@@ -8,7 +8,7 @@ data:
       title: template/template_all.hpp
     - icon: ':heavy_check_mark:'
       path: template/template_types.hpp
-      title: template/template_types.hpp
+      title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   verificationCategories:
   - name: verify
     pages:

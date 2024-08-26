@@ -3,7 +3,7 @@ data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
-    title: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
@@ -31,8 +31,9 @@ data:
     \ res.end());\n    return sign + res;\n  }\n  istream &operator>>(istream &is,\
     \ i128 &a)\n  {\n    string s;\n    is >> s;\n    a = stoi128(s);\n    return\
     \ is;\n  }\n  ostream &operator<<(ostream &os, const i128 &a)\n  {\n    os <<\
-    \ i128tos(a);\n    return os;\n  }\n#endif\n#line 4 \"template/template_all.hpp\"\
-    \n"
+    \ i128tos(a);\n    return os;\n  }\n#endif\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
+    \ */\n#line 4 \"template/template_all.hpp\"\n"
   code: '#pragma once
 
 
@@ -42,7 +43,7 @@ data:
   isVerificationFile: false
   path: template/template_all.hpp
   requiredBy: []
-  timestamp: '2024-08-26 23:40:19+09:00'
+  timestamp: '2024-08-27 03:11:16+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo_many_aplusb.test.cpp

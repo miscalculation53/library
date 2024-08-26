@@ -6,7 +6,7 @@ data:
     title: template/template_all.hpp
   - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
-    title: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: false
@@ -36,15 +36,16 @@ data:
     \    return sign + res;\n  }\n  istream &operator>>(istream &is, i128 &a)\n  {\n\
     \    string s;\n    is >> s;\n    a = stoi128(s);\n    return is;\n  }\n  ostream\
     \ &operator<<(ostream &os, const i128 &a)\n  {\n    os << i128tos(a);\n    return\
-    \ os;\n  }\n#endif\n#line 4 \"verify/yosupo_many_aplusb.test.cpp\"\n\n// #define\
-    \ SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define\
-    \ FAST_IO\n\nvoid init() {}\n\nvoid main2()\n{\n  ll A, B;\n  cin >> A >> B;\n\
-    \  cout << A + B << \"\\n\";\n}\n\nvoid test()\n{\n  /*\n  #ifdef LOCAL\n  rep(t,\
-    \ 100000)\n  {\n    dump(t);\n\n    // ----- generate cases -----\n    ll N =\
-    \ 1 + rand() % 5;\n    vl A(N);\n    rep(i, N) A.at(i) = 1 + rand() % 10;\n  \
-    \  // --------------------------\n\n    // ------ check output ------\n    auto\
-    \ god = naive(A);\n    auto ans = solve(A);\n    if (god != ans)\n    {\n    \
-    \  dump(N, A);\n      dump(god, ans);\n      exit(0);\n    }\n    // --------------------------\n\
+    \ os;\n  }\n#endif\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\
+    \u578B\uFF09\n * @docs docs/template/template_types.md\n */\n#line 4 \"verify/yosupo_many_aplusb.test.cpp\"\
+    \n\n// #define SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
+    \n#define FAST_IO\n\nvoid init() {}\n\nvoid main2()\n{\n  ll A, B;\n  cin >> A\
+    \ >> B;\n  cout << A + B << \"\\n\";\n}\n\nvoid test()\n{\n  /*\n  #ifdef LOCAL\n\
+    \  rep(t, 100000)\n  {\n    dump(t);\n\n    // ----- generate cases -----\n  \
+    \  ll N = 1 + rand() % 5;\n    vl A(N);\n    rep(i, N) A.at(i) = 1 + rand() %\
+    \ 10;\n    // --------------------------\n\n    // ------ check output ------\n\
+    \    auto god = naive(A);\n    auto ans = solve(A);\n    if (god != ans)\n   \
+    \ {\n      dump(N, A);\n      dump(god, ans);\n      exit(0);\n    }\n    // --------------------------\n\
     \  }\n  dump(\"ok\");\n  #endif\n  //*/\n}\n\nint main()\n{\n  #if defined FAST_IO\
     \ and not defined LOCAL\n    cerr << \"[FAST_IO]\\n\\n\";\n    cin.tie(0);\n \
     \   ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
@@ -77,7 +78,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo_many_aplusb.test.cpp
   requiredBy: []
-  timestamp: '2024-08-26 23:40:19+09:00'
+  timestamp: '2024-08-27 03:11:16+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo_many_aplusb.test.cpp

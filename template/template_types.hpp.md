@@ -13,6 +13,8 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
+    _deprecated_at_docs: docs/template/template_types.md
+    document_title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
     links: []
   bundledCode: "#line 2 \"template/template_types.hpp\"\n\n#include <bits/stdc++.h>\n\
     using namespace std;\n\nusing ll = long long;\nusing dbl = double;\nusing ld =\
@@ -31,7 +33,8 @@ data:
     \    return sign + res;\n  }\n  istream &operator>>(istream &is, i128 &a)\n  {\n\
     \    string s;\n    is >> s;\n    a = stoi128(s);\n    return is;\n  }\n  ostream\
     \ &operator<<(ostream &os, const i128 &a)\n  {\n    os << i128tos(a);\n    return\
-    \ os;\n  }\n#endif\n"
+    \ os;\n  }\n#endif\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\
+    \u578B\uFF09\n * @docs docs/template/template_types.md\n */\n"
   code: "#pragma once\n\n#include <bits/stdc++.h>\nusing namespace std;\n\nusing ll\
     \ = long long;\nusing dbl = double;\nusing ld = long double;\nusing uint = unsigned\
     \ int;\nusing ull = unsigned long long;\nusing pll = pair<ll, ll>;\nusing tlll\
@@ -48,13 +51,15 @@ data:
     \   }\n    reverse(res.begin(), res.end());\n    return sign + res;\n  }\n  istream\
     \ &operator>>(istream &is, i128 &a)\n  {\n    string s;\n    is >> s;\n    a =\
     \ stoi128(s);\n    return is;\n  }\n  ostream &operator<<(ostream &os, const i128\
-    \ &a)\n  {\n    os << i128tos(a);\n    return os;\n  }\n#endif"
+    \ &a)\n  {\n    os << i128tos(a);\n    return os;\n  }\n#endif\n\n/**\n * @brief\
+    \ \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
+    \ */"
   dependsOn: []
   isVerificationFile: false
   path: template/template_types.hpp
   requiredBy:
   - template/template_all.hpp
-  timestamp: '2024-08-26 23:40:19+09:00'
+  timestamp: '2024-08-27 03:11:16+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo_many_aplusb.test.cpp
@@ -63,5 +68,8 @@ layout: document
 redirect_from:
 - /library/template/template_types.hpp
 - /library/template/template_types.hpp.html
-title: template/template_types.hpp
+title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
 ---
+## テンプレート（型）
+
+定義されている型はソースコードの通りです。
