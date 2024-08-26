@@ -10,11 +10,6 @@ data:
       path: template/template_types.hpp
       title: template/template_types.hpp
   verificationCategories:
-  - name: .
-    pages:
-    - icon: ':heavy_check_mark:'
-      path: example.test.cpp
-      title: example.test.cpp
   - name: verify
     pages:
     - icon: ':heavy_check_mark:'
