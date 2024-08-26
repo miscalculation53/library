@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+ * @brief テンプレート（型）
+ * @docs docs/template/template_types.md
+ */
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -64,8 +69,3 @@ using vvl = vc<vc<ll>>;
     return os;
   }
 #endif
-
-/**
- * @brief テンプレート（型）
- * @docs docs/template/template_types.md
- */
