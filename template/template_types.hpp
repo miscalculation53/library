@@ -64,3 +64,8 @@ using vvl = vc<vc<ll>>;
     return os;
   }
 #endif
+
+/**
+ * @brief テンプレート（型）
+ * @docs docs/template/template_types.md
+ */
