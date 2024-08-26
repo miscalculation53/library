@@ -1,4 +1,4 @@
-[https://x.com/miscalc53](miscalc) のライブラリです。現在移植作業中
+[miscalc](https://x.com/miscalc53) のライブラリです。現在移植作業中
 
 他の人が使いやすいものにはあまりならないかもしれません
 
