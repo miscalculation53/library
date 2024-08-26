@@ -6,6 +6,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: template/template_all.hpp
       title: template/template_all.hpp
+    - icon: ':warning:'
+      path: template/template_rep.hpp
+      title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
     - icon: ':heavy_check_mark:'
       path: template/template_types.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
