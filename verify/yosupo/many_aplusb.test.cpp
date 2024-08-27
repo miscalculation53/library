@@ -1,20 +1,19 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/many_aplusb"
 
-#include "../template/template_all.hpp"
-
 // #define SINGLE_TESTCASE
 #define MULTI_TESTCASE
 // #define AOJ_TESTCASE
 
 #define FAST_IO
 
+#include "../../template/template_all.hpp"
+
 void init() {}
 
 void main2()
 {
-  ll A, B;
-  cin >> A >> B;
-  cout << A + B << "\n";
+  LL(A, B);
+  PRINT(A, B);
 }
 
 void test()

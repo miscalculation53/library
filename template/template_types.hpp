@@ -17,12 +17,21 @@ using pll = pair<ll, ll>;
 using tlll = tuple<ll, ll, ll>;
 using tllll = tuple<ll, ll, ll, ll>;
 
-#define vc vector
+template <class T>
+using vc = vector<T>;
+template <class T>
+using vvc = vector<vector<T>>;
+template <class T>
+using vvvc = vector<vector<vector<T>>>;
+
+using vb = vc<bool>;
 using vl = vc<ll>;
 using vpll = vc<pll>;
 using vtlll = vc<tlll>;
 using vtllll = vc<tllll>;
-using vvl = vc<vc<ll>>;
+using vstr = vc<string>;
+using vvb = vvc<bool>;
+using vvl = vvc<ll>;
 
 #ifdef __SIZEOF_INT128__
   using i128 = __int128_t;
