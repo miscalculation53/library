@@ -16,8 +16,14 @@ data:
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/aplusb.test.cpp
+    title: verify/yosupo/aplusb.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb.test.cpp
     title: verify/yosupo/many_aplusb.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/many_aplusb_128bit.test.cpp
+    title: verify/yosupo/many_aplusb_128bit.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb_tuple.test.cpp
     title: verify/yosupo/many_aplusb_tuple.test.cpp
@@ -133,11 +139,16 @@ data:
     \  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = tv_to_vt_impl(tv,\
     \ index_sequence_for<Ts...>{}, i);\n  return vt;\n}\n// ----------\n#line 2 \"\
     template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\
-    \uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n\
-    \  #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n  #define\
-    \ dump(...) cpp_dump(__VA_ARGS__)\n  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
-    \ cp::log_label::line());\n  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n\
-    #else\n  #define dump(...)\n#endif\n#line 7 \"template/template_all.hpp\"\n"
+    \uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n#line 9 \"template/template_dump.hpp\"\
+    \n\n#ifdef LOCAL\n  #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    \  namespace cpp_dump::_detail\n  {\n    inline string export_var(\n        const\
+    \ i128 &x, const string &indent, size_t last_line_length,\n        size_t current_depth,\
+    \ bool fail_on_newline, const export_command &command\n    ) {\n      return export_var(i128tos(x),\
+    \ indent, last_line_length, current_depth, fail_on_newline, command);\n    }\n\
+    \  } // namespace cpp_dump::_detail\n  #define dump(...) cpp_dump(__VA_ARGS__)\n\
+    \  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
+    \  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#else\n  #define dump(...)\n\
+    #endif\n#line 7 \"template/template_all.hpp\"\n"
   code: '#pragma once
 
 
@@ -156,9 +167,11 @@ data:
   isVerificationFile: false
   path: template/template_all.hpp
   requiredBy: []
-  timestamp: '2024-08-27 23:33:40+09:00'
+  timestamp: '2024-08-28 00:53:24+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yosupo/aplusb.test.cpp
+  - verify/yosupo/many_aplusb_128bit.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
   - verify/yosupo/many_aplusb_tuple.test.cpp
 documentation_of: template/template_all.hpp

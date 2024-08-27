@@ -23,11 +23,11 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/many_aplusb
+    PROBLEM: https://judge.yosupo.jp/problem/many_aplusb_128bit
     links:
-    - https://judge.yosupo.jp/problem/many_aplusb
-  bundledCode: "#line 1 \"verify/yosupo/many_aplusb_tuple.test.cpp\"\n#define PROBLEM\
-    \ \"https://judge.yosupo.jp/problem/many_aplusb\"\n\n// #define SINGLE_TESTCASE\n\
+    - https://judge.yosupo.jp/problem/many_aplusb_128bit
+  bundledCode: "#line 1 \"verify/yosupo/many_aplusb_128bit.test.cpp\"\n#define PROBLEM\
+    \ \"https://judge.yosupo.jp/problem/many_aplusb_128bit\"\n\n// #define SINGLE_TESTCASE\n\
     #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n\n#line 2\
     \ \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\n\n\
     /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs\
@@ -145,47 +145,37 @@ data:
     \  } // namespace cpp_dump::_detail\n  #define dump(...) cpp_dump(__VA_ARGS__)\n\
     \  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
     \  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#else\n  #define dump(...)\n\
-    #endif\n#line 10 \"verify/yosupo/many_aplusb_tuple.test.cpp\"\n\nvoid init() {}\n\
-    \nvoid main2()\n{\n  ll r = rand() % 5;\n  if (r == 0)\n  {\n    LL(A, B);\n \
-    \   PRINT(A + B);\n  }\n  else if (r == 1)\n  {\n    pll p;\n    cin >> p;\n \
-    \   PRINT(p.first + p.second);\n  }\n  else if (r == 2)\n  {\n    tuple<ll, ll>\
-    \ t;\n    cin >> t;\n    PRINT(get<0>(t) + get<1>(t));\n  }\n  else if (r == 3)\n\
-    \  {\n    ARR(ll, 2, A);\n    PRINT(A.at(0) + A.at(1));\n  }\n  else if (r ==\
-    \ 4)\n  {\n    VEC(ll, 2, A);\n    PRINT(A.at(0) + A.at(1));\n  }\n}\n\nvoid test()\n\
-    {\n  /*\n  #ifdef LOCAL\n  rep(t, 100000)\n  {\n    dump(t);\n\n    // ----- generate\
-    \ cases -----\n    ll N = 1 + rand() % 5;\n    vl A(N);\n    rep(i, N) A.at(i)\
-    \ = 1 + rand() % 10;\n    // --------------------------\n\n    // ------ check\
-    \ output ------\n    auto god = naive(A);\n    auto ans = solve(A);\n    if (god\
-    \ != ans)\n    {\n      dump(N, A);\n      dump(god, ans);\n      exit(0);\n \
-    \   }\n    // --------------------------\n  }\n  dump(\"ok\");\n  #endif\n  //*/\n\
-    }\n\nint main()\n{\n  #if defined FAST_IO and not defined LOCAL\n    cerr << \"\
-    [FAST_IO]\\n\\n\";\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n  #endif\n\
-    \  cout << fixed << setprecision(20);\n\n  init();\n  test();\n\n  #if defined\
-    \ AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    cerr << \"\
-    [AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n  #elif defined SINGLE_TESTCASE\n\
+    #endif\n#line 10 \"verify/yosupo/many_aplusb_128bit.test.cpp\"\n\nvoid init()\
+    \ {}\n\nvoid main2()\n{\n  i128 A, B;\n  cin >> A >> B;\n  dump(A, B);\n  PRINT(A\
+    \ + B);\n}\n\nvoid test()\n{\n  /*\n  #ifdef LOCAL\n  rep(t, 100000)\n  {\n  \
+    \  dump(t);\n\n    // ----- generate cases -----\n    ll N = 1 + rand() % 5;\n\
+    \    vl A(N);\n    rep(i, N) A.at(i) = 1 + rand() % 10;\n    // --------------------------\n\
+    \n    // ------ check output ------\n    auto god = naive(A);\n    auto ans =\
+    \ solve(A);\n    if (god != ans)\n    {\n      dump(N, A);\n      dump(god, ans);\n\
+    \      exit(0);\n    }\n    // --------------------------\n  }\n  dump(\"ok\"\
+    );\n  #endif\n  //*/\n}\n\nint main()\n{\n  #if defined FAST_IO and not defined\
+    \ LOCAL\n    cerr << \"[FAST_IO]\\n\\n\";\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
+    \  #endif\n  cout << fixed << setprecision(20);\n\n  init();\n  test();\n\n  #if\
+    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    cerr\
+    \ << \"[AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n  #elif defined SINGLE_TESTCASE\n\
     \    cerr << \"[SINGLE_TESTCASE]\\n\\n\";\n    main2();\n  #elif defined MULTI_TESTCASE\n\
     \    cerr << \"[MULTI_TESTCASE]\\n\\n\";\n    int T;\n    cin >> T;\n    while\
     \ (T--) main2();\n  #endif\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/many_aplusb\"\n\n// #define\
-    \ SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define\
-    \ FAST_IO\n\n#include \"../../template/template_all.hpp\"\n\nvoid init() {}\n\n\
-    void main2()\n{\n  ll r = rand() % 5;\n  if (r == 0)\n  {\n    LL(A, B);\n   \
-    \ PRINT(A + B);\n  }\n  else if (r == 1)\n  {\n    pll p;\n    cin >> p;\n   \
-    \ PRINT(p.first + p.second);\n  }\n  else if (r == 2)\n  {\n    tuple<ll, ll>\
-    \ t;\n    cin >> t;\n    PRINT(get<0>(t) + get<1>(t));\n  }\n  else if (r == 3)\n\
-    \  {\n    ARR(ll, 2, A);\n    PRINT(A.at(0) + A.at(1));\n  }\n  else if (r ==\
-    \ 4)\n  {\n    VEC(ll, 2, A);\n    PRINT(A.at(0) + A.at(1));\n  }\n}\n\nvoid test()\n\
-    {\n  /*\n  #ifdef LOCAL\n  rep(t, 100000)\n  {\n    dump(t);\n\n    // ----- generate\
-    \ cases -----\n    ll N = 1 + rand() % 5;\n    vl A(N);\n    rep(i, N) A.at(i)\
-    \ = 1 + rand() % 10;\n    // --------------------------\n\n    // ------ check\
-    \ output ------\n    auto god = naive(A);\n    auto ans = solve(A);\n    if (god\
-    \ != ans)\n    {\n      dump(N, A);\n      dump(god, ans);\n      exit(0);\n \
-    \   }\n    // --------------------------\n  }\n  dump(\"ok\");\n  #endif\n  //*/\n\
-    }\n\nint main()\n{\n  #if defined FAST_IO and not defined LOCAL\n    cerr << \"\
-    [FAST_IO]\\n\\n\";\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n  #endif\n\
-    \  cout << fixed << setprecision(20);\n\n  init();\n  test();\n\n  #if defined\
-    \ AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    cerr << \"\
-    [AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n  #elif defined SINGLE_TESTCASE\n\
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/many_aplusb_128bit\"\n\n\
+    // #define SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n\
+    #define FAST_IO\n\n#include \"../../template/template_all.hpp\"\n\nvoid init()\
+    \ {}\n\nvoid main2()\n{\n  i128 A, B;\n  cin >> A >> B;\n  dump(A, B);\n  PRINT(A\
+    \ + B);\n}\n\nvoid test()\n{\n  /*\n  #ifdef LOCAL\n  rep(t, 100000)\n  {\n  \
+    \  dump(t);\n\n    // ----- generate cases -----\n    ll N = 1 + rand() % 5;\n\
+    \    vl A(N);\n    rep(i, N) A.at(i) = 1 + rand() % 10;\n    // --------------------------\n\
+    \n    // ------ check output ------\n    auto god = naive(A);\n    auto ans =\
+    \ solve(A);\n    if (god != ans)\n    {\n      dump(N, A);\n      dump(god, ans);\n\
+    \      exit(0);\n    }\n    // --------------------------\n  }\n  dump(\"ok\"\
+    );\n  #endif\n  //*/\n}\n\nint main()\n{\n  #if defined FAST_IO and not defined\
+    \ LOCAL\n    cerr << \"[FAST_IO]\\n\\n\";\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
+    \  #endif\n  cout << fixed << setprecision(20);\n\n  init();\n  test();\n\n  #if\
+    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    cerr\
+    \ << \"[AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n  #elif defined SINGLE_TESTCASE\n\
     \    cerr << \"[SINGLE_TESTCASE]\\n\\n\";\n    main2();\n  #elif defined MULTI_TESTCASE\n\
     \    cerr << \"[MULTI_TESTCASE]\\n\\n\";\n    int T;\n    cin >> T;\n    while\
     \ (T--) main2();\n  #endif\n}\n"
@@ -196,15 +186,15 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   isVerificationFile: true
-  path: verify/yosupo/many_aplusb_tuple.test.cpp
+  path: verify/yosupo/many_aplusb_128bit.test.cpp
   requiredBy: []
   timestamp: '2024-08-28 00:53:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/yosupo/many_aplusb_tuple.test.cpp
+documentation_of: verify/yosupo/many_aplusb_128bit.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/yosupo/many_aplusb_tuple.test.cpp
-- /verify/verify/yosupo/many_aplusb_tuple.test.cpp.html
-title: verify/yosupo/many_aplusb_tuple.test.cpp
+- /verify/verify/yosupo/many_aplusb_128bit.test.cpp
+- /verify/verify/yosupo/many_aplusb_128bit.test.cpp.html
+title: verify/yosupo/many_aplusb_128bit.test.cpp
 ---

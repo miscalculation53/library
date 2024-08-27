@@ -27,8 +27,14 @@ data:
   - name: verify/yosupo
     pages:
     - icon: ':heavy_check_mark:'
+      path: verify/yosupo/aplusb.test.cpp
+      title: verify/yosupo/aplusb.test.cpp
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/many_aplusb.test.cpp
       title: verify/yosupo/many_aplusb.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yosupo/many_aplusb_128bit.test.cpp
+      title: verify/yosupo/many_aplusb_128bit.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/many_aplusb_tuple.test.cpp
       title: verify/yosupo/many_aplusb_tuple.test.cpp

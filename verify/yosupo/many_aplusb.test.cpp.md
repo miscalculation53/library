@@ -136,26 +136,30 @@ data:
     \  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = tv_to_vt_impl(tv,\
     \ index_sequence_for<Ts...>{}, i);\n  return vt;\n}\n// ----------\n#line 2 \"\
     template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\
-    \uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n\
-    \  #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n  #define\
-    \ dump(...) cpp_dump(__VA_ARGS__)\n  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
-    \ cp::log_label::line());\n  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n\
-    #else\n  #define dump(...)\n#endif\n#line 10 \"verify/yosupo/many_aplusb.test.cpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(A, B);\n  PRINT(A + B);\n}\n\nvoid\
-    \ test()\n{\n  /*\n  #ifdef LOCAL\n  rep(t, 100000)\n  {\n    dump(t);\n\n   \
-    \ // ----- generate cases -----\n    ll N = 1 + rand() % 5;\n    vl A(N);\n  \
-    \  rep(i, N) A.at(i) = 1 + rand() % 10;\n    // --------------------------\n\n\
-    \    // ------ check output ------\n    auto god = naive(A);\n    auto ans = solve(A);\n\
-    \    if (god != ans)\n    {\n      dump(N, A);\n      dump(god, ans);\n      exit(0);\n\
-    \    }\n    // --------------------------\n  }\n  dump(\"ok\");\n  #endif\n  //*/\n\
-    }\n\nint main()\n{\n  #if defined FAST_IO and not defined LOCAL\n    cerr << \"\
-    [FAST_IO]\\n\\n\";\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n  #endif\n\
-    \  cout << fixed << setprecision(20);\n\n  init();\n  test();\n\n  #if defined\
-    \ AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    cerr << \"\
-    [AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n  #elif defined SINGLE_TESTCASE\n\
-    \    cerr << \"[SINGLE_TESTCASE]\\n\\n\";\n    main2();\n  #elif defined MULTI_TESTCASE\n\
-    \    cerr << \"[MULTI_TESTCASE]\\n\\n\";\n    int T;\n    cin >> T;\n    while\
-    \ (T--) main2();\n  #endif\n}\n"
+    \uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n#line 9 \"template/template_dump.hpp\"\
+    \n\n#ifdef LOCAL\n  #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    \  namespace cpp_dump::_detail\n  {\n    inline string export_var(\n        const\
+    \ i128 &x, const string &indent, size_t last_line_length,\n        size_t current_depth,\
+    \ bool fail_on_newline, const export_command &command\n    ) {\n      return export_var(i128tos(x),\
+    \ indent, last_line_length, current_depth, fail_on_newline, command);\n    }\n\
+    \  } // namespace cpp_dump::_detail\n  #define dump(...) cpp_dump(__VA_ARGS__)\n\
+    \  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
+    \  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#else\n  #define dump(...)\n\
+    #endif\n#line 10 \"verify/yosupo/many_aplusb.test.cpp\"\n\nvoid init() {}\n\n\
+    void main2()\n{\n  LL(A, B);\n  PRINT(A + B);\n}\n\nvoid test()\n{\n  /*\n  #ifdef\
+    \ LOCAL\n  rep(t, 100000)\n  {\n    dump(t);\n\n    // ----- generate cases -----\n\
+    \    ll N = 1 + rand() % 5;\n    vl A(N);\n    rep(i, N) A.at(i) = 1 + rand()\
+    \ % 10;\n    // --------------------------\n\n    // ------ check output ------\n\
+    \    auto god = naive(A);\n    auto ans = solve(A);\n    if (god != ans)\n   \
+    \ {\n      dump(N, A);\n      dump(god, ans);\n      exit(0);\n    }\n    // --------------------------\n\
+    \  }\n  dump(\"ok\");\n  #endif\n  //*/\n}\n\nint main()\n{\n  #if defined FAST_IO\
+    \ and not defined LOCAL\n    cerr << \"[FAST_IO]\\n\\n\";\n    cin.tie(0);\n \
+    \   ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
+    \n  init();\n  test();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
+    \ SINGLE_TESTCASE)\n    cerr << \"[AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n\
+    \  #elif defined SINGLE_TESTCASE\n    cerr << \"[SINGLE_TESTCASE]\\n\\n\";\n \
+    \   main2();\n  #elif defined MULTI_TESTCASE\n    cerr << \"[MULTI_TESTCASE]\\\
+    n\\n\";\n    int T;\n    cin >> T;\n    while (T--) main2();\n  #endif\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/many_aplusb\"\n\n// #define\
     \ SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define\
     \ FAST_IO\n\n#include \"../../template/template_all.hpp\"\n\nvoid init() {}\n\n\
@@ -182,7 +186,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/many_aplusb.test.cpp
   requiredBy: []
-  timestamp: '2024-08-27 23:33:40+09:00'
+  timestamp: '2024-08-28 00:53:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/many_aplusb.test.cpp

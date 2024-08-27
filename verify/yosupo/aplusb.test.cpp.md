@@ -2,6 +2,9 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: template/template_all.hpp
+    title: template/template_all.hpp
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
   - icon: ':heavy_check_mark:'
@@ -23,11 +26,9 @@ data:
     PROBLEM: https://judge.yosupo.jp/problem/aplusb
     links:
     - https://judge.yosupo.jp/problem/aplusb
-  bundledCode: "#line 1 \"verify/mytest/template_inout_top.test.cpp\"\n#define PROBLEM\
-    \ \"https://judge.yosupo.jp/problem/aplusb\"\n\n#line 2 \"template/template_inout.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\
-    \uFF09\n * @docs docs/template/template_inout.md\n */\n/**\n * \u53C2\u8003\uFF1A\
-    \n * https://trap.jp/post/1224/\n */\n\n#line 2 \"template/template_types.hpp\"\
+  bundledCode: "#line 1 \"verify/yosupo/aplusb.test.cpp\"\n#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\
+    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
+    \n#define FAST_IO\n\n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
     \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
     \ namespace std;\n\nusing ll = long long;\nusing dbl = double;\nusing ld = long\
@@ -59,20 +60,23 @@ data:
     \ i++)\n#define repi2(i, l, r) for (int i = int(l); i < int(r); i++)\n#define\
     \ repi3(i, l, r, d) for (int i = int(l); (d) > 0 ? i < int(r) : i > int(r); i\
     \ += d)\n#define repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\
-    #line 14 \"template/template_inout.hpp\"\n\n// ---- \u5165\u529B ----\ntemplate\
-    \ <class T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  cin\
-    \ >> p.first >> p.second;\n  return is;\n}\ntemplate <class T, size_t n>\nistream\
-    \ &operator>>(istream &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n\
-    \    cin >> a[i];\n  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream\
-    \ &is, tuple<Ts...> &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a);\
-    \ }, t);\n  return is;\n}\n\ntemplate <class... Ts>\nvoid INPUT(Ts &...a) { (cin\
-    \ >> ... >> a); }\n\ntemplate <class T>\nvoid INPUTVEC(int n, vc<T> &v)\n{\n \
-    \ v.resize(n);\n  repi(i, n) cin >> v[i];\n}\ntemplate <class T, class... Ts>\n\
-    void INPUTVEC(int n, vc<T> &v, vc<Ts> &...vs)\n{ INPUTVEC(n, v), INPUTVEC(n, vs...);\
-    \ }\n\ntemplate <class T>\nvoid INPUTVEC2(int n, int m, vvc<T> &v)\n{\n  v.assign(n,\
-    \ vc<T>(m));\n  repi(i, n) repi(j, m) cin >> v[i][j];\n}\ntemplate <class T, class...\
-    \ Ts>\nvoid INPUTVEC2(int n, int m, vvc<T> &v, vvc<Ts> &...vs)\n{ INPUTVEC2(n,\
-    \ m, v), INPUTVEC2(n, m, vs...); }\n\n#define INT(...) int __VA_ARGS__; INPUT(__VA_ARGS__)\n\
+    #line 2 \"template/template_inout.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\n * @docs docs/template/template_inout.md\n\
+    \ */\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n */\n\n#line\
+    \ 14 \"template/template_inout.hpp\"\n\n// ---- \u5165\u529B ----\ntemplate <class\
+    \ T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  cin >> p.first\
+    \ >> p.second;\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
+    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    cin >> a[i];\n\
+    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
+    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
+    \ is;\n}\n\ntemplate <class... Ts>\nvoid INPUT(Ts &...a) { (cin >> ... >> a);\
+    \ }\n\ntemplate <class T>\nvoid INPUTVEC(int n, vc<T> &v)\n{\n  v.resize(n);\n\
+    \  repi(i, n) cin >> v[i];\n}\ntemplate <class T, class... Ts>\nvoid INPUTVEC(int\
+    \ n, vc<T> &v, vc<Ts> &...vs)\n{ INPUTVEC(n, v), INPUTVEC(n, vs...); }\n\ntemplate\
+    \ <class T>\nvoid INPUTVEC2(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n\
+    \  repi(i, n) repi(j, m) cin >> v[i][j];\n}\ntemplate <class T, class... Ts>\n\
+    void INPUTVEC2(int n, int m, vvc<T> &v, vvc<Ts> &...vs)\n{ INPUTVEC2(n, m, v),\
+    \ INPUTVEC2(n, m, vs...); }\n\n#define INT(...) int __VA_ARGS__; INPUT(__VA_ARGS__)\n\
     #define LL(...) ll __VA_ARGS__; INPUT(__VA_ARGS__)\n#define STR(...) string __VA_ARGS__;\
     \ INPUT(__VA_ARGS__)\n#define ARR(T, n, ...) array<T, n> __VA_ARGS__; INPUT(__VA_ARGS__)\n\
     #define VEC(T, n, ...) vc<T> __VA_ARGS__; INPUTVEC(n, __VA_ARGS__)\n#define VEC2(T,\
@@ -140,58 +144,54 @@ data:
     \  } // namespace cpp_dump::_detail\n  #define dump(...) cpp_dump(__VA_ARGS__)\n\
     \  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
     \  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#else\n  #define dump(...)\n\
-    #endif\n#line 5 \"verify/mytest/template_inout_top.test.cpp\"\n\nvoid test1()\n\
-    {\n  vc<pair<int, string>> vt_god = {\n    {1, \"a\"},\n    {2, \"bcd\"},\n  \
-    \  {3, \"ef\"}\n  };\n  pair<vc<int>, vc<string>> tv_god = {\n    {1, 2, 3},\n\
-    \    {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = top(vt_god);\n  auto vt_ans\
-    \ = top(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n  assert(vt_ans\
-    \ == vt_god);\n}\n\nvoid test2()\n{\n  vc<array<int, 5>> vt_god = {\n    {1, 2,\
-    \ 3, 4, 5},\n    {6, 7, 8, 9, 10},\n    {11, 12, 13, 14, 15}\n  };\n  array<vc<int>,\
-    \ 5> tv_god = {{\n    {1, 6, 11},\n    {2, 7, 12},\n    {3, 8, 13},\n    {4, 9,\
-    \ 14},\n    {5, 10, 15}\n  }};\n\n  auto tv_ans = top(vt_god);\n  auto vt_ans\
-    \ = top(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n  assert(vt_ans\
-    \ == vt_god);\n}\n\nvoid test3()\n{\n  vc<tuple<int, int, int, int, string>> vt_god\
-    \ = {\n    {1, 2, 3, 4, \"a\"},\n    {5, 6, 7, 8, \"bcd\"},\n    {9, 10, 11, 12,\
-    \ \"ef\"}\n  };\n  tuple<vc<int>, vc<int>, vc<int>, vc<int>, vc<string>> tv_god\
-    \ = {\n    {1, 5, 9},\n    {2, 6, 10},\n    {3, 7, 11},\n    {4, 8, 12},\n   \
-    \ {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = top(vt_god);\n  auto vt_ans\
-    \ = top(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n  assert(vt_ans\
-    \ == vt_god);\n}\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n\n  LL(A,\
-    \ B);\n  PRINT(A + B);\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n\n#include \"\
-    ../../template/template_inout.hpp\"\n#include \"../../template/template_dump.hpp\"\
-    \n\nvoid test1()\n{\n  vc<pair<int, string>> vt_god = {\n    {1, \"a\"},\n   \
-    \ {2, \"bcd\"},\n    {3, \"ef\"}\n  };\n  pair<vc<int>, vc<string>> tv_god = {\n\
-    \    {1, 2, 3},\n    {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = top(vt_god);\n\
-    \  auto vt_ans = top(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
-    \  assert(vt_ans == vt_god);\n}\n\nvoid test2()\n{\n  vc<array<int, 5>> vt_god\
-    \ = {\n    {1, 2, 3, 4, 5},\n    {6, 7, 8, 9, 10},\n    {11, 12, 13, 14, 15}\n\
-    \  };\n  array<vc<int>, 5> tv_god = {{\n    {1, 6, 11},\n    {2, 7, 12},\n   \
-    \ {3, 8, 13},\n    {4, 9, 14},\n    {5, 10, 15}\n  }};\n\n  auto tv_ans = top(vt_god);\n\
-    \  auto vt_ans = top(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
-    \  assert(vt_ans == vt_god);\n}\n\nvoid test3()\n{\n  vc<tuple<int, int, int,\
-    \ int, string>> vt_god = {\n    {1, 2, 3, 4, \"a\"},\n    {5, 6, 7, 8, \"bcd\"\
-    },\n    {9, 10, 11, 12, \"ef\"}\n  };\n  tuple<vc<int>, vc<int>, vc<int>, vc<int>,\
-    \ vc<string>> tv_god = {\n    {1, 5, 9},\n    {2, 6, 10},\n    {3, 7, 11},\n \
-    \   {4, 8, 12},\n    {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = top(vt_god);\n\
-    \  auto vt_ans = top(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
-    \  assert(vt_ans == vt_god);\n}\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n\
-    \n  LL(A, B);\n  PRINT(A + B);\n}"
+    #endif\n#line 10 \"verify/yosupo/aplusb.test.cpp\"\n\nvoid init() {}\n\nvoid main2()\n\
+    {\n  LL(A, B);\n  PRINT(A + B);\n}\n\nvoid test()\n{\n  /*\n  #ifdef LOCAL\n \
+    \ rep(t, 100000)\n  {\n    dump(t);\n\n    // ----- generate cases -----\n   \
+    \ ll N = 1 + rand() % 5;\n    vl A(N);\n    rep(i, N) A.at(i) = 1 + rand() % 10;\n\
+    \    // --------------------------\n\n    // ------ check output ------\n    auto\
+    \ god = naive(A);\n    auto ans = solve(A);\n    if (god != ans)\n    {\n    \
+    \  dump(N, A);\n      dump(god, ans);\n      exit(0);\n    }\n    // --------------------------\n\
+    \  }\n  dump(\"ok\");\n  #endif\n  //*/\n}\n\nint main()\n{\n  #if defined FAST_IO\
+    \ and not defined LOCAL\n    cerr << \"[FAST_IO]\\n\\n\";\n    cin.tie(0);\n \
+    \   ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
+    \n  init();\n  test();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
+    \ SINGLE_TESTCASE)\n    cerr << \"[AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n\
+    \  #elif defined SINGLE_TESTCASE\n    cerr << \"[SINGLE_TESTCASE]\\n\\n\";\n \
+    \   main2();\n  #elif defined MULTI_TESTCASE\n    cerr << \"[MULTI_TESTCASE]\\\
+    n\\n\";\n    int T;\n    cin >> T;\n    while (T--) main2();\n  #endif\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n\n#define SINGLE_TESTCASE\n\
+    // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n\n#include\
+    \ \"../../template/template_all.hpp\"\n\nvoid init() {}\n\nvoid main2()\n{\n \
+    \ LL(A, B);\n  PRINT(A + B);\n}\n\nvoid test()\n{\n  /*\n  #ifdef LOCAL\n  rep(t,\
+    \ 100000)\n  {\n    dump(t);\n\n    // ----- generate cases -----\n    ll N =\
+    \ 1 + rand() % 5;\n    vl A(N);\n    rep(i, N) A.at(i) = 1 + rand() % 10;\n  \
+    \  // --------------------------\n\n    // ------ check output ------\n    auto\
+    \ god = naive(A);\n    auto ans = solve(A);\n    if (god != ans)\n    {\n    \
+    \  dump(N, A);\n      dump(god, ans);\n      exit(0);\n    }\n    // --------------------------\n\
+    \  }\n  dump(\"ok\");\n  #endif\n  //*/\n}\n\nint main()\n{\n  #if defined FAST_IO\
+    \ and not defined LOCAL\n    cerr << \"[FAST_IO]\\n\\n\";\n    cin.tie(0);\n \
+    \   ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
+    \n  init();\n  test();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
+    \ SINGLE_TESTCASE)\n    cerr << \"[AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n\
+    \  #elif defined SINGLE_TESTCASE\n    cerr << \"[SINGLE_TESTCASE]\\n\\n\";\n \
+    \   main2();\n  #elif defined MULTI_TESTCASE\n    cerr << \"[MULTI_TESTCASE]\\\
+    n\\n\";\n    int T;\n    cin >> T;\n    while (T--) main2();\n  #endif\n}\n"
   dependsOn:
-  - template/template_inout.hpp
+  - template/template_all.hpp
   - template/template_types.hpp
   - template/template_rep.hpp
+  - template/template_inout.hpp
   - template/template_dump.hpp
   isVerificationFile: true
-  path: verify/mytest/template_inout_top.test.cpp
+  path: verify/yosupo/aplusb.test.cpp
   requiredBy: []
   timestamp: '2024-08-28 00:53:24+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/mytest/template_inout_top.test.cpp
+documentation_of: verify/yosupo/aplusb.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/mytest/template_inout_top.test.cpp
-- /verify/verify/mytest/template_inout_top.test.cpp.html
-title: verify/mytest/template_inout_top.test.cpp
+- /verify/verify/yosupo/aplusb.test.cpp
+- /verify/verify/yosupo/aplusb.test.cpp.html
+title: verify/yosupo/aplusb.test.cpp
 ---

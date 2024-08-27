@@ -6,6 +6,9 @@ data:
     path: template/template_all.hpp
     title: template/template_all.hpp
   - icon: ':heavy_check_mark:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
   - icon: ':heavy_check_mark:'
@@ -16,8 +19,14 @@ data:
     path: verify/mytest/template_inout_top.test.cpp
     title: verify/mytest/template_inout_top.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/aplusb.test.cpp
+    title: verify/yosupo/aplusb.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb.test.cpp
     title: verify/yosupo/many_aplusb.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/many_aplusb_128bit.test.cpp
+    title: verify/yosupo/many_aplusb_128bit.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb_tuple.test.cpp
     title: verify/yosupo/many_aplusb_tuple.test.cpp
@@ -75,6 +84,7 @@ data:
   isVerificationFile: false
   path: template/template_types.hpp
   requiredBy:
+  - template/template_dump.hpp
   - template/template_inout.hpp
   - template/template_all.hpp
   - template/template_rep.hpp
@@ -82,6 +92,8 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/template_inout_top.test.cpp
+  - verify/yosupo/aplusb.test.cpp
+  - verify/yosupo/many_aplusb_128bit.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
   - verify/yosupo/many_aplusb_tuple.test.cpp
 documentation_of: template/template_types.hpp

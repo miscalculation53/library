@@ -16,8 +16,14 @@ data:
     path: verify/mytest/template_inout_top.test.cpp
     title: verify/mytest/template_inout_top.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/aplusb.test.cpp
+    title: verify/yosupo/aplusb.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb.test.cpp
     title: verify/yosupo/many_aplusb.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/many_aplusb_128bit.test.cpp
+    title: verify/yosupo/many_aplusb_128bit.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb_tuple.test.cpp
     title: verify/yosupo/many_aplusb_tuple.test.cpp
@@ -220,6 +226,8 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/template_inout_top.test.cpp
+  - verify/yosupo/aplusb.test.cpp
+  - verify/yosupo/many_aplusb_128bit.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
   - verify/yosupo/many_aplusb_tuple.test.cpp
 documentation_of: template/template_inout.hpp
