@@ -13,7 +13,7 @@ void init() {}
 void main2()
 {
   LL(A, B);
-  PRINT(A, B);
+  PRINT(A + B);
 }
 
 void test()
