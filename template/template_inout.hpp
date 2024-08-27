@@ -13,15 +13,29 @@
 #include "template_rep.hpp"
 
 // ---- 入力 ----
-template <class Tuple, enable_if_t<__is_tuple_like<Tuple>::value == true> * = nullptr>
-istream &operator>>(istream &is, Tuple &t)
+template <class T, class U>
+istream &operator>>(istream &is, pair<T, U> &p)
+{
+  cin >> p.first >> p.second;
+  return is;
+}
+template <class T, size_t n>
+istream &operator>>(istream &is, array<T, n> &a)
+{
+  for (size_t i = 0; i < n; i++)
+    cin >> a[i];
+  return is;
+}
+template <class... Ts>
+istream &operator>>(istream &is, tuple<Ts...> &t)
 {
   apply([&](auto &...a)
         { (is >> ... >> a); }, t);
   return is;
 }
-template <class... T>
-void INPUT(T &...a) { (cin >> ... >> a); }
+
+template <class... Ts>
+void INPUT(Ts &...a) { (cin >> ... >> a); }
 
 template <class T>
 void INPUTVEC(int n, vc<T> &v)

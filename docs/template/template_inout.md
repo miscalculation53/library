@@ -2,8 +2,6 @@
 
 参考： https://trap.jp/post/1224/
 
-現状 `__is_tuple_like` を利用している。手元や AC, CF, AOJ のジャッジでは動くことを確認したが、動かない環境もあるようなので使わないように変更することを検討中。
-
 ### 入力
 
 - `cin >>` で tuple-like な型（`pair`, `tuple`, `array`）にも入力できる
