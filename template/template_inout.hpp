@@ -1,5 +1,8 @@
 #pragma once
 
+#include "template_types.hpp"
+#include "template_rep.hpp"
+
 /**
  * @brief テンプレート（入出力）
  * @docs docs/template/template_inout.md
@@ -8,9 +11,6 @@
  * 参考：
  * https://trap.jp/post/1224/
  */
-
-#include "template_types.hpp"
-#include "template_rep.hpp"
 
 // ---- 入力 ----
 template <class T, class U>

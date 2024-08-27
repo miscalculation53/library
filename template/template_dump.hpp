@@ -1,11 +1,11 @@
 #pragma once
 
+#include "template/template_types.hpp"
+
 /**
  * @brief テンプレート（dump）
  * @docs docs/template/template_dump.md
  */
-
-#include "template/template_types.hpp"
 
 #ifdef LOCAL
   #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump

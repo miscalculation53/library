@@ -1,5 +1,7 @@
 #pragma once
 
+#include "template_types.hpp"
+
 /**
  * @brief テンプレート（rep）
  * @docs docs/template/template_rep.md
@@ -9,8 +11,6 @@
  * 参考：
  * https://trap.jp/post/1224/
 */
-
-#include "template_types.hpp"
 
 #define overload4(_1, _2, _3, _4, name, ...) name
 #define rep1(i, n) for (ll i = 0; i < ll(n); i++)
