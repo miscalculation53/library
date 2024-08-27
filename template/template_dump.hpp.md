@@ -12,6 +12,9 @@ data:
   - icon: ':x:'
     path: verify/yosupo/many_aplusb.test.cpp
     title: verify/yosupo/many_aplusb.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/many_aplusb_tuple.test.cpp
+    title: verify/yosupo/many_aplusb_tuple.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
   _verificationStatusIcon: ':x:'
@@ -42,6 +45,7 @@ data:
   verifiedWith:
   - verify/mytest/template_inout_top.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
+  - verify/yosupo/many_aplusb_tuple.test.cpp
 documentation_of: template/template_dump.hpp
 layout: document
 redirect_from:

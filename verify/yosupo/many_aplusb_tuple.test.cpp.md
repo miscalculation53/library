@@ -2,6 +2,9 @@
 data:
   _extendedDependsOn:
   - icon: ':x:'
+    path: template/template_all.hpp
+    title: template/template_all.hpp
+  - icon: ':x:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
   - icon: ':x:'
@@ -14,46 +17,46 @@ data:
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy: []
-  _extendedVerifiedWith:
-  - icon: ':x:'
-    path: verify/yosupo/many_aplusb.test.cpp
-    title: verify/yosupo/many_aplusb.test.cpp
-  - icon: ':x:'
-    path: verify/yosupo/many_aplusb_tuple.test.cpp
-    title: verify/yosupo/many_aplusb_tuple.test.cpp
+  _extendedVerifiedWith: []
   _isVerificationFailed: true
-  _pathExtension: hpp
+  _pathExtension: cpp
   _verificationStatusIcon: ':x:'
   attributes:
-    links: []
-  bundledCode: "#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
-    \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
-    \ namespace std;\n\nusing ll = long long;\nusing dbl = double;\nusing ld = long\
-    \ double;\nusing uint = unsigned int;\nusing ull = unsigned long long;\nusing\
-    \ pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll,\
-    \ ll, ll, ll>;\n\ntemplate <class T>\nusing vc = vector<T>;\ntemplate <class T>\n\
-    using vvc = vector<vector<T>>;\ntemplate <class T>\nusing vvvc = vector<vector<vector<T>>>;\n\
-    \nusing vb = vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll\
-    \ = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb\
-    \ = vvc<bool>;\nusing vvl = vvc<ll>;\n\n#ifdef __SIZEOF_INT128__\n  using i128\
-    \ = __int128_t;\n  i128 stoi128(const string &s)\n  {\n    i128 res = 0;\n   \
-    \ if (s.front() == '-')\n    {\n      for (int i = 1; i < (int)s.size(); i++)\n\
-    \        res = 10 * res + s[i] - '0';\n      res = -res;\n    }\n    else\n  \
-    \  {\n      for (auto &&c : s)\n        res = 10 * res + c - '0';\n    }\n   \
-    \ return res;\n  }\n  string i128tos(i128 x)\n  {\n    if (x == 0) return \"0\"\
-    ;\n    string sign = \"\", res = \"\";\n    if (x < 0)\n      x = -x, sign = \"\
-    -\";\n    while (x > 0)\n    {\n      res += '0' + x % 10;\n      x /= 10;\n \
-    \   }\n    reverse(res.begin(), res.end());\n    return sign + res;\n  }\n  istream\
-    \ &operator>>(istream &is, i128 &a)\n  {\n    string s;\n    is >> s;\n    a =\
-    \ stoi128(s);\n    return is;\n  }\n  ostream &operator<<(ostream &os, const i128\
-    \ &a)\n  {\n    os << i128tos(a);\n    return os;\n  }\n#endif\n#line 2 \"template/template_rep.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
-    \ docs/template/template_rep.md\n */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n\
-    */\n\n#line 14 \"template/template_rep.hpp\"\n\n#define overload4(_1, _2, _3,\
-    \ _4, name, ...) name\n#define rep1(i, n) for (ll i = 0; i < ll(n); i++)\n#define\
-    \ rep2(i, l, r) for (ll i = ll(l); i < ll(r); i++)\n#define rep3(i, l, r, d) for\
-    \ (ll i = ll(l); (d) > 0 ? i < ll(r) : i > ll(r); i += d)\n#define rep(...) overload4(__VA_ARGS__,\
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.yosupo.jp/problem/many_aplusb
+    links:
+    - https://judge.yosupo.jp/problem/many_aplusb
+  bundledCode: "#line 1 \"verify/yosupo/many_aplusb_tuple.test.cpp\"\n#define PROBLEM\
+    \ \"https://judge.yosupo.jp/problem/many_aplusb\"\n\n// #define SINGLE_TESTCASE\n\
+    #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n\n#line 2\
+    \ \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\n\n\
+    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs\
+    \ docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing namespace\
+    \ std;\n\nusing ll = long long;\nusing dbl = double;\nusing ld = long double;\n\
+    using uint = unsigned int;\nusing ull = unsigned long long;\nusing pll = pair<ll,\
+    \ ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\
+    \ntemplate <class T>\nusing vc = vector<T>;\ntemplate <class T>\nusing vvc = vector<vector<T>>;\n\
+    template <class T>\nusing vvvc = vector<vector<vector<T>>>;\n\nusing vb = vc<bool>;\n\
+    using vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll\
+    \ = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl =\
+    \ vvc<ll>;\n\n#ifdef __SIZEOF_INT128__\n  using i128 = __int128_t;\n  i128 stoi128(const\
+    \ string &s)\n  {\n    i128 res = 0;\n    if (s.front() == '-')\n    {\n     \
+    \ for (int i = 1; i < (int)s.size(); i++)\n        res = 10 * res + s[i] - '0';\n\
+    \      res = -res;\n    }\n    else\n    {\n      for (auto &&c : s)\n       \
+    \ res = 10 * res + c - '0';\n    }\n    return res;\n  }\n  string i128tos(i128\
+    \ x)\n  {\n    if (x == 0) return \"0\";\n    string sign = \"\", res = \"\";\n\
+    \    if (x < 0)\n      x = -x, sign = \"-\";\n    while (x > 0)\n    {\n     \
+    \ res += '0' + x % 10;\n      x /= 10;\n    }\n    reverse(res.begin(), res.end());\n\
+    \    return sign + res;\n  }\n  istream &operator>>(istream &is, i128 &a)\n  {\n\
+    \    string s;\n    is >> s;\n    a = stoi128(s);\n    return is;\n  }\n  ostream\
+    \ &operator<<(ostream &os, const i128 &a)\n  {\n    os << i128tos(a);\n    return\
+    \ os;\n  }\n#endif\n#line 2 \"template/template_rep.hpp\"\n\n/**\n * @brief \u30C6\
+    \u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n\
+    \ */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n*/\n\n#line\
+    \ 14 \"template/template_rep.hpp\"\n\n#define overload4(_1, _2, _3, _4, name,\
+    \ ...) name\n#define rep1(i, n) for (ll i = 0; i < ll(n); i++)\n#define rep2(i,\
+    \ l, r) for (ll i = ll(l); i < ll(r); i++)\n#define rep3(i, l, r, d) for (ll i\
+    \ = ll(l); (d) > 0 ? i < ll(r) : i > ll(r); i += d)\n#define rep(...) overload4(__VA_ARGS__,\
     \ rep3, rep2, rep1)(__VA_ARGS__)\n#define repi1(i, n) for (int i = 0; i < int(n);\
     \ i++)\n#define repi2(i, l, r) for (int i = int(l); i < int(r); i++)\n#define\
     \ repi3(i, l, r, d) for (int i = int(l); (d) > 0 ? i < int(r) : i > int(r); i\
@@ -129,34 +132,66 @@ data:
     \ */\n\n#ifdef LOCAL\n  #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
     \  #define dump(...) cpp_dump(__VA_ARGS__)\n  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
     \ cp::log_label::line());\n  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n\
-    #else\n  #define dump(...)\n#endif\n#line 7 \"template/template_all.hpp\"\n"
-  code: '#pragma once
-
-
-    #include "template_types.hpp"
-
-    #include "template_rep.hpp"
-
-    #include "template_inout.hpp"
-
-    #include "template_dump.hpp"'
+    #else\n  #define dump(...)\n#endif\n#line 10 \"verify/yosupo/many_aplusb_tuple.test.cpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  ll r = rand() % 5;\n  if (r == 0)\n \
+    \ {\n    LL(A, B);\n    PRINT(A + B);\n  }\n  else if (r == 1)\n  {\n    pll p;\n\
+    \    cin >> p;\n    PRINT(p.first + p.second);\n  }\n  else if (r == 2)\n  {\n\
+    \    tuple<ll, ll> t;\n    cin >> t;\n    PRINT(get<0>(t) + get<1>(t));\n  }\n\
+    \  else if (r == 3)\n  {\n    ARR(ll, 2, A);\n    PRINT(A.at(0) + A.at(1));\n\
+    \  }\n  else if (r == 4)\n  {\n    VEC(ll, 2, A);\n    PRINT(A.at(0) + A.at(1));\n\
+    \  }\n}\n\nvoid test()\n{\n  /*\n  #ifdef LOCAL\n  rep(t, 100000)\n  {\n    dump(t);\n\
+    \n    // ----- generate cases -----\n    ll N = 1 + rand() % 5;\n    vl A(N);\n\
+    \    rep(i, N) A.at(i) = 1 + rand() % 10;\n    // --------------------------\n\
+    \n    // ------ check output ------\n    auto god = naive(A);\n    auto ans =\
+    \ solve(A);\n    if (god != ans)\n    {\n      dump(N, A);\n      dump(god, ans);\n\
+    \      exit(0);\n    }\n    // --------------------------\n  }\n  dump(\"ok\"\
+    );\n  #endif\n  //*/\n}\n\nint main()\n{\n  #if defined FAST_IO and not defined\
+    \ LOCAL\n    cerr << \"[FAST_IO]\\n\\n\";\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
+    \  #endif\n  cout << fixed << setprecision(20);\n\n  init();\n  test();\n\n  #if\
+    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    cerr\
+    \ << \"[AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n  #elif defined SINGLE_TESTCASE\n\
+    \    cerr << \"[SINGLE_TESTCASE]\\n\\n\";\n    main2();\n  #elif defined MULTI_TESTCASE\n\
+    \    cerr << \"[MULTI_TESTCASE]\\n\\n\";\n    int T;\n    cin >> T;\n    while\
+    \ (T--) main2();\n  #endif\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/many_aplusb\"\n\n// #define\
+    \ SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define\
+    \ FAST_IO\n\n#include \"../../template/template_all.hpp\"\n\nvoid init() {}\n\n\
+    void main2()\n{\n  ll r = rand() % 5;\n  if (r == 0)\n  {\n    LL(A, B);\n   \
+    \ PRINT(A + B);\n  }\n  else if (r == 1)\n  {\n    pll p;\n    cin >> p;\n   \
+    \ PRINT(p.first + p.second);\n  }\n  else if (r == 2)\n  {\n    tuple<ll, ll>\
+    \ t;\n    cin >> t;\n    PRINT(get<0>(t) + get<1>(t));\n  }\n  else if (r == 3)\n\
+    \  {\n    ARR(ll, 2, A);\n    PRINT(A.at(0) + A.at(1));\n  }\n  else if (r ==\
+    \ 4)\n  {\n    VEC(ll, 2, A);\n    PRINT(A.at(0) + A.at(1));\n  }\n}\n\nvoid test()\n\
+    {\n  /*\n  #ifdef LOCAL\n  rep(t, 100000)\n  {\n    dump(t);\n\n    // ----- generate\
+    \ cases -----\n    ll N = 1 + rand() % 5;\n    vl A(N);\n    rep(i, N) A.at(i)\
+    \ = 1 + rand() % 10;\n    // --------------------------\n\n    // ------ check\
+    \ output ------\n    auto god = naive(A);\n    auto ans = solve(A);\n    if (god\
+    \ != ans)\n    {\n      dump(N, A);\n      dump(god, ans);\n      exit(0);\n \
+    \   }\n    // --------------------------\n  }\n  dump(\"ok\");\n  #endif\n  //*/\n\
+    }\n\nint main()\n{\n  #if defined FAST_IO and not defined LOCAL\n    cerr << \"\
+    [FAST_IO]\\n\\n\";\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n  #endif\n\
+    \  cout << fixed << setprecision(20);\n\n  init();\n  test();\n\n  #if defined\
+    \ AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    cerr << \"\
+    [AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n  #elif defined SINGLE_TESTCASE\n\
+    \    cerr << \"[SINGLE_TESTCASE]\\n\\n\";\n    main2();\n  #elif defined MULTI_TESTCASE\n\
+    \    cerr << \"[MULTI_TESTCASE]\\n\\n\";\n    int T;\n    cin >> T;\n    while\
+    \ (T--) main2();\n  #endif\n}\n"
   dependsOn:
+  - template/template_all.hpp
   - template/template_types.hpp
   - template/template_rep.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
-  isVerificationFile: false
-  path: template/template_all.hpp
+  isVerificationFile: true
+  path: verify/yosupo/many_aplusb_tuple.test.cpp
   requiredBy: []
   timestamp: '2024-08-27 21:58:37+09:00'
-  verificationStatus: LIBRARY_ALL_WA
-  verifiedWith:
-  - verify/yosupo/many_aplusb.test.cpp
-  - verify/yosupo/many_aplusb_tuple.test.cpp
-documentation_of: template/template_all.hpp
+  verificationStatus: TEST_WRONG_ANSWER
+  verifiedWith: []
+documentation_of: verify/yosupo/many_aplusb_tuple.test.cpp
 layout: document
 redirect_from:
-- /library/template/template_all.hpp
-- /library/template/template_all.hpp.html
-title: template/template_all.hpp
+- /verify/verify/yosupo/many_aplusb_tuple.test.cpp
+- /verify/verify/yosupo/many_aplusb_tuple.test.cpp.html
+title: verify/yosupo/many_aplusb_tuple.test.cpp
 ---

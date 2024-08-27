@@ -29,6 +29,9 @@ data:
     - icon: ':x:'
       path: verify/yosupo/many_aplusb.test.cpp
       title: verify/yosupo/many_aplusb.test.cpp
+    - icon: ':x:'
+      path: verify/yosupo/many_aplusb_tuple.test.cpp
+      title: verify/yosupo/many_aplusb_tuple.test.cpp
 layout: toppage
 ---
 [miscalc](https://x.com/miscalc53) のライブラリです。現在移植作業中

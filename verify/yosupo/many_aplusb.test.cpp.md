@@ -65,16 +65,19 @@ data:
     \u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\n * @docs docs/template/template_inout.md\n\
     \ */\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n */\n\n#line\
     \ 14 \"template/template_inout.hpp\"\n\n// ---- \u5165\u529B ----\ntemplate <class\
-    \ Tuple, enable_if_t<__is_tuple_like<Tuple>::value == true> * = nullptr>\nistream\
-    \ &operator>>(istream &is, Tuple &t)\n{\n  apply([&](auto &...a)\n        { (is\
-    \ >> ... >> a); }, t);\n  return is;\n}\ntemplate <class... T>\nvoid INPUT(T &...a)\
-    \ { (cin >> ... >> a); }\n\ntemplate <class T>\nvoid INPUTVEC(int n, vc<T> &v)\n\
-    {\n  v.resize(n);\n  repi(i, n) cin >> v[i];\n}\ntemplate <class T, class... Ts>\n\
-    void INPUTVEC(int n, vc<T> &v, vc<Ts> &...vs)\n{ INPUTVEC(n, v), INPUTVEC(n, vs...);\
-    \ }\n\ntemplate <class T>\nvoid INPUTVEC2(int n, int m, vvc<T> &v)\n{\n  v.assign(n,\
-    \ vc<T>(m));\n  repi(i, n) repi(j, m) cin >> v[i][j];\n}\ntemplate <class T, class...\
-    \ Ts>\nvoid INPUTVEC2(int n, int m, vvc<T> &v, vvc<Ts> &...vs)\n{ INPUTVEC2(n,\
-    \ m, v), INPUTVEC2(n, m, vs...); }\n\n#define INT(...) int __VA_ARGS__; INPUT(__VA_ARGS__)\n\
+    \ T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  cin >> p.first\
+    \ >> p.second;\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
+    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    cin >> a[i];\n\
+    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
+    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
+    \ is;\n}\n\ntemplate <class... Ts>\nvoid INPUT(Ts &...a) { (cin >> ... >> a);\
+    \ }\n\ntemplate <class T>\nvoid INPUTVEC(int n, vc<T> &v)\n{\n  v.resize(n);\n\
+    \  repi(i, n) cin >> v[i];\n}\ntemplate <class T, class... Ts>\nvoid INPUTVEC(int\
+    \ n, vc<T> &v, vc<Ts> &...vs)\n{ INPUTVEC(n, v), INPUTVEC(n, vs...); }\n\ntemplate\
+    \ <class T>\nvoid INPUTVEC2(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n\
+    \  repi(i, n) repi(j, m) cin >> v[i][j];\n}\ntemplate <class T, class... Ts>\n\
+    void INPUTVEC2(int n, int m, vvc<T> &v, vvc<Ts> &...vs)\n{ INPUTVEC2(n, m, v),\
+    \ INPUTVEC2(n, m, vs...); }\n\n#define INT(...) int __VA_ARGS__; INPUT(__VA_ARGS__)\n\
     #define LL(...) ll __VA_ARGS__; INPUT(__VA_ARGS__)\n#define STR(...) string __VA_ARGS__;\
     \ INPUT(__VA_ARGS__)\n#define ARR(T, n, ...) array<T, n> __VA_ARGS__; INPUT(__VA_ARGS__)\n\
     #define VEC(T, n, ...) vc<T> __VA_ARGS__; INPUTVEC(n, __VA_ARGS__)\n#define VEC2(T,\
@@ -171,7 +174,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/many_aplusb.test.cpp
   requiredBy: []
-  timestamp: '2024-08-27 21:24:12+09:00'
+  timestamp: '2024-08-27 21:58:37+09:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yosupo/many_aplusb.test.cpp

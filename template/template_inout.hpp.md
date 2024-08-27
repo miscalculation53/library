@@ -18,6 +18,9 @@ data:
   - icon: ':x:'
     path: verify/yosupo/many_aplusb.test.cpp
     title: verify/yosupo/many_aplusb.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/many_aplusb_tuple.test.cpp
+    title: verify/yosupo/many_aplusb_tuple.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
   _verificationStatusIcon: ':x:'
@@ -62,41 +65,44 @@ data:
     \ repi3(i, l, r, d) for (int i = int(l); (d) > 0 ? i < int(r) : i > int(r); i\
     \ += d)\n#define repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\
     #line 14 \"template/template_inout.hpp\"\n\n// ---- \u5165\u529B ----\ntemplate\
-    \ <class Tuple, enable_if_t<__is_tuple_like<Tuple>::value == true> * = nullptr>\n\
-    istream &operator>>(istream &is, Tuple &t)\n{\n  apply([&](auto &...a)\n     \
-    \   { (is >> ... >> a); }, t);\n  return is;\n}\ntemplate <class... T>\nvoid INPUT(T\
-    \ &...a) { (cin >> ... >> a); }\n\ntemplate <class T>\nvoid INPUTVEC(int n, vc<T>\
-    \ &v)\n{\n  v.resize(n);\n  repi(i, n) cin >> v[i];\n}\ntemplate <class T, class...\
-    \ Ts>\nvoid INPUTVEC(int n, vc<T> &v, vc<Ts> &...vs)\n{ INPUTVEC(n, v), INPUTVEC(n,\
-    \ vs...); }\n\ntemplate <class T>\nvoid INPUTVEC2(int n, int m, vvc<T> &v)\n{\n\
-    \  v.assign(n, vc<T>(m));\n  repi(i, n) repi(j, m) cin >> v[i][j];\n}\ntemplate\
-    \ <class T, class... Ts>\nvoid INPUTVEC2(int n, int m, vvc<T> &v, vvc<Ts> &...vs)\n\
-    { INPUTVEC2(n, m, v), INPUTVEC2(n, m, vs...); }\n\n#define INT(...) int __VA_ARGS__;\
-    \ INPUT(__VA_ARGS__)\n#define LL(...) ll __VA_ARGS__; INPUT(__VA_ARGS__)\n#define\
-    \ STR(...) string __VA_ARGS__; INPUT(__VA_ARGS__)\n#define ARR(T, n, ...) array<T,\
-    \ n> __VA_ARGS__; INPUT(__VA_ARGS__)\n#define VEC(T, n, ...) vc<T> __VA_ARGS__;\
-    \ INPUTVEC(n, __VA_ARGS__)\n#define VEC2(T, n, m, ...) vvc<T> __VA_ARGS__; INPUTVEC2(n,\
-    \ m, __VA_ARGS__)\n// ----------\n\n// ----- \u51FA\u529B -----\n#ifdef FAST_IO\n\
-    \  #define ENDL '\\n'\n#else\n  #define ENDL endl\n#endif\n\ntemplate <class T>\n\
-    void PRINT(const T &a) { cout << a << ENDL; }\ntemplate <class T, class... Ts>\n\
-    void PRINT(const T &a, const Ts &...b)\n{\n  cout << a;\n  (cout << ... << (cout\
-    \ << ' ', b));\n  cout << ENDL;\n}\n#define PRINTEXIT(...) do { PRINT(__VA_ARGS__);\
-    \ exit(0); } while (false)\n#define PRINTRETURN(...) do { PRINT(__VA_ARGS__);\
-    \ return; } while (false)\n\ntemplate <class T>\nvoid PRINTVEC(const vc<T> &v)\n\
-    {\n  const int n = v.size();\n  repi(i, n) cout << v[i] << (i == n - 1 ? \"\"\
-    \ : \" \");\n  cout << ENDL;\n}\ntemplate <class T>\nvoid PRINTVECT(const vc<T>\
-    \ &v) { for (auto &vi : v) cout << vi << ENDL; }\ntemplate <class T>\nvoid PRINTVEC2(const\
-    \ vvc<T> &v) { for (auto &vi : v) PRINTVEC(vi); }\n// ----------\n\n// ----- \u57FA\
-    \u6E96\u305A\u3089\u3057 -----\ntemplate <size_t... I>\nauto tuple_add(auto &a,\
-    \ const auto &b, const index_sequence<I...>)\n{\n  ((get<I>(a) += get<I>(b)),\
-    \ ...);\n  return a;\n}\ntemplate <class Tuple>\nTuple operator+=(Tuple &a, const\
-    \ auto &b)\n{ return tuple_add(a, b, make_index_sequence<tuple_size_v<Tuple>>{});\
-    \ }\nauto operator+(auto a, const auto &b) { return a += b; }\n\ntemplate <class\
-    \ T>\nvoid offset(vc<T> &v, const auto &add) { for (auto &vi : v) vi += add; }\n\
-    template <class T>\nvoid offset(vvc<T> &v, const auto &add) { for (auto &vi :\
-    \ v) for (auto &vij : vi) vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E\
-    \ -----\ntemplate <class T, const size_t m>\narray<vc<T>, m> top(const vc<array<T,\
-    \ m>> &vt)\n{\n  const size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n\
+    \ <class T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  cin\
+    \ >> p.first >> p.second;\n  return is;\n}\ntemplate <class T, size_t n>\nistream\
+    \ &operator>>(istream &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n\
+    \    cin >> a[i];\n  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream\
+    \ &is, tuple<Ts...> &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a);\
+    \ }, t);\n  return is;\n}\n\ntemplate <class... Ts>\nvoid INPUT(Ts &...a) { (cin\
+    \ >> ... >> a); }\n\ntemplate <class T>\nvoid INPUTVEC(int n, vc<T> &v)\n{\n \
+    \ v.resize(n);\n  repi(i, n) cin >> v[i];\n}\ntemplate <class T, class... Ts>\n\
+    void INPUTVEC(int n, vc<T> &v, vc<Ts> &...vs)\n{ INPUTVEC(n, v), INPUTVEC(n, vs...);\
+    \ }\n\ntemplate <class T>\nvoid INPUTVEC2(int n, int m, vvc<T> &v)\n{\n  v.assign(n,\
+    \ vc<T>(m));\n  repi(i, n) repi(j, m) cin >> v[i][j];\n}\ntemplate <class T, class...\
+    \ Ts>\nvoid INPUTVEC2(int n, int m, vvc<T> &v, vvc<Ts> &...vs)\n{ INPUTVEC2(n,\
+    \ m, v), INPUTVEC2(n, m, vs...); }\n\n#define INT(...) int __VA_ARGS__; INPUT(__VA_ARGS__)\n\
+    #define LL(...) ll __VA_ARGS__; INPUT(__VA_ARGS__)\n#define STR(...) string __VA_ARGS__;\
+    \ INPUT(__VA_ARGS__)\n#define ARR(T, n, ...) array<T, n> __VA_ARGS__; INPUT(__VA_ARGS__)\n\
+    #define VEC(T, n, ...) vc<T> __VA_ARGS__; INPUTVEC(n, __VA_ARGS__)\n#define VEC2(T,\
+    \ n, m, ...) vvc<T> __VA_ARGS__; INPUTVEC2(n, m, __VA_ARGS__)\n// ----------\n\
+    \n// ----- \u51FA\u529B -----\n#ifdef FAST_IO\n  #define ENDL '\\n'\n#else\n \
+    \ #define ENDL endl\n#endif\n\ntemplate <class T>\nvoid PRINT(const T &a) { cout\
+    \ << a << ENDL; }\ntemplate <class T, class... Ts>\nvoid PRINT(const T &a, const\
+    \ Ts &...b)\n{\n  cout << a;\n  (cout << ... << (cout << ' ', b));\n  cout <<\
+    \ ENDL;\n}\n#define PRINTEXIT(...) do { PRINT(__VA_ARGS__); exit(0); } while (false)\n\
+    #define PRINTRETURN(...) do { PRINT(__VA_ARGS__); return; } while (false)\n\n\
+    template <class T>\nvoid PRINTVEC(const vc<T> &v)\n{\n  const int n = v.size();\n\
+    \  repi(i, n) cout << v[i] << (i == n - 1 ? \"\" : \" \");\n  cout << ENDL;\n\
+    }\ntemplate <class T>\nvoid PRINTVECT(const vc<T> &v) { for (auto &vi : v) cout\
+    \ << vi << ENDL; }\ntemplate <class T>\nvoid PRINTVEC2(const vvc<T> &v) { for\
+    \ (auto &vi : v) PRINTVEC(vi); }\n// ----------\n\n// ----- \u57FA\u6E96\u305A\
+    \u3089\u3057 -----\ntemplate <size_t... I>\nauto tuple_add(auto &a, const auto\
+    \ &b, const index_sequence<I...>)\n{\n  ((get<I>(a) += get<I>(b)), ...);\n  return\
+    \ a;\n}\ntemplate <class Tuple>\nTuple operator+=(Tuple &a, const auto &b)\n{\
+    \ return tuple_add(a, b, make_index_sequence<tuple_size_v<Tuple>>{}); }\nauto\
+    \ operator+(auto a, const auto &b) { return a += b; }\n\ntemplate <class T>\n\
+    void offset(vc<T> &v, const auto &add) { for (auto &vi : v) vi += add; }\ntemplate\
+    \ <class T>\nvoid offset(vvc<T> &v, const auto &add) { for (auto &vi : v) for\
+    \ (auto &vij : vi) vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E -----\n\
+    template <class T, const size_t m>\narray<vc<T>, m> top(const vc<array<T, m>>\
+    \ &vt)\n{\n  const size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n\
     \  for (size_t i = 0; i < n; i++)\n    for (size_t j = 0; j < m; j++)\n      tv[j][i]\
     \ = vt[i][j];\n  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T,\
     \ m>> top(const array<vc<T>, m> &tv)\n{\n  if (tv.empty()) return {};\n  const\
@@ -126,16 +132,19 @@ data:
     \u5165\u51FA\u529B\uFF09\n * @docs docs/template/template_inout.md\n */\n/**\n\
     \ * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n */\n\n#include \"template_types.hpp\"\
     \n#include \"template_rep.hpp\"\n\n// ---- \u5165\u529B ----\ntemplate <class\
-    \ Tuple, enable_if_t<__is_tuple_like<Tuple>::value == true> * = nullptr>\nistream\
-    \ &operator>>(istream &is, Tuple &t)\n{\n  apply([&](auto &...a)\n        { (is\
-    \ >> ... >> a); }, t);\n  return is;\n}\ntemplate <class... T>\nvoid INPUT(T &...a)\
-    \ { (cin >> ... >> a); }\n\ntemplate <class T>\nvoid INPUTVEC(int n, vc<T> &v)\n\
-    {\n  v.resize(n);\n  repi(i, n) cin >> v[i];\n}\ntemplate <class T, class... Ts>\n\
-    void INPUTVEC(int n, vc<T> &v, vc<Ts> &...vs)\n{ INPUTVEC(n, v), INPUTVEC(n, vs...);\
-    \ }\n\ntemplate <class T>\nvoid INPUTVEC2(int n, int m, vvc<T> &v)\n{\n  v.assign(n,\
-    \ vc<T>(m));\n  repi(i, n) repi(j, m) cin >> v[i][j];\n}\ntemplate <class T, class...\
-    \ Ts>\nvoid INPUTVEC2(int n, int m, vvc<T> &v, vvc<Ts> &...vs)\n{ INPUTVEC2(n,\
-    \ m, v), INPUTVEC2(n, m, vs...); }\n\n#define INT(...) int __VA_ARGS__; INPUT(__VA_ARGS__)\n\
+    \ T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  cin >> p.first\
+    \ >> p.second;\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
+    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    cin >> a[i];\n\
+    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
+    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
+    \ is;\n}\n\ntemplate <class... Ts>\nvoid INPUT(Ts &...a) { (cin >> ... >> a);\
+    \ }\n\ntemplate <class T>\nvoid INPUTVEC(int n, vc<T> &v)\n{\n  v.resize(n);\n\
+    \  repi(i, n) cin >> v[i];\n}\ntemplate <class T, class... Ts>\nvoid INPUTVEC(int\
+    \ n, vc<T> &v, vc<Ts> &...vs)\n{ INPUTVEC(n, v), INPUTVEC(n, vs...); }\n\ntemplate\
+    \ <class T>\nvoid INPUTVEC2(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n\
+    \  repi(i, n) repi(j, m) cin >> v[i][j];\n}\ntemplate <class T, class... Ts>\n\
+    void INPUTVEC2(int n, int m, vvc<T> &v, vvc<Ts> &...vs)\n{ INPUTVEC2(n, m, v),\
+    \ INPUTVEC2(n, m, vs...); }\n\n#define INT(...) int __VA_ARGS__; INPUT(__VA_ARGS__)\n\
     #define LL(...) ll __VA_ARGS__; INPUT(__VA_ARGS__)\n#define STR(...) string __VA_ARGS__;\
     \ INPUT(__VA_ARGS__)\n#define ARR(T, n, ...) array<T, n> __VA_ARGS__; INPUT(__VA_ARGS__)\n\
     #define VEC(T, n, ...) vc<T> __VA_ARGS__; INPUTVEC(n, __VA_ARGS__)\n#define VEC2(T,\
@@ -193,11 +202,12 @@ data:
   path: template/template_inout.hpp
   requiredBy:
   - template/template_all.hpp
-  timestamp: '2024-08-27 21:11:34+09:00'
+  timestamp: '2024-08-27 21:58:37+09:00'
   verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - verify/mytest/template_inout_top.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
+  - verify/yosupo/many_aplusb_tuple.test.cpp
 documentation_of: template/template_inout.hpp
 layout: document
 redirect_from:
@@ -208,8 +218,6 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
 ## テンプレート（入出力）
 
 参考： https://trap.jp/post/1224/
-
-現状 `__is_tuple_like` を利用している。手元や AC, CF, AOJ のジャッジでは動くことを確認したが、動かない環境もあるようなので使わないように変更することを検討中。
 
 ### 入力
 
