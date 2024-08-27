@@ -18,7 +18,7 @@
       return export_var(i128tos(x), indent, last_line_length, current_depth, fail_on_newline, command);
     }
   } // namespace cpp_dump::_detail
-#define dump(...) cpp_dump(__VA_ARGS__)
+  #define dump(...) cpp_dump(__VA_ARGS__)
   namespace cp = cpp_dump;
   CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());
   CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);
