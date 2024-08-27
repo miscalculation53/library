@@ -98,16 +98,37 @@ void PRINTVEC2(const vvc<T> &v) { for (auto &vi : v) PRINTVEC(vi); }
 // ----------
 
 // ----- 基準ずらし -----
+template <class T, class U>
+pair<T, U> operator+=(pair<T, U> &a, const auto &b)
+{
+  a.first += b.first;
+  a.second += b.second;
+  return a;
+}
+template <class T, class U>
+pair<T, U> operator+(pair<T, U> &a, const auto &b) { return a += b; }
+
+template <class T, size_t n>
+array<T, n> operator+=(array<T, n> &a, const auto &b)
+{
+  for (size_t i = 0; i < n; i++)
+    a[i] += b[i];
+  return a;
+}
+template <class T, size_t n>
+array<T, n> operator+(array<T, n> &a, const auto &b) { return a += b; }
+
 template <size_t... I>
-auto tuple_add(auto &a, const auto &b, const index_sequence<I...>)
+auto tuple_add_impl(auto &a, const auto &b, const index_sequence<I...>)
 {
   ((get<I>(a) += get<I>(b)), ...);
   return a;
 }
-template <class Tuple>
-Tuple operator+=(Tuple &a, const auto &b)
-{ return tuple_add(a, b, make_index_sequence<tuple_size_v<Tuple>>{}); }
-auto operator+(auto a, const auto &b) { return a += b; }
+template <class... Ts>
+tuple<Ts...> operator+=(tuple<Ts...> &a, const auto &b)
+{ return tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{}); }
+template <class... Ts>
+tuple<Ts...> operator+(tuple<Ts...> &a, const auto &b) { return a += b; }
 
 template <class T>
 void offset(vc<T> &v, const auto &add) { for (auto &vi : v) vi += add; }
