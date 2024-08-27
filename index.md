@@ -3,33 +3,33 @@ data:
   libraryCategories:
   - name: template
     pages:
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: template/template_all.hpp
       title: template/template_all.hpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: template/template_dump.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: template/template_inout.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: template/template_rep.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: template/template_types.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   verificationCategories:
   - name: verify/mytest
     pages:
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/mytest/template_inout_top.test.cpp
       title: verify/mytest/template_inout_top.test.cpp
   - name: verify/yosupo
     pages:
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/many_aplusb.test.cpp
       title: verify/yosupo/many_aplusb.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/many_aplusb_tuple.test.cpp
       title: verify/yosupo/many_aplusb_tuple.test.cpp
 layout: toppage
