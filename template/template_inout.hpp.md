@@ -261,7 +261,7 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
 
 改行の際の flush は、`FAST_IO` が define されていれば flush しない、define されていなければ flush する。
 
-このあたりの思想は [テンプレート全体](../../verify/yosupo/many_aplusb.test.cpp) も見るとよいかも。
+このあたりの思想は [テンプレート全体](/verify/yosupo/many_aplusb.test.cpp) も見るとよいかも。
 
 ### その他
 
