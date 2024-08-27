@@ -130,7 +130,7 @@ data:
     \  #define dump(...) cpp_dump(__VA_ARGS__)\n  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
     \ cp::log_label::line());\n  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n\
     #else\n  #define dump(...)\n#endif\n#line 10 \"verify/yosupo/many_aplusb.test.cpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(A, B);\n  PRINT(A, B);\n}\n\nvoid\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(A, B);\n  PRINT(A + B);\n}\n\nvoid\
     \ test()\n{\n  /*\n  #ifdef LOCAL\n  rep(t, 100000)\n  {\n    dump(t);\n\n   \
     \ // ----- generate cases -----\n    ll N = 1 + rand() % 5;\n    vl A(N);\n  \
     \  rep(i, N) A.at(i) = 1 + rand() % 10;\n    // --------------------------\n\n\
@@ -148,7 +148,7 @@ data:
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/many_aplusb\"\n\n// #define\
     \ SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define\
     \ FAST_IO\n\n#include \"../../template/template_all.hpp\"\n\nvoid init() {}\n\n\
-    void main2()\n{\n  LL(A, B);\n  PRINT(A, B);\n}\n\nvoid test()\n{\n  /*\n  #ifdef\
+    void main2()\n{\n  LL(A, B);\n  PRINT(A + B);\n}\n\nvoid test()\n{\n  /*\n  #ifdef\
     \ LOCAL\n  rep(t, 100000)\n  {\n    dump(t);\n\n    // ----- generate cases -----\n\
     \    ll N = 1 + rand() % 5;\n    vl A(N);\n    rep(i, N) A.at(i) = 1 + rand()\
     \ % 10;\n    // --------------------------\n\n    // ------ check output ------\n\
@@ -171,7 +171,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/many_aplusb.test.cpp
   requiredBy: []
-  timestamp: '2024-08-27 21:11:34+09:00'
+  timestamp: '2024-08-27 21:24:12+09:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yosupo/many_aplusb.test.cpp
