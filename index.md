@@ -3,6 +3,9 @@ data:
   libraryCategories:
   - name: template
     pages:
+    - icon: ':warning:'
+      path: template/template.cpp
+      title: template/template.cpp
     - icon: ':heavy_check_mark:'
       path: template/template_all.hpp
       title: template/template_all.hpp
