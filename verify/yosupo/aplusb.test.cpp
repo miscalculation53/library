@@ -6,6 +6,9 @@
 
 #define FAST_IO
 
+#define INF 4'000'000'000'000'000'037
+#define EPS 1e-11
+
 #include "../../template/template_all.hpp"
 
 void init() {}

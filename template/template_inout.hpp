@@ -99,41 +99,41 @@ void PRINTVEC2(const vvc<T> &v) { for (auto &vi : v) PRINTVEC(vi); }
 
 // ----- 基準ずらし -----
 template <class T, class U>
-pair<T, U> operator+=(pair<T, U> &a, const auto &b)
+pair<T, U> operator+=(pair<T, U> &a, cauto &b)
 {
   a.first += b.first;
   a.second += b.second;
   return a;
 }
 template <class T, class U>
-pair<T, U> operator+(pair<T, U> &a, const auto &b) { return a += b; }
+pair<T, U> operator+(pair<T, U> &a, cauto &b) { return a += b; }
 
 template <class T, size_t n>
-array<T, n> operator+=(array<T, n> &a, const auto &b)
+array<T, n> operator+=(array<T, n> &a, cauto &b)
 {
   for (size_t i = 0; i < n; i++)
     a[i] += b[i];
   return a;
 }
 template <class T, size_t n>
-array<T, n> operator+(array<T, n> &a, const auto &b) { return a += b; }
+array<T, n> operator+(array<T, n> &a, cauto &b) { return a += b; }
 
 template <size_t... I>
-auto tuple_add_impl(auto &a, const auto &b, const index_sequence<I...>)
+auto tuple_add_impl(auto &a, cauto &b, const index_sequence<I...>)
 {
   ((get<I>(a) += get<I>(b)), ...);
   return a;
 }
 template <class... Ts>
-tuple<Ts...> operator+=(tuple<Ts...> &a, const auto &b)
+tuple<Ts...> operator+=(tuple<Ts...> &a, cauto &b)
 { return tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{}); }
 template <class... Ts>
-tuple<Ts...> operator+(tuple<Ts...> &a, const auto &b) { return a += b; }
+tuple<Ts...> operator+(tuple<Ts...> &a, cauto &b) { return a += b; }
 
 template <class T>
-void offset(vc<T> &v, const auto &add) { for (auto &vi : v) vi += add; }
+void offset(vc<T> &v, cauto &add) { for (auto &vi : v) vi += add; }
 template <class T>
-void offset(vvc<T> &v, const auto &add) { for (auto &vi : v) for (auto &vij : vi) vij += add; }
+void offset(vvc<T> &v, cauto &add) { for (auto &vi : v) for (auto &vij : vi) vij += add; }
 // ----------
 
 // ----- 転置 -----
@@ -185,7 +185,7 @@ vc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)
 }
 
 template <size_t... I>
-auto vt_to_tv_impl(auto &tv, const auto &t, index_sequence<I...>, size_t index)
+auto vt_to_tv_impl(auto &tv, cauto &t, index_sequence<I...>, size_t index)
 { ((get<I>(tv)[index] = get<I>(t)), ...); }
 template <class... Ts>
 auto top(const vc<tuple<Ts...>> &vt)
@@ -200,7 +200,7 @@ auto top(const vc<tuple<Ts...>> &vt)
 }
 
 template <size_t... I>
-auto tv_to_vt_impl(const auto &tv, index_sequence<I...>, size_t index)
+auto tv_to_vt_impl(cauto &tv, index_sequence<I...>, size_t index)
 { return make_tuple(get<I>(tv)[index]...); }
 template <class... Ts>
 auto top(const tuple<vc<Ts>...> &tv)

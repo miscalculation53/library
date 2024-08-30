@@ -1,7 +1,5 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/many_aplusb_128bit"
-
-// #define SINGLE_TESTCASE
-#define MULTI_TESTCASE
+#define SINGLE_TESTCASE
+// #define MULTI_TESTCASE
 // #define AOJ_TESTCASE
 
 #define FAST_IO
@@ -9,16 +7,13 @@
 #define INF 4'000'000'000'000'000'037
 #define EPS 1e-11
 
-#include "../../template/template_all.hpp"
+#include "template/template_all.hpp"
 
 void init() {}
 
 void main2()
 {
-  i128 A, B;
-  cin >> A >> B;
-  dump(A, B);
-  PRINT(A + B);
+  
 }
 
 void test()
