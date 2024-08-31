@@ -8,9 +8,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#ifndef EPS
+#define EPS 1e-11
+#endif
+using ld = decltype(EPS);
+
 using ll = long long;
-using dbl = double;
-using ld = long double;
 using uint = unsigned int;
 using ull = unsigned long long;
 using pll = pair<ll, ll>;
