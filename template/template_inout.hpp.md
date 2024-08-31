@@ -22,6 +22,9 @@ data:
     path: verify/yosupo/aplusb.test.cpp
     title: verify/yosupo/aplusb.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/kth_root_integer.test.cpp
+    title: verify/yosupo/kth_root_integer.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb.test.cpp
     title: verify/yosupo/many_aplusb.test.cpp
   - icon: ':heavy_check_mark:'
@@ -41,23 +44,23 @@ data:
   bundledCode: "#line 2 \"template/template_inout.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
     \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
-    \ namespace std;\n\nusing ll = long long;\nusing dbl = double;\nusing ld = long\
-    \ double;\nusing uint = unsigned int;\nusing ull = unsigned long long;\nusing\
-    \ pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll,\
-    \ ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc = vc<vc<T>>;\n\
-    template <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb = vc<bool>;\nusing\
-    \ vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll =\
-    \ vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\
-    \ntemplate <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate\
-    \ <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n  using\
-    \ i128 = __int128_t;\n  i128 stoi128(const string &s)\n  {\n    i128 res = 0;\n\
-    \    if (s.front() == '-')\n    {\n      for (int i = 1; i < (int)s.size(); i++)\n\
-    \        res = 10 * res + s[i] - '0';\n      res = -res;\n    }\n    else\n  \
-    \  {\n      for (auto &&c : s)\n        res = 10 * res + c - '0';\n    }\n   \
-    \ return res;\n  }\n  string i128tos(i128 x)\n  {\n    if (x == 0) return \"0\"\
-    ;\n    string sign = \"\", res = \"\";\n    if (x < 0)\n      x = -x, sign = \"\
-    -\";\n    while (x > 0)\n    {\n      res += '0' + x % 10;\n      x /= 10;\n \
-    \   }\n    reverse(res.begin(), res.end());\n    return sign + res;\n  }\n  istream\
+    \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
+    \nusing ll = long long;\nusing uint = unsigned int;\nusing ull = unsigned long\
+    \ long;\nusing pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll\
+    \ = tuple<ll, ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc\
+    \ = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb =\
+    \ vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\n\
+    using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
+    using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
+    \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
+    \  using i128 = __int128_t;\n  i128 stoi128(const string &s)\n  {\n    i128 res\
+    \ = 0;\n    if (s.front() == '-')\n    {\n      for (int i = 1; i < (int)s.size();\
+    \ i++)\n        res = 10 * res + s[i] - '0';\n      res = -res;\n    }\n    else\n\
+    \    {\n      for (auto &&c : s)\n        res = 10 * res + c - '0';\n    }\n \
+    \   return res;\n  }\n  string i128tos(i128 x)\n  {\n    if (x == 0) return \"\
+    0\";\n    string sign = \"\", res = \"\";\n    if (x < 0)\n      x = -x, sign\
+    \ = \"-\";\n    while (x > 0)\n    {\n      res += '0' + x % 10;\n      x /= 10;\n\
+    \    }\n    reverse(res.begin(), res.end());\n    return sign + res;\n  }\n  istream\
     \ &operator>>(istream &is, i128 &a)\n  {\n    string s;\n    is >> s;\n    a =\
     \ stoi128(s);\n    return is;\n  }\n  ostream &operator<<(ostream &os, const i128\
     \ &a)\n  {\n    os << i128tos(a);\n    return os;\n  }\n#endif\n\n#define cauto\
@@ -225,10 +228,11 @@ data:
   requiredBy:
   - template/template.cpp
   - template/template_all.hpp
-  timestamp: '2024-08-31 06:37:52+09:00'
+  timestamp: '2024-08-31 12:06:34+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/template_inout_top.test.cpp
+  - verify/yosupo/kth_root_integer.test.cpp
   - verify/yosupo/aplusb.test.cpp
   - verify/yosupo/many_aplusb_128bit.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
@@ -242,37 +246,50 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
 ---
 ## テンプレート（入出力）
 
-参考： https://trap.jp/post/1224/
-
 ### 入力
 
-- `cin >>` で tuple-like な型（`pair`, `tuple`, `array`）にも入力できる
-- 変数を宣言と同時に入力するマクロ
-  - `INT(...)`：`int` 型の値（引数は複数）
-  - `LL(...)`：`ll` 型の値（引数は複数）
-  - `STR(...)`：`string` 型の値（引数は複数）
-  - `ARR(T, n, ...)`：`array<T, n>` 型の値（第 $3$ 引数以降は複数）
-  - `VEC(T, n, ...)`：`vector<T>` 型の値（サイズは $n$）（第 $3$ 引数以降は複数）
-  - `VEC2(T, n, m, ...)`：`vector<T>` 型の値（サイズは $n \times m$）（第 $4$ 引数以降は複数）
-- （すでにある変数に入力するマクロ（`INPUT` から始まる諸々）も副産物としてあるが、あまり使わないと思う）
+#### `pair`, `tuple`, `array` への入力
+
+`cin >>` でできる。
+
+#### 変数を宣言と同時に入力するマクロ
+
+- `INT(...)`：`int` 型の値（引数は複数）
+
+- `LL(...)`：`ll` 型の値（引数は複数）
+
+- `STR(...)`：`string` 型の値（引数は複数）
+
+- `ARR(T, n, ...)`：`array<T, n>` 型の値（第 $3$ 引数以降は複数）
+
+- `VEC(T, n, ...)`：`vector<T>` 型の値（サイズは $n$）（第 $3$ 引数以降は複数）
+
+- `VEC2(T, n, m, ...)`：`vector<T>` 型の値（サイズは $n \times m$）（第 $4$ 引数以降は複数）
+
+一応、すでにある変数に入力するマクロ（`INPUT` から始まる諸々）も副産物としてあるが、あまり使わないと思う。
 
 マクロに型を入れる場合、カンマが入っている型（`pair<int, int>` など）でうまく動かないので注意（`pll` 的なものを `using` するとよい）。
 
 ### 出力
 
 - `PRINT(...)`：出力（引数は複数、空白区切り、最後に改行）
+
 - `PRINTVEC(vc<T> v)`：`v` を空白区切りで出力し、最後に改行
+
 - `PRINTVECT(vc<T> v)`：`v` を改行区切りで出力
   - `vstr` にも使える
+
 - `PRINTVEC2(vvc<T> v)`：$2$ 次元配列 `v` をいい感じに出力
+
 - `PRINTEXIT`：`PRINT` して `exit(0)` する
   - あまり使わない（そもそも単一テストケースでないと使えない）、再帰関数の中身で使うくらいか？
+
 - `PRINTRETURN`：`PRINT` して `return` する
   - `main` の外に `main2` を作っておけば、複数テストケースの場合も `PRINTRETURN` でよい
 
 改行の際の flush は、`FAST_IO` が define されていれば flush しない、define されていなければ flush する。
 
-このあたりの思想は [テンプレート全体](https://miscalculation53.github.io/library/verify/yosupo/many_aplusb.test.cpp) も見るとよいかも。
+このあたりの思想はテンプレート全体（template.cpp）も見るとよいかも。
 
 ### その他
 

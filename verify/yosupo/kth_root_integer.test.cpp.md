@@ -26,32 +26,33 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/aplusb
+    PROBLEM: https://judge.yosupo.jp/problem/kth_root_integer
     links:
-    - https://judge.yosupo.jp/problem/aplusb
-  bundledCode: "#line 1 \"verify/yosupo/aplusb.test.cpp\"\n#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\
-    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
-    \n#define FAST_IO\n\n#define INF 4'000'000'000'000'000'037\n#define EPS 1e-11\n\
-    \n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
-    \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
-    \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
-    \nusing ll = long long;\nusing uint = unsigned int;\nusing ull = unsigned long\
-    \ long;\nusing pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll\
-    \ = tuple<ll, ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc\
-    \ = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb =\
-    \ vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\n\
-    using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
-    using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
-    \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
-    \  using i128 = __int128_t;\n  i128 stoi128(const string &s)\n  {\n    i128 res\
-    \ = 0;\n    if (s.front() == '-')\n    {\n      for (int i = 1; i < (int)s.size();\
-    \ i++)\n        res = 10 * res + s[i] - '0';\n      res = -res;\n    }\n    else\n\
-    \    {\n      for (auto &&c : s)\n        res = 10 * res + c - '0';\n    }\n \
-    \   return res;\n  }\n  string i128tos(i128 x)\n  {\n    if (x == 0) return \"\
-    0\";\n    string sign = \"\", res = \"\";\n    if (x < 0)\n      x = -x, sign\
-    \ = \"-\";\n    while (x > 0)\n    {\n      res += '0' + x % 10;\n      x /= 10;\n\
-    \    }\n    reverse(res.begin(), res.end());\n    return sign + res;\n  }\n  istream\
+    - https://judge.yosupo.jp/problem/kth_root_integer
+  bundledCode: "#line 1 \"verify/yosupo/kth_root_integer.test.cpp\"\n#define PROBLEM\
+    \ \"https://judge.yosupo.jp/problem/kth_root_integer\"\n\n// #define SINGLE_TESTCASE\n\
+    #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n\n#define\
+    \ INF 4'000'000'000'000'000'037\n#define EPS 1e-11\n\n#line 2 \"template/template_all.hpp\"\
+    \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
+    \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
+    \ EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing\
+    \ uint = unsigned int;\nusing ull = unsigned long long;\nusing pll = pair<ll,\
+    \ ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\
+    \n#define vc vector\ntemplate <class T>\nusing vvc = vc<vc<T>>;\ntemplate <class\
+    \ T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb = vc<bool>;\nusing vl = vc<ll>;\n\
+    using vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing\
+    \ vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate\
+    \ <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate <class\
+    \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n  using i128\
+    \ = __int128_t;\n  i128 stoi128(const string &s)\n  {\n    i128 res = 0;\n   \
+    \ if (s.front() == '-')\n    {\n      for (int i = 1; i < (int)s.size(); i++)\n\
+    \        res = 10 * res + s[i] - '0';\n      res = -res;\n    }\n    else\n  \
+    \  {\n      for (auto &&c : s)\n        res = 10 * res + c - '0';\n    }\n   \
+    \ return res;\n  }\n  string i128tos(i128 x)\n  {\n    if (x == 0) return \"0\"\
+    ;\n    string sign = \"\", res = \"\";\n    if (x < 0)\n      x = -x, sign = \"\
+    -\";\n    while (x > 0)\n    {\n      res += '0' + x % 10;\n      x /= 10;\n \
+    \   }\n    reverse(res.begin(), res.end());\n    return sign + res;\n  }\n  istream\
     \ &operator>>(istream &is, i128 &a)\n  {\n    string s;\n    is >> s;\n    a =\
     \ stoi128(s);\n    return is;\n  }\n  ostream &operator<<(ostream &os, const i128\
     \ &a)\n  {\n    os << i128tos(a);\n    return os;\n  }\n#endif\n\n#define cauto\
@@ -178,31 +179,33 @@ data:
     \  } // namespace cpp_dump::_detail\n  #define dump(...) cpp_dump(__VA_ARGS__)\n\
     \  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
     \  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#else\n  #define dump(...)\n\
-    #endif\n#line 13 \"verify/yosupo/aplusb.test.cpp\"\n\nvoid init() {}\n\nvoid main2()\n\
-    {\n  LL(A, B);\n  PRINT(A + B);\n}\n\nvoid test()\n{\n  /*\n  #ifdef LOCAL\n \
-    \ rep(t, 100000)\n  {\n    dump(t);\n\n    // ----- generate cases -----\n   \
-    \ ll N = 1 + rand() % 5;\n    vl A(N);\n    rep(i, N) A.at(i) = 1 + rand() % 10;\n\
-    \    // --------------------------\n\n    // ------ check output ------\n    auto\
-    \ god = naive(A);\n    auto ans = solve(A);\n    if (god != ans)\n    {\n    \
-    \  dump(N, A);\n      dump(god, ans);\n      exit(0);\n    }\n    // --------------------------\n\
-    \  }\n  dump(\"ok\");\n  #endif\n  //*/\n}\n\nint main()\n{\n  #if defined FAST_IO\
-    \ and not defined LOCAL\n    cerr << \"[FAST_IO]\\n\\n\";\n    cin.tie(0);\n \
-    \   ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
-    \n  init();\n  test();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
-    \ SINGLE_TESTCASE)\n    cerr << \"[AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n\
-    \  #elif defined SINGLE_TESTCASE\n    cerr << \"[SINGLE_TESTCASE]\\n\\n\";\n \
-    \   main2();\n  #elif defined MULTI_TESTCASE\n    cerr << \"[MULTI_TESTCASE]\\\
-    n\\n\";\n    int T;\n    cin >> T;\n    while (T--) main2();\n  #endif\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n\n#define SINGLE_TESTCASE\n\
-    // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n\n#define\
-    \ INF 4'000'000'000'000'000'037\n#define EPS 1e-11\n\n#include \"../../template/template_all.hpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(A, B);\n  PRINT(A + B);\n}\n\nvoid\
-    \ test()\n{\n  /*\n  #ifdef LOCAL\n  rep(t, 100000)\n  {\n    dump(t);\n\n   \
-    \ // ----- generate cases -----\n    ll N = 1 + rand() % 5;\n    vl A(N);\n  \
-    \  rep(i, N) A.at(i) = 1 + rand() % 10;\n    // --------------------------\n\n\
-    \    // ------ check output ------\n    auto god = naive(A);\n    auto ans = solve(A);\n\
-    \    if (god != ans)\n    {\n      dump(N, A);\n      dump(god, ans);\n      exit(0);\n\
-    \    }\n    // --------------------------\n  }\n  dump(\"ok\");\n  #endif\n  //*/\n\
+    #endif\n#line 13 \"verify/yosupo/kth_root_integer.test.cpp\"\n\nvoid init() {}\n\
+    \nvoid main2()\n{\n  ull A, K;\n  cin >> A >> K;\n  PRINT(iroot<ull>(A, K));\n\
+    }\n\nvoid test()\n{\n  /*\n  #ifdef LOCAL\n  rep(t, 100000)\n  {\n    dump(t);\n\
+    \n    // ----- generate cases -----\n    ll N = 1 + rand() % 5;\n    vl A(N);\n\
+    \    rep(i, N) A.at(i) = 1 + rand() % 10;\n    // --------------------------\n\
+    \n    // ------ check output ------\n    auto god = naive(A);\n    auto ans =\
+    \ solve(A);\n    if (god != ans)\n    {\n      dump(N, A);\n      dump(god, ans);\n\
+    \      exit(0);\n    }\n    // --------------------------\n  }\n  dump(\"ok\"\
+    );\n  #endif\n  //*/\n}\n\nint main()\n{\n  #if defined FAST_IO and not defined\
+    \ LOCAL\n    cerr << \"[FAST_IO]\\n\\n\";\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
+    \  #endif\n  cout << fixed << setprecision(20);\n\n  init();\n  test();\n\n  #if\
+    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    cerr\
+    \ << \"[AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n  #elif defined SINGLE_TESTCASE\n\
+    \    cerr << \"[SINGLE_TESTCASE]\\n\\n\";\n    main2();\n  #elif defined MULTI_TESTCASE\n\
+    \    cerr << \"[MULTI_TESTCASE]\\n\\n\";\n    int T;\n    cin >> T;\n    while\
+    \ (T--) main2();\n  #endif\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/kth_root_integer\"\n\n\
+    // #define SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n\
+    #define FAST_IO\n\n#define INF 4'000'000'000'000'000'037\n#define EPS 1e-11\n\n\
+    #include \"../../template/template_all.hpp\"\n\nvoid init() {}\n\nvoid main2()\n\
+    {\n  ull A, K;\n  cin >> A >> K;\n  PRINT(iroot<ull>(A, K));\n}\n\nvoid test()\n\
+    {\n  /*\n  #ifdef LOCAL\n  rep(t, 100000)\n  {\n    dump(t);\n\n    // ----- generate\
+    \ cases -----\n    ll N = 1 + rand() % 5;\n    vl A(N);\n    rep(i, N) A.at(i)\
+    \ = 1 + rand() % 10;\n    // --------------------------\n\n    // ------ check\
+    \ output ------\n    auto god = naive(A);\n    auto ans = solve(A);\n    if (god\
+    \ != ans)\n    {\n      dump(N, A);\n      dump(god, ans);\n      exit(0);\n \
+    \   }\n    // --------------------------\n  }\n  dump(\"ok\");\n  #endif\n  //*/\n\
     }\n\nint main()\n{\n  #if defined FAST_IO and not defined LOCAL\n    cerr << \"\
     [FAST_IO]\\n\\n\";\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n  #endif\n\
     \  cout << fixed << setprecision(20);\n\n  init();\n  test();\n\n  #if defined\
@@ -219,15 +222,15 @@ data:
   - template/template_math.hpp
   - template/template_dump.hpp
   isVerificationFile: true
-  path: verify/yosupo/aplusb.test.cpp
+  path: verify/yosupo/kth_root_integer.test.cpp
   requiredBy: []
   timestamp: '2024-08-31 12:06:34+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/yosupo/aplusb.test.cpp
+documentation_of: verify/yosupo/kth_root_integer.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/yosupo/aplusb.test.cpp
-- /verify/verify/yosupo/aplusb.test.cpp.html
-title: verify/yosupo/aplusb.test.cpp
+- /verify/verify/yosupo/kth_root_integer.test.cpp
+- /verify/verify/yosupo/kth_root_integer.test.cpp.html
+title: verify/yosupo/kth_root_integer.test.cpp
 ---
