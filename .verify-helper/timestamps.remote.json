@@ -1,7 +1,11 @@
 {
-"verify/mytest/template_inout_top.test.cpp": "2024-08-31 06:37:52 +0900",
-"verify/yosupo/aplusb.test.cpp": "2024-08-31 06:37:52 +0900",
-"verify/yosupo/many_aplusb.test.cpp": "2024-08-31 06:37:52 +0900",
-"verify/yosupo/many_aplusb_128bit.test.cpp": "2024-08-31 06:37:52 +0900",
-"verify/yosupo/many_aplusb_tuple.test.cpp": "2024-08-31 06:37:52 +0900"
+"verify/mytest/template_inout_top.test.cpp": "2024-08-31 12:06:34 +0900",
+"verify/mytest/template_math_div.test.cpp": "2024-08-31 12:06:34 +0900",
+"verify/mytest/template_math_mulpow.test.cpp": "2024-08-31 12:06:34 +0900",
+"verify/mytest/template_sgn.test.cpp.cpp": "2024-08-31 12:06:34 +0900",
+"verify/yosupo/aplusb.test.cpp": "2024-08-31 12:06:34 +0900",
+"verify/yosupo/kth_root_integer.test.cpp": "2024-08-31 12:06:34 +0900",
+"verify/yosupo/many_aplusb.test.cpp": "2024-08-31 12:06:34 +0900",
+"verify/yosupo/many_aplusb_128bit.test.cpp": "2024-08-31 12:06:34 +0900",
+"verify/yosupo/many_aplusb_tuple.test.cpp": "2024-08-31 12:06:34 +0900"
 }
