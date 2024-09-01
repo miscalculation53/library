@@ -25,6 +25,9 @@ data:
     path: verify/mytest/template_sgn.test.cpp.cpp
     title: verify/mytest/template_sgn.test.cpp.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/mytest/template_vector.test.cpp
+    title: verify/mytest/template_vector.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/aplusb.test.cpp
     title: verify/yosupo/aplusb.test.cpp
   - icon: ':heavy_check_mark:'
@@ -102,6 +105,7 @@ data:
   timestamp: '2024-08-31 12:06:34+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/mytest/template_vector.test.cpp
   - verify/mytest/template_math_div.test.cpp
   - verify/mytest/template_inout_top.test.cpp
   - verify/mytest/template_math_mulpow.test.cpp

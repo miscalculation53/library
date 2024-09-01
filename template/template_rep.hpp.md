@@ -11,12 +11,19 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_all.hpp
     title: template/template_all.hpp
+  - icon: ':warning:'
+    path: template/template_func.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u95A2\u6570\u30AA\u30D6\u30B8\
+      \u30A7\u30AF\u30C8\uFF09"
   - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
   - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/template_inout_top.test.cpp
@@ -30,6 +37,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/template_sgn.test.cpp.cpp
     title: verify/mytest/template_sgn.test.cpp.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/template_vector.test.cpp
+    title: verify/mytest/template_vector.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/aplusb.test.cpp
     title: verify/yosupo/aplusb.test.cpp
@@ -103,13 +113,16 @@ data:
   isVerificationFile: false
   path: template/template_rep.hpp
   requiredBy:
+  - template/template_func.hpp
   - template/template_inout.hpp
   - template/template.cpp
+  - template/template_vector.hpp
   - template/template_math.hpp
   - template/template_all.hpp
   timestamp: '2024-08-31 12:06:34+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/mytest/template_vector.test.cpp
   - verify/mytest/template_math_div.test.cpp
   - verify/mytest/template_inout_top.test.cpp
   - verify/mytest/template_math_mulpow.test.cpp
