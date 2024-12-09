@@ -20,34 +20,33 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/aplusb
+    PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
     links:
-    - https://judge.yosupo.jp/problem/aplusb
+    - https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
   bundledCode: "#line 1 \"verify/mytest/template_inout_top.test.cpp\"\n#define PROBLEM\
-    \ \"https://judge.yosupo.jp/problem/aplusb\"\n\n#line 2 \"template/template_inout.hpp\"\
-    \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
-    \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
-    \ EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing\
-    \ uint = unsigned int;\nusing ull = unsigned long long;\nusing pll = pair<ll,\
-    \ ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\
-    \n#define vc vector\ntemplate <class T>\nusing vvc = vc<vc<T>>;\ntemplate <class\
-    \ T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb = vc<bool>;\nusing vl = vc<ll>;\n\
-    using vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing\
-    \ vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate\
-    \ <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate <class\
-    \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n  using i128\
-    \ = __int128_t;\n  i128 stoi128(const string &s)\n  {\n    i128 res = 0;\n   \
-    \ if (s.front() == '-')\n    {\n      for (int i = 1; i < (int)s.size(); i++)\n\
-    \        res = 10 * res + s[i] - '0';\n      res = -res;\n    }\n    else\n  \
-    \  {\n      for (auto &&c : s)\n        res = 10 * res + c - '0';\n    }\n   \
-    \ return res;\n  }\n  string i128tos(i128 x)\n  {\n    if (x == 0) return \"0\"\
-    ;\n    string sign = \"\", res = \"\";\n    if (x < 0)\n      x = -x, sign = \"\
-    -\";\n    while (x > 0)\n    {\n      res += '0' + x % 10;\n      x /= 10;\n \
-    \   }\n    reverse(res.begin(), res.end());\n    return sign + res;\n  }\n  istream\
-    \ &operator>>(istream &is, i128 &a)\n  {\n    string s;\n    is >> s;\n    a =\
-    \ stoi128(s);\n    return is;\n  }\n  ostream &operator<<(ostream &os, const i128\
-    \ &a)\n  {\n    os << i128tos(a);\n    return os;\n  }\n#endif\n\n#define cauto\
+    \ \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\n\n#line\
+    \ 2 \"template/template_inout.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
+    \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
+    \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
+    \nusing ll = long long;\nusing uint = unsigned int;\nusing ull = unsigned long\
+    \ long;\nusing pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll\
+    \ = tuple<ll, ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc\
+    \ = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb =\
+    \ vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\n\
+    using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
+    using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
+    \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
+    using i128 = __int128_t;\ni128 stoi128(const string &s)\n{\n  i128 res = 0;\n\
+    \  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size(); i++)\n \
+    \     res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n    for\
+    \ (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n}\nstring\
+    \ i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\", res =\
+    \ \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n    res\
+    \ += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n  return\
+    \ sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string s;\n\
+    \  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream &os,\
+    \ const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto\
     \ const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
     \ docs/template/template_rep.md\n */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n\
@@ -58,39 +57,41 @@ data:
     #define repi1(i, n) for (int i = 0; i < int(n); i++)\n#define repi2(i, l, r) for\
     \ (int i = int(l); i < int(r); i++)\n#define repi3(i, l, r, d) for (int i = int(l);\
     \ (d) > 0 ? i < int(r) : i > int(r); i += d)\n#define repi(...) overload4(__VA_ARGS__,\
-    \ repi3, repi2, repi1)(__VA_ARGS__)\n#line 5 \"template/template_inout.hpp\"\n\
-    \n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\
-    \n * @docs docs/template/template_inout.md\n */\n/**\n * \u53C2\u8003\uFF1A\n\
-    \ * https://trap.jp/post/1224/\n */\n\n// ---- \u5165\u529B ----\ntemplate <class\
-    \ T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  cin >> p.first\
-    \ >> p.second;\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
-    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    cin >> a[i];\n\
-    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
-    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
-    \ is;\n}\n\ntemplate <class... Ts>\nvoid INPUT(Ts &...a) { (cin >> ... >> a);\
-    \ }\n\ntemplate <class T>\nvoid INPUTVEC(int n, vc<T> &v)\n{\n  v.resize(n);\n\
-    \  repi(i, n) cin >> v[i];\n}\ntemplate <class T, class... Ts>\nvoid INPUTVEC(int\
-    \ n, vc<T> &v, vc<Ts> &...vs)\n{ INPUTVEC(n, v), INPUTVEC(n, vs...); }\n\ntemplate\
-    \ <class T>\nvoid INPUTVEC2(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n\
-    \  repi(i, n) repi(j, m) cin >> v[i][j];\n}\ntemplate <class T, class... Ts>\n\
-    void INPUTVEC2(int n, int m, vvc<T> &v, vvc<Ts> &...vs)\n{ INPUTVEC2(n, m, v),\
-    \ INPUTVEC2(n, m, vs...); }\n\n#define INT(...) int __VA_ARGS__; INPUT(__VA_ARGS__)\n\
-    #define LL(...) ll __VA_ARGS__; INPUT(__VA_ARGS__)\n#define STR(...) string __VA_ARGS__;\
-    \ INPUT(__VA_ARGS__)\n#define ARR(T, n, ...) array<T, n> __VA_ARGS__; INPUT(__VA_ARGS__)\n\
-    #define VEC(T, n, ...) vc<T> __VA_ARGS__; INPUTVEC(n, __VA_ARGS__)\n#define VEC2(T,\
-    \ n, m, ...) vvc<T> __VA_ARGS__; INPUTVEC2(n, m, __VA_ARGS__)\n// ----------\n\
-    \n// ----- \u51FA\u529B -----\n#ifdef FAST_IO\n  #define ENDL '\\n'\n#else\n \
-    \ #define ENDL endl\n#endif\n\ntemplate <class T>\nvoid PRINT(const T &a) { cout\
-    \ << a << ENDL; }\ntemplate <class T, class... Ts>\nvoid PRINT(const T &a, const\
-    \ Ts &...b)\n{\n  cout << a;\n  (cout << ... << (cout << ' ', b));\n  cout <<\
-    \ ENDL;\n}\n#define PRINTEXIT(...) do { PRINT(__VA_ARGS__); exit(0); } while (false)\n\
-    #define PRINTRETURN(...) do { PRINT(__VA_ARGS__); return; } while (false)\n\n\
-    template <class T>\nvoid PRINTVEC(const vc<T> &v)\n{\n  const int n = v.size();\n\
-    \  repi(i, n) cout << v[i] << (i == n - 1 ? \"\" : \" \");\n  cout << ENDL;\n\
-    }\ntemplate <class T>\nvoid PRINTVECT(const vc<T> &v) { for (auto &vi : v) cout\
-    \ << vi << ENDL; }\ntemplate <class T>\nvoid PRINTVEC2(const vvc<T> &v) { for\
-    \ (auto &vi : v) PRINTVEC(vi); }\n// ----------\n\n// ----- \u57FA\u6E96\u305A\
-    \u3089\u3057 -----\ntemplate <class T, class U>\npair<T, U> operator+=(pair<T,\
+    \ repi3, repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n\
+    #define fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
+    #line 5 \"template/template_inout.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\n * @docs docs/template/template_inout.md\n\
+    \ */\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n */\n\n// ----\
+    \ \u5165\u529B ----\ntemplate <class T, class U>\nistream &operator>>(istream\
+    \ &is, pair<T, U> &p)\n{\n  cin >> p.first >> p.second;\n  return is;\n}\ntemplate\
+    \ <class T, size_t n>\nistream &operator>>(istream &is, array<T, n> &a)\n{\n \
+    \ for (size_t i = 0; i < n; i++)\n    cin >> a[i];\n  return is;\n}\ntemplate\
+    \ <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...> &t)\n{\n  apply([&](auto\
+    \ &...a)\n        { (is >> ... >> a); }, t);\n  return is;\n}\n\ntemplate <class...\
+    \ Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\ntemplate <class T>\nvoid CINVEC(int\
+    \ n, vc<T> &v)\n{\n  v.resize(n);\n  repi(i, n) cin >> v[i];\n}\ntemplate <class\
+    \ T, class... Ts>\nvoid CINVEC(int n, vc<T> &v, vc<Ts> &...vs)\n{ CINVEC(n, v),\
+    \ CINVEC(n, vs...); }\n\ntemplate <class T>\nvoid CINVEC2(int n, int m, vvc<T>\
+    \ &v)\n{\n  v.assign(n, vc<T>(m));\n  repi(i, n) repi(j, m) cin >> v[i][j];\n\
+    }\ntemplate <class T, class... Ts>\nvoid CINVEC2(int n, int m, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ CINVEC2(n, m, v), CINVEC2(n, m, vs...); }\n\n#define IN(T, ...) T\
+    \ __VA_ARGS__; CIN(__VA_ARGS__)\n\n#define CHAR(...) IN(char, __VA_ARGS__)\n#define\
+    \ INT(...) IN(int, __VA_ARGS__)\n#define LL(...) IN(ll, __VA_ARGS__)\n#define\
+    \ STR(...) IN(string, __VA_ARGS__)\n#define ARR(T, n, ...) array<T, n> __VA_ARGS__;\
+    \ CIN(__VA_ARGS__)\n\n#define VEC(T, n, ...) vc<T> __VA_ARGS__; CINVEC(n, __VA_ARGS__)\n\
+    #define VEC2(T, n, m, ...) vvc<T> __VA_ARGS__; CINVEC2(n, m, __VA_ARGS__)\n//\
+    \ ----------\n\n// ----- \u51FA\u529B -----\n#ifdef INTERACTIVE\n#define ENDL\
+    \ endl\n#else\n#define ENDL '\\n'\n#endif\n\ntemplate <class T>\nvoid PRINT(const\
+    \ T &a) { cout << a << ENDL; }\ntemplate <class T, class... Ts>\nvoid PRINT(const\
+    \ T &a, const Ts &...b)\n{\n  cout << a;\n  (cout << ... << (cout << ' ', b));\n\
+    \  cout << ENDL;\n}\n#define PRINTEXIT(...) do { PRINT(__VA_ARGS__); exit(0);\
+    \ } while (false)\n#define PRINTRETURN(...) do { PRINT(__VA_ARGS__); return; }\
+    \ while (false)\n\ntemplate <class T>\nvoid PRINTVEC(const vc<T> &v)\n{\n  const\
+    \ int n = v.size();\n  repi(i, n) cout << v[i] << (i == n - 1 ? \"\" : \" \");\n\
+    \  cout << ENDL;\n}\ntemplate <class T>\nvoid PRINTVECT(const vc<T> &v) { for\
+    \ (auto &vi : v) cout << vi << ENDL; }\ntemplate <class T>\nvoid PRINTVEC2(const\
+    \ vvc<T> &v) { for (auto &vi : v) PRINTVEC(vi); }\n// ----------\n\n// ----- \u57FA\
+    \u6E96\u305A\u3089\u3057 -----\ntemplate <class T, class U>\npair<T, U> operator+=(pair<T,\
     \ U> &a, cauto &b)\n{\n  a.first += b.first;\n  a.second += b.second;\n  return\
     \ a;\n}\ntemplate <class T, class U>\npair<T, U> operator+(pair<T, U> &a, cauto\
     \ &b) { return a += b; }\n\ntemplate <class T, size_t n>\narray<T, n> operator+=(array<T,\
@@ -157,10 +158,10 @@ data:
     \ = {\n    {1, 5, 9},\n    {2, 6, 10},\n    {3, 7, 11},\n    {4, 8, 12},\n   \
     \ {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = top(vt_god);\n  auto vt_ans\
     \ = top(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n  assert(vt_ans\
-    \ == vt_god);\n}\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n\n  LL(A,\
-    \ B);\n  PRINT(A + B);\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n\n#include \"\
-    ../../template/template_inout.hpp\"\n#include \"../../template/template_dump.hpp\"\
+    \ == vt_god);\n}\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n\n  PRINT(\"\
+    Hello World\");\n}\n"
+  code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
+    \n\n#include \"../../template/template_inout.hpp\"\n#include \"../../template/template_dump.hpp\"\
     \n\nvoid test1()\n{\n  vc<pair<int, string>> vt_god = {\n    {1, \"a\"},\n   \
     \ {2, \"bcd\"},\n    {3, \"ef\"}\n  };\n  pair<vc<int>, vc<string>> tv_god = {\n\
     \    {1, 2, 3},\n    {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = top(vt_god);\n\
@@ -177,7 +178,7 @@ data:
     \   {4, 8, 12},\n    {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = top(vt_god);\n\
     \  auto vt_ans = top(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
     \  assert(vt_ans == vt_god);\n}\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n\
-    \n  LL(A, B);\n  PRINT(A + B);\n}"
+    \n  PRINT(\"Hello World\");\n}"
   dependsOn:
   - template/template_inout.hpp
   - template/template_types.hpp
@@ -186,7 +187,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_inout_top.test.cpp
   requiredBy: []
-  timestamp: '2024-08-31 12:06:34+09:00'
+  timestamp: '2024-12-10 00:58:47+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_inout_top.test.cpp

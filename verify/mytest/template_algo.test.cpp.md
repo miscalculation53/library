@@ -6,18 +6,12 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
   - icon: ':heavy_check_mark:'
-    path: template/template_all.hpp
-    title: template/template_all.hpp
-  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
   - icon: ':heavy_check_mark:'
     path: template/template_func.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u95A2\u6570\u30AA\u30D6\u30B8\
       \u30A7\u30AF\u30C8\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_inout.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
   - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
@@ -37,15 +31,14 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/many_aplusb_128bit
+    PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
     links:
-    - https://judge.yosupo.jp/problem/many_aplusb_128bit
-  bundledCode: "#line 1 \"verify/yosupo/many_aplusb_128bit.test.cpp\"\n#define PROBLEM\
-    \ \"https://judge.yosupo.jp/problem/many_aplusb_128bit\"\n\n// #define SINGLE_TESTCASE\n\
-    #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n\n#define\
-    \ INF 4'000'000'000'000'000'037\n#define EPS 1e-11\n\n#line 2 \"template/template_all.hpp\"\
-    \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
+    - https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
+  bundledCode: "#line 1 \"verify/mytest/template_algo.test.cpp\"\n#define PROBLEM\
+    \ \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\n\n#line\
+    \ 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
+    #endif\n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
+    \u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
     \ EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing\
     \ uint = unsigned int;\nusing ull = unsigned long long;\nusing pll = pair<ll,\
@@ -78,98 +71,15 @@ data:
     \ (d) > 0 ? i < int(r) : i > int(r); i += d)\n#define repi(...) overload4(__VA_ARGS__,\
     \ repi3, repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n\
     #define fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
-    #line 2 \"template/template_inout.hpp\"\n\n#line 5 \"template/template_inout.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\
-    \uFF09\n * @docs docs/template/template_inout.md\n */\n/**\n * \u53C2\u8003\uFF1A\
-    \n * https://trap.jp/post/1224/\n */\n\n// ---- \u5165\u529B ----\ntemplate <class\
-    \ T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  cin >> p.first\
-    \ >> p.second;\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
-    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    cin >> a[i];\n\
-    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
-    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
-    \ is;\n}\n\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\
-    \ntemplate <class T>\nvoid CINVEC(int n, vc<T> &v)\n{\n  v.resize(n);\n  repi(i,\
-    \ n) cin >> v[i];\n}\ntemplate <class T, class... Ts>\nvoid CINVEC(int n, vc<T>\
-    \ &v, vc<Ts> &...vs)\n{ CINVEC(n, v), CINVEC(n, vs...); }\n\ntemplate <class T>\n\
-    void CINVEC2(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  repi(i,\
-    \ n) repi(j, m) cin >> v[i][j];\n}\ntemplate <class T, class... Ts>\nvoid CINVEC2(int\
-    \ n, int m, vvc<T> &v, vvc<Ts> &...vs)\n{ CINVEC2(n, m, v), CINVEC2(n, m, vs...);\
-    \ }\n\n#define IN(T, ...) T __VA_ARGS__; CIN(__VA_ARGS__)\n\n#define CHAR(...)\
-    \ IN(char, __VA_ARGS__)\n#define INT(...) IN(int, __VA_ARGS__)\n#define LL(...)\
-    \ IN(ll, __VA_ARGS__)\n#define STR(...) IN(string, __VA_ARGS__)\n#define ARR(T,\
-    \ n, ...) array<T, n> __VA_ARGS__; CIN(__VA_ARGS__)\n\n#define VEC(T, n, ...)\
-    \ vc<T> __VA_ARGS__; CINVEC(n, __VA_ARGS__)\n#define VEC2(T, n, m, ...) vvc<T>\
-    \ __VA_ARGS__; CINVEC2(n, m, __VA_ARGS__)\n// ----------\n\n// ----- \u51FA\u529B\
-    \ -----\n#ifdef INTERACTIVE\n#define ENDL endl\n#else\n#define ENDL '\\n'\n#endif\n\
-    \ntemplate <class T>\nvoid PRINT(const T &a) { cout << a << ENDL; }\ntemplate\
-    \ <class T, class... Ts>\nvoid PRINT(const T &a, const Ts &...b)\n{\n  cout <<\
-    \ a;\n  (cout << ... << (cout << ' ', b));\n  cout << ENDL;\n}\n#define PRINTEXIT(...)\
-    \ do { PRINT(__VA_ARGS__); exit(0); } while (false)\n#define PRINTRETURN(...)\
-    \ do { PRINT(__VA_ARGS__); return; } while (false)\n\ntemplate <class T>\nvoid\
-    \ PRINTVEC(const vc<T> &v)\n{\n  const int n = v.size();\n  repi(i, n) cout <<\
-    \ v[i] << (i == n - 1 ? \"\" : \" \");\n  cout << ENDL;\n}\ntemplate <class T>\n\
-    void PRINTVECT(const vc<T> &v) { for (auto &vi : v) cout << vi << ENDL; }\ntemplate\
-    \ <class T>\nvoid PRINTVEC2(const vvc<T> &v) { for (auto &vi : v) PRINTVEC(vi);\
-    \ }\n// ----------\n\n// ----- \u57FA\u6E96\u305A\u3089\u3057 -----\ntemplate\
-    \ <class T, class U>\npair<T, U> operator+=(pair<T, U> &a, cauto &b)\n{\n  a.first\
-    \ += b.first;\n  a.second += b.second;\n  return a;\n}\ntemplate <class T, class\
-    \ U>\npair<T, U> operator+(pair<T, U> &a, cauto &b) { return a += b; }\n\ntemplate\
-    \ <class T, size_t n>\narray<T, n> operator+=(array<T, n> &a, cauto &b)\n{\n \
-    \ for (size_t i = 0; i < n; i++)\n    a[i] += b[i];\n  return a;\n}\ntemplate\
-    \ <class T, size_t n>\narray<T, n> operator+(array<T, n> &a, cauto &b) { return\
-    \ a += b; }\n\ntemplate <size_t... I>\nauto tuple_add_impl(auto &a, cauto &b,\
-    \ const index_sequence<I...>)\n{\n  ((get<I>(a) += get<I>(b)), ...);\n  return\
-    \ a;\n}\ntemplate <class... Ts>\ntuple<Ts...> operator+=(tuple<Ts...> &a, cauto\
-    \ &b)\n{ return tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{});\
-    \ }\ntemplate <class... Ts>\ntuple<Ts...> operator+(tuple<Ts...> &a, cauto &b)\
-    \ { return a += b; }\n\ntemplate <class T>\nvoid offset(vc<T> &v, cauto &add)\
-    \ { for (auto &vi : v) vi += add; }\ntemplate <class T>\nvoid offset(vvc<T> &v,\
-    \ cauto &add) { for (auto &vi : v) for (auto &vij : vi) vij += add; }\n// ----------\n\
-    \n// ----- \u8EE2\u7F6E -----\ntemplate <class T, const size_t m>\narray<vc<T>,\
-    \ m> top(const vc<array<T, m>> &vt)\n{\n  const size_t n = vt.size();\n  array<vc<T>,\
-    \ m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t i = 0; i < n; i++)\n    for (size_t\
-    \ j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n  return tv;\n}\ntemplate <class\
-    \ T, const size_t m>\nvc<array<T, m>> top(const array<vc<T>, m> &tv)\n{\n  if\
-    \ (tv.empty()) return {};\n  const size_t n = tv[0].size();\n  vc<array<T, m>>\
-    \ vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size() == n);\n\
-    \    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n  return\
-    \ vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const vc<pair<T,\
-    \ U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>> tv;\n  tv.first.resize(n),\
-    \ tv.second.resize(n);\n  for (size_t i = 0; i < n; i++)\n    tie(tv.first[i],\
-    \ tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate <class T, class U>\nvc<pair<T,\
-    \ U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const size_t n = tv.first.size();\n\
-    \  assert(n == tv.second.size());\n  vc<pair<T, U>> vt(n);\n  for (size_t i =\
-    \ 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i], tv.second[i]);\n  return\
-    \ vt;\n}\n\ntemplate <size_t... I>\nauto vt_to_tv_impl(auto &tv, cauto &t, index_sequence<I...>,\
-    \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\ntemplate <class...\
-    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
-    \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
-    \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    vt_to_tv_impl(tv, vt[i], make_index_sequence<tuple_size_v<decltype(tv)>>{},\
-    \ i);\n  return tv;\n}\n\ntemplate <size_t... I>\nauto tv_to_vt_impl(cauto &tv,\
-    \ index_sequence<I...>, size_t index)\n{ return make_tuple(get<I>(tv)[index]...);\
-    \ }\ntemplate <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t\
-    \ n = get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size()\
-    \ == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n;\
-    \ i++)\n    vt[i] = tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 2 \"template/template_dump.hpp\"\n\n#line 4 \"\
-    template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\
-    \uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n\
-    \  #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n  namespace\
-    \ cpp_dump::_detail\n  {\n    inline string export_var(\n        const i128 &x,\
-    \ const string &indent, size_t last_line_length,\n        size_t current_depth,\
-    \ bool fail_on_newline, const export_command &command\n    ) {\n      return export_var(i128tos(x),\
-    \ indent, last_line_length, current_depth, fail_on_newline, command);\n    }\n\
-    \  } // namespace cpp_dump::_detail\n  #define dump(...) cpp_dump(__VA_ARGS__)\n\
-    \  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    \  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#else\n  #define dump(...)\n\
-    #endif\n#line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
-    #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
-    \n * @docs docs/template/template_math.md\n */\n\ninline bool chmin(auto &a, cauto\
-    \ &b) { return a > b ? a = b, true : false; }\ninline bool chmax(auto &a, cauto\
-    \ &b) { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll>\ninline\
-    \ T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b) && (T(a)\
-    \ ^ T(b)) < 0); }\ntemplate <class T = ll>\ninline T divceil(cauto &a, cauto &b)\
+    #line 2 \"template/template_vector.hpp\"\n\n#line 2 \"template/template_math.hpp\"\
+    \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
+    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
+    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
+    \ docs/template/template_math.md\n */\n\ninline bool chmin(auto &a, cauto &b)\
+    \ { return a > b ? a = b, true : false; }\ninline bool chmax(auto &a, cauto &b)\
+    \ { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll>\ninline T\
+    \ divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^\
+    \ T(b)) < 0); }\ntemplate <class T = ll>\ninline T divceil(cauto &a, cauto &b)\
     \ { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class\
     \ T = ll>\ninline T divround(cauto &a, cauto &b) { return divfloor<T>(2 * a +\
     \ b, 2 * b); }\ntemplate <class T = ll>\ninline T safemod(cauto &a, cauto &b)\
@@ -206,12 +116,12 @@ data:
     string b_ary_str(cauto &x, const int &b, const int &n, bool use_upper = true)\n\
     {\n  auto a = b_ary(x, b, n);\n  string s = \"\";\n  for (cauto &ai : a)\n   \
     \ s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n\
-    }\n#line 2 \"template/template_vector.hpp\"\n\n#line 6 \"template/template_vector.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09\n *\
-    \ @docs docs/template/template_vector.md\n */\n\n#define ALL(a) (a).begin(), (a).end()\n\
-    #define SZ(x) (ll)((x).size())\n#define SZI(x) (int)((x).size())\n\ntemplate <class\
-    \ F>\nauto gen_vec(const int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n\
-    \  repi(i, n) res[i] = f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    }\n#line 6 \"template/template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n\
+    \ */\n\n#define ALL(a) (a).begin(), (a).end()\n#define SZ(x) (ll)((x).size())\n\
+    #define SZI(x) (int)((x).size())\n\ntemplate <class F>\nauto gen_vec(const int\
+    \ &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n\
+    \  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
     template <class T, size_t d, size_t i = 0>\nauto dvec(cauto (&sz)[d], const T\
     \ &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i + 1>(sz,\
     \ init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT ctol(const\
@@ -236,12 +146,11 @@ data:
     \ min_op\n{\n  T operator()(const T &a, const T &b) const { return min(a, b);\
     \ }\n};\n\ntemplate <class T, const T val>\nstruct const_fn\n{\n  T operator()()\
     \ const { return val; }\n};\nusing max_e = const_fn<ll, -INF>;\nusing min_e =\
-    \ const_fn<ll, INF>;\nusing zero_fn = const_fn<ll, 0LL>;\n#line 2 \"template/template_algo.hpp\"\
-    \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 11 \"\
-    template/template_algo.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\
-    \uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\u30E0\uFF09\n * @docs docs/template/template_algo.md\n\
-    \ */\n\ntemplate <class T, class U = ll>\nU SUM(const vc<T> &v) { return accumulate(ALL(v),\
-    \ U(0)); }\ntemplate <class T>\nT MAX(const vc<T> &v) { return *max_element(ALL(v));\
+    \ const_fn<ll, INF>;\nusing zero_fn = const_fn<ll, 0LL>;\n#line 11 \"template/template_algo.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
+    \u30EA\u30BA\u30E0\uFF09\n * @docs docs/template/template_algo.md\n */\n\ntemplate\
+    \ <class T, class U = ll>\nU SUM(const vc<T> &v) { return accumulate(ALL(v), U(0));\
+    \ }\ntemplate <class T>\nT MAX(const vc<T> &v) { return *max_element(ALL(v));\
     \ }\ntemplate <class T>\nT MIN(const vc<T> &v) { return *min_element(ALL(v));\
     \ }\ntemplate <class T, class U = ll>\nU ARGMAX(const vc<T> &v) { return max_element(ALL(v))\
     \ - v.begin(); }\ntemplate <class T, class U = ll>\nU ARGMIN(const vc<T> &v) {\
@@ -309,62 +218,144 @@ data:
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
     \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll dij4 = {{1, 0},\
-    \ {0, 1}, {-1, 0}, {0, -1}};\n#line 13 \"verify/yosupo/many_aplusb_128bit.test.cpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  IN(i128, A, B);\n  dump(A, B);\n  PRINT(A\
-    \ + B);\n}\n\nvoid test()\n{\n  /*\n  #ifdef LOCAL\n  rep(testcase, 100000)\n\
-    \  {\n    cout << endl;\n    dump(testcase);\n\n\n    // ----- generate cases\
-    \ -----\n    ll N = 1 + rand() % 5;\n    vl A(N);\n    rep(i, N) A.at(i) = 1 +\
-    \ rand() % 10;\n    // --------------------------\n\n    // ------ check output\
-    \ ------\n    auto god = naive(A);\n    auto ans = solve(A);\n    if (god != ans)\n\
-    \    {\n      dump(N, A);\n      dump(god, ans);\n      exit(0);\n    }\n    //\
-    \ --------------------------\n  }\n  dump(\"ok\");\n  #endif\n  //*/\n}\n\nint\
-    \ main()\n{\n  #if defined FAST_IO and not defined LOCAL\n    cerr << \"[FAST_IO]\\\
-    n\\n\";\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n  #endif\n  cout <<\
-    \ fixed << setprecision(20);\n\n  init();\n  test();\n\n  #if defined AOJ_TESTCASE\
-    \ or (defined LOCAL and defined SINGLE_TESTCASE)\n    cerr << \"[AOJ_TESTCASE]\\\
-    n\\n\";\n    while (true) main2();\n  #elif defined SINGLE_TESTCASE\n    cerr\
-    \ << \"[SINGLE_TESTCASE]\\n\\n\";\n    main2();\n  #elif defined MULTI_TESTCASE\n\
-    \    cerr << \"[MULTI_TESTCASE]\\n\\n\";\n    int T;\n    cin >> T;\n    while\
-    \ (T--) main2();\n  #endif\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/many_aplusb_128bit\"\n\n\
-    // #define SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n\
-    #define FAST_IO\n\n#define INF 4'000'000'000'000'000'037\n#define EPS 1e-11\n\n\
-    #include \"../../template/template_all.hpp\"\n\nvoid init() {}\n\nvoid main2()\n\
-    {\n  IN(i128, A, B);\n  dump(A, B);\n  PRINT(A + B);\n}\n\nvoid test()\n{\n  /*\n\
-    \  #ifdef LOCAL\n  rep(testcase, 100000)\n  {\n    cout << endl;\n    dump(testcase);\n\
-    \n\n    // ----- generate cases -----\n    ll N = 1 + rand() % 5;\n    vl A(N);\n\
-    \    rep(i, N) A.at(i) = 1 + rand() % 10;\n    // --------------------------\n\
-    \n    // ------ check output ------\n    auto god = naive(A);\n    auto ans =\
-    \ solve(A);\n    if (god != ans)\n    {\n      dump(N, A);\n      dump(god, ans);\n\
-    \      exit(0);\n    }\n    // --------------------------\n  }\n  dump(\"ok\"\
-    );\n  #endif\n  //*/\n}\n\nint main()\n{\n  #if defined FAST_IO and not defined\
-    \ LOCAL\n    cerr << \"[FAST_IO]\\n\\n\";\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
-    \  #endif\n  cout << fixed << setprecision(20);\n\n  init();\n  test();\n\n  #if\
-    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    cerr\
-    \ << \"[AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n  #elif defined SINGLE_TESTCASE\n\
-    \    cerr << \"[SINGLE_TESTCASE]\\n\\n\";\n    main2();\n  #elif defined MULTI_TESTCASE\n\
-    \    cerr << \"[MULTI_TESTCASE]\\n\\n\";\n    int T;\n    cin >> T;\n    while\
-    \ (T--) main2();\n  #endif\n}\n"
+    \ {0, 1}, {-1, 0}, {0, -1}};\n#line 2 \"template/template_dump.hpp\"\n\n#line\
+    \ 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
+    \u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n#ifdef\
+    \ LOCAL\n  #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    \  namespace cpp_dump::_detail\n  {\n    inline string export_var(\n        const\
+    \ i128 &x, const string &indent, size_t last_line_length,\n        size_t current_depth,\
+    \ bool fail_on_newline, const export_command &command\n    ) {\n      return export_var(i128tos(x),\
+    \ indent, last_line_length, current_depth, fail_on_newline, command);\n    }\n\
+    \  } // namespace cpp_dump::_detail\n  #define dump(...) cpp_dump(__VA_ARGS__)\n\
+    \  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
+    \  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#else\n  #define dump(...)\n\
+    #endif\n#line 5 \"verify/mytest/template_algo.test.cpp\"\n\n// \u96C6\u7D04\n\
+    void test1()\n{\n  vl a = {2, 7, 1, 8, 2, 8, 1};\n  assert(SUM(a) == 29);\n  assert(MAX(a)\
+    \ == 8);\n  assert(MIN(a) == 1);\n  assert(ARGMAX(a) == 3);\n  assert(ARGMIN(a)\
+    \ == 2);\n  assert(mex(a) == 0);\n\n  vl b = {4, 0, 1, 0, 1, 100};\n  assert(mex(b)\
+    \ == 2);\n}\n\n// \u9806\u5217\nvoid test2()\n{\n  {\n    assert(permid(5) ==\
+    \ vl({0, 1, 2, 3, 4}));\n    assert(permid(5, 1) == vl({1, 2, 3, 4, 5}));\n  }\n\
+    \n  {\n    vl p = {1, 2, 0, 4, 3};\n    vl q = perminv(p);\n    repi(i, 5) assert(q[p[i]]\
+    \ == i);\n    assert(perminv(q) == p);\n  }\n\n  {\n    vl p = {1, 4, 2, 0, 3};\n\
+    \    vl q = {3, 1, 4, 0, 2};\n    vl r = permuted(p, q);\n    repi(i, 5) assert(r[i]\
+    \ == p[q[i]]);\n  }\n}\n\n// string \u3084 vector \u306E\u64CD\u4F5C\nvoid test3()\n\
+    {\n  {\n    string s = \"abcde\";\n    vl v = {0, 1, 2, 3, 4};\n    assert(reversed(s)\
+    \ == \"edcba\");\n    assert(s == \"abcde\");\n    assert(reversed(v) == vl({4,\
+    \ 3, 2, 1, 0}));\n    assert(v == vl({0, 1, 2, 3, 4}));\n  }\n\n  {\n    string\
+    \ s = \"bdcae\";\n    vl v = {4, 2, 1, 0, 3};\n    assert(sorted(s) == \"abcde\"\
+    );\n    assert(sorted(s, greater{}) == \"edcba\");\n    assert(s == \"bdcae\"\
+    );\n    assert(sorted(v) == vl({0, 1, 2, 3, 4}));\n    assert(sorted(v, greater{})\
+    \ == vl({4, 3, 2, 1, 0}));\n    assert(v == vl({4, 2, 1, 0, 3}));\n  }\n\n  {\n\
+    \    string s = \"bbabbccc\";\n    vl v = {1, 1, 0, 1, 1, 2, 2, 2};\n    assert(uniqued(s)\
+    \ == \"babc\");\n    assert(uniqued(v) == vl({1, 0, 1, 2}));\n    assert(s ==\
+    \ \"bbabbccc\");\n    assert(v == vl({1, 1, 0, 1, 1, 2, 2, 2}));\n    unique(s);\n\
+    \    unique(v);\n    assert(s == \"babc\");\n    assert(v == vl({1, 0, 1, 2}));\n\
+    \n    assert(sortuniqued(s) == \"abc\");\n    assert(sortuniqued(v) == vl({0,\
+    \ 1, 2}));\n    assert(s == \"babc\");\n    assert(v == vl({1, 0, 1, 2}));\n \
+    \   sortunique(s);\n    sortunique(v);\n    assert(s == \"abc\");\n    assert(v\
+    \ == vl({0, 1, 2}));\n  }\n\n  {\n    string s = \"abcde\";\n    vl v = {0, 1,\
+    \ 2, 3, 4};\n    assert(rotated(s, 1) == \"bcdea\");\n    assert(rotated(s, 2)\
+    \ == \"cdeab\");\n    assert(rotated(s, 1'000'000'000'000'003LL) == \"deabc\"\
+    );\n    assert(rotated(s, -1) == \"eabcd\");\n    assert(rotated(v, 1) == vl({1,\
+    \ 2, 3, 4, 0}));\n    assert(rotated(v, 2) == vl({2, 3, 4, 0, 1}));\n    assert(rotated(v,\
+    \ 1'000'000'000'000'003LL) == vl({3, 4, 0, 1, 2}));\n    assert(rotated(v, -1)\
+    \ == vl({4, 0, 1, 2, 3}));\n    assert(s == \"abcde\");\n    assert(v == vl({0,\
+    \ 1, 2, 3, 4}));\n    rotate(s, 1'000'000'000'000'003LL);\n    rotate(v, 1'000'000'000'000'003LL);\n\
+    \    assert(s == \"deabc\");\n    assert(v == vl({3, 4, 0, 1, 2}));\n  }\n}\n\n\
+    // \u4E8C\u6B21\u5143\u914D\u5217\u306E\u64CD\u4F5C\nvoid test4()\n{\n  vvl v\
+    \ = {\n    {1, 2},\n    {3, 4},\n    {5, 6}\n  };\n  vstr s = {\n    \"12\",\n\
+    \    \"34\",\n    \"56\"\n  };\n\n  vvl top_v = {\n    {1, 3, 5},\n    {2, 4,\
+    \ 6}\n  };\n  vstr top_s = {\n    \"135\",\n    \"246\"\n  };\n\n  vvl rot_v =\
+    \ {\n    {2, 4, 6},\n    {1, 3, 5}\n  };\n  vstr rot_s = {\n    \"246\",\n   \
+    \ \"135\"\n  };\n\n  assert(top(v) == top_v);\n  assert(top(s) == top_s);\n  assert(rot90(v)\
+    \ == rot_v);\n  assert(rot90(s) == rot_s);\n\n  assert(rot90(v, -11) == rot90(v));\n\
+    \  assert(rot90(v, -10) == rot90(rot90(v)));\n  assert(rot90(v, -9) == rot90(rot90(rot90(v))));\n\
+    \  assert(rot90(v, 8) == v);\n  assert(rot90(v, 9) == rot90(v));\n  assert(rot90(v,\
+    \ 10) == rot90(rot90(v)));\n  assert(rot90(v, 11) == rot90(rot90(rot90(v))));\n\
+    }\n\n// \u7D2F\u7A4D\u548C\u30FB\u5DEE\u5206\nvoid test5()\n{\n  vl a = {3, 1,\
+    \ 4, 1};\n  assert(cuml(a) == vl({0, 3, 4, 8, 9}));\n  assert(cumr(a) == vl({9,\
+    \ 6, 5, 1, 0}));\n  assert(cumlmax(a) == vl({-INF, 3, 3, 4, 4}));\n  assert(cumrmax(a)\
+    \ == vl({4, 4, 4, 1, -INF}));\n  assert(cumlmin(a) == vl({INF, 3, 1, 1, 1}));\n\
+    \  assert(cumrmin(a) == vl({1, 1, 1, 1, INF}));\n  assert(adjd(a) == vl({3, -2,\
+    \ 3, -3, -1}));\n}\n\n// \u5168\u63A2\u7D22\nvoid test6()\n{\n  vvl vs;\n  fec(v\
+    \ : direct_product({2, 1, 3})) vs.push_back(v);\n\n  vvl model = {\n    {0, 0,\
+    \ 0},\n    {0, 0, 1},\n    {0, 0, 2},\n    {1, 0, 0},\n    {1, 0, 1},\n    {1,\
+    \ 0, 2}\n  };\n  assert(vs == model);\n}\n\nint main()\n{\n  test1();\n  test2();\n\
+    \  test3();\n  test4();\n  test5();\n  test6();\n\n  cout << \"Hello World\" <<\
+    \ endl;\n}\n"
+  code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
+    \n\n#include \"../../template/template_algo.hpp\"\n#include \"../../template/template_dump.hpp\"\
+    \n\n// \u96C6\u7D04\nvoid test1()\n{\n  vl a = {2, 7, 1, 8, 2, 8, 1};\n  assert(SUM(a)\
+    \ == 29);\n  assert(MAX(a) == 8);\n  assert(MIN(a) == 1);\n  assert(ARGMAX(a)\
+    \ == 3);\n  assert(ARGMIN(a) == 2);\n  assert(mex(a) == 0);\n\n  vl b = {4, 0,\
+    \ 1, 0, 1, 100};\n  assert(mex(b) == 2);\n}\n\n// \u9806\u5217\nvoid test2()\n\
+    {\n  {\n    assert(permid(5) == vl({0, 1, 2, 3, 4}));\n    assert(permid(5, 1)\
+    \ == vl({1, 2, 3, 4, 5}));\n  }\n\n  {\n    vl p = {1, 2, 0, 4, 3};\n    vl q\
+    \ = perminv(p);\n    repi(i, 5) assert(q[p[i]] == i);\n    assert(perminv(q) ==\
+    \ p);\n  }\n\n  {\n    vl p = {1, 4, 2, 0, 3};\n    vl q = {3, 1, 4, 0, 2};\n\
+    \    vl r = permuted(p, q);\n    repi(i, 5) assert(r[i] == p[q[i]]);\n  }\n}\n\
+    \n// string \u3084 vector \u306E\u64CD\u4F5C\nvoid test3()\n{\n  {\n    string\
+    \ s = \"abcde\";\n    vl v = {0, 1, 2, 3, 4};\n    assert(reversed(s) == \"edcba\"\
+    );\n    assert(s == \"abcde\");\n    assert(reversed(v) == vl({4, 3, 2, 1, 0}));\n\
+    \    assert(v == vl({0, 1, 2, 3, 4}));\n  }\n\n  {\n    string s = \"bdcae\";\n\
+    \    vl v = {4, 2, 1, 0, 3};\n    assert(sorted(s) == \"abcde\");\n    assert(sorted(s,\
+    \ greater{}) == \"edcba\");\n    assert(s == \"bdcae\");\n    assert(sorted(v)\
+    \ == vl({0, 1, 2, 3, 4}));\n    assert(sorted(v, greater{}) == vl({4, 3, 2, 1,\
+    \ 0}));\n    assert(v == vl({4, 2, 1, 0, 3}));\n  }\n\n  {\n    string s = \"\
+    bbabbccc\";\n    vl v = {1, 1, 0, 1, 1, 2, 2, 2};\n    assert(uniqued(s) == \"\
+    babc\");\n    assert(uniqued(v) == vl({1, 0, 1, 2}));\n    assert(s == \"bbabbccc\"\
+    );\n    assert(v == vl({1, 1, 0, 1, 1, 2, 2, 2}));\n    unique(s);\n    unique(v);\n\
+    \    assert(s == \"babc\");\n    assert(v == vl({1, 0, 1, 2}));\n\n    assert(sortuniqued(s)\
+    \ == \"abc\");\n    assert(sortuniqued(v) == vl({0, 1, 2}));\n    assert(s ==\
+    \ \"babc\");\n    assert(v == vl({1, 0, 1, 2}));\n    sortunique(s);\n    sortunique(v);\n\
+    \    assert(s == \"abc\");\n    assert(v == vl({0, 1, 2}));\n  }\n\n  {\n    string\
+    \ s = \"abcde\";\n    vl v = {0, 1, 2, 3, 4};\n    assert(rotated(s, 1) == \"\
+    bcdea\");\n    assert(rotated(s, 2) == \"cdeab\");\n    assert(rotated(s, 1'000'000'000'000'003LL)\
+    \ == \"deabc\");\n    assert(rotated(s, -1) == \"eabcd\");\n    assert(rotated(v,\
+    \ 1) == vl({1, 2, 3, 4, 0}));\n    assert(rotated(v, 2) == vl({2, 3, 4, 0, 1}));\n\
+    \    assert(rotated(v, 1'000'000'000'000'003LL) == vl({3, 4, 0, 1, 2}));\n   \
+    \ assert(rotated(v, -1) == vl({4, 0, 1, 2, 3}));\n    assert(s == \"abcde\");\n\
+    \    assert(v == vl({0, 1, 2, 3, 4}));\n    rotate(s, 1'000'000'000'000'003LL);\n\
+    \    rotate(v, 1'000'000'000'000'003LL);\n    assert(s == \"deabc\");\n    assert(v\
+    \ == vl({3, 4, 0, 1, 2}));\n  }\n}\n\n// \u4E8C\u6B21\u5143\u914D\u5217\u306E\u64CD\
+    \u4F5C\nvoid test4()\n{\n  vvl v = {\n    {1, 2},\n    {3, 4},\n    {5, 6}\n \
+    \ };\n  vstr s = {\n    \"12\",\n    \"34\",\n    \"56\"\n  };\n\n  vvl top_v\
+    \ = {\n    {1, 3, 5},\n    {2, 4, 6}\n  };\n  vstr top_s = {\n    \"135\",\n \
+    \   \"246\"\n  };\n\n  vvl rot_v = {\n    {2, 4, 6},\n    {1, 3, 5}\n  };\n  vstr\
+    \ rot_s = {\n    \"246\",\n    \"135\"\n  };\n\n  assert(top(v) == top_v);\n \
+    \ assert(top(s) == top_s);\n  assert(rot90(v) == rot_v);\n  assert(rot90(s) ==\
+    \ rot_s);\n\n  assert(rot90(v, -11) == rot90(v));\n  assert(rot90(v, -10) == rot90(rot90(v)));\n\
+    \  assert(rot90(v, -9) == rot90(rot90(rot90(v))));\n  assert(rot90(v, 8) == v);\n\
+    \  assert(rot90(v, 9) == rot90(v));\n  assert(rot90(v, 10) == rot90(rot90(v)));\n\
+    \  assert(rot90(v, 11) == rot90(rot90(rot90(v))));\n}\n\n// \u7D2F\u7A4D\u548C\
+    \u30FB\u5DEE\u5206\nvoid test5()\n{\n  vl a = {3, 1, 4, 1};\n  assert(cuml(a)\
+    \ == vl({0, 3, 4, 8, 9}));\n  assert(cumr(a) == vl({9, 6, 5, 1, 0}));\n  assert(cumlmax(a)\
+    \ == vl({-INF, 3, 3, 4, 4}));\n  assert(cumrmax(a) == vl({4, 4, 4, 1, -INF}));\n\
+    \  assert(cumlmin(a) == vl({INF, 3, 1, 1, 1}));\n  assert(cumrmin(a) == vl({1,\
+    \ 1, 1, 1, INF}));\n  assert(adjd(a) == vl({3, -2, 3, -3, -1}));\n}\n\n// \u5168\
+    \u63A2\u7D22\nvoid test6()\n{\n  vvl vs;\n  fec(v : direct_product({2, 1, 3}))\
+    \ vs.push_back(v);\n\n  vvl model = {\n    {0, 0, 0},\n    {0, 0, 1},\n    {0,\
+    \ 0, 2},\n    {1, 0, 0},\n    {1, 0, 1},\n    {1, 0, 2}\n  };\n  assert(vs ==\
+    \ model);\n}\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n  test4();\n\
+    \  test5();\n  test6();\n\n  cout << \"Hello World\" << endl;\n}"
   dependsOn:
-  - template/template_all.hpp
+  - template/template_algo.hpp
   - template/template_types.hpp
   - template/template_rep.hpp
-  - template/template_inout.hpp
-  - template/template_dump.hpp
-  - template/template_math.hpp
   - template/template_vector.hpp
+  - template/template_math.hpp
   - template/template_func.hpp
-  - template/template_algo.hpp
+  - template/template_dump.hpp
   isVerificationFile: true
-  path: verify/yosupo/many_aplusb_128bit.test.cpp
+  path: verify/mytest/template_algo.test.cpp
   requiredBy: []
   timestamp: '2024-12-10 00:58:47+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/yosupo/many_aplusb_128bit.test.cpp
+documentation_of: verify/mytest/template_algo.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/yosupo/many_aplusb_128bit.test.cpp
-- /verify/verify/yosupo/many_aplusb_128bit.test.cpp.html
-title: verify/yosupo/many_aplusb_128bit.test.cpp
+- /verify/verify/mytest/template_algo.test.cpp
+- /verify/verify/mytest/template_algo.test.cpp.html
+title: verify/mytest/template_algo.test.cpp
 ---

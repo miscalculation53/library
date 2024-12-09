@@ -4,14 +4,21 @@ data:
   _extendedRequiredBy:
   - icon: ':warning:'
     path: template/template.cpp
-    title: template/template.cpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
   - icon: ':heavy_check_mark:'
     path: template/template_all.hpp
     title: template/template_all.hpp
   - icon: ':heavy_check_mark:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: template/template_func.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u95A2\u6570\u30AA\u30D6\u30B8\
       \u30A7\u30AF\u30C8\uFF09"
@@ -28,6 +35,12 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/template_algo.test.cpp
+    title: verify/mytest/template_algo.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/template_binsearch.test.cpp
+    title: verify/mytest/template_binsearch.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/template_inout_top.test.cpp
     title: verify/mytest/template_inout_top.test.cpp
@@ -76,19 +89,18 @@ data:
     using vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing\
     \ vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate\
     \ <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate <class\
-    \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n  using i128\
-    \ = __int128_t;\n  i128 stoi128(const string &s)\n  {\n    i128 res = 0;\n   \
-    \ if (s.front() == '-')\n    {\n      for (int i = 1; i < (int)s.size(); i++)\n\
-    \        res = 10 * res + s[i] - '0';\n      res = -res;\n    }\n    else\n  \
-    \  {\n      for (auto &&c : s)\n        res = 10 * res + c - '0';\n    }\n   \
-    \ return res;\n  }\n  string i128tos(i128 x)\n  {\n    if (x == 0) return \"0\"\
-    ;\n    string sign = \"\", res = \"\";\n    if (x < 0)\n      x = -x, sign = \"\
-    -\";\n    while (x > 0)\n    {\n      res += '0' + x % 10;\n      x /= 10;\n \
-    \   }\n    reverse(res.begin(), res.end());\n    return sign + res;\n  }\n  istream\
-    \ &operator>>(istream &is, i128 &a)\n  {\n    string s;\n    is >> s;\n    a =\
-    \ stoi128(s);\n    return is;\n  }\n  ostream &operator<<(ostream &os, const i128\
-    \ &a)\n  {\n    os << i128tos(a);\n    return os;\n  }\n#endif\n\n#define cauto\
-    \ const auto\n"
+    \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing i128 =\
+    \ __int128_t;\ni128 stoi128(const string &s)\n{\n  i128 res = 0;\n  if (s.front()\
+    \ == '-')\n  {\n    for (int i = 1; i < (int)s.size(); i++)\n      res = 10 *\
+    \ res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n    for (auto &&c : s)\n\
+    \      res = 10 * res + c - '0';\n  }\n  return res;\n}\nstring i128tos(i128 x)\n\
+    {\n  if (x == 0) return \"0\";\n  string sign = \"\", res = \"\";\n  if (x < 0)\n\
+    \    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n    res += '0' + x % 10;\n \
+    \   x /= 10;\n  }\n  reverse(res.begin(), res.end());\n  return sign + res;\n\
+    }\nistream &operator>>(istream &is, i128 &a)\n{\n  string s;\n  is >> s;\n  a\
+    \ = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream &os, const i128\
+    \ &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto const\
+    \ auto\n"
   code: "#pragma once\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\
     \u578B\uFF09\n * @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\n\
     using namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
@@ -100,43 +112,46 @@ data:
     using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
     using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
     \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
-    \  using i128 = __int128_t;\n  i128 stoi128(const string &s)\n  {\n    i128 res\
-    \ = 0;\n    if (s.front() == '-')\n    {\n      for (int i = 1; i < (int)s.size();\
-    \ i++)\n        res = 10 * res + s[i] - '0';\n      res = -res;\n    }\n    else\n\
-    \    {\n      for (auto &&c : s)\n        res = 10 * res + c - '0';\n    }\n \
-    \   return res;\n  }\n  string i128tos(i128 x)\n  {\n    if (x == 0) return \"\
-    0\";\n    string sign = \"\", res = \"\";\n    if (x < 0)\n      x = -x, sign\
-    \ = \"-\";\n    while (x > 0)\n    {\n      res += '0' + x % 10;\n      x /= 10;\n\
-    \    }\n    reverse(res.begin(), res.end());\n    return sign + res;\n  }\n  istream\
-    \ &operator>>(istream &is, i128 &a)\n  {\n    string s;\n    is >> s;\n    a =\
-    \ stoi128(s);\n    return is;\n  }\n  ostream &operator<<(ostream &os, const i128\
-    \ &a)\n  {\n    os << i128tos(a);\n    return os;\n  }\n#endif\n\n#define cauto\
+    using i128 = __int128_t;\ni128 stoi128(const string &s)\n{\n  i128 res = 0;\n\
+    \  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size(); i++)\n \
+    \     res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n    for\
+    \ (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n}\nstring\
+    \ i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\", res =\
+    \ \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n    res\
+    \ += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n  return\
+    \ sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string s;\n\
+    \  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream &os,\
+    \ const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto\
     \ const auto"
   dependsOn: []
   isVerificationFile: false
   path: template/template_types.hpp
   requiredBy:
-  - template/template_func.hpp
-  - template/template_dump.hpp
   - template/template_inout.hpp
+  - template/template_dump.hpp
   - template/template.cpp
-  - template/template_vector.hpp
-  - template/template_math.hpp
   - template/template_all.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_math.hpp
+  - template/template_vector.hpp
   - template/template_rep.hpp
-  timestamp: '2024-08-31 12:06:34+09:00'
+  - template/template_func.hpp
+  timestamp: '2024-12-10 00:58:47+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yosupo/many_aplusb_128bit.test.cpp
+  - verify/yosupo/kth_root_integer.test.cpp
+  - verify/yosupo/many_aplusb_tuple.test.cpp
+  - verify/yosupo/aplusb.test.cpp
+  - verify/yosupo/many_aplusb.test.cpp
+  - verify/mytest/template_algo.test.cpp
   - verify/mytest/template_vector.test.cpp
-  - verify/mytest/template_math_div.test.cpp
   - verify/mytest/template_inout_top.test.cpp
+  - verify/mytest/template_binsearch.test.cpp
   - verify/mytest/template_math_mulpow.test.cpp
   - verify/mytest/template_sgn.test.cpp.cpp
-  - verify/yosupo/kth_root_integer.test.cpp
-  - verify/yosupo/aplusb.test.cpp
-  - verify/yosupo/many_aplusb_128bit.test.cpp
-  - verify/yosupo/many_aplusb.test.cpp
-  - verify/yosupo/many_aplusb_tuple.test.cpp
+  - verify/mytest/template_math_div.test.cpp
 documentation_of: template/template_types.hpp
 layout: document
 redirect_from:

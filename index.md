@@ -5,14 +5,21 @@ data:
     pages:
     - icon: ':warning:'
       path: template/template.cpp
-      title: template/template.cpp
+      title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
+    - icon: ':heavy_check_mark:'
+      path: template/template_algo.hpp
+      title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+        \u30E0\uFF09"
     - icon: ':heavy_check_mark:'
       path: template/template_all.hpp
       title: template/template_all.hpp
     - icon: ':heavy_check_mark:'
+      path: template/template_binsearch.hpp
+      title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+    - icon: ':heavy_check_mark:'
       path: template/template_dump.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: template/template_func.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u95A2\u6570\u30AA\u30D6\u30B8\
         \u30A7\u30AF\u30C8\uFF09"
@@ -34,6 +41,12 @@ data:
   verificationCategories:
   - name: verify/mytest
     pages:
+    - icon: ':heavy_check_mark:'
+      path: verify/mytest/template_algo.test.cpp
+      title: verify/mytest/template_algo.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/mytest/template_binsearch.test.cpp
+      title: verify/mytest/template_binsearch.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/mytest/template_inout_top.test.cpp
       title: verify/mytest/template_inout_top.test.cpp

@@ -2,6 +2,9 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
   - icon: ':heavy_check_mark:'
@@ -26,9 +29,9 @@ data:
     PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
     links:
     - https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
-  bundledCode: "#line 1 \"verify/mytest/template_vector.test.cpp\"\n#define PROBLEM\
+  bundledCode: "#line 1 \"verify/mytest/template_binsearch.test.cpp\"\n#define PROBLEM\
     \ \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\n\n#line\
-    \ 2 \"template/template_vector.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+    \ 2 \"template/template_binsearch.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
     \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
     \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
@@ -62,14 +65,15 @@ data:
     \ (d) > 0 ? i < int(r) : i > int(r); i += d)\n#define repi(...) overload4(__VA_ARGS__,\
     \ repi3, repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n\
     #define fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
-    #line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
-    #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
-    \n * @docs docs/template/template_math.md\n */\n\ninline bool chmin(auto &a, cauto\
-    \ &b) { return a > b ? a = b, true : false; }\ninline bool chmax(auto &a, cauto\
-    \ &b) { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll>\ninline\
-    \ T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b) && (T(a)\
-    \ ^ T(b)) < 0); }\ntemplate <class T = ll>\ninline T divceil(cauto &a, cauto &b)\
+    #line 2 \"template/template_vector.hpp\"\n\n#line 2 \"template/template_math.hpp\"\
+    \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
+    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
+    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
+    \ docs/template/template_math.md\n */\n\ninline bool chmin(auto &a, cauto &b)\
+    \ { return a > b ? a = b, true : false; }\ninline bool chmax(auto &a, cauto &b)\
+    \ { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll>\ninline T\
+    \ divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^\
+    \ T(b)) < 0); }\ntemplate <class T = ll>\ninline T divceil(cauto &a, cauto &b)\
     \ { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class\
     \ T = ll>\ninline T divround(cauto &a, cauto &b) { return divfloor<T>(2 * a +\
     \ b, 2 * b); }\ntemplate <class T = ll>\ninline T safemod(cauto &a, cauto &b)\
@@ -127,62 +131,91 @@ data:
     {\n  (v.insert(v.end(), ALL(vs)), ...);\n  return v;\n}\n\ntemplate <class T>\n\
     T vecget(const vc<T> &v, cauto &i, const T &dflt_negative = -INF, const T &dflt_positive\
     \ = INF)\n{\n  if (i < 0)\n    return dflt_negative;\n  if (i >= SZI(v))\n   \
-    \ return dflt_positive;\n  return v[i];\n}\n#line 2 \"template/template_dump.hpp\"\
-    \n\n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
-    \ */\n\n#ifdef LOCAL\n  #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
-    \  namespace cpp_dump::_detail\n  {\n    inline string export_var(\n        const\
-    \ i128 &x, const string &indent, size_t last_line_length,\n        size_t current_depth,\
-    \ bool fail_on_newline, const export_command &command\n    ) {\n      return export_var(i128tos(x),\
+    \ return dflt_positive;\n  return v[i];\n}\n#line 6 \"template/template_binsearch.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\
+    \u7D22\uFF09\n * @docs docs/template/template_binsearch.md\n */\n\n#if __cplusplus\
+    \ < 202002L\n// val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\
+    \u6E80\u306E\u5024\u306E\u500B\u6570)\ntemplate <class T = ll, class V, class...\
+    \ Args>\ninline T LB(const V &v, Args&&... args)\n{ return lower_bound(ALL(v),\
+    \ forward<Args>(args)...) - v.begin(); }\n// val < v[i] \u3068\u306A\u308B\u6700\
+    \u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570)\ntemplate <class\
+    \ T = ll, class V, class... Args>\ninline T UB(const V &v, Args&&... args)\n{\
+    \ return upper_bound(ALL(v), forward<Args>(args)...) - v.begin(); }\n#else\n//\
+    \ val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\
+    \u306E\u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class T = ll, class\
+    \ V, class... Args>\ninline T LB(const V &v, Args&&... args)\n{ return ranges::lower_bound(v,\
+    \ forward<Args>(args)...) - v.begin(); }\n// val < v[i] \u3068\u306A\u308B\u6700\
+    \u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570\
+    : comp, proj\ntemplate <class T = ll, class V, class... Args>\ninline T UB(const\
+    \ V &v, Args&&... args)\n{ return ranges::upper_bound(v, forward<Args>(args)...)\
+    \ - v.begin(); }\n#endif\n\ntemplate <class T = ll>\npair<T, T> binsearch(cauto\
+    \ &judge, cauto &init_ok, cauto &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n\
+    \  assert(judge(ok));\n  assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok\
+    \ != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok\
+    \ : ng) = mid;\n  }\n  return make_pair(ok, ng);\n}\ntemplate <class T = ld>\n\
+    T binsearch_real(cauto &judge, cauto &init_ok, cauto &init_ng, const int &iteration_count\
+    \ = 100)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
+    \  repi(_, iteration_count)\n  {\n    T mid = (ok + ng) / 2;\n    (judge(mid)\
+    \ ? ok : ng) = mid;\n  }\n  return ok;\n}\ntemplate <class T = ll>\npair<T, T>\
+    \ expsearch(cauto &judge, cauto &init_val, const bool &positive = true)\n{\n \
+    \ T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val + (positive\
+    \ ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng, ng = init_val\
+    \ + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng = init_val, ok\
+    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok); i++)\n  \
+    \    ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  while\
+    \ (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n\
+    \    (judge(mid) ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n}\n#line\
+    \ 2 \"template/template_dump.hpp\"\n\n#line 4 \"template/template_dump.hpp\"\n\
+    \n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs\
+    \ docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n  #include <cpp-dump.hpp>\
+    \ // https://github.com/philip82148/cpp-dump\n  namespace cpp_dump::_detail\n\
+    \  {\n    inline string export_var(\n        const i128 &x, const string &indent,\
+    \ size_t last_line_length,\n        size_t current_depth, bool fail_on_newline,\
+    \ const export_command &command\n    ) {\n      return export_var(i128tos(x),\
     \ indent, last_line_length, current_depth, fail_on_newline, command);\n    }\n\
     \  } // namespace cpp_dump::_detail\n  #define dump(...) cpp_dump(__VA_ARGS__)\n\
     \  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
     \  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#else\n  #define dump(...)\n\
-    #endif\n#line 5 \"verify/mytest/template_vector.test.cpp\"\n\nvoid test1()\n{\n\
-    \  auto dp = dvec({3, 4, 5}, 0LL);\n  dump(dp);\n  assert(SZ(dp) == 3);\n  rep(i,\
-    \ 3)\n  {\n    assert(SZ(dp.at(i)) == 4);\n    rep(j, 4) assert(SZ(dp.at(i).at(j))\
-    \ == 5);\n  }\n}\n\nvoid test2()\n{\n  assert(ctol('J', \"JOI\") == 0);\n  assert(ctol('O',\
-    \ \"JOI\") == 1);\n  assert(ctol('I', \"JOI\") == 2);\n  assert(ctol('?', \"JOI\"\
-    ) == -1);\n\n  vl v = {0, 1, 2, 3, 4};\n  auto v1 = stov(\"ABCDE\", 'A');\n  auto\
-    \ v2 = stov(\"abcde\", 'a');\n  auto v3 = stov(\"01234\", '0');\n  assert(v ==\
-    \ v1 && v == v2 && v == v3);\n\n  vl w = {0, 1, 2, 1, 0, 2};\n  auto w1 = stov(\"\
-    RSPSRP\", \"RSP\");\n  assert(w == w1);\n}\n\nvoid test3()\n{\n  vvl vv = {\n\
-    \    {0, 1},\n    {2, 3, 4},\n    {5}\n  };\n  vl v = {0, 1, 2, 3, 4, 5};\n\n\
-    \  vl v1 = concat(vv);\n  vl v2 = concat(vv.at(0), vv.at(1), vv.at(2));\n  vl\
-    \ v3 = concat(vv.at(0), vc{2, 3, 4}, vc{5});\n  dump(v, v1, v2, v3);\n  assert(v\
-    \ == v1 && v == v2 && v == v3);\n}\n\nint main()\n{\n  test1();\n  test2();\n\
-    \  test3();\n\n  cout << \"Hello World\" << endl;\n}\n"
+    #endif\n#line 5 \"verify/mytest/template_binsearch.test.cpp\"\n\nvoid test1()\n\
+    {\n  vl a = {1, 3, 3, 3, 4, 5, 5, 6};\n  rep(k, 10)\n  {\n    ll i1, i2, i3;\n\
+    \n    i1 = LB(a, k);\n    i2 = binsearch([&](ll i)\n                   { return\
+    \ k <= vecget(a, i); }, SZI(a), -1)\n             .first;\n    i3 = expsearch([&](ll\
+    \ i)\n                   { return k <= vecget(a, i); }, 0, true)\n           \
+    \  .first;\n    assert(i1 == i2 && i2 == i3);\n\n    i1 = UB(a, k);\n    i2 =\
+    \ binsearch([&](ll i)\n                   { return k < vecget(a, i); }, SZI(a),\
+    \ -1)\n             .first;\n    i3 = expsearch([&](ll i)\n                  \
+    \ { return k < vecget(a, i); }, 0, true)\n             .first;\n    assert(i1\
+    \ == i2 && i2 == i3);\n  }\n}\n\nint main()\n{\n  test1();\n\n  cout << \"Hello\
+    \ World\" << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
-    \n\n#include \"../../template/template_vector.hpp\"\n#include \"../../template/template_dump.hpp\"\
-    \n\nvoid test1()\n{\n  auto dp = dvec({3, 4, 5}, 0LL);\n  dump(dp);\n  assert(SZ(dp)\
-    \ == 3);\n  rep(i, 3)\n  {\n    assert(SZ(dp.at(i)) == 4);\n    rep(j, 4) assert(SZ(dp.at(i).at(j))\
-    \ == 5);\n  }\n}\n\nvoid test2()\n{\n  assert(ctol('J', \"JOI\") == 0);\n  assert(ctol('O',\
-    \ \"JOI\") == 1);\n  assert(ctol('I', \"JOI\") == 2);\n  assert(ctol('?', \"JOI\"\
-    ) == -1);\n\n  vl v = {0, 1, 2, 3, 4};\n  auto v1 = stov(\"ABCDE\", 'A');\n  auto\
-    \ v2 = stov(\"abcde\", 'a');\n  auto v3 = stov(\"01234\", '0');\n  assert(v ==\
-    \ v1 && v == v2 && v == v3);\n\n  vl w = {0, 1, 2, 1, 0, 2};\n  auto w1 = stov(\"\
-    RSPSRP\", \"RSP\");\n  assert(w == w1);\n}\n\nvoid test3()\n{\n  vvl vv = {\n\
-    \    {0, 1},\n    {2, 3, 4},\n    {5}\n  };\n  vl v = {0, 1, 2, 3, 4, 5};\n\n\
-    \  vl v1 = concat(vv);\n  vl v2 = concat(vv.at(0), vv.at(1), vv.at(2));\n  vl\
-    \ v3 = concat(vv.at(0), vc{2, 3, 4}, vc{5});\n  dump(v, v1, v2, v3);\n  assert(v\
-    \ == v1 && v == v2 && v == v3);\n}\n\nint main()\n{\n  test1();\n  test2();\n\
-    \  test3();\n\n  cout << \"Hello World\" << endl;\n}"
+    \n\n#include \"../../template/template_binsearch.hpp\"\n#include \"../../template/template_dump.hpp\"\
+    \n\nvoid test1()\n{\n  vl a = {1, 3, 3, 3, 4, 5, 5, 6};\n  rep(k, 10)\n  {\n \
+    \   ll i1, i2, i3;\n\n    i1 = LB(a, k);\n    i2 = binsearch([&](ll i)\n     \
+    \              { return k <= vecget(a, i); }, SZI(a), -1)\n             .first;\n\
+    \    i3 = expsearch([&](ll i)\n                   { return k <= vecget(a, i);\
+    \ }, 0, true)\n             .first;\n    assert(i1 == i2 && i2 == i3);\n\n   \
+    \ i1 = UB(a, k);\n    i2 = binsearch([&](ll i)\n                   { return k\
+    \ < vecget(a, i); }, SZI(a), -1)\n             .first;\n    i3 = expsearch([&](ll\
+    \ i)\n                   { return k < vecget(a, i); }, 0, true)\n            \
+    \ .first;\n    assert(i1 == i2 && i2 == i3);\n  }\n}\n\nint main()\n{\n  test1();\n\
+    \n  cout << \"Hello World\" << endl;\n}"
   dependsOn:
-  - template/template_vector.hpp
+  - template/template_binsearch.hpp
   - template/template_types.hpp
   - template/template_rep.hpp
+  - template/template_vector.hpp
   - template/template_math.hpp
   - template/template_dump.hpp
   isVerificationFile: true
-  path: verify/mytest/template_vector.test.cpp
+  path: verify/mytest/template_binsearch.test.cpp
   requiredBy: []
   timestamp: '2024-12-10 00:58:47+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/mytest/template_vector.test.cpp
+documentation_of: verify/mytest/template_binsearch.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/mytest/template_vector.test.cpp
-- /verify/verify/mytest/template_vector.test.cpp.html
-title: verify/mytest/template_vector.test.cpp
+- /verify/verify/mytest/template_binsearch.test.cpp
+- /verify/verify/mytest/template_binsearch.test.cpp.html
+title: verify/mytest/template_binsearch.test.cpp
 ---

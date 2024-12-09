@@ -10,7 +10,7 @@ data:
   _extendedRequiredBy:
   - icon: ':warning:'
     path: template/template.cpp
-    title: template/template.cpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
   - icon: ':heavy_check_mark:'
     path: template/template_all.hpp
     title: template/template_all.hpp
@@ -53,17 +53,16 @@ data:
     using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
     using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
     \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
-    \  using i128 = __int128_t;\n  i128 stoi128(const string &s)\n  {\n    i128 res\
-    \ = 0;\n    if (s.front() == '-')\n    {\n      for (int i = 1; i < (int)s.size();\
-    \ i++)\n        res = 10 * res + s[i] - '0';\n      res = -res;\n    }\n    else\n\
-    \    {\n      for (auto &&c : s)\n        res = 10 * res + c - '0';\n    }\n \
-    \   return res;\n  }\n  string i128tos(i128 x)\n  {\n    if (x == 0) return \"\
-    0\";\n    string sign = \"\", res = \"\";\n    if (x < 0)\n      x = -x, sign\
-    \ = \"-\";\n    while (x > 0)\n    {\n      res += '0' + x % 10;\n      x /= 10;\n\
-    \    }\n    reverse(res.begin(), res.end());\n    return sign + res;\n  }\n  istream\
-    \ &operator>>(istream &is, i128 &a)\n  {\n    string s;\n    is >> s;\n    a =\
-    \ stoi128(s);\n    return is;\n  }\n  ostream &operator<<(ostream &os, const i128\
-    \ &a)\n  {\n    os << i128tos(a);\n    return os;\n  }\n#endif\n\n#define cauto\
+    using i128 = __int128_t;\ni128 stoi128(const string &s)\n{\n  i128 res = 0;\n\
+    \  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size(); i++)\n \
+    \     res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n    for\
+    \ (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n}\nstring\
+    \ i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\", res =\
+    \ \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n    res\
+    \ += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n  return\
+    \ sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string s;\n\
+    \  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream &os,\
+    \ const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto\
     \ const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
     \ docs/template/template_rep.md\n */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n\
@@ -74,39 +73,41 @@ data:
     #define repi1(i, n) for (int i = 0; i < int(n); i++)\n#define repi2(i, l, r) for\
     \ (int i = int(l); i < int(r); i++)\n#define repi3(i, l, r, d) for (int i = int(l);\
     \ (d) > 0 ? i < int(r) : i > int(r); i += d)\n#define repi(...) overload4(__VA_ARGS__,\
-    \ repi3, repi2, repi1)(__VA_ARGS__)\n#line 5 \"template/template_inout.hpp\"\n\
-    \n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\
-    \n * @docs docs/template/template_inout.md\n */\n/**\n * \u53C2\u8003\uFF1A\n\
-    \ * https://trap.jp/post/1224/\n */\n\n// ---- \u5165\u529B ----\ntemplate <class\
-    \ T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  cin >> p.first\
-    \ >> p.second;\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
-    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    cin >> a[i];\n\
-    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
-    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
-    \ is;\n}\n\ntemplate <class... Ts>\nvoid INPUT(Ts &...a) { (cin >> ... >> a);\
-    \ }\n\ntemplate <class T>\nvoid INPUTVEC(int n, vc<T> &v)\n{\n  v.resize(n);\n\
-    \  repi(i, n) cin >> v[i];\n}\ntemplate <class T, class... Ts>\nvoid INPUTVEC(int\
-    \ n, vc<T> &v, vc<Ts> &...vs)\n{ INPUTVEC(n, v), INPUTVEC(n, vs...); }\n\ntemplate\
-    \ <class T>\nvoid INPUTVEC2(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n\
-    \  repi(i, n) repi(j, m) cin >> v[i][j];\n}\ntemplate <class T, class... Ts>\n\
-    void INPUTVEC2(int n, int m, vvc<T> &v, vvc<Ts> &...vs)\n{ INPUTVEC2(n, m, v),\
-    \ INPUTVEC2(n, m, vs...); }\n\n#define INT(...) int __VA_ARGS__; INPUT(__VA_ARGS__)\n\
-    #define LL(...) ll __VA_ARGS__; INPUT(__VA_ARGS__)\n#define STR(...) string __VA_ARGS__;\
-    \ INPUT(__VA_ARGS__)\n#define ARR(T, n, ...) array<T, n> __VA_ARGS__; INPUT(__VA_ARGS__)\n\
-    #define VEC(T, n, ...) vc<T> __VA_ARGS__; INPUTVEC(n, __VA_ARGS__)\n#define VEC2(T,\
-    \ n, m, ...) vvc<T> __VA_ARGS__; INPUTVEC2(n, m, __VA_ARGS__)\n// ----------\n\
-    \n// ----- \u51FA\u529B -----\n#ifdef FAST_IO\n  #define ENDL '\\n'\n#else\n \
-    \ #define ENDL endl\n#endif\n\ntemplate <class T>\nvoid PRINT(const T &a) { cout\
-    \ << a << ENDL; }\ntemplate <class T, class... Ts>\nvoid PRINT(const T &a, const\
-    \ Ts &...b)\n{\n  cout << a;\n  (cout << ... << (cout << ' ', b));\n  cout <<\
-    \ ENDL;\n}\n#define PRINTEXIT(...) do { PRINT(__VA_ARGS__); exit(0); } while (false)\n\
-    #define PRINTRETURN(...) do { PRINT(__VA_ARGS__); return; } while (false)\n\n\
-    template <class T>\nvoid PRINTVEC(const vc<T> &v)\n{\n  const int n = v.size();\n\
-    \  repi(i, n) cout << v[i] << (i == n - 1 ? \"\" : \" \");\n  cout << ENDL;\n\
-    }\ntemplate <class T>\nvoid PRINTVECT(const vc<T> &v) { for (auto &vi : v) cout\
-    \ << vi << ENDL; }\ntemplate <class T>\nvoid PRINTVEC2(const vvc<T> &v) { for\
-    \ (auto &vi : v) PRINTVEC(vi); }\n// ----------\n\n// ----- \u57FA\u6E96\u305A\
-    \u3089\u3057 -----\ntemplate <class T, class U>\npair<T, U> operator+=(pair<T,\
+    \ repi3, repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n\
+    #define fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
+    #line 5 \"template/template_inout.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\n * @docs docs/template/template_inout.md\n\
+    \ */\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n */\n\n// ----\
+    \ \u5165\u529B ----\ntemplate <class T, class U>\nistream &operator>>(istream\
+    \ &is, pair<T, U> &p)\n{\n  cin >> p.first >> p.second;\n  return is;\n}\ntemplate\
+    \ <class T, size_t n>\nistream &operator>>(istream &is, array<T, n> &a)\n{\n \
+    \ for (size_t i = 0; i < n; i++)\n    cin >> a[i];\n  return is;\n}\ntemplate\
+    \ <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...> &t)\n{\n  apply([&](auto\
+    \ &...a)\n        { (is >> ... >> a); }, t);\n  return is;\n}\n\ntemplate <class...\
+    \ Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\ntemplate <class T>\nvoid CINVEC(int\
+    \ n, vc<T> &v)\n{\n  v.resize(n);\n  repi(i, n) cin >> v[i];\n}\ntemplate <class\
+    \ T, class... Ts>\nvoid CINVEC(int n, vc<T> &v, vc<Ts> &...vs)\n{ CINVEC(n, v),\
+    \ CINVEC(n, vs...); }\n\ntemplate <class T>\nvoid CINVEC2(int n, int m, vvc<T>\
+    \ &v)\n{\n  v.assign(n, vc<T>(m));\n  repi(i, n) repi(j, m) cin >> v[i][j];\n\
+    }\ntemplate <class T, class... Ts>\nvoid CINVEC2(int n, int m, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ CINVEC2(n, m, v), CINVEC2(n, m, vs...); }\n\n#define IN(T, ...) T\
+    \ __VA_ARGS__; CIN(__VA_ARGS__)\n\n#define CHAR(...) IN(char, __VA_ARGS__)\n#define\
+    \ INT(...) IN(int, __VA_ARGS__)\n#define LL(...) IN(ll, __VA_ARGS__)\n#define\
+    \ STR(...) IN(string, __VA_ARGS__)\n#define ARR(T, n, ...) array<T, n> __VA_ARGS__;\
+    \ CIN(__VA_ARGS__)\n\n#define VEC(T, n, ...) vc<T> __VA_ARGS__; CINVEC(n, __VA_ARGS__)\n\
+    #define VEC2(T, n, m, ...) vvc<T> __VA_ARGS__; CINVEC2(n, m, __VA_ARGS__)\n//\
+    \ ----------\n\n// ----- \u51FA\u529B -----\n#ifdef INTERACTIVE\n#define ENDL\
+    \ endl\n#else\n#define ENDL '\\n'\n#endif\n\ntemplate <class T>\nvoid PRINT(const\
+    \ T &a) { cout << a << ENDL; }\ntemplate <class T, class... Ts>\nvoid PRINT(const\
+    \ T &a, const Ts &...b)\n{\n  cout << a;\n  (cout << ... << (cout << ' ', b));\n\
+    \  cout << ENDL;\n}\n#define PRINTEXIT(...) do { PRINT(__VA_ARGS__); exit(0);\
+    \ } while (false)\n#define PRINTRETURN(...) do { PRINT(__VA_ARGS__); return; }\
+    \ while (false)\n\ntemplate <class T>\nvoid PRINTVEC(const vc<T> &v)\n{\n  const\
+    \ int n = v.size();\n  repi(i, n) cout << v[i] << (i == n - 1 ? \"\" : \" \");\n\
+    \  cout << ENDL;\n}\ntemplate <class T>\nvoid PRINTVECT(const vc<T> &v) { for\
+    \ (auto &vi : v) cout << vi << ENDL; }\ntemplate <class T>\nvoid PRINTVEC2(const\
+    \ vvc<T> &v) { for (auto &vi : v) PRINTVEC(vi); }\n// ----------\n\n// ----- \u57FA\
+    \u6E96\u305A\u3089\u3057 -----\ntemplate <class T, class U>\npair<T, U> operator+=(pair<T,\
     \ U> &a, cauto &b)\n{\n  a.first += b.first;\n  a.second += b.second;\n  return\
     \ a;\n}\ntemplate <class T, class U>\npair<T, U> operator+(pair<T, U> &a, cauto\
     \ &b) { return a += b; }\n\ntemplate <class T, size_t n>\narray<T, n> operator+=(array<T,\
@@ -156,39 +157,40 @@ data:
     \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    cin >> a[i];\n\
     \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
     \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
-    \ is;\n}\n\ntemplate <class... Ts>\nvoid INPUT(Ts &...a) { (cin >> ... >> a);\
-    \ }\n\ntemplate <class T>\nvoid INPUTVEC(int n, vc<T> &v)\n{\n  v.resize(n);\n\
-    \  repi(i, n) cin >> v[i];\n}\ntemplate <class T, class... Ts>\nvoid INPUTVEC(int\
-    \ n, vc<T> &v, vc<Ts> &...vs)\n{ INPUTVEC(n, v), INPUTVEC(n, vs...); }\n\ntemplate\
-    \ <class T>\nvoid INPUTVEC2(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n\
-    \  repi(i, n) repi(j, m) cin >> v[i][j];\n}\ntemplate <class T, class... Ts>\n\
-    void INPUTVEC2(int n, int m, vvc<T> &v, vvc<Ts> &...vs)\n{ INPUTVEC2(n, m, v),\
-    \ INPUTVEC2(n, m, vs...); }\n\n#define INT(...) int __VA_ARGS__; INPUT(__VA_ARGS__)\n\
-    #define LL(...) ll __VA_ARGS__; INPUT(__VA_ARGS__)\n#define STR(...) string __VA_ARGS__;\
-    \ INPUT(__VA_ARGS__)\n#define ARR(T, n, ...) array<T, n> __VA_ARGS__; INPUT(__VA_ARGS__)\n\
-    #define VEC(T, n, ...) vc<T> __VA_ARGS__; INPUTVEC(n, __VA_ARGS__)\n#define VEC2(T,\
-    \ n, m, ...) vvc<T> __VA_ARGS__; INPUTVEC2(n, m, __VA_ARGS__)\n// ----------\n\
-    \n// ----- \u51FA\u529B -----\n#ifdef FAST_IO\n  #define ENDL '\\n'\n#else\n \
-    \ #define ENDL endl\n#endif\n\ntemplate <class T>\nvoid PRINT(const T &a) { cout\
-    \ << a << ENDL; }\ntemplate <class T, class... Ts>\nvoid PRINT(const T &a, const\
-    \ Ts &...b)\n{\n  cout << a;\n  (cout << ... << (cout << ' ', b));\n  cout <<\
-    \ ENDL;\n}\n#define PRINTEXIT(...) do { PRINT(__VA_ARGS__); exit(0); } while (false)\n\
-    #define PRINTRETURN(...) do { PRINT(__VA_ARGS__); return; } while (false)\n\n\
-    template <class T>\nvoid PRINTVEC(const vc<T> &v)\n{\n  const int n = v.size();\n\
-    \  repi(i, n) cout << v[i] << (i == n - 1 ? \"\" : \" \");\n  cout << ENDL;\n\
-    }\ntemplate <class T>\nvoid PRINTVECT(const vc<T> &v) { for (auto &vi : v) cout\
-    \ << vi << ENDL; }\ntemplate <class T>\nvoid PRINTVEC2(const vvc<T> &v) { for\
-    \ (auto &vi : v) PRINTVEC(vi); }\n// ----------\n\n// ----- \u57FA\u6E96\u305A\
-    \u3089\u3057 -----\ntemplate <class T, class U>\npair<T, U> operator+=(pair<T,\
-    \ U> &a, cauto &b)\n{\n  a.first += b.first;\n  a.second += b.second;\n  return\
-    \ a;\n}\ntemplate <class T, class U>\npair<T, U> operator+(pair<T, U> &a, cauto\
-    \ &b) { return a += b; }\n\ntemplate <class T, size_t n>\narray<T, n> operator+=(array<T,\
-    \ n> &a, cauto &b)\n{\n  for (size_t i = 0; i < n; i++)\n    a[i] += b[i];\n \
-    \ return a;\n}\ntemplate <class T, size_t n>\narray<T, n> operator+(array<T, n>\
-    \ &a, cauto &b) { return a += b; }\n\ntemplate <size_t... I>\nauto tuple_add_impl(auto\
-    \ &a, cauto &b, const index_sequence<I...>)\n{\n  ((get<I>(a) += get<I>(b)), ...);\n\
-    \  return a;\n}\ntemplate <class... Ts>\ntuple<Ts...> operator+=(tuple<Ts...>\
-    \ &a, cauto &b)\n{ return tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{});\
+    \ is;\n}\n\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\
+    \ntemplate <class T>\nvoid CINVEC(int n, vc<T> &v)\n{\n  v.resize(n);\n  repi(i,\
+    \ n) cin >> v[i];\n}\ntemplate <class T, class... Ts>\nvoid CINVEC(int n, vc<T>\
+    \ &v, vc<Ts> &...vs)\n{ CINVEC(n, v), CINVEC(n, vs...); }\n\ntemplate <class T>\n\
+    void CINVEC2(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  repi(i,\
+    \ n) repi(j, m) cin >> v[i][j];\n}\ntemplate <class T, class... Ts>\nvoid CINVEC2(int\
+    \ n, int m, vvc<T> &v, vvc<Ts> &...vs)\n{ CINVEC2(n, m, v), CINVEC2(n, m, vs...);\
+    \ }\n\n#define IN(T, ...) T __VA_ARGS__; CIN(__VA_ARGS__)\n\n#define CHAR(...)\
+    \ IN(char, __VA_ARGS__)\n#define INT(...) IN(int, __VA_ARGS__)\n#define LL(...)\
+    \ IN(ll, __VA_ARGS__)\n#define STR(...) IN(string, __VA_ARGS__)\n#define ARR(T,\
+    \ n, ...) array<T, n> __VA_ARGS__; CIN(__VA_ARGS__)\n\n#define VEC(T, n, ...)\
+    \ vc<T> __VA_ARGS__; CINVEC(n, __VA_ARGS__)\n#define VEC2(T, n, m, ...) vvc<T>\
+    \ __VA_ARGS__; CINVEC2(n, m, __VA_ARGS__)\n// ----------\n\n// ----- \u51FA\u529B\
+    \ -----\n#ifdef INTERACTIVE\n#define ENDL endl\n#else\n#define ENDL '\\n'\n#endif\n\
+    \ntemplate <class T>\nvoid PRINT(const T &a) { cout << a << ENDL; }\ntemplate\
+    \ <class T, class... Ts>\nvoid PRINT(const T &a, const Ts &...b)\n{\n  cout <<\
+    \ a;\n  (cout << ... << (cout << ' ', b));\n  cout << ENDL;\n}\n#define PRINTEXIT(...)\
+    \ do { PRINT(__VA_ARGS__); exit(0); } while (false)\n#define PRINTRETURN(...)\
+    \ do { PRINT(__VA_ARGS__); return; } while (false)\n\ntemplate <class T>\nvoid\
+    \ PRINTVEC(const vc<T> &v)\n{\n  const int n = v.size();\n  repi(i, n) cout <<\
+    \ v[i] << (i == n - 1 ? \"\" : \" \");\n  cout << ENDL;\n}\ntemplate <class T>\n\
+    void PRINTVECT(const vc<T> &v) { for (auto &vi : v) cout << vi << ENDL; }\ntemplate\
+    \ <class T>\nvoid PRINTVEC2(const vvc<T> &v) { for (auto &vi : v) PRINTVEC(vi);\
+    \ }\n// ----------\n\n// ----- \u57FA\u6E96\u305A\u3089\u3057 -----\ntemplate\
+    \ <class T, class U>\npair<T, U> operator+=(pair<T, U> &a, cauto &b)\n{\n  a.first\
+    \ += b.first;\n  a.second += b.second;\n  return a;\n}\ntemplate <class T, class\
+    \ U>\npair<T, U> operator+(pair<T, U> &a, cauto &b) { return a += b; }\n\ntemplate\
+    \ <class T, size_t n>\narray<T, n> operator+=(array<T, n> &a, cauto &b)\n{\n \
+    \ for (size_t i = 0; i < n; i++)\n    a[i] += b[i];\n  return a;\n}\ntemplate\
+    \ <class T, size_t n>\narray<T, n> operator+(array<T, n> &a, cauto &b) { return\
+    \ a += b; }\n\ntemplate <size_t... I>\nauto tuple_add_impl(auto &a, cauto &b,\
+    \ const index_sequence<I...>)\n{\n  ((get<I>(a) += get<I>(b)), ...);\n  return\
+    \ a;\n}\ntemplate <class... Ts>\ntuple<Ts...> operator+=(tuple<Ts...> &a, cauto\
+    \ &b)\n{ return tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{});\
     \ }\ntemplate <class... Ts>\ntuple<Ts...> operator+(tuple<Ts...> &a, cauto &b)\
     \ { return a += b; }\n\ntemplate <class T>\nvoid offset(vc<T> &v, cauto &add)\
     \ { for (auto &vi : v) vi += add; }\ntemplate <class T>\nvoid offset(vvc<T> &v,\
@@ -228,15 +230,15 @@ data:
   requiredBy:
   - template/template.cpp
   - template/template_all.hpp
-  timestamp: '2024-08-31 12:06:34+09:00'
+  timestamp: '2024-12-10 00:58:47+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/mytest/template_inout_top.test.cpp
-  - verify/yosupo/kth_root_integer.test.cpp
-  - verify/yosupo/aplusb.test.cpp
   - verify/yosupo/many_aplusb_128bit.test.cpp
-  - verify/yosupo/many_aplusb.test.cpp
+  - verify/yosupo/kth_root_integer.test.cpp
   - verify/yosupo/many_aplusb_tuple.test.cpp
+  - verify/yosupo/aplusb.test.cpp
+  - verify/yosupo/many_aplusb.test.cpp
+  - verify/mytest/template_inout_top.test.cpp
 documentation_of: template/template_inout.hpp
 layout: document
 redirect_from:
@@ -254,21 +256,25 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
 
 #### 変数を宣言と同時に入力するマクロ
 
-- `INT(...)`：`int` 型の値（引数は複数）
+- `IN(T, ...)`：`T` 型の値（引数は複数）
 
-- `LL(...)`：`ll` 型の値（引数は複数）
+  - `CHAR(...)`：`char` 型の値（引数は複数）
 
-- `STR(...)`：`string` 型の値（引数は複数）
+  - `INT(...)`：`int` 型の値（引数は複数）
 
-- `ARR(T, n, ...)`：`array<T, n>` 型の値（第 $3$ 引数以降は複数）
+  - `LL(...)`：`ll` 型の値（引数は複数）
+
+  - `STR(...)`：`string` 型の値（引数は複数）
+
+  - `ARR(T, n, ...)`：`array<T, n>` 型の値（第 $3$ 引数以降は複数）
 
 - `VEC(T, n, ...)`：`vector<T>` 型の値（サイズは $n$）（第 $3$ 引数以降は複数）
 
 - `VEC2(T, n, m, ...)`：`vector<T>` 型の値（サイズは $n \times m$）（第 $4$ 引数以降は複数）
 
-一応、すでにある変数に入力するマクロ（`INPUT` から始まる諸々）も副産物としてあるが、あまり使わないと思う。
+一応、すでにある変数に入力するマクロ（`CIN` から始まる諸々）も副産物としてあるが、あまり使わないと思う。
 
-マクロに型を入れる場合、カンマが入っている型（`pair<int, int>` など）でうまく動かないので注意（`pll` 的なものを `using` するとよい）。
+マクロに型を入れる場合、カンマが入っている型（`pair<int, int>` など）には注意（`pll` 的なものを `using` する）。
 
 ### 出力
 
@@ -287,7 +293,7 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
 - `PRINTRETURN`：`PRINT` して `return` する
   - `main` の外に `main2` を作っておけば、複数テストケースの場合も `PRINTRETURN` でよい
 
-改行の際の flush は、`FAST_IO` が define されていれば flush しない、define されていなければ flush する。
+改行の際の flush は、`INTERACTIVE` が define されていれば flush しない、define されていなければ flush する。
 
 このあたりの思想はテンプレート全体（template.cpp）も見るとよいかも。
 
