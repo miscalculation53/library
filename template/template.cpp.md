@@ -315,15 +315,18 @@ data:
     \ output ------\n    #define INPUT A\n    auto god = naive(INPUT);\n    auto ans\
     \ = solve(INPUT);\n    if (god != ans)\n    {\n      dump(INPUT);\n      dump(god,\
     \ ans);\n      exit(0);\n    }\n    // --------------------------\n  }\n  dump(\"\
-    ok\");\n  #endif\n  //*/\n}\n\nint main()\n{\n  #if defined FAST_IO and not defined\
-    \ LOCAL\n    cerr << \"[FAST_IO]\\n\\n\";\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
-    \  #endif\n  cout << fixed << setprecision(20);\n\n  init();\n  test();\n\n  #if\
-    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    cerr\
-    \ << \"[AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n  #elif defined SINGLE_TESTCASE\n\
-    \    cerr << \"[SINGLE_TESTCASE]\\n\\n\";\n    main2();\n  #elif defined MULTI_TESTCASE\n\
-    \    cerr << \"[MULTI_TESTCASE]\\n\\n\";\n    int T;\n    cin >> T;\n    while\
-    \ (T--) main2();\n  #endif\n}\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08\u5168\u4F53\uFF09\n * @docs docs/template/template.md\n */\n"
+    ok\");\n  #endif\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n\
+    \  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO\
+    \ and not defined LOCAL\n    CERR(\"[FAST_IO]\\n\\n\");\n    cin.tie(0);\n   \
+    \ ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
+    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
+    \ SINGLE_TESTCASE)\n    CERR(\"[AOJ_TESTCASE]\\n\\n\");\n    while (true)\n  \
+    \  {\n      dump(\"new testcase\");\n      main2();\n    }\n  #elif defined SINGLE_TESTCASE\n\
+    \    CERR(\"[SINGLE_TESTCASE]\\n\\n\");\n    main2();\n  #elif defined MULTI_TESTCASE\n\
+    \    CERR(\"[MULTI_TESTCASE]\\n\\n\");\n    int T;\n    cin >> T;\n    while (T--)\n\
+    \    {\n      dump(\"new testcase\");\n      main2();\n    }\n  #endif\n}\n\n\n\
+    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09\n\
+    \ * @docs docs/template/template.md\n */\n"
   code: "#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037\n\
     #define EPS 1e-11\n\n#include \"template/template_all.hpp\"\n\nvoid init() {}\n\
@@ -334,15 +337,18 @@ data:
     \ output ------\n    #define INPUT A\n    auto god = naive(INPUT);\n    auto ans\
     \ = solve(INPUT);\n    if (god != ans)\n    {\n      dump(INPUT);\n      dump(god,\
     \ ans);\n      exit(0);\n    }\n    // --------------------------\n  }\n  dump(\"\
-    ok\");\n  #endif\n  //*/\n}\n\nint main()\n{\n  #if defined FAST_IO and not defined\
-    \ LOCAL\n    cerr << \"[FAST_IO]\\n\\n\";\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
-    \  #endif\n  cout << fixed << setprecision(20);\n\n  init();\n  test();\n\n  #if\
-    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    cerr\
-    \ << \"[AOJ_TESTCASE]\\n\\n\";\n    while (true) main2();\n  #elif defined SINGLE_TESTCASE\n\
-    \    cerr << \"[SINGLE_TESTCASE]\\n\\n\";\n    main2();\n  #elif defined MULTI_TESTCASE\n\
-    \    cerr << \"[MULTI_TESTCASE]\\n\\n\";\n    int T;\n    cin >> T;\n    while\
-    \ (T--) main2();\n  #endif\n}\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08\u5168\u4F53\uFF09\n * @docs docs/template/template.md\n */"
+    ok\");\n  #endif\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n\
+    \  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO\
+    \ and not defined LOCAL\n    CERR(\"[FAST_IO]\\n\\n\");\n    cin.tie(0);\n   \
+    \ ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
+    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
+    \ SINGLE_TESTCASE)\n    CERR(\"[AOJ_TESTCASE]\\n\\n\");\n    while (true)\n  \
+    \  {\n      dump(\"new testcase\");\n      main2();\n    }\n  #elif defined SINGLE_TESTCASE\n\
+    \    CERR(\"[SINGLE_TESTCASE]\\n\\n\");\n    main2();\n  #elif defined MULTI_TESTCASE\n\
+    \    CERR(\"[MULTI_TESTCASE]\\n\\n\");\n    int T;\n    cin >> T;\n    while (T--)\n\
+    \    {\n      dump(\"new testcase\");\n      main2();\n    }\n  #endif\n}\n\n\n\
+    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09\n\
+    \ * @docs docs/template/template.md\n */"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -356,7 +362,7 @@ data:
   isVerificationFile: false
   path: template/template.cpp
   requiredBy: []
-  timestamp: '2024-12-10 00:58:47+09:00'
+  timestamp: '2024-12-10 01:15:19+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: template/template.cpp
@@ -387,11 +393,10 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
 
 ### 入出力高速化
 
-`FAST_IO` が define されているとき、例の `cin.tie(0); ios::sync_with_stdio(false);` をする。また、`PRINT` 系での改行のとき flush しない。
+`FAST_IO` が define されているとき、例の `cin.tie(0); ios::sync_with_stdio(false);` をする。`FAST_IO` は `LOCAL` では外れる。
 
-インタラクティブ問題などでは `FAST_IO` を手動で外す。
+`INTERACTIVE` が define されているとき、`PRINT` 系での改行で flush する。
 
-`FAST_IO` は `LOCAL` では外れる。
 
 ### 定数
 

@@ -243,7 +243,7 @@ $v$ がソート済みで、後ろの引数がデフォルトの場合、
 
 ##### 計算量
 
-- $O(\log |v|)$
+- $O(\log \lvert v \rvert)$
 
 ### binsearch
 
@@ -252,8 +252,8 @@ $v$ がソート済みで、後ろの引数がデフォルトの場合、
 (2) T binsearch_real(F judge, T ok, T ng, int iteration_count)
 ```
 
-- (1)：整数の二分探索。整数 `T` から `bool` への関数 $\mathrm{judge}$ が $\mathrm{judge}(\mathrm{ok}) = \mathrm{true}, \mathrm{judge}(\mathrm{ng}) = \mathrm{false}$ を満たすとする。このとき $\mathrm{ok}$ と $\mathrm{ng}$ の間にある整数 $\alpha, \beta$ であって $\mathrm{judge}(\alpha) = \mathrm{true}, \mathrm{judge}(\beta) = \mathrm{false}, |\alpha - \beta| = 1$ を満たすものが存在する（特に $\mathrm{judge}$ が単調な場合は唯一である）。そのような $\alpha$ を一つ返す。
-- (2)：実数の二分探索。実数 `T` から `bool` への関数 $\mathrm{judge}$ が $\mathrm{judge}(\mathrm{ok}) = \mathrm{true}, \mathrm{judge}(\mathrm{ng}) = \mathrm{false}$ を満たすとする。$1$ 回の反復で、$\mathrm{judge}(\mathrm{ok}) = \mathrm{true}, \mathrm{judge}(\mathrm{ng}) = \mathrm{false}$ を満たしたまま $|\mathrm{ok} - \mathrm{ng}|$ を半分にできる。この反復を $\mathrm{iteration\_count}$ 回繰り返す。
+- (1)：整数の二分探索。整数 `T` から `bool` への関数 $\mathrm{judge}$ が $\mathrm{judge}(\mathrm{ok}) = \mathrm{true}, \mathrm{judge}(\mathrm{ng}) = \mathrm{false}$ を満たすとする。このとき $\mathrm{ok}$ と $\mathrm{ng}$ の間にある整数 $\alpha, \beta$ であって $\mathrm{judge}(\alpha) = \mathrm{true}, \mathrm{judge}(\beta) = \mathrm{false}, \lvert \alpha - \beta \rvert = 1$ を満たすものが存在する（特に $\mathrm{judge}$ が単調な場合は唯一である）。そのような $\alpha$ を一つ返す。
+- (2)：実数の二分探索。実数 `T` から `bool` への関数 $\mathrm{judge}$ が $\mathrm{judge}(\mathrm{ok}) = \mathrm{true}, \mathrm{judge}(\mathrm{ng}) = \mathrm{false}$ を満たすとする。$1$ 回の反復で、$\mathrm{judge}(\mathrm{ok}) = \mathrm{true}, \mathrm{judge}(\mathrm{ng}) = \mathrm{false}$ を満たしたまま $\lvert \mathrm{ok} - \mathrm{ng} \rvert$ を半分にできる。この反復を $\mathrm{iteration\_count}$ 回繰り返す。
 
 ##### 制約
 
@@ -267,14 +267,14 @@ $v$ がソート済みで、後ろの引数がデフォルトの場合、
 
 $\mathrm{judge}(x)$ の実行にかかる時間を $T$ として
 
-- (1)：$O(T \log |\mathrm{ok} - \mathrm{ng}|)$
+- (1)：$O(T \log \lvert \mathrm{ok} - \mathrm{ng} \rvert)$
 - (2)：$O(T \cdot \mathrm{iteration\_count})$
 
 #### expsearch
 
 `T expsearch(F judge, T first = 0, bool positive = true)`
 
-整数の指数探索。整数 `T` から `bool` への関数 $\mathrm{judge}$ は単調であり、$\mathrm{judge}$ の返り値が切り替わる境界（$\mathrm{judge}(\alpha) = \mathrm{true}, \mathrm{judge}(\beta) = \mathrm{false}, |\alpha - \beta| = 1$ を満たす唯一の整数組 $\alpha, \beta$）が
+整数の指数探索。整数 `T` から `bool` への関数 $\mathrm{judge}$ は単調であり、$\mathrm{judge}$ の返り値が切り替わる境界（$\mathrm{judge}(\alpha) = \mathrm{true}, \mathrm{judge}(\beta) = \mathrm{false}, \lvert \alpha - \beta \rvert = 1$ を満たす唯一の整数組 $\alpha, \beta$）が
 
 - $\mathrm{positive} = \mathrm{true}$ なら、$[\mathrm{first}, \infty)$ の範囲にある
 - $\mathrm{positive} = \mathrm{false}$ なら、$(-\infty, \mathrm{first}]$ の範囲にある
@@ -302,4 +302,4 @@ $\mathrm{judge}(x)$ の実行にかかる時間を $T$ として
 
 $\mathrm{judge}(x)$ の実行にかかる時間を $T$ として
 
-- $O(T \log |\mathrm{first} - \alpha|)$
+- $O(T \log \lvert \mathrm{first} - \alpha \rvert)$
