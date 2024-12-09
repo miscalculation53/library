@@ -19,11 +19,10 @@
 
 ### 入出力高速化
 
-`FAST_IO` が define されているとき、例の `cin.tie(0); ios::sync_with_stdio(false);` をする。また、`PRINT` 系での改行のとき flush しない。
+`FAST_IO` が define されているとき、例の `cin.tie(0); ios::sync_with_stdio(false);` をする。`FAST_IO` は `LOCAL` では外れる。
 
-インタラクティブ問題などでは `FAST_IO` を手動で外す。
+`INTERACTIVE` が define されているとき、`PRINT` 系での改行で flush する。
 
-`FAST_IO` は `LOCAL` では外れる。
 
 ### 定数
 

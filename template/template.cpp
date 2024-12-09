@@ -52,29 +52,45 @@ void test()
 
 int main()
 {
+  cauto CERR = [](cauto &val)
+  {
+    #ifndef BOJ
+      cerr << val;
+    #endif
+  };
+
   #if defined FAST_IO and not defined LOCAL
-    cerr << "[FAST_IO]\n\n";
+    CERR("[FAST_IO]\n\n");
     cin.tie(0);
     ios::sync_with_stdio(false);
   #endif
   cout << fixed << setprecision(20);
 
-  init();
   test();
+  init();
 
   #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)
-    cerr << "[AOJ_TESTCASE]\n\n";
-    while (true) main2();
+    CERR("[AOJ_TESTCASE]\n\n");
+    while (true)
+    {
+      dump("new testcase");
+      main2();
+    }
   #elif defined SINGLE_TESTCASE
-    cerr << "[SINGLE_TESTCASE]\n\n";
+    CERR("[SINGLE_TESTCASE]\n\n");
     main2();
   #elif defined MULTI_TESTCASE
-    cerr << "[MULTI_TESTCASE]\n\n";
+    CERR("[MULTI_TESTCASE]\n\n");
     int T;
     cin >> T;
-    while (T--) main2();
+    while (T--)
+    {
+      dump("new testcase");
+      main2();
+    }
   #endif
 }
+
 
 /**
  * @brief テンプレート（全体）
