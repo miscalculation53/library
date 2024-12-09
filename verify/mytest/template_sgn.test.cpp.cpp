@@ -1,4 +1,4 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
+#define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
 #define EPS 1e-11
 
@@ -32,7 +32,5 @@ int main()
 {
   test1();
 
-  ll A, B;
-  cin >> A >> B;
-  cout << A + B << endl;
+  cout << "Hello World" << endl;
 }

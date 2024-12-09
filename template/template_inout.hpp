@@ -35,41 +35,45 @@ istream &operator>>(istream &is, tuple<Ts...> &t)
 }
 
 template <class... Ts>
-void INPUT(Ts &...a) { (cin >> ... >> a); }
+void CIN(Ts &...a) { (cin >> ... >> a); }
 
 template <class T>
-void INPUTVEC(int n, vc<T> &v)
+void CINVEC(int n, vc<T> &v)
 {
   v.resize(n);
   repi(i, n) cin >> v[i];
 }
 template <class T, class... Ts>
-void INPUTVEC(int n, vc<T> &v, vc<Ts> &...vs)
-{ INPUTVEC(n, v), INPUTVEC(n, vs...); }
+void CINVEC(int n, vc<T> &v, vc<Ts> &...vs)
+{ CINVEC(n, v), CINVEC(n, vs...); }
 
 template <class T>
-void INPUTVEC2(int n, int m, vvc<T> &v)
+void CINVEC2(int n, int m, vvc<T> &v)
 {
   v.assign(n, vc<T>(m));
   repi(i, n) repi(j, m) cin >> v[i][j];
 }
 template <class T, class... Ts>
-void INPUTVEC2(int n, int m, vvc<T> &v, vvc<Ts> &...vs)
-{ INPUTVEC2(n, m, v), INPUTVEC2(n, m, vs...); }
+void CINVEC2(int n, int m, vvc<T> &v, vvc<Ts> &...vs)
+{ CINVEC2(n, m, v), CINVEC2(n, m, vs...); }
 
-#define INT(...) int __VA_ARGS__; INPUT(__VA_ARGS__)
-#define LL(...) ll __VA_ARGS__; INPUT(__VA_ARGS__)
-#define STR(...) string __VA_ARGS__; INPUT(__VA_ARGS__)
-#define ARR(T, n, ...) array<T, n> __VA_ARGS__; INPUT(__VA_ARGS__)
-#define VEC(T, n, ...) vc<T> __VA_ARGS__; INPUTVEC(n, __VA_ARGS__)
-#define VEC2(T, n, m, ...) vvc<T> __VA_ARGS__; INPUTVEC2(n, m, __VA_ARGS__)
+#define IN(T, ...) T __VA_ARGS__; CIN(__VA_ARGS__)
+
+#define CHAR(...) IN(char, __VA_ARGS__)
+#define INT(...) IN(int, __VA_ARGS__)
+#define LL(...) IN(ll, __VA_ARGS__)
+#define STR(...) IN(string, __VA_ARGS__)
+#define ARR(T, n, ...) array<T, n> __VA_ARGS__; CIN(__VA_ARGS__)
+
+#define VEC(T, n, ...) vc<T> __VA_ARGS__; CINVEC(n, __VA_ARGS__)
+#define VEC2(T, n, m, ...) vvc<T> __VA_ARGS__; CINVEC2(n, m, __VA_ARGS__)
 // ----------
 
 // ----- 出力 -----
-#ifdef FAST_IO
-  #define ENDL '\n'
+#ifdef INTERACTIVE
+#define ENDL endl
 #else
-  #define ENDL endl
+#define ENDL '\n'
 #endif
 
 template <class T>

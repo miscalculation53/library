@@ -20,7 +20,7 @@ struct max_op
 template <class T = ll>
 struct min_op
 {
-  T operator()(const T &a, const T &b) const { return max(a, b); }
+  T operator()(const T &a, const T &b) const { return min(a, b); }
 };
 
 template <class T, const T val>

@@ -23,7 +23,9 @@ inline T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b) && (T(
 template <class T = ll>
 inline T divceil(cauto &a, cauto &b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }
 template <class T = ll>
-inline T safemod(cauto &a, cauto &b) { return a - b * divfloor(a, b); }
+inline T divround(cauto &a, cauto &b) { return divfloor<T>(2 * a + b, 2 * b); }
+template <class T = ll>
+inline T safemod(cauto &a, cauto &b) { return a - b * divfloor<T>(a, b); }
 
 template <class T = ll>
 constexpr T ipow(cauto &a, cauto &b)
@@ -100,3 +102,46 @@ constexpr T iroot(cauto &a, cauto &k)
 // https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html
 template <class D = decltype(EPS)>
 int sgn(cauto &a, const D &eps = EPS) { return int(a > eps) - int(a < -eps); }
+
+// 位取り記数法と同じ順番（下位桁が後ろ）
+template <class T = ll>
+vc<T> b_ary(cauto &x, const int &b)
+{
+  vc<T> a;
+  while (x > 0)
+  {
+    a.emplace_back(x % b);
+    x /= b;
+  }
+  reverse(a.begin(), a.end());
+  return a;
+}
+// 位取り記数法と同じ順番（下位桁が後ろ）
+template <class T>
+vc<T> b_ary(cauto &x, const int &b, const int &n)
+{
+  vc<T> a(n);
+  repi(i, n)
+  {
+    a[i] = x % b;
+    x /= b;
+  }
+  reverse(a.begin(), a.end());
+  return a;
+}
+string b_ary_str(cauto &x, const int &b, bool use_upper = true)
+{
+  auto a = b_ary(x, b);
+  string s = "";
+  for (cauto &ai : a)
+    s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));
+  return s;
+}
+string b_ary_str(cauto &x, const int &b, const int &n, bool use_upper = true)
+{
+  auto a = b_ary(x, b, n);
+  string s = "";
+  for (cauto &ai : a)
+    s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));
+  return s;
+}

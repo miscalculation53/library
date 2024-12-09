@@ -23,9 +23,11 @@ void test()
 {
   /*
   #ifdef LOCAL
-  rep(t, 100000)
+  rep(testcase, 100000)
   {
-    dump(t);
+    cout << endl;
+    dump(testcase);
+
 
     // ----- generate cases -----
     ll N = 1 + rand() % 5;

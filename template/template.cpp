@@ -3,6 +3,7 @@
 // #define AOJ_TESTCASE
 
 #define FAST_IO
+// #define INTERACTIVE
 
 #define INF 4'000'000'000'000'000'037
 #define EPS 1e-11
@@ -20,9 +21,11 @@ void test()
 {
   /*
   #ifdef LOCAL
-  rep(t, 100000)
+  rep(testcase, 100000)
   {
-    dump(t);
+    cout << endl;
+    dump(testcase);
+
 
     // ----- generate cases -----
     ll N = 1 + rand() % 5;
@@ -31,11 +34,12 @@ void test()
     // --------------------------
 
     // ------ check output ------
-    auto god = naive(A);
-    auto ans = solve(A);
+    #define INPUT A
+    auto god = naive(INPUT);
+    auto ans = solve(INPUT);
     if (god != ans)
     {
-      dump(N, A);
+      dump(INPUT);
       dump(god, ans);
       exit(0);
     }
@@ -71,3 +75,8 @@ int main()
     while (T--) main2();
   #endif
 }
+
+/**
+ * @brief テンプレート（全体）
+ * @docs docs/template/template.md
+ */

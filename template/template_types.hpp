@@ -41,49 +41,49 @@ template <class T>
 using pqg = priority_queue<T>;
 
 #ifdef __SIZEOF_INT128__
-  using i128 = __int128_t;
-  i128 stoi128(const string &s)
+using i128 = __int128_t;
+i128 stoi128(const string &s)
+{
+  i128 res = 0;
+  if (s.front() == '-')
   {
-    i128 res = 0;
-    if (s.front() == '-')
-    {
-      for (int i = 1; i < (int)s.size(); i++)
-        res = 10 * res + s[i] - '0';
-      res = -res;
-    }
-    else
-    {
-      for (auto &&c : s)
-        res = 10 * res + c - '0';
-    }
-    return res;
+    for (int i = 1; i < (int)s.size(); i++)
+      res = 10 * res + s[i] - '0';
+    res = -res;
   }
-  string i128tos(i128 x)
+  else
   {
-    if (x == 0) return "0";
-    string sign = "", res = "";
-    if (x < 0)
-      x = -x, sign = "-";
-    while (x > 0)
-    {
-      res += '0' + x % 10;
-      x /= 10;
-    }
-    reverse(res.begin(), res.end());
-    return sign + res;
+    for (auto &&c : s)
+      res = 10 * res + c - '0';
   }
-  istream &operator>>(istream &is, i128 &a)
+  return res;
+}
+string i128tos(i128 x)
+{
+  if (x == 0) return "0";
+  string sign = "", res = "";
+  if (x < 0)
+    x = -x, sign = "-";
+  while (x > 0)
   {
-    string s;
-    is >> s;
-    a = stoi128(s);
-    return is;
+    res += '0' + x % 10;
+    x /= 10;
   }
-  ostream &operator<<(ostream &os, const i128 &a)
-  {
-    os << i128tos(a);
-    return os;
-  }
+  reverse(res.begin(), res.end());
+  return sign + res;
+}
+istream &operator>>(istream &is, i128 &a)
+{
+  string s;
+  is >> s;
+  a = stoi128(s);
+  return is;
+}
+ostream &operator<<(ostream &os, const i128 &a)
+{
+  os << i128tos(a);
+  return os;
+}
 #endif
 
 #define cauto const auto

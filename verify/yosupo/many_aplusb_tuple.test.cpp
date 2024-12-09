@@ -23,14 +23,13 @@ void main2()
   }
   else if (r == 1)
   {
-    pll p;
-    cin >> p;
+    IN(pll, p);
     PRINT(p.first + p.second);
   }
   else if (r == 2)
   {
-    tuple<ll, ll> t;
-    cin >> t;
+    using T = tuple<ll, ll>;
+    IN(T, t);
     PRINT(get<0>(t) + get<1>(t));
   }
   else if (r == 3)
@@ -49,9 +48,11 @@ void test()
 {
   /*
   #ifdef LOCAL
-  rep(t, 100000)
+  rep(testcase, 100000)
   {
-    dump(t);
+    cout << endl;
+    dump(testcase);
+
 
     // ----- generate cases -----
     ll N = 1 + rand() % 5;

@@ -2,6 +2,7 @@
 
 #include "template_types.hpp"
 #include "template_rep.hpp"
+#include "template_math.hpp"
 
 /**
  * @brief テンプレート（vector）
@@ -64,4 +65,14 @@ vc<T> concat(vc<T> v, const vc<Ts> &...vs)
 {
   (v.insert(v.end(), ALL(vs)), ...);
   return v;
+}
+
+template <class T>
+T vecget(const vc<T> &v, cauto &i, const T &dflt_negative = -INF, const T &dflt_positive = INF)
+{
+  if (i < 0)
+    return dflt_negative;
+  if (i >= SZI(v))
+    return dflt_positive;
+  return v[i];
 }

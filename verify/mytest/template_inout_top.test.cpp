@@ -1,4 +1,4 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
+#define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
 #include "../../template/template_inout.hpp"
 #include "../../template/template_dump.hpp"
@@ -72,6 +72,5 @@ int main()
   test2();
   test3();
 
-  LL(A, B);
-  PRINT(A + B);
+  PRINT("Hello World");
 }

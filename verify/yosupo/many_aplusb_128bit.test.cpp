@@ -15,8 +15,7 @@ void init() {}
 
 void main2()
 {
-  i128 A, B;
-  cin >> A >> B;
+  IN(i128, A, B);
   dump(A, B);
   PRINT(A + B);
 }
@@ -25,9 +24,11 @@ void test()
 {
   /*
   #ifdef LOCAL
-  rep(t, 100000)
+  rep(testcase, 100000)
   {
-    dump(t);
+    cout << endl;
+    dump(testcase);
+
 
     // ----- generate cases -----
     ll N = 1 + rand() % 5;

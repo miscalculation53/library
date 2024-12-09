@@ -1,4 +1,4 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
+#define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
 #include "../../template/template_math.hpp"
 #include "../../template/template_dump.hpp"
@@ -40,7 +40,5 @@ int main()
 {
   test1();
 
-  ll A, B;
-  cin >> A >> B;
-  cout << A + B << endl;
+  cout << "Hello World" << endl;
 }

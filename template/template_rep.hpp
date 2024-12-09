@@ -21,3 +21,7 @@
 #define repi2(i, l, r) for (int i = int(l); i < int(r); i++)
 #define repi3(i, l, r, d) for (int i = int(l); (d) > 0 ? i < int(r) : i > int(r); i += d)
 #define repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)
+
+#define fe(...) for (auto __VA_ARGS__)
+#define fec(...) for (cauto &__VA_ARGS__)
+#define fem(...) for (auto &__VA_ARGS__)
