@@ -72,11 +72,12 @@ data:
     \ ^ T(b)) >= 0); }\ntemplate <class T = ll>\ninline T divround(cauto &a, cauto\
     \ &b) { return divfloor<T>(2 * a + b, 2 * b); }\ntemplate <class T = ll>\ninline\
     \ T safemod(cauto &a, cauto &b) { return a - b * divfloor<T>(a, b); }\n\ntemplate\
-    \ <class T = ll>\nconstexpr T ipow(cauto &a, cauto &b)\n{\n  assert(b >= 0);\n\
-    \  if (b == 0) return 1;\n  if (a == 0 || a == 1) return a;\n  if (a == -1) return\
-    \ b & 1 ? -1 : 1;\n\n  T res = 1;\n  repi(_, b) res *= T(a);\n  return res;\n\
-    }\ntemplate <class T = ll>\nT mul_limited(cauto &a, cauto &b, cauto &m = INF)\n\
-    {\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return\
+    \ <class T = ll>\nconstexpr T ipow(auto a, auto b)\n{\n  assert(b >= 0);\n  if\
+    \ (b == 0) return 1;\n  if (a == 0 || a == 1) return a;\n  if (a == -1) return\
+    \ b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (b > 0)\n  {\n    if (b &\
+    \ 1)\n      res *= tmp;\n    tmp *= tmp;\n    b >>= 1;\n  }\n  return res;\n}\n\
+    template <class T = ll>\nT mul_limited(cauto &a, cauto &b, cauto &m = INF)\n{\n\
+    \  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return\
     \ T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll>\nT pow_limited(cauto\
     \ &a, cauto &b, cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if\
     \ (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1;\n\
@@ -116,28 +117,38 @@ data:
     \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n\
     #define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
     #endif\n#line 5 \"verify/mytest/template_math_mulpow.test.cpp\"\n\nmt19937 mt;\n\
-    \nvoid test1()\n{\n  for (int t = 0; t < 100000; t++)\n  {\n    int a = mt() %\
-    \ (mt() % 2 == 0 ? 1 << 15 : 1 << 30);\n    int b = mt() % (mt() % 2 == 0 ? 1\
-    \ << 15 : 1 << 30);\n    int m = mt() % (1 << 30);\n    int god = min(ll(a) *\
-    \ ll(b), ll(m));\n    int ans = mul_limited<int>(a, b, m);\n    dump(t, god ==\
-    \ m);\n    assert(god == ans);\n  }\n}\n\nvoid test2()\n{\n  for (int t = 0; t\
-    \ < 100000; t++)\n  {\n    int a = mt() % 11;\n    int b = mt() % 19;\n    int\
-    \ m = mt() % (mt() % 2 == 0 ? 10 : 1 << 30);\n    int god = min(ipow(a, b), (ll)m);\n\
-    \    int ans = pow_limited<int>(a, b, m);\n    dump(t, a, b, ipow(a, b), m, god,\
-    \ ans);\n    assert(god == ans);\n  }\n}\n\nint main()\n{\n  test1();\n  test2();\n\
-    \n  cout << \"Hello World\" << endl;\n}\n"
+    \nvoid test1()\n{\n  assert(ipow(0, 0) == 1);\n  assert(ipow(0, 1) == 0);\n  assert(ipow(1,\
+    \ 1LL << 60) == 1);\n  assert(ipow(-1, 1LL << 60) == 1);\n  assert(ipow(-1, (1LL\
+    \ << 60) - 1) == -1);\n  assert(ipow(2, 10) == 1024);\n  assert(ipow(2, 60) ==\
+    \ 1LL << 60);\n  assert(ipow(3, 10) == 59049);\n  assert(ipow(-4, 10) == 1048576);\n\
+    \  assert(ipow(-4, 11) == -4194304);\n}\n\nvoid test2()\n{\n  for (int t = 0;\
+    \ t < 100000; t++)\n  {\n    int a = mt() % (mt() % 2 == 0 ? 1 << 15 : 1 << 30);\n\
+    \    int b = mt() % (mt() % 2 == 0 ? 1 << 15 : 1 << 30);\n    int m = mt() % (1\
+    \ << 30);\n    int god = min(ll(a) * ll(b), ll(m));\n    int ans = mul_limited<int>(a,\
+    \ b, m);\n    dump(t, god == m);\n    assert(god == ans);\n  }\n}\n\nvoid test3()\n\
+    {\n  for (int t = 0; t < 100000; t++)\n  {\n    int a = mt() % 11;\n    int b\
+    \ = mt() % 19;\n    int m = mt() % (mt() % 2 == 0 ? 10 : 1 << 30);\n    int god\
+    \ = min(ipow(a, b), (ll)m);\n    int ans = pow_limited<int>(a, b, m);\n    dump(t,\
+    \ a, b, ipow(a, b), m, god, ans);\n    assert(god == ans);\n  }\n}\n\nint main()\n\
+    {\n  test1();\n  test2();\n  test3();\n\n  cout << \"Hello World\" << endl;\n\
+    }\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#include \"../../template/template_math.hpp\"\n#include \"../../template/template_dump.hpp\"\
-    \n\nmt19937 mt;\n\nvoid test1()\n{\n  for (int t = 0; t < 100000; t++)\n  {\n\
-    \    int a = mt() % (mt() % 2 == 0 ? 1 << 15 : 1 << 30);\n    int b = mt() % (mt()\
-    \ % 2 == 0 ? 1 << 15 : 1 << 30);\n    int m = mt() % (1 << 30);\n    int god =\
-    \ min(ll(a) * ll(b), ll(m));\n    int ans = mul_limited<int>(a, b, m);\n    dump(t,\
-    \ god == m);\n    assert(god == ans);\n  }\n}\n\nvoid test2()\n{\n  for (int t\
-    \ = 0; t < 100000; t++)\n  {\n    int a = mt() % 11;\n    int b = mt() % 19;\n\
-    \    int m = mt() % (mt() % 2 == 0 ? 10 : 1 << 30);\n    int god = min(ipow(a,\
-    \ b), (ll)m);\n    int ans = pow_limited<int>(a, b, m);\n    dump(t, a, b, ipow(a,\
-    \ b), m, god, ans);\n    assert(god == ans);\n  }\n}\n\nint main()\n{\n  test1();\n\
-    \  test2();\n\n  cout << \"Hello World\" << endl;\n}"
+    \n\nmt19937 mt;\n\nvoid test1()\n{\n  assert(ipow(0, 0) == 1);\n  assert(ipow(0,\
+    \ 1) == 0);\n  assert(ipow(1, 1LL << 60) == 1);\n  assert(ipow(-1, 1LL << 60)\
+    \ == 1);\n  assert(ipow(-1, (1LL << 60) - 1) == -1);\n  assert(ipow(2, 10) ==\
+    \ 1024);\n  assert(ipow(2, 60) == 1LL << 60);\n  assert(ipow(3, 10) == 59049);\n\
+    \  assert(ipow(-4, 10) == 1048576);\n  assert(ipow(-4, 11) == -4194304);\n}\n\n\
+    void test2()\n{\n  for (int t = 0; t < 100000; t++)\n  {\n    int a = mt() % (mt()\
+    \ % 2 == 0 ? 1 << 15 : 1 << 30);\n    int b = mt() % (mt() % 2 == 0 ? 1 << 15\
+    \ : 1 << 30);\n    int m = mt() % (1 << 30);\n    int god = min(ll(a) * ll(b),\
+    \ ll(m));\n    int ans = mul_limited<int>(a, b, m);\n    dump(t, god == m);\n\
+    \    assert(god == ans);\n  }\n}\n\nvoid test3()\n{\n  for (int t = 0; t < 100000;\
+    \ t++)\n  {\n    int a = mt() % 11;\n    int b = mt() % 19;\n    int m = mt()\
+    \ % (mt() % 2 == 0 ? 10 : 1 << 30);\n    int god = min(ipow(a, b), (ll)m);\n \
+    \   int ans = pow_limited<int>(a, b, m);\n    dump(t, a, b, ipow(a, b), m, god,\
+    \ ans);\n    assert(god == ans);\n  }\n}\n\nint main()\n{\n  test1();\n  test2();\n\
+    \  test3();\n\n  cout << \"Hello World\" << endl;\n}"
   dependsOn:
   - template/template_math.hpp
   - template/template_types.hpp
@@ -146,7 +157,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_math_mulpow.test.cpp
   requiredBy: []
-  timestamp: '2024-12-10 18:45:11+09:00'
+  timestamp: '2024-12-10 20:43:33+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_math_mulpow.test.cpp
