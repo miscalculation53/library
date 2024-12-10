@@ -311,8 +311,8 @@ data:
     \  return *this;\n    }\n    bool operator!=(const Iterator &other) const { return\
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll dij4 = {{1, 0},\
-    \ {0, 1}, {-1, 0}, {0, -1}};\n#line 13 \"verify/yosupo/many_aplusb_tuple.test.cpp\"\
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\n// DRUL\nconst vpll dij4\
+    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\n#line 13 \"verify/yosupo/many_aplusb_tuple.test.cpp\"\
     \n\nvoid init() {}\n\nvoid main2()\n{\n  ll r = rand() % 5;\n  if (r == 0)\n \
     \ {\n    LL(A, B);\n    PRINT(A + B);\n  }\n  else if (r == 1)\n  {\n    IN(pll,\
     \ p);\n    PRINT(p.first + p.second);\n  }\n  else if (r == 2)\n  {\n    using\
@@ -370,7 +370,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/many_aplusb_tuple.test.cpp
   requiredBy: []
-  timestamp: '2024-12-10 20:43:33+09:00'
+  timestamp: '2024-12-10 20:52:35+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/many_aplusb_tuple.test.cpp

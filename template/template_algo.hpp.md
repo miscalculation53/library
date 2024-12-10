@@ -238,8 +238,8 @@ data:
     \  return *this;\n    }\n    bool operator!=(const Iterator &other) const { return\
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll dij4 = {{1, 0},\
-    \ {0, 1}, {-1, 0}, {0, -1}};\n"
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\n// DRUL\nconst vpll dij4\
+    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\n"
   code: "#pragma once\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n\
     \n#include \"template_types.hpp\"\n#include \"template_rep.hpp\"\n#include \"\
     template_vector.hpp\"\n#include \"template_func.hpp\"\n\n/**\n * @brief \u30C6\
@@ -313,8 +313,8 @@ data:
     \  return *this;\n    }\n    bool operator!=(const Iterator &other) const { return\
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll dij4 = {{1, 0},\
-    \ {0, 1}, {-1, 0}, {0, -1}};"
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\n// DRUL\nconst vpll dij4\
+    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};"
   dependsOn:
   - template/template_types.hpp
   - template/template_rep.hpp
@@ -326,7 +326,7 @@ data:
   requiredBy:
   - template/template.cpp
   - template/template_all.hpp
-  timestamp: '2024-12-10 20:43:33+09:00'
+  timestamp: '2024-12-10 20:52:35+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/many_aplusb_128bit.test.cpp
@@ -350,7 +350,9 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA
 
 #### SUM
 
-`U SUM(vc<T> v)`
+```cpp
+U SUM(vc<T> v)
+```
 
 $v$ の要素の総和を（型 `U` の値として）返す。`U` はデフォルトでは `ll`。
 
@@ -390,7 +392,9 @@ $v$ の要素の総和を（型 `U` の値として）返す。`U` はデフォ�
 
 #### mex
 
-`U mex(vc<T> v)`
+```cpp
+U mex(vc<T> v)
+```
 
 $v$ の要素の mex を（型 `U` の値として）返す。`U` はデフォルトでは `ll`。
 
@@ -414,7 +418,9 @@ $v$ の要素はすべて非負整数であることを仮定。負の数があ�
 
 #### perminv
 
-`vc<T> perminv(vc<T> p)`
+```cpp
+vc<T> perminv(vc<T> p)
+```
 
 順列 $p$ の逆順列を返す。すなわち、$q_{p_i} = i$ を満たす順列 $q$ を返す。
 
@@ -426,7 +432,9 @@ $p$ が $(0, 1, \dots, \lvert p \rvert-1)$ の順列でない場合は、$p_i \g
 
 #### permuted
 
-`vc<T> permuted(vc<T> a, vc<U> p)`
+```cpp
+vc<T> permuted(vc<T> a, vc<U> p)
+```
 
 配列 $a$ を配列 $p$ にしたがって並べ替えた配列を返す。すなわち、$(a_{p_0}, a_{p_1}, \dots, a_{p_{\lvert p \rvert-1}})$ を返す。特に、$p$ が順列の場合や $a, p$ ともに順列の場合の使用を想定している。
 
@@ -614,7 +622,9 @@ $\lvert v \rvert = n$ とする。
 
 #### adjd
 
-`vc<T> adjd(vc<T> v)`
+```cpp
+vc<T> adjd(vc<T> v)
+```
 
 $\lvert v \rvert = n$ とする。
 
@@ -657,7 +667,9 @@ fec(v : direct_product({2, 1, 3}))
 
 #### dij4
 
-`const vpll dij4 = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} }`
+```cpp
+const vpll dij4 = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} }
+```
 
 グリッドの $4$ 方向の探索で使う。
 

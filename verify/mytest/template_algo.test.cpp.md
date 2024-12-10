@@ -220,11 +220,11 @@ data:
     \  return *this;\n    }\n    bool operator!=(const Iterator &other) const { return\
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll dij4 = {{1, 0},\
-    \ {0, 1}, {-1, 0}, {0, -1}};\n#line 2 \"template/template_dump.hpp\"\n\n#line\
-    \ 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n#ifdef\
-    \ LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\n// DRUL\nconst vpll dij4\
+    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\n#line 2 \"template/template_dump.hpp\"\
+    \n\n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
+    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
     namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
     \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
     \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
@@ -352,7 +352,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_algo.test.cpp
   requiredBy: []
-  timestamp: '2024-12-10 20:43:33+09:00'
+  timestamp: '2024-12-10 20:52:35+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_algo.test.cpp

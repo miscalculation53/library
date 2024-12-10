@@ -319,8 +319,9 @@ data:
     \  return *this;\n    }\n    bool operator!=(const Iterator &other) const { return\
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll dij4 = {{1, 0},\
-    \ {0, 1}, {-1, 0}, {0, -1}};\n#line 11 \"template/template_all.hpp\"\n"
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\n// DRUL\nconst vpll dij4\
+    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\n#line 11 \"template/template_all.hpp\"\
+    \n"
   code: '#pragma once
 
 
@@ -352,7 +353,7 @@ data:
   path: template/template_all.hpp
   requiredBy:
   - template/template.cpp
-  timestamp: '2024-12-10 20:43:33+09:00'
+  timestamp: '2024-12-10 20:52:35+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/many_aplusb_128bit.test.cpp

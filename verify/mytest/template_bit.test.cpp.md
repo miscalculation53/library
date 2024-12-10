@@ -278,9 +278,9 @@ data:
     \  return *this;\n    }\n    bool operator!=(const Iterator &other) const { return\
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll dij4 = {{1, 0},\
-    \ {0, 1}, {-1, 0}, {0, -1}};\n#line 6 \"verify/mytest/template_bit.test.cpp\"\n\
-    \nvoid test1()\n{\n  vc<ll> width_model = {0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 40};\n\
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\n// DRUL\nconst vpll dij4\
+    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\n#line 6 \"verify/mytest/template_bit.test.cpp\"\
+    \n\nvoid test1()\n{\n  vc<ll> width_model = {0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 40};\n\
     \  vc<ll> floor_model = {0, 1, 2, 2, 4, 4, 4, 4, 8, 8, 1LL << 39};\n  vc<ll> ceil_model\
     \ = {1, 1, 2, 4, 4, 8, 8, 8, 8, 16, 1LL << 40};\n  vc<ll> pp_model = {0, 1, 1,\
     \ 2, 1, 2, 2, 3, 1, 2, 20};\n  vc<ll> single_model = {0, 1, 1, 0, 1, 0, 0, 0,\
@@ -356,7 +356,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_bit.test.cpp
   requiredBy: []
-  timestamp: '2024-12-10 20:43:33+09:00'
+  timestamp: '2024-12-10 20:52:35+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_bit.test.cpp

@@ -228,7 +228,9 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
 
 #### gen_vec
 
-`gen_vec(int n, F f)`
+```cpp
+gen_vec(int n, F f)
+```
 
 長さ $n$ で、$i$ 番目が $f(i)$ の vector を返す。
 

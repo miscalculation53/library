@@ -253,7 +253,9 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
 
 #### divfloor
 
-`T divfloor<T = ll>(a, b)`
+```cpp
+T divfloor<T = ll>(a, b)
+```
 
 $\lfloor a / b \rfloor$ を返す。$a, b$ は、型 `T` にキャストしてから計算する。
 
@@ -265,7 +267,9 @@ $\lfloor a / b \rfloor$ を返す。$a, b$ は、型 `T` にキャストして�
 
 #### divceil
 
-`T divceil<T = ll>(a, b)`
+```cpp
+T divceil<T = ll>(a, b)
+```
 
 $\lceil a / b \rceil$ を返す。$a, b$ は、型 `T` にキャストしてから計算する。
 
@@ -277,11 +281,13 @@ $\lceil a / b \rceil$ を返す。$a, b$ は、型 `T` にキャストしてか�
 
 #### safemod
 
-`T safemod<T = ll>(a, b)`
+```cpp
+T safemod<T = ll>(a, b)
+```
 
 $b > 0$ のとき、$a \bmod b$ を $[0, b)$ の範囲で返す。（基本的には $b > 0$ での使用を想定している。）
 
-$b < 0$ のとき、$-\{(-a) \bmod (-b)\}$ を返す。すなわち、$(b, 0]$ の範囲の値が返る。
+$b < 0$ のとき、$-\lbrace (-a) \bmod (-b) \rbrace$ を返す。すなわち、$(b, 0]$ の範囲の値が返る。
 
 いずれの場合も、$a - x$ が $b$ の倍数となるような $x$ のうち $0$ と $b$ の間（$b$ は含まない）にあるものを返す、と解釈できる。
 
@@ -297,7 +303,9 @@ $a, b$ は、型 `T` にキャストしてから計算する。
 
 #### ipow
 
-`T ipow<T = ll>(a, b)`
+```cpp
+T ipow<T = ll>(a, b)
+```
 
 $a^b$ を返す（$0^0$ は $1$ とする）。$a, b$ は、型 `T` にキャストしてから計算する。
 
@@ -309,12 +317,14 @@ $a^b$ を返す（$0^0$ は $1$ とする）。$a, b$ は、型 `T` にキャス
 
 ##### 計算量
 
-- $a \in \{-1,0,1\}$ のとき、$O(1)$
+- $a \in \lbrace -1,0,1 \rbrace$ のとき、$O(1)$
 - それ以外のとき、$O(\log b)$
 
 #### iroot
 
-`T iroot<T = ll>(a, k)`
+```cpp
+T iroot<T = ll>(a, k)
+```
 
 $\mathrm{floor}(a^{1/k})$ を返す。$a, b$ は、型 `T` にキャストしてから計算する。
 
@@ -335,7 +345,9 @@ $\mathrm{floor}(a^{1/k})$ を返す。$a, b$ は、型 `T` にキャストして
 
 #### mul_limited
 
-`T mul_limited<T = ll>(a, b, m = INF)`
+```cpp
+T mul_limited<T = ll>(a, b, m = INF)
+```
 
 $\min(a \times b, m)$ を返す。$a, b, m$ は、型 `T` にキャストしてから計算する。
 
@@ -346,7 +358,9 @@ $\min(a \times b, m)$ を返す。$a, b, m$ は、型 `T` にキャストして�
 
 #### pow_limited
 
-`T pow_limited<T = ll>(a, b, m = INF)`
+```cpp
+T pow_limited<T = ll>(a, b, m = INF)
+```
 
 $\min(a^b, m)$ を返す。$a, b, m$ は、型 `T` にキャストしてから計算する。
 
@@ -361,7 +375,9 @@ https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html
 
 #### sgn
 
-`int sgn<D = ld>(a, D eps = EPS)`
+```cpp
+int sgn<D = ld>(a, D eps = EPS)
+```
 
 誤差 $\mathrm{eps}$ を考慮した $a$ の符号を、$-1, 0, 1$ で返す。
 

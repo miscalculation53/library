@@ -309,27 +309,28 @@ data:
     \  return *this;\n    }\n    bool operator!=(const Iterator &other) const { return\
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll dij4 = {{1, 0},\
-    \ {0, 1}, {-1, 0}, {0, -1}};\n#line 12 \"template/template.cpp\"\n\nvoid init()\
-    \ {}\n\nvoid main2()\n{\n  \n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase,\
-    \ 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\n\n      // -----\
-    \ generate cases -----\n      ll N = 1 + rand() % 5;\n      vl A(N);\n      rep(i,\
-    \ N) A.at(i) = 1 + rand() % 10;\n      // --------------------------\n\n     \
-    \ // ------ check output ------\n      #define INPUT A\n      auto god = naive(INPUT);\n\
-    \      auto ans = solve(INPUT);\n      if (god != ans)\n      {\n        dump(INPUT);\n\
-    \        dump(god, ans);\n        exit(0);\n      }\n      // --------------------------\n\
-    \    }\n    dump(\"ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](cauto\
-    \ &val)\n  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined\
-    \ FAST_IO and not defined LOCAL\n    CERR(\"[FAST_IO]\\n\\n\");\n    cin.tie(0);\n\
-    \    ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
-    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
-    \ SINGLE_TESTCASE)\n    CERR(\"[AOJ_TESTCASE]\\n\\n\");\n    while (true)\n  \
-    \  {\n      dump(\"new testcase\");\n      main2();\n    }\n  #elif defined SINGLE_TESTCASE\n\
-    \    CERR(\"[SINGLE_TESTCASE]\\n\\n\");\n    main2();\n  #elif defined MULTI_TESTCASE\n\
-    \    CERR(\"[MULTI_TESTCASE]\\n\\n\");\n    int T;\n    cin >> T;\n    while (T--)\n\
-    \    {\n      dump(\"new testcase\");\n      main2();\n    }\n  #endif\n}\n\n\n\
-    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09\n\
-    \ * @docs docs/template/template.md\n */\n"
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\n// DRUL\nconst vpll dij4\
+    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\n#line 12 \"template/template.cpp\"\n\n\
+    void init() {}\n\nvoid main2()\n{\n  \n}\n\nvoid test()\n{\n  /*\n  local(\n \
+    \   rep(testcase, 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\
+    \n\n      // ----- generate cases -----\n      ll N = 1 + rand() % 5;\n      vl\
+    \ A(N);\n      rep(i, N) A.at(i) = 1 + rand() % 10;\n      // --------------------------\n\
+    \n      // ------ check output ------\n      #define INPUT A\n      auto god =\
+    \ naive(INPUT);\n      auto ans = solve(INPUT);\n      if (god != ans)\n     \
+    \ {\n        dump(INPUT);\n        dump(god, ans);\n        exit(0);\n      }\n\
+    \      // --------------------------\n    }\n    dump(\"ok\");\n  );\n  //*/\n\
+    }\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifndef BOJ\n    \
+    \  cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n\
+    \    CERR(\"[FAST_IO]\\n\\n\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
+    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
+    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    CERR(\"\
+    [AOJ_TESTCASE]\\n\\n\");\n    while (true)\n    {\n      dump(\"new testcase\"\
+    );\n      main2();\n    }\n  #elif defined SINGLE_TESTCASE\n    CERR(\"[SINGLE_TESTCASE]\\\
+    n\\n\");\n    main2();\n  #elif defined MULTI_TESTCASE\n    CERR(\"[MULTI_TESTCASE]\\\
+    n\\n\");\n    int T;\n    cin >> T;\n    while (T--)\n    {\n      dump(\"new\
+    \ testcase\");\n      main2();\n    }\n  #endif\n}\n\n\n/**\n * @brief \u30C6\u30F3\
+    \u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09\n * @docs docs/template/template.md\n\
+    \ */\n"
   code: "#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037\n\
     #define EPS 1e-11\n\n#include \"template/template_all.hpp\"\n\nvoid init() {}\n\
@@ -365,7 +366,7 @@ data:
   isVerificationFile: false
   path: template/template.cpp
   requiredBy: []
-  timestamp: '2024-12-10 20:43:33+09:00'
+  timestamp: '2024-12-10 20:52:35+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: template/template.cpp
