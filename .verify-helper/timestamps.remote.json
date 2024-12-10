@@ -1,6 +1,7 @@
 {
 "verify/mytest/template_algo.test.cpp": "2024-12-10 18:45:11 +0900",
 "verify/mytest/template_binsearch.test.cpp": "2024-12-10 18:45:11 +0900",
+"verify/mytest/template_bit.test.cpp": "2024-12-10 19:11:35 +0900",
 "verify/mytest/template_inout_top.test.cpp": "2024-12-10 18:45:11 +0900",
 "verify/mytest/template_math_div.test.cpp": "2024-12-10 18:45:11 +0900",
 "verify/mytest/template_math_mulpow.test.cpp": "2024-12-10 18:45:11 +0900",
