@@ -130,17 +130,17 @@ data:
     \ return dflt_positive;\n  return v[i];\n}\n#line 2 \"template/template_dump.hpp\"\
     \n\n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
-    \ */\n\n#ifdef LOCAL\n  #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
-    \  namespace cpp_dump::_detail\n  {\n    inline string export_var(\n        const\
-    \ i128 &x, const string &indent, size_t last_line_length,\n        size_t current_depth,\
-    \ bool fail_on_newline, const export_command &command\n    ) {\n      return export_var(i128tos(x),\
-    \ indent, last_line_length, current_depth, fail_on_newline, command);\n    }\n\
-    \  } // namespace cpp_dump::_detail\n  #define dump(...) cpp_dump(__VA_ARGS__)\n\
-    \  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    \  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#else\n  #define dump(...)\n\
-    #endif\n#line 5 \"verify/mytest/template_vector.test.cpp\"\n\nvoid test1()\n{\n\
-    \  auto dp = dvec({3, 4, 5}, 0LL);\n  dump(dp);\n  assert(SZ(dp) == 3);\n  rep(i,\
-    \ 3)\n  {\n    assert(SZ(dp.at(i)) == 4);\n    rep(j, 4) assert(SZ(dp.at(i).at(j))\
+    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
+    \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
+    \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
+    \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
+    \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
+    \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
+    #else\n#define dump(...)\n#define local(...)\n#endif\n#line 5 \"verify/mytest/template_vector.test.cpp\"\
+    \n\nvoid test1()\n{\n  auto dp = dvec({3, 4, 5}, 0LL);\n  dump(dp);\n  assert(SZ(dp)\
+    \ == 3);\n  rep(i, 3)\n  {\n    assert(SZ(dp.at(i)) == 4);\n    rep(j, 4) assert(SZ(dp.at(i).at(j))\
     \ == 5);\n  }\n}\n\nvoid test2()\n{\n  assert(ctol('J', \"JOI\") == 0);\n  assert(ctol('O',\
     \ \"JOI\") == 1);\n  assert(ctol('I', \"JOI\") == 2);\n  assert(ctol('?', \"JOI\"\
     ) == -1);\n\n  vl v = {0, 1, 2, 3, 4};\n  auto v1 = stov(\"ABCDE\", 'A');\n  auto\
@@ -176,7 +176,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_vector.test.cpp
   requiredBy: []
-  timestamp: '2024-12-10 00:58:47+09:00'
+  timestamp: '2024-12-10 13:41:04+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_vector.test.cpp

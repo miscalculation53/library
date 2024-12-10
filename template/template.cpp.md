@@ -152,14 +152,14 @@ data:
     \ vt;\n}\n// ----------\n#line 2 \"template/template_dump.hpp\"\n\n#line 4 \"\
     template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\
     \uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n\
-    \  #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n  namespace\
-    \ cpp_dump::_detail\n  {\n    inline string export_var(\n        const i128 &x,\
-    \ const string &indent, size_t last_line_length,\n        size_t current_depth,\
-    \ bool fail_on_newline, const export_command &command\n    ) {\n      return export_var(i128tos(x),\
-    \ indent, last_line_length, current_depth, fail_on_newline, command);\n    }\n\
-    \  } // namespace cpp_dump::_detail\n  #define dump(...) cpp_dump(__VA_ARGS__)\n\
-    \  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    \  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#else\n  #define dump(...)\n\
+    #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\nnamespace\
+    \ cpp_dump::_detail\n{\n  inline string export_var(\n      const i128 &x, const\
+    \ string &indent, size_t last_line_length,\n      size_t current_depth, bool fail_on_newline,\
+    \ const export_command &command\n  ) {\n    return export_var(i128tos(x), indent,\
+    \ last_line_length, current_depth, fail_on_newline, command);\n  }\n} // namespace\
+    \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
+    CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
+    \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
     #endif\n#line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
     #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
@@ -308,17 +308,17 @@ data:
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
     \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll dij4 = {{1, 0},\
     \ {0, 1}, {-1, 0}, {0, -1}};\n#line 12 \"template/template.cpp\"\n\nvoid init()\
-    \ {}\n\nvoid main2()\n{\n  \n}\n\nvoid test()\n{\n  /*\n  #ifdef LOCAL\n  rep(testcase,\
-    \ 100000)\n  {\n    cout << endl;\n    dump(testcase);\n\n\n    // ----- generate\
-    \ cases -----\n    ll N = 1 + rand() % 5;\n    vl A(N);\n    rep(i, N) A.at(i)\
-    \ = 1 + rand() % 10;\n    // --------------------------\n\n    // ------ check\
-    \ output ------\n    #define INPUT A\n    auto god = naive(INPUT);\n    auto ans\
-    \ = solve(INPUT);\n    if (god != ans)\n    {\n      dump(INPUT);\n      dump(god,\
-    \ ans);\n      exit(0);\n    }\n    // --------------------------\n  }\n  dump(\"\
-    ok\");\n  #endif\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n\
-    \  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO\
-    \ and not defined LOCAL\n    CERR(\"[FAST_IO]\\n\\n\");\n    cin.tie(0);\n   \
-    \ ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
+    \ {}\n\nvoid main2()\n{\n  \n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase,\
+    \ 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\n\n      // -----\
+    \ generate cases -----\n      ll N = 1 + rand() % 5;\n      vl A(N);\n      rep(i,\
+    \ N) A.at(i) = 1 + rand() % 10;\n      // --------------------------\n\n     \
+    \ // ------ check output ------\n      #define INPUT A\n      auto god = naive(INPUT);\n\
+    \      auto ans = solve(INPUT);\n      if (god != ans)\n      {\n        dump(INPUT);\n\
+    \        dump(god, ans);\n        exit(0);\n      }\n      // --------------------------\n\
+    \    }\n    dump(\"ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](cauto\
+    \ &val)\n  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined\
+    \ FAST_IO and not defined LOCAL\n    CERR(\"[FAST_IO]\\n\\n\");\n    cin.tie(0);\n\
+    \    ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
     \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
     \ SINGLE_TESTCASE)\n    CERR(\"[AOJ_TESTCASE]\\n\\n\");\n    while (true)\n  \
     \  {\n      dump(\"new testcase\");\n      main2();\n    }\n  #elif defined SINGLE_TESTCASE\n\
@@ -330,17 +330,17 @@ data:
   code: "#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037\n\
     #define EPS 1e-11\n\n#include \"template/template_all.hpp\"\n\nvoid init() {}\n\
-    \nvoid main2()\n{\n  \n}\n\nvoid test()\n{\n  /*\n  #ifdef LOCAL\n  rep(testcase,\
-    \ 100000)\n  {\n    cout << endl;\n    dump(testcase);\n\n\n    // ----- generate\
-    \ cases -----\n    ll N = 1 + rand() % 5;\n    vl A(N);\n    rep(i, N) A.at(i)\
-    \ = 1 + rand() % 10;\n    // --------------------------\n\n    // ------ check\
-    \ output ------\n    #define INPUT A\n    auto god = naive(INPUT);\n    auto ans\
-    \ = solve(INPUT);\n    if (god != ans)\n    {\n      dump(INPUT);\n      dump(god,\
-    \ ans);\n      exit(0);\n    }\n    // --------------------------\n  }\n  dump(\"\
-    ok\");\n  #endif\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n\
-    \  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO\
-    \ and not defined LOCAL\n    CERR(\"[FAST_IO]\\n\\n\");\n    cin.tie(0);\n   \
-    \ ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
+    \nvoid main2()\n{\n  \n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase,\
+    \ 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\n\n      // -----\
+    \ generate cases -----\n      ll N = 1 + rand() % 5;\n      vl A(N);\n      rep(i,\
+    \ N) A.at(i) = 1 + rand() % 10;\n      // --------------------------\n\n     \
+    \ // ------ check output ------\n      #define INPUT A\n      auto god = naive(INPUT);\n\
+    \      auto ans = solve(INPUT);\n      if (god != ans)\n      {\n        dump(INPUT);\n\
+    \        dump(god, ans);\n        exit(0);\n      }\n      // --------------------------\n\
+    \    }\n    dump(\"ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](cauto\
+    \ &val)\n  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined\
+    \ FAST_IO and not defined LOCAL\n    CERR(\"[FAST_IO]\\n\\n\");\n    cin.tie(0);\n\
+    \    ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
     \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
     \ SINGLE_TESTCASE)\n    CERR(\"[AOJ_TESTCASE]\\n\\n\");\n    while (true)\n  \
     \  {\n      dump(\"new testcase\");\n      main2();\n    }\n  #elif defined SINGLE_TESTCASE\n\
@@ -362,7 +362,7 @@ data:
   isVerificationFile: false
   path: template/template.cpp
   requiredBy: []
-  timestamp: '2024-12-10 01:15:19+09:00'
+  timestamp: '2024-12-10 13:41:04+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: template/template.cpp
@@ -377,6 +377,8 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
 ### LOCAL
 
 手元では `LOCAL` が define された状態で実行する。オンラインジャッジ等では `LOCAL` が define されていない想定。
+
+デバッグのときは簡単なものであれば `dump` を使うだけでよいが、少し複雑になった場合 `local()` で囲むと `LOCAL` が define された環境のみで出力されるようになる。（`#ifdef LOCAL` で囲むのでもよいが）
 
 ### テストケースの形式
 
@@ -395,7 +397,7 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
 
 `FAST_IO` が define されているとき、例の `cin.tie(0); ios::sync_with_stdio(false);` をする。`FAST_IO` は `LOCAL` では外れる。
 
-`INTERACTIVE` が define されているとき、`PRINT` 系での改行で flush する。
+普段は `PRINT` 系での改行で flush しない。`INTERACTIVE` が define されているとき、flush する。
 
 
 ### 定数

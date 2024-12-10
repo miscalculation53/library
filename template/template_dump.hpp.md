@@ -80,26 +80,26 @@ data:
     \ const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto\
     \ const auto\n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
     \u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
-    \ */\n\n#ifdef LOCAL\n  #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
-    \  namespace cpp_dump::_detail\n  {\n    inline string export_var(\n        const\
-    \ i128 &x, const string &indent, size_t last_line_length,\n        size_t current_depth,\
-    \ bool fail_on_newline, const export_command &command\n    ) {\n      return export_var(i128tos(x),\
-    \ indent, last_line_length, current_depth, fail_on_newline, command);\n    }\n\
-    \  } // namespace cpp_dump::_detail\n  #define dump(...) cpp_dump(__VA_ARGS__)\n\
-    \  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    \  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#else\n  #define dump(...)\n\
-    #endif\n"
+    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
+    \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
+    \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
+    \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
+    \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
+    \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
+    #else\n#define dump(...)\n#define local(...)\n#endif\n"
   code: "#pragma once\n\n#include \"template/template_types.hpp\"\n\n/**\n * @brief\
     \ \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
-    \ */\n\n#ifdef LOCAL\n  #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
-    \  namespace cpp_dump::_detail\n  {\n    inline string export_var(\n        const\
-    \ i128 &x, const string &indent, size_t last_line_length,\n        size_t current_depth,\
-    \ bool fail_on_newline, const export_command &command\n    ) {\n      return export_var(i128tos(x),\
-    \ indent, last_line_length, current_depth, fail_on_newline, command);\n    }\n\
-    \  } // namespace cpp_dump::_detail\n  #define dump(...) cpp_dump(__VA_ARGS__)\n\
-    \  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    \  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#else\n  #define dump(...)\n\
-    #endif"
+    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
+    \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
+    \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
+    \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
+    \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
+    \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
+    #else\n#define dump(...)\n#define local(...)\n#endif"
   dependsOn:
   - template/template_types.hpp
   isVerificationFile: false
@@ -107,7 +107,7 @@ data:
   requiredBy:
   - template/template.cpp
   - template/template_all.hpp
-  timestamp: '2024-12-10 00:58:47+09:00'
+  timestamp: '2024-12-10 13:41:04+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/many_aplusb_128bit.test.cpp

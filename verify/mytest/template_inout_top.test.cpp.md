@@ -134,14 +134,14 @@ data:
     \ vt;\n}\n// ----------\n#line 2 \"template/template_dump.hpp\"\n\n#line 4 \"\
     template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\
     \uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n\
-    \  #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n  namespace\
-    \ cpp_dump::_detail\n  {\n    inline string export_var(\n        const i128 &x,\
-    \ const string &indent, size_t last_line_length,\n        size_t current_depth,\
-    \ bool fail_on_newline, const export_command &command\n    ) {\n      return export_var(i128tos(x),\
-    \ indent, last_line_length, current_depth, fail_on_newline, command);\n    }\n\
-    \  } // namespace cpp_dump::_detail\n  #define dump(...) cpp_dump(__VA_ARGS__)\n\
-    \  namespace cp = cpp_dump;\n  CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    \  CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#else\n  #define dump(...)\n\
+    #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\nnamespace\
+    \ cpp_dump::_detail\n{\n  inline string export_var(\n      const i128 &x, const\
+    \ string &indent, size_t last_line_length,\n      size_t current_depth, bool fail_on_newline,\
+    \ const export_command &command\n  ) {\n    return export_var(i128tos(x), indent,\
+    \ last_line_length, current_depth, fail_on_newline, command);\n  }\n} // namespace\
+    \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
+    CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
+    \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
     #endif\n#line 5 \"verify/mytest/template_inout_top.test.cpp\"\n\nvoid test1()\n\
     {\n  vc<pair<int, string>> vt_god = {\n    {1, \"a\"},\n    {2, \"bcd\"},\n  \
     \  {3, \"ef\"}\n  };\n  pair<vc<int>, vc<string>> tv_god = {\n    {1, 2, 3},\n\
@@ -187,7 +187,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_inout_top.test.cpp
   requiredBy: []
-  timestamp: '2024-12-10 00:58:47+09:00'
+  timestamp: '2024-12-10 13:41:04+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_inout_top.test.cpp
