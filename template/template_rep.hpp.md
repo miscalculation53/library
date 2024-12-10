@@ -1,14 +1,14 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy:
   - icon: ':warning:'
     path: template/template.cpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -18,17 +18,21 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
     path: template/template_func.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u95A2\u6570\u30AA\u30D6\u30B8\
       \u30A7\u30AF\u30C8\uFF09"
   - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedVerifiedWith:
@@ -38,6 +42,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/template_binsearch.test.cpp
     title: verify/mytest/template_binsearch.test.cpp
+  - icon: ':x:'
+    path: verify/mytest/template_bit.test.cpp
+    title: verify/mytest/template_bit.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/template_inout_top.test.cpp
     title: verify/mytest/template_inout_top.test.cpp
@@ -68,9 +75,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb_tuple.test.cpp
     title: verify/yosupo/many_aplusb_tuple.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/template/template_rep.md
     document_title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
@@ -101,32 +108,37 @@ data:
     \ const auto\n#line 4 \"template/template_rep.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
     \u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n\
     \ */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n*/\n\n#define\
-    \ overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0;\
-    \ i < ll(n); i++)\n#define rep2(i, l, r) for (ll i = ll(l); i < ll(r); i++)\n\
-    #define rep3(i, l, r, d) for (ll i = ll(l); (d) > 0 ? i < ll(r) : i > ll(r); i\
-    \ += d)\n#define rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n\
-    #define repi1(i, n) for (int i = 0; i < int(n); i++)\n#define repi2(i, l, r) for\
-    \ (int i = int(l); i < int(r); i++)\n#define repi3(i, l, r, d) for (int i = int(l);\
-    \ (d) > 0 ? i < int(r) : i > int(r); i += d)\n#define repi(...) overload4(__VA_ARGS__,\
-    \ repi3, repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n\
-    #define fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n"
+    \ overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0,\
+    \ nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i = ll(l), rrrrr\
+    \ = ll(r); i < rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i = ll(l), rrrrr\
+    \ = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define\
+    \ rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n#define repi1(i,\
+    \ n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i, l, r) for\
+    \ (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i, l, r, d)\
+    \ for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i < rrrrr :\
+    \ i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\
+    \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
+    #define fem(...) for (auto &__VA_ARGS__)\n"
   code: "#pragma once\n\n#include \"template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
     \u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n\
     \ */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n*/\n\n#define\
-    \ overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0;\
-    \ i < ll(n); i++)\n#define rep2(i, l, r) for (ll i = ll(l); i < ll(r); i++)\n\
-    #define rep3(i, l, r, d) for (ll i = ll(l); (d) > 0 ? i < ll(r) : i > ll(r); i\
-    \ += d)\n#define rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n\
-    #define repi1(i, n) for (int i = 0; i < int(n); i++)\n#define repi2(i, l, r) for\
-    \ (int i = int(l); i < int(r); i++)\n#define repi3(i, l, r, d) for (int i = int(l);\
-    \ (d) > 0 ? i < int(r) : i > int(r); i += d)\n#define repi(...) overload4(__VA_ARGS__,\
-    \ repi3, repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n\
-    #define fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)"
+    \ overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0,\
+    \ nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i = ll(l), rrrrr\
+    \ = ll(r); i < rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i = ll(l), rrrrr\
+    \ = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define\
+    \ rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n#define repi1(i,\
+    \ n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i, l, r) for\
+    \ (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i, l, r, d)\
+    \ for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i < rrrrr :\
+    \ i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\
+    \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
+    #define fem(...) for (auto &__VA_ARGS__)"
   dependsOn:
   - template/template_types.hpp
   isVerificationFile: false
   path: template/template_rep.hpp
   requiredBy:
+  - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template.cpp
   - template/template_all.hpp
@@ -135,8 +147,8 @@ data:
   - template/template_math.hpp
   - template/template_vector.hpp
   - template/template_func.hpp
-  timestamp: '2024-12-10 00:58:47+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2024-12-10 18:45:11+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yosupo/many_aplusb_128bit.test.cpp
   - verify/yosupo/kth_root_integer.test.cpp
@@ -147,6 +159,7 @@ data:
   - verify/mytest/template_vector.test.cpp
   - verify/mytest/template_inout_top.test.cpp
   - verify/mytest/template_binsearch.test.cpp
+  - verify/mytest/template_bit.test.cpp
   - verify/mytest/template_math_mulpow.test.cpp
   - verify/mytest/template_sgn.test.cpp.cpp
   - verify/mytest/template_math_div.test.cpp
@@ -159,12 +172,36 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
 ---
 ## テンプレート（rep）
 
+### rep
+
 指定する引数は Python の range と同じ。つまり、
 
-- `rep(l, r, d)`: $l$ から始めて $d$ ずつ変えるのを $r$ まで（$r$ は含まない）
-- `rep(l, r)`: `rep(l, r, 1)` と同じ
-- `rep(r)`: `rep(0, r, 1)` と同じ
+- `rep(i, l, r, d)`： $l$ から始めて $d$ ずつ変えるのを $r$ まで（$r$ は含まない）
+- `rep(i, l, r)`： `rep(i, l, r, 1)` と同じ
+- `rep(i, r)`： `rep(i, 0, r, 1)` と同じ
 
 引数の数が違う `rep1`, `rep2`, `rep3` をすべて `rep` で呼べるようにしてある（参考： https://trap.jp/post/1224/ ）。
 
 また、`rep` では `ll` 型を、`repi` では `int` 型を用いる。
+
+引数は**最初の $1$ 回だけ**評価される。
+
+（滅多にないと思うが、）`lllll`, `rrrrr`, `ddddd`, `nnnnn` という名前の変数を `rep` や `repi` の内部で使わないこと。
+
+
+### 範囲 for 
+
+- `fec(e : v)`
+  - `for (const auto &e : v)` と同じ
+  - for each const
+  - **だいたいはこれを使っておくべき**
+- `fe(e : v)`
+  - `for (auto e : v)` と同じ
+  - for each
+  - コピーを作って中で変更したいときのみ使う（`fec` で済むときにこれを使うと遅い）
+- `fem(e : v)`
+  - `for (auto &e : v)` と同じ
+  - for each mutable
+  - 本当に内部を変更したいときにしか使わない
+
+`e` には `[a, b]` とかも入れられる。区切りが通常の範囲 for と同様の `:` であることに注意（マクロ化する際の都合）。

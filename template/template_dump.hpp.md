@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy:
@@ -18,6 +18,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/template_binsearch.test.cpp
     title: verify/mytest/template_binsearch.test.cpp
+  - icon: ':x:'
+    path: verify/mytest/template_bit.test.cpp
+    title: verify/mytest/template_bit.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/template_inout_top.test.cpp
     title: verify/mytest/template_inout_top.test.cpp
@@ -48,9 +51,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb_tuple.test.cpp
     title: verify/yosupo/many_aplusb_tuple.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/template/template_dump.md
     document_title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
@@ -108,7 +111,7 @@ data:
   - template/template.cpp
   - template/template_all.hpp
   timestamp: '2024-12-10 13:41:04+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yosupo/many_aplusb_128bit.test.cpp
   - verify/yosupo/kth_root_integer.test.cpp
@@ -119,6 +122,7 @@ data:
   - verify/mytest/template_vector.test.cpp
   - verify/mytest/template_inout_top.test.cpp
   - verify/mytest/template_binsearch.test.cpp
+  - verify/mytest/template_bit.test.cpp
   - verify/mytest/template_math_mulpow.test.cpp
   - verify/mytest/template_sgn.test.cpp.cpp
   - verify/mytest/template_math_div.test.cpp

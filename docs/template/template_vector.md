@@ -62,3 +62,15 @@ auto dp = make_vec({N, M, 2}, 0LL);
 ```
 
 vector を結合したものを返す。(2) では、`v1`, `v2`, $\dots$ の型が必ずしも `T` と一致していなくてもよい（`ll` と `int` など）。
+
+### 取得
+
+#### vecget
+
+```cpp
+T vecget(vc<T> v, int i, T dflt_negative = -INF, T dflt_positive = INF)
+```
+
+範囲外も考慮した vector の取得。範囲内なら通常の `[]` や `at` と同じで、範囲外なら負方向は `dflt_negative`, 正方向は `dflt_positive` を返す。
+
+用途としては、ソート済み配列が無限に広がっていると考えたい場合（特に、`binsearch` や `expsearch` に渡すとき）。`LB` や `UB` だと頭が壊れるとき用に。
