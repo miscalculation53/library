@@ -1,20 +1,20 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/template_bit.test.cpp
     title: verify/mytest/template_bit.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/template/template_bit.md
     document_title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\
@@ -61,22 +61,23 @@ data:
     \ */\n\ninline ull pow2(auto k) { return 1ULL << k; }\ninline ull MASK(auto k)\
     \ { return (1ULL << k) - 1; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\
     \u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n\
-    // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline ull bit_width(ull x) { return flsll(x);\
-    \ }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline ull bit_floor(ull x) { return\
-    \ x == 0 ? 0ULL : 1ULL << (flsll(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16,\
-    \ ...\ninline ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL << flsll(x - 1);\
-    \ }\ninline ull countr_zero(ull x) { assert(x != 0); return __builtin_ctzll(x);\
-    \ }\ninline ull popcount(ull x) { return __builtin_popcountll(x); }\ninline bool\
-    \ has_single_bit(ull x) { return popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3,\
-    \ 3, 3, 3, 4, 4, ... \ninline ll bit_width(ll x) { return bit_width((ull)x); }\n\
-    // 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline ll bit_floor(ll x) { return bit_floor((ull)x);\
-    \ }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline ll bit_ceil(ll x) { return\
-    \ bit_ceil((ull)x); }\ninline ll countr_zero(ll x) { assert(x != 0); return countr_zero((ull)x);\
-    \ }\ninline ll popcount(ll x) { return popcount((ull)x); }\ninline bool has_single_bit(ll\
-    \ x) { return has_single_bit((ull)x); }\n#endif\n\ninline ull lsb_pos(ull x) {\
-    \ assert(x != 0); return countr_zero(x); }\ninline ull msb_pos(ull x) { assert(x\
-    \ != 0); return bit_width(x) - 1; }\ninline ull lsb_mask(ull x) { assert(x !=\
-    \ 0); return x & -x; }\ninline ull msb_mask(ull x) { assert(x != 0); return bit_floor(x);\
+    // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline ull bit_width(ull x) { return x\
+    \ == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\n\
+    inline ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1);\
+    \ }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline ull bit_ceil(ull x) { return\
+    \ x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline ull countr_zero(ull x) {\
+    \ assert(x != 0); return __builtin_ctzll(x); }\ninline ull popcount(ull x) { return\
+    \ __builtin_popcountll(x); }\ninline bool has_single_bit(ull x) { return popcount(x)\
+    \ == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline ll bit_width(ll\
+    \ x) { return bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline\
+    \ ll bit_floor(ll x) { return bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8,\
+    \ 8, 16, ...\ninline ll bit_ceil(ll x) { return bit_ceil((ull)x); }\ninline ll\
+    \ countr_zero(ll x) { assert(x != 0); return countr_zero((ull)x); }\ninline ll\
+    \ popcount(ll x) { return popcount((ull)x); }\ninline bool has_single_bit(ll x)\
+    \ { return has_single_bit((ull)x); }\n#endif\n\ninline ull lsb_pos(ull x) { assert(x\
+    \ != 0); return countr_zero(x); }\ninline ull msb_pos(ull x) { assert(x != 0);\
+    \ return bit_width(x) - 1; }\ninline ull lsb_mask(ull x) { assert(x != 0); return\
+    \ x & -x; }\ninline ull msb_mask(ull x) { assert(x != 0); return bit_floor(x);\
     \ }\n\ninline bool btest(ull x, uint k) { return (x >> k) & 1; }\ntemplate <class\
     \ T>\ninline void bset(T &x, uint k, bool b = 1) { b ? x |= (1ULL << k) : x &=\
     \ ~(1ULL << k); }\ntemplate <class T>\ninline void bflip(T &x, uint k) { x ^=\
@@ -105,52 +106,53 @@ data:
     \ pow2(auto k) { return 1ULL << k; }\ninline ull MASK(auto k) { return (1ULL <<\
     \ k) - 1; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\
     \u305D\u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n// 0, 1, 2, 2,\
-    \ 3, 3, 3, 3, 4, 4, ... \ninline ull bit_width(ull x) { return flsll(x); }\n//\
-    \ 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline ull bit_floor(ull x) { return x ==\
-    \ 0 ? 0ULL : 1ULL << (flsll(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\n\
-    inline ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL << flsll(x - 1); }\n\
-    inline ull countr_zero(ull x) { assert(x != 0); return __builtin_ctzll(x); }\n\
-    inline ull popcount(ull x) { return __builtin_popcountll(x); }\ninline bool has_single_bit(ull\
-    \ x) { return popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ...\
-    \ \ninline ll bit_width(ll x) { return bit_width((ull)x); }\n// 0, 1, 2, 2, 4,\
-    \ 4, 4, 4, 8, 8, ...\ninline ll bit_floor(ll x) { return bit_floor((ull)x); }\n\
-    // 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline ll bit_ceil(ll x) { return bit_ceil((ull)x);\
-    \ }\ninline ll countr_zero(ll x) { assert(x != 0); return countr_zero((ull)x);\
-    \ }\ninline ll popcount(ll x) { return popcount((ull)x); }\ninline bool has_single_bit(ll\
-    \ x) { return has_single_bit((ull)x); }\n#endif\n\ninline ull lsb_pos(ull x) {\
-    \ assert(x != 0); return countr_zero(x); }\ninline ull msb_pos(ull x) { assert(x\
-    \ != 0); return bit_width(x) - 1; }\ninline ull lsb_mask(ull x) { assert(x !=\
-    \ 0); return x & -x; }\ninline ull msb_mask(ull x) { assert(x != 0); return bit_floor(x);\
-    \ }\n\ninline bool btest(ull x, uint k) { return (x >> k) & 1; }\ntemplate <class\
-    \ T>\ninline void bset(T &x, uint k, bool b = 1) { b ? x |= (1ULL << k) : x &=\
-    \ ~(1ULL << k); }\ntemplate <class T>\ninline void bflip(T &x, uint k) { x ^=\
-    \ (1ULL << k); }\ninline bool bsubset(ull x, ull y) { return (x & y) == x; }\n\
-    inline bool bsupset(ull x, ull y) { return (x & y) == y; }\ninline ull bsetminus(ull\
-    \ x, ull y) { return x & ~y; }\n\ntemplate <class T>\nstruct bsubsets\n{\nprivate:\n\
-    \  T x;\npublic:\n  bsubsets(T x) : x(x) {}\n  struct Iterator\n  {\n  private:\n\
-    \    T y;\n    bool is_end;\n    const bsubsets &bs;\n  public:\n    Iterator(T\
-    \ y, bool is_end, const bsubsets &bs) : y(y), is_end(is_end), bs(bs) {}\n    T\
-    \ operator*() const { return y; }\n    Iterator& operator++()\n    {\n      if\
-    \ (y == 0)\n        is_end = true;\n      y = (y - 1) & bs.x;\n      return *this;\n\
-    \    }\n    bool operator!=(const Iterator &other) const { return y != other.y\
-    \ || is_end != other.is_end; }\n  };\n  Iterator begin() const { return Iterator(x,\
-    \ false, *this); }\n  Iterator end() const { return Iterator(x, true, *this);\
-    \ }\n};\ntemplate <class T>\nstruct bsupsets\n{\nprivate:\n  int n;\n  T x;\n\
-    public:\n  bsupsets(int n, T x) : n(n), x(x) {}\n  struct Iterator\n  {\n  private:\n\
-    \    T y;\n    const bsupsets &bs;\n  public:\n    Iterator(T y, const bsupsets\
-    \ &bs) : y(y), bs(bs) {}\n    T operator*() const { return y; }\n    Iterator&\
-    \ operator++()\n    {\n      y = (y + 1) | bs.x;\n      return *this;\n    }\n\
-    \    bool operator!=(const Iterator &other) const { return y != other.y; }\n \
-    \ };\n  Iterator begin() const { return Iterator(x, *this); }\n  Iterator end()\
-    \ const { return Iterator((T(1) << n) | x, *this); }\n};"
+    \ 3, 3, 3, 3, 4, 4, ... \ninline ull bit_width(ull x) { return x == 0 ? 0 : 64\
+    \ - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline ull bit_floor(ull\
+    \ x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4,\
+    \ 8, 8, 8, 8, 16, ...\ninline ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL\
+    \ << bit_width(x - 1); }\ninline ull countr_zero(ull x) { assert(x != 0); return\
+    \ __builtin_ctzll(x); }\ninline ull popcount(ull x) { return __builtin_popcountll(x);\
+    \ }\ninline bool has_single_bit(ull x) { return popcount(x) == 1; }\n#else\n//\
+    \ 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline ll bit_width(ll x) { return bit_width((ull)x);\
+    \ }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline ll bit_floor(ll x) { return\
+    \ bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline ll bit_ceil(ll\
+    \ x) { return bit_ceil((ull)x); }\ninline ll countr_zero(ll x) { assert(x != 0);\
+    \ return countr_zero((ull)x); }\ninline ll popcount(ll x) { return popcount((ull)x);\
+    \ }\ninline bool has_single_bit(ll x) { return has_single_bit((ull)x); }\n#endif\n\
+    \ninline ull lsb_pos(ull x) { assert(x != 0); return countr_zero(x); }\ninline\
+    \ ull msb_pos(ull x) { assert(x != 0); return bit_width(x) - 1; }\ninline ull\
+    \ lsb_mask(ull x) { assert(x != 0); return x & -x; }\ninline ull msb_mask(ull\
+    \ x) { assert(x != 0); return bit_floor(x); }\n\ninline bool btest(ull x, uint\
+    \ k) { return (x >> k) & 1; }\ntemplate <class T>\ninline void bset(T &x, uint\
+    \ k, bool b = 1) { b ? x |= (1ULL << k) : x &= ~(1ULL << k); }\ntemplate <class\
+    \ T>\ninline void bflip(T &x, uint k) { x ^= (1ULL << k); }\ninline bool bsubset(ull\
+    \ x, ull y) { return (x & y) == x; }\ninline bool bsupset(ull x, ull y) { return\
+    \ (x & y) == y; }\ninline ull bsetminus(ull x, ull y) { return x & ~y; }\n\ntemplate\
+    \ <class T>\nstruct bsubsets\n{\nprivate:\n  T x;\npublic:\n  bsubsets(T x) :\
+    \ x(x) {}\n  struct Iterator\n  {\n  private:\n    T y;\n    bool is_end;\n  \
+    \  const bsubsets &bs;\n  public:\n    Iterator(T y, bool is_end, const bsubsets\
+    \ &bs) : y(y), is_end(is_end), bs(bs) {}\n    T operator*() const { return y;\
+    \ }\n    Iterator& operator++()\n    {\n      if (y == 0)\n        is_end = true;\n\
+    \      y = (y - 1) & bs.x;\n      return *this;\n    }\n    bool operator!=(const\
+    \ Iterator &other) const { return y != other.y || is_end != other.is_end; }\n\
+    \  };\n  Iterator begin() const { return Iterator(x, false, *this); }\n  Iterator\
+    \ end() const { return Iterator(x, true, *this); }\n};\ntemplate <class T>\nstruct\
+    \ bsupsets\n{\nprivate:\n  int n;\n  T x;\npublic:\n  bsupsets(int n, T x) : n(n),\
+    \ x(x) {}\n  struct Iterator\n  {\n  private:\n    T y;\n    const bsupsets &bs;\n\
+    \  public:\n    Iterator(T y, const bsupsets &bs) : y(y), bs(bs) {}\n    T operator*()\
+    \ const { return y; }\n    Iterator& operator++()\n    {\n      y = (y + 1) |\
+    \ bs.x;\n      return *this;\n    }\n    bool operator!=(const Iterator &other)\
+    \ const { return y != other.y; }\n  };\n  Iterator begin() const { return Iterator(x,\
+    \ *this); }\n  Iterator end() const { return Iterator((T(1) << n) | x, *this);\
+    \ }\n};"
   dependsOn:
   - template/template_types.hpp
   - template/template_rep.hpp
   isVerificationFile: false
   path: template/template_bit.hpp
   requiredBy: []
-  timestamp: '2024-12-10 18:45:11+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  timestamp: '2024-12-10 19:11:35+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/template_bit.test.cpp
 documentation_of: template/template_bit.hpp

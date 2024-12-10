@@ -1,38 +1,38 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_func.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u95A2\u6570\u30AA\u30D6\u30B8\
       \u30A7\u30AF\u30C8\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
@@ -81,22 +81,23 @@ data:
     \ */\n\ninline ull pow2(auto k) { return 1ULL << k; }\ninline ull MASK(auto k)\
     \ { return (1ULL << k) - 1; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\
     \u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n\
-    // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline ull bit_width(ull x) { return flsll(x);\
-    \ }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline ull bit_floor(ull x) { return\
-    \ x == 0 ? 0ULL : 1ULL << (flsll(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16,\
-    \ ...\ninline ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL << flsll(x - 1);\
-    \ }\ninline ull countr_zero(ull x) { assert(x != 0); return __builtin_ctzll(x);\
-    \ }\ninline ull popcount(ull x) { return __builtin_popcountll(x); }\ninline bool\
-    \ has_single_bit(ull x) { return popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3,\
-    \ 3, 3, 3, 4, 4, ... \ninline ll bit_width(ll x) { return bit_width((ull)x); }\n\
-    // 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline ll bit_floor(ll x) { return bit_floor((ull)x);\
-    \ }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline ll bit_ceil(ll x) { return\
-    \ bit_ceil((ull)x); }\ninline ll countr_zero(ll x) { assert(x != 0); return countr_zero((ull)x);\
-    \ }\ninline ll popcount(ll x) { return popcount((ull)x); }\ninline bool has_single_bit(ll\
-    \ x) { return has_single_bit((ull)x); }\n#endif\n\ninline ull lsb_pos(ull x) {\
-    \ assert(x != 0); return countr_zero(x); }\ninline ull msb_pos(ull x) { assert(x\
-    \ != 0); return bit_width(x) - 1; }\ninline ull lsb_mask(ull x) { assert(x !=\
-    \ 0); return x & -x; }\ninline ull msb_mask(ull x) { assert(x != 0); return bit_floor(x);\
+    // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline ull bit_width(ull x) { return x\
+    \ == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\n\
+    inline ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1);\
+    \ }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline ull bit_ceil(ull x) { return\
+    \ x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline ull countr_zero(ull x) {\
+    \ assert(x != 0); return __builtin_ctzll(x); }\ninline ull popcount(ull x) { return\
+    \ __builtin_popcountll(x); }\ninline bool has_single_bit(ull x) { return popcount(x)\
+    \ == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline ll bit_width(ll\
+    \ x) { return bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline\
+    \ ll bit_floor(ll x) { return bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8,\
+    \ 8, 16, ...\ninline ll bit_ceil(ll x) { return bit_ceil((ull)x); }\ninline ll\
+    \ countr_zero(ll x) { assert(x != 0); return countr_zero((ull)x); }\ninline ll\
+    \ popcount(ll x) { return popcount((ull)x); }\ninline bool has_single_bit(ll x)\
+    \ { return has_single_bit((ull)x); }\n#endif\n\ninline ull lsb_pos(ull x) { assert(x\
+    \ != 0); return countr_zero(x); }\ninline ull msb_pos(ull x) { assert(x != 0);\
+    \ return bit_width(x) - 1; }\ninline ull lsb_mask(ull x) { assert(x != 0); return\
+    \ x & -x; }\ninline ull msb_mask(ull x) { assert(x != 0); return bit_floor(x);\
     \ }\n\ninline bool btest(ull x, uint k) { return (x >> k) & 1; }\ntemplate <class\
     \ T>\ninline void bset(T &x, uint k, bool b = 1) { b ? x |= (1ULL << k) : x &=\
     \ ~(1ULL << k); }\ntemplate <class T>\ninline void bflip(T &x, uint k) { x ^=\
@@ -354,8 +355,8 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_bit.test.cpp
   requiredBy: []
-  timestamp: '2024-12-10 18:45:11+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2024-12-10 19:11:35+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_bit.test.cpp
 layout: document
