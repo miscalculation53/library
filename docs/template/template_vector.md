@@ -10,7 +10,9 @@
 
 #### gen_vec
 
-`gen_vec(int n, F f)`
+```cpp
+gen_vec(int n, F f)
+```
 
 長さ $n$ で、$i$ 番目が $f(i)$ の vector を返す。
 

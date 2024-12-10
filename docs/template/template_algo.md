@@ -4,7 +4,9 @@
 
 #### SUM
 
-`U SUM(vc<T> v)`
+```cpp
+U SUM(vc<T> v)
+```
 
 $v$ の要素の総和を（型 `U` の値として）返す。`U` はデフォルトでは `ll`。
 
@@ -44,7 +46,9 @@ $v$ の要素の総和を（型 `U` の値として）返す。`U` はデフォ�
 
 #### mex
 
-`U mex(vc<T> v)`
+```cpp
+U mex(vc<T> v)
+```
 
 $v$ の要素の mex を（型 `U` の値として）返す。`U` はデフォルトでは `ll`。
 
@@ -68,7 +72,9 @@ $v$ の要素はすべて非負整数であることを仮定。負の数があ�
 
 #### perminv
 
-`vc<T> perminv(vc<T> p)`
+```cpp
+vc<T> perminv(vc<T> p)
+```
 
 順列 $p$ の逆順列を返す。すなわち、$q_{p_i} = i$ を満たす順列 $q$ を返す。
 
@@ -80,7 +86,9 @@ $p$ が $(0, 1, \dots, \lvert p \rvert-1)$ の順列でない場合は、$p_i \g
 
 #### permuted
 
-`vc<T> permuted(vc<T> a, vc<U> p)`
+```cpp
+vc<T> permuted(vc<T> a, vc<U> p)
+```
 
 配列 $a$ を配列 $p$ にしたがって並べ替えた配列を返す。すなわち、$(a_{p_0}, a_{p_1}, \dots, a_{p_{\lvert p \rvert-1}})$ を返す。特に、$p$ が順列の場合や $a, p$ ともに順列の場合の使用を想定している。
 
@@ -268,7 +276,9 @@ $\lvert v \rvert = n$ とする。
 
 #### adjd
 
-`vc<T> adjd(vc<T> v)`
+```cpp
+vc<T> adjd(vc<T> v)
+```
 
 $\lvert v \rvert = n$ とする。
 
@@ -311,7 +321,9 @@ fec(v : direct_product({2, 1, 3}))
 
 #### dij4
 
-`const vpll dij4 = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} }`
+```cpp
+const vpll dij4 = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} }
+```
 
 グリッドの $4$ 方向の探索で使う。
 
