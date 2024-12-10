@@ -7,6 +7,20 @@ mt19937 mt;
 
 void test1()
 {
+  assert(ipow(0, 0) == 1);
+  assert(ipow(0, 1) == 0);
+  assert(ipow(1, 1LL << 60) == 1);
+  assert(ipow(-1, 1LL << 60) == 1);
+  assert(ipow(-1, (1LL << 60) - 1) == -1);
+  assert(ipow(2, 10) == 1024);
+  assert(ipow(2, 60) == 1LL << 60);
+  assert(ipow(3, 10) == 59049);
+  assert(ipow(-4, 10) == 1048576);
+  assert(ipow(-4, 11) == -4194304);
+}
+
+void test2()
+{
   for (int t = 0; t < 100000; t++)
   {
     int a = mt() % (mt() % 2 == 0 ? 1 << 15 : 1 << 30);
@@ -19,7 +33,7 @@ void test1()
   }
 }
 
-void test2()
+void test3()
 {
   for (int t = 0; t < 100000; t++)
   {
@@ -37,6 +51,7 @@ int main()
 {
   test1();
   test2();
+  test3();
 
   cout << "Hello World" << endl;
 }

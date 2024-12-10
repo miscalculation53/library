@@ -28,15 +28,21 @@ template <class T = ll>
 inline T safemod(cauto &a, cauto &b) { return a - b * divfloor<T>(a, b); }
 
 template <class T = ll>
-constexpr T ipow(cauto &a, cauto &b)
+constexpr T ipow(auto a, auto b)
 {
   assert(b >= 0);
   if (b == 0) return 1;
   if (a == 0 || a == 1) return a;
   if (a == -1) return b & 1 ? -1 : 1;
 
-  T res = 1;
-  repi(_, b) res *= T(a);
+  T res = 1, tmp = a;
+  while (b > 0)
+  {
+    if (b & 1)
+      res *= tmp;
+    tmp *= tmp;
+    b >>= 1;
+  }
   return res;
 }
 template <class T = ll>
