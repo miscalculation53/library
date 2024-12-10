@@ -14,11 +14,11 @@ inline ull MASK(auto k) { return (1ULL << k) - 1; }
 #if __cplusplus < 202002L
 // x == 0 ならば 0、そうでなければ 1 + floor(log2(x))
 // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... 
-inline ull bit_width(ull x) { return flsll(x); }
+inline ull bit_width(ull x) { return x == 0 ? 0 : 64 - __builtin_clzll(x); }
 // 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...
-inline ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL << (flsll(x) - 1); }
+inline ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }
 // 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...
-inline ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL << flsll(x - 1); }
+inline ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }
 inline ull countr_zero(ull x) { assert(x != 0); return __builtin_ctzll(x); }
 inline ull popcount(ull x) { return __builtin_popcountll(x); }
 inline bool has_single_bit(ull x) { return popcount(x) == 1; }
