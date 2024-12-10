@@ -20,33 +20,33 @@ void main2()
 void test()
 {
   /*
-  #ifdef LOCAL
-  rep(testcase, 100000)
-  {
-    cout << endl;
-    dump(testcase);
-
-
-    // ----- generate cases -----
-    ll N = 1 + rand() % 5;
-    vl A(N);
-    rep(i, N) A.at(i) = 1 + rand() % 10;
-    // --------------------------
-
-    // ------ check output ------
-    #define INPUT A
-    auto god = naive(INPUT);
-    auto ans = solve(INPUT);
-    if (god != ans)
+  local(
+    rep(testcase, 100000)
     {
-      dump(INPUT);
-      dump(god, ans);
-      exit(0);
+      cout << endl;
+      dump(testcase);
+
+
+      // ----- generate cases -----
+      ll N = 1 + rand() % 5;
+      vl A(N);
+      rep(i, N) A.at(i) = 1 + rand() % 10;
+      // --------------------------
+
+      // ------ check output ------
+      #define INPUT A
+      auto god = naive(INPUT);
+      auto ans = solve(INPUT);
+      if (god != ans)
+      {
+        dump(INPUT);
+        dump(god, ans);
+        exit(0);
+      }
+      // --------------------------
     }
-    // --------------------------
-  }
-  dump("ok");
-  #endif
+    dump("ok");
+  );
   //*/
 }
 

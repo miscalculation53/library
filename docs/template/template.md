@@ -4,6 +4,8 @@
 
 手元では `LOCAL` が define された状態で実行する。オンラインジャッジ等では `LOCAL` が define されていない想定。
 
+デバッグのときは簡単なものであれば `dump` を使うだけでよいが、少し複雑になった場合 `local()` で囲むと `LOCAL` が define された環境のみで出力されるようになる。（`#ifdef LOCAL` で囲むのでもよいが）
+
 ### テストケースの形式
 
 - `SINGLE_TESTCASE`：単一テストケース
@@ -21,7 +23,7 @@
 
 `FAST_IO` が define されているとき、例の `cin.tie(0); ios::sync_with_stdio(false);` をする。`FAST_IO` は `LOCAL` では外れる。
 
-`INTERACTIVE` が define されているとき、`PRINT` 系での改行で flush する。
+普段は `PRINT` 系での改行で flush しない。`INTERACTIVE` が define されているとき、flush する。
 
 
 ### 定数
