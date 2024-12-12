@@ -19,13 +19,13 @@ inline bool chmin(auto &a, cauto &b) { return a > b ? a = b, true : false; }
 inline bool chmax(auto &a, cauto &b) { return a < b ? a = b, true : false; }
 
 template <class T = ll>
-inline T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }
+inline constexpr T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }
 template <class T = ll>
-inline T divceil(cauto &a, cauto &b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }
+inline constexpr T divceil(cauto &a, cauto &b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }
 template <class T = ll>
-inline T divround(cauto &a, cauto &b) { return divfloor<T>(2 * a + b, 2 * b); }
+inline constexpr T divround(cauto &a, cauto &b) { return divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }
 template <class T = ll>
-inline T safemod(cauto &a, cauto &b) { return a - b * divfloor<T>(a, b); }
+inline constexpr T safemod(cauto &a, cauto &b) { return T(a) - T(b) * divfloor<T>(a, b); }
 
 template <class T = ll>
 constexpr T ipow(auto a, auto b)

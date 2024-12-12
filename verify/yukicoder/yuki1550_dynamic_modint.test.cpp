@@ -1,7 +1,7 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/kth_root_integer"
+#define PROBLEM "https://yukicoder.me/problems/no/1550"
 
-// #define SINGLE_TESTCASE
-#define MULTI_TESTCASE
+#define SINGLE_TESTCASE
+// #define MULTI_TESTCASE
 // #define AOJ_TESTCASE
 
 #define FAST_IO
@@ -11,13 +11,20 @@
 
 #include "../../template/template_all.hpp"
 
+#include "../../math/modint/modint.hpp"
+// using mint = modint998244353;
+// using mint = modint1000000007;
+// using mint = static_modint<1000000000>;
+using mint = modint;
+
 void init() {}
 
 void main2()
 {
-  ull A, K;
-  cin >> A >> K;
-  PRINT(iroot<ull>(A, K));
+  mint::set_mod(1000000007);
+  IN(mint, N);
+  PRINT(N);
+  dump(N);
 }
 
 void test() {}
