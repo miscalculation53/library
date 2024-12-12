@@ -110,5 +110,5 @@ int main()
     test2(MOD);
   }
 
-  PRINT("Hello World!");
+  PRINT("Hello World");
 }
