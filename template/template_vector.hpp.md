@@ -11,6 +11,9 @@ data:
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: math/modint/modint.hpp
+    title: modint (32 bit)
   - icon: ':warning:'
     path: template/template.cpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
@@ -25,6 +28,9 @@ data:
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/modint.test.cpp
+    title: verify/mytest/modint.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/template_algo.test.cpp
     title: verify/mytest/template_algo.test.cpp
@@ -52,6 +58,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb_tuple.test.cpp
     title: verify/yosupo/many_aplusb_tuple.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+    title: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki1550_static_modint.test.cpp
+    title: verify/yukicoder/yuki1550_static_modint.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -102,30 +114,30 @@ data:
     \n * @docs docs/template/template_math.md\n */\n\ninline bool chmin(auto &a, cauto\
     \ &b) { return a > b ? a = b, true : false; }\ninline bool chmax(auto &a, cauto\
     \ &b) { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll>\ninline\
-    \ T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b) && (T(a)\
-    \ ^ T(b)) < 0); }\ntemplate <class T = ll>\ninline T divceil(cauto &a, cauto &b)\
-    \ { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class\
-    \ T = ll>\ninline T divround(cauto &a, cauto &b) { return divfloor<T>(2 * a +\
-    \ b, 2 * b); }\ntemplate <class T = ll>\ninline T safemod(cauto &a, cauto &b)\
-    \ { return a - b * divfloor<T>(a, b); }\n\ntemplate <class T = ll>\nconstexpr\
-    \ T ipow(auto a, auto b)\n{\n  assert(b >= 0);\n  if (b == 0) return 1;\n  if\
-    \ (a == 0 || a == 1) return a;\n  if (a == -1) return b & 1 ? -1 : 1;\n\n  T res\
-    \ = 1, tmp = a;\n  while (b > 0)\n  {\n    if (b & 1)\n      res *= tmp;\n   \
-    \ tmp *= tmp;\n    b >>= 1;\n  }\n  return res;\n}\ntemplate <class T = ll>\n\
-    T mul_limited(cauto &a, cauto &b, cauto &m = INF)\n{\n  assert(a >= 0 && b >=\
-    \ 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) / T(b) ? T(m)\
-    \ : T(a) * T(b);\n}\ntemplate <class T = ll>\nT pow_limited(cauto &a, cauto &b,\
-    \ cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b\
-    \ == 0)\n    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1;\n  repi(_, b)\n\
-    \  {\n    if (res > T(m) / T(a))\n      return T(m);\n    res *= T(a);\n  }\n\
-    \  return res;\n}\n\ntemplate <class T = ll>\nconstexpr T iroot(cauto &a, cauto\
-    \ &k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n\
-    \n  auto isok = [&](const T &x) -> bool\n  {\n    if (x == 0)\n      return true;\n\
-    \    T tmp = 1;\n    repi(_, k)\n    {\n      if (tmp > T(a) / x)\n        return\
-    \ false;\n      tmp *= x;\n    }\n    return tmp <= T(a);\n  };\n\n  T ok = 0,\
-    \ ng = 1;\n  while (isok(ng))\n    ok = ng, ng <<= 1;\n  while (ng - ok > 1)\n\
-    \  {\n    T mid = ((ng - ok) >> 1) + ok;\n    if (isok(mid))\n      ok = mid;\n\
-    \    else\n      ng = mid;\n  }\n  return ok;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    \ constexpr T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b)\
+    \ && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll>\ninline constexpr T divceil(cauto\
+    \ &a, cauto &b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\n\
+    template <class T = ll>\ninline constexpr T divround(cauto &a, cauto &b) { return\
+    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll>\ninline constexpr\
+    \ T safemod(cauto &a, cauto &b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
+    template <class T = ll>\nconstexpr T ipow(auto a, auto b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0) return 1;\n  if (a == 0 || a == 1) return a;\n  if (a == -1) return\
+    \ b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (b > 0)\n  {\n    if (b &\
+    \ 1)\n      res *= tmp;\n    tmp *= tmp;\n    b >>= 1;\n  }\n  return res;\n}\n\
+    template <class T = ll>\nT mul_limited(cauto &a, cauto &b, cauto &m = INF)\n{\n\
+    \  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return\
+    \ T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll>\nT pow_limited(cauto\
+    \ &a, cauto &b, cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if\
+    \ (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1;\n\
+    \  repi(_, b)\n  {\n    if (res > T(m) / T(a))\n      return T(m);\n    res *=\
+    \ T(a);\n  }\n  return res;\n}\n\ntemplate <class T = ll>\nconstexpr T iroot(cauto\
+    \ &a, cauto &k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n   \
+    \ return a;\n\n  auto isok = [&](const T &x) -> bool\n  {\n    if (x == 0)\n \
+    \     return true;\n    T tmp = 1;\n    repi(_, k)\n    {\n      if (tmp > T(a)\
+    \ / x)\n        return false;\n      tmp *= x;\n    }\n    return tmp <= T(a);\n\
+    \  };\n\n  T ok = 0, ng = 1;\n  while (isok(ng))\n    ok = ng, ng <<= 1;\n  while\
+    \ (ng - ok > 1)\n  {\n    T mid = ((ng - ok) >> 1) + ok;\n    if (isok(mid))\n\
+    \      ok = mid;\n    else\n      ng = mid;\n  }\n  return ok;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS)>\nint sgn(cauto &a, const D &eps = EPS) { return\
     \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
     \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate\
@@ -193,11 +205,12 @@ data:
   isVerificationFile: false
   path: template/template_vector.hpp
   requiredBy:
+  - math/modint/modint.hpp
   - template/template.cpp
   - template/template_all.hpp
   - template/template_algo.hpp
   - template/template_binsearch.hpp
-  timestamp: '2024-12-10 20:43:33+09:00'
+  timestamp: '2024-12-13 03:47:10+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/many_aplusb_128bit.test.cpp
@@ -205,10 +218,13 @@ data:
   - verify/yosupo/many_aplusb_tuple.test.cpp
   - verify/yosupo/aplusb.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
+  - verify/mytest/modint.test.cpp
   - verify/mytest/template_algo.test.cpp
   - verify/mytest/template_vector.test.cpp
   - verify/mytest/template_binsearch.test.cpp
   - verify/mytest/template_bit.test.cpp
+  - verify/yukicoder/yuki1550_static_modint.test.cpp
+  - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
 documentation_of: template/template_vector.hpp
 layout: document
 redirect_from:

@@ -2,6 +2,9 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: math/modint/modint.hpp
+    title: modint (32 bit)
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -41,7 +44,7 @@ data:
     links: []
   bundledCode: "#line 1 \"template/template.cpp\"\n#define SINGLE_TESTCASE\n// #define\
     \ MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n// #define INTERACTIVE\n\
-    \n#define INF 4'000'000'000'000'000'037\n#define EPS 1e-11\n\n#line 2 \"template/template_all.hpp\"\
+    \n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -78,120 +81,36 @@ data:
     \ < rrrrr : i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3,\
     \ repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n#define\
     \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
-    #line 2 \"template/template_inout.hpp\"\n\n#line 5 \"template/template_inout.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\
-    \uFF09\n * @docs docs/template/template_inout.md\n */\n/**\n * \u53C2\u8003\uFF1A\
-    \n * https://trap.jp/post/1224/\n */\n\n// ---- \u5165\u529B ----\ntemplate <class\
-    \ T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  cin >> p.first\
-    \ >> p.second;\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
-    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    cin >> a[i];\n\
-    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
-    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
-    \ is;\n}\n\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\
-    \ntemplate <class T>\nvoid CINVEC(int n, vc<T> &v)\n{\n  v.resize(n);\n  repi(i,\
-    \ n) cin >> v[i];\n}\ntemplate <class T, class... Ts>\nvoid CINVEC(int n, vc<T>\
-    \ &v, vc<Ts> &...vs)\n{ CINVEC(n, v), CINVEC(n, vs...); }\n\ntemplate <class T>\n\
-    void CINVEC2(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  repi(i,\
-    \ n) repi(j, m) cin >> v[i][j];\n}\ntemplate <class T, class... Ts>\nvoid CINVEC2(int\
-    \ n, int m, vvc<T> &v, vvc<Ts> &...vs)\n{ CINVEC2(n, m, v), CINVEC2(n, m, vs...);\
-    \ }\n\n#define IN(T, ...) T __VA_ARGS__; CIN(__VA_ARGS__)\n\n#define CHAR(...)\
-    \ IN(char, __VA_ARGS__)\n#define INT(...) IN(int, __VA_ARGS__)\n#define LL(...)\
-    \ IN(ll, __VA_ARGS__)\n#define STR(...) IN(string, __VA_ARGS__)\n#define ARR(T,\
-    \ n, ...) array<T, n> __VA_ARGS__; CIN(__VA_ARGS__)\n\n#define VEC(T, n, ...)\
-    \ vc<T> __VA_ARGS__; CINVEC(n, __VA_ARGS__)\n#define VEC2(T, n, m, ...) vvc<T>\
-    \ __VA_ARGS__; CINVEC2(n, m, __VA_ARGS__)\n// ----------\n\n// ----- \u51FA\u529B\
-    \ -----\n#ifdef INTERACTIVE\n#define ENDL endl\n#else\n#define ENDL '\\n'\n#endif\n\
-    \ntemplate <class T>\nvoid PRINT(const T &a) { cout << a << ENDL; }\ntemplate\
-    \ <class T, class... Ts>\nvoid PRINT(const T &a, const Ts &...b)\n{\n  cout <<\
-    \ a;\n  (cout << ... << (cout << ' ', b));\n  cout << ENDL;\n}\n#define PRINTEXIT(...)\
-    \ do { PRINT(__VA_ARGS__); exit(0); } while (false)\n#define PRINTRETURN(...)\
-    \ do { PRINT(__VA_ARGS__); return; } while (false)\n\ntemplate <class T>\nvoid\
-    \ PRINTVEC(const vc<T> &v)\n{\n  const int n = v.size();\n  repi(i, n) cout <<\
-    \ v[i] << (i == n - 1 ? \"\" : \" \");\n  cout << ENDL;\n}\ntemplate <class T>\n\
-    void PRINTVECT(const vc<T> &v) { for (auto &vi : v) cout << vi << ENDL; }\ntemplate\
-    \ <class T>\nvoid PRINTVEC2(const vvc<T> &v) { for (auto &vi : v) PRINTVEC(vi);\
-    \ }\n// ----------\n\n// ----- \u57FA\u6E96\u305A\u3089\u3057 -----\ntemplate\
-    \ <class T, class U>\npair<T, U> operator+=(pair<T, U> &a, cauto &b)\n{\n  a.first\
-    \ += b.first;\n  a.second += b.second;\n  return a;\n}\ntemplate <class T, class\
-    \ U>\npair<T, U> operator+(pair<T, U> &a, cauto &b) { return a += b; }\n\ntemplate\
-    \ <class T, size_t n>\narray<T, n> operator+=(array<T, n> &a, cauto &b)\n{\n \
-    \ for (size_t i = 0; i < n; i++)\n    a[i] += b[i];\n  return a;\n}\ntemplate\
-    \ <class T, size_t n>\narray<T, n> operator+(array<T, n> &a, cauto &b) { return\
-    \ a += b; }\n\ntemplate <size_t... I>\nauto tuple_add_impl(auto &a, cauto &b,\
-    \ const index_sequence<I...>)\n{\n  ((get<I>(a) += get<I>(b)), ...);\n  return\
-    \ a;\n}\ntemplate <class... Ts>\ntuple<Ts...> operator+=(tuple<Ts...> &a, cauto\
-    \ &b)\n{ return tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{});\
-    \ }\ntemplate <class... Ts>\ntuple<Ts...> operator+(tuple<Ts...> &a, cauto &b)\
-    \ { return a += b; }\n\ntemplate <class T>\nvoid offset(vc<T> &v, cauto &add)\
-    \ { for (auto &vi : v) vi += add; }\ntemplate <class T>\nvoid offset(vvc<T> &v,\
-    \ cauto &add) { for (auto &vi : v) for (auto &vij : vi) vij += add; }\n// ----------\n\
-    \n// ----- \u8EE2\u7F6E -----\ntemplate <class T, const size_t m>\narray<vc<T>,\
-    \ m> top(const vc<array<T, m>> &vt)\n{\n  const size_t n = vt.size();\n  array<vc<T>,\
-    \ m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t i = 0; i < n; i++)\n    for (size_t\
-    \ j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n  return tv;\n}\ntemplate <class\
-    \ T, const size_t m>\nvc<array<T, m>> top(const array<vc<T>, m> &tv)\n{\n  if\
-    \ (tv.empty()) return {};\n  const size_t n = tv[0].size();\n  vc<array<T, m>>\
-    \ vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size() == n);\n\
-    \    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n  return\
-    \ vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const vc<pair<T,\
-    \ U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>> tv;\n  tv.first.resize(n),\
-    \ tv.second.resize(n);\n  for (size_t i = 0; i < n; i++)\n    tie(tv.first[i],\
-    \ tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate <class T, class U>\nvc<pair<T,\
-    \ U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const size_t n = tv.first.size();\n\
-    \  assert(n == tv.second.size());\n  vc<pair<T, U>> vt(n);\n  for (size_t i =\
-    \ 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i], tv.second[i]);\n  return\
-    \ vt;\n}\n\ntemplate <size_t... I>\nauto vt_to_tv_impl(auto &tv, cauto &t, index_sequence<I...>,\
-    \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\ntemplate <class...\
-    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
-    \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
-    \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    vt_to_tv_impl(tv, vt[i], make_index_sequence<tuple_size_v<decltype(tv)>>{},\
-    \ i);\n  return tv;\n}\n\ntemplate <size_t... I>\nauto tv_to_vt_impl(cauto &tv,\
-    \ index_sequence<I...>, size_t index)\n{ return make_tuple(get<I>(tv)[index]...);\
-    \ }\ntemplate <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t\
-    \ n = get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size()\
-    \ == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n;\
-    \ i++)\n    vt[i] = tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 2 \"template/template_dump.hpp\"\n\n#line 4 \"\
-    template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\
-    \uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n\
-    #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\nnamespace\
-    \ cpp_dump::_detail\n{\n  inline string export_var(\n      const i128 &x, const\
-    \ string &indent, size_t last_line_length,\n      size_t current_depth, bool fail_on_newline,\
-    \ const export_command &command\n  ) {\n    return export_var(i128tos(x), indent,\
-    \ last_line_length, current_depth, fail_on_newline, command);\n  }\n} // namespace\
-    \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
-    CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
-    \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
+    #line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
     #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
     \n * @docs docs/template/template_math.md\n */\n\ninline bool chmin(auto &a, cauto\
     \ &b) { return a > b ? a = b, true : false; }\ninline bool chmax(auto &a, cauto\
     \ &b) { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll>\ninline\
-    \ T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b) && (T(a)\
-    \ ^ T(b)) < 0); }\ntemplate <class T = ll>\ninline T divceil(cauto &a, cauto &b)\
-    \ { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class\
-    \ T = ll>\ninline T divround(cauto &a, cauto &b) { return divfloor<T>(2 * a +\
-    \ b, 2 * b); }\ntemplate <class T = ll>\ninline T safemod(cauto &a, cauto &b)\
-    \ { return a - b * divfloor<T>(a, b); }\n\ntemplate <class T = ll>\nconstexpr\
-    \ T ipow(auto a, auto b)\n{\n  assert(b >= 0);\n  if (b == 0) return 1;\n  if\
-    \ (a == 0 || a == 1) return a;\n  if (a == -1) return b & 1 ? -1 : 1;\n\n  T res\
-    \ = 1, tmp = a;\n  while (b > 0)\n  {\n    if (b & 1)\n      res *= tmp;\n   \
-    \ tmp *= tmp;\n    b >>= 1;\n  }\n  return res;\n}\ntemplate <class T = ll>\n\
-    T mul_limited(cauto &a, cauto &b, cauto &m = INF)\n{\n  assert(a >= 0 && b >=\
-    \ 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) / T(b) ? T(m)\
-    \ : T(a) * T(b);\n}\ntemplate <class T = ll>\nT pow_limited(cauto &a, cauto &b,\
-    \ cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b\
-    \ == 0)\n    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1;\n  repi(_, b)\n\
-    \  {\n    if (res > T(m) / T(a))\n      return T(m);\n    res *= T(a);\n  }\n\
-    \  return res;\n}\n\ntemplate <class T = ll>\nconstexpr T iroot(cauto &a, cauto\
-    \ &k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n\
-    \n  auto isok = [&](const T &x) -> bool\n  {\n    if (x == 0)\n      return true;\n\
-    \    T tmp = 1;\n    repi(_, k)\n    {\n      if (tmp > T(a) / x)\n        return\
-    \ false;\n      tmp *= x;\n    }\n    return tmp <= T(a);\n  };\n\n  T ok = 0,\
-    \ ng = 1;\n  while (isok(ng))\n    ok = ng, ng <<= 1;\n  while (ng - ok > 1)\n\
-    \  {\n    T mid = ((ng - ok) >> 1) + ok;\n    if (isok(mid))\n      ok = mid;\n\
-    \    else\n      ng = mid;\n  }\n  return ok;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    \ constexpr T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b)\
+    \ && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll>\ninline constexpr T divceil(cauto\
+    \ &a, cauto &b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\n\
+    template <class T = ll>\ninline constexpr T divround(cauto &a, cauto &b) { return\
+    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll>\ninline constexpr\
+    \ T safemod(cauto &a, cauto &b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
+    template <class T = ll>\nconstexpr T ipow(auto a, auto b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0) return 1;\n  if (a == 0 || a == 1) return a;\n  if (a == -1) return\
+    \ b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (b > 0)\n  {\n    if (b &\
+    \ 1)\n      res *= tmp;\n    tmp *= tmp;\n    b >>= 1;\n  }\n  return res;\n}\n\
+    template <class T = ll>\nT mul_limited(cauto &a, cauto &b, cauto &m = INF)\n{\n\
+    \  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return\
+    \ T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll>\nT pow_limited(cauto\
+    \ &a, cauto &b, cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if\
+    \ (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1;\n\
+    \  repi(_, b)\n  {\n    if (res > T(m) / T(a))\n      return T(m);\n    res *=\
+    \ T(a);\n  }\n  return res;\n}\n\ntemplate <class T = ll>\nconstexpr T iroot(cauto\
+    \ &a, cauto &k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n   \
+    \ return a;\n\n  auto isok = [&](const T &x) -> bool\n  {\n    if (x == 0)\n \
+    \     return true;\n    T tmp = 1;\n    repi(_, k)\n    {\n      if (tmp > T(a)\
+    \ / x)\n        return false;\n      tmp *= x;\n    }\n    return tmp <= T(a);\n\
+    \  };\n\n  T ok = 0, ng = 1;\n  while (isok(ng))\n    ok = ng, ng <<= 1;\n  while\
+    \ (ng - ok > 1)\n  {\n    T mid = ((ng - ok) >> 1) + ok;\n    if (isok(mid))\n\
+    \      ok = mid;\n    else\n      ng = mid;\n  }\n  return ok;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS)>\nint sgn(cauto &a, const D &eps = EPS) { return\
     \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
     \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate\
@@ -310,9 +229,192 @@ data:
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
     \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\n// DRUL\nconst vpll dij4\
-    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\n#line 12 \"template/template.cpp\"\n\n\
-    void init() {}\n\nvoid main2()\n{\n  \n}\n\nvoid test()\n{\n  /*\n  local(\n \
-    \   rep(testcase, 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\
+    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\n#line 2 \"template/template_inout.hpp\"\
+    \n\n#line 5 \"template/template_inout.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\n * @docs docs/template/template_inout.md\n\
+    \ */\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n */\n\n// ----\
+    \ \u5165\u529B ----\ntemplate <class T, class U>\nistream &operator>>(istream\
+    \ &is, pair<T, U> &p)\n{\n  cin >> p.first >> p.second;\n  return is;\n}\ntemplate\
+    \ <class T, size_t n>\nistream &operator>>(istream &is, array<T, n> &a)\n{\n \
+    \ for (size_t i = 0; i < n; i++)\n    cin >> a[i];\n  return is;\n}\ntemplate\
+    \ <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...> &t)\n{\n  apply([&](auto\
+    \ &...a)\n        { (is >> ... >> a); }, t);\n  return is;\n}\n\ntemplate <class...\
+    \ Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\ntemplate <class T>\nvoid CINVEC(int\
+    \ n, vc<T> &v)\n{\n  v.resize(n);\n  repi(i, n) cin >> v[i];\n}\ntemplate <class\
+    \ T, class... Ts>\nvoid CINVEC(int n, vc<T> &v, vc<Ts> &...vs)\n{ CINVEC(n, v),\
+    \ CINVEC(n, vs...); }\n\ntemplate <class T>\nvoid CINVEC2(int n, int m, vvc<T>\
+    \ &v)\n{\n  v.assign(n, vc<T>(m));\n  repi(i, n) repi(j, m) cin >> v[i][j];\n\
+    }\ntemplate <class T, class... Ts>\nvoid CINVEC2(int n, int m, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ CINVEC2(n, m, v), CINVEC2(n, m, vs...); }\n\n#define IN(T, ...) T\
+    \ __VA_ARGS__; CIN(__VA_ARGS__)\n\n#define CHAR(...) IN(char, __VA_ARGS__)\n#define\
+    \ INT(...) IN(int, __VA_ARGS__)\n#define LL(...) IN(ll, __VA_ARGS__)\n#define\
+    \ STR(...) IN(string, __VA_ARGS__)\n#define ARR(T, n, ...) array<T, n> __VA_ARGS__;\
+    \ CIN(__VA_ARGS__)\n\n#define VEC(T, n, ...) vc<T> __VA_ARGS__; CINVEC(n, __VA_ARGS__)\n\
+    #define VEC2(T, n, m, ...) vvc<T> __VA_ARGS__; CINVEC2(n, m, __VA_ARGS__)\n//\
+    \ ----------\n\n// ----- \u51FA\u529B -----\n#ifdef INTERACTIVE\n#define ENDL\
+    \ endl\n#else\n#define ENDL '\\n'\n#endif\n\ntemplate <class T>\nvoid PRINT(const\
+    \ T &a) { cout << a << ENDL; }\ntemplate <class T, class... Ts>\nvoid PRINT(const\
+    \ T &a, const Ts &...b)\n{\n  cout << a;\n  (cout << ... << (cout << ' ', b));\n\
+    \  cout << ENDL;\n}\n#define PRINTEXIT(...) do { PRINT(__VA_ARGS__); exit(0);\
+    \ } while (false)\n#define PRINTRETURN(...) do { PRINT(__VA_ARGS__); return; }\
+    \ while (false)\n\ntemplate <class T>\nvoid PRINTVEC(const vc<T> &v)\n{\n  const\
+    \ int n = v.size();\n  repi(i, n) cout << v[i] << (i == n - 1 ? \"\" : \" \");\n\
+    \  cout << ENDL;\n}\ntemplate <class T>\nvoid PRINTVECT(const vc<T> &v) { for\
+    \ (auto &vi : v) cout << vi << ENDL; }\ntemplate <class T>\nvoid PRINTVEC2(const\
+    \ vvc<T> &v) { for (auto &vi : v) PRINTVEC(vi); }\n// ----------\n\n// ----- \u57FA\
+    \u6E96\u305A\u3089\u3057 -----\ntemplate <class T, class U>\npair<T, U> operator+=(pair<T,\
+    \ U> &a, cauto &b)\n{\n  a.first += b.first;\n  a.second += b.second;\n  return\
+    \ a;\n}\ntemplate <class T, class U>\npair<T, U> operator+(pair<T, U> &a, cauto\
+    \ &b) { return a += b; }\n\ntemplate <class T, size_t n>\narray<T, n> operator+=(array<T,\
+    \ n> &a, cauto &b)\n{\n  for (size_t i = 0; i < n; i++)\n    a[i] += b[i];\n \
+    \ return a;\n}\ntemplate <class T, size_t n>\narray<T, n> operator+(array<T, n>\
+    \ &a, cauto &b) { return a += b; }\n\ntemplate <size_t... I>\nauto tuple_add_impl(auto\
+    \ &a, cauto &b, const index_sequence<I...>)\n{\n  ((get<I>(a) += get<I>(b)), ...);\n\
+    \  return a;\n}\ntemplate <class... Ts>\ntuple<Ts...> operator+=(tuple<Ts...>\
+    \ &a, cauto &b)\n{ return tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{});\
+    \ }\ntemplate <class... Ts>\ntuple<Ts...> operator+(tuple<Ts...> &a, cauto &b)\
+    \ { return a += b; }\n\ntemplate <class T>\nvoid offset(vc<T> &v, cauto &add)\
+    \ { for (auto &vi : v) vi += add; }\ntemplate <class T>\nvoid offset(vvc<T> &v,\
+    \ cauto &add) { for (auto &vi : v) for (auto &vij : vi) vij += add; }\n// ----------\n\
+    \n// ----- \u8EE2\u7F6E -----\ntemplate <class T, const size_t m>\narray<vc<T>,\
+    \ m> top(const vc<array<T, m>> &vt)\n{\n  const size_t n = vt.size();\n  array<vc<T>,\
+    \ m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t i = 0; i < n; i++)\n    for (size_t\
+    \ j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n  return tv;\n}\ntemplate <class\
+    \ T, const size_t m>\nvc<array<T, m>> top(const array<vc<T>, m> &tv)\n{\n  if\
+    \ (tv.empty()) return {};\n  const size_t n = tv[0].size();\n  vc<array<T, m>>\
+    \ vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size() == n);\n\
+    \    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n  return\
+    \ vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const vc<pair<T,\
+    \ U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>> tv;\n  tv.first.resize(n),\
+    \ tv.second.resize(n);\n  for (size_t i = 0; i < n; i++)\n    tie(tv.first[i],\
+    \ tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate <class T, class U>\nvc<pair<T,\
+    \ U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const size_t n = tv.first.size();\n\
+    \  assert(n == tv.second.size());\n  vc<pair<T, U>> vt(n);\n  for (size_t i =\
+    \ 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i], tv.second[i]);\n  return\
+    \ vt;\n}\n\ntemplate <size_t... I>\nauto vt_to_tv_impl(auto &tv, cauto &t, index_sequence<I...>,\
+    \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\ntemplate <class...\
+    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
+    \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
+    \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    vt_to_tv_impl(tv, vt[i], make_index_sequence<tuple_size_v<decltype(tv)>>{},\
+    \ i);\n  return tv;\n}\n\ntemplate <size_t... I>\nauto tv_to_vt_impl(cauto &tv,\
+    \ index_sequence<I...>, size_t index)\n{ return make_tuple(get<I>(tv)[index]...);\
+    \ }\ntemplate <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t\
+    \ n = get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size()\
+    \ == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n;\
+    \ i++)\n    vt[i] = tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
+    \ vt;\n}\n// ----------\n#line 2 \"template/template_dump.hpp\"\n\n#line 4 \"\
+    template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\
+    \uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n\
+    #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\nnamespace\
+    \ cpp_dump::_detail\n{\n  inline string export_var(\n      const i128 &x, const\
+    \ string &indent, size_t last_line_length,\n      size_t current_depth, bool fail_on_newline,\
+    \ const export_command &command\n  ) {\n    return export_var(i128tos(x), indent,\
+    \ last_line_length, current_depth, fail_on_newline, command);\n  }\n} // namespace\
+    \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
+    CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
+    \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
+    #endif\n#line 12 \"template/template.cpp\"\n\n#line 2 \"math/modint/modint.hpp\"\
+    \n\n#line 4 \"math/modint/modint.hpp\"\n\n/**\n * @brief modint (32 bit)\n * @docs\
+    \ docs/math/modint/modint.md\n */\n\nnamespace internal\n{\n  \nstruct barrett\n\
+    {\n  uint m;\n  ull im;\n\n  explicit barrett(uint m) : m(m), im((ull)(-1) / m\
+    \ + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint a, uint b) const\n\
+    \  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)(((unsigned __int128)(z)*im)\
+    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
+    \ }\n};\n\nconstexpr ll pow_mod_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n\
+    \    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n\
+    \  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n    y = (y * y) %\
+    \ _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool is_prime_constexpr(int\
+    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
+    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while\
+    \ (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll\
+    \ a : bases)\n  {\n    ll t = d;\n    ll y = pow_mod_constexpr(a, t, n);\n   \
+    \ while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n  \
+    \    t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n\
+    \  }\n  return true;\n}\ntemplate <int n>\nconstexpr bool is_prime = is_prime_constexpr(n);\n\
+    \nconstexpr pll inv_gcd(ll a, ll b)\n{\n  a = safemod(a, b);\n  if (a == 0)\n\
+    \    return {b, 0};\n  ll s = b, t = a;\n  ll m0 = 0, m1 = 1;\n  while (t)\n \
+    \ {\n    ll u = s / t;\n    s -= t * u;\n    m0 -= m1 * u;\n    auto tmp = s;\n\
+    \    s = t, t = tmp, tmp = m0, m0 = m1, m1 = tmp;\n  }\n  if (m0 < 0)\n    m0\
+    \ += b / s;\n  return {s, m0};\n}\n\n} // namespace internal\n\ntemplate <int\
+    \ m>\nstruct static_modint\n{\n  using mint = static_modint;\nprivate:\n  uint\
+    \ _v;\n  static constexpr uint umod() { return m; }\n  static constexpr bool prime\
+    \ = internal::is_prime<m>;\n\npublic:\n  static constexpr int mod() { return m;\
+    \ }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
+    \  }\n\n  static_modint() : _v(0) {}\n  template <class T>\n  static_modint(T\
+    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
+    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
+    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
+    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
+    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
+    \n  mint& operator++()\n  {\n    _v++;\n    if (_v == umod())\n      _v = 0;\n\
+    \    return *this;\n  }\n  mint& operator--()\n  {\n    if (_v == 0)\n      _v\
+    \ = umod();\n    _v--;\n    return *this;\n  }\n  mint operator++(int)\n  {\n\
+    \    mint res = *this;\n    ++*this;\n    return res;\n  }\n  mint operator--(int)\n\
+    \  {\n    mint res = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const\
+    \ mint& rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n\
+    \    return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
+    \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
+    \ mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n    _v = (uint)(z % umod());\n\
+    \    return *this;\n  }\n  mint& operator/=(const mint &rhs) { return *this =\
+    \ *this * rhs.inv(); }\n\n  mint operator+() const { return *this; }\n  mint operator-()\
+    \ const { return mint() - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n\
+    \ >= 0);\n    mint x = *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n\
+    \        r *= x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n \
+    \ mint inv() const\n  {\n    if (prime)\n    {\n      assert(_v != 0);\n     \
+    \ return pow(umod() - 2);\n    }\n    else\n    {\n      auto eg = internal::inv_gcd(_v,\
+    \ m);\n      assert(eg.first == 1);\n      return eg.second;\n    }\n  }\n\n \
+    \ friend mint operator+(const mint &lhs, const mint &rhs)\n  { return mint(lhs)\
+    \ += rhs; }\n  friend mint operator-(const mint &lhs, const mint &rhs)\n  { return\
+    \ mint(lhs) -= rhs; }\n  friend mint operator*(const mint &lhs, const mint &rhs)\n\
+    \  { return mint(lhs) *= rhs; }\n  friend mint operator/(const mint &lhs, const\
+    \ mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const mint\
+    \ &lhs, const mint &rhs)\n  { return lhs._v == rhs._v; }\n  friend bool operator!=(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v != rhs._v; }\n\n  friend istream\
+    \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
+    \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
+    \  {\n    os << x.val();\n    return os;\n  }\n};\n\ntemplate <int id>\nstruct\
+    \ dynamic_modint\n{\n  using mint = dynamic_modint;\nprivate:\n  uint _v;\n  static\
+    \ internal::barrett bt;\n  static uint umod() { return bt.umod(); }\n\npublic:\n\
+    \  static int mod() { return (int)(bt.umod()); }\n  static void set_mod(int m)\n\
+    \  {\n    assert(m >= 1);\n    bt = internal::barrett(m);\n  }\n  static mint\
+    \ raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n  }\n\n  dynamic_modint()\
+    \ : _v(0) {}\n  template <class T>\n  dynamic_modint(T v)\n  {\n    if constexpr\
+    \ (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x <\
+    \ 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else if constexpr\
+    \ (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n    }\n    else\n\
+    \    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>, \"Unsupported\
+    \ Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\n  mint& operator++()\n\
+    \  {\n    _v++;\n    if (_v == umod())\n      _v = 0;\n    return *this;\n  }\n\
+    \  mint& operator--()\n  {\n    if (_v == 0)\n      _v = umod();\n    _v--;\n\
+    \    return *this;\n  }\n  mint operator++(int)\n  {\n    mint res = *this;\n\
+    \    ++*this;\n    return res;\n  }\n  mint operator--(int)\n  {\n    mint res\
+    \ = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const mint&\
+    \ rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n \
+    \   return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
+    \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
+    \ mint &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n    return *this;\n  }\n  mint&\
+    \ operator/=(const mint &rhs) { return *this = *this * rhs.inv(); }\n\n  mint\
+    \ operator+() const { return *this; }\n  mint operator-() const { return mint()\
+    \ - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n    mint x =\
+    \ *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r *= x;\n   \
+    \   x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n  mint inv() const\n \
+    \ {\n    auto eg = internal::inv_gcd(_v, mod());\n    assert(eg.first == 1);\n\
+    \    return eg.second;\n  }\n\n  friend mint operator+(const mint &lhs, const\
+    \ mint &rhs)\n  { return mint(lhs) += rhs; }\n  friend mint operator-(const mint\
+    \ &lhs, const mint &rhs)\n  { return mint(lhs) -= rhs; }\n  friend mint operator*(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) *= rhs; }\n  friend mint operator/(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v == rhs._v; }\n  friend bool operator!=(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v != rhs._v; }\n\n  friend istream\
+    \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
+    \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
+    \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::barrett\
+    \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
+    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
+    #line 14 \"template/template.cpp\"\nusing mint = modint998244353;\n// using mint\
+    \ = modint1000000007;\n// using mint = static_modint<1000000000>;\n// using mint\
+    \ = modint;\n\nvoid init() {}\n\nvoid main2()\n{\n  \n}\n\nvoid test()\n{\n  /*\n\
+    \  local(\n    rep(testcase, 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\
     \n\n      // ----- generate cases -----\n      ll N = 1 + rand() % 5;\n      vl\
     \ A(N);\n      rep(i, N) A.at(i) = 1 + rand() % 10;\n      // --------------------------\n\
     \n      // ------ check output ------\n      #define INPUT A\n      auto god =\
@@ -332,14 +434,16 @@ data:
     \u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09\n * @docs docs/template/template.md\n\
     \ */\n"
   code: "#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
-    \n#define FAST_IO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037\n\
-    #define EPS 1e-11\n\n#include \"template/template_all.hpp\"\n\nvoid init() {}\n\
-    \nvoid main2()\n{\n  \n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase,\
-    \ 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\n\n      // -----\
-    \ generate cases -----\n      ll N = 1 + rand() % 5;\n      vl A(N);\n      rep(i,\
-    \ N) A.at(i) = 1 + rand() % 10;\n      // --------------------------\n\n     \
-    \ // ------ check output ------\n      #define INPUT A\n      auto god = naive(INPUT);\n\
-    \      auto ans = solve(INPUT);\n      if (god != ans)\n      {\n        dump(INPUT);\n\
+    \n#define FAST_IO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
+    #define EPS 1e-11\n\n#include \"template/template_all.hpp\"\n\n#include \"../math/modint/modint.hpp\"\
+    \nusing mint = modint998244353;\n// using mint = modint1000000007;\n// using mint\
+    \ = static_modint<1000000000>;\n// using mint = modint;\n\nvoid init() {}\n\n\
+    void main2()\n{\n  \n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase, 100000)\n\
+    \    {\n      cout << endl;\n      dump(testcase);\n\n\n      // ----- generate\
+    \ cases -----\n      ll N = 1 + rand() % 5;\n      vl A(N);\n      rep(i, N) A.at(i)\
+    \ = 1 + rand() % 10;\n      // --------------------------\n\n      // ------ check\
+    \ output ------\n      #define INPUT A\n      auto god = naive(INPUT);\n     \
+    \ auto ans = solve(INPUT);\n      if (god != ans)\n      {\n        dump(INPUT);\n\
     \        dump(god, ans);\n        exit(0);\n      }\n      // --------------------------\n\
     \    }\n    dump(\"ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](cauto\
     \ &val)\n  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined\
@@ -357,16 +461,17 @@ data:
   - template/template_all.hpp
   - template/template_types.hpp
   - template/template_rep.hpp
-  - template/template_inout.hpp
-  - template/template_dump.hpp
   - template/template_math.hpp
   - template/template_vector.hpp
   - template/template_func.hpp
   - template/template_algo.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - math/modint/modint.hpp
   isVerificationFile: false
   path: template/template.cpp
   requiredBy: []
-  timestamp: '2024-12-10 20:52:35+09:00'
+  timestamp: '2024-12-13 03:47:10+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: template/template.cpp

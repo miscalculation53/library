@@ -30,20 +30,28 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedRequiredBy:
+  - icon: ':warning:'
+    path: template/template.cpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/modint.test.cpp
+    title: verify/mytest/modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+    title: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki1550_static_modint.test.cpp
+    title: verify/yukicoder/yuki1550_static_modint.test.cpp
   _isVerificationFailed: false
-  _pathExtension: cpp
+  _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/many_aplusb
-    links:
-    - https://judge.yosupo.jp/problem/many_aplusb
-  bundledCode: "#line 1 \"verify/yosupo/many_aplusb_tuple.test.cpp\"\n#define PROBLEM\
-    \ \"https://judge.yosupo.jp/problem/many_aplusb\"\n\n// #define SINGLE_TESTCASE\n\
-    #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n\n#define\
-    \ INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#line 2 \"template/template_all.hpp\"\
+    _deprecated_at_docs: docs/math/modint/modint.md
+    document_title: modint (32 bit)
+    links: []
+  bundledCode: "#line 2 \"math/modint/modint.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -312,43 +320,200 @@ data:
     \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
     CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
     \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 13 \"verify/yosupo/many_aplusb_tuple.test.cpp\"\n\nvoid init() {}\n\
-    \nvoid main2()\n{\n  ll r = rand() % 5;\n  if (r == 0)\n  {\n    LL(A, B);\n \
-    \   PRINT(A + B);\n  }\n  else if (r == 1)\n  {\n    IN(pll, p);\n    PRINT(p.first\
-    \ + p.second);\n  }\n  else if (r == 2)\n  {\n    using T = tuple<ll, ll>;\n \
-    \   IN(T, t);\n    PRINT(get<0>(t) + get<1>(t));\n  }\n  else if (r == 3)\n  {\n\
-    \    ARR(ll, 2, A);\n    PRINT(A.at(0) + A.at(1));\n  }\n  else if (r == 4)\n\
-    \  {\n    VEC(ll, 2, A);\n    PRINT(A.at(0) + A.at(1));\n  }\n}\n\nvoid test()\
-    \ {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifndef BOJ\n \
-    \     cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined\
-    \ LOCAL\n    CERR(\"[FAST_IO]\\n\\n\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
-    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
-    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    CERR(\"\
-    [AOJ_TESTCASE]\\n\\n\");\n    while (true)\n    {\n      dump(\"new testcase\"\
-    );\n      main2();\n    }\n  #elif defined SINGLE_TESTCASE\n    CERR(\"[SINGLE_TESTCASE]\\\
-    n\\n\");\n    main2();\n  #elif defined MULTI_TESTCASE\n    CERR(\"[MULTI_TESTCASE]\\\
-    n\\n\");\n    int T;\n    cin >> T;\n    while (T--)\n    {\n      dump(\"new\
-    \ testcase\");\n      main2();\n    }\n  #endif\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/many_aplusb\"\n\n// #define\
-    \ SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define\
-    \ FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include\
-    \ \"../../template/template_all.hpp\"\n\nvoid init() {}\n\nvoid main2()\n{\n \
-    \ ll r = rand() % 5;\n  if (r == 0)\n  {\n    LL(A, B);\n    PRINT(A + B);\n \
-    \ }\n  else if (r == 1)\n  {\n    IN(pll, p);\n    PRINT(p.first + p.second);\n\
-    \  }\n  else if (r == 2)\n  {\n    using T = tuple<ll, ll>;\n    IN(T, t);\n \
-    \   PRINT(get<0>(t) + get<1>(t));\n  }\n  else if (r == 3)\n  {\n    ARR(ll, 2,\
-    \ A);\n    PRINT(A.at(0) + A.at(1));\n  }\n  else if (r == 4)\n  {\n    VEC(ll,\
-    \ 2, A);\n    PRINT(A.at(0) + A.at(1));\n  }\n}\n\nvoid test() {}\n\nint main()\n\
-    {\n  cauto CERR = [](cauto &val)\n  {\n    #ifndef BOJ\n      cerr << val;\n \
-    \   #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n    CERR(\"[FAST_IO]\\\
-    n\\n\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n  #endif\n  cout\
-    \ << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE\
-    \ or (defined LOCAL and defined SINGLE_TESTCASE)\n    CERR(\"[AOJ_TESTCASE]\\\
-    n\\n\");\n    while (true)\n    {\n      dump(\"new testcase\");\n      main2();\n\
-    \    }\n  #elif defined SINGLE_TESTCASE\n    CERR(\"[SINGLE_TESTCASE]\\n\\n\"\
-    );\n    main2();\n  #elif defined MULTI_TESTCASE\n    CERR(\"[MULTI_TESTCASE]\\\
-    n\\n\");\n    int T;\n    cin >> T;\n    while (T--)\n    {\n      dump(\"new\
-    \ testcase\");\n      main2();\n    }\n  #endif\n}"
+    #endif\n#line 4 \"math/modint/modint.hpp\"\n\n/**\n * @brief modint (32 bit)\n\
+    \ * @docs docs/math/modint/modint.md\n */\n\nnamespace internal\n{\n  \nstruct\
+    \ barrett\n{\n  uint m;\n  ull im;\n\n  explicit barrett(uint m) : m(m), im((ull)(-1)\
+    \ / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint a, uint b) const\n\
+    \  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)(((unsigned __int128)(z)*im)\
+    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
+    \ }\n};\n\nconstexpr ll pow_mod_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n\
+    \    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n\
+    \  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n    y = (y * y) %\
+    \ _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool is_prime_constexpr(int\
+    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
+    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while\
+    \ (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll\
+    \ a : bases)\n  {\n    ll t = d;\n    ll y = pow_mod_constexpr(a, t, n);\n   \
+    \ while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n  \
+    \    t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n\
+    \  }\n  return true;\n}\ntemplate <int n>\nconstexpr bool is_prime = is_prime_constexpr(n);\n\
+    \nconstexpr pll inv_gcd(ll a, ll b)\n{\n  a = safemod(a, b);\n  if (a == 0)\n\
+    \    return {b, 0};\n  ll s = b, t = a;\n  ll m0 = 0, m1 = 1;\n  while (t)\n \
+    \ {\n    ll u = s / t;\n    s -= t * u;\n    m0 -= m1 * u;\n    auto tmp = s;\n\
+    \    s = t, t = tmp, tmp = m0, m0 = m1, m1 = tmp;\n  }\n  if (m0 < 0)\n    m0\
+    \ += b / s;\n  return {s, m0};\n}\n\n} // namespace internal\n\ntemplate <int\
+    \ m>\nstruct static_modint\n{\n  using mint = static_modint;\nprivate:\n  uint\
+    \ _v;\n  static constexpr uint umod() { return m; }\n  static constexpr bool prime\
+    \ = internal::is_prime<m>;\n\npublic:\n  static constexpr int mod() { return m;\
+    \ }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
+    \  }\n\n  static_modint() : _v(0) {}\n  template <class T>\n  static_modint(T\
+    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
+    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
+    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
+    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
+    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
+    \n  mint& operator++()\n  {\n    _v++;\n    if (_v == umod())\n      _v = 0;\n\
+    \    return *this;\n  }\n  mint& operator--()\n  {\n    if (_v == 0)\n      _v\
+    \ = umod();\n    _v--;\n    return *this;\n  }\n  mint operator++(int)\n  {\n\
+    \    mint res = *this;\n    ++*this;\n    return res;\n  }\n  mint operator--(int)\n\
+    \  {\n    mint res = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const\
+    \ mint& rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n\
+    \    return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
+    \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
+    \ mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n    _v = (uint)(z % umod());\n\
+    \    return *this;\n  }\n  mint& operator/=(const mint &rhs) { return *this =\
+    \ *this * rhs.inv(); }\n\n  mint operator+() const { return *this; }\n  mint operator-()\
+    \ const { return mint() - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n\
+    \ >= 0);\n    mint x = *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n\
+    \        r *= x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n \
+    \ mint inv() const\n  {\n    if (prime)\n    {\n      assert(_v != 0);\n     \
+    \ return pow(umod() - 2);\n    }\n    else\n    {\n      auto eg = internal::inv_gcd(_v,\
+    \ m);\n      assert(eg.first == 1);\n      return eg.second;\n    }\n  }\n\n \
+    \ friend mint operator+(const mint &lhs, const mint &rhs)\n  { return mint(lhs)\
+    \ += rhs; }\n  friend mint operator-(const mint &lhs, const mint &rhs)\n  { return\
+    \ mint(lhs) -= rhs; }\n  friend mint operator*(const mint &lhs, const mint &rhs)\n\
+    \  { return mint(lhs) *= rhs; }\n  friend mint operator/(const mint &lhs, const\
+    \ mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const mint\
+    \ &lhs, const mint &rhs)\n  { return lhs._v == rhs._v; }\n  friend bool operator!=(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v != rhs._v; }\n\n  friend istream\
+    \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
+    \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
+    \  {\n    os << x.val();\n    return os;\n  }\n};\n\ntemplate <int id>\nstruct\
+    \ dynamic_modint\n{\n  using mint = dynamic_modint;\nprivate:\n  uint _v;\n  static\
+    \ internal::barrett bt;\n  static uint umod() { return bt.umod(); }\n\npublic:\n\
+    \  static int mod() { return (int)(bt.umod()); }\n  static void set_mod(int m)\n\
+    \  {\n    assert(m >= 1);\n    bt = internal::barrett(m);\n  }\n  static mint\
+    \ raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n  }\n\n  dynamic_modint()\
+    \ : _v(0) {}\n  template <class T>\n  dynamic_modint(T v)\n  {\n    if constexpr\
+    \ (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x <\
+    \ 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else if constexpr\
+    \ (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n    }\n    else\n\
+    \    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>, \"Unsupported\
+    \ Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\n  mint& operator++()\n\
+    \  {\n    _v++;\n    if (_v == umod())\n      _v = 0;\n    return *this;\n  }\n\
+    \  mint& operator--()\n  {\n    if (_v == 0)\n      _v = umod();\n    _v--;\n\
+    \    return *this;\n  }\n  mint operator++(int)\n  {\n    mint res = *this;\n\
+    \    ++*this;\n    return res;\n  }\n  mint operator--(int)\n  {\n    mint res\
+    \ = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const mint&\
+    \ rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n \
+    \   return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
+    \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
+    \ mint &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n    return *this;\n  }\n  mint&\
+    \ operator/=(const mint &rhs) { return *this = *this * rhs.inv(); }\n\n  mint\
+    \ operator+() const { return *this; }\n  mint operator-() const { return mint()\
+    \ - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n    mint x =\
+    \ *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r *= x;\n   \
+    \   x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n  mint inv() const\n \
+    \ {\n    auto eg = internal::inv_gcd(_v, mod());\n    assert(eg.first == 1);\n\
+    \    return eg.second;\n  }\n\n  friend mint operator+(const mint &lhs, const\
+    \ mint &rhs)\n  { return mint(lhs) += rhs; }\n  friend mint operator-(const mint\
+    \ &lhs, const mint &rhs)\n  { return mint(lhs) -= rhs; }\n  friend mint operator*(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) *= rhs; }\n  friend mint operator/(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v == rhs._v; }\n  friend bool operator!=(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v != rhs._v; }\n\n  friend istream\
+    \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
+    \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
+    \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::barrett\
+    \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
+    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n"
+  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n\n/**\n * @brief\
+    \ modint (32 bit)\n * @docs docs/math/modint/modint.md\n */\n\nnamespace internal\n\
+    {\n  \nstruct barrett\n{\n  uint m;\n  ull im;\n\n  explicit barrett(uint m) :\
+    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
+    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)(((unsigned\
+    \ __int128)(z)*im) >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z <\
+    \ y ? m : 0));\n  }\n};\n\nconstexpr ll pow_mod_constexpr(ll x, ll n, int m)\n\
+    {\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y =\
+    \ safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n\
+    \    y = (y * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool is_prime_constexpr(int\
+    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
+    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while\
+    \ (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll\
+    \ a : bases)\n  {\n    ll t = d;\n    ll y = pow_mod_constexpr(a, t, n);\n   \
+    \ while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n  \
+    \    t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n\
+    \  }\n  return true;\n}\ntemplate <int n>\nconstexpr bool is_prime = is_prime_constexpr(n);\n\
+    \nconstexpr pll inv_gcd(ll a, ll b)\n{\n  a = safemod(a, b);\n  if (a == 0)\n\
+    \    return {b, 0};\n  ll s = b, t = a;\n  ll m0 = 0, m1 = 1;\n  while (t)\n \
+    \ {\n    ll u = s / t;\n    s -= t * u;\n    m0 -= m1 * u;\n    auto tmp = s;\n\
+    \    s = t, t = tmp, tmp = m0, m0 = m1, m1 = tmp;\n  }\n  if (m0 < 0)\n    m0\
+    \ += b / s;\n  return {s, m0};\n}\n\n} // namespace internal\n\ntemplate <int\
+    \ m>\nstruct static_modint\n{\n  using mint = static_modint;\nprivate:\n  uint\
+    \ _v;\n  static constexpr uint umod() { return m; }\n  static constexpr bool prime\
+    \ = internal::is_prime<m>;\n\npublic:\n  static constexpr int mod() { return m;\
+    \ }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
+    \  }\n\n  static_modint() : _v(0) {}\n  template <class T>\n  static_modint(T\
+    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
+    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
+    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
+    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
+    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
+    \n  mint& operator++()\n  {\n    _v++;\n    if (_v == umod())\n      _v = 0;\n\
+    \    return *this;\n  }\n  mint& operator--()\n  {\n    if (_v == 0)\n      _v\
+    \ = umod();\n    _v--;\n    return *this;\n  }\n  mint operator++(int)\n  {\n\
+    \    mint res = *this;\n    ++*this;\n    return res;\n  }\n  mint operator--(int)\n\
+    \  {\n    mint res = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const\
+    \ mint& rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n\
+    \    return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
+    \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
+    \ mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n    _v = (uint)(z % umod());\n\
+    \    return *this;\n  }\n  mint& operator/=(const mint &rhs) { return *this =\
+    \ *this * rhs.inv(); }\n\n  mint operator+() const { return *this; }\n  mint operator-()\
+    \ const { return mint() - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n\
+    \ >= 0);\n    mint x = *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n\
+    \        r *= x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n \
+    \ mint inv() const\n  {\n    if (prime)\n    {\n      assert(_v != 0);\n     \
+    \ return pow(umod() - 2);\n    }\n    else\n    {\n      auto eg = internal::inv_gcd(_v,\
+    \ m);\n      assert(eg.first == 1);\n      return eg.second;\n    }\n  }\n\n \
+    \ friend mint operator+(const mint &lhs, const mint &rhs)\n  { return mint(lhs)\
+    \ += rhs; }\n  friend mint operator-(const mint &lhs, const mint &rhs)\n  { return\
+    \ mint(lhs) -= rhs; }\n  friend mint operator*(const mint &lhs, const mint &rhs)\n\
+    \  { return mint(lhs) *= rhs; }\n  friend mint operator/(const mint &lhs, const\
+    \ mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const mint\
+    \ &lhs, const mint &rhs)\n  { return lhs._v == rhs._v; }\n  friend bool operator!=(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v != rhs._v; }\n\n  friend istream\
+    \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
+    \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
+    \  {\n    os << x.val();\n    return os;\n  }\n};\n\ntemplate <int id>\nstruct\
+    \ dynamic_modint\n{\n  using mint = dynamic_modint;\nprivate:\n  uint _v;\n  static\
+    \ internal::barrett bt;\n  static uint umod() { return bt.umod(); }\n\npublic:\n\
+    \  static int mod() { return (int)(bt.umod()); }\n  static void set_mod(int m)\n\
+    \  {\n    assert(m >= 1);\n    bt = internal::barrett(m);\n  }\n  static mint\
+    \ raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n  }\n\n  dynamic_modint()\
+    \ : _v(0) {}\n  template <class T>\n  dynamic_modint(T v)\n  {\n    if constexpr\
+    \ (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x <\
+    \ 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else if constexpr\
+    \ (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n    }\n    else\n\
+    \    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>, \"Unsupported\
+    \ Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\n  mint& operator++()\n\
+    \  {\n    _v++;\n    if (_v == umod())\n      _v = 0;\n    return *this;\n  }\n\
+    \  mint& operator--()\n  {\n    if (_v == 0)\n      _v = umod();\n    _v--;\n\
+    \    return *this;\n  }\n  mint operator++(int)\n  {\n    mint res = *this;\n\
+    \    ++*this;\n    return res;\n  }\n  mint operator--(int)\n  {\n    mint res\
+    \ = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const mint&\
+    \ rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n \
+    \   return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
+    \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
+    \ mint &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n    return *this;\n  }\n  mint&\
+    \ operator/=(const mint &rhs) { return *this = *this * rhs.inv(); }\n\n  mint\
+    \ operator+() const { return *this; }\n  mint operator-() const { return mint()\
+    \ - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n    mint x =\
+    \ *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r *= x;\n   \
+    \   x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n  mint inv() const\n \
+    \ {\n    auto eg = internal::inv_gcd(_v, mod());\n    assert(eg.first == 1);\n\
+    \    return eg.second;\n  }\n\n  friend mint operator+(const mint &lhs, const\
+    \ mint &rhs)\n  { return mint(lhs) += rhs; }\n  friend mint operator-(const mint\
+    \ &lhs, const mint &rhs)\n  { return mint(lhs) -= rhs; }\n  friend mint operator*(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) *= rhs; }\n  friend mint operator/(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v == rhs._v; }\n  friend bool operator!=(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v != rhs._v; }\n\n  friend istream\
+    \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
+    \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
+    \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::barrett\
+    \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
+    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -359,16 +524,28 @@ data:
   - template/template_algo.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
-  isVerificationFile: true
-  path: verify/yosupo/many_aplusb_tuple.test.cpp
-  requiredBy: []
+  isVerificationFile: false
+  path: math/modint/modint.hpp
+  requiredBy:
+  - template/template.cpp
   timestamp: '2024-12-13 03:47:10+09:00'
-  verificationStatus: TEST_ACCEPTED
-  verifiedWith: []
-documentation_of: verify/yosupo/many_aplusb_tuple.test.cpp
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - verify/mytest/modint.test.cpp
+  - verify/yukicoder/yuki1550_static_modint.test.cpp
+  - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+documentation_of: math/modint/modint.hpp
 layout: document
 redirect_from:
-- /verify/verify/yosupo/many_aplusb_tuple.test.cpp
-- /verify/verify/yosupo/many_aplusb_tuple.test.cpp.html
-title: verify/yosupo/many_aplusb_tuple.test.cpp
+- /library/math/modint/modint.hpp
+- /library/math/modint/modint.hpp.html
+title: modint (32 bit)
 ---
+## modint (32 bit)
+
+ACL の modint がベース
+
+相違点：
+
+- 入出力ができる
+- 他は外から使う分にはあまり変わっていないと思うが、中は一部省略している

@@ -1,6 +1,11 @@
 ---
 data:
   libraryCategories:
+  - name: math/modint
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: math/modint/modint.hpp
+      title: modint (32 bit)
   - name: template
     pages:
     - icon: ':warning:'
@@ -46,6 +51,9 @@ data:
   - name: verify/mytest
     pages:
     - icon: ':heavy_check_mark:'
+      path: verify/mytest/modint.test.cpp
+      title: verify/mytest/modint.test.cpp
+    - icon: ':heavy_check_mark:'
       path: verify/mytest/template_algo.test.cpp
       title: verify/mytest/template_algo.test.cpp
     - icon: ':heavy_check_mark:'
@@ -86,6 +94,14 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/many_aplusb_tuple.test.cpp
       title: verify/yosupo/many_aplusb_tuple.test.cpp
+  - name: verify/yukicoder
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+      title: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yukicoder/yuki1550_static_modint.test.cpp
+      title: verify/yukicoder/yuki1550_static_modint.test.cpp
 layout: toppage
 ---
 [miscalc](https://x.com/miscalc53) のライブラリです。現在移植作業中
@@ -98,7 +114,7 @@ verification helper についての備忘録：
 - https://github.com/online-judge-tools/verification-helper/issues/411
 - https://qiita.com/KakurenboUni/items/b47d9e6e3582e2149d63
 - https://maspypy.github.io/library/
+- https://zenn.dev/harui/articles/ec9ad6a3d3e7ce
+  - 手元で yukicoder の問題を verify したいときは `export YUKICODER_TOKEN='(ここにAPIキーを入れる)'`
 
-コミットする前は exec ファイルを消す（消さないとファイルがでかすぎると怒られる）
-
-もしこれを忘れてしまって怒られたら git log で履歴を見る → git reset --soft (戻したいコミットのid)
+コミットする前は exec ファイルを消す（消さないとファイルがでかすぎると怒られる）。もしこれを忘れてしまって怒られたら git log で履歴を見る → git reset --soft (戻したいコミットのid)
