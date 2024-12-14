@@ -7,11 +7,44 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  _extendedRequiredBy: []
+  _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: math/modint/modint.hpp
+    title: modint (32 bit)
+  - icon: ':warning:'
+    path: template/template.cpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: template/template_all.hpp
+    title: template/template_all.hpp
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/modint.test.cpp
+    title: verify/mytest/modint.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/template_bit.test.cpp
     title: verify/mytest/template_bit.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/aplusb.test.cpp
+    title: verify/yosupo/aplusb.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/kth_root_integer.test.cpp
+    title: verify/yosupo/kth_root_integer.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/many_aplusb.test.cpp
+    title: verify/yosupo/many_aplusb.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/many_aplusb_128bit.test.cpp
+    title: verify/yosupo/many_aplusb_128bit.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/many_aplusb_tuple.test.cpp
+    title: verify/yosupo/many_aplusb_tuple.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+    title: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki1550_static_modint.test.cpp
+    title: verify/yukicoder/yuki1550_static_modint.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -150,11 +183,22 @@ data:
   - template/template_rep.hpp
   isVerificationFile: false
   path: template/template_bit.hpp
-  requiredBy: []
+  requiredBy:
+  - math/modint/modint.hpp
+  - template/template.cpp
+  - template/template_all.hpp
   timestamp: '2024-12-10 19:11:35+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yosupo/many_aplusb_128bit.test.cpp
+  - verify/yosupo/kth_root_integer.test.cpp
+  - verify/yosupo/many_aplusb_tuple.test.cpp
+  - verify/yosupo/aplusb.test.cpp
+  - verify/yosupo/many_aplusb.test.cpp
+  - verify/mytest/modint.test.cpp
   - verify/mytest/template_bit.test.cpp
+  - verify/yukicoder/yuki1550_static_modint.test.cpp
+  - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
 documentation_of: template/template_bit.hpp
 layout: document
 redirect_from:

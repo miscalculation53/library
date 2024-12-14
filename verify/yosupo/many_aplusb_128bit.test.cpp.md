@@ -9,6 +9,13 @@ data:
     path: template/template_all.hpp
     title: template/template_all.hpp
   - icon: ':heavy_check_mark:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
   - icon: ':heavy_check_mark:'
@@ -228,49 +235,127 @@ data:
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
     \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\n// DRUL\nconst vpll dij4\
-    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\n#line 2 \"template/template_inout.hpp\"\
-    \n\n#line 5 \"template/template_inout.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\n * @docs docs/template/template_inout.md\n\
-    \ */\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n */\n\n// ----\
-    \ \u5165\u529B ----\ntemplate <class T, class U>\nistream &operator>>(istream\
-    \ &is, pair<T, U> &p)\n{\n  cin >> p.first >> p.second;\n  return is;\n}\ntemplate\
-    \ <class T, size_t n>\nistream &operator>>(istream &is, array<T, n> &a)\n{\n \
-    \ for (size_t i = 0; i < n; i++)\n    cin >> a[i];\n  return is;\n}\ntemplate\
-    \ <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...> &t)\n{\n  apply([&](auto\
-    \ &...a)\n        { (is >> ... >> a); }, t);\n  return is;\n}\n\ntemplate <class...\
-    \ Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\ntemplate <class T>\nvoid CINVEC(int\
-    \ n, vc<T> &v)\n{\n  v.resize(n);\n  repi(i, n) cin >> v[i];\n}\ntemplate <class\
-    \ T, class... Ts>\nvoid CINVEC(int n, vc<T> &v, vc<Ts> &...vs)\n{ CINVEC(n, v),\
-    \ CINVEC(n, vs...); }\n\ntemplate <class T>\nvoid CINVEC2(int n, int m, vvc<T>\
-    \ &v)\n{\n  v.assign(n, vc<T>(m));\n  repi(i, n) repi(j, m) cin >> v[i][j];\n\
-    }\ntemplate <class T, class... Ts>\nvoid CINVEC2(int n, int m, vvc<T> &v, vvc<Ts>\
-    \ &...vs)\n{ CINVEC2(n, m, v), CINVEC2(n, m, vs...); }\n\n#define IN(T, ...) T\
-    \ __VA_ARGS__; CIN(__VA_ARGS__)\n\n#define CHAR(...) IN(char, __VA_ARGS__)\n#define\
-    \ INT(...) IN(int, __VA_ARGS__)\n#define LL(...) IN(ll, __VA_ARGS__)\n#define\
-    \ STR(...) IN(string, __VA_ARGS__)\n#define ARR(T, n, ...) array<T, n> __VA_ARGS__;\
-    \ CIN(__VA_ARGS__)\n\n#define VEC(T, n, ...) vc<T> __VA_ARGS__; CINVEC(n, __VA_ARGS__)\n\
-    #define VEC2(T, n, m, ...) vvc<T> __VA_ARGS__; CINVEC2(n, m, __VA_ARGS__)\n//\
-    \ ----------\n\n// ----- \u51FA\u529B -----\n#ifdef INTERACTIVE\n#define ENDL\
-    \ endl\n#else\n#define ENDL '\\n'\n#endif\n\ntemplate <class T>\nvoid PRINT(const\
-    \ T &a) { cout << a << ENDL; }\ntemplate <class T, class... Ts>\nvoid PRINT(const\
-    \ T &a, const Ts &...b)\n{\n  cout << a;\n  (cout << ... << (cout << ' ', b));\n\
-    \  cout << ENDL;\n}\n#define PRINTEXIT(...) do { PRINT(__VA_ARGS__); exit(0);\
-    \ } while (false)\n#define PRINTRETURN(...) do { PRINT(__VA_ARGS__); return; }\
-    \ while (false)\n\ntemplate <class T>\nvoid PRINTVEC(const vc<T> &v)\n{\n  const\
-    \ int n = v.size();\n  repi(i, n) cout << v[i] << (i == n - 1 ? \"\" : \" \");\n\
-    \  cout << ENDL;\n}\ntemplate <class T>\nvoid PRINTVECT(const vc<T> &v) { for\
-    \ (auto &vi : v) cout << vi << ENDL; }\ntemplate <class T>\nvoid PRINTVEC2(const\
-    \ vvc<T> &v) { for (auto &vi : v) PRINTVEC(vi); }\n// ----------\n\n// ----- \u57FA\
-    \u6E96\u305A\u3089\u3057 -----\ntemplate <class T, class U>\npair<T, U> operator+=(pair<T,\
-    \ U> &a, cauto &b)\n{\n  a.first += b.first;\n  a.second += b.second;\n  return\
-    \ a;\n}\ntemplate <class T, class U>\npair<T, U> operator+(pair<T, U> &a, cauto\
-    \ &b) { return a += b; }\n\ntemplate <class T, size_t n>\narray<T, n> operator+=(array<T,\
-    \ n> &a, cauto &b)\n{\n  for (size_t i = 0; i < n; i++)\n    a[i] += b[i];\n \
-    \ return a;\n}\ntemplate <class T, size_t n>\narray<T, n> operator+(array<T, n>\
-    \ &a, cauto &b) { return a += b; }\n\ntemplate <size_t... I>\nauto tuple_add_impl(auto\
-    \ &a, cauto &b, const index_sequence<I...>)\n{\n  ((get<I>(a) += get<I>(b)), ...);\n\
-    \  return a;\n}\ntemplate <class... Ts>\ntuple<Ts...> operator+=(tuple<Ts...>\
-    \ &a, cauto &b)\n{ return tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{});\
+    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\n#line 2 \"template/template_binsearch.hpp\"\
+    \n\n#line 6 \"template/template_binsearch.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
+    \u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09\n * @docs docs/template/template_binsearch.md\n\
+    \ */\n\n#if __cplusplus < 202002L\n// val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\
+    \u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\ntemplate <class T =\
+    \ ll, class V, class... Args>\ninline T LB(const V &v, Args&&... args)\n{ return\
+    \ lower_bound(ALL(v), forward<Args>(args)...) - v.begin(); }\n// val < v[i] \u3068\
+    \u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570\
+    )\ntemplate <class T = ll, class V, class... Args>\ninline T UB(const V &v, Args&&...\
+    \ args)\n{ return upper_bound(ALL(v), forward<Args>(args)...) - v.begin(); }\n\
+    #else\n// val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\
+    \u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class\
+    \ T = ll, class V, class... Args>\ninline T LB(const V &v, Args&&... args)\n{\
+    \ return ranges::lower_bound(v, forward<Args>(args)...) - v.begin(); }\n// val\
+    \ < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\
+    \u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class T = ll, class V, class...\
+    \ Args>\ninline T UB(const V &v, Args&&... args)\n{ return ranges::upper_bound(v,\
+    \ forward<Args>(args)...) - v.begin(); }\n#endif\n\ntemplate <class T = ll>\n\
+    pair<T, T> binsearch(cauto &judge, cauto &init_ok, cauto &init_ng)\n{\n  T ok(init_ok),\
+    \ ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n  while (ok - ng\
+    \ != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid)\
+    \ ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n}\ntemplate <class T =\
+    \ ld>\nT binsearch_real(cauto &judge, cauto &init_ok, cauto &init_ng, const int\
+    \ &iteration_count = 100)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n\
+    \  assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n    T mid = (ok + ng)\
+    \ / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n}\ntemplate <class\
+    \ T = ll>\npair<T, T> expsearch(cauto &judge, cauto &init_val, const bool &positive\
+    \ = true)\n{\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng\
+    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n   \
+    \   ok = ng, ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n\
+    \  {\n    ng = init_val, ok = init_val + (positive ? 1 : -1);\n    for (int i\
+    \ = 1; !judge(ok); i++)\n      ng = ok, ok = init_val + (positive ? 1 : -1) *\
+    \ (T(1) << i);\n  }\n  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid =\
+    \ (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return\
+    \ make_pair(ok, ng);\n}\n#line 2 \"template/template_bit.hpp\"\n\n#line 5 \"template/template_bit.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\
+    \u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ninline ull\
+    \ pow2(auto k) { return 1ULL << k; }\ninline ull MASK(auto k) { return (1ULL <<\
+    \ k) - 1; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\
+    \u305D\u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n// 0, 1, 2, 2,\
+    \ 3, 3, 3, 3, 4, 4, ... \ninline ull bit_width(ull x) { return x == 0 ? 0 : 64\
+    \ - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline ull bit_floor(ull\
+    \ x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4,\
+    \ 8, 8, 8, 8, 16, ...\ninline ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL\
+    \ << bit_width(x - 1); }\ninline ull countr_zero(ull x) { assert(x != 0); return\
+    \ __builtin_ctzll(x); }\ninline ull popcount(ull x) { return __builtin_popcountll(x);\
+    \ }\ninline bool has_single_bit(ull x) { return popcount(x) == 1; }\n#else\n//\
+    \ 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline ll bit_width(ll x) { return bit_width((ull)x);\
+    \ }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline ll bit_floor(ll x) { return\
+    \ bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline ll bit_ceil(ll\
+    \ x) { return bit_ceil((ull)x); }\ninline ll countr_zero(ll x) { assert(x != 0);\
+    \ return countr_zero((ull)x); }\ninline ll popcount(ll x) { return popcount((ull)x);\
+    \ }\ninline bool has_single_bit(ll x) { return has_single_bit((ull)x); }\n#endif\n\
+    \ninline ull lsb_pos(ull x) { assert(x != 0); return countr_zero(x); }\ninline\
+    \ ull msb_pos(ull x) { assert(x != 0); return bit_width(x) - 1; }\ninline ull\
+    \ lsb_mask(ull x) { assert(x != 0); return x & -x; }\ninline ull msb_mask(ull\
+    \ x) { assert(x != 0); return bit_floor(x); }\n\ninline bool btest(ull x, uint\
+    \ k) { return (x >> k) & 1; }\ntemplate <class T>\ninline void bset(T &x, uint\
+    \ k, bool b = 1) { b ? x |= (1ULL << k) : x &= ~(1ULL << k); }\ntemplate <class\
+    \ T>\ninline void bflip(T &x, uint k) { x ^= (1ULL << k); }\ninline bool bsubset(ull\
+    \ x, ull y) { return (x & y) == x; }\ninline bool bsupset(ull x, ull y) { return\
+    \ (x & y) == y; }\ninline ull bsetminus(ull x, ull y) { return x & ~y; }\n\ntemplate\
+    \ <class T>\nstruct bsubsets\n{\nprivate:\n  T x;\npublic:\n  bsubsets(T x) :\
+    \ x(x) {}\n  struct Iterator\n  {\n  private:\n    T y;\n    bool is_end;\n  \
+    \  const bsubsets &bs;\n  public:\n    Iterator(T y, bool is_end, const bsubsets\
+    \ &bs) : y(y), is_end(is_end), bs(bs) {}\n    T operator*() const { return y;\
+    \ }\n    Iterator& operator++()\n    {\n      if (y == 0)\n        is_end = true;\n\
+    \      y = (y - 1) & bs.x;\n      return *this;\n    }\n    bool operator!=(const\
+    \ Iterator &other) const { return y != other.y || is_end != other.is_end; }\n\
+    \  };\n  Iterator begin() const { return Iterator(x, false, *this); }\n  Iterator\
+    \ end() const { return Iterator(x, true, *this); }\n};\ntemplate <class T>\nstruct\
+    \ bsupsets\n{\nprivate:\n  int n;\n  T x;\npublic:\n  bsupsets(int n, T x) : n(n),\
+    \ x(x) {}\n  struct Iterator\n  {\n  private:\n    T y;\n    const bsupsets &bs;\n\
+    \  public:\n    Iterator(T y, const bsupsets &bs) : y(y), bs(bs) {}\n    T operator*()\
+    \ const { return y; }\n    Iterator& operator++()\n    {\n      y = (y + 1) |\
+    \ bs.x;\n      return *this;\n    }\n    bool operator!=(const Iterator &other)\
+    \ const { return y != other.y; }\n  };\n  Iterator begin() const { return Iterator(x,\
+    \ *this); }\n  Iterator end() const { return Iterator((T(1) << n) | x, *this);\
+    \ }\n};\n#line 2 \"template/template_inout.hpp\"\n\n#line 5 \"template/template_inout.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\
+    \uFF09\n * @docs docs/template/template_inout.md\n */\n/**\n * \u53C2\u8003\uFF1A\
+    \n * https://trap.jp/post/1224/\n */\n\n// ---- \u5165\u529B ----\ntemplate <class\
+    \ T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  cin >> p.first\
+    \ >> p.second;\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
+    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    cin >> a[i];\n\
+    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
+    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
+    \ is;\n}\n\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\
+    \ntemplate <class T>\nvoid CINVEC(int n, vc<T> &v)\n{\n  v.resize(n);\n  repi(i,\
+    \ n) cin >> v[i];\n}\ntemplate <class T, class... Ts>\nvoid CINVEC(int n, vc<T>\
+    \ &v, vc<Ts> &...vs)\n{ CINVEC(n, v), CINVEC(n, vs...); }\n\ntemplate <class T>\n\
+    void CINVEC2(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  repi(i,\
+    \ n) repi(j, m) cin >> v[i][j];\n}\ntemplate <class T, class... Ts>\nvoid CINVEC2(int\
+    \ n, int m, vvc<T> &v, vvc<Ts> &...vs)\n{ CINVEC2(n, m, v), CINVEC2(n, m, vs...);\
+    \ }\n\n#define IN(T, ...) T __VA_ARGS__; CIN(__VA_ARGS__)\n\n#define CHAR(...)\
+    \ IN(char, __VA_ARGS__)\n#define INT(...) IN(int, __VA_ARGS__)\n#define LL(...)\
+    \ IN(ll, __VA_ARGS__)\n#define STR(...) IN(string, __VA_ARGS__)\n#define ARR(T,\
+    \ n, ...) array<T, n> __VA_ARGS__; CIN(__VA_ARGS__)\n\n#define VEC(T, n, ...)\
+    \ vc<T> __VA_ARGS__; CINVEC(n, __VA_ARGS__)\n#define VEC2(T, n, m, ...) vvc<T>\
+    \ __VA_ARGS__; CINVEC2(n, m, __VA_ARGS__)\n// ----------\n\n// ----- \u51FA\u529B\
+    \ -----\n#ifdef INTERACTIVE\n#define ENDL endl\n#else\n#define ENDL '\\n'\n#endif\n\
+    \ntemplate <class T>\nvoid PRINT(const T &a) { cout << a << ENDL; }\ntemplate\
+    \ <class T, class... Ts>\nvoid PRINT(const T &a, const Ts &...b)\n{\n  cout <<\
+    \ a;\n  (cout << ... << (cout << ' ', b));\n  cout << ENDL;\n}\n#define PRINTEXIT(...)\
+    \ do { PRINT(__VA_ARGS__); exit(0); } while (false)\n#define PRINTRETURN(...)\
+    \ do { PRINT(__VA_ARGS__); return; } while (false)\n\ntemplate <class T>\nvoid\
+    \ PRINTVEC(const vc<T> &v)\n{\n  const int n = v.size();\n  repi(i, n) cout <<\
+    \ v[i] << (i == n - 1 ? \"\" : \" \");\n  cout << ENDL;\n}\ntemplate <class T>\n\
+    void PRINTVECT(const vc<T> &v) { for (auto &vi : v) cout << vi << ENDL; }\ntemplate\
+    \ <class T>\nvoid PRINTVEC2(const vvc<T> &v) { for (auto &vi : v) PRINTVEC(vi);\
+    \ }\n// ----------\n\n// ----- \u57FA\u6E96\u305A\u3089\u3057 -----\ntemplate\
+    \ <class T, class U>\npair<T, U> operator+=(pair<T, U> &a, cauto &b)\n{\n  a.first\
+    \ += b.first;\n  a.second += b.second;\n  return a;\n}\ntemplate <class T, class\
+    \ U>\npair<T, U> operator+(pair<T, U> &a, cauto &b) { return a += b; }\n\ntemplate\
+    \ <class T, size_t n>\narray<T, n> operator+=(array<T, n> &a, cauto &b)\n{\n \
+    \ for (size_t i = 0; i < n; i++)\n    a[i] += b[i];\n  return a;\n}\ntemplate\
+    \ <class T, size_t n>\narray<T, n> operator+(array<T, n> &a, cauto &b) { return\
+    \ a += b; }\n\ntemplate <size_t... I>\nauto tuple_add_impl(auto &a, cauto &b,\
+    \ const index_sequence<I...>)\n{\n  ((get<I>(a) += get<I>(b)), ...);\n  return\
+    \ a;\n}\ntemplate <class... Ts>\ntuple<Ts...> operator+=(tuple<Ts...> &a, cauto\
+    \ &b)\n{ return tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{});\
     \ }\ntemplate <class... Ts>\ntuple<Ts...> operator+(tuple<Ts...> &a, cauto &b)\
     \ { return a += b; }\n\ntemplate <class T>\nvoid offset(vc<T> &v, cauto &add)\
     \ { for (auto &vi : v) vi += add; }\ntemplate <class T>\nvoid offset(vvc<T> &v,\
@@ -316,14 +401,14 @@ data:
     \ {}\n\nvoid main2()\n{\n  IN(i128, A, B);\n  dump(A, B);\n  PRINT(A + B);\n}\n\
     \nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifndef\
     \ BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined\
-    \ LOCAL\n    CERR(\"[FAST_IO]\\n\\n\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
+    \ LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
     \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
-    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    CERR(\"\
-    [AOJ_TESTCASE]\\n\\n\");\n    while (true)\n    {\n      dump(\"new testcase\"\
-    );\n      main2();\n    }\n  #elif defined SINGLE_TESTCASE\n    CERR(\"[SINGLE_TESTCASE]\\\
-    n\\n\");\n    main2();\n  #elif defined MULTI_TESTCASE\n    CERR(\"[MULTI_TESTCASE]\\\
-    n\\n\");\n    int T;\n    cin >> T;\n    while (T--)\n    {\n      dump(\"new\
-    \ testcase\");\n      main2();\n    }\n  #endif\n}\n"
+    \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
+    \  CERR(\"[AOJ_TESTCASE]\\n\\n\");\n  while (true)\n  {\n    dump(\"new testcase\"\
+    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"[SINGLE_TESTCASE]\\\
+    n\\n\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"[MULTI_TESTCASE]\\\
+    n\\n\");\n  int T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\"\
+    );\n    main2();\n  }\n  #endif\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/many_aplusb_128bit\"\n\n\
     // #define SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n\
     #define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\
@@ -331,14 +416,14 @@ data:
     {\n  IN(i128, A, B);\n  dump(A, B);\n  PRINT(A + B);\n}\n\nvoid test() {}\n\n\
     int main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifndef BOJ\n      cerr\
     \ << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n \
-    \   CERR(\"[FAST_IO]\\n\\n\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
+    \ CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
     \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
-    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n    CERR(\"\
-    [AOJ_TESTCASE]\\n\\n\");\n    while (true)\n    {\n      dump(\"new testcase\"\
-    );\n      main2();\n    }\n  #elif defined SINGLE_TESTCASE\n    CERR(\"[SINGLE_TESTCASE]\\\
-    n\\n\");\n    main2();\n  #elif defined MULTI_TESTCASE\n    CERR(\"[MULTI_TESTCASE]\\\
-    n\\n\");\n    int T;\n    cin >> T;\n    while (T--)\n    {\n      dump(\"new\
-    \ testcase\");\n      main2();\n    }\n  #endif\n}"
+    \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
+    \  CERR(\"[AOJ_TESTCASE]\\n\\n\");\n  while (true)\n  {\n    dump(\"new testcase\"\
+    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"[SINGLE_TESTCASE]\\\
+    n\\n\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"[MULTI_TESTCASE]\\\
+    n\\n\");\n  int T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\"\
+    );\n    main2();\n  }\n  #endif\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -347,12 +432,14 @@ data:
   - template/template_vector.hpp
   - template/template_func.hpp
   - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
   isVerificationFile: true
   path: verify/yosupo/many_aplusb_128bit.test.cpp
   requiredBy: []
-  timestamp: '2024-12-13 03:47:10+09:00'
+  timestamp: '2024-12-14 12:07:36+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/many_aplusb_128bit.test.cpp
