@@ -1,6 +1,11 @@
 ---
 data:
   libraryCategories:
+  - name: math
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: math/extgcd.hpp
+      title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - name: math/modint
     pages:
     - icon: ':heavy_check_mark:'
@@ -48,6 +53,11 @@ data:
       path: template/template_vector.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   verificationCategories:
+  - name: verify/atcoder
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: verify/atcoder/abc340_f.test.cpp
+      title: verify/atcoder/abc340_f.test.cpp
   - name: verify/mytest
     pages:
     - icon: ':heavy_check_mark:'

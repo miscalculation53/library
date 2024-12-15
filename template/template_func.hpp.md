@@ -9,6 +9,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
+    path: math/extgcd.hpp
+    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
   - icon: ':warning:'
@@ -22,6 +25,9 @@ data:
     path: template/template_all.hpp
     title: template/template_all.hpp
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/atcoder/abc340_f.test.cpp
+    title: verify/atcoder/abc340_f.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/modint.test.cpp
     title: verify/mytest/modint.test.cpp
@@ -122,6 +128,7 @@ data:
   path: template/template_func.hpp
   requiredBy:
   - math/modint/modint.hpp
+  - math/extgcd.hpp
   - template/template.cpp
   - template/template_all.hpp
   - template/template_algo.hpp
@@ -136,6 +143,7 @@ data:
   - verify/mytest/modint.test.cpp
   - verify/mytest/template_algo.test.cpp
   - verify/mytest/template_bit.test.cpp
+  - verify/atcoder/abc340_f.test.cpp
   - verify/yukicoder/yuki1550_static_modint.test.cpp
   - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
 documentation_of: template/template_func.hpp

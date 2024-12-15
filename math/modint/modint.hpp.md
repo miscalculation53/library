@@ -43,6 +43,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
+    path: verify/atcoder/abc340_f.test.cpp
+    title: verify/atcoder/abc340_f.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/modint.test.cpp
     title: verify/mytest/modint.test.cpp
   - icon: ':heavy_check_mark:'
@@ -619,6 +622,7 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/modint.test.cpp
+  - verify/atcoder/abc340_f.test.cpp
   - verify/yukicoder/yuki1550_static_modint.test.cpp
   - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
 documentation_of: math/modint/modint.hpp
