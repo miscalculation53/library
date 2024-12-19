@@ -22,8 +22,8 @@ data:
     title: template/template_all.hpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/atcoder/abc340_f.test.cpp
-    title: verify/atcoder/abc340_f.test.cpp
+    path: verify/aoj/extgcd.test.cpp
+    title: verify/aoj/extgcd.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/modint.test.cpp
     title: verify/mytest/modint.test.cpp
@@ -204,7 +204,7 @@ data:
   - verify/yosupo/many_aplusb.test.cpp
   - verify/mytest/modint.test.cpp
   - verify/mytest/template_bit.test.cpp
-  - verify/atcoder/abc340_f.test.cpp
+  - verify/aoj/extgcd.test.cpp
   - verify/yukicoder/yuki1550_static_modint.test.cpp
   - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
 documentation_of: template/template_bit.hpp

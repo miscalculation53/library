@@ -40,8 +40,8 @@ data:
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/atcoder/abc340_f.test.cpp
-    title: verify/atcoder/abc340_f.test.cpp
+    path: verify/aoj/extgcd.test.cpp
+    title: verify/aoj/extgcd.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -399,7 +399,7 @@ data:
     \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
     #endif\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\u5F35\u30E6\u30FC\
     \u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs docs/math/extgcd.md\n\
-    \ */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\u305F\u3059 (x, y, g)\n\
+    \ */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\u305F\u3059 (g, x, y)\n\
     // max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T = ll>\nconstexpr tuple<T,\
     \ T, T> extgcd(const T &a, const T &b)\n{\n  if (a == 0 && b == 0)\n    return\
     \ {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  // a*x2 + b*y2 == z2  ...(2)\n\
@@ -411,7 +411,7 @@ data:
   code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
     \ \u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n\
     \ * @docs docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\
-    \u6E80\u305F\u3059 (x, y, g)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class\
+    \u6E80\u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class\
     \ T = ll>\nconstexpr tuple<T, T, T> extgcd(const T &a, const T &b)\n{\n  if (a\
     \ == 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n\
     \  // a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 =\
@@ -435,10 +435,10 @@ data:
   isVerificationFile: false
   path: math/extgcd.hpp
   requiredBy: []
-  timestamp: '2024-12-16 08:04:01+09:00'
+  timestamp: '2024-12-20 04:19:16+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/atcoder/abc340_f.test.cpp
+  - verify/aoj/extgcd.test.cpp
 documentation_of: math/extgcd.hpp
 layout: document
 redirect_from:

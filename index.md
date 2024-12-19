@@ -53,11 +53,11 @@ data:
       path: template/template_vector.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   verificationCategories:
-  - name: verify/atcoder
+  - name: verify/aoj
     pages:
     - icon: ':heavy_check_mark:'
-      path: verify/atcoder/abc340_f.test.cpp
-      title: verify/atcoder/abc340_f.test.cpp
+      path: verify/aoj/extgcd.test.cpp
+      title: verify/aoj/extgcd.test.cpp
   - name: verify/mytest
     pages:
     - icon: ':heavy_check_mark:'

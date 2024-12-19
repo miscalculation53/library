@@ -32,8 +32,8 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/atcoder/abc340_f.test.cpp
-    title: verify/atcoder/abc340_f.test.cpp
+    path: verify/aoj/extgcd.test.cpp
+    title: verify/aoj/extgcd.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/modint.test.cpp
     title: verify/mytest/modint.test.cpp
@@ -230,7 +230,7 @@ data:
   - verify/mytest/template_vector.test.cpp
   - verify/mytest/template_binsearch.test.cpp
   - verify/mytest/template_bit.test.cpp
-  - verify/atcoder/abc340_f.test.cpp
+  - verify/aoj/extgcd.test.cpp
   - verify/yukicoder/yuki1550_static_modint.test.cpp
   - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
 documentation_of: template/template_vector.hpp

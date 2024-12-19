@@ -50,37 +50,35 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    ERROR: 1e19
-    PROBLEM: https://atcoder.jp/contests/abc340/tasks/abc340_f
+    PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_E&lang=jp
     links:
-    - https://atcoder.jp/contests/abc340/tasks/abc340_f
-  bundledCode: "#line 1 \"verify/atcoder/abc340_f.test.cpp\"\n#define PROBLEM \"https://atcoder.jp/contests/abc340/tasks/abc340_f\"\
-    \n#define ERROR 1e19\n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n//\
-    \ #define AOJ_TESTCASE\n\n#define FAST_IO\n// #define INTERACTIVE\n\n#define INF\
-    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#line 2 \"template/template_all.hpp\"\
-    \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
-    \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
-    \ EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing\
-    \ uint = unsigned int;\nusing ull = unsigned long long;\nusing pll = pair<ll,\
-    \ ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\
-    \n#define vc vector\ntemplate <class T>\nusing vvc = vc<vc<T>>;\ntemplate <class\
-    \ T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb = vc<bool>;\nusing vl = vc<ll>;\n\
-    using vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing\
-    \ vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate\
-    \ <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate <class\
-    \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing i128 =\
-    \ __int128_t;\ni128 stoi128(const string &s)\n{\n  i128 res = 0;\n  if (s.front()\
-    \ == '-')\n  {\n    for (int i = 1; i < (int)s.size(); i++)\n      res = 10 *\
-    \ res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n    for (auto &&c : s)\n\
-    \      res = 10 * res + c - '0';\n  }\n  return res;\n}\nstring i128tos(i128 x)\n\
-    {\n  if (x == 0) return \"0\";\n  string sign = \"\", res = \"\";\n  if (x < 0)\n\
-    \    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n    res += '0' + x % 10;\n \
-    \   x /= 10;\n  }\n  reverse(res.begin(), res.end());\n  return sign + res;\n\
-    }\nistream &operator>>(istream &is, i128 &a)\n{\n  string s;\n  is >> s;\n  a\
-    \ = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream &os, const i128\
-    \ &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto const\
-    \ auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
+    - https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_E&lang=jp
+  bundledCode: "#line 1 \"verify/aoj/extgcd.test.cpp\"\n#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_E&lang=jp\"\
+    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
+    \n#define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\
+    \n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
+    \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
+    \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
+    \nusing ll = long long;\nusing uint = unsigned int;\nusing ull = unsigned long\
+    \ long;\nusing pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll\
+    \ = tuple<ll, ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc\
+    \ = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb =\
+    \ vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\n\
+    using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
+    using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
+    \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
+    using i128 = __int128_t;\ni128 stoi128(const string &s)\n{\n  i128 res = 0;\n\
+    \  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size(); i++)\n \
+    \     res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n    for\
+    \ (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n}\nstring\
+    \ i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\", res =\
+    \ \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n    res\
+    \ += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n  return\
+    \ sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string s;\n\
+    \  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream &os,\
+    \ const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto\
+    \ const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
     \ docs/template/template_rep.md\n */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n\
     */\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for\
@@ -404,7 +402,7 @@ data:
     \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
     CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
     \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 15 \"verify/atcoder/abc340_f.test.cpp\"\n\n#line 2 \"math/modint/modint.hpp\"\
+    #endif\n#line 13 \"verify/aoj/extgcd.test.cpp\"\n\n#line 2 \"math/modint/modint.hpp\"\
     \n\n#line 4 \"math/modint/modint.hpp\"\n\n/**\n * @brief modint (32 bit)\n * @docs\
     \ docs/math/modint/modint.md\n */\n\nnamespace internal\n{\n  \nstruct barrett\n\
     {\n  uint m;\n  ull im;\n\n  explicit barrett(uint m) : m(m), im((ull)(-1) / m\
@@ -502,12 +500,12 @@ data:
     \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::barrett\
     \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
     using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
-    #line 17 \"verify/atcoder/abc340_f.test.cpp\"\nusing mint = modint998244353;\n\
-    // using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
-    // using mint = modint;\n\n#line 2 \"math/extgcd.hpp\"\n\n#line 4 \"math/extgcd.hpp\"\
+    #line 15 \"verify/aoj/extgcd.test.cpp\"\n// using mint = modint998244353;\n//\
+    \ using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
+    using mint = modint;\n\n#line 2 \"math/extgcd.hpp\"\n\n#line 4 \"math/extgcd.hpp\"\
     \n\n/**\n * @brief \u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\
     \u6CD5 (extgcd)\n * @docs docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0,\
-    \ ax + by == g \u3092\u6E80\u305F\u3059 (x, y, g)\n// max(|x|, |y|) <= max(|a|,\
+    \ ax + by == g \u3092\u6E80\u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|,\
     \ |b|)\ntemplate <class T = ll>\nconstexpr tuple<T, T, T> extgcd(const T &a, const\
     \ T &b)\n{\n  if (a == 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1\
     \ == z1  ...(1)\n  // a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n\
@@ -515,21 +513,11 @@ data:
     \ (2)' = (1) - q*(2)\n    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 -\
     \ q * x2);\n    tie(y1, y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2,\
     \ z1 - q * z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return\
-    \ {z1, x1, y1};\n}\n#line 23 \"verify/atcoder/abc340_f.test.cpp\"\n\nvoid init()\
-    \ {}\n\nvoid main2()\n{\n  LL(x, y);\n  // find (a, b) s.t. |a*y-b*x| == 2\n \
-    \ auto [g, a, b] = extgcd(y, -x);\n  if (g >= 3)\n    PRINTRETURN(-1);\n  if (g\
-    \ == 1)\n    a *= 2, b *= 2;\n  assert(abs(a) <= ipow(10, 18) && abs(b) <= ipow(10,\
-    \ 18));\n  assert(abs(a * y - b * x) == 2);\n  PRINT(a, b);\n}\n\nvoid test()\n\
-    {\n  /*\n  local(\n    rep(testcase, 100000)\n    {\n      cout << endl;\n   \
-    \   dump(testcase);\n\n\n      // ----- generate cases -----\n      ll N = 1 +\
-    \ rand() % 5;\n      vl A(N);\n      rep(i, N) A.at(i) = 1 + rand() % 10;\n  \
-    \    // --------------------------\n\n      // ------ check output ------\n  \
-    \    #define INPUT A\n      auto god = naive(INPUT);\n      auto ans = solve(INPUT);\n\
-    \      if (god != ans)\n      {\n        dump(INPUT);\n        dump(god, ans);\n\
-    \        exit(0);\n      }\n      // --------------------------\n    }\n    dump(\"\
-    ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n\
-    \    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO\
-    \ and not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    \ {z1, x1, y1};\n}\n#line 21 \"verify/aoj/extgcd.test.cpp\"\n\nvoid init() {}\n\
+    \nvoid main2()\n{\n  LL(a, b);\n  auto [g, x, y] = extgcd(a, b);\n  PRINT(x, y);\n\
+    }\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n   \
+    \ #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and\
+    \ not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
     \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
     \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
     \  CERR(\"[AOJ_TESTCASE]\\n\\n\");\n  while (true)\n  {\n    dump(\"new testcase\"\
@@ -537,33 +525,24 @@ data:
     n\\n\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"[MULTI_TESTCASE]\\\
     n\\n\");\n  int T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\"\
     );\n    main2();\n  }\n  #endif\n}\n"
-  code: "#define PROBLEM \"https://atcoder.jp/contests/abc340/tasks/abc340_f\"\n#define\
-    \ ERROR 1e19\n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define\
-    \ AOJ_TESTCASE\n\n#define FAST_IO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
-    #define EPS 1e-11\n\n#include \"template/template_all.hpp\"\n\n#include \"math/modint/modint.hpp\"\
-    \nusing mint = modint998244353;\n// using mint = modint1000000007;\n// using mint\
-    \ = static_modint<1000000000>;\n// using mint = modint;\n\n#include \"math/extgcd.hpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(x, y);\n  // find (a, b) s.t. |a*y-b*x|\
-    \ == 2\n  auto [g, a, b] = extgcd(y, -x);\n  if (g >= 3)\n    PRINTRETURN(-1);\n\
-    \  if (g == 1)\n    a *= 2, b *= 2;\n  assert(abs(a) <= ipow(10, 18) && abs(b)\
-    \ <= ipow(10, 18));\n  assert(abs(a * y - b * x) == 2);\n  PRINT(a, b);\n}\n\n\
-    void test()\n{\n  /*\n  local(\n    rep(testcase, 100000)\n    {\n      cout <<\
-    \ endl;\n      dump(testcase);\n\n\n      // ----- generate cases -----\n    \
-    \  ll N = 1 + rand() % 5;\n      vl A(N);\n      rep(i, N) A.at(i) = 1 + rand()\
-    \ % 10;\n      // --------------------------\n\n      // ------ check output ------\n\
-    \      #define INPUT A\n      auto god = naive(INPUT);\n      auto ans = solve(INPUT);\n\
-    \      if (god != ans)\n      {\n        dump(INPUT);\n        dump(god, ans);\n\
-    \        exit(0);\n      }\n      // --------------------------\n    }\n    dump(\"\
-    ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n\
-    \    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO\
-    \ and not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
-    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
-    \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
-    \  CERR(\"[AOJ_TESTCASE]\\n\\n\");\n  while (true)\n  {\n    dump(\"new testcase\"\
-    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"[SINGLE_TESTCASE]\\\
-    n\\n\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"[MULTI_TESTCASE]\\\
-    n\\n\");\n  int T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\"\
-    );\n    main2();\n  }\n  #endif\n}"
+  code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_E&lang=jp\"\
+    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
+    \n#define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\
+    \n#include \"../../template/template_all.hpp\"\n\n#include \"../../math/modint/modint.hpp\"\
+    \n// using mint = modint998244353;\n// using mint = modint1000000007;\n// using\
+    \ mint = static_modint<1000000000>;\nusing mint = modint;\n\n#include \"../../math/extgcd.hpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(a, b);\n  auto [g, x, y] = extgcd(a,\
+    \ b);\n  PRINT(x, y);\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto\
+    \ &val)\n  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined\
+    \ FAST_IO and not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n\
+    \  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
+    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (not defined NOT_AOJ and\
+    \ defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"[AOJ_TESTCASE]\\n\\n\"\
+    );\n  while (true)\n  {\n    dump(\"new testcase\");\n    main2();\n  }\n  #elif\
+    \ defined SINGLE_TESTCASE\n  CERR(\"[SINGLE_TESTCASE]\\n\\n\");\n  main2();\n\
+    \  #elif defined MULTI_TESTCASE\n  CERR(\"[MULTI_TESTCASE]\\n\\n\");\n  int T;\n\
+    \  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
+    \  }\n  #endif\n}\n"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -579,15 +558,15 @@ data:
   - math/modint/modint.hpp
   - math/extgcd.hpp
   isVerificationFile: true
-  path: verify/atcoder/abc340_f.test.cpp
+  path: verify/aoj/extgcd.test.cpp
   requiredBy: []
-  timestamp: '2024-12-16 08:04:01+09:00'
+  timestamp: '2024-12-20 04:19:16+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/atcoder/abc340_f.test.cpp
+documentation_of: verify/aoj/extgcd.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/atcoder/abc340_f.test.cpp
-- /verify/verify/atcoder/abc340_f.test.cpp.html
-title: verify/atcoder/abc340_f.test.cpp
+- /verify/verify/aoj/extgcd.test.cpp
+- /verify/verify/aoj/extgcd.test.cpp.html
+title: verify/aoj/extgcd.test.cpp
 ---
