@@ -7,7 +7,7 @@
  * @docs docs/math/extgcd.md
  */
 
-// g == gcd(x, y) >= 0, ax + by == g を満たす (x, y, g)
+// g == gcd(x, y) >= 0, ax + by == g を満たす (g, x, y)
 // max(|x|, |y|) <= max(|a|, |b|)
 template <class T = ll>
 constexpr tuple<T, T, T> extgcd(const T &a, const T &b)
