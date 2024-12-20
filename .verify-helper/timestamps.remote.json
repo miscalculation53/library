@@ -15,7 +15,7 @@
 "verify/yosupo/many_aplusb.test.cpp": "2024-12-20 09:47:18 +0900",
 "verify/yosupo/many_aplusb_128bit.test.cpp": "2024-12-20 09:47:18 +0900",
 "verify/yosupo/many_aplusb_tuple.test.cpp": "2024-12-20 09:47:18 +0900",
-"verify/yosupo/primality_test.test.cpp": "2024-12-20 10:11:25 +0900",
+"verify/yosupo/primality_test.test.cpp": "2024-12-20 10:22:28 +0900",
 "verify/yukicoder/yuki1550_dynamic_modint.test.cpp": "2024-12-20 09:47:18 +0900",
 "verify/yukicoder/yuki1550_static_modint.test.cpp": "2024-12-20 09:47:18 +0900"
 }
