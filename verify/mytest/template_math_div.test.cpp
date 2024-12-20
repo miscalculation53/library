@@ -6,18 +6,19 @@
 mt19937 mt;
 ll randll() { return (mt() << 30) + mt(); }
 
+template <class T>
 void test1()
 {
   for (int t = 0; t < 100000; t++)
   {
     dump(t);
-    ll a = randll(), b = randll();
+    T a = randll(), b = randll();
     if (b == 0)
       continue;
     if (mt() % 2) a *= -1;
     if (mt() % 2) b *= -1;
 
-    ll c = divfloor(a, b), d = divceil(a, b), e = safemod(a, b);
+    T c = divfloor<T>(a, b), d = divceil<T>(a, b), e = safemod<T>(a, b);
     dump(a, b, c, d, e);
     if (b > 0)
     {
@@ -38,7 +39,8 @@ void test1()
 
 int main()
 {
-  test1();
+  test1<ll>();
+  test1<i128>();
 
   cout << "Hello World" << endl;
 }

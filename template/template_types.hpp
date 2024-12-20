@@ -42,6 +42,7 @@ using pqg = priority_queue<T>;
 
 #ifdef __SIZEOF_INT128__
 using i128 = __int128_t;
+using u128 = __uint128_t;
 i128 stoi128(const string &s)
 {
   i128 res = 0;

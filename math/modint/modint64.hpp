@@ -5,50 +5,46 @@
 #include "../extgcd.hpp"
 
 /**
- * @brief modint (32 bit)
- * @docs docs/math/modint/modint.md
+ * @brief modint (64 bit)
+ * @docs docs/math/modint/modint64.md
  */
 
-template <int m>
-struct static_modint
+template <ll m>
+struct static_modint64
 {
-  using mint = static_modint;
+  using mint = static_modint64;
 private:
-  uint _v;
-  static constexpr uint umod() { return m; }
-  static constexpr bool prime = internal::isprime32<m>;
+  ull _v;
+  static constexpr ull umod() { return m; }
+  static constexpr bool prime = internal::isprime64<m>;
 
 public:
-  static constexpr int mod() { return m; }
-  static mint raw(int v)
+  static constexpr ll mod() { return m; }
+  static mint raw(ll v)
   {
     mint x;
     x._v = v;
     return x;
   }
 
-  static_modint() : _v(0) {}
+  static_modint64() : _v(0) {}
   template <class T>
-  static_modint(T v)
+  static_modint64(T v)
   {
-    if constexpr (is_signed_v<T>)
+    if constexpr (is_unsigned_v<T>)
+    {
+      _v = (ull)(v % umod());
+    }
+    else
     {
       ll x = (ll)(v % (ll)(umod()));
       if (x < 0)
         x += umod();
-      _v = (uint)x;
-    }
-    else if constexpr (is_unsigned_v<T>)
-    {
-      _v = (uint)(v % umod());
-    }
-    else
-    {
-      static_assert(is_signed_v<T> || is_unsigned_v<T>, "Unsupported Type");
+      _v = (ull)x;
     }
   }
 
-  int val() const { return (int)_v; }
+  ll val() const { return (ll)_v; }
 
   mint& operator++()
   {
@@ -93,9 +89,9 @@ public:
   }
   mint& operator*=(const mint &rhs)
   {
-    ull z = _v;
+    u128 z = _v;
     z *= rhs._v;
-    _v = (uint)(z % umod());
+    _v = (ull)(z % umod());
     return *this;
   }
   mint& operator/=(const mint &rhs) { return *this = *this * rhs.inv(); }
@@ -125,7 +121,7 @@ public:
     }
     else
     {
-      auto [g, x, y] = extgcd<int>(_v, m);
+      auto [g, x, y] = extgcd<ll>(_v, m);
       assert(g == 1);
       return x;
     }
@@ -159,50 +155,27 @@ public:
 };
 
 template <int id>
-struct dynamic_modint
+struct dynamic_modint64_odd
 {
-  using mint = dynamic_modint;
+  using mint = dynamic_modint64_odd;
 private:
-  uint _v;
-  static internal::barrett32 bt;
-  static uint umod() { return bt.umod(); }
+  ull _v;  // montgomery expression
+  static internal::montgomery64odd mg;
+  static ull umod() { return mg.umod(); }
 
 public:
-  static int mod() { return (int)(bt.umod()); }
-  static void set_mod(int m)
+  static ll mod() { return (ll)(mg.umod()); }
+  static void set_mod(ll m)
   {
-    assert(m >= 1);
-    bt = internal::barrett32(m);
-  }
-  static mint raw(int v)
-  {
-    mint x;
-    x._v = v;
-    return x;
+    assert(m >= 1 && m % 2 == 1);
+    mg = internal::montgomery64odd(m);
   }
 
-  dynamic_modint() : _v(0) {}
-  template <class T>
-  dynamic_modint(T v)
-  {
-    if constexpr (is_signed_v<T>)
-    {
-      ll x = (ll)(v % (ll)(umod()));
-      if (x < 0)
-        x += umod();
-      _v = (uint)x;
-    }
-    else if constexpr (is_unsigned_v<T>)
-    {
-      _v = (uint)(v % umod());
-    }
-    else
-    {
-      static_assert(is_signed_v<T> || is_unsigned_v<T>, "Unsupported Type");
-    }
-  }
+  dynamic_modint64_odd() : _v(0) {}
+  dynamic_modint64_odd(i128 v)
+  { _v = mg.inv_reduce(v); }
 
-  int val() const { return (int)_v; }
+  ll val() const { return (ll)mg.reduce(_v); }
 
   mint& operator++()
   {
@@ -247,7 +220,7 @@ public:
   }
   mint& operator*=(const mint &rhs)
   {
-    _v = bt.mul(_v, rhs._v);
+    _v = mg.reduce(u128(_v) * rhs._v);
     return *this;
   }
   mint& operator/=(const mint &rhs) { return *this = *this * rhs.inv(); }
@@ -270,7 +243,7 @@ public:
   }
   mint inv() const
   {
-    auto [g, x, y] = extgcd<int>(_v, mod());
+    auto [g, x, y] = extgcd<ll>(val(), mod());
     assert(g == 1);
     return x;
   }
@@ -302,8 +275,6 @@ public:
   }
 };
 template <int id>
-internal::barrett32 dynamic_modint<id>::bt(998244353);
+internal::montgomery64odd dynamic_modint64_odd<id>::mg((1LL << 61) - 1);
 
-using modint998244353 = static_modint<998244353>;
-using modint1000000007 = static_modint<1000000007>;
-using modint = dynamic_modint<-1>;
+using modint61 = static_modint64<(1LL << 61) - 1>;

@@ -11,11 +11,11 @@ void test1()
   using mint = static_modint<MOD>;
   repi(t, 1000)
   {
-    ll a = mt() % MOD;
-    ll b = mt() % MOD;
-    assert((mint(a) + mint(b)).val() == (a + b) % MOD);
+    ll a = -10LL * MOD + mt() % (21LL * MOD);
+    ll b = -10LL * MOD + mt() % (21LL * MOD);
+    assert((mint(a) + mint(b)).val() == safemod(a + b, MOD));
     assert((mint(a) - mint(b)).val() == safemod(a - b, MOD));
-    assert((mint(a) * mint(b)).val() == a * b % MOD);
+    assert((mint(a) * mint(b)).val() == safemod((a % MOD) * (b % MOD), MOD));
     if (gcd(b, MOD) == 1)
     {
       mint c = mint(a) / mint(b);
@@ -53,11 +53,11 @@ void test2(int MOD)
 
   repi(t, 1000)
   {
-    ll a = mt() % MOD;
-    ll b = mt() % MOD;
-    assert((mint(a) + mint(b)).val() == (a + b) % MOD);
+    ll a = -10LL * MOD + mt() % (21LL * MOD);
+    ll b = -10LL * MOD + mt() % (21LL * MOD);
+    assert((mint(a) + mint(b)).val() == safemod(a + b, MOD));
     assert((mint(a) - mint(b)).val() == safemod(a - b, MOD));
-    assert((mint(a) * mint(b)).val() == a * b % MOD);
+    assert((mint(a) * mint(b)).val() == safemod((a % MOD) * (b % MOD), MOD));
     if (gcd(b, MOD) == 1)
     {
       mint c = mint(a) / mint(b);
@@ -104,8 +104,9 @@ int main()
   test1<1'000'000'007>();
   test1<2'000'000'011>();
   test1<2'000'001'000>();
+  test1<INT_MAX>();
 
-  fec(MOD : {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 998244353, 1'000'000'000, 1'000'000'007, 2'000'000'011, 2'000'000'100})
+  fec(MOD : {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 998244353, 1'000'000'000, 1'000'000'007, 2'000'000'011, 2'000'000'100, INT_MAX})
   {
     test2(MOD);
   }
