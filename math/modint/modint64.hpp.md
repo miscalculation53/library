@@ -46,7 +46,7 @@ data:
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
     path: math/prime/primality_test.hpp
-    title: math/prime/primality_test.hpp
+    title: "\u7D20\u6570\u5224\u5B9A"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/modint64.test.cpp

@@ -58,6 +58,8 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
+    _deprecated_at_docs: docs/math/prime/primality_test.md
+    document_title: "\u7D20\u6570\u5224\u5B9A"
     links: []
   bundledCode: "#line 2 \"math/prime/primality_test.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
@@ -607,7 +609,8 @@ data:
     \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
     \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::montgomery64odd\
     \ dynamic_modint64_odd<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
-    \ << 61) - 1>;\n#line 6 \"math/prime/primality_test.hpp\"\n\nbool is_prime_int(int\
+    \ << 61) - 1>;\n#line 6 \"math/prime/primality_test.hpp\"\n\n/**\n * @brief \u7D20\
+    \u6570\u5224\u5B9A\n * @docs docs/math/prime/primality_test.md\n */\n\nbool is_prime_int(int\
     \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
     \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n\
     \ - 1);\n  static const ll bases[3] = {2, 7, 61};\n  using mint = dynamic_modint<-1>;\n\
@@ -623,21 +626,23 @@ data:
     \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
     \ true;\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
-    ../modint/modint.hpp\"\n#include \"../modint/modint64.hpp\"\n\nbool is_prime_int(int\
-    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
-    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n\
-    \ - 1);\n  static const ll bases[3] = {2, 7, 61};\n  using mint = dynamic_modint<-1>;\n\
-    \  mint::set_mod(n);\n  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n\
-    \    while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t\
-    \ <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n\
-    \  return true;\n}\n\nbool is_prime(ll n)\n{\n  if (n <= INT_MAX)\n    return\
-    \ is_prime_int(n);\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >>\
-    \ countr_zero(n - 1);\n  static const ll bases[7] = {2, 325, 9375, 28178, 450775,\
-    \ 9780504, 1795265022};\n  using mint = dynamic_modint64_odd<-1>;\n  mint::set_mod(n);\n\
-    \  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while\
-    \ (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n\
-    \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
-    \ true;\n}"
+    ../modint/modint.hpp\"\n#include \"../modint/modint64.hpp\"\n\n/**\n * @brief\
+    \ \u7D20\u6570\u5224\u5B9A\n * @docs docs/math/prime/primality_test.md\n */\n\n\
+    bool is_prime_int(int n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 ||\
+    \ n == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return false;\n\
+    \  ll d = (n - 1) >> countr_zero(n - 1);\n  static const ll bases[3] = {2, 7,\
+    \ 61};\n  using mint = dynamic_modint<-1>;\n  mint::set_mod(n);\n  for (ll a :\
+    \ bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t != n\
+    \ - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n\
+    \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
+    }\n\nbool is_prime(ll n)\n{\n  if (n <= INT_MAX)\n    return is_prime_int(n);\n\
+    \  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n - 1);\n\
+    \  static const ll bases[7] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};\n\
+    \  using mint = dynamic_modint64_odd<-1>;\n  mint::set_mod(n);\n  for (ll a :\
+    \ bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t != n\
+    \ - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n\
+    \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
+    }"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -657,7 +662,7 @@ data:
   isVerificationFile: false
   path: math/prime/primality_test.hpp
   requiredBy: []
-  timestamp: '2024-12-20 10:11:25+09:00'
+  timestamp: '2024-12-20 10:22:28+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/primality_test.test.cpp
@@ -666,5 +671,16 @@ layout: document
 redirect_from:
 - /library/math/prime/primality_test.hpp
 - /library/math/prime/primality_test.hpp.html
-title: math/prime/primality_test.hpp
+title: "\u7D20\u6570\u5224\u5B9A"
 ---
+## 素数判定
+
+与えられた整数が素数かどうかをミラー・ラビン素数判定法で判定する。
+
+```cpp
+bool is_prime_int(int n)
+```
+
+```cpp
+bool is_prime(ll n)
+```

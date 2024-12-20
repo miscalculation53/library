@@ -49,7 +49,7 @@ data:
     title: math/modint/modint_internal.hpp
   - icon: ':heavy_check_mark:'
     path: math/prime/primality_test.hpp
-    title: math/prime/primality_test.hpp
+    title: "\u7D20\u6570\u5224\u5B9A"
   - icon: ':warning:'
     path: template/template.cpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
