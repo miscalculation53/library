@@ -45,6 +45,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
+    path: math/prime/factorize.hpp
+    title: "\u7D20\u56E0\u6570\u5206\u89E3"
+  - icon: ':heavy_check_mark:'
     path: math/prime/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
   _extendedVerifiedWith:
@@ -52,8 +55,14 @@ data:
     path: verify/mytest/modint64.test.cpp
     title: verify/mytest/modint64.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/factorize.test.cpp
+    title: verify/yosupo/factorize.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki888.test.cpp
+    title: verify/yukicoder/yuki888.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -621,12 +630,15 @@ data:
   isVerificationFile: false
   path: math/modint/modint64.hpp
   requiredBy:
+  - math/prime/factorize.hpp
   - math/prime/primality_test.hpp
   timestamp: '2024-12-20 09:47:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yosupo/factorize.test.cpp
   - verify/yosupo/primality_test.test.cpp
   - verify/mytest/modint64.test.cpp
+  - verify/yukicoder/yuki888.test.cpp
 documentation_of: math/modint/modint64.hpp
 layout: document
 redirect_from:

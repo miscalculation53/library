@@ -45,6 +45,9 @@ data:
     path: math/modint/modint64.hpp
     title: modint (64 bit)
   - icon: ':heavy_check_mark:'
+    path: math/prime/factorize.hpp
+    title: "\u7D20\u56E0\u6570\u5206\u89E3"
+  - icon: ':heavy_check_mark:'
     path: math/prime/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
   - icon: ':warning:'
@@ -61,6 +64,9 @@ data:
     path: verify/mytest/modint64.test.cpp
     title: verify/mytest/modint64.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/factorize.test.cpp
+    title: verify/yosupo/factorize.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
   - icon: ':heavy_check_mark:'
@@ -69,6 +75,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki1550_static_modint.test.cpp
     title: verify/yukicoder/yuki1550_static_modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki888.test.cpp
+    title: verify/yukicoder/yuki888.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -467,17 +476,20 @@ data:
   requiredBy:
   - math/modint/modint.hpp
   - math/modint/modint64.hpp
+  - math/prime/factorize.hpp
   - math/prime/primality_test.hpp
   - template/template.cpp
   timestamp: '2024-12-20 09:47:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yosupo/factorize.test.cpp
   - verify/yosupo/primality_test.test.cpp
   - verify/mytest/modint.test.cpp
   - verify/mytest/modint64.test.cpp
   - verify/aoj/extgcd.test.cpp
   - verify/yukicoder/yuki1550_static_modint.test.cpp
   - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+  - verify/yukicoder/yuki888.test.cpp
 documentation_of: math/extgcd.hpp
 layout: document
 redirect_from:

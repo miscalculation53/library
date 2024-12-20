@@ -2,12 +2,6 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
-    path: math/extgcd.hpp
-    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint_internal.hpp
-    title: math/modint/modint_internal.hpp
-  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -47,31 +41,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/primality_test.hpp
-    title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':warning:'
-    path: template/template.cpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/extgcd.test.cpp
-    title: verify/aoj/extgcd.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint.test.cpp
-    title: verify/mytest/modint.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-    title: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki1550_static_modint.test.cpp
-    title: verify/yukicoder/yuki1550_static_modint.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki888.test.cpp
     title: verify/yukicoder/yuki888.test.cpp
@@ -79,10 +52,10 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/modint/modint.md
-    document_title: modint (32 bit)
+    _deprecated_at_docs: docs/math/prime/prime_power.md
+    document_title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
     links: []
-  bundledCode: "#line 2 \"math/modint/modint.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+  bundledCode: "#line 2 \"math/prime/prime_power.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -432,212 +405,23 @@ data:
     \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
     CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
     \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 2 \"math/modint/modint_internal.hpp\"\n\n#line 4 \"math/modint/modint_internal.hpp\"\
-    \n\nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll x, ll n, int m)\n\
-    {\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y =\
-    \ safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n\
-    \    y = (y * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\nconstexpr ll powmod64_constexpr(ll\
-    \ x, ll n, ll m)\n{\n  if (m == 1)\n    return 0;\n  ull _m = (ull)m;\n  ull r\
-    \ = 1;\n  ull y = safemod(x, m);\n  while (n)\n  {\n    u128 y128(y);\n    if\
-    \ (n & 1)\n      r = (y128 * r) % _m;\n    y = (y128 * y) % _m;\n    n >>= 1;\n\
-    \  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int n)\n{\n  if (n\
-    \ <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n    return true;\n\
-    \  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2 == 0)\n\
-    \    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll a : bases)\n  {\n\
-    \    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n    while (t != n - 1\
-    \ && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n      t <<= 1;\n    }\n\
-    \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
-    }\nconstexpr bool isprime64_constexpr(ll n)\n{\n  if (n <= INT_MAX)\n    return\
-    \ isprime32_constexpr(n);\n  if (n % 2 == 0)\n    return false;\n  ll d = n -\
-    \ 1;\n  while (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[7] = {2, 325, 9375,\
-    \ 28178, 450775, 9780504, 1795265022};\n  for (ll a : bases)\n  {\n    ll t =\
-    \ d;\n    ll y = powmod64_constexpr(a, t, n);\n    while (t != n - 1 && y != 1\
-    \ && y != n - 1)\n    {\n      y = (u128(y) * y) % n;\n      t <<= 1;\n    }\n\
-    \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
-    }\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\ntemplate\
-    \ <ll n>\nconstexpr bool isprime64 = isprime64_constexpr(n);\n\nstruct barrett32\n\
-    {\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) : m(m), im((ull)(-1) /\
-    \ m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint a, uint b) const\n\
-    \  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im) >> 64);\n  \
-    \  ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n  }\n};\n\ninline\
-    \ constexpr ull inv64(ull a)\n{\n  ull x = a;\n  while (a * x != 1) x *= 2 - a\
-    \ * x;\n  return x;\n}\n\nstruct montgomery64odd\n{\n  ull m, im, sq;\n  explicit\
-    \ montgomery64odd(ull m) : m(m), im(inv64(m)), sq(-u128(m) % m) {}\n  ull umod()\
-    \ const { return m; }\n  ull reduce(u128 x) const\n  {\n    auto t = (x + u128(m)\
-    \ * (-im * ull(x))) >> 64;\n    if (t >= m)\n      t -= m;\n    return (ull)t;\n\
-    \  }\n  ull inv_reduce(i128 v) const\n  { return reduce(u128(v % m + m) * sq);\
-    \ }\n};\n\n// https://www.mathenachia.blog/even-mod-montgomery-impl/\nstruct montgomery64\n\
-    {\n  ull m, mx, imx, d, sq;\n  uint b;\n\n  explicit montgomery64(ull m) : m(m),\
-    \ sq(-u128(m) % m)\n  {\n    b = countr_zero(m), mx = m >> b;  // m == 2^b * mx,\
-    \ mx is odd\n    imx = inv64(mx);\n    d = powmod64_constexpr((mx + 1) / 2, b,\
-    \ mx);  // 2^{-b} mod mx\n  }\n  ull umod() const { return m; }\n  ull reduce(u128\
-    \ x) const\n  {\n    ull p = x & MASK(b);  // x mod 2^b\n    x = (x >> b) + p\
-    \ * d;\n    ull y = p << (64 - b);\n    auto t = (x + u128(mx) * (imx * (y - ull(x))))\
-    \ >> (64 - b);\n    if (t >= m)\n    {\n      t -= m;\n      if (t >= m)\n   \
-    \     t -= m;\n    }\n    return (ull)t;\n  }\n  ull inv_reduce(i128 v) const\n\
-    \  { return reduce(u128(v % m + m) * sq); }\n};\n\n}\n#line 2 \"math/extgcd.hpp\"\
-    \n\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\u5F35\u30E6\u30FC\u30AF\
-    \u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs docs/math/extgcd.md\n\
-    \ */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\u305F\u3059 (g, x, y)\n\
-    // max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T = ll>\nconstexpr tuple<T,\
-    \ T, T> extgcd(const T &a, const T &b)\n{\n  if (a == 0 && b == 0)\n    return\
-    \ {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  // a*x2 + b*y2 == z2  ...(2)\n\
-    \  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1, z2 = b;\n  while (z2 != 0)\n\
-    \  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n    T q = z1 / z2;\n    tie(x1,\
-    \ x2) = make_pair(x2, x1 - q * x2);\n    tie(y1, y2) = make_pair(y2, y1 - q *\
-    \ y2);\n    tie(z1, z2) = make_pair(z2, z1 - q * z2);\n  }\n  if (z1 < 0)\n  \
-    \  x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1, y1};\n}\n#line 6 \"math/modint/modint.hpp\"\
-    \n\n/**\n * @brief modint (32 bit)\n * @docs docs/math/modint/modint.md\n */\n\
-    \ntemplate <int m>\nstruct static_modint\n{\n  using mint = static_modint;\nprivate:\n\
-    \  uint _v;\n  static constexpr uint umod() { return m; }\n  static constexpr\
-    \ bool prime = internal::isprime32<m>;\n\npublic:\n  static constexpr int mod()\
-    \ { return m; }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n \
-    \   return x;\n  }\n\n  static_modint() : _v(0) {}\n  template <class T>\n  static_modint(T\
-    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
-    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
-    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
-    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
-    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
-    \n  mint& operator++()\n  {\n    _v++;\n    if (_v == umod())\n      _v = 0;\n\
-    \    return *this;\n  }\n  mint& operator--()\n  {\n    if (_v == 0)\n      _v\
-    \ = umod();\n    _v--;\n    return *this;\n  }\n  mint operator++(int)\n  {\n\
-    \    mint res = *this;\n    ++*this;\n    return res;\n  }\n  mint operator--(int)\n\
-    \  {\n    mint res = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const\
-    \ mint& rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n\
-    \    return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
-    \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
-    \ mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n    _v = (uint)(z % umod());\n\
-    \    return *this;\n  }\n  mint& operator/=(const mint &rhs) { return *this =\
-    \ *this * rhs.inv(); }\n\n  mint operator+() const { return *this; }\n  mint operator-()\
-    \ const { return mint() - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n\
-    \ >= 0);\n    mint x = *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n\
-    \        r *= x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n \
-    \ mint inv() const\n  {\n    if (prime)\n    {\n      assert(_v != 0);\n     \
-    \ return pow(umod() - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<int>(_v,\
-    \ m);\n      assert(g == 1);\n      return x;\n    }\n  }\n\n  friend mint operator+(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) += rhs; }\n  friend mint operator-(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) -= rhs; }\n  friend mint operator*(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) *= rhs; }\n  friend mint operator/(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const\
-    \ mint &lhs, const mint &rhs)\n  { return lhs._v == rhs._v; }\n  friend bool operator!=(const\
-    \ mint &lhs, const mint &rhs)\n  { return lhs._v != rhs._v; }\n\n  friend istream\
-    \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
-    \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
-    \  {\n    os << x.val();\n    return os;\n  }\n};\n\ntemplate <int id>\nstruct\
-    \ dynamic_modint\n{\n  using mint = dynamic_modint;\nprivate:\n  uint _v;\n  static\
-    \ internal::barrett32 bt;\n  static uint umod() { return bt.umod(); }\n\npublic:\n\
-    \  static int mod() { return (int)(bt.umod()); }\n  static void set_mod(int m)\n\
-    \  {\n    assert(m >= 1);\n    bt = internal::barrett32(m);\n  }\n  static mint\
-    \ raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n  }\n\n  dynamic_modint()\
-    \ : _v(0) {}\n  template <class T>\n  dynamic_modint(T v)\n  {\n    if constexpr\
-    \ (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x <\
-    \ 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else if constexpr\
-    \ (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n    }\n    else\n\
-    \    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>, \"Unsupported\
-    \ Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\n  mint& operator++()\n\
-    \  {\n    _v++;\n    if (_v == umod())\n      _v = 0;\n    return *this;\n  }\n\
-    \  mint& operator--()\n  {\n    if (_v == 0)\n      _v = umod();\n    _v--;\n\
-    \    return *this;\n  }\n  mint operator++(int)\n  {\n    mint res = *this;\n\
-    \    ++*this;\n    return res;\n  }\n  mint operator--(int)\n  {\n    mint res\
-    \ = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const mint&\
-    \ rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n \
-    \   return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
-    \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
-    \ mint &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n    return *this;\n  }\n  mint&\
-    \ operator/=(const mint &rhs) { return *this = *this * rhs.inv(); }\n\n  mint\
-    \ operator+() const { return *this; }\n  mint operator-() const { return mint()\
-    \ - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n    mint x =\
-    \ *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r *= x;\n   \
-    \   x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n  mint inv() const\n \
-    \ {\n    auto [g, x, y] = extgcd<int>(_v, mod());\n    assert(g == 1);\n    return\
-    \ x;\n  }\n\n  friend mint operator+(const mint &lhs, const mint &rhs)\n  { return\
-    \ mint(lhs) += rhs; }\n  friend mint operator-(const mint &lhs, const mint &rhs)\n\
-    \  { return mint(lhs) -= rhs; }\n  friend mint operator*(const mint &lhs, const\
-    \ mint &rhs)\n  { return mint(lhs) *= rhs; }\n  friend mint operator/(const mint\
-    \ &lhs, const mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const\
-    \ mint &lhs, const mint &rhs)\n  { return lhs._v == rhs._v; }\n  friend bool operator!=(const\
-    \ mint &lhs, const mint &rhs)\n  { return lhs._v != rhs._v; }\n\n  friend istream\
-    \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
-    \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
-    \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::barrett32\
-    \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
-    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n"
-  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
-    modint_internal.hpp\"\n#include \"../extgcd.hpp\"\n\n/**\n * @brief modint (32\
-    \ bit)\n * @docs docs/math/modint/modint.md\n */\n\ntemplate <int m>\nstruct static_modint\n\
-    {\n  using mint = static_modint;\nprivate:\n  uint _v;\n  static constexpr uint\
-    \ umod() { return m; }\n  static constexpr bool prime = internal::isprime32<m>;\n\
-    \npublic:\n  static constexpr int mod() { return m; }\n  static mint raw(int v)\n\
-    \  {\n    mint x;\n    x._v = v;\n    return x;\n  }\n\n  static_modint() : _v(0)\
-    \ {}\n  template <class T>\n  static_modint(T v)\n  {\n    if constexpr (is_signed_v<T>)\n\
-    \    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x < 0)\n        x += umod();\n\
-    \      _v = (uint)x;\n    }\n    else if constexpr (is_unsigned_v<T>)\n    {\n\
-    \      _v = (uint)(v % umod());\n    }\n    else\n    {\n      static_assert(is_signed_v<T>\
-    \ || is_unsigned_v<T>, \"Unsupported Type\");\n    }\n  }\n\n  int val() const\
-    \ { return (int)_v; }\n\n  mint& operator++()\n  {\n    _v++;\n    if (_v == umod())\n\
-    \      _v = 0;\n    return *this;\n  }\n  mint& operator--()\n  {\n    if (_v\
-    \ == 0)\n      _v = umod();\n    _v--;\n    return *this;\n  }\n  mint operator++(int)\n\
-    \  {\n    mint res = *this;\n    ++*this;\n    return res;\n  }\n  mint operator--(int)\n\
-    \  {\n    mint res = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const\
-    \ mint& rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n\
-    \    return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
-    \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
-    \ mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n    _v = (uint)(z % umod());\n\
-    \    return *this;\n  }\n  mint& operator/=(const mint &rhs) { return *this =\
-    \ *this * rhs.inv(); }\n\n  mint operator+() const { return *this; }\n  mint operator-()\
-    \ const { return mint() - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n\
-    \ >= 0);\n    mint x = *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n\
-    \        r *= x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n \
-    \ mint inv() const\n  {\n    if (prime)\n    {\n      assert(_v != 0);\n     \
-    \ return pow(umod() - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<int>(_v,\
-    \ m);\n      assert(g == 1);\n      return x;\n    }\n  }\n\n  friend mint operator+(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) += rhs; }\n  friend mint operator-(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) -= rhs; }\n  friend mint operator*(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) *= rhs; }\n  friend mint operator/(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const\
-    \ mint &lhs, const mint &rhs)\n  { return lhs._v == rhs._v; }\n  friend bool operator!=(const\
-    \ mint &lhs, const mint &rhs)\n  { return lhs._v != rhs._v; }\n\n  friend istream\
-    \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
-    \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
-    \  {\n    os << x.val();\n    return os;\n  }\n};\n\ntemplate <int id>\nstruct\
-    \ dynamic_modint\n{\n  using mint = dynamic_modint;\nprivate:\n  uint _v;\n  static\
-    \ internal::barrett32 bt;\n  static uint umod() { return bt.umod(); }\n\npublic:\n\
-    \  static int mod() { return (int)(bt.umod()); }\n  static void set_mod(int m)\n\
-    \  {\n    assert(m >= 1);\n    bt = internal::barrett32(m);\n  }\n  static mint\
-    \ raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n  }\n\n  dynamic_modint()\
-    \ : _v(0) {}\n  template <class T>\n  dynamic_modint(T v)\n  {\n    if constexpr\
-    \ (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x <\
-    \ 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else if constexpr\
-    \ (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n    }\n    else\n\
-    \    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>, \"Unsupported\
-    \ Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\n  mint& operator++()\n\
-    \  {\n    _v++;\n    if (_v == umod())\n      _v = 0;\n    return *this;\n  }\n\
-    \  mint& operator--()\n  {\n    if (_v == 0)\n      _v = umod();\n    _v--;\n\
-    \    return *this;\n  }\n  mint operator++(int)\n  {\n    mint res = *this;\n\
-    \    ++*this;\n    return res;\n  }\n  mint operator--(int)\n  {\n    mint res\
-    \ = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const mint&\
-    \ rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n \
-    \   return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
-    \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
-    \ mint &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n    return *this;\n  }\n  mint&\
-    \ operator/=(const mint &rhs) { return *this = *this * rhs.inv(); }\n\n  mint\
-    \ operator+() const { return *this; }\n  mint operator-() const { return mint()\
-    \ - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n    mint x =\
-    \ *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r *= x;\n   \
-    \   x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n  mint inv() const\n \
-    \ {\n    auto [g, x, y] = extgcd<int>(_v, mod());\n    assert(g == 1);\n    return\
-    \ x;\n  }\n\n  friend mint operator+(const mint &lhs, const mint &rhs)\n  { return\
-    \ mint(lhs) += rhs; }\n  friend mint operator-(const mint &lhs, const mint &rhs)\n\
-    \  { return mint(lhs) -= rhs; }\n  friend mint operator*(const mint &lhs, const\
-    \ mint &rhs)\n  { return mint(lhs) *= rhs; }\n  friend mint operator/(const mint\
-    \ &lhs, const mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const\
-    \ mint &lhs, const mint &rhs)\n  { return lhs._v == rhs._v; }\n  friend bool operator!=(const\
-    \ mint &lhs, const mint &rhs)\n  { return lhs._v != rhs._v; }\n\n  friend istream\
-    \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
-    \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
-    \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::barrett32\
-    \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
-    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;"
+    #endif\n#line 4 \"math/prime/prime_power.hpp\"\n\n/**\n * @brief \u7D20\u3079\u304D\
+    \u69CB\u9020\u4F53\n * @docs docs/math/prime/prime_power.md\n */\n\ntemplate <class\
+    \ P>\nstruct PrimePower\n{\n  P p;\n  int e;\n  P pe;\n\n  PrimePower() {}\n \
+    \ PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e)) {}\n  PrimePower(P p,\
+    \ int e, P pe) : p(p), e(e), pe(pe) {}\n  template <class P2>\n  PrimePower(const\
+    \ PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\n  void mul_p() { e++,\
+    \ pe *= p; }\n  void div_p() { e--, pe /= p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>,\
+    \ p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n"
+  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n\n/**\n * @brief\
+    \ \u7D20\u3079\u304D\u69CB\u9020\u4F53\n * @docs docs/math/prime/prime_power.md\n\
+    \ */\n\ntemplate <class P>\nstruct PrimePower\n{\n  P p;\n  int e;\n  P pe;\n\n\
+    \  PrimePower() {}\n  PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e))\
+    \ {}\n  PrimePower(P p, int e, P pe) : p(p), e(e), pe(pe) {}\n  template <class\
+    \ P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\
+    \n  void mul_p() { e++, pe *= p; }\n  void div_p() { e--, pe /= p; }\n};\n#ifdef\
+    \ LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>,\
+    \ p, e, pe);\n#endif"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -650,41 +434,80 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
-  - math/modint/modint_internal.hpp
-  - math/extgcd.hpp
   isVerificationFile: false
-  path: math/modint/modint.hpp
+  path: math/prime/prime_power.hpp
   requiredBy:
   - math/prime/factorize.hpp
-  - math/prime/primality_test.hpp
-  - template/template.cpp
-  timestamp: '2024-12-20 09:47:18+09:00'
+  timestamp: '2024-12-20 18:57:12+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/mytest/modint.test.cpp
-  - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/yuki1550_static_modint.test.cpp
-  - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
   - verify/yukicoder/yuki888.test.cpp
-documentation_of: math/modint/modint.hpp
+documentation_of: math/prime/prime_power.hpp
 layout: document
 redirect_from:
-- /library/math/modint/modint.hpp
-- /library/math/modint/modint.hpp.html
-title: modint (32 bit)
+- /library/math/prime/prime_power.hpp
+- /library/math/prime/prime_power.hpp.html
+title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
 ---
-## modint (32 bit)
+## 素べき構造体
 
-ACL の modint がベース
+主に素因数分解を扱うための構造体。
 
-相違点：
 
-- 入出力ができる
-- 他は外から使う分にはあまり変わっていないと思うが、中は一部省略している
+### メンバ変数
+
+- `P p`：素数
+- `int e`：指数
+- `P pe`：素べきの値（$p^e$）
+
+
+### コンストラクタ
+
+```cpp
+(1) PrimePower<P>()
+(2) PrimePower<P>(P p, int e = 1)
+(3) PrimePower<P>(P p, int e, P pe)
+```
+
+- (1) 特に初期化を行わない。この状態のまま使わないこと。
+- (2) `p`, `e` を設定し、`pe` は自動で計算する。
+- (3) `p`, `e`, `pe` を設定する。
 
 ##### 制約
 
-- mod の上限は、`int` に収まるなら OK なはず（証明したわけではない）
-  - $2^{31} - 1 = 2.147483647 \times 10^9$
+- `P` は `int` か `ll`
+- $p$ は素数
+- $e \geq 0$
+- (3) において、`pe` は $p^e$ に等しい
+
+##### 計算量
+
+- (2) のみ $O(\log e)$、他は $O(1)$
+
+
+### メンバ関数
+
+#### mul_p
+
+```cpp
+void mul_p()
+```
+
+素べきに $p$ を掛ける。
+
+##### 制約
+
+- $p^e$ が `P` に収まる
+
+#### div_p
+
+```cpp
+void div_p()
+```
+
+素べきを $p$ で割る。
+
+##### 制約
+
+- $e > 0$（すなわち $p^e > p$）

@@ -49,11 +49,20 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy: []
+  _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: math/prime/factorize.hpp
+    title: "\u7D20\u56E0\u6570\u5206\u89E3"
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/factorize.test.cpp
+    title: verify/yosupo/factorize.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki888.test.cpp
+    title: verify/yukicoder/yuki888.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -613,14 +622,14 @@ data:
     \u6570\u5224\u5B9A\n * @docs docs/math/prime/primality_test.md\n */\n\nbool is_prime_int(int\
     \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
     \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n\
-    \ - 1);\n  static const ll bases[3] = {2, 7, 61};\n  using mint = dynamic_modint<-1>;\n\
+    \ - 1);\n  static const ll bases[3] = {2, 7, 61};\n  using mint = dynamic_modint<-2>;\n\
     \  mint::set_mod(n);\n  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n\
     \    while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t\
     \ <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n\
     \  return true;\n}\n\nbool is_prime(ll n)\n{\n  if (n <= INT_MAX)\n    return\
     \ is_prime_int(n);\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >>\
     \ countr_zero(n - 1);\n  static const ll bases[7] = {2, 325, 9375, 28178, 450775,\
-    \ 9780504, 1795265022};\n  using mint = dynamic_modint64_odd<-1>;\n  mint::set_mod(n);\n\
+    \ 9780504, 1795265022};\n  using mint = dynamic_modint64_odd<-2>;\n  mint::set_mod(n);\n\
     \  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while\
     \ (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n\
     \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
@@ -631,14 +640,14 @@ data:
     bool is_prime_int(int n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 ||\
     \ n == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return false;\n\
     \  ll d = (n - 1) >> countr_zero(n - 1);\n  static const ll bases[3] = {2, 7,\
-    \ 61};\n  using mint = dynamic_modint<-1>;\n  mint::set_mod(n);\n  for (ll a :\
+    \ 61};\n  using mint = dynamic_modint<-2>;\n  mint::set_mod(n);\n  for (ll a :\
     \ bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t != n\
     \ - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n\
     \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
     }\n\nbool is_prime(ll n)\n{\n  if (n <= INT_MAX)\n    return is_prime_int(n);\n\
     \  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n - 1);\n\
     \  static const ll bases[7] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};\n\
-    \  using mint = dynamic_modint64_odd<-1>;\n  mint::set_mod(n);\n  for (ll a :\
+    \  using mint = dynamic_modint64_odd<-2>;\n  mint::set_mod(n);\n  for (ll a :\
     \ bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t != n\
     \ - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n\
     \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
@@ -661,11 +670,14 @@ data:
   - math/modint/modint64.hpp
   isVerificationFile: false
   path: math/prime/primality_test.hpp
-  requiredBy: []
-  timestamp: '2024-12-20 10:22:28+09:00'
+  requiredBy:
+  - math/prime/factorize.hpp
+  timestamp: '2024-12-20 18:57:12+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yosupo/factorize.test.cpp
   - verify/yosupo/primality_test.test.cpp
+  - verify/yukicoder/yuki888.test.cpp
 documentation_of: math/prime/primality_test.hpp
 layout: document
 redirect_from:
@@ -684,3 +696,11 @@ bool is_prime_int(int n)
 ```cpp
 bool is_prime(ll n)
 ```
+
+##### 制約
+
+- 特になし（それぞれ `int`, `ll` に収まっていれば OK）
+
+##### 計算量
+
+- $O(\log n)$
