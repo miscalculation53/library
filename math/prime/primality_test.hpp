@@ -4,6 +4,11 @@
 #include "../modint/modint.hpp"
 #include "../modint/modint64.hpp"
 
+/**
+ * @brief 素数判定
+ * @docs docs/math/prime/primality_test.md
+ */
+
 bool is_prime_int(int n)
 {
   if (n <= 1)
