@@ -52,17 +52,17 @@ data:
     \ vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\
     \ntemplate <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate\
     \ <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing\
-    \ i128 = __int128_t;\ni128 stoi128(const string &s)\n{\n  i128 res = 0;\n  if\
-    \ (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size(); i++)\n     \
-    \ res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n    for (auto\
-    \ &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n}\nstring i128tos(i128\
-    \ x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\", res = \"\";\n  if\
-    \ (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n    res += '0' + x\
-    \ % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n  return sign\
-    \ + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string s;\n  is >>\
-    \ s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream &os, const\
-    \ i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto const\
-    \ auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
+    \ i128 = __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string &s)\n\
+    {\n  i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size();\
+    \ i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n\
+    \    for (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n\
+    }\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\"\
+    , res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n\
+    \    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n\
+    \  return sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string\
+    \ s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream\
+    \ &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define\
+    \ cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
     \ docs/template/template_rep.md\n */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n\
     */\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for\
@@ -78,91 +78,93 @@ data:
     \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
     #line 5 \"template/template_bit.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
     \u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n\
-    \ */\n\ninline ull pow2(auto k) { return 1ULL << k; }\ninline ull MASK(auto k)\
-    \ { return (1ULL << k) - 1; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\
-    \u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n\
-    // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline ull bit_width(ull x) { return x\
-    \ == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\n\
-    inline ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1);\
-    \ }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline ull bit_ceil(ull x) { return\
-    \ x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline ull countr_zero(ull x) {\
-    \ assert(x != 0); return __builtin_ctzll(x); }\ninline ull popcount(ull x) { return\
-    \ __builtin_popcountll(x); }\ninline bool has_single_bit(ull x) { return popcount(x)\
-    \ == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline ll bit_width(ll\
-    \ x) { return bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline\
-    \ ll bit_floor(ll x) { return bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8,\
-    \ 8, 16, ...\ninline ll bit_ceil(ll x) { return bit_ceil((ull)x); }\ninline ll\
-    \ countr_zero(ll x) { assert(x != 0); return countr_zero((ull)x); }\ninline ll\
-    \ popcount(ll x) { return popcount((ull)x); }\ninline bool has_single_bit(ll x)\
-    \ { return has_single_bit((ull)x); }\n#endif\n\ninline ull lsb_pos(ull x) { assert(x\
-    \ != 0); return countr_zero(x); }\ninline ull msb_pos(ull x) { assert(x != 0);\
-    \ return bit_width(x) - 1; }\ninline ull lsb_mask(ull x) { assert(x != 0); return\
-    \ x & -x; }\ninline ull msb_mask(ull x) { assert(x != 0); return bit_floor(x);\
-    \ }\n\ninline bool btest(ull x, uint k) { return (x >> k) & 1; }\ntemplate <class\
-    \ T>\ninline void bset(T &x, uint k, bool b = 1) { b ? x |= (1ULL << k) : x &=\
-    \ ~(1ULL << k); }\ntemplate <class T>\ninline void bflip(T &x, uint k) { x ^=\
-    \ (1ULL << k); }\ninline bool bsubset(ull x, ull y) { return (x & y) == x; }\n\
-    inline bool bsupset(ull x, ull y) { return (x & y) == y; }\ninline ull bsetminus(ull\
-    \ x, ull y) { return x & ~y; }\n\ntemplate <class T>\nstruct bsubsets\n{\nprivate:\n\
-    \  T x;\npublic:\n  bsubsets(T x) : x(x) {}\n  struct Iterator\n  {\n  private:\n\
-    \    T y;\n    bool is_end;\n    const bsubsets &bs;\n  public:\n    Iterator(T\
-    \ y, bool is_end, const bsubsets &bs) : y(y), is_end(is_end), bs(bs) {}\n    T\
-    \ operator*() const { return y; }\n    Iterator& operator++()\n    {\n      if\
-    \ (y == 0)\n        is_end = true;\n      y = (y - 1) & bs.x;\n      return *this;\n\
-    \    }\n    bool operator!=(const Iterator &other) const { return y != other.y\
-    \ || is_end != other.is_end; }\n  };\n  Iterator begin() const { return Iterator(x,\
-    \ false, *this); }\n  Iterator end() const { return Iterator(x, true, *this);\
-    \ }\n};\ntemplate <class T>\nstruct bsupsets\n{\nprivate:\n  int n;\n  T x;\n\
-    public:\n  bsupsets(int n, T x) : n(n), x(x) {}\n  struct Iterator\n  {\n  private:\n\
-    \    T y;\n    const bsupsets &bs;\n  public:\n    Iterator(T y, const bsupsets\
-    \ &bs) : y(y), bs(bs) {}\n    T operator*() const { return y; }\n    Iterator&\
-    \ operator++()\n    {\n      y = (y + 1) | bs.x;\n      return *this;\n    }\n\
-    \    bool operator!=(const Iterator &other) const { return y != other.y; }\n \
-    \ };\n  Iterator begin() const { return Iterator(x, *this); }\n  Iterator end()\
-    \ const { return Iterator((T(1) << n) | x, *this); }\n};\n#line 2 \"template/template_dump.hpp\"\
-    \n\n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
-    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
-    namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
-    \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
-    \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
-    \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
-    \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
-    \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
-    #else\n#define dump(...)\n#define local(...)\n#endif\n#line 2 \"template/template_algo.hpp\"\
-    \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 2 \"\
-    template/template_vector.hpp\"\n\n#line 2 \"template/template_math.hpp\"\n\n#ifndef\
-    \ INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n#define EPS\
-    \ 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n * @brief \u30C6\
-    \u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs docs/template/template_math.md\n\
-    \ */\n\ninline bool chmin(auto &a, cauto &b) { return a > b ? a = b, true : false;\
-    \ }\ninline bool chmax(auto &a, cauto &b) { return a < b ? a = b, true : false;\
-    \ }\n\ntemplate <class T = ll>\ninline constexpr T divfloor(cauto &a, cauto &b)\
-    \ { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class\
-    \ T = ll>\ninline constexpr T divceil(cauto &a, cauto &b) { return T(a) / T(b)\
-    \ + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll>\ninline constexpr\
-    \ T divround(cauto &a, cauto &b) { return divfloor<T>(2 * T(a) + T(b), 2 * T(b));\
-    \ }\ntemplate <class T = ll>\ninline constexpr T safemod(cauto &a, cauto &b) {\
-    \ return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class T = ll>\nconstexpr\
-    \ T ipow(auto a, auto b)\n{\n  assert(b >= 0);\n  if (b == 0) return 1;\n  if\
-    \ (a == 0 || a == 1) return a;\n  if (a == -1) return b & 1 ? -1 : 1;\n\n  T res\
-    \ = 1, tmp = a;\n  while (b > 0)\n  {\n    if (b & 1)\n      res *= tmp;\n   \
-    \ tmp *= tmp;\n    b >>= 1;\n  }\n  return res;\n}\ntemplate <class T = ll>\n\
-    T mul_limited(cauto &a, cauto &b, cauto &m = INF)\n{\n  assert(a >= 0 && b >=\
-    \ 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) / T(b) ? T(m)\
-    \ : T(a) * T(b);\n}\ntemplate <class T = ll>\nT pow_limited(cauto &a, cauto &b,\
-    \ cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b\
-    \ == 0)\n    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1;\n  repi(_, b)\n\
-    \  {\n    if (res > T(m) / T(a))\n      return T(m);\n    res *= T(a);\n  }\n\
-    \  return res;\n}\n\ntemplate <class T = ll>\nconstexpr T iroot(cauto &a, cauto\
-    \ &k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n\
-    \n  auto isok = [&](const T &x) -> bool\n  {\n    if (x == 0)\n      return true;\n\
-    \    T tmp = 1;\n    repi(_, k)\n    {\n      if (tmp > T(a) / x)\n        return\
-    \ false;\n      tmp *= x;\n    }\n    return tmp <= T(a);\n  };\n\n  T ok = 0,\
-    \ ng = 1;\n  while (isok(ng))\n    ok = ng, ng <<= 1;\n  while (ng - ok > 1)\n\
-    \  {\n    T mid = ((ng - ok) >> 1) + ok;\n    if (isok(mid))\n      ok = mid;\n\
-    \    else\n      ng = mid;\n  }\n  return ok;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    \ */\n\ninline constexpr ull pow2(auto k) { return 1ULL << k; }\ninline constexpr\
+    \ ull MASK(auto k) { return (1ULL << k) - 1ULL; }\n\n#if __cplusplus < 202002L\n\
+    // x == 0 \u306A\u3089\u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\u3070\
+    \ 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
+    \ ull bit_width(ull x) { return x == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0,\
+    \ 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ull bit_floor(ull x) { return\
+    \ x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8,\
+    \ 16, ...\ninline constexpr ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL\
+    \ << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull x) { assert(x !=\
+    \ 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull x) { return\
+    \ __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull x) { return\
+    \ popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
+    \ ll bit_width(ll x) { return bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4, 4, 4,\
+    \ 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return bit_floor((ull)x); }\n\
+    // 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ll bit_ceil(ll x) { return\
+    \ bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll x) { assert(x != 0);\
+    \ return countr_zero((ull)x); }\ninline constexpr ll popcount(ll x) { return popcount((ull)x);\
+    \ }\ninline constexpr bool has_single_bit(ll x) { return has_single_bit((ull)x);\
+    \ }\n#endif\n\ninline constexpr ull lsb_pos(ull x) { assert(x != 0); return countr_zero(x);\
+    \ }\ninline constexpr ull msb_pos(ull x) { assert(x != 0); return bit_width(x)\
+    \ - 1; }\ninline constexpr ull lsb_mask(ull x) { assert(x != 0); return x & -x;\
+    \ }\ninline constexpr ull msb_mask(ull x) { assert(x != 0); return bit_floor(x);\
+    \ }\n\ninline constexpr bool btest(ull x, uint k) { return (x >> k) & 1; }\ntemplate\
+    \ <class T>\ninline void bset(T &x, uint k, bool b = 1) { b ? x |= (1ULL << k)\
+    \ : x &= ~(1ULL << k); }\ntemplate <class T>\ninline void bflip(T &x, uint k)\
+    \ { x ^= (1ULL << k); }\ninline constexpr bool bsubset(ull x, ull y) { return\
+    \ (x & y) == x; }\ninline constexpr bool bsupset(ull x, ull y) { return (x & y)\
+    \ == y; }\ninline constexpr ull bsetminus(ull x, ull y) { return x & ~y; }\n\n\
+    template <class T>\nstruct bsubsets\n{\nprivate:\n  T x;\npublic:\n  bsubsets(T\
+    \ x) : x(x) {}\n  struct Iterator\n  {\n  private:\n    T y;\n    bool is_end;\n\
+    \    const bsubsets &bs;\n  public:\n    Iterator(T y, bool is_end, const bsubsets\
+    \ &bs) : y(y), is_end(is_end), bs(bs) {}\n    T operator*() const { return y;\
+    \ }\n    Iterator& operator++()\n    {\n      if (y == 0)\n        is_end = true;\n\
+    \      y = (y - 1) & bs.x;\n      return *this;\n    }\n    bool operator!=(const\
+    \ Iterator &other) const { return y != other.y || is_end != other.is_end; }\n\
+    \  };\n  Iterator begin() const { return Iterator(x, false, *this); }\n  Iterator\
+    \ end() const { return Iterator(x, true, *this); }\n};\ntemplate <class T>\nstruct\
+    \ bsupsets\n{\nprivate:\n  int n;\n  T x;\npublic:\n  bsupsets(int n, T x) : n(n),\
+    \ x(x) {}\n  struct Iterator\n  {\n  private:\n    T y;\n    const bsupsets &bs;\n\
+    \  public:\n    Iterator(T y, const bsupsets &bs) : y(y), bs(bs) {}\n    T operator*()\
+    \ const { return y; }\n    Iterator& operator++()\n    {\n      y = (y + 1) |\
+    \ bs.x;\n      return *this;\n    }\n    bool operator!=(const Iterator &other)\
+    \ const { return y != other.y; }\n  };\n  Iterator begin() const { return Iterator(x,\
+    \ *this); }\n  Iterator end() const { return Iterator((T(1) << n) | x, *this);\
+    \ }\n};\n#line 2 \"template/template_dump.hpp\"\n\n#line 4 \"template/template_dump.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs\
+    \ docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp>\
+    \ // https://github.com/philip82148/cpp-dump\nnamespace cpp_dump::_detail\n{\n\
+    \  inline string export_var(\n      const i128 &x, const string &indent, size_t\
+    \ last_line_length,\n      size_t current_depth, bool fail_on_newline, const export_command\
+    \ &command\n  ) {\n    return export_var(i128tos(x), indent, last_line_length,\
+    \ current_depth, fail_on_newline, command);\n  }\n} // namespace cpp_dump::_detail\n\
+    #define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
+    \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n\
+    #define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
+    #endif\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
+    #endif\n\n#line 2 \"template/template_vector.hpp\"\n\n#line 2 \"template/template_math.hpp\"\
+    \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
+    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
+    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
+    \ docs/template/template_math.md\n */\n\ninline bool chmin(auto &a, cauto &b)\
+    \ { return a > b ? a = b, true : false; }\ninline bool chmax(auto &a, cauto &b)\
+    \ { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll>\ninline constexpr\
+    \ T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) < 0); }\ntemplate <class T = ll>\ninline constexpr T divceil(cauto &a,\
+    \ cauto &b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate\
+    \ <class T = ll>\ninline constexpr T divround(cauto &a, cauto &b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll>\ninline constexpr T safemod(cauto\
+    \ &a, cauto &b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
+    \ T = ll>\nconstexpr T ipow(auto a, auto b)\n{\n  assert(b >= 0);\n  if (b ==\
+    \ 0) return 1;\n  if (a == 0 || a == 1) return a;\n  if (a == -1) return b & 1\
+    \ ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (b > 0)\n  {\n    if (b & 1)\n \
+    \     res *= tmp;\n    tmp *= tmp;\n    b >>= 1;\n  }\n  return res;\n}\ntemplate\
+    \ <class T = ll>\nT mul_limited(cauto &a, cauto &b, cauto &m = INF)\n{\n  assert(a\
+    \ >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m)\
+    \ / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll>\nT pow_limited(cauto\
+    \ &a, cauto &b, cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if\
+    \ (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1;\n\
+    \  repi(_, b)\n  {\n    if (res > T(m) / T(a))\n      return T(m);\n    res *=\
+    \ T(a);\n  }\n  return res;\n}\n\ntemplate <class T = ll>\nconstexpr T iroot(cauto\
+    \ &a, cauto &k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n   \
+    \ return a;\n\n  auto isok = [&](const T &x) -> bool\n  {\n    if (x == 0)\n \
+    \     return true;\n    T tmp = 1;\n    repi(_, k)\n    {\n      if (tmp > T(a)\
+    \ / x)\n        return false;\n      tmp *= x;\n    }\n    return tmp <= T(a);\n\
+    \  };\n\n  T ok = 0, ng = 1;\n  while (isok(ng))\n    ok = ng, ng <<= 1;\n  while\
+    \ (ng - ok > 1)\n  {\n    T mid = ((ng - ok) >> 1) + ok;\n    if (isok(mid))\n\
+    \      ok = mid;\n    else\n      ng = mid;\n  }\n  return ok;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS)>\nint sgn(cauto &a, const D &eps = EPS) { return\
     \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
     \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate\
@@ -357,7 +359,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_bit.test.cpp
   requiredBy: []
-  timestamp: '2024-12-13 03:47:10+09:00'
+  timestamp: '2024-12-20 09:47:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_bit.test.cpp

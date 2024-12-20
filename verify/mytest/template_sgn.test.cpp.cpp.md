@@ -39,17 +39,17 @@ data:
     \ vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate\
     \ <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate <class\
     \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing i128 =\
-    \ __int128_t;\ni128 stoi128(const string &s)\n{\n  i128 res = 0;\n  if (s.front()\
-    \ == '-')\n  {\n    for (int i = 1; i < (int)s.size(); i++)\n      res = 10 *\
-    \ res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n    for (auto &&c : s)\n\
-    \      res = 10 * res + c - '0';\n  }\n  return res;\n}\nstring i128tos(i128 x)\n\
-    {\n  if (x == 0) return \"0\";\n  string sign = \"\", res = \"\";\n  if (x < 0)\n\
-    \    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n    res += '0' + x % 10;\n \
-    \   x /= 10;\n  }\n  reverse(res.begin(), res.end());\n  return sign + res;\n\
-    }\nistream &operator>>(istream &is, i128 &a)\n{\n  string s;\n  is >> s;\n  a\
-    \ = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream &os, const i128\
-    \ &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto const\
-    \ auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
+    \ __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string &s)\n{\n \
+    \ i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size();\
+    \ i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n\
+    \    for (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n\
+    }\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\"\
+    , res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n\
+    \    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n\
+    \  return sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string\
+    \ s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream\
+    \ &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define\
+    \ cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
     \ docs/template/template_rep.md\n */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n\
     */\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for\
@@ -145,7 +145,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_sgn.test.cpp.cpp
   requiredBy: []
-  timestamp: '2024-12-13 03:47:10+09:00'
+  timestamp: '2024-12-20 09:47:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_sgn.test.cpp.cpp

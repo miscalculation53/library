@@ -63,17 +63,17 @@ data:
     \ vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate\
     \ <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate <class\
     \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing i128 =\
-    \ __int128_t;\ni128 stoi128(const string &s)\n{\n  i128 res = 0;\n  if (s.front()\
-    \ == '-')\n  {\n    for (int i = 1; i < (int)s.size(); i++)\n      res = 10 *\
-    \ res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n    for (auto &&c : s)\n\
-    \      res = 10 * res + c - '0';\n  }\n  return res;\n}\nstring i128tos(i128 x)\n\
-    {\n  if (x == 0) return \"0\";\n  string sign = \"\", res = \"\";\n  if (x < 0)\n\
-    \    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n    res += '0' + x % 10;\n \
-    \   x /= 10;\n  }\n  reverse(res.begin(), res.end());\n  return sign + res;\n\
-    }\nistream &operator>>(istream &is, i128 &a)\n{\n  string s;\n  is >> s;\n  a\
-    \ = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream &os, const i128\
-    \ &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto const\
-    \ auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
+    \ __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string &s)\n{\n \
+    \ i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size();\
+    \ i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n\
+    \    for (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n\
+    }\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\"\
+    , res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n\
+    \    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n\
+    \  return sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string\
+    \ s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream\
+    \ &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define\
+    \ cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
     \ docs/template/template_rep.md\n */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n\
     */\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for\
@@ -271,32 +271,35 @@ data:
     \ (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return\
     \ make_pair(ok, ng);\n}\n#line 2 \"template/template_bit.hpp\"\n\n#line 5 \"template/template_bit.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\
-    \u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ninline ull\
-    \ pow2(auto k) { return 1ULL << k; }\ninline ull MASK(auto k) { return (1ULL <<\
-    \ k) - 1; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\
-    \u305D\u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n// 0, 1, 2, 2,\
-    \ 3, 3, 3, 3, 4, 4, ... \ninline ull bit_width(ull x) { return x == 0 ? 0 : 64\
-    \ - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline ull bit_floor(ull\
-    \ x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4,\
-    \ 8, 8, 8, 8, 16, ...\ninline ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL\
-    \ << bit_width(x - 1); }\ninline ull countr_zero(ull x) { assert(x != 0); return\
-    \ __builtin_ctzll(x); }\ninline ull popcount(ull x) { return __builtin_popcountll(x);\
-    \ }\ninline bool has_single_bit(ull x) { return popcount(x) == 1; }\n#else\n//\
-    \ 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline ll bit_width(ll x) { return bit_width((ull)x);\
-    \ }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline ll bit_floor(ll x) { return\
-    \ bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline ll bit_ceil(ll\
-    \ x) { return bit_ceil((ull)x); }\ninline ll countr_zero(ll x) { assert(x != 0);\
-    \ return countr_zero((ull)x); }\ninline ll popcount(ll x) { return popcount((ull)x);\
-    \ }\ninline bool has_single_bit(ll x) { return has_single_bit((ull)x); }\n#endif\n\
-    \ninline ull lsb_pos(ull x) { assert(x != 0); return countr_zero(x); }\ninline\
-    \ ull msb_pos(ull x) { assert(x != 0); return bit_width(x) - 1; }\ninline ull\
-    \ lsb_mask(ull x) { assert(x != 0); return x & -x; }\ninline ull msb_mask(ull\
-    \ x) { assert(x != 0); return bit_floor(x); }\n\ninline bool btest(ull x, uint\
-    \ k) { return (x >> k) & 1; }\ntemplate <class T>\ninline void bset(T &x, uint\
-    \ k, bool b = 1) { b ? x |= (1ULL << k) : x &= ~(1ULL << k); }\ntemplate <class\
-    \ T>\ninline void bflip(T &x, uint k) { x ^= (1ULL << k); }\ninline bool bsubset(ull\
-    \ x, ull y) { return (x & y) == x; }\ninline bool bsupset(ull x, ull y) { return\
-    \ (x & y) == y; }\ninline ull bsetminus(ull x, ull y) { return x & ~y; }\n\ntemplate\
+    \u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ninline constexpr\
+    \ ull pow2(auto k) { return 1ULL << k; }\ninline constexpr ull MASK(auto k) {\
+    \ return (1ULL << k) - 1ULL; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\
+    \u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n\
+    // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr ull bit_width(ull x) {\
+    \ return x == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8,\
+    \ 8, ...\ninline constexpr ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL\
+    \ << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr\
+    \ ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline\
+    \ constexpr ull countr_zero(ull x) { assert(x != 0); return __builtin_ctzll(x);\
+    \ }\ninline constexpr ull popcount(ull x) { return __builtin_popcountll(x); }\n\
+    inline constexpr bool has_single_bit(ull x) { return popcount(x) == 1; }\n#else\n\
+    // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr ll bit_width(ll x) { return\
+    \ bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr\
+    \ ll bit_floor(ll x) { return bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8,\
+    \ 8, 16, ...\ninline constexpr ll bit_ceil(ll x) { return bit_ceil((ull)x); }\n\
+    inline constexpr ll countr_zero(ll x) { assert(x != 0); return countr_zero((ull)x);\
+    \ }\ninline constexpr ll popcount(ll x) { return popcount((ull)x); }\ninline constexpr\
+    \ bool has_single_bit(ll x) { return has_single_bit((ull)x); }\n#endif\n\ninline\
+    \ constexpr ull lsb_pos(ull x) { assert(x != 0); return countr_zero(x); }\ninline\
+    \ constexpr ull msb_pos(ull x) { assert(x != 0); return bit_width(x) - 1; }\n\
+    inline constexpr ull lsb_mask(ull x) { assert(x != 0); return x & -x; }\ninline\
+    \ constexpr ull msb_mask(ull x) { assert(x != 0); return bit_floor(x); }\n\ninline\
+    \ constexpr bool btest(ull x, uint k) { return (x >> k) & 1; }\ntemplate <class\
+    \ T>\ninline void bset(T &x, uint k, bool b = 1) { b ? x |= (1ULL << k) : x &=\
+    \ ~(1ULL << k); }\ntemplate <class T>\ninline void bflip(T &x, uint k) { x ^=\
+    \ (1ULL << k); }\ninline constexpr bool bsubset(ull x, ull y) { return (x & y)\
+    \ == x; }\ninline constexpr bool bsupset(ull x, ull y) { return (x & y) == y;\
+    \ }\ninline constexpr ull bsetminus(ull x, ull y) { return x & ~y; }\n\ntemplate\
     \ <class T>\nstruct bsubsets\n{\nprivate:\n  T x;\npublic:\n  bsubsets(T x) :\
     \ x(x) {}\n  struct Iterator\n  {\n  private:\n    T y;\n    bool is_end;\n  \
     \  const bsubsets &bs;\n  public:\n    Iterator(T y, bool is_end, const bsubsets\
@@ -449,7 +452,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/many_aplusb_tuple.test.cpp
   requiredBy: []
-  timestamp: '2024-12-14 12:07:36+09:00'
+  timestamp: '2024-12-20 09:47:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/many_aplusb_tuple.test.cpp

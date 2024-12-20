@@ -11,6 +11,12 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/modint/modint.hpp
       title: modint (32 bit)
+    - icon: ':heavy_check_mark:'
+      path: math/modint/modint64.hpp
+      title: modint (64 bit)
+    - icon: ':heavy_check_mark:'
+      path: math/modint/modint_internal.hpp
+      title: math/modint/modint_internal.hpp
   - name: template
     pages:
     - icon: ':warning:'
@@ -63,6 +69,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/mytest/modint.test.cpp
       title: verify/mytest/modint.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/mytest/modint64.test.cpp
+      title: verify/mytest/modint64.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/mytest/template_algo.test.cpp
       title: verify/mytest/template_algo.test.cpp

@@ -11,6 +11,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
+  - icon: ':heavy_check_mark:'
+    path: math/modint/modint64.hpp
+    title: modint (64 bit)
+  - icon: ':heavy_check_mark:'
+    path: math/modint/modint_internal.hpp
+    title: math/modint/modint_internal.hpp
   - icon: ':warning:'
     path: template/template.cpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
@@ -24,6 +30,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/modint.test.cpp
     title: verify/mytest/modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/modint64.test.cpp
+    title: verify/mytest/modint64.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/template_algo.test.cpp
     title: verify/mytest/template_algo.test.cpp
@@ -89,27 +98,28 @@ data:
     using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
     using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
     \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
-    using i128 = __int128_t;\ni128 stoi128(const string &s)\n{\n  i128 res = 0;\n\
-    \  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size(); i++)\n \
-    \     res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n    for\
-    \ (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n}\nstring\
-    \ i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\", res =\
-    \ \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n    res\
-    \ += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n  return\
-    \ sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string s;\n\
-    \  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream &os,\
-    \ const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto\
-    \ const auto\n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
-    \u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
-    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
-    namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
-    \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
-    \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
-    \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
-    \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
-    \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
-    #else\n#define dump(...)\n#define local(...)\n#endif\n"
+    using i128 = __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string\
+    \ &s)\n{\n  i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i\
+    \ < (int)s.size(); i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n\
+    \  }\n  else\n  {\n    for (auto &&c : s)\n      res = 10 * res + c - '0';\n \
+    \ }\n  return res;\n}\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n\
+    \  string sign = \"\", res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n\
+    \  while (x > 0)\n  {\n    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(),\
+    \ res.end());\n  return sign + res;\n}\nistream &operator>>(istream &is, i128\
+    \ &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream\
+    \ &operator<<(ostream &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n\
+    }\n#endif\n\n#define cauto const auto\n#line 4 \"template/template_dump.hpp\"\n\
+    \n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs\
+    \ docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp>\
+    \ // https://github.com/philip82148/cpp-dump\nnamespace cpp_dump::_detail\n{\n\
+    \  inline string export_var(\n      const i128 &x, const string &indent, size_t\
+    \ last_line_length,\n      size_t current_depth, bool fail_on_newline, const export_command\
+    \ &command\n  ) {\n    return export_var(i128tos(x), indent, last_line_length,\
+    \ current_depth, fail_on_newline, command);\n  }\n} // namespace cpp_dump::_detail\n\
+    #define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
+    \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n\
+    #define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
+    #endif\n"
   code: "#pragma once\n\n#include \"template/template_types.hpp\"\n\n/**\n * @brief\
     \ \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
     \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
@@ -126,11 +136,13 @@ data:
   isVerificationFile: false
   path: template/template_dump.hpp
   requiredBy:
+  - math/modint/modint_internal.hpp
   - math/modint/modint.hpp
+  - math/modint/modint64.hpp
   - math/extgcd.hpp
   - template/template.cpp
   - template/template_all.hpp
-  timestamp: '2024-12-10 13:41:04+09:00'
+  timestamp: '2024-12-20 09:47:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/many_aplusb_128bit.test.cpp
@@ -145,6 +157,7 @@ data:
   - verify/mytest/template_binsearch.test.cpp
   - verify/mytest/template_bit.test.cpp
   - verify/mytest/template_math_mulpow.test.cpp
+  - verify/mytest/modint64.test.cpp
   - verify/mytest/template_sgn.test.cpp.cpp
   - verify/mytest/template_math_div.test.cpp
   - verify/aoj/extgcd.test.cpp
