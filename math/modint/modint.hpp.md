@@ -44,6 +44,9 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: math/prime/primality_test.hpp
+    title: math/prime/primality_test.hpp
   - icon: ':warning:'
     path: template/template.cpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
@@ -54,6 +57,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/modint.test.cpp
     title: verify/mytest/modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/primality_test.test.cpp
+    title: verify/yosupo/primality_test.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
     title: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
@@ -640,10 +646,12 @@ data:
   isVerificationFile: false
   path: math/modint/modint.hpp
   requiredBy:
+  - math/prime/primality_test.hpp
   - template/template.cpp
   timestamp: '2024-12-20 09:47:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yosupo/primality_test.test.cpp
   - verify/mytest/modint.test.cpp
   - verify/aoj/extgcd.test.cpp
   - verify/yukicoder/yuki1550_static_modint.test.cpp

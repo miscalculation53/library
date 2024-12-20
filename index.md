@@ -17,6 +17,11 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/modint/modint_internal.hpp
       title: math/modint/modint_internal.hpp
+  - name: math/prime
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: math/prime/primality_test.hpp
+      title: math/prime/primality_test.hpp
   - name: template
     pages:
     - icon: ':warning:'
@@ -113,6 +118,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/many_aplusb_tuple.test.cpp
       title: verify/yosupo/many_aplusb_tuple.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yosupo/primality_test.test.cpp
+      title: verify/yosupo/primality_test.test.cpp
   - name: verify/yukicoder
     pages:
     - icon: ':heavy_check_mark:'
