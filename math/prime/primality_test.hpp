@@ -19,7 +19,7 @@ bool is_prime_int(int n)
     return false;
   ll d = (n - 1) >> countr_zero(n - 1);
   static const ll bases[3] = {2, 7, 61};
-  using mint = dynamic_modint<-1>;
+  using mint = dynamic_modint<-2>;
   mint::set_mod(n);
   for (ll a : bases)
   {
@@ -44,7 +44,7 @@ bool is_prime(ll n)
     return false;
   ll d = (n - 1) >> countr_zero(n - 1);
   static const ll bases[7] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};
-  using mint = dynamic_modint64_odd<-1>;
+  using mint = dynamic_modint64_odd<-2>;
   mint::set_mod(n);
   for (ll a : bases)
   {
