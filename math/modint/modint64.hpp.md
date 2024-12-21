@@ -121,22 +121,23 @@ data:
     \ T safemod(cauto &a, cauto &b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
     template <class T = ll>\nconstexpr T ipow(auto a, auto b)\n{\n  assert(b >= 0);\n\
     \  if (b == 0) return 1;\n  if (a == 0 || a == 1) return a;\n  if (a == -1) return\
-    \ b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (b > 0)\n  {\n    if (b &\
-    \ 1)\n      res *= tmp;\n    tmp *= tmp;\n    b >>= 1;\n  }\n  return res;\n}\n\
-    template <class T = ll>\nT mul_limited(cauto &a, cauto &b, cauto &m = INF)\n{\n\
-    \  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return\
-    \ T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll>\nT pow_limited(cauto\
-    \ &a, cauto &b, cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if\
-    \ (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1;\n\
-    \  repi(_, b)\n  {\n    if (res > T(m) / T(a))\n      return T(m);\n    res *=\
-    \ T(a);\n  }\n  return res;\n}\n\ntemplate <class T = ll>\nconstexpr T iroot(cauto\
-    \ &a, cauto &k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n   \
-    \ return a;\n\n  auto isok = [&](const T &x) -> bool\n  {\n    if (x == 0)\n \
-    \     return true;\n    T tmp = 1;\n    repi(_, k)\n    {\n      if (tmp > T(a)\
-    \ / x)\n        return false;\n      tmp *= x;\n    }\n    return tmp <= T(a);\n\
-    \  };\n\n  T ok = 0, ng = 1;\n  while (isok(ng))\n    ok = ng, ng <<= 1;\n  while\
-    \ (ng - ok > 1)\n  {\n    T mid = ((ng - ok) >> 1) + ok;\n    if (isok(mid))\n\
-    \      ok = mid;\n    else\n      ng = mid;\n  }\n  return ok;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    \ b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
+    \      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n\
+    \  }\n  return res;\n}\ntemplate <class T = ll>\nT mul_limited(cauto &a, cauto\
+    \ &b, cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n\
+    \    return 0;\n  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate\
+    \ <class T = ll>\nT pow_limited(cauto &a, cauto &b, cauto &m = INF)\n{\n  assert(a\
+    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
+    \ b), T(m));\n  \n  T res = 1;\n  repi(_, b)\n  {\n    if (res > T(m) / T(a))\n\
+    \      return T(m);\n    res *= T(a);\n  }\n  return res;\n}\n\ntemplate <class\
+    \ T = ll>\nconstexpr T iroot(cauto &a, cauto &k)\n{\n  assert(a >= 0 && k >= 1);\n\
+    \  if (a <= 1 || k == 1)\n    return a;\n\n  auto isok = [&](const T &x) -> bool\n\
+    \  {\n    if (x == 0)\n      return true;\n    T tmp = 1;\n    repi(_, k)\n  \
+    \  {\n      if (tmp > T(a) / x)\n        return false;\n      tmp *= x;\n    }\n\
+    \    return tmp <= T(a);\n  };\n\n  T ok = 0, ng = 1;\n  while (isok(ng))\n  \
+    \  ok = ng, ng <<= 1;\n  while (ng - ok > 1)\n  {\n    T mid = ((ng - ok) >> 1)\
+    \ + ok;\n    if (isok(mid))\n      ok = mid;\n    else\n      ng = mid;\n  }\n\
+    \  return ok;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS)>\nint sgn(cauto &a, const D &eps = EPS) { return\
     \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
     \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate\
@@ -632,7 +633,7 @@ data:
   requiredBy:
   - math/prime/factorize.hpp
   - math/prime/primality_test.hpp
-  timestamp: '2024-12-20 09:47:18+09:00'
+  timestamp: '2024-12-21 17:37:41+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/factorize.test.cpp
