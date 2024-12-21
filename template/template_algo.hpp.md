@@ -39,6 +39,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
+  - icon: ':heavy_check_mark:'
+    path: math/quotients.hpp
+    title: "\u5546\u5217\u6319"
   - icon: ':warning:'
     path: template/template.cpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
@@ -82,6 +85,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/quotients.test.cpp
+    title: verify/yosupo/quotients.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
     title: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
@@ -378,6 +384,7 @@ data:
   - math/prime/factorize.hpp
   - math/prime/primality_test.hpp
   - math/prime/prime_power.hpp
+  - math/quotients.hpp
   - math/extgcd.hpp
   - template/template.cpp
   - template/template_all.hpp
@@ -387,6 +394,7 @@ data:
   - verify/yosupo/many_aplusb_128bit.test.cpp
   - verify/yosupo/kth_root_integer.test.cpp
   - verify/yosupo/factorize.test.cpp
+  - verify/yosupo/quotients.test.cpp
   - verify/yosupo/many_aplusb_tuple.test.cpp
   - verify/yosupo/primality_test.test.cpp
   - verify/yosupo/aplusb.test.cpp

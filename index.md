@@ -6,6 +6,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/extgcd.hpp
       title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
+    - icon: ':heavy_check_mark:'
+      path: math/quotients.hpp
+      title: "\u5546\u5217\u6319"
   - name: math/modint
     pages:
     - icon: ':heavy_check_mark:'
@@ -130,6 +133,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/primality_test.test.cpp
       title: verify/yosupo/primality_test.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yosupo/quotients.test.cpp
+      title: verify/yosupo/quotients.test.cpp
   - name: verify/yukicoder
     pages:
     - icon: ':heavy_check_mark:'

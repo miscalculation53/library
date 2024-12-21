@@ -2,9 +2,15 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: math/quotients.hpp
+    title: "\u5546\u5217\u6319"
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: template/template_all.hpp
+    title: template/template_all.hpp
   - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
@@ -34,83 +40,20 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: math/extgcd.hpp
-    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64.hpp
-    title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint_internal.hpp
-    title: math/modint/modint_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/prime/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/primality_test.hpp
-    title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/prime_power.hpp
-    title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
-  - icon: ':heavy_check_mark:'
-    path: math/quotients.hpp
-    title: "\u5546\u5217\u6319"
-  - icon: ':warning:'
-    path: template/template.cpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/extgcd.test.cpp
-    title: verify/aoj/extgcd.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint.test.cpp
-    title: verify/mytest/modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint64.test.cpp
-    title: verify/mytest/modint64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/aplusb.test.cpp
-    title: verify/yosupo/aplusb.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kth_root_integer.test.cpp
-    title: verify/yosupo/kth_root_integer.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb.test.cpp
-    title: verify/yosupo/many_aplusb.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb_128bit.test.cpp
-    title: verify/yosupo/many_aplusb_128bit.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb_tuple.test.cpp
-    title: verify/yosupo/many_aplusb_tuple.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/quotients.test.cpp
-    title: verify/yosupo/quotients.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-    title: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki1550_static_modint.test.cpp
-    title: verify/yukicoder/yuki1550_static_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki888.test.cpp
-    title: verify/yukicoder/yuki888.test.cpp
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
-  _pathExtension: hpp
+  _pathExtension: cpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    links: []
-  bundledCode: "#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.yosupo.jp/problem/enumerate_quotients
+    links:
+    - https://judge.yosupo.jp/problem/enumerate_quotients
+  bundledCode: "#line 1 \"verify/yosupo/quotients.test.cpp\"\n#define PROBLEM \"https://judge.yosupo.jp/problem/enumerate_quotients\"\
+    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
+    \n#define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\
+    \n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
     \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
     \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
@@ -462,30 +405,52 @@ data:
     \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
     CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
     \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 13 \"template/template_all.hpp\"\n"
-  code: '#pragma once
-
-
-    #include "template_types.hpp"
-
-    #include "template_rep.hpp"
-
-    #include "template_math.hpp"
-
-    #include "template_vector.hpp"
-
-    #include "template_func.hpp"
-
-    #include "template_algo.hpp"
-
-    #include "template_binsearch.hpp"
-
-    #include "template_bit.hpp"
-
-    #include "template_inout.hpp"
-
-    #include "template_dump.hpp"'
+    #endif\n#line 13 \"verify/yosupo/quotients.test.cpp\"\n\n#line 2 \"math/quotients.hpp\"\
+    \n\n#line 4 \"math/quotients.hpp\"\n\n/**\n * @brief \u5546\u5217\u6319\n * @docs\
+    \ docs/math/quotients.md\n */\n\n// (y, l, r)\n// y \u306F floor(n / x^d) (x:\
+    \ \u6574\u6570) \u3068\u3057\u3066\u8868\u305B\u308B\u6574\u6570\n// y == floor(n\
+    \ / x^d) <=> l < x <= r\nstruct quotients\n{\nprivate:\n  ll n;\n  int d;\n\n\
+    public:\n  quotients(ll n, int d = 1) : n(n), d(d)\n  {\n    assert(n >= 1 &&\
+    \ d >= 1);\n  }\n  struct Iterator\n  {\n  private:\n    ll y, l, r;\n    const\
+    \ quotients &q;\n\n  public:\n    Iterator(ll y, ll l, ll r, const quotients &q)\
+    \ : y(y), l(l), r(r), q(q) {}\n    tuple<ll, ll, ll> operator*() const { return\
+    \ {y, l, r}; }\n    Iterator& operator++()\n    {\n      if (l == 0)\n       \
+    \ y = l = r = -1;\n      else\n      {\n        r = l;\n        y = q.n / ipow(l,\
+    \ q.d);\n        l = iroot(q.n / (y + 1), q.d);\n      }\n      return *this;\n\
+    \    }\n    bool operator!=(const Iterator &other) const { return y != other.y;\
+    \ }\n  };\n  Iterator begin() const { return Iterator(1, iroot(n / 2, d), iroot(n,\
+    \ d), *this); }\n  Iterator end() const { return Iterator(-1, -1, -1, *this);\
+    \ }\n};\n#line 15 \"verify/yosupo/quotients.test.cpp\"\n\nvoid init() {}\n\nvoid\
+    \ main2()\n{\n  LL(N);\n  vl ans;\n  fec([y, l, r] : quotients(N))\n  {\n    ans.push_back(y);\n\
+    \  }\n  PRINT(ans.size());\n  PRINTVEC(ans);\n}\n\nvoid test() {}\n\nint main()\n\
+    {\n  cauto CERR = [](cauto &val)\n  {\n    #ifndef BOJ\n      cerr << val;\n \
+    \   #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"[FAST_IO]\\\
+    n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed\
+    \ << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or\
+    \ (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
+    [AOJ_TESTCASE]\\n\\n\");\n  while (true)\n  {\n    dump(\"new testcase\");\n \
+    \   main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"[SINGLE_TESTCASE]\\\
+    n\\n\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"[MULTI_TESTCASE]\\\
+    n\\n\");\n  int T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\"\
+    );\n    main2();\n  }\n  #endif\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/enumerate_quotients\"\n\
+    \n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
+    \n#define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\
+    \n#include \"../../template/template_all.hpp\"\n\n#include \"../../math/quotients.hpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n  vl ans;\n  fec([y, l, r] :\
+    \ quotients(N))\n  {\n    ans.push_back(y);\n  }\n  PRINT(ans.size());\n  PRINTVEC(ans);\n\
+    }\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n   \
+    \ #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and\
+    \ not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
+    \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
+    \  CERR(\"[AOJ_TESTCASE]\\n\\n\");\n  while (true)\n  {\n    dump(\"new testcase\"\
+    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"[SINGLE_TESTCASE]\\\
+    n\\n\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"[MULTI_TESTCASE]\\\
+    n\\n\");\n  int T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\"\
+    );\n    main2();\n  }\n  #endif\n}"
   dependsOn:
+  - template/template_all.hpp
   - template/template_types.hpp
   - template/template_rep.hpp
   - template/template_math.hpp
@@ -496,39 +461,17 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
-  isVerificationFile: false
-  path: template/template_all.hpp
-  requiredBy:
-  - math/modint/modint_internal.hpp
-  - math/modint/modint.hpp
-  - math/modint/modint64.hpp
-  - math/prime/factorize.hpp
-  - math/prime/primality_test.hpp
-  - math/prime/prime_power.hpp
   - math/quotients.hpp
-  - math/extgcd.hpp
-  - template/template.cpp
-  timestamp: '2024-12-22 00:03:33+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/yosupo/many_aplusb_128bit.test.cpp
-  - verify/yosupo/kth_root_integer.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/quotients.test.cpp
-  - verify/yosupo/many_aplusb_tuple.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/aplusb.test.cpp
-  - verify/yosupo/many_aplusb.test.cpp
-  - verify/mytest/modint.test.cpp
-  - verify/mytest/modint64.test.cpp
-  - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/yuki1550_static_modint.test.cpp
-  - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-  - verify/yukicoder/yuki888.test.cpp
-documentation_of: template/template_all.hpp
+  isVerificationFile: true
+  path: verify/yosupo/quotients.test.cpp
+  requiredBy: []
+  timestamp: '2024-12-22 02:24:56+09:00'
+  verificationStatus: TEST_ACCEPTED
+  verifiedWith: []
+documentation_of: verify/yosupo/quotients.test.cpp
 layout: document
 redirect_from:
-- /library/template/template_all.hpp
-- /library/template/template_all.hpp.html
-title: template/template_all.hpp
+- /verify/verify/yosupo/quotients.test.cpp
+- /verify/verify/yosupo/quotients.test.cpp.html
+title: verify/yosupo/quotients.test.cpp
 ---
