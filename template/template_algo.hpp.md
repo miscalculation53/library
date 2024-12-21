@@ -284,8 +284,9 @@ data:
     \  return *this;\n    }\n    bool operator!=(const Iterator &other) const { return\
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\n// DRUL\nconst vpll dij4\
-    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\n"
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll DRULgrid = {{1,\
+    \ 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane = {{0, -1}, {1, 0}, {0,\
+    \ 1}, {-1, 0}};\n"
   code: "#pragma once\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n\
     \n#include \"template_types.hpp\"\n#include \"template_rep.hpp\"\n#include \"\
     template_vector.hpp\"\n#include \"template_func.hpp\"\n\n/**\n * @brief \u30C6\
@@ -359,8 +360,9 @@ data:
     \  return *this;\n    }\n    bool operator!=(const Iterator &other) const { return\
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\n// DRUL\nconst vpll dij4\
-    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};"
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll DRULgrid = {{1,\
+    \ 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane = {{0, -1}, {1, 0}, {0,\
+    \ 1}, {-1, 0}};"
   dependsOn:
   - template/template_types.hpp
   - template/template_rep.hpp
@@ -379,7 +381,7 @@ data:
   - math/extgcd.hpp
   - template/template.cpp
   - template/template_all.hpp
-  timestamp: '2024-12-21 17:37:41+09:00'
+  timestamp: '2024-12-22 00:03:33+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/many_aplusb_128bit.test.cpp
@@ -729,9 +731,11 @@ fec(v : direct_product({2, 1, 3}))
 #### dij4
 
 ```cpp
-const vpll dij4 = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} }
+const vpll DRULgrid = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} };
+const vpll DRULplane = { {0, -1}, {1, 0}, {0, 1}, {-1, 0} };
 ```
 
 グリッドの $4$ 方向の探索で使う。
 
-$(i, j)$ の $i$ を下方向、$j$ を右方向とする座標系において、`DRUL` の順になっている。
+- `DRULgrid`：$(i, j)$ の $i$ を下方向、$j$ を右方向とする座標系において、`DRUL` の順になっている。
+- `DRULplane`：$(x, y)$ の $x$ を右方向、$y$ を上方向とする座標系において、`DRUL` の順になっている。

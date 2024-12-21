@@ -269,44 +269,45 @@ data:
     \  return *this;\n    }\n    bool operator!=(const Iterator &other) const { return\
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\n// DRUL\nconst vpll dij4\
-    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\n#line 2 \"template/template_binsearch.hpp\"\
-    \n\n#line 6 \"template/template_binsearch.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
-    \u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09\n * @docs docs/template/template_binsearch.md\n\
-    \ */\n\n#if __cplusplus < 202002L\n// val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\
-    \u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\ntemplate <class T =\
-    \ ll, class V, class... Args>\ninline T LB(const V &v, Args&&... args)\n{ return\
-    \ lower_bound(ALL(v), forward<Args>(args)...) - v.begin(); }\n// val < v[i] \u3068\
-    \u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570\
-    )\ntemplate <class T = ll, class V, class... Args>\ninline T UB(const V &v, Args&&...\
-    \ args)\n{ return upper_bound(ALL(v), forward<Args>(args)...) - v.begin(); }\n\
-    #else\n// val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\
-    \u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class\
-    \ T = ll, class V, class... Args>\ninline T LB(const V &v, Args&&... args)\n{\
-    \ return ranges::lower_bound(v, forward<Args>(args)...) - v.begin(); }\n// val\
-    \ < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\
-    \u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class T = ll, class V, class...\
-    \ Args>\ninline T UB(const V &v, Args&&... args)\n{ return ranges::upper_bound(v,\
-    \ forward<Args>(args)...) - v.begin(); }\n#endif\n\ntemplate <class T = ll>\n\
-    pair<T, T> binsearch(cauto &judge, cauto &init_ok, cauto &init_ng)\n{\n  T ok(init_ok),\
-    \ ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n  while (ok - ng\
-    \ != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid)\
-    \ ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n}\ntemplate <class T =\
-    \ ld>\nT binsearch_real(cauto &judge, cauto &init_ok, cauto &init_ng, const int\
-    \ &iteration_count = 100)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n\
-    \  assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n    T mid = (ok + ng)\
-    \ / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n}\ntemplate <class\
-    \ T = ll>\npair<T, T> expsearch(cauto &judge, cauto &init_val, const bool &positive\
-    \ = true)\n{\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng\
-    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n   \
-    \   ok = ng, ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n\
-    \  {\n    ng = init_val, ok = init_val + (positive ? 1 : -1);\n    for (int i\
-    \ = 1; !judge(ok); i++)\n      ng = ok, ok = init_val + (positive ? 1 : -1) *\
-    \ (T(1) << i);\n  }\n  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid =\
-    \ (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return\
-    \ make_pair(ok, ng);\n}\n#line 2 \"template/template_bit.hpp\"\n\n#line 5 \"template/template_bit.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\
-    \u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ninline constexpr\
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll DRULgrid = {{1,\
+    \ 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane = {{0, -1}, {1, 0}, {0,\
+    \ 1}, {-1, 0}};\n#line 2 \"template/template_binsearch.hpp\"\n\n#line 6 \"template/template_binsearch.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\
+    \u7D22\uFF09\n * @docs docs/template/template_binsearch.md\n */\n\n#if __cplusplus\
+    \ < 202002L\n// val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\
+    \u6E80\u306E\u5024\u306E\u500B\u6570)\ntemplate <class T = ll, class V, class...\
+    \ Args>\ninline T LB(const V &v, Args&&... args)\n{ return lower_bound(ALL(v),\
+    \ forward<Args>(args)...) - v.begin(); }\n// val < v[i] \u3068\u306A\u308B\u6700\
+    \u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570)\ntemplate <class\
+    \ T = ll, class V, class... Args>\ninline T UB(const V &v, Args&&... args)\n{\
+    \ return upper_bound(ALL(v), forward<Args>(args)...) - v.begin(); }\n#else\n//\
+    \ val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\
+    \u306E\u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class T = ll, class\
+    \ V, class... Args>\ninline T LB(const V &v, Args&&... args)\n{ return ranges::lower_bound(v,\
+    \ forward<Args>(args)...) - v.begin(); }\n// val < v[i] \u3068\u306A\u308B\u6700\
+    \u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570\
+    : comp, proj\ntemplate <class T = ll, class V, class... Args>\ninline T UB(const\
+    \ V &v, Args&&... args)\n{ return ranges::upper_bound(v, forward<Args>(args)...)\
+    \ - v.begin(); }\n#endif\n\ntemplate <class T = ll>\npair<T, T> binsearch(cauto\
+    \ &judge, cauto &init_ok, cauto &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n\
+    \  assert(judge(ok));\n  assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok\
+    \ != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok\
+    \ : ng) = mid;\n  }\n  return make_pair(ok, ng);\n}\ntemplate <class T = ld>\n\
+    T binsearch_real(cauto &judge, cauto &init_ok, cauto &init_ng, const int &iteration_count\
+    \ = 100)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
+    \  repi(_, iteration_count)\n  {\n    T mid = (ok + ng) / 2;\n    (judge(mid)\
+    \ ? ok : ng) = mid;\n  }\n  return ok;\n}\ntemplate <class T = ll>\npair<T, T>\
+    \ expsearch(cauto &judge, cauto &init_val, const bool &positive = true)\n{\n \
+    \ T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val + (positive\
+    \ ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng, ng = init_val\
+    \ + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng = init_val, ok\
+    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok); i++)\n  \
+    \    ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  while\
+    \ (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n\
+    \    (judge(mid) ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n}\n#line\
+    \ 2 \"template/template_bit.hpp\"\n\n#line 5 \"template/template_bit.hpp\"\n\n\
+    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\
+    \u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ninline constexpr\
     \ ull pow2(auto k) { return 1ULL << k; }\ninline constexpr ull MASK(auto k) {\
     \ return (1ULL << k) - 1ULL; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\
     \u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n\
@@ -542,7 +543,7 @@ data:
   - math/prime/factorize.hpp
   - math/prime/primality_test.hpp
   - template/template.cpp
-  timestamp: '2024-12-21 17:37:41+09:00'
+  timestamp: '2024-12-22 00:03:33+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/factorize.test.cpp

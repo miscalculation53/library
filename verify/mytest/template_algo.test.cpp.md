@@ -221,72 +221,73 @@ data:
     \  return *this;\n    }\n    bool operator!=(const Iterator &other) const { return\
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\n// DRUL\nconst vpll dij4\
-    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\n#line 2 \"template/template_dump.hpp\"\
-    \n\n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
-    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
-    namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
-    \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
-    \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
-    \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
-    \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
-    \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
-    #else\n#define dump(...)\n#define local(...)\n#endif\n#line 5 \"verify/mytest/template_algo.test.cpp\"\
-    \n\n// \u96C6\u7D04\nvoid test1()\n{\n  vl a = {2, 7, 1, 8, 2, 8, 1};\n  assert(SUM(a)\
-    \ == 29);\n  assert(MAX(a) == 8);\n  assert(MIN(a) == 1);\n  assert(ARGMAX(a)\
-    \ == 3);\n  assert(ARGMIN(a) == 2);\n  assert(mex(a) == 0);\n\n  vl b = {4, 0,\
-    \ 1, 0, 1, 100};\n  assert(mex(b) == 2);\n}\n\n// \u9806\u5217\nvoid test2()\n\
-    {\n  {\n    assert(permid(5) == vl({0, 1, 2, 3, 4}));\n    assert(permid(5, 1)\
-    \ == vl({1, 2, 3, 4, 5}));\n  }\n\n  {\n    vl p = {1, 2, 0, 4, 3};\n    vl q\
-    \ = perminv(p);\n    repi(i, 5) assert(q[p[i]] == i);\n    assert(perminv(q) ==\
-    \ p);\n  }\n\n  {\n    vl p = {1, 4, 2, 0, 3};\n    vl q = {3, 1, 4, 0, 2};\n\
-    \    vl r = permuted(p, q);\n    repi(i, 5) assert(r[i] == p[q[i]]);\n  }\n}\n\
-    \n// string \u3084 vector \u306E\u64CD\u4F5C\nvoid test3()\n{\n  {\n    string\
-    \ s = \"abcde\";\n    vl v = {0, 1, 2, 3, 4};\n    assert(reversed(s) == \"edcba\"\
-    );\n    assert(s == \"abcde\");\n    assert(reversed(v) == vl({4, 3, 2, 1, 0}));\n\
-    \    assert(v == vl({0, 1, 2, 3, 4}));\n  }\n\n  {\n    string s = \"bdcae\";\n\
-    \    vl v = {4, 2, 1, 0, 3};\n    assert(sorted(s) == \"abcde\");\n    assert(sorted(s,\
-    \ greater{}) == \"edcba\");\n    assert(s == \"bdcae\");\n    assert(sorted(v)\
-    \ == vl({0, 1, 2, 3, 4}));\n    assert(sorted(v, greater{}) == vl({4, 3, 2, 1,\
-    \ 0}));\n    assert(v == vl({4, 2, 1, 0, 3}));\n  }\n\n  {\n    string s = \"\
-    bbabbccc\";\n    vl v = {1, 1, 0, 1, 1, 2, 2, 2};\n    assert(uniqued(s) == \"\
-    babc\");\n    assert(uniqued(v) == vl({1, 0, 1, 2}));\n    assert(s == \"bbabbccc\"\
-    );\n    assert(v == vl({1, 1, 0, 1, 1, 2, 2, 2}));\n    unique(s);\n    unique(v);\n\
-    \    assert(s == \"babc\");\n    assert(v == vl({1, 0, 1, 2}));\n\n    assert(sortuniqued(s)\
-    \ == \"abc\");\n    assert(sortuniqued(v) == vl({0, 1, 2}));\n    assert(s ==\
-    \ \"babc\");\n    assert(v == vl({1, 0, 1, 2}));\n    sortunique(s);\n    sortunique(v);\n\
-    \    assert(s == \"abc\");\n    assert(v == vl({0, 1, 2}));\n  }\n\n  {\n    string\
-    \ s = \"abcde\";\n    vl v = {0, 1, 2, 3, 4};\n    assert(rotated(s, 1) == \"\
-    bcdea\");\n    assert(rotated(s, 2) == \"cdeab\");\n    assert(rotated(s, 1'000'000'000'000'003LL)\
-    \ == \"deabc\");\n    assert(rotated(s, -1) == \"eabcd\");\n    assert(rotated(v,\
-    \ 1) == vl({1, 2, 3, 4, 0}));\n    assert(rotated(v, 2) == vl({2, 3, 4, 0, 1}));\n\
-    \    assert(rotated(v, 1'000'000'000'000'003LL) == vl({3, 4, 0, 1, 2}));\n   \
-    \ assert(rotated(v, -1) == vl({4, 0, 1, 2, 3}));\n    assert(s == \"abcde\");\n\
-    \    assert(v == vl({0, 1, 2, 3, 4}));\n    rotate(s, 1'000'000'000'000'003LL);\n\
-    \    rotate(v, 1'000'000'000'000'003LL);\n    assert(s == \"deabc\");\n    assert(v\
-    \ == vl({3, 4, 0, 1, 2}));\n  }\n}\n\n// \u4E8C\u6B21\u5143\u914D\u5217\u306E\u64CD\
-    \u4F5C\nvoid test4()\n{\n  vvl v = {\n    {1, 2},\n    {3, 4},\n    {5, 6}\n \
-    \ };\n  vstr s = {\n    \"12\",\n    \"34\",\n    \"56\"\n  };\n\n  vvl top_v\
-    \ = {\n    {1, 3, 5},\n    {2, 4, 6}\n  };\n  vstr top_s = {\n    \"135\",\n \
-    \   \"246\"\n  };\n\n  vvl rot_v = {\n    {2, 4, 6},\n    {1, 3, 5}\n  };\n  vstr\
-    \ rot_s = {\n    \"246\",\n    \"135\"\n  };\n\n  assert(top(v) == top_v);\n \
-    \ assert(top(s) == top_s);\n  assert(rot90(v) == rot_v);\n  assert(rot90(s) ==\
-    \ rot_s);\n\n  assert(rot90(v, -11) == rot90(v));\n  assert(rot90(v, -10) == rot90(rot90(v)));\n\
-    \  assert(rot90(v, -9) == rot90(rot90(rot90(v))));\n  assert(rot90(v, 8) == v);\n\
-    \  assert(rot90(v, 9) == rot90(v));\n  assert(rot90(v, 10) == rot90(rot90(v)));\n\
-    \  assert(rot90(v, 11) == rot90(rot90(rot90(v))));\n}\n\n// \u7D2F\u7A4D\u548C\
-    \u30FB\u5DEE\u5206\nvoid test5()\n{\n  vl a = {3, 1, 4, 1};\n  assert(cuml(a)\
-    \ == vl({0, 3, 4, 8, 9}));\n  assert(cumr(a) == vl({9, 6, 5, 1, 0}));\n  assert(cumlmax(a)\
-    \ == vl({-INF, 3, 3, 4, 4}));\n  assert(cumrmax(a) == vl({4, 4, 4, 1, -INF}));\n\
-    \  assert(cumlmin(a) == vl({INF, 3, 1, 1, 1}));\n  assert(cumrmin(a) == vl({1,\
-    \ 1, 1, 1, INF}));\n  assert(adjd(a) == vl({3, -2, 3, -3, -1}));\n}\n\n// \u5168\
-    \u63A2\u7D22\nvoid test6()\n{\n  vvl vs;\n  fec(v : direct_product({2, 1, 3}))\
-    \ vs.push_back(v);\n\n  vvl model = {\n    {0, 0, 0},\n    {0, 0, 1},\n    {0,\
-    \ 0, 2},\n    {1, 0, 0},\n    {1, 0, 1},\n    {1, 0, 2}\n  };\n  assert(vs ==\
-    \ model);\n}\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n  test4();\n\
-    \  test5();\n  test6();\n\n  cout << \"Hello World\" << endl;\n}\n"
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll DRULgrid = {{1,\
+    \ 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane = {{0, -1}, {1, 0}, {0,\
+    \ 1}, {-1, 0}};\n#line 2 \"template/template_dump.hpp\"\n\n#line 4 \"template/template_dump.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs\
+    \ docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp>\
+    \ // https://github.com/philip82148/cpp-dump\nnamespace cpp_dump::_detail\n{\n\
+    \  inline string export_var(\n      const i128 &x, const string &indent, size_t\
+    \ last_line_length,\n      size_t current_depth, bool fail_on_newline, const export_command\
+    \ &command\n  ) {\n    return export_var(i128tos(x), indent, last_line_length,\
+    \ current_depth, fail_on_newline, command);\n  }\n} // namespace cpp_dump::_detail\n\
+    #define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
+    \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n\
+    #define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
+    #endif\n#line 5 \"verify/mytest/template_algo.test.cpp\"\n\n// \u96C6\u7D04\n\
+    void test1()\n{\n  vl a = {2, 7, 1, 8, 2, 8, 1};\n  assert(SUM(a) == 29);\n  assert(MAX(a)\
+    \ == 8);\n  assert(MIN(a) == 1);\n  assert(ARGMAX(a) == 3);\n  assert(ARGMIN(a)\
+    \ == 2);\n  assert(mex(a) == 0);\n\n  vl b = {4, 0, 1, 0, 1, 100};\n  assert(mex(b)\
+    \ == 2);\n}\n\n// \u9806\u5217\nvoid test2()\n{\n  {\n    assert(permid(5) ==\
+    \ vl({0, 1, 2, 3, 4}));\n    assert(permid(5, 1) == vl({1, 2, 3, 4, 5}));\n  }\n\
+    \n  {\n    vl p = {1, 2, 0, 4, 3};\n    vl q = perminv(p);\n    repi(i, 5) assert(q[p[i]]\
+    \ == i);\n    assert(perminv(q) == p);\n  }\n\n  {\n    vl p = {1, 4, 2, 0, 3};\n\
+    \    vl q = {3, 1, 4, 0, 2};\n    vl r = permuted(p, q);\n    repi(i, 5) assert(r[i]\
+    \ == p[q[i]]);\n  }\n}\n\n// string \u3084 vector \u306E\u64CD\u4F5C\nvoid test3()\n\
+    {\n  {\n    string s = \"abcde\";\n    vl v = {0, 1, 2, 3, 4};\n    assert(reversed(s)\
+    \ == \"edcba\");\n    assert(s == \"abcde\");\n    assert(reversed(v) == vl({4,\
+    \ 3, 2, 1, 0}));\n    assert(v == vl({0, 1, 2, 3, 4}));\n  }\n\n  {\n    string\
+    \ s = \"bdcae\";\n    vl v = {4, 2, 1, 0, 3};\n    assert(sorted(s) == \"abcde\"\
+    );\n    assert(sorted(s, greater{}) == \"edcba\");\n    assert(s == \"bdcae\"\
+    );\n    assert(sorted(v) == vl({0, 1, 2, 3, 4}));\n    assert(sorted(v, greater{})\
+    \ == vl({4, 3, 2, 1, 0}));\n    assert(v == vl({4, 2, 1, 0, 3}));\n  }\n\n  {\n\
+    \    string s = \"bbabbccc\";\n    vl v = {1, 1, 0, 1, 1, 2, 2, 2};\n    assert(uniqued(s)\
+    \ == \"babc\");\n    assert(uniqued(v) == vl({1, 0, 1, 2}));\n    assert(s ==\
+    \ \"bbabbccc\");\n    assert(v == vl({1, 1, 0, 1, 1, 2, 2, 2}));\n    unique(s);\n\
+    \    unique(v);\n    assert(s == \"babc\");\n    assert(v == vl({1, 0, 1, 2}));\n\
+    \n    assert(sortuniqued(s) == \"abc\");\n    assert(sortuniqued(v) == vl({0,\
+    \ 1, 2}));\n    assert(s == \"babc\");\n    assert(v == vl({1, 0, 1, 2}));\n \
+    \   sortunique(s);\n    sortunique(v);\n    assert(s == \"abc\");\n    assert(v\
+    \ == vl({0, 1, 2}));\n  }\n\n  {\n    string s = \"abcde\";\n    vl v = {0, 1,\
+    \ 2, 3, 4};\n    assert(rotated(s, 1) == \"bcdea\");\n    assert(rotated(s, 2)\
+    \ == \"cdeab\");\n    assert(rotated(s, 1'000'000'000'000'003LL) == \"deabc\"\
+    );\n    assert(rotated(s, -1) == \"eabcd\");\n    assert(rotated(v, 1) == vl({1,\
+    \ 2, 3, 4, 0}));\n    assert(rotated(v, 2) == vl({2, 3, 4, 0, 1}));\n    assert(rotated(v,\
+    \ 1'000'000'000'000'003LL) == vl({3, 4, 0, 1, 2}));\n    assert(rotated(v, -1)\
+    \ == vl({4, 0, 1, 2, 3}));\n    assert(s == \"abcde\");\n    assert(v == vl({0,\
+    \ 1, 2, 3, 4}));\n    rotate(s, 1'000'000'000'000'003LL);\n    rotate(v, 1'000'000'000'000'003LL);\n\
+    \    assert(s == \"deabc\");\n    assert(v == vl({3, 4, 0, 1, 2}));\n  }\n}\n\n\
+    // \u4E8C\u6B21\u5143\u914D\u5217\u306E\u64CD\u4F5C\nvoid test4()\n{\n  vvl v\
+    \ = {\n    {1, 2},\n    {3, 4},\n    {5, 6}\n  };\n  vstr s = {\n    \"12\",\n\
+    \    \"34\",\n    \"56\"\n  };\n\n  vvl top_v = {\n    {1, 3, 5},\n    {2, 4,\
+    \ 6}\n  };\n  vstr top_s = {\n    \"135\",\n    \"246\"\n  };\n\n  vvl rot_v =\
+    \ {\n    {2, 4, 6},\n    {1, 3, 5}\n  };\n  vstr rot_s = {\n    \"246\",\n   \
+    \ \"135\"\n  };\n\n  assert(top(v) == top_v);\n  assert(top(s) == top_s);\n  assert(rot90(v)\
+    \ == rot_v);\n  assert(rot90(s) == rot_s);\n\n  assert(rot90(v, -11) == rot90(v));\n\
+    \  assert(rot90(v, -10) == rot90(rot90(v)));\n  assert(rot90(v, -9) == rot90(rot90(rot90(v))));\n\
+    \  assert(rot90(v, 8) == v);\n  assert(rot90(v, 9) == rot90(v));\n  assert(rot90(v,\
+    \ 10) == rot90(rot90(v)));\n  assert(rot90(v, 11) == rot90(rot90(rot90(v))));\n\
+    }\n\n// \u7D2F\u7A4D\u548C\u30FB\u5DEE\u5206\nvoid test5()\n{\n  vl a = {3, 1,\
+    \ 4, 1};\n  assert(cuml(a) == vl({0, 3, 4, 8, 9}));\n  assert(cumr(a) == vl({9,\
+    \ 6, 5, 1, 0}));\n  assert(cumlmax(a) == vl({-INF, 3, 3, 4, 4}));\n  assert(cumrmax(a)\
+    \ == vl({4, 4, 4, 1, -INF}));\n  assert(cumlmin(a) == vl({INF, 3, 1, 1, 1}));\n\
+    \  assert(cumrmin(a) == vl({1, 1, 1, 1, INF}));\n  assert(adjd(a) == vl({3, -2,\
+    \ 3, -3, -1}));\n}\n\n// \u5168\u63A2\u7D22\nvoid test6()\n{\n  vvl vs;\n  fec(v\
+    \ : direct_product({2, 1, 3})) vs.push_back(v);\n\n  vvl model = {\n    {0, 0,\
+    \ 0},\n    {0, 0, 1},\n    {0, 0, 2},\n    {1, 0, 0},\n    {1, 0, 1},\n    {1,\
+    \ 0, 2}\n  };\n  assert(vs == model);\n}\n\nint main()\n{\n  test1();\n  test2();\n\
+    \  test3();\n  test4();\n  test5();\n  test6();\n\n  cout << \"Hello World\" <<\
+    \ endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#include \"../../template/template_algo.hpp\"\n#include \"../../template/template_dump.hpp\"\
     \n\n// \u96C6\u7D04\nvoid test1()\n{\n  vl a = {2, 7, 1, 8, 2, 8, 1};\n  assert(SUM(a)\
@@ -353,7 +354,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_algo.test.cpp
   requiredBy: []
-  timestamp: '2024-12-21 17:37:41+09:00'
+  timestamp: '2024-12-22 00:03:33+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_algo.test.cpp

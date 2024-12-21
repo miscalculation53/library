@@ -282,14 +282,15 @@ data:
     \  return *this;\n    }\n    bool operator!=(const Iterator &other) const { return\
     \ b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
     \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\n// DRUL\nconst vpll dij4\
-    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\n#line 6 \"verify/mytest/template_bit.test.cpp\"\
-    \n\nvoid test1()\n{\n  vc<ll> width_model = {0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 40};\n\
-    \  vc<ll> floor_model = {0, 1, 2, 2, 4, 4, 4, 4, 8, 8, 1LL << 39};\n  vc<ll> ceil_model\
-    \ = {1, 1, 2, 4, 4, 8, 8, 8, 8, 16, 1LL << 40};\n  vc<ll> pp_model = {0, 1, 1,\
-    \ 2, 1, 2, 2, 3, 1, 2, 20};\n  vc<ll> single_model = {0, 1, 1, 0, 1, 0, 0, 0,\
-    \ 1, 0, 0};\n  vc<ll> width, floor, ceil, pp, single;\n  fec(k : vl{0, 1, 2, 3,\
-    \ 4, 5, 6, 7, 8, 9, 0b1010101010101010101010101010101010101010LL})\n  {\n    width.push_back(bit_width(k));\n\
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll DRULgrid = {{1,\
+    \ 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane = {{0, -1}, {1, 0}, {0,\
+    \ 1}, {-1, 0}};\n#line 6 \"verify/mytest/template_bit.test.cpp\"\n\nvoid test1()\n\
+    {\n  vc<ll> width_model = {0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 40};\n  vc<ll> floor_model\
+    \ = {0, 1, 2, 2, 4, 4, 4, 4, 8, 8, 1LL << 39};\n  vc<ll> ceil_model = {1, 1, 2,\
+    \ 4, 4, 8, 8, 8, 8, 16, 1LL << 40};\n  vc<ll> pp_model = {0, 1, 1, 2, 1, 2, 2,\
+    \ 3, 1, 2, 20};\n  vc<ll> single_model = {0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0};\n\
+    \  vc<ll> width, floor, ceil, pp, single;\n  fec(k : vl{0, 1, 2, 3, 4, 5, 6, 7,\
+    \ 8, 9, 0b1010101010101010101010101010101010101010LL})\n  {\n    width.push_back(bit_width(k));\n\
     \    floor.push_back(bit_floor(k));\n    ceil.push_back(bit_ceil(k));\n    pp.push_back(popcount(k));\n\
     \    single.push_back(has_single_bit(k));\n  }\n  assert(width == width_model);\n\
     \  assert(floor == floor_model);\n  assert(ceil == ceil_model);\n  assert(pp ==\
@@ -360,7 +361,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_bit.test.cpp
   requiredBy: []
-  timestamp: '2024-12-21 17:37:41+09:00'
+  timestamp: '2024-12-22 00:03:33+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_bit.test.cpp
