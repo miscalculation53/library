@@ -36,12 +36,14 @@ constexpr T ipow(auto a, auto b)
   if (a == -1) return b & 1 ? -1 : 1;
 
   T res = 1, tmp = a;
-  while (b > 0)
+  while (true)
   {
     if (b & 1)
       res *= tmp;
-    tmp *= tmp;
     b >>= 1;
+    if (b == 0)
+      break;
+    tmp *= tmp;
   }
   return res;
 }
