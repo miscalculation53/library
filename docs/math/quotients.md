@@ -33,8 +33,8 @@ fec([y, l, r] : quotients(n))
 
   $\begin{aligned}
     y = \left\lfloor \frac{n}{x^d} \right\rfloor
-    &\iff \frac{n}{x^d} - 1 \lt y \leq \frac{n}{x^d} \\\\
-    &\iff \frac{n}{y+1} \lt x^d \leq \frac{n}{y} \\\\
+    &\iff \frac{n}{x^d} - 1 \lt y \leq \frac{n}{x^d} \\\\  
+    &\iff \frac{n}{y+1} \lt x^d \leq \frac{n}{y} \\\\  
     &\iff \left\lfloor \left\lfloor\frac{n}{y+1}\right\rfloor^{1/d} \right\rfloor \lt x \leq \left\lfloor \left\lfloor\frac{n}{y}\right\rfloor^{1/d} \right\rfloor
   \end{aligned}$
 
