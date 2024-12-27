@@ -11,10 +11,12 @@
 
 #if __cplusplus < 202002L
 // val <= v[i] となる最小の i (val 未満の値の個数)
+// 引数: comp
 template <class T = ll, class V, class... Args>
 inline T LB(const V &v, Args&&... args)
 { return lower_bound(ALL(v), forward<Args>(args)...) - v.begin(); }
 // val < v[i] となる最小の i (val 以下の値の個数)
+// 引数: comp
 template <class T = ll, class V, class... Args>
 inline T UB(const V &v, Args&&... args)
 { return upper_bound(ALL(v), forward<Args>(args)...) - v.begin(); }
@@ -30,6 +32,75 @@ template <class T = ll, class V, class... Args>
 inline T UB(const V &v, Args&&... args)
 { return ranges::upper_bound(v, forward<Args>(args)...) - v.begin(); }
 #endif
+
+template <class T>
+struct is_random_access_iterator
+{
+  static constexpr bool value = is_same_v<
+    typename iterator_traits<T>::iterator_category,
+    random_access_iterator_tag
+  >;
+};
+template <class T>
+constexpr bool is_random_access_iterator_v = is_random_access_iterator<T>::value;
+
+template <class T = ll, class V, class... Args>
+inline auto lt_max(const V &v, Args&&... args)
+{
+  if constexpr (is_random_access_iterator_v<typename V::iterator>)
+    return LB<T>(v, forward<Args>(args)...) - 1;
+  else
+  {
+    auto it = v.lower_bound(forward<Args>(args)...);
+    if (it == v.begin())
+      return v.end();
+    else
+      return prev(it);
+  }
+}
+template <class T = ll, class V, class... Args>
+inline auto leq_max(const V &v, Args&&... args)
+{
+  if constexpr (is_random_access_iterator_v<typename V::iterator>)
+    return UB<T>(v, forward<Args>(args)...) - 1;
+  else
+  {
+    auto it = v.upper_bound(forward<Args>(args)...);
+    if (it == v.begin())
+      return v.end();
+    else
+      return prev(it);
+  }
+}
+template <class T = ll, class V, class... Args>
+inline auto gt_min(const V &v, Args&&... args)
+{
+  if constexpr (is_random_access_iterator_v<typename V::iterator>)
+    return UB<T>(v, forward<Args>(args)...);
+  else
+    return v.upper_bound(forward<Args>(args)...);
+}
+template <class T = ll, class V, class... Args>
+inline auto geq_min(const V &v, Args&&... args)
+{
+  if constexpr (is_random_access_iterator_v<typename V::iterator>)
+    return LB<T>(v, forward<Args>(args)...);
+  else
+    return v.lower_bound(forward<Args>(args)...);
+}
+
+template <class T = ll, class V, class... Args>
+inline T lt_cnt(const V &v, Args&&... args)
+{ return LB<T>(v, forward<Args>(args)...); }
+template <class T = ll, class V, class... Args>
+inline T leq_cnt(const V &v, Args&&... args)
+{ return UB<T>(v, forward<Args>(args)...); }
+template <class T = ll, class V, class... Args>
+inline T gt_cnt(const V &v, Args&&... args)
+{ return SZ<T>(v) - UB<T>(v, forward<Args>(args)...); }
+template <class T = ll, class V, class... Args>
+inline T geq_cnt(const V &v, Args&&... args)
+{ return SZ<T>(v) - LB<T>(v, forward<Args>(args)...); }
 
 template <class T = ll>
 pair<T, T> binsearch(cauto &judge, cauto &init_ok, cauto &init_ng)

@@ -112,7 +112,7 @@ vc<ll> divisors(const vc<PrimePower<ll>> &pps)
   vc<ll> res;
   auto dfs = [&](auto dfs, ll d, int i) -> void
   {
-    if (i == SZI(pps))
+    if (i == SZ<int>(pps))
     {
       res.emplace_back(d);
       return;

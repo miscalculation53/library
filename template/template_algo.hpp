@@ -120,7 +120,7 @@ vvc<T> top(const vvc<T> &a)
   vvc<T> b(m, vc<T>(n));
   repi(i, n)
   {
-    assert(SZI(a[i]) == m);
+    assert(SZ<int>(a[i]) == m);
     repi(j, m) b[j][i] = a[i][j];
   }
   return b;
@@ -128,10 +128,10 @@ vvc<T> top(const vvc<T> &a)
 vstr top(const vstr &a)
 {
   vvc<char> a_(a.size());
-  repi(i, SZI(a)) a_[i] = {ALL(a[i])};
+  repi(i, SZ<int>(a)) a_[i] = {ALL(a[i])};
   vvc<char> b_ = top(a_);
   vstr b(b_.size());
-  repi(i, SZI(b)) b[i] = {ALL(b_[i])};
+  repi(i, SZ<int>(b)) b[i] = {ALL(b_[i])};
   return b;
 }
 
@@ -154,7 +154,7 @@ VV rot90(const VV &a, U k = 1)
     repi(j, m) b[j].resize(n);
     repi(i, n)
     {
-      assert(SZI(a[i]) == m);
+      assert(SZ<int>(a[i]) == m);
       repi(j, m) b[m - 1 - j][i] = a[i][j];
     }
     return b;
@@ -165,7 +165,7 @@ VV rot90(const VV &a, U k = 1)
     repi(i, n) b[i].resize(m);
     repi(i, n)
     {
-      assert(SZI(a[i]) == m);
+      assert(SZ<int>(a[i]) == m);
       repi(j, m) b[n - 1 - i][m - 1 - j] = a[i][j];
     }
     return b;
@@ -176,7 +176,7 @@ VV rot90(const VV &a, U k = 1)
     repi(j, m) b[j].resize(n);
     repi(i, n)
     {
-      assert(SZI(a[i]) == m);
+      assert(SZ<int>(a[i]) == m);
       repi(j, m) b[j][n - 1 - i] = a[i][j];
     }
     return b;
@@ -237,7 +237,7 @@ public:
     Iterator& operator++()
     {
       b.back()++;
-      repi(i, SZI(prod.a) - 1, 0, -1)
+      repi(i, SZ<int>(prod.a) - 1, 0, -1)
       {
         if (b[i] == prod.a[i])
         {

@@ -10,8 +10,8 @@
  */
 
 #define ALL(a) (a).begin(), (a).end()
-#define SZ(x) (ll)((x).size())
-#define SZI(x) (int)((x).size())
+template <class T = ll>
+inline T SZ(cauto &x) { return x.size(); }
 
 template <class F>
 auto gen_vec(const int &n, const F &f)
@@ -34,19 +34,19 @@ auto dvec(cauto (&sz)[d], const T &init)
 template <class T = ll>
 T ctol(const char &c, const string &s)
 {
-  repi(i, SZI(s)) if (s[i] == c) return i;
+  repi(i, SZ<int>(s)) if (s[i] == c) return i;
   return -1;
 }
 template <class T = ll>
 vc<T> stov(const string &s, const char &first)
 {
-  return gen_vec(SZI(s), [&](int i) -> T
+  return gen_vec(SZ<int>(s), [&](int i) -> T
                  { return s[i] - first; });
 }
 template <class T = ll>
 vc<T> stov(const string &s, const string &t)
 {
-  return gen_vec(SZI(s), [&](int i) -> T
+  return gen_vec(SZ<int>(s), [&](int i) -> T
                  { return ctol(s[i], t); });
 }
 
@@ -72,7 +72,7 @@ T vecget(const vc<T> &v, cauto &i, const T &dflt_negative = -INF, const T &dflt_
 {
   if (i < 0)
     return dflt_negative;
-  if (i >= SZI(v))
+  if (i >= SZ<int>(v))
     return dflt_positive;
   return v[i];
 }
