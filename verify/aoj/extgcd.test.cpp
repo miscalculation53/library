@@ -34,8 +34,8 @@ int main()
 {
   cauto CERR = [](cauto &val)
   {
-    #ifndef BOJ
-      cerr << val;
+    #ifdef LOCAL
+    cerr << val;
     #endif
   };
 
