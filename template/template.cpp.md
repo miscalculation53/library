@@ -579,8 +579,8 @@ data:
     \ naive(INPUT);\n      auto ans = solve(INPUT);\n      if (god != ans)\n     \
     \ {\n        dump(INPUT);\n        dump(god, ans);\n        exit(0);\n      }\n\
     \      // --------------------------\n    }\n    dump(\"ok\");\n  );\n  //*/\n\
-    }\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifndef BOJ\n    \
-    \  cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n\
+    }\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n   \
+    \ cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n\
     \  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
     \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
     \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
@@ -603,7 +603,7 @@ data:
     \ auto ans = solve(INPUT);\n      if (god != ans)\n      {\n        dump(INPUT);\n\
     \        dump(god, ans);\n        exit(0);\n      }\n      // --------------------------\n\
     \    }\n    dump(\"ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](cauto\
-    \ &val)\n  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined\
+    \ &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n  #if defined\
     \ FAST_IO and not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n\
     \  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
     \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (not defined NOT_AOJ and\
@@ -632,7 +632,7 @@ data:
   isVerificationFile: false
   path: template/template.cpp
   requiredBy: []
-  timestamp: '2024-12-27 23:57:11+09:00'
+  timestamp: '2024-12-28 02:19:59+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: template/template.cpp

@@ -440,7 +440,7 @@ data:
     \      else\n        PRINT(*it);\n    }\n    else if (c == 4)\n    {\n      auto\
     \ it = leq_max(st, k);\n      if (it == st.end())\n        PRINT(-1);\n      else\n\
     \        PRINT(*it);\n    }\n  }\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto\
-    \ CERR = [](cauto &val)\n  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n\
+    \ CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n    #endif\n\
     \  };\n\n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\\
     n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed\
     \ << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or\
@@ -462,7 +462,7 @@ data:
     \    }\n    else if (c == 4)\n    {\n      auto it = leq_max(st, k);\n      if\
     \ (it == st.end())\n        PRINT(-1);\n      else\n        PRINT(*it);\n    }\n\
     \  }\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n\
-    \    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO\
+    \    #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO\
     \ and not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
     \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
     \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
@@ -486,7 +486,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/predecessor_problem.test.cpp
   requiredBy: []
-  timestamp: '2024-12-27 23:57:11+09:00'
+  timestamp: '2024-12-28 02:19:59+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/predecessor_problem.test.cpp

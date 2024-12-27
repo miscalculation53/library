@@ -575,8 +575,8 @@ data:
     \ = modint998244353;\n// using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
     using mint = modint;\n\nvoid init() {}\n\nvoid main2()\n{\n  mint::set_mod(1000000007);\n\
     \  IN(mint, N);\n  PRINT(N);\n  dump(N);\n}\n\nvoid test() {}\n\nint main()\n\
-    {\n  cauto CERR = [](cauto &val)\n  {\n    #ifndef BOJ\n      cerr << val;\n \
-    \   #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"[FAST_IO]\\\
+    {\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n  \
+    \  #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"[FAST_IO]\\\
     n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed\
     \ << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or\
     \ (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
@@ -592,8 +592,8 @@ data:
     // using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
     using mint = modint;\n\nvoid init() {}\n\nvoid main2()\n{\n  mint::set_mod(1000000007);\n\
     \  IN(mint, N);\n  PRINT(N);\n  dump(N);\n}\n\nvoid test() {}\n\nint main()\n\
-    {\n  cauto CERR = [](cauto &val)\n  {\n    #ifndef BOJ\n      cerr << val;\n \
-    \   #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"[FAST_IO]\\\
+    {\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n  \
+    \  #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"[FAST_IO]\\\
     n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed\
     \ << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or\
     \ (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
@@ -620,7 +620,7 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
   requiredBy: []
-  timestamp: '2024-12-27 23:57:11+09:00'
+  timestamp: '2024-12-28 02:19:59+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/yuki1550_dynamic_modint.test.cpp

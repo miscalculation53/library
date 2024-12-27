@@ -438,9 +438,9 @@ data:
     \   IN(T, t);\n    PRINT(get<0>(t) + get<1>(t));\n  }\n  else if (r == 3)\n  {\n\
     \    ARR(ll, 2, A);\n    PRINT(A.at(0) + A.at(1));\n  }\n  else if (r == 4)\n\
     \  {\n    VEC(ll, 2, A);\n    PRINT(A.at(0) + A.at(1));\n  }\n}\n\nvoid test()\
-    \ {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifndef BOJ\n \
-    \     cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined\
-    \ LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    \ {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n\
+    \    cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n\
+    \  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
     \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
     \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
     \  CERR(\"[AOJ_TESTCASE]\\n\\n\");\n  while (true)\n  {\n    dump(\"new testcase\"\
@@ -458,8 +458,8 @@ data:
     \   PRINT(get<0>(t) + get<1>(t));\n  }\n  else if (r == 3)\n  {\n    ARR(ll, 2,\
     \ A);\n    PRINT(A.at(0) + A.at(1));\n  }\n  else if (r == 4)\n  {\n    VEC(ll,\
     \ 2, A);\n    PRINT(A.at(0) + A.at(1));\n  }\n}\n\nvoid test() {}\n\nint main()\n\
-    {\n  cauto CERR = [](cauto &val)\n  {\n    #ifndef BOJ\n      cerr << val;\n \
-    \   #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"[FAST_IO]\\\
+    {\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n  \
+    \  #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"[FAST_IO]\\\
     n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed\
     \ << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or\
     \ (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
@@ -483,7 +483,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/many_aplusb_tuple.test.cpp
   requiredBy: []
-  timestamp: '2024-12-27 23:57:11+09:00'
+  timestamp: '2024-12-28 02:19:59+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/many_aplusb_tuple.test.cpp

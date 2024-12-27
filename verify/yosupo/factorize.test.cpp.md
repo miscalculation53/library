@@ -709,7 +709,7 @@ data:
     \ {}\n\nvoid main2()\n{\n  LL(N);\n  auto pps = factorize(N);\n  vl ans;\n  fec(pp\
     \ : pps)\n  {\n    rep(_, pp.e) ans.emplace_back(pp.p);\n  }\n  cout << ans.size()\
     \ << \" \";\n  PRINTVEC(ans);\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR\
-    \ = [](cauto &val)\n  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\
+    \ = [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\
     \n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n\
     \  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
     \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (not defined NOT_AOJ and\
@@ -726,7 +726,7 @@ data:
     \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n  auto pps = factorize(N);\n\
     \  vl ans;\n  fec(pp : pps)\n  {\n    rep(_, pp.e) ans.emplace_back(pp.p);\n \
     \ }\n  cout << ans.size() << \" \";\n  PRINTVEC(ans);\n}\n\nvoid test() {}\n\n\
-    int main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifndef BOJ\n      cerr\
+    int main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr\
     \ << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n \
     \ CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
     \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
@@ -758,7 +758,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/factorize.test.cpp
   requiredBy: []
-  timestamp: '2024-12-27 23:57:11+09:00'
+  timestamp: '2024-12-28 02:19:59+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/factorize.test.cpp

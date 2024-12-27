@@ -663,7 +663,7 @@ data:
     \ true;\n}\n#line 15 \"verify/yosupo/primality_test.test.cpp\"\n\nvoid init()\
     \ {}\n\nvoid main2()\n{\n  LL(N);\n  PRINT(is_prime(N) ? \"Yes\" : \"No\");\n\
     }\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n   \
-    \ #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and\
+    \ #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and\
     \ not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
     \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
     \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
@@ -678,7 +678,7 @@ data:
     \n#include \"../../template/template_all.hpp\"\n\n#include \"../../math/prime/primality_test.hpp\"\
     \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n  PRINT(is_prime(N) ? \"Yes\"\
     \ : \"No\");\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n\
-    \  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO\
+    \  {\n    #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO\
     \ and not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
     \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
     \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
@@ -707,7 +707,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/primality_test.test.cpp
   requiredBy: []
-  timestamp: '2024-12-27 23:57:11+09:00'
+  timestamp: '2024-12-28 02:19:59+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/primality_test.test.cpp
