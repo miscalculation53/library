@@ -11,6 +11,7 @@
 "verify/mytest/template_sgn.test.cpp.cpp": "2024-12-21 17:37:41 +0900",
 "verify/mytest/template_vector.test.cpp": "2024-12-21 17:37:41 +0900",
 "verify/yosupo/aplusb.test.cpp": "2024-12-22 00:03:33 +0900",
+"verify/yosupo/associative_array_lower_bound.test.cpp": "2024-12-27 21:40:07 +0900",
 "verify/yosupo/factorize.test.cpp": "2024-12-22 00:03:33 +0900",
 "verify/yosupo/kth_root_integer.test.cpp": "2024-12-22 00:03:33 +0900",
 "verify/yosupo/many_aplusb.test.cpp": "2024-12-22 00:03:33 +0900",
