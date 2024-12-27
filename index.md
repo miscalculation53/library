@@ -1,6 +1,11 @@
 ---
 data:
   libraryCategories:
+  - name: ds
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: ds/coordinate_compression.hpp
+      title: "\u5EA7\u6A19\u5727\u7E2E"
   - name: math
     pages:
     - icon: ':heavy_check_mark:'
@@ -115,6 +120,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/aplusb.test.cpp
       title: verify/yosupo/aplusb.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yosupo/associative_array_lower_bound.test.cpp
+      title: verify/yosupo/associative_array_lower_bound.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/factorize.test.cpp
       title: verify/yosupo/factorize.test.cpp

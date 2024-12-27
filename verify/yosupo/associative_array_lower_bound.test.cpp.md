@@ -2,9 +2,15 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: ds/coordinate_compression.hpp
+    title: "\u5EA7\u6A19\u5727\u7E2E"
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: template/template_all.hpp
+    title: template/template_all.hpp
   - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
@@ -34,141 +40,72 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: ds/coordinate_compression.hpp
-    title: "\u5EA7\u6A19\u5727\u7E2E"
-  - icon: ':heavy_check_mark:'
-    path: math/extgcd.hpp
-    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64.hpp
-    title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint_internal.hpp
-    title: math/modint/modint_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/prime/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/primality_test.hpp
-    title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/prime_power.hpp
-    title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
-  - icon: ':heavy_check_mark:'
-    path: math/quotients.hpp
-    title: "\u5546\u5217\u6319"
-  - icon: ':warning:'
-    path: template/template.cpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/extgcd.test.cpp
-    title: verify/aoj/extgcd.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint.test.cpp
-    title: verify/mytest/modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint64.test.cpp
-    title: verify/mytest/modint64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/aplusb.test.cpp
-    title: verify/yosupo/aplusb.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/associative_array_lower_bound.test.cpp
-    title: verify/yosupo/associative_array_lower_bound.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kth_root_integer.test.cpp
-    title: verify/yosupo/kth_root_integer.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb.test.cpp
-    title: verify/yosupo/many_aplusb.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb_128bit.test.cpp
-    title: verify/yosupo/many_aplusb_128bit.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb_tuple.test.cpp
-    title: verify/yosupo/many_aplusb_tuple.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/quotients.test.cpp
-    title: verify/yosupo/quotients.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-    title: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki1550_static_modint.test.cpp
-    title: verify/yukicoder/yuki1550_static_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki888.test.cpp
-    title: verify/yukicoder/yuki888.test.cpp
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
-  _pathExtension: hpp
+  _pathExtension: cpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    links: []
-  bundledCode: "#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
-    \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
-    \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
-    \nusing ll = long long;\nusing uint = unsigned int;\nusing ull = unsigned long\
-    \ long;\nusing pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll\
-    \ = tuple<ll, ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc\
-    \ = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb =\
-    \ vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\n\
-    using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
-    using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
-    \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
-    using i128 = __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string\
-    \ &s)\n{\n  i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i\
-    \ < (int)s.size(); i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n\
-    \  }\n  else\n  {\n    for (auto &&c : s)\n      res = 10 * res + c - '0';\n \
-    \ }\n  return res;\n}\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n\
-    \  string sign = \"\", res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n\
-    \  while (x > 0)\n  {\n    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(),\
-    \ res.end());\n  return sign + res;\n}\nistream &operator>>(istream &is, i128\
-    \ &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream\
-    \ &operator<<(ostream &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n\
-    }\n#endif\n\n#define cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\
-    \n#line 4 \"template/template_rep.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
-    \u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n */\n\n/**\n\
-    \ * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n*/\n\n#define overload4(_1,\
-    \ _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0, nnnnn = ll(n);\
-    \ i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i = ll(l), rrrrr = ll(r); i <\
-    \ rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd\
-    \ = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__,\
-    \ rep3, rep2, rep1)(__VA_ARGS__)\n#define repi1(i, n) for (int i = 0, nnnnn =\
-    \ int(n); i < nnnnn; i++)\n#define repi2(i, l, r) for (int i = int(l), rrrrr =\
-    \ int(r); i < rrrrr; i++)\n#define repi3(i, l, r, d) for (int i = int(l), rrrrr\
-    \ = int(r), ddddd = int(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define\
-    \ repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\n#define\
-    \ fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
-    #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\
-    \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
-    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
-    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
-    \ docs/template/template_math.md\n */\n\ninline bool chmin(auto &a, cauto &b)\
-    \ { return a > b ? a = b, true : false; }\ninline bool chmax(auto &a, cauto &b)\
-    \ { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll>\ninline constexpr\
-    \ T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b) && (T(a)\
-    \ ^ T(b)) < 0); }\ntemplate <class T = ll>\ninline constexpr T divceil(cauto &a,\
-    \ cauto &b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate\
-    \ <class T = ll>\ninline constexpr T divround(cauto &a, cauto &b) { return divfloor<T>(2\
-    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll>\ninline constexpr T safemod(cauto\
-    \ &a, cauto &b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
-    \ T = ll>\nconstexpr T ipow(auto a, auto b)\n{\n  assert(b >= 0);\n  if (b ==\
-    \ 0) return 1;\n  if (a == 0 || a == 1) return a;\n  if (a == -1) return b & 1\
-    \ ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n  \
-    \    res *= tmp;\n    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n\
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.yosupo.jp/problem/associative_array
+    links:
+    - https://judge.yosupo.jp/problem/associative_array
+  bundledCode: "#line 1 \"verify/yosupo/associative_array_lower_bound.test.cpp\"\n\
+    #define PROBLEM \"https://judge.yosupo.jp/problem/associative_array\"\n\n#define\
+    \ SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define\
+    \ FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#line\
+    \ 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\n\
+    \n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs\
+    \ docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing namespace\
+    \ std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\n\
+    using ll = long long;\nusing uint = unsigned int;\nusing ull = unsigned long long;\n\
+    using pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll,\
+    \ ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc = vc<vc<T>>;\n\
+    template <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb = vc<bool>;\nusing\
+    \ vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll =\
+    \ vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\
+    \ntemplate <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate\
+    \ <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing\
+    \ i128 = __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string &s)\n\
+    {\n  i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size();\
+    \ i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n\
+    \    for (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n\
+    }\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\"\
+    , res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n\
+    \    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n\
+    \  return sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string\
+    \ s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream\
+    \ &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define\
+    \ cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
+    \ docs/template/template_rep.md\n */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n\
+    */\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for\
+    \ (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i =\
+    \ ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i =\
+    \ ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i +=\
+    \ d)\n#define rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n\
+    #define repi1(i, n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i,\
+    \ l, r) for (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i,\
+    \ l, r, d) for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i\
+    \ < rrrrr : i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3,\
+    \ repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n#define\
+    \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
+    #line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
+    #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
+    \n * @docs docs/template/template_math.md\n */\n\ninline bool chmin(auto &a, cauto\
+    \ &b) { return a > b ? a = b, true : false; }\ninline bool chmax(auto &a, cauto\
+    \ &b) { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll>\ninline\
+    \ constexpr T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b)\
+    \ && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll>\ninline constexpr T divceil(cauto\
+    \ &a, cauto &b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\n\
+    template <class T = ll>\ninline constexpr T divround(cauto &a, cauto &b) { return\
+    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll>\ninline constexpr\
+    \ T safemod(cauto &a, cauto &b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
+    template <class T = ll>\nconstexpr T ipow(auto a, auto b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0) return 1;\n  if (a == 0 || a == 1) return a;\n  if (a == -1) return\
+    \ b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
+    \      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n\
     \  }\n  return res;\n}\ntemplate <class T = ll>\nT mul_limited(cauto &a, cauto\
     \ &b, cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n\
     \    return 0;\n  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate\
@@ -468,30 +405,70 @@ data:
     \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
     CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
     \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 13 \"template/template_all.hpp\"\n"
-  code: '#pragma once
-
-
-    #include "template_types.hpp"
-
-    #include "template_rep.hpp"
-
-    #include "template_math.hpp"
-
-    #include "template_vector.hpp"
-
-    #include "template_func.hpp"
-
-    #include "template_algo.hpp"
-
-    #include "template_binsearch.hpp"
-
-    #include "template_bit.hpp"
-
-    #include "template_inout.hpp"
-
-    #include "template_dump.hpp"'
+    #endif\n#line 13 \"verify/yosupo/associative_array_lower_bound.test.cpp\"\n\n\
+    #line 2 \"ds/coordinate_compression.hpp\"\n\n#line 4 \"ds/coordinate_compression.hpp\"\
+    \n\n/**\n * @brief \u5EA7\u6A19\u5727\u7E2E\n * @docs docs/ds/coordinate_compression.md\n\
+    \ */\n\ntemplate <class T>\nstruct CoordinateCompression\n{\n  vc<T> vals;\n \
+    \ CoordinateCompression() {}\n  CoordinateCompression(const vc<T> &vec) : vals(sortuniqued(vec))\
+    \ {}\n\n  // \u6DFB\u5B57 i \u306B\u5BFE\u5FDC\u3059\u308B\u5024\n  T get_val(const\
+    \ int i) const\n  {\n    assert(0 <= i && i < SZ(vals));\n    return vals[i];\n\
+    \  }\n  // \u5024 val \u306B\u5BFE\u5FDC\u3059\u308B\u6DFB\u5B57 (\u306A\u3051\
+    \u308C\u3070 -1)\n  template <class I = ll>\n  I get_id(const T &val) const\n\
+    \  {\n    auto it = lower_bound(ALL(vals), val);\n    if (it == vals.end() ||\
+    \ *it != val)\n      return -1;\n    return it - vals.begin();\n  }\n\n  template\
+    \ <class I = ll>\n  I size() const { return vals.size(); }\n};\n\n// \u5EA7\u6A19\
+    \u5727\u7E2E\u3057\u305F\u5F8C\u306E\u914D\u5217\u3092\u8FD4\u3059\ntemplate <class\
+    \ T, class I = ll>\nvc<I> compressed(const vc<T> &vec)\n{\n  CoordinateCompression\
+    \ cc(vec);\n  vc<I> res(vec.size());\n  repi(i, vec.size()) res[i] = cc.get_id(vec[i]);\n\
+    \  return res;\n}\n// \u540C\u3058\u5024\u306B\u306F\u540C\u3058 id \u3092\u632F\
+    \u308B\u304C\u3001id \u306F\u914D\u5217\u5185\u3067\u5148\u306B\u73FE\u308C\u308B\
+    \u3082\u306E\u304B\u3089\u5148\u306B\u632F\u308B\ntemplate <class T, class I =\
+    \ ll>\nvc<I> compressed_unordered(const vc<T> &vec)\n{\n  auto cv = compressed(vec);\n\
+    \  vc<int> id(vec.size(), -1);\n  vc<I> res(vec.size());\n  int j = 0;\n  repi(i,\
+    \ vec.size())\n  {\n    int &tmp = id[cv[i]];\n    if (tmp == -1)\n      tmp =\
+    \ j++;\n    res[i] = tmp;\n  }\n  return res;\n}\n#line 15 \"verify/yosupo/associative_array_lower_bound.test.cpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(Q);\n  vc<tlll> queries(Q);\n  vc<ll>\
+    \ keys;\n  rep(i, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(k, v);\n\
+    \      queries.at(i) = {t, k, v};\n      keys.push_back(k);\n    }\n    else if\
+    \ (t == 1)\n    {\n      LL(k);\n      queries.at(i) = {t, k, -1};\n    }\n  }\n\
+    \  CoordinateCompression cc(keys);\n  vc<ll> vals(cc.size());\n  fec([t, k, v]\
+    \ : queries)\n  {\n    if (t == 0)\n    {\n      ll i = cc.get_id(k);\n      vals.at(i)\
+    \ = v;\n    }\n    else if (t == 1)\n    {\n      ll i = cc.get_id(k);\n     \
+    \ if (i == -1)\n        PRINT(0);\n      else\n        PRINT(vals.at(i));\n  \
+    \  }\n  }\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n\
+    \  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO\
+    \ and not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
+    \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
+    \  CERR(\"[AOJ_TESTCASE]\\n\\n\");\n  while (true)\n  {\n    dump(\"new testcase\"\
+    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"[SINGLE_TESTCASE]\\\
+    n\\n\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"[MULTI_TESTCASE]\\\
+    n\\n\");\n  int T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\"\
+    );\n    main2();\n  }\n  #endif\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/associative_array\"\n\n\
+    #define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n\
+    #define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\
+    \n#include \"../../template/template_all.hpp\"\n\n#include \"../../ds/coordinate_compression.hpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(Q);\n  vc<tlll> queries(Q);\n  vc<ll>\
+    \ keys;\n  rep(i, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(k, v);\n\
+    \      queries.at(i) = {t, k, v};\n      keys.push_back(k);\n    }\n    else if\
+    \ (t == 1)\n    {\n      LL(k);\n      queries.at(i) = {t, k, -1};\n    }\n  }\n\
+    \  CoordinateCompression cc(keys);\n  vc<ll> vals(cc.size());\n  fec([t, k, v]\
+    \ : queries)\n  {\n    if (t == 0)\n    {\n      ll i = cc.get_id(k);\n      vals.at(i)\
+    \ = v;\n    }\n    else if (t == 1)\n    {\n      ll i = cc.get_id(k);\n     \
+    \ if (i == -1)\n        PRINT(0);\n      else\n        PRINT(vals.at(i));\n  \
+    \  }\n  }\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n\
+    \  {\n    #ifndef BOJ\n      cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO\
+    \ and not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
+    \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
+    \  CERR(\"[AOJ_TESTCASE]\\n\\n\");\n  while (true)\n  {\n    dump(\"new testcase\"\
+    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"[SINGLE_TESTCASE]\\\
+    n\\n\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"[MULTI_TESTCASE]\\\
+    n\\n\");\n  int T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\"\
+    );\n    main2();\n  }\n  #endif\n}"
   dependsOn:
+  - template/template_all.hpp
   - template/template_types.hpp
   - template/template_rep.hpp
   - template/template_math.hpp
@@ -502,41 +479,17 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
-  isVerificationFile: false
-  path: template/template_all.hpp
-  requiredBy:
-  - math/modint/modint_internal.hpp
-  - math/modint/modint.hpp
-  - math/modint/modint64.hpp
-  - math/prime/factorize.hpp
-  - math/prime/primality_test.hpp
-  - math/prime/prime_power.hpp
-  - math/quotients.hpp
-  - math/extgcd.hpp
   - ds/coordinate_compression.hpp
-  - template/template.cpp
-  timestamp: '2024-12-22 00:03:33+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/yosupo/many_aplusb_128bit.test.cpp
-  - verify/yosupo/kth_root_integer.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/quotients.test.cpp
-  - verify/yosupo/many_aplusb_tuple.test.cpp
-  - verify/yosupo/associative_array_lower_bound.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/aplusb.test.cpp
-  - verify/yosupo/many_aplusb.test.cpp
-  - verify/mytest/modint.test.cpp
-  - verify/mytest/modint64.test.cpp
-  - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/yuki1550_static_modint.test.cpp
-  - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-  - verify/yukicoder/yuki888.test.cpp
-documentation_of: template/template_all.hpp
+  isVerificationFile: true
+  path: verify/yosupo/associative_array_lower_bound.test.cpp
+  requiredBy: []
+  timestamp: '2024-12-27 21:40:07+09:00'
+  verificationStatus: TEST_ACCEPTED
+  verifiedWith: []
+documentation_of: verify/yosupo/associative_array_lower_bound.test.cpp
 layout: document
 redirect_from:
-- /library/template/template_all.hpp
-- /library/template/template_all.hpp.html
-title: template/template_all.hpp
+- /verify/verify/yosupo/associative_array_lower_bound.test.cpp
+- /verify/verify/yosupo/associative_array_lower_bound.test.cpp.html
+title: verify/yosupo/associative_array_lower_bound.test.cpp
 ---

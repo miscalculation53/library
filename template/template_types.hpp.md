@@ -3,6 +3,9 @@ data:
   _extendedDependsOn: []
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
+    path: ds/coordinate_compression.hpp
+    title: "\u5EA7\u6A19\u5727\u7E2E"
+  - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - icon: ':heavy_check_mark:'
@@ -100,6 +103,9 @@ data:
     path: verify/yosupo/aplusb.test.cpp
     title: verify/yosupo/aplusb.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/associative_array_lower_bound.test.cpp
+    title: verify/yosupo/associative_array_lower_bound.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
   - icon: ':heavy_check_mark:'
@@ -193,6 +199,7 @@ data:
   - math/prime/prime_power.hpp
   - math/quotients.hpp
   - math/extgcd.hpp
+  - ds/coordinate_compression.hpp
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
@@ -212,6 +219,7 @@ data:
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/quotients.test.cpp
   - verify/yosupo/many_aplusb_tuple.test.cpp
+  - verify/yosupo/associative_array_lower_bound.test.cpp
   - verify/yosupo/primality_test.test.cpp
   - verify/yosupo/aplusb.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
