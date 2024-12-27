@@ -82,6 +82,9 @@ data:
     path: verify/yosupo/many_aplusb_tuple.test.cpp
     title: verify/yosupo/many_aplusb_tuple.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/predecessor_problem.test.cpp
+    title: verify/yosupo/predecessor_problem.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
   - icon: ':heavy_check_mark:'
@@ -189,94 +192,149 @@ data:
     \ s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n\
     }\n#line 6 \"template/template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n\
-    \ */\n\n#define ALL(a) (a).begin(), (a).end()\n#define SZ(x) (ll)((x).size())\n\
-    #define SZI(x) (int)((x).size())\n\ntemplate <class F>\nauto gen_vec(const int\
-    \ &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n\
-    \  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    \ */\n\n#define ALL(a) (a).begin(), (a).end()\ntemplate <class T = ll>\ninline\
+    \ T SZ(cauto &x) { return x.size(); }\n\ntemplate <class F>\nauto gen_vec(const\
+    \ int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] =\
+    \ f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
     template <class T, size_t d, size_t i = 0>\nauto dvec(cauto (&sz)[d], const T\
     \ &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i + 1>(sz,\
     \ init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT ctol(const\
-    \ char &c, const string &s)\n{\n  repi(i, SZI(s)) if (s[i] == c) return i;\n \
-    \ return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string &s, const char\
-    \ &first)\n{\n  return gen_vec(SZI(s), [&](int i) -> T\n                 { return\
-    \ s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T> stov(const string &s, const\
-    \ string &t)\n{\n  return gen_vec(SZI(s), [&](int i) -> T\n                 {\
-    \ return ctol(s[i], t); });\n}\n\ntemplate <class T>\nvc<T> concat(const vvc<T>\
-    \ &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n    res.insert(res.end(), ALL(v));\n\
-    \  return res;\n}\ntemplate <class T>\nvc<T> concat(const vc<T> &v) { return v;\
-    \ }\ntemplate <class T, class... Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n\
-    {\n  (v.insert(v.end(), ALL(vs)), ...);\n  return v;\n}\n\ntemplate <class T>\n\
-    T vecget(const vc<T> &v, cauto &i, const T &dflt_negative = -INF, const T &dflt_positive\
-    \ = INF)\n{\n  if (i < 0)\n    return dflt_negative;\n  if (i >= SZI(v))\n   \
-    \ return dflt_positive;\n  return v[i];\n}\n#line 6 \"template/template_binsearch.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\
-    \u7D22\uFF09\n * @docs docs/template/template_binsearch.md\n */\n\n#if __cplusplus\
-    \ < 202002L\n// val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\
-    \u6E80\u306E\u5024\u306E\u500B\u6570)\ntemplate <class T = ll, class V, class...\
-    \ Args>\ninline T LB(const V &v, Args&&... args)\n{ return lower_bound(ALL(v),\
-    \ forward<Args>(args)...) - v.begin(); }\n// val < v[i] \u3068\u306A\u308B\u6700\
-    \u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570)\ntemplate <class\
+    \ char &c, const string &s)\n{\n  repi(i, SZ<int>(s)) if (s[i] == c) return i;\n\
+    \  return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string &s, const char\
+    \ &first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n                 {\
+    \ return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T> stov(const string\
+    \ &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n    \
+    \             { return ctol(s[i], t); });\n}\n\ntemplate <class T>\nvc<T> concat(const\
+    \ vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n    res.insert(res.end(),\
+    \ ALL(v));\n  return res;\n}\ntemplate <class T>\nvc<T> concat(const vc<T> &v)\
+    \ { return v; }\ntemplate <class T, class... Ts>\nvc<T> concat(vc<T> v, const\
+    \ vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)), ...);\n  return v;\n}\n\n\
+    template <class T>\nT vecget(const vc<T> &v, cauto &i, const T &dflt_negative\
+    \ = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n    return dflt_negative;\n\
+    \  if (i >= SZ<int>(v))\n    return dflt_positive;\n  return v[i];\n}\n#line 6\
+    \ \"template/template_binsearch.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09\n * @docs docs/template/template_binsearch.md\n\
+    \ */\n\n#if __cplusplus < 202002L\n// val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\
+    \u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570: comp\n\
+    template <class T = ll, class V, class... Args>\ninline T LB(const V &v, Args&&...\
+    \ args)\n{ return lower_bound(ALL(v), forward<Args>(args)...) - v.begin(); }\n\
+    // val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\
+    \u306E\u500B\u6570)\n// \u5F15\u6570: comp\ntemplate <class T = ll, class V, class...\
+    \ Args>\ninline T UB(const V &v, Args&&... args)\n{ return upper_bound(ALL(v),\
+    \ forward<Args>(args)...) - v.begin(); }\n#else\n// val <= v[i] \u3068\u306A\u308B\
+    \u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\
+    \u6570: comp, proj\ntemplate <class T = ll, class V, class... Args>\ninline T\
+    \ LB(const V &v, Args&&... args)\n{ return ranges::lower_bound(v, forward<Args>(args)...)\
+    \ - v.begin(); }\n// val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\
+    \u4E0B\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class\
     \ T = ll, class V, class... Args>\ninline T UB(const V &v, Args&&... args)\n{\
-    \ return upper_bound(ALL(v), forward<Args>(args)...) - v.begin(); }\n#else\n//\
-    \ val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\
-    \u306E\u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class T = ll, class\
-    \ V, class... Args>\ninline T LB(const V &v, Args&&... args)\n{ return ranges::lower_bound(v,\
-    \ forward<Args>(args)...) - v.begin(); }\n// val < v[i] \u3068\u306A\u308B\u6700\
-    \u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570\
-    : comp, proj\ntemplate <class T = ll, class V, class... Args>\ninline T UB(const\
-    \ V &v, Args&&... args)\n{ return ranges::upper_bound(v, forward<Args>(args)...)\
-    \ - v.begin(); }\n#endif\n\ntemplate <class T = ll>\npair<T, T> binsearch(cauto\
-    \ &judge, cauto &init_ok, cauto &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n\
-    \  assert(judge(ok));\n  assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok\
-    \ != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok\
-    \ : ng) = mid;\n  }\n  return make_pair(ok, ng);\n}\ntemplate <class T = ld>\n\
-    T binsearch_real(cauto &judge, cauto &init_ok, cauto &init_ng, const int &iteration_count\
-    \ = 100)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
-    \  repi(_, iteration_count)\n  {\n    T mid = (ok + ng) / 2;\n    (judge(mid)\
-    \ ? ok : ng) = mid;\n  }\n  return ok;\n}\ntemplate <class T = ll>\npair<T, T>\
-    \ expsearch(cauto &judge, cauto &init_val, const bool &positive = true)\n{\n \
-    \ T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val + (positive\
-    \ ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng, ng = init_val\
-    \ + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng = init_val, ok\
-    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok); i++)\n  \
-    \    ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  while\
-    \ (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n\
-    \    (judge(mid) ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n}\n"
+    \ return ranges::upper_bound(v, forward<Args>(args)...) - v.begin(); }\n#endif\n\
+    \ntemplate <class T>\nstruct is_random_access_iterator\n{\n  static constexpr\
+    \ bool value = is_same_v<\n    typename iterator_traits<T>::iterator_category,\n\
+    \    random_access_iterator_tag\n  >;\n};\ntemplate <class T>\nconstexpr bool\
+    \ is_random_access_iterator_v = is_random_access_iterator<T>::value;\n\ntemplate\
+    \ <class T = ll, class V, class... Args>\ninline auto lt_max(const V &v, Args&&...\
+    \ args)\n{\n  if constexpr (is_random_access_iterator_v<typename V::iterator>)\n\
+    \    return LB<T>(v, forward<Args>(args)...) - 1;\n  else\n  {\n    auto it =\
+    \ v.lower_bound(forward<Args>(args)...);\n    if (it == v.begin())\n      return\
+    \ v.end();\n    else\n      return prev(it);\n  }\n}\ntemplate <class T = ll,\
+    \ class V, class... Args>\ninline auto leq_max(const V &v, Args&&... args)\n{\n\
+    \  if constexpr (is_random_access_iterator_v<typename V::iterator>)\n    return\
+    \ UB<T>(v, forward<Args>(args)...) - 1;\n  else\n  {\n    auto it = v.upper_bound(forward<Args>(args)...);\n\
+    \    if (it == v.begin())\n      return v.end();\n    else\n      return prev(it);\n\
+    \  }\n}\ntemplate <class T = ll, class V, class... Args>\ninline auto gt_min(const\
+    \ V &v, Args&&... args)\n{\n  if constexpr (is_random_access_iterator_v<typename\
+    \ V::iterator>)\n    return UB<T>(v, forward<Args>(args)...);\n  else\n    return\
+    \ v.upper_bound(forward<Args>(args)...);\n}\ntemplate <class T = ll, class V,\
+    \ class... Args>\ninline auto geq_min(const V &v, Args&&... args)\n{\n  if constexpr\
+    \ (is_random_access_iterator_v<typename V::iterator>)\n    return LB<T>(v, forward<Args>(args)...);\n\
+    \  else\n    return v.lower_bound(forward<Args>(args)...);\n}\n\ntemplate <class\
+    \ T = ll, class V, class... Args>\ninline T lt_cnt(const V &v, Args&&... args)\n\
+    { return LB<T>(v, forward<Args>(args)...); }\ntemplate <class T = ll, class V,\
+    \ class... Args>\ninline T leq_cnt(const V &v, Args&&... args)\n{ return UB<T>(v,\
+    \ forward<Args>(args)...); }\ntemplate <class T = ll, class V, class... Args>\n\
+    inline T gt_cnt(const V &v, Args&&... args)\n{ return SZ<T>(v) - UB<T>(v, forward<Args>(args)...);\
+    \ }\ntemplate <class T = ll, class V, class... Args>\ninline T geq_cnt(const V\
+    \ &v, Args&&... args)\n{ return SZ<T>(v) - LB<T>(v, forward<Args>(args)...); }\n\
+    \ntemplate <class T = ll>\npair<T, T> binsearch(cauto &judge, cauto &init_ok,\
+    \ cauto &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
+    \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
+    \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n\
+    }\ntemplate <class T = ld>\nT binsearch_real(cauto &judge, cauto &init_ok, cauto\
+    \ &init_ng, const int &iteration_count = 100)\n{\n  T ok(init_ok), ng(init_ng);\n\
+    \  assert(judge(ok));\n  assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n\
+    \    T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return\
+    \ ok;\n}\ntemplate <class T = ll>\npair<T, T> expsearch(cauto &judge, cauto &init_val,\
+    \ const bool &positive = true)\n{\n  T ok, ng;\n  if (judge(init_val))\n  {\n\
+    \    ok = init_val, ng = init_val + (positive ? 1 : -1);\n    for (int i = 1;\
+    \ judge(ng); i++)\n      ok = ng, ng = init_val + (positive ? 1 : -1) * (T(1)\
+    \ << i);\n  }\n  else\n  {\n    ng = init_val, ok = init_val + (positive ? 1 :\
+    \ -1);\n    for (int i = 1; !judge(ok); i++)\n      ng = ok, ok = init_val + (positive\
+    \ ? 1 : -1) * (T(1) << i);\n  }\n  while (ok - ng != 1 && ng - ok != 1)\n  {\n\
+    \    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) = mid;\n\
+    \  }\n  return make_pair(ok, ng);\n}\n"
   code: "#pragma once\n\n#include \"template_types.hpp\"\n#include \"template_rep.hpp\"\
     \n#include \"template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
     \u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09\n * @docs docs/template/template_binsearch.md\n\
     \ */\n\n#if __cplusplus < 202002L\n// val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\
-    \u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\ntemplate <class T =\
-    \ ll, class V, class... Args>\ninline T LB(const V &v, Args&&... args)\n{ return\
-    \ lower_bound(ALL(v), forward<Args>(args)...) - v.begin(); }\n// val < v[i] \u3068\
-    \u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570\
-    )\ntemplate <class T = ll, class V, class... Args>\ninline T UB(const V &v, Args&&...\
-    \ args)\n{ return upper_bound(ALL(v), forward<Args>(args)...) - v.begin(); }\n\
-    #else\n// val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\
-    \u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class\
-    \ T = ll, class V, class... Args>\ninline T LB(const V &v, Args&&... args)\n{\
-    \ return ranges::lower_bound(v, forward<Args>(args)...) - v.begin(); }\n// val\
-    \ < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\
-    \u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class T = ll, class V, class...\
-    \ Args>\ninline T UB(const V &v, Args&&... args)\n{ return ranges::upper_bound(v,\
-    \ forward<Args>(args)...) - v.begin(); }\n#endif\n\ntemplate <class T = ll>\n\
-    pair<T, T> binsearch(cauto &judge, cauto &init_ok, cauto &init_ng)\n{\n  T ok(init_ok),\
-    \ ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n  while (ok - ng\
-    \ != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid)\
-    \ ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n}\ntemplate <class T =\
-    \ ld>\nT binsearch_real(cauto &judge, cauto &init_ok, cauto &init_ng, const int\
-    \ &iteration_count = 100)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n\
-    \  assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n    T mid = (ok + ng)\
-    \ / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n}\ntemplate <class\
-    \ T = ll>\npair<T, T> expsearch(cauto &judge, cauto &init_val, const bool &positive\
-    \ = true)\n{\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng\
-    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n   \
-    \   ok = ng, ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n\
-    \  {\n    ng = init_val, ok = init_val + (positive ? 1 : -1);\n    for (int i\
-    \ = 1; !judge(ok); i++)\n      ng = ok, ok = init_val + (positive ? 1 : -1) *\
-    \ (T(1) << i);\n  }\n  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid =\
-    \ (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return\
-    \ make_pair(ok, ng);\n}"
+    \u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570: comp\n\
+    template <class T = ll, class V, class... Args>\ninline T LB(const V &v, Args&&...\
+    \ args)\n{ return lower_bound(ALL(v), forward<Args>(args)...) - v.begin(); }\n\
+    // val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\
+    \u306E\u500B\u6570)\n// \u5F15\u6570: comp\ntemplate <class T = ll, class V, class...\
+    \ Args>\ninline T UB(const V &v, Args&&... args)\n{ return upper_bound(ALL(v),\
+    \ forward<Args>(args)...) - v.begin(); }\n#else\n// val <= v[i] \u3068\u306A\u308B\
+    \u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\
+    \u6570: comp, proj\ntemplate <class T = ll, class V, class... Args>\ninline T\
+    \ LB(const V &v, Args&&... args)\n{ return ranges::lower_bound(v, forward<Args>(args)...)\
+    \ - v.begin(); }\n// val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\
+    \u4E0B\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class\
+    \ T = ll, class V, class... Args>\ninline T UB(const V &v, Args&&... args)\n{\
+    \ return ranges::upper_bound(v, forward<Args>(args)...) - v.begin(); }\n#endif\n\
+    \ntemplate <class T>\nstruct is_random_access_iterator\n{\n  static constexpr\
+    \ bool value = is_same_v<\n    typename iterator_traits<T>::iterator_category,\n\
+    \    random_access_iterator_tag\n  >;\n};\ntemplate <class T>\nconstexpr bool\
+    \ is_random_access_iterator_v = is_random_access_iterator<T>::value;\n\ntemplate\
+    \ <class T = ll, class V, class... Args>\ninline auto lt_max(const V &v, Args&&...\
+    \ args)\n{\n  if constexpr (is_random_access_iterator_v<typename V::iterator>)\n\
+    \    return LB<T>(v, forward<Args>(args)...) - 1;\n  else\n  {\n    auto it =\
+    \ v.lower_bound(forward<Args>(args)...);\n    if (it == v.begin())\n      return\
+    \ v.end();\n    else\n      return prev(it);\n  }\n}\ntemplate <class T = ll,\
+    \ class V, class... Args>\ninline auto leq_max(const V &v, Args&&... args)\n{\n\
+    \  if constexpr (is_random_access_iterator_v<typename V::iterator>)\n    return\
+    \ UB<T>(v, forward<Args>(args)...) - 1;\n  else\n  {\n    auto it = v.upper_bound(forward<Args>(args)...);\n\
+    \    if (it == v.begin())\n      return v.end();\n    else\n      return prev(it);\n\
+    \  }\n}\ntemplate <class T = ll, class V, class... Args>\ninline auto gt_min(const\
+    \ V &v, Args&&... args)\n{\n  if constexpr (is_random_access_iterator_v<typename\
+    \ V::iterator>)\n    return UB<T>(v, forward<Args>(args)...);\n  else\n    return\
+    \ v.upper_bound(forward<Args>(args)...);\n}\ntemplate <class T = ll, class V,\
+    \ class... Args>\ninline auto geq_min(const V &v, Args&&... args)\n{\n  if constexpr\
+    \ (is_random_access_iterator_v<typename V::iterator>)\n    return LB<T>(v, forward<Args>(args)...);\n\
+    \  else\n    return v.lower_bound(forward<Args>(args)...);\n}\n\ntemplate <class\
+    \ T = ll, class V, class... Args>\ninline T lt_cnt(const V &v, Args&&... args)\n\
+    { return LB<T>(v, forward<Args>(args)...); }\ntemplate <class T = ll, class V,\
+    \ class... Args>\ninline T leq_cnt(const V &v, Args&&... args)\n{ return UB<T>(v,\
+    \ forward<Args>(args)...); }\ntemplate <class T = ll, class V, class... Args>\n\
+    inline T gt_cnt(const V &v, Args&&... args)\n{ return SZ<T>(v) - UB<T>(v, forward<Args>(args)...);\
+    \ }\ntemplate <class T = ll, class V, class... Args>\ninline T geq_cnt(const V\
+    \ &v, Args&&... args)\n{ return SZ<T>(v) - LB<T>(v, forward<Args>(args)...); }\n\
+    \ntemplate <class T = ll>\npair<T, T> binsearch(cauto &judge, cauto &init_ok,\
+    \ cauto &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
+    \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
+    \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n\
+    }\ntemplate <class T = ld>\nT binsearch_real(cauto &judge, cauto &init_ok, cauto\
+    \ &init_ng, const int &iteration_count = 100)\n{\n  T ok(init_ok), ng(init_ng);\n\
+    \  assert(judge(ok));\n  assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n\
+    \    T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return\
+    \ ok;\n}\ntemplate <class T = ll>\npair<T, T> expsearch(cauto &judge, cauto &init_val,\
+    \ const bool &positive = true)\n{\n  T ok, ng;\n  if (judge(init_val))\n  {\n\
+    \    ok = init_val, ng = init_val + (positive ? 1 : -1);\n    for (int i = 1;\
+    \ judge(ng); i++)\n      ok = ng, ng = init_val + (positive ? 1 : -1) * (T(1)\
+    \ << i);\n  }\n  else\n  {\n    ng = init_val, ok = init_val + (positive ? 1 :\
+    \ -1);\n    for (int i = 1; !judge(ok); i++)\n      ng = ok, ok = init_val + (positive\
+    \ ? 1 : -1) * (T(1) << i);\n  }\n  while (ok - ng != 1 && ng - ok != 1)\n  {\n\
+    \    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) = mid;\n\
+    \  }\n  return make_pair(ok, ng);\n}"
   dependsOn:
   - template/template_types.hpp
   - template/template_rep.hpp
@@ -296,10 +354,11 @@ data:
   - ds/coordinate_compression.hpp
   - template/template.cpp
   - template/template_all.hpp
-  timestamp: '2024-12-21 17:37:41+09:00'
+  timestamp: '2024-12-27 23:57:11+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/many_aplusb_128bit.test.cpp
+  - verify/yosupo/predecessor_problem.test.cpp
   - verify/yosupo/kth_root_integer.test.cpp
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/quotients.test.cpp
@@ -327,8 +386,8 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09
 ### LB, UB
 
 ```cpp
-(1) U=ll LB(vc<T> v, T val, ...)
-(2) U=ll UB(vc<T> v, T val, ...)
+(1) U=ll LB(V v, T val, ...)
+(2) U=ll UB(V v, T val, ...)
 ```
 
 `ranges::lower_bound` や `ranges::upper_bound` で返るイテレータの `begin` からの距離を整数で返す。
@@ -347,11 +406,57 @@ $v$ がソート済みで、後ろの引数がデフォルトの場合、
 
 ##### 制約
 
-`std::lower_bound`, `std::upper_bound` に準じる。
+- `V` のイテレータはランダムアクセスイテレータ
+  - OK 例：vector など
+  - NG 例：set など
+- $v$ はソート済みであることを想定（実際はもう少し緩い）
 
 ##### 計算量
 
 - $O(\log \lvert v \rvert)$
+
+### lt, leq, gt, geq
+
+```cpp
+(1) lt_max(V v, T val, ...)
+(2) leq_max(V v, T val, ...)
+(3) gt_max(V v, T val, ...)
+(4) geq_max(V v, T val, ...)
+(5) U=ll lt_cnt(V v, T val, ...)
+(6) U=ll leq_cnt(V v, T val, ...)
+(7) U=ll gt_cnt(V v, T val, ...)
+(8) U=ll geq_cnt(V v, T val, ...)
+```
+
+- (1), (2), (3), (4)：次の条件を満たす $v$ の要素を探し、`V` が vector など（ランダムアクセスイテレータ）なら添字を、set など（ランダムアクセス不可で、メンバ関数に `lower_bound` や `upper_bound` を持つ）ならイテレータを返す。前者のときは $v$ がソート済みであることを想定。
+  - (1)：$\mathrm{val}$ 未満で最大
+  - (2)：$\mathrm{val}$ 以下で最大
+  - (3)：$\mathrm{val}$ 超過で最小
+  - (4)：$\mathrm{val}$ 以上で最小
+  
+  そのような要素が存在しない場合は、
+  - 添字が返るときは、配列が無限に伸びている（負方向には $-\infty$ で正方向には $\infty$）とみなして計算し、返す（つまり、$-1$ か $n$ が返る）。
+  - イテレータが返るときは、前か後ろかにかかわらず `end()` を返す。
+
+- (5), (6), (7), (8)：次の条件を満たす $v$ の要素の個数を返す。ソート済みであることを想定。
+  - (5)：$\mathrm{val}$ 未満
+  - (6)：$\mathrm{val}$ 以下
+  - (7)：$\mathrm{val}$ 超過
+  - (8)：$\mathrm{val}$ 以上
+
+##### 制約
+
+- (1), (2), (3), (4)：`V` は次のいずれかを満たす。
+  - `V` のイテレータはランダムアクセスイテレータ
+  - `V` はメンバ関数に `lower_bound`, `upper_bound` を持つ
+- (5), (6), (7), (8)：`V` のイテレータはランダムアクセスイテレータ
+- (1), (2), (3), (4) の前者および (5), (6), (7), (8) では、$v$ がソート済みであることを想定（実際はもう少し緩い）
+
+
+##### 計算量
+
+- $O(\log \lvert v \rvert)$
+
 
 ### binsearch
 

@@ -139,6 +139,9 @@ data:
       path: verify/yosupo/many_aplusb_tuple.test.cpp
       title: verify/yosupo/many_aplusb_tuple.test.cpp
     - icon: ':heavy_check_mark:'
+      path: verify/yosupo/predecessor_problem.test.cpp
+      title: verify/yosupo/predecessor_problem.test.cpp
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/primality_test.test.cpp
       title: verify/yosupo/primality_test.test.cpp
     - icon: ':heavy_check_mark:'

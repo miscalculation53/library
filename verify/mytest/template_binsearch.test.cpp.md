@@ -116,93 +116,154 @@ data:
     \ s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n\
     }\n#line 6 \"template/template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n\
-    \ */\n\n#define ALL(a) (a).begin(), (a).end()\n#define SZ(x) (ll)((x).size())\n\
-    #define SZI(x) (int)((x).size())\n\ntemplate <class F>\nauto gen_vec(const int\
-    \ &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n\
-    \  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    \ */\n\n#define ALL(a) (a).begin(), (a).end()\ntemplate <class T = ll>\ninline\
+    \ T SZ(cauto &x) { return x.size(); }\n\ntemplate <class F>\nauto gen_vec(const\
+    \ int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] =\
+    \ f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
     template <class T, size_t d, size_t i = 0>\nauto dvec(cauto (&sz)[d], const T\
     \ &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i + 1>(sz,\
     \ init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT ctol(const\
-    \ char &c, const string &s)\n{\n  repi(i, SZI(s)) if (s[i] == c) return i;\n \
-    \ return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string &s, const char\
-    \ &first)\n{\n  return gen_vec(SZI(s), [&](int i) -> T\n                 { return\
-    \ s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T> stov(const string &s, const\
-    \ string &t)\n{\n  return gen_vec(SZI(s), [&](int i) -> T\n                 {\
-    \ return ctol(s[i], t); });\n}\n\ntemplate <class T>\nvc<T> concat(const vvc<T>\
-    \ &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n    res.insert(res.end(), ALL(v));\n\
-    \  return res;\n}\ntemplate <class T>\nvc<T> concat(const vc<T> &v) { return v;\
-    \ }\ntemplate <class T, class... Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n\
-    {\n  (v.insert(v.end(), ALL(vs)), ...);\n  return v;\n}\n\ntemplate <class T>\n\
-    T vecget(const vc<T> &v, cauto &i, const T &dflt_negative = -INF, const T &dflt_positive\
-    \ = INF)\n{\n  if (i < 0)\n    return dflt_negative;\n  if (i >= SZI(v))\n   \
-    \ return dflt_positive;\n  return v[i];\n}\n#line 6 \"template/template_binsearch.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\
-    \u7D22\uFF09\n * @docs docs/template/template_binsearch.md\n */\n\n#if __cplusplus\
-    \ < 202002L\n// val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\
-    \u6E80\u306E\u5024\u306E\u500B\u6570)\ntemplate <class T = ll, class V, class...\
-    \ Args>\ninline T LB(const V &v, Args&&... args)\n{ return lower_bound(ALL(v),\
-    \ forward<Args>(args)...) - v.begin(); }\n// val < v[i] \u3068\u306A\u308B\u6700\
-    \u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570)\ntemplate <class\
+    \ char &c, const string &s)\n{\n  repi(i, SZ<int>(s)) if (s[i] == c) return i;\n\
+    \  return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string &s, const char\
+    \ &first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n                 {\
+    \ return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T> stov(const string\
+    \ &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n    \
+    \             { return ctol(s[i], t); });\n}\n\ntemplate <class T>\nvc<T> concat(const\
+    \ vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n    res.insert(res.end(),\
+    \ ALL(v));\n  return res;\n}\ntemplate <class T>\nvc<T> concat(const vc<T> &v)\
+    \ { return v; }\ntemplate <class T, class... Ts>\nvc<T> concat(vc<T> v, const\
+    \ vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)), ...);\n  return v;\n}\n\n\
+    template <class T>\nT vecget(const vc<T> &v, cauto &i, const T &dflt_negative\
+    \ = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n    return dflt_negative;\n\
+    \  if (i >= SZ<int>(v))\n    return dflt_positive;\n  return v[i];\n}\n#line 6\
+    \ \"template/template_binsearch.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09\n * @docs docs/template/template_binsearch.md\n\
+    \ */\n\n#if __cplusplus < 202002L\n// val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\
+    \u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570: comp\n\
+    template <class T = ll, class V, class... Args>\ninline T LB(const V &v, Args&&...\
+    \ args)\n{ return lower_bound(ALL(v), forward<Args>(args)...) - v.begin(); }\n\
+    // val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\
+    \u306E\u500B\u6570)\n// \u5F15\u6570: comp\ntemplate <class T = ll, class V, class...\
+    \ Args>\ninline T UB(const V &v, Args&&... args)\n{ return upper_bound(ALL(v),\
+    \ forward<Args>(args)...) - v.begin(); }\n#else\n// val <= v[i] \u3068\u306A\u308B\
+    \u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\
+    \u6570: comp, proj\ntemplate <class T = ll, class V, class... Args>\ninline T\
+    \ LB(const V &v, Args&&... args)\n{ return ranges::lower_bound(v, forward<Args>(args)...)\
+    \ - v.begin(); }\n// val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\
+    \u4E0B\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class\
     \ T = ll, class V, class... Args>\ninline T UB(const V &v, Args&&... args)\n{\
-    \ return upper_bound(ALL(v), forward<Args>(args)...) - v.begin(); }\n#else\n//\
-    \ val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\
-    \u306E\u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class T = ll, class\
-    \ V, class... Args>\ninline T LB(const V &v, Args&&... args)\n{ return ranges::lower_bound(v,\
-    \ forward<Args>(args)...) - v.begin(); }\n// val < v[i] \u3068\u306A\u308B\u6700\
-    \u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570\
-    : comp, proj\ntemplate <class T = ll, class V, class... Args>\ninline T UB(const\
-    \ V &v, Args&&... args)\n{ return ranges::upper_bound(v, forward<Args>(args)...)\
-    \ - v.begin(); }\n#endif\n\ntemplate <class T = ll>\npair<T, T> binsearch(cauto\
-    \ &judge, cauto &init_ok, cauto &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n\
-    \  assert(judge(ok));\n  assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok\
-    \ != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok\
-    \ : ng) = mid;\n  }\n  return make_pair(ok, ng);\n}\ntemplate <class T = ld>\n\
-    T binsearch_real(cauto &judge, cauto &init_ok, cauto &init_ng, const int &iteration_count\
-    \ = 100)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
-    \  repi(_, iteration_count)\n  {\n    T mid = (ok + ng) / 2;\n    (judge(mid)\
-    \ ? ok : ng) = mid;\n  }\n  return ok;\n}\ntemplate <class T = ll>\npair<T, T>\
-    \ expsearch(cauto &judge, cauto &init_val, const bool &positive = true)\n{\n \
-    \ T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val + (positive\
-    \ ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng, ng = init_val\
-    \ + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng = init_val, ok\
-    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok); i++)\n  \
-    \    ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  while\
-    \ (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n\
-    \    (judge(mid) ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n}\n#line\
-    \ 2 \"template/template_dump.hpp\"\n\n#line 4 \"template/template_dump.hpp\"\n\
-    \n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs\
-    \ docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp>\
-    \ // https://github.com/philip82148/cpp-dump\nnamespace cpp_dump::_detail\n{\n\
-    \  inline string export_var(\n      const i128 &x, const string &indent, size_t\
-    \ last_line_length,\n      size_t current_depth, bool fail_on_newline, const export_command\
-    \ &command\n  ) {\n    return export_var(i128tos(x), indent, last_line_length,\
-    \ current_depth, fail_on_newline, command);\n  }\n} // namespace cpp_dump::_detail\n\
-    #define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
-    \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n\
-    #define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 5 \"verify/mytest/template_binsearch.test.cpp\"\n\nvoid test1()\n\
-    {\n  vl a = {1, 3, 3, 3, 4, 5, 5, 6};\n  rep(k, 10)\n  {\n    ll i1, i2, i3;\n\
-    \n    i1 = LB(a, k);\n    i2 = binsearch([&](ll i)\n                   { return\
-    \ k <= vecget(a, i); }, SZI(a), -1)\n             .first;\n    i3 = expsearch([&](ll\
-    \ i)\n                   { return k <= vecget(a, i); }, 0, true)\n           \
-    \  .first;\n    assert(i1 == i2 && i2 == i3);\n\n    i1 = UB(a, k);\n    i2 =\
-    \ binsearch([&](ll i)\n                   { return k < vecget(a, i); }, SZI(a),\
-    \ -1)\n             .first;\n    i3 = expsearch([&](ll i)\n                  \
-    \ { return k < vecget(a, i); }, 0, true)\n             .first;\n    assert(i1\
-    \ == i2 && i2 == i3);\n  }\n}\n\nint main()\n{\n  test1();\n\n  cout << \"Hello\
-    \ World\" << endl;\n}\n"
+    \ return ranges::upper_bound(v, forward<Args>(args)...) - v.begin(); }\n#endif\n\
+    \ntemplate <class T>\nstruct is_random_access_iterator\n{\n  static constexpr\
+    \ bool value = is_same_v<\n    typename iterator_traits<T>::iterator_category,\n\
+    \    random_access_iterator_tag\n  >;\n};\ntemplate <class T>\nconstexpr bool\
+    \ is_random_access_iterator_v = is_random_access_iterator<T>::value;\n\ntemplate\
+    \ <class T = ll, class V, class... Args>\ninline auto lt_max(const V &v, Args&&...\
+    \ args)\n{\n  if constexpr (is_random_access_iterator_v<typename V::iterator>)\n\
+    \    return LB<T>(v, forward<Args>(args)...) - 1;\n  else\n  {\n    auto it =\
+    \ v.lower_bound(forward<Args>(args)...);\n    if (it == v.begin())\n      return\
+    \ v.end();\n    else\n      return prev(it);\n  }\n}\ntemplate <class T = ll,\
+    \ class V, class... Args>\ninline auto leq_max(const V &v, Args&&... args)\n{\n\
+    \  if constexpr (is_random_access_iterator_v<typename V::iterator>)\n    return\
+    \ UB<T>(v, forward<Args>(args)...) - 1;\n  else\n  {\n    auto it = v.upper_bound(forward<Args>(args)...);\n\
+    \    if (it == v.begin())\n      return v.end();\n    else\n      return prev(it);\n\
+    \  }\n}\ntemplate <class T = ll, class V, class... Args>\ninline auto gt_min(const\
+    \ V &v, Args&&... args)\n{\n  if constexpr (is_random_access_iterator_v<typename\
+    \ V::iterator>)\n    return UB<T>(v, forward<Args>(args)...);\n  else\n    return\
+    \ v.upper_bound(forward<Args>(args)...);\n}\ntemplate <class T = ll, class V,\
+    \ class... Args>\ninline auto geq_min(const V &v, Args&&... args)\n{\n  if constexpr\
+    \ (is_random_access_iterator_v<typename V::iterator>)\n    return LB<T>(v, forward<Args>(args)...);\n\
+    \  else\n    return v.lower_bound(forward<Args>(args)...);\n}\n\ntemplate <class\
+    \ T = ll, class V, class... Args>\ninline T lt_cnt(const V &v, Args&&... args)\n\
+    { return LB<T>(v, forward<Args>(args)...); }\ntemplate <class T = ll, class V,\
+    \ class... Args>\ninline T leq_cnt(const V &v, Args&&... args)\n{ return UB<T>(v,\
+    \ forward<Args>(args)...); }\ntemplate <class T = ll, class V, class... Args>\n\
+    inline T gt_cnt(const V &v, Args&&... args)\n{ return SZ<T>(v) - UB<T>(v, forward<Args>(args)...);\
+    \ }\ntemplate <class T = ll, class V, class... Args>\ninline T geq_cnt(const V\
+    \ &v, Args&&... args)\n{ return SZ<T>(v) - LB<T>(v, forward<Args>(args)...); }\n\
+    \ntemplate <class T = ll>\npair<T, T> binsearch(cauto &judge, cauto &init_ok,\
+    \ cauto &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
+    \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
+    \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n\
+    }\ntemplate <class T = ld>\nT binsearch_real(cauto &judge, cauto &init_ok, cauto\
+    \ &init_ng, const int &iteration_count = 100)\n{\n  T ok(init_ok), ng(init_ng);\n\
+    \  assert(judge(ok));\n  assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n\
+    \    T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return\
+    \ ok;\n}\ntemplate <class T = ll>\npair<T, T> expsearch(cauto &judge, cauto &init_val,\
+    \ const bool &positive = true)\n{\n  T ok, ng;\n  if (judge(init_val))\n  {\n\
+    \    ok = init_val, ng = init_val + (positive ? 1 : -1);\n    for (int i = 1;\
+    \ judge(ng); i++)\n      ok = ng, ng = init_val + (positive ? 1 : -1) * (T(1)\
+    \ << i);\n  }\n  else\n  {\n    ng = init_val, ok = init_val + (positive ? 1 :\
+    \ -1);\n    for (int i = 1; !judge(ok); i++)\n      ng = ok, ok = init_val + (positive\
+    \ ? 1 : -1) * (T(1) << i);\n  }\n  while (ok - ng != 1 && ng - ok != 1)\n  {\n\
+    \    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) = mid;\n\
+    \  }\n  return make_pair(ok, ng);\n}\n#line 2 \"template/template_dump.hpp\"\n\
+    \n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n\
+    #ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
+    \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
+    \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
+    \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
+    \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
+    \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
+    #else\n#define dump(...)\n#define local(...)\n#endif\n#line 5 \"verify/mytest/template_binsearch.test.cpp\"\
+    \n\nmt19937 mt;\nvoid test1()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i,\
+    \ n) a[i] = 1 + mt() % 10;\n  sort(ALL(a));\n  ll k = -1 + mt() % 12;\n\n  ll\
+    \ i1, i2, i3;\n\n  i1 = LB(a, k);\n  i2 = binsearch([&](ll i)\n              \
+    \    { return k <= vecget(a, i); }, SZ<int>(a), -1)\n            .first;\n  i3\
+    \ = expsearch([&](ll i)\n                  { return k <= vecget(a, i); }, 0, true)\n\
+    \            .first;\n  assert(i1 == i2 && i2 == i3);\n\n  i1 = UB(a, k);\n  i2\
+    \ = binsearch([&](ll i)\n                  { return k < vecget(a, i); }, SZ<int>(a),\
+    \ -1)\n            .first;\n  i3 = expsearch([&](ll i)\n                  { return\
+    \ k < vecget(a, i); }, 0, true)\n            .first;\n  assert(i1 == i2 && i2\
+    \ == i3);\n}\n\nvoid test2()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i,\
+    \ n) a[i] = 1 + mt() % 10;\n  sort(ALL(a));\n  ll k = -1 + mt() % 12;\n\n  ll\
+    \ i1, i2;\n  i1 = lt_max(a, k);\n  i2 = expsearch([&](ll i)\n                \
+    \ { return vecget(a, i) < k; }, 0, true)\n           .first;\n  assert(i1 == i2);\n\
+    \  i1 = leq_max(a, k);\n  i2 = expsearch([&](ll i)\n                 { return\
+    \ vecget(a, i) <= k; }, 0, true)\n           .first;\n  assert(i1 == i2);\n  i1\
+    \ = gt_min(a, k);\n  i2 = expsearch([&](ll i)\n                 { return k < vecget(a,\
+    \ i); }, 0, true)\n           .first;\n  assert(i1 == i2);\n  i1 = geq_min(a,\
+    \ k);\n  i2 = expsearch([&](ll i)\n                 { return k <= vecget(a, i);\
+    \ }, 0, true)\n           .first;\n  assert(i1 == i2);\n\n  i1 = lt_cnt(a, k);\n\
+    \  i2 = count_if(ALL(a), [&](ll ai)\n                { return ai < k; });\n  assert(i1\
+    \ == i2);\n  i1 = leq_cnt(a, k);\n  i2 = count_if(ALL(a), [&](ll ai)\n       \
+    \         { return ai <= k; });\n  assert(i1 == i2);\n  i1 = gt_cnt(a, k);\n \
+    \ i2 = count_if(ALL(a), [&](ll ai)\n                { return k < ai; });\n  assert(i1\
+    \ == i2);\n  i1 = geq_cnt(a, k);\n  i2 = count_if(ALL(a), [&](ll ai)\n       \
+    \         { return k <= ai; });\n  assert(i1 == i2);\n}\n\nint main()\n{\n  rep(_,\
+    \ 10000) test1();\n  rep(_, 10000) test2();\n\n  cout << \"Hello World\" << endl;\n\
+    }\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#include \"../../template/template_binsearch.hpp\"\n#include \"../../template/template_dump.hpp\"\
-    \n\nvoid test1()\n{\n  vl a = {1, 3, 3, 3, 4, 5, 5, 6};\n  rep(k, 10)\n  {\n \
-    \   ll i1, i2, i3;\n\n    i1 = LB(a, k);\n    i2 = binsearch([&](ll i)\n     \
-    \              { return k <= vecget(a, i); }, SZI(a), -1)\n             .first;\n\
-    \    i3 = expsearch([&](ll i)\n                   { return k <= vecget(a, i);\
-    \ }, 0, true)\n             .first;\n    assert(i1 == i2 && i2 == i3);\n\n   \
-    \ i1 = UB(a, k);\n    i2 = binsearch([&](ll i)\n                   { return k\
-    \ < vecget(a, i); }, SZI(a), -1)\n             .first;\n    i3 = expsearch([&](ll\
-    \ i)\n                   { return k < vecget(a, i); }, 0, true)\n            \
-    \ .first;\n    assert(i1 == i2 && i2 == i3);\n  }\n}\n\nint main()\n{\n  test1();\n\
-    \n  cout << \"Hello World\" << endl;\n}"
+    \n\nmt19937 mt;\nvoid test1()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i,\
+    \ n) a[i] = 1 + mt() % 10;\n  sort(ALL(a));\n  ll k = -1 + mt() % 12;\n\n  ll\
+    \ i1, i2, i3;\n\n  i1 = LB(a, k);\n  i2 = binsearch([&](ll i)\n              \
+    \    { return k <= vecget(a, i); }, SZ<int>(a), -1)\n            .first;\n  i3\
+    \ = expsearch([&](ll i)\n                  { return k <= vecget(a, i); }, 0, true)\n\
+    \            .first;\n  assert(i1 == i2 && i2 == i3);\n\n  i1 = UB(a, k);\n  i2\
+    \ = binsearch([&](ll i)\n                  { return k < vecget(a, i); }, SZ<int>(a),\
+    \ -1)\n            .first;\n  i3 = expsearch([&](ll i)\n                  { return\
+    \ k < vecget(a, i); }, 0, true)\n            .first;\n  assert(i1 == i2 && i2\
+    \ == i3);\n}\n\nvoid test2()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i,\
+    \ n) a[i] = 1 + mt() % 10;\n  sort(ALL(a));\n  ll k = -1 + mt() % 12;\n\n  ll\
+    \ i1, i2;\n  i1 = lt_max(a, k);\n  i2 = expsearch([&](ll i)\n                \
+    \ { return vecget(a, i) < k; }, 0, true)\n           .first;\n  assert(i1 == i2);\n\
+    \  i1 = leq_max(a, k);\n  i2 = expsearch([&](ll i)\n                 { return\
+    \ vecget(a, i) <= k; }, 0, true)\n           .first;\n  assert(i1 == i2);\n  i1\
+    \ = gt_min(a, k);\n  i2 = expsearch([&](ll i)\n                 { return k < vecget(a,\
+    \ i); }, 0, true)\n           .first;\n  assert(i1 == i2);\n  i1 = geq_min(a,\
+    \ k);\n  i2 = expsearch([&](ll i)\n                 { return k <= vecget(a, i);\
+    \ }, 0, true)\n           .first;\n  assert(i1 == i2);\n\n  i1 = lt_cnt(a, k);\n\
+    \  i2 = count_if(ALL(a), [&](ll ai)\n                { return ai < k; });\n  assert(i1\
+    \ == i2);\n  i1 = leq_cnt(a, k);\n  i2 = count_if(ALL(a), [&](ll ai)\n       \
+    \         { return ai <= k; });\n  assert(i1 == i2);\n  i1 = gt_cnt(a, k);\n \
+    \ i2 = count_if(ALL(a), [&](ll ai)\n                { return k < ai; });\n  assert(i1\
+    \ == i2);\n  i1 = geq_cnt(a, k);\n  i2 = count_if(ALL(a), [&](ll ai)\n       \
+    \         { return k <= ai; });\n  assert(i1 == i2);\n}\n\nint main()\n{\n  rep(_,\
+    \ 10000) test1();\n  rep(_, 10000) test2();\n\n  cout << \"Hello World\" << endl;\n\
+    }"
   dependsOn:
   - template/template_binsearch.hpp
   - template/template_types.hpp
@@ -213,7 +274,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_binsearch.test.cpp
   requiredBy: []
-  timestamp: '2024-12-21 17:37:41+09:00'
+  timestamp: '2024-12-27 23:57:11+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_binsearch.test.cpp

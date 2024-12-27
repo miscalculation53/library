@@ -113,39 +113,40 @@ data:
     \ s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n\
     }\n#line 6 \"template/template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n\
-    \ */\n\n#define ALL(a) (a).begin(), (a).end()\n#define SZ(x) (ll)((x).size())\n\
-    #define SZI(x) (int)((x).size())\n\ntemplate <class F>\nauto gen_vec(const int\
-    \ &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n\
-    \  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    \ */\n\n#define ALL(a) (a).begin(), (a).end()\ntemplate <class T = ll>\ninline\
+    \ T SZ(cauto &x) { return x.size(); }\n\ntemplate <class F>\nauto gen_vec(const\
+    \ int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] =\
+    \ f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
     template <class T, size_t d, size_t i = 0>\nauto dvec(cauto (&sz)[d], const T\
     \ &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i + 1>(sz,\
     \ init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT ctol(const\
-    \ char &c, const string &s)\n{\n  repi(i, SZI(s)) if (s[i] == c) return i;\n \
-    \ return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string &s, const char\
-    \ &first)\n{\n  return gen_vec(SZI(s), [&](int i) -> T\n                 { return\
-    \ s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T> stov(const string &s, const\
-    \ string &t)\n{\n  return gen_vec(SZI(s), [&](int i) -> T\n                 {\
-    \ return ctol(s[i], t); });\n}\n\ntemplate <class T>\nvc<T> concat(const vvc<T>\
-    \ &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n    res.insert(res.end(), ALL(v));\n\
-    \  return res;\n}\ntemplate <class T>\nvc<T> concat(const vc<T> &v) { return v;\
-    \ }\ntemplate <class T, class... Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n\
-    {\n  (v.insert(v.end(), ALL(vs)), ...);\n  return v;\n}\n\ntemplate <class T>\n\
-    T vecget(const vc<T> &v, cauto &i, const T &dflt_negative = -INF, const T &dflt_positive\
-    \ = INF)\n{\n  if (i < 0)\n    return dflt_negative;\n  if (i >= SZI(v))\n   \
-    \ return dflt_positive;\n  return v[i];\n}\n#line 2 \"template/template_dump.hpp\"\
-    \n\n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
-    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
-    namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
-    \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
-    \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
-    \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
-    \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
-    \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
-    #else\n#define dump(...)\n#define local(...)\n#endif\n#line 5 \"verify/mytest/template_vector.test.cpp\"\
-    \n\nvoid test1()\n{\n  auto dp = dvec({3, 4, 5}, 0LL);\n  dump(dp);\n  assert(SZ(dp)\
-    \ == 3);\n  rep(i, 3)\n  {\n    assert(SZ(dp.at(i)) == 4);\n    rep(j, 4) assert(SZ(dp.at(i).at(j))\
+    \ char &c, const string &s)\n{\n  repi(i, SZ<int>(s)) if (s[i] == c) return i;\n\
+    \  return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string &s, const char\
+    \ &first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n                 {\
+    \ return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T> stov(const string\
+    \ &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n    \
+    \             { return ctol(s[i], t); });\n}\n\ntemplate <class T>\nvc<T> concat(const\
+    \ vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n    res.insert(res.end(),\
+    \ ALL(v));\n  return res;\n}\ntemplate <class T>\nvc<T> concat(const vc<T> &v)\
+    \ { return v; }\ntemplate <class T, class... Ts>\nvc<T> concat(vc<T> v, const\
+    \ vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)), ...);\n  return v;\n}\n\n\
+    template <class T>\nT vecget(const vc<T> &v, cauto &i, const T &dflt_negative\
+    \ = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n    return dflt_negative;\n\
+    \  if (i >= SZ<int>(v))\n    return dflt_positive;\n  return v[i];\n}\n#line 2\
+    \ \"template/template_dump.hpp\"\n\n#line 4 \"template/template_dump.hpp\"\n\n\
+    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs\
+    \ docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp>\
+    \ // https://github.com/philip82148/cpp-dump\nnamespace cpp_dump::_detail\n{\n\
+    \  inline string export_var(\n      const i128 &x, const string &indent, size_t\
+    \ last_line_length,\n      size_t current_depth, bool fail_on_newline, const export_command\
+    \ &command\n  ) {\n    return export_var(i128tos(x), indent, last_line_length,\
+    \ current_depth, fail_on_newline, command);\n  }\n} // namespace cpp_dump::_detail\n\
+    #define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
+    \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n\
+    #define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
+    #endif\n#line 5 \"verify/mytest/template_vector.test.cpp\"\n\nvoid test1()\n{\n\
+    \  auto dp = dvec({3, 4, 5}, 0LL);\n  dump(dp);\n  assert(SZ(dp) == 3);\n  rep(i,\
+    \ 3)\n  {\n    assert(SZ(dp.at(i)) == 4);\n    rep(j, 4) assert(SZ(dp.at(i).at(j))\
     \ == 5);\n  }\n}\n\nvoid test2()\n{\n  assert(ctol('J', \"JOI\") == 0);\n  assert(ctol('O',\
     \ \"JOI\") == 1);\n  assert(ctol('I', \"JOI\") == 2);\n  assert(ctol('?', \"JOI\"\
     ) == -1);\n\n  vl v = {0, 1, 2, 3, 4};\n  auto v1 = stov(\"ABCDE\", 'A');\n  auto\
@@ -181,7 +182,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_vector.test.cpp
   requiredBy: []
-  timestamp: '2024-12-21 17:37:41+09:00'
+  timestamp: '2024-12-27 23:57:11+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_vector.test.cpp

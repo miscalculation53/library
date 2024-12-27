@@ -2,9 +2,17 @@
 
 ### マクロ
 
-- `ALL(x)`
-- `SZ(x)`：vector の長さを `ll` 型で
-- `SZI(x)`：vector の長さを `int` 型で
+#### ALL
+
+`ALL(x)`：`begin(x), end(x)`
+
+#### SZ
+
+```cpp
+T SZ<T=ll>(x)
+```
+
+`x.size()` を `T` 型で返す（デフォルトでは `ll`）。
 
 ### vector の生成
 
@@ -15,6 +23,8 @@ gen_vec(int n, F f)
 ```
 
 長さ $n$ で、$i$ 番目が $f(i)$ の vector を返す。
+
+一応、生成する vector の型を書かなくてもよいという利点がある。（が、あまり使わないかも。）
 
 ### 多次元 vector の生成
 
@@ -75,4 +85,4 @@ T vecget(vc<T> v, int i, T dflt_negative = -INF, T dflt_positive = INF)
 
 範囲外も考慮した vector の取得。範囲内なら通常の `[]` や `at` と同じで、範囲外なら負方向は `dflt_negative`, 正方向は `dflt_positive` を返す。
 
-用途としては、ソート済み配列が無限に広がっていると考えたい場合（特に、`binsearch` や `expsearch` に渡すとき）。`LB` や `UB` だと頭が壊れるとき用に。
+用途としては、ソート済み配列が無限に広がっていると考えたい場合（特に、`binsearch` や `expsearch` に渡すとき）。`LB` や `UB` だと頭が壊れるとき用に。→ 二分探索に lt, leq, gt, geq 系をつけたので出番がないかも。
