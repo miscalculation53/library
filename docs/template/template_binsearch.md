@@ -37,8 +37,8 @@ $v$ がソート済みで、後ろの引数がデフォルトの場合、
 ```cpp
 (1) lt_max(V v, T val, ...)
 (2) leq_max(V v, T val, ...)
-(3) gt_max(V v, T val, ...)
-(4) geq_max(V v, T val, ...)
+(3) gt_min(V v, T val, ...)
+(4) geq_min(V v, T val, ...)
 (5) U=ll lt_cnt(V v, T val, ...)
 (6) U=ll leq_cnt(V v, T val, ...)
 (7) U=ll gt_cnt(V v, T val, ...)
