@@ -43,7 +43,7 @@ T get_val(int i)
 #### get_id
 
 ```cpp
-I get_id(T v)
+I=ll get_id(T v)
 ```
 
 値 $v$ に対応する添字を返す。$v$ が存在しない場合 $-1$ を返す。
@@ -57,7 +57,7 @@ $v$ が存在する場合は `LB(vals, v)` と同じこと。
 #### size
 
 ```cpp
-I size()
+I=ll size()
 ```
 
 値の個数 $n$ を返す。`vals.size()` と同じこと。
