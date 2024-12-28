@@ -102,6 +102,14 @@ template <class T = ll, class V, class... Args>
 inline T geq_cnt(const V &v, Args&&... args)
 { return SZ<T>(v) - LB<T>(v, forward<Args>(args)...); }
 
+template <class T = ll, class V, class... Args>
+inline T in_cnt(const V &v, auto l, auto r, Args&&... args)
+{
+  if (l > r)
+    return 0;
+  return lt_cnt<T>(v, r, forward<Args>(args)...) - lt_cnt<T>(v, l, forward<Args>(args)...);
+}
+
 template <class T = ll>
 pair<T, T> binsearch(cauto &judge, cauto &init_ok, cauto &init_ng)
 {
