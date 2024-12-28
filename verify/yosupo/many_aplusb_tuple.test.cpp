@@ -56,7 +56,7 @@ int main()
   };
 
   #if defined FAST_IO and not defined LOCAL
-  CERR("[FAST_IO]\n\n");
+  CERR("\033[33m \n[FAST_IO]\n\n \033[m");
   cin.tie(0);
   ios::sync_with_stdio(false);
   #endif
@@ -66,18 +66,18 @@ int main()
   init();
 
   #if defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)
-  CERR("[AOJ_TESTCASE]\n\n");
+  CERR("\033[35m \n[AOJ_TESTCASE]\n\n \033[m");
   while (true)
   {
     dump("new testcase");
     main2();
   }
   #elif defined SINGLE_TESTCASE
-  CERR("[SINGLE_TESTCASE]\n\n");
+  CERR("\033[36m \n[SINGLE_TESTCASE]\n\n \033[m");
   main2();
   #elif defined MULTI_TESTCASE
-  CERR("[MULTI_TESTCASE]\n\n");
-  int T;
+  CERR("\033[32m \n[MULTI_TESTCASE]\n\n \033[m");
+  uint T;
   cin >> T;
   while (T--)
   {
