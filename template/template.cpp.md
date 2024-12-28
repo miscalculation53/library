@@ -581,15 +581,16 @@ data:
     \      // --------------------------\n    }\n    dump(\"ok\");\n  );\n  //*/\n\
     }\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n   \
     \ cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n\
-    \  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    \  CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
     \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
     \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
-    \  CERR(\"[AOJ_TESTCASE]\\n\\n\");\n  while (true)\n  {\n    dump(\"new testcase\"\
-    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"[SINGLE_TESTCASE]\\\
-    n\\n\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"[MULTI_TESTCASE]\\\
-    n\\n\");\n  int T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\"\
-    );\n    main2();\n  }\n  #endif\n}\n\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
-    \u30FC\u30C8\uFF08\u5168\u4F53\uFF09\n * @docs docs/template/template.md\n */\n"
+    \  CERR(\"\\033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n\
+    \    dump(\"new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n\
+    \  CERR(\"\\033[36m \\n[SINGLE_TESTCASE]\\n\\n \\033[m\");\n  main2();\n  #elif\
+    \ defined MULTI_TESTCASE\n  CERR(\"\\033[32m \\n[MULTI_TESTCASE]\\n\\n \\033[m\"\
+    );\n  uint T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n\
+    \    main2();\n  }\n  #endif\n}\n\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
+    \u30C8\uFF08\u5168\u4F53\uFF09\n * @docs docs/template/template.md\n */\n"
   code: "#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
     #define EPS 1e-11\n\n#include \"template/template_all.hpp\"\n\n#include \"../math/modint/modint.hpp\"\
@@ -604,14 +605,15 @@ data:
     \        dump(god, ans);\n        exit(0);\n      }\n      // --------------------------\n\
     \    }\n    dump(\"ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](cauto\
     \ &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n  #if defined\
-    \ FAST_IO and not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n  cin.tie(0);\n\
-    \  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
-    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (not defined NOT_AOJ and\
-    \ defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"[AOJ_TESTCASE]\\n\\n\"\
-    );\n  while (true)\n  {\n    dump(\"new testcase\");\n    main2();\n  }\n  #elif\
-    \ defined SINGLE_TESTCASE\n  CERR(\"[SINGLE_TESTCASE]\\n\\n\");\n  main2();\n\
-    \  #elif defined MULTI_TESTCASE\n  CERR(\"[MULTI_TESTCASE]\\n\\n\");\n  int T;\n\
-    \  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
+    \ FAST_IO and not defined LOCAL\n  CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\"\
+    );\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed <<\
+    \ setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (not\
+    \ defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\\\
+    033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n    dump(\"\
+    new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\
+    \\033[36m \\n[SINGLE_TESTCASE]\\n\\n \\033[m\");\n  main2();\n  #elif defined\
+    \ MULTI_TESTCASE\n  CERR(\"\\033[32m \\n[MULTI_TESTCASE]\\n\\n \\033[m\");\n \
+    \ uint T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
     \  }\n  #endif\n}\n\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\
     \u5168\u4F53\uFF09\n * @docs docs/template/template.md\n */"
   dependsOn:
@@ -632,7 +634,7 @@ data:
   isVerificationFile: false
   path: template/template.cpp
   requiredBy: []
-  timestamp: '2024-12-28 02:19:59+09:00'
+  timestamp: '2024-12-28 13:20:39+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: template/template.cpp

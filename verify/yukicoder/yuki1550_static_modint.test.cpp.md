@@ -576,14 +576,15 @@ data:
     // using mint = modint;\n\nvoid init() {}\n\nvoid main2()\n{\n  IN(mint, N);\n\
     \  PRINT(N);\n  dump(N);\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR =\
     \ [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n\
-    \  #if defined FAST_IO and not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n \
-    \ cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
-    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (not defined NOT_AOJ and\
-    \ defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"[AOJ_TESTCASE]\\n\\n\"\
-    );\n  while (true)\n  {\n    dump(\"new testcase\");\n    main2();\n  }\n  #elif\
-    \ defined SINGLE_TESTCASE\n  CERR(\"[SINGLE_TESTCASE]\\n\\n\");\n  main2();\n\
-    \  #elif defined MULTI_TESTCASE\n  CERR(\"[MULTI_TESTCASE]\\n\\n\");\n  int T;\n\
-    \  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
+    \  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\033[33m \\n[FAST_IO]\\\
+    n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout\
+    \ << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE\
+    \ or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
+    \\033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n    dump(\"\
+    new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\
+    \\033[36m \\n[SINGLE_TESTCASE]\\n\\n \\033[m\");\n  main2();\n  #elif defined\
+    \ MULTI_TESTCASE\n  CERR(\"\\033[32m \\n[MULTI_TESTCASE]\\n\\n \\033[m\");\n \
+    \ uint T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
     \  }\n  #endif\n}\n"
   code: "#define PROBLEM \"https://yukicoder.me/problems/no/1550\"\n\n#define SINGLE_TESTCASE\n\
     // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n\n#define\
@@ -593,14 +594,15 @@ data:
     \ using mint = modint;\n\nvoid init() {}\n\nvoid main2()\n{\n  IN(mint, N);\n\
     \  PRINT(N);\n  dump(N);\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR =\
     \ [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n\
-    \  #if defined FAST_IO and not defined LOCAL\n  CERR(\"[FAST_IO]\\n\\n\");\n \
-    \ cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
-    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (not defined NOT_AOJ and\
-    \ defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"[AOJ_TESTCASE]\\n\\n\"\
-    );\n  while (true)\n  {\n    dump(\"new testcase\");\n    main2();\n  }\n  #elif\
-    \ defined SINGLE_TESTCASE\n  CERR(\"[SINGLE_TESTCASE]\\n\\n\");\n  main2();\n\
-    \  #elif defined MULTI_TESTCASE\n  CERR(\"[MULTI_TESTCASE]\\n\\n\");\n  int T;\n\
-    \  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
+    \  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\033[33m \\n[FAST_IO]\\\
+    n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout\
+    \ << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE\
+    \ or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
+    \\033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n    dump(\"\
+    new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\
+    \\033[36m \\n[SINGLE_TESTCASE]\\n\\n \\033[m\");\n  main2();\n  #elif defined\
+    \ MULTI_TESTCASE\n  CERR(\"\\033[32m \\n[MULTI_TESTCASE]\\n\\n \\033[m\");\n \
+    \ uint T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
     \  }\n  #endif\n}\n"
   dependsOn:
   - template/template_all.hpp
@@ -620,7 +622,7 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/yuki1550_static_modint.test.cpp
   requiredBy: []
-  timestamp: '2024-12-28 02:19:59+09:00'
+  timestamp: '2024-12-28 13:20:39+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/yuki1550_static_modint.test.cpp
