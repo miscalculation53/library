@@ -9,6 +9,12 @@ data:
     path: ds/coordinate_compression.hpp
     title: "\u5EA7\u6A19\u5727\u7E2E"
   - icon: ':heavy_check_mark:'
+    path: ds/csr.hpp
+    title: CSR
+  - icon: ':heavy_check_mark:'
+    path: ds/group_index.hpp
+    title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
+  - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - icon: ':heavy_check_mark:'
@@ -63,6 +69,9 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/csr.test.cpp
+    title: verify/aoj/csr.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/aoj/extgcd.test.cpp
     title: verify/aoj/extgcd.test.cpp
@@ -127,14 +136,17 @@ data:
     path: verify/yosupo/quotients.test.cpp
     title: verify/yosupo/quotients.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-    title: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+    path: verify/yosupo/static_range_frequency.test.cpp
+    title: verify/yosupo/static_range_frequency.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki1550_static_modint.test.cpp
-    title: verify/yukicoder/yuki1550_static_modint.test.cpp
+    path: verify/yukicoder/divisors.test.cpp
+    title: verify/yukicoder/divisors.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki888.test.cpp
-    title: verify/yukicoder/yuki888.test.cpp
+    path: verify/yukicoder/dynamic_modint.test.cpp
+    title: verify/yukicoder/dynamic_modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/static_modint.test.cpp
+    title: verify/yukicoder/static_modint.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -206,6 +218,8 @@ data:
   - math/prime/prime_power.hpp
   - math/quotients.hpp
   - math/extgcd.hpp
+  - ds/csr.hpp
+  - ds/group_index.hpp
   - ds/coordinate_compression.hpp
   - template/template_bit.hpp
   - template/template_inout.hpp
@@ -221,6 +235,7 @@ data:
   verifiedWith:
   - verify/yosupo/many_aplusb_128bit.test.cpp
   - verify/yosupo/predecessor_problem.test.cpp
+  - verify/yosupo/static_range_frequency.test.cpp
   - verify/yosupo/kth_root_integer.test.cpp
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/quotients.test.cpp
@@ -240,9 +255,10 @@ data:
   - verify/mytest/template_sgn.test.cpp.cpp
   - verify/mytest/template_math_div.test.cpp
   - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/yuki1550_static_modint.test.cpp
-  - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-  - verify/yukicoder/yuki888.test.cpp
+  - verify/aoj/csr.test.cpp
+  - verify/yukicoder/divisors.test.cpp
+  - verify/yukicoder/dynamic_modint.test.cpp
+  - verify/yukicoder/static_modint.test.cpp
 documentation_of: template/template_rep.hpp
 layout: document
 redirect_from:

@@ -70,14 +70,14 @@ data:
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-    title: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+    path: verify/yukicoder/divisors.test.cpp
+    title: verify/yukicoder/divisors.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki1550_static_modint.test.cpp
-    title: verify/yukicoder/yuki1550_static_modint.test.cpp
+    path: verify/yukicoder/dynamic_modint.test.cpp
+    title: verify/yukicoder/dynamic_modint.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki888.test.cpp
-    title: verify/yukicoder/yuki888.test.cpp
+    path: verify/yukicoder/static_modint.test.cpp
+    title: verify/yukicoder/static_modint.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -320,8 +320,11 @@ data:
     inline T gt_cnt(const V &v, Args&&... args)\n{ return SZ<T>(v) - UB<T>(v, forward<Args>(args)...);\
     \ }\ntemplate <class T = ll, class V, class... Args>\ninline T geq_cnt(const V\
     \ &v, Args&&... args)\n{ return SZ<T>(v) - LB<T>(v, forward<Args>(args)...); }\n\
-    \ntemplate <class T = ll>\npair<T, T> binsearch(cauto &judge, cauto &init_ok,\
-    \ cauto &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
+    \ntemplate <class T = ll, class V, class... Args>\ninline T in_cnt(const V &v,\
+    \ auto l, auto r, Args&&... args)\n{\n  if (l > r)\n    return 0;\n  return lt_cnt<T>(v,\
+    \ r, forward<Args>(args)...) - lt_cnt<T>(v, l, forward<Args>(args)...);\n}\n\n\
+    template <class T = ll>\npair<T, T> binsearch(cauto &judge, cauto &init_ok, cauto\
+    \ &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
     \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
     \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n\
     }\ntemplate <class T = ld>\nT binsearch_real(cauto &judge, cauto &init_ok, cauto\
@@ -510,7 +513,7 @@ data:
   - math/prime/factorize.hpp
   - math/prime/primality_test.hpp
   - template/template.cpp
-  timestamp: '2024-12-27 23:57:11+09:00'
+  timestamp: '2024-12-28 23:16:25+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/factorize.test.cpp
@@ -518,9 +521,9 @@ data:
   - verify/mytest/modint.test.cpp
   - verify/mytest/modint64.test.cpp
   - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/yuki1550_static_modint.test.cpp
-  - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-  - verify/yukicoder/yuki888.test.cpp
+  - verify/yukicoder/divisors.test.cpp
+  - verify/yukicoder/dynamic_modint.test.cpp
+  - verify/yukicoder/static_modint.test.cpp
 documentation_of: math/extgcd.hpp
 layout: document
 redirect_from:

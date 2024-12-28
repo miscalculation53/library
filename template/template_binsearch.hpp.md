@@ -18,6 +18,12 @@ data:
     path: ds/coordinate_compression.hpp
     title: "\u5EA7\u6A19\u5727\u7E2E"
   - icon: ':heavy_check_mark:'
+    path: ds/csr.hpp
+    title: CSR
+  - icon: ':heavy_check_mark:'
+    path: ds/group_index.hpp
+    title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
+  - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - icon: ':heavy_check_mark:'
@@ -48,6 +54,9 @@ data:
     path: template/template_all.hpp
     title: template/template_all.hpp
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/csr.test.cpp
+    title: verify/aoj/csr.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/aoj/extgcd.test.cpp
     title: verify/aoj/extgcd.test.cpp
@@ -91,14 +100,17 @@ data:
     path: verify/yosupo/quotients.test.cpp
     title: verify/yosupo/quotients.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-    title: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+    path: verify/yosupo/static_range_frequency.test.cpp
+    title: verify/yosupo/static_range_frequency.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki1550_static_modint.test.cpp
-    title: verify/yukicoder/yuki1550_static_modint.test.cpp
+    path: verify/yukicoder/divisors.test.cpp
+    title: verify/yukicoder/divisors.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki888.test.cpp
-    title: verify/yukicoder/yuki888.test.cpp
+    path: verify/yukicoder/dynamic_modint.test.cpp
+    title: verify/yukicoder/dynamic_modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/static_modint.test.cpp
+    title: verify/yukicoder/static_modint.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -256,8 +268,11 @@ data:
     inline T gt_cnt(const V &v, Args&&... args)\n{ return SZ<T>(v) - UB<T>(v, forward<Args>(args)...);\
     \ }\ntemplate <class T = ll, class V, class... Args>\ninline T geq_cnt(const V\
     \ &v, Args&&... args)\n{ return SZ<T>(v) - LB<T>(v, forward<Args>(args)...); }\n\
-    \ntemplate <class T = ll>\npair<T, T> binsearch(cauto &judge, cauto &init_ok,\
-    \ cauto &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
+    \ntemplate <class T = ll, class V, class... Args>\ninline T in_cnt(const V &v,\
+    \ auto l, auto r, Args&&... args)\n{\n  if (l > r)\n    return 0;\n  return lt_cnt<T>(v,\
+    \ r, forward<Args>(args)...) - lt_cnt<T>(v, l, forward<Args>(args)...);\n}\n\n\
+    template <class T = ll>\npair<T, T> binsearch(cauto &judge, cauto &init_ok, cauto\
+    \ &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
     \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
     \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n\
     }\ntemplate <class T = ld>\nT binsearch_real(cauto &judge, cauto &init_ok, cauto\
@@ -318,8 +333,11 @@ data:
     inline T gt_cnt(const V &v, Args&&... args)\n{ return SZ<T>(v) - UB<T>(v, forward<Args>(args)...);\
     \ }\ntemplate <class T = ll, class V, class... Args>\ninline T geq_cnt(const V\
     \ &v, Args&&... args)\n{ return SZ<T>(v) - LB<T>(v, forward<Args>(args)...); }\n\
-    \ntemplate <class T = ll>\npair<T, T> binsearch(cauto &judge, cauto &init_ok,\
-    \ cauto &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
+    \ntemplate <class T = ll, class V, class... Args>\ninline T in_cnt(const V &v,\
+    \ auto l, auto r, Args&&... args)\n{\n  if (l > r)\n    return 0;\n  return lt_cnt<T>(v,\
+    \ r, forward<Args>(args)...) - lt_cnt<T>(v, l, forward<Args>(args)...);\n}\n\n\
+    template <class T = ll>\npair<T, T> binsearch(cauto &judge, cauto &init_ok, cauto\
+    \ &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
     \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
     \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n\
     }\ntemplate <class T = ld>\nT binsearch_real(cauto &judge, cauto &init_ok, cauto\
@@ -351,14 +369,17 @@ data:
   - math/prime/prime_power.hpp
   - math/quotients.hpp
   - math/extgcd.hpp
+  - ds/csr.hpp
+  - ds/group_index.hpp
   - ds/coordinate_compression.hpp
   - template/template.cpp
   - template/template_all.hpp
-  timestamp: '2024-12-27 23:57:11+09:00'
+  timestamp: '2024-12-28 23:16:25+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/many_aplusb_128bit.test.cpp
   - verify/yosupo/predecessor_problem.test.cpp
+  - verify/yosupo/static_range_frequency.test.cpp
   - verify/yosupo/kth_root_integer.test.cpp
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/quotients.test.cpp
@@ -371,9 +392,10 @@ data:
   - verify/mytest/template_binsearch.test.cpp
   - verify/mytest/modint64.test.cpp
   - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/yuki1550_static_modint.test.cpp
-  - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-  - verify/yukicoder/yuki888.test.cpp
+  - verify/aoj/csr.test.cpp
+  - verify/yukicoder/divisors.test.cpp
+  - verify/yukicoder/dynamic_modint.test.cpp
+  - verify/yukicoder/static_modint.test.cpp
 documentation_of: template/template_binsearch.hpp
 layout: document
 redirect_from:
@@ -426,6 +448,7 @@ $v$ がソート済みで、後ろの引数がデフォルトの場合、
 (6) U=ll leq_cnt(V v, T val, ...)
 (7) U=ll gt_cnt(V v, T val, ...)
 (8) U=ll geq_cnt(V v, T val, ...)
+(9) U=ll in_cnt(V v, T l, T r, ...)
 ```
 
 - (1), (2), (3), (4)：次の条件を満たす $v$ の要素を探し、`V` が vector など（ランダムアクセスイテレータ）なら添字を、set など（ランダムアクセス不可で、メンバ関数に `lower_bound` や `upper_bound` を持つ）ならイテレータを返す。前者のときは $v$ がソート済みであることを想定。
@@ -438,19 +461,20 @@ $v$ がソート済みで、後ろの引数がデフォルトの場合、
   - 添字が返るときは、配列が無限に伸びている（負方向には $-\infty$ で正方向には $\infty$）とみなして計算し、返す（つまり、$-1$ か $n$ が返る）。
   - イテレータが返るときは、前か後ろかにかかわらず `end()` を返す。
 
-- (5), (6), (7), (8)：次の条件を満たす $v$ の要素の個数を返す。ソート済みであることを想定。
+- (5), (6), (7), (8), (9)：次の条件を満たす $v$ の要素の個数を返す。$v$ はソート済みであることを想定。
   - (5)：$\mathrm{val}$ 未満
   - (6)：$\mathrm{val}$ 以下
   - (7)：$\mathrm{val}$ 超過
   - (8)：$\mathrm{val}$ 以上
+  - (9)：$l$ 以上 $r$ 未満
 
 ##### 制約
 
 - (1), (2), (3), (4)：`V` は次のいずれかを満たす。
   - `V` のイテレータはランダムアクセスイテレータ
   - `V` はメンバ関数に `lower_bound`, `upper_bound` を持つ
-- (5), (6), (7), (8)：`V` のイテレータはランダムアクセスイテレータ
-- (1), (2), (3), (4) の前者および (5), (6), (7), (8) では、$v$ がソート済みであることを想定（実際はもう少し緩い）
+- (5), (6), (7), (8), (9)：`V` のイテレータはランダムアクセスイテレータ
+- (1), (2), (3), (4) の前者および (5), (6), (7), (8), (9) では、$v$ がソート済みであることを想定（実際はもう少し緩い）
 
 
 ##### 計算量

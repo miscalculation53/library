@@ -6,6 +6,12 @@ data:
     - icon: ':heavy_check_mark:'
       path: ds/coordinate_compression.hpp
       title: "\u5EA7\u6A19\u5727\u7E2E"
+    - icon: ':heavy_check_mark:'
+      path: ds/csr.hpp
+      title: CSR
+    - icon: ':heavy_check_mark:'
+      path: ds/group_index.hpp
+      title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
   - name: math
     pages:
     - icon: ':heavy_check_mark:'
@@ -81,6 +87,9 @@ data:
   - name: verify/aoj
     pages:
     - icon: ':heavy_check_mark:'
+      path: verify/aoj/csr.test.cpp
+      title: verify/aoj/csr.test.cpp
+    - icon: ':heavy_check_mark:'
       path: verify/aoj/extgcd.test.cpp
       title: verify/aoj/extgcd.test.cpp
   - name: verify/mytest
@@ -147,17 +156,20 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/quotients.test.cpp
       title: verify/yosupo/quotients.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yosupo/static_range_frequency.test.cpp
+      title: verify/yosupo/static_range_frequency.test.cpp
   - name: verify/yukicoder
     pages:
     - icon: ':heavy_check_mark:'
-      path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-      title: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+      path: verify/yukicoder/divisors.test.cpp
+      title: verify/yukicoder/divisors.test.cpp
     - icon: ':heavy_check_mark:'
-      path: verify/yukicoder/yuki1550_static_modint.test.cpp
-      title: verify/yukicoder/yuki1550_static_modint.test.cpp
+      path: verify/yukicoder/dynamic_modint.test.cpp
+      title: verify/yukicoder/dynamic_modint.test.cpp
     - icon: ':heavy_check_mark:'
-      path: verify/yukicoder/yuki888.test.cpp
-      title: verify/yukicoder/yuki888.test.cpp
+      path: verify/yukicoder/static_modint.test.cpp
+      title: verify/yukicoder/static_modint.test.cpp
 layout: toppage
 ---
 [miscalc](https://x.com/miscalc53) のライブラリです。現在移植作業中

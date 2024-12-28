@@ -68,7 +68,7 @@ data:
     PROBLEM: https://yukicoder.me/problems/no/888
     links:
     - https://yukicoder.me/problems/no/888
-  bundledCode: "#line 1 \"verify/yukicoder/yuki888.test.cpp\"\n#define PROBLEM \"\
+  bundledCode: "#line 1 \"verify/yukicoder/divisors.test.cpp\"\n#define PROBLEM \"\
     https://yukicoder.me/problems/no/888\"\n\n#define SINGLE_TESTCASE\n// #define\
     \ MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n\
     #define EPS 1e-11\n\n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
@@ -305,8 +305,11 @@ data:
     inline T gt_cnt(const V &v, Args&&... args)\n{ return SZ<T>(v) - UB<T>(v, forward<Args>(args)...);\
     \ }\ntemplate <class T = ll, class V, class... Args>\ninline T geq_cnt(const V\
     \ &v, Args&&... args)\n{ return SZ<T>(v) - LB<T>(v, forward<Args>(args)...); }\n\
-    \ntemplate <class T = ll>\npair<T, T> binsearch(cauto &judge, cauto &init_ok,\
-    \ cauto &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
+    \ntemplate <class T = ll, class V, class... Args>\ninline T in_cnt(const V &v,\
+    \ auto l, auto r, Args&&... args)\n{\n  if (l > r)\n    return 0;\n  return lt_cnt<T>(v,\
+    \ r, forward<Args>(args)...) - lt_cnt<T>(v, l, forward<Args>(args)...);\n}\n\n\
+    template <class T = ll>\npair<T, T> binsearch(cauto &judge, cauto &init_ok, cauto\
+    \ &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
     \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
     \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n\
     }\ntemplate <class T = ld>\nT binsearch_real(cauto &judge, cauto &init_ok, cauto\
@@ -452,7 +455,7 @@ data:
     \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
     CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
     \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 13 \"verify/yukicoder/yuki888.test.cpp\"\n\n#line 2 \"math/prime/factorize.hpp\"\
+    #endif\n#line 13 \"verify/yukicoder/divisors.test.cpp\"\n\n#line 2 \"math/prime/factorize.hpp\"\
     \n\n#line 2 \"math/modint/modint.hpp\"\n\n#line 2 \"math/modint/modint_internal.hpp\"\
     \n\n#line 4 \"math/modint/modint_internal.hpp\"\n\nnamespace internal\n{\n\nconstexpr\
     \ ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n    return 0;\n\
@@ -705,7 +708,7 @@ data:
     \ == SZ<int>(pps))\n    {\n      res.emplace_back(d);\n      return;\n    }\n\
     \    auto &pp = pps[i];\n    ull nd = d;\n    repi(j, pp.e + 1)\n    {\n     \
     \ dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs, 1, 0);\n  sort(ALL(res));\n\
-    \  return res;\n}\n#line 15 \"verify/yukicoder/yuki888.test.cpp\"\n\nvoid init()\
+    \  return res;\n}\n#line 15 \"verify/yukicoder/divisors.test.cpp\"\n\nvoid init()\
     \ {}\n\nvoid main2()\n{\n  LL(N);\n  auto ds = divisors(factorize(N));\n  PRINT(SUM(ds));\n\
     }\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n   \
     \ #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and\
@@ -754,15 +757,15 @@ data:
   - math/prime/prime_power.hpp
   - math/prime/primality_test.hpp
   isVerificationFile: true
-  path: verify/yukicoder/yuki888.test.cpp
+  path: verify/yukicoder/divisors.test.cpp
   requiredBy: []
-  timestamp: '2024-12-28 13:20:39+09:00'
+  timestamp: '2024-12-28 23:16:25+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/yukicoder/yuki888.test.cpp
+documentation_of: verify/yukicoder/divisors.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/yukicoder/yuki888.test.cpp
-- /verify/verify/yukicoder/yuki888.test.cpp.html
-title: verify/yukicoder/yuki888.test.cpp
+- /verify/verify/yukicoder/divisors.test.cpp
+- /verify/verify/yukicoder/divisors.test.cpp.html
+title: verify/yukicoder/divisors.test.cpp
 ---

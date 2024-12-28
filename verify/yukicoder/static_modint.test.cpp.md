@@ -53,13 +53,13 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_E&lang=jp
+    PROBLEM: https://yukicoder.me/problems/no/1550
     links:
-    - https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_E&lang=jp
-  bundledCode: "#line 1 \"verify/aoj/extgcd.test.cpp\"\n#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_E&lang=jp\"\
-    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
-    \n#define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\
-    \n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+    - https://yukicoder.me/problems/no/1550
+  bundledCode: "#line 1 \"verify/yukicoder/static_modint.test.cpp\"\n#define PROBLEM\
+    \ \"https://yukicoder.me/problems/no/1550\"\n\n#define SINGLE_TESTCASE\n// #define\
+    \ MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n\
+    #define EPS 1e-11\n\n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
     \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
     \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
@@ -443,7 +443,7 @@ data:
     \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
     CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
     \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 13 \"verify/aoj/extgcd.test.cpp\"\n\n#line 2 \"math/modint/modint.hpp\"\
+    #endif\n#line 13 \"verify/yukicoder/static_modint.test.cpp\"\n\n#line 2 \"math/modint/modint.hpp\"\
     \n\n#line 2 \"math/modint/modint_internal.hpp\"\n\n#line 4 \"math/modint/modint_internal.hpp\"\
     \n\nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll x, ll n, int m)\n\
     {\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y =\
@@ -574,35 +574,34 @@ data:
     \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::barrett32\
     \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
     using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
-    #line 15 \"verify/aoj/extgcd.test.cpp\"\n// using mint = modint998244353;\n//\
-    \ using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
-    using mint = modint;\n\n#line 21 \"verify/aoj/extgcd.test.cpp\"\n\nvoid init()\
-    \ {}\n\nvoid main2()\n{\n  LL(a, b);\n  auto [g, x, y] = extgcd(a, b);\n  PRINT(x,\
-    \ y);\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n \
-    \ {\n    #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO\
-    \ and not defined LOCAL\n  CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\");\n \
-    \ cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
-    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (not defined NOT_AOJ and\
-    \ defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\\033[35m \\n[AOJ_TESTCASE]\\\
-    n\\n \\033[m\");\n  while (true)\n  {\n    dump(\"new testcase\");\n    main2();\n\
-    \  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\\033[36m \\n[SINGLE_TESTCASE]\\\
-    n\\n \\033[m\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"\\033[32m\
-    \ \\n[MULTI_TESTCASE]\\n\\n \\033[m\");\n  uint T;\n  cin >> T;\n  while (T--)\n\
-    \  {\n    dump(\"new testcase\");\n    main2();\n  }\n  #endif\n}\n"
-  code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_E&lang=jp\"\
-    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
-    \n#define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\
-    \n#include \"../../template/template_all.hpp\"\n\n#include \"../../math/modint/modint.hpp\"\
-    \n// using mint = modint998244353;\n// using mint = modint1000000007;\n// using\
-    \ mint = static_modint<1000000000>;\nusing mint = modint;\n\n#include \"../../math/extgcd.hpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(a, b);\n  auto [g, x, y] = extgcd(a,\
-    \ b);\n  PRINT(x, y);\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto\
-    \ &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n  #if defined\
-    \ FAST_IO and not defined LOCAL\n  CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\"\
-    );\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed <<\
-    \ setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (not\
-    \ defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\\\
-    033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n    dump(\"\
+    #line 15 \"verify/yukicoder/static_modint.test.cpp\"\n// using mint = modint998244353;\n\
+    using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n//\
+    \ using mint = modint;\n\nvoid init() {}\n\nvoid main2()\n{\n  IN(mint, N);\n\
+    \  PRINT(N);\n  dump(N);\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR =\
+    \ [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n\
+    \  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\033[33m \\n[FAST_IO]\\\
+    n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout\
+    \ << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE\
+    \ or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
+    \\033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n    dump(\"\
+    new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\
+    \\033[36m \\n[SINGLE_TESTCASE]\\n\\n \\033[m\");\n  main2();\n  #elif defined\
+    \ MULTI_TESTCASE\n  CERR(\"\\033[32m \\n[MULTI_TESTCASE]\\n\\n \\033[m\");\n \
+    \ uint T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
+    \  }\n  #endif\n}\n"
+  code: "#define PROBLEM \"https://yukicoder.me/problems/no/1550\"\n\n#define SINGLE_TESTCASE\n\
+    // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n\n#define\
+    \ INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"../../template/template_all.hpp\"\
+    \n\n#include \"../../math/modint/modint.hpp\"\n// using mint = modint998244353;\n\
+    using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n//\
+    \ using mint = modint;\n\nvoid init() {}\n\nvoid main2()\n{\n  IN(mint, N);\n\
+    \  PRINT(N);\n  dump(N);\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR =\
+    \ [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n\
+    \  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\033[33m \\n[FAST_IO]\\\
+    n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout\
+    \ << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE\
+    \ or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
+    \\033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n    dump(\"\
     new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\
     \\033[36m \\n[SINGLE_TESTCASE]\\n\\n \\033[m\");\n  main2();\n  #elif defined\
     \ MULTI_TESTCASE\n  CERR(\"\\033[32m \\n[MULTI_TESTCASE]\\n\\n \\033[m\");\n \
@@ -624,15 +623,15 @@ data:
   - math/modint/modint_internal.hpp
   - math/extgcd.hpp
   isVerificationFile: true
-  path: verify/aoj/extgcd.test.cpp
+  path: verify/yukicoder/static_modint.test.cpp
   requiredBy: []
   timestamp: '2024-12-28 23:16:25+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/aoj/extgcd.test.cpp
+documentation_of: verify/yukicoder/static_modint.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/aoj/extgcd.test.cpp
-- /verify/verify/aoj/extgcd.test.cpp.html
-title: verify/aoj/extgcd.test.cpp
+- /verify/verify/yukicoder/static_modint.test.cpp
+- /verify/verify/yukicoder/static_modint.test.cpp.html
+title: verify/yukicoder/static_modint.test.cpp
 ---

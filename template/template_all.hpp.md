@@ -39,6 +39,12 @@ data:
     path: ds/coordinate_compression.hpp
     title: "\u5EA7\u6A19\u5727\u7E2E"
   - icon: ':heavy_check_mark:'
+    path: ds/csr.hpp
+    title: CSR
+  - icon: ':heavy_check_mark:'
+    path: ds/group_index.hpp
+    title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
+  - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - icon: ':heavy_check_mark:'
@@ -66,6 +72,9 @@ data:
     path: template/template.cpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/csr.test.cpp
+    title: verify/aoj/csr.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/aoj/extgcd.test.cpp
     title: verify/aoj/extgcd.test.cpp
@@ -106,14 +115,17 @@ data:
     path: verify/yosupo/quotients.test.cpp
     title: verify/yosupo/quotients.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-    title: verify/yukicoder/yuki1550_dynamic_modint.test.cpp
+    path: verify/yosupo/static_range_frequency.test.cpp
+    title: verify/yosupo/static_range_frequency.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki1550_static_modint.test.cpp
-    title: verify/yukicoder/yuki1550_static_modint.test.cpp
+    path: verify/yukicoder/divisors.test.cpp
+    title: verify/yukicoder/divisors.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki888.test.cpp
-    title: verify/yukicoder/yuki888.test.cpp
+    path: verify/yukicoder/dynamic_modint.test.cpp
+    title: verify/yukicoder/dynamic_modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/static_modint.test.cpp
+    title: verify/yukicoder/static_modint.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -353,8 +365,11 @@ data:
     inline T gt_cnt(const V &v, Args&&... args)\n{ return SZ<T>(v) - UB<T>(v, forward<Args>(args)...);\
     \ }\ntemplate <class T = ll, class V, class... Args>\ninline T geq_cnt(const V\
     \ &v, Args&&... args)\n{ return SZ<T>(v) - LB<T>(v, forward<Args>(args)...); }\n\
-    \ntemplate <class T = ll>\npair<T, T> binsearch(cauto &judge, cauto &init_ok,\
-    \ cauto &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
+    \ntemplate <class T = ll, class V, class... Args>\ninline T in_cnt(const V &v,\
+    \ auto l, auto r, Args&&... args)\n{\n  if (l > r)\n    return 0;\n  return lt_cnt<T>(v,\
+    \ r, forward<Args>(args)...) - lt_cnt<T>(v, l, forward<Args>(args)...);\n}\n\n\
+    template <class T = ll>\npair<T, T> binsearch(cauto &judge, cauto &init_ok, cauto\
+    \ &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
     \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
     \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n\
     }\ntemplate <class T = ld>\nT binsearch_real(cauto &judge, cauto &init_ok, cauto\
@@ -545,13 +560,16 @@ data:
   - math/prime/prime_power.hpp
   - math/quotients.hpp
   - math/extgcd.hpp
+  - ds/csr.hpp
+  - ds/group_index.hpp
   - ds/coordinate_compression.hpp
   - template/template.cpp
-  timestamp: '2024-12-27 23:57:11+09:00'
+  timestamp: '2024-12-28 23:16:25+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/many_aplusb_128bit.test.cpp
   - verify/yosupo/predecessor_problem.test.cpp
+  - verify/yosupo/static_range_frequency.test.cpp
   - verify/yosupo/kth_root_integer.test.cpp
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/quotients.test.cpp
@@ -563,9 +581,10 @@ data:
   - verify/mytest/modint.test.cpp
   - verify/mytest/modint64.test.cpp
   - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/yuki1550_static_modint.test.cpp
-  - verify/yukicoder/yuki1550_dynamic_modint.test.cpp
-  - verify/yukicoder/yuki888.test.cpp
+  - verify/aoj/csr.test.cpp
+  - verify/yukicoder/divisors.test.cpp
+  - verify/yukicoder/dynamic_modint.test.cpp
+  - verify/yukicoder/static_modint.test.cpp
 documentation_of: template/template_all.hpp
 layout: document
 redirect_from:
