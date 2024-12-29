@@ -14,19 +14,17 @@
  * @docs docs/template/template_algo.md
  */
 
-template <class T, class U = ll>
-U SUM(const vc<T> &v) { return accumulate(ALL(v), U(0)); }
-template <class T>
-T MAX(const vc<T> &v) { return *max_element(ALL(v)); }
-template <class T>
-T MIN(const vc<T> &v) { return *min_element(ALL(v)); }
-template <class T, class U = ll>
-U ARGMAX(const vc<T> &v) { return max_element(ALL(v)) - v.begin(); }
-template <class T, class U = ll>
-U ARGMIN(const vc<T> &v) { return min_element(ALL(v)) - v.begin(); }
+template <class T = ll>
+T SUM(cauto &v) { return accumulate(ALL(v), T(0)); }
+auto MAX(cauto &v) { return *max_element(ALL(v)); }
+auto MIN(cauto &v) { return *min_element(ALL(v)); }
+template <class I = ll>
+I ARGMAX(cauto &v) { return max_element(ALL(v)) - v.begin(); }
+template <class I = ll>
+I ARGMIN(cauto &v) { return min_element(ALL(v)) - v.begin(); }
 
-template<class T, class U = ll>
-U mex(const vector<T> &a)
+template<class T = ll>
+T mex(cauto &a)
 {
   int n = a.size();
   vector<bool> exists(n, false);
