@@ -125,6 +125,9 @@ data:
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/base_repr.test.cpp
+    title: verify/yukicoder/base_repr.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/divisors.test.cpp
     title: verify/yukicoder/divisors.test.cpp
   - icon: ':heavy_check_mark:'
@@ -210,20 +213,24 @@ data:
     \      ok = mid;\n    else\n      ng = mid;\n  }\n  return ok;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS)>\nint sgn(cauto &a, const D &eps = EPS) { return\
     \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
-    \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate\
-    \ <class T = ll>\nvc<T> b_ary(cauto &x, const int &b)\n{\n  vc<T> a;\n  while\
-    \ (x > 0)\n  {\n    a.emplace_back(x % b);\n    x /= b;\n  }\n  reverse(a.begin(),\
+    \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\n// 0\
+    \ \u306B\u5BFE\u3057\u3066\u306F {0} \u304C\u8FD4\u308B\ntemplate <class T = ll>\n\
+    vc<T> base_repr(auto val, auto base)\n{\n  assert(val >= 0);\n  assert(base >=\
+    \ 2);\n  if (val == 0)\n    return {0};\n  vc<T> a;\n  while (val > 0)\n  {\n\
+    \    a.emplace_back(val % base);\n    val /= base;\n  }\n  reverse(a.begin(),\
     \ a.end());\n  return a;\n}\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\u540C\
     \u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate <class\
-    \ T>\nvc<T> b_ary(cauto &x, const int &b, const int &n)\n{\n  vc<T> a(n);\n  repi(i,\
-    \ n)\n  {\n    a[i] = x % b;\n    x /= b;\n  }\n  reverse(a.begin(), a.end());\n\
-    \  return a;\n}\nstring b_ary_str(cauto &x, const int &b, bool use_upper = true)\n\
-    {\n  auto a = b_ary(x, b);\n  string s = \"\";\n  for (cauto &ai : a)\n    s +=\
-    \ (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}\n\
-    string b_ary_str(cauto &x, const int &b, const int &n, bool use_upper = true)\n\
-    {\n  auto a = b_ary(x, b, n);\n  string s = \"\";\n  for (cauto &ai : a)\n   \
-    \ s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n\
-    }\n"
+    \ T = ll>\nvc<T> base_repr(auto val, auto base, int n)\n{\n  assert(val >= 0);\n\
+    \  assert(base >= 2);\n  assert(n >= 0);\n  vc<T> a(n);\n  repi(i, n)\n  {\n \
+    \   a[i] = val % base;\n    val /= base;\n  }\n  reverse(a.begin(), a.end());\n\
+    \  return a;\n}\nstring base_repr_str(auto val, int base, bool use_upper = true)\n\
+    {\n  assert(val >= 0);\n  assert(2 <= base && base <= 36);\n  auto a = base_repr(val,\
+    \ base);\n  string s = \"\";\n  for (cauto &ai : a)\n    s += (ai < 10 ? '0' +\
+    \ ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}\nstring base_repr_str(auto\
+    \ val, int base, int n, bool use_upper = true)\n{\n  assert(val >= 0);\n  assert(2\
+    \ <= base && base <= 36);\n  assert(n >= 0);\n  auto a = base_repr(val, base,\
+    \ n);\n  string s = \"\";\n  for (cauto &ai : a)\n    s += (ai < 10 ? '0' + ai\
+    \ : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}\n"
   code: "#pragma once\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n\
     #ifndef EPS\n#define EPS 1e-11\n#endif\n\n#include \"template_types.hpp\"\n#include\
     \ \"template_rep.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\
@@ -257,20 +264,24 @@ data:
     \      ok = mid;\n    else\n      ng = mid;\n  }\n  return ok;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS)>\nint sgn(cauto &a, const D &eps = EPS) { return\
     \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
-    \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate\
-    \ <class T = ll>\nvc<T> b_ary(cauto &x, const int &b)\n{\n  vc<T> a;\n  while\
-    \ (x > 0)\n  {\n    a.emplace_back(x % b);\n    x /= b;\n  }\n  reverse(a.begin(),\
+    \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\n// 0\
+    \ \u306B\u5BFE\u3057\u3066\u306F {0} \u304C\u8FD4\u308B\ntemplate <class T = ll>\n\
+    vc<T> base_repr(auto val, auto base)\n{\n  assert(val >= 0);\n  assert(base >=\
+    \ 2);\n  if (val == 0)\n    return {0};\n  vc<T> a;\n  while (val > 0)\n  {\n\
+    \    a.emplace_back(val % base);\n    val /= base;\n  }\n  reverse(a.begin(),\
     \ a.end());\n  return a;\n}\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\u540C\
     \u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate <class\
-    \ T>\nvc<T> b_ary(cauto &x, const int &b, const int &n)\n{\n  vc<T> a(n);\n  repi(i,\
-    \ n)\n  {\n    a[i] = x % b;\n    x /= b;\n  }\n  reverse(a.begin(), a.end());\n\
-    \  return a;\n}\nstring b_ary_str(cauto &x, const int &b, bool use_upper = true)\n\
-    {\n  auto a = b_ary(x, b);\n  string s = \"\";\n  for (cauto &ai : a)\n    s +=\
-    \ (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}\n\
-    string b_ary_str(cauto &x, const int &b, const int &n, bool use_upper = true)\n\
-    {\n  auto a = b_ary(x, b, n);\n  string s = \"\";\n  for (cauto &ai : a)\n   \
-    \ s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n\
-    }"
+    \ T = ll>\nvc<T> base_repr(auto val, auto base, int n)\n{\n  assert(val >= 0);\n\
+    \  assert(base >= 2);\n  assert(n >= 0);\n  vc<T> a(n);\n  repi(i, n)\n  {\n \
+    \   a[i] = val % base;\n    val /= base;\n  }\n  reverse(a.begin(), a.end());\n\
+    \  return a;\n}\nstring base_repr_str(auto val, int base, bool use_upper = true)\n\
+    {\n  assert(val >= 0);\n  assert(2 <= base && base <= 36);\n  auto a = base_repr(val,\
+    \ base);\n  string s = \"\";\n  for (cauto &ai : a)\n    s += (ai < 10 ? '0' +\
+    \ ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}\nstring base_repr_str(auto\
+    \ val, int base, int n, bool use_upper = true)\n{\n  assert(val >= 0);\n  assert(2\
+    \ <= base && base <= 36);\n  assert(n >= 0);\n  auto a = base_repr(val, base,\
+    \ n);\n  string s = \"\";\n  for (cauto &ai : a)\n    s += (ai < 10 ? '0' + ai\
+    \ : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}"
   dependsOn:
   - template/template_types.hpp
   - template/template_rep.hpp
@@ -293,7 +304,7 @@ data:
   - template/template_algo.hpp
   - template/template_binsearch.hpp
   - template/template_vector.hpp
-  timestamp: '2024-12-21 17:37:41+09:00'
+  timestamp: '2024-12-30 04:05:44+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/many_aplusb_128bit.test.cpp
@@ -320,6 +331,7 @@ data:
   - verify/aoj/csr.test.cpp
   - verify/yukicoder/divisors.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
+  - verify/yukicoder/base_repr.test.cpp
   - verify/yukicoder/static_modint.test.cpp
 documentation_of: template/template_math.hpp
 layout: document
@@ -468,6 +480,10 @@ $\min(a \times b, m)$ を返す。$a, b, m$ は、型 `T` にキャストして�
 - `T` は整数
 - $a, b, m \geq 0$
 
+##### 計算量
+
+- $O(1)$
+
 #### pow_limited
 
 ```cpp
@@ -480,6 +496,11 @@ $\min(a^b, m)$ を返す。$a, b, m$ は、型 `T` にキャストしてから�
 
 - `T` は整数
 - $a, b, m \geq 0$
+
+##### 計算量
+
+- $a = 1$ のとき、$O(1)$
+- それ以外のとき、$O(\min(b, \log_a m))$
 
 ### 符号関数（誤差を考慮）
 
@@ -494,3 +515,43 @@ int sgn<D = ld>(a, D eps = EPS)
 誤差 $\mathrm{eps}$ を考慮した $a$ の符号を、$-1, 0, 1$ で返す。
 
 整数の場合もこれを使ってよい。
+
+### 位取り記数法
+
+#### base_repr, base_repr_str
+
+```cpp
+(1) vc<T=ll> base_repr(auto val, auto base)
+(2) vc<T=ll> base_repr(auto val, auto base, int n)
+(3) string base_repr_str(auto val, auto base, bool use_upper = true)
+(4) string base_repr_str(auto val, auto base, int n, bool use_upper = true)
+```
+
+$\mathrm{val}$ を $\mathrm{base}$ 進法で表現する。
+
+- (1)：leading-zeros のない vector で表す。順番は通常の位取り記数法と同じ（下位桁が後ろ）。$0$ に対しては $(0)$ を返す。
+- (2)：必要なら leading-zeros をつけて長さ $n$ の vector で表す。順番は通常の位取り記数法と同じ（下位桁が後ろ）。
+- (3)：leading-zeros のない string で表す。$10$ から $35$ は `A` から `Z`（`use_upper` が false の場合は `a` から `z`）で表す。
+- (4)：必要なら leading-zeros をつけて長さ $n$ の string で表す。$10$ から $35$ は `A` から `Z`（`use_upper` が false の場合は `a` から `z`）で表す。
+
+##### 制約
+
+- $\mathrm{val} \geq 0$
+- $\mathrm{base} \geq 2$
+  - (3), (4) では $2 \leq \mathrm{base} \leq 36$
+- (2), (4) では $n \geq 0$
+
+##### 計算量
+
+- (1), (3)：$O(\log_\mathrm{base} \mathrm{val})$
+- (2), (4)：$O(n + \log_\mathrm{base} \mathrm{val})$
+
+##### 余談
+
+逆変換（$\mathrm{base}$ 進法で整数を表す string を整数型に変換する）は、標準ライブラリの `stoll` 等を用いれば十分である。
+
+```cpp
+stoll(str, nullptr, base)  // base 進法表現された str を整数型に
+```
+
+（雑談：`stoll` に基数変換あるのに `to_string` にないのはなんでなんだろうね）

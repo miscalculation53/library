@@ -162,6 +162,9 @@ data:
   - name: verify/yukicoder
     pages:
     - icon: ':heavy_check_mark:'
+      path: verify/yukicoder/base_repr.test.cpp
+      title: verify/yukicoder/base_repr.test.cpp
+    - icon: ':heavy_check_mark:'
       path: verify/yukicoder/divisors.test.cpp
       title: verify/yukicoder/divisors.test.cpp
     - icon: ':heavy_check_mark:'

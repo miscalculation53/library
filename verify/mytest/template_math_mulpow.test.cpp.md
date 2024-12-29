@@ -94,46 +94,50 @@ data:
     \  return ok;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS)>\nint sgn(cauto &a, const D &eps = EPS) { return\
     \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
-    \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate\
-    \ <class T = ll>\nvc<T> b_ary(cauto &x, const int &b)\n{\n  vc<T> a;\n  while\
-    \ (x > 0)\n  {\n    a.emplace_back(x % b);\n    x /= b;\n  }\n  reverse(a.begin(),\
+    \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\n// 0\
+    \ \u306B\u5BFE\u3057\u3066\u306F {0} \u304C\u8FD4\u308B\ntemplate <class T = ll>\n\
+    vc<T> base_repr(auto val, auto base)\n{\n  assert(val >= 0);\n  assert(base >=\
+    \ 2);\n  if (val == 0)\n    return {0};\n  vc<T> a;\n  while (val > 0)\n  {\n\
+    \    a.emplace_back(val % base);\n    val /= base;\n  }\n  reverse(a.begin(),\
     \ a.end());\n  return a;\n}\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\u540C\
     \u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate <class\
-    \ T>\nvc<T> b_ary(cauto &x, const int &b, const int &n)\n{\n  vc<T> a(n);\n  repi(i,\
-    \ n)\n  {\n    a[i] = x % b;\n    x /= b;\n  }\n  reverse(a.begin(), a.end());\n\
-    \  return a;\n}\nstring b_ary_str(cauto &x, const int &b, bool use_upper = true)\n\
-    {\n  auto a = b_ary(x, b);\n  string s = \"\";\n  for (cauto &ai : a)\n    s +=\
-    \ (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}\n\
-    string b_ary_str(cauto &x, const int &b, const int &n, bool use_upper = true)\n\
-    {\n  auto a = b_ary(x, b, n);\n  string s = \"\";\n  for (cauto &ai : a)\n   \
-    \ s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n\
-    }\n#line 2 \"template/template_dump.hpp\"\n\n#line 4 \"template/template_dump.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs\
-    \ docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp>\
-    \ // https://github.com/philip82148/cpp-dump\nnamespace cpp_dump::_detail\n{\n\
-    \  inline string export_var(\n      const i128 &x, const string &indent, size_t\
-    \ last_line_length,\n      size_t current_depth, bool fail_on_newline, const export_command\
-    \ &command\n  ) {\n    return export_var(i128tos(x), indent, last_line_length,\
-    \ current_depth, fail_on_newline, command);\n  }\n} // namespace cpp_dump::_detail\n\
-    #define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
-    \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n\
-    #define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 5 \"verify/mytest/template_math_mulpow.test.cpp\"\n\nmt19937 mt;\n\
-    \nvoid test1()\n{\n  assert(ipow(0, 0) == 1);\n  assert(ipow(0, 1) == 0);\n  assert(ipow(1,\
-    \ 1LL << 60) == 1);\n  assert(ipow(-1, 1LL << 60) == 1);\n  assert(ipow(-1, (1LL\
-    \ << 60) - 1) == -1);\n  assert(ipow(2, 10) == 1024);\n  assert(ipow(2, 60) ==\
-    \ 1LL << 60);\n  assert(ipow(3, 10) == 59049);\n  assert(ipow(-4, 10) == 1048576);\n\
-    \  assert(ipow(-4, 11) == -4194304);\n}\n\nvoid test2()\n{\n  for (int t = 0;\
-    \ t < 100000; t++)\n  {\n    int a = mt() % (mt() % 2 == 0 ? 1 << 15 : 1 << 30);\n\
-    \    int b = mt() % (mt() % 2 == 0 ? 1 << 15 : 1 << 30);\n    int m = mt() % (1\
-    \ << 30);\n    int god = min(ll(a) * ll(b), ll(m));\n    int ans = mul_limited<int>(a,\
-    \ b, m);\n    dump(t, god == m);\n    assert(god == ans);\n  }\n}\n\nvoid test3()\n\
-    {\n  for (int t = 0; t < 100000; t++)\n  {\n    int a = mt() % 11;\n    int b\
-    \ = mt() % 19;\n    int m = mt() % (mt() % 2 == 0 ? 10 : 1 << 30);\n    int god\
-    \ = min(ipow(a, b), (ll)m);\n    int ans = pow_limited<int>(a, b, m);\n    dump(t,\
-    \ a, b, ipow(a, b), m, god, ans);\n    assert(god == ans);\n  }\n}\n\nint main()\n\
-    {\n  test1();\n  test2();\n  test3();\n\n  cout << \"Hello World\" << endl;\n\
-    }\n"
+    \ T = ll>\nvc<T> base_repr(auto val, auto base, int n)\n{\n  assert(val >= 0);\n\
+    \  assert(base >= 2);\n  assert(n >= 0);\n  vc<T> a(n);\n  repi(i, n)\n  {\n \
+    \   a[i] = val % base;\n    val /= base;\n  }\n  reverse(a.begin(), a.end());\n\
+    \  return a;\n}\nstring base_repr_str(auto val, int base, bool use_upper = true)\n\
+    {\n  assert(val >= 0);\n  assert(2 <= base && base <= 36);\n  auto a = base_repr(val,\
+    \ base);\n  string s = \"\";\n  for (cauto &ai : a)\n    s += (ai < 10 ? '0' +\
+    \ ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}\nstring base_repr_str(auto\
+    \ val, int base, int n, bool use_upper = true)\n{\n  assert(val >= 0);\n  assert(2\
+    \ <= base && base <= 36);\n  assert(n >= 0);\n  auto a = base_repr(val, base,\
+    \ n);\n  string s = \"\";\n  for (cauto &ai : a)\n    s += (ai < 10 ? '0' + ai\
+    \ : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}\n#line 2 \"template/template_dump.hpp\"\
+    \n\n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
+    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
+    \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
+    \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
+    \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
+    \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
+    \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
+    #else\n#define dump(...)\n#define local(...)\n#endif\n#line 5 \"verify/mytest/template_math_mulpow.test.cpp\"\
+    \n\nmt19937 mt;\n\nvoid test1()\n{\n  assert(ipow(0, 0) == 1);\n  assert(ipow(0,\
+    \ 1) == 0);\n  assert(ipow(1, 1LL << 60) == 1);\n  assert(ipow(-1, 1LL << 60)\
+    \ == 1);\n  assert(ipow(-1, (1LL << 60) - 1) == -1);\n  assert(ipow(2, 10) ==\
+    \ 1024);\n  assert(ipow(2, 60) == 1LL << 60);\n  assert(ipow(3, 10) == 59049);\n\
+    \  assert(ipow(-4, 10) == 1048576);\n  assert(ipow(-4, 11) == -4194304);\n}\n\n\
+    void test2()\n{\n  for (int t = 0; t < 100000; t++)\n  {\n    int a = mt() % (mt()\
+    \ % 2 == 0 ? 1 << 15 : 1 << 30);\n    int b = mt() % (mt() % 2 == 0 ? 1 << 15\
+    \ : 1 << 30);\n    int m = mt() % (1 << 30);\n    int god = min(ll(a) * ll(b),\
+    \ ll(m));\n    int ans = mul_limited<int>(a, b, m);\n    dump(t, god == m);\n\
+    \    assert(god == ans);\n  }\n}\n\nvoid test3()\n{\n  for (int t = 0; t < 100000;\
+    \ t++)\n  {\n    int a = mt() % 11;\n    int b = mt() % 19;\n    int m = mt()\
+    \ % (mt() % 2 == 0 ? 10 : 1 << 30);\n    int god = min(ipow(a, b), (ll)m);\n \
+    \   int ans = pow_limited<int>(a, b, m);\n    dump(t, a, b, ipow(a, b), m, god,\
+    \ ans);\n    assert(god == ans);\n  }\n}\n\nint main()\n{\n  test1();\n  test2();\n\
+    \  test3();\n\n  cout << \"Hello World\" << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#include \"../../template/template_math.hpp\"\n#include \"../../template/template_dump.hpp\"\
     \n\nmt19937 mt;\n\nvoid test1()\n{\n  assert(ipow(0, 0) == 1);\n  assert(ipow(0,\
@@ -159,7 +163,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_math_mulpow.test.cpp
   requiredBy: []
-  timestamp: '2024-12-21 17:37:41+09:00'
+  timestamp: '2024-12-30 04:05:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_math_mulpow.test.cpp

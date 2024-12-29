@@ -138,6 +138,10 @@ $\min(a \times b, m)$ を返す。$a, b, m$ は、型 `T` にキャストして�
 - `T` は整数
 - $a, b, m \geq 0$
 
+##### 計算量
+
+- $O(1)$
+
 #### pow_limited
 
 ```cpp
@@ -150,6 +154,11 @@ $\min(a^b, m)$ を返す。$a, b, m$ は、型 `T` にキャストしてから�
 
 - `T` は整数
 - $a, b, m \geq 0$
+
+##### 計算量
+
+- $a = 1$ のとき、$O(1)$
+- それ以外のとき、$O(\min(b, \log_a m))$
 
 ### 符号関数（誤差を考慮）
 
@@ -164,3 +173,43 @@ int sgn<D = ld>(a, D eps = EPS)
 誤差 $\mathrm{eps}$ を考慮した $a$ の符号を、$-1, 0, 1$ で返す。
 
 整数の場合もこれを使ってよい。
+
+### 位取り記数法
+
+#### base_repr, base_repr_str
+
+```cpp
+(1) vc<T=ll> base_repr(auto val, auto base)
+(2) vc<T=ll> base_repr(auto val, auto base, int n)
+(3) string base_repr_str(auto val, auto base, bool use_upper = true)
+(4) string base_repr_str(auto val, auto base, int n, bool use_upper = true)
+```
+
+$\mathrm{val}$ を $\mathrm{base}$ 進法で表現する。
+
+- (1)：leading-zeros のない vector で表す。順番は通常の位取り記数法と同じ（下位桁が後ろ）。$0$ に対しては $(0)$ を返す。
+- (2)：必要なら leading-zeros をつけて長さ $n$ の vector で表す。順番は通常の位取り記数法と同じ（下位桁が後ろ）。
+- (3)：leading-zeros のない string で表す。$10$ から $35$ は `A` から `Z`（`use_upper` が false の場合は `a` から `z`）で表す。
+- (4)：必要なら leading-zeros をつけて長さ $n$ の string で表す。$10$ から $35$ は `A` から `Z`（`use_upper` が false の場合は `a` から `z`）で表す。
+
+##### 制約
+
+- $\mathrm{val} \geq 0$
+- $\mathrm{base} \geq 2$
+  - (3), (4) では $2 \leq \mathrm{base} \leq 36$
+- (2), (4) では $n \geq 0$
+
+##### 計算量
+
+- (1), (3)：$O(\log_\mathrm{base} \mathrm{val})$
+- (2), (4)：$O(n + \log_\mathrm{base} \mathrm{val})$
+
+##### 余談
+
+逆変換（$\mathrm{base}$ 進法で整数を表す string を整数型に変換する）は、標準ライブラリの `stoll` 等を用いれば十分である。
+
+```cpp
+stoll(str, nullptr, base)  // base 進法表現された str を整数型に
+```
+
+（雑談：`stoll` に基数変換あるのに `to_string` にないのはなんでなんだろうね）

@@ -139,6 +139,9 @@ data:
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/base_repr.test.cpp
+    title: verify/yukicoder/base_repr.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/divisors.test.cpp
     title: verify/yukicoder/divisors.test.cpp
   - icon: ':heavy_check_mark:'
@@ -258,6 +261,7 @@ data:
   - verify/aoj/csr.test.cpp
   - verify/yukicoder/divisors.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
+  - verify/yukicoder/base_repr.test.cpp
   - verify/yukicoder/static_modint.test.cpp
 documentation_of: template/template_rep.hpp
 layout: document

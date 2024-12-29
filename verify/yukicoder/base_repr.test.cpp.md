@@ -2,9 +2,6 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
-    path: math/quotients.hpp
-    title: "\u5546\u5217\u6319"
-  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -47,13 +44,13 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/enumerate_quotients
+    PROBLEM: https://yukicoder.me/problems/no/2087
     links:
-    - https://judge.yosupo.jp/problem/enumerate_quotients
-  bundledCode: "#line 1 \"verify/yosupo/quotients.test.cpp\"\n#define PROBLEM \"https://judge.yosupo.jp/problem/enumerate_quotients\"\
-    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
-    \n#define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\
-    \n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+    - https://yukicoder.me/problems/no/2087
+  bundledCode: "#line 1 \"verify/yukicoder/base_repr.test.cpp\"\n#define PROBLEM \"\
+    https://yukicoder.me/problems/no/2087\"\n\n#define SINGLE_TESTCASE\n// #define\
+    \ MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n\
+    #define EPS 1e-11\n\n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
     \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
     \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
@@ -440,27 +437,11 @@ data:
     \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
     CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
     \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 13 \"verify/yosupo/quotients.test.cpp\"\n\n#line 2 \"math/quotients.hpp\"\
-    \n\n#line 4 \"math/quotients.hpp\"\n\n/**\n * @brief \u5546\u5217\u6319\n * @docs\
-    \ docs/math/quotients.md\n */\n\n// (y, l, r)\n// y \u306F floor(n / x^d) (x:\
-    \ \u6574\u6570) \u3068\u3057\u3066\u8868\u305B\u308B\u6574\u6570\n// y == floor(n\
-    \ / x^d) <=> l < x <= r\nstruct quotients\n{\nprivate:\n  ll n;\n  int d;\n\n\
-    public:\n  quotients(ll n, int d = 1) : n(n), d(d)\n  {\n    assert(n >= 1 &&\
-    \ d >= 1);\n  }\n  struct Iterator\n  {\n  private:\n    ll y, l, r;\n    const\
-    \ quotients &q;\n\n  public:\n    Iterator(ll y, ll l, ll r, const quotients &q)\
-    \ : y(y), l(l), r(r), q(q) {}\n    tuple<ll, ll, ll> operator*() const { return\
-    \ {y, l, r}; }\n    Iterator& operator++()\n    {\n      if (l == 0)\n       \
-    \ y = l = r = -1;\n      else\n      {\n        r = l;\n        y = q.n / ipow(l,\
-    \ q.d);\n        l = iroot(q.n / (y + 1), q.d);\n      }\n      return *this;\n\
-    \    }\n    bool operator!=(const Iterator &other) const { return y != other.y;\
-    \ }\n  };\n  Iterator begin() const { return Iterator(1, iroot(n / 2, d), iroot(n,\
-    \ d), *this); }\n  Iterator end() const { return Iterator(-1, -1, -1, *this);\
-    \ }\n};\n#line 15 \"verify/yosupo/quotients.test.cpp\"\n\nvoid init() {}\n\nvoid\
-    \ main2()\n{\n  LL(N);\n  vl ans;\n  fec([y, l, r] : quotients(N))\n  {\n    ans.push_back(y);\n\
-    \  }\n  PRINT(ans.size());\n  PRINTVEC(ans);\n}\n\nvoid test() {}\n\nint main()\n\
-    {\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n  \
-    \  #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\033[33m\
-    \ \\n[FAST_IO]\\n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    #endif\n#line 13 \"verify/yukicoder/base_repr.test.cpp\"\n\nvoid init() {}\n\n\
+    void main2()\n{\n  LL(N, M);\n  PRINT(base_repr_str(M, N));\n}\n\nvoid test()\
+    \ {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n\
+    \    cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n\
+    \  CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
     \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
     \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
     \  CERR(\"\\033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n\
@@ -469,12 +450,10 @@ data:
     \ defined MULTI_TESTCASE\n  CERR(\"\\033[32m \\n[MULTI_TESTCASE]\\n\\n \\033[m\"\
     );\n  uint T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n\
     \    main2();\n  }\n  #endif\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/enumerate_quotients\"\n\
-    \n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
-    \n#define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\
-    \n#include \"../../template/template_all.hpp\"\n\n#include \"../../math/quotients.hpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n  vl ans;\n  fec([y, l, r] :\
-    \ quotients(N))\n  {\n    ans.push_back(y);\n  }\n  PRINT(ans.size());\n  PRINTVEC(ans);\n\
+  code: "#define PROBLEM \"https://yukicoder.me/problems/no/2087\"\n\n#define SINGLE_TESTCASE\n\
+    // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n\n#define\
+    \ INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"../../template/template_all.hpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, M);\n  PRINT(base_repr_str(M, N));\n\
     }\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n   \
     \ #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and\
     \ not defined LOCAL\n  CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\");\n  cin.tie(0);\n\
@@ -498,17 +477,16 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
-  - math/quotients.hpp
   isVerificationFile: true
-  path: verify/yosupo/quotients.test.cpp
+  path: verify/yukicoder/base_repr.test.cpp
   requiredBy: []
-  timestamp: '2024-12-30 04:08:13+09:00'
+  timestamp: '2024-12-30 04:11:14+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/yosupo/quotients.test.cpp
+documentation_of: verify/yukicoder/base_repr.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/yosupo/quotients.test.cpp
-- /verify/verify/yosupo/quotients.test.cpp.html
-title: verify/yosupo/quotients.test.cpp
+- /verify/verify/yukicoder/base_repr.test.cpp
+- /verify/verify/yukicoder/base_repr.test.cpp.html
+title: verify/yukicoder/base_repr.test.cpp
 ---

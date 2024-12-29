@@ -110,6 +110,9 @@ data:
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/base_repr.test.cpp
+    title: verify/yukicoder/base_repr.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/divisors.test.cpp
     title: verify/yukicoder/divisors.test.cpp
   - icon: ':heavy_check_mark:'
@@ -197,25 +200,29 @@ data:
     \  return ok;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS)>\nint sgn(cauto &a, const D &eps = EPS) { return\
     \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
-    \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate\
-    \ <class T = ll>\nvc<T> b_ary(cauto &x, const int &b)\n{\n  vc<T> a;\n  while\
-    \ (x > 0)\n  {\n    a.emplace_back(x % b);\n    x /= b;\n  }\n  reverse(a.begin(),\
+    \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\n// 0\
+    \ \u306B\u5BFE\u3057\u3066\u306F {0} \u304C\u8FD4\u308B\ntemplate <class T = ll>\n\
+    vc<T> base_repr(auto val, auto base)\n{\n  assert(val >= 0);\n  assert(base >=\
+    \ 2);\n  if (val == 0)\n    return {0};\n  vc<T> a;\n  while (val > 0)\n  {\n\
+    \    a.emplace_back(val % base);\n    val /= base;\n  }\n  reverse(a.begin(),\
     \ a.end());\n  return a;\n}\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\u540C\
     \u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate <class\
-    \ T>\nvc<T> b_ary(cauto &x, const int &b, const int &n)\n{\n  vc<T> a(n);\n  repi(i,\
-    \ n)\n  {\n    a[i] = x % b;\n    x /= b;\n  }\n  reverse(a.begin(), a.end());\n\
-    \  return a;\n}\nstring b_ary_str(cauto &x, const int &b, bool use_upper = true)\n\
-    {\n  auto a = b_ary(x, b);\n  string s = \"\";\n  for (cauto &ai : a)\n    s +=\
-    \ (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}\n\
-    string b_ary_str(cauto &x, const int &b, const int &n, bool use_upper = true)\n\
-    {\n  auto a = b_ary(x, b, n);\n  string s = \"\";\n  for (cauto &ai : a)\n   \
-    \ s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n\
-    }\n#line 6 \"template/template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n\
-    \ */\n\n#define ALL(a) (a).begin(), (a).end()\ntemplate <class T = ll>\ninline\
-    \ T SZ(cauto &x) { return x.size(); }\n\ntemplate <class F>\nauto gen_vec(const\
-    \ int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] =\
-    \ f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    \ T = ll>\nvc<T> base_repr(auto val, auto base, int n)\n{\n  assert(val >= 0);\n\
+    \  assert(base >= 2);\n  assert(n >= 0);\n  vc<T> a(n);\n  repi(i, n)\n  {\n \
+    \   a[i] = val % base;\n    val /= base;\n  }\n  reverse(a.begin(), a.end());\n\
+    \  return a;\n}\nstring base_repr_str(auto val, int base, bool use_upper = true)\n\
+    {\n  assert(val >= 0);\n  assert(2 <= base && base <= 36);\n  auto a = base_repr(val,\
+    \ base);\n  string s = \"\";\n  for (cauto &ai : a)\n    s += (ai < 10 ? '0' +\
+    \ ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}\nstring base_repr_str(auto\
+    \ val, int base, int n, bool use_upper = true)\n{\n  assert(val >= 0);\n  assert(2\
+    \ <= base && base <= 36);\n  assert(n >= 0);\n  auto a = base_repr(val, base,\
+    \ n);\n  string s = \"\";\n  for (cauto &ai : a)\n    s += (ai < 10 ? '0' + ai\
+    \ : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}\n#line 6 \"template/template_vector.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09\n *\
+    \ @docs docs/template/template_vector.md\n */\n\n#define ALL(a) (a).begin(), (a).end()\n\
+    template <class T = ll>\ninline T SZ(cauto &x) { return x.size(); }\n\ntemplate\
+    \ <class F>\nauto gen_vec(const int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n\
+    \  repi(i, n) res[i] = f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
     template <class T, size_t d, size_t i = 0>\nauto dvec(cauto (&sz)[d], const T\
     \ &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i + 1>(sz,\
     \ init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT ctol(const\
@@ -243,32 +250,30 @@ data:
     \ max_e = const_fn<ll, -INF>;\nusing min_e = const_fn<ll, INF>;\nusing zero_fn\
     \ = const_fn<ll, 0LL>;\n#line 11 \"template/template_algo.hpp\"\n\n/**\n * @brief\
     \ \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\u30E0\
-    \uFF09\n * @docs docs/template/template_algo.md\n */\n\ntemplate <class T, class\
-    \ U = ll>\nU SUM(const vc<T> &v) { return accumulate(ALL(v), U(0)); }\ntemplate\
-    \ <class T>\nT MAX(const vc<T> &v) { return *max_element(ALL(v)); }\ntemplate\
-    \ <class T>\nT MIN(const vc<T> &v) { return *min_element(ALL(v)); }\ntemplate\
-    \ <class T, class U = ll>\nU ARGMAX(const vc<T> &v) { return max_element(ALL(v))\
-    \ - v.begin(); }\ntemplate <class T, class U = ll>\nU ARGMIN(const vc<T> &v) {\
-    \ return min_element(ALL(v)) - v.begin(); }\n\ntemplate<class T, class U = ll>\n\
-    U mex(const vector<T> &a)\n{\n  int n = a.size();\n  vector<bool> exists(n, false);\n\
-    \  repi(i, n) if (0 <= a[i] && a[i] < n) exists[a[i]] = true;\n  repi(x, n) if\
-    \ (!exists[x]) return x;\n  return n;\n}\n\ntemplate <class T = ll>\nvc<T> permid(const\
-    \ int &n, const int &base_index = 0)\n{\n  vc<T> p(n);\n  repi(i, n) p[i] = i\
-    \ + base_index;\n  return p;\n}\ntemplate <class T>\nvc<T> perminv(const vc<T>\
-    \ &p)\n{\n  if (p.empty())\n    return {};\n  const int n = p.size();\n  vc<T>\
-    \ q(MAX(p) + 1);\n  repi(i, n) if (p[i] >= 0) q[p[i]] = i;\n  return q;\n}\n//\
-    \ a[p[i]] for all i\ntemplate <class T, class U>\nvc<T> permuted(const vc<T> &a,\
-    \ const vc<U> &p)\n{\n  const int n = p.size();\n  vc<T> res(n);\n  repi(i, n)\n\
-    \  {\n    assert(0 <= p[i] && p[i] < U(a.size()));\n    res[i] = a[p[i]];\n  }\n\
-    \  return res;\n}\n\ntemplate <class V>\nV reversed(const V &v) { return {v.rbegin(),\
-    \ v.rend()}; }\n\n#if __cplusplus < 202002L\ntemplate <class V, class... Args>\n\
-    V sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n  return\
-    \ v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&... args)\n\
-    {\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\ntemplate\
-    \ <class V>\nvoid unique(V &v) { v.erase(unique(ALL(v)), v.end()); }\ntemplate\
-    \ <class V>\nV uniqued(V v) { unique(v); return v; }\n\ntemplate <class V>\nvoid\
-    \ sortunique(V &v)\n{\n  sort(ALL(v));\n  unique(v);\n}\ntemplate <class V>\n\
-    V sortuniqued(V v) { sortunique(v); return v; }\n\n// 01234 -> 12340\ntemplate\
+    \uFF09\n * @docs docs/template/template_algo.md\n */\n\ntemplate <class T = ll>\n\
+    T SUM(cauto &v) { return accumulate(ALL(v), T(0)); }\nauto MAX(cauto &v) { return\
+    \ *max_element(ALL(v)); }\nauto MIN(cauto &v) { return *min_element(ALL(v)); }\n\
+    template <class I = ll>\nI ARGMAX(cauto &v) { return max_element(ALL(v)) - v.begin();\
+    \ }\ntemplate <class I = ll>\nI ARGMIN(cauto &v) { return min_element(ALL(v))\
+    \ - v.begin(); }\n\ntemplate<class T = ll>\nT mex(cauto &a)\n{\n  int n = a.size();\n\
+    \  vector<bool> exists(n, false);\n  repi(i, n) if (0 <= a[i] && a[i] < n) exists[a[i]]\
+    \ = true;\n  repi(x, n) if (!exists[x]) return x;\n  return n;\n}\n\ntemplate\
+    \ <class T = ll>\nvc<T> permid(const int &n, const int &base_index = 0)\n{\n \
+    \ vc<T> p(n);\n  repi(i, n) p[i] = i + base_index;\n  return p;\n}\ntemplate <class\
+    \ T>\nvc<T> perminv(const vc<T> &p)\n{\n  if (p.empty())\n    return {};\n  const\
+    \ int n = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i, n) if (p[i] >= 0) q[p[i]]\
+    \ = i;\n  return q;\n}\n// a[p[i]] for all i\ntemplate <class T, class U>\nvc<T>\
+    \ permuted(const vc<T> &a, const vc<U> &p)\n{\n  const int n = p.size();\n  vc<T>\
+    \ res(n);\n  repi(i, n)\n  {\n    assert(0 <= p[i] && p[i] < U(a.size()));\n \
+    \   res[i] = a[p[i]];\n  }\n  return res;\n}\n\ntemplate <class V>\nV reversed(const\
+    \ V &v) { return {v.rbegin(), v.rend()}; }\n\n#if __cplusplus < 202002L\ntemplate\
+    \ <class V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n\
+    \  return v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
+    \ args)\n{\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\
+    \ntemplate <class V>\nvoid unique(V &v) { v.erase(unique(ALL(v)), v.end()); }\n\
+    template <class V>\nV uniqued(V v) { unique(v); return v; }\n\ntemplate <class\
+    \ V>\nvoid sortunique(V &v)\n{\n  sort(ALL(v));\n  unique(v);\n}\ntemplate <class\
+    \ V>\nV sortuniqued(V v) { sortunique(v); return v; }\n\n// 01234 -> 12340\ntemplate\
     \ <class V, class U>\nvoid rotate(V &v, U k)\n{ \n  const U n = v.size();\n  k\
     \ = (k % n + n) % n;\n  rotate(v.begin(), v.begin() + k, v.end());\n}\n// 01234\
     \ -> 12340\ntemplate <class V, class U>\nV rotated(V v, U k) { rotate(v, k); return\
@@ -320,78 +325,77 @@ data:
     \n#include \"template_types.hpp\"\n#include \"template_rep.hpp\"\n#include \"\
     template_vector.hpp\"\n#include \"template_func.hpp\"\n\n/**\n * @brief \u30C6\
     \u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\u30E0\uFF09\
-    \n * @docs docs/template/template_algo.md\n */\n\ntemplate <class T, class U =\
-    \ ll>\nU SUM(const vc<T> &v) { return accumulate(ALL(v), U(0)); }\ntemplate <class\
-    \ T>\nT MAX(const vc<T> &v) { return *max_element(ALL(v)); }\ntemplate <class\
-    \ T>\nT MIN(const vc<T> &v) { return *min_element(ALL(v)); }\ntemplate <class\
-    \ T, class U = ll>\nU ARGMAX(const vc<T> &v) { return max_element(ALL(v)) - v.begin();\
-    \ }\ntemplate <class T, class U = ll>\nU ARGMIN(const vc<T> &v) { return min_element(ALL(v))\
-    \ - v.begin(); }\n\ntemplate<class T, class U = ll>\nU mex(const vector<T> &a)\n\
-    {\n  int n = a.size();\n  vector<bool> exists(n, false);\n  repi(i, n) if (0 <=\
-    \ a[i] && a[i] < n) exists[a[i]] = true;\n  repi(x, n) if (!exists[x]) return\
-    \ x;\n  return n;\n}\n\ntemplate <class T = ll>\nvc<T> permid(const int &n, const\
-    \ int &base_index = 0)\n{\n  vc<T> p(n);\n  repi(i, n) p[i] = i + base_index;\n\
-    \  return p;\n}\ntemplate <class T>\nvc<T> perminv(const vc<T> &p)\n{\n  if (p.empty())\n\
-    \    return {};\n  const int n = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i,\
-    \ n) if (p[i] >= 0) q[p[i]] = i;\n  return q;\n}\n// a[p[i]] for all i\ntemplate\
-    \ <class T, class U>\nvc<T> permuted(const vc<T> &a, const vc<U> &p)\n{\n  const\
-    \ int n = p.size();\n  vc<T> res(n);\n  repi(i, n)\n  {\n    assert(0 <= p[i]\
-    \ && p[i] < U(a.size()));\n    res[i] = a[p[i]];\n  }\n  return res;\n}\n\ntemplate\
-    \ <class V>\nV reversed(const V &v) { return {v.rbegin(), v.rend()}; }\n\n#if\
-    \ __cplusplus < 202002L\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
-    \ args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n  return v;\n}\n#else\ntemplate\
-    \ <class V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  ranges::sort(v,\
-    \ forward<Args>(args)...);\n  return v;\n}\n#endif\n\ntemplate <class V>\nvoid\
-    \ unique(V &v) { v.erase(unique(ALL(v)), v.end()); }\ntemplate <class V>\nV uniqued(V\
-    \ v) { unique(v); return v; }\n\ntemplate <class V>\nvoid sortunique(V &v)\n{\n\
-    \  sort(ALL(v));\n  unique(v);\n}\ntemplate <class V>\nV sortuniqued(V v) { sortunique(v);\
-    \ return v; }\n\n// 01234 -> 12340\ntemplate <class V, class U>\nvoid rotate(V\
-    \ &v, U k)\n{ \n  const U n = v.size();\n  k = (k % n + n) % n;\n  rotate(v.begin(),\
-    \ v.begin() + k, v.end());\n}\n// 01234 -> 12340\ntemplate <class V, class U>\n\
-    V rotated(V v, U k) { rotate(v, k); return v; }\n\ntemplate <class T>\nvvc<T>\
-    \ top(const vvc<T> &a)\n{\n  if (a.empty())\n    return {};\n  const int n = a.size(),\
-    \ m = a[0].size();\n  vvc<T> b(m, vc<T>(n));\n  repi(i, n)\n  {\n    assert(SZ<int>(a[i])\
-    \ == m);\n    repi(j, m) b[j][i] = a[i][j];\n  }\n  return b;\n}\nvstr top(const\
-    \ vstr &a)\n{\n  vvc<char> a_(a.size());\n  repi(i, SZ<int>(a)) a_[i] = {ALL(a[i])};\n\
-    \  vvc<char> b_ = top(a_);\n  vstr b(b_.size());\n  repi(i, SZ<int>(b)) b[i] =\
-    \ {ALL(b_[i])};\n  return b;\n}\n\n// 12\n// 34 -> 246\n// 56    135\n// (\u53CD\
-    \u6642\u8A08\u56DE\u308A)\ntemplate <class VV, class U = ll>\nVV rot90(const VV\
-    \ &a, U k = 1)\n{\n  if (a.empty())\n    return {};\n  const int n = a.size(),\
-    \ m = a[0].size();\n  k = (k % 4 + 4) % 4;\n  if (k == 0)\n    return a;\n  else\
-    \ if (k == 1)\n  {\n    VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i,\
-    \ n)\n    {\n      assert(SZ<int>(a[i]) == m);\n      repi(j, m) b[m - 1 - j][i]\
-    \ = a[i][j];\n    }\n    return b;\n  }\n  else if (k == 2)\n  {\n    VV b(n);\n\
-    \    repi(i, n) b[i].resize(m);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
-    \ == m);\n      repi(j, m) b[n - 1 - i][m - 1 - j] = a[i][j];\n    }\n    return\
-    \ b;\n  }\n  else\n  {\n    VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i,\
-    \ n)\n    {\n      assert(SZ<int>(a[i]) == m);\n      repi(j, m) b[j][n - 1 -\
-    \ i] = a[i][j];\n    }\n    return b;\n  }\n}\n\ntemplate <class T, class F =\
-    \ decltype(plus<>())>\nvc<T> cuml(const vc<T> &v, const F &op = plus<>(), const\
-    \ T &e = 0)\n{\n  const int n = v.size();\n  vc<T> res(n + 1, e);\n  repi(i, n)\
-    \ res[i + 1] = op(res[i], v[i]);\n  return res;\n}\ntemplate <class T, class F\
-    \ = decltype(plus<>())>\nvc<T> cumr(const vc<T> &v, const F &op = plus<>(), const\
-    \ T &e = 0)\n{ return reversed(cuml<T, F>(reversed(v), op, e)); }\ntemplate <class\
-    \ T>\nvc<T> cumlmax(const vc<T> &v) { return cuml(v, max_op<T>(), max_e()());\
-    \ }\ntemplate <class T>\nvc<T> cumrmax(const vc<T> &v) { return cumr(v, max_op<T>(),\
-    \ max_e()()); }\ntemplate <class T>\nvc<T> cumlmin(const vc<T> &v) { return cuml(v,\
-    \ min_op<T>(), min_e()()); }\ntemplate <class T>\nvc<T> cumrmin(const vc<T> &v)\
-    \ { return cumr(v, min_op<T>(), min_e()()); }\n\ntemplate <class T>\nvc<T> adjd(const\
-    \ vc<T> &v)\n{\n  int n = v.size();\n  vc<T> res(n + 1);\n  res[0] = v[0];\n \
-    \ repi(i, 1, n) res[i] = v[i] - v[i - 1];\n  res[n] = -v[n - 1];\n  return res;\n\
-    }\n\ntemplate <class T = ll>\nstruct direct_product\n{\nprivate:\n  vc<T> a;\n\
-    public:\n  direct_product(const vc<T> &a) : a(a)\n  {\n    assert(!a.empty());\n\
-    \    fec(ai : a) assert(ai >= 1);\n  }\n  struct Iterator\n  {\n  private:\n \
-    \   vc<T> b;\n    const direct_product &prod;\n\n  public:\n    Iterator(const\
-    \ vc<T> &b, const direct_product &prod) : b(b), prod(prod) {}\n    vc<T> operator*()\
-    \ const { return b; }\n    Iterator& operator++()\n    {\n      b.back()++;\n\
-    \      repi(i, SZ<int>(prod.a) - 1, 0, -1)\n      {\n        if (b[i] == prod.a[i])\n\
-    \        {\n          b[i] = 0;\n          b[i - 1]++;\n        }\n        else\n\
-    \          break;\n      }\n      return *this;\n    }\n    bool operator!=(const\
-    \ Iterator &other) const { return b != other.b; }\n  };\n  Iterator begin() const\
-    \ { return Iterator(vc<T>(a.size(), 0), *this); }\n  Iterator end() const\n  {\n\
-    \    vc<T> c(a.size(), 0);\n    c[0] = a[0];\n    return Iterator(c, *this);\n\
-    \  }\n};\n\nconst vpll DRULgrid = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll\
-    \ DRULplane = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};"
+    \n * @docs docs/template/template_algo.md\n */\n\ntemplate <class T = ll>\nT SUM(cauto\
+    \ &v) { return accumulate(ALL(v), T(0)); }\nauto MAX(cauto &v) { return *max_element(ALL(v));\
+    \ }\nauto MIN(cauto &v) { return *min_element(ALL(v)); }\ntemplate <class I =\
+    \ ll>\nI ARGMAX(cauto &v) { return max_element(ALL(v)) - v.begin(); }\ntemplate\
+    \ <class I = ll>\nI ARGMIN(cauto &v) { return min_element(ALL(v)) - v.begin();\
+    \ }\n\ntemplate<class T = ll>\nT mex(cauto &a)\n{\n  int n = a.size();\n  vector<bool>\
+    \ exists(n, false);\n  repi(i, n) if (0 <= a[i] && a[i] < n) exists[a[i]] = true;\n\
+    \  repi(x, n) if (!exists[x]) return x;\n  return n;\n}\n\ntemplate <class T =\
+    \ ll>\nvc<T> permid(const int &n, const int &base_index = 0)\n{\n  vc<T> p(n);\n\
+    \  repi(i, n) p[i] = i + base_index;\n  return p;\n}\ntemplate <class T>\nvc<T>\
+    \ perminv(const vc<T> &p)\n{\n  if (p.empty())\n    return {};\n  const int n\
+    \ = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i, n) if (p[i] >= 0) q[p[i]] = i;\n\
+    \  return q;\n}\n// a[p[i]] for all i\ntemplate <class T, class U>\nvc<T> permuted(const\
+    \ vc<T> &a, const vc<U> &p)\n{\n  const int n = p.size();\n  vc<T> res(n);\n \
+    \ repi(i, n)\n  {\n    assert(0 <= p[i] && p[i] < U(a.size()));\n    res[i] =\
+    \ a[p[i]];\n  }\n  return res;\n}\n\ntemplate <class V>\nV reversed(const V &v)\
+    \ { return {v.rbegin(), v.rend()}; }\n\n#if __cplusplus < 202002L\ntemplate <class\
+    \ V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n\
+    \  return v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
+    \ args)\n{\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\
+    \ntemplate <class V>\nvoid unique(V &v) { v.erase(unique(ALL(v)), v.end()); }\n\
+    template <class V>\nV uniqued(V v) { unique(v); return v; }\n\ntemplate <class\
+    \ V>\nvoid sortunique(V &v)\n{\n  sort(ALL(v));\n  unique(v);\n}\ntemplate <class\
+    \ V>\nV sortuniqued(V v) { sortunique(v); return v; }\n\n// 01234 -> 12340\ntemplate\
+    \ <class V, class U>\nvoid rotate(V &v, U k)\n{ \n  const U n = v.size();\n  k\
+    \ = (k % n + n) % n;\n  rotate(v.begin(), v.begin() + k, v.end());\n}\n// 01234\
+    \ -> 12340\ntemplate <class V, class U>\nV rotated(V v, U k) { rotate(v, k); return\
+    \ v; }\n\ntemplate <class T>\nvvc<T> top(const vvc<T> &a)\n{\n  if (a.empty())\n\
+    \    return {};\n  const int n = a.size(), m = a[0].size();\n  vvc<T> b(m, vc<T>(n));\n\
+    \  repi(i, n)\n  {\n    assert(SZ<int>(a[i]) == m);\n    repi(j, m) b[j][i] =\
+    \ a[i][j];\n  }\n  return b;\n}\nvstr top(const vstr &a)\n{\n  vvc<char> a_(a.size());\n\
+    \  repi(i, SZ<int>(a)) a_[i] = {ALL(a[i])};\n  vvc<char> b_ = top(a_);\n  vstr\
+    \ b(b_.size());\n  repi(i, SZ<int>(b)) b[i] = {ALL(b_[i])};\n  return b;\n}\n\n\
+    // 12\n// 34 -> 246\n// 56    135\n// (\u53CD\u6642\u8A08\u56DE\u308A)\ntemplate\
+    \ <class VV, class U = ll>\nVV rot90(const VV &a, U k = 1)\n{\n  if (a.empty())\n\
+    \    return {};\n  const int n = a.size(), m = a[0].size();\n  k = (k % 4 + 4)\
+    \ % 4;\n  if (k == 0)\n    return a;\n  else if (k == 1)\n  {\n    VV b(m);\n\
+    \    repi(j, m) b[j].resize(n);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
+    \ == m);\n      repi(j, m) b[m - 1 - j][i] = a[i][j];\n    }\n    return b;\n\
+    \  }\n  else if (k == 2)\n  {\n    VV b(n);\n    repi(i, n) b[i].resize(m);\n\
+    \    repi(i, n)\n    {\n      assert(SZ<int>(a[i]) == m);\n      repi(j, m) b[n\
+    \ - 1 - i][m - 1 - j] = a[i][j];\n    }\n    return b;\n  }\n  else\n  {\n   \
+    \ VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
+    \ == m);\n      repi(j, m) b[j][n - 1 - i] = a[i][j];\n    }\n    return b;\n\
+    \  }\n}\n\ntemplate <class T, class F = decltype(plus<>())>\nvc<T> cuml(const\
+    \ vc<T> &v, const F &op = plus<>(), const T &e = 0)\n{\n  const int n = v.size();\n\
+    \  vc<T> res(n + 1, e);\n  repi(i, n) res[i + 1] = op(res[i], v[i]);\n  return\
+    \ res;\n}\ntemplate <class T, class F = decltype(plus<>())>\nvc<T> cumr(const\
+    \ vc<T> &v, const F &op = plus<>(), const T &e = 0)\n{ return reversed(cuml<T,\
+    \ F>(reversed(v), op, e)); }\ntemplate <class T>\nvc<T> cumlmax(const vc<T> &v)\
+    \ { return cuml(v, max_op<T>(), max_e()()); }\ntemplate <class T>\nvc<T> cumrmax(const\
+    \ vc<T> &v) { return cumr(v, max_op<T>(), max_e()()); }\ntemplate <class T>\n\
+    vc<T> cumlmin(const vc<T> &v) { return cuml(v, min_op<T>(), min_e()()); }\ntemplate\
+    \ <class T>\nvc<T> cumrmin(const vc<T> &v) { return cumr(v, min_op<T>(), min_e()());\
+    \ }\n\ntemplate <class T>\nvc<T> adjd(const vc<T> &v)\n{\n  int n = v.size();\n\
+    \  vc<T> res(n + 1);\n  res[0] = v[0];\n  repi(i, 1, n) res[i] = v[i] - v[i -\
+    \ 1];\n  res[n] = -v[n - 1];\n  return res;\n}\n\ntemplate <class T = ll>\nstruct\
+    \ direct_product\n{\nprivate:\n  vc<T> a;\npublic:\n  direct_product(const vc<T>\
+    \ &a) : a(a)\n  {\n    assert(!a.empty());\n    fec(ai : a) assert(ai >= 1);\n\
+    \  }\n  struct Iterator\n  {\n  private:\n    vc<T> b;\n    const direct_product\
+    \ &prod;\n\n  public:\n    Iterator(const vc<T> &b, const direct_product &prod)\
+    \ : b(b), prod(prod) {}\n    vc<T> operator*() const { return b; }\n    Iterator&\
+    \ operator++()\n    {\n      b.back()++;\n      repi(i, SZ<int>(prod.a) - 1, 0,\
+    \ -1)\n      {\n        if (b[i] == prod.a[i])\n        {\n          b[i] = 0;\n\
+    \          b[i - 1]++;\n        }\n        else\n          break;\n      }\n \
+    \     return *this;\n    }\n    bool operator!=(const Iterator &other) const {\
+    \ return b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
+    \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll DRULgrid = {{1,\
+    \ 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane = {{0, -1}, {1, 0}, {0,\
+    \ 1}, {-1, 0}};"
   dependsOn:
   - template/template_types.hpp
   - template/template_rep.hpp
@@ -414,7 +418,7 @@ data:
   - ds/coordinate_compression.hpp
   - template/template.cpp
   - template/template_all.hpp
-  timestamp: '2024-12-27 23:57:11+09:00'
+  timestamp: '2024-12-30 04:08:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/many_aplusb_128bit.test.cpp
@@ -436,6 +440,7 @@ data:
   - verify/aoj/csr.test.cpp
   - verify/yukicoder/divisors.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
+  - verify/yukicoder/base_repr.test.cpp
   - verify/yukicoder/static_modint.test.cpp
 documentation_of: template/template_algo.hpp
 layout: document
@@ -452,10 +457,10 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA
 #### SUM
 
 ```cpp
-U SUM(vc<T> v)
+T SUM(V v)
 ```
 
-$v$ の要素の総和を（型 `U` の値として）返す。`U` はデフォルトでは `ll`。
+$v$ の要素の総和を（型 `T` の値として）返す。`T` はデフォルトでは `ll`。
 
 ##### 計算量
 
@@ -464,11 +469,11 @@ $v$ の要素の総和を（型 `U` の値として）返す。`U` はデフォ�
 #### MAX, MIN
 
 ```cpp
-(1) T MAX(vc<T> v, T dflt = INF)
-(2) T MIN(vc<T> v, T dflt = -INF)
+(1) auto MAX(V v)
+(2) auto MIN(V v)
 ```
 
-それぞれ、$v$ の要素の最大値、最小値を返す。
+それぞれ、$v$ の要素の最大値、最小値を（$v$ の要素の型で）返す。
 
 ##### 制約
 
@@ -481,8 +486,8 @@ $v$ の要素の総和を（型 `U` の値として）返す。`U` はデフォ�
 #### ARGMAX, ARGMIN
 
 ```cpp
-(1) T ARGMAX(vc<T> v)
-(2) T ARGMIN(vc<T> v)
+(1) I=ll ARGMAX(V v)
+(2) I=ll ARGMIN(V v)
 ```
 
 それぞれ、$v$ の要素が最大値、最小値をとるインデックス（のうち最小のもの）を返す。$v$ が空のときは $0$ を返す。
@@ -494,7 +499,7 @@ $v$ の要素の総和を（型 `U` の値として）返す。`U` はデフォ�
 #### mex
 
 ```cpp
-U mex(vc<T> v)
+U mex(V v)
 ```
 
 $v$ の要素の mex を（型 `U` の値として）返す。`U` はデフォルトでは `ll`。
