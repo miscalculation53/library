@@ -112,42 +112,55 @@ template <class D = decltype(EPS)>
 int sgn(cauto &a, const D &eps = EPS) { return int(a > eps) - int(a < -eps); }
 
 // 位取り記数法と同じ順番（下位桁が後ろ）
+// 0 に対しては {0} が返る
 template <class T = ll>
-vc<T> b_ary(cauto &x, const int &b)
+vc<T> base_repr(auto val, auto base)
 {
+  assert(val >= 0);
+  assert(base >= 2);
+  if (val == 0)
+    return {0};
   vc<T> a;
-  while (x > 0)
+  while (val > 0)
   {
-    a.emplace_back(x % b);
-    x /= b;
+    a.emplace_back(val % base);
+    val /= base;
   }
   reverse(a.begin(), a.end());
   return a;
 }
 // 位取り記数法と同じ順番（下位桁が後ろ）
-template <class T>
-vc<T> b_ary(cauto &x, const int &b, const int &n)
+template <class T = ll>
+vc<T> base_repr(auto val, auto base, int n)
 {
+  assert(val >= 0);
+  assert(base >= 2);
+  assert(n >= 0);
   vc<T> a(n);
   repi(i, n)
   {
-    a[i] = x % b;
-    x /= b;
+    a[i] = val % base;
+    val /= base;
   }
   reverse(a.begin(), a.end());
   return a;
 }
-string b_ary_str(cauto &x, const int &b, bool use_upper = true)
+string base_repr_str(auto val, int base, bool use_upper = true)
 {
-  auto a = b_ary(x, b);
+  assert(val >= 0);
+  assert(2 <= base && base <= 36);
+  auto a = base_repr(val, base);
   string s = "";
   for (cauto &ai : a)
     s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));
   return s;
 }
-string b_ary_str(cauto &x, const int &b, const int &n, bool use_upper = true)
+string base_repr_str(auto val, int base, int n, bool use_upper = true)
 {
-  auto a = b_ary(x, b, n);
+  assert(val >= 0);
+  assert(2 <= base && base <= 36);
+  assert(n >= 0);
+  auto a = base_repr(val, base, n);
   string s = "";
   for (cauto &ai : a)
     s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));
