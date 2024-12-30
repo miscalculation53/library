@@ -61,11 +61,11 @@ $a_i = \mathrm{val}$ である添字 $i$ を小さい順に並べた CSR の行�
 - (2)：$\min \lbrace j \leq i \mid a_j = \mathrm{val} \rbrace$、存在しなければ $-1$
 - (3)：$\min \lbrace j \gt i \mid a_j = \mathrm{val} \rbrace$、存在しなければ $n$
 - (4)：$\min \lbrace j \geq i \mid a_j = \mathrm{val} \rbrace$、存在しなければ $n$
-- (5)：$ \# \lbrace j \lt i \mid a_j = \mathrm{val} \rbrace $
-- (6)：$ \# \lbrace j \leq i \mid a_j = \mathrm{val} \rbrace $
-- (7)：$ \# \lbrace j \gt i \mid a_j = \mathrm{val} \rbrace $
-- (8)：$ \# \lbrace j \geq i \mid a_j = \mathrm{val} \rbrace $
-- (9)：$ \# \lbrace l \leq j \lt r \mid a_j = \mathrm{val} \rbrace $
+- (5)：$ \\# \lbrace j \lt i \mid a_j = \mathrm{val} \rbrace $
+- (6)：$ \\# \lbrace j \leq i \mid a_j = \mathrm{val} \rbrace $
+- (7)：$ \\# \lbrace j \gt i \mid a_j = \mathrm{val} \rbrace $
+- (8)：$ \\# \lbrace j \geq i \mid a_j = \mathrm{val} \rbrace $
+- (9)：$ \\# \lbrace l \leq j \lt r \mid a_j = \mathrm{val} \rbrace $
 
 「$a_i = \mathrm{val}$ は何番目の $\mathrm{val}$ か」は (5) と一致する。
 
