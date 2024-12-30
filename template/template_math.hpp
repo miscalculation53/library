@@ -28,12 +28,15 @@ template <class T = ll>
 inline constexpr T safemod(cauto &a, cauto &b) { return T(a) - T(b) * divfloor<T>(a, b); }
 
 template <class T = ll>
-constexpr T ipow(auto a, auto b)
+constexpr T ipow(cauto &a, auto b)
 {
   assert(b >= 0);
-  if (b == 0) return 1;
-  if (a == 0 || a == 1) return a;
-  if (a == -1) return b & 1 ? -1 : 1;
+  if (b == 0)
+    return 1;
+  if (a == 0 || a == 1)
+    return a;
+  if (a < 0 && a == -1)
+    return b & 1 ? -1 : 1;
 
   T res = 1, tmp = a;
   while (true)
@@ -56,18 +59,27 @@ T mul_limited(cauto &a, cauto &b, cauto &m = INF)
   return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);
 }
 template <class T = ll>
-T pow_limited(cauto &a, cauto &b, cauto &m = INF)
+T pow_limited(cauto &a, auto b, cauto &m = INF)
 {
   assert(a >= 0 && b >= 0 && m >= 0);
   if (a <= 1 || b == 0)
     return min(ipow<T>(a, b), T(m));
   
-  T res = 1;
-  repi(_, b)
+  T res = 1, tmp = a;
+  while (true)
   {
-    if (res > T(m) / T(a))
-      return T(m);
-    res *= T(a);
+    if (b & 1)
+    {
+      if (res > T(m) / tmp)
+        return m;
+      res *= tmp;
+    }
+    b >>= 1;
+    if (b == 0)
+      break;
+    if (tmp > T(m) / tmp)
+      return m;
+    tmp *= tmp;
   }
   return res;
 }
@@ -78,33 +90,42 @@ constexpr T iroot(cauto &a, cauto &k)
   assert(a >= 0 && k >= 1);
   if (a <= 1 || k == 1)
     return a;
+  if (k == 2 && a <= ULLONG_MAX)
+    return sqrtl(a);
 
-  auto isok = [&](const T &x) -> bool
+  auto isok = [&](T x) -> bool
   {
     if (x == 0)
       return true;
-    T tmp = 1;
-    repi(_, k)
+    T res = 1, k2 = k;
+    while (true)
     {
-      if (tmp > T(a) / x)
+      if (k2 & 1)
+      {
+        if (res > T(a) / x)
+          return false;
+        res *= x;
+      }
+      k2 >>= 1;
+      if (k2 == 0)
+        break;
+      if (x > T(a) / x)
         return false;
-      tmp *= x;
+      x *= x;
     }
-    return tmp <= T(a);
+    return res <= T(a);
   };
 
-  T ok = 0, ng = 1;
-  while (isok(ng))
-    ok = ng, ng <<= 1;
-  while (ng - ok > 1)
+  T x = pow(a, 1.0 / k);
+  bool up = true;
+  while (!isok(x))
+    up = false, x--;
+  if (up)
   {
-    T mid = ((ng - ok) >> 1) + ok;
-    if (isok(mid))
-      ok = mid;
-    else
-      ng = mid;
+    while (x < numeric_limits<T>::max() && isok(x + 1))
+      x++;
   }
-  return ok;
+  return x;
 }
 
 // https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html
