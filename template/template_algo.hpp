@@ -14,7 +14,8 @@
  * @docs docs/template/template_algo.md
  */
 
-template <class T = ll>
+auto SUM(cauto &v) { return accumulate(ALL(v), (decltype(v[0]))0); }
+template <class T>
 T SUM(cauto &v) { return accumulate(ALL(v), T(0)); }
 auto MAX(cauto &v) { return *max_element(ALL(v)); }
 auto MIN(cauto &v) { return *min_element(ALL(v)); }
