@@ -161,24 +161,25 @@ data:
     \ max_e = const_fn<ll, -INF>;\nusing min_e = const_fn<ll, INF>;\nusing zero_fn\
     \ = const_fn<ll, 0LL>;\n#line 11 \"template/template_algo.hpp\"\n\n/**\n * @brief\
     \ \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\u30E0\
-    \uFF09\n * @docs docs/template/template_algo.md\n */\n\ntemplate <class T = ll>\n\
-    T SUM(cauto &v) { return accumulate(ALL(v), T(0)); }\nauto MAX(cauto &v) { return\
-    \ *max_element(ALL(v)); }\nauto MIN(cauto &v) { return *min_element(ALL(v)); }\n\
-    template <class I = ll>\nI ARGMAX(cauto &v) { return max_element(ALL(v)) - v.begin();\
-    \ }\ntemplate <class I = ll>\nI ARGMIN(cauto &v) { return min_element(ALL(v))\
-    \ - v.begin(); }\n\ntemplate<class T = ll>\nT mex(cauto &a)\n{\n  int n = a.size();\n\
-    \  vector<bool> exists(n, false);\n  repi(i, n) if (0 <= a[i] && a[i] < n) exists[a[i]]\
-    \ = true;\n  repi(x, n) if (!exists[x]) return x;\n  return n;\n}\n\ntemplate\
-    \ <class T = ll>\nvc<T> permid(const int &n, const int &base_index = 0)\n{\n \
-    \ vc<T> p(n);\n  repi(i, n) p[i] = i + base_index;\n  return p;\n}\ntemplate <class\
-    \ T>\nvc<T> perminv(const vc<T> &p)\n{\n  if (p.empty())\n    return {};\n  const\
-    \ int n = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i, n) if (p[i] >= 0) q[p[i]]\
-    \ = i;\n  return q;\n}\n// a[p[i]] for all i\ntemplate <class T, class U>\nvc<T>\
-    \ permuted(const vc<T> &a, const vc<U> &p)\n{\n  const int n = p.size();\n  vc<T>\
-    \ res(n);\n  repi(i, n)\n  {\n    assert(0 <= p[i] && p[i] < U(a.size()));\n \
-    \   res[i] = a[p[i]];\n  }\n  return res;\n}\n\ntemplate <class V>\nV reversed(const\
-    \ V &v) { return {v.rbegin(), v.rend()}; }\n\n#if __cplusplus < 202002L\ntemplate\
-    \ <class V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n\
+    \uFF09\n * @docs docs/template/template_algo.md\n */\n\nauto SUM(cauto &v) { return\
+    \ accumulate(ALL(v), (decltype(v[0]))0); }\ntemplate <class T>\nT SUM(cauto &v)\
+    \ { return accumulate(ALL(v), T(0)); }\nauto MAX(cauto &v) { return *max_element(ALL(v));\
+    \ }\nauto MIN(cauto &v) { return *min_element(ALL(v)); }\ntemplate <class I =\
+    \ ll>\nI ARGMAX(cauto &v) { return max_element(ALL(v)) - v.begin(); }\ntemplate\
+    \ <class I = ll>\nI ARGMIN(cauto &v) { return min_element(ALL(v)) - v.begin();\
+    \ }\n\ntemplate<class T = ll>\nT mex(cauto &a)\n{\n  int n = a.size();\n  vector<bool>\
+    \ exists(n, false);\n  repi(i, n) if (0 <= a[i] && a[i] < n) exists[a[i]] = true;\n\
+    \  repi(x, n) if (!exists[x]) return x;\n  return n;\n}\n\ntemplate <class T =\
+    \ ll>\nvc<T> permid(const int &n, const int &base_index = 0)\n{\n  vc<T> p(n);\n\
+    \  repi(i, n) p[i] = i + base_index;\n  return p;\n}\ntemplate <class T>\nvc<T>\
+    \ perminv(const vc<T> &p)\n{\n  if (p.empty())\n    return {};\n  const int n\
+    \ = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i, n) if (p[i] >= 0) q[p[i]] = i;\n\
+    \  return q;\n}\n// a[p[i]] for all i\ntemplate <class T, class U>\nvc<T> permuted(const\
+    \ vc<T> &a, const vc<U> &p)\n{\n  const int n = p.size();\n  vc<T> res(n);\n \
+    \ repi(i, n)\n  {\n    assert(0 <= p[i] && p[i] < U(a.size()));\n    res[i] =\
+    \ a[p[i]];\n  }\n  return res;\n}\n\ntemplate <class V>\nV reversed(const V &v)\
+    \ { return {v.rbegin(), v.rend()}; }\n\n#if __cplusplus < 202002L\ntemplate <class\
+    \ V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n\
     \  return v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
     \ args)\n{\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\
     \ntemplate <class V>\nvoid unique(V &v) { v.erase(unique(ALL(v)), v.end()); }\n\
@@ -362,7 +363,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_algo.test.cpp
   requiredBy: []
-  timestamp: '2024-12-30 15:05:37+09:00'
+  timestamp: '2025-01-04 23:27:57+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_algo.test.cpp

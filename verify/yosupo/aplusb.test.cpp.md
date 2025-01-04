@@ -176,9 +176,10 @@ data:
     \ = const_fn<ll, 0LL>;\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n\
     #define INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 11 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
-    \u30EA\u30BA\u30E0\uFF09\n * @docs docs/template/template_algo.md\n */\n\ntemplate\
-    \ <class T = ll>\nT SUM(cauto &v) { return accumulate(ALL(v), T(0)); }\nauto MAX(cauto\
-    \ &v) { return *max_element(ALL(v)); }\nauto MIN(cauto &v) { return *min_element(ALL(v));\
+    \u30EA\u30BA\u30E0\uFF09\n * @docs docs/template/template_algo.md\n */\n\nauto\
+    \ SUM(cauto &v) { return accumulate(ALL(v), (decltype(v[0]))0); }\ntemplate <class\
+    \ T>\nT SUM(cauto &v) { return accumulate(ALL(v), T(0)); }\nauto MAX(cauto &v)\
+    \ { return *max_element(ALL(v)); }\nauto MIN(cauto &v) { return *min_element(ALL(v));\
     \ }\ntemplate <class I = ll>\nI ARGMAX(cauto &v) { return max_element(ALL(v))\
     \ - v.begin(); }\ntemplate <class I = ll>\nI ARGMIN(cauto &v) { return min_element(ALL(v))\
     \ - v.begin(); }\n\ntemplate<class T = ll>\nT mex(cauto &a)\n{\n  int n = a.size();\n\
@@ -484,7 +485,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/aplusb.test.cpp
   requiredBy: []
-  timestamp: '2024-12-30 15:05:37+09:00'
+  timestamp: '2025-01-04 23:27:57+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/aplusb.test.cpp
