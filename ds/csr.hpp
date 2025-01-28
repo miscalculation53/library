@@ -30,18 +30,18 @@ private:
     template <class I = ll>
     inline I size() const { return endi - begi; }
     inline bool empty() const { return size() > 0; }
-    inline T &operator[](int i) const
+
+    inline T get(int i) const
     {
       assert(0 <= i && i < size());
       return *(begi + i);
     }
-    inline T &at(int i) const { return operator[](i); }
-    inline T &front() const
+    inline T front() const
     {
       assert(!empty());
       return *begi;
     }
-    inline T &back() const
+    inline T back() const
     {
       assert(!empty());
       return *prev(endi);

@@ -36,33 +36,33 @@ public:
   template <class I = ll>
   I lt_max(auto val, int i) const
   {
-    auto &is = idxs(val);
+    auto is = idxs(val);
     ll j = ::lt_max(is, i);
-    return j == -1 ? -1 : is[j];
+    return j == -1 ? -1 : is.get(j);
   }
   // 値が val になる添字のうち i 以下で最大のもの (なければ -1)
   template <class I = ll>
   I leq_max(auto val, int i) const
   {
-    auto &is = idxs(val);
+    auto is = idxs(val);
     ll j = ::leq_max(is, i);
-    return j == -1 ? -1 : is[j];
+    return j == -1 ? -1 : is.get(j);
   }
   // 値が val になる添字のうち i 超過で最小のもの (なければ n)
   template <class I = ll>
   I gt_min(auto val, int i) const
   {
-    auto &is = idxs(val);
+    auto is = idxs(val);
     ll j = ::gt_min(is, i);
-    return j == is.size() ? n : is[j];
+    return j == is.size() ? n : is.get(j);
   }
   // 値が val になる添字のうち i 以上で最小のもの (なければ n)
   template <class I = ll>
   I geq_min(auto val, int i) const
   {
-    auto &is = idxs(val);
+    auto is = idxs(val);
     ll j = ::geq_min(is, i);
-    return j == is.size() ? n : is[j];
+    return j == is.size() ? n : is.get(j);
   }
   // 値が val になる i 未満の添字の個数
   // i 番目が val のとき、「これは何番目の val か？」に一致
