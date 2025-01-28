@@ -718,9 +718,9 @@ data:
   timestamp: '2025-01-04 23:27:57+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yukicoder/divisors.test.cpp
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/primality_test.test.cpp
-  - verify/yukicoder/divisors.test.cpp
 documentation_of: math/prime/primality_test.hpp
 layout: document
 redirect_from:

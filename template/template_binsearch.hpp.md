@@ -374,41 +374,41 @@ data:
   path: template/template_binsearch.hpp
   requiredBy:
   - math/modint/modint_internal.hpp
-  - math/modint/modint.hpp
   - math/modint/modint64.hpp
+  - math/modint/modint.hpp
+  - math/quotients.hpp
+  - math/extgcd.hpp
   - math/prime/factorize.hpp
   - math/prime/primality_test.hpp
   - math/prime/prime_power.hpp
-  - math/quotients.hpp
-  - math/extgcd.hpp
-  - ds/csr.hpp
-  - ds/group_index.hpp
-  - ds/coordinate_compression.hpp
   - template/template.cpp
   - template/template_all.hpp
+  - ds/group_index.hpp
+  - ds/csr.hpp
+  - ds/coordinate_compression.hpp
   timestamp: '2024-12-30 15:05:37+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/many_aplusb_128bit.test.cpp
-  - verify/yosupo/predecessor_problem.test.cpp
-  - verify/yosupo/static_range_frequency.test.cpp
-  - verify/yosupo/kth_root_integer.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/quotients.test.cpp
-  - verify/yosupo/many_aplusb_tuple.test.cpp
-  - verify/yosupo/associative_array_lower_bound.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/aplusb.test.cpp
-  - verify/yosupo/many_aplusb.test.cpp
   - verify/mytest/modint.test.cpp
   - verify/mytest/template_binsearch.test.cpp
   - verify/mytest/modint64.test.cpp
-  - verify/aoj/extgcd.test.cpp
   - verify/aoj/csr.test.cpp
-  - verify/yukicoder/divisors.test.cpp
+  - verify/aoj/extgcd.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
   - verify/yukicoder/base_repr.test.cpp
   - verify/yukicoder/static_modint.test.cpp
+  - verify/yukicoder/divisors.test.cpp
+  - verify/yosupo/aplusb.test.cpp
+  - verify/yosupo/quotients.test.cpp
+  - verify/yosupo/kth_root_integer.test.cpp
+  - verify/yosupo/many_aplusb_tuple.test.cpp
+  - verify/yosupo/predecessor_problem.test.cpp
+  - verify/yosupo/static_range_frequency.test.cpp
+  - verify/yosupo/factorize.test.cpp
+  - verify/yosupo/primality_test.test.cpp
+  - verify/yosupo/associative_array_lower_bound.test.cpp
+  - verify/yosupo/many_aplusb.test.cpp
+  - verify/yosupo/many_aplusb_128bit.test.cpp
 documentation_of: template/template_binsearch.hpp
 layout: document
 redirect_from:

@@ -454,44 +454,43 @@ data:
     \ const iterator &endi) : begi(begi), endi(endi) {}\n    inline iterator begin()\
     \ const { return begi; }\n    inline iterator end() const { return endi; }\n \
     \   template <class I = ll>\n    inline I size() const { return endi - begi; }\n\
-    \    inline bool empty() const { return size() > 0; }\n    inline T &operator[](int\
+    \    inline bool empty() const { return size() > 0; }\n\n    inline T get(int\
     \ i) const\n    {\n      assert(0 <= i && i < size());\n      return *(begi +\
-    \ i);\n    }\n    inline T &at(int i) const { return operator[](i); }\n    inline\
-    \ T &front() const\n    {\n      assert(!empty());\n      return *begi;\n    }\n\
-    \    inline T &back() const\n    {\n      assert(!empty());\n      return *prev(endi);\n\
-    \    }\n  };\n\npublic:\n  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\
-    \u305F vector\n  template <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) :\
-    \ n(n), elist(ies.size())\n  {\n    assert(n >= 0);\n    start.assign(n, 0);\n\
-    \    fec([ i, e ] : ies)\n    {\n      assert(0 <= i && i < n);\n      start[i]++;\n\
-    \    }\n    start = cuml(start);\n    auto cnt = start;\n    fec([ i, e ] : ies)\
-    \ elist[cnt[i]++] = e;\n  }\n  // vv[i] \u306B elem \u305F\u3061\u304C\u683C\u7D0D\
-    \u3055\u308C\u305F vector\n  CSR(const vvc<T> &vv) : n(vv.size()), start(n + 1)\n\
-    \  {\n    int m = 0;\n    fec(row : vv) m += row.size();\n    elist.resize(m);\n\
-    \    int k = 0;\n    repi(i, n)\n    {\n      start[i] = k;\n      fec(e : vv[i])\
-    \ elist[k++] = e;\n    }\n    start.back() = m;\n  }\n\n  // i \u884C\u76EE\n\
-    \  Row row(int i) const\n  {\n    if (!(0 <= i && i < n))\n      return Row(elist.begin(),\
-    \ elist.begin());\n    return Row(elist.begin() + start[i], elist.begin() + start[i\
-    \ + 1]);\n  }\n\n  template <class I = ll>\n  I size() const { return n; }\n\n\
-    \  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i] = {elist.begin()\
-    \ + start[i], elist.begin() + start[i + 1]};\n    return res;\n  }\n};\n#line\
-    \ 15 \"verify/aoj/csr.test.cpp\"\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n\
-    \  vvl vv(N);\n  vpll ies;\n  rep(i, N)\n  {\n    LL(u, k);\n    u--;\n    CINVEC(k,\
-    \ vv.at(u));\n    offset(vv.at(u), -1);\n    fec(v : vv.at(i)) ies.push_back({u,\
-    \ v});\n  }\n\n  CSR csr1(vv), csr2(N, ies);\n  assert(csr1.to_vv() == csr2.to_vv()\
-    \ && csr1.to_vv() == vv);\n  dump(csr1.to_vv() | cp::index());\n  vvl ans(N, vl(N,\
-    \ 0));\n  rep(i, N)\n  {\n    fec(j : csr1.row(i)) ans.at(i).at(j) = 1;\n  }\n\
-    \  PRINTVEC2(ans);\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto\
-    \ &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n  #if defined\
-    \ FAST_IO and not defined LOCAL\n  CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\"\
-    );\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed <<\
-    \ setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (not\
-    \ defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\\\
-    033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n    dump(\"\
-    new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\
-    \\033[36m \\n[SINGLE_TESTCASE]\\n\\n \\033[m\");\n  main2();\n  #elif defined\
-    \ MULTI_TESTCASE\n  CERR(\"\\033[32m \\n[MULTI_TESTCASE]\\n\\n \\033[m\");\n \
-    \ uint T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
-    \  }\n  #endif\n}\n"
+    \ i);\n    }\n    inline T front() const\n    {\n      assert(!empty());\n   \
+    \   return *begi;\n    }\n    inline T back() const\n    {\n      assert(!empty());\n\
+    \      return *prev(endi);\n    }\n  };\n\npublic:\n  CSR() {}\n  // (i, elem)\
+    \ \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template <class I>\n  CSR(int\
+    \ n, const vc<pair<I, T>> &ies) : n(n), elist(ies.size())\n  {\n    assert(n >=\
+    \ 0);\n    start.assign(n, 0);\n    fec([ i, e ] : ies)\n    {\n      assert(0\
+    \ <= i && i < n);\n      start[i]++;\n    }\n    start = cuml(start);\n    auto\
+    \ cnt = start;\n    fec([ i, e ] : ies) elist[cnt[i]++] = e;\n  }\n  // vv[i]\
+    \ \u306B elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  CSR(const\
+    \ vvc<T> &vv) : n(vv.size()), start(n + 1)\n  {\n    int m = 0;\n    fec(row :\
+    \ vv) m += row.size();\n    elist.resize(m);\n    int k = 0;\n    repi(i, n)\n\
+    \    {\n      start[i] = k;\n      fec(e : vv[i]) elist[k++] = e;\n    }\n   \
+    \ start.back() = m;\n  }\n\n  // i \u884C\u76EE\n  Row row(int i) const\n  {\n\
+    \    if (!(0 <= i && i < n))\n      return Row(elist.begin(), elist.begin());\n\
+    \    return Row(elist.begin() + start[i], elist.begin() + start[i + 1]);\n  }\n\
+    \n  template <class I = ll>\n  I size() const { return n; }\n\n  vvc<T> to_vv()\
+    \ const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i] = {elist.begin() + start[i],\
+    \ elist.begin() + start[i + 1]};\n    return res;\n  }\n};\n#line 15 \"verify/aoj/csr.test.cpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n  vvl vv(N);\n  vpll ies;\n \
+    \ rep(i, N)\n  {\n    LL(u, k);\n    u--;\n    CINVEC(k, vv.at(u));\n    offset(vv.at(u),\
+    \ -1);\n    fec(v : vv.at(i)) ies.push_back({u, v});\n  }\n\n  CSR csr1(vv), csr2(N,\
+    \ ies);\n  assert(csr1.to_vv() == csr2.to_vv() && csr1.to_vv() == vv);\n  dump(csr1.to_vv()\
+    \ | cp::index());\n  vvl ans(N, vl(N, 0));\n  rep(i, N)\n  {\n    fec(j : csr1.row(i))\
+    \ ans.at(i).at(j) = 1;\n  }\n  PRINTVEC2(ans);\n}\n\nvoid test() {}\n\nint main()\n\
+    {\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n  \
+    \  #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\033[33m\
+    \ \\n[FAST_IO]\\n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
+    \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
+    \  CERR(\"\\033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n\
+    \    dump(\"new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n\
+    \  CERR(\"\\033[36m \\n[SINGLE_TESTCASE]\\n\\n \\033[m\");\n  main2();\n  #elif\
+    \ defined MULTI_TESTCASE\n  CERR(\"\\033[32m \\n[MULTI_TESTCASE]\\n\\n \\033[m\"\
+    );\n  uint T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n\
+    \    main2();\n  }\n  #endif\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_11_A&lang=jp\"\
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\
@@ -529,7 +528,7 @@ data:
   isVerificationFile: true
   path: verify/aoj/csr.test.cpp
   requiredBy: []
-  timestamp: '2025-01-04 23:27:57+09:00'
+  timestamp: '2025-01-28 20:24:52+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/aoj/csr.test.cpp

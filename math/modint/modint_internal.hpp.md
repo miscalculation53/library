@@ -579,22 +579,22 @@ data:
   isVerificationFile: false
   path: math/modint/modint_internal.hpp
   requiredBy:
-  - math/modint/modint.hpp
   - math/modint/modint64.hpp
+  - math/modint/modint.hpp
   - math/prime/factorize.hpp
   - math/prime/primality_test.hpp
   - template/template.cpp
   timestamp: '2025-01-04 23:27:57+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/primality_test.test.cpp
   - verify/mytest/modint.test.cpp
   - verify/mytest/modint64.test.cpp
   - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/divisors.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
   - verify/yukicoder/static_modint.test.cpp
+  - verify/yukicoder/divisors.test.cpp
+  - verify/yosupo/factorize.test.cpp
+  - verify/yosupo/primality_test.test.cpp
 documentation_of: math/modint/modint_internal.hpp
 layout: document
 redirect_from:

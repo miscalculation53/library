@@ -456,13 +456,12 @@ data:
     \ endi(endi) {}\n    inline iterator begin() const { return begi; }\n    inline\
     \ iterator end() const { return endi; }\n    template <class I = ll>\n    inline\
     \ I size() const { return endi - begi; }\n    inline bool empty() const { return\
-    \ size() > 0; }\n    inline T &operator[](int i) const\n    {\n      assert(0\
-    \ <= i && i < size());\n      return *(begi + i);\n    }\n    inline T &at(int\
-    \ i) const { return operator[](i); }\n    inline T &front() const\n    {\n   \
-    \   assert(!empty());\n      return *begi;\n    }\n    inline T &back() const\n\
-    \    {\n      assert(!empty());\n      return *prev(endi);\n    }\n  };\n\npublic:\n\
-    \  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template\
-    \ <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) : n(n), elist(ies.size())\n\
+    \ size() > 0; }\n\n    inline T get(int i) const\n    {\n      assert(0 <= i &&\
+    \ i < size());\n      return *(begi + i);\n    }\n    inline T front() const\n\
+    \    {\n      assert(!empty());\n      return *begi;\n    }\n    inline T back()\
+    \ const\n    {\n      assert(!empty());\n      return *prev(endi);\n    }\n  };\n\
+    \npublic:\n  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n\
+    \  template <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) : n(n), elist(ies.size())\n\
     \  {\n    assert(n >= 0);\n    start.assign(n, 0);\n    fec([ i, e ] : ies)\n\
     \    {\n      assert(0 <= i && i < n);\n      start[i]++;\n    }\n    start =\
     \ cuml(start);\n    auto cnt = start;\n    fec([ i, e ] : ies) elist[cnt[i]++]\
@@ -485,22 +484,21 @@ data:
     \ : begi(begi), endi(endi) {}\n    inline iterator begin() const { return begi;\
     \ }\n    inline iterator end() const { return endi; }\n    template <class I =\
     \ ll>\n    inline I size() const { return endi - begi; }\n    inline bool empty()\
-    \ const { return size() > 0; }\n    inline T &operator[](int i) const\n    {\n\
-    \      assert(0 <= i && i < size());\n      return *(begi + i);\n    }\n    inline\
-    \ T &at(int i) const { return operator[](i); }\n    inline T &front() const\n\
-    \    {\n      assert(!empty());\n      return *begi;\n    }\n    inline T &back()\
-    \ const\n    {\n      assert(!empty());\n      return *prev(endi);\n    }\n  };\n\
-    \npublic:\n  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n\
-    \  template <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) : n(n), elist(ies.size())\n\
-    \  {\n    assert(n >= 0);\n    start.assign(n, 0);\n    fec([ i, e ] : ies)\n\
-    \    {\n      assert(0 <= i && i < n);\n      start[i]++;\n    }\n    start =\
-    \ cuml(start);\n    auto cnt = start;\n    fec([ i, e ] : ies) elist[cnt[i]++]\
-    \ = e;\n  }\n  // vv[i] \u306B elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\
-    \u305F vector\n  CSR(const vvc<T> &vv) : n(vv.size()), start(n + 1)\n  {\n   \
-    \ int m = 0;\n    fec(row : vv) m += row.size();\n    elist.resize(m);\n    int\
-    \ k = 0;\n    repi(i, n)\n    {\n      start[i] = k;\n      fec(e : vv[i]) elist[k++]\
-    \ = e;\n    }\n    start.back() = m;\n  }\n\n  // i \u884C\u76EE\n  Row row(int\
-    \ i) const\n  {\n    if (!(0 <= i && i < n))\n      return Row(elist.begin(),\
+    \ const { return size() > 0; }\n\n    inline T get(int i) const\n    {\n     \
+    \ assert(0 <= i && i < size());\n      return *(begi + i);\n    }\n    inline\
+    \ T front() const\n    {\n      assert(!empty());\n      return *begi;\n    }\n\
+    \    inline T back() const\n    {\n      assert(!empty());\n      return *prev(endi);\n\
+    \    }\n  };\n\npublic:\n  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\
+    \u305F vector\n  template <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) :\
+    \ n(n), elist(ies.size())\n  {\n    assert(n >= 0);\n    start.assign(n, 0);\n\
+    \    fec([ i, e ] : ies)\n    {\n      assert(0 <= i && i < n);\n      start[i]++;\n\
+    \    }\n    start = cuml(start);\n    auto cnt = start;\n    fec([ i, e ] : ies)\
+    \ elist[cnt[i]++] = e;\n  }\n  // vv[i] \u306B elem \u305F\u3061\u304C\u683C\u7D0D\
+    \u3055\u308C\u305F vector\n  CSR(const vvc<T> &vv) : n(vv.size()), start(n + 1)\n\
+    \  {\n    int m = 0;\n    fec(row : vv) m += row.size();\n    elist.resize(m);\n\
+    \    int k = 0;\n    repi(i, n)\n    {\n      start[i] = k;\n      fec(e : vv[i])\
+    \ elist[k++] = e;\n    }\n    start.back() = m;\n  }\n\n  // i \u884C\u76EE\n\
+    \  Row row(int i) const\n  {\n    if (!(0 <= i && i < n))\n      return Row(elist.begin(),\
     \ elist.begin());\n    return Row(elist.begin() + start[i], elist.begin() + start[i\
     \ + 1]);\n  }\n\n  template <class I = ll>\n  I size() const { return n; }\n\n\
     \  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i] = {elist.begin()\
@@ -521,11 +519,11 @@ data:
   path: ds/csr.hpp
   requiredBy:
   - ds/group_index.hpp
-  timestamp: '2025-01-04 23:27:57+09:00'
+  timestamp: '2025-01-28 20:24:52+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/static_range_frequency.test.cpp
   - verify/aoj/csr.test.cpp
+  - verify/yosupo/static_range_frequency.test.cpp
 documentation_of: ds/csr.hpp
 layout: document
 redirect_from:

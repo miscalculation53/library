@@ -483,69 +483,68 @@ data:
     \ const iterator &endi) : begi(begi), endi(endi) {}\n    inline iterator begin()\
     \ const { return begi; }\n    inline iterator end() const { return endi; }\n \
     \   template <class I = ll>\n    inline I size() const { return endi - begi; }\n\
-    \    inline bool empty() const { return size() > 0; }\n    inline T &operator[](int\
+    \    inline bool empty() const { return size() > 0; }\n\n    inline T get(int\
     \ i) const\n    {\n      assert(0 <= i && i < size());\n      return *(begi +\
-    \ i);\n    }\n    inline T &at(int i) const { return operator[](i); }\n    inline\
-    \ T &front() const\n    {\n      assert(!empty());\n      return *begi;\n    }\n\
-    \    inline T &back() const\n    {\n      assert(!empty());\n      return *prev(endi);\n\
-    \    }\n  };\n\npublic:\n  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\
-    \u305F vector\n  template <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) :\
-    \ n(n), elist(ies.size())\n  {\n    assert(n >= 0);\n    start.assign(n, 0);\n\
-    \    fec([ i, e ] : ies)\n    {\n      assert(0 <= i && i < n);\n      start[i]++;\n\
-    \    }\n    start = cuml(start);\n    auto cnt = start;\n    fec([ i, e ] : ies)\
-    \ elist[cnt[i]++] = e;\n  }\n  // vv[i] \u306B elem \u305F\u3061\u304C\u683C\u7D0D\
-    \u3055\u308C\u305F vector\n  CSR(const vvc<T> &vv) : n(vv.size()), start(n + 1)\n\
-    \  {\n    int m = 0;\n    fec(row : vv) m += row.size();\n    elist.resize(m);\n\
-    \    int k = 0;\n    repi(i, n)\n    {\n      start[i] = k;\n      fec(e : vv[i])\
-    \ elist[k++] = e;\n    }\n    start.back() = m;\n  }\n\n  // i \u884C\u76EE\n\
-    \  Row row(int i) const\n  {\n    if (!(0 <= i && i < n))\n      return Row(elist.begin(),\
-    \ elist.begin());\n    return Row(elist.begin() + start[i], elist.begin() + start[i\
-    \ + 1]);\n  }\n\n  template <class I = ll>\n  I size() const { return n; }\n\n\
-    \  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i] = {elist.begin()\
-    \ + start[i], elist.begin() + start[i + 1]};\n    return res;\n  }\n};\n#line\
-    \ 6 \"ds/group_index.hpp\"\n\n/**\n * @brief \u6DFB\u5B57\u3092\u5024\u3067\u5206\
-    \u985E\n * @docs docs/ds/group_index.md\n */\n\nstruct GroupIndex\n{\nprivate:\n\
-    \  int n, m;\n  CSR<int> csr;\n\npublic:\n  GroupIndex() {}\n  template <class\
-    \ T>\n  GroupIndex(const vc<T> &a) : n(a.size()), m(a.empty() ? 0 : MAX(a) + 1)\n\
-    \  {\n    vc<pair<int, int>> ies(n);\n    repi(i, n)\n    {\n      assert(0 <=\
-    \ a[i]);\n      ies[i] = {a[i], i};\n    }\n    csr = CSR(m, ies);\n  }\n\n  //\
-    \ \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u305F\u3061\n  auto idxs(int\
-    \ val) const { return csr.row(val); }\n\n  // \u5024\u304C val \u306B\u306A\u308B\
-    \u6DFB\u5B57\u306E\u3046\u3061 i \u672A\u6E80\u3067\u6700\u5927\u306E\u3082\u306E\
-    \ (\u306A\u3051\u308C\u3070 -1)\n  template <class I = ll>\n  I lt_max(auto val,\
-    \ int i) const\n  {\n    auto &is = idxs(val);\n    ll j = ::lt_max(is, i);\n\
-    \    return j == -1 ? -1 : is[j];\n  }\n  // \u5024\u304C val \u306B\u306A\u308B\
-    \u6DFB\u5B57\u306E\u3046\u3061 i \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u3082\u306E\
-    \ (\u306A\u3051\u308C\u3070 -1)\n  template <class I = ll>\n  I leq_max(auto val,\
-    \ int i) const\n  {\n    auto &is = idxs(val);\n    ll j = ::leq_max(is, i);\n\
-    \    return j == -1 ? -1 : is[j];\n  }\n  // \u5024\u304C val \u306B\u306A\u308B\
-    \u6DFB\u5B57\u306E\u3046\u3061 i \u8D85\u904E\u3067\u6700\u5C0F\u306E\u3082\u306E\
-    \ (\u306A\u3051\u308C\u3070 n)\n  template <class I = ll>\n  I gt_min(auto val,\
-    \ int i) const\n  {\n    auto &is = idxs(val);\n    ll j = ::gt_min(is, i);\n\
-    \    return j == is.size() ? n : is[j];\n  }\n  // \u5024\u304C val \u306B\u306A\
-    \u308B\u6DFB\u5B57\u306E\u3046\u3061 i \u4EE5\u4E0A\u3067\u6700\u5C0F\u306E\u3082\
-    \u306E (\u306A\u3051\u308C\u3070 n)\n  template <class I = ll>\n  I geq_min(auto\
-    \ val, int i) const\n  {\n    auto &is = idxs(val);\n    ll j = ::geq_min(is,\
-    \ i);\n    return j == is.size() ? n : is[j];\n  }\n  // \u5024\u304C val \u306B\
-    \u306A\u308B i \u672A\u6E80\u306E\u6DFB\u5B57\u306E\u500B\u6570\n  // i \u756A\
-    \u76EE\u304C val \u306E\u3068\u304D\u3001\u300C\u3053\u308C\u306F\u4F55\u756A\u76EE\
-    \u306E val \u304B\uFF1F\u300D\u306B\u4E00\u81F4\n  template <class I = ll>\n \
-    \ I lt_cnt(auto val, int i) const { return ::lt_cnt(idxs(val), i); }\n  // \u5024\
-    \u304C val \u306B\u306A\u308B i \u4EE5\u4E0B\u306E\u6DFB\u5B57\u306E\u500B\u6570\
-    \n  template <class I = ll>\n  I leq_cnt(auto val, int i) const { return ::leq_cnt(idxs(val),\
-    \ i); }\n  template <class I = ll>\n  // \u5024\u304C val \u306B\u306A\u308B i\
-    \ \u8D85\u904E\u306E\u6DFB\u5B57\u306E\u500B\u6570\n  I gt_cnt(auto val, int i)\
-    \ const { return ::gt_cnt(idxs(val), i); }\n  template <class I = ll>\n  // \u5024\
-    \u304C val \u306B\u306A\u308B i \u4EE5\u4E0A\u306E\u6DFB\u5B57\u306E\u500B\u6570\
-    \n  I geq_cnt(auto val, int i) const { return ::geq_cnt(idxs(val), i); }\n  //\
-    \ \u5024\u304C val \u306B\u306A\u308B [l, r) \u306E\u6DFB\u5B57\u306E\u500B\u6570\
-    \n  template <class I = ll>\n  I in_cnt(auto val, int l, int r) const { return\
-    \ ::in_cnt(idxs(val), l, r); }\n\n  template <class I = ll>\n  vvc<I> to_vv()\
-    \ const\n  {\n    auto res = csr.to_vv();\n    vvc<I> res2(res.size());\n    rep(i,\
-    \ res.size()) res2[i] = vc<I>(ALL(res[i]));\n    return res2;\n  }\n};\n#line\
-    \ 16 \"verify/yosupo/static_range_frequency.test.cpp\"\n\nvoid init() {}\n\nvoid\
-    \ main2()\n{\n  LL(N, Q);\n  VEC(ll, N, A);\n  CoordinateCompression cc(A);\n\
-    \  GroupIndex grp(compressed(A));\n  rep(val, cc.size()) dump(val, grp.idxs(val));\n\
+    \ i);\n    }\n    inline T front() const\n    {\n      assert(!empty());\n   \
+    \   return *begi;\n    }\n    inline T back() const\n    {\n      assert(!empty());\n\
+    \      return *prev(endi);\n    }\n  };\n\npublic:\n  CSR() {}\n  // (i, elem)\
+    \ \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template <class I>\n  CSR(int\
+    \ n, const vc<pair<I, T>> &ies) : n(n), elist(ies.size())\n  {\n    assert(n >=\
+    \ 0);\n    start.assign(n, 0);\n    fec([ i, e ] : ies)\n    {\n      assert(0\
+    \ <= i && i < n);\n      start[i]++;\n    }\n    start = cuml(start);\n    auto\
+    \ cnt = start;\n    fec([ i, e ] : ies) elist[cnt[i]++] = e;\n  }\n  // vv[i]\
+    \ \u306B elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  CSR(const\
+    \ vvc<T> &vv) : n(vv.size()), start(n + 1)\n  {\n    int m = 0;\n    fec(row :\
+    \ vv) m += row.size();\n    elist.resize(m);\n    int k = 0;\n    repi(i, n)\n\
+    \    {\n      start[i] = k;\n      fec(e : vv[i]) elist[k++] = e;\n    }\n   \
+    \ start.back() = m;\n  }\n\n  // i \u884C\u76EE\n  Row row(int i) const\n  {\n\
+    \    if (!(0 <= i && i < n))\n      return Row(elist.begin(), elist.begin());\n\
+    \    return Row(elist.begin() + start[i], elist.begin() + start[i + 1]);\n  }\n\
+    \n  template <class I = ll>\n  I size() const { return n; }\n\n  vvc<T> to_vv()\
+    \ const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i] = {elist.begin() + start[i],\
+    \ elist.begin() + start[i + 1]};\n    return res;\n  }\n};\n#line 6 \"ds/group_index.hpp\"\
+    \n\n/**\n * @brief \u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E\n * @docs docs/ds/group_index.md\n\
+    \ */\n\nstruct GroupIndex\n{\nprivate:\n  int n, m;\n  CSR<int> csr;\n\npublic:\n\
+    \  GroupIndex() {}\n  template <class T>\n  GroupIndex(const vc<T> &a) : n(a.size()),\
+    \ m(a.empty() ? 0 : MAX(a) + 1)\n  {\n    vc<pair<int, int>> ies(n);\n    repi(i,\
+    \ n)\n    {\n      assert(0 <= a[i]);\n      ies[i] = {a[i], i};\n    }\n    csr\
+    \ = CSR(m, ies);\n  }\n\n  // \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u305F\
+    \u3061\n  auto idxs(int val) const { return csr.row(val); }\n\n  // \u5024\u304C\
+    \ val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061 i \u672A\u6E80\u3067\u6700\
+    \u5927\u306E\u3082\u306E (\u306A\u3051\u308C\u3070 -1)\n  template <class I =\
+    \ ll>\n  I lt_max(auto val, int i) const\n  {\n    auto is = idxs(val);\n    ll\
+    \ j = ::lt_max(is, i);\n    return j == -1 ? -1 : is.get(j);\n  }\n  // \u5024\
+    \u304C val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061 i \u4EE5\u4E0B\u3067\
+    \u6700\u5927\u306E\u3082\u306E (\u306A\u3051\u308C\u3070 -1)\n  template <class\
+    \ I = ll>\n  I leq_max(auto val, int i) const\n  {\n    auto is = idxs(val);\n\
+    \    ll j = ::leq_max(is, i);\n    return j == -1 ? -1 : is.get(j);\n  }\n  //\
+    \ \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061 i \u8D85\u904E\
+    \u3067\u6700\u5C0F\u306E\u3082\u306E (\u306A\u3051\u308C\u3070 n)\n  template\
+    \ <class I = ll>\n  I gt_min(auto val, int i) const\n  {\n    auto is = idxs(val);\n\
+    \    ll j = ::gt_min(is, i);\n    return j == is.size() ? n : is.get(j);\n  }\n\
+    \  // \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061 i \u4EE5\
+    \u4E0A\u3067\u6700\u5C0F\u306E\u3082\u306E (\u306A\u3051\u308C\u3070 n)\n  template\
+    \ <class I = ll>\n  I geq_min(auto val, int i) const\n  {\n    auto is = idxs(val);\n\
+    \    ll j = ::geq_min(is, i);\n    return j == is.size() ? n : is.get(j);\n  }\n\
+    \  // \u5024\u304C val \u306B\u306A\u308B i \u672A\u6E80\u306E\u6DFB\u5B57\u306E\
+    \u500B\u6570\n  // i \u756A\u76EE\u304C val \u306E\u3068\u304D\u3001\u300C\u3053\
+    \u308C\u306F\u4F55\u756A\u76EE\u306E val \u304B\uFF1F\u300D\u306B\u4E00\u81F4\n\
+    \  template <class I = ll>\n  I lt_cnt(auto val, int i) const { return ::lt_cnt(idxs(val),\
+    \ i); }\n  // \u5024\u304C val \u306B\u306A\u308B i \u4EE5\u4E0B\u306E\u6DFB\u5B57\
+    \u306E\u500B\u6570\n  template <class I = ll>\n  I leq_cnt(auto val, int i) const\
+    \ { return ::leq_cnt(idxs(val), i); }\n  template <class I = ll>\n  // \u5024\u304C\
+    \ val \u306B\u306A\u308B i \u8D85\u904E\u306E\u6DFB\u5B57\u306E\u500B\u6570\n\
+    \  I gt_cnt(auto val, int i) const { return ::gt_cnt(idxs(val), i); }\n  template\
+    \ <class I = ll>\n  // \u5024\u304C val \u306B\u306A\u308B i \u4EE5\u4E0A\u306E\
+    \u6DFB\u5B57\u306E\u500B\u6570\n  I geq_cnt(auto val, int i) const { return ::geq_cnt(idxs(val),\
+    \ i); }\n  // \u5024\u304C val \u306B\u306A\u308B [l, r) \u306E\u6DFB\u5B57\u306E\
+    \u500B\u6570\n  template <class I = ll>\n  I in_cnt(auto val, int l, int r) const\
+    \ { return ::in_cnt(idxs(val), l, r); }\n\n  template <class I = ll>\n  vvc<I>\
+    \ to_vv() const\n  {\n    auto res = csr.to_vv();\n    vvc<I> res2(res.size());\n\
+    \    rep(i, res.size()) res2[i] = vc<I>(ALL(res[i]));\n    return res2;\n  }\n\
+    };\n#line 16 \"verify/yosupo/static_range_frequency.test.cpp\"\n\nvoid init()\
+    \ {}\n\nvoid main2()\n{\n  LL(N, Q);\n  VEC(ll, N, A);\n  CoordinateCompression\
+    \ cc(A);\n  GroupIndex grp(compressed(A));\n  rep(val, cc.size()) dump(val, grp.idxs(val));\n\
     \  rep(_, Q)\n  {\n    LL(l, r, x);\n    auto v = cc.get_id(x);\n    dump(v, l,\
     \ r, grp.lt_cnt(v, r), grp.lt_cnt(v, l));\n    PRINT(grp.in_cnt(v, l, r));\n \
     \ }\n  dump(grp.to_vv() | cp::index());\n}\n\nvoid test() {}\n\nint main()\n{\n\
@@ -598,7 +597,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/static_range_frequency.test.cpp
   requiredBy: []
-  timestamp: '2025-01-04 23:27:57+09:00'
+  timestamp: '2025-01-28 20:24:52+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/static_range_frequency.test.cpp
