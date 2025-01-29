@@ -480,21 +480,22 @@ data:
     \  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im) >> 64);\n  \
     \  ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n  }\n};\n\ninline\
     \ constexpr ull inv64(ull a)\n{\n  ull x = a;\n  while (a * x != 1) x *= 2 - a\
-    \ * x;\n  return x;\n}\n\nstruct montgomery64odd\n{\n  ull m, im, sq;\n  explicit\
-    \ montgomery64odd(ull m) : m(m), im(inv64(m)), sq(-u128(m) % m) {}\n  ull umod()\
-    \ const { return m; }\n  ull reduce(u128 x) const\n  {\n    auto t = (x + u128(m)\
-    \ * (-im * ull(x))) >> 64;\n    if (t >= m)\n      t -= m;\n    return (ull)t;\n\
-    \  }\n  ull inv_reduce(i128 v) const\n  { return reduce(u128(v % m + m) * sq);\
-    \ }\n};\n\n// https://www.mathenachia.blog/even-mod-montgomery-impl/\nstruct montgomery64\n\
-    {\n  ull m, mx, imx, d, sq;\n  uint b;\n\n  explicit montgomery64(ull m) : m(m),\
-    \ sq(-u128(m) % m)\n  {\n    b = countr_zero(m), mx = m >> b;  // m == 2^b * mx,\
-    \ mx is odd\n    imx = inv64(mx);\n    d = powmod64_constexpr((mx + 1) / 2, b,\
-    \ mx);  // 2^{-b} mod mx\n  }\n  ull umod() const { return m; }\n  ull reduce(u128\
-    \ x) const\n  {\n    ull p = x & MASK(b);  // x mod 2^b\n    x = (x >> b) + p\
-    \ * d;\n    ull y = p << (64 - b);\n    auto t = (x + u128(mx) * (imx * (y - ull(x))))\
-    \ >> (64 - b);\n    if (t >= m)\n    {\n      t -= m;\n      if (t >= m)\n   \
-    \     t -= m;\n    }\n    return (ull)t;\n  }\n  ull inv_reduce(i128 v) const\n\
-    \  { return reduce(u128(v % m + m) * sq); }\n};\n\n}\n#line 2 \"math/extgcd.hpp\"\
+    \ * x;\n  return x;\n}\n\nstruct montgomery64odd\n{\n  ull m, im, sq;\n  // sq\
+    \ = (2^64)^2 % m = (2^128 - m) % m = (-m % 2^128) % m\n  explicit montgomery64odd(ull\
+    \ m) : m(m), im(inv64(m)), sq(-u128(m) % m) {}\n  ull umod() const { return m;\
+    \ }\n  ull reduce(u128 x) const\n  {\n    auto t = (x + u128(m) * (-im * ull(x)))\
+    \ >> 64;\n    if (t >= m)\n      t -= m;\n    return (ull)t;\n  }\n  ull inv_reduce(i128\
+    \ v) const\n  { return reduce(u128(v % m + m) * sq); }\n};\n\n// https://www.mathenachia.blog/even-mod-montgomery-impl/\n\
+    struct montgomery64\n{\n  ull m, mx, imx, d, q;\n  uint b;\n\n  explicit montgomery64(ull\
+    \ m) : m(m)\n  {\n    b = countr_zero(m), mx = m >> b;  // m == 2^b * mx, mx is\
+    \ odd\n    imx = inv64(mx);\n    d = powmod64_constexpr((mx + 1) / 2, b, mx);\
+    \  // 2^{-b} mod mx\n    u128 sq = -u128(mx) % mx;  // 2^128 mod mx\n    q = (1\
+    \ + (((sq - 1) * d) << b)) % m;\n  }\n  ull umod() const { return m; }\n  ull\
+    \ reduce(u128 x) const\n  {\n    ull p = x & MASK(b);  // x mod 2^b\n    x = (x\
+    \ >> b) + p * d;\n    ull y = p << (64 - b);\n    auto t = (x + u128(mx) * (imx\
+    \ * (y - ull(x)))) >> (64 - b);\n    if (t >= m)\n    {\n      t -= m;\n     \
+    \ if (t >= m)\n        t -= m;\n    }\n    return (ull)t;\n  }\n  ull inv_reduce(i128\
+    \ v) const\n  { return reduce(u128(v % m + m) * q); }\n};\n\n}\n#line 2 \"math/extgcd.hpp\"\
     \n\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\u5F35\u30E6\u30FC\u30AF\
     \u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs docs/math/extgcd.md\n\
     \ */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\u305F\u3059 (g, x, y)\n\
@@ -646,7 +647,7 @@ data:
   isVerificationFile: false
   path: template/template.cpp
   requiredBy: []
-  timestamp: '2025-01-04 23:27:57+09:00'
+  timestamp: '2025-01-29 21:47:21+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: template/template.cpp

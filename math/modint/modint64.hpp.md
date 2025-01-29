@@ -492,21 +492,22 @@ data:
     \  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im) >> 64);\n  \
     \  ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n  }\n};\n\ninline\
     \ constexpr ull inv64(ull a)\n{\n  ull x = a;\n  while (a * x != 1) x *= 2 - a\
-    \ * x;\n  return x;\n}\n\nstruct montgomery64odd\n{\n  ull m, im, sq;\n  explicit\
-    \ montgomery64odd(ull m) : m(m), im(inv64(m)), sq(-u128(m) % m) {}\n  ull umod()\
-    \ const { return m; }\n  ull reduce(u128 x) const\n  {\n    auto t = (x + u128(m)\
-    \ * (-im * ull(x))) >> 64;\n    if (t >= m)\n      t -= m;\n    return (ull)t;\n\
-    \  }\n  ull inv_reduce(i128 v) const\n  { return reduce(u128(v % m + m) * sq);\
-    \ }\n};\n\n// https://www.mathenachia.blog/even-mod-montgomery-impl/\nstruct montgomery64\n\
-    {\n  ull m, mx, imx, d, sq;\n  uint b;\n\n  explicit montgomery64(ull m) : m(m),\
-    \ sq(-u128(m) % m)\n  {\n    b = countr_zero(m), mx = m >> b;  // m == 2^b * mx,\
-    \ mx is odd\n    imx = inv64(mx);\n    d = powmod64_constexpr((mx + 1) / 2, b,\
-    \ mx);  // 2^{-b} mod mx\n  }\n  ull umod() const { return m; }\n  ull reduce(u128\
-    \ x) const\n  {\n    ull p = x & MASK(b);  // x mod 2^b\n    x = (x >> b) + p\
-    \ * d;\n    ull y = p << (64 - b);\n    auto t = (x + u128(mx) * (imx * (y - ull(x))))\
-    \ >> (64 - b);\n    if (t >= m)\n    {\n      t -= m;\n      if (t >= m)\n   \
-    \     t -= m;\n    }\n    return (ull)t;\n  }\n  ull inv_reduce(i128 v) const\n\
-    \  { return reduce(u128(v % m + m) * sq); }\n};\n\n}\n#line 2 \"math/extgcd.hpp\"\
+    \ * x;\n  return x;\n}\n\nstruct montgomery64odd\n{\n  ull m, im, sq;\n  // sq\
+    \ = (2^64)^2 % m = (2^128 - m) % m = (-m % 2^128) % m\n  explicit montgomery64odd(ull\
+    \ m) : m(m), im(inv64(m)), sq(-u128(m) % m) {}\n  ull umod() const { return m;\
+    \ }\n  ull reduce(u128 x) const\n  {\n    auto t = (x + u128(m) * (-im * ull(x)))\
+    \ >> 64;\n    if (t >= m)\n      t -= m;\n    return (ull)t;\n  }\n  ull inv_reduce(i128\
+    \ v) const\n  { return reduce(u128(v % m + m) * sq); }\n};\n\n// https://www.mathenachia.blog/even-mod-montgomery-impl/\n\
+    struct montgomery64\n{\n  ull m, mx, imx, d, q;\n  uint b;\n\n  explicit montgomery64(ull\
+    \ m) : m(m)\n  {\n    b = countr_zero(m), mx = m >> b;  // m == 2^b * mx, mx is\
+    \ odd\n    imx = inv64(mx);\n    d = powmod64_constexpr((mx + 1) / 2, b, mx);\
+    \  // 2^{-b} mod mx\n    u128 sq = -u128(mx) % mx;  // 2^128 mod mx\n    q = (1\
+    \ + (((sq - 1) * d) << b)) % m;\n  }\n  ull umod() const { return m; }\n  ull\
+    \ reduce(u128 x) const\n  {\n    ull p = x & MASK(b);  // x mod 2^b\n    x = (x\
+    \ >> b) + p * d;\n    ull y = p << (64 - b);\n    auto t = (x + u128(mx) * (imx\
+    \ * (y - ull(x)))) >> (64 - b);\n    if (t >= m)\n    {\n      t -= m;\n     \
+    \ if (t >= m)\n        t -= m;\n    }\n    return (ull)t;\n  }\n  ull inv_reduce(i128\
+    \ v) const\n  { return reduce(u128(v % m + m) * q); }\n};\n\n}\n#line 2 \"math/extgcd.hpp\"\
     \n\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\u5F35\u30E6\u30FC\u30AF\
     \u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs docs/math/extgcd.md\n\
     \ */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\u305F\u3059 (g, x, y)\n\
@@ -584,7 +585,39 @@ data:
     \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
     \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
     \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::montgomery64odd\
-    \ dynamic_modint64_odd<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
+    \ dynamic_modint64_odd<id>::mg((1LL << 61) - 1);\n\ntemplate <int id>\nstruct\
+    \ dynamic_modint64\n{\n  using mint = dynamic_modint64;\nprivate:\n  ull _v; \
+    \ // montgomery expression\n  static internal::montgomery64 mg;\n  static ull\
+    \ umod() { return mg.umod(); }\n\npublic:\n  static ll mod() { return (ll)(mg.umod());\
+    \ }\n  static void set_mod(ll m)\n  {\n    assert(m >= 1);\n    mg = internal::montgomery64(m);\n\
+    \  }\n\n  dynamic_modint64() : _v(0) {}\n  dynamic_modint64(i128 v)\n  { _v =\
+    \ mg.inv_reduce(v); }\n\n  ll val() const { return (ll)mg.reduce(_v); }\n\n  mint&\
+    \ operator++()\n  {\n    _v++;\n    if (_v == umod())\n      _v = 0;\n    return\
+    \ *this;\n  }\n  mint& operator--()\n  {\n    if (_v == 0)\n      _v = umod();\n\
+    \    _v--;\n    return *this;\n  }\n  mint operator++(int)\n  {\n    mint res\
+    \ = *this;\n    ++*this;\n    return res;\n  }\n  mint operator--(int)\n  {\n\
+    \    mint res = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const\
+    \ mint& rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n\
+    \    return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
+    \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
+    \ mint &rhs)\n  {\n    _v = mg.reduce(u128(_v) * rhs._v);\n    return *this;\n\
+    \  }\n  mint& operator/=(const mint &rhs) { return *this = *this * rhs.inv();\
+    \ }\n\n  mint operator+() const { return *this; }\n  mint operator-() const {\
+    \ return mint() - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n\
+    \    mint x = *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r\
+    \ *= x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n  mint inv()\
+    \ const\n  {\n    auto [g, x, y] = extgcd<ll>(val(), mod());\n    assert(g ==\
+    \ 1);\n    return x;\n  }\n\n  friend mint operator+(const mint &lhs, const mint\
+    \ &rhs)\n  { return mint(lhs) += rhs; }\n  friend mint operator-(const mint &lhs,\
+    \ const mint &rhs)\n  { return mint(lhs) -= rhs; }\n  friend mint operator*(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) *= rhs; }\n  friend mint operator/(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v == rhs._v; }\n  friend bool operator!=(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v != rhs._v; }\n\n  friend istream\
+    \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
+    \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
+    \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::montgomery64\
+    \ dynamic_modint64<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
     \ << 61) - 1>;\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
     modint_internal.hpp\"\n#include \"../extgcd.hpp\"\n\n/**\n * @brief modint (64\
@@ -654,7 +687,39 @@ data:
     \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
     \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
     \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::montgomery64odd\
-    \ dynamic_modint64_odd<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
+    \ dynamic_modint64_odd<id>::mg((1LL << 61) - 1);\n\ntemplate <int id>\nstruct\
+    \ dynamic_modint64\n{\n  using mint = dynamic_modint64;\nprivate:\n  ull _v; \
+    \ // montgomery expression\n  static internal::montgomery64 mg;\n  static ull\
+    \ umod() { return mg.umod(); }\n\npublic:\n  static ll mod() { return (ll)(mg.umod());\
+    \ }\n  static void set_mod(ll m)\n  {\n    assert(m >= 1);\n    mg = internal::montgomery64(m);\n\
+    \  }\n\n  dynamic_modint64() : _v(0) {}\n  dynamic_modint64(i128 v)\n  { _v =\
+    \ mg.inv_reduce(v); }\n\n  ll val() const { return (ll)mg.reduce(_v); }\n\n  mint&\
+    \ operator++()\n  {\n    _v++;\n    if (_v == umod())\n      _v = 0;\n    return\
+    \ *this;\n  }\n  mint& operator--()\n  {\n    if (_v == 0)\n      _v = umod();\n\
+    \    _v--;\n    return *this;\n  }\n  mint operator++(int)\n  {\n    mint res\
+    \ = *this;\n    ++*this;\n    return res;\n  }\n  mint operator--(int)\n  {\n\
+    \    mint res = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const\
+    \ mint& rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n\
+    \    return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
+    \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
+    \ mint &rhs)\n  {\n    _v = mg.reduce(u128(_v) * rhs._v);\n    return *this;\n\
+    \  }\n  mint& operator/=(const mint &rhs) { return *this = *this * rhs.inv();\
+    \ }\n\n  mint operator+() const { return *this; }\n  mint operator-() const {\
+    \ return mint() - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n\
+    \    mint x = *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r\
+    \ *= x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n  mint inv()\
+    \ const\n  {\n    auto [g, x, y] = extgcd<ll>(val(), mod());\n    assert(g ==\
+    \ 1);\n    return x;\n  }\n\n  friend mint operator+(const mint &lhs, const mint\
+    \ &rhs)\n  { return mint(lhs) += rhs; }\n  friend mint operator-(const mint &lhs,\
+    \ const mint &rhs)\n  { return mint(lhs) -= rhs; }\n  friend mint operator*(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) *= rhs; }\n  friend mint operator/(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v == rhs._v; }\n  friend bool operator!=(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v != rhs._v; }\n\n  friend istream\
+    \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
+    \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
+    \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::montgomery64\
+    \ dynamic_modint64<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
     \ << 61) - 1>;"
   dependsOn:
   - template/template_all.hpp
@@ -675,7 +740,7 @@ data:
   requiredBy:
   - math/prime/factorize.hpp
   - math/prime/primality_test.hpp
-  timestamp: '2025-01-04 23:27:57+09:00'
+  timestamp: '2025-01-29 21:47:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/modint64.test.cpp
@@ -693,6 +758,7 @@ title: modint (64 bit)
 
 - `static_modint64`
 - `dynamic_modint64_odd`（mod が奇数のみ）
+- `dynamic_modint64`（mod が偶数も OK）
 
 の $3$ つを用意。`modint61` は `static_modint64<(1LL << 61) - 1>` のエイリアス。
 
@@ -706,9 +772,11 @@ ACL の modint にあるメソッドと入出力はだいたい揃っている�
 - https://rsk0315.hatenablog.com/entry/2022/11/27/060616
 - https://nyaannyaan.github.io/library/modint/arbitrary-montgomery-modint.hpp
 - https://www.mathenachia.blog/even-mod-montgomery-impl/
-  - これに書いてある mod 偶数 ver も実装しようとしたが、初期化がよくわからなくなった　後で考えたいかも
+  - mod 偶数 ver はこれ
+  - 初期化は、$R = 2^{64}$ として $\mathrm{REDC}(x) \equiv xR^{-1} \pmod {M_x}, \mathrm{REDC}(x) \equiv x \pmod {2^b}$ の逆 $\mathrm{IREDC}$ を $\mathrm{REDC}$ で表せばよくて、$y \equiv R^2 \pmod {M_x}, y \equiv x \pmod {2^b}$ を解けばよい。
 
 ##### 制約
 
+- `dynamic_modint64_odd<INT_MIN>` はライブラリの内部で使用するので使用しないこと
 - mod の上限は、`ll` に収まるなら OK なはず（証明したわけではない）
   - $2^{63}-1 = 9.223372036854775807 \times 10^{18}$
