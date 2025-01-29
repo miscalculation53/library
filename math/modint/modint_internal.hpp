@@ -121,6 +121,7 @@ inline constexpr ull inv64(ull a)
 struct montgomery64odd
 {
   ull m, im, sq;
+  // sq = (2^64)^2 % m = (2^128 - m) % m = (-m % 2^128) % m
   explicit montgomery64odd(ull m) : m(m), im(inv64(m)), sq(-u128(m) % m) {}
   ull umod() const { return m; }
   ull reduce(u128 x) const
@@ -137,14 +138,16 @@ struct montgomery64odd
 // https://www.mathenachia.blog/even-mod-montgomery-impl/
 struct montgomery64
 {
-  ull m, mx, imx, d, sq;
+  ull m, mx, imx, d, q;
   uint b;
 
-  explicit montgomery64(ull m) : m(m), sq(-u128(m) % m)
+  explicit montgomery64(ull m) : m(m)
   {
     b = countr_zero(m), mx = m >> b;  // m == 2^b * mx, mx is odd
     imx = inv64(mx);
     d = powmod64_constexpr((mx + 1) / 2, b, mx);  // 2^{-b} mod mx
+    u128 sq = -u128(mx) % mx;  // 2^128 mod mx
+    q = (1 + (((sq - 1) * d) << b)) % m;
   }
   ull umod() const { return m; }
   ull reduce(u128 x) const
@@ -162,7 +165,7 @@ struct montgomery64
     return (ull)t;
   }
   ull inv_reduce(i128 v) const
-  { return reduce(u128(v % m + m) * sq); }
+  { return reduce(u128(v % m + m) * q); }
 };
 
 }
