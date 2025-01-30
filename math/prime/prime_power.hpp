@@ -40,7 +40,7 @@ vc<PrimePower<P>> factorized_mul
   {
     if (fac1[i].p < fac2[j].p)
       fac.emplace_back(fac1[i++]);
-    else if (fac1[i].p > fac2[i].p)
+    else if (fac1[i].p > fac2[j].p)
       fac.emplace_back(fac2[j++]);
     else
     {
@@ -48,7 +48,7 @@ vc<PrimePower<P>> factorized_mul
       i++, j++;
     }
   }
-  fac.insert(fac.end(), ALL(fac1));
-  fac.insert(fac.end(), ALL(fac2));
+  fac.insert(fac.end(), fac1.begin() + i, fac1.end());
+  fac.insert(fac.end(), fac2.begin() + j, fac2.end());
   return fac;
 }
