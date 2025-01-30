@@ -55,14 +55,33 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy: []
+  _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: math/prime/euler_phi_carmichael.hpp
+    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
+      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/order_primitive_root.hpp
+    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/primitive_root.test.cpp
+    title: verify/yosupo/primitive_root.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/primitive_root_min.test.cpp
+    title: verify/yosupo/primitive_root_min.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/divisors.test.cpp
     title: verify/yukicoder/divisors.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/order_mod_carmichael.test.cpp
+    title: verify/yukicoder/order_mod_carmichael.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/order_mod_euler_phi.test.cpp
+    title: verify/yukicoder/order_mod_euler_phi.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -701,60 +720,71 @@ data:
     \  PrimePower() {}\n  PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e))\
     \ {}\n  PrimePower(P p, int e, P pe) : p(p), e(e), pe(pe) {}\n  template <class\
     \ P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\
-    \n  void mul_p() { e++, pe *= p; }\n  void div_p() { e--, pe /= p; }\n};\n#ifdef\
-    \ LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>,\
-    \ p, e, pe);\n#endif\n#line 2 \"math/prime/primality_test.hpp\"\n\n#line 6 \"\
-    math/prime/primality_test.hpp\"\n\n/**\n * @brief \u7D20\u6570\u5224\u5B9A\n *\
-    \ @docs docs/math/prime/primality_test.md\n */\n\nbool is_prime_int(int n)\n{\n\
-    \  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n    return\
-    \ true;\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n\
-    \ - 1);\n  static const ll bases[3] = {2, 7, 61};\n  using mint = dynamic_modint<-2>;\n\
+    \n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void div_p() { e--, pe /=\
+    \ p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e,\
+    \ pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\ntemplate\
+    \ <class P>\nvc<PrimePower<P>> factorized_mul\n(const vc<PrimePower<P>> &fac1,\
+    \ const vc<PrimePower<P>> &fac2)\n{\n  const int n = fac1.size(), m = fac2.size();\n\
+    \  vc<PrimePower<P>> fac;\n  fac.reserve(n + m);\n  int i = 0, j = 0;\n  while\
+    \ (i < n && j < m)\n  {\n    if (fac1[i].p < fac2[j].p)\n      fac.emplace_back(fac1[i++]);\n\
+    \    else if (fac1[i].p > fac2[i].p)\n      fac.emplace_back(fac2[j++]);\n   \
+    \ else\n    {\n      fac.emplace_back(fac1[i].p, fac1[i].e + fac2[j].e, ull(fac1[i].pe)\
+    \ * ull(fac2[j].pe));\n      i++, j++;\n    }\n  }\n  fac.insert(fac.end(), ALL(fac1));\n\
+    \  fac.insert(fac.end(), ALL(fac2));\n  return fac;\n}\n#line 2 \"math/prime/primality_test.hpp\"\
+    \n\n#line 6 \"math/prime/primality_test.hpp\"\n\n/**\n * @brief \u7D20\u6570\u5224\
+    \u5B9A\n * @docs docs/math/prime/primality_test.md\n */\n\nbool is_prime_int(int\
+    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
+    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n\
+    \ - 1);\n  static const ll bases[3] = {2, 7, 61};\n  using mint = dynamic_modint<INT_MIN>;\n\
     \  mint::set_mod(n);\n  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n\
     \    while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t\
     \ <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n\
     \  return true;\n}\n\nbool is_prime(ll n)\n{\n  if (n <= INT_MAX)\n    return\
     \ is_prime_int(n);\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >>\
     \ countr_zero(n - 1);\n  static const ll bases[7] = {2, 325, 9375, 28178, 450775,\
-    \ 9780504, 1795265022};\n  using mint = dynamic_modint64_odd<-2>;\n  mint::set_mod(n);\n\
+    \ 9780504, 1795265022};\n  using mint = dynamic_modint64_odd<INT_MIN>;\n  mint::set_mod(n);\n\
     \  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while\
     \ (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n\
     \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
     \ true;\n}\n#line 8 \"math/prime/factorize.hpp\"\n\n/**\n * @brief \u7D20\u56E0\
     \u6570\u5206\u89E3\n * @docs docs/math/prime/factorize.md\n */\n\nnamespace internal\n\
     {\n\nint get_prime_factor_int(int n)\n{\n  int m = pow(n, .125);\n  using mint\
-    \ = dynamic_modint<-2>;\n  mint::set_mod(n);\n  for (int c = 1;; c++)\n  {\n \
-    \   mint x = 2, y = 2, prod = 1;\n    int g = 1;\n    for (int t = 1; g == 1;\
-    \ t = min(2 * t, m))\n    {\n      repi(i, t)\n      {\n        x = x * x + c;\n\
-    \        y = y * y + c, y = y * y + c;\n        prod *= x - y;\n      }\n    \
-    \  g = gcd(prod.val(), n);\n    }\n    if (g == n)\n      continue;\n    if (is_prime(g))\n\
-    \      return g;\n    else if (is_prime(n / g))\n      return n / g;\n    else\n\
-    \      return get_prime_factor_int(g);\n  }\n}\n\nll get_prime_factor(ll n)\n\
-    {\n  if (n <= INT_MAX)\n    return get_prime_factor_int(n);\n  int m = pow(n,\
-    \ .125);\n  using mint = dynamic_modint64_odd<-2>;\n  mint::set_mod(n);\n  for\
-    \ (int c = 1;; c++)\n  {\n    mint x = 2, y = 2, prod = 1;\n    ll g = 1;\n  \
-    \  for (int t = 1; g == 1; t = min(2 * t, m))\n    {\n      repi(i, t)\n     \
-    \ {\n        x = x * x + c;\n        y = y * y + c, y = y * y + c;\n        prod\
-    \ *= x - y;\n      }\n      g = gcd(prod.val(), n);\n    }\n    if (g == n)\n\
-    \      continue;\n    if (is_prime(g))\n      return g;\n    else if (is_prime(n\
+    \ = dynamic_modint<INT_MIN>;\n  mint::set_mod(n);\n  for (int c = 1;; c++)\n \
+    \ {\n    mint x = 2, y = 2, prod = 1;\n    int g = 1;\n    for (int t = 1; g ==\
+    \ 1; t = min(2 * t, m))\n    {\n      repi(i, t)\n      {\n        x = x * x +\
+    \ c;\n        y = y * y + c, y = y * y + c;\n        prod *= x - y;\n      }\n\
+    \      g = gcd(prod.val(), n);\n    }\n    if (g == n)\n      continue;\n    if\
+    \ (is_prime(g))\n      return g;\n    else if (is_prime(n / g))\n      return\
+    \ n / g;\n    else\n      return get_prime_factor_int(g);\n  }\n}\n\nll get_prime_factor(ll\
+    \ n)\n{\n  if (n <= INT_MAX)\n    return get_prime_factor_int(n);\n  int m = pow(n,\
+    \ .125);\n  using mint = dynamic_modint64_odd<INT_MIN>;\n  mint::set_mod(n);\n\
+    \  for (int c = 1;; c++)\n  {\n    mint x = 2, y = 2, prod = 1;\n    ll g = 1;\n\
+    \    for (int t = 1; g == 1; t = min(2 * t, m))\n    {\n      repi(i, t)\n   \
+    \   {\n        x = x * x + c;\n        y = y * y + c, y = y * y + c;\n       \
+    \ prod *= x - y;\n      }\n      g = gcd(prod.val(), n);\n    }\n    if (g ==\
+    \ n)\n      continue;\n    if (is_prime(g))\n      return g;\n    else if (is_prime(n\
     \ / g))\n      return n / g;\n    else\n      return get_prime_factor(g);\n  }\n\
-    }\n\n};\n\nvc<PrimePower<ll>> factorize(ll n)\n{\n  vc<PrimePower<ll>> res;\n\
-    \  repi(p, 2, 100)\n  {\n    PrimePower<ll> pp(p, 0);\n    while (n % p == 0)\n\
-    \      n /= p, pp.mul_p();\n    if (pp.e > 0)\n      res.emplace_back(pp);\n \
-    \ }\n  while (n > 1)\n  {\n    if (is_prime(n))\n    {\n      res.emplace_back(n);\n\
+    }\n\n}; // namespace internal\n\nvc<PrimePower<ll>> factorize(ll n)\n{\n  vc<PrimePower<ll>>\
+    \ res;\n  repi(p, 2, 100)\n  {\n    PrimePower<ll> pp(p, 0);\n    while (n % p\
+    \ == 0)\n      n /= p, pp.mul_p();\n    if (pp.e > 0)\n      res.emplace_back(pp);\n\
+    \  }\n  while (n > 1)\n  {\n    if (is_prime(n))\n    {\n      res.emplace_back(n);\n\
     \      break;\n    }\n    ll p = internal::get_prime_factor(n);\n    PrimePower<ll>\
     \ pp(p, 0);\n    while (n % p == 0)\n      n /= p, pp.mul_p();\n    res.emplace_back(pp);\n\
     \  }\n  sort(ALL(res), [&](cauto &pp1, cauto &pp2)\n       { return pp1.p < pp2.p;\
-    \ });\n  return res;\n}\n\nvc<ll> divisors(const vc<PrimePower<ll>> &pps)\n{\n\
-    \  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d, int i) -> void\n  {\n    if (i\
-    \ == SZ<int>(pps))\n    {\n      res.emplace_back(d);\n      return;\n    }\n\
-    \    auto &pp = pps[i];\n    ull nd = d;\n    repi(j, pp.e + 1)\n    {\n     \
-    \ dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs, 1, 0);\n  sort(ALL(res));\n\
-    \  return res;\n}\n"
+    \ });\n  return res;\n}\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate\
+    \ <class P>\nvc<P> factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n\
+    \  repi(i, fac.size()) res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570\
+    \ fac \u306F\u7D20\u56E0\u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const\
+    \ vc<PrimePower<P>> &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d,\
+    \ int i) -> void\n  {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n\
+    \      return;\n    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e\
+    \ + 1)\n    {\n      dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs,\
+    \ 1, 0);\n  sort(ALL(res));\n  return res;\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
     ../modint/modint.hpp\"\n#include \"../modint/modint64.hpp\"\n#include \"prime_power.hpp\"\
     \n#include \"primality_test.hpp\"\n\n/**\n * @brief \u7D20\u56E0\u6570\u5206\u89E3\
     \n * @docs docs/math/prime/factorize.md\n */\n\nnamespace internal\n{\n\nint get_prime_factor_int(int\
-    \ n)\n{\n  int m = pow(n, .125);\n  using mint = dynamic_modint<-2>;\n  mint::set_mod(n);\n\
+    \ n)\n{\n  int m = pow(n, .125);\n  using mint = dynamic_modint<INT_MIN>;\n  mint::set_mod(n);\n\
     \  for (int c = 1;; c++)\n  {\n    mint x = 2, y = 2, prod = 1;\n    int g = 1;\n\
     \    for (int t = 1; g == 1; t = min(2 * t, m))\n    {\n      repi(i, t)\n   \
     \   {\n        x = x * x + c;\n        y = y * y + c, y = y * y + c;\n       \
@@ -762,26 +792,29 @@ data:
     \ n)\n      continue;\n    if (is_prime(g))\n      return g;\n    else if (is_prime(n\
     \ / g))\n      return n / g;\n    else\n      return get_prime_factor_int(g);\n\
     \  }\n}\n\nll get_prime_factor(ll n)\n{\n  if (n <= INT_MAX)\n    return get_prime_factor_int(n);\n\
-    \  int m = pow(n, .125);\n  using mint = dynamic_modint64_odd<-2>;\n  mint::set_mod(n);\n\
+    \  int m = pow(n, .125);\n  using mint = dynamic_modint64_odd<INT_MIN>;\n  mint::set_mod(n);\n\
     \  for (int c = 1;; c++)\n  {\n    mint x = 2, y = 2, prod = 1;\n    ll g = 1;\n\
     \    for (int t = 1; g == 1; t = min(2 * t, m))\n    {\n      repi(i, t)\n   \
     \   {\n        x = x * x + c;\n        y = y * y + c, y = y * y + c;\n       \
     \ prod *= x - y;\n      }\n      g = gcd(prod.val(), n);\n    }\n    if (g ==\
     \ n)\n      continue;\n    if (is_prime(g))\n      return g;\n    else if (is_prime(n\
     \ / g))\n      return n / g;\n    else\n      return get_prime_factor(g);\n  }\n\
-    }\n\n};\n\nvc<PrimePower<ll>> factorize(ll n)\n{\n  vc<PrimePower<ll>> res;\n\
-    \  repi(p, 2, 100)\n  {\n    PrimePower<ll> pp(p, 0);\n    while (n % p == 0)\n\
-    \      n /= p, pp.mul_p();\n    if (pp.e > 0)\n      res.emplace_back(pp);\n \
-    \ }\n  while (n > 1)\n  {\n    if (is_prime(n))\n    {\n      res.emplace_back(n);\n\
+    }\n\n}; // namespace internal\n\nvc<PrimePower<ll>> factorize(ll n)\n{\n  vc<PrimePower<ll>>\
+    \ res;\n  repi(p, 2, 100)\n  {\n    PrimePower<ll> pp(p, 0);\n    while (n % p\
+    \ == 0)\n      n /= p, pp.mul_p();\n    if (pp.e > 0)\n      res.emplace_back(pp);\n\
+    \  }\n  while (n > 1)\n  {\n    if (is_prime(n))\n    {\n      res.emplace_back(n);\n\
     \      break;\n    }\n    ll p = internal::get_prime_factor(n);\n    PrimePower<ll>\
     \ pp(p, 0);\n    while (n % p == 0)\n      n /= p, pp.mul_p();\n    res.emplace_back(pp);\n\
     \  }\n  sort(ALL(res), [&](cauto &pp1, cauto &pp2)\n       { return pp1.p < pp2.p;\
-    \ });\n  return res;\n}\n\nvc<ll> divisors(const vc<PrimePower<ll>> &pps)\n{\n\
-    \  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d, int i) -> void\n  {\n    if (i\
-    \ == SZ<int>(pps))\n    {\n      res.emplace_back(d);\n      return;\n    }\n\
-    \    auto &pp = pps[i];\n    ull nd = d;\n    repi(j, pp.e + 1)\n    {\n     \
-    \ dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs, 1, 0);\n  sort(ALL(res));\n\
-    \  return res;\n}"
+    \ });\n  return res;\n}\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate\
+    \ <class P>\nvc<P> factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n\
+    \  repi(i, fac.size()) res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570\
+    \ fac \u306F\u7D20\u56E0\u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const\
+    \ vc<PrimePower<P>> &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d,\
+    \ int i) -> void\n  {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n\
+    \      return;\n    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e\
+    \ + 1)\n    {\n      dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs,\
+    \ 1, 0);\n  sort(ALL(res));\n  return res;\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -802,12 +835,18 @@ data:
   - math/prime/primality_test.hpp
   isVerificationFile: false
   path: math/prime/factorize.hpp
-  requiredBy: []
-  timestamp: '2025-01-29 21:47:21+09:00'
+  requiredBy:
+  - math/prime/euler_phi_carmichael.hpp
+  - math/prime/order_primitive_root.hpp
+  timestamp: '2025-01-31 00:04:12+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yukicoder/order_mod_carmichael.test.cpp
+  - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/divisors.test.cpp
   - verify/yosupo/factorize.test.cpp
+  - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/primitive_root_min.test.cpp
 documentation_of: math/prime/factorize.hpp
 layout: document
 redirect_from:
@@ -815,7 +854,7 @@ redirect_from:
 - /library/math/prime/factorize.hpp.html
 title: "\u7D20\u56E0\u6570\u5206\u89E3"
 ---
-## 素数判定
+## 素因数分解
 
 #### factorize
 
@@ -836,17 +875,31 @@ vc<PrimePower<ll>> factorize(ll n)
 - $O(n^{1/4})$ と考えられている
 
 
+#### factors
+
+整数の素因数分解形を受け取り、その相異なる素因数を返す。
+
+```cpp
+vc<P> divisors(vc<PrimePower<P>> fac)
+```
+
+##### 計算量
+
+- $O(\lvert \mathrm{fac} \rvert)$
+
+
 #### divisors
 
 整数の素因数分解形を受け取り、そのすべての約数を小さい順に格納した vector を返す。
 
 ```cpp
-vc<ll> divisors(vc<PrimePower<ll>> pps)
+vc<ll> divisors(vc<PrimePower<ll>> fac)
 ```
 
 ##### 制約
 
-- `pps` が表す整数は `ll` に収まる
+- `fac` は素因数分解形として正しい
+- `fac` が表す整数は `ll` に収まる
 
 ##### 計算量
 

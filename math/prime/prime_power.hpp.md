@@ -39,15 +39,34 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
+    path: math/prime/euler_phi_carmichael.hpp
+    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
+      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
+  - icon: ':heavy_check_mark:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/order_primitive_root.hpp
+    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/primitive_root.test.cpp
+    title: verify/yosupo/primitive_root.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/primitive_root_min.test.cpp
+    title: verify/yosupo/primitive_root_min.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/divisors.test.cpp
     title: verify/yukicoder/divisors.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/order_mod_carmichael.test.cpp
+    title: verify/yukicoder/order_mod_carmichael.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/order_mod_euler_phi.test.cpp
+    title: verify/yukicoder/order_mod_euler_phi.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -454,17 +473,34 @@ data:
     \ PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e)) {}\n  PrimePower(P p,\
     \ int e, P pe) : p(p), e(e), pe(pe) {}\n  template <class P2>\n  PrimePower(const\
     \ PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\n  void mul_p() { e++,\
-    \ pe *= p; }\n  void div_p() { e--, pe /= p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>,\
-    \ p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n"
+    \ pe = ull(pe) * ull(p); }\n  void div_p() { e--, pe /= p; }\n};\n#ifdef LOCAL\n\
+    CPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>,\
+    \ p, e, pe);\n#endif\n\ntemplate <class P>\nvc<PrimePower<P>> factorized_mul\n\
+    (const vc<PrimePower<P>> &fac1, const vc<PrimePower<P>> &fac2)\n{\n  const int\
+    \ n = fac1.size(), m = fac2.size();\n  vc<PrimePower<P>> fac;\n  fac.reserve(n\
+    \ + m);\n  int i = 0, j = 0;\n  while (i < n && j < m)\n  {\n    if (fac1[i].p\
+    \ < fac2[j].p)\n      fac.emplace_back(fac1[i++]);\n    else if (fac1[i].p > fac2[i].p)\n\
+    \      fac.emplace_back(fac2[j++]);\n    else\n    {\n      fac.emplace_back(fac1[i].p,\
+    \ fac1[i].e + fac2[j].e, ull(fac1[i].pe) * ull(fac2[j].pe));\n      i++, j++;\n\
+    \    }\n  }\n  fac.insert(fac.end(), ALL(fac1));\n  fac.insert(fac.end(), ALL(fac2));\n\
+    \  return fac;\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n\n/**\n * @brief\
     \ \u7D20\u3079\u304D\u69CB\u9020\u4F53\n * @docs docs/math/prime/prime_power.md\n\
     \ */\n\ntemplate <class P>\nstruct PrimePower\n{\n  P p;\n  int e;\n  P pe;\n\n\
     \  PrimePower() {}\n  PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e))\
     \ {}\n  PrimePower(P p, int e, P pe) : p(p), e(e), pe(pe) {}\n  template <class\
     \ P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\
-    \n  void mul_p() { e++, pe *= p; }\n  void div_p() { e--, pe /= p; }\n};\n#ifdef\
-    \ LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>,\
-    \ p, e, pe);\n#endif"
+    \n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void div_p() { e--, pe /=\
+    \ p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e,\
+    \ pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\ntemplate\
+    \ <class P>\nvc<PrimePower<P>> factorized_mul\n(const vc<PrimePower<P>> &fac1,\
+    \ const vc<PrimePower<P>> &fac2)\n{\n  const int n = fac1.size(), m = fac2.size();\n\
+    \  vc<PrimePower<P>> fac;\n  fac.reserve(n + m);\n  int i = 0, j = 0;\n  while\
+    \ (i < n && j < m)\n  {\n    if (fac1[i].p < fac2[j].p)\n      fac.emplace_back(fac1[i++]);\n\
+    \    else if (fac1[i].p > fac2[i].p)\n      fac.emplace_back(fac2[j++]);\n   \
+    \ else\n    {\n      fac.emplace_back(fac1[i].p, fac1[i].e + fac2[j].e, ull(fac1[i].pe)\
+    \ * ull(fac2[j].pe));\n      i++, j++;\n    }\n  }\n  fac.insert(fac.end(), ALL(fac1));\n\
+    \  fac.insert(fac.end(), ALL(fac2));\n  return fac;\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -481,11 +517,17 @@ data:
   path: math/prime/prime_power.hpp
   requiredBy:
   - math/prime/factorize.hpp
-  timestamp: '2025-01-04 23:27:57+09:00'
+  - math/prime/euler_phi_carmichael.hpp
+  - math/prime/order_primitive_root.hpp
+  timestamp: '2025-01-31 00:04:12+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yukicoder/order_mod_carmichael.test.cpp
+  - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/divisors.test.cpp
   - verify/yosupo/factorize.test.cpp
+  - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/primitive_root_min.test.cpp
 documentation_of: math/prime/prime_power.hpp
 layout: document
 redirect_from:
@@ -513,7 +555,6 @@ title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
 (3) PrimePower<P>(P p, int e, P pe)
 ```
 
-- (1) 特に初期化を行わない。この状態のまま使わないこと。
 - (2) `p`, `e` を設定し、`pe` は自動で計算する。
 - (3) `p`, `e`, `pe` を設定する。
 
@@ -537,11 +578,7 @@ title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
 void mul_p()
 ```
 
-素べきに $p$ を掛ける。
-
-##### 制約
-
-- $p^e$ が `P` に収まる
+素べきに $p$ を掛ける。$p^e$ が `P` に収まらないときは、$\bmod \ 2^{32}$ や $\bmod \ 2^{64}$ で等しい値にする。
 
 #### div_p
 
@@ -554,3 +591,22 @@ void div_p()
 ##### 制約
 
 - $e > 0$（すなわち $p^e > p$）
+
+
+### 外側の関数
+
+#### factorized_mul
+
+整数の素因数分解形（`p` についてソート済み）を複数受け取り、その積の素因数分解形（`p` についてソート済み）を返す。`pe` がオーバーフローする場合は $\bmod \ 2^{32}$ や $\bmod \ 2^{64}$ で等しい値を返す。
+
+```cpp
+vc<PrimePower<P>> factorized_mul(vc<PrimePower<P>> fac1, vc<PrimePower<P>> fac2)
+```
+
+##### 制約
+
+- `fac1`, `fac2` は `p` についてソート済み
+
+##### 計算量
+
+- $O(\lvert \mathrm{fac1} \rvert + \lvert \mathrm{fac2} \rvert)$

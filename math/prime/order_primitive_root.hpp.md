@@ -14,6 +14,19 @@ data:
     path: math/modint/modint_internal.hpp
     title: math/modint/modint_internal.hpp
   - icon: ':heavy_check_mark:'
+    path: math/prime/euler_phi_carmichael.hpp
+    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
+      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/factorize.hpp
+    title: "\u7D20\u56E0\u6570\u5206\u89E3"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/primality_test.hpp
+    title: "\u7D20\u6570\u5224\u5B9A"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/prime_power.hpp
+    title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -49,33 +62,14 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: math/prime/euler_phi_carmichael.hpp
-    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
-      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/order_primitive_root.hpp
-    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root.test.cpp
     title: verify/yosupo/primitive_root.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root_min.test.cpp
     title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/order_mod_carmichael.test.cpp
     title: verify/yukicoder/order_mod_carmichael.test.cpp
@@ -86,10 +80,12 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/prime/primality_test.md
-    document_title: "\u7D20\u6570\u5224\u5B9A"
-    links: []
-  bundledCode: "#line 2 \"math/prime/primality_test.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+    _deprecated_at_docs: docs/math/prime/order_primitive_root.md
+    document_title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
+    links:
+    - https://37zigen.com/primitive-root/#i-4
+    - https://x.com/noshi91/status/1317025404700405760
+  bundledCode: "#line 2 \"math/prime/order_primitive_root.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -714,8 +710,25 @@ data:
     \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
     \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::montgomery64\
     \ dynamic_modint64<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
-    \ << 61) - 1>;\n#line 6 \"math/prime/primality_test.hpp\"\n\n/**\n * @brief \u7D20\
-    \u6570\u5224\u5B9A\n * @docs docs/math/prime/primality_test.md\n */\n\nbool is_prime_int(int\
+    \ << 61) - 1>;\n#line 2 \"math/prime/prime_power.hpp\"\n\n#line 4 \"math/prime/prime_power.hpp\"\
+    \n\n/**\n * @brief \u7D20\u3079\u304D\u69CB\u9020\u4F53\n * @docs docs/math/prime/prime_power.md\n\
+    \ */\n\ntemplate <class P>\nstruct PrimePower\n{\n  P p;\n  int e;\n  P pe;\n\n\
+    \  PrimePower() {}\n  PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e))\
+    \ {}\n  PrimePower(P p, int e, P pe) : p(p), e(e), pe(pe) {}\n  template <class\
+    \ P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\
+    \n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void div_p() { e--, pe /=\
+    \ p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e,\
+    \ pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\ntemplate\
+    \ <class P>\nvc<PrimePower<P>> factorized_mul\n(const vc<PrimePower<P>> &fac1,\
+    \ const vc<PrimePower<P>> &fac2)\n{\n  const int n = fac1.size(), m = fac2.size();\n\
+    \  vc<PrimePower<P>> fac;\n  fac.reserve(n + m);\n  int i = 0, j = 0;\n  while\
+    \ (i < n && j < m)\n  {\n    if (fac1[i].p < fac2[j].p)\n      fac.emplace_back(fac1[i++]);\n\
+    \    else if (fac1[i].p > fac2[i].p)\n      fac.emplace_back(fac2[j++]);\n   \
+    \ else\n    {\n      fac.emplace_back(fac1[i].p, fac1[i].e + fac2[j].e, ull(fac1[i].pe)\
+    \ * ull(fac2[j].pe));\n      i++, j++;\n    }\n  }\n  fac.insert(fac.end(), ALL(fac1));\n\
+    \  fac.insert(fac.end(), ALL(fac2));\n  return fac;\n}\n#line 2 \"math/prime/primality_test.hpp\"\
+    \n\n#line 6 \"math/prime/primality_test.hpp\"\n\n/**\n * @brief \u7D20\u6570\u5224\
+    \u5B9A\n * @docs docs/math/prime/primality_test.md\n */\n\nbool is_prime_int(int\
     \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
     \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n\
     \ - 1);\n  static const ll bases[3] = {2, 7, 61};\n  using mint = dynamic_modint<INT_MIN>;\n\
@@ -729,25 +742,152 @@ data:
     \  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while\
     \ (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n\
     \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
-    \ true;\n}\n"
+    \ true;\n}\n#line 2 \"math/prime/factorize.hpp\"\n\n#line 8 \"math/prime/factorize.hpp\"\
+    \n\n/**\n * @brief \u7D20\u56E0\u6570\u5206\u89E3\n * @docs docs/math/prime/factorize.md\n\
+    \ */\n\nnamespace internal\n{\n\nint get_prime_factor_int(int n)\n{\n  int m =\
+    \ pow(n, .125);\n  using mint = dynamic_modint<INT_MIN>;\n  mint::set_mod(n);\n\
+    \  for (int c = 1;; c++)\n  {\n    mint x = 2, y = 2, prod = 1;\n    int g = 1;\n\
+    \    for (int t = 1; g == 1; t = min(2 * t, m))\n    {\n      repi(i, t)\n   \
+    \   {\n        x = x * x + c;\n        y = y * y + c, y = y * y + c;\n       \
+    \ prod *= x - y;\n      }\n      g = gcd(prod.val(), n);\n    }\n    if (g ==\
+    \ n)\n      continue;\n    if (is_prime(g))\n      return g;\n    else if (is_prime(n\
+    \ / g))\n      return n / g;\n    else\n      return get_prime_factor_int(g);\n\
+    \  }\n}\n\nll get_prime_factor(ll n)\n{\n  if (n <= INT_MAX)\n    return get_prime_factor_int(n);\n\
+    \  int m = pow(n, .125);\n  using mint = dynamic_modint64_odd<INT_MIN>;\n  mint::set_mod(n);\n\
+    \  for (int c = 1;; c++)\n  {\n    mint x = 2, y = 2, prod = 1;\n    ll g = 1;\n\
+    \    for (int t = 1; g == 1; t = min(2 * t, m))\n    {\n      repi(i, t)\n   \
+    \   {\n        x = x * x + c;\n        y = y * y + c, y = y * y + c;\n       \
+    \ prod *= x - y;\n      }\n      g = gcd(prod.val(), n);\n    }\n    if (g ==\
+    \ n)\n      continue;\n    if (is_prime(g))\n      return g;\n    else if (is_prime(n\
+    \ / g))\n      return n / g;\n    else\n      return get_prime_factor(g);\n  }\n\
+    }\n\n}; // namespace internal\n\nvc<PrimePower<ll>> factorize(ll n)\n{\n  vc<PrimePower<ll>>\
+    \ res;\n  repi(p, 2, 100)\n  {\n    PrimePower<ll> pp(p, 0);\n    while (n % p\
+    \ == 0)\n      n /= p, pp.mul_p();\n    if (pp.e > 0)\n      res.emplace_back(pp);\n\
+    \  }\n  while (n > 1)\n  {\n    if (is_prime(n))\n    {\n      res.emplace_back(n);\n\
+    \      break;\n    }\n    ll p = internal::get_prime_factor(n);\n    PrimePower<ll>\
+    \ pp(p, 0);\n    while (n % p == 0)\n      n /= p, pp.mul_p();\n    res.emplace_back(pp);\n\
+    \  }\n  sort(ALL(res), [&](cauto &pp1, cauto &pp2)\n       { return pp1.p < pp2.p;\
+    \ });\n  return res;\n}\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate\
+    \ <class P>\nvc<P> factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n\
+    \  repi(i, fac.size()) res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570\
+    \ fac \u306F\u7D20\u56E0\u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const\
+    \ vc<PrimePower<P>> &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d,\
+    \ int i) -> void\n  {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n\
+    \      return;\n    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e\
+    \ + 1)\n    {\n      dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs,\
+    \ 1, 0);\n  sort(ALL(res));\n  return res;\n}\n#line 2 \"math/prime/euler_phi_carmichael.hpp\"\
+    \n\n#line 9 \"math/prime/euler_phi_carmichael.hpp\"\n\n/**\n * @brief \u30AA\u30A4\
+    \u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\u30FC\u30DE\u30A4\
+    \u30B1\u30EB\u95A2\u6570\n * @docs docs/math/prime/euler_phi_carmichael.md\n */\n\
+    \ntemplate <class P>\nll euler_phi(const vc<PrimePower<P>> &fac)\n{\n  ll res\
+    \ = 1;\n  fec(pp : fac)\n  {\n    res *= pp.pe / pp.p * (pp.p - 1);\n  }\n  return\
+    \ res;\n}\n\ntemplate <class P>\nll carmichael(const vc<PrimePower<P>> &fac)\n\
+    {\n  ll res = 1;\n  fec(pp : fac)\n  {\n    ll tmp = pp.pe / pp.p * (pp.p - 1);\n\
+    \    if (pp.p == 2 && pp.e >= 3)\n      tmp /= 2;\n    res = lcm(res, tmp);\n\
+    \  }\n  return res;\n}\n#line 10 \"math/prime/order_primitive_root.hpp\"\n\n/**\n\
+    \ * @brief \u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839\n * @docs docs/math/prime/order_primitive_root.md\n\
+    \ */\n\n// https://37zigen.com/primitive-root/#i-4\n// https://x.com/noshi91/status/1317025404700405760\n\
+    \nnamespace internal\n{\n\n// x^{ a[0]...a[i-1] a[i+1]...a[n-1] } for all i\n\
+    template <class mint, class I>\nvc<mint> lagrange_basis(const vc<I> &a, mint x)\n\
+    {\n  const int n = a.size();\n  vc<mint> res(n);\n  auto dfs = [&](auto dfs, mint\
+    \ v, int l, int r)\n  {\n    if (r - l == 1)\n    {\n      res[l] = v;\n     \
+    \ return;\n    }\n    int m = (l + r) / 2;\n    mint vl = v, vr = v;\n    repi(i,\
+    \ l, m) vr = vr.pow(a[i]);\n    repi(i, m, r) vl = vl.pow(a[i]);\n    dfs(dfs,\
+    \ vl, l, m);\n    dfs(dfs, vr, m, r);\n  };\n  dfs(dfs, x, 0, n);\n  return res;\n\
+    }\n\ntemplate <class mint, class P>\nbool internal_is_primitive_root(ll x, ll\
+    \ p, const vc<PrimePower<P>> &fac)\n{\n  const int k = fac.size();\n  mint::set_mod(p);\n\
+    \  vc<ll> a(k);\n  repi(i, k) a[i] = fac[i].pe;\n  auto b = lagrange_basis(a,\
+    \ mint(x));\n  repi(i, k)\n  {\n    if (b[i].pow(fac[i].pe / fac[i].p) == 1)\n\
+    \      return false;\n  }\n  return true;\n}\n\ntemplate <class mint, class P>\n\
+    ll internal_primitive_root(ll p, const vc<PrimePower<P>> &fac)\n{\n  if (p ==\
+    \ 2)\n    return 1;\n  mt19937 _mt;\n  while (true)\n  {\n    ll g = 1 + _mt()\
+    \ % (p - 1);\n    if (internal_is_primitive_root<mint>(g, p, fac))\n      return\
+    \ g;\n  }\n}\ntemplate <class mint, class P>\nll internal_primitive_root_min(ll\
+    \ p, const vc<PrimePower<P>> &fac)\n{\n  if (p == 2)\n    return 1;\n  for (int\
+    \ g = 2; g < p; g++)\n  {\n    if (internal_is_primitive_root<mint>(g, p, fac))\n\
+    \      return g;\n  }\n  assert(false);\n}\n\ntemplate <class mint, class P>\n\
+    ll internal_order_mod(ll x, ll m, const vc<PrimePower<P>> &fac)\n{\n  const int\
+    \ k = fac.size();\n  mint::set_mod(m);\n  vc<ll> a(k);\n  repi(i, k) a[i] = fac[i].pe;\n\
+    \  auto b = internal::lagrange_basis(a, mint(x));\n  ll res = 1;\n  repi(i, k)\n\
+    \  {\n    mint tmp = b[i];\n    repi(j, fac[i].e + 1)\n    {\n      if (tmp ==\
+    \ 1)\n        break;\n      tmp = tmp.pow(fac[i].p);\n      res *= fac[i].p;\n\
+    \    }\n  }\n  return res;\n}\n\n}; // namespace internal\n\n// m >= 2\n// mod\
+    \ m \u3067\u306E x \u306E\u4F4D\u6570\n// fac \u306B\u306F\u30AA\u30A4\u30E9\u30FC\
+    \u95A2\u6570 \u03C6(m) \u304B\u30AB\u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570\
+    \ \u03BB(m) \u306E\u7D20\u56E0\u6570\u5206\u89E3\u3092\u6E21\u3059 (\u7D20\u6570\
+    \u306A\u3089 p-1)\n// O( log(m) loglog(m) )\ntemplate <class P>\nll order_mod(ll\
+    \ x, ll m, const vc<PrimePower<P>> &fac)\n{\n  assert(m >= 2);\n  assert(gcd(x,\
+    \ m) == 1);\n  if (m <= INT_MAX)\n  {\n    using mint = dynamic_modint<INT_MIN>;\n\
+    \    return internal::internal_order_mod<mint>(x, m, fac);\n  }\n  else if (m\
+    \ % 2 == 1)\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n    return\
+    \ internal::internal_order_mod<mint>(x, m, fac);\n  }\n  else\n  {\n    using\
+    \ mint = dynamic_modint64<INT_MIN>;\n    return internal::internal_order_mod<mint>(x,\
+    \ m, fac);\n  }\n}\n\n// p (\u7D20\u6570) \u306E\u539F\u59CB\u6839\n// fac \u306B\
+    \u306F p-1 \u306E\u7D20\u56E0\u6570\u5206\u89E3\u3092\u6E21\u3059\n// O( log(p)\
+    \ loglog(p)^2 )\ntemplate <class P>\nll primitive_root(ll p, const vc<PrimePower<P>>\
+    \ &fac)\n{\n  if (p <= INT_MAX)\n  {\n    using mint = dynamic_modint<INT_MIN>;\n\
+    \    return internal::internal_primitive_root<mint>(p, fac);\n  }\n  else\n  {\n\
+    \    using mint = dynamic_modint64_odd<INT_MIN>;\n    return internal::internal_primitive_root<mint>(p,\
+    \ fac);\n  }\n}\n\n// p (\u7D20\u6570) \u306E\u6700\u5C0F\u306E\u539F\u59CB\u6839\
+    \n// fac \u306B\u306F p-1 \u306E\u7D20\u56E0\u6570\u5206\u89E3\u3092\u6E21\u3059\
+    \n// O( log(p) loglog(p)^2 )\ntemplate <class P>\nll primitive_root_min(ll p,\
+    \ const vc<PrimePower<P>> &fac)\n{\n  if (p <= INT_MAX)\n  {\n    using mint =\
+    \ dynamic_modint<INT_MIN>;\n    return internal::internal_primitive_root_min<mint>(p,\
+    \ fac);\n  }\n  else\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n \
+    \   return internal::internal_primitive_root_min<mint>(p, fac);\n  }\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
-    ../modint/modint.hpp\"\n#include \"../modint/modint64.hpp\"\n\n/**\n * @brief\
-    \ \u7D20\u6570\u5224\u5B9A\n * @docs docs/math/prime/primality_test.md\n */\n\n\
-    bool is_prime_int(int n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 ||\
-    \ n == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return false;\n\
-    \  ll d = (n - 1) >> countr_zero(n - 1);\n  static const ll bases[3] = {2, 7,\
-    \ 61};\n  using mint = dynamic_modint<INT_MIN>;\n  mint::set_mod(n);\n  for (ll\
-    \ a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n\
-    \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
-    }\n\nbool is_prime(ll n)\n{\n  if (n <= INT_MAX)\n    return is_prime_int(n);\n\
-    \  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n - 1);\n\
-    \  static const ll bases[7] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};\n\
-    \  using mint = dynamic_modint64_odd<INT_MIN>;\n  mint::set_mod(n);\n  for (ll\
-    \ a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n\
-    \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
-    }"
+    ../modint/modint.hpp\"\n#include \"../modint/modint64.hpp\"\n#include \"prime_power.hpp\"\
+    \n#include \"primality_test.hpp\"\n#include \"factorize.hpp\"\n#include \"euler_phi_carmichael.hpp\"\
+    \n\n/**\n * @brief \u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839\n * @docs\
+    \ docs/math/prime/order_primitive_root.md\n */\n\n// https://37zigen.com/primitive-root/#i-4\n\
+    // https://x.com/noshi91/status/1317025404700405760\n\nnamespace internal\n{\n\
+    \n// x^{ a[0]...a[i-1] a[i+1]...a[n-1] } for all i\ntemplate <class mint, class\
+    \ I>\nvc<mint> lagrange_basis(const vc<I> &a, mint x)\n{\n  const int n = a.size();\n\
+    \  vc<mint> res(n);\n  auto dfs = [&](auto dfs, mint v, int l, int r)\n  {\n \
+    \   if (r - l == 1)\n    {\n      res[l] = v;\n      return;\n    }\n    int m\
+    \ = (l + r) / 2;\n    mint vl = v, vr = v;\n    repi(i, l, m) vr = vr.pow(a[i]);\n\
+    \    repi(i, m, r) vl = vl.pow(a[i]);\n    dfs(dfs, vl, l, m);\n    dfs(dfs, vr,\
+    \ m, r);\n  };\n  dfs(dfs, x, 0, n);\n  return res;\n}\n\ntemplate <class mint,\
+    \ class P>\nbool internal_is_primitive_root(ll x, ll p, const vc<PrimePower<P>>\
+    \ &fac)\n{\n  const int k = fac.size();\n  mint::set_mod(p);\n  vc<ll> a(k);\n\
+    \  repi(i, k) a[i] = fac[i].pe;\n  auto b = lagrange_basis(a, mint(x));\n  repi(i,\
+    \ k)\n  {\n    if (b[i].pow(fac[i].pe / fac[i].p) == 1)\n      return false;\n\
+    \  }\n  return true;\n}\n\ntemplate <class mint, class P>\nll internal_primitive_root(ll\
+    \ p, const vc<PrimePower<P>> &fac)\n{\n  if (p == 2)\n    return 1;\n  mt19937\
+    \ _mt;\n  while (true)\n  {\n    ll g = 1 + _mt() % (p - 1);\n    if (internal_is_primitive_root<mint>(g,\
+    \ p, fac))\n      return g;\n  }\n}\ntemplate <class mint, class P>\nll internal_primitive_root_min(ll\
+    \ p, const vc<PrimePower<P>> &fac)\n{\n  if (p == 2)\n    return 1;\n  for (int\
+    \ g = 2; g < p; g++)\n  {\n    if (internal_is_primitive_root<mint>(g, p, fac))\n\
+    \      return g;\n  }\n  assert(false);\n}\n\ntemplate <class mint, class P>\n\
+    ll internal_order_mod(ll x, ll m, const vc<PrimePower<P>> &fac)\n{\n  const int\
+    \ k = fac.size();\n  mint::set_mod(m);\n  vc<ll> a(k);\n  repi(i, k) a[i] = fac[i].pe;\n\
+    \  auto b = internal::lagrange_basis(a, mint(x));\n  ll res = 1;\n  repi(i, k)\n\
+    \  {\n    mint tmp = b[i];\n    repi(j, fac[i].e + 1)\n    {\n      if (tmp ==\
+    \ 1)\n        break;\n      tmp = tmp.pow(fac[i].p);\n      res *= fac[i].p;\n\
+    \    }\n  }\n  return res;\n}\n\n}; // namespace internal\n\n// m >= 2\n// mod\
+    \ m \u3067\u306E x \u306E\u4F4D\u6570\n// fac \u306B\u306F\u30AA\u30A4\u30E9\u30FC\
+    \u95A2\u6570 \u03C6(m) \u304B\u30AB\u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570\
+    \ \u03BB(m) \u306E\u7D20\u56E0\u6570\u5206\u89E3\u3092\u6E21\u3059 (\u7D20\u6570\
+    \u306A\u3089 p-1)\n// O( log(m) loglog(m) )\ntemplate <class P>\nll order_mod(ll\
+    \ x, ll m, const vc<PrimePower<P>> &fac)\n{\n  assert(m >= 2);\n  assert(gcd(x,\
+    \ m) == 1);\n  if (m <= INT_MAX)\n  {\n    using mint = dynamic_modint<INT_MIN>;\n\
+    \    return internal::internal_order_mod<mint>(x, m, fac);\n  }\n  else if (m\
+    \ % 2 == 1)\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n    return\
+    \ internal::internal_order_mod<mint>(x, m, fac);\n  }\n  else\n  {\n    using\
+    \ mint = dynamic_modint64<INT_MIN>;\n    return internal::internal_order_mod<mint>(x,\
+    \ m, fac);\n  }\n}\n\n// p (\u7D20\u6570) \u306E\u539F\u59CB\u6839\n// fac \u306B\
+    \u306F p-1 \u306E\u7D20\u56E0\u6570\u5206\u89E3\u3092\u6E21\u3059\n// O( log(p)\
+    \ loglog(p)^2 )\ntemplate <class P>\nll primitive_root(ll p, const vc<PrimePower<P>>\
+    \ &fac)\n{\n  if (p <= INT_MAX)\n  {\n    using mint = dynamic_modint<INT_MIN>;\n\
+    \    return internal::internal_primitive_root<mint>(p, fac);\n  }\n  else\n  {\n\
+    \    using mint = dynamic_modint64_odd<INT_MIN>;\n    return internal::internal_primitive_root<mint>(p,\
+    \ fac);\n  }\n}\n\n// p (\u7D20\u6570) \u306E\u6700\u5C0F\u306E\u539F\u59CB\u6839\
+    \n// fac \u306B\u306F p-1 \u306E\u7D20\u56E0\u6570\u5206\u89E3\u3092\u6E21\u3059\
+    \n// O( log(p) loglog(p)^2 )\ntemplate <class P>\nll primitive_root_min(ll p,\
+    \ const vc<PrimePower<P>> &fac)\n{\n  if (p <= INT_MAX)\n  {\n    using mint =\
+    \ dynamic_modint<INT_MIN>;\n    return internal::internal_primitive_root_min<mint>(p,\
+    \ fac);\n  }\n  else\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n \
+    \   return internal::internal_primitive_root_min<mint>(p, fac);\n  }\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -764,45 +904,160 @@ data:
   - math/modint/modint_internal.hpp
   - math/extgcd.hpp
   - math/modint/modint64.hpp
-  isVerificationFile: false
-  path: math/prime/primality_test.hpp
-  requiredBy:
+  - math/prime/prime_power.hpp
+  - math/prime/primality_test.hpp
   - math/prime/factorize.hpp
   - math/prime/euler_phi_carmichael.hpp
-  - math/prime/order_primitive_root.hpp
+  isVerificationFile: false
+  path: math/prime/order_primitive_root.hpp
+  requiredBy: []
   timestamp: '2025-01-31 00:04:12+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/primality_test.test.cpp
   - verify/yosupo/primitive_root.test.cpp
   - verify/yosupo/primitive_root_min.test.cpp
-documentation_of: math/prime/primality_test.hpp
+documentation_of: math/prime/order_primitive_root.hpp
 layout: document
 redirect_from:
-- /library/math/prime/primality_test.hpp
-- /library/math/prime/primality_test.hpp.html
-title: "\u7D20\u6570\u5224\u5B9A"
+- /library/math/prime/order_primitive_root.hpp
+- /library/math/prime/order_primitive_root.hpp.html
+title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
 ---
-## 素数判定
+## 元の位数と原始根
 
-与えられた整数が素数かどうかをミラー・ラビン素数判定法で判定する。
+素数 $p$ に対し、乗法群 $(\mathbb{Z}/p\mathbb{Z})^\times$ の元の位数や原始根を求めるライブラリ。
+
+約数ゼータ・メビウス変換が絡んでくることもしばしばある。
+
+### 概要
+
+#### 定義
+
+- 元 $1 \leq x < p$ の**位数**とは、$x^n \equiv 1 \pmod p$ を満たす最小の $n \geq 1$ のこと
+- $p$ の**原始根**とは、位数が $p-1$ であるような元のこと
+
+#### 性質
+
+- $a^m \equiv 1 \pmod p$ を満たす $m$ は位数の倍数
+  - 特に、位数は $p - 1$ の約数（フェルマーの小定理より $p-1$ は必ず満たす）
+- $g^a \equiv g^b \pmod p \iff a \equiv b \pmod{p-1}$
+  - 巡回群だから
+- $g^a$ の位数は $\dfrac{p-1}{\gcd(p-1, a)}$
+  - $d = \gcd(p-1, a)$ とおくと、$g^a$ の累乗として現れるのは $g^0, g^d, g^{2d}, \dots, g^{\left(\frac{p-1}{d}-1\right)d}$
+- 位数がちょうど $d$ の元の個数は $\phi(d)$（これは一般に巡回群についてもいえる）
+  - 約数ゼータ変換を考えると、位数が $d$ の約数であるような元の個数は $d$
+
+### ライブラリの使い方
+
+元の位数や原始根は、$p-1$ の素因数分解 $O(p^{1/4})$ 時間を除くと $O(\mathrm{polylog}\ p)$ 時間で求まる。特に、（原始根を底とする）**指数は**（離散対数 $O(\sqrt{p})$ 時間等でないと）**求まらないが、位数は求まる**。
+
+`int` と `ll` で実装が分かれている。しかし、`ll` 側の関数でも `int` で計算できるなら `int` で計算してくれるので、基本的に `ll` 側で呼んでしまってよいと思う。
+
+#### order_mod
 
 ```cpp
-bool is_prime_int(int n)
+(1) int order_mod_int(int x, int p, vc<PrimePower<P>> fac)
+(2) ll order_mod(ll x, ll p, vc<Primepower<ll>> fac)
 ```
 
-```cpp
-bool is_prime(ll n)
-```
+$(\mathbb{Z}/p\mathbb{Z})^\times$ の元 $x$ の位数を求める。`fac` には $p-1$ の素因数分解形が入る。
 
 ##### 制約
 
-- 特になし（それぞれ `int`, `ll` に収まっていれば OK）
+- $p$ は素数
+- $x \not\equiv 0 \pmod p$
 
 ##### 計算量
 
-- $O(\log n)$
+- $O(\log p \log\log p)$
+
+ただし、`fac` の前計算に $O(p^{1/4})$ かかることに注意。
+
+
+#### primitive_root
+
+```cpp
+(1) ll primitive_root(ll p, vc<PrimePower<ll>> fac)
+(2) ll primitive_root_min(ll p, vc<PrimePower<ll>> fac)
+```
+
+(1) では $p$ の原始根を $1$ つ求める。(2) では $p$ の最小の原始根を求める。`fac` には $p-1$ の素因数分解形が入る。
+
+##### 制約
+
+- $p$ は素数
+
+
+##### 計算量
+
+- (1) は期待 $O((\log p) (\log\log p)^2)$
+- (2) は、原始根の分布に極端な偏りがないと仮定すれば期待 $O((\log p) (\log\log p)^2)$
+  - 実際は最小の原始根が大きめな $p$ があるので、何か $1$ つ欲しいだけなら (1) のほうが高速
+
+ただし、`fac` の前計算に $O(p^{1/4})$ かかることに注意。
+
+### 中身
+
+#### ラグランジュ補間風のアルゴリズム
+
+https://twitter.com/noshi91/status/1317025404700405760
+
+```
+|       a       |
+|5,6,7,8|1,2,3,4| 伝播
+|   b   |   c   |
+|3,4|1,2|7,8|5,6| 伝播
+| d | e | f | g |
+|2|1|4|3|6|5|8|7| 伝播
+|h|i|j|k|l|m|n|o|
+```
+
+これで各 $i$ について $x^{a_1 \cdots a_{i-1} a_{i+1} \cdots a_k}$ が求まる。計算量は、$\log k$ 個ある段それぞれで $a_1, \dots, a_k$ 乗の計算をするので、$O((\log k) \sum_i \log a_i) = O(\log k \log \prod_i a_i)$ 時間。
+
+とりあえず再帰で書いたけど非再帰とどっちが速いかは計測してない（よくわからない）
+
+#### 元の位数
+
+https://atcoder.jp/contests/abc335/editorial/9017
+https://atcoder.jp/contests/abc335/editorial/9045
+
+$p-1 = q_1^{e_1} \cdots q_k^{e_k}$ とする。位数 $n$ は $n = q_1^{f_1} \cdots q_k^{f_k} \: (0 \leq f_i \leq e_i)$ と書ける。性質「$x^m \equiv 1 \pmod p$ を満たす $m$ は位数の倍数」より、各 $f_i$ ごとに最小化すればよい。つまり、$i$ ごとに $\left(x^{q_1^{e_1} \cdots q_{i-1}^{e_{i-1}} q_{i+1}^{e_{i+1}} \cdots q_k^{e_k}}\right)^{q_i^{f_i}} \equiv 1 \pmod p$ を満たす $f_i$ の最小値を求めればよい。これは、上述のラグランジュ補間風のアルゴリズムで $x^{q_1^{e_1} \cdots q_{i-1}^{e_{i-1}} q_{i+1}^{e_{i+1}} \cdots q_k^{e_k}}$ を求めた後、それを $q_i$ 乗する回数 $f_i$ を愚直に $1$ ずつ増やしていけばよい。計算量は、$x^{q_1^{e_1} \cdots q_{i-1}^{e_{i-1}} q_{i+1}^{e_{i+1}} \cdots q_k^{e_k}}$ を求めるパートが $O(\log k \log p) = O(\log p \log\log p)$ 時間、$f_i$ を増やしていくパートが $O(\sum_i e_i \log q_i) = O(\log \prod_i q_i^{e_i}) = O(\log p)$ 時間で、全体 $O(\log p\log\log p)$ 時間。
+
+#### 原始根
+
+https://37zigen.com/primitive-root/#i-4
+https://37zigen.com/prime-complexity/#i-4
+
+ある元が原始根かどうかの判定は、位数が $p-1$ かどうかなので $O(\log p\log\log p)$ 時間で求まる。より強く $f_i = e_i - 1$（つまり $\dfrac{p-1}{q_i}$）のみを調べればよいこともすぐにわかる。
+
+原始根は $\phi(p-1)$ 個あるので、乱択すれば試行回数の期待値は $\dfrac{p-1}{\phi(p-1)}$ である。https://37zigen.com/prime-complexity/#i-4 より $\dfrac{n}{\phi(n)} = O(\log\log n)$ であるから、全体の期待計算量は $O((\log p) (\log\log p)^2)$ 時間とわかる。
+
+---
+
+実装が簡単な（ラグランジュ補間風のアルゴリズムを実装しない）代わりに計算量が劣る方法：
+
+元の位数は、$m = p-1$ から始めて、各 $i$ について $m$ を $q_i$ で割っていくと $O(\log^2 p)$ 時間（https://atcoder.jp/contests/abc335/editorial/9017 ）。各 $i$ について、まず $m$ を $q_i^{e_i}$ で割ってから $m$ を $q_i$ 倍していけば $O(k (\log p + \sum_i e_i \log q_i)) = O(k \log p)$ 時間で、$k = O\left(\dfrac{\log p}{\log\log p}\right)$（https://37zigen.com/prime-complexity/#i-3 ）なので $O\left(\dfrac{\log^2 p}{\log\log p}\right)$ 時間（https://atcoder.jp/contests/abc335/editorial/9042 ）。
+
+原始根判定は、単純に $x^{\frac{p-1}{q_i}}$ を計算することで $O(k \log p) = O\left(\dfrac{\log^2 p}{\log\log p}\right)$ 時間。よって原始根を求めるのは $O(\log^2 p)$ 時間。
+
+### 素数でない場合
+
+#### 元の位数
+
+$n \geq 2$ に対し、乗法群 $(\mathbb{Z}/n\mathbb{Z})^\times$ の元 $x$（つまり $\gcd(x, n) = 1$ を満たす $x$）の位数は、オイラーの定理 $x^{\phi(n)} \equiv 1 \pmod n$ から $\phi(n)$ の約数（「位数の倍数」の性質は巡回群でなくても成り立つ）。`fac` に $\phi(n)$ の素因数分解を渡すことでまったく同様のアルゴリズムで求まる。カーマイケル関数 $\lambda(n)$ を使うともう少し速い。
+
+#### 原始根
+
+$n \geq 2$ の原始根が存在する条件は、$n$ が $2, 4, p^e, 2p^e$（$p$ は奇素数、$e \geq 1$）のどれかであることらしい。
+
+また、$(\mathbb{Z}/n\mathbb{Z})^\times$ の元の位数となりうる最大の値は $\lambda(n)$ である。
+
+具体的な元の求め方は未履修。
+
+まだちゃんと読んでない：
+
+- https://integers.hatenablog.com/entry/2016/07/24/163831
+- https://en.wikipedia.org/wiki/Primitive_root_modulo_n
+- https://ocw.mit.edu/courses/18-781-theory-of-numbers-spring-2012/resources/mit18_781s12_lec8/

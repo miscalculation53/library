@@ -45,8 +45,15 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
+    path: math/prime/euler_phi_carmichael.hpp
+    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
+      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
+  - icon: ':heavy_check_mark:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/order_primitive_root.hpp
+    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
   - icon: ':heavy_check_mark:'
     path: math/prime/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
@@ -67,11 +74,23 @@ data:
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/primitive_root.test.cpp
+    title: verify/yosupo/primitive_root.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/primitive_root_min.test.cpp
+    title: verify/yosupo/primitive_root_min.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/divisors.test.cpp
     title: verify/yukicoder/divisors.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/dynamic_modint.test.cpp
     title: verify/yukicoder/dynamic_modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/order_mod_carmichael.test.cpp
+    title: verify/yukicoder/order_mod_carmichael.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/order_mod_euler_phi.test.cpp
+    title: verify/yukicoder/order_mod_euler_phi.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/static_modint.test.cpp
     title: verify/yukicoder/static_modint.test.cpp
@@ -701,6 +720,8 @@ data:
   requiredBy:
   - math/prime/factorize.hpp
   - math/prime/primality_test.hpp
+  - math/prime/euler_phi_carmichael.hpp
+  - math/prime/order_primitive_root.hpp
   - template/template.cpp
   timestamp: '2025-01-29 21:47:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
@@ -709,9 +730,13 @@ data:
   - verify/aoj/extgcd.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
   - verify/yukicoder/static_modint.test.cpp
+  - verify/yukicoder/order_mod_carmichael.test.cpp
+  - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/divisors.test.cpp
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/primality_test.test.cpp
+  - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/primitive_root_min.test.cpp
 documentation_of: math/modint/modint.hpp
 layout: document
 redirect_from:

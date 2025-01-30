@@ -702,69 +702,80 @@ data:
     \  PrimePower() {}\n  PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e))\
     \ {}\n  PrimePower(P p, int e, P pe) : p(p), e(e), pe(pe) {}\n  template <class\
     \ P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\
-    \n  void mul_p() { e++, pe *= p; }\n  void div_p() { e--, pe /= p; }\n};\n#ifdef\
-    \ LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>,\
-    \ p, e, pe);\n#endif\n#line 2 \"math/prime/primality_test.hpp\"\n\n#line 6 \"\
-    math/prime/primality_test.hpp\"\n\n/**\n * @brief \u7D20\u6570\u5224\u5B9A\n *\
-    \ @docs docs/math/prime/primality_test.md\n */\n\nbool is_prime_int(int n)\n{\n\
-    \  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n    return\
-    \ true;\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n\
-    \ - 1);\n  static const ll bases[3] = {2, 7, 61};\n  using mint = dynamic_modint<-2>;\n\
+    \n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void div_p() { e--, pe /=\
+    \ p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e,\
+    \ pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\ntemplate\
+    \ <class P>\nvc<PrimePower<P>> factorized_mul\n(const vc<PrimePower<P>> &fac1,\
+    \ const vc<PrimePower<P>> &fac2)\n{\n  const int n = fac1.size(), m = fac2.size();\n\
+    \  vc<PrimePower<P>> fac;\n  fac.reserve(n + m);\n  int i = 0, j = 0;\n  while\
+    \ (i < n && j < m)\n  {\n    if (fac1[i].p < fac2[j].p)\n      fac.emplace_back(fac1[i++]);\n\
+    \    else if (fac1[i].p > fac2[i].p)\n      fac.emplace_back(fac2[j++]);\n   \
+    \ else\n    {\n      fac.emplace_back(fac1[i].p, fac1[i].e + fac2[j].e, ull(fac1[i].pe)\
+    \ * ull(fac2[j].pe));\n      i++, j++;\n    }\n  }\n  fac.insert(fac.end(), ALL(fac1));\n\
+    \  fac.insert(fac.end(), ALL(fac2));\n  return fac;\n}\n#line 2 \"math/prime/primality_test.hpp\"\
+    \n\n#line 6 \"math/prime/primality_test.hpp\"\n\n/**\n * @brief \u7D20\u6570\u5224\
+    \u5B9A\n * @docs docs/math/prime/primality_test.md\n */\n\nbool is_prime_int(int\
+    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
+    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n\
+    \ - 1);\n  static const ll bases[3] = {2, 7, 61};\n  using mint = dynamic_modint<INT_MIN>;\n\
     \  mint::set_mod(n);\n  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n\
     \    while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t\
     \ <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n\
     \  return true;\n}\n\nbool is_prime(ll n)\n{\n  if (n <= INT_MAX)\n    return\
     \ is_prime_int(n);\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >>\
     \ countr_zero(n - 1);\n  static const ll bases[7] = {2, 325, 9375, 28178, 450775,\
-    \ 9780504, 1795265022};\n  using mint = dynamic_modint64_odd<-2>;\n  mint::set_mod(n);\n\
+    \ 9780504, 1795265022};\n  using mint = dynamic_modint64_odd<INT_MIN>;\n  mint::set_mod(n);\n\
     \  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while\
     \ (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n\
     \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
     \ true;\n}\n#line 8 \"math/prime/factorize.hpp\"\n\n/**\n * @brief \u7D20\u56E0\
     \u6570\u5206\u89E3\n * @docs docs/math/prime/factorize.md\n */\n\nnamespace internal\n\
     {\n\nint get_prime_factor_int(int n)\n{\n  int m = pow(n, .125);\n  using mint\
-    \ = dynamic_modint<-2>;\n  mint::set_mod(n);\n  for (int c = 1;; c++)\n  {\n \
-    \   mint x = 2, y = 2, prod = 1;\n    int g = 1;\n    for (int t = 1; g == 1;\
-    \ t = min(2 * t, m))\n    {\n      repi(i, t)\n      {\n        x = x * x + c;\n\
-    \        y = y * y + c, y = y * y + c;\n        prod *= x - y;\n      }\n    \
-    \  g = gcd(prod.val(), n);\n    }\n    if (g == n)\n      continue;\n    if (is_prime(g))\n\
-    \      return g;\n    else if (is_prime(n / g))\n      return n / g;\n    else\n\
-    \      return get_prime_factor_int(g);\n  }\n}\n\nll get_prime_factor(ll n)\n\
-    {\n  if (n <= INT_MAX)\n    return get_prime_factor_int(n);\n  int m = pow(n,\
-    \ .125);\n  using mint = dynamic_modint64_odd<-2>;\n  mint::set_mod(n);\n  for\
-    \ (int c = 1;; c++)\n  {\n    mint x = 2, y = 2, prod = 1;\n    ll g = 1;\n  \
-    \  for (int t = 1; g == 1; t = min(2 * t, m))\n    {\n      repi(i, t)\n     \
-    \ {\n        x = x * x + c;\n        y = y * y + c, y = y * y + c;\n        prod\
-    \ *= x - y;\n      }\n      g = gcd(prod.val(), n);\n    }\n    if (g == n)\n\
-    \      continue;\n    if (is_prime(g))\n      return g;\n    else if (is_prime(n\
+    \ = dynamic_modint<INT_MIN>;\n  mint::set_mod(n);\n  for (int c = 1;; c++)\n \
+    \ {\n    mint x = 2, y = 2, prod = 1;\n    int g = 1;\n    for (int t = 1; g ==\
+    \ 1; t = min(2 * t, m))\n    {\n      repi(i, t)\n      {\n        x = x * x +\
+    \ c;\n        y = y * y + c, y = y * y + c;\n        prod *= x - y;\n      }\n\
+    \      g = gcd(prod.val(), n);\n    }\n    if (g == n)\n      continue;\n    if\
+    \ (is_prime(g))\n      return g;\n    else if (is_prime(n / g))\n      return\
+    \ n / g;\n    else\n      return get_prime_factor_int(g);\n  }\n}\n\nll get_prime_factor(ll\
+    \ n)\n{\n  if (n <= INT_MAX)\n    return get_prime_factor_int(n);\n  int m = pow(n,\
+    \ .125);\n  using mint = dynamic_modint64_odd<INT_MIN>;\n  mint::set_mod(n);\n\
+    \  for (int c = 1;; c++)\n  {\n    mint x = 2, y = 2, prod = 1;\n    ll g = 1;\n\
+    \    for (int t = 1; g == 1; t = min(2 * t, m))\n    {\n      repi(i, t)\n   \
+    \   {\n        x = x * x + c;\n        y = y * y + c, y = y * y + c;\n       \
+    \ prod *= x - y;\n      }\n      g = gcd(prod.val(), n);\n    }\n    if (g ==\
+    \ n)\n      continue;\n    if (is_prime(g))\n      return g;\n    else if (is_prime(n\
     \ / g))\n      return n / g;\n    else\n      return get_prime_factor(g);\n  }\n\
-    }\n\n};\n\nvc<PrimePower<ll>> factorize(ll n)\n{\n  vc<PrimePower<ll>> res;\n\
-    \  repi(p, 2, 100)\n  {\n    PrimePower<ll> pp(p, 0);\n    while (n % p == 0)\n\
-    \      n /= p, pp.mul_p();\n    if (pp.e > 0)\n      res.emplace_back(pp);\n \
-    \ }\n  while (n > 1)\n  {\n    if (is_prime(n))\n    {\n      res.emplace_back(n);\n\
+    }\n\n}; // namespace internal\n\nvc<PrimePower<ll>> factorize(ll n)\n{\n  vc<PrimePower<ll>>\
+    \ res;\n  repi(p, 2, 100)\n  {\n    PrimePower<ll> pp(p, 0);\n    while (n % p\
+    \ == 0)\n      n /= p, pp.mul_p();\n    if (pp.e > 0)\n      res.emplace_back(pp);\n\
+    \  }\n  while (n > 1)\n  {\n    if (is_prime(n))\n    {\n      res.emplace_back(n);\n\
     \      break;\n    }\n    ll p = internal::get_prime_factor(n);\n    PrimePower<ll>\
     \ pp(p, 0);\n    while (n % p == 0)\n      n /= p, pp.mul_p();\n    res.emplace_back(pp);\n\
     \  }\n  sort(ALL(res), [&](cauto &pp1, cauto &pp2)\n       { return pp1.p < pp2.p;\
-    \ });\n  return res;\n}\n\nvc<ll> divisors(const vc<PrimePower<ll>> &pps)\n{\n\
-    \  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d, int i) -> void\n  {\n    if (i\
-    \ == SZ<int>(pps))\n    {\n      res.emplace_back(d);\n      return;\n    }\n\
-    \    auto &pp = pps[i];\n    ull nd = d;\n    repi(j, pp.e + 1)\n    {\n     \
-    \ dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs, 1, 0);\n  sort(ALL(res));\n\
-    \  return res;\n}\n#line 15 \"verify/yosupo/factorize.test.cpp\"\n\nvoid init()\
-    \ {}\n\nvoid main2()\n{\n  LL(N);\n  auto pps = factorize(N);\n  vl ans;\n  fec(pp\
-    \ : pps)\n  {\n    rep(_, pp.e) ans.emplace_back(pp.p);\n  }\n  cout << ans.size()\
-    \ << \" \";\n  PRINTVEC(ans);\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR\
-    \ = [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\
-    \n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\033[33m \\n[FAST_IO]\\\
-    n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout\
-    \ << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE\
-    \ or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
-    \\033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n    dump(\"\
-    new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\
-    \\033[36m \\n[SINGLE_TESTCASE]\\n\\n \\033[m\");\n  main2();\n  #elif defined\
-    \ MULTI_TESTCASE\n  CERR(\"\\033[32m \\n[MULTI_TESTCASE]\\n\\n \\033[m\");\n \
-    \ uint T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
-    \  }\n  #endif\n}\n"
+    \ });\n  return res;\n}\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate\
+    \ <class P>\nvc<P> factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n\
+    \  repi(i, fac.size()) res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570\
+    \ fac \u306F\u7D20\u56E0\u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const\
+    \ vc<PrimePower<P>> &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d,\
+    \ int i) -> void\n  {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n\
+    \      return;\n    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e\
+    \ + 1)\n    {\n      dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs,\
+    \ 1, 0);\n  sort(ALL(res));\n  return res;\n}\n#line 15 \"verify/yosupo/factorize.test.cpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n  auto pps = factorize(N);\n\
+    \  vl ans;\n  fec(pp : pps)\n  {\n    rep(_, pp.e) ans.emplace_back(pp.p);\n \
+    \ }\n  cout << ans.size() << \" \";\n  PRINTVEC(ans);\n}\n\nvoid test() {}\n\n\
+    int main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr\
+    \ << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n \
+    \ CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
+    \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
+    \  CERR(\"\\033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n\
+    \    dump(\"new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n\
+    \  CERR(\"\\033[36m \\n[SINGLE_TESTCASE]\\n\\n \\033[m\");\n  main2();\n  #elif\
+    \ defined MULTI_TESTCASE\n  CERR(\"\\033[32m \\n[MULTI_TESTCASE]\\n\\n \\033[m\"\
+    );\n  uint T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n\
+    \    main2();\n  }\n  #endif\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/factorize\"\n\n// #define\
     \ SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define\
     \ FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include\
@@ -805,7 +816,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/factorize.test.cpp
   requiredBy: []
-  timestamp: '2025-01-29 21:47:21+09:00'
+  timestamp: '2025-01-31 00:04:12+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/factorize.test.cpp

@@ -695,14 +695,14 @@ data:
     \u6570\u5224\u5B9A\n * @docs docs/math/prime/primality_test.md\n */\n\nbool is_prime_int(int\
     \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
     \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n\
-    \ - 1);\n  static const ll bases[3] = {2, 7, 61};\n  using mint = dynamic_modint<-2>;\n\
+    \ - 1);\n  static const ll bases[3] = {2, 7, 61};\n  using mint = dynamic_modint<INT_MIN>;\n\
     \  mint::set_mod(n);\n  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n\
     \    while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t\
     \ <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n\
     \  return true;\n}\n\nbool is_prime(ll n)\n{\n  if (n <= INT_MAX)\n    return\
     \ is_prime_int(n);\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >>\
     \ countr_zero(n - 1);\n  static const ll bases[7] = {2, 325, 9375, 28178, 450775,\
-    \ 9780504, 1795265022};\n  using mint = dynamic_modint64_odd<-2>;\n  mint::set_mod(n);\n\
+    \ 9780504, 1795265022};\n  using mint = dynamic_modint64_odd<INT_MIN>;\n  mint::set_mod(n);\n\
     \  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while\
     \ (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n\
     \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
@@ -755,7 +755,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/primality_test.test.cpp
   requiredBy: []
-  timestamp: '2025-01-29 21:47:21+09:00'
+  timestamp: '2025-01-31 00:04:12+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/primality_test.test.cpp
