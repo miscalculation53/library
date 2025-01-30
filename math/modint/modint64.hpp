@@ -401,3 +401,5 @@ template <int id>
 internal::montgomery64 dynamic_modint64<id>::mg((1LL << 61) - 1);
 
 using modint61 = static_modint64<(1LL << 61) - 1>;
+using modint64_odd = dynamic_modint64_odd<-1>;
+using modint64 = dynamic_modint64<-1>;
