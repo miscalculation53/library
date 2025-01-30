@@ -17,7 +17,7 @@ namespace internal
 int get_prime_factor_int(int n)
 {
   int m = pow(n, .125);
-  using mint = dynamic_modint<-2>;
+  using mint = dynamic_modint<INT_MIN>;
   mint::set_mod(n);
   for (int c = 1;; c++)
   {
@@ -49,7 +49,7 @@ ll get_prime_factor(ll n)
   if (n <= INT_MAX)
     return get_prime_factor_int(n);
   int m = pow(n, .125);
-  using mint = dynamic_modint64_odd<-2>;
+  using mint = dynamic_modint64_odd<INT_MIN>;
   mint::set_mod(n);
   for (int c = 1;; c++)
   {
@@ -76,7 +76,7 @@ ll get_prime_factor(ll n)
   }
 }
 
-};
+}; // namespace internal
 
 vc<PrimePower<ll>> factorize(ll n)
 {
@@ -107,17 +107,28 @@ vc<PrimePower<ll>> factorize(ll n)
   return res;
 }
 
-vc<ll> divisors(const vc<PrimePower<ll>> &pps)
+// 相異なる素因数
+template <class P>
+vc<P> factors(const vc<PrimePower<P>> &fac)
+{
+  vc<P> res(fac.size());
+  repi(i, fac.size()) res[i] = fac[i].p;
+  return res;
+}
+
+// 引数 fac は素因数分解形
+template <class P>
+vc<ll> divisors(const vc<PrimePower<P>> &fac)
 {
   vc<ll> res;
   auto dfs = [&](auto dfs, ll d, int i) -> void
   {
-    if (i == SZ<int>(pps))
+    if (i == SZ<int>(fac))
     {
       res.emplace_back(d);
       return;
     }
-    auto &pp = pps[i];
+    auto &pp = fac[i];
     ull nd = d;
     repi(j, pp.e + 1)
     {
