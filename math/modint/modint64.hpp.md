@@ -637,7 +637,8 @@ data:
     \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
     \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::montgomery64\
     \ dynamic_modint64<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
-    \ << 61) - 1>;\n"
+    \ << 61) - 1>;\nusing modint64_odd = dynamic_modint64_odd<-1>;\nusing modint64\
+    \ = dynamic_modint64<-1>;\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
     modint_internal.hpp\"\n#include \"../extgcd.hpp\"\n\n/**\n * @brief modint (64\
     \ bit)\n * @docs docs/math/modint/modint64.md\n */\n\ntemplate <ll m>\nstruct\
@@ -739,7 +740,8 @@ data:
     \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
     \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::montgomery64\
     \ dynamic_modint64<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
-    \ << 61) - 1>;"
+    \ << 61) - 1>;\nusing modint64_odd = dynamic_modint64_odd<-1>;\nusing modint64\
+    \ = dynamic_modint64<-1>;"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -761,7 +763,7 @@ data:
   - math/prime/primality_test.hpp
   - math/prime/euler_phi_carmichael.hpp
   - math/prime/order_primitive_root.hpp
-  timestamp: '2025-01-29 21:47:21+09:00'
+  timestamp: '2025-01-31 00:13:50+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/modint64.test.cpp

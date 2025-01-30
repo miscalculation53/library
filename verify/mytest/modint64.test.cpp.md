@@ -605,8 +605,9 @@ data:
     \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
     \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::montgomery64\
     \ dynamic_modint64<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
-    \ << 61) - 1>;\n#line 4 \"verify/mytest/modint64.test.cpp\"\n\nmt19937_64 mt;\n\
-    \n// static\ntemplate <const ll MOD>\nvoid test1()\n{\n  using mint = static_modint64<MOD>;\n\
+    \ << 61) - 1>;\nusing modint64_odd = dynamic_modint64_odd<-1>;\nusing modint64\
+    \ = dynamic_modint64<-1>;\n#line 4 \"verify/mytest/modint64.test.cpp\"\n\nmt19937_64\
+    \ mt;\n\n// static\ntemplate <const ll MOD>\nvoid test1()\n{\n  using mint = static_modint64<MOD>;\n\
     \  repi(t, 1000)\n  {\n    i128 a = i128(-10) * MOD + mt() % (i128(21) * MOD);\n\
     \    i128 b = i128(-10) * MOD + mt() % (i128(21) * MOD);\n    i128 ma = safemod<i128>(a,\
     \ MOD);\n    i128 mb = safemod<i128>(b, MOD);\n    assert((mint(a) + mint(b)).val()\
@@ -728,7 +729,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/modint64.test.cpp
   requiredBy: []
-  timestamp: '2025-01-29 21:47:21+09:00'
+  timestamp: '2025-01-31 00:13:50+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/modint64.test.cpp

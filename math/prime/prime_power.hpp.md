@@ -479,11 +479,11 @@ data:
     (const vc<PrimePower<P>> &fac1, const vc<PrimePower<P>> &fac2)\n{\n  const int\
     \ n = fac1.size(), m = fac2.size();\n  vc<PrimePower<P>> fac;\n  fac.reserve(n\
     \ + m);\n  int i = 0, j = 0;\n  while (i < n && j < m)\n  {\n    if (fac1[i].p\
-    \ < fac2[j].p)\n      fac.emplace_back(fac1[i++]);\n    else if (fac1[i].p > fac2[i].p)\n\
+    \ < fac2[j].p)\n      fac.emplace_back(fac1[i++]);\n    else if (fac1[i].p > fac2[j].p)\n\
     \      fac.emplace_back(fac2[j++]);\n    else\n    {\n      fac.emplace_back(fac1[i].p,\
     \ fac1[i].e + fac2[j].e, ull(fac1[i].pe) * ull(fac2[j].pe));\n      i++, j++;\n\
-    \    }\n  }\n  fac.insert(fac.end(), ALL(fac1));\n  fac.insert(fac.end(), ALL(fac2));\n\
-    \  return fac;\n}\n"
+    \    }\n  }\n  fac.insert(fac.end(), fac1.begin() + i, fac1.end());\n  fac.insert(fac.end(),\
+    \ fac2.begin() + j, fac2.end());\n  return fac;\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n\n/**\n * @brief\
     \ \u7D20\u3079\u304D\u69CB\u9020\u4F53\n * @docs docs/math/prime/prime_power.md\n\
     \ */\n\ntemplate <class P>\nstruct PrimePower\n{\n  P p;\n  int e;\n  P pe;\n\n\
@@ -497,10 +497,11 @@ data:
     \ const vc<PrimePower<P>> &fac2)\n{\n  const int n = fac1.size(), m = fac2.size();\n\
     \  vc<PrimePower<P>> fac;\n  fac.reserve(n + m);\n  int i = 0, j = 0;\n  while\
     \ (i < n && j < m)\n  {\n    if (fac1[i].p < fac2[j].p)\n      fac.emplace_back(fac1[i++]);\n\
-    \    else if (fac1[i].p > fac2[i].p)\n      fac.emplace_back(fac2[j++]);\n   \
+    \    else if (fac1[i].p > fac2[j].p)\n      fac.emplace_back(fac2[j++]);\n   \
     \ else\n    {\n      fac.emplace_back(fac1[i].p, fac1[i].e + fac2[j].e, ull(fac1[i].pe)\
-    \ * ull(fac2[j].pe));\n      i++, j++;\n    }\n  }\n  fac.insert(fac.end(), ALL(fac1));\n\
-    \  fac.insert(fac.end(), ALL(fac2));\n  return fac;\n}"
+    \ * ull(fac2[j].pe));\n      i++, j++;\n    }\n  }\n  fac.insert(fac.end(), fac1.begin()\
+    \ + i, fac1.end());\n  fac.insert(fac.end(), fac2.begin() + j, fac2.end());\n\
+    \  return fac;\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -519,7 +520,7 @@ data:
   - math/prime/factorize.hpp
   - math/prime/euler_phi_carmichael.hpp
   - math/prime/order_primitive_root.hpp
-  timestamp: '2025-01-31 00:04:12+09:00'
+  timestamp: '2025-01-31 00:19:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/order_mod_carmichael.test.cpp

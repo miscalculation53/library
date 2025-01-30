@@ -704,39 +704,41 @@ data:
     \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
     \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::montgomery64\
     \ dynamic_modint64<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
-    \ << 61) - 1>;\n#line 2 \"math/prime/prime_power.hpp\"\n\n#line 4 \"math/prime/prime_power.hpp\"\
-    \n\n/**\n * @brief \u7D20\u3079\u304D\u69CB\u9020\u4F53\n * @docs docs/math/prime/prime_power.md\n\
-    \ */\n\ntemplate <class P>\nstruct PrimePower\n{\n  P p;\n  int e;\n  P pe;\n\n\
-    \  PrimePower() {}\n  PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e))\
-    \ {}\n  PrimePower(P p, int e, P pe) : p(p), e(e), pe(pe) {}\n  template <class\
-    \ P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\
-    \n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void div_p() { e--, pe /=\
-    \ p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e,\
-    \ pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\ntemplate\
-    \ <class P>\nvc<PrimePower<P>> factorized_mul\n(const vc<PrimePower<P>> &fac1,\
-    \ const vc<PrimePower<P>> &fac2)\n{\n  const int n = fac1.size(), m = fac2.size();\n\
+    \ << 61) - 1>;\nusing modint64_odd = dynamic_modint64_odd<-1>;\nusing modint64\
+    \ = dynamic_modint64<-1>;\n#line 2 \"math/prime/prime_power.hpp\"\n\n#line 4 \"\
+    math/prime/prime_power.hpp\"\n\n/**\n * @brief \u7D20\u3079\u304D\u69CB\u9020\u4F53\
+    \n * @docs docs/math/prime/prime_power.md\n */\n\ntemplate <class P>\nstruct PrimePower\n\
+    {\n  P p;\n  int e;\n  P pe;\n\n  PrimePower() {}\n  PrimePower(P p, int e = 1)\
+    \ : p(p), e(e), pe(ipow(p, e)) {}\n  PrimePower(P p, int e, P pe) : p(p), e(e),\
+    \ pe(pe) {}\n  template <class P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p),\
+    \ e(pp.e), pe(pp.pe) {}\n\n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void\
+    \ div_p() { e--, pe /= p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>,\
+    \ p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\
+    \ntemplate <class P>\nvc<PrimePower<P>> factorized_mul\n(const vc<PrimePower<P>>\
+    \ &fac1, const vc<PrimePower<P>> &fac2)\n{\n  const int n = fac1.size(), m = fac2.size();\n\
     \  vc<PrimePower<P>> fac;\n  fac.reserve(n + m);\n  int i = 0, j = 0;\n  while\
     \ (i < n && j < m)\n  {\n    if (fac1[i].p < fac2[j].p)\n      fac.emplace_back(fac1[i++]);\n\
-    \    else if (fac1[i].p > fac2[i].p)\n      fac.emplace_back(fac2[j++]);\n   \
+    \    else if (fac1[i].p > fac2[j].p)\n      fac.emplace_back(fac2[j++]);\n   \
     \ else\n    {\n      fac.emplace_back(fac1[i].p, fac1[i].e + fac2[j].e, ull(fac1[i].pe)\
-    \ * ull(fac2[j].pe));\n      i++, j++;\n    }\n  }\n  fac.insert(fac.end(), ALL(fac1));\n\
-    \  fac.insert(fac.end(), ALL(fac2));\n  return fac;\n}\n#line 2 \"math/prime/primality_test.hpp\"\
-    \n\n#line 6 \"math/prime/primality_test.hpp\"\n\n/**\n * @brief \u7D20\u6570\u5224\
-    \u5B9A\n * @docs docs/math/prime/primality_test.md\n */\n\nbool is_prime_int(int\
-    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
-    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n\
-    \ - 1);\n  static const ll bases[3] = {2, 7, 61};\n  using mint = dynamic_modint<INT_MIN>;\n\
-    \  mint::set_mod(n);\n  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n\
-    \    while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t\
-    \ <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n\
-    \  return true;\n}\n\nbool is_prime(ll n)\n{\n  if (n <= INT_MAX)\n    return\
-    \ is_prime_int(n);\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >>\
-    \ countr_zero(n - 1);\n  static const ll bases[7] = {2, 325, 9375, 28178, 450775,\
-    \ 9780504, 1795265022};\n  using mint = dynamic_modint64_odd<INT_MIN>;\n  mint::set_mod(n);\n\
+    \ * ull(fac2[j].pe));\n      i++, j++;\n    }\n  }\n  fac.insert(fac.end(), fac1.begin()\
+    \ + i, fac1.end());\n  fac.insert(fac.end(), fac2.begin() + j, fac2.end());\n\
+    \  return fac;\n}\n#line 2 \"math/prime/primality_test.hpp\"\n\n#line 6 \"math/prime/primality_test.hpp\"\
+    \n\n/**\n * @brief \u7D20\u6570\u5224\u5B9A\n * @docs docs/math/prime/primality_test.md\n\
+    \ */\n\nbool is_prime_int(int n)\n{\n  if (n <= 1)\n    return false;\n  if (n\
+    \ == 2 || n == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return\
+    \ false;\n  ll d = (n - 1) >> countr_zero(n - 1);\n  static const ll bases[3]\
+    \ = {2, 7, 61};\n  using mint = dynamic_modint<INT_MIN>;\n  mint::set_mod(n);\n\
     \  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while\
     \ (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n\
     \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
-    \ true;\n}\n#line 2 \"math/prime/factorize.hpp\"\n\n#line 8 \"math/prime/factorize.hpp\"\
+    \ true;\n}\n\nbool is_prime(ll n)\n{\n  if (n <= INT_MAX)\n    return is_prime_int(n);\n\
+    \  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n - 1);\n\
+    \  static const ll bases[7] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};\n\
+    \  using mint = dynamic_modint64_odd<INT_MIN>;\n  mint::set_mod(n);\n  for (ll\
+    \ a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t !=\
+    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n\
+    \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
+    }\n#line 2 \"math/prime/factorize.hpp\"\n\n#line 8 \"math/prime/factorize.hpp\"\
     \n\n/**\n * @brief \u7D20\u56E0\u6570\u5206\u89E3\n * @docs docs/math/prime/factorize.md\n\
     \ */\n\nnamespace internal\n{\n\nint get_prime_factor_int(int n)\n{\n  int m =\
     \ pow(n, .125);\n  using mint = dynamic_modint<INT_MIN>;\n  mint::set_mod(n);\n\
@@ -883,7 +885,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/primitive_root_min.test.cpp
   requiredBy: []
-  timestamp: '2025-01-31 00:04:12+09:00'
+  timestamp: '2025-01-31 00:19:13+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/primitive_root_min.test.cpp
