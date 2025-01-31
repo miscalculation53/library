@@ -694,33 +694,31 @@ data:
     \ << 61) - 1>;\nusing modint64_odd = dynamic_modint64_odd<-1>;\nusing modint64\
     \ = dynamic_modint64<-1>;\n#line 6 \"math/prime/primality_test.hpp\"\n\n/**\n\
     \ * @brief \u7D20\u6570\u5224\u5B9A\n * @docs docs/math/prime/primality_test.md\n\
-    \ */\n\nbool is_prime_int(int n)\n{\n  if (n <= 1)\n    return false;\n  if (n\
-    \ == 2 || n == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return\
-    \ false;\n  ll d = (n - 1) >> countr_zero(n - 1);\n  static const ll bases[3]\
-    \ = {2, 7, 61};\n  using mint = dynamic_modint<INT_MIN>;\n  mint::set_mod(n);\n\
-    \  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while\
-    \ (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n\
-    \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
-    \ true;\n}\n\nbool is_prime(ll n)\n{\n  if (n <= INT_MAX)\n    return is_prime_int(n);\n\
-    \  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n - 1);\n\
-    \  static const ll bases[7] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};\n\
-    \  using mint = dynamic_modint64_odd<INT_MIN>;\n  mint::set_mod(n);\n  for (ll\
-    \ a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n\
-    \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
-    }\n#line 15 \"verify/yosupo/primality_test.test.cpp\"\n\nvoid init() {}\n\nvoid\
-    \ main2()\n{\n  LL(N);\n  PRINT(is_prime(N) ? \"Yes\" : \"No\");\n}\n\nvoid test()\
-    \ {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n\
-    \    cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n\
-    \  CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
-    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
-    \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
-    \  CERR(\"\\033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n\
-    \    dump(\"new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n\
-    \  CERR(\"\\033[36m \\n[SINGLE_TESTCASE]\\n\\n \\033[m\");\n  main2();\n  #elif\
-    \ defined MULTI_TESTCASE\n  CERR(\"\\033[32m \\n[MULTI_TESTCASE]\\n\\n \\033[m\"\
-    );\n  uint T;\n  cin >> T;\n  while (T--)\n  {\n    dump(\"new testcase\");\n\
-    \    main2();\n  }\n  #endif\n}\n"
+    \ */\n\nnamespace internal\n{\n\ntemplate <class mint>\nbool is_prime_impl(ll\
+    \ n, cauto &bases)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n ==\
+    \ 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return false;\n  ll\
+    \ d = (n - 1) >> countr_zero(n - 1);\n  mint::set_mod(n);\n  for (ll a : bases)\n\
+    \  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t != n - 1 && y\
+    \ != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n    if (y\
+    \ != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n}\n\n}; //\
+    \ namespace internal\n\nbool is_prime(ll n)\n{\n  static constexpr array<ll, 3>\
+    \ bases32 = {2, 7, 61};\n  static constexpr array<ll, 7> bases64 = {2, 325, 9375,\
+    \ 28178, 450775, 9780504, 1795265022};\n  if (n <= INT_MAX)\n  {\n    using mint\
+    \ = dynamic_modint<INT_MIN>;\n    return internal::is_prime_impl<mint>(n, bases32);\n\
+    \  }\n  else\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n    return\
+    \ internal::is_prime_impl<mint>(n, bases64);\n  }\n}\n#line 15 \"verify/yosupo/primality_test.test.cpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n  PRINT(is_prime(N) ? \"Yes\"\
+    \ : \"No\");\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n\
+    \  {\n    #ifdef LOCAL\n    cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO\
+    \ and not defined LOCAL\n  CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\");\n \
+    \ cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
+    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (not defined NOT_AOJ and\
+    \ defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\\033[35m \\n[AOJ_TESTCASE]\\\
+    n\\n \\033[m\");\n  while (true)\n  {\n    dump(\"new testcase\");\n    main2();\n\
+    \  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\\033[36m \\n[SINGLE_TESTCASE]\\\
+    n\\n \\033[m\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"\\033[32m\
+    \ \\n[MULTI_TESTCASE]\\n\\n \\033[m\");\n  uint T;\n  cin >> T;\n  while (T--)\n\
+    \  {\n    dump(\"new testcase\");\n    main2();\n  }\n  #endif\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/primality_test\"\n\n//\
     \ #define SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n\
     #define FAST_IO\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\
@@ -757,7 +755,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/primality_test.test.cpp
   requiredBy: []
-  timestamp: '2025-01-31 00:13:50+09:00'
+  timestamp: '2025-01-31 23:20:54+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/primality_test.test.cpp

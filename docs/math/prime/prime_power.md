@@ -58,6 +58,38 @@ void div_p()
 
 ### 外側の関数
 
+
+#### factors
+
+整数の素因数分解形を受け取り、その相異なる素因数を返す。
+
+```cpp
+vc<P> divisors(vc<PrimePower<P>> fac)
+```
+
+##### 計算量
+
+- $O(\lvert \mathrm{fac} \rvert)$
+
+
+#### divisors
+
+整数の素因数分解形を受け取り、そのすべての約数を小さい順に格納した vector を返す。
+
+```cpp
+vc<ll> divisors(vc<PrimePower<ll>> fac)
+```
+
+##### 制約
+
+- `fac` は素因数分解形として正しい
+- `fac` が表す整数は `ll` に収まる
+
+##### 計算量
+
+- $O(\sigma_0(n))$
+
+
 #### factorized_mul
 
 整数の素因数分解形（`p` についてソート済み）を複数受け取り、その積の素因数分解形（`p` についてソート済み）を返す。`pe` がオーバーフローする場合は $\bmod \ 2^{32}$ や $\bmod \ 2^{64}$ で等しい値を返す。

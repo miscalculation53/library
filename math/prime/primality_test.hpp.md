@@ -717,39 +717,35 @@ data:
     \ << 61) - 1>;\nusing modint64_odd = dynamic_modint64_odd<-1>;\nusing modint64\
     \ = dynamic_modint64<-1>;\n#line 6 \"math/prime/primality_test.hpp\"\n\n/**\n\
     \ * @brief \u7D20\u6570\u5224\u5B9A\n * @docs docs/math/prime/primality_test.md\n\
-    \ */\n\nbool is_prime_int(int n)\n{\n  if (n <= 1)\n    return false;\n  if (n\
-    \ == 2 || n == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return\
-    \ false;\n  ll d = (n - 1) >> countr_zero(n - 1);\n  static const ll bases[3]\
-    \ = {2, 7, 61};\n  using mint = dynamic_modint<INT_MIN>;\n  mint::set_mod(n);\n\
-    \  for (ll a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while\
-    \ (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n\
-    \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
-    \ true;\n}\n\nbool is_prime(ll n)\n{\n  if (n <= INT_MAX)\n    return is_prime_int(n);\n\
-    \  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n - 1);\n\
-    \  static const ll bases[7] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};\n\
-    \  using mint = dynamic_modint64_odd<INT_MIN>;\n  mint::set_mod(n);\n  for (ll\
-    \ a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n\
-    \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
-    }\n"
+    \ */\n\nnamespace internal\n{\n\ntemplate <class mint>\nbool is_prime_impl(ll\
+    \ n, cauto &bases)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n ==\
+    \ 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return false;\n  ll\
+    \ d = (n - 1) >> countr_zero(n - 1);\n  mint::set_mod(n);\n  for (ll a : bases)\n\
+    \  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t != n - 1 && y\
+    \ != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n    if (y\
+    \ != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n}\n\n}; //\
+    \ namespace internal\n\nbool is_prime(ll n)\n{\n  static constexpr array<ll, 3>\
+    \ bases32 = {2, 7, 61};\n  static constexpr array<ll, 7> bases64 = {2, 325, 9375,\
+    \ 28178, 450775, 9780504, 1795265022};\n  if (n <= INT_MAX)\n  {\n    using mint\
+    \ = dynamic_modint<INT_MIN>;\n    return internal::is_prime_impl<mint>(n, bases32);\n\
+    \  }\n  else\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n    return\
+    \ internal::is_prime_impl<mint>(n, bases64);\n  }\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
     ../modint/modint.hpp\"\n#include \"../modint/modint64.hpp\"\n\n/**\n * @brief\
     \ \u7D20\u6570\u5224\u5B9A\n * @docs docs/math/prime/primality_test.md\n */\n\n\
-    bool is_prime_int(int n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 ||\
-    \ n == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return false;\n\
-    \  ll d = (n - 1) >> countr_zero(n - 1);\n  static const ll bases[3] = {2, 7,\
-    \ 61};\n  using mint = dynamic_modint<INT_MIN>;\n  mint::set_mod(n);\n  for (ll\
-    \ a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n\
-    \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
-    }\n\nbool is_prime(ll n)\n{\n  if (n <= INT_MAX)\n    return is_prime_int(n);\n\
-    \  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1) >> countr_zero(n - 1);\n\
-    \  static const ll bases[7] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};\n\
-    \  using mint = dynamic_modint64_odd<INT_MIN>;\n  mint::set_mod(n);\n  for (ll\
-    \ a : bases)\n  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n\
-    \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
-    }"
+    namespace internal\n{\n\ntemplate <class mint>\nbool is_prime_impl(ll n, cauto\
+    \ &bases)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n ==\
+    \ 61)\n    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1)\
+    \ >> countr_zero(n - 1);\n  mint::set_mod(n);\n  for (ll a : bases)\n  {\n   \
+    \ ll t = d;\n    mint y = mint(a).pow(t);\n    while (t != n - 1 && y != 1 &&\
+    \ y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n    if (y != n - 1\
+    \ && t % 2 == 0)\n      return false;\n  }\n  return true;\n}\n\n}; // namespace\
+    \ internal\n\nbool is_prime(ll n)\n{\n  static constexpr array<ll, 3> bases32\
+    \ = {2, 7, 61};\n  static constexpr array<ll, 7> bases64 = {2, 325, 9375, 28178,\
+    \ 450775, 9780504, 1795265022};\n  if (n <= INT_MAX)\n  {\n    using mint = dynamic_modint<INT_MIN>;\n\
+    \    return internal::is_prime_impl<mint>(n, bases32);\n  }\n  else\n  {\n   \
+    \ using mint = dynamic_modint64_odd<INT_MIN>;\n    return internal::is_prime_impl<mint>(n,\
+    \ bases64);\n  }\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -772,7 +768,7 @@ data:
   - math/prime/factorize.hpp
   - math/prime/euler_phi_carmichael.hpp
   - math/prime/order_primitive_root.hpp
-  timestamp: '2025-01-31 00:13:50+09:00'
+  timestamp: '2025-01-31 23:20:54+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/order_mod_carmichael.test.cpp
