@@ -14,18 +14,20 @@
 namespace internal
 {
 
-int get_prime_factor_int(int n)
+template <class mint>
+ll get_prime_factor_impl(ll n)
 {
-  int m = pow(n, .125);
-  using mint = dynamic_modint<INT_MIN>;
   mint::set_mod(n);
-  for (int c = 1;; c++)
+  int m = pow(n, .125);
+  mt19937 _mt;
+  while (true)
   {
+    int c = 1 + _mt() % 100;
     mint x = 2, y = 2, prod = 1;
-    int g = 1;
-    for (int t = 1; g == 1; t = min(2 * t, m))
+    ll g = 1;
+    while (g == 1)
     {
-      repi(i, t)
+      repi(i, m)
       {
         x = x * x + c;
         y = y * y + c, y = y * y + c;
@@ -40,39 +42,21 @@ int get_prime_factor_int(int n)
     else if (is_prime(n / g))
       return n / g;
     else
-      return get_prime_factor_int(g);
+      return get_prime_factor_impl<mint>(g);
   }
 }
 
 ll get_prime_factor(ll n)
 {
   if (n <= INT_MAX)
-    return get_prime_factor_int(n);
-  int m = pow(n, .125);
-  using mint = dynamic_modint64_odd<INT_MIN>;
-  mint::set_mod(n);
-  for (int c = 1;; c++)
   {
-    mint x = 2, y = 2, prod = 1;
-    ll g = 1;
-    for (int t = 1; g == 1; t = min(2 * t, m))
-    {
-      repi(i, t)
-      {
-        x = x * x + c;
-        y = y * y + c, y = y * y + c;
-        prod *= x - y;
-      }
-      g = gcd(prod.val(), n);
-    }
-    if (g == n)
-      continue;
-    if (is_prime(g))
-      return g;
-    else if (is_prime(n / g))
-      return n / g;
-    else
-      return get_prime_factor(g);
+    using mint = dynamic_modint<INT_MIN>;
+    return get_prime_factor_impl<mint>(n);
+  }
+  else
+  {
+    using mint = dynamic_modint64_odd<INT_MIN>;
+    return get_prime_factor_impl<mint>(n);
   }
 }
 
@@ -104,39 +88,5 @@ vc<PrimePower<ll>> factorize(ll n)
   }
   sort(ALL(res), [&](cauto &pp1, cauto &pp2)
        { return pp1.p < pp2.p; });
-  return res;
-}
-
-// 相異なる素因数
-template <class P>
-vc<P> factors(const vc<PrimePower<P>> &fac)
-{
-  vc<P> res(fac.size());
-  repi(i, fac.size()) res[i] = fac[i].p;
-  return res;
-}
-
-// 引数 fac は素因数分解形
-template <class P>
-vc<ll> divisors(const vc<PrimePower<P>> &fac)
-{
-  vc<ll> res;
-  auto dfs = [&](auto dfs, ll d, int i) -> void
-  {
-    if (i == SZ<int>(fac))
-    {
-      res.emplace_back(d);
-      return;
-    }
-    auto &pp = fac[i];
-    ull nd = d;
-    repi(j, pp.e + 1)
-    {
-      dfs(dfs, nd, i + 1);
-      nd *= pp.p;
-    }
-  };
-  dfs(dfs, 1, 0);
-  sort(ALL(res));
   return res;
 }

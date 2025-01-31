@@ -28,6 +28,40 @@ CPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e, pe);
 CPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);
 #endif
 
+// 相異なる素因数
+template <class P>
+vc<P> factors(const vc<PrimePower<P>> &fac)
+{
+  vc<P> res(fac.size());
+  repi(i, fac.size()) res[i] = fac[i].p;
+  return res;
+}
+
+// 引数 fac は素因数分解形
+template <class P>
+vc<ll> divisors(const vc<PrimePower<P>> &fac)
+{
+  vc<ll> res;
+  auto dfs = [&](auto dfs, ll d, int i) -> void
+  {
+    if (i == SZ<int>(fac))
+    {
+      res.emplace_back(d);
+      return;
+    }
+    auto &pp = fac[i];
+    ull nd = d;
+    repi(j, pp.e + 1)
+    {
+      dfs(dfs, nd, i + 1);
+      nd *= pp.p;
+    }
+  };
+  dfs(dfs, 1, 0);
+  sort(ALL(res));
+  return res;
+}
+
 template <class P>
 vc<PrimePower<P>> factorized_mul
 (const vc<PrimePower<P>> &fac1, const vc<PrimePower<P>> &fac2)
