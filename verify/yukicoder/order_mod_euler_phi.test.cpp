@@ -22,7 +22,6 @@ void main2()
     PRINT(1);
   else
     PRINT(order_mod(2, 2 * N - 1, factorize(euler_phi(factorize(2 * N - 1)))));
-
 }
 
 void test() {}
