@@ -25,6 +25,8 @@ vc<mint> lagrange_basis(const vc<I> &a, mint x)
 {
   const int n = a.size();
   vc<mint> res(n);
+  if (n == 0)
+    return res;
   auto dfs = [&](auto dfs, mint v, int l, int r)
   {
     if (r - l == 1)
