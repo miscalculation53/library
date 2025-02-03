@@ -485,8 +485,15 @@ data:
     \ PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\n  void mul_p() { e++,\
     \ pe = ull(pe) * ull(p); }\n  void div_p() { e--, pe /= p; }\n};\n#ifdef LOCAL\n\
     CPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>,\
-    \ p, e, pe);\n#endif\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate\
-    \ <class P>\nvc<P> factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n\
+    \ p, e, pe);\n#endif\n\n// n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\
+    \u6570 e \u306B\u3064\u3044\u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll\
+    \ n, ll m)\n{\n  assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n\
+    \    return {e, 1LL << e, n >> e};\n  }\n  if (n % m != 0)\n    return {0, 1,\
+    \ n};\n  n /= m;\n  if (n % m != 0)\n    return {1, m, n};\n  n /= m;\n  ll m2\
+    \ = m * m;\n  auto [f, m2f, nn] = ord_pow_div(n, m2);\n  int e = 2 + 2 * f;\n\
+    \  ll me = m2f * m2;\n  if (nn % m == 0)\n    e++, me *= m, nn /= m;\n  return\
+    \ {e, me, nn};\n}\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class\
+    \ P>\nvc<P> factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n\
     \  repi(i, fac.size()) res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570\
     \ fac \u306F\u7D20\u56E0\u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const\
     \ vc<PrimePower<P>> &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d,\
@@ -511,15 +518,22 @@ data:
     \n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void div_p() { e--, pe /=\
     \ p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e,\
     \ pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\n//\
-    \ \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class P>\nvc<P> factors(const\
-    \ vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n  repi(i, fac.size())\
-    \ res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570 fac \u306F\u7D20\u56E0\
-    \u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const vc<PrimePower<P>>\
-    \ &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d, int i) -> void\n \
-    \ {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n      return;\n\
-    \    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e + 1)\n    {\n\
-    \      dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs, 1, 0);\n\
-    \  sort(ALL(res));\n  return res;\n}\n\ntemplate <class P>\nvc<PrimePower<P>>\
+    \ n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\u6570 e \u306B\u3064\u3044\
+    \u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll n, ll m)\n{\n \
+    \ assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n    return\
+    \ {e, 1LL << e, n >> e};\n  }\n  if (n % m != 0)\n    return {0, 1, n};\n  n /=\
+    \ m;\n  if (n % m != 0)\n    return {1, m, n};\n  n /= m;\n  ll m2 = m * m;\n\
+    \  auto [f, m2f, nn] = ord_pow_div(n, m2);\n  int e = 2 + 2 * f;\n  ll me = m2f\
+    \ * m2;\n  if (nn % m == 0)\n    e++, me *= m, nn /= m;\n  return {e, me, nn};\n\
+    }\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class P>\nvc<P>\
+    \ factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n  repi(i,\
+    \ fac.size()) res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570 fac \u306F\
+    \u7D20\u56E0\u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const\
+    \ vc<PrimePower<P>> &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d,\
+    \ int i) -> void\n  {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n\
+    \      return;\n    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e\
+    \ + 1)\n    {\n      dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs,\
+    \ 1, 0);\n  sort(ALL(res));\n  return res;\n}\n\ntemplate <class P>\nvc<PrimePower<P>>\
     \ factorized_mul\n(const vc<PrimePower<P>> &fac1, const vc<PrimePower<P>> &fac2)\n\
     {\n  const int n = fac1.size(), m = fac2.size();\n  vc<PrimePower<P>> fac;\n \
     \ fac.reserve(n + m);\n  int i = 0, j = 0;\n  while (i < n && j < m)\n  {\n  \
@@ -547,7 +561,7 @@ data:
   - math/prime/euler_phi_carmichael.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
   - math/prime/order_primitive_root.hpp
-  timestamp: '2025-01-31 23:20:54+09:00'
+  timestamp: '2025-02-03 22:51:35+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -568,6 +582,8 @@ title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
 ## 素べき構造体
 
 主に素因数分解を扱うための構造体。
+
+といいつつ素数に関する util 全般を含む。
 
 
 ### メンバ変数
@@ -625,6 +641,18 @@ void div_p()
 
 ### 外側の関数
 
+#### ord_pow
+
+```cpp
+pair<int, P> ord_pow(P n, P m)
+```
+
+$n$ が $m$ で割り切れる回数 $e$ について $(e, m^e)$ を返す。
+
+##### 計算量
+
+- $O(\log e)$
+  - $e = O(\log_m n)$
 
 #### factors
 

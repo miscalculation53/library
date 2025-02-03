@@ -706,15 +706,22 @@ data:
     \ e(pp.e), pe(pp.pe) {}\n\n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void\
     \ div_p() { e--, pe /= p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>,\
     \ p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\
-    \n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class P>\nvc<P> factors(const\
-    \ vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n  repi(i, fac.size())\
-    \ res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570 fac \u306F\u7D20\u56E0\
-    \u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const vc<PrimePower<P>>\
-    \ &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d, int i) -> void\n \
-    \ {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n      return;\n\
-    \    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e + 1)\n    {\n\
-    \      dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs, 1, 0);\n\
-    \  sort(ALL(res));\n  return res;\n}\n\ntemplate <class P>\nvc<PrimePower<P>>\
+    \n// n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\u6570 e \u306B\u3064\
+    \u3044\u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll n, ll m)\n\
+    {\n  assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n    return\
+    \ {e, 1LL << e, n >> e};\n  }\n  if (n % m != 0)\n    return {0, 1, n};\n  n /=\
+    \ m;\n  if (n % m != 0)\n    return {1, m, n};\n  n /= m;\n  ll m2 = m * m;\n\
+    \  auto [f, m2f, nn] = ord_pow_div(n, m2);\n  int e = 2 + 2 * f;\n  ll me = m2f\
+    \ * m2;\n  if (nn % m == 0)\n    e++, me *= m, nn /= m;\n  return {e, me, nn};\n\
+    }\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class P>\nvc<P>\
+    \ factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n  repi(i,\
+    \ fac.size()) res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570 fac \u306F\
+    \u7D20\u56E0\u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const\
+    \ vc<PrimePower<P>> &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d,\
+    \ int i) -> void\n  {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n\
+    \      return;\n    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e\
+    \ + 1)\n    {\n      dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs,\
+    \ 1, 0);\n  sort(ALL(res));\n  return res;\n}\n\ntemplate <class P>\nvc<PrimePower<P>>\
     \ factorized_mul\n(const vc<PrimePower<P>> &fac1, const vc<PrimePower<P>> &fac2)\n\
     {\n  const int n = fac1.size(), m = fac2.size();\n  vc<PrimePower<P>> fac;\n \
     \ fac.reserve(n + m);\n  int i = 0, j = 0;\n  while (i < n && j < m)\n  {\n  \
@@ -751,19 +758,19 @@ data:
     \    return get_prime_factor_impl<mint>(n);\n  }\n  else\n  {\n    using mint\
     \ = dynamic_modint64_odd<INT_MIN>;\n    return get_prime_factor_impl<mint>(n);\n\
     \  }\n}\n\n}; // namespace internal\n\nvc<PrimePower<ll>> factorize(ll n)\n{\n\
-    \  vc<PrimePower<ll>> res;\n  repi(p, 2, 100)\n  {\n    PrimePower<ll> pp(p, 0);\n\
-    \    while (n % p == 0)\n      n /= p, pp.mul_p();\n    if (pp.e > 0)\n      res.emplace_back(pp);\n\
-    \  }\n  while (n > 1)\n  {\n    if (is_prime(n))\n    {\n      res.emplace_back(n);\n\
-    \      break;\n    }\n    ll p = internal::get_prime_factor(n);\n    PrimePower<ll>\
-    \ pp(p, 0);\n    while (n % p == 0)\n      n /= p, pp.mul_p();\n    res.emplace_back(pp);\n\
-    \  }\n  sort(ALL(res), [&](cauto &pp1, cauto &pp2)\n       { return pp1.p < pp2.p;\
-    \ });\n  return res;\n}\n#line 15 \"verify/yosupo/factorize.test.cpp\"\n\nvoid\
-    \ init() {}\n\nvoid main2()\n{\n  LL(N);\n  auto pps = factorize(N);\n  vl ans;\n\
-    \  fec(pp : pps)\n  {\n    rep(_, pp.e) ans.emplace_back(pp.p);\n  }\n  cout <<\
-    \ ans.size() << \" \";\n  PRINTVEC(ans);\n}\n\nvoid test() {}\n\nint main()\n\
-    {\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr << val;\n  \
-    \  #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\033[33m\
-    \ \\n[FAST_IO]\\n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    \  vc<PrimePower<ll>> res;\n  repi(p, 2, 100)\n  {\n    if (n % p == 0)\n    {\n\
+    \      auto [e, pe, nn] = ord_pow_div(n, p);\n      res.emplace_back(PrimePower<ll>(p,\
+    \ e, pe));\n      n = nn;\n    }\n  }\n  while (n > 1)\n  {\n    if (is_prime(n))\n\
+    \    {\n      res.emplace_back(n);\n      break;\n    }\n    ll p = internal::get_prime_factor(n);\n\
+    \    auto [e, pe, nn] = ord_pow_div(n, p);\n    res.emplace_back(PrimePower<ll>(p,\
+    \ e, pe));\n    n = nn;\n  }\n  sort(ALL(res), [&](cauto &pp1, cauto &pp2)\n \
+    \      { return pp1.p < pp2.p; });\n  return res;\n}\n#line 15 \"verify/yosupo/factorize.test.cpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n  auto pps = factorize(N);\n\
+    \  vl ans;\n  fec(pp : pps)\n  {\n    rep(_, pp.e) ans.emplace_back(pp.p);\n \
+    \ }\n  cout << ans.size() << \" \";\n  PRINTVEC(ans);\n}\n\nvoid test() {}\n\n\
+    int main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr\
+    \ << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n \
+    \ CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
     \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
     \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
     \  CERR(\"\\033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n\
@@ -812,7 +819,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/factorize.test.cpp
   requiredBy: []
-  timestamp: '2025-01-31 23:20:54+09:00'
+  timestamp: '2025-02-03 22:51:35+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/factorize.test.cpp

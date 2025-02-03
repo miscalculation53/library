@@ -715,15 +715,22 @@ data:
     \ e(pp.e), pe(pp.pe) {}\n\n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void\
     \ div_p() { e--, pe /= p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>,\
     \ p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\
-    \n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class P>\nvc<P> factors(const\
-    \ vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n  repi(i, fac.size())\
-    \ res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570 fac \u306F\u7D20\u56E0\
-    \u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const vc<PrimePower<P>>\
-    \ &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d, int i) -> void\n \
-    \ {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n      return;\n\
-    \    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e + 1)\n    {\n\
-    \      dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs, 1, 0);\n\
-    \  sort(ALL(res));\n  return res;\n}\n\ntemplate <class P>\nvc<PrimePower<P>>\
+    \n// n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\u6570 e \u306B\u3064\
+    \u3044\u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll n, ll m)\n\
+    {\n  assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n    return\
+    \ {e, 1LL << e, n >> e};\n  }\n  if (n % m != 0)\n    return {0, 1, n};\n  n /=\
+    \ m;\n  if (n % m != 0)\n    return {1, m, n};\n  n /= m;\n  ll m2 = m * m;\n\
+    \  auto [f, m2f, nn] = ord_pow_div(n, m2);\n  int e = 2 + 2 * f;\n  ll me = m2f\
+    \ * m2;\n  if (nn % m == 0)\n    e++, me *= m, nn /= m;\n  return {e, me, nn};\n\
+    }\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class P>\nvc<P>\
+    \ factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n  repi(i,\
+    \ fac.size()) res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570 fac \u306F\
+    \u7D20\u56E0\u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const\
+    \ vc<PrimePower<P>> &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d,\
+    \ int i) -> void\n  {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n\
+    \      return;\n    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e\
+    \ + 1)\n    {\n      dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs,\
+    \ 1, 0);\n  sort(ALL(res));\n  return res;\n}\n\ntemplate <class P>\nvc<PrimePower<P>>\
     \ factorized_mul\n(const vc<PrimePower<P>> &fac1, const vc<PrimePower<P>> &fac2)\n\
     {\n  const int n = fac1.size(), m = fac2.size();\n  vc<PrimePower<P>> fac;\n \
     \ fac.reserve(n + m);\n  int i = 0, j = 0;\n  while (i < n && j < m)\n  {\n  \
@@ -760,38 +767,39 @@ data:
     \    return get_prime_factor_impl<mint>(n);\n  }\n  else\n  {\n    using mint\
     \ = dynamic_modint64_odd<INT_MIN>;\n    return get_prime_factor_impl<mint>(n);\n\
     \  }\n}\n\n}; // namespace internal\n\nvc<PrimePower<ll>> factorize(ll n)\n{\n\
-    \  vc<PrimePower<ll>> res;\n  repi(p, 2, 100)\n  {\n    PrimePower<ll> pp(p, 0);\n\
-    \    while (n % p == 0)\n      n /= p, pp.mul_p();\n    if (pp.e > 0)\n      res.emplace_back(pp);\n\
-    \  }\n  while (n > 1)\n  {\n    if (is_prime(n))\n    {\n      res.emplace_back(n);\n\
-    \      break;\n    }\n    ll p = internal::get_prime_factor(n);\n    PrimePower<ll>\
-    \ pp(p, 0);\n    while (n % p == 0)\n      n /= p, pp.mul_p();\n    res.emplace_back(pp);\n\
-    \  }\n  sort(ALL(res), [&](cauto &pp1, cauto &pp2)\n       { return pp1.p < pp2.p;\
-    \ });\n  return res;\n}\n#line 2 \"math/algebraic_struct.hpp\"\n\n#line 4 \"math/algebraic_struct.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\n * @docs docs/math/algebraic_struct.md\n\
-    \ */\n\ntemplate <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
-    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
-    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
-    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
-    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
-    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
-    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
-    \ static constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct\
-    \ GroupAddSub\n{\n  using G = T;\n  static constexpr G op(G a, G b) { return a\
-    \ + b; }\n  static constexpr G e() { return 0; }\n  static constexpr G inv(G a)\
-    \ { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using G = T;\n\
-    \  static constexpr G op(G a, G b) { return a * b; }\n  static constexpr G e()\
-    \ { return 1; }\n  static constexpr G inv(G a) { return 1 / a; }\n};\n\ntemplate\
-    \ <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n  using R = T;\n\
-    \  static constexpr R add(R a, R b) { return min(a, b); }\n  static constexpr\
-    \ R e0() { return infty; }\n  static constexpr R mul(R a, R b) { return a + b;\
-    \ }\n};\ntemplate <class T, const T infty = INF>\nstruct SemiRingMaxPlus\n{\n\
-    \  using R = T;\n  static constexpr R add(R a, R b) { return max(a, b); }\n  static\
-    \ constexpr R e0() { return -infty; }\n  static constexpr R mul(R a, R b) { return\
-    \ a + b; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using R = T;\n\
-    \  static constexpr R add(R a, R b) { return a + b; }\n  static constexpr R minus(const\
-    \ R &a) { return -a; }\n  static constexpr R e0() { return 0; }\n  static constexpr\
-    \ R mul(R a, R b) { return a * b; }\n};\n#line 6 \"math/prime/zeta_mobius_divisor_multiple_large.hpp\"\
+    \  vc<PrimePower<ll>> res;\n  repi(p, 2, 100)\n  {\n    if (n % p == 0)\n    {\n\
+    \      auto [e, pe, nn] = ord_pow_div(n, p);\n      res.emplace_back(PrimePower<ll>(p,\
+    \ e, pe));\n      n = nn;\n    }\n  }\n  while (n > 1)\n  {\n    if (is_prime(n))\n\
+    \    {\n      res.emplace_back(n);\n      break;\n    }\n    ll p = internal::get_prime_factor(n);\n\
+    \    auto [e, pe, nn] = ord_pow_div(n, p);\n    res.emplace_back(PrimePower<ll>(p,\
+    \ e, pe));\n    n = nn;\n  }\n  sort(ALL(res), [&](cauto &pp1, cauto &pp2)\n \
+    \      { return pp1.p < pp2.p; });\n  return res;\n}\n#line 2 \"math/algebraic_struct.hpp\"\
+    \n\n#line 4 \"math/algebraic_struct.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
+    \u69CB\u9020\u306E struct\n * @docs docs/math/algebraic_struct.md\n */\n\ntemplate\
+    \ <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S op(S a,\
+    \ S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\ntemplate\
+    \ <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S op(S a,\
+    \ S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\ntemplate\
+    \ <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n  static\
+    \ constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S e() { return\
+    \ infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n{\n\
+    \  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n  static\
+    \ constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct GroupAddSub\n\
+    {\n  using G = T;\n  static constexpr G op(G a, G b) { return a + b; }\n  static\
+    \ constexpr G e() { return 0; }\n  static constexpr G inv(G a) { return -a; }\n\
+    };\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using G = T;\n  static constexpr\
+    \ G op(G a, G b) { return a * b; }\n  static constexpr G e() { return 1; }\n \
+    \ static constexpr G inv(G a) { return 1 / a; }\n};\n\ntemplate <class T, const\
+    \ T infty = INF>\nstruct SemiRingMinPlus\n{\n  using R = T;\n  static constexpr\
+    \ R add(R a, R b) { return min(a, b); }\n  static constexpr R e0() { return infty;\
+    \ }\n  static constexpr R mul(R a, R b) { return a + b; }\n};\ntemplate <class\
+    \ T, const T infty = INF>\nstruct SemiRingMaxPlus\n{\n  using R = T;\n  static\
+    \ constexpr R add(R a, R b) { return max(a, b); }\n  static constexpr R e0() {\
+    \ return -infty; }\n  static constexpr R mul(R a, R b) { return a + b; }\n};\n\
+    \ntemplate <class T>\nstruct RingAddSubMul\n{\n  using R = T;\n  static constexpr\
+    \ R add(R a, R b) { return a + b; }\n  static constexpr R minus(const R &a) {\
+    \ return -a; }\n  static constexpr R e0() { return 0; }\n  static constexpr R\
+    \ mul(R a, R b) { return a * b; }\n};\n#line 6 \"math/prime/zeta_mobius_divisor_multiple_large.hpp\"\
     \n\n/**\n * @brief \u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\
     \u30D3\u30A6\u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09\
     \n * @docs docs/math/prime/zeta_mobius_divisor_multiple_large.md\n */\n\nstruct\
@@ -809,14 +817,10 @@ data:
     \  d *= fac[j].p;\n          break;\n        }\n      }\n    }\n  }\n\nprivate:\n\
     \  //                f3\n  // +       (e3+1) f2\n  // + (e2+1)(e3+1) f1\n  //\
     \ = f3+(e3+1)(f2+(e2+1)f1)\n  int dtoi(ll d) const\n  {\n    assert(d > 0 && m\
-    \ % d == 0);\n    int res = 0;\n    fec(pp : fac)\n    {\n      // \u3053\u3053\
-    \ O(log f) \u304B\u304B\u3063\u3066\u308B\u3051\u3069\u5DE5\u592B\u3059\u308B\u3068\
-    \ O(loglog f) \u306B\u306A\u308A\u305D\u3046\n      // \u305F\u3060\u3001\u5927\
-    \u3057\u3066\u30DC\u30C8\u30EB\u30CD\u30C3\u30AF\u306B\u306A\u3089\u306A\u3044\
-    \u3053\u3068\u304C\u591A\u305D\u3046\n      int f = 0;\n      while (d % pp.p\
-    \ == 0)\n        d /= pp.p, f++;\n      res *= pp.e + 1;\n      res += f;\n  \
-    \  }\n    return res;\n  }\n  //*\n  // f3 = i % (e3+1)\n  // f2 = (i // (e3+1))\
-    \ % (e2+1)\n  ll itod(int i) const\n  {\n    ll d = 1;\n    fec(pp : reversed(fac))\n\
+    \ % d == 0);\n    int res = 0;\n    fec(pp : fac)\n    {\n      auto [f, pf, nd]\
+    \ = ord_pow_div(d, pp.p);\n      d = nd;\n      res *= pp.e + 1;\n      res +=\
+    \ f;\n    }\n    return res;\n  }\n  //*\n  // f3 = i % (e3+1)\n  // f2 = (i //\
+    \ (e3+1)) % (e2+1)\n  ll itod(int i) const\n  {\n    ll d = 1;\n    fec(pp : reversed(fac))\n\
     \    {\n      d *= ipow(pp.p, i % (pp.e + 1));\n      i /= pp.e + 1;\n    }\n\
     \    return d;\n  }\n  //*/\n\npublic:\n  template <class T>\n  struct DivisorMap\n\
     \  {\n  private:\n    const ZetaMobiusDivisorMultipleLarge &zm;\n    vc<T> v;\n\
@@ -965,7 +969,7 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   requiredBy: []
-  timestamp: '2025-02-03 20:54:13+09:00'
+  timestamp: '2025-02-03 22:51:35+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/zeta_mobius_multiple_large.test.cpp

@@ -718,15 +718,22 @@ data:
     \ e(pp.e), pe(pp.pe) {}\n\n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void\
     \ div_p() { e--, pe /= p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>,\
     \ p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\
-    \n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class P>\nvc<P> factors(const\
-    \ vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n  repi(i, fac.size())\
-    \ res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570 fac \u306F\u7D20\u56E0\
-    \u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const vc<PrimePower<P>>\
-    \ &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d, int i) -> void\n \
-    \ {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n      return;\n\
-    \    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e + 1)\n    {\n\
-    \      dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs, 1, 0);\n\
-    \  sort(ALL(res));\n  return res;\n}\n\ntemplate <class P>\nvc<PrimePower<P>>\
+    \n// n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\u6570 e \u306B\u3064\
+    \u3044\u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll n, ll m)\n\
+    {\n  assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n    return\
+    \ {e, 1LL << e, n >> e};\n  }\n  if (n % m != 0)\n    return {0, 1, n};\n  n /=\
+    \ m;\n  if (n % m != 0)\n    return {1, m, n};\n  n /= m;\n  ll m2 = m * m;\n\
+    \  auto [f, m2f, nn] = ord_pow_div(n, m2);\n  int e = 2 + 2 * f;\n  ll me = m2f\
+    \ * m2;\n  if (nn % m == 0)\n    e++, me *= m, nn /= m;\n  return {e, me, nn};\n\
+    }\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class P>\nvc<P>\
+    \ factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n  repi(i,\
+    \ fac.size()) res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570 fac \u306F\
+    \u7D20\u56E0\u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const\
+    \ vc<PrimePower<P>> &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d,\
+    \ int i) -> void\n  {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n\
+    \      return;\n    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e\
+    \ + 1)\n    {\n      dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs,\
+    \ 1, 0);\n  sort(ALL(res));\n  return res;\n}\n\ntemplate <class P>\nvc<PrimePower<P>>\
     \ factorized_mul\n(const vc<PrimePower<P>> &fac1, const vc<PrimePower<P>> &fac2)\n\
     {\n  const int n = fac1.size(), m = fac2.size();\n  vc<PrimePower<P>> fac;\n \
     \ fac.reserve(n + m);\n  int i = 0, j = 0;\n  while (i < n && j < m)\n  {\n  \
@@ -763,13 +770,13 @@ data:
     \ (n <= INT_MAX)\n  {\n    using mint = dynamic_modint<INT_MIN>;\n    return get_prime_factor_impl<mint>(n);\n\
     \  }\n  else\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n    return\
     \ get_prime_factor_impl<mint>(n);\n  }\n}\n\n}; // namespace internal\n\nvc<PrimePower<ll>>\
-    \ factorize(ll n)\n{\n  vc<PrimePower<ll>> res;\n  repi(p, 2, 100)\n  {\n    PrimePower<ll>\
-    \ pp(p, 0);\n    while (n % p == 0)\n      n /= p, pp.mul_p();\n    if (pp.e >\
-    \ 0)\n      res.emplace_back(pp);\n  }\n  while (n > 1)\n  {\n    if (is_prime(n))\n\
+    \ factorize(ll n)\n{\n  vc<PrimePower<ll>> res;\n  repi(p, 2, 100)\n  {\n    if\
+    \ (n % p == 0)\n    {\n      auto [e, pe, nn] = ord_pow_div(n, p);\n      res.emplace_back(PrimePower<ll>(p,\
+    \ e, pe));\n      n = nn;\n    }\n  }\n  while (n > 1)\n  {\n    if (is_prime(n))\n\
     \    {\n      res.emplace_back(n);\n      break;\n    }\n    ll p = internal::get_prime_factor(n);\n\
-    \    PrimePower<ll> pp(p, 0);\n    while (n % p == 0)\n      n /= p, pp.mul_p();\n\
-    \    res.emplace_back(pp);\n  }\n  sort(ALL(res), [&](cauto &pp1, cauto &pp2)\n\
-    \       { return pp1.p < pp2.p; });\n  return res;\n}\n#line 9 \"math/prime/euler_phi_carmichael.hpp\"\
+    \    auto [e, pe, nn] = ord_pow_div(n, p);\n    res.emplace_back(PrimePower<ll>(p,\
+    \ e, pe));\n    n = nn;\n  }\n  sort(ALL(res), [&](cauto &pp1, cauto &pp2)\n \
+    \      { return pp1.p < pp2.p; });\n  return res;\n}\n#line 9 \"math/prime/euler_phi_carmichael.hpp\"\
     \n\n/**\n * @brief \u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\
     \u30FB\u30AB\u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570\n * @docs docs/math/prime/euler_phi_carmichael.md\n\
     \ */\n\ntemplate <class P>\nll euler_phi(const vc<PrimePower<P>> &fac)\n{\n  ll\
@@ -812,7 +819,7 @@ data:
   path: math/prime/euler_phi_carmichael.hpp
   requiredBy:
   - math/prime/order_primitive_root.hpp
-  timestamp: '2025-01-31 23:20:54+09:00'
+  timestamp: '2025-02-03 22:51:35+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/order_mod_carmichael.test.cpp
