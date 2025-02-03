@@ -17,8 +17,8 @@ $\mu$ は $\zeta$ の逆変換、つまり $\displaystyle \mu\zeta a(n) = a(n)$
 メビウス関数
 
 $\displaystyle \mu(n) = \begin{cases}
-0 & (n \ の素因数に重複がある) \\
-1 & (n \ の異なる素因数が偶数個) \\
+0 & (n \ の素因数に重複がある) \\\\  
+1 & (n \ の異なる素因数が偶数個) \\\\  
 -1 & (n \ の異なる素因数が奇数個)
 \end{cases}$
 
@@ -134,6 +134,7 @@ ZetaMobiusDivisorMultipleLarge(ll m)
 `DivisorMap` のメンバ関数：
 
 - `T get(ll d)`：約数 $d$ に紐づく値の取得・書き換えができる。
+  - $O(\log d)$ 時間だが $O(\log\log d)$ 時間にできそう、ここがボトルネックになることはあまりなさそうではあるが
 - `map<ll, T> to_map()`：map にしたものを返す。デバッグ用の想定。
 
 #### zeta_divisor
