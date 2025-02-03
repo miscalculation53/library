@@ -1,77 +1,77 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/algebraic_struct.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint_internal.hpp
     title: math/modint/modint_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_func.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u95A2\u6570\u30AA\u30D6\u30B8\
       \u30A7\u30AF\u30C8\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
     title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     _deprecated_at_docs: docs/math/prime/zeta_mobius_divisor_multiple_large.md
     document_title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\
@@ -812,59 +812,64 @@ data:
     \ if (i == dnum - 1)\n        break;\n      rep(j, pnum - 1, -1, -1)\n      {\n\
     \        if (f[j] == fac[j].e)\n        {\n          f[j] = 0;\n          d /=\
     \ fac[j].pe;\n        }\n        else\n        {\n          f[j]++;\n        \
-    \  d *= fac[j].p;\n          break;\n        }\n      }\n    }\n  }\n\nprivate:\n\
-    \  //                f3\n  // +       (e3+1) f2\n  // + (e2+1)(e3+1) f1\n  //\
-    \ = f3+(e3+1)(f2+(e2+1)f1)\n  int dtoi(ll d) const\n  {\n    assert(d > 0 && m\
-    \ % d == 0);\n    int res = 0;\n    fec(pp : fac)\n    {\n      auto [f, pf, nd]\
-    \ = ord_pow_div(d, pp.p);\n      d = nd;\n      res *= pp.e + 1;\n      res +=\
-    \ f;\n    }\n    return res;\n  }\n  //*\n  // f3 = i % (e3+1)\n  // f2 = (i //\
-    \ (e3+1)) % (e2+1)\n  ll itod(int i) const\n  {\n    ll d = 1;\n    fec(pp : reversed(fac))\n\
-    \    {\n      d *= ipow(pp.p, i % (pp.e + 1));\n      i /= pp.e + 1;\n    }\n\
-    \    return d;\n  }\n  //*/\n\npublic:\n  template <class T>\n  struct DivisorMap\n\
-    \  {\n  private:\n    const ZetaMobiusDivisorMultipleLarge &zm;\n    vc<T> v;\n\
-    \n    friend struct ZetaMobiusDivisorMultipleLarge;\n\n  public:\n    DivisorMap()\
+    \  d *= fac[j].p;\n          break;\n        }\n      }\n    }\n  }\n\npublic:\n\
+    \  // d \u304B\u3089 ds[i] = d \u3068\u306A\u308B i\n  int dtoi(ll d) const\n\
+    \  {\n    //                f3\n    // +       (e3+1) f2\n    // + (e2+1)(e3+1)\
+    \ f1\n    // = f3+(e3+1)(f2+(e2+1)f1)\n    assert(d > 0 && m % d == 0);\n    int\
+    \ res = 0;\n    fec(pp : fac)\n    {\n      auto [f, pf, nd] = ord_pow_div(d,\
+    \ pp.p);\n      d = nd;\n      res *= pp.e + 1;\n      res += f;\n    }\n    return\
+    \ res;\n  }\n  /*\n  // f3 = i % (e3+1)\n  // f2 = (i // (e3+1)) % (e2+1)\n  ll\
+    \ itod(int i) const\n  {\n    ll d = 1;\n    fec(pp : reversed(fac))\n    {\n\
+    \      d *= ipow(pp.p, i % (pp.e + 1));\n      i /= pp.e + 1;\n    }\n    return\
+    \ d;\n  }\n  //*/\n\npublic:\n  template <class T>\n  struct DivisorMap\n  {\n\
+    \  private:\n    const ZetaMobiusDivisorMultipleLarge &zm;\n    vc<T> v;\n\n \
+    \   friend struct ZetaMobiusDivisorMultipleLarge;\n\n  public:\n    DivisorMap()\
     \ {}\n    DivisorMap(const ZetaMobiusDivisorMultipleLarge &zm)\n    : zm(zm),\
     \ v(zm.dnum) {}\n    DivisorMap(const ZetaMobiusDivisorMultipleLarge &zm, cauto\
     \ &func)\n    : zm(zm), v(zm.dnum) { repi(i, zm.dnum) v[i] = func(zm.ds[i]); }\n\
     \n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3066\u5024\u3092\u53D6\u5F97\
-    \n    // \u5909\u66F4\u3082\u53EF\u80FD\n    // O(\u91CD\u8907\u3042\u308A\u3067\
-    \u306E\u7D20\u56E0\u6570\u306E\u500B\u6570)\n    T &get(ll d) { return v[zm.dtoi(d)];\
-    \ }\n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3066\u5024\u3092\u53D6\u5F97\
-    \n    // \u5909\u66F4\u3082\u53EF\u80FD\n    // O(\u91CD\u8907\u3042\u308A\u3067\
-    \u306E\u7D20\u56E0\u6570\u306E\u500B\u6570)\n    const T &get(ll d) const { return\
-    \ v[zm.dtoi(d)]; }\n\n    map<ll, T> to_map()\n    {\n      map<ll, T> res;\n\
-    \      fec(d : zm.ds) res[d] = get(d);\n      return res;\n    }\n  };\n\n  template\
-    \ <class T>\n  DivisorMap<T> divisor_map() const\n  { return DivisorMap<T>(*this);\
-    \ }\n  template <class T>\n  DivisorMap<T> divisor_map(cauto &func) const\n  {\
-    \ return DivisorMap<T>(*this, func); }\n\n  // \u03B6a(n) = \u03A3{d | n} a(d)\n\
-    \  // Monoid \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n\
+    \n    // \u5909\u66F4\u3082\u53EF\u80FD\n    // O(loglog d)\n    T &get_by_d(ll\
+    \ d) { return v[zm.dtoi(d)]; }\n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\
+    \u3066\u5024\u3092\u53D6\u5F97\n    // \u5909\u66F4\u3082\u53EF\u80FD\n    //\
+    \ O(loglog d)\n    const T &get_by_d(ll d) const { return v[zm.dtoi(d)]; }\n\n\
+    \    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3001i = dtoi(d) \u304B\u3089\
+    \u5024\u3092\u53D6\u5F97\n    // \u5909\u66F4\u3082\u53EF\u80FD\n    T &get_by_i(ll\
+    \ i) { return v[i]; }\n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3001\
+    i = dtoi(d) \u304B\u3089\u5024\u3092\u53D6\u5F97\n    // \u5909\u66F4\u3082\u53EF\
+    \u80FD\n    const T &get_by_i(ll i) const { return v[i]; }\n\n    map<ll, T> to_map()\n\
+    \    {\n      map<ll, T> res;\n      fec(d : zm.ds) res[d] = get_by_d(d);\n  \
+    \    return res;\n    }\n  };\n\n  template <class T>\n  DivisorMap<T> divisor_map()\
+    \ const\n  { return DivisorMap<T>(*this); }\n  template <class T>\n  DivisorMap<T>\
+    \ divisor_map(cauto &func) const\n  { return DivisorMap<T>(*this, func); }\n\n\
+    \  // \u03B6a(n) = \u03A3{d | n} a(d)\n  // Monoid \u306F\u53EF\u63DB\u30E2\u30CE\
+    \u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n  // O(\u7D04\u6570\u500B\u6570 * \u7D20\
+    \u56E0\u6570\u500B\u6570)\n  template <class Monoid>\n  DivisorMap<typename Monoid::S>\
+    \ zeta_divisor\n  (const DivisorMap<typename Monoid::S> &a) const\n  {\n    auto\
+    \ b = a;\n    for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n\
+    \    {\n      repi(i, dnum)\n      {\n        if (!btest(f01[i], j))\n       \
+    \   b.v[i + k] = Monoid::op(b.v[i + k], b.v[i]);\n      }\n    }\n    return b;\n\
+    \  }\n\n  // \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n  // \u03BCa(n) =\
+    \ \u03A3{d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\
+    \u516C\u5F0F\n  // Group \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +, -)\n\
     \  // O(\u7D04\u6570\u500B\u6570 * \u7D20\u56E0\u6570\u500B\u6570)\n  template\
-    \ <class Monoid>\n  DivisorMap<typename Monoid::S> zeta_divisor\n  (const DivisorMap<typename\
-    \ Monoid::S> &a) const\n  {\n    auto b = a;\n    for (int j = pnum - 1, k = 1;\
-    \ j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i, dnum)\n      {\n     \
-    \   if (!btest(f01[i], j))\n          b.v[i + k] = Monoid::op(b.v[i + k], b.v[i]);\n\
-    \      }\n    }\n    return b;\n  }\n\n  // \u03BC \u306F \u03B6 \u306E\u9006\u5909\
-    \u63DB\n  // \u03BCa(n) = \u03A3{d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\
-    \u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\n  // Group \u306F\u53EF\u63DB\u7FA4 (\u03A3\
-    \ \u3060\u3068 +, -)\n  // O(\u7D04\u6570\u500B\u6570 * \u7D20\u56E0\u6570\u500B\
-    \u6570)\n  template <class Group>\n  DivisorMap<typename Group::G> mobius_divisor\n\
-    \  (const DivisorMap<typename Group::G> &a) const\n  {\n    auto b = a;\n    for\
-    \ (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i,\
-    \ dnum - 1, -1, -1)\n      {\n        if (!btest(f01[i], j))\n          b.v[i\
-    \ + k] = Group::op(b.v[i + k], Group::inv(b.v[i]));\n      }\n    }\n    return\
-    \ b;\n  }\n\n  // \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n  // \u03BCa(n)\
-    \ = \u03A3{d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\
-    \u516C\u5F0F\n  // \u03BCa(n) \u306E 1 \u70B9\u3060\u3051\u6B32\u3057\u3044\u3068\
-    \u304D\u306B\u4F7F\u3046\n  // Group \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068\
-    \ +, -)\n  // O(\u7D20\u56E0\u6570\u500B\u6570 * 2^\u7D20\u56E0\u6570\u500B\u6570\
-    )\n  template <class Group>\n  typename Group::G mobius_divisor_point\n  (const\
-    \ DivisorMap<typename Group::G> &a, ll n) const\n  {\n    typename Group::G res\
-    \ = Group::e();\n    int si = dtoi(n);\n    repi(bit, 1 << pnum)\n    {\n    \
-    \  int i = si;\n      for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1,\
-    \ j--)\n      {\n        if (btest(bit, j) && i - k >= 0 && !btest(f01[i - k],\
-    \ j))\n          i -= k;\n      }\n      if (popcount(bit) % 2 == 0)\n       \
-    \ res = Group::op(res, a.v[i]);\n      else\n        res = Group::op(res, Group::inv(a.v[i]));\n\
-    \    }\n    return res;\n  }\n\n  // \u03B6'a(n) = \u03A3{n | m} a(m)\n  // Monoid\
+    \ <class Group>\n  DivisorMap<typename Group::G> mobius_divisor\n  (const DivisorMap<typename\
+    \ Group::G> &a) const\n  {\n    auto b = a;\n    for (int j = pnum - 1, k = 1;\
+    \ j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i, dnum - 1, -1, -1)\n  \
+    \    {\n        if (!btest(f01[i], j))\n          b.v[i + k] = Group::op(b.v[i\
+    \ + k], Group::inv(b.v[i]));\n      }\n    }\n    return b;\n  }\n\n  // \u03BC\
+    \ \u306F \u03B6 \u306E\u9006\u5909\u63DB\n  // \u03BCa(n) = \u03A3{d | n} \u03BC\
+    (n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\n  // \u03BC\
+    a(n) \u306E 1 \u70B9\u3060\u3051\u6B32\u3057\u3044\u3068\u304D\u306B\u4F7F\u3046\
+    \n  // Group \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +, -)\n  // O(\u7D20\
+    \u56E0\u6570\u500B\u6570 * 2^\u7D20\u56E0\u6570\u500B\u6570)\n  template <class\
+    \ Group>\n  typename Group::G mobius_divisor_point\n  (const DivisorMap<typename\
+    \ Group::G> &a, ll n) const\n  {\n    typename Group::G res = Group::e();\n  \
+    \  int si = dtoi(n);\n    repi(bit, 1 << pnum)\n    {\n      int i = si;\n   \
+    \   for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n      {\n \
+    \       if (btest(bit, j) && i - k >= 0 && !btest(f01[i - k], j))\n          i\
+    \ -= k;\n      }\n      if (popcount(bit) % 2 == 0)\n        res = Group::op(res,\
+    \ a.v[i]);\n      else\n        res = Group::op(res, Group::inv(a.v[i]));\n  \
+    \  }\n    return res;\n  }\n\n  // \u03B6'a(n) = \u03A3{n | m} a(m)\n  // Monoid\
     \ \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n  // O(\u7D04\
     \u6570\u500B\u6570 * \u7D20\u56E0\u6570\u500B\u6570)\n  template <class Monoid>\n\
     \  DivisorMap<typename Monoid::S> zeta_multiple\n  (const DivisorMap<typename\
@@ -908,59 +913,64 @@ data:
     \ if (i == dnum - 1)\n        break;\n      rep(j, pnum - 1, -1, -1)\n      {\n\
     \        if (f[j] == fac[j].e)\n        {\n          f[j] = 0;\n          d /=\
     \ fac[j].pe;\n        }\n        else\n        {\n          f[j]++;\n        \
-    \  d *= fac[j].p;\n          break;\n        }\n      }\n    }\n  }\n\nprivate:\n\
-    \  //                f3\n  // +       (e3+1) f2\n  // + (e2+1)(e3+1) f1\n  //\
-    \ = f3+(e3+1)(f2+(e2+1)f1)\n  int dtoi(ll d) const\n  {\n    assert(d > 0 && m\
-    \ % d == 0);\n    int res = 0;\n    fec(pp : fac)\n    {\n      auto [f, pf, nd]\
-    \ = ord_pow_div(d, pp.p);\n      d = nd;\n      res *= pp.e + 1;\n      res +=\
-    \ f;\n    }\n    return res;\n  }\n  //*\n  // f3 = i % (e3+1)\n  // f2 = (i //\
-    \ (e3+1)) % (e2+1)\n  ll itod(int i) const\n  {\n    ll d = 1;\n    fec(pp : reversed(fac))\n\
-    \    {\n      d *= ipow(pp.p, i % (pp.e + 1));\n      i /= pp.e + 1;\n    }\n\
-    \    return d;\n  }\n  //*/\n\npublic:\n  template <class T>\n  struct DivisorMap\n\
-    \  {\n  private:\n    const ZetaMobiusDivisorMultipleLarge &zm;\n    vc<T> v;\n\
-    \n    friend struct ZetaMobiusDivisorMultipleLarge;\n\n  public:\n    DivisorMap()\
+    \  d *= fac[j].p;\n          break;\n        }\n      }\n    }\n  }\n\npublic:\n\
+    \  // d \u304B\u3089 ds[i] = d \u3068\u306A\u308B i\n  int dtoi(ll d) const\n\
+    \  {\n    //                f3\n    // +       (e3+1) f2\n    // + (e2+1)(e3+1)\
+    \ f1\n    // = f3+(e3+1)(f2+(e2+1)f1)\n    assert(d > 0 && m % d == 0);\n    int\
+    \ res = 0;\n    fec(pp : fac)\n    {\n      auto [f, pf, nd] = ord_pow_div(d,\
+    \ pp.p);\n      d = nd;\n      res *= pp.e + 1;\n      res += f;\n    }\n    return\
+    \ res;\n  }\n  /*\n  // f3 = i % (e3+1)\n  // f2 = (i // (e3+1)) % (e2+1)\n  ll\
+    \ itod(int i) const\n  {\n    ll d = 1;\n    fec(pp : reversed(fac))\n    {\n\
+    \      d *= ipow(pp.p, i % (pp.e + 1));\n      i /= pp.e + 1;\n    }\n    return\
+    \ d;\n  }\n  //*/\n\npublic:\n  template <class T>\n  struct DivisorMap\n  {\n\
+    \  private:\n    const ZetaMobiusDivisorMultipleLarge &zm;\n    vc<T> v;\n\n \
+    \   friend struct ZetaMobiusDivisorMultipleLarge;\n\n  public:\n    DivisorMap()\
     \ {}\n    DivisorMap(const ZetaMobiusDivisorMultipleLarge &zm)\n    : zm(zm),\
     \ v(zm.dnum) {}\n    DivisorMap(const ZetaMobiusDivisorMultipleLarge &zm, cauto\
     \ &func)\n    : zm(zm), v(zm.dnum) { repi(i, zm.dnum) v[i] = func(zm.ds[i]); }\n\
     \n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3066\u5024\u3092\u53D6\u5F97\
-    \n    // \u5909\u66F4\u3082\u53EF\u80FD\n    // O(\u91CD\u8907\u3042\u308A\u3067\
-    \u306E\u7D20\u56E0\u6570\u306E\u500B\u6570)\n    T &get(ll d) { return v[zm.dtoi(d)];\
-    \ }\n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3066\u5024\u3092\u53D6\u5F97\
-    \n    // \u5909\u66F4\u3082\u53EF\u80FD\n    // O(\u91CD\u8907\u3042\u308A\u3067\
-    \u306E\u7D20\u56E0\u6570\u306E\u500B\u6570)\n    const T &get(ll d) const { return\
-    \ v[zm.dtoi(d)]; }\n\n    map<ll, T> to_map()\n    {\n      map<ll, T> res;\n\
-    \      fec(d : zm.ds) res[d] = get(d);\n      return res;\n    }\n  };\n\n  template\
-    \ <class T>\n  DivisorMap<T> divisor_map() const\n  { return DivisorMap<T>(*this);\
-    \ }\n  template <class T>\n  DivisorMap<T> divisor_map(cauto &func) const\n  {\
-    \ return DivisorMap<T>(*this, func); }\n\n  // \u03B6a(n) = \u03A3{d | n} a(d)\n\
-    \  // Monoid \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n\
+    \n    // \u5909\u66F4\u3082\u53EF\u80FD\n    // O(loglog d)\n    T &get_by_d(ll\
+    \ d) { return v[zm.dtoi(d)]; }\n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\
+    \u3066\u5024\u3092\u53D6\u5F97\n    // \u5909\u66F4\u3082\u53EF\u80FD\n    //\
+    \ O(loglog d)\n    const T &get_by_d(ll d) const { return v[zm.dtoi(d)]; }\n\n\
+    \    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3001i = dtoi(d) \u304B\u3089\
+    \u5024\u3092\u53D6\u5F97\n    // \u5909\u66F4\u3082\u53EF\u80FD\n    T &get_by_i(ll\
+    \ i) { return v[i]; }\n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3001\
+    i = dtoi(d) \u304B\u3089\u5024\u3092\u53D6\u5F97\n    // \u5909\u66F4\u3082\u53EF\
+    \u80FD\n    const T &get_by_i(ll i) const { return v[i]; }\n\n    map<ll, T> to_map()\n\
+    \    {\n      map<ll, T> res;\n      fec(d : zm.ds) res[d] = get_by_d(d);\n  \
+    \    return res;\n    }\n  };\n\n  template <class T>\n  DivisorMap<T> divisor_map()\
+    \ const\n  { return DivisorMap<T>(*this); }\n  template <class T>\n  DivisorMap<T>\
+    \ divisor_map(cauto &func) const\n  { return DivisorMap<T>(*this, func); }\n\n\
+    \  // \u03B6a(n) = \u03A3{d | n} a(d)\n  // Monoid \u306F\u53EF\u63DB\u30E2\u30CE\
+    \u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n  // O(\u7D04\u6570\u500B\u6570 * \u7D20\
+    \u56E0\u6570\u500B\u6570)\n  template <class Monoid>\n  DivisorMap<typename Monoid::S>\
+    \ zeta_divisor\n  (const DivisorMap<typename Monoid::S> &a) const\n  {\n    auto\
+    \ b = a;\n    for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n\
+    \    {\n      repi(i, dnum)\n      {\n        if (!btest(f01[i], j))\n       \
+    \   b.v[i + k] = Monoid::op(b.v[i + k], b.v[i]);\n      }\n    }\n    return b;\n\
+    \  }\n\n  // \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n  // \u03BCa(n) =\
+    \ \u03A3{d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\
+    \u516C\u5F0F\n  // Group \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +, -)\n\
     \  // O(\u7D04\u6570\u500B\u6570 * \u7D20\u56E0\u6570\u500B\u6570)\n  template\
-    \ <class Monoid>\n  DivisorMap<typename Monoid::S> zeta_divisor\n  (const DivisorMap<typename\
-    \ Monoid::S> &a) const\n  {\n    auto b = a;\n    for (int j = pnum - 1, k = 1;\
-    \ j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i, dnum)\n      {\n     \
-    \   if (!btest(f01[i], j))\n          b.v[i + k] = Monoid::op(b.v[i + k], b.v[i]);\n\
-    \      }\n    }\n    return b;\n  }\n\n  // \u03BC \u306F \u03B6 \u306E\u9006\u5909\
-    \u63DB\n  // \u03BCa(n) = \u03A3{d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\
-    \u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\n  // Group \u306F\u53EF\u63DB\u7FA4 (\u03A3\
-    \ \u3060\u3068 +, -)\n  // O(\u7D04\u6570\u500B\u6570 * \u7D20\u56E0\u6570\u500B\
-    \u6570)\n  template <class Group>\n  DivisorMap<typename Group::G> mobius_divisor\n\
-    \  (const DivisorMap<typename Group::G> &a) const\n  {\n    auto b = a;\n    for\
-    \ (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i,\
-    \ dnum - 1, -1, -1)\n      {\n        if (!btest(f01[i], j))\n          b.v[i\
-    \ + k] = Group::op(b.v[i + k], Group::inv(b.v[i]));\n      }\n    }\n    return\
-    \ b;\n  }\n\n  // \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n  // \u03BCa(n)\
-    \ = \u03A3{d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\
-    \u516C\u5F0F\n  // \u03BCa(n) \u306E 1 \u70B9\u3060\u3051\u6B32\u3057\u3044\u3068\
-    \u304D\u306B\u4F7F\u3046\n  // Group \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068\
-    \ +, -)\n  // O(\u7D20\u56E0\u6570\u500B\u6570 * 2^\u7D20\u56E0\u6570\u500B\u6570\
-    )\n  template <class Group>\n  typename Group::G mobius_divisor_point\n  (const\
-    \ DivisorMap<typename Group::G> &a, ll n) const\n  {\n    typename Group::G res\
-    \ = Group::e();\n    int si = dtoi(n);\n    repi(bit, 1 << pnum)\n    {\n    \
-    \  int i = si;\n      for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1,\
-    \ j--)\n      {\n        if (btest(bit, j) && i - k >= 0 && !btest(f01[i - k],\
-    \ j))\n          i -= k;\n      }\n      if (popcount(bit) % 2 == 0)\n       \
-    \ res = Group::op(res, a.v[i]);\n      else\n        res = Group::op(res, Group::inv(a.v[i]));\n\
-    \    }\n    return res;\n  }\n\n  // \u03B6'a(n) = \u03A3{n | m} a(m)\n  // Monoid\
+    \ <class Group>\n  DivisorMap<typename Group::G> mobius_divisor\n  (const DivisorMap<typename\
+    \ Group::G> &a) const\n  {\n    auto b = a;\n    for (int j = pnum - 1, k = 1;\
+    \ j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i, dnum - 1, -1, -1)\n  \
+    \    {\n        if (!btest(f01[i], j))\n          b.v[i + k] = Group::op(b.v[i\
+    \ + k], Group::inv(b.v[i]));\n      }\n    }\n    return b;\n  }\n\n  // \u03BC\
+    \ \u306F \u03B6 \u306E\u9006\u5909\u63DB\n  // \u03BCa(n) = \u03A3{d | n} \u03BC\
+    (n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\n  // \u03BC\
+    a(n) \u306E 1 \u70B9\u3060\u3051\u6B32\u3057\u3044\u3068\u304D\u306B\u4F7F\u3046\
+    \n  // Group \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +, -)\n  // O(\u7D20\
+    \u56E0\u6570\u500B\u6570 * 2^\u7D20\u56E0\u6570\u500B\u6570)\n  template <class\
+    \ Group>\n  typename Group::G mobius_divisor_point\n  (const DivisorMap<typename\
+    \ Group::G> &a, ll n) const\n  {\n    typename Group::G res = Group::e();\n  \
+    \  int si = dtoi(n);\n    repi(bit, 1 << pnum)\n    {\n      int i = si;\n   \
+    \   for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n      {\n \
+    \       if (btest(bit, j) && i - k >= 0 && !btest(f01[i - k], j))\n          i\
+    \ -= k;\n      }\n      if (popcount(bit) % 2 == 0)\n        res = Group::op(res,\
+    \ a.v[i]);\n      else\n        res = Group::op(res, Group::inv(a.v[i]));\n  \
+    \  }\n    return res;\n  }\n\n  // \u03B6'a(n) = \u03A3{n | m} a(m)\n  // Monoid\
     \ \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n  // O(\u7D04\
     \u6570\u500B\u6570 * \u7D20\u56E0\u6570\u500B\u6570)\n  template <class Monoid>\n\
     \  DivisorMap<typename Monoid::S> zeta_multiple\n  (const DivisorMap<typename\
@@ -1012,8 +1022,8 @@ data:
   isVerificationFile: false
   path: math/prime/zeta_mobius_divisor_multiple_large.hpp
   requiredBy: []
-  timestamp: '2025-02-03 22:51:35+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2025-02-03 23:24:16+09:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
@@ -1098,7 +1108,7 @@ g(m) &:= \sum_{\mathrm{lcm}(a_{i_1}, \dots, a_{i_k}) \mid m} h(i_1, \dots, i_k) 
   - $\omega(m)$ を $m$ の異なる素因数の個数、$\sigma_0(m)$ を $m$ の約数の個数とするとき、約数ゼータ変換には $O(\omega(m) \sigma_0(m))$ 時間かかる。普通のゼータ変換は $O(\omega(m) 2^{\omega(m)})$ 時間で、$\dfrac{\max_{m \leq M} \sigma_0(m)}{\max_{m \leq M} 2^{\omega(m)}}$ は $M \leq 10^{18}$ の範囲では最大で $5.625$ になる。実装自体の定数倍も普通のゼータ変換のほうが（たぶん）軽い。
   - https://yukicoder.me/problems/no/2578 とか（一応このライブラリは定数倍に気を使って実装したつもりだが、それでもこの問題は結構厳しい）
 
-<details><summary>素因数個数と約数個数の表</summary>
+素因数個数と約数個数の表：
 
 |$m \leq$|$\max 2^{\omega(m)}$|$\max \sigma_0(m)$|$\dfrac{\max \sigma_0(m)}{\max 2^{\omega(m)}}$|
 |---|---|---|---|
@@ -1118,8 +1128,6 @@ g(m) &:= \sum_{\mathrm{lcm}(a_{i_1}, \dots, a_{i_k}) \mid m} h(i_1, \dots, i_k) 
 |$10^{16}$|$2^{13} = 8192$|$41472$|$5.0625$|
 |$10^{17}$|$2^{14} = 16384$|$64512$|$3.9375$|
 |$10^{18}$|$2^{15} = 32768$|$103680$|$3.1640625$|
-
-</details>
 
 ----
 
@@ -1160,8 +1168,11 @@ ZetaMobiusDivisorMultipleLarge(ll m)
 
 `DivisorMap` のメンバ関数：
 
-- `T get(ll d)`：約数 $d$ に紐づく値の取得・書き換えができる。
-  - $O(\log\log d)$ 時間
+- `int dtoi(ll d)`：約数 $d$ に紐づく値がデータ構造上で保持されている添字 $i$ を返す。$O(\log\log d)$ 時間。
+- `T get_by_d(ll d)`：約数 $d$ に紐づく値の取得・書き換えができる。$O(\log\log d)$ 時間。
+- `T get_by_i(int i)`：約数 $d$ に対し、$i = \mathrm{dtoi}(d)$ から値の取得・書き換えができる。$O(1)$ 時間。
+  - `get_by_d(A[j])` を何回もやるのは無駄。そういう場合にこちらを使うことで高速化できる。
+
 - `map<ll, T> to_map()`：map にしたものを返す。デバッグ用の想定。
 
 #### zeta_divisor
