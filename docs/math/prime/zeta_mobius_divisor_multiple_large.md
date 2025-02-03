@@ -134,7 +134,7 @@ ZetaMobiusDivisorMultipleLarge(ll m)
 `DivisorMap` のメンバ関数：
 
 - `T get(ll d)`：約数 $d$ に紐づく値の取得・書き換えができる。
-  - $O(\log d)$ 時間だが $O(\log\log d)$ 時間にできそう、ここがボトルネックになることはあまりなさそうではあるが
+  - $O(\log\log d)$ 時間
 - `map<ll, T> to_map()`：map にしたものを返す。デバッグ用の想定。
 
 #### zeta_divisor

@@ -67,11 +67,12 @@ vc<PrimePower<ll>> factorize(ll n)
   vc<PrimePower<ll>> res;
   repi(p, 2, 100)
   {
-    PrimePower<ll> pp(p, 0);
-    while (n % p == 0)
-      n /= p, pp.mul_p();
-    if (pp.e > 0)
-      res.emplace_back(pp);
+    if (n % p == 0)
+    {
+      auto [e, pe, nn] = ord_pow_div(n, p);
+      res.emplace_back(PrimePower<ll>(p, e, pe));
+      n = nn;
+    }
   }
   while (n > 1)
   {
@@ -81,10 +82,9 @@ vc<PrimePower<ll>> factorize(ll n)
       break;
     }
     ll p = internal::get_prime_factor(n);
-    PrimePower<ll> pp(p, 0);
-    while (n % p == 0)
-      n /= p, pp.mul_p();
-    res.emplace_back(pp);
+    auto [e, pe, nn] = ord_pow_div(n, p);
+    res.emplace_back(PrimePower<ll>(p, e, pe));
+    n = nn;
   }
   sort(ALL(res), [&](cauto &pp1, cauto &pp2)
        { return pp1.p < pp2.p; });

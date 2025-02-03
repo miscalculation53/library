@@ -28,6 +28,30 @@ CPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e, pe);
 CPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);
 #endif
 
+// n が m で割り切れる回数 e について、(e, m^e, n/m^e)
+tuple<int, ll, ll> ord_pow_div(ll n, ll m)
+{
+  assert(m >= 2);
+  if (m == 2)
+  {
+    int e = countr_zero(n);
+    return {e, 1LL << e, n >> e};
+  }
+  if (n % m != 0)
+    return {0, 1, n};
+  n /= m;
+  if (n % m != 0)
+    return {1, m, n};
+  n /= m;
+  ll m2 = m * m;
+  auto [f, m2f, nn] = ord_pow_div(n, m2);
+  int e = 2 + 2 * f;
+  ll me = m2f * m2;
+  if (nn % m == 0)
+    e++, me *= m, nn /= m;
+  return {e, me, nn};
+}
+
 // 相異なる素因数
 template <class P>
 vc<P> factors(const vc<PrimePower<P>> &fac)

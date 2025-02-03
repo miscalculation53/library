@@ -66,11 +66,8 @@ private:
     int res = 0;
     fec(pp : fac)
     {
-      // ここ O(log f) かかってるけど工夫すると O(loglog f) になりそう
-      // ただ、大してボトルネックにならないことが多そう
-      int f = 0;
-      while (d % pp.p == 0)
-        d /= pp.p, f++;
+      auto [f, pf, nd] = ord_pow_div(d, pp.p);
+      d = nd;
       res *= pp.e + 1;
       res += f;
     }
