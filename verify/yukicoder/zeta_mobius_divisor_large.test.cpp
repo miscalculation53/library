@@ -37,7 +37,7 @@ void main2()
     {
       if (M % A.at(i) != 0)
         continue;
-      h.get(A.at(i)) *= 1 + W.at(i);
+      h.get_by_d(A.at(i)) *= 1 + W.at(i);
     }
     dump(h.to_map());
     auto g = zm.zeta_divisor<MonoidMul<mint>>(h);
@@ -45,7 +45,7 @@ void main2()
     
     auto f = zm.mobius_divisor<GroupAddSub<mint>>(g);
     dump(f.to_map());
-    mint ans = f.get(M);
+    mint ans = f.get_by_d(M);
     if (M == 1)
       ans--;
     PRINT(ans);
