@@ -785,20 +785,20 @@ data:
     \ */\n\n// https://37zigen.com/primitive-root/#i-4\n// https://x.com/noshi91/status/1317025404700405760\n\
     \nnamespace internal\n{\n\n// x^{ a[0]...a[i-1] a[i+1]...a[n-1] } for all i\n\
     template <class mint, class I>\nvc<mint> lagrange_basis(const vc<I> &a, mint x)\n\
-    {\n  const int n = a.size();\n  vc<mint> res(n);\n  auto dfs = [&](auto dfs, mint\
-    \ v, int l, int r)\n  {\n    if (r - l == 1)\n    {\n      res[l] = v;\n     \
-    \ return;\n    }\n    int m = (l + r) / 2;\n    mint vl = v, vr = v;\n    repi(i,\
-    \ l, m) vr = vr.pow(a[i]);\n    repi(i, m, r) vl = vl.pow(a[i]);\n    dfs(dfs,\
-    \ vl, l, m);\n    dfs(dfs, vr, m, r);\n  };\n  dfs(dfs, x, 0, n);\n  return res;\n\
-    }\n\ntemplate <class mint, class P>\nbool internal_is_primitive_root(ll x, ll\
-    \ p, const vc<PrimePower<P>> &fac)\n{\n  const int k = fac.size();\n  mint::set_mod(p);\n\
-    \  vc<ll> a(k);\n  repi(i, k) a[i] = fac[i].pe;\n  auto b = lagrange_basis(a,\
-    \ mint(x));\n  repi(i, k)\n  {\n    if (b[i].pow(fac[i].pe / fac[i].p) == 1)\n\
-    \      return false;\n  }\n  return true;\n}\n\ntemplate <class mint, class P>\n\
-    ll internal_primitive_root(ll p, const vc<PrimePower<P>> &fac)\n{\n  if (p ==\
-    \ 2)\n    return 1;\n  mt19937 _mt;\n  while (true)\n  {\n    ll g = 1 + _mt()\
-    \ % (p - 1);\n    if (internal_is_primitive_root<mint>(g, p, fac))\n      return\
-    \ g;\n  }\n}\ntemplate <class mint, class P>\nll internal_primitive_root_min(ll\
+    {\n  const int n = a.size();\n  vc<mint> res(n);\n  if (n == 0)\n    return res;\n\
+    \  auto dfs = [&](auto dfs, mint v, int l, int r)\n  {\n    if (r - l == 1)\n\
+    \    {\n      res[l] = v;\n      return;\n    }\n    int m = (l + r) / 2;\n  \
+    \  mint vl = v, vr = v;\n    repi(i, l, m) vr = vr.pow(a[i]);\n    repi(i, m,\
+    \ r) vl = vl.pow(a[i]);\n    dfs(dfs, vl, l, m);\n    dfs(dfs, vr, m, r);\n  };\n\
+    \  dfs(dfs, x, 0, n);\n  return res;\n}\n\ntemplate <class mint, class P>\nbool\
+    \ internal_is_primitive_root(ll x, ll p, const vc<PrimePower<P>> &fac)\n{\n  const\
+    \ int k = fac.size();\n  mint::set_mod(p);\n  vc<ll> a(k);\n  repi(i, k) a[i]\
+    \ = fac[i].pe;\n  auto b = lagrange_basis(a, mint(x));\n  repi(i, k)\n  {\n  \
+    \  if (b[i].pow(fac[i].pe / fac[i].p) == 1)\n      return false;\n  }\n  return\
+    \ true;\n}\n\ntemplate <class mint, class P>\nll internal_primitive_root(ll p,\
+    \ const vc<PrimePower<P>> &fac)\n{\n  if (p == 2)\n    return 1;\n  mt19937 _mt;\n\
+    \  while (true)\n  {\n    ll g = 1 + _mt() % (p - 1);\n    if (internal_is_primitive_root<mint>(g,\
+    \ p, fac))\n      return g;\n  }\n}\ntemplate <class mint, class P>\nll internal_primitive_root_min(ll\
     \ p, const vc<PrimePower<P>> &fac)\n{\n  if (p == 2)\n    return 1;\n  for (int\
     \ g = 2; g < p; g++)\n  {\n    if (internal_is_primitive_root<mint>(g, p, fac))\n\
     \      return g;\n  }\n  assert(false);\n}\n\ntemplate <class mint, class P>\n\
@@ -839,19 +839,20 @@ data:
     // https://x.com/noshi91/status/1317025404700405760\n\nnamespace internal\n{\n\
     \n// x^{ a[0]...a[i-1] a[i+1]...a[n-1] } for all i\ntemplate <class mint, class\
     \ I>\nvc<mint> lagrange_basis(const vc<I> &a, mint x)\n{\n  const int n = a.size();\n\
-    \  vc<mint> res(n);\n  auto dfs = [&](auto dfs, mint v, int l, int r)\n  {\n \
-    \   if (r - l == 1)\n    {\n      res[l] = v;\n      return;\n    }\n    int m\
-    \ = (l + r) / 2;\n    mint vl = v, vr = v;\n    repi(i, l, m) vr = vr.pow(a[i]);\n\
-    \    repi(i, m, r) vl = vl.pow(a[i]);\n    dfs(dfs, vl, l, m);\n    dfs(dfs, vr,\
-    \ m, r);\n  };\n  dfs(dfs, x, 0, n);\n  return res;\n}\n\ntemplate <class mint,\
-    \ class P>\nbool internal_is_primitive_root(ll x, ll p, const vc<PrimePower<P>>\
-    \ &fac)\n{\n  const int k = fac.size();\n  mint::set_mod(p);\n  vc<ll> a(k);\n\
-    \  repi(i, k) a[i] = fac[i].pe;\n  auto b = lagrange_basis(a, mint(x));\n  repi(i,\
-    \ k)\n  {\n    if (b[i].pow(fac[i].pe / fac[i].p) == 1)\n      return false;\n\
-    \  }\n  return true;\n}\n\ntemplate <class mint, class P>\nll internal_primitive_root(ll\
-    \ p, const vc<PrimePower<P>> &fac)\n{\n  if (p == 2)\n    return 1;\n  mt19937\
-    \ _mt;\n  while (true)\n  {\n    ll g = 1 + _mt() % (p - 1);\n    if (internal_is_primitive_root<mint>(g,\
-    \ p, fac))\n      return g;\n  }\n}\ntemplate <class mint, class P>\nll internal_primitive_root_min(ll\
+    \  vc<mint> res(n);\n  if (n == 0)\n    return res;\n  auto dfs = [&](auto dfs,\
+    \ mint v, int l, int r)\n  {\n    if (r - l == 1)\n    {\n      res[l] = v;\n\
+    \      return;\n    }\n    int m = (l + r) / 2;\n    mint vl = v, vr = v;\n  \
+    \  repi(i, l, m) vr = vr.pow(a[i]);\n    repi(i, m, r) vl = vl.pow(a[i]);\n  \
+    \  dfs(dfs, vl, l, m);\n    dfs(dfs, vr, m, r);\n  };\n  dfs(dfs, x, 0, n);\n\
+    \  return res;\n}\n\ntemplate <class mint, class P>\nbool internal_is_primitive_root(ll\
+    \ x, ll p, const vc<PrimePower<P>> &fac)\n{\n  const int k = fac.size();\n  mint::set_mod(p);\n\
+    \  vc<ll> a(k);\n  repi(i, k) a[i] = fac[i].pe;\n  auto b = lagrange_basis(a,\
+    \ mint(x));\n  repi(i, k)\n  {\n    if (b[i].pow(fac[i].pe / fac[i].p) == 1)\n\
+    \      return false;\n  }\n  return true;\n}\n\ntemplate <class mint, class P>\n\
+    ll internal_primitive_root(ll p, const vc<PrimePower<P>> &fac)\n{\n  if (p ==\
+    \ 2)\n    return 1;\n  mt19937 _mt;\n  while (true)\n  {\n    ll g = 1 + _mt()\
+    \ % (p - 1);\n    if (internal_is_primitive_root<mint>(g, p, fac))\n      return\
+    \ g;\n  }\n}\ntemplate <class mint, class P>\nll internal_primitive_root_min(ll\
     \ p, const vc<PrimePower<P>> &fac)\n{\n  if (p == 2)\n    return 1;\n  for (int\
     \ g = 2; g < p; g++)\n  {\n    if (internal_is_primitive_root<mint>(g, p, fac))\n\
     \      return g;\n  }\n  assert(false);\n}\n\ntemplate <class mint, class P>\n\
@@ -907,7 +908,7 @@ data:
   isVerificationFile: false
   path: math/prime/order_primitive_root.hpp
   requiredBy: []
-  timestamp: '2025-01-31 23:20:54+09:00'
+  timestamp: '2025-02-03 20:56:52+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/order_mod_carmichael.test.cpp
