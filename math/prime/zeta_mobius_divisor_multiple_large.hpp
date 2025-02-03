@@ -2,6 +2,7 @@
 
 #include "../../template/template_all.hpp"
 #include "factorize.hpp"
+#include "../algebraic_struct.hpp"
 
 /**
  * @brief 約数・倍数 ゼータ・メビウス変換（大きい $m$ の約数）
