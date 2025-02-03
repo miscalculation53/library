@@ -5,7 +5,7 @@
 
 /**
  * @brief 約数・倍数 ゼータ・メビウス変換（大きい $m$ の約数）
- * @docs docs/math/zeta_mobius_divisor_multiple_large.md
+ * @docs docs/math/prime/zeta_mobius_divisor_multiple_large.md
  */
 
 struct ZetaMobiusDivisorMultipleLarge
