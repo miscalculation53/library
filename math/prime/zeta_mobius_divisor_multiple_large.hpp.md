@@ -2,6 +2,9 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: math/algebraic_struct.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct"
+  - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - icon: ':heavy_check_mark:'
@@ -761,7 +764,32 @@ data:
     \      break;\n    }\n    ll p = internal::get_prime_factor(n);\n    PrimePower<ll>\
     \ pp(p, 0);\n    while (n % p == 0)\n      n /= p, pp.mul_p();\n    res.emplace_back(pp);\n\
     \  }\n  sort(ALL(res), [&](cauto &pp1, cauto &pp2)\n       { return pp1.p < pp2.p;\
-    \ });\n  return res;\n}\n#line 5 \"math/prime/zeta_mobius_divisor_multiple_large.hpp\"\
+    \ });\n  return res;\n}\n#line 2 \"math/algebraic_struct.hpp\"\n\n#line 4 \"math/algebraic_struct.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\n * @docs docs/math/algebraic_struct.md\n\
+    \ */\n\ntemplate <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
+    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
+    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
+    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
+    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
+    \ static constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct\
+    \ GroupAddSub\n{\n  using G = T;\n  static constexpr G op(G a, G b) { return a\
+    \ + b; }\n  static constexpr G e() { return 0; }\n  static constexpr G inv(G a)\
+    \ { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using G = T;\n\
+    \  static constexpr G op(G a, G b) { return a * b; }\n  static constexpr G e()\
+    \ { return 1; }\n  static constexpr G inv(G a) { return 1 / a; }\n};\n\ntemplate\
+    \ <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n  using R = T;\n\
+    \  static constexpr R add(R a, R b) { return min(a, b); }\n  static constexpr\
+    \ R e0() { return infty; }\n  static constexpr R mul(R a, R b) { return a + b;\
+    \ }\n};\ntemplate <class T, const T infty = INF>\nstruct SemiRingMaxPlus\n{\n\
+    \  using R = T;\n  static constexpr R add(R a, R b) { return max(a, b); }\n  static\
+    \ constexpr R e0() { return -infty; }\n  static constexpr R mul(R a, R b) { return\
+    \ a + b; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using R = T;\n\
+    \  static constexpr R add(R a, R b) { return a + b; }\n  static constexpr R minus(const\
+    \ R &a) { return -a; }\n  static constexpr R e0() { return 0; }\n  static constexpr\
+    \ R mul(R a, R b) { return a * b; }\n};\n#line 6 \"math/prime/zeta_mobius_divisor_multiple_large.hpp\"\
     \n\n/**\n * @brief \u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\
     \u30D3\u30A6\u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09\
     \n * @docs docs/math/prime/zeta_mobius_divisor_multiple_large.md\n */\n\nstruct\
@@ -862,9 +890,9 @@ data:
     \ a.v[i]);\n      else\n        res = Group::op(res, Group::inv(a.v[i]));\n  \
     \  }\n    return res;\n  }\n};\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
-    factorize.hpp\"\n\n/**\n * @brief \u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\
-    \u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\
-    \u6570\uFF09\n * @docs docs/math/prime/zeta_mobius_divisor_multiple_large.md\n\
+    factorize.hpp\"\n#include \"../algebraic_struct.hpp\"\n\n/**\n * @brief \u7D04\
+    \u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\
+    \u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09\n * @docs docs/math/prime/zeta_mobius_divisor_multiple_large.md\n\
     \ */\n\nstruct ZetaMobiusDivisorMultipleLarge\n{\npublic:\n  ll m;\n  vc<PrimePower<ll>>\
     \ fac;\n  ll pnum, dnum;\n  vc<ll> ds;\n\nprivate:\n  vc<int> f01;  // f01[d]\
     \ \u306F\u3001d \u304C f[j] == e[j] \u306A\u3089 j \u30D3\u30C3\u30C8\u76EE\u304C\
@@ -980,10 +1008,11 @@ data:
   - math/modint/modint64.hpp
   - math/prime/prime_power.hpp
   - math/prime/primality_test.hpp
+  - math/algebraic_struct.hpp
   isVerificationFile: false
   path: math/prime/zeta_mobius_divisor_multiple_large.hpp
   requiredBy: []
-  timestamp: '2025-02-03 20:44:58+09:00'
+  timestamp: '2025-02-03 20:54:13+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp

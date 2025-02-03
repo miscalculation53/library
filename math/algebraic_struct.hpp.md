@@ -37,7 +37,11 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy: []
+  _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
+    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
+      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -511,7 +515,8 @@ data:
   - template/template_dump.hpp
   isVerificationFile: false
   path: math/algebraic_struct.hpp
-  requiredBy: []
+  requiredBy:
+  - math/prime/zeta_mobius_divisor_multiple_large.hpp
   timestamp: '2025-02-03 20:19:05+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
