@@ -5,8 +5,23 @@ data:
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - icon: ':heavy_check_mark:'
+    path: math/modint/modint.hpp
+    title: modint (32 bit)
+  - icon: ':heavy_check_mark:'
+    path: math/modint/modint64.hpp
+    title: modint (64 bit)
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint_internal.hpp
     title: math/modint/modint_internal.hpp
+  - icon: ':heavy_check_mark:'
+    path: math/prime/factorize.hpp
+    title: "\u7D20\u56E0\u6570\u5206\u89E3"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/primality_test.hpp
+    title: "\u7D20\u6570\u5224\u5B9A"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/prime_power.hpp
+    title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
   - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
@@ -43,61 +58,8 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: math/prime/euler_phi_carmichael.hpp
-    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
-      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/order_primitive_root.hpp
-    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/primality_test.hpp
-    title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':warning:'
-    path: template/template.cpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/extgcd.test.cpp
-    title: verify/aoj/extgcd.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint.test.cpp
-    title: verify/mytest/modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root.test.cpp
-    title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root_min.test.cpp
-    title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/dynamic_modint.test.cpp
-    title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_carmichael.test.cpp
-    title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_euler_phi.test.cpp
-    title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/static_modint.test.cpp
-    title: verify/yukicoder/static_modint.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -108,82 +70,84 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/modint/modint.md
-    document_title: modint (32 bit)
+    _deprecated_at_docs: docs/math/zeta_mobius_divisor_multiple_large.md
+    document_title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\
+      \u30D3\u30A6\u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\
+      \uFF09"
     links: []
-  bundledCode: "#line 2 \"math/modint/modint.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
-    \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
-    \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
-    \ EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing\
-    \ uint = unsigned int;\nusing ull = unsigned long long;\nusing pll = pair<ll,\
-    \ ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\
-    \n#define vc vector\ntemplate <class T>\nusing vvc = vc<vc<T>>;\ntemplate <class\
-    \ T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb = vc<bool>;\nusing vl = vc<ll>;\n\
-    using vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing\
-    \ vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate\
-    \ <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate <class\
-    \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing i128 =\
-    \ __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string &s)\n{\n \
-    \ i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size();\
-    \ i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n\
-    \    for (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n\
-    }\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\"\
-    , res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n\
-    \    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n\
-    \  return sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string\
-    \ s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream\
-    \ &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define\
-    \ cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
-    \ docs/template/template_rep.md\n */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n\
-    */\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for\
-    \ (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i =\
-    \ ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i =\
-    \ ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i +=\
-    \ d)\n#define rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n\
-    #define repi1(i, n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i,\
-    \ l, r) for (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i,\
-    \ l, r, d) for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i\
-    \ < rrrrr : i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3,\
-    \ repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n#define\
-    \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
-    #line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
-    #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
-    \n * @docs docs/template/template_math.md\n */\n\ninline bool chmin(auto &a, cauto\
-    \ &b) { return a > b ? a = b, true : false; }\ninline bool chmax(auto &a, cauto\
-    \ &b) { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll>\ninline\
-    \ constexpr T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b)\
-    \ && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll>\ninline constexpr T divceil(cauto\
-    \ &a, cauto &b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\n\
-    template <class T = ll>\ninline constexpr T divround(cauto &a, cauto &b) { return\
-    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll>\ninline constexpr\
-    \ T safemod(cauto &a, cauto &b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
-    template <class T = ll>\nconstexpr T ipow(cauto &a, auto b)\n{\n  assert(b >=\
-    \ 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
-    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
-    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
-    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
-    \ T = ll>\nT mul_limited(cauto &a, cauto &b, cauto &m = INF)\n{\n  assert(a >=\
-    \ 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m)\
-    \ / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll>\nT pow_limited(cauto\
-    \ &a, auto b, cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if\
-    \ (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1, tmp\
-    \ = a;\n  while (true)\n  {\n    if (b & 1)\n    {\n      if (res > T(m) / tmp)\n\
-    \        return m;\n      res *= tmp;\n    }\n    b >>= 1;\n    if (b == 0)\n\
-    \      break;\n    if (tmp > T(m) / tmp)\n      return m;\n    tmp *= tmp;\n \
-    \ }\n  return res;\n}\n\ntemplate <class T = ll>\nconstexpr T iroot(cauto &a,\
-    \ cauto &k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return\
-    \ a;\n  if (k == 2 && a <= ULLONG_MAX)\n    return sqrtl(a);\n\n  auto isok =\
-    \ [&](T x) -> bool\n  {\n    if (x == 0)\n      return true;\n    T res = 1, k2\
-    \ = k;\n    while (true)\n    {\n      if (k2 & 1)\n      {\n        if (res >\
-    \ T(a) / x)\n          return false;\n        res *= x;\n      }\n      k2 >>=\
-    \ 1;\n      if (k2 == 0)\n        break;\n      if (x > T(a) / x)\n        return\
-    \ false;\n      x *= x;\n    }\n    return res <= T(a);\n  };\n\n  T x = pow(a,\
-    \ 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n    up = false, x--;\n  if\
-    \ (up)\n  {\n    while (x < numeric_limits<T>::max() && isok(x + 1))\n      x++;\n\
-    \  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+  bundledCode: "#line 2 \"math/prime/zeta_mobius_divisor_multiple_large.hpp\"\n\n\
+    #line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
+    \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
+    \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
+    \nusing ll = long long;\nusing uint = unsigned int;\nusing ull = unsigned long\
+    \ long;\nusing pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll\
+    \ = tuple<ll, ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc\
+    \ = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb =\
+    \ vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\n\
+    using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
+    using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
+    \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
+    using i128 = __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string\
+    \ &s)\n{\n  i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i\
+    \ < (int)s.size(); i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n\
+    \  }\n  else\n  {\n    for (auto &&c : s)\n      res = 10 * res + c - '0';\n \
+    \ }\n  return res;\n}\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n\
+    \  string sign = \"\", res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n\
+    \  while (x > 0)\n  {\n    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(),\
+    \ res.end());\n  return sign + res;\n}\nistream &operator>>(istream &is, i128\
+    \ &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream\
+    \ &operator<<(ostream &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n\
+    }\n#endif\n\n#define cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\
+    \n#line 4 \"template/template_rep.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n */\n\n/**\n\
+    \ * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n*/\n\n#define overload4(_1,\
+    \ _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0, nnnnn = ll(n);\
+    \ i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i = ll(l), rrrrr = ll(r); i <\
+    \ rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd\
+    \ = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__,\
+    \ rep3, rep2, rep1)(__VA_ARGS__)\n#define repi1(i, n) for (int i = 0, nnnnn =\
+    \ int(n); i < nnnnn; i++)\n#define repi2(i, l, r) for (int i = int(l), rrrrr =\
+    \ int(r); i < rrrrr; i++)\n#define repi3(i, l, r, d) for (int i = int(l), rrrrr\
+    \ = int(r), ddddd = int(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define\
+    \ repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\n#define\
+    \ fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
+    #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\
+    \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
+    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
+    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
+    \ docs/template/template_math.md\n */\n\ninline bool chmin(auto &a, cauto &b)\
+    \ { return a > b ? a = b, true : false; }\ninline bool chmax(auto &a, cauto &b)\
+    \ { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll>\ninline constexpr\
+    \ T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) < 0); }\ntemplate <class T = ll>\ninline constexpr T divceil(cauto &a,\
+    \ cauto &b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate\
+    \ <class T = ll>\ninline constexpr T divround(cauto &a, cauto &b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll>\ninline constexpr T safemod(cauto\
+    \ &a, cauto &b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
+    \ T = ll>\nconstexpr T ipow(cauto &a, auto b)\n{\n  assert(b >= 0);\n  if (b ==\
+    \ 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a < 0 && a\
+    \ == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (true)\n\
+    \  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n     \
+    \ break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll>\nT mul_limited(cauto\
+    \ &a, cauto &b, cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if\
+    \ (b == 0)\n    return 0;\n  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n\
+    }\ntemplate <class T = ll>\nT pow_limited(cauto &a, auto b, cauto &m = INF)\n\
+    {\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return\
+    \ min(ipow<T>(a, b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n\
+    \    if (b & 1)\n    {\n      if (res > T(m) / tmp)\n        return m;\n     \
+    \ res *= tmp;\n    }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp\
+    \ > T(m) / tmp)\n      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\n\ntemplate\
+    \ <class T = ll>\nconstexpr T iroot(cauto &a, cauto &k)\n{\n  assert(a >= 0 &&\
+    \ k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n  if (k == 2 && a <= ULLONG_MAX)\n\
+    \    return sqrtl(a);\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n\
+    \      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n      if\
+    \ (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n  \
+    \      res *= x;\n      }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n\
+    \      if (x > T(a) / x)\n        return false;\n      x *= x;\n    }\n    return\
+    \ res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n\
+    \    up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max()\
+    \ && isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS)>\nint sgn(cauto &a, const D &eps = EPS) { return\
     \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
     \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\n// 0\
@@ -504,7 +468,8 @@ data:
     \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
     CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
     \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 2 \"math/modint/modint_internal.hpp\"\n\n#line 4 \"math/modint/modint_internal.hpp\"\
+    #endif\n#line 2 \"math/prime/factorize.hpp\"\n\n#line 2 \"math/modint/modint.hpp\"\
+    \n\n#line 2 \"math/modint/modint_internal.hpp\"\n\n#line 4 \"math/modint/modint_internal.hpp\"\
     \n\nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll x, ll n, int m)\n\
     {\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y =\
     \ safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n\
@@ -634,35 +599,33 @@ data:
     \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
     \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::barrett32\
     \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
-    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n"
-  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
-    modint_internal.hpp\"\n#include \"../extgcd.hpp\"\n\n/**\n * @brief modint (32\
-    \ bit)\n * @docs docs/math/modint/modint.md\n */\n\ntemplate <int m>\nstruct static_modint\n\
-    {\n  using mint = static_modint;\nprivate:\n  uint _v;\n  static constexpr uint\
-    \ umod() { return m; }\n  static constexpr bool prime = internal::isprime32<m>;\n\
-    \npublic:\n  static constexpr int mod() { return m; }\n  static mint raw(int v)\n\
-    \  {\n    mint x;\n    x._v = v;\n    return x;\n  }\n\n  static_modint() : _v(0)\
-    \ {}\n  template <class T>\n  static_modint(T v)\n  {\n    if constexpr (is_signed_v<T>)\n\
-    \    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x < 0)\n        x += umod();\n\
-    \      _v = (uint)x;\n    }\n    else if constexpr (is_unsigned_v<T>)\n    {\n\
-    \      _v = (uint)(v % umod());\n    }\n    else\n    {\n      static_assert(is_signed_v<T>\
-    \ || is_unsigned_v<T>, \"Unsupported Type\");\n    }\n  }\n\n  int val() const\
-    \ { return (int)_v; }\n\n  mint& operator++()\n  {\n    _v++;\n    if (_v == umod())\n\
-    \      _v = 0;\n    return *this;\n  }\n  mint& operator--()\n  {\n    if (_v\
-    \ == 0)\n      _v = umod();\n    _v--;\n    return *this;\n  }\n  mint operator++(int)\n\
+    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
+    #line 2 \"math/modint/modint64.hpp\"\n\n#line 6 \"math/modint/modint64.hpp\"\n\
+    \n/**\n * @brief modint (64 bit)\n * @docs docs/math/modint/modint64.md\n */\n\
+    \ntemplate <ll m>\nstruct static_modint64\n{\n  using mint = static_modint64;\n\
+    private:\n  ull _v;\n  static constexpr ull umod() { return m; }\n  static constexpr\
+    \ bool prime = internal::isprime64<m>;\n\npublic:\n  static constexpr ll mod()\
+    \ { return m; }\n  static mint raw(ll v)\n  {\n    mint x;\n    x._v = v;\n  \
+    \  return x;\n  }\n\n  static_modint64() : _v(0) {}\n  template <class T>\n  static_modint64(T\
+    \ v)\n  {\n    if constexpr (is_unsigned_v<T>)\n    {\n      _v = (ull)(v % umod());\n\
+    \    }\n    else\n    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x < 0)\n\
+    \        x += umod();\n      _v = (ull)x;\n    }\n  }\n\n  ll val() const { return\
+    \ (ll)_v; }\n\n  mint& operator++()\n  {\n    _v++;\n    if (_v == umod())\n \
+    \     _v = 0;\n    return *this;\n  }\n  mint& operator--()\n  {\n    if (_v ==\
+    \ 0)\n      _v = umod();\n    _v--;\n    return *this;\n  }\n  mint operator++(int)\n\
     \  {\n    mint res = *this;\n    ++*this;\n    return res;\n  }\n  mint operator--(int)\n\
     \  {\n    mint res = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const\
     \ mint& rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n\
     \    return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
     \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
-    \ mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n    _v = (uint)(z % umod());\n\
+    \ mint &rhs)\n  {\n    u128 z = _v;\n    z *= rhs._v;\n    _v = (ull)(z % umod());\n\
     \    return *this;\n  }\n  mint& operator/=(const mint &rhs) { return *this =\
     \ *this * rhs.inv(); }\n\n  mint operator+() const { return *this; }\n  mint operator-()\
     \ const { return mint() - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n\
     \ >= 0);\n    mint x = *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n\
     \        r *= x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n \
     \ mint inv() const\n  {\n    if (prime)\n    {\n      assert(_v != 0);\n     \
-    \ return pow(umod() - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<int>(_v,\
+    \ return pow(umod() - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<ll>(_v,\
     \ m);\n      assert(g == 1);\n      return x;\n    }\n  }\n\n  friend mint operator+(const\
     \ mint &lhs, const mint &rhs)\n  { return mint(lhs) += rhs; }\n  friend mint operator-(const\
     \ mint &lhs, const mint &rhs)\n  { return mint(lhs) -= rhs; }\n  friend mint operator*(const\
@@ -673,44 +636,330 @@ data:
     \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
     \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
     \  {\n    os << x.val();\n    return os;\n  }\n};\n\ntemplate <int id>\nstruct\
-    \ dynamic_modint\n{\n  using mint = dynamic_modint;\nprivate:\n  uint _v;\n  static\
-    \ internal::barrett32 bt;\n  static uint umod() { return bt.umod(); }\n\npublic:\n\
-    \  static int mod() { return (int)(bt.umod()); }\n  static void set_mod(int m)\n\
-    \  {\n    assert(m >= 1);\n    bt = internal::barrett32(m);\n  }\n  static mint\
-    \ raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n  }\n\n  dynamic_modint()\
-    \ : _v(0) {}\n  template <class T>\n  dynamic_modint(T v)\n  {\n    if constexpr\
-    \ (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x <\
-    \ 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else if constexpr\
-    \ (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n    }\n    else\n\
-    \    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>, \"Unsupported\
-    \ Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\n  mint& operator++()\n\
-    \  {\n    _v++;\n    if (_v == umod())\n      _v = 0;\n    return *this;\n  }\n\
-    \  mint& operator--()\n  {\n    if (_v == 0)\n      _v = umod();\n    _v--;\n\
-    \    return *this;\n  }\n  mint operator++(int)\n  {\n    mint res = *this;\n\
-    \    ++*this;\n    return res;\n  }\n  mint operator--(int)\n  {\n    mint res\
-    \ = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const mint&\
-    \ rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n \
-    \   return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
-    \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
-    \ mint &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n    return *this;\n  }\n  mint&\
-    \ operator/=(const mint &rhs) { return *this = *this * rhs.inv(); }\n\n  mint\
-    \ operator+() const { return *this; }\n  mint operator-() const { return mint()\
-    \ - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n    mint x =\
-    \ *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r *= x;\n   \
-    \   x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n  mint inv() const\n \
-    \ {\n    auto [g, x, y] = extgcd<int>(_v, mod());\n    assert(g == 1);\n    return\
-    \ x;\n  }\n\n  friend mint operator+(const mint &lhs, const mint &rhs)\n  { return\
-    \ mint(lhs) += rhs; }\n  friend mint operator-(const mint &lhs, const mint &rhs)\n\
-    \  { return mint(lhs) -= rhs; }\n  friend mint operator*(const mint &lhs, const\
-    \ mint &rhs)\n  { return mint(lhs) *= rhs; }\n  friend mint operator/(const mint\
-    \ &lhs, const mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const\
+    \ dynamic_modint64_odd\n{\n  using mint = dynamic_modint64_odd;\nprivate:\n  ull\
+    \ _v;  // montgomery expression\n  static internal::montgomery64odd mg;\n  static\
+    \ ull umod() { return mg.umod(); }\n\npublic:\n  static ll mod() { return (ll)(mg.umod());\
+    \ }\n  static void set_mod(ll m)\n  {\n    assert(m >= 1 && m % 2 == 1);\n   \
+    \ mg = internal::montgomery64odd(m);\n  }\n\n  dynamic_modint64_odd() : _v(0)\
+    \ {}\n  dynamic_modint64_odd(i128 v)\n  { _v = mg.inv_reduce(v); }\n\n  ll val()\
+    \ const { return (ll)mg.reduce(_v); }\n\n  mint& operator++()\n  {\n    _v++;\n\
+    \    if (_v == umod())\n      _v = 0;\n    return *this;\n  }\n  mint& operator--()\n\
+    \  {\n    if (_v == 0)\n      _v = umod();\n    _v--;\n    return *this;\n  }\n\
+    \  mint operator++(int)\n  {\n    mint res = *this;\n    ++*this;\n    return\
+    \ res;\n  }\n  mint operator--(int)\n  {\n    mint res = *this;\n    --*this;\n\
+    \    return res;\n  }\n\n  mint& operator+=(const mint& rhs)\n  {\n    _v += rhs._v;\n\
+    \    if (_v >= umod())\n      _v -= umod();\n    return *this;\n  }\n  mint& operator-=(const\
+    \ mint &rhs)\n  {\n    _v -= rhs._v;\n    if (_v >= umod())\n      _v += umod();\n\
+    \    return *this;\n  }\n  mint& operator*=(const mint &rhs)\n  {\n    _v = mg.reduce(u128(_v)\
+    \ * rhs._v);\n    return *this;\n  }\n  mint& operator/=(const mint &rhs) { return\
+    \ *this = *this * rhs.inv(); }\n\n  mint operator+() const { return *this; }\n\
+    \  mint operator-() const { return mint() - *this; }\n\n  mint pow(ll n) const\n\
+    \  {\n    assert(n >= 0);\n    mint x = *this, r = 1;\n    while (n)\n    {\n\
+    \      if (n & 1)\n        r *= x;\n      x *= x;\n      n >>= 1;\n    }\n   \
+    \ return r;\n  }\n  mint inv() const\n  {\n    auto [g, x, y] = extgcd<ll>(val(),\
+    \ mod());\n    assert(g == 1);\n    return x;\n  }\n\n  friend mint operator+(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) += rhs; }\n  friend mint operator-(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) -= rhs; }\n  friend mint operator*(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) *= rhs; }\n  friend mint operator/(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const\
     \ mint &lhs, const mint &rhs)\n  { return lhs._v == rhs._v; }\n  friend bool operator!=(const\
     \ mint &lhs, const mint &rhs)\n  { return lhs._v != rhs._v; }\n\n  friend istream\
     \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
     \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
-    \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::barrett32\
-    \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
-    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;"
+    \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::montgomery64odd\
+    \ dynamic_modint64_odd<id>::mg((1LL << 61) - 1);\n\ntemplate <int id>\nstruct\
+    \ dynamic_modint64\n{\n  using mint = dynamic_modint64;\nprivate:\n  ull _v; \
+    \ // montgomery expression\n  static internal::montgomery64 mg;\n  static ull\
+    \ umod() { return mg.umod(); }\n\npublic:\n  static ll mod() { return (ll)(mg.umod());\
+    \ }\n  static void set_mod(ll m)\n  {\n    assert(m >= 1);\n    mg = internal::montgomery64(m);\n\
+    \  }\n\n  dynamic_modint64() : _v(0) {}\n  dynamic_modint64(i128 v)\n  { _v =\
+    \ mg.inv_reduce(v); }\n\n  ll val() const { return (ll)mg.reduce(_v); }\n\n  mint&\
+    \ operator++()\n  {\n    _v++;\n    if (_v == umod())\n      _v = 0;\n    return\
+    \ *this;\n  }\n  mint& operator--()\n  {\n    if (_v == 0)\n      _v = umod();\n\
+    \    _v--;\n    return *this;\n  }\n  mint operator++(int)\n  {\n    mint res\
+    \ = *this;\n    ++*this;\n    return res;\n  }\n  mint operator--(int)\n  {\n\
+    \    mint res = *this;\n    --*this;\n    return res;\n  }\n\n  mint& operator+=(const\
+    \ mint& rhs)\n  {\n    _v += rhs._v;\n    if (_v >= umod())\n      _v -= umod();\n\
+    \    return *this;\n  }\n  mint& operator-=(const mint &rhs)\n  {\n    _v -= rhs._v;\n\
+    \    if (_v >= umod())\n      _v += umod();\n    return *this;\n  }\n  mint& operator*=(const\
+    \ mint &rhs)\n  {\n    _v = mg.reduce(u128(_v) * rhs._v);\n    return *this;\n\
+    \  }\n  mint& operator/=(const mint &rhs) { return *this = *this * rhs.inv();\
+    \ }\n\n  mint operator+() const { return *this; }\n  mint operator-() const {\
+    \ return mint() - *this; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n\
+    \    mint x = *this, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r\
+    \ *= x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n  mint inv()\
+    \ const\n  {\n    auto [g, x, y] = extgcd<ll>(val(), mod());\n    assert(g ==\
+    \ 1);\n    return x;\n  }\n\n  friend mint operator+(const mint &lhs, const mint\
+    \ &rhs)\n  { return mint(lhs) += rhs; }\n  friend mint operator-(const mint &lhs,\
+    \ const mint &rhs)\n  { return mint(lhs) -= rhs; }\n  friend mint operator*(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) *= rhs; }\n  friend mint operator/(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v == rhs._v; }\n  friend bool operator!=(const\
+    \ mint &lhs, const mint &rhs)\n  { return lhs._v != rhs._v; }\n\n  friend istream\
+    \ &operator>>(istream &is, mint &x)\n  {\n    ll a;\n    is >> a;\n    x = a;\n\
+    \    return is;\n  }\n  friend ostream &operator<<(ostream &os, const mint &x)\n\
+    \  {\n    os << x.val();\n    return os;\n  }\n};\ntemplate <int id>\ninternal::montgomery64\
+    \ dynamic_modint64<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
+    \ << 61) - 1>;\nusing modint64_odd = dynamic_modint64_odd<-1>;\nusing modint64\
+    \ = dynamic_modint64<-1>;\n#line 2 \"math/prime/prime_power.hpp\"\n\n#line 4 \"\
+    math/prime/prime_power.hpp\"\n\n/**\n * @brief \u7D20\u3079\u304D\u69CB\u9020\u4F53\
+    \n * @docs docs/math/prime/prime_power.md\n */\n\ntemplate <class P>\nstruct PrimePower\n\
+    {\n  P p;\n  int e;\n  P pe;\n\n  PrimePower() {}\n  PrimePower(P p, int e = 1)\
+    \ : p(p), e(e), pe(ipow(p, e)) {}\n  PrimePower(P p, int e, P pe) : p(p), e(e),\
+    \ pe(pe) {}\n  template <class P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p),\
+    \ e(pp.e), pe(pp.pe) {}\n\n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void\
+    \ div_p() { e--, pe /= p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>,\
+    \ p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\
+    \n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class P>\nvc<P> factors(const\
+    \ vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n  repi(i, fac.size())\
+    \ res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570 fac \u306F\u7D20\u56E0\
+    \u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const vc<PrimePower<P>>\
+    \ &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d, int i) -> void\n \
+    \ {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n      return;\n\
+    \    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e + 1)\n    {\n\
+    \      dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs, 1, 0);\n\
+    \  sort(ALL(res));\n  return res;\n}\n\ntemplate <class P>\nvc<PrimePower<P>>\
+    \ factorized_mul\n(const vc<PrimePower<P>> &fac1, const vc<PrimePower<P>> &fac2)\n\
+    {\n  const int n = fac1.size(), m = fac2.size();\n  vc<PrimePower<P>> fac;\n \
+    \ fac.reserve(n + m);\n  int i = 0, j = 0;\n  while (i < n && j < m)\n  {\n  \
+    \  if (fac1[i].p < fac2[j].p)\n      fac.emplace_back(fac1[i++]);\n    else if\
+    \ (fac1[i].p > fac2[j].p)\n      fac.emplace_back(fac2[j++]);\n    else\n    {\n\
+    \      fac.emplace_back(fac1[i].p, fac1[i].e + fac2[j].e, ull(fac1[i].pe) * ull(fac2[j].pe));\n\
+    \      i++, j++;\n    }\n  }\n  fac.insert(fac.end(), fac1.begin() + i, fac1.end());\n\
+    \  fac.insert(fac.end(), fac2.begin() + j, fac2.end());\n  return fac;\n}\n#line\
+    \ 2 \"math/prime/primality_test.hpp\"\n\n#line 6 \"math/prime/primality_test.hpp\"\
+    \n\n/**\n * @brief \u7D20\u6570\u5224\u5B9A\n * @docs docs/math/prime/primality_test.md\n\
+    \ */\n\nnamespace internal\n{\n\ntemplate <class mint>\nbool is_prime_impl(ll\
+    \ n, cauto &bases)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n ==\
+    \ 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return false;\n  ll\
+    \ d = (n - 1) >> countr_zero(n - 1);\n  mint::set_mod(n);\n  for (ll a : bases)\n\
+    \  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t != n - 1 && y\
+    \ != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n    if (y\
+    \ != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n}\n\n}; //\
+    \ namespace internal\n\nbool is_prime(ll n)\n{\n  static constexpr array<ll, 3>\
+    \ bases32 = {2, 7, 61};\n  static constexpr array<ll, 7> bases64 = {2, 325, 9375,\
+    \ 28178, 450775, 9780504, 1795265022};\n  if (n <= INT_MAX)\n  {\n    using mint\
+    \ = dynamic_modint<INT_MIN>;\n    return internal::is_prime_impl<mint>(n, bases32);\n\
+    \  }\n  else\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n    return\
+    \ internal::is_prime_impl<mint>(n, bases64);\n  }\n}\n#line 8 \"math/prime/factorize.hpp\"\
+    \n\n/**\n * @brief \u7D20\u56E0\u6570\u5206\u89E3\n * @docs docs/math/prime/factorize.md\n\
+    \ */\n\nnamespace internal\n{\n\ntemplate <class mint>\nll get_prime_factor_impl(ll\
+    \ n)\n{\n  mint::set_mod(n);\n  int m = pow(n, .125);\n  mt19937 _mt;\n  while\
+    \ (true)\n  {\n    int c = 1 + _mt() % 100;\n    mint x = 2, y = 2, prod = 1;\n\
+    \    ll g = 1;\n    while (g == 1)\n    {\n      repi(i, m)\n      {\n       \
+    \ x = x * x + c;\n        y = y * y + c, y = y * y + c;\n        prod *= x - y;\n\
+    \      }\n      g = gcd(prod.val(), n);\n    }\n    if (g == n)\n      continue;\n\
+    \    if (is_prime(g))\n      return g;\n    else if (is_prime(n / g))\n      return\
+    \ n / g;\n    else\n      return get_prime_factor_impl<mint>(g);\n  }\n}\n\nll\
+    \ get_prime_factor(ll n)\n{\n  if (n <= INT_MAX)\n  {\n    using mint = dynamic_modint<INT_MIN>;\n\
+    \    return get_prime_factor_impl<mint>(n);\n  }\n  else\n  {\n    using mint\
+    \ = dynamic_modint64_odd<INT_MIN>;\n    return get_prime_factor_impl<mint>(n);\n\
+    \  }\n}\n\n}; // namespace internal\n\nvc<PrimePower<ll>> factorize(ll n)\n{\n\
+    \  vc<PrimePower<ll>> res;\n  repi(p, 2, 100)\n  {\n    PrimePower<ll> pp(p, 0);\n\
+    \    while (n % p == 0)\n      n /= p, pp.mul_p();\n    if (pp.e > 0)\n      res.emplace_back(pp);\n\
+    \  }\n  while (n > 1)\n  {\n    if (is_prime(n))\n    {\n      res.emplace_back(n);\n\
+    \      break;\n    }\n    ll p = internal::get_prime_factor(n);\n    PrimePower<ll>\
+    \ pp(p, 0);\n    while (n % p == 0)\n      n /= p, pp.mul_p();\n    res.emplace_back(pp);\n\
+    \  }\n  sort(ALL(res), [&](cauto &pp1, cauto &pp2)\n       { return pp1.p < pp2.p;\
+    \ });\n  return res;\n}\n#line 5 \"math/prime/zeta_mobius_divisor_multiple_large.hpp\"\
+    \n\n/**\n * @brief \u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\
+    \u30D3\u30A6\u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09\
+    \n * @docs docs/math/zeta_mobius_divisor_multiple_large.md\n */\n\nstruct ZetaMobiusDivisorMultipleLarge\n\
+    {\npublic:\n  ll m;\n  vc<PrimePower<ll>> fac;\n  ll pnum, dnum;\n  vc<ll> ds;\n\
+    \nprivate:\n  vc<int> f01;  // f01[d] \u306F\u3001d \u304C f[j] == e[j] \u306A\
+    \u3089 j \u30D3\u30C3\u30C8\u76EE\u304C 1\n\npublic:\n  ZetaMobiusDivisorMultipleLarge()\
+    \ {}\n  ZetaMobiusDivisorMultipleLarge(ll m) : m(m)\n  {\n    fac = factorize(m);\n\
+    \    pnum = fac.size();\n    dnum = 1;\n    fec(pp : fac) dnum *= pp.e + 1;\n\n\
+    \    ds.resize(dnum), f01.resize(dnum);\n    vc<int> f(pnum, 0);\n    ll d = 1;\n\
+    \    for (int i = 0;; i++)\n    {\n      ds[i] = d;\n      rep(j, pnum) bset(f01[i],\
+    \ j, f[j] == fac[j].e);\n      if (i == dnum - 1)\n        break;\n      rep(j,\
+    \ pnum - 1, -1, -1)\n      {\n        if (f[j] == fac[j].e)\n        {\n     \
+    \     f[j] = 0;\n          d /= fac[j].pe;\n        }\n        else\n        {\n\
+    \          f[j]++;\n          d *= fac[j].p;\n          break;\n        }\n  \
+    \    }\n    }\n  }\n\nprivate:\n  //                f3\n  // +       (e3+1) f2\n\
+    \  // + (e2+1)(e3+1) f1\n  // = f3+(e3+1)(f2+(e2+1)f1)\n  int dtoi(ll d) const\n\
+    \  {\n    assert(d > 0 && m % d == 0);\n    int res = 0;\n    fec(pp : fac)\n\
+    \    {\n      // \u3053\u3053 O(log f) \u304B\u304B\u3063\u3066\u308B\u3051\u3069\
+    \u5DE5\u592B\u3059\u308B\u3068 O(loglog f) \u306B\u306A\u308A\u305D\u3046\n  \
+    \    // \u305F\u3060\u3001\u5927\u3057\u3066\u30DC\u30C8\u30EB\u30CD\u30C3\u30AF\
+    \u306B\u306A\u3089\u306A\u3044\u3053\u3068\u304C\u591A\u305D\u3046\n      int\
+    \ f = 0;\n      while (d % pp.p == 0)\n        d /= pp.p, f++;\n      res *= pp.e\
+    \ + 1;\n      res += f;\n    }\n    return res;\n  }\n  //*\n  // f3 = i % (e3+1)\n\
+    \  // f2 = (i // (e3+1)) % (e2+1)\n  ll itod(int i) const\n  {\n    ll d = 1;\n\
+    \    fec(pp : reversed(fac))\n    {\n      d *= ipow(pp.p, i % (pp.e + 1));\n\
+    \      i /= pp.e + 1;\n    }\n    return d;\n  }\n  //*/\n\npublic:\n  template\
+    \ <class T>\n  struct DivisorMap\n  {\n  private:\n    const ZetaMobiusDivisorMultipleLarge\
+    \ &zm;\n    vc<T> v;\n\n    friend struct ZetaMobiusDivisorMultipleLarge;\n\n\
+    \  public:\n    DivisorMap() {}\n    DivisorMap(const ZetaMobiusDivisorMultipleLarge\
+    \ &zm)\n    : zm(zm), v(zm.dnum) {}\n    DivisorMap(const ZetaMobiusDivisorMultipleLarge\
+    \ &zm, cauto &func)\n    : zm(zm), v(zm.dnum) { repi(i, zm.dnum) v[i] = func(zm.ds[i]);\
+    \ }\n\n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3066\u5024\u3092\u53D6\
+    \u5F97\n    // \u5909\u66F4\u3082\u53EF\u80FD\n    // O(\u91CD\u8907\u3042\u308A\
+    \u3067\u306E\u7D20\u56E0\u6570\u306E\u500B\u6570)\n    T &get(ll d) { return v[zm.dtoi(d)];\
+    \ }\n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3066\u5024\u3092\u53D6\u5F97\
+    \n    // \u5909\u66F4\u3082\u53EF\u80FD\n    // O(\u91CD\u8907\u3042\u308A\u3067\
+    \u306E\u7D20\u56E0\u6570\u306E\u500B\u6570)\n    const T &get(ll d) const { return\
+    \ v[zm.dtoi(d)]; }\n\n    map<ll, T> to_map()\n    {\n      map<ll, T> res;\n\
+    \      fec(d : zm.ds) res[d] = get(d);\n      return res;\n    }\n  };\n\n  template\
+    \ <class T>\n  DivisorMap<T> divisor_map() const\n  { return DivisorMap<T>(*this);\
+    \ }\n  template <class T>\n  DivisorMap<T> divisor_map(cauto &func) const\n  {\
+    \ return DivisorMap<T>(*this, func); }\n\n  // \u03B6a(n) = \u03A3{d | n} a(d)\n\
+    \  // Monoid \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n\
+    \  // O(\u7D04\u6570\u500B\u6570 * \u7D20\u56E0\u6570\u500B\u6570)\n  template\
+    \ <class Monoid>\n  DivisorMap<typename Monoid::S> zeta_divisor\n  (const DivisorMap<typename\
+    \ Monoid::S> &a) const\n  {\n    auto b = a;\n    for (int j = pnum - 1, k = 1;\
+    \ j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i, dnum)\n      {\n     \
+    \   if (!btest(f01[i], j))\n          b.v[i + k] = Monoid::op(b.v[i + k], b.v[i]);\n\
+    \      }\n    }\n    return b;\n  }\n\n  // \u03BC \u306F \u03B6 \u306E\u9006\u5909\
+    \u63DB\n  // \u03BCa(n) = \u03A3{d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\
+    \u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\n  // Group \u306F\u53EF\u63DB\u7FA4 (\u03A3\
+    \ \u3060\u3068 +, -)\n  // O(\u7D04\u6570\u500B\u6570 * \u7D20\u56E0\u6570\u500B\
+    \u6570)\n  template <class Group>\n  DivisorMap<typename Group::G> mobius_divisor\n\
+    \  (const DivisorMap<typename Group::G> &a) const\n  {\n    auto b = a;\n    for\
+    \ (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i,\
+    \ dnum - 1, -1, -1)\n      {\n        if (!btest(f01[i], j))\n          b.v[i\
+    \ + k] = Group::op(b.v[i + k], Group::inv(b.v[i]));\n      }\n    }\n    return\
+    \ b;\n  }\n\n  // \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n  // \u03BCa(n)\
+    \ = \u03A3{d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\
+    \u516C\u5F0F\n  // \u03BCa(n) \u306E 1 \u70B9\u3060\u3051\u6B32\u3057\u3044\u3068\
+    \u304D\u306B\u4F7F\u3046\n  // Group \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068\
+    \ +, -)\n  // O(\u7D20\u56E0\u6570\u500B\u6570 * 2^\u7D20\u56E0\u6570\u500B\u6570\
+    )\n  template <class Group>\n  typename Group::G mobius_divisor_point\n  (const\
+    \ DivisorMap<typename Group::G> &a, ll n) const\n  {\n    typename Group::G res\
+    \ = Group::e();\n    int si = dtoi(n);\n    repi(bit, 1 << pnum)\n    {\n    \
+    \  int i = si;\n      for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1,\
+    \ j--)\n      {\n        if (btest(bit, j) && i - k >= 0 && !btest(f01[i - k],\
+    \ j))\n          i -= k;\n      }\n      if (popcount(bit) % 2 == 0)\n       \
+    \ res = Group::op(res, a.v[i]);\n      else\n        res = Group::op(res, Group::inv(a.v[i]));\n\
+    \    }\n    return res;\n  }\n\n  // \u03B6'a(n) = \u03A3{n | m} a(m)\n  // Monoid\
+    \ \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n  // O(\u7D04\
+    \u6570\u500B\u6570 * \u7D20\u56E0\u6570\u500B\u6570)\n  template <class Monoid>\n\
+    \  DivisorMap<typename Monoid::S> zeta_multiple\n  (const DivisorMap<typename\
+    \ Monoid::S> &a) const\n  {\n    auto b = a;\n    for (int j = pnum - 1, k = 1;\
+    \ j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i, dnum - 1, -1, -1)\n  \
+    \    {\n        if (!btest(f01[i], j))\n          b.v[i] = Monoid::op(b.v[i],\
+    \ b.v[i + k]);\n      }\n    }\n    return b;\n  }\n\n  // \u03BC' \u306F \u03B6\
+    ' \u306E\u9006\u5909\u63DB\n  // \u03BC'a(n) = \u03A3{n | m} \u03BC(m/n)g(m) \
+    \ cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\n  // Group \u306F\
+    \u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +, -)\n  // O(\u7D04\u6570\u500B\u6570\
+    \ * \u7D20\u56E0\u6570\u500B\u6570)\n  template <class Group>\n  DivisorMap<typename\
+    \ Group::G> mobius_multiple\n  (const DivisorMap<typename Group::G> &a) const\n\
+    \  {\n    auto b = a;\n    for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e\
+    \ + 1, j--)\n    {\n      repi(i, dnum)\n      {\n        if (!btest(f01[i], j))\n\
+    \          b.v[i] = Group::op(b.v[i], Group::inv(b.v[i + k]));\n      }\n    }\n\
+    \    return b;\n  }\n\n  // \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n\
+    \  // \u03BC'a(n) = \u03A3{n | m} \u03BC(m/n)g(m)  cf. \u30E1\u30D3\u30A6\u30B9\
+    \u306E\u53CD\u8EE2\u516C\u5F0F\n  // \u03BC'a(n) \u306E 1 \u70B9\u3060\u3051\u6B32\
+    \u3057\u3044\u3068\u304D\u306B\u4F7F\u3046\n  // Group \u306F\u53EF\u63DB\u7FA4\
+    \ (\u03A3 \u3060\u3068 +, -)\n  // O(\u7D20\u56E0\u6570\u500B\u6570 * 2^\u7D20\
+    \u56E0\u6570\u500B\u6570)\n  template <class Group>\n  typename Group::G mobius_multiple_point\n\
+    \  (const DivisorMap<typename Group::G> &a, ll n) const\n  {\n    typename Group::G\
+    \ res = Group::e();\n    int si = dtoi(n);\n    repi(bit, 1 << pnum)\n    {\n\
+    \      int i = si;\n      for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e\
+    \ + 1, j--)\n      {\n        if (btest(bit, j) && !btest(f01[i], j))\n      \
+    \    i += k;\n      }\n      if (popcount(bit) % 2 == 0)\n        res = Group::op(res,\
+    \ a.v[i]);\n      else\n        res = Group::op(res, Group::inv(a.v[i]));\n  \
+    \  }\n    return res;\n  }\n};\n"
+  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
+    factorize.hpp\"\n\n/**\n * @brief \u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\
+    \u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\
+    \u6570\uFF09\n * @docs docs/math/zeta_mobius_divisor_multiple_large.md\n */\n\n\
+    struct ZetaMobiusDivisorMultipleLarge\n{\npublic:\n  ll m;\n  vc<PrimePower<ll>>\
+    \ fac;\n  ll pnum, dnum;\n  vc<ll> ds;\n\nprivate:\n  vc<int> f01;  // f01[d]\
+    \ \u306F\u3001d \u304C f[j] == e[j] \u306A\u3089 j \u30D3\u30C3\u30C8\u76EE\u304C\
+    \ 1\n\npublic:\n  ZetaMobiusDivisorMultipleLarge() {}\n  ZetaMobiusDivisorMultipleLarge(ll\
+    \ m) : m(m)\n  {\n    fac = factorize(m);\n    pnum = fac.size();\n    dnum =\
+    \ 1;\n    fec(pp : fac) dnum *= pp.e + 1;\n\n    ds.resize(dnum), f01.resize(dnum);\n\
+    \    vc<int> f(pnum, 0);\n    ll d = 1;\n    for (int i = 0;; i++)\n    {\n  \
+    \    ds[i] = d;\n      rep(j, pnum) bset(f01[i], j, f[j] == fac[j].e);\n     \
+    \ if (i == dnum - 1)\n        break;\n      rep(j, pnum - 1, -1, -1)\n      {\n\
+    \        if (f[j] == fac[j].e)\n        {\n          f[j] = 0;\n          d /=\
+    \ fac[j].pe;\n        }\n        else\n        {\n          f[j]++;\n        \
+    \  d *= fac[j].p;\n          break;\n        }\n      }\n    }\n  }\n\nprivate:\n\
+    \  //                f3\n  // +       (e3+1) f2\n  // + (e2+1)(e3+1) f1\n  //\
+    \ = f3+(e3+1)(f2+(e2+1)f1)\n  int dtoi(ll d) const\n  {\n    assert(d > 0 && m\
+    \ % d == 0);\n    int res = 0;\n    fec(pp : fac)\n    {\n      // \u3053\u3053\
+    \ O(log f) \u304B\u304B\u3063\u3066\u308B\u3051\u3069\u5DE5\u592B\u3059\u308B\u3068\
+    \ O(loglog f) \u306B\u306A\u308A\u305D\u3046\n      // \u305F\u3060\u3001\u5927\
+    \u3057\u3066\u30DC\u30C8\u30EB\u30CD\u30C3\u30AF\u306B\u306A\u3089\u306A\u3044\
+    \u3053\u3068\u304C\u591A\u305D\u3046\n      int f = 0;\n      while (d % pp.p\
+    \ == 0)\n        d /= pp.p, f++;\n      res *= pp.e + 1;\n      res += f;\n  \
+    \  }\n    return res;\n  }\n  //*\n  // f3 = i % (e3+1)\n  // f2 = (i // (e3+1))\
+    \ % (e2+1)\n  ll itod(int i) const\n  {\n    ll d = 1;\n    fec(pp : reversed(fac))\n\
+    \    {\n      d *= ipow(pp.p, i % (pp.e + 1));\n      i /= pp.e + 1;\n    }\n\
+    \    return d;\n  }\n  //*/\n\npublic:\n  template <class T>\n  struct DivisorMap\n\
+    \  {\n  private:\n    const ZetaMobiusDivisorMultipleLarge &zm;\n    vc<T> v;\n\
+    \n    friend struct ZetaMobiusDivisorMultipleLarge;\n\n  public:\n    DivisorMap()\
+    \ {}\n    DivisorMap(const ZetaMobiusDivisorMultipleLarge &zm)\n    : zm(zm),\
+    \ v(zm.dnum) {}\n    DivisorMap(const ZetaMobiusDivisorMultipleLarge &zm, cauto\
+    \ &func)\n    : zm(zm), v(zm.dnum) { repi(i, zm.dnum) v[i] = func(zm.ds[i]); }\n\
+    \n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3066\u5024\u3092\u53D6\u5F97\
+    \n    // \u5909\u66F4\u3082\u53EF\u80FD\n    // O(\u91CD\u8907\u3042\u308A\u3067\
+    \u306E\u7D20\u56E0\u6570\u306E\u500B\u6570)\n    T &get(ll d) { return v[zm.dtoi(d)];\
+    \ }\n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3066\u5024\u3092\u53D6\u5F97\
+    \n    // \u5909\u66F4\u3082\u53EF\u80FD\n    // O(\u91CD\u8907\u3042\u308A\u3067\
+    \u306E\u7D20\u56E0\u6570\u306E\u500B\u6570)\n    const T &get(ll d) const { return\
+    \ v[zm.dtoi(d)]; }\n\n    map<ll, T> to_map()\n    {\n      map<ll, T> res;\n\
+    \      fec(d : zm.ds) res[d] = get(d);\n      return res;\n    }\n  };\n\n  template\
+    \ <class T>\n  DivisorMap<T> divisor_map() const\n  { return DivisorMap<T>(*this);\
+    \ }\n  template <class T>\n  DivisorMap<T> divisor_map(cauto &func) const\n  {\
+    \ return DivisorMap<T>(*this, func); }\n\n  // \u03B6a(n) = \u03A3{d | n} a(d)\n\
+    \  // Monoid \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n\
+    \  // O(\u7D04\u6570\u500B\u6570 * \u7D20\u56E0\u6570\u500B\u6570)\n  template\
+    \ <class Monoid>\n  DivisorMap<typename Monoid::S> zeta_divisor\n  (const DivisorMap<typename\
+    \ Monoid::S> &a) const\n  {\n    auto b = a;\n    for (int j = pnum - 1, k = 1;\
+    \ j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i, dnum)\n      {\n     \
+    \   if (!btest(f01[i], j))\n          b.v[i + k] = Monoid::op(b.v[i + k], b.v[i]);\n\
+    \      }\n    }\n    return b;\n  }\n\n  // \u03BC \u306F \u03B6 \u306E\u9006\u5909\
+    \u63DB\n  // \u03BCa(n) = \u03A3{d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\
+    \u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\n  // Group \u306F\u53EF\u63DB\u7FA4 (\u03A3\
+    \ \u3060\u3068 +, -)\n  // O(\u7D04\u6570\u500B\u6570 * \u7D20\u56E0\u6570\u500B\
+    \u6570)\n  template <class Group>\n  DivisorMap<typename Group::G> mobius_divisor\n\
+    \  (const DivisorMap<typename Group::G> &a) const\n  {\n    auto b = a;\n    for\
+    \ (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i,\
+    \ dnum - 1, -1, -1)\n      {\n        if (!btest(f01[i], j))\n          b.v[i\
+    \ + k] = Group::op(b.v[i + k], Group::inv(b.v[i]));\n      }\n    }\n    return\
+    \ b;\n  }\n\n  // \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n  // \u03BCa(n)\
+    \ = \u03A3{d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\
+    \u516C\u5F0F\n  // \u03BCa(n) \u306E 1 \u70B9\u3060\u3051\u6B32\u3057\u3044\u3068\
+    \u304D\u306B\u4F7F\u3046\n  // Group \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068\
+    \ +, -)\n  // O(\u7D20\u56E0\u6570\u500B\u6570 * 2^\u7D20\u56E0\u6570\u500B\u6570\
+    )\n  template <class Group>\n  typename Group::G mobius_divisor_point\n  (const\
+    \ DivisorMap<typename Group::G> &a, ll n) const\n  {\n    typename Group::G res\
+    \ = Group::e();\n    int si = dtoi(n);\n    repi(bit, 1 << pnum)\n    {\n    \
+    \  int i = si;\n      for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1,\
+    \ j--)\n      {\n        if (btest(bit, j) && i - k >= 0 && !btest(f01[i - k],\
+    \ j))\n          i -= k;\n      }\n      if (popcount(bit) % 2 == 0)\n       \
+    \ res = Group::op(res, a.v[i]);\n      else\n        res = Group::op(res, Group::inv(a.v[i]));\n\
+    \    }\n    return res;\n  }\n\n  // \u03B6'a(n) = \u03A3{n | m} a(m)\n  // Monoid\
+    \ \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n  // O(\u7D04\
+    \u6570\u500B\u6570 * \u7D20\u56E0\u6570\u500B\u6570)\n  template <class Monoid>\n\
+    \  DivisorMap<typename Monoid::S> zeta_multiple\n  (const DivisorMap<typename\
+    \ Monoid::S> &a) const\n  {\n    auto b = a;\n    for (int j = pnum - 1, k = 1;\
+    \ j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i, dnum - 1, -1, -1)\n  \
+    \    {\n        if (!btest(f01[i], j))\n          b.v[i] = Monoid::op(b.v[i],\
+    \ b.v[i + k]);\n      }\n    }\n    return b;\n  }\n\n  // \u03BC' \u306F \u03B6\
+    ' \u306E\u9006\u5909\u63DB\n  // \u03BC'a(n) = \u03A3{n | m} \u03BC(m/n)g(m) \
+    \ cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\n  // Group \u306F\
+    \u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +, -)\n  // O(\u7D04\u6570\u500B\u6570\
+    \ * \u7D20\u56E0\u6570\u500B\u6570)\n  template <class Group>\n  DivisorMap<typename\
+    \ Group::G> mobius_multiple\n  (const DivisorMap<typename Group::G> &a) const\n\
+    \  {\n    auto b = a;\n    for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e\
+    \ + 1, j--)\n    {\n      repi(i, dnum)\n      {\n        if (!btest(f01[i], j))\n\
+    \          b.v[i] = Group::op(b.v[i], Group::inv(b.v[i + k]));\n      }\n    }\n\
+    \    return b;\n  }\n\n  // \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n\
+    \  // \u03BC'a(n) = \u03A3{n | m} \u03BC(m/n)g(m)  cf. \u30E1\u30D3\u30A6\u30B9\
+    \u306E\u53CD\u8EE2\u516C\u5F0F\n  // \u03BC'a(n) \u306E 1 \u70B9\u3060\u3051\u6B32\
+    \u3057\u3044\u3068\u304D\u306B\u4F7F\u3046\n  // Group \u306F\u53EF\u63DB\u7FA4\
+    \ (\u03A3 \u3060\u3068 +, -)\n  // O(\u7D20\u56E0\u6570\u500B\u6570 * 2^\u7D20\
+    \u56E0\u6570\u500B\u6570)\n  template <class Group>\n  typename Group::G mobius_multiple_point\n\
+    \  (const DivisorMap<typename Group::G> &a, ll n) const\n  {\n    typename Group::G\
+    \ res = Group::e();\n    int si = dtoi(n);\n    repi(bit, 1 << pnum)\n    {\n\
+    \      int i = si;\n      for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e\
+    \ + 1, j--)\n      {\n        if (btest(bit, j) && !btest(f01[i], j))\n      \
+    \    i += k;\n      }\n      if (popcount(bit) % 2 == 0)\n        res = Group::op(res,\
+    \ a.v[i]);\n      else\n        res = Group::op(res, Group::inv(a.v[i]));\n  \
+    \  }\n    return res;\n  }\n};"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -723,51 +972,26 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
+  - math/prime/factorize.hpp
+  - math/modint/modint.hpp
   - math/modint/modint_internal.hpp
   - math/extgcd.hpp
-  isVerificationFile: false
-  path: math/modint/modint.hpp
-  requiredBy:
-  - math/prime/factorize.hpp
+  - math/modint/modint64.hpp
+  - math/prime/prime_power.hpp
   - math/prime/primality_test.hpp
-  - math/prime/euler_phi_carmichael.hpp
-  - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/order_primitive_root.hpp
-  - template/template.cpp
-  timestamp: '2025-01-29 21:47:21+09:00'
+  isVerificationFile: false
+  path: math/prime/zeta_mobius_divisor_multiple_large.hpp
+  requiredBy: []
+  timestamp: '2025-02-03 20:19:05+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/mytest/modint.test.cpp
-  - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/dynamic_modint.test.cpp
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/static_modint.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-documentation_of: math/modint/modint.hpp
+documentation_of: math/prime/zeta_mobius_divisor_multiple_large.hpp
 layout: document
 redirect_from:
-- /library/math/modint/modint.hpp
-- /library/math/modint/modint.hpp.html
-title: modint (32 bit)
+- /library/math/prime/zeta_mobius_divisor_multiple_large.hpp
+- /library/math/prime/zeta_mobius_divisor_multiple_large.hpp.html
+title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\
+  \u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
 ---
-## modint (32 bit)
-
-ACL の modint がベース
-
-相違点：
-
-- 入出力ができる
-- 他は外から使う分にはあまり変わっていないと思うが、中は一部省略している
-
-##### 制約
-
-- `dynamic_modint<INT_MIN>` はライブラリの内部で使用するので使用しないこと
-- mod の上限は、`int` に収まるなら OK なはず（証明したわけではない）
-  - $2^{31} - 1 = 2.147483647 \times 10^9$

@@ -57,6 +57,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/prime/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
+    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
+      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/modint64.test.cpp
@@ -82,6 +86,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/order_mod_euler_phi.test.cpp
     title: verify/yukicoder/order_mod_euler_phi.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -762,12 +772,15 @@ data:
   - math/prime/factorize.hpp
   - math/prime/primality_test.hpp
   - math/prime/euler_phi_carmichael.hpp
+  - math/prime/zeta_mobius_divisor_multiple_large.hpp
   - math/prime/order_primitive_root.hpp
   timestamp: '2025-01-31 00:13:50+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/modint64.test.cpp
+  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
   - verify/yukicoder/order_mod_carmichael.test.cpp
+  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/divisors.test.cpp
   - verify/yosupo/factorize.test.cpp

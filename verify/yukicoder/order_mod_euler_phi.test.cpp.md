@@ -827,10 +827,10 @@ data:
     \   return internal::internal_primitive_root_min<mint>(p, fac);\n  }\n}\n#line\
     \ 15 \"verify/yukicoder/order_mod_euler_phi.test.cpp\"\n\nvoid init() {}\n\nvoid\
     \ main2()\n{\n  LL(N);\n  if (N == 1)\n    PRINT(1);\n  else\n    PRINT(order_mod(2,\
-    \ 2 * N - 1, factorize(euler_phi(factorize(2 * N - 1)))));\n\n}\n\nvoid test()\
-    \ {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n\
-    \    cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n\
-    \  CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    \ 2 * N - 1, factorize(euler_phi(factorize(2 * N - 1)))));\n}\n\nvoid test() {}\n\
+    \nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr\
+    \ << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n \
+    \ CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
     \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
     \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
     \  CERR(\"\\033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n\
@@ -844,10 +844,10 @@ data:
     \ INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"../../template/template_all.hpp\"\
     \n\n#include \"../../math/prime/order_primitive_root.hpp\"\n\nvoid init() {}\n\
     \nvoid main2()\n{\n  LL(N);\n  if (N == 1)\n    PRINT(1);\n  else\n    PRINT(order_mod(2,\
-    \ 2 * N - 1, factorize(euler_phi(factorize(2 * N - 1)))));\n\n}\n\nvoid test()\
-    \ {}\n\nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n\
-    \    cerr << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n\
-    \  CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    \ 2 * N - 1, factorize(euler_phi(factorize(2 * N - 1)))));\n}\n\nvoid test() {}\n\
+    \nint main()\n{\n  cauto CERR = [](cauto &val)\n  {\n    #ifdef LOCAL\n    cerr\
+    \ << val;\n    #endif\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n \
+    \ CERR(\"\\033[33m \\n[FAST_IO]\\n\\n \\033[m\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
     \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
     \ defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)\n\
     \  CERR(\"\\033[35m \\n[AOJ_TESTCASE]\\n\\n \\033[m\");\n  while (true)\n  {\n\
@@ -880,7 +880,7 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/order_mod_euler_phi.test.cpp
   requiredBy: []
-  timestamp: '2025-01-31 23:20:54+09:00'
+  timestamp: '2025-02-03 20:19:43+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/order_mod_euler_phi.test.cpp

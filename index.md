@@ -15,6 +15,9 @@ data:
   - name: math
     pages:
     - icon: ':heavy_check_mark:'
+      path: math/algebraic_struct.hpp
+      title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct"
+    - icon: ':heavy_check_mark:'
       path: math/extgcd.hpp
       title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
     - icon: ':heavy_check_mark:'
@@ -49,6 +52,10 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/prime/prime_power.hpp
       title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
+    - icon: ':heavy_check_mark:'
+      path: math/prime/zeta_mobius_divisor_multiple_large.hpp
+      title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
+        \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
   - name: template
     pages:
     - icon: ':warning:'
@@ -192,6 +199,12 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yukicoder/static_modint.test.cpp
       title: verify/yukicoder/static_modint.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+      title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+      title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
 layout: toppage
 ---
 [miscalc](https://x.com/miscalc53) のライブラリです。現在移植作業中

@@ -37,70 +37,8 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64.hpp
-    title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/prime/euler_phi_carmichael.hpp
-    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
-      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/order_primitive_root.hpp
-    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/primality_test.hpp
-    title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':warning:'
-    path: template/template.cpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5168\u4F53\uFF09"
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/extgcd.test.cpp
-    title: verify/aoj/extgcd.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint.test.cpp
-    title: verify/mytest/modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint64.test.cpp
-    title: verify/mytest/modint64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root.test.cpp
-    title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root_min.test.cpp
-    title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/dynamic_modint.test.cpp
-    title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_carmichael.test.cpp
-    title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_euler_phi.test.cpp
-    title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/static_modint.test.cpp
-    title: verify/yukicoder/static_modint.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -111,11 +49,10 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/extgcd.md
-    document_title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5\
-      \ (extgcd)"
+    _deprecated_at_docs: docs/math/algebraic_struct.md
+    document_title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct"
     links: []
-  bundledCode: "#line 2 \"math/extgcd.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+  bundledCode: "#line 2 \"math/algebraic_struct.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -508,29 +445,58 @@ data:
     \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
     CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
     \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\u5F35\u30E6\u30FC\
-    \u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs docs/math/extgcd.md\n\
-    \ */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\u305F\u3059 (g, x, y)\n\
-    // max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T = ll>\nconstexpr tuple<T,\
-    \ T, T> extgcd(const T &a, const T &b)\n{\n  if (a == 0 && b == 0)\n    return\
-    \ {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  // a*x2 + b*y2 == z2  ...(2)\n\
-    \  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1, z2 = b;\n  while (z2 != 0)\n\
-    \  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n    T q = z1 / z2;\n    tie(x1,\
-    \ x2) = make_pair(x2, x1 - q * x2);\n    tie(y1, y2) = make_pair(y2, y1 - q *\
-    \ y2);\n    tie(z1, z2) = make_pair(z2, z1 - q * z2);\n  }\n  if (z1 < 0)\n  \
-    \  x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1, y1};\n}\n"
+    #endif\n#line 4 \"math/algebraic_struct.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
+    \u69CB\u9020\u306E struct\n * @docs docs/math/algebraic_struct.md\n */\n\ntemplate\
+    \ <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S op(S a,\
+    \ S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\ntemplate\
+    \ <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S op(S a,\
+    \ S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\ntemplate\
+    \ <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n  static\
+    \ constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S e() { return\
+    \ infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n{\n\
+    \  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n  static\
+    \ constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct GroupAddSub\n\
+    {\n  using G = T;\n  static constexpr G op(G a, G b) { return a + b; }\n  static\
+    \ constexpr G e() { return 0; }\n  static constexpr G inv(G a) { return -a; }\n\
+    };\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using G = T;\n  static constexpr\
+    \ G op(G a, G b) { return a * b; }\n  static constexpr G e() { return 1; }\n \
+    \ static constexpr G inv(G a) { return 1 / a; }\n};\n\ntemplate <class T, const\
+    \ T infty = INF>\nstruct SemiRingMinPlus\n{\n  using R = T;\n  static constexpr\
+    \ R add(R a, R b) { return min(a, b); }\n  static constexpr R e0() { return infty;\
+    \ }\n  static constexpr R mul(R a, R b) { return a + b; }\n};\ntemplate <class\
+    \ T, const T infty = INF>\nstruct SemiRingMaxPlus\n{\n  using R = T;\n  static\
+    \ constexpr R add(R a, R b) { return max(a, b); }\n  static constexpr R e0() {\
+    \ return -infty; }\n  static constexpr R mul(R a, R b) { return a + b; }\n};\n\
+    \ntemplate <class T>\nstruct RingAddSubMul\n{\n  using R = T;\n  static constexpr\
+    \ R add(R a, R b) { return a + b; }\n  static constexpr R minus(const R &a) {\
+    \ return -a; }\n  static constexpr R e0() { return 0; }\n  static constexpr R\
+    \ mul(R a, R b) { return a * b; }\n};\n"
   code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n\
-    \ * @docs docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\
-    \u6E80\u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class\
-    \ T = ll>\nconstexpr tuple<T, T, T> extgcd(const T &a, const T &b)\n{\n  if (a\
-    \ == 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n\
-    \  // a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 =\
-    \ 1, z2 = b;\n  while (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n\
-    \    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1,\
-    \ y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q *\
-    \ z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1,\
-    \ y1};\n}"
+    \ \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\n * @docs docs/math/algebraic_struct.md\n\
+    \ */\n\ntemplate <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
+    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
+    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
+    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
+    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
+    \ static constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct\
+    \ GroupAddSub\n{\n  using G = T;\n  static constexpr G op(G a, G b) { return a\
+    \ + b; }\n  static constexpr G e() { return 0; }\n  static constexpr G inv(G a)\
+    \ { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using G = T;\n\
+    \  static constexpr G op(G a, G b) { return a * b; }\n  static constexpr G e()\
+    \ { return 1; }\n  static constexpr G inv(G a) { return 1 / a; }\n};\n\ntemplate\
+    \ <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n  using R = T;\n\
+    \  static constexpr R add(R a, R b) { return min(a, b); }\n  static constexpr\
+    \ R e0() { return infty; }\n  static constexpr R mul(R a, R b) { return a + b;\
+    \ }\n};\ntemplate <class T, const T infty = INF>\nstruct SemiRingMaxPlus\n{\n\
+    \  using R = T;\n  static constexpr R add(R a, R b) { return max(a, b); }\n  static\
+    \ constexpr R e0() { return -infty; }\n  static constexpr R mul(R a, R b) { return\
+    \ a + b; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using R = T;\n\
+    \  static constexpr R add(R a, R b) { return a + b; }\n  static constexpr R minus(const\
+    \ R &a) { return -a; }\n  static constexpr R e0() { return 0; }\n  static constexpr\
+    \ R mul(R a, R b) { return a * b; }\n};"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -544,77 +510,121 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   isVerificationFile: false
-  path: math/extgcd.hpp
-  requiredBy:
-  - math/modint/modint64.hpp
-  - math/modint/modint.hpp
-  - math/prime/factorize.hpp
-  - math/prime/primality_test.hpp
-  - math/prime/euler_phi_carmichael.hpp
-  - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/order_primitive_root.hpp
-  - template/template.cpp
-  timestamp: '2025-01-04 23:27:57+09:00'
+  path: math/algebraic_struct.hpp
+  requiredBy: []
+  timestamp: '2025-02-03 20:19:05+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/mytest/modint.test.cpp
-  - verify/mytest/modint64.test.cpp
-  - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/dynamic_modint.test.cpp
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/static_modint.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-documentation_of: math/extgcd.hpp
+documentation_of: math/algebraic_struct.hpp
 layout: document
 redirect_from:
-- /library/math/extgcd.hpp
-- /library/math/extgcd.hpp.html
-title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
+- /library/math/algebraic_struct.hpp
+- /library/math/algebraic_struct.hpp.html
+title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct"
 ---
-## 拡張ユークリッドの互除法 (extgcd)
+## 代数的構造の struct
 
-```cpp
-tuple<T, T, T> extgcd(T a, T b)
-```
+データ構造などに代数的構造を載せるとき、代数的構造を struct で表現することにする。
 
-次の条件を満たす $(g, x, y)$ の組を $1$ 組返す。
+https://noshi91.hatenablog.com/entry/2020/04/22/212649 の E の方法を採用。
 
-- $g = \gcd(a, b)$
-  - $g \geq 0$ となるように定める
-  - $\gcd(c, 0) = \gcd(0, c) = c \quad (c \geq 0)$
-  - $\gcd(0, 0) = 0$
-- $ax + by = g$
-- $\max(\lvert x \rvert, \lvert y \rvert) \leq \max(\lvert a \rvert, \lvert b \rvert)$
+よく使うものをライブラリにしておく。編集方針：
 
-##### 制約
-
-- `T` は符号つき整数型
+- 必要になったときに増やす
+- 広く使えるものをこのファイルに書く
+- 行列とかは行列ライブラリのファイルに書く
 
 
-##### 計算量
+### 群に似た構造
 
-- $O(1 + \log \min(\lvert a \rvert, \lvert b \rvert))$
+#### 半群 (semigroup)
+
+- 集合 $S$ (`S`)
+- 二項演算 $\cdot\colon S \to S$ (`S op(S a, S b)`)
+
+の組であって、
+
+- 結合則 $(a\cdot b) \cdot c = a\cdot (b\cdot c)$
+
+を満たすもの。
+
+データ構造に載せる目的だと、単位元を添加してモノイドにできる（上に、よく使うものはだいたい単位元がある）ので、あまり出番がないかも。
 
 
-##### 関連事実
+#### モノイド (monoid)
 
-- $(a, b) \neq (0, 0)$ とする。$(x, y)$ についての一次不定方程式 $ax + by = c$ が整数解を持つ必要十分条件は、$c$ が $\gcd(a, b)$ で割り切れることである。
-- $(a, b) \neq (0, 0)$ とする。$(x, y)$ についての一次不定方程式 $ax + by = c$ が整数解を持つとき、$g = \gcd(a, b)$、整数解の $1$ つを $(x_0, y_0)$ とすると、一般解は
+単位元を持つ半群。
 
-  $\displaystyle x = x_0 + k\frac{b}{g}, y = y_0 - k\frac{a}{g} \quad (k \in \mathbb{Z})$
+競技プログラマにはセグ木に載るでおなじみ（？）
 
-  と書ける。$g$ で割り忘れないよう注意。
-- $m \geq 1$ とする。$x$ についての合同方程式 $ax \equiv c \pmod m$ の解集合は、$(x, y)$ についての一次不定方程式 $ax + my = c$ の解集合の $x$ だけとってきた集合と一致。つまり、
-  - $ax \equiv c \pmod m$ の解が存在する必要十分条件は $c$ が $\gcd(a, m)$ で割り切れることである（特に、$\bmod \ m$ で $a$ の逆元が存在する必要十分条件は $\gcd(a, m) = 1$ であることである）。
-  - $ax \equiv c \pmod m$ の解が存在するとき、$g = \gcd(a, m)$、解の $1$ つを $x_0$ とすると、一般解は
+`S`, `S op(S a, S b)` に加えて `S e()` を持つ。
 
-    $\displaystyle x \equiv x_0 + k\frac{m}{g} \pmod m \quad (k = 0, \dots, g-1)$
-    
-    と書ける。
+演算が可換なものは可換モノイドと呼ばれる（実装上では変えていない）。
+
+
+#### 群 (group)
+
+逆元を持つモノイド。
+
+`G`, `G op(G a, G b)`, `G e()` に加えて `G inv(G a)` を持つ。
+
+演算が可換なものは可換群やアーベル群と呼ばれる（実装上では変えていない）。
+
+
+#### 作用つきモノイド
+
+競技プログラマには遅延セグ木に載るでおなじみ（？）
+
+遅延セグ木を整備した時に書く
+
+
+### 環に似た構造
+
+#### 半環 (semiring)
+
+気持ち：足し算と掛け算ができる
+
+競技プログラマには行列累乗に載るでおなじみ（？）
+
+- 集合 $R$ (`R`)
+- 和 $+$ (`R add(R a, R b)`)
+- 和の単位元 $0$ (`R e0()`)
+- 積 $\cdot$ (`R mul(R a, R b)`)
+
+の組であって、
+
+- $(R, +, 0)$ は可換モノイド
+  - $(a+b) + c = a+(b+c)$
+  - $0+a=a+0=a$
+  - $a+b=b+a$
+- $(R, \cdot, 1)$ はモノイド
+  - $(a\cdot b)\cdot c = a\cdot (b\cdot c)$
+  - $1\cdot a = a\cdot 1 = a$
+- 分配則
+  - $a\cdot (b+c) = (a\cdot b) + (a\cdot c)$
+  - $(a+b)\cdot c = (a\cdot c) + (b\cdot c)$
+- $0$ 倍
+  - $0\cdot a = a\cdot 0 = 0$
+
+を満たすもの。
+
+#### 環 (ring)
+
+気持ち：足し算と引き算と掛け算ができる
+
+加法逆元 $-a$ を持つ半環。
+
+`R`, `R add(R a, R b)`, `R e0()`, `R mul(R a, R b)`, `R e1()` に加えて、`R minus(R a)` も持つ。
+
+乗法が可換である環は可換環と呼ばれる（実装上では変えていない）。
+
+
+#### （可換）体 (field)
+
+気持ち：足し算と引き算と掛け算と割り算ができる
+
+乗法が可換で、乗法逆元 $a^{-1}$ を持つ環。
+
+`R`, `R add(R a, R b)`, `R e0()`, `R mul(R a, R b)`, `R e1()`, `R minus(R a)` に加えて、`R inv(R a)` も持つ。
