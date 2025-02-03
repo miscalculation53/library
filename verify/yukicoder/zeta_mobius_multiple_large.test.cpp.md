@@ -769,38 +769,39 @@ data:
     \ });\n  return res;\n}\n#line 5 \"math/prime/zeta_mobius_divisor_multiple_large.hpp\"\
     \n\n/**\n * @brief \u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\
     \u30D3\u30A6\u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09\
-    \n * @docs docs/math/zeta_mobius_divisor_multiple_large.md\n */\n\nstruct ZetaMobiusDivisorMultipleLarge\n\
-    {\npublic:\n  ll m;\n  vc<PrimePower<ll>> fac;\n  ll pnum, dnum;\n  vc<ll> ds;\n\
-    \nprivate:\n  vc<int> f01;  // f01[d] \u306F\u3001d \u304C f[j] == e[j] \u306A\
-    \u3089 j \u30D3\u30C3\u30C8\u76EE\u304C 1\n\npublic:\n  ZetaMobiusDivisorMultipleLarge()\
-    \ {}\n  ZetaMobiusDivisorMultipleLarge(ll m) : m(m)\n  {\n    fac = factorize(m);\n\
-    \    pnum = fac.size();\n    dnum = 1;\n    fec(pp : fac) dnum *= pp.e + 1;\n\n\
-    \    ds.resize(dnum), f01.resize(dnum);\n    vc<int> f(pnum, 0);\n    ll d = 1;\n\
-    \    for (int i = 0;; i++)\n    {\n      ds[i] = d;\n      rep(j, pnum) bset(f01[i],\
-    \ j, f[j] == fac[j].e);\n      if (i == dnum - 1)\n        break;\n      rep(j,\
-    \ pnum - 1, -1, -1)\n      {\n        if (f[j] == fac[j].e)\n        {\n     \
-    \     f[j] = 0;\n          d /= fac[j].pe;\n        }\n        else\n        {\n\
-    \          f[j]++;\n          d *= fac[j].p;\n          break;\n        }\n  \
-    \    }\n    }\n  }\n\nprivate:\n  //                f3\n  // +       (e3+1) f2\n\
-    \  // + (e2+1)(e3+1) f1\n  // = f3+(e3+1)(f2+(e2+1)f1)\n  int dtoi(ll d) const\n\
-    \  {\n    assert(d > 0 && m % d == 0);\n    int res = 0;\n    fec(pp : fac)\n\
-    \    {\n      // \u3053\u3053 O(log f) \u304B\u304B\u3063\u3066\u308B\u3051\u3069\
-    \u5DE5\u592B\u3059\u308B\u3068 O(loglog f) \u306B\u306A\u308A\u305D\u3046\n  \
-    \    // \u305F\u3060\u3001\u5927\u3057\u3066\u30DC\u30C8\u30EB\u30CD\u30C3\u30AF\
-    \u306B\u306A\u3089\u306A\u3044\u3053\u3068\u304C\u591A\u305D\u3046\n      int\
-    \ f = 0;\n      while (d % pp.p == 0)\n        d /= pp.p, f++;\n      res *= pp.e\
-    \ + 1;\n      res += f;\n    }\n    return res;\n  }\n  //*\n  // f3 = i % (e3+1)\n\
-    \  // f2 = (i // (e3+1)) % (e2+1)\n  ll itod(int i) const\n  {\n    ll d = 1;\n\
-    \    fec(pp : reversed(fac))\n    {\n      d *= ipow(pp.p, i % (pp.e + 1));\n\
-    \      i /= pp.e + 1;\n    }\n    return d;\n  }\n  //*/\n\npublic:\n  template\
-    \ <class T>\n  struct DivisorMap\n  {\n  private:\n    const ZetaMobiusDivisorMultipleLarge\
-    \ &zm;\n    vc<T> v;\n\n    friend struct ZetaMobiusDivisorMultipleLarge;\n\n\
-    \  public:\n    DivisorMap() {}\n    DivisorMap(const ZetaMobiusDivisorMultipleLarge\
-    \ &zm)\n    : zm(zm), v(zm.dnum) {}\n    DivisorMap(const ZetaMobiusDivisorMultipleLarge\
-    \ &zm, cauto &func)\n    : zm(zm), v(zm.dnum) { repi(i, zm.dnum) v[i] = func(zm.ds[i]);\
-    \ }\n\n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3066\u5024\u3092\u53D6\
-    \u5F97\n    // \u5909\u66F4\u3082\u53EF\u80FD\n    // O(\u91CD\u8907\u3042\u308A\
-    \u3067\u306E\u7D20\u56E0\u6570\u306E\u500B\u6570)\n    T &get(ll d) { return v[zm.dtoi(d)];\
+    \n * @docs docs/math/prime/zeta_mobius_divisor_multiple_large.md\n */\n\nstruct\
+    \ ZetaMobiusDivisorMultipleLarge\n{\npublic:\n  ll m;\n  vc<PrimePower<ll>> fac;\n\
+    \  ll pnum, dnum;\n  vc<ll> ds;\n\nprivate:\n  vc<int> f01;  // f01[d] \u306F\u3001\
+    d \u304C f[j] == e[j] \u306A\u3089 j \u30D3\u30C3\u30C8\u76EE\u304C 1\n\npublic:\n\
+    \  ZetaMobiusDivisorMultipleLarge() {}\n  ZetaMobiusDivisorMultipleLarge(ll m)\
+    \ : m(m)\n  {\n    fac = factorize(m);\n    pnum = fac.size();\n    dnum = 1;\n\
+    \    fec(pp : fac) dnum *= pp.e + 1;\n\n    ds.resize(dnum), f01.resize(dnum);\n\
+    \    vc<int> f(pnum, 0);\n    ll d = 1;\n    for (int i = 0;; i++)\n    {\n  \
+    \    ds[i] = d;\n      rep(j, pnum) bset(f01[i], j, f[j] == fac[j].e);\n     \
+    \ if (i == dnum - 1)\n        break;\n      rep(j, pnum - 1, -1, -1)\n      {\n\
+    \        if (f[j] == fac[j].e)\n        {\n          f[j] = 0;\n          d /=\
+    \ fac[j].pe;\n        }\n        else\n        {\n          f[j]++;\n        \
+    \  d *= fac[j].p;\n          break;\n        }\n      }\n    }\n  }\n\nprivate:\n\
+    \  //                f3\n  // +       (e3+1) f2\n  // + (e2+1)(e3+1) f1\n  //\
+    \ = f3+(e3+1)(f2+(e2+1)f1)\n  int dtoi(ll d) const\n  {\n    assert(d > 0 && m\
+    \ % d == 0);\n    int res = 0;\n    fec(pp : fac)\n    {\n      // \u3053\u3053\
+    \ O(log f) \u304B\u304B\u3063\u3066\u308B\u3051\u3069\u5DE5\u592B\u3059\u308B\u3068\
+    \ O(loglog f) \u306B\u306A\u308A\u305D\u3046\n      // \u305F\u3060\u3001\u5927\
+    \u3057\u3066\u30DC\u30C8\u30EB\u30CD\u30C3\u30AF\u306B\u306A\u3089\u306A\u3044\
+    \u3053\u3068\u304C\u591A\u305D\u3046\n      int f = 0;\n      while (d % pp.p\
+    \ == 0)\n        d /= pp.p, f++;\n      res *= pp.e + 1;\n      res += f;\n  \
+    \  }\n    return res;\n  }\n  //*\n  // f3 = i % (e3+1)\n  // f2 = (i // (e3+1))\
+    \ % (e2+1)\n  ll itod(int i) const\n  {\n    ll d = 1;\n    fec(pp : reversed(fac))\n\
+    \    {\n      d *= ipow(pp.p, i % (pp.e + 1));\n      i /= pp.e + 1;\n    }\n\
+    \    return d;\n  }\n  //*/\n\npublic:\n  template <class T>\n  struct DivisorMap\n\
+    \  {\n  private:\n    const ZetaMobiusDivisorMultipleLarge &zm;\n    vc<T> v;\n\
+    \n    friend struct ZetaMobiusDivisorMultipleLarge;\n\n  public:\n    DivisorMap()\
+    \ {}\n    DivisorMap(const ZetaMobiusDivisorMultipleLarge &zm)\n    : zm(zm),\
+    \ v(zm.dnum) {}\n    DivisorMap(const ZetaMobiusDivisorMultipleLarge &zm, cauto\
+    \ &func)\n    : zm(zm), v(zm.dnum) { repi(i, zm.dnum) v[i] = func(zm.ds[i]); }\n\
+    \n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3066\u5024\u3092\u53D6\u5F97\
+    \n    // \u5909\u66F4\u3082\u53EF\u80FD\n    // O(\u91CD\u8907\u3042\u308A\u3067\
+    \u306E\u7D20\u56E0\u6570\u306E\u500B\u6570)\n    T &get(ll d) { return v[zm.dtoi(d)];\
     \ }\n    // m \u306E\u7D04\u6570 d \u306B\u5BFE\u3057\u3066\u5024\u3092\u53D6\u5F97\
     \n    // \u5909\u66F4\u3082\u53EF\u80FD\n    // O(\u91CD\u8907\u3042\u308A\u3067\
     \u306E\u7D20\u56E0\u6570\u306E\u500B\u6570)\n    const T &get(ll d) const { return\
@@ -965,7 +966,7 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   requiredBy: []
-  timestamp: '2025-02-03 20:19:05+09:00'
+  timestamp: '2025-02-03 20:44:58+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
