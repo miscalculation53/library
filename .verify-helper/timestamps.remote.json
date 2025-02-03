@@ -29,5 +29,7 @@
 "verify/yukicoder/dynamic_modint.test.cpp": "2025-01-29 21:47:21 +0900",
 "verify/yukicoder/order_mod_carmichael.test.cpp": "2025-02-03 22:51:35 +0900",
 "verify/yukicoder/order_mod_euler_phi.test.cpp": "2025-02-03 22:51:35 +0900",
-"verify/yukicoder/static_modint.test.cpp": "2025-01-29 21:47:21 +0900"
+"verify/yukicoder/static_modint.test.cpp": "2025-01-29 21:47:21 +0900",
+"verify/yukicoder/zeta_mobius_divisor_large.test.cpp": "2025-02-04 00:52:34 +0900",
+"verify/yukicoder/zeta_mobius_multiple_large.test.cpp": "2025-02-04 00:52:34 +0900"
 }
