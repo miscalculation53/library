@@ -55,13 +55,14 @@ public:
     }
   }
 
-private:
-  //                f3
-  // +       (e3+1) f2
-  // + (e2+1)(e3+1) f1
-  // = f3+(e3+1)(f2+(e2+1)f1)
+public:
+  // d から ds[i] = d となる i
   int dtoi(ll d) const
   {
+    //                f3
+    // +       (e3+1) f2
+    // + (e2+1)(e3+1) f1
+    // = f3+(e3+1)(f2+(e2+1)f1)
     assert(d > 0 && m % d == 0);
     int res = 0;
     fec(pp : fac)
@@ -73,7 +74,7 @@ private:
     }
     return res;
   }
-  //*
+  /*
   // f3 = i % (e3+1)
   // f2 = (i // (e3+1)) % (e2+1)
   ll itod(int i) const
@@ -107,17 +108,24 @@ public:
 
     // m の約数 d に対して値を取得
     // 変更も可能
-    // O(重複ありでの素因数の個数)
-    T &get(ll d) { return v[zm.dtoi(d)]; }
+    // O(loglog d)
+    T &get_by_d(ll d) { return v[zm.dtoi(d)]; }
     // m の約数 d に対して値を取得
     // 変更も可能
-    // O(重複ありでの素因数の個数)
-    const T &get(ll d) const { return v[zm.dtoi(d)]; }
+    // O(loglog d)
+    const T &get_by_d(ll d) const { return v[zm.dtoi(d)]; }
+
+    // m の約数 d に対し、i = dtoi(d) から値を取得
+    // 変更も可能
+    T &get_by_i(ll i) { return v[i]; }
+    // m の約数 d に対し、i = dtoi(d) から値を取得
+    // 変更も可能
+    const T &get_by_i(ll i) const { return v[i]; }
 
     map<ll, T> to_map()
     {
       map<ll, T> res;
-      fec(d : zm.ds) res[d] = get(d);
+      fec(d : zm.ds) res[d] = get_by_d(d);
       return res;
     }
   };

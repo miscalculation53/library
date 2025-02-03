@@ -71,7 +71,7 @@ g(m) &:= \sum_{\mathrm{lcm}(a_{i_1}, \dots, a_{i_k}) \mid m} h(i_1, \dots, i_k) 
   - $\omega(m)$ を $m$ の異なる素因数の個数、$\sigma_0(m)$ を $m$ の約数の個数とするとき、約数ゼータ変換には $O(\omega(m) \sigma_0(m))$ 時間かかる。普通のゼータ変換は $O(\omega(m) 2^{\omega(m)})$ 時間で、$\dfrac{\max_{m \leq M} \sigma_0(m)}{\max_{m \leq M} 2^{\omega(m)}}$ は $M \leq 10^{18}$ の範囲では最大で $5.625$ になる。実装自体の定数倍も普通のゼータ変換のほうが（たぶん）軽い。
   - https://yukicoder.me/problems/no/2578 とか（一応このライブラリは定数倍に気を使って実装したつもりだが、それでもこの問題は結構厳しい）
 
-<details><summary>素因数個数と約数個数の表</summary>
+素因数個数と約数個数の表：
 
 |$m \leq$|$\max 2^{\omega(m)}$|$\max \sigma_0(m)$|$\dfrac{\max \sigma_0(m)}{\max 2^{\omega(m)}}$|
 |---|---|---|---|
@@ -91,8 +91,6 @@ g(m) &:= \sum_{\mathrm{lcm}(a_{i_1}, \dots, a_{i_k}) \mid m} h(i_1, \dots, i_k) 
 |$10^{16}$|$2^{13} = 8192$|$41472$|$5.0625$|
 |$10^{17}$|$2^{14} = 16384$|$64512$|$3.9375$|
 |$10^{18}$|$2^{15} = 32768$|$103680$|$3.1640625$|
-
-</details>
 
 ----
 
@@ -133,8 +131,11 @@ ZetaMobiusDivisorMultipleLarge(ll m)
 
 `DivisorMap` のメンバ関数：
 
-- `T get(ll d)`：約数 $d$ に紐づく値の取得・書き換えができる。
-  - $O(\log\log d)$ 時間
+- `int dtoi(ll d)`：約数 $d$ に紐づく値がデータ構造上で保持されている添字 $i$ を返す。$O(\log\log d)$ 時間。
+- `T get_by_d(ll d)`：約数 $d$ に紐づく値の取得・書き換えができる。$O(\log\log d)$ 時間。
+- `T get_by_i(int i)`：約数 $d$ に対し、$i = \mathrm{dtoi}(d)$ から値の取得・書き換えができる。$O(1)$ 時間。
+  - `get_by_d(A[j])` を何回もやるのは無駄。そういう場合にこちらを使うことで高速化できる。
+
 - `map<ll, T> to_map()`：map にしたものを返す。デバッグ用の想定。
 
 #### zeta_divisor
