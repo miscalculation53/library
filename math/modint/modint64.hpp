@@ -139,19 +139,6 @@ public:
   { return lhs._v == rhs._v; }
   friend bool operator!=(const mint &lhs, const mint &rhs)
   { return lhs._v != rhs._v; }
-
-  friend istream &operator>>(istream &is, mint &x)
-  {
-    ll a;
-    is >> a;
-    x = a;
-    return is;
-  }
-  friend ostream &operator<<(ostream &os, const mint &x)
-  {
-    os << x.val();
-    return os;
-  }
 };
 
 template <int id>
@@ -260,19 +247,6 @@ public:
   { return lhs._v == rhs._v; }
   friend bool operator!=(const mint &lhs, const mint &rhs)
   { return lhs._v != rhs._v; }
-
-  friend istream &operator>>(istream &is, mint &x)
-  {
-    ll a;
-    is >> a;
-    x = a;
-    return is;
-  }
-  friend ostream &operator<<(ostream &os, const mint &x)
-  {
-    os << x.val();
-    return os;
-  }
 };
 template <int id>
 internal::montgomery64odd dynamic_modint64_odd<id>::mg((1LL << 61) - 1);
@@ -383,19 +357,6 @@ public:
   { return lhs._v == rhs._v; }
   friend bool operator!=(const mint &lhs, const mint &rhs)
   { return lhs._v != rhs._v; }
-
-  friend istream &operator>>(istream &is, mint &x)
-  {
-    ll a;
-    is >> a;
-    x = a;
-    return is;
-  }
-  friend ostream &operator<<(ostream &os, const mint &x)
-  {
-    os << x.val();
-    return os;
-  }
 };
 template <int id>
 internal::montgomery64 dynamic_modint64<id>::mg((1LL << 61) - 1);
@@ -403,3 +364,83 @@ internal::montgomery64 dynamic_modint64<id>::mg((1LL << 61) - 1);
 using modint61 = static_modint64<(1LL << 61) - 1>;
 using modint64_odd = dynamic_modint64_odd<-1>;
 using modint64 = dynamic_modint64<-1>;
+
+template <int m>
+istream &operator>>(istream &is, static_modint64<m> &x)
+{
+  ll a;
+  is >> a;
+  x = a;
+  return is;
+}
+template <int m>
+ostream &operator<<(ostream &os, const static_modint64<m> &x)
+{
+  os << x.val();
+  return os;
+}
+template <int id>
+istream &operator>>(istream &is, dynamic_modint64_odd<id> &x)
+{
+  ll a;
+  is >> a;
+  x = a;
+  return is;
+}
+template <int id>
+ostream &operator<<(ostream &os, const dynamic_modint64_odd<id> &x)
+{
+  os << x.val();
+  return os;
+}
+template <int id>
+istream &operator>>(istream &is, dynamic_modint64<id> &x)
+{
+  ll a;
+  is >> a;
+  x = a;
+  return is;
+}
+template <int id>
+ostream &operator<<(ostream &os, const dynamic_modint64<id> &x)
+{
+  os << x.val();
+  return os;
+}
+
+template <int m>
+void rd1(static_modint64<m> &x)
+{
+  ll a;
+  fastio::rd1(a);
+  x = a;
+}
+template <int m>
+void wt1(const static_modint64<m> &x)
+{
+  fastio::wt1(x.val());
+}
+template <int id>
+void rd1(dynamic_modint64_odd<id> &x)
+{
+  ll a;
+  fastio::rd1(a);
+  x = a;
+}
+template <int id>
+void wt1(const dynamic_modint64_odd<id> &x)
+{
+  fastio::wt1(x.val());
+}
+template <int id>
+void rd1(dynamic_modint64<id> &x)
+{
+  ll a;
+  fastio::rd1(a);
+  x = a;
+}
+template <int id>
+void wt1(const dynamic_modint64<id> &x)
+{
+  fastio::wt1(x.val());
+}

@@ -58,37 +58,44 @@ void test()
 
 int main()
 {
-  cauto CERR = [](cauto &val)
+  cauto CERR = [](string val, string color)
   {
+    string s = "\033[" + color + "m" + val + "\033[m";
     #ifdef LOCAL
-    cerr << val;
+    cerr << s;
     #endif
+    /* コードテストで確認する際にコメントアウトする
+    cerr << val;
+    //*/
   };
 
   #if defined FAST_IO and not defined LOCAL
-  CERR("\033[33m \n[FAST_IO]\n\n \033[m");
+  CERR("\n[FAST_IO]\n\n", "34");
   cin.tie(0);
   ios::sync_with_stdio(false);
+  #endif
+  #if defined FAST_IO and not defined LOCAL and not defined INTERACTIVE
+  CERR("\n[FAST_IO]\n\n", "32");
   #endif
   cout << fixed << setprecision(20);
 
   test();
   init();
 
-  #if defined AOJ_TESTCASE or (not defined NOT_AOJ and defined LOCAL and defined SINGLE_TESTCASE)
-  CERR("\033[35m \n[AOJ_TESTCASE]\n\n \033[m");
+  #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)
+  CERR("\n[AOJ_TESTCASE]\n\n", "35");
   while (true)
   {
     dump("new testcase");
     main2();
   }
   #elif defined SINGLE_TESTCASE
-  CERR("\033[36m \n[SINGLE_TESTCASE]\n\n \033[m");
+  CERR("\n[SINGLE_TESTCASE]\n\n", "36");
   main2();
   #elif defined MULTI_TESTCASE
-  CERR("\033[32m \n[MULTI_TESTCASE]\n\n \033[m");
-  uint T;
-  cin >> T;
+  CERR("\n[MULTI_TESTCASE]\n\n", "33");
+  dump("T");
+  IN(uint, T);
   while (T--)
   {
     dump("new testcase");

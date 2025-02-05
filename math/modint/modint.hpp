@@ -143,19 +143,6 @@ public:
   { return lhs._v == rhs._v; }
   friend bool operator!=(const mint &lhs, const mint &rhs)
   { return lhs._v != rhs._v; }
-
-  friend istream &operator>>(istream &is, mint &x)
-  {
-    ll a;
-    is >> a;
-    x = a;
-    return is;
-  }
-  friend ostream &operator<<(ostream &os, const mint &x)
-  {
-    os << x.val();
-    return os;
-  }
 };
 
 template <int id>
@@ -287,19 +274,6 @@ public:
   { return lhs._v == rhs._v; }
   friend bool operator!=(const mint &lhs, const mint &rhs)
   { return lhs._v != rhs._v; }
-
-  friend istream &operator>>(istream &is, mint &x)
-  {
-    ll a;
-    is >> a;
-    x = a;
-    return is;
-  }
-  friend ostream &operator<<(ostream &os, const mint &x)
-  {
-    os << x.val();
-    return os;
-  }
 };
 template <int id>
 internal::barrett32 dynamic_modint<id>::bt(998244353);
@@ -307,3 +281,57 @@ internal::barrett32 dynamic_modint<id>::bt(998244353);
 using modint998244353 = static_modint<998244353>;
 using modint1000000007 = static_modint<1000000007>;
 using modint = dynamic_modint<-1>;
+
+template <int m>
+istream &operator>>(istream &is, static_modint<m> &x)
+{
+  ll a;
+  is >> a;
+  x = a;
+  return is;
+}
+template <int m>
+ostream &operator<<(ostream &os, const static_modint<m> &x)
+{
+  os << x.val();
+  return os;
+}
+template <int id>
+istream &operator>>(istream &is, dynamic_modint<id> &x)
+{
+  ll a;
+  is >> a;
+  x = a;
+  return is;
+}
+template <int id>
+ostream &operator<<(ostream &os, const dynamic_modint<id> &x)
+{
+  os << x.val();
+  return os;
+}
+
+template <int m>
+void rd1(static_modint<m> &x)
+{
+  ll a;
+  fastio::rd1(a);
+  x = a;
+}
+template <int m>
+void wt1(const static_modint<m> &x)
+{
+  fastio::wt1(x.val());
+}
+template <int id>
+void rd1(dynamic_modint<id> &x)
+{
+  ll a;
+  fastio::rd1(a);
+  x = a;
+}
+template <int id>
+void wt1(const dynamic_modint<id> &x)
+{
+  fastio::wt1(x.val());
+}
