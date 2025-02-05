@@ -58,6 +58,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_all.hpp
     title: template/template_all.hpp
+  - icon: ':heavy_check_mark:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/csr.test.cpp
@@ -229,6 +232,7 @@ data:
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
   - math/prime/order_primitive_root.hpp
   - template/template.cpp
+  - template/template_inout.hpp
   - template/template_all.hpp
   - ds/group_index.hpp
   - ds/csr.hpp
