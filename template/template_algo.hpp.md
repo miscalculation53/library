@@ -18,6 +18,9 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
+  - icon: ':warning:'
+    path: algo/merge_sort.hpp
+    title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
   - icon: ':heavy_check_mark:'
     path: ds/coordinate_compression.hpp
     title: "\u5EA7\u6A19\u5727\u7E2E"
@@ -461,6 +464,7 @@ data:
   - ds/group_index.hpp
   - ds/csr.hpp
   - ds/coordinate_compression.hpp
+  - algo/merge_sort.hpp
   timestamp: '2025-01-04 23:27:57+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:

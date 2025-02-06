@@ -2,6 +2,9 @@
 data:
   _extendedDependsOn: []
   _extendedRequiredBy:
+  - icon: ':warning:'
+    path: algo/merge_sort.hpp
+    title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
   - icon: ':heavy_check_mark:'
     path: ds/coordinate_compression.hpp
     title: "\u5EA7\u6A19\u5727\u7E2E"
@@ -267,6 +270,7 @@ data:
   - ds/group_index.hpp
   - ds/csr.hpp
   - ds/coordinate_compression.hpp
+  - algo/merge_sort.hpp
   timestamp: '2024-12-20 09:47:18+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
