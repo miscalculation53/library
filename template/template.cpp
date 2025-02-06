@@ -1,8 +1,9 @@
-#define SINGLE_TESTCASE
-// #define MULTI_TESTCASE
+// #define SINGLE_TESTCASE
+#define MULTI_TESTCASE
 // #define AOJ_TESTCASE
 
 #define FAST_IO
+// #define FAST_CIO
 // #define INTERACTIVE
 
 #define INF 4'000'000'000'000'000'037LL
@@ -10,7 +11,7 @@
 
 #include "template/template_all.hpp"
 
-#include "../math/modint/modint.hpp"
+#include "math/modint/modint.hpp"
 using mint = modint998244353;
 // using mint = modint1000000007;
 // using mint = static_modint<1000000000>;
@@ -20,7 +21,7 @@ void init() {}
 
 void main2()
 {
-  
+
 }
 
 void test()
@@ -70,12 +71,12 @@ int main()
   };
 
   #if defined FAST_IO and not defined LOCAL
-  CERR("\n[FAST_IO]\n\n", "34");
+  CERR("\n[FAST_IO]\n\n", "32");
+  #endif
+  #if defined FAST_CIO and not defined LOCAL
+  CERR("\n[FAST_CIO]\n\n", "32");
   cin.tie(0);
   ios::sync_with_stdio(false);
-  #endif
-  #if defined FAST_IO and not defined LOCAL and not defined INTERACTIVE
-  CERR("\n[FAST_IO]\n\n", "32");
   #endif
   cout << fixed << setprecision(20);
 
@@ -103,9 +104,3 @@ int main()
   }
   #endif
 }
-
-
-/**
- * @brief テンプレート（全体）
- * @docs docs/template/template.md
- */

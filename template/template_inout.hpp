@@ -181,7 +181,7 @@ void wt_real(T x) {
 void wt1(int x) { wt_integer(x); }
 void wt1(ll x) { wt_integer(x); }
 void wt1(i128 x) { wt_integer(x); }
-void wt1(size_t x) { wt_integer(x); }
+// void wt1(size_t x) { wt_integer(x); }
 void wt1(uint x) { wt_integer(x); }
 void wt1(ull x) { wt_integer(x); }
 void wt1(u128 x) { wt_integer(x); }
