@@ -66,14 +66,14 @@ void rd1(string &x) {
 }
 
 template <typename T>
-void rd_real(T &x) {
+void rd1_real(T &x) {
   string s;
   rd1(s);
   x = stod(s);
 }
 
 template <typename T>
-void rd_integer(T &x) {
+void rd1_integer(T &x) {
   if (pil + 100 > pir) load();
   char c;
   do
@@ -90,15 +90,15 @@ void rd_integer(T &x) {
   }
 }
 
-void rd1(int &x) { rd_integer(x); }
-void rd1(ll &x) { rd_integer(x); }
-void rd1(i128 &x) { rd_integer(x); }
-void rd1(uint &x) { rd_integer(x); }
-void rd1(ull &x) { rd_integer(x); }
-void rd1(u128 &x) { rd_integer(x); }
-void rd1(double &x) { rd_real(x); }
-void rd1(long double &x) { rd_real(x); }
-// void rd1(f128 &x) { rd_real(x); }
+void rd1(int &x) { rd1_integer(x); }
+void rd1(ll &x) { rd1_integer(x); }
+void rd1(i128 &x) { rd1_integer(x); }
+void rd1(uint &x) { rd1_integer(x); }
+void rd1(ull &x) { rd1_integer(x); }
+void rd1(u128 &x) { rd1_integer(x); }
+void rd1(double &x) { rd1_real(x); }
+void rd1(long double &x) { rd1_real(x); }
+// void rd1(f128 &x) { rd1_real(x); }
 
 template <class T, class U>
 void rd1(pair<T, U> &p) {
@@ -145,7 +145,7 @@ void wt1(const char *s) {
 }
 
 template <typename T>
-void wt_integer(T x) {
+void wt1_integer(T x) {
   if (por > SIZ - 100) flush();
   if (x < 0) { obuf[por++] = '-', x = -x; }
   int outi;
@@ -171,23 +171,20 @@ void wt_integer(T x) {
 }
 
 template <typename T>
-void wt_real(T x) {
+void wt1_real(T x) {
   ostringstream oss;
   oss << fixed << setprecision(15) << double(x);
   string s = oss.str();
   wt1(s);
 }
 
-void wt1(int x) { wt_integer(x); }
-void wt1(ll x) { wt_integer(x); }
-void wt1(i128 x) { wt_integer(x); }
-// void wt1(size_t x) { wt_integer(x); }
-void wt1(uint x) { wt_integer(x); }
-void wt1(ull x) { wt_integer(x); }
-void wt1(u128 x) { wt_integer(x); }
-void wt1(double x) { wt_real(x); }
-void wt1(long double x) { wt_real(x); }
-// void wt1(f128 x) { wt_real(x); }
+template <class T, enable_if_t<is_integral_v<T>, int> = 0>
+void wt1(T x) { wt1_integer(x); }
+void wt1(i128 x) { wt1_integer(x); }
+void wt1(u128 x) { wt1_integer(x); }
+void wt1(double x) { wt1_real(x); }
+void wt1(long double x) { wt1_real(x); }
+// void wt1(f128 x) { wt1_real(x); }
 
 template <class T, class U>
 void wt1(const pair<T, U> &val) {
