@@ -1,16 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy: []
@@ -123,7 +123,7 @@ data:
     \ outi;\n}\n\ntemplate <typename T>\nvoid wt_real(T x) {\n  ostringstream oss;\n\
     \  oss << fixed << setprecision(15) << double(x);\n  string s = oss.str();\n \
     \ wt1(s);\n}\n\nvoid wt1(int x) { wt_integer(x); }\nvoid wt1(ll x) { wt_integer(x);\
-    \ }\nvoid wt1(i128 x) { wt_integer(x); }\nvoid wt1(size_t x) { wt_integer(x);\
+    \ }\nvoid wt1(i128 x) { wt_integer(x); }\n// void wt1(size_t x) { wt_integer(x);\
     \ }\nvoid wt1(uint x) { wt_integer(x); }\nvoid wt1(ull x) { wt_integer(x); }\n\
     void wt1(u128 x) { wt_integer(x); }\nvoid wt1(double x) { wt_real(x); }\nvoid\
     \ wt1(long double x) { wt_real(x); }\n// void wt1(f128 x) { wt_real(x); }\n\n\
@@ -289,7 +289,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_inout_top.test.cpp
   requiredBy: []
-  timestamp: '2025-02-06 08:47:25+09:00'
+  timestamp: '2025-02-06 21:26:50+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_inout_top.test.cpp
