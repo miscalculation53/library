@@ -1,5 +1,5 @@
-// #define SINGLE_TESTCASE
-#define MULTI_TESTCASE
+#define SINGLE_TESTCASE
+// #define MULTI_TESTCASE
 // #define AOJ_TESTCASE
 
 #define FAST_IO
