@@ -2,6 +2,16 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_basic_ops.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+      \ max\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/set/zeta_mobius.hpp
+    title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -38,15 +48,18 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/and_or_convolution.test.cpp
+    title: verify/yosupo/and_or_convolution.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/algo/merge_sort.md
-    document_title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
+    _deprecated_at_docs: docs/math/set/and_or_convolution.md
+    document_title: "and/or \u7573\u307F\u8FBC\u307F"
     links: []
-  bundledCode: "#line 2 \"algo/merge_sort.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+  bundledCode: "#line 2 \"math/set/and_or_convolution.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -537,18 +550,110 @@ data:
     \ &tv)\n{\n  size_t n = get<0>(tv).size();\n  apply([&](auto &...v)\n        {\
     \ ((assert(v.size() == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t\
     \ i = 0; i < n; i++)\n    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{},\
-    \ i);\n  return vt;\n}\n// ----------\n#line 4 \"algo/merge_sort.hpp\"\n\n/**\n\
-    \ * @brief \u30DE\u30FC\u30B8\u30BD\u30FC\u30C8\n * @docs docs/algo/merge_sort.md\n\
-    \ */\n\ntemplate <class T>\nvoid merge_sort(vc<T> &v, cauto &comp)\n{\n  const\
-    \ int n = v.size();\n  if (n <= 1)\n    return;\n  vc<T> l{v.begin(), v.begin()\
-    \ + n / 2};\n  vc<T> r{v.begin() + n / 2, v.end()};\n  merge_sort(l, comp);\n\
-    \  merge_sort(r, comp);\n  merge(ALL(l), ALL(r), v.begin(), comp);\n}\n"
-  code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u30DE\u30FC\u30B8\u30BD\u30FC\u30C8\n * @docs docs/algo/merge_sort.md\n */\n\
-    \ntemplate <class T>\nvoid merge_sort(vc<T> &v, cauto &comp)\n{\n  const int n\
-    \ = v.size();\n  if (n <= 1)\n    return;\n  vc<T> l{v.begin(), v.begin() + n\
-    \ / 2};\n  vc<T> r{v.begin() + n / 2, v.end()};\n  merge_sort(l, comp);\n  merge_sort(r,\
-    \ comp);\n  merge(ALL(l), ALL(r), v.begin(), comp);\n}"
+    \ i);\n  return vt;\n}\n// ----------\n#line 2 \"math/set/zeta_mobius.hpp\"\n\n\
+    #line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n#line 2 \"math/algebra/algebra_base.hpp\"\
+    \n\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
+    \u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
+    \ */\n\ntemplate <class S_, auto op_, auto e_>\nstruct Monoid\n{\n  using S =\
+    \ S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n};\n\
+    \ntemplate <class S_, auto op_, auto e_, auto inv_>\nstruct Group\n{\n  using\
+    \ S = S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n\
+    \  static constexpr auto inv = inv_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto mul_, auto e1_>\nstruct SemiRing\n{\n  using S = S_;\n  static constexpr\
+    \ auto add = add_;\n  static constexpr auto e0 = e0_;\n  static constexpr auto\
+    \ mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto\
+    \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
+    \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
+    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
+    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
+    \ = Group<typename R::S, R::add, R::e0, R::minus>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
+    \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
+    template <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
+    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
+    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
+    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
+    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
+    \ static constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct\
+    \ GroupAddSub\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
+    \ + b; }\n  static constexpr S e() { return 0; }\n  static constexpr S inv(S a)\
+    \ { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return a * b; }\n  static constexpr S e()\
+    \ { return 1; }\n  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate\
+    \ <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return min(a, b); }\n  static constexpr\
+    \ S e0() { return infty; }\n  static constexpr S mul(S a, S b) { return a + b;\
+    \ }\n  static constexpr S e1() { return 0; }\n};\ntemplate <class T, const T infty\
+    \ = INF>\nstruct SemiRingMaxPlus\n{\n  using S = T;\n  static constexpr S add(S\
+    \ a, S b) { return max(a, b); }\n  static constexpr S e0() { return -infty; }\n\
+    \  static constexpr S mul(S a, S b) { return a + b; }\n  static constexpr S e1()\
+    \ { return 0; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using S\
+    \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
+    \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
+    \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
+    \ 1; }\n};\n#line 5 \"math/set/zeta_mobius.hpp\"\n\n/**\n * @brief \u30BC\u30FC\
+    \u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB\n * @docs docs/math/set/zeta_mobius.md\n\
+    \ */\n\n// \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\
+    \u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001\
+    O(n 2^n) \u6642\u9593\ntemplate <class M>\nvc<typename M::S> zeta_subset(const\
+    \ vc<typename M::S> &a)\n{\n  if (a.empty())\n    return {};\n  assert(has_single_bit(a.size()));\n\
+    \  const int n = countr_zero(a.size());\n  auto b = a;\n  repi(i, n) repi(s, 1\
+    \ << n)\n  {\n    if (!btest(s, i))\n    {\n      int t = s;\n      bset(t, i);\n\
+    \      b[t] = M::op(b[t], b[s]);\n    }\n  }\n  return b;\n}\n// \u03BC \u306F\
+    \ \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286 s} (-1)^{|s\\\
+    t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n\
+    \ \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class G>\nvc<typename\
+    \ G::S> mobius_subset(const vc<typename G::S> &a)\n{\n  if (a.empty())\n    return\
+    \ {};\n  assert(has_single_bit(a.size()));\n  const int n = countr_zero(a.size());\n\
+    \  auto b = a;\n  repi(i, n) repi(s, 1 << n)\n  {\n    if (!btest(s, i))\n   \
+    \ {\n      int t = s;\n      bset(t, i);\n      b[t] = G::op(b[t], G::inv(b[s]));\n\
+    \    }\n  }\n  return b;\n}\n\n// \u03B6'a[s] = \u03A3{s \u2286 t} a[t]\n// M\
+    \ \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| =\
+    \ 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class M>\nvc<typename\
+    \ M::S> zeta_supset(const vc<typename M::S> &a)\n{\n  if (a.empty())\n    return\
+    \ {};\n  assert(has_single_bit(a.size()));\n  const int n = countr_zero(a.size());\n\
+    \  auto b = a;\n  repi(i, n) repi(s, 1 << n)\n  {\n    if (!btest(s, i))\n   \
+    \ {\n      int t = s;\n      bset(t, i);\n      b[s] = M::op(b[s], b[t]);\n  \
+    \  }\n  }\n  return b;\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n\
+    // \u03BC'a[s] = \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n// G \u306F\u53EF\u63DB\
+    \u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n)\
+    \ \u6642\u9593\ntemplate <class G>\nvc<typename G::S> mobius_supset(const vc<typename\
+    \ G::S> &a)\n{\n  if (a.empty())\n    return {};\n  assert(has_single_bit(a.size()));\n\
+    \  const int n = countr_zero(a.size());\n  auto b = a;\n  repi(i, n) repi(s, 1\
+    \ << n)\n  {\n    if (!btest(s, i))\n    {\n      int t = s;\n      bset(t, i);\n\
+    \      b[s] = G::op(b[s], G::inv(b[t]));\n    }\n  }\n  return b;\n}\n#line 5\
+    \ \"math/set/and_or_convolution.hpp\"\n\n/**\n * @brief and/or \u7573\u307F\u8FBC\
+    \u307F\n * @docs docs/math/set/and_or_convolution.md\n */\n\n// R \u306F\u74B0\
+    \n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class\
+    \ R>\nvc<typename R::S> and_convolution\n(const vc<typename R::S> &a, const vc<typename\
+    \ R::S> &b)\n{\n  assert(a.size() == b.size());\n  auto za = zeta_supset<MonoidOfSemiRingAdd<R>>(a);\n\
+    \  auto zb = zeta_supset<MonoidOfSemiRingAdd<R>>(b);\n  repi(i, za.size()) za[i]\
+    \ = R::mul(za[i], zb[i]);\n  return mobius_supset<GroupOfRingAdd<R>>(za);\n}\n\
+    // R \u306F\u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\
+    \ntemplate <class R>\nvc<typename R::S> or_convolution\n(const vc<typename R::S>\
+    \ &a, const vc<typename R::S> &b)\n{\n  assert(a.size() == b.size());\n  auto\
+    \ za = zeta_subset<MonoidOfSemiRingAdd<R>>(a);\n  auto zb = zeta_subset<MonoidOfSemiRingAdd<R>>(b);\n\
+    \  repi(i, za.size()) za[i] = R::mul(za[i], zb[i]);\n  return mobius_subset<GroupOfRingAdd<R>>(za);\n\
+    }\n"
+  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
+    zeta_mobius.hpp\"\n\n/**\n * @brief and/or \u7573\u307F\u8FBC\u307F\n * @docs\
+    \ docs/math/set/and_or_convolution.md\n */\n\n// R \u306F\u74B0\n// |a| = |b|\
+    \ = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class R>\nvc<typename\
+    \ R::S> and_convolution\n(const vc<typename R::S> &a, const vc<typename R::S>\
+    \ &b)\n{\n  assert(a.size() == b.size());\n  auto za = zeta_supset<MonoidOfSemiRingAdd<R>>(a);\n\
+    \  auto zb = zeta_supset<MonoidOfSemiRingAdd<R>>(b);\n  repi(i, za.size()) za[i]\
+    \ = R::mul(za[i], zb[i]);\n  return mobius_supset<GroupOfRingAdd<R>>(za);\n}\n\
+    // R \u306F\u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\
+    \ntemplate <class R>\nvc<typename R::S> or_convolution\n(const vc<typename R::S>\
+    \ &a, const vc<typename R::S> &b)\n{\n  assert(a.size() == b.size());\n  auto\
+    \ za = zeta_subset<MonoidOfSemiRingAdd<R>>(a);\n  auto zb = zeta_subset<MonoidOfSemiRingAdd<R>>(b);\n\
+    \  repi(i, za.size()) za[i] = R::mul(za[i], zb[i]);\n  return mobius_subset<GroupOfRingAdd<R>>(za);\n\
+    }"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -561,29 +666,62 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
+  - math/set/zeta_mobius.hpp
+  - math/algebra/algebra_basic_ops.hpp
+  - math/algebra/algebra_base.hpp
   isVerificationFile: false
-  path: algo/merge_sort.hpp
+  path: math/set/and_or_convolution.hpp
   requiredBy: []
   timestamp: '2025-02-08 07:50:23+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
-documentation_of: algo/merge_sort.hpp
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - verify/yosupo/and_or_convolution.test.cpp
+documentation_of: math/set/and_or_convolution.hpp
 layout: document
 redirect_from:
-- /library/algo/merge_sort.hpp
-- /library/algo/merge_sort.hpp.html
-title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
+- /library/math/set/and_or_convolution.hpp
+- /library/math/set/and_or_convolution.hpp.html
+title: "and/or \u7573\u307F\u8FBC\u307F"
 ---
-## マージソート
+## and/or 畳み込み
 
-比較回数がたかだか $n\lceil\log_2 n \rceil$ 回のソート（インタラクティブで役立つ）。
+### 定義
 
-正確な比較回数はたぶんこれ？ https://oeis.org/A003071
+一般には環が載る。
 
-`std::stable_sort` を使うというテクがあるが小さいときにマージソートじゃないとかで比較回数が多くなることがあるらしい（？）（よくわかってない）
+#### and 畳み込み
 
-#### merge_sort
+$\displaystyle c(u) = \sum_{u = s \cap t} a(s)b(t)$
 
-```cpp
-void merge_sort(vc<T> v)
-```
+#### or 畳み込み
+
+$\displaystyle c(u) = \sum_{u = s \cup t} a(s)b(t)$
+
+### 計算方法
+
+#### and 畳み込み
+
+$u \subseteq s \cap t \iff u \subseteq s$ かつ $u \subseteq t$
+
+$\begin{aligned}
+\zeta' c(u) &= \sum_{u \subseteq v} c(v) \\\\  
+&= \sum_{u \subseteq v} \sum_{v = s\cap t} a(s)b(t) \\\\  
+&= \sum_{u \subseteq s \cap t} a(s)b(t) \\\\  
+&= \sum_{u \subseteq s} a(s) \sum_{u \subseteq t} b(t) \\\\  
+&= \zeta' a(u) \zeta' b(u)
+\end{aligned}$
+
+#### or 畳み込み
+
+$s \cup t \subseteq u \iff s \subseteq u$ かつ $t \subseteq u$
+
+$\begin{aligned}
+\zeta c(u) &= \sum_{v \subseteq u} c(v) \\\\  
+&= \sum_{v\subseteq u} \sum_{v = s\cup t} a(s)b(t) \\\\  
+&= \sum_{s\cup t \subseteq u} a(s)b(t) \\\\  
+&= \sum_{s\cup u} a(s) \sum_{t\cup u} b(t) \\\\  
+&= \zeta a(u) \zeta b(u)
+\end{aligned}$
+
+### ライブラリ
+

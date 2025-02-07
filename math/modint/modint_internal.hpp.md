@@ -75,6 +75,9 @@ data:
     path: verify/mytest/modint64.test.cpp
     title: verify/mytest/modint64.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/and_or_convolution.test.cpp
+    title: verify/yosupo/and_or_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
   - icon: ':heavy_check_mark:'
@@ -257,7 +260,7 @@ data:
     \ permuted(const vc<T> &a, const vc<U> &p)\n{\n  const int n = p.size();\n  vc<T>\
     \ res(n);\n  repi(i, n)\n  {\n    assert(0 <= p[i] && p[i] < U(a.size()));\n \
     \   res[i] = a[p[i]];\n  }\n  return res;\n}\n\ntemplate <class V>\nV reversed(const\
-    \ V &v) { return {v.rbegin(), v.rend()}; }\n\n#if __cplusplus < 202002L\ntemplate\
+    \ V &v) { return V(v.rbegin(), v.rend()); }\n\n#if __cplusplus < 202002L\ntemplate\
     \ <class V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n\
     \  return v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
     \ args)\n{\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\
@@ -717,7 +720,7 @@ data:
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
   - math/prime/order_primitive_root.hpp
   - template/template.cpp
-  timestamp: '2025-02-06 21:45:06+09:00'
+  timestamp: '2025-02-08 07:50:23+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/modint.test.cpp
@@ -730,6 +733,7 @@ data:
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/divisors.test.cpp
+  - verify/yosupo/and_or_convolution.test.cpp
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/primality_test.test.cpp
   - verify/yosupo/primitive_root.test.cpp

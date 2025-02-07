@@ -2,7 +2,7 @@
 
 $m$ の約数の整除関係に関する約数・倍数 ゼータ・メビウス変換。
 
-### 約数・倍数 ゼータ・メビウス変換の定義
+### 定義
 
 一般には、ゼータ変換には可換モノイドが、メビウス変換には可換群が載る。以下に述べる定義は、演算を $+$ とした場合のもの。
 
@@ -141,14 +141,14 @@ ZetaMobiusDivisorMultipleLarge(ll m)
 #### zeta_divisor
 
 ```cpp
-DivisorMap<Monoid::S> zeta_divisor(DivisorMap<Monoid::S> a)
+DivisorMap<M::S> zeta_divisor(DivisorMap<M::S> a)
 ```
 
-可換モノイド `Monoid` 上での $a$ の約数ゼータ変換を返す。
+可換モノイド `M` 上での $a$ の約数ゼータ変換を返す。
 
 ##### 制約
 
-- `Monoid::op` は可換
+- `M` は**可換**モノイド
 
 ##### 計算量
 
@@ -158,14 +158,14 @@ DivisorMap<Monoid::S> zeta_divisor(DivisorMap<Monoid::S> a)
 #### mobius_divisor
 
 ```cpp
-DivisorMap<Group::G> mobius_divisor(DivisorMap<Group::G> a)
+DivisorMap<G::S> mobius_divisor(DivisorMap<G::S> a)
 ```
 
-可換群 `Group` 上での $a$ の約数メビウス変換を返す。
+可換群 `G` 上での $a$ の約数メビウス変換を返す。
 
 ##### 制約
 
-- `Group::op` は可換
+- `G` は**可換**群
 
 ##### 計算量
 
@@ -175,14 +175,14 @@ DivisorMap<Group::G> mobius_divisor(DivisorMap<Group::G> a)
 #### mobius_divisor_point
 
 ```cpp
-Group::G mobius_divisor_point(DivisorMap<Group::G> a, ll n)
+G::S mobius_divisor_point(DivisorMap<G::S> a, ll n)
 ```
 
-可換群 `Group` 上での $a$ の約数メビウス変換の $n$ での値 $\mu a(n)$ を返す。
+可換群 `G` 上での $a$ の約数メビウス変換の $n$ での値 $\mu a(n)$ を返す。
 
 ##### 制約
 
-- `Group::op` は可換
+- `G` は**可換**群
 
 ##### 計算量
 

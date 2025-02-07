@@ -37,16 +37,40 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_basic_ops.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+      \ max\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
+    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
+      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/set/and_or_convolution.hpp
+    title: "and/or \u7573\u307F\u8FBC\u307F"
+  - icon: ':heavy_check_mark:'
+    path: math/set/zeta_mobius.hpp
+    title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/and_or_convolution.test.cpp
+    title: verify/yosupo/and_or_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/algo/merge_sort.md
-    document_title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
+    _deprecated_at_docs: docs/math/algebra/algebra_base.md
+    document_title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
+      \uFF09"
     links: []
-  bundledCode: "#line 2 \"algo/merge_sort.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+  bundledCode: "#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -537,18 +561,42 @@ data:
     \ &tv)\n{\n  size_t n = get<0>(tv).size();\n  apply([&](auto &...v)\n        {\
     \ ((assert(v.size() == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t\
     \ i = 0; i < n; i++)\n    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{},\
-    \ i);\n  return vt;\n}\n// ----------\n#line 4 \"algo/merge_sort.hpp\"\n\n/**\n\
-    \ * @brief \u30DE\u30FC\u30B8\u30BD\u30FC\u30C8\n * @docs docs/algo/merge_sort.md\n\
-    \ */\n\ntemplate <class T>\nvoid merge_sort(vc<T> &v, cauto &comp)\n{\n  const\
-    \ int n = v.size();\n  if (n <= 1)\n    return;\n  vc<T> l{v.begin(), v.begin()\
-    \ + n / 2};\n  vc<T> r{v.begin() + n / 2, v.end()};\n  merge_sort(l, comp);\n\
-    \  merge_sort(r, comp);\n  merge(ALL(l), ALL(r), v.begin(), comp);\n}\n"
-  code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u30DE\u30FC\u30B8\u30BD\u30FC\u30C8\n * @docs docs/algo/merge_sort.md\n */\n\
-    \ntemplate <class T>\nvoid merge_sort(vc<T> &v, cauto &comp)\n{\n  const int n\
-    \ = v.size();\n  if (n <= 1)\n    return;\n  vc<T> l{v.begin(), v.begin() + n\
-    \ / 2};\n  vc<T> r{v.begin() + n / 2, v.end()};\n  merge_sort(l, comp);\n  merge_sort(r,\
-    \ comp);\n  merge(ALL(l), ALL(r), v.begin(), comp);\n}"
+    \ i);\n  return vt;\n}\n// ----------\n#line 4 \"math/algebra/algebra_base.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
+    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
+    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
+    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
+    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
+    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
+    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
+    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
+    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
+    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
+    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
+    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
+    \ R::S, R::add, R::e0, R::minus>;\n"
+  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n\n/**\n * @brief\
+    \ \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs\
+    \ docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_, auto op_, auto\
+    \ e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto op = op_;\n\
+    \  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_, auto e_,\
+    \ auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto op = op_;\n\
+    \  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n};\n\n\
+    template <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
+    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
+    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
+    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
+    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
+    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
+    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
+    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
+    \ R::S, R::add, R::e0, R::minus>;"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -562,28 +610,136 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   isVerificationFile: false
-  path: algo/merge_sort.hpp
-  requiredBy: []
+  path: math/algebra/algebra_base.hpp
+  requiredBy:
+  - math/algebra/algebra_basic_ops.hpp
+  - math/set/zeta_mobius.hpp
+  - math/set/and_or_convolution.hpp
+  - math/prime/zeta_mobius_divisor_multiple_large.hpp
   timestamp: '2025-02-08 07:50:23+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
-documentation_of: algo/merge_sort.hpp
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  - verify/yosupo/and_or_convolution.test.cpp
+documentation_of: math/algebra/algebra_base.hpp
 layout: document
 redirect_from:
-- /library/algo/merge_sort.hpp
-- /library/algo/merge_sort.hpp.html
-title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
+- /library/math/algebra/algebra_base.hpp
+- /library/math/algebra/algebra_base.hpp.html
+title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
 ---
-## マージソート
+## 代数的構造の struct（基本）
 
-比較回数がたかだか $n\lceil\log_2 n \rceil$ 回のソート（インタラクティブで役立つ）。
+データ構造などに代数的構造を載せるとき、代数的構造を struct で表現することにする。
 
-正確な比較回数はたぶんこれ？ https://oeis.org/A003071
+https://noshi91.hatenablog.com/entry/2020/04/22/212649 の E の方法を採用。
 
-`std::stable_sort` を使うというテクがあるが小さいときにマージソートじゃないとかで比較回数が多くなることがあるらしい（？）（よくわかってない）
+### 使い方
 
-#### merge_sort
+- よく使うものはライブラリにしておく
+- 変なのが出たら struct を書く
+  - コピペするとよさそう
+  - スニペットにしたい
+  - 一応 `Monoid`, `Group`, `SemiRing`, `Ring` のテンプレート引数に型と関数を渡すことで作れる（ACL の使い方と大差ない感じになる）。しかし、この使い方はあまり想定していない（struct を 1 個しか使わないならこれでもいいかも。2 個以上使うとき名前をいちいちつけないといけないのが微妙だと（個人的には）思う）
+- 群をモノイドとして使う、環を半環として使う は OK
+- 半環や環から $+$ や $\cdot$ だけのモノイド・群をとってくるものとして次がある（使用頻度はそんなに高くないかも）
+  - `MonoidOfSemiRingAdd<SR>`
+  - `MonoidOfSemiRingMul<SR>`
+  - `GroupOfRingAdd<R>`
 
-```cpp
-void merge_sort(vc<T> v)
-```
+
+### 群に似た構造
+
+#### 半群 (semigroup)
+
+- 集合 $S$ (`S`)
+- 二項演算 $\cdot\colon S \to S$ (`S op(S a, S b)`)
+
+の組であって、
+
+- 結合則 $(a\cdot b) \cdot c = a\cdot (b\cdot c)$
+
+を満たすもの。
+
+データ構造に載せる目的だと、単位元を添加してモノイドにできる（上に、よく使うものはだいたい単位元がある）ので、あまり出番がなさそう。
+
+
+#### モノイド (monoid)
+
+単位元を持つ半群。
+
+競技プログラマにはセグ木に載るでおなじみ（？）
+
+`S`, `S op(S a, S b)` に加えて `S e()` を持つ。
+
+演算が可換なものは可換モノイドと呼ばれる（実装上では変えていない）。
+
+
+#### 群 (group)
+
+逆元を持つモノイド。
+
+`S`, `S op(S a, S b)`, `S e()` に加えて `S inv(S a)` を持つ。
+
+演算が可換なものは可換群やアーベル群と呼ばれる（実装上では変えていない）。
+
+
+#### 作用つきモノイド
+
+競技プログラマには遅延セグ木に載るでおなじみ（？）
+
+遅延セグ木を整備した時に書く
+
+
+### 環に似た構造
+
+#### 半環 (semiring)
+
+気持ち：足し算と掛け算ができる
+
+競技プログラマには行列累乗に載るでおなじみ（？）
+
+- 集合 $S$ (`S`)
+- 和 $+$ (`S add(S a, S b)`)
+- 和の単位元 $0$ (`S e0()`)
+- 積 $\cdot$ (`S mul(S a, S b)`)
+- 積の単位元 $1$ (`S e1()`)
+
+の組であって、
+
+- $(S, +, 0)$ は可換モノイド
+  - $(a+b) + c = a+(b+c)$
+  - $0+a=a+0=a$
+  - $a+b=b+a$
+- $(S, \cdot, 1)$ はモノイド
+  - $(a\cdot b)\cdot c = a\cdot (b\cdot c)$
+  - $1\cdot a = a\cdot 1 = a$
+- 分配則
+  - $a\cdot (b+c) = (a\cdot b) + (a\cdot c)$
+  - $(a+b)\cdot c = (a\cdot c) + (b\cdot c)$
+- $0$ 倍
+  - $0\cdot a = a\cdot 0 = 0$
+
+を満たすもの。
+
+#### 環 (ring)
+
+気持ち：足し算と引き算と掛け算ができる
+
+加法逆元 $-a$ を持つ半環。
+
+`S`, `S add(S a, S b)`, `S e0()`, `S mul(S a, S b)`, `S e1()` に加えて、`S minus(S a)` も持つ。
+
+乗法が可換である環は可換環と呼ばれる（実装上では変えていない）。
+
+
+#### （可換）体 (field)
+
+気持ち：足し算と引き算と掛け算と割り算ができる
+
+乗法が可換で、乗法逆元 $a^{-1}$ を持つ環。
+
+`S`, `S add(S a, S b)`, `S e0()`, `S mul(S a, S b)`, `S e1()`, `S minus(S a)` に加えて、`S inv(S a)` も持つ。
+
+これ使うことある？

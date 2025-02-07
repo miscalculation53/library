@@ -2,8 +2,12 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
-    path: math/algebraic_struct.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct"
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_basic_ops.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+      \ max\uFF09"
   - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
@@ -222,7 +226,7 @@ data:
     \ permuted(const vc<T> &a, const vc<U> &p)\n{\n  const int n = p.size();\n  vc<T>\
     \ res(n);\n  repi(i, n)\n  {\n    assert(0 <= p[i] && p[i] < U(a.size()));\n \
     \   res[i] = a[p[i]];\n  }\n  return res;\n}\n\ntemplate <class V>\nV reversed(const\
-    \ V &v) { return {v.rbegin(), v.rend()}; }\n\n#if __cplusplus < 202002L\ntemplate\
+    \ V &v) { return V(v.rbegin(), v.rend()); }\n\n#if __cplusplus < 202002L\ntemplate\
     \ <class V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n\
     \  return v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
     \ args)\n{\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\
@@ -884,36 +888,56 @@ data:
     \    {\n      res.emplace_back(n);\n      break;\n    }\n    ll p = internal::get_prime_factor(n);\n\
     \    auto [e, pe, nn] = ord_pow_div(n, p);\n    res.emplace_back(PrimePower<ll>(p,\
     \ e, pe));\n    n = nn;\n  }\n  sort(ALL(res), [&](cauto &pp1, cauto &pp2)\n \
-    \      { return pp1.p < pp2.p; });\n  return res;\n}\n#line 2 \"math/algebraic_struct.hpp\"\
-    \n\n#line 4 \"math/algebraic_struct.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
-    \u69CB\u9020\u306E struct\n * @docs docs/math/algebraic_struct.md\n */\n\ntemplate\
-    \ <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S op(S a,\
-    \ S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\ntemplate\
-    \ <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S op(S a,\
-    \ S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\ntemplate\
-    \ <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n  static\
-    \ constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S e() { return\
-    \ infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n{\n\
-    \  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n  static\
-    \ constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct GroupAddSub\n\
-    {\n  using G = T;\n  static constexpr G op(G a, G b) { return a + b; }\n  static\
-    \ constexpr G e() { return 0; }\n  static constexpr G inv(G a) { return -a; }\n\
-    };\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using G = T;\n  static constexpr\
-    \ G op(G a, G b) { return a * b; }\n  static constexpr G e() { return 1; }\n \
-    \ static constexpr G inv(G a) { return 1 / a; }\n};\n\ntemplate <class T, const\
-    \ T infty = INF>\nstruct SemiRingMinPlus\n{\n  using R = T;\n  static constexpr\
-    \ R add(R a, R b) { return min(a, b); }\n  static constexpr R e0() { return infty;\
-    \ }\n  static constexpr R mul(R a, R b) { return a + b; }\n};\ntemplate <class\
-    \ T, const T infty = INF>\nstruct SemiRingMaxPlus\n{\n  using R = T;\n  static\
-    \ constexpr R add(R a, R b) { return max(a, b); }\n  static constexpr R e0() {\
-    \ return -infty; }\n  static constexpr R mul(R a, R b) { return a + b; }\n};\n\
-    \ntemplate <class T>\nstruct RingAddSubMul\n{\n  using R = T;\n  static constexpr\
-    \ R add(R a, R b) { return a + b; }\n  static constexpr R minus(const R &a) {\
-    \ return -a; }\n  static constexpr R e0() { return 0; }\n  static constexpr R\
-    \ mul(R a, R b) { return a * b; }\n};\n#line 6 \"math/prime/zeta_mobius_divisor_multiple_large.hpp\"\
-    \n\n/**\n * @brief \u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\
-    \u30D3\u30A6\u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09\
-    \n * @docs docs/math/prime/zeta_mobius_divisor_multiple_large.md\n */\n\nstruct\
+    \      { return pp1.p < pp2.p; });\n  return res;\n}\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
+    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
+    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
+    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
+    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
+    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
+    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
+    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
+    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
+    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
+    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
+    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
+    \ R::S, R::add, R::e0, R::minus>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
+    \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
+    template <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
+    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
+    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
+    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
+    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
+    \ static constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct\
+    \ GroupAddSub\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
+    \ + b; }\n  static constexpr S e() { return 0; }\n  static constexpr S inv(S a)\
+    \ { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return a * b; }\n  static constexpr S e()\
+    \ { return 1; }\n  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate\
+    \ <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return min(a, b); }\n  static constexpr\
+    \ S e0() { return infty; }\n  static constexpr S mul(S a, S b) { return a + b;\
+    \ }\n  static constexpr S e1() { return 0; }\n};\ntemplate <class T, const T infty\
+    \ = INF>\nstruct SemiRingMaxPlus\n{\n  using S = T;\n  static constexpr S add(S\
+    \ a, S b) { return max(a, b); }\n  static constexpr S e0() { return -infty; }\n\
+    \  static constexpr S mul(S a, S b) { return a + b; }\n  static constexpr S e1()\
+    \ { return 0; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using S\
+    \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
+    \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
+    \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
+    \ 1; }\n};\n#line 6 \"math/prime/zeta_mobius_divisor_multiple_large.hpp\"\n\n\
+    /**\n * @brief \u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\
+    \u30A6\u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09\n\
+    \ * @docs docs/math/prime/zeta_mobius_divisor_multiple_large.md\n */\n\nstruct\
     \ ZetaMobiusDivisorMultipleLarge\n{\npublic:\n  ll m;\n  vc<PrimePower<ll>> fac;\n\
     \  ll pnum, dnum;\n  vc<ll> ds;\n\nprivate:\n  vc<int> f01;  // f01[d] \u306F\u3001\
     d \u304C f[j] == e[j] \u306A\u3089 j \u30D3\u30C3\u30C8\u76EE\u304C 1\n\npublic:\n\
@@ -954,64 +978,61 @@ data:
     \    return res;\n    }\n  };\n\n  template <class T>\n  DivisorMap<T> divisor_map()\
     \ const\n  { return DivisorMap<T>(*this); }\n  template <class T>\n  DivisorMap<T>\
     \ divisor_map(cauto &func) const\n  { return DivisorMap<T>(*this, func); }\n\n\
-    \  // \u03B6a(n) = \u03A3{d | n} a(d)\n  // Monoid \u306F\u53EF\u63DB\u30E2\u30CE\
-    \u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n  // O(\u7D04\u6570\u500B\u6570 * \u7D20\
-    \u56E0\u6570\u500B\u6570)\n  template <class Monoid>\n  DivisorMap<typename Monoid::S>\
-    \ zeta_divisor\n  (const DivisorMap<typename Monoid::S> &a) const\n  {\n    auto\
-    \ b = a;\n    for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n\
-    \    {\n      repi(i, dnum)\n      {\n        if (!btest(f01[i], j))\n       \
-    \   b.v[i + k] = Monoid::op(b.v[i + k], b.v[i]);\n      }\n    }\n    return b;\n\
-    \  }\n\n  // \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n  // \u03BCa(n) =\
-    \ \u03A3{d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\
-    \u516C\u5F0F\n  // Group \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +, -)\n\
-    \  // O(\u7D04\u6570\u500B\u6570 * \u7D20\u56E0\u6570\u500B\u6570)\n  template\
-    \ <class Group>\n  DivisorMap<typename Group::G> mobius_divisor\n  (const DivisorMap<typename\
-    \ Group::G> &a) const\n  {\n    auto b = a;\n    for (int j = pnum - 1, k = 1;\
-    \ j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i, dnum - 1, -1, -1)\n  \
-    \    {\n        if (!btest(f01[i], j))\n          b.v[i + k] = Group::op(b.v[i\
-    \ + k], Group::inv(b.v[i]));\n      }\n    }\n    return b;\n  }\n\n  // \u03BC\
-    \ \u306F \u03B6 \u306E\u9006\u5909\u63DB\n  // \u03BCa(n) = \u03A3{d | n} \u03BC\
-    (n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\n  // \u03BC\
-    a(n) \u306E 1 \u70B9\u3060\u3051\u6B32\u3057\u3044\u3068\u304D\u306B\u4F7F\u3046\
-    \n  // Group \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +, -)\n  // O(\u7D20\
-    \u56E0\u6570\u500B\u6570 * 2^\u7D20\u56E0\u6570\u500B\u6570)\n  template <class\
-    \ Group>\n  typename Group::G mobius_divisor_point\n  (const DivisorMap<typename\
-    \ Group::G> &a, ll n) const\n  {\n    typename Group::G res = Group::e();\n  \
-    \  int si = dtoi(n);\n    repi(bit, 1 << pnum)\n    {\n      int i = si;\n   \
-    \   for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n      {\n \
-    \       if (btest(bit, j) && i - k >= 0 && !btest(f01[i - k], j))\n          i\
-    \ -= k;\n      }\n      if (popcount(bit) % 2 == 0)\n        res = Group::op(res,\
-    \ a.v[i]);\n      else\n        res = Group::op(res, Group::inv(a.v[i]));\n  \
-    \  }\n    return res;\n  }\n\n  // \u03B6'a(n) = \u03A3{n | m} a(m)\n  // Monoid\
-    \ \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n  // O(\u7D04\
-    \u6570\u500B\u6570 * \u7D20\u56E0\u6570\u500B\u6570)\n  template <class Monoid>\n\
-    \  DivisorMap<typename Monoid::S> zeta_multiple\n  (const DivisorMap<typename\
-    \ Monoid::S> &a) const\n  {\n    auto b = a;\n    for (int j = pnum - 1, k = 1;\
-    \ j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i, dnum - 1, -1, -1)\n  \
-    \    {\n        if (!btest(f01[i], j))\n          b.v[i] = Monoid::op(b.v[i],\
+    \  // \u03B6a(n) = \u03A3{d | n} a(d)\n  // M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\
+    \u30C9 (\u03A3 \u3060\u3068 +)\n  // O(\u7D04\u6570\u500B\u6570 * \u7D20\u56E0\
+    \u6570\u500B\u6570)\n  template <class M>\n  DivisorMap<typename M::S> zeta_divisor\n\
+    \  (const DivisorMap<typename M::S> &a) const\n  {\n    auto b = a;\n    for (int\
+    \ j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i, dnum)\n\
+    \      {\n        if (!btest(f01[i], j))\n          b.v[i + k] = M::op(b.v[i +\
+    \ k], b.v[i]);\n      }\n    }\n    return b;\n  }\n\n  // \u03BC \u306F \u03B6\
+    \ \u306E\u9006\u5909\u63DB\n  // \u03BCa(n) = \u03A3{d | n} \u03BC(n/d)a(d)  cf.\
+    \ \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\n  // G \u306F\u53EF\u63DB\
+    \u7FA4 (\u03A3 \u3060\u3068 +, -)\n  // O(\u7D04\u6570\u500B\u6570 * \u7D20\u56E0\
+    \u6570\u500B\u6570)\n  template <class G>\n  DivisorMap<typename G::S> mobius_divisor\n\
+    \  (const DivisorMap<typename G::S> &a) const\n  {\n    auto b = a;\n    for (int\
+    \ j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i, dnum\
+    \ - 1, -1, -1)\n      {\n        if (!btest(f01[i], j))\n          b.v[i + k]\
+    \ = G::op(b.v[i + k], G::inv(b.v[i]));\n      }\n    }\n    return b;\n  }\n\n\
+    \  // \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n  // \u03BCa(n) = \u03A3\
+    {d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\
+    \n  // \u03BCa(n) \u306E 1 \u70B9\u3060\u3051\u6B32\u3057\u3044\u3068\u304D\u306B\
+    \u4F7F\u3046\n  // G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +, -)\n  //\
+    \ O(\u7D20\u56E0\u6570\u500B\u6570 * 2^\u7D20\u56E0\u6570\u500B\u6570)\n  template\
+    \ <class G>\n  typename G::S mobius_divisor_point\n  (const DivisorMap<typename\
+    \ G::S> &a, ll n) const\n  {\n    typename G::S res = G::e();\n    int si = dtoi(n);\n\
+    \    repi(bit, 1 << pnum)\n    {\n      int i = si;\n      for (int j = pnum -\
+    \ 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n      {\n        if (btest(bit, j)\
+    \ && i - k >= 0 && !btest(f01[i - k], j))\n          i -= k;\n      }\n      if\
+    \ (popcount(bit) % 2 == 0)\n        res = G::op(res, a.v[i]);\n      else\n  \
+    \      res = G::op(res, G::inv(a.v[i]));\n    }\n    return res;\n  }\n\n  //\
+    \ \u03B6'a(n) = \u03A3{n | m} a(m)\n  // M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\
+    \u30C9 (\u03A3 \u3060\u3068 +)\n  // O(\u7D04\u6570\u500B\u6570 * \u7D20\u56E0\
+    \u6570\u500B\u6570)\n  template <class M>\n  DivisorMap<typename M::S> zeta_multiple\n\
+    \  (const DivisorMap<typename M::S> &a) const\n  {\n    auto b = a;\n    for (int\
+    \ j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i, dnum\
+    \ - 1, -1, -1)\n      {\n        if (!btest(f01[i], j))\n          b.v[i] = M::op(b.v[i],\
     \ b.v[i + k]);\n      }\n    }\n    return b;\n  }\n\n  // \u03BC' \u306F \u03B6\
     ' \u306E\u9006\u5909\u63DB\n  // \u03BC'a(n) = \u03A3{n | m} \u03BC(m/n)g(m) \
-    \ cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\n  // Group \u306F\
-    \u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +, -)\n  // O(\u7D04\u6570\u500B\u6570\
-    \ * \u7D20\u56E0\u6570\u500B\u6570)\n  template <class Group>\n  DivisorMap<typename\
-    \ Group::G> mobius_multiple\n  (const DivisorMap<typename Group::G> &a) const\n\
-    \  {\n    auto b = a;\n    for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e\
-    \ + 1, j--)\n    {\n      repi(i, dnum)\n      {\n        if (!btest(f01[i], j))\n\
-    \          b.v[i] = Group::op(b.v[i], Group::inv(b.v[i + k]));\n      }\n    }\n\
-    \    return b;\n  }\n\n  // \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n\
-    \  // \u03BC'a(n) = \u03A3{n | m} \u03BC(m/n)g(m)  cf. \u30E1\u30D3\u30A6\u30B9\
-    \u306E\u53CD\u8EE2\u516C\u5F0F\n  // \u03BC'a(n) \u306E 1 \u70B9\u3060\u3051\u6B32\
-    \u3057\u3044\u3068\u304D\u306B\u4F7F\u3046\n  // Group \u306F\u53EF\u63DB\u7FA4\
-    \ (\u03A3 \u3060\u3068 +, -)\n  // O(\u7D20\u56E0\u6570\u500B\u6570 * 2^\u7D20\
-    \u56E0\u6570\u500B\u6570)\n  template <class Group>\n  typename Group::G mobius_multiple_point\n\
-    \  (const DivisorMap<typename Group::G> &a, ll n) const\n  {\n    typename Group::G\
-    \ res = Group::e();\n    int si = dtoi(n);\n    repi(bit, 1 << pnum)\n    {\n\
-    \      int i = si;\n      for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e\
-    \ + 1, j--)\n      {\n        if (btest(bit, j) && !btest(f01[i], j))\n      \
-    \    i += k;\n      }\n      if (popcount(bit) % 2 == 0)\n        res = Group::op(res,\
-    \ a.v[i]);\n      else\n        res = Group::op(res, Group::inv(a.v[i]));\n  \
-    \  }\n    return res;\n  }\n};\n#line 18 \"verify/yukicoder/zeta_mobius_multiple_large.test.cpp\"\
-    \n\n#line 20 \"verify/yukicoder/zeta_mobius_multiple_large.test.cpp\"\nusing mint\
+    \ cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\n  // G \u306F\u53EF\
+    \u63DB\u7FA4 (\u03A3 \u3060\u3068 +, -)\n  // O(\u7D04\u6570\u500B\u6570 * \u7D20\
+    \u56E0\u6570\u500B\u6570)\n  template <class G>\n  DivisorMap<typename G::S> mobius_multiple\n\
+    \  (const DivisorMap<typename G::S> &a) const\n  {\n    auto b = a;\n    for (int\
+    \ j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n    {\n      repi(i, dnum)\n\
+    \      {\n        if (!btest(f01[i], j))\n          b.v[i] = G::op(b.v[i], G::inv(b.v[i\
+    \ + k]));\n      }\n    }\n    return b;\n  }\n\n  // \u03BC' \u306F \u03B6' \u306E\
+    \u9006\u5909\u63DB\n  // \u03BC'a(n) = \u03A3{n | m} \u03BC(m/n)g(m)  cf. \u30E1\
+    \u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\n  // \u03BC'a(n) \u306E 1 \u70B9\
+    \u3060\u3051\u6B32\u3057\u3044\u3068\u304D\u306B\u4F7F\u3046\n  // G \u306F\u53EF\
+    \u63DB\u7FA4 (\u03A3 \u3060\u3068 +, -)\n  // O(\u7D20\u56E0\u6570\u500B\u6570\
+    \ * 2^\u7D20\u56E0\u6570\u500B\u6570)\n  template <class G>\n  typename G::S mobius_multiple_point\n\
+    \  (const DivisorMap<typename G::S> &a, ll n) const\n  {\n    typename G::S res\
+    \ = G::e();\n    int si = dtoi(n);\n    repi(bit, 1 << pnum)\n    {\n      int\
+    \ i = si;\n      for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)\n\
+    \      {\n        if (btest(bit, j) && !btest(f01[i], j))\n          i += k;\n\
+    \      }\n      if (popcount(bit) % 2 == 0)\n        res = G::op(res, a.v[i]);\n\
+    \      else\n        res = G::op(res, G::inv(a.v[i]));\n    }\n    return res;\n\
+    \  }\n};\n#line 18 \"verify/yukicoder/zeta_mobius_multiple_large.test.cpp\"\n\n\
+    #line 20 \"verify/yukicoder/zeta_mobius_multiple_large.test.cpp\"\nusing mint\
     \ = modint998244353;\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(T, M);\n  ZetaMobiusDivisorMultipleLarge\
     \ zm(M);\n  rep(_, T)\n  {\n    LL(N, B, C, D);\n    VEC(ll, N, A);\n    vc<mint>\
     \ W(N);\n    W.at(0) = B;\n    rep(i, 1, N) W.at(i) = C * W.at(i - 1) + D;\n\n\
@@ -1042,7 +1063,7 @@ data:
     // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n// #define\
     \ FAST_CIO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
     #define EPS 1e-11\n\n#include \"../../template/template_all.hpp\"\n\n#include\
-    \ \"../../math/prime/zeta_mobius_divisor_multiple_large.hpp\"\n#include \"../../math/algebraic_struct.hpp\"\
+    \ \"../../math/prime/zeta_mobius_divisor_multiple_large.hpp\"\n#include \"../../math/algebra/algebra_basic_ops.hpp\"\
     \n\n#include \"../../math/modint/modint.hpp\"\nusing mint = modint998244353;\n\
     \nvoid init() {}\n\nvoid main2()\n{\n  LL(T, M);\n  ZetaMobiusDivisorMultipleLarge\
     \ zm(M);\n  rep(_, T)\n  {\n    LL(N, B, C, D);\n    VEC(ll, N, A);\n    vc<mint>\
@@ -1090,11 +1111,12 @@ data:
   - math/modint/modint64.hpp
   - math/prime/prime_power.hpp
   - math/prime/primality_test.hpp
-  - math/algebraic_struct.hpp
+  - math/algebra/algebra_basic_ops.hpp
+  - math/algebra/algebra_base.hpp
   isVerificationFile: true
   path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   requiredBy: []
-  timestamp: '2025-02-06 21:45:06+09:00'
+  timestamp: '2025-02-08 07:50:23+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/zeta_mobius_multiple_large.test.cpp

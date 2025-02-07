@@ -17,11 +17,17 @@ data:
     - icon: ':heavy_check_mark:'
       path: ds/group_index.hpp
       title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
-  - name: math
+  - name: math/algebra
     pages:
     - icon: ':heavy_check_mark:'
-      path: math/algebraic_struct.hpp
-      title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct"
+      path: math/algebra/algebra_base.hpp
+      title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+    - icon: ':heavy_check_mark:'
+      path: math/algebra/algebra_basic_ops.hpp
+      title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+        \ max\uFF09"
+  - name: math
+    pages:
     - icon: ':heavy_check_mark:'
       path: math/extgcd.hpp
       title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
@@ -61,6 +67,14 @@ data:
       path: math/prime/zeta_mobius_divisor_multiple_large.hpp
       title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
         \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
+  - name: math/set
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: math/set/and_or_convolution.hpp
+      title: "and/or \u7573\u307F\u8FBC\u307F"
+    - icon: ':heavy_check_mark:'
+      path: math/set/zeta_mobius.hpp
+      title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
   - name: template
     pages:
     - icon: ':warning:'
@@ -145,6 +159,9 @@ data:
       title: verify/mytest/template_vector.test.cpp
   - name: verify/yosupo
     pages:
+    - icon: ':heavy_check_mark:'
+      path: verify/yosupo/and_or_convolution.test.cpp
+      title: verify/yosupo/and_or_convolution.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/aplusb.test.cpp
       title: verify/yosupo/aplusb.test.cpp

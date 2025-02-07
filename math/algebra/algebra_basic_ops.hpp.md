@@ -2,6 +2,9 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -42,7 +45,16 @@ data:
     path: math/prime/zeta_mobius_divisor_multiple_large.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/set/and_or_convolution.hpp
+    title: "and/or \u7573\u307F\u8FBC\u307F"
+  - icon: ':heavy_check_mark:'
+    path: math/set/zeta_mobius.hpp
+    title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/and_or_convolution.test.cpp
+    title: verify/yosupo/and_or_convolution.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -53,10 +65,11 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/algebraic_struct.md
-    document_title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct"
+    _deprecated_at_docs: docs/math/algebra/algebra_basic_ops.md
+    document_title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068\
+      \ min, max\uFF09"
     links: []
-  bundledCode: "#line 2 \"math/algebraic_struct.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+  bundledCode: "#line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -200,7 +213,7 @@ data:
     \ permuted(const vc<T> &a, const vc<U> &p)\n{\n  const int n = p.size();\n  vc<T>\
     \ res(n);\n  repi(i, n)\n  {\n    assert(0 <= p[i] && p[i] < U(a.size()));\n \
     \   res[i] = a[p[i]];\n  }\n  return res;\n}\n\ntemplate <class V>\nV reversed(const\
-    \ V &v) { return {v.rbegin(), v.rend()}; }\n\n#if __cplusplus < 202002L\ntemplate\
+    \ V &v) { return V(v.rbegin(), v.rend()); }\n\n#if __cplusplus < 202002L\ntemplate\
     \ <class V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n\
     \  return v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
     \ args)\n{\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\
@@ -547,8 +560,55 @@ data:
     \ &tv)\n{\n  size_t n = get<0>(tv).size();\n  apply([&](auto &...v)\n        {\
     \ ((assert(v.size() == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t\
     \ i = 0; i < n; i++)\n    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{},\
-    \ i);\n  return vt;\n}\n// ----------\n#line 4 \"math/algebraic_struct.hpp\"\n\
-    \n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\n * @docs docs/math/algebraic_struct.md\n\
+    \ i);\n  return vt;\n}\n// ----------\n#line 2 \"math/algebra/algebra_base.hpp\"\
+    \n\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
+    \u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
+    \ */\n\ntemplate <class S_, auto op_, auto e_>\nstruct Monoid\n{\n  using S =\
+    \ S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n};\n\
+    \ntemplate <class S_, auto op_, auto e_, auto inv_>\nstruct Group\n{\n  using\
+    \ S = S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n\
+    \  static constexpr auto inv = inv_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto mul_, auto e1_>\nstruct SemiRing\n{\n  using S = S_;\n  static constexpr\
+    \ auto add = add_;\n  static constexpr auto e0 = e0_;\n  static constexpr auto\
+    \ mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto\
+    \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
+    \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
+    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
+    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
+    \ = Group<typename R::S, R::add, R::e0, R::minus>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
+    \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
+    template <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
+    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
+    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
+    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
+    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
+    \ static constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct\
+    \ GroupAddSub\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
+    \ + b; }\n  static constexpr S e() { return 0; }\n  static constexpr S inv(S a)\
+    \ { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return a * b; }\n  static constexpr S e()\
+    \ { return 1; }\n  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate\
+    \ <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return min(a, b); }\n  static constexpr\
+    \ S e0() { return infty; }\n  static constexpr S mul(S a, S b) { return a + b;\
+    \ }\n  static constexpr S e1() { return 0; }\n};\ntemplate <class T, const T infty\
+    \ = INF>\nstruct SemiRingMaxPlus\n{\n  using S = T;\n  static constexpr S add(S\
+    \ a, S b) { return max(a, b); }\n  static constexpr S e0() { return -infty; }\n\
+    \  static constexpr S mul(S a, S b) { return a + b; }\n  static constexpr S e1()\
+    \ { return 0; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using S\
+    \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
+    \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
+    \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
+    \ 1; }\n};\n"
+  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
+    algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\
+    \u5247\u6F14\u7B97\u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n\
     \ */\n\ntemplate <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr\
     \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
     template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
@@ -558,47 +618,23 @@ data:
     \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
     {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
     \ static constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct\
-    \ GroupAddSub\n{\n  using G = T;\n  static constexpr G op(G a, G b) { return a\
-    \ + b; }\n  static constexpr G e() { return 0; }\n  static constexpr G inv(G a)\
-    \ { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using G = T;\n\
-    \  static constexpr G op(G a, G b) { return a * b; }\n  static constexpr G e()\
-    \ { return 1; }\n  static constexpr G inv(G a) { return 1 / a; }\n};\n\ntemplate\
-    \ <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n  using R = T;\n\
-    \  static constexpr R add(R a, R b) { return min(a, b); }\n  static constexpr\
-    \ R e0() { return infty; }\n  static constexpr R mul(R a, R b) { return a + b;\
-    \ }\n};\ntemplate <class T, const T infty = INF>\nstruct SemiRingMaxPlus\n{\n\
-    \  using R = T;\n  static constexpr R add(R a, R b) { return max(a, b); }\n  static\
-    \ constexpr R e0() { return -infty; }\n  static constexpr R mul(R a, R b) { return\
-    \ a + b; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using R = T;\n\
-    \  static constexpr R add(R a, R b) { return a + b; }\n  static constexpr R minus(const\
-    \ R &a) { return -a; }\n  static constexpr R e0() { return 0; }\n  static constexpr\
-    \ R mul(R a, R b) { return a * b; }\n};\n"
-  code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\n * @docs docs/math/algebraic_struct.md\n\
-    \ */\n\ntemplate <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
-    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
-    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
-    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
-    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
-    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
-    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
-    \ static constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct\
-    \ GroupAddSub\n{\n  using G = T;\n  static constexpr G op(G a, G b) { return a\
-    \ + b; }\n  static constexpr G e() { return 0; }\n  static constexpr G inv(G a)\
-    \ { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using G = T;\n\
-    \  static constexpr G op(G a, G b) { return a * b; }\n  static constexpr G e()\
-    \ { return 1; }\n  static constexpr G inv(G a) { return 1 / a; }\n};\n\ntemplate\
-    \ <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n  using R = T;\n\
-    \  static constexpr R add(R a, R b) { return min(a, b); }\n  static constexpr\
-    \ R e0() { return infty; }\n  static constexpr R mul(R a, R b) { return a + b;\
-    \ }\n};\ntemplate <class T, const T infty = INF>\nstruct SemiRingMaxPlus\n{\n\
-    \  using R = T;\n  static constexpr R add(R a, R b) { return max(a, b); }\n  static\
-    \ constexpr R e0() { return -infty; }\n  static constexpr R mul(R a, R b) { return\
-    \ a + b; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using R = T;\n\
-    \  static constexpr R add(R a, R b) { return a + b; }\n  static constexpr R minus(const\
-    \ R &a) { return -a; }\n  static constexpr R e0() { return 0; }\n  static constexpr\
-    \ R mul(R a, R b) { return a * b; }\n};"
+    \ GroupAddSub\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
+    \ + b; }\n  static constexpr S e() { return 0; }\n  static constexpr S inv(S a)\
+    \ { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return a * b; }\n  static constexpr S e()\
+    \ { return 1; }\n  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate\
+    \ <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return min(a, b); }\n  static constexpr\
+    \ S e0() { return infty; }\n  static constexpr S mul(S a, S b) { return a + b;\
+    \ }\n  static constexpr S e1() { return 0; }\n};\ntemplate <class T, const T infty\
+    \ = INF>\nstruct SemiRingMaxPlus\n{\n  using S = T;\n  static constexpr S add(S\
+    \ a, S b) { return max(a, b); }\n  static constexpr S e0() { return -infty; }\n\
+    \  static constexpr S mul(S a, S b) { return a + b; }\n  static constexpr S e1()\
+    \ { return 0; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using S\
+    \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
+    \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
+    \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
+    \ 1; }\n};"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -611,123 +647,47 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
+  - math/algebra/algebra_base.hpp
   isVerificationFile: false
-  path: math/algebraic_struct.hpp
+  path: math/algebra/algebra_basic_ops.hpp
   requiredBy:
+  - math/set/zeta_mobius.hpp
+  - math/set/and_or_convolution.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  timestamp: '2025-02-06 21:45:06+09:00'
+  timestamp: '2025-02-08 07:50:23+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-documentation_of: math/algebraic_struct.hpp
+  - verify/yosupo/and_or_convolution.test.cpp
+documentation_of: math/algebra/algebra_basic_ops.hpp
 layout: document
 redirect_from:
-- /library/math/algebraic_struct.hpp
-- /library/math/algebraic_struct.hpp.html
-title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct"
+- /library/math/algebra/algebra_basic_ops.hpp
+- /library/math/algebra/algebra_basic_ops.hpp.html
+title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min, max\uFF09"
 ---
-## 代数的構造の struct
+## 代数的構造（四則演算と min, max）
 
-データ構造などに代数的構造を載せるとき、代数的構造を struct で表現することにする。
+`+`, `-`, `*`, `/`, `min`, `max`, `0`, `1` を使って定義できるやつ
 
-https://noshi91.hatenablog.com/entry/2020/04/22/212649 の E の方法を採用。
+### モノイド
 
-よく使うものをライブラリにしておく。編集方針：
+- `MonoidAdd<T>`
+- `MonoidMul<T>`
+- `MonoidMin<T, infty>`
+- `MonoidMax<T, infty>`
 
-- 必要になったときに増やす
-- 広く使えるものをこのファイルに書く
-- 行列とかは行列ライブラリのファイルに書く
+### 群
 
+- `GroupAddSub<T>`
+- `GroupMulDiv<T>`
 
-### 群に似た構造
+### 半環
 
-#### 半群 (semigroup)
+- `SemiRingMinPlus<T>`
+- `SemiRingMaxPlus<T>`
 
-- 集合 $S$ (`S`)
-- 二項演算 $\cdot\colon S \to S$ (`S op(S a, S b)`)
+### 環
 
-の組であって、
-
-- 結合則 $(a\cdot b) \cdot c = a\cdot (b\cdot c)$
-
-を満たすもの。
-
-データ構造に載せる目的だと、単位元を添加してモノイドにできる（上に、よく使うものはだいたい単位元がある）ので、あまり出番がないかも。
-
-
-#### モノイド (monoid)
-
-単位元を持つ半群。
-
-競技プログラマにはセグ木に載るでおなじみ（？）
-
-`S`, `S op(S a, S b)` に加えて `S e()` を持つ。
-
-演算が可換なものは可換モノイドと呼ばれる（実装上では変えていない）。
-
-
-#### 群 (group)
-
-逆元を持つモノイド。
-
-`G`, `G op(G a, G b)`, `G e()` に加えて `G inv(G a)` を持つ。
-
-演算が可換なものは可換群やアーベル群と呼ばれる（実装上では変えていない）。
-
-
-#### 作用つきモノイド
-
-競技プログラマには遅延セグ木に載るでおなじみ（？）
-
-遅延セグ木を整備した時に書く
-
-
-### 環に似た構造
-
-#### 半環 (semiring)
-
-気持ち：足し算と掛け算ができる
-
-競技プログラマには行列累乗に載るでおなじみ（？）
-
-- 集合 $R$ (`R`)
-- 和 $+$ (`R add(R a, R b)`)
-- 和の単位元 $0$ (`R e0()`)
-- 積 $\cdot$ (`R mul(R a, R b)`)
-
-の組であって、
-
-- $(R, +, 0)$ は可換モノイド
-  - $(a+b) + c = a+(b+c)$
-  - $0+a=a+0=a$
-  - $a+b=b+a$
-- $(R, \cdot, 1)$ はモノイド
-  - $(a\cdot b)\cdot c = a\cdot (b\cdot c)$
-  - $1\cdot a = a\cdot 1 = a$
-- 分配則
-  - $a\cdot (b+c) = (a\cdot b) + (a\cdot c)$
-  - $(a+b)\cdot c = (a\cdot c) + (b\cdot c)$
-- $0$ 倍
-  - $0\cdot a = a\cdot 0 = 0$
-
-を満たすもの。
-
-#### 環 (ring)
-
-気持ち：足し算と引き算と掛け算ができる
-
-加法逆元 $-a$ を持つ半環。
-
-`R`, `R add(R a, R b)`, `R e0()`, `R mul(R a, R b)`, `R e1()` に加えて、`R minus(R a)` も持つ。
-
-乗法が可換である環は可換環と呼ばれる（実装上では変えていない）。
-
-
-#### （可換）体 (field)
-
-気持ち：足し算と引き算と掛け算と割り算ができる
-
-乗法が可換で、乗法逆元 $a^{-1}$ を持つ環。
-
-`R`, `R add(R a, R b)`, `R e0()`, `R mul(R a, R b)`, `R e1()`, `R minus(R a)` に加えて、`R inv(R a)` も持つ。
+- `RingAddSubMul<T>`

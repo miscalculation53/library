@@ -31,8 +31,12 @@ data:
     path: ds/group_index.hpp
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
   - icon: ':heavy_check_mark:'
-    path: math/algebraic_struct.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct"
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_basic_ops.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+      \ max\uFF09"
   - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
@@ -68,6 +72,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/quotients.hpp
     title: "\u5546\u5217\u6319"
+  - icon: ':heavy_check_mark:'
+    path: math/set/and_or_convolution.hpp
+    title: "and/or \u7573\u307F\u8FBC\u307F"
+  - icon: ':heavy_check_mark:'
+    path: math/set/zeta_mobius.hpp
+    title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
   - icon: ':warning:'
     path: template/template.cpp
     title: template/template.cpp
@@ -93,6 +103,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/template_bit.test.cpp
     title: verify/mytest/template_bit.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/and_or_convolution.test.cpp
+    title: verify/yosupo/and_or_convolution.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/aplusb.test.cpp
     title: verify/yosupo/aplusb.test.cpp
@@ -307,7 +320,7 @@ data:
     \ vc<T> &a, const vc<U> &p)\n{\n  const int n = p.size();\n  vc<T> res(n);\n \
     \ repi(i, n)\n  {\n    assert(0 <= p[i] && p[i] < U(a.size()));\n    res[i] =\
     \ a[p[i]];\n  }\n  return res;\n}\n\ntemplate <class V>\nV reversed(const V &v)\
-    \ { return {v.rbegin(), v.rend()}; }\n\n#if __cplusplus < 202002L\ntemplate <class\
+    \ { return V(v.rbegin(), v.rend()); }\n\n#if __cplusplus < 202002L\ntemplate <class\
     \ V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n\
     \  return v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
     \ args)\n{\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\
@@ -383,7 +396,7 @@ data:
     \ vc<T> &a, const vc<U> &p)\n{\n  const int n = p.size();\n  vc<T> res(n);\n \
     \ repi(i, n)\n  {\n    assert(0 <= p[i] && p[i] < U(a.size()));\n    res[i] =\
     \ a[p[i]];\n  }\n  return res;\n}\n\ntemplate <class V>\nV reversed(const V &v)\
-    \ { return {v.rbegin(), v.rend()}; }\n\n#if __cplusplus < 202002L\ntemplate <class\
+    \ { return V(v.rbegin(), v.rend()); }\n\n#if __cplusplus < 202002L\ntemplate <class\
     \ V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n\
     \  return v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
     \ args)\n{\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\
@@ -452,7 +465,10 @@ data:
   - math/modint/modint.hpp
   - math/quotients.hpp
   - math/extgcd.hpp
-  - math/algebraic_struct.hpp
+  - math/algebra/algebra_basic_ops.hpp
+  - math/algebra/algebra_base.hpp
+  - math/set/zeta_mobius.hpp
+  - math/set/and_or_convolution.hpp
   - math/prime/factorize.hpp
   - math/prime/primality_test.hpp
   - math/prime/prime_power.hpp
@@ -465,7 +481,7 @@ data:
   - ds/csr.hpp
   - ds/coordinate_compression.hpp
   - algo/merge_sort.hpp
-  timestamp: '2025-01-04 23:27:57+09:00'
+  timestamp: '2025-02-08 07:50:23+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/template_bit.test.cpp
@@ -485,6 +501,7 @@ data:
   - verify/yosupo/aplusb.test.cpp
   - verify/yosupo/quotients.test.cpp
   - verify/yosupo/kth_root_integer.test.cpp
+  - verify/yosupo/and_or_convolution.test.cpp
   - verify/yosupo/many_aplusb_tuple.test.cpp
   - verify/yosupo/predecessor_problem.test.cpp
   - verify/yosupo/static_range_frequency.test.cpp
