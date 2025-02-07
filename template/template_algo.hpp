@@ -66,7 +66,7 @@ vc<T> permuted(const vc<T> &a, const vc<U> &p)
 }
 
 template <class V>
-V reversed(const V &v) { return {v.rbegin(), v.rend()}; }
+V reversed(const V &v) { return V(v.rbegin(), v.rend()); }
 
 #if __cplusplus < 202002L
 template <class V, class... Args>

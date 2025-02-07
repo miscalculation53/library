@@ -2,7 +2,7 @@
 
 #include "../../template/template_all.hpp"
 #include "factorize.hpp"
-#include "../algebraic_struct.hpp"
+#include "../algebra/algebra_basic_ops.hpp"
 
 /**
  * @brief 約数・倍数 ゼータ・メビウス変換（大きい $m$ の約数）
@@ -138,11 +138,11 @@ public:
   { return DivisorMap<T>(*this, func); }
 
   // ζa(n) = Σ{d | n} a(d)
-  // Monoid は可換モノイド (Σ だと +)
+  // M は可換モノイド (Σ だと +)
   // O(約数個数 * 素因数個数)
-  template <class Monoid>
-  DivisorMap<typename Monoid::S> zeta_divisor
-  (const DivisorMap<typename Monoid::S> &a) const
+  template <class M>
+  DivisorMap<typename M::S> zeta_divisor
+  (const DivisorMap<typename M::S> &a) const
   {
     auto b = a;
     for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)
@@ -150,7 +150,7 @@ public:
       repi(i, dnum)
       {
         if (!btest(f01[i], j))
-          b.v[i + k] = Monoid::op(b.v[i + k], b.v[i]);
+          b.v[i + k] = M::op(b.v[i + k], b.v[i]);
       }
     }
     return b;
@@ -158,11 +158,11 @@ public:
 
   // μ は ζ の逆変換
   // μa(n) = Σ{d | n} μ(n/d)a(d)  cf. メビウスの反転公式
-  // Group は可換群 (Σ だと +, -)
+  // G は可換群 (Σ だと +, -)
   // O(約数個数 * 素因数個数)
-  template <class Group>
-  DivisorMap<typename Group::G> mobius_divisor
-  (const DivisorMap<typename Group::G> &a) const
+  template <class G>
+  DivisorMap<typename G::S> mobius_divisor
+  (const DivisorMap<typename G::S> &a) const
   {
     auto b = a;
     for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)
@@ -170,7 +170,7 @@ public:
       repi(i, dnum - 1, -1, -1)
       {
         if (!btest(f01[i], j))
-          b.v[i + k] = Group::op(b.v[i + k], Group::inv(b.v[i]));
+          b.v[i + k] = G::op(b.v[i + k], G::inv(b.v[i]));
       }
     }
     return b;
@@ -179,13 +179,13 @@ public:
   // μ は ζ の逆変換
   // μa(n) = Σ{d | n} μ(n/d)a(d)  cf. メビウスの反転公式
   // μa(n) の 1 点だけ欲しいときに使う
-  // Group は可換群 (Σ だと +, -)
+  // G は可換群 (Σ だと +, -)
   // O(素因数個数 * 2^素因数個数)
-  template <class Group>
-  typename Group::G mobius_divisor_point
-  (const DivisorMap<typename Group::G> &a, ll n) const
+  template <class G>
+  typename G::S mobius_divisor_point
+  (const DivisorMap<typename G::S> &a, ll n) const
   {
-    typename Group::G res = Group::e();
+    typename G::S res = G::e();
     int si = dtoi(n);
     repi(bit, 1 << pnum)
     {
@@ -196,19 +196,19 @@ public:
           i -= k;
       }
       if (popcount(bit) % 2 == 0)
-        res = Group::op(res, a.v[i]);
+        res = G::op(res, a.v[i]);
       else
-        res = Group::op(res, Group::inv(a.v[i]));
+        res = G::op(res, G::inv(a.v[i]));
     }
     return res;
   }
 
   // ζ'a(n) = Σ{n | m} a(m)
-  // Monoid は可換モノイド (Σ だと +)
+  // M は可換モノイド (Σ だと +)
   // O(約数個数 * 素因数個数)
-  template <class Monoid>
-  DivisorMap<typename Monoid::S> zeta_multiple
-  (const DivisorMap<typename Monoid::S> &a) const
+  template <class M>
+  DivisorMap<typename M::S> zeta_multiple
+  (const DivisorMap<typename M::S> &a) const
   {
     auto b = a;
     for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)
@@ -216,7 +216,7 @@ public:
       repi(i, dnum - 1, -1, -1)
       {
         if (!btest(f01[i], j))
-          b.v[i] = Monoid::op(b.v[i], b.v[i + k]);
+          b.v[i] = M::op(b.v[i], b.v[i + k]);
       }
     }
     return b;
@@ -224,11 +224,11 @@ public:
 
   // μ' は ζ' の逆変換
   // μ'a(n) = Σ{n | m} μ(m/n)g(m)  cf. メビウスの反転公式
-  // Group は可換群 (Σ だと +, -)
+  // G は可換群 (Σ だと +, -)
   // O(約数個数 * 素因数個数)
-  template <class Group>
-  DivisorMap<typename Group::G> mobius_multiple
-  (const DivisorMap<typename Group::G> &a) const
+  template <class G>
+  DivisorMap<typename G::S> mobius_multiple
+  (const DivisorMap<typename G::S> &a) const
   {
     auto b = a;
     for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)
@@ -236,7 +236,7 @@ public:
       repi(i, dnum)
       {
         if (!btest(f01[i], j))
-          b.v[i] = Group::op(b.v[i], Group::inv(b.v[i + k]));
+          b.v[i] = G::op(b.v[i], G::inv(b.v[i + k]));
       }
     }
     return b;
@@ -245,13 +245,13 @@ public:
   // μ' は ζ' の逆変換
   // μ'a(n) = Σ{n | m} μ(m/n)g(m)  cf. メビウスの反転公式
   // μ'a(n) の 1 点だけ欲しいときに使う
-  // Group は可換群 (Σ だと +, -)
+  // G は可換群 (Σ だと +, -)
   // O(素因数個数 * 2^素因数個数)
-  template <class Group>
-  typename Group::G mobius_multiple_point
-  (const DivisorMap<typename Group::G> &a, ll n) const
+  template <class G>
+  typename G::S mobius_multiple_point
+  (const DivisorMap<typename G::S> &a, ll n) const
   {
-    typename Group::G res = Group::e();
+    typename G::S res = G::e();
     int si = dtoi(n);
     repi(bit, 1 << pnum)
     {
@@ -262,9 +262,9 @@ public:
           i += k;
       }
       if (popcount(bit) % 2 == 0)
-        res = Group::op(res, a.v[i]);
+        res = G::op(res, a.v[i]);
       else
-        res = Group::op(res, Group::inv(a.v[i]));
+        res = G::op(res, G::inv(a.v[i]));
     }
     return res;
   }

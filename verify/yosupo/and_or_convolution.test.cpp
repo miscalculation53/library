@@ -1,4 +1,4 @@
-#define PROBLEM "https://yukicoder.me/problems/no/2578"
+#define PROBLEM "https://judge.yosupo.jp/problem/bitwise_and_convolution"
 
 #define SINGLE_TESTCASE
 // #define MULTI_TESTCASE
@@ -12,9 +12,7 @@
 #define EPS 1e-11
 
 #include "../../template/template_all.hpp"
-
-#include "../../math/prime/zeta_mobius_divisor_multiple_large.hpp"
-#include "../../math/algebra/algebra_basic_ops.hpp"
+#include "../../math/set/and_or_convolution.hpp"
 
 #include "../../math/modint/modint.hpp"
 using mint = modint998244353;
@@ -23,41 +21,14 @@ void init() {}
 
 void main2()
 {
-  LL(T, M);
-  ZetaMobiusDivisorMultipleLarge zm(M);
-  rep(_, T)
-  {
-    LL(N, B, C, D);
-    VEC(ll, N, A);
-    vc<mint> W(N);
-    W.at(0) = B;
-    rep(i, 1, N) W.at(i) = C * W.at(i - 1) + D;
-
-    auto h = zm.divisor_map<mint>([&](ll)
-                                  { return 1; });
-    rep(i, N)
-    {
-      if (M % A.at(i) != 0)
-        continue;
-      h.get_by_d(A.at(i)) *= 1 + W.at(i);
-    }
-    dump(h.to_map());
-    auto g = zm.zeta_divisor<MonoidMul<mint>>(h);
-    dump(g.to_map());
-    
-    auto f = zm.mobius_divisor<GroupAddSub<mint>>(g);
-    dump(f.to_map());
-    mint ans = f.get_by_d(M);
-    if (M == 1)
-      ans--;
-    PRINT(ans);
-
-    mint ans2 = zm.mobius_divisor_point<GroupAddSub<mint>>(g, M);
-    if (M == 1)
-      ans2--;
-    dump(ans2);
-    assert(ans == ans2);
-  }
+  LL(N);
+  VEC(mint, 1 << N, A, B);
+  auto C = and_convolution<RingAddSubMul<mint>>(A, B);
+  PRINT(C);
+  auto D = or_convolution<RingAddSubMul<mint>>(reversed(A), reversed(B));
+  reverse(ALL(D));
+  dump(C, D);
+  assert(C == D);
 }
 
 void test() {}

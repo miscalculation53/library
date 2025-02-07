@@ -14,7 +14,7 @@
 #include "../../template/template_all.hpp"
 
 #include "../../math/prime/zeta_mobius_divisor_multiple_large.hpp"
-#include "../../math/algebraic_struct.hpp"
+#include "../../math/algebra/algebra_basic_ops.hpp"
 
 #include "../../math/modint/modint.hpp"
 using mint = modint998244353;
