@@ -7,10 +7,7 @@
  * @docs docs/template/template_rep.md
  */
 
-/**
- * 参考：
- * https://trap.jp/post/1224/
-*/
+// https://trap.jp/post/1224/
 
 #define overload4(_1, _2, _3, _4, name, ...) name
 #define rep1(i, n) for (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)

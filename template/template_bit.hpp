@@ -24,14 +24,14 @@ inline constexpr ull popcount(ull x) { return __builtin_popcountll(x); }
 inline constexpr bool has_single_bit(ull x) { return popcount(x) == 1; }
 #else
 // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... 
-inline constexpr ll bit_width(ll x) { return bit_width((ull)x); }
+inline constexpr ll bit_width(ll x) { return std::bit_width((ull)x); }
 // 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...
-inline constexpr ll bit_floor(ll x) { return bit_floor((ull)x); }
+inline constexpr ll bit_floor(ll x) { return std::bit_floor((ull)x); }
 // 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...
-inline constexpr ll bit_ceil(ll x) { return bit_ceil((ull)x); }
-inline constexpr ll countr_zero(ll x) { assert(x != 0); return countr_zero((ull)x); }
-inline constexpr ll popcount(ll x) { return popcount((ull)x); }
-inline constexpr bool has_single_bit(ll x) { return has_single_bit((ull)x); }
+inline constexpr ll bit_ceil(ll x) { return std::bit_ceil((ull)x); }
+inline constexpr ll countr_zero(ll x) { assert(x != 0); return std::countr_zero((ull)x); }
+inline constexpr ll popcount(ll x) { return std::popcount((ull)x); }
+inline constexpr bool has_single_bit(ll x) { return std::has_single_bit((ull)x); }
 #endif
 
 inline constexpr ull lsb_pos(ull x) { assert(x != 0); return countr_zero(x); }
@@ -47,58 +47,3 @@ inline void bflip(T &x, uint k) { x ^= (1ULL << k); }
 inline constexpr bool bsubset(ull x, ull y) { return (x & y) == x; }
 inline constexpr bool bsupset(ull x, ull y) { return (x & y) == y; }
 inline constexpr ull bsetminus(ull x, ull y) { return x & ~y; }
-
-template <class T>
-struct bsubsets
-{
-private:
-  T x;
-public:
-  bsubsets(T x) : x(x) {}
-  struct Iterator
-  {
-  private:
-    T y;
-    bool is_end;
-    const bsubsets &bs;
-  public:
-    Iterator(T y, bool is_end, const bsubsets &bs) : y(y), is_end(is_end), bs(bs) {}
-    T operator*() const { return y; }
-    Iterator& operator++()
-    {
-      if (y == 0)
-        is_end = true;
-      y = (y - 1) & bs.x;
-      return *this;
-    }
-    bool operator!=(const Iterator &other) const { return y != other.y || is_end != other.is_end; }
-  };
-  Iterator begin() const { return Iterator(x, false, *this); }
-  Iterator end() const { return Iterator(x, true, *this); }
-};
-template <class T>
-struct bsupsets
-{
-private:
-  int n;
-  T x;
-public:
-  bsupsets(int n, T x) : n(n), x(x) {}
-  struct Iterator
-  {
-  private:
-    T y;
-    const bsupsets &bs;
-  public:
-    Iterator(T y, const bsupsets &bs) : y(y), bs(bs) {}
-    T operator*() const { return y; }
-    Iterator& operator++()
-    {
-      y = (y + 1) | bs.x;
-      return *this;
-    }
-    bool operator!=(const Iterator &other) const { return y != other.y; }
-  };
-  Iterator begin() const { return Iterator(x, *this); }
-  Iterator end() const { return Iterator((T(1) << n) | x, *this); }
-};

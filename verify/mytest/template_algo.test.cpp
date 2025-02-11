@@ -165,23 +165,6 @@ void test5()
   assert(adjd(a) == vl({3, -2, 3, -3, -1}));
 }
 
-// 全探索
-void test6()
-{
-  vvl vs;
-  fec(v : direct_product({2, 1, 3})) vs.push_back(v);
-
-  vvl model = {
-    {0, 0, 0},
-    {0, 0, 1},
-    {0, 0, 2},
-    {1, 0, 0},
-    {1, 0, 1},
-    {1, 0, 2}
-  };
-  assert(vs == model);
-}
-
 int main()
 {
   test1();
@@ -189,7 +172,6 @@ int main()
   test3();
   test4();
   test5();
-  test6();
 
   cout << "Hello World" << endl;
 }

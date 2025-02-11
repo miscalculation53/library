@@ -7,7 +7,6 @@
 #include "template_types.hpp"
 #include "template_rep.hpp"
 #include "template_vector.hpp"
-#include "template_func.hpp"
 
 /**
  * @brief テンプレート（アルゴリズム）
@@ -85,7 +84,7 @@ V sorted(V v, Args&&... args)
 #endif
 
 template <class V>
-void unique(V &v) { v.erase(unique(ALL(v)), v.end()); }
+void unique(V &v) { v.erase(std::unique(ALL(v)), v.end()); }
 template <class V>
 V uniqued(V v) { unique(v); return v; }
 
@@ -104,7 +103,7 @@ void rotate(V &v, U k)
 { 
   const U n = v.size();
   k = (k % n + n) % n;
-  rotate(v.begin(), v.begin() + k, v.end());
+  std::rotate(v.begin(), v.begin() + k, v.end());
 }
 // 01234 -> 12340
 template <class V, class U>
@@ -183,7 +182,7 @@ VV rot90(const VV &a, U k = 1)
 }
 
 template <class T, class F = decltype(plus<>())>
-vc<T> cuml(const vc<T> &v, const F &op = plus<>(), const T &e = 0)
+vc<T> cuml(const vc<T> &v, F op = plus<>(), const T &e = 0)
 {
   const int n = v.size();
   vc<T> res(n + 1, e);
@@ -193,14 +192,18 @@ vc<T> cuml(const vc<T> &v, const F &op = plus<>(), const T &e = 0)
 template <class T, class F = decltype(plus<>())>
 vc<T> cumr(const vc<T> &v, const F &op = plus<>(), const T &e = 0)
 { return reversed(cuml<T, F>(reversed(v), op, e)); }
-template <class T>
-vc<T> cumlmax(const vc<T> &v) { return cuml(v, max_op<T>(), max_e()()); }
-template <class T>
-vc<T> cumrmax(const vc<T> &v) { return cumr(v, max_op<T>(), max_e()()); }
-template <class T>
-vc<T> cumlmin(const vc<T> &v) { return cuml(v, min_op<T>(), min_e()()); }
-template <class T>
-vc<T> cumrmin(const vc<T> &v) { return cumr(v, min_op<T>(), min_e()()); }
+template <class T, const T infty = INF>
+vc<T> cumlmax(const vc<T> &v)
+{ return cuml(v, [](T a, T b) { return max(a, b); }, -infty); }
+template <class T, const T infty = INF>
+vc<T> cumrmax(const vc<T> &v)
+{ return cumr(v, [](T a, T b) { return max(a, b); }, -infty); }
+template <class T, const T infty = INF>
+vc<T> cumlmin(const vc<T> &v)
+{ return cuml(v, [](T a, T b) { return min(a, b); }, infty); }
+template <class T, const T infty = INF>
+vc<T> cumrmin(const vc<T> &v)
+{ return cumr(v, [](T a, T b) { return min(a, b); }, infty); }
 
 template <class T>
 vc<T> adjd(const vc<T> &v)
@@ -212,52 +215,6 @@ vc<T> adjd(const vc<T> &v)
   res[n] = -v[n - 1];
   return res;
 }
-
-template <class T = ll>
-struct direct_product
-{
-private:
-  vc<T> a;
-public:
-  direct_product(const vc<T> &a) : a(a)
-  {
-    assert(!a.empty());
-    fec(ai : a) assert(ai >= 1);
-  }
-  struct Iterator
-  {
-  private:
-    vc<T> b;
-    const direct_product &prod;
-
-  public:
-    Iterator(const vc<T> &b, const direct_product &prod) : b(b), prod(prod) {}
-    vc<T> operator*() const { return b; }
-    Iterator& operator++()
-    {
-      b.back()++;
-      repi(i, SZ<int>(prod.a) - 1, 0, -1)
-      {
-        if (b[i] == prod.a[i])
-        {
-          b[i] = 0;
-          b[i - 1]++;
-        }
-        else
-          break;
-      }
-      return *this;
-    }
-    bool operator!=(const Iterator &other) const { return b != other.b; }
-  };
-  Iterator begin() const { return Iterator(vc<T>(a.size(), 0), *this); }
-  Iterator end() const
-  {
-    vc<T> c(a.size(), 0);
-    c[0] = a[0];
-    return Iterator(c, *this);
-  }
-};
 
 const vpll DRULgrid = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 const vpll DRULplane = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};

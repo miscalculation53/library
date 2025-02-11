@@ -7,22 +7,22 @@
 
 void test1()
 {
-  assert(sgn(-2) == -1);
-  assert(sgn(-1) == -1);
-  assert(sgn(0) == 0);
-  assert(sgn(1) == 1);
-  assert(sgn(2) == 1);
+  assert(SGN(-2) == -1);
+  assert(SGN(-1) == -1);
+  assert(SGN(0) == 0);
+  assert(SGN(1) == 1);
+  assert(SGN(2) == 1);
 
-  assert(sgn(-EPS * 2) == -1);
-  assert(sgn(-EPS / 2) == 0);
-  assert(sgn(EPS / 2) == 0);
-  assert(sgn(EPS * 2) == 1);
+  assert(SGN(-EPS * 2) == -1);
+  assert(SGN(-EPS / 2) == 0);
+  assert(SGN(EPS / 2) == 0);
+  assert(SGN(EPS * 2) == 1);
 
   long double EPS2 = EPS;
-  assert(sgn(-EPS2 * 2) == -1);
-  assert(sgn(-EPS2 / 2) == 0);
-  assert(sgn(EPS2 / 2) == 0);
-  assert(sgn(EPS2 * 2) == 1);
+  assert(SGN(-EPS2 * 2) == -1);
+  assert(SGN(-EPS2 / 2) == 0);
+  assert(SGN(EPS2 / 2) == 0);
+  assert(SGN(EPS2 * 2) == 1);
 
   dump(typeid(double).name(), typeid(long double).name());
   dump(typeid(EPS).name(), typeid(EPS2).name());

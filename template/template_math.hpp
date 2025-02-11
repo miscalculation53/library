@@ -130,7 +130,7 @@ constexpr T iroot(cauto &a, cauto &k)
 
 // https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html
 template <class D = decltype(EPS)>
-int sgn(cauto &a, const D &eps = EPS) { return int(a > eps) - int(a < -eps); }
+int SGN(cauto &a, const D &eps = EPS) { return int(a > eps) - int(a < -eps); }
 
 // 位取り記数法と同じ順番（下位桁が後ろ）
 // 0 に対しては {0} が返る
