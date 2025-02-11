@@ -17,6 +17,14 @@ data:
     - icon: ':heavy_check_mark:'
       path: ds/group_index.hpp
       title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
+  - name: itertools
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: itertools/bit.hpp
+      title: "\u76F4\u7A4D"
+    - icon: ':heavy_check_mark:'
+      path: itertools/direct_product.hpp
+      title: "\u76F4\u7A4D"
   - name: math/algebra
     pages:
     - icon: ':heavy_check_mark:'
@@ -98,10 +106,6 @@ data:
       path: template/template_dump.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
     - icon: ':heavy_check_mark:'
-      path: template/template_func.hpp
-      title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u95A2\u6570\u30AA\u30D6\u30B8\
-        \u30A7\u30AF\u30C8\uFF09"
-    - icon: ':heavy_check_mark:'
       path: template/template_inout.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
     - icon: ':heavy_check_mark:'
@@ -127,6 +131,12 @@ data:
       title: verify/aoj/extgcd.test.cpp
   - name: verify/mytest
     pages:
+    - icon: ':heavy_check_mark:'
+      path: verify/mytest/itertools_bit.test.cpp
+      title: verify/mytest/itertools_bit.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/mytest/itertools_direct_product.test.cpp
+      title: verify/mytest/itertools_direct_product.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/mytest/modint.test.cpp
       title: verify/mytest/modint.test.cpp

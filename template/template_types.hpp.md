@@ -15,6 +15,12 @@ data:
     path: ds/group_index.hpp
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
   - icon: ':heavy_check_mark:'
+    path: itertools/bit.hpp
+    title: "\u76F4\u7A4D"
+  - icon: ':heavy_check_mark:'
+    path: itertools/direct_product.hpp
+    title: "\u76F4\u7A4D"
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
   - icon: ':heavy_check_mark:'
@@ -83,10 +89,6 @@ data:
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
   - icon: ':heavy_check_mark:'
-    path: template/template_func.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u95A2\u6570\u30AA\u30D6\u30B8\
-      \u30A7\u30AF\u30C8\uFF09"
-  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
   - icon: ':heavy_check_mark:'
@@ -105,6 +107,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/extgcd.test.cpp
     title: verify/aoj/extgcd.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/itertools_bit.test.cpp
+    title: verify/mytest/itertools_bit.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/itertools_direct_product.test.cpp
+    title: verify/mytest/itertools_direct_product.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/modint.test.cpp
     title: verify/mytest/modint.test.cpp
@@ -280,9 +288,10 @@ data:
   - template/template_inout.hpp
   - template/template_algo.hpp
   - template/template_vector.hpp
-  - template/template_func.hpp
   - template/template_rep.hpp
   - template/template_all.hpp
+  - itertools/bit.hpp
+  - itertools/direct_product.hpp
   - ds/group_index.hpp
   - ds/csr.hpp
   - ds/coordinate_compression.hpp
@@ -295,7 +304,9 @@ data:
   - verify/mytest/template_bit.test.cpp
   - verify/mytest/modint.test.cpp
   - verify/mytest/template_math_div.test.cpp
+  - verify/mytest/itertools_direct_product.test.cpp
   - verify/mytest/template_vector.test.cpp
+  - verify/mytest/itertools_bit.test.cpp
   - verify/mytest/template_algo.test.cpp
   - verify/mytest/template_sgn.test.cpp.cpp
   - verify/mytest/template_binsearch.test.cpp

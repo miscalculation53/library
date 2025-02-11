@@ -13,10 +13,6 @@ data:
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
   - icon: ':heavy_check_mark:'
-    path: template/template_func.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u95A2\u6570\u30AA\u30D6\u30B8\
-      \u30A7\u30AF\u30C8\uFF09"
-  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
   - icon: ':heavy_check_mark:'
@@ -64,39 +60,39 @@ data:
     \ &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define\
     \ cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
-    \ docs/template/template_rep.md\n */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n\
-    */\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for\
-    \ (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i =\
-    \ ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i =\
-    \ ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i +=\
-    \ d)\n#define rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n\
-    #define repi1(i, n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i,\
-    \ l, r) for (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i,\
-    \ l, r, d) for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i\
-    \ < rrrrr : i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3,\
-    \ repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n#define\
-    \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
-    #line 5 \"template/template_bit.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
-    \u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n\
-    \ */\n\ninline constexpr ull pow2(auto k) { return 1ULL << k; }\ninline constexpr\
-    \ ull MASK(auto k) { return (1ULL << k) - 1ULL; }\n\n#if __cplusplus < 202002L\n\
-    // x == 0 \u306A\u3089\u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\u3070\
-    \ 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ull bit_width(ull x) { return x == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0,\
-    \ 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ull bit_floor(ull x) { return\
-    \ x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8,\
-    \ 16, ...\ninline constexpr ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL\
-    \ << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull x) { assert(x !=\
-    \ 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull x) { return\
-    \ __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull x) { return\
-    \ popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ll bit_width(ll x) { return bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4, 4, 4,\
-    \ 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return bit_floor((ull)x); }\n\
-    // 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ll bit_ceil(ll x) { return\
-    \ bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll x) { assert(x != 0);\
-    \ return countr_zero((ull)x); }\ninline constexpr ll popcount(ll x) { return popcount((ull)x);\
-    \ }\ninline constexpr bool has_single_bit(ll x) { return has_single_bit((ull)x);\
-    \ }\n#endif\n\ninline constexpr ull lsb_pos(ull x) { assert(x != 0); return countr_zero(x);\
+    \ docs/template/template_rep.md\n */\n\n// https://trap.jp/post/1224/\n\n#define\
+    \ overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0,\
+    \ nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i = ll(l), rrrrr\
+    \ = ll(r); i < rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i = ll(l), rrrrr\
+    \ = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define\
+    \ rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n#define repi1(i,\
+    \ n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i, l, r) for\
+    \ (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i, l, r, d)\
+    \ for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i < rrrrr :\
+    \ i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\
+    \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
+    #define fem(...) for (auto &__VA_ARGS__)\n#line 5 \"template/template_bit.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\
+    \u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ninline constexpr\
+    \ ull pow2(auto k) { return 1ULL << k; }\ninline constexpr ull MASK(auto k) {\
+    \ return (1ULL << k) - 1ULL; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\
+    \u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n\
+    // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr ull bit_width(ull x) {\
+    \ return x == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8,\
+    \ 8, ...\ninline constexpr ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL\
+    \ << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr\
+    \ ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline\
+    \ constexpr ull countr_zero(ull x) { assert(x != 0); return __builtin_ctzll(x);\
+    \ }\ninline constexpr ull popcount(ull x) { return __builtin_popcountll(x); }\n\
+    inline constexpr bool has_single_bit(ull x) { return popcount(x) == 1; }\n#else\n\
+    // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr ll bit_width(ll x) { return\
+    \ std::bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr\
+    \ ll bit_floor(ll x) { return std::bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8,\
+    \ 8, 8, 8, 16, ...\ninline constexpr ll bit_ceil(ll x) { return std::bit_ceil((ull)x);\
+    \ }\ninline constexpr ll countr_zero(ll x) { assert(x != 0); return std::countr_zero((ull)x);\
+    \ }\ninline constexpr ll popcount(ll x) { return std::popcount((ull)x); }\ninline\
+    \ constexpr bool has_single_bit(ll x) { return std::has_single_bit((ull)x); }\n\
+    #endif\n\ninline constexpr ull lsb_pos(ull x) { assert(x != 0); return countr_zero(x);\
     \ }\ninline constexpr ull msb_pos(ull x) { assert(x != 0); return bit_width(x)\
     \ - 1; }\ninline constexpr ull lsb_mask(ull x) { assert(x != 0); return x & -x;\
     \ }\ninline constexpr ull msb_mask(ull x) { assert(x != 0); return bit_floor(x);\
@@ -105,25 +101,9 @@ data:
     \ : x &= ~(1ULL << k); }\ntemplate <class T>\ninline void bflip(T &x, uint k)\
     \ { x ^= (1ULL << k); }\ninline constexpr bool bsubset(ull x, ull y) { return\
     \ (x & y) == x; }\ninline constexpr bool bsupset(ull x, ull y) { return (x & y)\
-    \ == y; }\ninline constexpr ull bsetminus(ull x, ull y) { return x & ~y; }\n\n\
-    template <class T>\nstruct bsubsets\n{\nprivate:\n  T x;\npublic:\n  bsubsets(T\
-    \ x) : x(x) {}\n  struct Iterator\n  {\n  private:\n    T y;\n    bool is_end;\n\
-    \    const bsubsets &bs;\n  public:\n    Iterator(T y, bool is_end, const bsubsets\
-    \ &bs) : y(y), is_end(is_end), bs(bs) {}\n    T operator*() const { return y;\
-    \ }\n    Iterator& operator++()\n    {\n      if (y == 0)\n        is_end = true;\n\
-    \      y = (y - 1) & bs.x;\n      return *this;\n    }\n    bool operator!=(const\
-    \ Iterator &other) const { return y != other.y || is_end != other.is_end; }\n\
-    \  };\n  Iterator begin() const { return Iterator(x, false, *this); }\n  Iterator\
-    \ end() const { return Iterator(x, true, *this); }\n};\ntemplate <class T>\nstruct\
-    \ bsupsets\n{\nprivate:\n  int n;\n  T x;\npublic:\n  bsupsets(int n, T x) : n(n),\
-    \ x(x) {}\n  struct Iterator\n  {\n  private:\n    T y;\n    const bsupsets &bs;\n\
-    \  public:\n    Iterator(T y, const bsupsets &bs) : y(y), bs(bs) {}\n    T operator*()\
-    \ const { return y; }\n    Iterator& operator++()\n    {\n      y = (y + 1) |\
-    \ bs.x;\n      return *this;\n    }\n    bool operator!=(const Iterator &other)\
-    \ const { return y != other.y; }\n  };\n  Iterator begin() const { return Iterator(x,\
-    \ *this); }\n  Iterator end() const { return Iterator((T(1) << n) | x, *this);\
-    \ }\n};\n#line 2 \"template/template_dump.hpp\"\n\n#line 4 \"template/template_dump.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs\
+    \ == y; }\ninline constexpr ull bsetminus(ull x, ull y) { return x & ~y; }\n#line\
+    \ 2 \"template/template_dump.hpp\"\n\n#line 4 \"template/template_dump.hpp\"\n\
+    \n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs\
     \ docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp>\
     \ // https://github.com/philip82148/cpp-dump\nnamespace cpp_dump::_detail\n{\n\
     \  inline string export_var(\n      const i128 &x, const string &indent, size_t\
@@ -170,7 +150,7 @@ data:
     \ res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n\
     \    up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max()\
     \ && isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
-    template <class D = decltype(EPS)>\nint sgn(cauto &a, const D &eps = EPS) { return\
+    template <class D = decltype(EPS)>\nint SGN(cauto &a, const D &eps = EPS) { return\
     \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
     \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\n// 0\
     \ \u306B\u5BFE\u3057\u3066\u306F {0} \u304C\u8FD4\u308B\ntemplate <class T = ll>\n\
@@ -210,48 +190,39 @@ data:
     \ vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)), ...);\n  return v;\n}\n\n\
     template <class T>\nT vecget(const vc<T> &v, cauto &i, const T &dflt_negative\
     \ = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n    return dflt_negative;\n\
-    \  if (i >= SZ<int>(v))\n    return dflt_positive;\n  return v[i];\n}\n#line 2\
-    \ \"template/template_func.hpp\"\n\n#line 5 \"template/template_func.hpp\"\n\n\
-    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u95A2\u6570\u30AA\u30D6\
-    \u30B8\u30A7\u30AF\u30C8\uFF09\n * @docs docs/template/template_func.md\n */\n\
-    \n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n\ntemplate <class\
-    \ T = ll>\nstruct max_op\n{\n  T operator()(const T &a, const T &b) const { return\
-    \ max(a, b); }\n};\ntemplate <class T = ll>\nstruct min_op\n{\n  T operator()(const\
-    \ T &a, const T &b) const { return min(a, b); }\n};\n\ntemplate <class T, const\
-    \ T val>\nstruct const_fn\n{\n  T operator()() const { return val; }\n};\nusing\
-    \ max_e = const_fn<ll, -INF>;\nusing min_e = const_fn<ll, INF>;\nusing zero_fn\
-    \ = const_fn<ll, 0LL>;\n#line 11 \"template/template_algo.hpp\"\n\n/**\n * @brief\
-    \ \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\u30E0\
-    \uFF09\n * @docs docs/template/template_algo.md\n */\n\nauto SUM(cauto &v) { return\
-    \ accumulate(ALL(v), (decltype(v[0]))0); }\ntemplate <class T>\nT SUM(cauto &v)\
-    \ { return accumulate(ALL(v), T(0)); }\nauto MAX(cauto &v) { return *max_element(ALL(v));\
-    \ }\nauto MIN(cauto &v) { return *min_element(ALL(v)); }\ntemplate <class I =\
-    \ ll>\nI ARGMAX(cauto &v) { return max_element(ALL(v)) - v.begin(); }\ntemplate\
-    \ <class I = ll>\nI ARGMIN(cauto &v) { return min_element(ALL(v)) - v.begin();\
-    \ }\n\ntemplate<class T = ll>\nT mex(cauto &a)\n{\n  int n = a.size();\n  vector<bool>\
-    \ exists(n, false);\n  repi(i, n) if (0 <= a[i] && a[i] < n) exists[a[i]] = true;\n\
-    \  repi(x, n) if (!exists[x]) return x;\n  return n;\n}\n\ntemplate <class T =\
-    \ ll>\nvc<T> permid(const int &n, const int &base_index = 0)\n{\n  vc<T> p(n);\n\
-    \  repi(i, n) p[i] = i + base_index;\n  return p;\n}\ntemplate <class T>\nvc<T>\
-    \ perminv(const vc<T> &p)\n{\n  if (p.empty())\n    return {};\n  const int n\
-    \ = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i, n) if (p[i] >= 0) q[p[i]] = i;\n\
-    \  return q;\n}\n// a[p[i]] for all i\ntemplate <class T, class U>\nvc<T> permuted(const\
-    \ vc<T> &a, const vc<U> &p)\n{\n  const int n = p.size();\n  vc<T> res(n);\n \
-    \ repi(i, n)\n  {\n    assert(0 <= p[i] && p[i] < U(a.size()));\n    res[i] =\
-    \ a[p[i]];\n  }\n  return res;\n}\n\ntemplate <class V>\nV reversed(const V &v)\
-    \ { return V(v.rbegin(), v.rend()); }\n\n#if __cplusplus < 202002L\ntemplate <class\
-    \ V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n\
-    \  return v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
-    \ args)\n{\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\
-    \ntemplate <class V>\nvoid unique(V &v) { v.erase(unique(ALL(v)), v.end()); }\n\
-    template <class V>\nV uniqued(V v) { unique(v); return v; }\n\ntemplate <class\
-    \ V>\nvoid sortunique(V &v)\n{\n  sort(ALL(v));\n  unique(v);\n}\ntemplate <class\
-    \ V>\nV sortuniqued(V v) { sortunique(v); return v; }\n\n// 01234 -> 12340\ntemplate\
-    \ <class V, class U>\nvoid rotate(V &v, U k)\n{ \n  const U n = v.size();\n  k\
-    \ = (k % n + n) % n;\n  rotate(v.begin(), v.begin() + k, v.end());\n}\n// 01234\
-    \ -> 12340\ntemplate <class V, class U>\nV rotated(V v, U k) { rotate(v, k); return\
-    \ v; }\n\ntemplate <class T>\nvvc<T> top(const vvc<T> &a)\n{\n  if (a.empty())\n\
-    \    return {};\n  const int n = a.size(), m = a[0].size();\n  vvc<T> b(m, vc<T>(n));\n\
+    \  if (i >= SZ<int>(v))\n    return dflt_positive;\n  return v[i];\n}\n#line 10\
+    \ \"template/template_algo.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
+    \u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\u30E0\uFF09\n * @docs docs/template/template_algo.md\n\
+    \ */\n\nauto SUM(cauto &v) { return accumulate(ALL(v), (decltype(v[0]))0); }\n\
+    template <class T>\nT SUM(cauto &v) { return accumulate(ALL(v), T(0)); }\nauto\
+    \ MAX(cauto &v) { return *max_element(ALL(v)); }\nauto MIN(cauto &v) { return\
+    \ *min_element(ALL(v)); }\ntemplate <class I = ll>\nI ARGMAX(cauto &v) { return\
+    \ max_element(ALL(v)) - v.begin(); }\ntemplate <class I = ll>\nI ARGMIN(cauto\
+    \ &v) { return min_element(ALL(v)) - v.begin(); }\n\ntemplate<class T = ll>\n\
+    T mex(cauto &a)\n{\n  int n = a.size();\n  vector<bool> exists(n, false);\n  repi(i,\
+    \ n) if (0 <= a[i] && a[i] < n) exists[a[i]] = true;\n  repi(x, n) if (!exists[x])\
+    \ return x;\n  return n;\n}\n\ntemplate <class T = ll>\nvc<T> permid(const int\
+    \ &n, const int &base_index = 0)\n{\n  vc<T> p(n);\n  repi(i, n) p[i] = i + base_index;\n\
+    \  return p;\n}\ntemplate <class T>\nvc<T> perminv(const vc<T> &p)\n{\n  if (p.empty())\n\
+    \    return {};\n  const int n = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i,\
+    \ n) if (p[i] >= 0) q[p[i]] = i;\n  return q;\n}\n// a[p[i]] for all i\ntemplate\
+    \ <class T, class U>\nvc<T> permuted(const vc<T> &a, const vc<U> &p)\n{\n  const\
+    \ int n = p.size();\n  vc<T> res(n);\n  repi(i, n)\n  {\n    assert(0 <= p[i]\
+    \ && p[i] < U(a.size()));\n    res[i] = a[p[i]];\n  }\n  return res;\n}\n\ntemplate\
+    \ <class V>\nV reversed(const V &v) { return V(v.rbegin(), v.rend()); }\n\n#if\
+    \ __cplusplus < 202002L\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
+    \ args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n  return v;\n}\n#else\ntemplate\
+    \ <class V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  ranges::sort(v,\
+    \ forward<Args>(args)...);\n  return v;\n}\n#endif\n\ntemplate <class V>\nvoid\
+    \ unique(V &v) { v.erase(std::unique(ALL(v)), v.end()); }\ntemplate <class V>\n\
+    V uniqued(V v) { unique(v); return v; }\n\ntemplate <class V>\nvoid sortunique(V\
+    \ &v)\n{\n  sort(ALL(v));\n  unique(v);\n}\ntemplate <class V>\nV sortuniqued(V\
+    \ v) { sortunique(v); return v; }\n\n// 01234 -> 12340\ntemplate <class V, class\
+    \ U>\nvoid rotate(V &v, U k)\n{ \n  const U n = v.size();\n  k = (k % n + n) %\
+    \ n;\n  std::rotate(v.begin(), v.begin() + k, v.end());\n}\n// 01234 -> 12340\n\
+    template <class V, class U>\nV rotated(V v, U k) { rotate(v, k); return v; }\n\
+    \ntemplate <class T>\nvvc<T> top(const vvc<T> &a)\n{\n  if (a.empty())\n    return\
+    \ {};\n  const int n = a.size(), m = a[0].size();\n  vvc<T> b(m, vc<T>(n));\n\
     \  repi(i, n)\n  {\n    assert(SZ<int>(a[i]) == m);\n    repi(j, m) b[j][i] =\
     \ a[i][j];\n  }\n  return b;\n}\nvstr top(const vstr &a)\n{\n  vvc<char> a_(a.size());\n\
     \  repi(i, SZ<int>(a)) a_[i] = {ALL(a[i])};\n  vvc<char> b_ = top(a_);\n  vstr\
@@ -268,38 +239,28 @@ data:
     \ VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
     \ == m);\n      repi(j, m) b[j][n - 1 - i] = a[i][j];\n    }\n    return b;\n\
     \  }\n}\n\ntemplate <class T, class F = decltype(plus<>())>\nvc<T> cuml(const\
-    \ vc<T> &v, const F &op = plus<>(), const T &e = 0)\n{\n  const int n = v.size();\n\
-    \  vc<T> res(n + 1, e);\n  repi(i, n) res[i + 1] = op(res[i], v[i]);\n  return\
+    \ vc<T> &v, F op = plus<>(), const T &e = 0)\n{\n  const int n = v.size();\n \
+    \ vc<T> res(n + 1, e);\n  repi(i, n) res[i + 1] = op(res[i], v[i]);\n  return\
     \ res;\n}\ntemplate <class T, class F = decltype(plus<>())>\nvc<T> cumr(const\
     \ vc<T> &v, const F &op = plus<>(), const T &e = 0)\n{ return reversed(cuml<T,\
-    \ F>(reversed(v), op, e)); }\ntemplate <class T>\nvc<T> cumlmax(const vc<T> &v)\
-    \ { return cuml(v, max_op<T>(), max_e()()); }\ntemplate <class T>\nvc<T> cumrmax(const\
-    \ vc<T> &v) { return cumr(v, max_op<T>(), max_e()()); }\ntemplate <class T>\n\
-    vc<T> cumlmin(const vc<T> &v) { return cuml(v, min_op<T>(), min_e()()); }\ntemplate\
-    \ <class T>\nvc<T> cumrmin(const vc<T> &v) { return cumr(v, min_op<T>(), min_e()());\
-    \ }\n\ntemplate <class T>\nvc<T> adjd(const vc<T> &v)\n{\n  int n = v.size();\n\
-    \  vc<T> res(n + 1);\n  res[0] = v[0];\n  repi(i, 1, n) res[i] = v[i] - v[i -\
-    \ 1];\n  res[n] = -v[n - 1];\n  return res;\n}\n\ntemplate <class T = ll>\nstruct\
-    \ direct_product\n{\nprivate:\n  vc<T> a;\npublic:\n  direct_product(const vc<T>\
-    \ &a) : a(a)\n  {\n    assert(!a.empty());\n    fec(ai : a) assert(ai >= 1);\n\
-    \  }\n  struct Iterator\n  {\n  private:\n    vc<T> b;\n    const direct_product\
-    \ &prod;\n\n  public:\n    Iterator(const vc<T> &b, const direct_product &prod)\
-    \ : b(b), prod(prod) {}\n    vc<T> operator*() const { return b; }\n    Iterator&\
-    \ operator++()\n    {\n      b.back()++;\n      repi(i, SZ<int>(prod.a) - 1, 0,\
-    \ -1)\n      {\n        if (b[i] == prod.a[i])\n        {\n          b[i] = 0;\n\
-    \          b[i - 1]++;\n        }\n        else\n          break;\n      }\n \
-    \     return *this;\n    }\n    bool operator!=(const Iterator &other) const {\
-    \ return b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
-    \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n\nconst vpll DRULgrid = {{1,\
-    \ 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane = {{0, -1}, {1, 0}, {0,\
-    \ 1}, {-1, 0}};\n#line 6 \"verify/mytest/template_bit.test.cpp\"\n\nvoid test1()\n\
-    {\n  vc<ll> width_model = {0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 40};\n  vc<ll> floor_model\
-    \ = {0, 1, 2, 2, 4, 4, 4, 4, 8, 8, 1LL << 39};\n  vc<ll> ceil_model = {1, 1, 2,\
-    \ 4, 4, 8, 8, 8, 8, 16, 1LL << 40};\n  vc<ll> pp_model = {0, 1, 1, 2, 1, 2, 2,\
-    \ 3, 1, 2, 20};\n  vc<ll> single_model = {0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0};\n\
-    \  vc<ll> width, floor, ceil, pp, single;\n  fec(k : vl{0, 1, 2, 3, 4, 5, 6, 7,\
-    \ 8, 9, 0b1010101010101010101010101010101010101010LL})\n  {\n    width.push_back(bit_width(k));\n\
+    \ F>(reversed(v), op, e)); }\ntemplate <class T, const T infty = INF>\nvc<T> cumlmax(const\
+    \ vc<T> &v)\n{ return cuml(v, [](T a, T b) { return max(a, b); }, -infty); }\n\
+    template <class T, const T infty = INF>\nvc<T> cumrmax(const vc<T> &v)\n{ return\
+    \ cumr(v, [](T a, T b) { return max(a, b); }, -infty); }\ntemplate <class T, const\
+    \ T infty = INF>\nvc<T> cumlmin(const vc<T> &v)\n{ return cuml(v, [](T a, T b)\
+    \ { return min(a, b); }, infty); }\ntemplate <class T, const T infty = INF>\n\
+    vc<T> cumrmin(const vc<T> &v)\n{ return cumr(v, [](T a, T b) { return min(a, b);\
+    \ }, infty); }\n\ntemplate <class T>\nvc<T> adjd(const vc<T> &v)\n{\n  int n =\
+    \ v.size();\n  vc<T> res(n + 1);\n  res[0] = v[0];\n  repi(i, 1, n) res[i] = v[i]\
+    \ - v[i - 1];\n  res[n] = -v[n - 1];\n  return res;\n}\n\nconst vpll DRULgrid\
+    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane = {{0, -1}, {1,\
+    \ 0}, {0, 1}, {-1, 0}};\n#line 6 \"verify/mytest/template_bit.test.cpp\"\n\nvoid\
+    \ test1()\n{\n  vc<ll> width_model = {0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 40};\n  vc<ll>\
+    \ floor_model = {0, 1, 2, 2, 4, 4, 4, 4, 8, 8, 1LL << 39};\n  vc<ll> ceil_model\
+    \ = {1, 1, 2, 4, 4, 8, 8, 8, 8, 16, 1LL << 40};\n  vc<ll> pp_model = {0, 1, 1,\
+    \ 2, 1, 2, 2, 3, 1, 2, 20};\n  vc<ll> single_model = {0, 1, 1, 0, 1, 0, 0, 0,\
+    \ 1, 0, 0};\n  vc<ll> width, floor, ceil, pp, single;\n  fec(k : vl{0, 1, 2, 3,\
+    \ 4, 5, 6, 7, 8, 9, 0b1010101010101010101010101010101010101010LL})\n  {\n    width.push_back(bit_width(k));\n\
     \    floor.push_back(bit_floor(k));\n    ceil.push_back(bit_ceil(k));\n    pp.push_back(popcount(k));\n\
     \    single.push_back(has_single_bit(k));\n  }\n  assert(width == width_model);\n\
     \  assert(floor == floor_model);\n  assert(ceil == ceil_model);\n  assert(pp ==\
@@ -316,15 +277,8 @@ data:
     \  assert(btest(x, 0));\n  assert(!btest(x, 1));\n  bset(x, 1);\n  assert(btest(x,\
     \ 1));\n  bset(x, 0, 0);\n  assert(!btest(x, 0));\n  ll y(x);\n  bflip(y, 2);\n\
     \  bflip(y, 3);\n  assert(btest(x, 2) != btest(y, 2));\n  assert(btest(x, 3) !=\
-    \ btest(y, 3));\n}\n\nvoid test4()\n{\n  const ll n = 6;\n  vc<pll> sub1, sup1,\
-    \ sub2, sup2;\n  rep(x, pow2(n)) rep(y, pow2(n))\n  {\n    if (bsubset(x, y))\n\
-    \      sub1.emplace_back(x, y);\n    if (bsupset(y, x))\n      sup1.emplace_back(x,\
-    \ y);\n  }\n  rep(y, pow2(n)) fec(x : bsubsets(y)) sub2.emplace_back(x, y);\n\
-    \  rep(x, pow2(n)) fec(y : bsupsets(n, x)) sup2.emplace_back(x, y);\n  // dump(sub1\
-    \ | cp::bin(n), sub2 | cp::bin(n));\n  // dump(sup1 | cp::bin(n), sup2 | cp::bin(n));\n\
-    \  assert(sorted(sub1) == sorted(sub2));\n  assert(sorted(sup1) == sorted(sup2));\n\
-    }\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n  test4();\n\n  cout <<\
-    \ \"Hello World\" << endl;\n}\n"
+    \ btest(y, 3));\n}\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n\n  cout\
+    \ << \"Hello World\" << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#include \"../../template/template_bit.hpp\"\n#include \"../../template/template_dump.hpp\"\
     \n#include \"../../template/template_algo.hpp\"\n\nvoid test1()\n{\n  vc<ll> width_model\
@@ -349,15 +303,8 @@ data:
     \  assert(btest(x, 0));\n  assert(!btest(x, 1));\n  bset(x, 1);\n  assert(btest(x,\
     \ 1));\n  bset(x, 0, 0);\n  assert(!btest(x, 0));\n  ll y(x);\n  bflip(y, 2);\n\
     \  bflip(y, 3);\n  assert(btest(x, 2) != btest(y, 2));\n  assert(btest(x, 3) !=\
-    \ btest(y, 3));\n}\n\nvoid test4()\n{\n  const ll n = 6;\n  vc<pll> sub1, sup1,\
-    \ sub2, sup2;\n  rep(x, pow2(n)) rep(y, pow2(n))\n  {\n    if (bsubset(x, y))\n\
-    \      sub1.emplace_back(x, y);\n    if (bsupset(y, x))\n      sup1.emplace_back(x,\
-    \ y);\n  }\n  rep(y, pow2(n)) fec(x : bsubsets(y)) sub2.emplace_back(x, y);\n\
-    \  rep(x, pow2(n)) fec(y : bsupsets(n, x)) sup2.emplace_back(x, y);\n  // dump(sub1\
-    \ | cp::bin(n), sub2 | cp::bin(n));\n  // dump(sup1 | cp::bin(n), sup2 | cp::bin(n));\n\
-    \  assert(sorted(sub1) == sorted(sub2));\n  assert(sorted(sup1) == sorted(sup2));\n\
-    }\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n  test4();\n\n  cout <<\
-    \ \"Hello World\" << endl;\n}"
+    \ btest(y, 3));\n}\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n\n  cout\
+    \ << \"Hello World\" << endl;\n}"
   dependsOn:
   - template/template_bit.hpp
   - template/template_types.hpp
@@ -366,11 +313,10 @@ data:
   - template/template_algo.hpp
   - template/template_vector.hpp
   - template/template_math.hpp
-  - template/template_func.hpp
   isVerificationFile: true
   path: verify/mytest/template_bit.test.cpp
   requiredBy: []
-  timestamp: '2025-02-08 07:50:23+09:00'
+  timestamp: '2025-02-12 07:45:54+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_bit.test.cpp

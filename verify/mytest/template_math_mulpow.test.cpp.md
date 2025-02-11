@@ -50,54 +50,53 @@ data:
     \ &operator<<(ostream &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n\
     }\n#endif\n\n#define cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\
     \n#line 4 \"template/template_rep.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
-    \u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n */\n\n/**\n\
-    \ * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n*/\n\n#define overload4(_1,\
-    \ _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0, nnnnn = ll(n);\
-    \ i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i = ll(l), rrrrr = ll(r); i <\
-    \ rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd\
-    \ = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__,\
-    \ rep3, rep2, rep1)(__VA_ARGS__)\n#define repi1(i, n) for (int i = 0, nnnnn =\
-    \ int(n); i < nnnnn; i++)\n#define repi2(i, l, r) for (int i = int(l), rrrrr =\
-    \ int(r); i < rrrrr; i++)\n#define repi3(i, l, r, d) for (int i = int(l), rrrrr\
-    \ = int(r), ddddd = int(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define\
-    \ repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\n#define\
-    \ fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
-    #define fem(...) for (auto &__VA_ARGS__)\n#line 12 \"template/template_math.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
-    \n * @docs docs/template/template_math.md\n */\n\ninline bool chmin(auto &a, cauto\
-    \ &b) { return a > b ? a = b, true : false; }\ninline bool chmax(auto &a, cauto\
-    \ &b) { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll>\ninline\
-    \ constexpr T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b)\
-    \ && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll>\ninline constexpr T divceil(cauto\
-    \ &a, cauto &b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\n\
-    template <class T = ll>\ninline constexpr T divround(cauto &a, cauto &b) { return\
-    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll>\ninline constexpr\
-    \ T safemod(cauto &a, cauto &b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
-    template <class T = ll>\nconstexpr T ipow(cauto &a, auto b)\n{\n  assert(b >=\
-    \ 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
-    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
-    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
-    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
-    \ T = ll>\nT mul_limited(cauto &a, cauto &b, cauto &m = INF)\n{\n  assert(a >=\
-    \ 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m)\
-    \ / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll>\nT pow_limited(cauto\
-    \ &a, auto b, cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if\
-    \ (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1, tmp\
-    \ = a;\n  while (true)\n  {\n    if (b & 1)\n    {\n      if (res > T(m) / tmp)\n\
-    \        return m;\n      res *= tmp;\n    }\n    b >>= 1;\n    if (b == 0)\n\
-    \      break;\n    if (tmp > T(m) / tmp)\n      return m;\n    tmp *= tmp;\n \
-    \ }\n  return res;\n}\n\ntemplate <class T = ll>\nconstexpr T iroot(cauto &a,\
-    \ cauto &k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return\
-    \ a;\n  if (k == 2 && a <= ULLONG_MAX)\n    return sqrtl(a);\n\n  auto isok =\
-    \ [&](T x) -> bool\n  {\n    if (x == 0)\n      return true;\n    T res = 1, k2\
-    \ = k;\n    while (true)\n    {\n      if (k2 & 1)\n      {\n        if (res >\
-    \ T(a) / x)\n          return false;\n        res *= x;\n      }\n      k2 >>=\
-    \ 1;\n      if (k2 == 0)\n        break;\n      if (x > T(a) / x)\n        return\
-    \ false;\n      x *= x;\n    }\n    return res <= T(a);\n  };\n\n  T x = pow(a,\
-    \ 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n    up = false, x--;\n  if\
-    \ (up)\n  {\n    while (x < numeric_limits<T>::max() && isok(x + 1))\n      x++;\n\
-    \  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
-    template <class D = decltype(EPS)>\nint sgn(cauto &a, const D &eps = EPS) { return\
+    \u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n */\n\n//\
+    \ https://trap.jp/post/1224/\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n\
+    #define rep1(i, n) for (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i,\
+    \ l, r) for (ll i = ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define rep3(i, l,\
+    \ r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr\
+    \ : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n\
+    #define repi1(i, n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i,\
+    \ l, r) for (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i,\
+    \ l, r, d) for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i\
+    \ < rrrrr : i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3,\
+    \ repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n#define\
+    \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
+    #line 12 \"template/template_math.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs docs/template/template_math.md\n\
+    \ */\n\ninline bool chmin(auto &a, cauto &b) { return a > b ? a = b, true : false;\
+    \ }\ninline bool chmax(auto &a, cauto &b) { return a < b ? a = b, true : false;\
+    \ }\n\ntemplate <class T = ll>\ninline constexpr T divfloor(cauto &a, cauto &b)\
+    \ { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class\
+    \ T = ll>\ninline constexpr T divceil(cauto &a, cauto &b) { return T(a) / T(b)\
+    \ + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll>\ninline constexpr\
+    \ T divround(cauto &a, cauto &b) { return divfloor<T>(2 * T(a) + T(b), 2 * T(b));\
+    \ }\ntemplate <class T = ll>\ninline constexpr T safemod(cauto &a, cauto &b) {\
+    \ return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class T = ll>\nconstexpr\
+    \ T ipow(cauto &a, auto b)\n{\n  assert(b >= 0);\n  if (b == 0)\n    return 1;\n\
+    \  if (a == 0 || a == 1)\n    return a;\n  if (a < 0 && a == -1)\n    return b\
+    \ & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
+    \      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n\
+    \  }\n  return res;\n}\ntemplate <class T = ll>\nT mul_limited(cauto &a, cauto\
+    \ &b, cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n\
+    \    return 0;\n  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate\
+    \ <class T = ll>\nT pow_limited(cauto &a, auto b, cauto &m = INF)\n{\n  assert(a\
+    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
+    \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
+    \    {\n      if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n  \
+    \  }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n\
+    \      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\n\ntemplate <class T\
+    \ = ll>\nconstexpr T iroot(cauto &a, cauto &k)\n{\n  assert(a >= 0 && k >= 1);\n\
+    \  if (a <= 1 || k == 1)\n    return a;\n  if (k == 2 && a <= ULLONG_MAX)\n  \
+    \  return sqrtl(a);\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n\
+    \      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n      if\
+    \ (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n  \
+    \      res *= x;\n      }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n\
+    \      if (x > T(a) / x)\n        return false;\n      x *= x;\n    }\n    return\
+    \ res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n\
+    \    up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max()\
+    \ && isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    template <class D = decltype(EPS)>\nint SGN(cauto &a, const D &eps = EPS) { return\
     \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
     \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\n// 0\
     \ \u306B\u5BFE\u3057\u3066\u306F {0} \u304C\u8FD4\u308B\ntemplate <class T = ll>\n\
@@ -168,7 +167,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_math_mulpow.test.cpp
   requiredBy: []
-  timestamp: '2024-12-30 15:05:37+09:00'
+  timestamp: '2025-02-12 07:45:54+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_math_mulpow.test.cpp

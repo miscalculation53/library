@@ -36,16 +36,16 @@ data:
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/yosupo/quotients.test.cpp
-    title: verify/yosupo/quotients.test.cpp
+    path: verify/mytest/itertools_direct_product.test.cpp
+    title: verify/mytest/itertools_direct_product.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/quotients.md
-    document_title: "\u5546\u5217\u6319"
+    _deprecated_at_docs: docs/itertools/direct_product.md
+    document_title: "\u76F4\u7A4D"
     links: []
-  bundledCode: "#line 2 \"math/quotients.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+  bundledCode: "#line 2 \"itertools/direct_product.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -500,36 +500,34 @@ data:
     \ &tv)\n{\n  size_t n = get<0>(tv).size();\n  apply([&](auto &...v)\n        {\
     \ ((assert(v.size() == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t\
     \ i = 0; i < n; i++)\n    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{},\
-    \ i);\n  return vt;\n}\n// ----------\n#line 4 \"math/quotients.hpp\"\n\n/**\n\
-    \ * @brief \u5546\u5217\u6319\n * @docs docs/math/quotients.md\n */\n\n// (y,\
-    \ l, r)\n// y \u306F floor(n / x^d) (x: \u6574\u6570) \u3068\u3057\u3066\u8868\
-    \u305B\u308B\u6574\u6570\n// y == floor(n / x^d) <=> l < x <= r\nstruct quotients\n\
-    {\nprivate:\n  ll n;\n  int d;\n\npublic:\n  quotients(ll n, int d = 1) : n(n),\
-    \ d(d)\n  {\n    assert(n >= 1 && d >= 1);\n  }\n  struct Iterator\n  {\n  private:\n\
-    \    ll y, l, r;\n    const quotients &q;\n\n  public:\n    Iterator(ll y, ll\
-    \ l, ll r, const quotients &q) : y(y), l(l), r(r), q(q) {}\n    tuple<ll, ll,\
-    \ ll> operator*() const { return {y, l, r}; }\n    Iterator& operator++()\n  \
-    \  {\n      if (l == 0)\n        y = l = r = -1;\n      else\n      {\n      \
-    \  r = l;\n        y = q.n / ipow(l, q.d);\n        l = iroot(q.n / (y + 1), q.d);\n\
-    \      }\n      return *this;\n    }\n    bool operator!=(const Iterator &other)\
-    \ const { return y != other.y; }\n  };\n  Iterator begin() const { return Iterator(1,\
-    \ iroot(n / 2, d), iroot(n, d), *this); }\n  Iterator end() const { return Iterator(-1,\
-    \ -1, -1, *this); }\n};\n"
+    \ i);\n  return vt;\n}\n// ----------\n#line 4 \"itertools/direct_product.hpp\"\
+    \n\n/**\n * @brief \u76F4\u7A4D\n * @docs docs/itertools/direct_product.md\n */\n\
+    \ntemplate <class T = ll>\nstruct direct_product\n{\nprivate:\n  vc<T> a;\npublic:\n\
+    \  direct_product(const vc<T> &a) : a(a)\n  {\n    assert(!a.empty());\n    fec(ai\
+    \ : a) assert(ai >= 1);\n  }\n  struct Iterator\n  {\n  private:\n    vc<T> b;\n\
+    \    const direct_product &prod;\n\n  public:\n    Iterator(const vc<T> &b, const\
+    \ direct_product &prod) : b(b), prod(prod) {}\n    vc<T> operator*() const { return\
+    \ b; }\n    Iterator& operator++()\n    {\n      b.back()++;\n      repi(i, SZ<int>(prod.a)\
+    \ - 1, 0, -1)\n      {\n        if (b[i] == prod.a[i])\n        {\n          b[i]\
+    \ = 0;\n          b[i - 1]++;\n        }\n        else\n          break;\n   \
+    \   }\n      return *this;\n    }\n    bool operator!=(const Iterator &other)\
+    \ const { return b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
+    \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n"
   code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u5546\u5217\u6319\n * @docs docs/math/quotients.md\n */\n\n// (y, l, r)\n//\
-    \ y \u306F floor(n / x^d) (x: \u6574\u6570) \u3068\u3057\u3066\u8868\u305B\u308B\
-    \u6574\u6570\n// y == floor(n / x^d) <=> l < x <= r\nstruct quotients\n{\nprivate:\n\
-    \  ll n;\n  int d;\n\npublic:\n  quotients(ll n, int d = 1) : n(n), d(d)\n  {\n\
-    \    assert(n >= 1 && d >= 1);\n  }\n  struct Iterator\n  {\n  private:\n    ll\
-    \ y, l, r;\n    const quotients &q;\n\n  public:\n    Iterator(ll y, ll l, ll\
-    \ r, const quotients &q) : y(y), l(l), r(r), q(q) {}\n    tuple<ll, ll, ll> operator*()\
-    \ const { return {y, l, r}; }\n    Iterator& operator++()\n    {\n      if (l\
-    \ == 0)\n        y = l = r = -1;\n      else\n      {\n        r = l;\n      \
-    \  y = q.n / ipow(l, q.d);\n        l = iroot(q.n / (y + 1), q.d);\n      }\n\
-    \      return *this;\n    }\n    bool operator!=(const Iterator &other) const\
-    \ { return y != other.y; }\n  };\n  Iterator begin() const { return Iterator(1,\
-    \ iroot(n / 2, d), iroot(n, d), *this); }\n  Iterator end() const { return Iterator(-1,\
-    \ -1, -1, *this); }\n};"
+    \ \u76F4\u7A4D\n * @docs docs/itertools/direct_product.md\n */\n\ntemplate <class\
+    \ T = ll>\nstruct direct_product\n{\nprivate:\n  vc<T> a;\npublic:\n  direct_product(const\
+    \ vc<T> &a) : a(a)\n  {\n    assert(!a.empty());\n    fec(ai : a) assert(ai >=\
+    \ 1);\n  }\n  struct Iterator\n  {\n  private:\n    vc<T> b;\n    const direct_product\
+    \ &prod;\n\n  public:\n    Iterator(const vc<T> &b, const direct_product &prod)\
+    \ : b(b), prod(prod) {}\n    vc<T> operator*() const { return b; }\n    Iterator&\
+    \ operator++()\n    {\n      b.back()++;\n      repi(i, SZ<int>(prod.a) - 1, 0,\
+    \ -1)\n      {\n        if (b[i] == prod.a[i])\n        {\n          b[i] = 0;\n\
+    \          b[i - 1]++;\n        }\n        else\n          break;\n      }\n \
+    \     return *this;\n    }\n    bool operator!=(const Iterator &other) const {\
+    \ return b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
+    \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
+    \ = a[0];\n    return Iterator(c, *this);\n  }\n};"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -542,63 +540,42 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   isVerificationFile: false
-  path: math/quotients.hpp
+  path: itertools/direct_product.hpp
   requiredBy: []
   timestamp: '2025-02-12 07:45:54+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/quotients.test.cpp
-documentation_of: math/quotients.hpp
+  - verify/mytest/itertools_direct_product.test.cpp
+documentation_of: itertools/direct_product.hpp
 layout: document
 redirect_from:
-- /library/math/quotients.hpp
-- /library/math/quotients.hpp.html
-title: "\u5546\u5217\u6319"
+- /library/itertools/direct_product.hpp
+- /library/itertools/direct_product.hpp.html
+title: "\u76F4\u7A4D"
 ---
-## 商列挙
+## 直積全探索
+
+#### direct_product
 
 ```cpp
-quotients(ll n, int d = 1)
+direct_product(vc<T> a)
 ```
 
-次の条件を満たす $(y, l, r)$ を $y$ の昇順（$l, r$ の降順）に列挙する。
+長さ $\lvert a \rvert$ で、$i \: (0 \leq i < \lvert a \rvert)$ 番目が $[0, a_i)$ であるような vector をすべて（辞書順で）列挙する。
+  - 例：$a = (2, 1, 3)$ のとき
+    - $(0, 0, 0)$
+    - $(0, 0, 1)$
+    - $(0, 0, 2)$
+    - $(1, 0, 0)$
+    - $(1, 0, 1)$
+    - $(1, 0, 2)$
 
-- $\displaystyle y \in \left\lbrace \left\lfloor \frac{n}{x^d} \right\rfloor \ \middle\vert \ x \in \mathbb{Z}, 1 \leq x \leq n^{1/d} \right\rbrace$
-- $x \in \mathbb{Z}, 1 \leq x \leq n^{1/d}$ に対し、$\displaystyle y = \left\lfloor \frac{n}{x^d} \right\rfloor \iff x \in (l, r]$
-
-使い方としては
-
-```cpp
-fec([y, l, r] : quotients(n))
+イテレータを実装している形なので、たとえば範囲 for の中で
 ```
-
-という感じ。
-
-##### 制約
-
-- $n \geq 1$
-- $d \geq 1$
+fec(v : direct_product({2, 1, 3}))
+```
+のように使う。
 
 ##### 計算量
 
-- $1$ 回のイテレーションは `ipow`, `iroot` がボトルネック
-- 条件を満たすものの個数は $O(n^{1/(d+1)})$
-
-##### 関連事実
-
-- 中身は以下の通り。
-
-  $\begin{aligned}
-    y = \left\lfloor \frac{n}{x^d} \right\rfloor
-    &\iff \frac{n}{x^d} - 1 \lt y \leq \frac{n}{x^d} \\\\  
-    &\iff \frac{n}{y+1} \lt x^d \leq \frac{n}{y} \\\\  
-    &\iff \left\lfloor \left\lfloor\frac{n}{y+1}\right\rfloor^{1/d} \right\rfloor \lt x \leq \left\lfloor \left\lfloor\frac{n}{y}\right\rfloor^{1/d} \right\rfloor
-  \end{aligned}$
-
-  $(y, l, r)$ から $(y', l', r')$ を得るには、$r' = l$ とし、$y'$ を計算し、$l'$ を上式から求める。
-- 個数の評価について
-  - $x \leq m$ なものの個数は、$x$ の個数（$\leq m$）で抑えられる。
-  - $x \geq m$ なものの個数は、$y$ の個数（$\leq n/m^d$）で抑えられる。
-  - $m = n/m^d$ とすると $m = n^{1/(d+1)}$ で、結局全体では $2n^{1/(d+1)}$ で抑えられる。
-- $d$ が一般の場合の応用先
-  - $d = 2$ の場合は無平方数の数え上げに利用できる。
+- $1$ 回のイテレーションが償却 $O(1)$

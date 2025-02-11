@@ -18,6 +18,12 @@ data:
     path: ds/group_index.hpp
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
   - icon: ':heavy_check_mark:'
+    path: itertools/bit.hpp
+    title: "\u76F4\u7A4D"
+  - icon: ':heavy_check_mark:'
+    path: itertools/direct_product.hpp
+    title: "\u76F4\u7A4D"
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
   - icon: ':heavy_check_mark:'
@@ -83,10 +89,6 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
   - icon: ':heavy_check_mark:'
-    path: template/template_func.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u95A2\u6570\u30AA\u30D6\u30B8\
-      \u30A7\u30AF\u30C8\uFF09"
-  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
   - icon: ':heavy_check_mark:'
@@ -102,6 +104,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/extgcd.test.cpp
     title: verify/aoj/extgcd.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/itertools_bit.test.cpp
+    title: verify/mytest/itertools_bit.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/itertools_direct_product.test.cpp
+    title: verify/mytest/itertools_direct_product.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/modint.test.cpp
     title: verify/mytest/modint.test.cpp
@@ -230,21 +238,7 @@ data:
     \ &operator<<(ostream &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n\
     }\n#endif\n\n#define cauto const auto\n#line 4 \"template/template_rep.hpp\"\n\
     \n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
-    \ docs/template/template_rep.md\n */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n\
-    */\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for\
-    \ (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i =\
-    \ ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i =\
-    \ ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i +=\
-    \ d)\n#define rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n\
-    #define repi1(i, n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i,\
-    \ l, r) for (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i,\
-    \ l, r, d) for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i\
-    \ < rrrrr : i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3,\
-    \ repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n#define\
-    \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n"
-  code: "#pragma once\n\n#include \"template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
-    \u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n\
-    \ */\n\n/**\n * \u53C2\u8003\uFF1A\n * https://trap.jp/post/1224/\n*/\n\n#define\
+    \ docs/template/template_rep.md\n */\n\n// https://trap.jp/post/1224/\n\n#define\
     \ overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0,\
     \ nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i = ll(l), rrrrr\
     \ = ll(r); i < rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i = ll(l), rrrrr\
@@ -255,7 +249,21 @@ data:
     \ for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i < rrrrr :\
     \ i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\
     \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
-    #define fem(...) for (auto &__VA_ARGS__)"
+    #define fem(...) for (auto &__VA_ARGS__)\n"
+  code: "#pragma once\n\n#include \"template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
+    \u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n\
+    \ */\n\n// https://trap.jp/post/1224/\n\n#define overload4(_1, _2, _3, _4, name,\
+    \ ...) name\n#define rep1(i, n) for (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n\
+    #define rep2(i, l, r) for (ll i = ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define\
+    \ rep3(i, l, r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0\
+    \ ? i < rrrrr : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__, rep3,\
+    \ rep2, rep1)(__VA_ARGS__)\n#define repi1(i, n) for (int i = 0, nnnnn = int(n);\
+    \ i < nnnnn; i++)\n#define repi2(i, l, r) for (int i = int(l), rrrrr = int(r);\
+    \ i < rrrrr; i++)\n#define repi3(i, l, r, d) for (int i = int(l), rrrrr = int(r),\
+    \ ddddd = int(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define repi(...)\
+    \ overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\n#define fe(...)\
+    \ for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n#define fem(...)\
+    \ for (auto &__VA_ARGS__)"
   dependsOn:
   - template/template_types.hpp
   isVerificationFile: false
@@ -283,13 +291,14 @@ data:
   - template/template_inout.hpp
   - template/template_algo.hpp
   - template/template_vector.hpp
-  - template/template_func.hpp
   - template/template_all.hpp
+  - itertools/bit.hpp
+  - itertools/direct_product.hpp
   - ds/group_index.hpp
   - ds/csr.hpp
   - ds/coordinate_compression.hpp
   - algo/merge_sort.hpp
-  timestamp: '2024-12-20 09:47:18+09:00'
+  timestamp: '2025-02-12 07:45:54+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/template_math_mulpow.test.cpp
@@ -297,7 +306,9 @@ data:
   - verify/mytest/template_bit.test.cpp
   - verify/mytest/modint.test.cpp
   - verify/mytest/template_math_div.test.cpp
+  - verify/mytest/itertools_direct_product.test.cpp
   - verify/mytest/template_vector.test.cpp
+  - verify/mytest/itertools_bit.test.cpp
   - verify/mytest/template_algo.test.cpp
   - verify/mytest/template_sgn.test.cpp.cpp
   - verify/mytest/template_binsearch.test.cpp
