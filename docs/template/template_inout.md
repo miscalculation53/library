@@ -8,6 +8,8 @@
   - （人から借りた）爆速入出力
     - 参考： https://maspypy.com/library-checker-many-a-b
   - cin, cout と併用してはならない
+  - cin でたまにやる、`12+345` に対して `ll x, y; char c; cin >> x >> c >> y;` とするようなやつは多分未対応？（TLE するので注意）
+    - 実装してないだけなのか原理的に難しいのかを知らない
 - `FAST_CIO`
   - cin, cout を使う
   - `cin.tie(0); ios::sync_with_stdio(false);` をする
