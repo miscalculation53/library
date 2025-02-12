@@ -43,7 +43,8 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/itertools/bit.md
-    document_title: "\u76F4\u7A4D"
+    document_title: "\u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\
+      \u7D22"
     links: []
   bundledCode: "#line 2 \"itertools/bit.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
@@ -501,36 +502,37 @@ data:
     \ ((assert(v.size() == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t\
     \ i = 0; i < n; i++)\n    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{},\
     \ i);\n  return vt;\n}\n// ----------\n#line 4 \"itertools/bit.hpp\"\n\n/**\n\
-    \ * @brief \u76F4\u7A4D\n * @docs docs/itertools/bit.md\n */\n\ntemplate <class\
-    \ T>\nstruct bsubsets\n{\nprivate:\n  T x;\npublic:\n  bsubsets(T x) : x(x) {}\n\
-    \  struct Iterator\n  {\n  private:\n    T y;\n    bool is_end;\n    const bsubsets\
-    \ &bs;\n  public:\n    Iterator(T y, bool is_end, const bsubsets &bs) : y(y),\
-    \ is_end(is_end), bs(bs) {}\n    T operator*() const { return y; }\n    Iterator&\
-    \ operator++()\n    {\n      if (y == 0)\n        is_end = true;\n      y = (y\
-    \ - 1) & bs.x;\n      return *this;\n    }\n    bool operator!=(const Iterator\
-    \ &other) const { return y != other.y || is_end != other.is_end; }\n  };\n  Iterator\
-    \ begin() const { return Iterator(x, false, *this); }\n  Iterator end() const\
-    \ { return Iterator(x, true, *this); }\n};\ntemplate <class T>\nstruct bsupsets\n\
-    {\nprivate:\n  int n;\n  T x;\npublic:\n  bsupsets(int n, T x) : n(n), x(x) {}\n\
-    \  struct Iterator\n  {\n  private:\n    T y;\n    const bsupsets &bs;\n  public:\n\
-    \    Iterator(T y, const bsupsets &bs) : y(y), bs(bs) {}\n    T operator*() const\
-    \ { return y; }\n    Iterator& operator++()\n    {\n      y = (y + 1) | bs.x;\n\
-    \      return *this;\n    }\n    bool operator!=(const Iterator &other) const\
-    \ { return y != other.y; }\n  };\n  Iterator begin() const { return Iterator(x,\
-    \ *this); }\n  Iterator end() const { return Iterator((T(1) << n) | x, *this);\
-    \ }\n};\n"
+    \ * @brief \u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\u7D22\
+    \n * @docs docs/itertools/bit.md\n */\n\ntemplate <class T>\nstruct bsubsets\n\
+    {\nprivate:\n  T x;\npublic:\n  bsubsets(T x) : x(x) {}\n  struct Iterator\n \
+    \ {\n  private:\n    T y;\n    bool is_end;\n    const bsubsets &bs;\n  public:\n\
+    \    Iterator(T y, bool is_end, const bsubsets &bs) : y(y), is_end(is_end), bs(bs)\
+    \ {}\n    T operator*() const { return y; }\n    Iterator& operator++()\n    {\n\
+    \      if (y == 0)\n        is_end = true;\n      y = (y - 1) & bs.x;\n      return\
+    \ *this;\n    }\n    bool operator!=(const Iterator &other) const { return y !=\
+    \ other.y || is_end != other.is_end; }\n  };\n  Iterator begin() const { return\
+    \ Iterator(x, false, *this); }\n  Iterator end() const { return Iterator(x, true,\
+    \ *this); }\n};\ntemplate <class T>\nstruct bsupsets\n{\nprivate:\n  int n;\n\
+    \  T x;\npublic:\n  bsupsets(int n, T x) : n(n), x(x) {}\n  struct Iterator\n\
+    \  {\n  private:\n    T y;\n    const bsupsets &bs;\n  public:\n    Iterator(T\
+    \ y, const bsupsets &bs) : y(y), bs(bs) {}\n    T operator*() const { return y;\
+    \ }\n    Iterator& operator++()\n    {\n      y = (y + 1) | bs.x;\n      return\
+    \ *this;\n    }\n    bool operator!=(const Iterator &other) const { return y !=\
+    \ other.y; }\n  };\n  Iterator begin() const { return Iterator(x, *this); }\n\
+    \  Iterator end() const { return Iterator((T(1) << n) | x, *this); }\n};\n"
   code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u76F4\u7A4D\n * @docs docs/itertools/bit.md\n */\n\ntemplate <class T>\nstruct\
-    \ bsubsets\n{\nprivate:\n  T x;\npublic:\n  bsubsets(T x) : x(x) {}\n  struct\
-    \ Iterator\n  {\n  private:\n    T y;\n    bool is_end;\n    const bsubsets &bs;\n\
-    \  public:\n    Iterator(T y, bool is_end, const bsubsets &bs) : y(y), is_end(is_end),\
-    \ bs(bs) {}\n    T operator*() const { return y; }\n    Iterator& operator++()\n\
-    \    {\n      if (y == 0)\n        is_end = true;\n      y = (y - 1) & bs.x;\n\
-    \      return *this;\n    }\n    bool operator!=(const Iterator &other) const\
-    \ { return y != other.y || is_end != other.is_end; }\n  };\n  Iterator begin()\
-    \ const { return Iterator(x, false, *this); }\n  Iterator end() const { return\
-    \ Iterator(x, true, *this); }\n};\ntemplate <class T>\nstruct bsupsets\n{\nprivate:\n\
-    \  int n;\n  T x;\npublic:\n  bsupsets(int n, T x) : n(n), x(x) {}\n  struct Iterator\n\
+    \ \u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\u7D22\n *\
+    \ @docs docs/itertools/bit.md\n */\n\ntemplate <class T>\nstruct bsubsets\n{\n\
+    private:\n  T x;\npublic:\n  bsubsets(T x) : x(x) {}\n  struct Iterator\n  {\n\
+    \  private:\n    T y;\n    bool is_end;\n    const bsubsets &bs;\n  public:\n\
+    \    Iterator(T y, bool is_end, const bsubsets &bs) : y(y), is_end(is_end), bs(bs)\
+    \ {}\n    T operator*() const { return y; }\n    Iterator& operator++()\n    {\n\
+    \      if (y == 0)\n        is_end = true;\n      y = (y - 1) & bs.x;\n      return\
+    \ *this;\n    }\n    bool operator!=(const Iterator &other) const { return y !=\
+    \ other.y || is_end != other.is_end; }\n  };\n  Iterator begin() const { return\
+    \ Iterator(x, false, *this); }\n  Iterator end() const { return Iterator(x, true,\
+    \ *this); }\n};\ntemplate <class T>\nstruct bsupsets\n{\nprivate:\n  int n;\n\
+    \  T x;\npublic:\n  bsupsets(int n, T x) : n(n), x(x) {}\n  struct Iterator\n\
     \  {\n  private:\n    T y;\n    const bsupsets &bs;\n  public:\n    Iterator(T\
     \ y, const bsupsets &bs) : y(y), bs(bs) {}\n    T operator*() const { return y;\
     \ }\n    Iterator& operator++()\n    {\n      y = (y + 1) | bs.x;\n      return\
@@ -551,7 +553,7 @@ data:
   isVerificationFile: false
   path: itertools/bit.hpp
   requiredBy: []
-  timestamp: '2025-02-12 07:45:54+09:00'
+  timestamp: '2025-02-12 10:29:53+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/itertools_bit.test.cpp
@@ -560,7 +562,7 @@ layout: document
 redirect_from:
 - /library/itertools/bit.hpp
 - /library/itertools/bit.hpp.html
-title: "\u76F4\u7A4D"
+title: "\u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\u7D22"
 ---
 ## 部分集合・上位集合全探索
 

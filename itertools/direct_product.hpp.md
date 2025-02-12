@@ -43,7 +43,7 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/itertools/direct_product.md
-    document_title: "\u76F4\u7A4D"
+    document_title: "\u76F4\u7A4D\u5168\u63A2\u7D22"
     links: []
   bundledCode: "#line 2 \"itertools/direct_product.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
@@ -501,33 +501,35 @@ data:
     \ ((assert(v.size() == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t\
     \ i = 0; i < n; i++)\n    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{},\
     \ i);\n  return vt;\n}\n// ----------\n#line 4 \"itertools/direct_product.hpp\"\
-    \n\n/**\n * @brief \u76F4\u7A4D\n * @docs docs/itertools/direct_product.md\n */\n\
-    \ntemplate <class T = ll>\nstruct direct_product\n{\nprivate:\n  vc<T> a;\npublic:\n\
-    \  direct_product(const vc<T> &a) : a(a)\n  {\n    assert(!a.empty());\n    fec(ai\
-    \ : a) assert(ai >= 1);\n  }\n  struct Iterator\n  {\n  private:\n    vc<T> b;\n\
-    \    const direct_product &prod;\n\n  public:\n    Iterator(const vc<T> &b, const\
-    \ direct_product &prod) : b(b), prod(prod) {}\n    vc<T> operator*() const { return\
-    \ b; }\n    Iterator& operator++()\n    {\n      b.back()++;\n      repi(i, SZ<int>(prod.a)\
-    \ - 1, 0, -1)\n      {\n        if (b[i] == prod.a[i])\n        {\n          b[i]\
-    \ = 0;\n          b[i - 1]++;\n        }\n        else\n          break;\n   \
-    \   }\n      return *this;\n    }\n    bool operator!=(const Iterator &other)\
-    \ const { return b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
-    \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n"
+    \n\n/**\n * @brief \u76F4\u7A4D\u5168\u63A2\u7D22\n * @docs docs/itertools/direct_product.md\n\
+    \ */\n\ntemplate <class T = ll>\nstruct direct_product\n{\nprivate:\n  vc<T> a;\n\
+    public:\n  direct_product(const vc<T> &a) : a(a)\n  {\n    assert(!a.empty());\n\
+    \    fec(ai : a) assert(ai >= 1);\n  }\n  struct Iterator\n  {\n  private:\n \
+    \   vc<T> b;\n    const direct_product &prod;\n\n  public:\n    Iterator(const\
+    \ vc<T> &b, const direct_product &prod) : b(b), prod(prod) {}\n    vc<T> operator*()\
+    \ const { return b; }\n    Iterator& operator++()\n    {\n      b.back()++;\n\
+    \      repi(i, SZ<int>(prod.a) - 1, 0, -1)\n      {\n        if (b[i] == prod.a[i])\n\
+    \        {\n          b[i] = 0;\n          b[i - 1]++;\n        }\n        else\n\
+    \          break;\n      }\n      return *this;\n    }\n    bool operator!=(const\
+    \ Iterator &other) const { return b != other.b; }\n  };\n  Iterator begin() const\
+    \ { return Iterator(vc<T>(a.size(), 0), *this); }\n  Iterator end() const\n  {\n\
+    \    vc<T> c(a.size(), 0);\n    c[0] = a[0];\n    return Iterator(c, *this);\n\
+    \  }\n};\n"
   code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u76F4\u7A4D\n * @docs docs/itertools/direct_product.md\n */\n\ntemplate <class\
-    \ T = ll>\nstruct direct_product\n{\nprivate:\n  vc<T> a;\npublic:\n  direct_product(const\
-    \ vc<T> &a) : a(a)\n  {\n    assert(!a.empty());\n    fec(ai : a) assert(ai >=\
-    \ 1);\n  }\n  struct Iterator\n  {\n  private:\n    vc<T> b;\n    const direct_product\
-    \ &prod;\n\n  public:\n    Iterator(const vc<T> &b, const direct_product &prod)\
-    \ : b(b), prod(prod) {}\n    vc<T> operator*() const { return b; }\n    Iterator&\
-    \ operator++()\n    {\n      b.back()++;\n      repi(i, SZ<int>(prod.a) - 1, 0,\
-    \ -1)\n      {\n        if (b[i] == prod.a[i])\n        {\n          b[i] = 0;\n\
-    \          b[i - 1]++;\n        }\n        else\n          break;\n      }\n \
-    \     return *this;\n    }\n    bool operator!=(const Iterator &other) const {\
-    \ return b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
-    \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};"
+    \ \u76F4\u7A4D\u5168\u63A2\u7D22\n * @docs docs/itertools/direct_product.md\n\
+    \ */\n\ntemplate <class T = ll>\nstruct direct_product\n{\nprivate:\n  vc<T> a;\n\
+    public:\n  direct_product(const vc<T> &a) : a(a)\n  {\n    assert(!a.empty());\n\
+    \    fec(ai : a) assert(ai >= 1);\n  }\n  struct Iterator\n  {\n  private:\n \
+    \   vc<T> b;\n    const direct_product &prod;\n\n  public:\n    Iterator(const\
+    \ vc<T> &b, const direct_product &prod) : b(b), prod(prod) {}\n    vc<T> operator*()\
+    \ const { return b; }\n    Iterator& operator++()\n    {\n      b.back()++;\n\
+    \      repi(i, SZ<int>(prod.a) - 1, 0, -1)\n      {\n        if (b[i] == prod.a[i])\n\
+    \        {\n          b[i] = 0;\n          b[i - 1]++;\n        }\n        else\n\
+    \          break;\n      }\n      return *this;\n    }\n    bool operator!=(const\
+    \ Iterator &other) const { return b != other.b; }\n  };\n  Iterator begin() const\
+    \ { return Iterator(vc<T>(a.size(), 0), *this); }\n  Iterator end() const\n  {\n\
+    \    vc<T> c(a.size(), 0);\n    c[0] = a[0];\n    return Iterator(c, *this);\n\
+    \  }\n};"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -542,7 +544,7 @@ data:
   isVerificationFile: false
   path: itertools/direct_product.hpp
   requiredBy: []
-  timestamp: '2025-02-12 07:45:54+09:00'
+  timestamp: '2025-02-12 10:29:53+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/itertools_direct_product.test.cpp
@@ -551,7 +553,7 @@ layout: document
 redirect_from:
 - /library/itertools/direct_product.hpp
 - /library/itertools/direct_product.hpp.html
-title: "\u76F4\u7A4D"
+title: "\u76F4\u7A4D\u5168\u63A2\u7D22"
 ---
 ## 直積全探索
 

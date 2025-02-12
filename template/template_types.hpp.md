@@ -16,10 +16,10 @@ data:
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
   - icon: ':heavy_check_mark:'
     path: itertools/bit.hpp
-    title: "\u76F4\u7A4D"
+    title: "\u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\u7D22"
   - icon: ':heavy_check_mark:'
     path: itertools/direct_product.hpp
-    title: "\u76F4\u7A4D"
+    title: "\u76F4\u7A4D\u5168\u63A2\u7D22"
   - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"

@@ -3,7 +3,7 @@ data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
     path: itertools/bit.hpp
-    title: "\u76F4\u7A4D"
+    title: "\u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\u7D22"
   - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
@@ -504,32 +504,33 @@ data:
     \ ((assert(v.size() == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t\
     \ i = 0; i < n; i++)\n    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{},\
     \ i);\n  return vt;\n}\n// ----------\n#line 4 \"itertools/bit.hpp\"\n\n/**\n\
-    \ * @brief \u76F4\u7A4D\n * @docs docs/itertools/bit.md\n */\n\ntemplate <class\
-    \ T>\nstruct bsubsets\n{\nprivate:\n  T x;\npublic:\n  bsubsets(T x) : x(x) {}\n\
-    \  struct Iterator\n  {\n  private:\n    T y;\n    bool is_end;\n    const bsubsets\
-    \ &bs;\n  public:\n    Iterator(T y, bool is_end, const bsubsets &bs) : y(y),\
-    \ is_end(is_end), bs(bs) {}\n    T operator*() const { return y; }\n    Iterator&\
-    \ operator++()\n    {\n      if (y == 0)\n        is_end = true;\n      y = (y\
-    \ - 1) & bs.x;\n      return *this;\n    }\n    bool operator!=(const Iterator\
-    \ &other) const { return y != other.y || is_end != other.is_end; }\n  };\n  Iterator\
-    \ begin() const { return Iterator(x, false, *this); }\n  Iterator end() const\
-    \ { return Iterator(x, true, *this); }\n};\ntemplate <class T>\nstruct bsupsets\n\
-    {\nprivate:\n  int n;\n  T x;\npublic:\n  bsupsets(int n, T x) : n(n), x(x) {}\n\
-    \  struct Iterator\n  {\n  private:\n    T y;\n    const bsupsets &bs;\n  public:\n\
-    \    Iterator(T y, const bsupsets &bs) : y(y), bs(bs) {}\n    T operator*() const\
-    \ { return y; }\n    Iterator& operator++()\n    {\n      y = (y + 1) | bs.x;\n\
-    \      return *this;\n    }\n    bool operator!=(const Iterator &other) const\
-    \ { return y != other.y; }\n  };\n  Iterator begin() const { return Iterator(x,\
-    \ *this); }\n  Iterator end() const { return Iterator((T(1) << n) | x, *this);\
-    \ }\n};\n#line 4 \"verify/mytest/itertools_bit.test.cpp\"\n\nvoid test1()\n{\n\
-    \  const ll n = 6;\n  vc<pll> sub1, sup1, sub2, sup2;\n  rep(x, pow2(n)) rep(y,\
-    \ pow2(n))\n  {\n    if (bsubset(x, y))\n      sub1.emplace_back(x, y);\n    if\
-    \ (bsupset(y, x))\n      sup1.emplace_back(x, y);\n  }\n  rep(y, pow2(n)) fec(x\
-    \ : bsubsets(y)) sub2.emplace_back(x, y);\n  rep(x, pow2(n)) fec(y : bsupsets(n,\
-    \ x)) sup2.emplace_back(x, y);\n  // dump(sub1 | cp::bin(n), sub2 | cp::bin(n));\n\
-    \  // dump(sup1 | cp::bin(n), sup2 | cp::bin(n));\n  assert(sorted(sub1) == sorted(sub2));\n\
-    \  assert(sorted(sup1) == sorted(sup2));\n}\n\nint main()\n{\n  test1();\n\n \
-    \ cout << \"Hello World\" << endl;\n}\n"
+    \ * @brief \u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\u7D22\
+    \n * @docs docs/itertools/bit.md\n */\n\ntemplate <class T>\nstruct bsubsets\n\
+    {\nprivate:\n  T x;\npublic:\n  bsubsets(T x) : x(x) {}\n  struct Iterator\n \
+    \ {\n  private:\n    T y;\n    bool is_end;\n    const bsubsets &bs;\n  public:\n\
+    \    Iterator(T y, bool is_end, const bsubsets &bs) : y(y), is_end(is_end), bs(bs)\
+    \ {}\n    T operator*() const { return y; }\n    Iterator& operator++()\n    {\n\
+    \      if (y == 0)\n        is_end = true;\n      y = (y - 1) & bs.x;\n      return\
+    \ *this;\n    }\n    bool operator!=(const Iterator &other) const { return y !=\
+    \ other.y || is_end != other.is_end; }\n  };\n  Iterator begin() const { return\
+    \ Iterator(x, false, *this); }\n  Iterator end() const { return Iterator(x, true,\
+    \ *this); }\n};\ntemplate <class T>\nstruct bsupsets\n{\nprivate:\n  int n;\n\
+    \  T x;\npublic:\n  bsupsets(int n, T x) : n(n), x(x) {}\n  struct Iterator\n\
+    \  {\n  private:\n    T y;\n    const bsupsets &bs;\n  public:\n    Iterator(T\
+    \ y, const bsupsets &bs) : y(y), bs(bs) {}\n    T operator*() const { return y;\
+    \ }\n    Iterator& operator++()\n    {\n      y = (y + 1) | bs.x;\n      return\
+    \ *this;\n    }\n    bool operator!=(const Iterator &other) const { return y !=\
+    \ other.y; }\n  };\n  Iterator begin() const { return Iterator(x, *this); }\n\
+    \  Iterator end() const { return Iterator((T(1) << n) | x, *this); }\n};\n#line\
+    \ 4 \"verify/mytest/itertools_bit.test.cpp\"\n\nvoid test1()\n{\n  const ll n\
+    \ = 6;\n  vc<pll> sub1, sup1, sub2, sup2;\n  rep(x, pow2(n)) rep(y, pow2(n))\n\
+    \  {\n    if (bsubset(x, y))\n      sub1.emplace_back(x, y);\n    if (bsupset(y,\
+    \ x))\n      sup1.emplace_back(x, y);\n  }\n  rep(y, pow2(n)) fec(x : bsubsets(y))\
+    \ sub2.emplace_back(x, y);\n  rep(x, pow2(n)) fec(y : bsupsets(n, x)) sup2.emplace_back(x,\
+    \ y);\n  // dump(sub1 | cp::bin(n), sub2 | cp::bin(n));\n  // dump(sup1 | cp::bin(n),\
+    \ sup2 | cp::bin(n));\n  assert(sorted(sub1) == sorted(sub2));\n  assert(sorted(sup1)\
+    \ == sorted(sup2));\n}\n\nint main()\n{\n  test1();\n\n  cout << \"Hello World\"\
+    \ << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#include \"../../itertools/bit.hpp\"\n\nvoid test1()\n{\n  const ll n = 6;\n\
     \  vc<pll> sub1, sup1, sub2, sup2;\n  rep(x, pow2(n)) rep(y, pow2(n))\n  {\n \
@@ -555,7 +556,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/itertools_bit.test.cpp
   requiredBy: []
-  timestamp: '2025-02-12 07:45:54+09:00'
+  timestamp: '2025-02-12 10:29:53+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/itertools_bit.test.cpp

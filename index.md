@@ -21,10 +21,10 @@ data:
     pages:
     - icon: ':heavy_check_mark:'
       path: itertools/bit.hpp
-      title: "\u76F4\u7A4D"
+      title: "\u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\u7D22"
     - icon: ':heavy_check_mark:'
       path: itertools/direct_product.hpp
-      title: "\u76F4\u7A4D"
+      title: "\u76F4\u7A4D\u5168\u63A2\u7D22"
   - name: math/algebra
     pages:
     - icon: ':heavy_check_mark:'
