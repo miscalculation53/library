@@ -892,8 +892,8 @@ data:
   timestamp: '2025-02-12 07:45:54+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/order_mod_euler_phi.test.cpp
+  - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yosupo/primitive_root.test.cpp
   - verify/yosupo/primitive_root_min.test.cpp
 documentation_of: math/prime/euler_phi_carmichael.hpp

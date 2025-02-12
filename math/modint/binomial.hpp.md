@@ -705,7 +705,7 @@ $T$ 回呼んだとき、
 mint C(int n, int k)
 ```
 
-$n \geq k \geq 0$ のとき、$\displaystyle \binom{n}{k} = \dfrac{n!}{k!(n-k)!} = [x^k](1+x)^n$ を返す。
+$n \geq k \geq 0$ のとき、$\displaystyle \binom{n}{k} = \dfrac{n!}{k!(n-k)!} = [x^k](1 + x)^n$ を返す。
 
 $n \lt k, n \lt 0, k \lt 0$ のいずれかを満たす場合は $0$ を返す。
 
@@ -760,7 +760,7 @@ $2$ 通りの実装が知られている。
 $1$ つ目は、次の漸化式に基づいて `fac`, `finv`, `inv` テーブルを計算するもの。
 
 - $i! = (i-1)! \cdot i$
-- $p = qi + r \: (0 \leq r \lt i)$ として $\dfrac{1}{i} \equiv -q \cdot \dfrac{1}{r}$
+- $p = qi + r \ (0 \leq r \lt i)$ として $\dfrac{1}{i} \equiv -q \cdot \dfrac{1}{r}$
 - $\dfrac{1}{i!} = \dfrac{1}{(i-1)!} \cdot \dfrac{1}{i}$
 
 $2$ つ目は、`fac` テーブルは普通に計算し、`finv` テーブルは末尾だけを $O(\log p)$ 時間で求め、後ろから $\displaystyle \frac{1}{i!} = \frac{1}{(i+1)!} \cdot (i+1)$ で計算するもの。
