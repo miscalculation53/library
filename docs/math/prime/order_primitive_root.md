@@ -26,13 +26,12 @@
 
 元の位数や原始根は、$p-1$ の素因数分解 $O(p^{1/4})$ 時間を除くと $O(\mathrm{polylog}\ p)$ 時間で求まる。特に、（原始根を底とする）**指数は**（離散対数 $O(\sqrt{p})$ 時間等でないと）**求まらないが、位数は求まる**。
 
-`int` と `ll` で実装が分かれている。しかし、`ll` 側の関数でも `int` で計算できるなら `int` で計算してくれるので、基本的に `ll` 側で呼んでしまってよいと思う。
+`ll` までとれる関数だが、`int` の範囲で計算できるならそうしてくれる（modint パートが int と ll で割と重さが変わる）。
 
 #### order_mod
 
 ```cpp
-(1) int order_mod_int(int x, int p, vc<PrimePower<P>> fac)
-(2) ll order_mod(ll x, ll p, vc<Primepower<ll>> fac)
+ll order_mod(ll x, ll p, vc<Primepower<ll>> fac)
 ```
 
 $(\mathbb{Z}/p\mathbb{Z})^\times$ の元 $x$ の位数を求める。`fac` には $p-1$ の素因数分解形が入る。
@@ -105,7 +104,7 @@ https://37zigen.com/prime-complexity/#i-4
 
 ある元が原始根かどうかの判定は、位数が $p-1$ かどうかなので $O(\log p\log\log p)$ 時間で求まる。より強く $f_i = e_i - 1$（つまり $\dfrac{p-1}{q_i}$）のみを調べればよいこともすぐにわかる。
 
-原始根は $\phi(p-1)$ 個あるので、乱択すれば試行回数の期待値は $\dfrac{p-1}{\phi(p-1)}$ である。https://37zigen.com/prime-complexity/#i-4 より $\dfrac{n}{\phi(n)} = O(\log\log n)$ であるから、全体の期待計算量は $O((\log p) (\log\log p)^2)$ 時間とわかる。
+原始根は $\phi(p-1)$ 個あるので、乱択すれば試行回数の期待値は $\dfrac{p-1}{\phi(p-1)}$ である。https://37zigen.com/prime-complexity/#i-4 より $\dfrac{n}{\phi(n)} = O(\log\log n)$ であるから、全体の期待計算量は $O((\log p) (\log\log p)^2)$ 時間。
 
 ---
 
@@ -119,7 +118,7 @@ https://37zigen.com/prime-complexity/#i-4
 
 #### 元の位数
 
-$n \geq 2$ に対し、乗法群 $(\mathbb{Z}/n\mathbb{Z})^\times$ の元 $x$（つまり $\gcd(x, n) = 1$ を満たす $x$）の位数は、オイラーの定理 $x^{\phi(n)} \equiv 1 \pmod n$ から $\phi(n)$ の約数（「位数の倍数」の性質は巡回群でなくても成り立つ）。`fac` に $\phi(n)$ の素因数分解を渡すことでまったく同様のアルゴリズムで求まる。カーマイケル関数 $\lambda(n)$ を使うともう少し速い。
+$n \geq 2$ に対し、乗法群 $(\mathbb{Z}/n\mathbb{Z})^\times$ の元 $x$（つまり $\gcd(x, n) = 1$ を満たす $x$）の位数は、オイラーの定理 $x^{\phi(n)} \equiv 1 \pmod n$ から $\phi(n)$ の約数（「位数の倍数」の性質は巡回群でなくても成り立つ）。`fac` に $\phi(n)$ の素因数分解を渡すことでまったく同様のアルゴリズムで求まる。カーマイケル関数 $\lambda(n)$ を使う改善が考えられるが、最悪ケースでは同じ。
 
 #### 原始根
 

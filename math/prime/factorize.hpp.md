@@ -907,18 +907,18 @@ data:
   path: math/prime/factorize.hpp
   requiredBy:
   - math/prime/euler_phi_carmichael.hpp
-  - math/prime/order_primitive_root.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
+  - math/prime/order_primitive_root.hpp
   timestamp: '2025-02-12 07:45:54+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/yukicoder/order_mod_carmichael.test.cpp
+  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/divisors.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
   - verify/yosupo/factorize.test.cpp
+  - verify/yosupo/primitive_root.test.cpp
   - verify/yosupo/primitive_root_min.test.cpp
 documentation_of: math/prime/factorize.hpp
 layout: document

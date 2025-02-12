@@ -367,73 +367,73 @@ data:
   isVerificationFile: false
   path: template/template_math.hpp
   requiredBy:
-  - template/template_all.hpp
-  - template/template_vector.hpp
-  - template/template_algo.hpp
-  - template/template.cpp
-  - template/template_binsearch.hpp
-  - ds/group_index.hpp
-  - ds/coordinate_compression.hpp
-  - ds/csr.hpp
-  - math/algebra/algebra_base.hpp
-  - math/algebra/algebra_basic_ops.hpp
+  - math/modint/binomial.hpp
   - math/modint/modint_internal.hpp
   - math/modint/modint64.hpp
   - math/modint/modint.hpp
-  - math/modint/binomial.hpp
   - math/quotients.hpp
+  - math/extgcd.hpp
+  - math/algebra/algebra_basic_ops.hpp
+  - math/algebra/algebra_base.hpp
   - math/set/zeta_mobius.hpp
   - math/set/and_or_convolution.hpp
-  - math/prime/euler_phi_carmichael.hpp
-  - math/prime/order_primitive_root.hpp
-  - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/primality_test.hpp
   - math/prime/factorize.hpp
+  - math/prime/primality_test.hpp
   - math/prime/prime_power.hpp
-  - math/extgcd.hpp
-  - itertools/direct_product.hpp
+  - math/prime/euler_phi_carmichael.hpp
+  - math/prime/zeta_mobius_divisor_multiple_large.hpp
+  - math/prime/order_primitive_root.hpp
+  - template/template.cpp
+  - template/template_binsearch.hpp
+  - template/template_algo.hpp
+  - template/template_vector.hpp
+  - template/template_all.hpp
   - itertools/bit.hpp
+  - itertools/direct_product.hpp
+  - ds/group_index.hpp
+  - ds/csr.hpp
+  - ds/coordinate_compression.hpp
   - algo/merge_sort.hpp
   timestamp: '2025-02-12 07:45:54+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yukicoder/base_repr.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/dynamic_modint.test.cpp
-  - verify/yukicoder/binomial.test.cpp
-  - verify/yukicoder/static_modint.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yosupo/static_range_frequency.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/kth_root_integer.test.cpp
-  - verify/yosupo/many_aplusb_tuple.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/predecessor_problem.test.cpp
-  - verify/yosupo/many_aplusb_128bit.test.cpp
-  - verify/yosupo/binomial.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/aplusb.test.cpp
-  - verify/yosupo/many_aplusb.test.cpp
-  - verify/yosupo/associative_array_lower_bound.test.cpp
-  - verify/yosupo/quotients.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/aoj/csr.test.cpp
-  - verify/aoj/extgcd.test.cpp
-  - verify/mytest/template_binsearch.test.cpp
-  - verify/mytest/itertools_bit.test.cpp
-  - verify/mytest/modint.test.cpp
   - verify/mytest/template_math_mulpow.test.cpp
   - verify/mytest/template_bit.test.cpp
-  - verify/mytest/template_vector.test.cpp
-  - verify/mytest/modint64.test.cpp
-  - verify/mytest/template_algo.test.cpp
-  - verify/mytest/template_sgn.test.cpp.cpp
+  - verify/mytest/modint.test.cpp
   - verify/mytest/template_math_div.test.cpp
   - verify/mytest/itertools_direct_product.test.cpp
+  - verify/mytest/template_vector.test.cpp
+  - verify/mytest/itertools_bit.test.cpp
+  - verify/mytest/template_algo.test.cpp
+  - verify/mytest/template_sgn.test.cpp.cpp
+  - verify/mytest/template_binsearch.test.cpp
+  - verify/mytest/modint64.test.cpp
+  - verify/aoj/csr.test.cpp
+  - verify/aoj/extgcd.test.cpp
+  - verify/yukicoder/dynamic_modint.test.cpp
+  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/yukicoder/base_repr.test.cpp
+  - verify/yukicoder/static_modint.test.cpp
+  - verify/yukicoder/order_mod_carmichael.test.cpp
+  - verify/yukicoder/binomial.test.cpp
+  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  - verify/yukicoder/order_mod_euler_phi.test.cpp
+  - verify/yukicoder/divisors.test.cpp
+  - verify/yosupo/aplusb.test.cpp
+  - verify/yosupo/quotients.test.cpp
+  - verify/yosupo/kth_root_integer.test.cpp
+  - verify/yosupo/and_or_convolution.test.cpp
+  - verify/yosupo/many_aplusb_tuple.test.cpp
+  - verify/yosupo/predecessor_problem.test.cpp
+  - verify/yosupo/static_range_frequency.test.cpp
+  - verify/yosupo/factorize.test.cpp
+  - verify/yosupo/primality_test.test.cpp
+  - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/associative_array_lower_bound.test.cpp
+  - verify/yosupo/many_aplusb.test.cpp
+  - verify/yosupo/primitive_root_min.test.cpp
+  - verify/yosupo/binomial.test.cpp
+  - verify/yosupo/many_aplusb_128bit.test.cpp
 documentation_of: template/template_math.hpp
 layout: document
 redirect_from:
