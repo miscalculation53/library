@@ -63,10 +63,10 @@ void div_p()
 #### ord_pow
 
 ```cpp
-pair<int, P> ord_pow(P n, P m)
+tuple<int, P, P> ord_pow(P n, P m)
 ```
 
-$n$ が $m$ で割り切れる回数 $e$ について $(e, m^e)$ を返す。
+$n$ が $m$ で割り切れる回数 $e$ について $(e, m^e, n/m^e)$ を返す。
 
 ##### 計算量
 
