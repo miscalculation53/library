@@ -3,7 +3,7 @@
 #include "../template/template_all.hpp"
 
 /**
- * @brief 直積
+ * @brief 部分集合・上位集合全探索
  * @docs docs/itertools/bit.md
  */
 

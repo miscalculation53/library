@@ -3,7 +3,7 @@
 #include "../template/template_all.hpp"
 
 /**
- * @brief 直積
+ * @brief 直積全探索
  * @docs docs/itertools/direct_product.md
  */
 
