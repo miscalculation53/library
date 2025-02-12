@@ -40,6 +40,9 @@ data:
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - icon: ':heavy_check_mark:'
+    path: math/modint/binomial.hpp
+    title: "\u4E8C\u9805\u4FC2\u6570"
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
   - icon: ':heavy_check_mark:'
@@ -131,6 +134,9 @@ data:
     path: verify/yosupo/associative_array_lower_bound.test.cpp
     title: verify/yosupo/associative_array_lower_bound.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/binomial.test.cpp
+    title: verify/yosupo/binomial.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
   - icon: ':heavy_check_mark:'
@@ -166,6 +172,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/base_repr.test.cpp
     title: verify/yukicoder/base_repr.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/binomial.test.cpp
+    title: verify/yukicoder/binomial.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/divisors.test.cpp
     title: verify/yukicoder/divisors.test.cpp
@@ -338,6 +347,7 @@ data:
   isVerificationFile: false
   path: template/template_vector.hpp
   requiredBy:
+  - math/modint/binomial.hpp
   - math/modint/modint_internal.hpp
   - math/modint/modint64.hpp
   - math/modint/modint.hpp
@@ -381,6 +391,7 @@ data:
   - verify/yukicoder/base_repr.test.cpp
   - verify/yukicoder/static_modint.test.cpp
   - verify/yukicoder/order_mod_carmichael.test.cpp
+  - verify/yukicoder/binomial.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/divisors.test.cpp
@@ -397,6 +408,7 @@ data:
   - verify/yosupo/associative_array_lower_bound.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
   - verify/yosupo/primitive_root_min.test.cpp
+  - verify/yosupo/binomial.test.cpp
   - verify/yosupo/many_aplusb_128bit.test.cpp
 documentation_of: template/template_vector.hpp
 layout: document

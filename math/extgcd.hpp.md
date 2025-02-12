@@ -74,6 +74,9 @@ data:
     path: verify/yosupo/and_or_convolution.test.cpp
     title: verify/yosupo/and_or_convolution.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/binomial.test.cpp
+    title: verify/yosupo/binomial.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
   - icon: ':heavy_check_mark:'
@@ -85,6 +88,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root_min.test.cpp
     title: verify/yosupo/primitive_root_min.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/binomial.test.cpp
+    title: verify/yukicoder/binomial.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/divisors.test.cpp
     title: verify/yukicoder/divisors.test.cpp
@@ -625,6 +631,7 @@ data:
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
   - verify/yukicoder/static_modint.test.cpp
   - verify/yukicoder/order_mod_carmichael.test.cpp
+  - verify/yukicoder/binomial.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/divisors.test.cpp
@@ -633,6 +640,7 @@ data:
   - verify/yosupo/primality_test.test.cpp
   - verify/yosupo/primitive_root.test.cpp
   - verify/yosupo/primitive_root_min.test.cpp
+  - verify/yosupo/binomial.test.cpp
 documentation_of: math/extgcd.hpp
 layout: document
 redirect_from:

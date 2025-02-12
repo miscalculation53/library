@@ -45,6 +45,9 @@ data:
   - name: math/modint
     pages:
     - icon: ':heavy_check_mark:'
+      path: math/modint/binomial.hpp
+      title: "\u4E8C\u9805\u4FC2\u6570"
+    - icon: ':heavy_check_mark:'
       path: math/modint/modint.hpp
       title: modint (32 bit)
     - icon: ':heavy_check_mark:'
@@ -179,6 +182,9 @@ data:
       path: verify/yosupo/associative_array_lower_bound.test.cpp
       title: verify/yosupo/associative_array_lower_bound.test.cpp
     - icon: ':heavy_check_mark:'
+      path: verify/yosupo/binomial.test.cpp
+      title: verify/yosupo/binomial.test.cpp
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/factorize.test.cpp
       title: verify/yosupo/factorize.test.cpp
     - icon: ':heavy_check_mark:'
@@ -216,6 +222,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yukicoder/base_repr.test.cpp
       title: verify/yukicoder/base_repr.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yukicoder/binomial.test.cpp
+      title: verify/yukicoder/binomial.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/yukicoder/divisors.test.cpp
       title: verify/yukicoder/divisors.test.cpp
