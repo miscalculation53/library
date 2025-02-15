@@ -580,8 +580,8 @@ data:
   timestamp: '2025-02-12 07:45:54+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/aoj/csr.test.cpp
   - verify/yosupo/static_range_frequency.test.cpp
+  - verify/aoj/csr.test.cpp
 documentation_of: ds/csr.hpp
 layout: document
 redirect_from:
