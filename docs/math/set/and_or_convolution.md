@@ -40,3 +40,24 @@ $\begin{aligned}
 
 ### ライブラリ
 
+#### and_convolution
+
+```cpp
+vc<R::S> and_convolution(vc<R::S> a, vc<R::S> b)
+```
+
+##### 制約
+
+- `R` は環
+- $\lvert a \rvert = \lvert b \rvert$
+- $\lvert a \rvert$ は $0$ または $2$ べき
+
+##### 計算量
+
+$\lvert a \rvert = 2^n$ として
+
+- $O(n 2^n)$
+
+----
+
+or_convolution も同様（省略）
