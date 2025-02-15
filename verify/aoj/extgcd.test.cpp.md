@@ -670,11 +670,11 @@ data:
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=NTL_1_E&lang=jp\"\
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF\
-    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"../../template/template_all.hpp\"\
-    \n\n#include \"../../math/modint/modint.hpp\"\n// using mint = modint998244353;\n\
-    // using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
-    using mint = modint;\n\n#include \"../../math/extgcd.hpp\"\n\nvoid init() {}\n\
-    \nvoid main2()\n{\n  LL(a, b);\n  auto [g, x, y] = extgcd(a, b);\n  PRINT(x, y);\n\
+    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"template/template_all.hpp\"\
+    \n\n#include \"math/modint/modint.hpp\"\n// using mint = modint998244353;\n//\
+    \ using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
+    using mint = modint;\n\n#include \"math/extgcd.hpp\"\n\nvoid init() {}\n\nvoid\
+    \ main2()\n{\n  LL(a, b);\n  auto [g, x, y] = extgcd(a, b);\n  PRINT(x, y);\n\
     }\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](string val, string color)\n\
     \  {\n    string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\";\n    #ifdef\
     \ LOCAL\n    cerr << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\
@@ -707,7 +707,7 @@ data:
   isVerificationFile: true
   path: verify/aoj/extgcd.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/aoj/extgcd.test.cpp

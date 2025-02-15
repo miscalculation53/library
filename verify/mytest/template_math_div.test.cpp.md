@@ -139,7 +139,7 @@ data:
     \ && e <= 0);\n      assert((a - e) % b == 0);\n    }\n  }\n}\n\nint main()\n\
     {\n  test1<ll>();\n  test1<i128>();\n\n  cout << \"Hello World\" << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
-    \n\n#include \"../../template/template_math.hpp\"\n#include \"../../template/template_dump.hpp\"\
+    \n\n#include \"template/template_math.hpp\"\n#include \"template/template_dump.hpp\"\
     \n\nmt19937 mt;\nll randll() { return (mt() << 30) + mt(); }\n\ntemplate <class\
     \ T>\nvoid test1()\n{\n  for (int t = 0; t < 100000; t++)\n  {\n    dump(t);\n\
     \    T a = randll(), b = randll();\n    if (b == 0)\n      continue;\n    if (mt()\
@@ -159,7 +159,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_math_div.test.cpp
   requiredBy: []
-  timestamp: '2025-02-12 07:45:54+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_math_div.test.cpp

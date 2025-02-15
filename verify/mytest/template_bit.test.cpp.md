@@ -281,8 +281,8 @@ data:
     \ btest(y, 3));\n}\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n\n  cout\
     \ << \"Hello World\" << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
-    \n\n#include \"../../template/template_bit.hpp\"\n#include \"../../template/template_dump.hpp\"\
-    \n#include \"../../template/template_algo.hpp\"\n\nvoid test1()\n{\n  vc<ll> width_model\
+    \n\n#include \"template/template_bit.hpp\"\n#include \"template/template_dump.hpp\"\
+    \n#include \"template/template_algo.hpp\"\n\nvoid test1()\n{\n  vc<ll> width_model\
     \ = {0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 40};\n  vc<ll> floor_model = {0, 1, 2, 2, 4,\
     \ 4, 4, 4, 8, 8, 1LL << 39};\n  vc<ll> ceil_model = {1, 1, 2, 4, 4, 8, 8, 8, 8,\
     \ 16, 1LL << 40};\n  vc<ll> pp_model = {0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 20};\n \
@@ -317,7 +317,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_bit.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_bit.test.cpp

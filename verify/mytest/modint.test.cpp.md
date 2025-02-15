@@ -676,7 +676,7 @@ data:
     \ 6, 7, 8, 9, 10, 998244353, 1'000'000'000, 1'000'000'007, 2'000'000'011, 2'000'000'100,\
     \ INT_MAX})\n  {\n    test2(MOD);\n  }\n\n  PRINT(\"Hello World\");\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
-    \n\n#include \"../../math/modint/modint.hpp\"\n\nmt19937 mt;\n\n// static\ntemplate\
+    \n\n#include \"math/modint/modint.hpp\"\n\nmt19937 mt;\n\n// static\ntemplate\
     \ <const int MOD>\nvoid test1()\n{\n  using mint = static_modint<MOD>;\n  repi(t,\
     \ 1000)\n  {\n    ll a = -10LL * MOD + mt() % (21LL * MOD);\n    ll b = -10LL\
     \ * MOD + mt() % (21LL * MOD);\n    assert((mint(a) + mint(b)).val() == safemod(a\
@@ -723,7 +723,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/modint.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/modint.test.cpp

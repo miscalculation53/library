@@ -532,15 +532,14 @@ data:
     \ == sorted(sup2));\n}\n\nint main()\n{\n  test1();\n\n  cout << \"Hello World\"\
     \ << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
-    \n\n#include \"../../itertools/bit.hpp\"\n\nvoid test1()\n{\n  const ll n = 6;\n\
-    \  vc<pll> sub1, sup1, sub2, sup2;\n  rep(x, pow2(n)) rep(y, pow2(n))\n  {\n \
-    \   if (bsubset(x, y))\n      sub1.emplace_back(x, y);\n    if (bsupset(y, x))\n\
-    \      sup1.emplace_back(x, y);\n  }\n  rep(y, pow2(n)) fec(x : bsubsets(y)) sub2.emplace_back(x,\
-    \ y);\n  rep(x, pow2(n)) fec(y : bsupsets(n, x)) sup2.emplace_back(x, y);\n  //\
-    \ dump(sub1 | cp::bin(n), sub2 | cp::bin(n));\n  // dump(sup1 | cp::bin(n), sup2\
-    \ | cp::bin(n));\n  assert(sorted(sub1) == sorted(sub2));\n  assert(sorted(sup1)\
-    \ == sorted(sup2));\n}\n\nint main()\n{\n  test1();\n\n  cout << \"Hello World\"\
-    \ << endl;\n}"
+    \n\n#include \"itertools/bit.hpp\"\n\nvoid test1()\n{\n  const ll n = 6;\n  vc<pll>\
+    \ sub1, sup1, sub2, sup2;\n  rep(x, pow2(n)) rep(y, pow2(n))\n  {\n    if (bsubset(x,\
+    \ y))\n      sub1.emplace_back(x, y);\n    if (bsupset(y, x))\n      sup1.emplace_back(x,\
+    \ y);\n  }\n  rep(y, pow2(n)) fec(x : bsubsets(y)) sub2.emplace_back(x, y);\n\
+    \  rep(x, pow2(n)) fec(y : bsupsets(n, x)) sup2.emplace_back(x, y);\n  // dump(sub1\
+    \ | cp::bin(n), sub2 | cp::bin(n));\n  // dump(sup1 | cp::bin(n), sup2 | cp::bin(n));\n\
+    \  assert(sorted(sub1) == sorted(sub2));\n  assert(sorted(sup1) == sorted(sup2));\n\
+    }\n\nint main()\n{\n  test1();\n\n  cout << \"Hello World\" << endl;\n}"
   dependsOn:
   - itertools/bit.hpp
   - template/template_all.hpp
@@ -556,7 +555,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/itertools_bit.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/itertools_bit.test.cpp

@@ -168,7 +168,7 @@ data:
     \ == v1 && v == v2 && v == v3);\n}\n\nint main()\n{\n  test1();\n  test2();\n\
     \  test3();\n\n  cout << \"Hello World\" << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
-    \n\n#include \"../../template/template_vector.hpp\"\n#include \"../../template/template_dump.hpp\"\
+    \n\n#include \"template/template_vector.hpp\"\n#include \"template/template_dump.hpp\"\
     \n\nvoid test1()\n{\n  auto dp = dvec({3, 4, 5}, 0LL);\n  dump(dp);\n  assert(SZ(dp)\
     \ == 3);\n  rep(i, 3)\n  {\n    assert(SZ(dp.at(i)) == 4);\n    rep(j, 4) assert(SZ(dp.at(i).at(j))\
     \ == 5);\n  }\n}\n\nvoid test2()\n{\n  assert(ctol('J', \"JOI\") == 0);\n  assert(ctol('O',\
@@ -191,7 +191,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_vector.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_vector.test.cpp

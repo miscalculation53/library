@@ -866,7 +866,7 @@ data:
     \    assert(fac1 == fac2);\n  }\n}\n\nint main()\n{\n  test1();\n\n  PRINT(\"\
     Hello World\");\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
-    \n\n#include \"../../math/prime/linear_sieve.hpp\"\n#include \"../../math/prime/factorize.hpp\"\
+    \n\n#include \"math/prime/linear_sieve.hpp\"\n#include \"math/prime/factorize.hpp\"\
     \n\nvoid test1()\n{\n  const ll N = 10000;\n  rep(n, 1, N + 1)\n  {\n    vc<PrimePower<ll>>\
     \ fac1 = LinearSieve::factorize<ll>(n);\n    vc<PrimePower<ll>> fac2 = factorize(n);\n\
     \    assert(fac1 == fac2);\n  }\n}\n\nint main()\n{\n  test1();\n\n  PRINT(\"\
@@ -893,7 +893,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/linear_sieve.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/linear_sieve.test.cpp

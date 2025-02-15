@@ -523,10 +523,10 @@ data:
     \ 0},\n    {1, 0, 1},\n    {1, 0, 2}\n  };\n  assert(vs == model);\n}\n\nint main()\n\
     {\n  test1();\n\n  cout << \"Hello World\" << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
-    \n\n#include \"../../itertools/direct_product.hpp\"\n\nvoid test1()\n{\n  vvl\
-    \ vs;\n  fec(v : direct_product({2, 1, 3})) vs.push_back(v);\n\n  vvl model =\
-    \ {\n    {0, 0, 0},\n    {0, 0, 1},\n    {0, 0, 2},\n    {1, 0, 0},\n    {1, 0,\
-    \ 1},\n    {1, 0, 2}\n  };\n  assert(vs == model);\n}\n\nint main()\n{\n  test1();\n\
+    \n\n#include \"itertools/direct_product.hpp\"\n\nvoid test1()\n{\n  vvl vs;\n\
+    \  fec(v : direct_product({2, 1, 3})) vs.push_back(v);\n\n  vvl model = {\n  \
+    \  {0, 0, 0},\n    {0, 0, 1},\n    {0, 0, 2},\n    {1, 0, 0},\n    {1, 0, 1},\n\
+    \    {1, 0, 2}\n  };\n  assert(vs == model);\n}\n\nint main()\n{\n  test1();\n\
     \n  cout << \"Hello World\" << endl;\n}"
   dependsOn:
   - itertools/direct_product.hpp
@@ -543,7 +543,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/itertools_direct_product.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/itertools_direct_product.test.cpp

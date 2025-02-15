@@ -248,7 +248,7 @@ data:
     \ 10000) test1();\n  rep(_, 10000) test2();\n\n  cout << \"Hello World\" << endl;\n\
     }\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
-    \n\n#include \"../../template/template_binsearch.hpp\"\n#include \"../../template/template_dump.hpp\"\
+    \n\n#include \"template/template_binsearch.hpp\"\n#include \"template/template_dump.hpp\"\
     \n\nmt19937 mt;\nvoid test1()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i,\
     \ n) a[i] = 1 + mt() % 10;\n  sort(ALL(a));\n  ll k = -1 + mt() % 12;\n\n  ll\
     \ i1, i2, i3;\n\n  i1 = LB(a, k);\n  i2 = binsearch([&](ll i)\n              \
@@ -286,7 +286,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_binsearch.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_binsearch.test.cpp

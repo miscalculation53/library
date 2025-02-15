@@ -662,12 +662,12 @@ data:
     \ == mint(2).pow(i));\n}\n\nint main()\n{\n  test1();\n\n  cout << \"Hello World\"\
     \ << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
-    \n\n#include \"../../template/template_all.hpp\"\n#include \"../../math/modint/modint.hpp\"\
-    \n#include \"../../math/modint/power_table.hpp\"\nusing mint = modint;\n\nvoid\
-    \ test1()\n{\n  mint::set_mod(998244353);\n  PowerTable<mint> pw2(2);\n  rep(i,\
-    \ 1000) assert(pw2.pow(i) == mint(2).pow(i));\n  mint::set_mod(1'000'000'007);\n\
-    \  rep(i, 2000) assert(pw2.pow(i) == mint(2).pow(i));\n}\n\nint main()\n{\n  test1();\n\
-    \n  cout << \"Hello World\" << endl;\n}"
+    \n\n#include \"template/template_all.hpp\"\n#include \"math/modint/modint.hpp\"\
+    \n#include \"math/modint/power_table.hpp\"\nusing mint = modint;\n\nvoid test1()\n\
+    {\n  mint::set_mod(998244353);\n  PowerTable<mint> pw2(2);\n  rep(i, 1000) assert(pw2.pow(i)\
+    \ == mint(2).pow(i));\n  mint::set_mod(1'000'000'007);\n  rep(i, 2000) assert(pw2.pow(i)\
+    \ == mint(2).pow(i));\n}\n\nint main()\n{\n  test1();\n\n  cout << \"Hello World\"\
+    \ << endl;\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -686,7 +686,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/power_table.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/power_table.test.cpp

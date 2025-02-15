@@ -557,8 +557,8 @@ data:
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_11_A&lang=jp\"\
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF\
-    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"../../template/template_all.hpp\"\
-    \n\n#include \"../../ds/csr.hpp\"\n\nvoid init() {}\n\nvoid main2()\n{ \n  LL(N);\n\
+    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"template/template_all.hpp\"\
+    \n\n#include \"ds/csr.hpp\"\n\nvoid init() {}\n\nvoid main2()\n{ \n  LL(N);\n\
     \  vvl vv(N);\n  vpll ies;\n  rep(i, N)\n  {\n    LL(u, k);\n    u--;\n    READVEC(k,\
     \ vv.at(u));\n    offset(vv.at(u), -1);\n    fec(v : vv.at(i)) ies.push_back({u,\
     \ v});\n  }\n\n  CSR csr1(vv), csr2(N, ies);\n  assert(csr1.to_vv() == csr2.to_vv()\
@@ -594,7 +594,7 @@ data:
   isVerificationFile: true
   path: verify/aoj/csr.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/aoj/csr.test.cpp

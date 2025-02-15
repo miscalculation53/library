@@ -624,8 +624,8 @@ data:
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/static_range_frequency\"\
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF\
-    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"../../template/template_all.hpp\"\
-    \n\n#include \"../../ds/coordinate_compression.hpp\"\n#include \"../../ds/group_index.hpp\"\
+    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"template/template_all.hpp\"\
+    \n\n#include \"ds/coordinate_compression.hpp\"\n#include \"ds/group_index.hpp\"\
     \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  VEC(ll, N, A);\n  CoordinateCompression\
     \ cc(A);\n  GroupIndex grp(compressed(A));\n  rep(val, cc.size()) dump(val, grp.idxs(val));\n\
     \  rep(_, Q)\n  {\n    LL(l, r, x);\n    auto v = cc.get_id(x);\n    dump(v, l,\
@@ -662,7 +662,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/static_range_frequency.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/static_range_frequency.test.cpp

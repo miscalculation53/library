@@ -705,12 +705,12 @@ data:
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/binomial_coefficient_prime_mod\"\
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF\
-    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"../../template/template_all.hpp\"\
-    \n\n#include \"../../math/modint/modint.hpp\"\n// using mint = modint998244353;\n\
-    // using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
-    using mint = modint;\n#include \"../../math/modint/binomial.hpp\"\nusing bi =\
-    \ Binomial<mint>;\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(T, M);\n  mint::set_mod(200003);\n\
-    \  bi::reserve(ipow(10, 3));\n  mint::set_mod(M);\n  bi::reserve(ipow(10, 6));\n\
+    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"template/template_all.hpp\"\
+    \n\n#include \"math/modint/modint.hpp\"\n// using mint = modint998244353;\n//\
+    \ using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
+    using mint = modint;\n#include \"math/modint/binomial.hpp\"\nusing bi = Binomial<mint>;\n\
+    \nvoid init() {}\n\nvoid main2()\n{\n  LL(T, M);\n  mint::set_mod(200003);\n \
+    \ bi::reserve(ipow(10, 3));\n  mint::set_mod(M);\n  bi::reserve(ipow(10, 6));\n\
     \  rep(_, T)\n  {\n    LL(N, K);\n    PRINT(bi::C(N, K));\n  }\n}\n\nvoid test()\n\
     {\n  /*\n  local(\n    rep(testcase, 100000)\n    {\n      cout << endl;\n   \
     \   dump(testcase);\n\n\n      // ----- generate cases -----\n      ll N = 1 +\
@@ -752,7 +752,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/binomial.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/binomial.test.cpp

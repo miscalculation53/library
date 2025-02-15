@@ -773,8 +773,8 @@ data:
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/bitwise_and_convolution\"\
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF\
-    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"../../template/template_all.hpp\"\
-    \n#include \"../../math/set/and_or_convolution.hpp\"\n\n#include \"../../math/modint/modint.hpp\"\
+    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"template/template_all.hpp\"\
+    \n#include \"math/set/and_or_convolution.hpp\"\n\n#include \"math/modint/modint.hpp\"\
     \nusing mint = modint998244353;\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n\
     \  VEC(mint, 1 << N, A, B);\n  auto C = and_convolution<RingAddSubMul<mint>>(A,\
     \ B);\n  PRINT(C);\n  auto D = or_convolution<RingAddSubMul<mint>>(reversed(A),\
@@ -815,7 +815,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/and_or_convolution.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/and_or_convolution.test.cpp

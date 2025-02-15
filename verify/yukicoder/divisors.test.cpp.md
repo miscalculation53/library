@@ -860,24 +860,23 @@ data:
   code: "#define PROBLEM \"https://yukicoder.me/problems/no/888\"\n\n#define SINGLE_TESTCASE\n\
     // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n// #define\
     \ FAST_CIO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
-    #define EPS 1e-11\n\n#include \"../../template/template_all.hpp\"\n\n#include\
-    \ \"../../math/prime/factorize.hpp\"\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n\
-    \  auto ds = divisors(factorize(N));\n  PRINT(SUM(ds));\n}\n\nvoid test() {}\n\
-    \nint main()\n{\n  cauto CERR = [](string val, string color)\n  {\n    string\
-    \ s = \"\\033[\" + color + \"m\" + val + \"\\033[m\";\n    #ifdef LOCAL\n    cerr\
-    \ << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\
-    \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3059\u308B\
-    \n    cerr << val;\n    //*/\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n\
-    \  CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n  #endif\n  #if defined FAST_CIO and\
-    \ not defined LOCAL\n  CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n\
-    \  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
-    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
-    \ SINGLE_TESTCASE)\n  CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n\
-    \  {\n    dump(\"new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n\
-    \  CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n  main2();\n  #elif defined\
-    \ MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n  dump(\"T\"\
-    );\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
-    \  }\n  #endif\n}"
+    #define EPS 1e-11\n\n#include \"template/template_all.hpp\"\n\n#include \"math/prime/factorize.hpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n  auto ds = divisors(factorize(N));\n\
+    \  PRINT(SUM(ds));\n}\n\nvoid test() {}\n\nint main()\n{\n  cauto CERR = [](string\
+    \ val, string color)\n  {\n    string s = \"\\033[\" + color + \"m\" + val + \"\
+    \\033[m\";\n    #ifdef LOCAL\n    cerr << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\
+    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
+    \u30C8\u30A2\u30A6\u30C8\u3059\u308B\n    cerr << val;\n    //*/\n  };\n\n  #if\
+    \ defined FAST_IO and not defined LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\", \"32\"\
+    );\n  #endif\n  #if defined FAST_CIO and not defined LOCAL\n  CERR(\"\\n[FAST_CIO]\\\
+    n\\n\", \"32\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout\
+    \ << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE\
+    \ or (defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\\n[AOJ_TESTCASE]\\\
+    n\\n\", \"35\");\n  while (true)\n  {\n    dump(\"new testcase\");\n    main2();\n\
+    \  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\",\
+    \ \"36\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\\
+    n\\n\", \"33\");\n  dump(\"T\");\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"\
+    new testcase\");\n    main2();\n  }\n  #endif\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -899,7 +898,7 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/divisors.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/divisors.test.cpp

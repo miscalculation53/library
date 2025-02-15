@@ -143,7 +143,7 @@ data:
     \ ans);\n    assert(god == ans);\n  }\n}\n\nint main()\n{\n  test1();\n  test2();\n\
     \  test3();\n\n  cout << \"Hello World\" << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
-    \n\n#include \"../../template/template_math.hpp\"\n#include \"../../template/template_dump.hpp\"\
+    \n\n#include \"template/template_math.hpp\"\n#include \"template/template_dump.hpp\"\
     \n\nmt19937 mt;\n\nvoid test1()\n{\n  assert(ipow(0, 0) == 1);\n  assert(ipow(0,\
     \ 1) == 0);\n  assert(ipow(1, 1LL << 60) == 1);\n  assert(ipow(-1, 1LL << 60)\
     \ == 1);\n  assert(ipow(-1, (1LL << 60) - 1) == -1);\n  assert(ipow(2, 10) ==\
@@ -167,7 +167,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_math_mulpow.test.cpp
   requiredBy: []
-  timestamp: '2025-02-12 07:45:54+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_math_mulpow.test.cpp

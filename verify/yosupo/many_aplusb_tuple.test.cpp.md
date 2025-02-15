@@ -527,9 +527,9 @@ data:
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/many_aplusb\"\n\n// #define\
     \ SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define\
     \ FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
-    #define EPS 1e-11\n\n#include \"../../template/template_all.hpp\"\n\nvoid init()\
-    \ {}\n\nvoid main2()\n{\n  ll r = rand() % 5;\n  if (r == 0)\n  {\n    LL(A, B);\n\
-    \    PRINT(A + B);\n  }\n  else if (r == 1)\n  {\n    IN(pll, p);\n    PRINT(p.first\
+    #define EPS 1e-11\n\n#include \"template/template_all.hpp\"\n\nvoid init() {}\n\
+    \nvoid main2()\n{\n  ll r = rand() % 5;\n  if (r == 0)\n  {\n    LL(A, B);\n \
+    \   PRINT(A + B);\n  }\n  else if (r == 1)\n  {\n    IN(pll, p);\n    PRINT(p.first\
     \ + p.second);\n  }\n  else if (r == 2)\n  {\n    using T = tuple<ll, ll>;\n \
     \   IN(T, t);\n    PRINT(get<0>(t) + get<1>(t));\n  }\n  else if (r == 3)\n  {\n\
     \    ARR(ll, 2, A);\n    PRINT(A.at(0) + A.at(1));\n  }\n  else if (r == 4)\n\
@@ -563,7 +563,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/many_aplusb_tuple.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/many_aplusb_tuple.test.cpp

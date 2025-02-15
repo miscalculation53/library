@@ -272,7 +272,7 @@ data:
     \ 3, -3, -1}));\n}\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n  test4();\n\
     \  test5();\n\n  cout << \"Hello World\" << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
-    \n\n#include \"../../template/template_algo.hpp\"\n#include \"../../template/template_dump.hpp\"\
+    \n\n#include \"template/template_algo.hpp\"\n#include \"template/template_dump.hpp\"\
     \n\n// \u96C6\u7D04\nvoid test1()\n{\n  vl a = {2, 7, 1, 8, 2, 8, 1};\n  assert(SUM(a)\
     \ == 29);\n  assert(MAX(a) == 8);\n  assert(MIN(a) == 1);\n  assert(ARGMAX(a)\
     \ == 3);\n  assert(ARGMIN(a) == 2);\n  assert(mex(a) == 0);\n\n  vl b = {4, 0,\
@@ -333,7 +333,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_algo.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_algo.test.cpp

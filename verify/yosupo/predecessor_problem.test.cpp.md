@@ -528,7 +528,7 @@ data:
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/predecessor_problem\"\n\
     \n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF\
-    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"../../template/template_all.hpp\"\
+    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"template/template_all.hpp\"\
     \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  STR(T);\n  set<ll> st;\n\
     \  rep(i, N) if (T.at(i) == '1') st.insert(i);\n  rep(_, Q)\n  {\n    LL(c, k);\n\
     \    if (c == 0)\n      st.insert(k);\n    else if (c == 1)\n      st.erase(k);\n\
@@ -565,7 +565,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/predecessor_problem.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/predecessor_problem.test.cpp

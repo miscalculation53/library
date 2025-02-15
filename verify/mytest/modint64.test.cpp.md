@@ -726,10 +726,10 @@ data:
     \ INT_MAX, (1LL << 61) - 1, 1LL << 61, (1LL << 62) - 1, 1LL << 62, LONG_MAX -\
     \ 1, LONG_MAX})\n  {\n    test3(MOD);\n  }\n\n  PRINT(\"Hello World\");\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
-    \n\n#include \"../../math/modint/modint64.hpp\"\n\nmt19937_64 mt;\n\n// static\n\
-    template <const ll MOD>\nvoid test1()\n{\n  using mint = static_modint64<MOD>;\n\
-    \  repi(t, 1000)\n  {\n    i128 a = i128(-10) * MOD + mt() % (i128(21) * MOD);\n\
-    \    i128 b = i128(-10) * MOD + mt() % (i128(21) * MOD);\n    i128 ma = safemod<i128>(a,\
+    \n\n#include \"math/modint/modint64.hpp\"\n\nmt19937_64 mt;\n\n// static\ntemplate\
+    \ <const ll MOD>\nvoid test1()\n{\n  using mint = static_modint64<MOD>;\n  repi(t,\
+    \ 1000)\n  {\n    i128 a = i128(-10) * MOD + mt() % (i128(21) * MOD);\n    i128\
+    \ b = i128(-10) * MOD + mt() % (i128(21) * MOD);\n    i128 ma = safemod<i128>(a,\
     \ MOD);\n    i128 mb = safemod<i128>(b, MOD);\n    assert((mint(a) + mint(b)).val()\
     \ == safemod<i128>(ma + mb, MOD));\n    assert((mint(a) - mint(b)).val() == safemod<i128>(ma\
     \ - mb, MOD));\n    assert((mint(a) * mint(b)).val() == safemod<i128>(ma * mb,\
@@ -795,7 +795,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/modint64.test.cpp
   requiredBy: []
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/modint64.test.cpp

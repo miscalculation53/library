@@ -261,7 +261,7 @@ data:
     \  assert(vt_ans == vt_god);\n}\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n\
     \n  PRINT(\"Hello World\");\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
-    \n\n#include \"../../template/template_inout.hpp\"\n#include \"../../template/template_dump.hpp\"\
+    \n\n#include \"template/template_inout.hpp\"\n#include \"template/template_dump.hpp\"\
     \n\nvoid test1()\n{\n  vc<pair<int, string>> vt_god = {\n    {1, \"a\"},\n   \
     \ {2, \"bcd\"},\n    {3, \"ef\"}\n  };\n  pair<vc<int>, vc<string>> tv_god = {\n\
     \    {1, 2, 3},\n    {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = top(vt_god);\n\
@@ -287,7 +287,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_inout_top.test.cpp
   requiredBy: []
-  timestamp: '2025-02-12 07:45:54+09:00'
+  timestamp: '2025-02-16 03:31:44+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_inout_top.test.cpp
