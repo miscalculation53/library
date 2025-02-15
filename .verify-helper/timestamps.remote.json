@@ -5,6 +5,7 @@
 "verify/mytest/itertools_direct_product.test.cpp": "2025-02-12 10:29:53 +0900",
 "verify/mytest/modint.test.cpp": "2025-02-12 07:45:54 +0900",
 "verify/mytest/modint64.test.cpp": "2025-02-12 07:45:54 +0900",
+"verify/mytest/power_table.test.cpp": "2025-02-15 23:30:34 +0900",
 "verify/mytest/template_algo.test.cpp": "2025-02-12 07:45:54 +0900",
 "verify/mytest/template_binsearch.test.cpp": "2025-02-12 07:45:54 +0900",
 "verify/mytest/template_bit.test.cpp": "2025-02-12 07:45:54 +0900",
