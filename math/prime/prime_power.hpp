@@ -14,11 +14,17 @@ struct PrimePower
   int e;
   P pe;
 
-  PrimePower() {}
+  PrimePower() : p(-1), e(-1), pe(-1) {}
   PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e)) {}
   PrimePower(P p, int e, P pe) : p(p), e(e), pe(pe) {}
   template <class P2>
   PrimePower(const PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}
+
+  template <class P2>
+  bool operator==(const PrimePower<P2> &rhs) const
+  { return p == rhs.p && e == rhs.e && pe == rhs.pe; }
+  template <class P2>
+  bool operator!=(const PrimePower<P2> &rhs) const { return *this != rhs; }
 
   void mul_p() { e++, pe = ull(pe) * ull(p); }
   void div_p() { e--, pe /= p; }

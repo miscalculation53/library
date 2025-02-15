@@ -12,6 +12,7 @@
 #define ALL(a) (a).begin(), (a).end()
 template <class T = ll>
 inline T SZ(cauto &x) { return x.size(); }
+#define eb emplace_back
 
 template <class F>
 auto gen_vec(const int &n, const F &f)
