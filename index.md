@@ -56,6 +56,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/modint/modint_internal.hpp
       title: math/modint/modint_internal.hpp
+    - icon: ':heavy_check_mark:'
+      path: math/modint/power_table.hpp
+      title: "\u4E8C\u9805\u4FC2\u6570"
   - name: math/prime
     pages:
     - icon: ':heavy_check_mark:'
@@ -146,6 +149,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/mytest/modint64.test.cpp
       title: verify/mytest/modint64.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/mytest/power_table.test.cpp
+      title: verify/mytest/power_table.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/mytest/template_algo.test.cpp
       title: verify/mytest/template_algo.test.cpp

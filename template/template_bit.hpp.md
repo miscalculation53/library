@@ -49,6 +49,9 @@ data:
     path: math/modint/modint_internal.hpp
     title: math/modint/modint_internal.hpp
   - icon: ':heavy_check_mark:'
+    path: math/modint/power_table.hpp
+    title: "\u4E8C\u9805\u4FC2\u6570"
+  - icon: ':heavy_check_mark:'
     path: math/prime/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
@@ -102,6 +105,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/modint64.test.cpp
     title: verify/mytest/modint64.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/power_table.test.cpp
+    title: verify/mytest/power_table.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/template_bit.test.cpp
     title: verify/mytest/template_bit.test.cpp
@@ -299,6 +305,7 @@ data:
   - math/modint/modint_internal.hpp
   - math/modint/modint64.hpp
   - math/modint/modint.hpp
+  - math/modint/power_table.hpp
   - math/modint/binomial.hpp
   - math/quotients.hpp
   - math/set/zeta_mobius.hpp
@@ -344,6 +351,7 @@ data:
   - verify/aoj/extgcd.test.cpp
   - verify/mytest/itertools_bit.test.cpp
   - verify/mytest/modint.test.cpp
+  - verify/mytest/power_table.test.cpp
   - verify/mytest/template_bit.test.cpp
   - verify/mytest/modint64.test.cpp
   - verify/mytest/itertools_direct_product.test.cpp

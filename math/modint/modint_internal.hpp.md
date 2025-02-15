@@ -71,6 +71,9 @@ data:
     path: verify/mytest/modint64.test.cpp
     title: verify/mytest/modint64.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/mytest/power_table.test.cpp
+    title: verify/mytest/power_table.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/and_or_convolution.test.cpp
     title: verify/yosupo/and_or_convolution.test.cpp
   - icon: ':heavy_check_mark:'
@@ -704,6 +707,7 @@ data:
   - verify/yosupo/primitive_root_min.test.cpp
   - verify/aoj/extgcd.test.cpp
   - verify/mytest/modint.test.cpp
+  - verify/mytest/power_table.test.cpp
   - verify/mytest/modint64.test.cpp
 documentation_of: math/modint/modint_internal.hpp
 layout: document
