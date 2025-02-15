@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-#include "../../math/modint/modint64.hpp"
+#include "math/modint/modint64.hpp"
 
 mt19937_64 mt;
 

@@ -11,15 +11,15 @@
 #define INF 4'000'000'000'000'000'037LL
 #define EPS 1e-11
 
-#include "../../template/template_all.hpp"
+#include "template/template_all.hpp"
 
-#include "../../math/modint/modint.hpp"
+#include "math/modint/modint.hpp"
 // using mint = modint998244353;
 // using mint = modint1000000007;
 // using mint = static_modint<1000000000>;
 using mint = modint;
 
-#include "../../math/extgcd.hpp"
+#include "math/extgcd.hpp"
 
 void init() {}
 

@@ -11,12 +11,12 @@
 #define INF 4'000'000'000'000'000'037LL
 #define EPS 1e-11
 
-#include "../../template/template_all.hpp"
+#include "template/template_all.hpp"
 
-#include "../../math/prime/zeta_mobius_divisor_multiple_large.hpp"
-#include "../../math/algebra/algebra_basic_ops.hpp"
+#include "math/prime/zeta_mobius_divisor_multiple_large.hpp"
+#include "math/algebra/algebra_basic_ops.hpp"
 
-#include "../../math/modint/modint.hpp"
+#include "math/modint/modint.hpp"
 using mint = modint998244353;
 
 void init() {}

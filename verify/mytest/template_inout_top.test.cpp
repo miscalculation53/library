@@ -1,7 +1,7 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-#include "../../template/template_inout.hpp"
-#include "../../template/template_dump.hpp"
+#include "template/template_inout.hpp"
+#include "template/template_dump.hpp"
 
 void test1()
 {
