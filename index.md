@@ -69,6 +69,9 @@ data:
       path: math/prime/factorize.hpp
       title: "\u7D20\u56E0\u6570\u5206\u89E3"
     - icon: ':heavy_check_mark:'
+      path: math/prime/linear_sieve.hpp
+      title: "\u7DDA\u5F62\u7BE9"
+    - icon: ':heavy_check_mark:'
       path: math/prime/order_primitive_root.hpp
       title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
     - icon: ':heavy_check_mark:'
@@ -143,6 +146,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/mytest/itertools_direct_product.test.cpp
       title: verify/mytest/itertools_direct_product.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/mytest/linear_sieve.test.cpp
+      title: verify/mytest/linear_sieve.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/mytest/modint.test.cpp
       title: verify/mytest/modint.test.cpp

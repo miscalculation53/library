@@ -62,6 +62,9 @@ data:
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
   - icon: ':heavy_check_mark:'
+    path: math/prime/linear_sieve.hpp
+    title: "\u7DDA\u5F62\u7BE9"
+  - icon: ':heavy_check_mark:'
     path: math/prime/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
   - icon: ':heavy_check_mark:'
@@ -102,6 +105,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/itertools_direct_product.test.cpp
     title: verify/mytest/itertools_direct_product.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/linear_sieve.test.cpp
+    title: verify/mytest/linear_sieve.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/modint.test.cpp
     title: verify/mytest/modint.test.cpp
@@ -611,6 +617,7 @@ data:
   - math/prime/euler_phi_carmichael.hpp
   - math/prime/order_primitive_root.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
+  - math/prime/linear_sieve.hpp
   - math/prime/primality_test.hpp
   - math/prime/factorize.hpp
   - math/prime/prime_power.hpp
@@ -647,6 +654,7 @@ data:
   - verify/yosupo/primitive_root_min.test.cpp
   - verify/aoj/csr.test.cpp
   - verify/aoj/extgcd.test.cpp
+  - verify/mytest/linear_sieve.test.cpp
   - verify/mytest/itertools_bit.test.cpp
   - verify/mytest/modint.test.cpp
   - verify/mytest/power_table.test.cpp

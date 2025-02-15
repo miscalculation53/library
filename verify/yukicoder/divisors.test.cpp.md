@@ -163,9 +163,9 @@ data:
     \n\n#line 6 \"template/template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n\
     \ */\n\n#define ALL(a) (a).begin(), (a).end()\ntemplate <class T = ll>\ninline\
-    \ T SZ(cauto &x) { return x.size(); }\n\ntemplate <class F>\nauto gen_vec(const\
-    \ int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] =\
-    \ f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    \ T SZ(cauto &x) { return x.size(); }\n#define eb emplace_back\n\ntemplate <class\
+    \ F>\nauto gen_vec(const int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n\
+    \  repi(i, n) res[i] = f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
     template <class T, size_t d, size_t i = 0>\nauto dvec(cauto (&sz)[d], const T\
     \ &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i + 1>(sz,\
     \ init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT ctol(const\
@@ -773,23 +773,26 @@ data:
     \  fastio::wt1(x.val());\n}\n#line 2 \"math/prime/prime_power.hpp\"\n\n#line 4\
     \ \"math/prime/prime_power.hpp\"\n\n/**\n * @brief \u7D20\u3079\u304D\u69CB\u9020\
     \u4F53\n * @docs docs/math/prime/prime_power.md\n */\n\ntemplate <class P>\nstruct\
-    \ PrimePower\n{\n  P p;\n  int e;\n  P pe;\n\n  PrimePower() {}\n  PrimePower(P\
-    \ p, int e = 1) : p(p), e(e), pe(ipow(p, e)) {}\n  PrimePower(P p, int e, P pe)\
-    \ : p(p), e(e), pe(pe) {}\n  template <class P2>\n  PrimePower(const PrimePower<P2>\
-    \ &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\n  void mul_p() { e++, pe = ull(pe)\
-    \ * ull(p); }\n  void div_p() { e--, pe /= p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>,\
-    \ p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\
-    \n// n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\u6570 e \u306B\u3064\
-    \u3044\u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll n, ll m)\n\
-    {\n  assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n    return\
-    \ {e, 1LL << e, n >> e};\n  }\n  if (n % m != 0)\n    return {0, 1, n};\n  n /=\
-    \ m;\n  if (n % m != 0)\n    return {1, m, n};\n  n /= m;\n  ll m2 = m * m;\n\
-    \  auto [f, m2f, nn] = ord_pow_div(n, m2);\n  int e = 2 + 2 * f;\n  ll me = m2f\
-    \ * m2;\n  if (nn % m == 0)\n    e++, me *= m, nn /= m;\n  return {e, me, nn};\n\
-    }\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class P>\nvc<P>\
-    \ factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n  repi(i,\
-    \ fac.size()) res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570 fac \u306F\
-    \u7D20\u56E0\u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const\
+    \ PrimePower\n{\n  P p;\n  int e;\n  P pe;\n\n  PrimePower() : p(-1), e(-1), pe(-1)\
+    \ {}\n  PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e)) {}\n  PrimePower(P\
+    \ p, int e, P pe) : p(p), e(e), pe(pe) {}\n  template <class P2>\n  PrimePower(const\
+    \ PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\n  template <class P2>\n\
+    \  bool operator==(const PrimePower<P2> &rhs) const\n  { return p == rhs.p &&\
+    \ e == rhs.e && pe == rhs.pe; }\n  template <class P2>\n  bool operator!=(const\
+    \ PrimePower<P2> &rhs) const { return *this != rhs; }\n\n  void mul_p() { e++,\
+    \ pe = ull(pe) * ull(p); }\n  void div_p() { e--, pe /= p; }\n};\n#ifdef LOCAL\n\
+    CPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>,\
+    \ p, e, pe);\n#endif\n\n// n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\
+    \u6570 e \u306B\u3064\u3044\u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll\
+    \ n, ll m)\n{\n  assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n\
+    \    return {e, 1LL << e, n >> e};\n  }\n  if (n % m != 0)\n    return {0, 1,\
+    \ n};\n  n /= m;\n  if (n % m != 0)\n    return {1, m, n};\n  n /= m;\n  ll m2\
+    \ = m * m;\n  auto [f, m2f, nn] = ord_pow_div(n, m2);\n  int e = 2 + 2 * f;\n\
+    \  ll me = m2f * m2;\n  if (nn % m == 0)\n    e++, me *= m, nn /= m;\n  return\
+    \ {e, me, nn};\n}\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class\
+    \ P>\nvc<P> factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n\
+    \  repi(i, fac.size()) res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570\
+    \ fac \u306F\u7D20\u56E0\u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const\
     \ vc<PrimePower<P>> &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d,\
     \ int i) -> void\n  {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n\
     \      return;\n    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e\
@@ -896,7 +899,7 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/divisors.test.cpp
   requiredBy: []
-  timestamp: '2025-02-12 07:45:54+09:00'
+  timestamp: '2025-02-16 02:18:39+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/divisors.test.cpp

@@ -65,6 +65,9 @@ data:
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
   - icon: ':heavy_check_mark:'
+    path: math/prime/linear_sieve.hpp
+    title: "\u7DDA\u5F62\u7BE9"
+  - icon: ':heavy_check_mark:'
     path: math/prime/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
   - icon: ':heavy_check_mark:'
@@ -105,6 +108,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/itertools_direct_product.test.cpp
     title: verify/mytest/itertools_direct_product.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/linear_sieve.test.cpp
+    title: verify/mytest/linear_sieve.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/modint.test.cpp
     title: verify/mytest/modint.test.cpp
@@ -295,9 +301,10 @@ data:
     \ : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}\n#line 6 \"template/template_vector.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09\n *\
     \ @docs docs/template/template_vector.md\n */\n\n#define ALL(a) (a).begin(), (a).end()\n\
-    template <class T = ll>\ninline T SZ(cauto &x) { return x.size(); }\n\ntemplate\
-    \ <class F>\nauto gen_vec(const int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n\
-    \  repi(i, n) res[i] = f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    template <class T = ll>\ninline T SZ(cauto &x) { return x.size(); }\n#define eb\
+    \ emplace_back\n\ntemplate <class F>\nauto gen_vec(const int &n, const F &f)\n\
+    {\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n  return res;\n\
+    }\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
     template <class T, size_t d, size_t i = 0>\nauto dvec(cauto (&sz)[d], const T\
     \ &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i + 1>(sz,\
     \ init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT ctol(const\
@@ -470,6 +477,7 @@ data:
   - math/prime/euler_phi_carmichael.hpp
   - math/prime/order_primitive_root.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
+  - math/prime/linear_sieve.hpp
   - math/prime/primality_test.hpp
   - math/prime/factorize.hpp
   - math/prime/prime_power.hpp
@@ -477,7 +485,7 @@ data:
   - itertools/direct_product.hpp
   - itertools/bit.hpp
   - algo/merge_sort.hpp
-  timestamp: '2025-02-12 07:45:54+09:00'
+  timestamp: '2025-02-16 02:18:39+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/order_mod_euler_phi.test.cpp
@@ -506,6 +514,7 @@ data:
   - verify/yosupo/primitive_root_min.test.cpp
   - verify/aoj/csr.test.cpp
   - verify/aoj/extgcd.test.cpp
+  - verify/mytest/linear_sieve.test.cpp
   - verify/mytest/itertools_bit.test.cpp
   - verify/mytest/modint.test.cpp
   - verify/mytest/power_table.test.cpp

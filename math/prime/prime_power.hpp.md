@@ -42,6 +42,9 @@ data:
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
   - icon: ':heavy_check_mark:'
+    path: math/prime/linear_sieve.hpp
+    title: "\u7DDA\u5F62\u7BE9"
+  - icon: ':heavy_check_mark:'
     path: math/prime/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
   - icon: ':heavy_check_mark:'
@@ -49,6 +52,9 @@ data:
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/linear_sieve.test.cpp
+    title: verify/mytest/linear_sieve.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
@@ -175,9 +181,9 @@ data:
     \n\n#line 6 \"template/template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n\
     \ */\n\n#define ALL(a) (a).begin(), (a).end()\ntemplate <class T = ll>\ninline\
-    \ T SZ(cauto &x) { return x.size(); }\n\ntemplate <class F>\nauto gen_vec(const\
-    \ int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] =\
-    \ f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    \ T SZ(cauto &x) { return x.size(); }\n#define eb emplace_back\n\ntemplate <class\
+    \ F>\nauto gen_vec(const int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n\
+    \  repi(i, n) res[i] = f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
     template <class T, size_t d, size_t i = 0>\nauto dvec(cauto (&sz)[d], const T\
     \ &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i + 1>(sz,\
     \ init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT ctol(const\
@@ -538,15 +544,18 @@ data:
     \ i);\n  return vt;\n}\n// ----------\n#line 4 \"math/prime/prime_power.hpp\"\n\
     \n/**\n * @brief \u7D20\u3079\u304D\u69CB\u9020\u4F53\n * @docs docs/math/prime/prime_power.md\n\
     \ */\n\ntemplate <class P>\nstruct PrimePower\n{\n  P p;\n  int e;\n  P pe;\n\n\
-    \  PrimePower() {}\n  PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e))\
-    \ {}\n  PrimePower(P p, int e, P pe) : p(p), e(e), pe(pe) {}\n  template <class\
-    \ P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\
-    \n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void div_p() { e--, pe /=\
-    \ p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e,\
-    \ pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\n//\
-    \ n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\u6570 e \u306B\u3064\u3044\
-    \u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll n, ll m)\n{\n \
-    \ assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n    return\
+    \  PrimePower() : p(-1), e(-1), pe(-1) {}\n  PrimePower(P p, int e = 1) : p(p),\
+    \ e(e), pe(ipow(p, e)) {}\n  PrimePower(P p, int e, P pe) : p(p), e(e), pe(pe)\
+    \ {}\n  template <class P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p),\
+    \ e(pp.e), pe(pp.pe) {}\n\n  template <class P2>\n  bool operator==(const PrimePower<P2>\
+    \ &rhs) const\n  { return p == rhs.p && e == rhs.e && pe == rhs.pe; }\n  template\
+    \ <class P2>\n  bool operator!=(const PrimePower<P2> &rhs) const { return *this\
+    \ != rhs; }\n\n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void div_p()\
+    \ { e--, pe /= p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>,\
+    \ p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\
+    \n// n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\u6570 e \u306B\u3064\
+    \u3044\u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll n, ll m)\n\
+    {\n  assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n    return\
     \ {e, 1LL << e, n >> e};\n  }\n  if (n % m != 0)\n    return {0, 1, n};\n  n /=\
     \ m;\n  if (n % m != 0)\n    return {1, m, n};\n  n /= m;\n  ll m2 = m * m;\n\
     \  auto [f, m2f, nn] = ord_pow_div(n, m2);\n  int e = 2 + 2 * f;\n  ll me = m2f\
@@ -571,15 +580,18 @@ data:
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n\n/**\n * @brief\
     \ \u7D20\u3079\u304D\u69CB\u9020\u4F53\n * @docs docs/math/prime/prime_power.md\n\
     \ */\n\ntemplate <class P>\nstruct PrimePower\n{\n  P p;\n  int e;\n  P pe;\n\n\
-    \  PrimePower() {}\n  PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e))\
-    \ {}\n  PrimePower(P p, int e, P pe) : p(p), e(e), pe(pe) {}\n  template <class\
-    \ P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\
-    \n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void div_p() { e--, pe /=\
-    \ p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e,\
-    \ pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\n//\
-    \ n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\u6570 e \u306B\u3064\u3044\
-    \u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll n, ll m)\n{\n \
-    \ assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n    return\
+    \  PrimePower() : p(-1), e(-1), pe(-1) {}\n  PrimePower(P p, int e = 1) : p(p),\
+    \ e(e), pe(ipow(p, e)) {}\n  PrimePower(P p, int e, P pe) : p(p), e(e), pe(pe)\
+    \ {}\n  template <class P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p),\
+    \ e(pp.e), pe(pp.pe) {}\n\n  template <class P2>\n  bool operator==(const PrimePower<P2>\
+    \ &rhs) const\n  { return p == rhs.p && e == rhs.e && pe == rhs.pe; }\n  template\
+    \ <class P2>\n  bool operator!=(const PrimePower<P2> &rhs) const { return *this\
+    \ != rhs; }\n\n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void div_p()\
+    \ { e--, pe /= p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>,\
+    \ p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\
+    \n// n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\u6570 e \u306B\u3064\
+    \u3044\u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll n, ll m)\n\
+    {\n  assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n    return\
     \ {e, 1LL << e, n >> e};\n  }\n  if (n % m != 0)\n    return {0, 1, n};\n  n /=\
     \ m;\n  if (n % m != 0)\n    return {1, m, n};\n  n /= m;\n  ll m2 = m * m;\n\
     \  auto [f, m2f, nn] = ord_pow_div(n, m2);\n  int e = 2 + 2 * f;\n  ll me = m2f\
@@ -618,8 +630,9 @@ data:
   - math/prime/euler_phi_carmichael.hpp
   - math/prime/order_primitive_root.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
+  - math/prime/linear_sieve.hpp
   - math/prime/factorize.hpp
-  timestamp: '2025-02-12 07:45:54+09:00'
+  timestamp: '2025-02-16 02:18:39+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/order_mod_euler_phi.test.cpp
@@ -630,6 +643,7 @@ data:
   - verify/yosupo/primitive_root.test.cpp
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/primitive_root_min.test.cpp
+  - verify/mytest/linear_sieve.test.cpp
 documentation_of: math/prime/prime_power.hpp
 layout: document
 redirect_from:
@@ -659,6 +673,7 @@ title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
 (3) PrimePower<P>(P p, int e, P pe)
 ```
 
+- (1) `p`, `e`, `pe` を $-1$ で初期化する。
 - (2) `p`, `e` を設定し、`pe` は自動で計算する。
 - (3) `p`, `e`, `pe` を設定する。
 
