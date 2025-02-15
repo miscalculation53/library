@@ -254,9 +254,16 @@ data:
       title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
 layout: toppage
 ---
-[miscalc](https://x.com/miscalc53) のライブラリです。現在移植作業中
+[miscalc](https://x.com/miscalc53) のライブラリです。
 
-他の人が使いやすいものにはあまりならないかもしれません
+- 現在移植作業中なのでいろいろなものが足りていないです。
+- 利用は自由です。
+- verify したりテストを書いたりするようにはしているつもりですが、バグっていたらごめんなさい。
+- 「『自分が』『競技で』使いやすい」ことを第一に作っているため、
+  - 意識的または無意識にお行儀の悪いコードがあると思います。
+  - 他の人が使いにくい場合があるかもしれません。
+    - テンプレも含めてコピペしないと動かないことが多いです。
+    - ACL と併用する場合は `using namespace atcoder;` をせずに毎回 `atcoder::` を書いてください。（名前空間周りは後でどうにかしたいかも）
 
 ---
 
@@ -267,6 +274,7 @@ verification helper についての備忘録：
 - https://zenn.dev/harui/articles/ec9ad6a3d3e7ce
   - 手元で yukicoder の問題を verify したいときは `export YUKICODER_TOKEN='(ここにAPIキーを入れる)'`
 - コミットする前は exec ファイルを消す（消さないとファイルがでかすぎると怒られる）。もしこれを忘れてしまって怒られたら `git log` で履歴を見る → `git reset --soft (戻したいコミットのid)`
+  - `.gitignore` でどうにかできないかと思ったが無理そうだった（？）
 - ドキュメントを書くとき
   - `|` を使うと表と解釈されてやばいことになる。数式では `\lvert`, `\rvert` を使う
   - `{ }` も `\lbrace`, `\rbrace` を使うのが無難
