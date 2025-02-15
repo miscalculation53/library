@@ -28,7 +28,7 @@ $\displaystyle \mu a(n) = \sum_{d\mid n} \mu\left(\frac{n}{d}\right) a(d)$
 
 #### 倍数ゼータ変換
 
-$\zeta' a(n) = \sum_{n \mid m} a(m)$
+$\displaystyle \zeta' a(n) = \sum_{n \mid m} a(m)$
 
 
 #### 倍数メビウス変換

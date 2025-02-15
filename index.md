@@ -69,6 +69,9 @@ data:
       path: math/prime/factorize.hpp
       title: "\u7D20\u56E0\u6570\u5206\u89E3"
     - icon: ':heavy_check_mark:'
+      path: math/prime/lcm_gcd_convolution.hpp
+      title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
+    - icon: ':heavy_check_mark:'
       path: math/prime/linear_sieve.hpp
       title: "\u7DDA\u5F62\u7BE9"
     - icon: ':heavy_check_mark:'
@@ -80,6 +83,10 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/prime/prime_power.hpp
       title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
+    - icon: ':heavy_check_mark:'
+      path: math/prime/zeta_mobius_divisor_multiple.hpp
+      title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
+        \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
     - icon: ':heavy_check_mark:'
       path: math/prime/zeta_mobius_divisor_multiple_large.hpp
       title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
@@ -200,8 +207,14 @@ data:
       path: verify/yosupo/factorize.test.cpp
       title: verify/yosupo/factorize.test.cpp
     - icon: ':heavy_check_mark:'
+      path: verify/yosupo/gcd_convolution.test.cpp
+      title: verify/yosupo/gcd_convolution.test.cpp
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/kth_root_integer.test.cpp
       title: verify/yosupo/kth_root_integer.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yosupo/lcm_convolution.test.cpp
+      title: verify/yosupo/lcm_convolution.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/many_aplusb.test.cpp
       title: verify/yosupo/many_aplusb.test.cpp

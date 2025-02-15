@@ -42,11 +42,18 @@ data:
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
   - icon: ':heavy_check_mark:'
+    path: math/prime/lcm_gcd_convolution.hpp
+    title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
+  - icon: ':heavy_check_mark:'
     path: math/prime/linear_sieve.hpp
     title: "\u7DDA\u5F62\u7BE9"
   - icon: ':heavy_check_mark:'
     path: math/prime/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/zeta_mobius_divisor_multiple.hpp
+    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
+      \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
   - icon: ':heavy_check_mark:'
     path: math/prime/zeta_mobius_divisor_multiple_large.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
@@ -58,6 +65,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/gcd_convolution.test.cpp
+    title: verify/yosupo/gcd_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/lcm_convolution.test.cpp
+    title: verify/yosupo/lcm_convolution.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root.test.cpp
     title: verify/yosupo/primitive_root.test.cpp
@@ -627,10 +640,12 @@ data:
   isVerificationFile: false
   path: math/prime/prime_power.hpp
   requiredBy:
+  - math/prime/lcm_gcd_convolution.hpp
   - math/prime/euler_phi_carmichael.hpp
   - math/prime/order_primitive_root.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
   - math/prime/linear_sieve.hpp
+  - math/prime/zeta_mobius_divisor_multiple.hpp
   - math/prime/factorize.hpp
   timestamp: '2025-02-16 02:18:39+09:00'
   verificationStatus: LIBRARY_ALL_AC
@@ -642,6 +657,8 @@ data:
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yosupo/primitive_root.test.cpp
   - verify/yosupo/factorize.test.cpp
+  - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/gcd_convolution.test.cpp
   - verify/yosupo/primitive_root_min.test.cpp
   - verify/mytest/linear_sieve.test.cpp
 documentation_of: math/prime/prime_power.hpp

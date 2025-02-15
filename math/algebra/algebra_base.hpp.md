@@ -39,6 +39,13 @@ data:
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
   - icon: ':heavy_check_mark:'
+    path: math/prime/lcm_gcd_convolution.hpp
+    title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/zeta_mobius_divisor_multiple.hpp
+    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
+      \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
+  - icon: ':heavy_check_mark:'
     path: math/prime/zeta_mobius_divisor_multiple_large.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
@@ -52,6 +59,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/and_or_convolution.test.cpp
     title: verify/yosupo/and_or_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/gcd_convolution.test.cpp
+    title: verify/yosupo/gcd_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/lcm_convolution.test.cpp
+    title: verify/yosupo/lcm_convolution.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -574,13 +587,17 @@ data:
   - math/algebra/algebra_basic_ops.hpp
   - math/set/zeta_mobius.hpp
   - math/set/and_or_convolution.hpp
+  - math/prime/lcm_gcd_convolution.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
+  - math/prime/zeta_mobius_divisor_multiple.hpp
   timestamp: '2025-02-16 02:18:39+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yosupo/and_or_convolution.test.cpp
+  - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/gcd_convolution.test.cpp
 documentation_of: math/algebra/algebra_base.hpp
 layout: document
 redirect_from:

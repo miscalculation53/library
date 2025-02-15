@@ -5,6 +5,16 @@ data:
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
   - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_basic_ops.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+      \ max\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/linear_sieve.hpp
+    title: "\u7DDA\u5F62\u7BE9"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/prime_power.hpp
+    title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -40,59 +50,36 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/prime/lcm_gcd_convolution.hpp
     title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/set/and_or_convolution.hpp
-    title: "and/or \u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
-    path: math/set/zeta_mobius.hpp
-    title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/and_or_convolution.test.cpp
-    title: verify/yosupo/and_or_convolution.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/algebra/algebra_basic_ops.md
-    document_title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068\
-      \ min, max\uFF09"
+    _deprecated_at_docs: docs/math/prime/zeta_mobius_divisor_multiple.md
+    document_title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\
+      \u30D3\u30A6\u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
     links: []
-  bundledCode: "#line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
-    \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
-    \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
-    \ EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing\
-    \ uint = unsigned int;\nusing ull = unsigned long long;\nusing pll = pair<ll,\
-    \ ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\
-    \n#define vc vector\ntemplate <class T>\nusing vvc = vc<vc<T>>;\ntemplate <class\
-    \ T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb = vc<bool>;\nusing vl = vc<ll>;\n\
-    using vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing\
-    \ vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate\
-    \ <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate <class\
-    \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing i128 =\
-    \ __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string &s)\n{\n \
-    \ i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size();\
+  bundledCode: "#line 2 \"math/prime/zeta_mobius_divisor_multiple.hpp\"\n\n#line 2\
+    \ \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\n\n\
+    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs\
+    \ docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing namespace\
+    \ std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\n\
+    using ll = long long;\nusing uint = unsigned int;\nusing ull = unsigned long long;\n\
+    using pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll,\
+    \ ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc = vc<vc<T>>;\n\
+    template <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb = vc<bool>;\nusing\
+    \ vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll =\
+    \ vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\
+    \ntemplate <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate\
+    \ <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing\
+    \ i128 = __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string &s)\n\
+    {\n  i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size();\
     \ i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n\
     \    for (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n\
     }\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\"\
@@ -533,24 +520,80 @@ data:
     \ &tv)\n{\n  size_t n = get<0>(tv).size();\n  apply([&](auto &...v)\n        {\
     \ ((assert(v.size() == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t\
     \ i = 0; i < n; i++)\n    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{},\
-    \ i);\n  return vt;\n}\n// ----------\n#line 2 \"math/algebra/algebra_base.hpp\"\
-    \n\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
-    \u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
-    \ */\n\ntemplate <class S_, auto op_, auto e_>\nstruct Monoid\n{\n  using S =\
-    \ S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n};\n\
-    \ntemplate <class S_, auto op_, auto e_, auto inv_>\nstruct Group\n{\n  using\
-    \ S = S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n\
-    \  static constexpr auto inv = inv_;\n};\n\ntemplate <class S_, auto add_, auto\
-    \ e0_, auto mul_, auto e1_>\nstruct SemiRing\n{\n  using S = S_;\n  static constexpr\
-    \ auto add = add_;\n  static constexpr auto e0 = e0_;\n  static constexpr auto\
-    \ mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto\
-    \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
-    \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
-    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
-    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
-    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
-    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
-    \ = Group<typename R::S, R::add, R::e0, R::minus>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    \ i);\n  return vt;\n}\n// ----------\n#line 2 \"math/prime/linear_sieve.hpp\"\
+    \n\n#line 2 \"math/prime/prime_power.hpp\"\n\n#line 4 \"math/prime/prime_power.hpp\"\
+    \n\n/**\n * @brief \u7D20\u3079\u304D\u69CB\u9020\u4F53\n * @docs docs/math/prime/prime_power.md\n\
+    \ */\n\ntemplate <class P>\nstruct PrimePower\n{\n  P p;\n  int e;\n  P pe;\n\n\
+    \  PrimePower() : p(-1), e(-1), pe(-1) {}\n  PrimePower(P p, int e = 1) : p(p),\
+    \ e(e), pe(ipow(p, e)) {}\n  PrimePower(P p, int e, P pe) : p(p), e(e), pe(pe)\
+    \ {}\n  template <class P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p),\
+    \ e(pp.e), pe(pp.pe) {}\n\n  template <class P2>\n  bool operator==(const PrimePower<P2>\
+    \ &rhs) const\n  { return p == rhs.p && e == rhs.e && pe == rhs.pe; }\n  template\
+    \ <class P2>\n  bool operator!=(const PrimePower<P2> &rhs) const { return *this\
+    \ != rhs; }\n\n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void div_p()\
+    \ { e--, pe /= p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>,\
+    \ p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\
+    \n// n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\u6570 e \u306B\u3064\
+    \u3044\u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll n, ll m)\n\
+    {\n  assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n    return\
+    \ {e, 1LL << e, n >> e};\n  }\n  if (n % m != 0)\n    return {0, 1, n};\n  n /=\
+    \ m;\n  if (n % m != 0)\n    return {1, m, n};\n  n /= m;\n  ll m2 = m * m;\n\
+    \  auto [f, m2f, nn] = ord_pow_div(n, m2);\n  int e = 2 + 2 * f;\n  ll me = m2f\
+    \ * m2;\n  if (nn % m == 0)\n    e++, me *= m, nn /= m;\n  return {e, me, nn};\n\
+    }\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class P>\nvc<P>\
+    \ factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n  repi(i,\
+    \ fac.size()) res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570 fac \u306F\
+    \u7D20\u56E0\u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const\
+    \ vc<PrimePower<P>> &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d,\
+    \ int i) -> void\n  {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n\
+    \      return;\n    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e\
+    \ + 1)\n    {\n      dfs(dfs, nd, i + 1);\n      nd *= pp.p;\n    }\n  };\n  dfs(dfs,\
+    \ 1, 0);\n  sort(ALL(res));\n  return res;\n}\n\ntemplate <class P>\nvc<PrimePower<P>>\
+    \ factorized_mul\n(const vc<PrimePower<P>> &fac1, const vc<PrimePower<P>> &fac2)\n\
+    {\n  const int n = fac1.size(), m = fac2.size();\n  vc<PrimePower<P>> fac;\n \
+    \ fac.reserve(n + m);\n  int i = 0, j = 0;\n  while (i < n && j < m)\n  {\n  \
+    \  if (fac1[i].p < fac2[j].p)\n      fac.emplace_back(fac1[i++]);\n    else if\
+    \ (fac1[i].p > fac2[j].p)\n      fac.emplace_back(fac2[j++]);\n    else\n    {\n\
+    \      fac.emplace_back(fac1[i].p, fac1[i].e + fac2[j].e, ull(fac1[i].pe) * ull(fac2[j].pe));\n\
+    \      i++, j++;\n    }\n  }\n  fac.insert(fac.end(), fac1.begin() + i, fac1.end());\n\
+    \  fac.insert(fac.end(), fac2.begin() + j, fac2.end());\n  return fac;\n}\n#line\
+    \ 5 \"math/prime/linear_sieve.hpp\"\n\n/**\n * @brief \u7DDA\u5F62\u7BE9\n * @docs\
+    \ docs/math/prime/linear_sieve.md\n */\n\nstruct LinearSieve\n{\npublic:\n  static\
+    \ int n;\n  static vc<PrimePower<int>> lpf_;\n  static vc<int> primes;\n\n  static\
+    \ void reserve(int n_)\n  {\n    if (n_ <= n)\n      return;\n    n = max(n_,\
+    \ 2 * n);\n    lpf_.resize(n + 1);\n    for (int d = 2; d <= n; d++)\n    {\n\
+    \      if (lpf_[d].p == -1)\n      {\n        lpf_[d] = PrimePower<int>(d, 1,\
+    \ d);\n        primes.eb(d);\n      }\n      fec(p : primes)\n      {\n      \
+    \  if (p > n / d || p > lpf_[d].p)\n          break;\n        if (lpf_[d].p ==\
+    \ p)\n          lpf_[p * d] = PrimePower<int>(p, lpf_[d].e + 1, lpf_[d].pe * p);\n\
+    \        else\n          lpf_[p * d] = PrimePower<int>(p, 1, p);\n      }\n  \
+    \  }\n  }\n\n  static PrimePower<int> lpf(int n)\n  {\n    assert(n >= 1);\n \
+    \   reserve(n);\n    return lpf_[n];\n  }\n\n  static bool is_prime(int n)\n \
+    \ {\n    if (n <= 1)\n      return false;\n    return lpf(n).p == n;\n  }\n\n\
+    \  // \u8A08\u7B97\u91CF: O(n \u306E\u7D20\u56E0\u6570\u306E\u7A2E\u985E\u6570\
+    ) = O(log n / loglog n)\n  template <class P = int>\n  static vc<PrimePower<P>>\
+    \ factorize(int n)\n  {\n    assert(n >= 1);\n    reserve(n);\n    vc<PrimePower<P>>\
+    \ res;\n    while (n > 1)\n    {\n      res.eb(lpf_[n]);\n      n /= lpf_[n].pe;\n\
+    \    }\n    return res;\n  }\n};\nvc<PrimePower<int>> LinearSieve::lpf_{};\nint\
+    \ LinearSieve::n{};\nvc<int> LinearSieve::primes{};\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
+    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
+    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
+    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
+    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
+    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
+    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
+    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
+    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
+    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
+    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
+    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
+    \ R::S, R::add, R::e0, R::minus>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
     \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
     \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
     template <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S\
@@ -578,36 +621,69 @@ data:
     \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
     \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
     \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
-    \ 1; }\n};\n"
+    \ 1; }\n};\n#line 6 \"math/prime/zeta_mobius_divisor_multiple.hpp\"\n\n/**\n *\
+    \ @brief \u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
+    \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09\n * @docs docs/math/prime/zeta_mobius_divisor_multiple.md\n\
+    \ */\n\n// \u03B6a(n) = \u03A3[d | n] a(d)\n// M \u306F\u53EF\u63DB\u30E2\u30CE\
+    \u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// 1-indexed (a[0] \u306F\u4F7F\u308F\u306A\
+    \u3044)\ntemplate <class M>\nvc<typename M::S> zeta_divisor(const vc<typename\
+    \ M::S> &a)\n{\n  const int n = SZ<int>(a) - 1;\n  LinearSieve::reserve(n);\n\
+    \  auto b = a;\n  fec(p : LinearSieve::primes)\n  {\n    if (p > n)\n      break;\n\
+    \    for (int i = 1; i * p <= n; i++)\n      b[i * p] = M::op(b[i * p], b[i]);\n\
+    \  }\n  return b;\n}\n\n// \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BC\
+    a(n) = \u03A3{d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\
+    \u8EE2\u516C\u5F0F\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n//\
+    \ 1-indexed (a[0] \u306F\u4F7F\u308F\u306A\u3044)\ntemplate <class G>\nvc<typename\
+    \ G::S> mobius_divisor(const vc<typename G::S> &a)\n{\n  const int n = SZ<int>(a)\
+    \ - 1;\n  LinearSieve::reserve(n);\n  auto b = a;\n  fec(p : LinearSieve::primes)\n\
+    \  {\n    if (p > n)\n      break;\n    for (int i = n / p; i >= 1; i--)\n   \
+    \   b[i * p] = G::op(b[i * p], G::inv(b[i]));\n  }\n  return b;\n}\n\n// \u03B6\
+    'a(n) = \u03A3{n | m} a(m)\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3\
+    \ \u3060\u3068 +)\n// 1-indexed (a[0] \u306F\u4F7F\u308F\u306A\u3044)\ntemplate\
+    \ <class M>\nvc<typename M::S> zeta_multiple(const vc<typename M::S> &a)\n{\n\
+    \  const int n = SZ<int>(a) - 1;\n  LinearSieve::reserve(n);\n  auto b = a;\n\
+    \  fec(p : LinearSieve::primes)\n  {\n    if (p > n)\n      break;\n    for (int\
+    \ i = n / p; i >= 1; i--)\n      b[i] = M::op(b[i], b[i * p]);\n  }\n  return\
+    \ b;\n}\n\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n// \u03BC'a(n)\
+    \ = \u03A3{n | m} \u03BC(m/n)g(m)\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\
+    \u3068 +)\n// 1-indexed (a[0] \u306F\u4F7F\u308F\u306A\u3044)\ntemplate <class\
+    \ G>\nvc<typename G::S> mobius_multiple(const vc<typename G::S> &a)\n{\n  const\
+    \ int n = SZ<int>(a) - 1;\n  LinearSieve::reserve(n);\n  auto b = a;\n  fec(p\
+    \ : LinearSieve::primes)\n  {\n    if (p > n)\n      break;\n    for (int i =\
+    \ 1; i * p <= n; i++)\n      b[i] = G::op(b[i], G::inv(b[i * p]));\n  }\n  return\
+    \ b;\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
-    algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\
-    \u5247\u6F14\u7B97\u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n\
-    \ */\n\ntemplate <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
-    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
-    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
-    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
-    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
-    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
-    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
-    \ static constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct\
-    \ GroupAddSub\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
-    \ + b; }\n  static constexpr S e() { return 0; }\n  static constexpr S inv(S a)\
-    \ { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using S = T;\n\
-    \  static constexpr S op(S a, S b) { return a * b; }\n  static constexpr S e()\
-    \ { return 1; }\n  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate\
-    \ <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n  using S = T;\n\
-    \  static constexpr S add(S a, S b) { return min(a, b); }\n  static constexpr\
-    \ S e0() { return infty; }\n  static constexpr S mul(S a, S b) { return a + b;\
-    \ }\n  static constexpr S e1() { return 0; }\n};\ntemplate <class T, const T infty\
-    \ = INF>\nstruct SemiRingMaxPlus\n{\n  using S = T;\n  static constexpr S add(S\
-    \ a, S b) { return max(a, b); }\n  static constexpr S e0() { return -infty; }\n\
-    \  static constexpr S mul(S a, S b) { return a + b; }\n  static constexpr S e1()\
-    \ { return 0; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using S\
-    \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
-    \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
-    \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
-    \ 1; }\n};"
+    linear_sieve.hpp\"\n#include \"../algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief\
+    \ \u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\
+    \u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09\n * @docs docs/math/prime/zeta_mobius_divisor_multiple.md\n\
+    \ */\n\n// \u03B6a(n) = \u03A3[d | n] a(d)\n// M \u306F\u53EF\u63DB\u30E2\u30CE\
+    \u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// 1-indexed (a[0] \u306F\u4F7F\u308F\u306A\
+    \u3044)\ntemplate <class M>\nvc<typename M::S> zeta_divisor(const vc<typename\
+    \ M::S> &a)\n{\n  const int n = SZ<int>(a) - 1;\n  LinearSieve::reserve(n);\n\
+    \  auto b = a;\n  fec(p : LinearSieve::primes)\n  {\n    if (p > n)\n      break;\n\
+    \    for (int i = 1; i * p <= n; i++)\n      b[i * p] = M::op(b[i * p], b[i]);\n\
+    \  }\n  return b;\n}\n\n// \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BC\
+    a(n) = \u03A3{d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\
+    \u8EE2\u516C\u5F0F\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n//\
+    \ 1-indexed (a[0] \u306F\u4F7F\u308F\u306A\u3044)\ntemplate <class G>\nvc<typename\
+    \ G::S> mobius_divisor(const vc<typename G::S> &a)\n{\n  const int n = SZ<int>(a)\
+    \ - 1;\n  LinearSieve::reserve(n);\n  auto b = a;\n  fec(p : LinearSieve::primes)\n\
+    \  {\n    if (p > n)\n      break;\n    for (int i = n / p; i >= 1; i--)\n   \
+    \   b[i * p] = G::op(b[i * p], G::inv(b[i]));\n  }\n  return b;\n}\n\n// \u03B6\
+    'a(n) = \u03A3{n | m} a(m)\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3\
+    \ \u3060\u3068 +)\n// 1-indexed (a[0] \u306F\u4F7F\u308F\u306A\u3044)\ntemplate\
+    \ <class M>\nvc<typename M::S> zeta_multiple(const vc<typename M::S> &a)\n{\n\
+    \  const int n = SZ<int>(a) - 1;\n  LinearSieve::reserve(n);\n  auto b = a;\n\
+    \  fec(p : LinearSieve::primes)\n  {\n    if (p > n)\n      break;\n    for (int\
+    \ i = n / p; i >= 1; i--)\n      b[i] = M::op(b[i], b[i * p]);\n  }\n  return\
+    \ b;\n}\n\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n// \u03BC'a(n)\
+    \ = \u03A3{n | m} \u03BC(m/n)g(m)\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\
+    \u3068 +)\n// 1-indexed (a[0] \u306F\u4F7F\u308F\u306A\u3044)\ntemplate <class\
+    \ G>\nvc<typename G::S> mobius_multiple(const vc<typename G::S> &a)\n{\n  const\
+    \ int n = SZ<int>(a) - 1;\n  LinearSieve::reserve(n);\n  auto b = a;\n  fec(p\
+    \ : LinearSieve::primes)\n  {\n    if (p > n)\n      break;\n    for (int i =\
+    \ 1; i * p <= n; i++)\n      b[i] = G::op(b[i], G::inv(b[i * p]));\n  }\n  return\
+    \ b;\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -619,51 +695,76 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
+  - math/prime/linear_sieve.hpp
+  - math/prime/prime_power.hpp
+  - math/algebra/algebra_basic_ops.hpp
   - math/algebra/algebra_base.hpp
   isVerificationFile: false
-  path: math/algebra/algebra_basic_ops.hpp
+  path: math/prime/zeta_mobius_divisor_multiple.hpp
   requiredBy:
-  - math/set/zeta_mobius.hpp
-  - math/set/and_or_convolution.hpp
   - math/prime/lcm_gcd_convolution.hpp
-  - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/zeta_mobius_divisor_multiple.hpp
-  timestamp: '2025-02-16 02:18:39+09:00'
+  timestamp: '2025-02-16 03:29:11+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/gcd_convolution.test.cpp
-documentation_of: math/algebra/algebra_basic_ops.hpp
+documentation_of: math/prime/zeta_mobius_divisor_multiple.hpp
 layout: document
 redirect_from:
-- /library/math/algebra/algebra_basic_ops.hpp
-- /library/math/algebra/algebra_basic_ops.hpp.html
-title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min, max\uFF09"
+- /library/math/prime/zeta_mobius_divisor_multiple.hpp
+- /library/math/prime/zeta_mobius_divisor_multiple.hpp.html
+title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\
+  \u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
 ---
-## 代数的構造（四則演算と min, max）
+## 約数・倍数 ゼータ・メビウス変換（$1$ 以上 $n$ 以下）
 
-`+`, `-`, `*`, `/`, `min`, `max`, `0`, `1` を使って定義できるやつ
+$1$ 以上 $n$ 以下の整数の集合の整除関係に関する約数・倍数 ゼータ・メビウス変換。
 
-### モノイド
+約数・倍数 ゼータ・メビウス変換の定義は、「$m$ の約数」側のドキュメントを参照のこと。
 
-- `MonoidAdd<T>`
-- `MonoidMul<T>`
-- `MonoidMin<T, infty>`
-- `MonoidMax<T, infty>`
+LCM/GCD 畳み込みについてはそちら側のドキュメントを参照のこと。
 
-### 群
+### 関数
 
-- `GroupAddSub<T>`
-- `GroupMulDiv<T>`
+内部で線形篩を用いている。関数を呼び出す前に `LinearSieve::reserve(n)` しておくと定数倍高速化が期待できる。
 
-### 半環
+#### zeta_divisor
 
-- `SemiRingMinPlus<T>`
-- `SemiRingMaxPlus<T>`
+```cpp
+DivisorMap<M::S> zeta_divisor(DivisorMap<M::S> a)
+```
 
-### 環
+1-indexed（`a[0]` は使わない）。
 
-- `RingAddSubMul<T>`
+##### 制約
+
+- `M` は**可換**モノイド
+
+##### 計算量
+
+$\lvert a \rvert = n$ として
+
+- $O(n \log \log n)$
+
+
+#### mobius_divisor
+
+```cpp
+DivisorMap<G::S> mobius_divisor(DivisorMap<G::S> a)
+```
+
+1-indexed（`a[0]` は使わない）。
+
+##### 制約
+
+- `G` は**可換**群
+
+##### 計算量
+
+$\lvert a \rvert = n$ として
+
+- $O(n \log \log n)$
+
+----
+
+zeta_multiple, mobius_multiple も同様（省略）。

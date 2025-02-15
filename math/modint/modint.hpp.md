@@ -83,6 +83,12 @@ data:
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/gcd_convolution.test.cpp
+    title: verify/yosupo/gcd_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/lcm_convolution.test.cpp
+    title: verify/yosupo/lcm_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
   - icon: ':heavy_check_mark:'
@@ -833,7 +839,9 @@ data:
   - verify/yosupo/and_or_convolution.test.cpp
   - verify/yosupo/primitive_root.test.cpp
   - verify/yosupo/factorize.test.cpp
+  - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/binomial.test.cpp
+  - verify/yosupo/gcd_convolution.test.cpp
   - verify/yosupo/primality_test.test.cpp
   - verify/yosupo/primitive_root_min.test.cpp
   - verify/aoj/extgcd.test.cpp

@@ -42,6 +42,12 @@ data:
     path: verify/yosupo/binomial.test.cpp
     title: verify/yosupo/binomial.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/gcd_convolution.test.cpp
+    title: verify/yosupo/gcd_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/lcm_convolution.test.cpp
+    title: verify/yosupo/lcm_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/binomial.test.cpp
     title: verify/yukicoder/binomial.test.cpp
   _isVerificationFailed: false
@@ -572,7 +578,9 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/binomial.test.cpp
+  - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/binomial.test.cpp
+  - verify/yosupo/gcd_convolution.test.cpp
 documentation_of: math/modint/binomial.hpp
 layout: document
 redirect_from:
