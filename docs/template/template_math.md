@@ -183,8 +183,8 @@ int sgn<D = ld>(a, D eps = EPS)
 ```cpp
 (1) vc<T=ll> base_repr(auto val, auto base)
 (2) vc<T=ll> base_repr(auto val, auto base, int n)
-(3) string base_repr_str(auto val, auto base, bool use_upper = true)
-(4) string base_repr_str(auto val, auto base, int n, bool use_upper = true)
+(3) string base_repr_str<bool use_upper = true>(auto val, auto base)
+(4) string base_repr_str<bool use_upper = true>(auto val, auto base, int n)
 ```
 
 $\mathrm{val}$ を $\mathrm{base}$ 進法で表現する。

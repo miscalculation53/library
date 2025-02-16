@@ -166,7 +166,8 @@ vc<T> base_repr(auto val, auto base, int n)
   reverse(a.begin(), a.end());
   return a;
 }
-string base_repr_str(auto val, int base, bool use_upper = true)
+template <const bool use_upper = true>
+string base_repr_str(auto val, int base)
 {
   assert(val >= 0);
   assert(2 <= base && base <= 36);
@@ -176,7 +177,8 @@ string base_repr_str(auto val, int base, bool use_upper = true)
     s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));
   return s;
 }
-string base_repr_str(auto val, int base, int n, bool use_upper = true)
+template <const bool use_upper = true>
+string base_repr_str(auto val, int base, int n)
 {
   assert(val >= 0);
   assert(2 <= base && base <= 36);
