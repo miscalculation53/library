@@ -1,16 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy: []
@@ -109,17 +109,18 @@ data:
     \ T = ll>\nvc<T> base_repr(auto val, auto base, int n)\n{\n  assert(val >= 0);\n\
     \  assert(base >= 2);\n  assert(n >= 0);\n  vc<T> a(n);\n  repi(i, n)\n  {\n \
     \   a[i] = val % base;\n    val /= base;\n  }\n  reverse(a.begin(), a.end());\n\
-    \  return a;\n}\nstring base_repr_str(auto val, int base, bool use_upper = true)\n\
-    {\n  assert(val >= 0);\n  assert(2 <= base && base <= 36);\n  auto a = base_repr(val,\
-    \ base);\n  string s = \"\";\n  for (cauto &ai : a)\n    s += (ai < 10 ? '0' +\
-    \ ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}\nstring base_repr_str(auto\
-    \ val, int base, int n, bool use_upper = true)\n{\n  assert(val >= 0);\n  assert(2\
-    \ <= base && base <= 36);\n  assert(n >= 0);\n  auto a = base_repr(val, base,\
-    \ n);\n  string s = \"\";\n  for (cauto &ai : a)\n    s += (ai < 10 ? '0' + ai\
-    \ : (use_upper ? 'A' : 'a') + (ai - 10));\n  return s;\n}\n#line 2 \"template/template_dump.hpp\"\
-    \n\n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
-    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    \  return a;\n}\ntemplate <const bool use_upper = true>\nstring base_repr_str(auto\
+    \ val, int base)\n{\n  assert(val >= 0);\n  assert(2 <= base && base <= 36);\n\
+    \  auto a = base_repr(val, base);\n  string s = \"\";\n  for (cauto &ai : a)\n\
+    \    s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return\
+    \ s;\n}\ntemplate <const bool use_upper = true>\nstring base_repr_str(auto val,\
+    \ int base, int n)\n{\n  assert(val >= 0);\n  assert(2 <= base && base <= 36);\n\
+    \  assert(n >= 0);\n  auto a = base_repr(val, base, n);\n  string s = \"\";\n\
+    \  for (cauto &ai : a)\n    s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a')\
+    \ + (ai - 10));\n  return s;\n}\n#line 2 \"template/template_dump.hpp\"\n\n#line\
+    \ 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
+    \u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n#ifdef\
+    \ LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
     namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
     \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
     \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
@@ -154,7 +155,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_sgn.test.cpp.cpp
   requiredBy: []
-  timestamp: '2025-02-12 07:45:54+09:00'
+  timestamp: '2025-02-17 01:49:35+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_sgn.test.cpp.cpp
