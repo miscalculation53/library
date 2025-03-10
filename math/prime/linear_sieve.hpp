@@ -40,7 +40,8 @@ public:
     }
   }
 
-  static PrimePower<int> lpf(int n)
+  template <class P = int>
+  static PrimePower<P> lpf(int n)
   {
     assert(n >= 1);
     reserve(n);

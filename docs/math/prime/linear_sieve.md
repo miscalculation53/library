@@ -39,11 +39,37 @@ $T$ 回呼んだとき、
 
 #### lpf
 
+```cpp
+PrimePower<P=int> lpf(int n)
+```
 
+$n$ の最小素因数 $p$ と $n$ が $p$ で割り切れる回数 $e$ について $(p, e, p^e)$ を返す。
+
+##### 制約
+
+- $n \geq 1$
 
 ##### 計算量
 
+$T$ 回呼んだとき、
+
+- $O(T + \max(n))$
+
+
 #### is_prime
+
+```cpp
+bool is_prime(int n)
+```
+
+$n$ が素数かどうかを返す。（最小素因数が自身に一致するかどうか）
+
+##### 計算量
+
+$T$ 回呼んだとき、
+
+- $O(T + \max(n))$
+
 
 #### factorize
 
@@ -54,6 +80,8 @@ vc<PrimePower<P=int>> factorize(n)
 $n$ の素因数分解を返す。
 
 ##### 制約
+
+- $n \geq 1$
 
 ##### 計算量
 
