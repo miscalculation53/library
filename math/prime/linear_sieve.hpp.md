@@ -1,39 +1,39 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
@@ -564,15 +564,15 @@ data:
     \  if (p > n / d || p > lpf_[d].p)\n          break;\n        if (lpf_[d].p ==\
     \ p)\n          lpf_[p * d] = PrimePower<int>(p, lpf_[d].e + 1, lpf_[d].pe * p);\n\
     \        else\n          lpf_[p * d] = PrimePower<int>(p, 1, p);\n      }\n  \
-    \  }\n  }\n\n  static PrimePower<int> lpf(int n)\n  {\n    assert(n >= 1);\n \
-    \   reserve(n);\n    return lpf_[n];\n  }\n\n  static bool is_prime(int n)\n \
-    \ {\n    if (n <= 1)\n      return false;\n    return lpf(n).p == n;\n  }\n\n\
-    \  // \u8A08\u7B97\u91CF: O(n \u306E\u7D20\u56E0\u6570\u306E\u7A2E\u985E\u6570\
-    ) = O(log n / loglog n)\n  template <class P = int>\n  static vc<PrimePower<P>>\
-    \ factorize(int n)\n  {\n    assert(n >= 1);\n    reserve(n);\n    vc<PrimePower<P>>\
-    \ res;\n    while (n > 1)\n    {\n      res.eb(lpf_[n]);\n      n /= lpf_[n].pe;\n\
-    \    }\n    return res;\n  }\n};\nvc<PrimePower<int>> LinearSieve::lpf_{};\nint\
-    \ LinearSieve::n{};\nvc<int> LinearSieve::primes{};\n"
+    \  }\n  }\n\n  template <class P = int>\n  static PrimePower<P> lpf(int n)\n \
+    \ {\n    assert(n >= 1);\n    reserve(n);\n    return lpf_[n];\n  }\n\n  static\
+    \ bool is_prime(int n)\n  {\n    if (n <= 1)\n      return false;\n    return\
+    \ lpf(n).p == n;\n  }\n\n  // \u8A08\u7B97\u91CF: O(n \u306E\u7D20\u56E0\u6570\
+    \u306E\u7A2E\u985E\u6570) = O(log n / loglog n)\n  template <class P = int>\n\
+    \  static vc<PrimePower<P>> factorize(int n)\n  {\n    assert(n >= 1);\n    reserve(n);\n\
+    \    vc<PrimePower<P>> res;\n    while (n > 1)\n    {\n      res.eb(lpf_[n]);\n\
+    \      n /= lpf_[n].pe;\n    }\n    return res;\n  }\n};\nvc<PrimePower<int>>\
+    \ LinearSieve::lpf_{};\nint LinearSieve::n{};\nvc<int> LinearSieve::primes{};\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
     prime_power.hpp\"\n\n/**\n * @brief \u7DDA\u5F62\u7BE9\n * @docs docs/math/prime/linear_sieve.md\n\
     \ */\n\nstruct LinearSieve\n{\npublic:\n  static int n;\n  static vc<PrimePower<int>>\
@@ -583,15 +583,15 @@ data:
     \      fec(p : primes)\n      {\n        if (p > n / d || p > lpf_[d].p)\n   \
     \       break;\n        if (lpf_[d].p == p)\n          lpf_[p * d] = PrimePower<int>(p,\
     \ lpf_[d].e + 1, lpf_[d].pe * p);\n        else\n          lpf_[p * d] = PrimePower<int>(p,\
-    \ 1, p);\n      }\n    }\n  }\n\n  static PrimePower<int> lpf(int n)\n  {\n  \
-    \  assert(n >= 1);\n    reserve(n);\n    return lpf_[n];\n  }\n\n  static bool\
-    \ is_prime(int n)\n  {\n    if (n <= 1)\n      return false;\n    return lpf(n).p\
-    \ == n;\n  }\n\n  // \u8A08\u7B97\u91CF: O(n \u306E\u7D20\u56E0\u6570\u306E\u7A2E\
-    \u985E\u6570) = O(log n / loglog n)\n  template <class P = int>\n  static vc<PrimePower<P>>\
-    \ factorize(int n)\n  {\n    assert(n >= 1);\n    reserve(n);\n    vc<PrimePower<P>>\
-    \ res;\n    while (n > 1)\n    {\n      res.eb(lpf_[n]);\n      n /= lpf_[n].pe;\n\
-    \    }\n    return res;\n  }\n};\nvc<PrimePower<int>> LinearSieve::lpf_{};\nint\
-    \ LinearSieve::n{};\nvc<int> LinearSieve::primes{};"
+    \ 1, p);\n      }\n    }\n  }\n\n  template <class P = int>\n  static PrimePower<P>\
+    \ lpf(int n)\n  {\n    assert(n >= 1);\n    reserve(n);\n    return lpf_[n];\n\
+    \  }\n\n  static bool is_prime(int n)\n  {\n    if (n <= 1)\n      return false;\n\
+    \    return lpf(n).p == n;\n  }\n\n  // \u8A08\u7B97\u91CF: O(n \u306E\u7D20\u56E0\
+    \u6570\u306E\u7A2E\u985E\u6570) = O(log n / loglog n)\n  template <class P = int>\n\
+    \  static vc<PrimePower<P>> factorize(int n)\n  {\n    assert(n >= 1);\n    reserve(n);\n\
+    \    vc<PrimePower<P>> res;\n    while (n > 1)\n    {\n      res.eb(lpf_[n]);\n\
+    \      n /= lpf_[n].pe;\n    }\n    return res;\n  }\n};\nvc<PrimePower<int>>\
+    \ LinearSieve::lpf_{};\nint LinearSieve::n{};\nvc<int> LinearSieve::primes{};"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -609,11 +609,11 @@ data:
   requiredBy:
   - math/prime/lcm_gcd_convolution.hpp
   - math/prime/zeta_mobius_divisor_multiple.hpp
-  timestamp: '2025-02-17 01:49:35+09:00'
+  timestamp: '2025-03-10 20:16:03+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/gcd_convolution.test.cpp
+  - verify/yosupo/lcm_convolution.test.cpp
   - verify/mytest/linear_sieve.test.cpp
 documentation_of: math/prime/linear_sieve.hpp
 layout: document
@@ -663,11 +663,37 @@ $T$ 回呼んだとき、
 
 #### lpf
 
+```cpp
+PrimePower<P=int> lpf(int n)
+```
 
+$n$ の最小素因数 $p$ と $n$ が $p$ で割り切れる回数 $e$ について $(p, e, p^e)$ を返す。
+
+##### 制約
+
+- $n \geq 1$
 
 ##### 計算量
 
+$T$ 回呼んだとき、
+
+- $O(T + \max(n))$
+
+
 #### is_prime
+
+```cpp
+bool is_prime(int n)
+```
+
+$n$ が素数かどうかを返す。（最小素因数が自身に一致するかどうか）
+
+##### 計算量
+
+$T$ 回呼んだとき、
+
+- $O(T + \max(n))$
+
 
 #### factorize
 
@@ -678,6 +704,8 @@ vc<PrimePower<P=int>> factorize(n)
 $n$ の素因数分解を返す。
 
 ##### 制約
+
+- $n \geq 1$
 
 ##### 計算量
 

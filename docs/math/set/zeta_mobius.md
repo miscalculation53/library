@@ -41,7 +41,7 @@ vc<M::S> zeta_subset(vc<M::S> a)
 
 ##### 計算量
 
-$|a| = n$ として
+$\lvert a \rvert = n$ として
 
 - $O(n 2^n)$
 
@@ -59,7 +59,7 @@ vc<G::S> mobius_subset(vc<G::S> a)
 
 ##### 計算量
 
-$|a| = n$ として
+$\lvert a \rvert = n$ として
 
 - $O(n 2^n)$
 

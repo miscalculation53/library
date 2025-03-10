@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy:
@@ -17,32 +17,35 @@ data:
   - icon: ':heavy_check_mark:'
     path: ds/group_index.hpp
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
+  - icon: ':warning:'
+    path: graph/graph.hpp
+    title: "\u30B0\u30E9\u30D5\uFF08\u57FA\u5E95\u30AF\u30E9\u30B9\uFF09"
   - icon: ':heavy_check_mark:'
     path: itertools/bit.hpp
     title: "\u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\u7D22"
   - icon: ':heavy_check_mark:'
     path: itertools/direct_product.hpp
     title: "\u76F4\u7A4D\u5168\u63A2\u7D22"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - icon: ':heavy_check_mark:'
     path: math/modint/binomial.hpp
     title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint_internal.hpp
     title: math/modint/modint_internal.hpp
   - icon: ':heavy_check_mark:'
@@ -52,7 +55,7 @@ data:
     path: math/prime/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
   - icon: ':heavy_check_mark:'
@@ -64,17 +67,17 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/prime/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
   - icon: ':heavy_check_mark:'
     path: math/prime/zeta_mobius_divisor_multiple.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/zeta_mobius_divisor_multiple_large.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
@@ -90,10 +93,10 @@ data:
   - icon: ':warning:'
     path: template/template.cpp
     title: template/template.cpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
   _extendedVerifiedWith:
@@ -220,12 +223,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
     title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/template/template_dump.md
     document_title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
@@ -281,80 +284,81 @@ data:
   isVerificationFile: false
   path: template/template_dump.hpp
   requiredBy:
-  - template/template_all.hpp
-  - template/template_inout.hpp
-  - template/template.cpp
-  - ds/group_index.hpp
-  - ds/coordinate_compression.hpp
-  - ds/csr.hpp
-  - math/algebra/algebra_base.hpp
-  - math/algebra/algebra_basic_ops.hpp
-  - math/modint/modint_internal.hpp
-  - math/modint/modint64.hpp
-  - math/modint/modint.hpp
-  - math/modint/power_table.hpp
-  - math/modint/binomial.hpp
-  - math/quotients.hpp
+  - math/extgcd.hpp
   - math/set/zeta_mobius.hpp
   - math/set/and_or_convolution.hpp
-  - math/prime/lcm_gcd_convolution.hpp
-  - math/prime/euler_phi_carmichael.hpp
   - math/prime/order_primitive_root.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/linear_sieve.hpp
+  - math/prime/euler_phi_carmichael.hpp
+  - math/prime/prime_power.hpp
+  - math/prime/factorize.hpp
+  - math/prime/lcm_gcd_convolution.hpp
   - math/prime/primality_test.hpp
   - math/prime/zeta_mobius_divisor_multiple.hpp
-  - math/prime/factorize.hpp
-  - math/prime/prime_power.hpp
-  - math/extgcd.hpp
+  - math/prime/linear_sieve.hpp
+  - math/modint/modint.hpp
+  - math/modint/modint_internal.hpp
+  - math/modint/binomial.hpp
+  - math/modint/modint64.hpp
+  - math/modint/power_table.hpp
+  - math/quotients.hpp
+  - math/algebra/algebra_basic_ops.hpp
+  - math/algebra/algebra_base.hpp
+  - template/template_inout.hpp
+  - template/template_all.hpp
+  - template/template.cpp
+  - algo/merge_sort.hpp
+  - graph/graph.hpp
   - itertools/direct_product.hpp
   - itertools/bit.hpp
-  - algo/merge_sort.hpp
+  - ds/csr.hpp
+  - ds/coordinate_compression.hpp
+  - ds/group_index.hpp
   timestamp: '2024-12-20 09:47:18+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/aoj/csr.test.cpp
+  - verify/aoj/extgcd.test.cpp
   - verify/yukicoder/order_mod_euler_phi.test.cpp
+  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/divisors.test.cpp
   - verify/yukicoder/base_repr.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
+  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/yukicoder/static_modint.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
   - verify/yukicoder/binomial.test.cpp
-  - verify/yukicoder/static_modint.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  - verify/yosupo/quotients.test.cpp
+  - verify/yosupo/many_aplusb_tuple.test.cpp
   - verify/yosupo/static_range_frequency.test.cpp
   - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/kth_root_integer.test.cpp
-  - verify/yosupo/many_aplusb_tuple.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/primitive_root_min.test.cpp
   - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yosupo/predecessor_problem.test.cpp
   - verify/yosupo/many_aplusb_128bit.test.cpp
-  - verify/yosupo/binomial.test.cpp
   - verify/yosupo/gcd_convolution.test.cpp
   - verify/yosupo/primality_test.test.cpp
   - verify/yosupo/aplusb.test.cpp
+  - verify/yosupo/kth_root_integer.test.cpp
+  - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/predecessor_problem.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
   - verify/yosupo/associative_array_lower_bound.test.cpp
-  - verify/yosupo/quotients.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/aoj/csr.test.cpp
-  - verify/aoj/extgcd.test.cpp
+  - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/binomial.test.cpp
+  - verify/mytest/modint64.test.cpp
+  - verify/mytest/template_sgn.test.cpp.cpp
   - verify/mytest/template_binsearch.test.cpp
-  - verify/mytest/linear_sieve.test.cpp
-  - verify/mytest/itertools_bit.test.cpp
+  - verify/mytest/template_bit.test.cpp
+  - verify/mytest/power_table.test.cpp
+  - verify/mytest/itertools_direct_product.test.cpp
+  - verify/mytest/template_math_div.test.cpp
   - verify/mytest/modint.test.cpp
   - verify/mytest/template_math_mulpow.test.cpp
-  - verify/mytest/power_table.test.cpp
-  - verify/mytest/template_bit.test.cpp
+  - verify/mytest/template_algo.test.cpp
   - verify/mytest/template_vector.test.cpp
   - verify/mytest/template_inout_top.test.cpp
-  - verify/mytest/modint64.test.cpp
-  - verify/mytest/template_algo.test.cpp
-  - verify/mytest/template_sgn.test.cpp.cpp
-  - verify/mytest/template_math_div.test.cpp
-  - verify/mytest/itertools_direct_product.test.cpp
+  - verify/mytest/linear_sieve.test.cpp
+  - verify/mytest/itertools_bit.test.cpp
 documentation_of: template/template_dump.hpp
 layout: document
 redirect_from:

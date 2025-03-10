@@ -1,60 +1,60 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint_internal.hpp
     title: math/modint/modint_internal.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
   - icon: ':heavy_check_mark:'
     path: math/prime/linear_sieve.hpp
     title: "\u7DDA\u5F62\u7BE9"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -572,61 +572,61 @@ data:
     \  if (p > n / d || p > lpf_[d].p)\n          break;\n        if (lpf_[d].p ==\
     \ p)\n          lpf_[p * d] = PrimePower<int>(p, lpf_[d].e + 1, lpf_[d].pe * p);\n\
     \        else\n          lpf_[p * d] = PrimePower<int>(p, 1, p);\n      }\n  \
-    \  }\n  }\n\n  static PrimePower<int> lpf(int n)\n  {\n    assert(n >= 1);\n \
-    \   reserve(n);\n    return lpf_[n];\n  }\n\n  static bool is_prime(int n)\n \
-    \ {\n    if (n <= 1)\n      return false;\n    return lpf(n).p == n;\n  }\n\n\
-    \  // \u8A08\u7B97\u91CF: O(n \u306E\u7D20\u56E0\u6570\u306E\u7A2E\u985E\u6570\
-    ) = O(log n / loglog n)\n  template <class P = int>\n  static vc<PrimePower<P>>\
-    \ factorize(int n)\n  {\n    assert(n >= 1);\n    reserve(n);\n    vc<PrimePower<P>>\
-    \ res;\n    while (n > 1)\n    {\n      res.eb(lpf_[n]);\n      n /= lpf_[n].pe;\n\
-    \    }\n    return res;\n  }\n};\nvc<PrimePower<int>> LinearSieve::lpf_{};\nint\
-    \ LinearSieve::n{};\nvc<int> LinearSieve::primes{};\n#line 2 \"math/prime/factorize.hpp\"\
-    \n\n#line 2 \"math/modint/modint.hpp\"\n\n#line 2 \"math/modint/modint_internal.hpp\"\
-    \n\n#line 4 \"math/modint/modint_internal.hpp\"\n\nnamespace internal\n{\n\nconstexpr\
-    \ ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n    return 0;\n\
-    \  uint _m = (uint)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while (n)\n \
-    \ {\n    if (n & 1)\n      r = (r * y) % _m;\n    y = (y * y) % _m;\n    n >>=\
-    \ 1;\n  }\n  return r;\n}\nconstexpr ll powmod64_constexpr(ll x, ll n, ll m)\n\
-    {\n  if (m == 1)\n    return 0;\n  ull _m = (ull)m;\n  ull r = 1;\n  ull y = safemod(x,\
-    \ m);\n  while (n)\n  {\n    u128 y128(y);\n    if (n & 1)\n      r = (y128 *\
-    \ r) % _m;\n    y = (y128 * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr\
-    \ bool isprime32_constexpr(int n)\n{\n  if (n <= 1)\n    return false;\n  if (n\
-    \ == 2 || n == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return\
-    \ false;\n  ll d = n - 1;\n  while (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[3]\
-    \ = {2, 7, 61};\n  for (ll a : bases)\n  {\n    ll t = d;\n    ll y = powmod32_constexpr(a,\
-    \ t, n);\n    while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = y *\
-    \ y % n;\n      t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return\
-    \ false;\n  }\n  return true;\n}\nconstexpr bool isprime64_constexpr(ll n)\n{\n\
-    \  if (n <= INT_MAX)\n    return isprime32_constexpr(n);\n  if (n % 2 == 0)\n\
-    \    return false;\n  ll d = n - 1;\n  while (d % 2 == 0)\n    d /= 2;\n  constexpr\
-    \ ll bases[7] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};\n  for (ll\
-    \ a : bases)\n  {\n    ll t = d;\n    ll y = powmod64_constexpr(a, t, n);\n  \
-    \  while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = (u128(y) * y)\
-    \ % n;\n      t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return\
-    \ false;\n  }\n  return true;\n}\ntemplate <int n>\nconstexpr bool isprime32 =\
-    \ isprime32_constexpr(n);\ntemplate <ll n>\nconstexpr bool isprime64 = isprime64_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
-    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\ninline constexpr ull inv64(ull a)\n{\n  ull x = a;\n  while (a * x\
-    \ != 1) x *= 2 - a * x;\n  return x;\n}\n\nstruct montgomery64odd\n{\n  ull m,\
-    \ im, sq;\n  // sq = (2^64)^2 % m = (2^128 - m) % m = (-m % 2^128) % m\n  explicit\
-    \ montgomery64odd(ull m) : m(m), im(inv64(m)), sq(-u128(m) % m) {}\n  ull umod()\
-    \ const { return m; }\n  ull reduce(u128 x) const\n  {\n    auto t = (x + u128(m)\
-    \ * (-im * ull(x))) >> 64;\n    if (t >= m)\n      t -= m;\n    return (ull)t;\n\
-    \  }\n  ull inv_reduce(i128 v) const\n  { return reduce(u128(v % m + m) * sq);\
-    \ }\n};\n\n// https://www.mathenachia.blog/even-mod-montgomery-impl/\nstruct montgomery64\n\
-    {\n  ull m, mx, imx, d, q;\n  uint b;\n\n  explicit montgomery64(ull m) : m(m)\n\
-    \  {\n    b = countr_zero(m), mx = m >> b;  // m == 2^b * mx, mx is odd\n    imx\
-    \ = inv64(mx);\n    d = powmod64_constexpr((mx + 1) / 2, b, mx);  // 2^{-b} mod\
-    \ mx\n    u128 sq = -u128(mx) % mx;  // 2^128 mod mx\n    q = (1 + (((sq - 1)\
-    \ * d) << b)) % m;\n  }\n  ull umod() const { return m; }\n  ull reduce(u128 x)\
-    \ const\n  {\n    ull p = x & MASK(b);  // x mod 2^b\n    x = (x >> b) + p * d;\n\
-    \    ull y = p << (64 - b);\n    auto t = (x + u128(mx) * (imx * (y - ull(x))))\
-    \ >> (64 - b);\n    if (t >= m)\n    {\n      t -= m;\n      if (t >= m)\n   \
-    \     t -= m;\n    }\n    return (ull)t;\n  }\n  ull inv_reduce(i128 v) const\n\
-    \  { return reduce(u128(v % m + m) * q); }\n};\n\n}\n#line 2 \"math/extgcd.hpp\"\
+    \  }\n  }\n\n  template <class P = int>\n  static PrimePower<P> lpf(int n)\n \
+    \ {\n    assert(n >= 1);\n    reserve(n);\n    return lpf_[n];\n  }\n\n  static\
+    \ bool is_prime(int n)\n  {\n    if (n <= 1)\n      return false;\n    return\
+    \ lpf(n).p == n;\n  }\n\n  // \u8A08\u7B97\u91CF: O(n \u306E\u7D20\u56E0\u6570\
+    \u306E\u7A2E\u985E\u6570) = O(log n / loglog n)\n  template <class P = int>\n\
+    \  static vc<PrimePower<P>> factorize(int n)\n  {\n    assert(n >= 1);\n    reserve(n);\n\
+    \    vc<PrimePower<P>> res;\n    while (n > 1)\n    {\n      res.eb(lpf_[n]);\n\
+    \      n /= lpf_[n].pe;\n    }\n    return res;\n  }\n};\nvc<PrimePower<int>>\
+    \ LinearSieve::lpf_{};\nint LinearSieve::n{};\nvc<int> LinearSieve::primes{};\n\
+    #line 2 \"math/prime/factorize.hpp\"\n\n#line 2 \"math/modint/modint.hpp\"\n\n\
+    #line 2 \"math/modint/modint_internal.hpp\"\n\n#line 4 \"math/modint/modint_internal.hpp\"\
+    \n\nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll x, ll n, int m)\n\
+    {\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y =\
+    \ safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n\
+    \    y = (y * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\nconstexpr ll powmod64_constexpr(ll\
+    \ x, ll n, ll m)\n{\n  if (m == 1)\n    return 0;\n  ull _m = (ull)m;\n  ull r\
+    \ = 1;\n  ull y = safemod(x, m);\n  while (n)\n  {\n    u128 y128(y);\n    if\
+    \ (n & 1)\n      r = (y128 * r) % _m;\n    y = (y128 * y) % _m;\n    n >>= 1;\n\
+    \  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int n)\n{\n  if (n\
+    \ <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n    return true;\n\
+    \  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2 == 0)\n\
+    \    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll a : bases)\n  {\n\
+    \    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n    while (t != n - 1\
+    \ && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n      t <<= 1;\n    }\n\
+    \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
+    }\nconstexpr bool isprime64_constexpr(ll n)\n{\n  if (n <= INT_MAX)\n    return\
+    \ isprime32_constexpr(n);\n  if (n % 2 == 0)\n    return false;\n  ll d = n -\
+    \ 1;\n  while (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[7] = {2, 325, 9375,\
+    \ 28178, 450775, 9780504, 1795265022};\n  for (ll a : bases)\n  {\n    ll t =\
+    \ d;\n    ll y = powmod64_constexpr(a, t, n);\n    while (t != n - 1 && y != 1\
+    \ && y != n - 1)\n    {\n      y = (u128(y) * y) % n;\n      t <<= 1;\n    }\n\
+    \    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n\
+    }\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\ntemplate\
+    \ <ll n>\nconstexpr bool isprime64 = isprime64_constexpr(n);\n\nstruct barrett32\n\
+    {\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) : m(m), im((ull)(-1) /\
+    \ m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint a, uint b) const\n\
+    \  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im) >> 64);\n  \
+    \  ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n  }\n};\n\ninline\
+    \ constexpr ull inv64(ull a)\n{\n  ull x = a;\n  while (a * x != 1) x *= 2 - a\
+    \ * x;\n  return x;\n}\n\nstruct montgomery64odd\n{\n  ull m, im, sq;\n  // sq\
+    \ = (2^64)^2 % m = (2^128 - m) % m = (-m % 2^128) % m\n  explicit montgomery64odd(ull\
+    \ m) : m(m), im(inv64(m)), sq(-u128(m) % m) {}\n  ull umod() const { return m;\
+    \ }\n  ull reduce(u128 x) const\n  {\n    auto t = (x + u128(m) * (-im * ull(x)))\
+    \ >> 64;\n    if (t >= m)\n      t -= m;\n    return (ull)t;\n  }\n  ull inv_reduce(i128\
+    \ v) const\n  { return reduce(u128(v % m + m) * sq); }\n};\n\n// https://www.mathenachia.blog/even-mod-montgomery-impl/\n\
+    struct montgomery64\n{\n  ull m, mx, imx, d, q;\n  uint b;\n\n  explicit montgomery64(ull\
+    \ m) : m(m)\n  {\n    b = countr_zero(m), mx = m >> b;  // m == 2^b * mx, mx is\
+    \ odd\n    imx = inv64(mx);\n    d = powmod64_constexpr((mx + 1) / 2, b, mx);\
+    \  // 2^{-b} mod mx\n    u128 sq = -u128(mx) % mx;  // 2^128 mod mx\n    q = (1\
+    \ + (((sq - 1) * d) << b)) % m;\n  }\n  ull umod() const { return m; }\n  ull\
+    \ reduce(u128 x) const\n  {\n    ull p = x & MASK(b);  // x mod 2^b\n    x = (x\
+    \ >> b) + p * d;\n    ull y = p << (64 - b);\n    auto t = (x + u128(mx) * (imx\
+    \ * (y - ull(x)))) >> (64 - b);\n    if (t >= m)\n    {\n      t -= m;\n     \
+    \ if (t >= m)\n        t -= m;\n    }\n    return (ull)t;\n  }\n  ull inv_reduce(i128\
+    \ v) const\n  { return reduce(u128(v % m + m) * q); }\n};\n\n}\n#line 2 \"math/extgcd.hpp\"\
     \n\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\u5F35\u30E6\u30FC\u30AF\
     \u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs docs/math/extgcd.md\n\
     \ */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\u305F\u3059 (g, x, y)\n\
@@ -894,7 +894,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/linear_sieve.test.cpp
   requiredBy: []
-  timestamp: '2025-02-17 01:49:35+09:00'
+  timestamp: '2025-03-10 20:16:03+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/linear_sieve.test.cpp

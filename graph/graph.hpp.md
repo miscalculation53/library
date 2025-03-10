@@ -2,6 +2,9 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: ds/csr.hpp
+    title: CSR
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -34,18 +37,15 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/itertools_direct_product.test.cpp
-    title: verify/mytest/itertools_direct_product.test.cpp
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':warning:'
   attributes:
-    _deprecated_at_docs: docs/itertools/direct_product.md
-    document_title: "\u76F4\u7A4D\u5168\u63A2\u7D22"
+    _deprecated_at_docs: docs/graph/graph.md
+    document_title: "\u30B0\u30E9\u30D5\uFF08\u57FA\u5E95\u30AF\u30E9\u30B9\uFF09"
     links: []
-  bundledCode: "#line 2 \"itertools/direct_product.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+  bundledCode: "#line 2 \"graph/graph.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -501,36 +501,82 @@ data:
     \ &tv)\n{\n  size_t n = get<0>(tv).size();\n  apply([&](auto &...v)\n        {\
     \ ((assert(v.size() == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t\
     \ i = 0; i < n; i++)\n    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{},\
-    \ i);\n  return vt;\n}\n// ----------\n#line 4 \"itertools/direct_product.hpp\"\
-    \n\n/**\n * @brief \u76F4\u7A4D\u5168\u63A2\u7D22\n * @docs docs/itertools/direct_product.md\n\
-    \ */\n\ntemplate <class T = ll>\nstruct direct_product\n{\nprivate:\n  vc<T> a;\n\
-    public:\n  direct_product(const vc<T> &a) : a(a)\n  {\n    assert(!a.empty());\n\
-    \    fec(ai : a) assert(ai >= 1);\n  }\n  struct Iterator\n  {\n  private:\n \
-    \   vc<T> b;\n    const direct_product &prod;\n\n  public:\n    Iterator(const\
-    \ vc<T> &b, const direct_product &prod) : b(b), prod(prod) {}\n    vc<T> operator*()\
-    \ const { return b; }\n    Iterator& operator++()\n    {\n      b.back()++;\n\
-    \      repi(i, SZ<int>(prod.a) - 1, 0, -1)\n      {\n        if (b[i] == prod.a[i])\n\
-    \        {\n          b[i] = 0;\n          b[i - 1]++;\n        }\n        else\n\
-    \          break;\n      }\n      return *this;\n    }\n    bool operator!=(const\
-    \ Iterator &other) const { return b != other.b; }\n  };\n  Iterator begin() const\
-    \ { return Iterator(vc<T>(a.size(), 0), *this); }\n  Iterator end() const\n  {\n\
-    \    vc<T> c(a.size(), 0);\n    c[0] = a[0];\n    return Iterator(c, *this);\n\
-    \  }\n};\n"
-  code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u76F4\u7A4D\u5168\u63A2\u7D22\n * @docs docs/itertools/direct_product.md\n\
-    \ */\n\ntemplate <class T = ll>\nstruct direct_product\n{\nprivate:\n  vc<T> a;\n\
-    public:\n  direct_product(const vc<T> &a) : a(a)\n  {\n    assert(!a.empty());\n\
-    \    fec(ai : a) assert(ai >= 1);\n  }\n  struct Iterator\n  {\n  private:\n \
-    \   vc<T> b;\n    const direct_product &prod;\n\n  public:\n    Iterator(const\
-    \ vc<T> &b, const direct_product &prod) : b(b), prod(prod) {}\n    vc<T> operator*()\
-    \ const { return b; }\n    Iterator& operator++()\n    {\n      b.back()++;\n\
-    \      repi(i, SZ<int>(prod.a) - 1, 0, -1)\n      {\n        if (b[i] == prod.a[i])\n\
-    \        {\n          b[i] = 0;\n          b[i - 1]++;\n        }\n        else\n\
-    \          break;\n      }\n      return *this;\n    }\n    bool operator!=(const\
-    \ Iterator &other) const { return b != other.b; }\n  };\n  Iterator begin() const\
-    \ { return Iterator(vc<T>(a.size(), 0), *this); }\n  Iterator end() const\n  {\n\
-    \    vc<T> c(a.size(), 0);\n    c[0] = a[0];\n    return Iterator(c, *this);\n\
-    \  }\n};"
+    \ i);\n  return vt;\n}\n// ----------\n#line 2 \"ds/csr.hpp\"\n\n#line 4 \"ds/csr.hpp\"\
+    \n\n/**\n * @brief CSR\n * @docs docs/ds/csr.md\n */\n\ntemplate <class T>\nstruct\
+    \ CSR\n{\nprivate:\n  // i (0 <= i < n) \u884C\u76EE\u3092\u8868\u3059\u306E\u306F\
+    \ elist \u306E [start[i], start[i+1])\n  int n;\n  vc<int> start;\n  vc<T> elist;\n\
+    \n  struct Row\n  {\n    using iterator = typename vc<T>::const_iterator;\n\n\
+    \  private:\n    iterator begi, endi;\n\n  public:\n    Row(const iterator &begi,\
+    \ const iterator &endi) : begi(begi), endi(endi) {}\n    inline iterator begin()\
+    \ const { return begi; }\n    inline iterator end() const { return endi; }\n \
+    \   template <class I = ll>\n    inline I size() const { return endi - begi; }\n\
+    \    inline bool empty() const { return size() > 0; }\n\n    inline T get(int\
+    \ i) const\n    {\n      assert(0 <= i && i < size());\n      return *(begi +\
+    \ i);\n    }\n    inline T front() const\n    {\n      assert(!empty());\n   \
+    \   return *begi;\n    }\n    inline T back() const\n    {\n      assert(!empty());\n\
+    \      return *prev(endi);\n    }\n  };\n\npublic:\n  CSR() {}\n  // (i, elem)\
+    \ \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template <class I>\n  CSR(int\
+    \ n, const vc<pair<I, T>> &ies) : n(n), elist(ies.size())\n  {\n    assert(n >=\
+    \ 0);\n    start.assign(n, 0);\n    fec([ i, e ] : ies)\n    {\n      assert(0\
+    \ <= i && i < n);\n      start[i]++;\n    }\n    start = cuml(start);\n    auto\
+    \ cnt = start;\n    fec([ i, e ] : ies) elist[cnt[i]++] = e;\n  }\n  // vv[i]\
+    \ \u306B elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  CSR(const\
+    \ vvc<T> &vv) : n(vv.size()), start(n + 1)\n  {\n    int m = 0;\n    fec(row :\
+    \ vv) m += row.size();\n    elist.resize(m);\n    int k = 0;\n    repi(i, n)\n\
+    \    {\n      start[i] = k;\n      fec(e : vv[i]) elist[k++] = e;\n    }\n   \
+    \ start.back() = m;\n  }\n\n  // i \u884C\u76EE\n  Row row(int i) const\n  {\n\
+    \    if (!(0 <= i && i < n))\n      return Row(elist.begin(), elist.begin());\n\
+    \    return Row(elist.begin() + start[i], elist.begin() + start[i + 1]);\n  }\n\
+    \n  template <class I = ll>\n  I size() const { return n; }\n\n  vvc<T> to_vv()\
+    \ const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i] = {elist.begin() + start[i],\
+    \ elist.begin() + start[i + 1]};\n    return res;\n  }\n};\n#line 5 \"graph/graph.hpp\"\
+    \n\n/**\n * @brief \u30B0\u30E9\u30D5\uFF08\u57FA\u5E95\u30AF\u30E9\u30B9\uFF09\
+    \n * @docs docs/graph/graph.md\n */\n\ntemplate <class Cost, const Cost dflt_cost\
+    \ = 1>\nstruct Edge\n{\n  int from, to;\n  Cost cost;\n  int index;\n  Edge()\
+    \ {}\n  Edge(int s, int t, Cost c = dflt_cost, int i = -1) : from(s), to(t), cost(c),\
+    \ index(i) {}\n  operator int() const { return to; }\n};\n\ntemplate <class Cost,\
+    \ const Cost dflt_cost = 1>\nstruct Graph\n{\n  int n;\n  CSR<Edge<Cost>> g;\n\
+    \  Graph() : n(0) {}\n  template <class EdgeId>\n  Graph(int n, const vc<pair<EdgeId,\
+    \ EdgeId>> &es, bool is_directed) : n(n)\n  {\n    const int m = es.size();\n\
+    \    if (is_directed)\n    {\n      vc<Edge<Cost>> edges(m);\n      repi(i, m)\n\
+    \      {\n        auto [u, v] = es[i];\n        edges[i] = Edge<Cost>(u, v, dflt_cost,\
+    \ i);\n      }\n      g = CSR<Edge<Cost>>(edges);\n    }\n    else\n    {\n  \
+    \    vc<Edge<Cost>> edges(2 * m);\n      repi(i, m)\n      {\n        auto [u,\
+    \ v] = es[i];\n        edges[2 * i] = Edge<Cost>(u, v, dflt_cost, i);\n      \
+    \  edges[2 * i + 1] = Edge<Cost>(v, u, dflt_cost, i);\n      }\n      g = CSR<Edge<Cost>>(edges);\n\
+    \    }\n  }\n  template <class EdgeId>\n  Graph(int n, const vc<tuple<EdgeId,\
+    \ EdgeId, Cost>> &es, bool is_directed) : n(n)\n  {\n    const int m = es.size();\n\
+    \    if (is_directed)\n    {\n      vc<Edge<Cost>> edges(m);\n      repi(i, m)\n\
+    \      {\n        auto [u, v, w] = es[i];\n        edges[i] = Edge<Cost>(u, v,\
+    \ w, i);\n      }\n      g = CSR<Edge<Cost>>(edges);\n    }\n    else\n    {\n\
+    \      vc<Edge<Cost>> edges(2 * m);\n      repi(i, m)\n      {\n        auto [u,\
+    \ v, w] = es[i];\n        edges[2 * i] = Edge<Cost>(u, v, w, i);\n        edges[2\
+    \ * i + 1] = Edge<Cost>(v, u, w, i);\n      }\n      g = CSR<Edge<Cost>>(edges);\n\
+    \    }\n  }\n};\n"
+  code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n#include \"../ds/csr.hpp\"\
+    \n\n/**\n * @brief \u30B0\u30E9\u30D5\uFF08\u57FA\u5E95\u30AF\u30E9\u30B9\uFF09\
+    \n * @docs docs/graph/graph.md\n */\n\ntemplate <class Cost, const Cost dflt_cost\
+    \ = 1>\nstruct Edge\n{\n  int from, to;\n  Cost cost;\n  int index;\n  Edge()\
+    \ {}\n  Edge(int s, int t, Cost c = dflt_cost, int i = -1) : from(s), to(t), cost(c),\
+    \ index(i) {}\n  operator int() const { return to; }\n};\n\ntemplate <class Cost,\
+    \ const Cost dflt_cost = 1>\nstruct Graph\n{\n  int n;\n  CSR<Edge<Cost>> g;\n\
+    \  Graph() : n(0) {}\n  template <class EdgeId>\n  Graph(int n, const vc<pair<EdgeId,\
+    \ EdgeId>> &es, bool is_directed) : n(n)\n  {\n    const int m = es.size();\n\
+    \    if (is_directed)\n    {\n      vc<Edge<Cost>> edges(m);\n      repi(i, m)\n\
+    \      {\n        auto [u, v] = es[i];\n        edges[i] = Edge<Cost>(u, v, dflt_cost,\
+    \ i);\n      }\n      g = CSR<Edge<Cost>>(edges);\n    }\n    else\n    {\n  \
+    \    vc<Edge<Cost>> edges(2 * m);\n      repi(i, m)\n      {\n        auto [u,\
+    \ v] = es[i];\n        edges[2 * i] = Edge<Cost>(u, v, dflt_cost, i);\n      \
+    \  edges[2 * i + 1] = Edge<Cost>(v, u, dflt_cost, i);\n      }\n      g = CSR<Edge<Cost>>(edges);\n\
+    \    }\n  }\n  template <class EdgeId>\n  Graph(int n, const vc<tuple<EdgeId,\
+    \ EdgeId, Cost>> &es, bool is_directed) : n(n)\n  {\n    const int m = es.size();\n\
+    \    if (is_directed)\n    {\n      vc<Edge<Cost>> edges(m);\n      repi(i, m)\n\
+    \      {\n        auto [u, v, w] = es[i];\n        edges[i] = Edge<Cost>(u, v,\
+    \ w, i);\n      }\n      g = CSR<Edge<Cost>>(edges);\n    }\n    else\n    {\n\
+    \      vc<Edge<Cost>> edges(2 * m);\n      repi(i, m)\n      {\n        auto [u,\
+    \ v, w] = es[i];\n        edges[2 * i] = Edge<Cost>(u, v, w, i);\n        edges[2\
+    \ * i + 1] = Edge<Cost>(v, u, w, i);\n      }\n      g = CSR<Edge<Cost>>(edges);\n\
+    \    }\n  }\n};"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -542,43 +588,17 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
+  - ds/csr.hpp
   isVerificationFile: false
-  path: itertools/direct_product.hpp
+  path: graph/graph.hpp
   requiredBy: []
-  timestamp: '2025-02-17 01:49:35+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/mytest/itertools_direct_product.test.cpp
-documentation_of: itertools/direct_product.hpp
+  timestamp: '2025-03-10 20:16:03+09:00'
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
+documentation_of: graph/graph.hpp
 layout: document
 redirect_from:
-- /library/itertools/direct_product.hpp
-- /library/itertools/direct_product.hpp.html
-title: "\u76F4\u7A4D\u5168\u63A2\u7D22"
+- /library/graph/graph.hpp
+- /library/graph/graph.hpp.html
+title: "\u30B0\u30E9\u30D5\uFF08\u57FA\u5E95\u30AF\u30E9\u30B9\uFF09"
 ---
-## 直積全探索
-
-#### direct_product
-
-```cpp
-direct_product(vc<T> a)
-```
-
-長さ $\lvert a \rvert$ で、$i \: (0 \leq i < \lvert a \rvert)$ 番目が $[0, a_i)$ であるような vector をすべて（辞書順で）列挙する。
-  - 例：$a = (2, 1, 3)$ のとき
-    - $(0, 0, 0)$
-    - $(0, 0, 1)$
-    - $(0, 0, 2)$
-    - $(1, 0, 0)$
-    - $(1, 0, 1)$
-    - $(1, 0, 2)$
-
-イテレータを実装している形なので、たとえば範囲 for の中で
-```
-fec(v : direct_product({2, 1, 3}))
-```
-のように使う。
-
-##### 計算量
-
-- $1$ 回のイテレーションが償却 $O(1)$

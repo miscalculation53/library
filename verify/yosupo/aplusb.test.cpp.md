@@ -1,36 +1,36 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -508,17 +508,17 @@ data:
     \    string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\";\n    #ifdef LOCAL\n\
     \    cerr << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\
     \u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\
-    \u3059\u308B\n    cerr << val;\n    //*/\n  };\n\n  #if defined FAST_IO and not\
-    \ defined LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n  #endif\n  #if defined\
-    \ FAST_CIO and not defined LOCAL\n  CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n \
-    \ cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
-    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
-    \ SINGLE_TESTCASE)\n  CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n\
-    \  {\n    dump(\"new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n\
-    \  CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n  main2();\n  #elif defined\
-    \ MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n  dump(\"T\"\
-    );\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
-    \  }\n  #endif\n}\n"
+    \u3092\u5916\u3059\n    cerr << val;\n    //*/\n  };\n\n  #if defined FAST_IO\
+    \ and not defined LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n  #endif\n \
+    \ #if defined FAST_CIO and not defined LOCAL\n  CERR(\"\\n[FAST_CIO]\\n\\n\",\
+    \ \"32\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout <<\
+    \ fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE\
+    \ or (defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\\n[AOJ_TESTCASE]\\\
+    n\\n\", \"35\");\n  while (true)\n  {\n    dump(\"new testcase\");\n    main2();\n\
+    \  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\",\
+    \ \"36\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\\
+    n\\n\", \"33\");\n  dump(\"T\");\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"\
+    new testcase\");\n    main2();\n  }\n  #endif\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/aplusb\"\n\n#define SINGLE_TESTCASE\n\
     // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n// #define\
     \ FAST_CIO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
@@ -527,17 +527,18 @@ data:
     {\n  cauto CERR = [](string val, string color)\n  {\n    string s = \"\\033[\"\
     \ + color + \"m\" + val + \"\\033[m\";\n    #ifdef LOCAL\n    cerr << s;\n   \
     \ #endif\n    /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\
-    \u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3059\u308B\n    cerr <<\
-    \ val;\n    //*/\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\
-    \\n[FAST_IO]\\n\\n\", \"32\");\n  #endif\n  #if defined FAST_CIO and not defined\
-    \ LOCAL\n  CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
-    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
-    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
-    \\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n  {\n    dump(\"new testcase\"\
-    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\\n[SINGLE_TESTCASE]\\\
-    n\\n\", \"36\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\\
-    n\\n\", \"33\");\n  dump(\"T\");\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"\
-    new testcase\");\n    main2();\n  }\n  #endif\n}"
+    \u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n   \
+    \ cerr << val;\n    //*/\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n\
+    \  CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n  #endif\n  #if defined FAST_CIO and\
+    \ not defined LOCAL\n  CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n\
+    \  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
+    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
+    \ SINGLE_TESTCASE)\n  CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n\
+    \  {\n    dump(\"new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n\
+    \  CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n  main2();\n  #elif defined\
+    \ MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n  dump(\"T\"\
+    );\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
+    \  }\n  #endif\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -552,7 +553,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/aplusb.test.cpp
   requiredBy: []
-  timestamp: '2025-02-17 01:49:35+09:00'
+  timestamp: '2025-03-10 20:16:03+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/aplusb.test.cpp

@@ -1,64 +1,64 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint_internal.hpp
     title: math/modint/modint_internal.hpp
   - icon: ':heavy_check_mark:'
     path: math/prime/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
   - icon: ':heavy_check_mark:'
     path: math/prime/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -914,10 +914,10 @@ data:
     \ {}\n\nint main()\n{\n  cauto CERR = [](string val, string color)\n  {\n    string\
     \ s = \"\\033[\" + color + \"m\" + val + \"\\033[m\";\n    #ifdef LOCAL\n    cerr\
     \ << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\
-    \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3059\u308B\
-    \n    cerr << val;\n    //*/\n  };\n\n  #if defined FAST_IO and not defined LOCAL\n\
-    \  CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n  #endif\n  #if defined FAST_CIO and\
-    \ not defined LOCAL\n  CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n\
+    \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\
+    \u3059\n    cerr << val;\n    //*/\n  };\n\n  #if defined FAST_IO and not defined\
+    \ LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n  #endif\n  #if defined FAST_CIO\
+    \ and not defined LOCAL\n  CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n\
     \  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
     \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
     \ SINGLE_TESTCASE)\n  CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n\
@@ -936,15 +936,15 @@ data:
     \ val, string color)\n  {\n    string s = \"\\033[\" + color + \"m\" + val + \"\
     \\033[m\";\n    #ifdef LOCAL\n    cerr << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\
     \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
-    \u30C8\u30A2\u30A6\u30C8\u3059\u308B\n    cerr << val;\n    //*/\n  };\n\n  #if\
-    \ defined FAST_IO and not defined LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\", \"32\"\
-    );\n  #endif\n  #if defined FAST_CIO and not defined LOCAL\n  CERR(\"\\n[FAST_CIO]\\\
-    n\\n\", \"32\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout\
-    \ << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE\
-    \ or (defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\\n[AOJ_TESTCASE]\\\
-    n\\n\", \"35\");\n  while (true)\n  {\n    dump(\"new testcase\");\n    main2();\n\
-    \  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\",\
-    \ \"36\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\\
+    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n    cerr << val;\n    //*/\n  };\n\
+    \n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\",\
+    \ \"32\");\n  #endif\n  #if defined FAST_CIO and not defined LOCAL\n  CERR(\"\\\
+    n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
+    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
+    \\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n  {\n    dump(\"new testcase\"\
+    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\\n[SINGLE_TESTCASE]\\\
+    n\\n\", \"36\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\\
     n\\n\", \"33\");\n  dump(\"T\");\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"\
     new testcase\");\n    main2();\n  }\n  #endif\n}"
   dependsOn:
@@ -970,7 +970,7 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/order_mod_carmichael.test.cpp
   requiredBy: []
-  timestamp: '2025-02-17 01:49:35+09:00'
+  timestamp: '2025-03-10 20:16:03+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/order_mod_carmichael.test.cpp
