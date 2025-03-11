@@ -365,6 +365,7 @@ using modint61 = static_modint64<(1LL << 61) - 1>;
 using modint64_odd = dynamic_modint64_odd<-1>;
 using modint64 = dynamic_modint64<-1>;
 
+#if defined LOCAL or not defined FAST_IO
 template <int m>
 istream &operator>>(istream &is, static_modint64<m> &x)
 {
@@ -407,7 +408,7 @@ ostream &operator<<(ostream &os, const dynamic_modint64<id> &x)
   os << x.val();
   return os;
 }
-
+#else
 template <int m>
 void rd1(static_modint64<m> &x)
 {
@@ -444,3 +445,4 @@ void wt1(const dynamic_modint64<id> &x)
 {
   fastio::wt1(x.val());
 }
+#endif

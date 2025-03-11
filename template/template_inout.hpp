@@ -11,6 +11,7 @@
 
 // https://judge.yosupo.jp/submission/170706 (maspy さん)
 // https://judge.yosupo.jp/submission/21623  (Nyaan さん)
+#if defined FAST_IO and not defined LOCAL
 namespace fastio {
 static constexpr uint32_t SIZ = 1 << 17;
 char ibuf[SIZ];
@@ -239,6 +240,8 @@ void print(Head &&head, Tail &&... tail) {
 
 } // namespace fastio
 
+#endif
+
 #if defined FAST_IO and not defined LOCAL
 struct Dummy {
   Dummy() { atexit(fastio::flush); }
@@ -248,6 +251,7 @@ struct Dummy {
 // https://trap.jp/post/1224/
 
 // ---- 入力 ----
+#if defined LOCAL or not defined FAST_IO
 template <class T, class U>
 istream &operator>>(istream &is, pair<T, U> &p)
 {
@@ -276,12 +280,15 @@ istream &operator>>(istream &is, vc<T> &a)
     is >> a[i];
   return is;
 }
+#endif
 
 namespace internal
 {
 
+#if defined LOCAL or not defined FAST_IO
 template <class... Ts>
 void CIN(Ts &...a) { (cin >> ... >> a); }
+#endif
 
 #if defined FAST_IO and not defined LOCAL
 template <class... Ts>
@@ -357,6 +364,7 @@ void READJAGnodump(int n, vvc<T> &v, vvc<Ts> &...vs)
 #define ENDL '\n'
 #endif
 
+#if defined LOCAL or not defined FAST_IO
 template <class T, class U>
 ostream &operator<<(ostream &os, const pair<T, U> &p)
 {
@@ -430,6 +438,7 @@ void COUTP(const T &a, const Ts &...b)
 }
 
 }; // namespace internal
+#endif
 
 #if defined FAST_IO and not defined LOCAL
 #define WRITE fastio::write

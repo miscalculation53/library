@@ -282,6 +282,7 @@ using modint998244353 = static_modint<998244353>;
 using modint1000000007 = static_modint<1000000007>;
 using modint = dynamic_modint<-1>;
 
+#if defined LOCAL or not defined FAST_IO
 template <int m>
 istream &operator>>(istream &is, static_modint<m> &x)
 {
@@ -310,7 +311,7 @@ ostream &operator<<(ostream &os, const dynamic_modint<id> &x)
   os << x.val();
   return os;
 }
-
+#else
 template <int m>
 void rd1(static_modint<m> &x)
 {
@@ -335,3 +336,4 @@ void wt1(const dynamic_modint<id> &x)
 {
   fastio::wt1(x.val());
 }
+#endif
