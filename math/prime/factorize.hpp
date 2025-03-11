@@ -86,7 +86,7 @@ vc<PrimePower<ll>> factorize(ll n)
     res.emplace_back(PrimePower<ll>(p, e, pe));
     n = nn;
   }
-  sort(ALL(res), [&](cauto &pp1, cauto &pp2)
+  sort(ALL(res), [&](const PrimePower<ll> &pp1, const PrimePower<ll> &pp2)
        { return pp1.p < pp2.p; });
   return res;
 }

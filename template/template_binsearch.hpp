@@ -102,16 +102,16 @@ template <class T = ll, class V, class... Args>
 inline T geq_cnt(const V &v, Args&&... args)
 { return SZ<T>(v) - LB<T>(v, forward<Args>(args)...); }
 
-template <class T = ll, class V, class... Args>
-inline T in_cnt(const V &v, auto l, auto r, Args&&... args)
+template <class T = ll, class V, class L, class R, class... Args>
+inline T in_cnt(const V &v, L l, R r, Args&&... args)
 {
   if (l > r)
     return 0;
   return lt_cnt<T>(v, r, forward<Args>(args)...) - lt_cnt<T>(v, l, forward<Args>(args)...);
 }
 
-template <class T = ll>
-pair<T, T> binsearch(cauto &judge, cauto &init_ok, cauto &init_ng)
+template <class T = ll, class Judge, class InitOk, class InitNg>
+pair<T, T> binsearch(const Judge &judge, const InitOk &init_ok, const InitNg &init_ng)
 {
   T ok(init_ok), ng(init_ng);
   assert(judge(ok));
@@ -123,8 +123,8 @@ pair<T, T> binsearch(cauto &judge, cauto &init_ok, cauto &init_ng)
   }
   return make_pair(ok, ng);
 }
-template <class T = ld>
-T binsearch_real(cauto &judge, cauto &init_ok, cauto &init_ng, const int &iteration_count = 100)
+template <class T = ld, class Judge, class InitOk, class InitNg>
+T binsearch_real(const Judge &judge, const InitOk &init_ok, const InitNg &init_ng, int iteration_count = 100)
 {
   T ok(init_ok), ng(init_ng);
   assert(judge(ok));
@@ -136,8 +136,8 @@ T binsearch_real(cauto &judge, cauto &init_ok, cauto &init_ng, const int &iterat
   }
   return ok;
 }
-template <class T = ll>
-pair<T, T> expsearch(cauto &judge, cauto &init_val, const bool &positive = true)
+template <class T = ll, class Judge, class InitVal>
+pair<T, T> expsearch(const Judge &judge, const InitVal &init_val, const bool &positive = true)
 {
   T ok, ng;
   if (judge(init_val))

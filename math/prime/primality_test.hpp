@@ -12,8 +12,8 @@
 namespace internal
 {
 
-template <class mint>
-bool is_prime_impl(ll n, cauto &bases)
+template <class mint, class Array>
+bool is_prime_impl(ll n, const Array &bases)
 {
   if (n <= 1)
     return false;

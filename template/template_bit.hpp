@@ -8,8 +8,10 @@
  * @docs docs/template/template_bit.md
  */
 
-inline constexpr ull pow2(auto k) { return 1ULL << k; }
-inline constexpr ull MASK(auto k) { return (1ULL << k) - 1ULL; }
+template <class T>
+inline constexpr ull pow2(T k) { return 1ULL << k; }
+template <class T>
+inline constexpr ull MASK(T k) { return (1ULL << k) - 1ULL; }
 
 #if __cplusplus < 202002L
 // x == 0 ならば 0、そうでなければ 1 + floor(log2(x))

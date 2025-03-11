@@ -7,8 +7,8 @@
  * @docs docs/algo/merge_sort.md
  */
 
-template <class T>
-void merge_sort(vc<T> &v, cauto &comp)
+template <class T, class Compare>
+void merge_sort(vc<T> &v, const Compare &comp)
 {
   const int n = v.size();
   if (n <= 1)

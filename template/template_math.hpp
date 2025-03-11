@@ -15,20 +15,22 @@
  * @docs docs/template/template_math.md
  */
 
-inline bool chmin(auto &a, cauto &b) { return a > b ? a = b, true : false; }
-inline bool chmax(auto &a, cauto &b) { return a < b ? a = b, true : false; }
+template <class T, class U>
+inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }
+template <class T, class U>
+inline bool chmax(T &a, U b) { return a < b ? a = b, true : false; }
 
-template <class T = ll>
-inline constexpr T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }
-template <class T = ll>
-inline constexpr T divceil(cauto &a, cauto &b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }
-template <class T = ll>
-inline constexpr T divround(cauto &a, cauto &b) { return divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }
-template <class T = ll>
-inline constexpr T safemod(cauto &a, cauto &b) { return T(a) - T(b) * divfloor<T>(a, b); }
+template <class T = ll, class U, class V>
+inline constexpr T divfloor(U a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }
+template <class T = ll, class U, class V>
+inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }
+template <class T = ll, class U, class V>
+inline constexpr T divround(U a, V b) { return divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }
+template <class T = ll, class U, class V>
+inline constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }
 
-template <class T = ll>
-constexpr T ipow(cauto &a, auto b)
+template <class T = ll, class U, class V>
+constexpr T ipow(U a, V b)
 {
   assert(b >= 0);
   if (b == 0)
@@ -50,16 +52,16 @@ constexpr T ipow(cauto &a, auto b)
   }
   return res;
 }
-template <class T = ll>
-T mul_limited(cauto &a, cauto &b, cauto &m = INF)
+template <class T = ll, class A, class B, class M>
+T mul_limited(A a, B b, M m = INF)
 {
   assert(a >= 0 && b >= 0 && m >= 0);
   if (b == 0)
     return 0;
   return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);
 }
-template <class T = ll>
-T pow_limited(cauto &a, auto b, cauto &m = INF)
+template <class T = ll, class A, class B, class M>
+T pow_limited(A a, B b, M m = INF)
 {
   assert(a >= 0 && b >= 0 && m >= 0);
   if (a <= 1 || b == 0)
@@ -84,8 +86,8 @@ T pow_limited(cauto &a, auto b, cauto &m = INF)
   return res;
 }
 
-template <class T = ll>
-constexpr T iroot(cauto &a, cauto &k)
+template <class T = ll, class A, class K>
+constexpr T iroot(A a, K k)
 {
   assert(a >= 0 && k >= 1);
   if (a <= 1 || k == 1)
@@ -129,13 +131,13 @@ constexpr T iroot(cauto &a, cauto &k)
 }
 
 // https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html
-template <class D = decltype(EPS)>
-int SGN(cauto &a, const D &eps = EPS) { return int(a > eps) - int(a < -eps); }
+template <class D = decltype(EPS), class A>
+int SGN(A a, const D &eps = EPS) { return int(a > eps) - int(a < -eps); }
 
 // 位取り記数法と同じ順番（下位桁が後ろ）
 // 0 に対しては {0} が返る
-template <class T = ll>
-vc<T> base_repr(auto val, auto base)
+template <class T = ll, class U, class V>
+vc<T> base_repr(U val, V base)
 {
   assert(val >= 0);
   assert(base >= 2);
@@ -151,8 +153,8 @@ vc<T> base_repr(auto val, auto base)
   return a;
 }
 // 位取り記数法と同じ順番（下位桁が後ろ）
-template <class T = ll>
-vc<T> base_repr(auto val, auto base, int n)
+template <class T = ll, class U, class V>
+vc<T> base_repr(U val, V base, int n)
 {
   assert(val >= 0);
   assert(base >= 2);
@@ -166,8 +168,8 @@ vc<T> base_repr(auto val, auto base, int n)
   reverse(a.begin(), a.end());
   return a;
 }
-template <const bool use_upper = true>
-string base_repr_str(auto val, int base)
+template <const bool use_upper = true, class U>
+string base_repr_str(U val, int base)
 {
   assert(val >= 0);
   assert(2 <= base && base <= 36);
@@ -177,8 +179,8 @@ string base_repr_str(auto val, int base)
     s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));
   return s;
 }
-template <const bool use_upper = true>
-string base_repr_str(auto val, int base, int n)
+template <const bool use_upper = true, class U>
+string base_repr_str(U val, int base, int n)
 {
   assert(val >= 0);
   assert(2 <= base && base <= 36);

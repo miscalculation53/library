@@ -10,8 +10,8 @@
  */
 
 #define ALL(a) (a).begin(), (a).end()
-template <class T = ll>
-inline T SZ(cauto &x) { return x.size(); }
+template <class T = ll, class V>
+inline T SZ(const V &x) { return x.size(); }
 #define eb emplace_back
 
 template <class F>
@@ -23,8 +23,8 @@ auto gen_vec(const int &n, const F &f)
 }
 
 // https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0
-template <class T, size_t d, size_t i = 0>
-auto dvec(cauto (&sz)[d], const T &init)
+template <class T, size_t d, size_t i = 0, class V>
+auto dvec(const V (&sz)[d], const T &init)
 {
   if constexpr (i < d)
     return vc(sz[i], dvec<T, d, i + 1>(sz, init));
@@ -68,8 +68,8 @@ vc<T> concat(vc<T> v, const vc<Ts> &...vs)
   return v;
 }
 
-template <class T>
-T vecget(const vc<T> &v, cauto &i, const T &dflt_negative = -INF, const T &dflt_positive = INF)
+template <class T, class I>
+T vecget(const vc<T> &v, I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)
 {
   if (i < 0)
     return dflt_negative;

@@ -457,31 +457,31 @@ void PRINTV(const vc<T> &v) { for (auto &vi : v) PRINT(vi); }
 // ----------
 
 // ----- 基準ずらし -----
-template <class T, class U>
-pair<T, U> operator+=(pair<T, U> &a, cauto &b)
+template <class T, class U, class P>
+pair<T, U> operator+=(pair<T, U> &a, const P &b)
 {
   a.first += b.first;
   a.second += b.second;
   return a;
 }
-template <class T, class U>
-pair<T, U> operator+(pair<T, U> &a, cauto &b) { return a += b; }
+template <class T, class U, class P>
+pair<T, U> operator+(pair<T, U> &a, const P &b) { return a += b; }
 
-template <class T, size_t n>
-array<T, n> operator+=(array<T, n> &a, cauto &b)
+template <class T, size_t n, class A>
+array<T, n> operator+=(array<T, n> &a, const A &b)
 {
   for (size_t i = 0; i < n; i++)
     a[i] += b[i];
   return a;
 }
-template <class T, size_t n>
-array<T, n> operator+(array<T, n> &a, cauto &b) { return a += b; }
+template <class T, size_t n, class A>
+array<T, n> operator+(array<T, n> &a, const A &b) { return a += b; }
 
 namespace internal
 {
 
-template <size_t... I>
-auto tuple_add_impl(auto &a, cauto &b, const index_sequence<I...>)
+template <size_t... I, class A, class B>
+auto tuple_add_impl(A &a, const B &b, const index_sequence<I...>)
 {
   ((get<I>(a) += get<I>(b)), ...);
   return a;
@@ -489,16 +489,16 @@ auto tuple_add_impl(auto &a, cauto &b, const index_sequence<I...>)
 
 }; // namespace internal
 
-template <class... Ts>
-tuple<Ts...> operator+=(tuple<Ts...> &a, cauto &b)
+template <class... Ts, class Tp>
+tuple<Ts...> operator+=(tuple<Ts...> &a, const Tp &b)
 { return internal::tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{}); }
-template <class... Ts>
-tuple<Ts...> operator+(tuple<Ts...> &a, cauto &b) { return a += b; }
+template <class... Ts, class Tp>
+tuple<Ts...> operator+(tuple<Ts...> &a, const Tp &b) { return a += b; }
 
-template <class T>
-void offset(vc<T> &v, cauto &add) { for (auto &vi : v) vi += add; }
-template <class T>
-void offset(vvc<T> &v, cauto &add) { for (auto &vi : v) for (auto &vij : vi) vij += add; }
+template <class T, class Add>
+void offset(vc<T> &v, const Add &add) { for (auto &vi : v) vi += add; }
+template <class T, class Add>
+void offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto &vij : vi) vij += add; }
 // ----------
 
 // ----- 転置 -----
@@ -552,12 +552,12 @@ vc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)
 namespace internal
 {
 
-template <size_t... I>
-auto vt_to_tv_impl(auto &tv, cauto &t, index_sequence<I...>, size_t index)
+template <size_t... I, class V, class Tp>
+auto vt_to_tv_impl(V &tv, const Tp &t, index_sequence<I...>, size_t index)
 { ((get<I>(tv)[index] = get<I>(t)), ...); }
 
-template <size_t... I>
-auto tv_to_vt_impl(cauto &tv, index_sequence<I...>, size_t index)
+template <size_t... I, class Tp>
+auto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t index)
 { return make_tuple(get<I>(tv)[index]...); }
 
 };

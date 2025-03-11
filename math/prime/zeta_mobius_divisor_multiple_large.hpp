@@ -103,7 +103,8 @@ public:
     DivisorMap() {}
     DivisorMap(const ZetaMobiusDivisorMultipleLarge &zm)
     : zm(zm), v(zm.dnum) {}
-    DivisorMap(const ZetaMobiusDivisorMultipleLarge &zm, cauto &func)
+    template <class F>
+    DivisorMap(const ZetaMobiusDivisorMultipleLarge &zm, const F &func)
     : zm(zm), v(zm.dnum) { repi(i, zm.dnum) v[i] = func(zm.ds[i]); }
 
     // m の約数 d に対して値を取得
@@ -133,8 +134,8 @@ public:
   template <class T>
   DivisorMap<T> divisor_map() const
   { return DivisorMap<T>(*this); }
-  template <class T>
-  DivisorMap<T> divisor_map(cauto &func) const
+  template <class T, class F>
+  DivisorMap<T> divisor_map(const F &func) const
   { return DivisorMap<T>(*this, func); }
 
   // ζa(n) = Σ{d | n} a(d)
