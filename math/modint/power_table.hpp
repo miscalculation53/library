@@ -3,7 +3,7 @@
 #include "../../template/template_all.hpp"
 
 /**
- * @brief 二項係数
+ * @brief 累乗テーブル
  * @docs docs/math/modint/power_table.md
  */
 
@@ -23,7 +23,8 @@ public:
   {
     if (mod != T::mod())
       pw = {1};
-    int i = SZ<int>(pw);
+    mod = T::mod();
+    int i = pw.size();
     if (n < i)
       return;
     pw.resize(n + 1);
