@@ -91,7 +91,7 @@ struct modint_base
   friend bool operator==(const mint &lhs, const mint &rhs)
   { return mint(lhs).eq(rhs); }
   friend bool operator!=(const mint &lhs, const mint &rhs)
-  { return mint(rhs).neq(rhs); }
+  { return mint(lhs).neq(rhs); }
 private:
   bool eq(const mint &rhs) { return REF._v == rhs._v; }
   bool neq(const mint &rhs) { return REF._v != rhs._v; }
