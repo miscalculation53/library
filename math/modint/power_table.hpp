@@ -17,7 +17,7 @@ private:
 
 public:
   PowerTable() {}
-  PowerTable(T base) : base(base), pw(1, 1) {}
+  PowerTable(T base) : mod(T::mod()), base(base), pw(1, 1) {}
 
   void reserve(int n)
   {

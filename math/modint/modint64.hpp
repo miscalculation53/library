@@ -1,7 +1,8 @@
 #pragma once
 
 #include "../../template/template_all.hpp"
-#include "modint_internal.hpp"
+#include "modint64_internal.hpp"
+#include "modint_base.hpp"
 #include "../extgcd.hpp"
 
 /**
@@ -10,10 +11,11 @@
  */
 
 template <ll m>
-struct static_modint64
+struct static_modint64 : internal::modint_base<static_modint64<m>>
 {
   using mint = static_modint64;
 private:
+  friend struct internal::modint_base<static_modint64<m>>;
   ull _v;
   static constexpr ull umod() { return m; }
   static constexpr bool prime = internal::isprime64<m>;
@@ -46,47 +48,6 @@ public:
 
   ll val() const { return (ll)_v; }
 
-  mint& operator++()
-  {
-    _v++;
-    if (_v == umod())
-      _v = 0;
-    return *this;
-  }
-  mint& operator--()
-  {
-    if (_v == 0)
-      _v = umod();
-    _v--;
-    return *this;
-  }
-  mint operator++(int)
-  {
-    mint res = *this;
-    ++*this;
-    return res;
-  }
-  mint operator--(int)
-  {
-    mint res = *this;
-    --*this;
-    return res;
-  }
-
-  mint& operator+=(const mint& rhs)
-  {
-    _v += rhs._v;
-    if (_v >= umod())
-      _v -= umod();
-    return *this;
-  }
-  mint& operator-=(const mint &rhs)
-  {
-    _v -= rhs._v;
-    if (_v >= umod())
-      _v += umod();
-    return *this;
-  }
   mint& operator*=(const mint &rhs)
   {
     u128 z = _v;
@@ -94,30 +55,13 @@ public:
     _v = (ull)(z % umod());
     return *this;
   }
-  mint& operator/=(const mint &rhs) { return *this = *this * rhs.inv(); }
 
-  mint operator+() const { return *this; }
-  mint operator-() const { return mint() - *this; }
-
-  mint pow(ll n) const
-  {
-    assert(n >= 0);
-    mint x = *this, r = 1;
-    while (n)
-    {
-      if (n & 1)
-        r *= x;
-      x *= x;
-      n >>= 1;
-    }
-    return r;
-  }
   mint inv() const
   {
     if (prime)
     {
       assert(_v != 0);
-      return pow(umod() - 2);
+      return CREF.pow(umod() - 2);
     }
     else
     {
@@ -126,27 +70,15 @@ public:
       return x;
     }
   }
-
-  friend mint operator+(const mint &lhs, const mint &rhs)
-  { return mint(lhs) += rhs; }
-  friend mint operator-(const mint &lhs, const mint &rhs)
-  { return mint(lhs) -= rhs; }
-  friend mint operator*(const mint &lhs, const mint &rhs)
-  { return mint(lhs) *= rhs; }
-  friend mint operator/(const mint &lhs, const mint &rhs)
-  { return mint(lhs) /= rhs; }
-  friend bool operator==(const mint &lhs, const mint &rhs)
-  { return lhs._v == rhs._v; }
-  friend bool operator!=(const mint &lhs, const mint &rhs)
-  { return lhs._v != rhs._v; }
 };
 
 template <int id>
-struct dynamic_modint64_odd
+struct dynamic_modint64_odd : internal::modint_base<dynamic_modint64_odd<id>>
 {
   using mint = dynamic_modint64_odd;
 private:
-  ull _v;  // montgomery expression
+  friend struct internal::modint_base<dynamic_modint64_odd<id>>;
+  ull _v; // montgomery expression
   static internal::montgomery64odd mg;
   static ull umod() { return mg.umod(); }
 
@@ -164,99 +96,29 @@ public:
 
   ll val() const { return (ll)mg.reduce(_v); }
 
-  mint& operator++()
-  {
-    _v++;
-    if (_v == umod())
-      _v = 0;
-    return *this;
-  }
-  mint& operator--()
-  {
-    if (_v == 0)
-      _v = umod();
-    _v--;
-    return *this;
-  }
-  mint operator++(int)
-  {
-    mint res = *this;
-    ++*this;
-    return res;
-  }
-  mint operator--(int)
-  {
-    mint res = *this;
-    --*this;
-    return res;
-  }
-
-  mint& operator+=(const mint& rhs)
-  {
-    _v += rhs._v;
-    if (_v >= umod())
-      _v -= umod();
-    return *this;
-  }
-  mint& operator-=(const mint &rhs)
-  {
-    _v -= rhs._v;
-    if (_v >= umod())
-      _v += umod();
-    return *this;
-  }
   mint& operator*=(const mint &rhs)
   {
     _v = mg.reduce(u128(_v) * rhs._v);
     return *this;
   }
-  mint& operator/=(const mint &rhs) { return *this = *this * rhs.inv(); }
 
-  mint operator+() const { return *this; }
-  mint operator-() const { return mint() - *this; }
-
-  mint pow(ll n) const
-  {
-    assert(n >= 0);
-    mint x = *this, r = 1;
-    while (n)
-    {
-      if (n & 1)
-        r *= x;
-      x *= x;
-      n >>= 1;
-    }
-    return r;
-  }
   mint inv() const
   {
     auto [g, x, y] = extgcd<ll>(val(), mod());
     assert(g == 1);
     return x;
   }
-
-  friend mint operator+(const mint &lhs, const mint &rhs)
-  { return mint(lhs) += rhs; }
-  friend mint operator-(const mint &lhs, const mint &rhs)
-  { return mint(lhs) -= rhs; }
-  friend mint operator*(const mint &lhs, const mint &rhs)
-  { return mint(lhs) *= rhs; }
-  friend mint operator/(const mint &lhs, const mint &rhs)
-  { return mint(lhs) /= rhs; }
-  friend bool operator==(const mint &lhs, const mint &rhs)
-  { return lhs._v == rhs._v; }
-  friend bool operator!=(const mint &lhs, const mint &rhs)
-  { return lhs._v != rhs._v; }
 };
 template <int id>
 internal::montgomery64odd dynamic_modint64_odd<id>::mg((1LL << 61) - 1);
 
 template <int id>
-struct dynamic_modint64
+struct dynamic_modint64 : internal::modint_base<dynamic_modint64<id>>
 {
   using mint = dynamic_modint64;
 private:
-  ull _v;  // montgomery expression
+  friend struct internal::modint_base<dynamic_modint64<id>>;
+  ull _v; // montgomery expression
   static internal::montgomery64 mg;
   static ull umod() { return mg.umod(); }
 
@@ -274,89 +136,18 @@ public:
 
   ll val() const { return (ll)mg.reduce(_v); }
 
-  mint& operator++()
-  {
-    _v++;
-    if (_v == umod())
-      _v = 0;
-    return *this;
-  }
-  mint& operator--()
-  {
-    if (_v == 0)
-      _v = umod();
-    _v--;
-    return *this;
-  }
-  mint operator++(int)
-  {
-    mint res = *this;
-    ++*this;
-    return res;
-  }
-  mint operator--(int)
-  {
-    mint res = *this;
-    --*this;
-    return res;
-  }
-
-  mint& operator+=(const mint& rhs)
-  {
-    _v += rhs._v;
-    if (_v >= umod())
-      _v -= umod();
-    return *this;
-  }
-  mint& operator-=(const mint &rhs)
-  {
-    _v -= rhs._v;
-    if (_v >= umod())
-      _v += umod();
-    return *this;
-  }
   mint& operator*=(const mint &rhs)
   {
     _v = mg.reduce(u128(_v) * rhs._v);
     return *this;
   }
-  mint& operator/=(const mint &rhs) { return *this = *this * rhs.inv(); }
 
-  mint operator+() const { return *this; }
-  mint operator-() const { return mint() - *this; }
-
-  mint pow(ll n) const
-  {
-    assert(n >= 0);
-    mint x = *this, r = 1;
-    while (n)
-    {
-      if (n & 1)
-        r *= x;
-      x *= x;
-      n >>= 1;
-    }
-    return r;
-  }
   mint inv() const
   {
     auto [g, x, y] = extgcd<ll>(val(), mod());
     assert(g == 1);
     return x;
   }
-
-  friend mint operator+(const mint &lhs, const mint &rhs)
-  { return mint(lhs) += rhs; }
-  friend mint operator-(const mint &lhs, const mint &rhs)
-  { return mint(lhs) -= rhs; }
-  friend mint operator*(const mint &lhs, const mint &rhs)
-  { return mint(lhs) *= rhs; }
-  friend mint operator/(const mint &lhs, const mint &rhs)
-  { return mint(lhs) /= rhs; }
-  friend bool operator==(const mint &lhs, const mint &rhs)
-  { return lhs._v == rhs._v; }
-  friend bool operator!=(const mint &lhs, const mint &rhs)
-  { return lhs._v != rhs._v; }
 };
 template <int id>
 internal::montgomery64 dynamic_modint64<id>::mg((1LL << 61) - 1);
@@ -364,85 +155,3 @@ internal::montgomery64 dynamic_modint64<id>::mg((1LL << 61) - 1);
 using modint61 = static_modint64<(1LL << 61) - 1>;
 using modint64_odd = dynamic_modint64_odd<-1>;
 using modint64 = dynamic_modint64<-1>;
-
-#if defined LOCAL or not defined FAST_IO
-template <int m>
-istream &operator>>(istream &is, static_modint64<m> &x)
-{
-  ll a;
-  is >> a;
-  x = a;
-  return is;
-}
-template <int m>
-ostream &operator<<(ostream &os, const static_modint64<m> &x)
-{
-  os << x.val();
-  return os;
-}
-template <int id>
-istream &operator>>(istream &is, dynamic_modint64_odd<id> &x)
-{
-  ll a;
-  is >> a;
-  x = a;
-  return is;
-}
-template <int id>
-ostream &operator<<(ostream &os, const dynamic_modint64_odd<id> &x)
-{
-  os << x.val();
-  return os;
-}
-template <int id>
-istream &operator>>(istream &is, dynamic_modint64<id> &x)
-{
-  ll a;
-  is >> a;
-  x = a;
-  return is;
-}
-template <int id>
-ostream &operator<<(ostream &os, const dynamic_modint64<id> &x)
-{
-  os << x.val();
-  return os;
-}
-#else
-template <int m>
-void rd1(static_modint64<m> &x)
-{
-  ll a;
-  fastio::rd1(a);
-  x = a;
-}
-template <int m>
-void wt1(const static_modint64<m> &x)
-{
-  fastio::wt1(x.val());
-}
-template <int id>
-void rd1(dynamic_modint64_odd<id> &x)
-{
-  ll a;
-  fastio::rd1(a);
-  x = a;
-}
-template <int id>
-void wt1(const dynamic_modint64_odd<id> &x)
-{
-  fastio::wt1(x.val());
-}
-template <int id>
-void rd1(dynamic_modint64<id> &x)
-{
-  ll a;
-  fastio::rd1(a);
-  x = a;
-}
-template <int id>
-void wt1(const dynamic_modint64<id> &x)
-{
-  fastio::wt1(x.val());
-}
-#endif
