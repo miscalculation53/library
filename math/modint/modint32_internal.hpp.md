@@ -33,19 +33,109 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy: []
+  _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: math/modint/modint.hpp
+    title: modint (32 bit)
+  - icon: ':heavy_check_mark:'
+    path: math/modint/modint64.hpp
+    title: modint (64 bit)
+  - icon: ':heavy_check_mark:'
+    path: math/modint/modint64_internal.hpp
+    title: math/modint/modint64_internal.hpp
+  - icon: ':heavy_check_mark:'
+    path: math/prime/euler_phi_carmichael.hpp
+    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
+      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/factorize.hpp
+    title: "\u7D20\u56E0\u6570\u5206\u89E3"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/order_primitive_root.hpp
+    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/primality_test.hpp
+    title: "\u7D20\u6570\u5224\u5B9A"
+  - icon: ':heavy_check_mark:'
+    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
+    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
+      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
+  - icon: ':warning:'
+    path: template/template.cpp
+    title: template/template.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/yosupo/quotients.test.cpp
-    title: verify/yosupo/quotients.test.cpp
+    path: verify/aoj/extgcd.test.cpp
+    title: verify/aoj/extgcd.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/modpow.test.cpp
+    title: verify/aoj/modpow.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/linear_sieve.test.cpp
+    title: verify/mytest/linear_sieve.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/modint.test.cpp
+    title: verify/mytest/modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/modint64.test.cpp
+    title: verify/mytest/modint64.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/power_table.test.cpp
+    title: verify/mytest/power_table.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/and_or_convolution.test.cpp
+    title: verify/yosupo/and_or_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/binomial.test.cpp
+    title: verify/yosupo/binomial.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/factorize.test.cpp
+    title: verify/yosupo/factorize.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/gcd_convolution.test.cpp
+    title: verify/yosupo/gcd_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/lcm_convolution.test.cpp
+    title: verify/yosupo/lcm_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/primality_test.test.cpp
+    title: verify/yosupo/primality_test.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/primitive_root.test.cpp
+    title: verify/yosupo/primitive_root.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/primitive_root_min.test.cpp
+    title: verify/yosupo/primitive_root_min.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/binomial.test.cpp
+    title: verify/yukicoder/binomial.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/divisors.test.cpp
+    title: verify/yukicoder/divisors.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/dynamic_modint.test.cpp
+    title: verify/yukicoder/dynamic_modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/order_mod_carmichael.test.cpp
+    title: verify/yukicoder/order_mod_carmichael.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/order_mod_euler_phi.test.cpp
+    title: verify/yukicoder/order_mod_euler_phi.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/static_modint.test.cpp
+    title: verify/yukicoder/static_modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/quotients.md
-    document_title: "\u5546\u5217\u6319"
     links: []
-  bundledCode: "#line 2 \"math/quotients.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+  bundledCode: "#line 2 \"math/modint/modint32_internal.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -503,36 +593,40 @@ data:
     \ &tv)\n{\n  size_t n = get<0>(tv).size();\n  apply([&](auto &...v)\n        {\
     \ ((assert(v.size() == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t\
     \ i = 0; i < n; i++)\n    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{},\
-    \ i);\n  return vt;\n}\n// ----------\n#line 4 \"math/quotients.hpp\"\n\n/**\n\
-    \ * @brief \u5546\u5217\u6319\n * @docs docs/math/quotients.md\n */\n\n// (y,\
-    \ l, r)\n// y \u306F floor(n / x^d) (x: \u6574\u6570) \u3068\u3057\u3066\u8868\
-    \u305B\u308B\u6574\u6570\n// y == floor(n / x^d) <=> l < x <= r\nstruct quotients\n\
-    {\nprivate:\n  ll n;\n  int d;\n\npublic:\n  quotients(ll n, int d = 1) : n(n),\
-    \ d(d)\n  {\n    assert(n >= 1 && d >= 1);\n  }\n  struct Iterator\n  {\n  private:\n\
-    \    ll y, l, r;\n    const quotients &q;\n\n  public:\n    Iterator(ll y, ll\
-    \ l, ll r, const quotients &q) : y(y), l(l), r(r), q(q) {}\n    tuple<ll, ll,\
-    \ ll> operator*() const { return {y, l, r}; }\n    Iterator& operator++()\n  \
-    \  {\n      if (l == 0)\n        y = l = r = -1;\n      else\n      {\n      \
-    \  r = l;\n        y = q.n / ipow(l, q.d);\n        l = iroot(q.n / (y + 1), q.d);\n\
-    \      }\n      return *this;\n    }\n    bool operator!=(const Iterator &other)\
-    \ const { return y != other.y; }\n  };\n  Iterator begin() const { return Iterator(1,\
-    \ iroot(n / 2, d), iroot(n, d), *this); }\n  Iterator end() const { return Iterator(-1,\
-    \ -1, -1, *this); }\n};\n"
-  code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u5546\u5217\u6319\n * @docs docs/math/quotients.md\n */\n\n// (y, l, r)\n//\
-    \ y \u306F floor(n / x^d) (x: \u6574\u6570) \u3068\u3057\u3066\u8868\u305B\u308B\
-    \u6574\u6570\n// y == floor(n / x^d) <=> l < x <= r\nstruct quotients\n{\nprivate:\n\
-    \  ll n;\n  int d;\n\npublic:\n  quotients(ll n, int d = 1) : n(n), d(d)\n  {\n\
-    \    assert(n >= 1 && d >= 1);\n  }\n  struct Iterator\n  {\n  private:\n    ll\
-    \ y, l, r;\n    const quotients &q;\n\n  public:\n    Iterator(ll y, ll l, ll\
-    \ r, const quotients &q) : y(y), l(l), r(r), q(q) {}\n    tuple<ll, ll, ll> operator*()\
-    \ const { return {y, l, r}; }\n    Iterator& operator++()\n    {\n      if (l\
-    \ == 0)\n        y = l = r = -1;\n      else\n      {\n        r = l;\n      \
-    \  y = q.n / ipow(l, q.d);\n        l = iroot(q.n / (y + 1), q.d);\n      }\n\
-    \      return *this;\n    }\n    bool operator!=(const Iterator &other) const\
-    \ { return y != other.y; }\n  };\n  Iterator begin() const { return Iterator(1,\
-    \ iroot(n / 2, d), iroot(n, d), *this); }\n  Iterator end() const { return Iterator(-1,\
-    \ -1, -1, *this); }\n};"
+    \ i);\n  return vt;\n}\n// ----------\n#line 4 \"math/modint/modint32_internal.hpp\"\
+    \n\nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll x, ll n, int m)\n\
+    {\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y =\
+    \ safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n\
+    \    y = (y * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int\
+    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
+    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while\
+    \ (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll\
+    \ a : bases)\n  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n  \
+    \  while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n \
+    \     t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n\
+    \  }\n  return true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
+    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
+    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
+    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
+    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
+    \ }\n};\n\n}\n"
+  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n\nnamespace\
+    \ internal\n{\n\nconstexpr ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m\
+    \ == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y = safemod(x,\
+    \ m);\n  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n    y = (y *\
+    \ y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int\
+    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
+    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while\
+    \ (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll\
+    \ a : bases)\n  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n  \
+    \  while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n \
+    \     t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n\
+    \  }\n  return true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
+    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
+    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
+    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
+    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
+    \ }\n};\n\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -545,63 +639,46 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   isVerificationFile: false
-  path: math/quotients.hpp
-  requiredBy: []
-  timestamp: '2025-03-12 01:12:20+09:00'
+  path: math/modint/modint32_internal.hpp
+  requiredBy:
+  - math/prime/order_primitive_root.hpp
+  - math/prime/zeta_mobius_divisor_multiple_large.hpp
+  - math/prime/euler_phi_carmichael.hpp
+  - math/prime/factorize.hpp
+  - math/prime/primality_test.hpp
+  - math/modint/modint64_internal.hpp
+  - math/modint/modint.hpp
+  - math/modint/modint64.hpp
+  - template/template.cpp
+  timestamp: '2025-03-12 04:52:12+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/quotients.test.cpp
-documentation_of: math/quotients.hpp
+  - verify/aoj/modpow.test.cpp
+  - verify/aoj/extgcd.test.cpp
+  - verify/yukicoder/order_mod_euler_phi.test.cpp
+  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  - verify/yukicoder/order_mod_carmichael.test.cpp
+  - verify/yukicoder/divisors.test.cpp
+  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/yukicoder/static_modint.test.cpp
+  - verify/yukicoder/dynamic_modint.test.cpp
+  - verify/yukicoder/binomial.test.cpp
+  - verify/yosupo/and_or_convolution.test.cpp
+  - verify/yosupo/primitive_root_min.test.cpp
+  - verify/yosupo/factorize.test.cpp
+  - verify/yosupo/gcd_convolution.test.cpp
+  - verify/yosupo/primality_test.test.cpp
+  - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/binomial.test.cpp
+  - verify/mytest/modint64.test.cpp
+  - verify/mytest/power_table.test.cpp
+  - verify/mytest/modint.test.cpp
+  - verify/mytest/linear_sieve.test.cpp
+documentation_of: math/modint/modint32_internal.hpp
 layout: document
 redirect_from:
-- /library/math/quotients.hpp
-- /library/math/quotients.hpp.html
-title: "\u5546\u5217\u6319"
+- /library/math/modint/modint32_internal.hpp
+- /library/math/modint/modint32_internal.hpp.html
+title: math/modint/modint32_internal.hpp
 ---
-## 商列挙
-
-```cpp
-quotients(ll n, int d = 1)
-```
-
-次の条件を満たす $(y, l, r)$ を $y$ の昇順（$l, r$ の降順）に列挙する。
-
-- $\displaystyle y \in \left\lbrace \left\lfloor \frac{n}{x^d} \right\rfloor \ \middle\vert \ x \in \mathbb{Z}, 1 \leq x \leq n^{1/d} \right\rbrace$
-- $x \in \mathbb{Z}, 1 \leq x \leq n^{1/d}$ に対し、$\displaystyle y = \left\lfloor \frac{n}{x^d} \right\rfloor \iff x \in (l, r]$
-
-使い方としては
-
-```cpp
-fec([y, l, r] : quotients(n))
-```
-
-という感じ。
-
-##### 制約
-
-- $n \geq 1$
-- $d \geq 1$
-
-##### 計算量
-
-- $1$ 回のイテレーションは `ipow`, `iroot` がボトルネック
-- 条件を満たすものの個数は $O(n^{1/(d+1)})$
-
-##### 関連事実
-
-- 中身は以下の通り。
-
-  $\begin{aligned}
-    y = \left\lfloor \frac{n}{x^d} \right\rfloor
-    &\iff \frac{n}{x^d} - 1 \lt y \leq \frac{n}{x^d} \\\\  
-    &\iff \frac{n}{y+1} \lt x^d \leq \frac{n}{y} \\\\  
-    &\iff \left\lfloor \left\lfloor\frac{n}{y+1}\right\rfloor^{1/d} \right\rfloor \lt x \leq \left\lfloor \left\lfloor\frac{n}{y}\right\rfloor^{1/d} \right\rfloor
-  \end{aligned}$
-
-  $(y, l, r)$ から $(y', l', r')$ を得るには、$r' = l$ とし、$y'$ を計算し、$l'$ を上式から求める。
-- 個数の評価について
-  - $x \leq m$ なものの個数は、$x$ の個数（$\leq m$）で抑えられる。
-  - $x \geq m$ なものの個数は、$y$ の個数（$\leq n/m^d$）で抑えられる。
-  - $m = n/m^d$ とすると $m = n^{1/(d+1)}$ で、結局全体では $2n^{1/(d+1)}$ で抑えられる。
-- $d$ が一般の場合の応用先
-  - $d = 2$ の場合は無平方数の数え上げに利用できる。
