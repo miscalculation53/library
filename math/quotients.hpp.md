@@ -1,36 +1,36 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -334,95 +334,96 @@ data:
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\
     \uFF09\n * @docs docs/template/template_inout.md\n */\n\n// https://judge.yosupo.jp/submission/170706\
     \ (maspy \u3055\u3093)\n// https://judge.yosupo.jp/submission/21623  (Nyaan \u3055\
-    \u3093)\nnamespace fastio {\nstatic constexpr uint32_t SIZ = 1 << 17;\nchar ibuf[SIZ];\n\
-    char obuf[SIZ];\nchar out[100];\n// pointer of ibuf, obuf\nuint32_t pil = 0, pir\
-    \ = 0, por = 0;\n\nstruct Pre {\n  char num[10000][4];\n  constexpr Pre() : num()\
-    \ {\n    for (int i = 0; i < 10000; i++) {\n      int n = i;\n      for (int j\
-    \ = 3; j >= 0; j--) {\n        num[i][j] = n % 10 | '0';\n        n /= 10;\n \
-    \     }\n    }\n  }\n} constexpr pre;\n\ninline void load() {\n  memcpy(ibuf,\
-    \ ibuf + pil, pir - pil);\n  pir = pir - pil + fread(ibuf + pir - pil, 1, SIZ\
-    \ - pir + pil, stdin);\n  pil = 0;\n  if (pir < SIZ) ibuf[pir++] = '\\n';\n}\n\
-    \ninline void flush() {\n  fwrite(obuf, 1, por, stdout);\n  por = 0;\n}\n\nvoid\
-    \ rd1(char &c) {\n  do {\n    if (pil + 1 > pir) load();\n    c = ibuf[pil++];\n\
-    \  } while (isspace(c));\n}\n\nvoid rd1(string &x) {\n  x.clear();\n  char c;\n\
-    \  do {\n    if (pil + 1 > pir) load();\n    c = ibuf[pil++];\n  } while (isspace(c));\n\
-    \  do {\n    x += c;\n    if (pil == pir) load();\n    c = ibuf[pil++];\n  } while\
-    \ (!isspace(c));\n}\n\ntemplate <typename T>\nvoid rd1_real(T &x) {\n  string\
-    \ s;\n  rd1(s);\n  x = stod(s);\n}\n\ntemplate <typename T>\nvoid rd1_integer(T\
-    \ &x) {\n  if (pil + 100 > pir) load();\n  char c;\n  do\n    c = ibuf[pil++];\n\
-    \  while (c < '-');\n  bool minus = 0;\n  if constexpr (is_signed<T>::value ||\
-    \ is_same_v<T, i128>) {\n    if (c == '-') { minus = 1, c = ibuf[pil++]; }\n \
-    \ }\n  x = 0;\n  while ('0' <= c) { x = x * 10 + (c & 15), c = ibuf[pil++]; }\n\
-    \  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {\n    if (minus)\
-    \ x = -x;\n  }\n}\n\nvoid rd1(int &x) { rd1_integer(x); }\nvoid rd1(ll &x) { rd1_integer(x);\
-    \ }\nvoid rd1(i128 &x) { rd1_integer(x); }\nvoid rd1(uint &x) { rd1_integer(x);\
-    \ }\nvoid rd1(ull &x) { rd1_integer(x); }\nvoid rd1(u128 &x) { rd1_integer(x);\
-    \ }\nvoid rd1(double &x) { rd1_real(x); }\nvoid rd1(long double &x) { rd1_real(x);\
-    \ }\n// void rd1(f128 &x) { rd1_real(x); }\n\ntemplate <class T, class U>\nvoid\
-    \ rd1(pair<T, U> &p) {\n  return rd1(p.first), rd1(p.second);\n}\ntemplate <size_t\
-    \ N = 0, typename T>\nvoid rd1_tuple(T &t) {\n  if constexpr (N < std::tuple_size<T>::value)\
-    \ {\n    auto &x = std::get<N>(t);\n    rd1(x);\n    rd1_tuple<N + 1>(t);\n  }\n\
-    }\ntemplate <class... T>\nvoid rd1(tuple<T...> &tpl) {\n  rd1_tuple(tpl);\n}\n\
-    \ntemplate <size_t N = 0, typename T>\nvoid rd1(array<T, N> &x) {\n  for (auto\
-    \ &d: x) rd1(d);\n}\ntemplate <class T>\nvoid rd1(vc<T> &x) {\n  for (auto &d:\
-    \ x) rd1(d);\n}\n\nvoid read() {}\ntemplate <class H, class... T>\nvoid read(H\
-    \ &h, T &... t) {\n  rd1(h), read(t...);\n}\n\nvoid wt1(const char c) {\n  if\
-    \ (por == SIZ) flush();\n  obuf[por++] = c;\n}\nvoid wt1(const string s) {\n \
-    \ for (char c: s) wt1(c);\n}\nvoid wt1(const char *s) {\n  size_t len = strlen(s);\n\
-    \  for (size_t i = 0; i < len; i++) wt1(s[i]);\n}\n\ntemplate <typename T>\nvoid\
-    \ wt1_integer(T x) {\n  if (por > SIZ - 100) flush();\n  if (x < 0) { obuf[por++]\
-    \ = '-', x = -x; }\n  int outi;\n  for (outi = 96; x >= 10000; outi -= 4) {\n\
-    \    memcpy(out + outi, pre.num[x % 10000], 4);\n    x /= 10000;\n  }\n  if (x\
-    \ >= 1000) {\n    memcpy(obuf + por, pre.num[x], 4);\n    por += 4;\n  } else\
-    \ if (x >= 100) {\n    memcpy(obuf + por, pre.num[x] + 1, 3);\n    por += 3;\n\
-    \  } else if (x >= 10) {\n    int q = (x * 103) >> 10;\n    obuf[por] = q | '0';\n\
-    \    obuf[por + 1] = (x - q * 10) | '0';\n    por += 2;\n  } else\n    obuf[por++]\
-    \ = x | '0';\n  memcpy(obuf + por, out + outi + 4, 96 - outi);\n  por += 96 -\
-    \ outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T x) {\n  ostringstream oss;\n\
-    \  oss << fixed << setprecision(15) << double(x);\n  string s = oss.str();\n \
-    \ wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>, int> = 0>\nvoid\
-    \ wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x); }\nvoid wt1(u128\
-    \ x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\nvoid wt1(long double\
-    \ x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\ntemplate <class\
-    \ T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n  wt1(' ');\n\
-    \  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid wt1_tuple(const\
-    \ T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n    if constexpr\
-    \ (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n    wt1(x);\n   \
-    \ wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const tuple<T...>\
-    \ &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid wt1(const\
-    \ array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i < n; i++)\
-    \ {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class T>\nvoid\
-    \ wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i\
-    \ < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid write()\
-    \ {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail &&...\
-    \ tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print() {\
-    \ wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
+    \u3093)\n#if defined FAST_IO and not defined LOCAL\nnamespace fastio {\nstatic\
+    \ constexpr uint32_t SIZ = 1 << 17;\nchar ibuf[SIZ];\nchar obuf[SIZ];\nchar out[100];\n\
+    // pointer of ibuf, obuf\nuint32_t pil = 0, pir = 0, por = 0;\n\nstruct Pre {\n\
+    \  char num[10000][4];\n  constexpr Pre() : num() {\n    for (int i = 0; i < 10000;\
+    \ i++) {\n      int n = i;\n      for (int j = 3; j >= 0; j--) {\n        num[i][j]\
+    \ = n % 10 | '0';\n        n /= 10;\n      }\n    }\n  }\n} constexpr pre;\n\n\
+    inline void load() {\n  memcpy(ibuf, ibuf + pil, pir - pil);\n  pir = pir - pil\
+    \ + fread(ibuf + pir - pil, 1, SIZ - pir + pil, stdin);\n  pil = 0;\n  if (pir\
+    \ < SIZ) ibuf[pir++] = '\\n';\n}\n\ninline void flush() {\n  fwrite(obuf, 1, por,\
+    \ stdout);\n  por = 0;\n}\n\nvoid rd1(char &c) {\n  do {\n    if (pil + 1 > pir)\
+    \ load();\n    c = ibuf[pil++];\n  } while (isspace(c));\n}\n\nvoid rd1(string\
+    \ &x) {\n  x.clear();\n  char c;\n  do {\n    if (pil + 1 > pir) load();\n   \
+    \ c = ibuf[pil++];\n  } while (isspace(c));\n  do {\n    x += c;\n    if (pil\
+    \ == pir) load();\n    c = ibuf[pil++];\n  } while (!isspace(c));\n}\n\ntemplate\
+    \ <typename T>\nvoid rd1_real(T &x) {\n  string s;\n  rd1(s);\n  x = stod(s);\n\
+    }\n\ntemplate <typename T>\nvoid rd1_integer(T &x) {\n  if (pil + 100 > pir) load();\n\
+    \  char c;\n  do\n    c = ibuf[pil++];\n  while (c < '-');\n  bool minus = 0;\n\
+    \  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {\n    if (c == '-')\
+    \ { minus = 1, c = ibuf[pil++]; }\n  }\n  x = 0;\n  while ('0' <= c) { x = x *\
+    \ 10 + (c & 15), c = ibuf[pil++]; }\n  if constexpr (is_signed<T>::value || is_same_v<T,\
+    \ i128>) {\n    if (minus) x = -x;\n  }\n}\n\nvoid rd1(int &x) { rd1_integer(x);\
+    \ }\nvoid rd1(ll &x) { rd1_integer(x); }\nvoid rd1(i128 &x) { rd1_integer(x);\
+    \ }\nvoid rd1(uint &x) { rd1_integer(x); }\nvoid rd1(ull &x) { rd1_integer(x);\
+    \ }\nvoid rd1(u128 &x) { rd1_integer(x); }\nvoid rd1(double &x) { rd1_real(x);\
+    \ }\nvoid rd1(long double &x) { rd1_real(x); }\n// void rd1(f128 &x) { rd1_real(x);\
+    \ }\n\ntemplate <class T, class U>\nvoid rd1(pair<T, U> &p) {\n  return rd1(p.first),\
+    \ rd1(p.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid rd1_tuple(T &t)\
+    \ {\n  if constexpr (N < std::tuple_size<T>::value) {\n    auto &x = std::get<N>(t);\n\
+    \    rd1(x);\n    rd1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid rd1(tuple<T...>\
+    \ &tpl) {\n  rd1_tuple(tpl);\n}\n\ntemplate <size_t N = 0, typename T>\nvoid rd1(array<T,\
+    \ N> &x) {\n  for (auto &d: x) rd1(d);\n}\ntemplate <class T>\nvoid rd1(vc<T>\
+    \ &x) {\n  for (auto &d: x) rd1(d);\n}\n\nvoid read() {}\ntemplate <class H, class...\
+    \ T>\nvoid read(H &h, T &... t) {\n  rd1(h), read(t...);\n}\n\nvoid wt1(const\
+    \ char c) {\n  if (por == SIZ) flush();\n  obuf[por++] = c;\n}\nvoid wt1(const\
+    \ string s) {\n  for (char c: s) wt1(c);\n}\nvoid wt1(const char *s) {\n  size_t\
+    \ len = strlen(s);\n  for (size_t i = 0; i < len; i++) wt1(s[i]);\n}\n\ntemplate\
+    \ <typename T>\nvoid wt1_integer(T x) {\n  if (por > SIZ - 100) flush();\n  if\
+    \ (x < 0) { obuf[por++] = '-', x = -x; }\n  int outi;\n  for (outi = 96; x >=\
+    \ 10000; outi -= 4) {\n    memcpy(out + outi, pre.num[x % 10000], 4);\n    x /=\
+    \ 10000;\n  }\n  if (x >= 1000) {\n    memcpy(obuf + por, pre.num[x], 4);\n  \
+    \  por += 4;\n  } else if (x >= 100) {\n    memcpy(obuf + por, pre.num[x] + 1,\
+    \ 3);\n    por += 3;\n  } else if (x >= 10) {\n    int q = (x * 103) >> 10;\n\
+    \    obuf[por] = q | '0';\n    obuf[por + 1] = (x - q * 10) | '0';\n    por +=\
+    \ 2;\n  } else\n    obuf[por++] = x | '0';\n  memcpy(obuf + por, out + outi +\
+    \ 4, 96 - outi);\n  por += 96 - outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T\
+    \ x) {\n  ostringstream oss;\n  oss << fixed << setprecision(15) << double(x);\n\
+    \  string s = oss.str();\n  wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>,\
+    \ int> = 0>\nvoid wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x);\
+    \ }\nvoid wt1(u128 x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\n\
+    void wt1(long double x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\
+    \ntemplate <class T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n\
+    \  wt1(' ');\n  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid\
+    \ wt1_tuple(const T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n\
+    \    if constexpr (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n\
+    \    wt1(x);\n    wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const\
+    \ tuple<T...> &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid\
+    \ wt1(const array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0;\
+    \ i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class\
+    \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
+    \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
+    \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
+    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
+    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
     \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
-    }\n\n} // namespace fastio\n\n#if defined FAST_IO and not defined LOCAL\nstruct\
-    \ Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
-    \n// ---- \u5165\u529B ----\ntemplate <class T, class U>\nistream &operator>>(istream\
-    \ &is, pair<T, U> &p)\n{\n  is >> p.first >> p.second;\n  return is;\n}\ntemplate\
-    \ <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...> &t)\n{\n  apply([&](auto\
-    \ &...a)\n        { (is >> ... >> a); }, t);\n  return is;\n}\ntemplate <class\
-    \ T, size_t n>\nistream &operator>>(istream &is, array<T, n> &a)\n{\n  for (size_t\
-    \ i = 0; i < n; i++)\n    is >> a[i];\n  return is;\n}\ntemplate <class T>\nistream\
-    \ &operator>>(istream &is, vc<T> &a)\n{\n  const size_t n = a.size();\n  for (size_t\
-    \ i = 0; i < n; i++)\n    is >> a[i];\n  return is;\n}\n\nnamespace internal\n\
-    {\n\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\n#if\
-    \ defined FAST_IO and not defined LOCAL\ntemplate <class... Ts>\nvoid READnodump(Ts\
-    \ &...a) { fastio::read(a...); }\n#else\ntemplate <class... Ts>\nvoid READnodump(Ts\
-    \ &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\nvoid READVECnodump(int\
-    \ n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\ntemplate <class T, class...\
-    \ Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n{ READVECnodump(n,\
-    \ v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid READVEC2nodump(int\
-    \ n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n}\ntemplate\
-    \ <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v, vvc<Ts>\
-    \ &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\ntemplate\
-    \ <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n  repi(i,\
-    \ n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n  }\n\
-    }\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v, vvc<Ts>\
-    \ &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; // namespace\
-    \ internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
+    }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
+    struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
+    \n// ---- \u5165\u529B ----\n#if defined LOCAL or not defined FAST_IO\ntemplate\
+    \ <class T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  is\
+    \ >> p.first >> p.second;\n  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream\
+    \ &is, tuple<Ts...> &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a);\
+    \ }, t);\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
+    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
+    \  return is;\n}\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n\
+    {\n  const size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
+    \  return is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not\
+    \ defined FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >>\
+    \ a); }\n#endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class...\
+    \ Ts>\nvoid READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class...\
+    \ Ts>\nvoid READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\n\
+    void READVECnodump(int n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\n\
+    template <class T, class... Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n\
+    { READVECnodump(n, v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid\
+    \ READVEC2nodump(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n\
+    }\ntemplate <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v,\
+    \ vvc<Ts> &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\
+    \ntemplate <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n\
+    \  repi(i, n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n\
+    \  }\n}\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v,\
+    \ vvc<Ts> &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; //\
+    \ namespace internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
     \n#define IN(T, ...) T __VA_ARGS__; READ(__VA_ARGS__)\n\n#define CHAR(...) IN(char,\
     \ __VA_ARGS__)\n#define INT(...) IN(int, __VA_ARGS__)\n#define LL(...) IN(ll,\
     \ __VA_ARGS__)\n#define STR(...) IN(string, __VA_ARGS__)\n#define ARR(T, n, ...)\
@@ -433,43 +434,44 @@ data:
     #define READJAG(...) internal::READJAGnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
     \n#define JAG(T, n, ...) vvc<T> __VA_ARGS__; READJAG(n, __VA_ARGS__)\n\n// ----------\n\
     \n// ----- \u51FA\u529B -----\n#ifdef INTERACTIVE\n#define ENDL endl\n#else\n\
-    #define ENDL '\\n'\n#endif\n\ntemplate <class T, class U>\nostream &operator<<(ostream\
-    \ &os, const pair<T, U> &p)\n{\n  os << p.first << ' ' << p.second;\n  return\
-    \ os;\n}\n\nnamespace internal\n{\n\ntemplate <size_t N = 0, typename T>\nvoid\
-    \ cout_tuple(ostream &os, const T &t) {\n  if constexpr (N < std::tuple_size<T>::value)\
-    \ {\n    if constexpr (N > 0) { os << ' '; }\n    const auto x = std::get<N>(t);\n\
-    \    os << x;\n    cout_tuple<N + 1>(os, t);\n  }\n}\n\n}; // namespace internal\n\
-    \ntemplate <class... Ts>\nostream &operator<<(ostream &os, const tuple<Ts...>\
-    \ &t)\n{\n  internal::cout_tuple(os, t);\n  return os;\n}\ntemplate <class T,\
-    \ size_t n>\nostream &operator<<(ostream &os, const array<T, n> &a)\n{\n  for\
-    \ (size_t i = 0; i < n; i++)\n  {\n    if (i)\n      os << ' ';\n    os << a[i];\n\
-    \  }\n  return os;\n}\ntemplate <class T>\nostream &operator<<(ostream &os, const\
-    \ vc<T> &v)\n{\n  const size_t n = v.size();\n  for (size_t i = 0; i < n; i++)\n\
-    \  {\n    if (i)\n      os << ' ';\n    os << v[i];\n  }\n  return os;\n}\n\n\
-    namespace internal\n{\n\ntemplate <class T>\nvoid COUTW() {}\ntemplate <class...\
-    \ Ts>\nvoid COUTW(const Ts &...a) { (cout << ... << a); }\n\ntemplate <class T>\n\
-    void COUTP() { cout << ENDL; }\ntemplate <class T>\nvoid COUTP(const T &a) { cout\
-    \ << a << ENDL; }\ntemplate <class T, class... Ts>\nvoid COUTP(const T &a, const\
-    \ Ts &...b)\n{\n  cout << a;\n  (cout << ... << (cout << ' ', b));\n  cout <<\
-    \ ENDL;\n}\n\n}; // namespace internal\n\n#if defined FAST_IO and not defined\
-    \ LOCAL\n#define WRITE fastio::write\n#define PRINT fastio::print\n#else\n#define\
-    \ WRITE internal::COUTW\n#define PRINT internal::COUTP\n#endif\n#define PRINTEXIT(...)\
-    \ do { PRINT(__VA_ARGS__); exit(0); } while (false)\n#define PRINTRETURN(...)\
-    \ do { PRINT(__VA_ARGS__); return; } while (false)\n\ntemplate <class T>\nvoid\
-    \ PRINTV(const vc<T> &v) { for (auto &vi : v) PRINT(vi); }\n#define PRINTVEXIT(...)\
-    \ do { PRINTV(__VA_ARGS__); exit(0); } while (false)\n#define PRINTVRETURN(...)\
-    \ do { PRINTV(__VA_ARGS__); return; } while (false)\n// ----------\n\n// -----\
-    \ \u57FA\u6E96\u305A\u3089\u3057 -----\ntemplate <class T, class U>\npair<T, U>\
-    \ operator+=(pair<T, U> &a, cauto &b)\n{\n  a.first += b.first;\n  a.second +=\
-    \ b.second;\n  return a;\n}\ntemplate <class T, class U>\npair<T, U> operator+(pair<T,\
-    \ U> &a, cauto &b) { return a += b; }\n\ntemplate <class T, size_t n>\narray<T,\
-    \ n> operator+=(array<T, n> &a, cauto &b)\n{\n  for (size_t i = 0; i < n; i++)\n\
-    \    a[i] += b[i];\n  return a;\n}\ntemplate <class T, size_t n>\narray<T, n>\
-    \ operator+(array<T, n> &a, cauto &b) { return a += b; }\n\nnamespace internal\n\
-    {\n\ntemplate <size_t... I>\nauto tuple_add_impl(auto &a, cauto &b, const index_sequence<I...>)\n\
-    {\n  ((get<I>(a) += get<I>(b)), ...);\n  return a;\n}\n\n}; // namespace internal\n\
-    \ntemplate <class... Ts>\ntuple<Ts...> operator+=(tuple<Ts...> &a, cauto &b)\n\
-    { return internal::tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{});\
+    #define ENDL '\\n'\n#endif\n\n#if defined LOCAL or not defined FAST_IO\ntemplate\
+    \ <class T, class U>\nostream &operator<<(ostream &os, const pair<T, U> &p)\n\
+    {\n  os << p.first << ' ' << p.second;\n  return os;\n}\n\nnamespace internal\n\
+    {\n\ntemplate <size_t N = 0, typename T>\nvoid cout_tuple(ostream &os, const T\
+    \ &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n    if constexpr (N\
+    \ > 0) { os << ' '; }\n    const auto x = std::get<N>(t);\n    os << x;\n    cout_tuple<N\
+    \ + 1>(os, t);\n  }\n}\n\n}; // namespace internal\n\ntemplate <class... Ts>\n\
+    ostream &operator<<(ostream &os, const tuple<Ts...> &t)\n{\n  internal::cout_tuple(os,\
+    \ t);\n  return os;\n}\ntemplate <class T, size_t n>\nostream &operator<<(ostream\
+    \ &os, const array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n  {\n    if\
+    \ (i)\n      os << ' ';\n    os << a[i];\n  }\n  return os;\n}\ntemplate <class\
+    \ T>\nostream &operator<<(ostream &os, const vc<T> &v)\n{\n  const size_t n =\
+    \ v.size();\n  for (size_t i = 0; i < n; i++)\n  {\n    if (i)\n      os << '\
+    \ ';\n    os << v[i];\n  }\n  return os;\n}\n\nnamespace internal\n{\n\ntemplate\
+    \ <class T>\nvoid COUTW() {}\ntemplate <class... Ts>\nvoid COUTW(const Ts &...a)\
+    \ { (cout << ... << a); }\n\ntemplate <class T>\nvoid COUTP() { cout << ENDL;\
+    \ }\ntemplate <class T>\nvoid COUTP(const T &a) { cout << a << ENDL; }\ntemplate\
+    \ <class T, class... Ts>\nvoid COUTP(const T &a, const Ts &...b)\n{\n  cout <<\
+    \ a;\n  (cout << ... << (cout << ' ', b));\n  cout << ENDL;\n}\n\n}; // namespace\
+    \ internal\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n#define WRITE\
+    \ fastio::write\n#define PRINT fastio::print\n#else\n#define WRITE internal::COUTW\n\
+    #define PRINT internal::COUTP\n#endif\n#define PRINTEXIT(...) do { PRINT(__VA_ARGS__);\
+    \ exit(0); } while (false)\n#define PRINTRETURN(...) do { PRINT(__VA_ARGS__);\
+    \ return; } while (false)\n\ntemplate <class T>\nvoid PRINTV(const vc<T> &v) {\
+    \ for (auto &vi : v) PRINT(vi); }\n#define PRINTVEXIT(...) do { PRINTV(__VA_ARGS__);\
+    \ exit(0); } while (false)\n#define PRINTVRETURN(...) do { PRINTV(__VA_ARGS__);\
+    \ return; } while (false)\n// ----------\n\n// ----- \u57FA\u6E96\u305A\u3089\u3057\
+    \ -----\ntemplate <class T, class U>\npair<T, U> operator+=(pair<T, U> &a, cauto\
+    \ &b)\n{\n  a.first += b.first;\n  a.second += b.second;\n  return a;\n}\ntemplate\
+    \ <class T, class U>\npair<T, U> operator+(pair<T, U> &a, cauto &b) { return a\
+    \ += b; }\n\ntemplate <class T, size_t n>\narray<T, n> operator+=(array<T, n>\
+    \ &a, cauto &b)\n{\n  for (size_t i = 0; i < n; i++)\n    a[i] += b[i];\n  return\
+    \ a;\n}\ntemplate <class T, size_t n>\narray<T, n> operator+(array<T, n> &a, cauto\
+    \ &b) { return a += b; }\n\nnamespace internal\n{\n\ntemplate <size_t... I>\n\
+    auto tuple_add_impl(auto &a, cauto &b, const index_sequence<I...>)\n{\n  ((get<I>(a)\
+    \ += get<I>(b)), ...);\n  return a;\n}\n\n}; // namespace internal\n\ntemplate\
+    \ <class... Ts>\ntuple<Ts...> operator+=(tuple<Ts...> &a, cauto &b)\n{ return\
+    \ internal::tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{});\
     \ }\ntemplate <class... Ts>\ntuple<Ts...> operator+(tuple<Ts...> &a, cauto &b)\
     \ { return a += b; }\n\ntemplate <class T>\nvoid offset(vc<T> &v, cauto &add)\
     \ { for (auto &vi : v) vi += add; }\ntemplate <class T>\nvoid offset(vvc<T> &v,\
@@ -545,7 +547,7 @@ data:
   isVerificationFile: false
   path: math/quotients.hpp
   requiredBy: []
-  timestamp: '2025-02-17 01:49:35+09:00'
+  timestamp: '2025-03-12 01:12:20+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/quotients.test.cpp
