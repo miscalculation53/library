@@ -43,7 +43,7 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/modint/power_table.md
-    document_title: "\u4E8C\u9805\u4FC2\u6570"
+    document_title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
     links: []
   bundledCode: "#line 2 \"math/modint/power_table.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
@@ -502,21 +502,23 @@ data:
     \ ((assert(v.size() == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t\
     \ i = 0; i < n; i++)\n    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{},\
     \ i);\n  return vt;\n}\n// ----------\n#line 4 \"math/modint/power_table.hpp\"\
-    \n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\n * @docs docs/math/modint/power_table.md\n\
+    \n\n/**\n * @brief \u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB\n * @docs docs/math/modint/power_table.md\n\
     \ */\n\ntemplate <class T>\nstruct PowerTable\n{\nprivate:\n  decltype(T::mod())\
     \ mod;\n  T base;\n  vc<T> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(T base)\
     \ : base(base), pw(1, 1) {}\n\n  void reserve(int n)\n  {\n    if (mod != T::mod())\n\
-    \      pw = {1};\n    int i = SZ<int>(pw);\n    if (n < i)\n      return;\n  \
-    \  pw.resize(n + 1);\n    for (; i <= n; i++)\n      pw[i] = pw[i - 1] * base;\n\
-    \  }\n\n  T pow(int n)\n  {\n    reserve(n);\n    return pw[n];\n  }\n};\n"
+    \      pw = {1};\n    mod = T::mod();\n    int i = pw.size();\n    if (n < i)\n\
+    \      return;\n    pw.resize(n + 1);\n    for (; i <= n; i++)\n      pw[i] =\
+    \ pw[i - 1] * base;\n  }\n\n  T pow(int n)\n  {\n    reserve(n);\n    return pw[n];\n\
+    \  }\n};\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u4E8C\u9805\u4FC2\u6570\n * @docs docs/math/modint/power_table.md\n */\n\n\
-    template <class T>\nstruct PowerTable\n{\nprivate:\n  decltype(T::mod()) mod;\n\
-    \  T base;\n  vc<T> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(T base) :\
-    \ base(base), pw(1, 1) {}\n\n  void reserve(int n)\n  {\n    if (mod != T::mod())\n\
-    \      pw = {1};\n    int i = SZ<int>(pw);\n    if (n < i)\n      return;\n  \
-    \  pw.resize(n + 1);\n    for (; i <= n; i++)\n      pw[i] = pw[i - 1] * base;\n\
-    \  }\n\n  T pow(int n)\n  {\n    reserve(n);\n    return pw[n];\n  }\n};"
+    \ \u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB\n * @docs docs/math/modint/power_table.md\n\
+    \ */\n\ntemplate <class T>\nstruct PowerTable\n{\nprivate:\n  decltype(T::mod())\
+    \ mod;\n  T base;\n  vc<T> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(T base)\
+    \ : base(base), pw(1, 1) {}\n\n  void reserve(int n)\n  {\n    if (mod != T::mod())\n\
+    \      pw = {1};\n    mod = T::mod();\n    int i = pw.size();\n    if (n < i)\n\
+    \      return;\n    pw.resize(n + 1);\n    for (; i <= n; i++)\n      pw[i] =\
+    \ pw[i - 1] * base;\n  }\n\n  T pow(int n)\n  {\n    reserve(n);\n    return pw[n];\n\
+    \  }\n};"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -531,7 +533,7 @@ data:
   isVerificationFile: false
   path: math/modint/power_table.hpp
   requiredBy: []
-  timestamp: '2025-02-17 01:49:35+09:00'
+  timestamp: '2025-03-12 00:42:56+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/power_table.test.cpp
@@ -540,5 +542,50 @@ layout: document
 redirect_from:
 - /library/math/modint/power_table.hpp
 - /library/math/modint/power_table.hpp.html
-title: "\u4E8C\u9805\u4FC2\u6570"
+title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
 ---
+## 累乗テーブル
+
+固定された $\mathrm{base}$ の累乗をテーブルに格納するやつ。
+
+普通に書けばいいんだけど地味に面倒に思って $\log$ のつく累乗で横着して TLE、がありがち。これを貼ろう。
+
+### コンストラクタ
+
+```cpp
+PowerTable<mint> pw(mint base);
+```
+
+$\mathrm{base}$ を設定する。
+
+### メンバ関数
+
+#### reserve
+
+```cpp
+void reserve(int n)
+```
+
+テーブルを最大 $n$ のところまで前計算する。
+
+なくても動くが、事前に必要な分だけ呼んでおくと定数倍高速化が期待できる。
+
+##### 計算量
+
+$T$ 回呼んだとき、
+
+- $O(T + \max(n))$
+
+#### pow
+
+```cpp
+void pow(int n)
+```
+
+$\mathrm{base}^n$ を計算する。
+
+##### 計算量
+
+$T$ 回呼んだとき、
+
+- $O(T + \max(n))$

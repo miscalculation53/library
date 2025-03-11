@@ -63,7 +63,7 @@ data:
       title: math/modint/modint_internal.hpp
     - icon: ':heavy_check_mark:'
       path: math/modint/power_table.hpp
-      title: "\u4E8C\u9805\u4FC2\u6570"
+      title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
   - name: math/prime
     pages:
     - icon: ':heavy_check_mark:'

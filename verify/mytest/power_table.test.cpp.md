@@ -12,7 +12,7 @@ data:
     title: math/modint/modint_internal.hpp
   - icon: ':heavy_check_mark:'
     path: math/modint/power_table.hpp
-    title: "\u4E8C\u9805\u4FC2\u6570"
+    title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
   - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
@@ -650,18 +650,18 @@ data:
     \ rd1(dynamic_modint<id> &x)\n{\n  ll a;\n  fastio::rd1(a);\n  x = a;\n}\ntemplate\
     \ <int id>\nvoid wt1(const dynamic_modint<id> &x)\n{\n  fastio::wt1(x.val());\n\
     }\n#line 2 \"math/modint/power_table.hpp\"\n\n#line 4 \"math/modint/power_table.hpp\"\
-    \n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\n * @docs docs/math/modint/power_table.md\n\
+    \n\n/**\n * @brief \u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB\n * @docs docs/math/modint/power_table.md\n\
     \ */\n\ntemplate <class T>\nstruct PowerTable\n{\nprivate:\n  decltype(T::mod())\
     \ mod;\n  T base;\n  vc<T> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(T base)\
     \ : base(base), pw(1, 1) {}\n\n  void reserve(int n)\n  {\n    if (mod != T::mod())\n\
-    \      pw = {1};\n    int i = SZ<int>(pw);\n    if (n < i)\n      return;\n  \
-    \  pw.resize(n + 1);\n    for (; i <= n; i++)\n      pw[i] = pw[i - 1] * base;\n\
-    \  }\n\n  T pow(int n)\n  {\n    reserve(n);\n    return pw[n];\n  }\n};\n#line\
-    \ 6 \"verify/mytest/power_table.test.cpp\"\nusing mint = modint;\n\nvoid test1()\n\
-    {\n  mint::set_mod(998244353);\n  PowerTable<mint> pw2(2);\n  rep(i, 1000) assert(pw2.pow(i)\
-    \ == mint(2).pow(i));\n  mint::set_mod(1'000'000'007);\n  rep(i, 2000) assert(pw2.pow(i)\
-    \ == mint(2).pow(i));\n}\n\nint main()\n{\n  test1();\n\n  cout << \"Hello World\"\
-    \ << endl;\n}\n"
+    \      pw = {1};\n    mod = T::mod();\n    int i = pw.size();\n    if (n < i)\n\
+    \      return;\n    pw.resize(n + 1);\n    for (; i <= n; i++)\n      pw[i] =\
+    \ pw[i - 1] * base;\n  }\n\n  T pow(int n)\n  {\n    reserve(n);\n    return pw[n];\n\
+    \  }\n};\n#line 6 \"verify/mytest/power_table.test.cpp\"\nusing mint = modint;\n\
+    \nvoid test1()\n{\n  mint::set_mod(998244353);\n  PowerTable<mint> pw2(2);\n \
+    \ rep(i, 1000) assert(pw2.pow(i) == mint(2).pow(i));\n  mint::set_mod(1'000'000'007);\n\
+    \  rep(i, 2000) assert(pw2.pow(i) == mint(2).pow(i));\n}\n\nint main()\n{\n  test1();\n\
+    \n  cout << \"Hello World\" << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#include \"template/template_all.hpp\"\n#include \"math/modint/modint.hpp\"\
     \n#include \"math/modint/power_table.hpp\"\nusing mint = modint;\n\nvoid test1()\n\
@@ -687,7 +687,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/power_table.test.cpp
   requiredBy: []
-  timestamp: '2025-02-17 01:49:35+09:00'
+  timestamp: '2025-03-12 00:42:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/power_table.test.cpp
