@@ -1,16 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy: []
@@ -64,62 +64,64 @@ data:
     \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
     #line 12 \"template/template_math.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
     \u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs docs/template/template_math.md\n\
-    \ */\n\ninline bool chmin(auto &a, cauto &b) { return a > b ? a = b, true : false;\
-    \ }\ninline bool chmax(auto &a, cauto &b) { return a < b ? a = b, true : false;\
-    \ }\n\ntemplate <class T = ll>\ninline constexpr T divfloor(cauto &a, cauto &b)\
-    \ { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class\
-    \ T = ll>\ninline constexpr T divceil(cauto &a, cauto &b) { return T(a) / T(b)\
-    \ + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll>\ninline constexpr\
-    \ T divround(cauto &a, cauto &b) { return divfloor<T>(2 * T(a) + T(b), 2 * T(b));\
-    \ }\ntemplate <class T = ll>\ninline constexpr T safemod(cauto &a, cauto &b) {\
-    \ return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class T = ll>\nconstexpr\
-    \ T ipow(cauto &a, auto b)\n{\n  assert(b >= 0);\n  if (b == 0)\n    return 1;\n\
-    \  if (a == 0 || a == 1)\n    return a;\n  if (a < 0 && a == -1)\n    return b\
-    \ & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
-    \      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n\
-    \  }\n  return res;\n}\ntemplate <class T = ll>\nT mul_limited(cauto &a, cauto\
-    \ &b, cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n\
-    \    return 0;\n  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate\
-    \ <class T = ll>\nT pow_limited(cauto &a, auto b, cauto &m = INF)\n{\n  assert(a\
-    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
-    \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
-    \    {\n      if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n  \
-    \  }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n\
-    \      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\n\ntemplate <class T\
-    \ = ll>\nconstexpr T iroot(cauto &a, cauto &k)\n{\n  assert(a >= 0 && k >= 1);\n\
-    \  if (a <= 1 || k == 1)\n    return a;\n  if (k == 2 && a <= ULLONG_MAX)\n  \
-    \  return sqrtl(a);\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n\
-    \      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n      if\
-    \ (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n  \
-    \      res *= x;\n      }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n\
-    \      if (x > T(a) / x)\n        return false;\n      x *= x;\n    }\n    return\
-    \ res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n\
-    \    up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max()\
-    \ && isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
-    template <class D = decltype(EPS)>\nint SGN(cauto &a, const D &eps = EPS) { return\
-    \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
-    \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\n// 0\
-    \ \u306B\u5BFE\u3057\u3066\u306F {0} \u304C\u8FD4\u308B\ntemplate <class T = ll>\n\
-    vc<T> base_repr(auto val, auto base)\n{\n  assert(val >= 0);\n  assert(base >=\
-    \ 2);\n  if (val == 0)\n    return {0};\n  vc<T> a;\n  while (val > 0)\n  {\n\
-    \    a.emplace_back(val % base);\n    val /= base;\n  }\n  reverse(a.begin(),\
+    \ */\n\ntemplate <class T, class U>\ninline bool chmin(T &a, U b) { return a >\
+    \ b ? a = b, true : false; }\ntemplate <class T, class U>\ninline bool chmax(T\
+    \ &a, U b) { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll,\
+    \ class U, class V>\ninline constexpr T divfloor(U a, V b) { return T(a) / T(b)\
+    \ - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class U, class\
+    \ V>\ninline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b)\
+    \ && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V>\ninline\
+    \ constexpr T divround(U a, V b) { return divfloor<T>(2 * T(a) + T(b), 2 * T(b));\
+    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T safemod(U a,\
+    \ V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class T = ll,\
+    \ class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n  if (b\
+    \ == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a < 0 &&\
+    \ a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (true)\n\
+    \  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n     \
+    \ break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll, class\
+    \ A, class B, class M>\nT mul_limited(A a, B b, M m = INF)\n{\n  assert(a >= 0\
+    \ && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) /\
+    \ T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B, class\
+    \ M>\nT pow_limited(A a, B b, M m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >=\
+    \ 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n  \n  T\
+    \ res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n    {\n      if (res\
+    \ > T(m) / tmp)\n        return m;\n      res *= tmp;\n    }\n    b >>= 1;\n \
+    \   if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n      return m;\n  \
+    \  tmp *= tmp;\n  }\n  return res;\n}\n\ntemplate <class T = ll, class A, class\
+    \ K>\nconstexpr T iroot(A a, K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <=\
+    \ 1 || k == 1)\n    return a;\n  if (k == 2 && a <= ULLONG_MAX)\n    return sqrtl(a);\n\
+    \n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n      return true;\n \
+    \   T res = 1, k2 = k;\n    while (true)\n    {\n      if (k2 & 1)\n      {\n\
+    \        if (res > T(a) / x)\n          return false;\n        res *= x;\n   \
+    \   }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n      if (x > T(a)\
+    \ / x)\n        return false;\n      x *= x;\n    }\n    return res <= T(a);\n\
+    \  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n   \
+    \ up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max() &&\
+    \ isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    template <class D = decltype(EPS), class A>\nint SGN(A a, const D &eps = EPS)\
+    \ { return int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\
+    \u6CD5\u3068\u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\
+    \uFF09\n// 0 \u306B\u5BFE\u3057\u3066\u306F {0} \u304C\u8FD4\u308B\ntemplate <class\
+    \ T = ll, class U, class V>\nvc<T> base_repr(U val, V base)\n{\n  assert(val >=\
+    \ 0);\n  assert(base >= 2);\n  if (val == 0)\n    return {0};\n  vc<T> a;\n  while\
+    \ (val > 0)\n  {\n    a.emplace_back(val % base);\n    val /= base;\n  }\n  reverse(a.begin(),\
     \ a.end());\n  return a;\n}\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\u540C\
     \u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate <class\
-    \ T = ll>\nvc<T> base_repr(auto val, auto base, int n)\n{\n  assert(val >= 0);\n\
-    \  assert(base >= 2);\n  assert(n >= 0);\n  vc<T> a(n);\n  repi(i, n)\n  {\n \
-    \   a[i] = val % base;\n    val /= base;\n  }\n  reverse(a.begin(), a.end());\n\
-    \  return a;\n}\ntemplate <const bool use_upper = true>\nstring base_repr_str(auto\
+    \ T = ll, class U, class V>\nvc<T> base_repr(U val, V base, int n)\n{\n  assert(val\
+    \ >= 0);\n  assert(base >= 2);\n  assert(n >= 0);\n  vc<T> a(n);\n  repi(i, n)\n\
+    \  {\n    a[i] = val % base;\n    val /= base;\n  }\n  reverse(a.begin(), a.end());\n\
+    \  return a;\n}\ntemplate <const bool use_upper = true, class U>\nstring base_repr_str(U\
     \ val, int base)\n{\n  assert(val >= 0);\n  assert(2 <= base && base <= 36);\n\
     \  auto a = base_repr(val, base);\n  string s = \"\";\n  for (cauto &ai : a)\n\
     \    s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return\
-    \ s;\n}\ntemplate <const bool use_upper = true>\nstring base_repr_str(auto val,\
-    \ int base, int n)\n{\n  assert(val >= 0);\n  assert(2 <= base && base <= 36);\n\
-    \  assert(n >= 0);\n  auto a = base_repr(val, base, n);\n  string s = \"\";\n\
-    \  for (cauto &ai : a)\n    s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a')\
-    \ + (ai - 10));\n  return s;\n}\n#line 2 \"template/template_dump.hpp\"\n\n#line\
-    \ 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n#ifdef\
-    \ LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    \ s;\n}\ntemplate <const bool use_upper = true, class U>\nstring base_repr_str(U\
+    \ val, int base, int n)\n{\n  assert(val >= 0);\n  assert(2 <= base && base <=\
+    \ 36);\n  assert(n >= 0);\n  auto a = base_repr(val, base, n);\n  string s = \"\
+    \";\n  for (cauto &ai : a)\n    s += (ai < 10 ? '0' + ai : (use_upper ? 'A' :\
+    \ 'a') + (ai - 10));\n  return s;\n}\n#line 2 \"template/template_dump.hpp\"\n\
+    \n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n\
+    #ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
     namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
     \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
     \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
@@ -168,7 +170,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_math_mulpow.test.cpp
   requiredBy: []
-  timestamp: '2025-02-17 01:49:35+09:00'
+  timestamp: '2025-03-12 06:54:29+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_math_mulpow.test.cpp

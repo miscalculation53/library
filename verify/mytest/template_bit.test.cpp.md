@@ -1,27 +1,27 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -73,139 +73,143 @@ data:
     \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
     #define fem(...) for (auto &__VA_ARGS__)\n#line 5 \"template/template_bit.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\
-    \u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ninline constexpr\
-    \ ull pow2(auto k) { return 1ULL << k; }\ninline constexpr ull MASK(auto k) {\
-    \ return (1ULL << k) - 1ULL; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\
-    \u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n\
-    // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr ull bit_width(ull x) {\
-    \ return x == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8,\
-    \ 8, ...\ninline constexpr ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL\
-    \ << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr\
-    \ ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline\
-    \ constexpr ull countr_zero(ull x) { assert(x != 0); return __builtin_ctzll(x);\
-    \ }\ninline constexpr ull popcount(ull x) { return __builtin_popcountll(x); }\n\
-    inline constexpr bool has_single_bit(ull x) { return popcount(x) == 1; }\n#else\n\
-    // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr ll bit_width(ll x) { return\
-    \ std::bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr\
-    \ ll bit_floor(ll x) { return std::bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8,\
-    \ 8, 8, 8, 16, ...\ninline constexpr ll bit_ceil(ll x) { return std::bit_ceil((ull)x);\
-    \ }\ninline constexpr ll countr_zero(ll x) { assert(x != 0); return std::countr_zero((ull)x);\
-    \ }\ninline constexpr ll popcount(ll x) { return std::popcount((ull)x); }\ninline\
-    \ constexpr bool has_single_bit(ll x) { return std::has_single_bit((ull)x); }\n\
-    #endif\n\ninline constexpr ull lsb_pos(ull x) { assert(x != 0); return countr_zero(x);\
-    \ }\ninline constexpr ull msb_pos(ull x) { assert(x != 0); return bit_width(x)\
-    \ - 1; }\ninline constexpr ull lsb_mask(ull x) { assert(x != 0); return x & -x;\
-    \ }\ninline constexpr ull msb_mask(ull x) { assert(x != 0); return bit_floor(x);\
-    \ }\n\ninline constexpr bool btest(ull x, uint k) { return (x >> k) & 1; }\ntemplate\
-    \ <class T>\ninline void bset(T &x, uint k, bool b = 1) { b ? x |= (1ULL << k)\
-    \ : x &= ~(1ULL << k); }\ntemplate <class T>\ninline void bflip(T &x, uint k)\
-    \ { x ^= (1ULL << k); }\ninline constexpr bool bsubset(ull x, ull y) { return\
-    \ (x & y) == x; }\ninline constexpr bool bsupset(ull x, ull y) { return (x & y)\
-    \ == y; }\ninline constexpr ull bsetminus(ull x, ull y) { return x & ~y; }\n#line\
-    \ 2 \"template/template_dump.hpp\"\n\n#line 4 \"template/template_dump.hpp\"\n\
-    \n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs\
-    \ docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp>\
-    \ // https://github.com/philip82148/cpp-dump\nnamespace cpp_dump::_detail\n{\n\
-    \  inline string export_var(\n      const i128 &x, const string &indent, size_t\
-    \ last_line_length,\n      size_t current_depth, bool fail_on_newline, const export_command\
-    \ &command\n  ) {\n    return export_var(i128tos(x), indent, last_line_length,\
-    \ current_depth, fail_on_newline, command);\n  }\n} // namespace cpp_dump::_detail\n\
-    #define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
-    \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n\
-    #define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
+    \u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ntemplate <class\
+    \ T>\ninline constexpr ull pow2(T k) { return 1ULL << k; }\ntemplate <class T>\n\
+    inline constexpr ull MASK(T k) { return (1ULL << k) - 1ULL; }\n\n#if __cplusplus\
+    \ < 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\
+    \u308C\u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline\
+    \ constexpr ull bit_width(ull x) { return x == 0 ? 0 : 64 - __builtin_clzll(x);\
+    \ }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ull bit_floor(ull\
+    \ x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4,\
+    \ 8, 8, 8, 8, 16, ...\ninline constexpr ull bit_ceil(ull x) { return x == 0 ?\
+    \ 1ULL : 1ULL << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull x)\
+    \ { assert(x != 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull\
+    \ x) { return __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull\
+    \ x) { return popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ...\
+    \ \ninline constexpr ll bit_width(ll x) { return std::bit_width((ull)x); }\n//\
+    \ 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return\
+    \ std::bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr\
+    \ ll bit_ceil(ll x) { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll\
+    \ x) { assert(x != 0); return std::countr_zero((ull)x); }\ninline constexpr ll\
+    \ popcount(ll x) { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll\
+    \ x) { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
+    \ x) { assert(x != 0); return countr_zero(x); }\ninline constexpr ull msb_pos(ull\
+    \ x) { assert(x != 0); return bit_width(x) - 1; }\ninline constexpr ull lsb_mask(ull\
+    \ x) { assert(x != 0); return x & -x; }\ninline constexpr ull msb_mask(ull x)\
+    \ { assert(x != 0); return bit_floor(x); }\n\ninline constexpr bool btest(ull\
+    \ x, uint k) { return (x >> k) & 1; }\ntemplate <class T>\ninline void bset(T\
+    \ &x, uint k, bool b = 1) { b ? x |= (1ULL << k) : x &= ~(1ULL << k); }\ntemplate\
+    \ <class T>\ninline void bflip(T &x, uint k) { x ^= (1ULL << k); }\ninline constexpr\
+    \ bool bsubset(ull x, ull y) { return (x & y) == x; }\ninline constexpr bool bsupset(ull\
+    \ x, ull y) { return (x & y) == y; }\ninline constexpr ull bsetminus(ull x, ull\
+    \ y) { return x & ~y; }\n#line 2 \"template/template_dump.hpp\"\n\n#line 4 \"\
+    template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\
+    \uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n\
+    #include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\nnamespace\
+    \ cpp_dump::_detail\n{\n  inline string export_var(\n      const i128 &x, const\
+    \ string &indent, size_t last_line_length,\n      size_t current_depth, bool fail_on_newline,\
+    \ const export_command &command\n  ) {\n    return export_var(i128tos(x), indent,\
+    \ last_line_length, current_depth, fail_on_newline, command);\n  }\n} // namespace\
+    \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
+    CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
+    \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
     #endif\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
     #endif\n\n#line 2 \"template/template_vector.hpp\"\n\n#line 2 \"template/template_math.hpp\"\
     \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
     #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
     \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
-    \ docs/template/template_math.md\n */\n\ninline bool chmin(auto &a, cauto &b)\
-    \ { return a > b ? a = b, true : false; }\ninline bool chmax(auto &a, cauto &b)\
-    \ { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll>\ninline constexpr\
-    \ T divfloor(cauto &a, cauto &b) { return T(a) / T(b) - (T(a) % T(b) && (T(a)\
-    \ ^ T(b)) < 0); }\ntemplate <class T = ll>\ninline constexpr T divceil(cauto &a,\
-    \ cauto &b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate\
-    \ <class T = ll>\ninline constexpr T divround(cauto &a, cauto &b) { return divfloor<T>(2\
-    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll>\ninline constexpr T safemod(cauto\
-    \ &a, cauto &b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
-    \ T = ll>\nconstexpr T ipow(cauto &a, auto b)\n{\n  assert(b >= 0);\n  if (b ==\
-    \ 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a < 0 && a\
-    \ == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (true)\n\
-    \  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n     \
-    \ break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll>\nT mul_limited(cauto\
-    \ &a, cauto &b, cauto &m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if\
-    \ (b == 0)\n    return 0;\n  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n\
-    }\ntemplate <class T = ll>\nT pow_limited(cauto &a, auto b, cauto &m = INF)\n\
-    {\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return\
-    \ min(ipow<T>(a, b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n\
-    \    if (b & 1)\n    {\n      if (res > T(m) / tmp)\n        return m;\n     \
-    \ res *= tmp;\n    }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp\
-    \ > T(m) / tmp)\n      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\n\ntemplate\
-    \ <class T = ll>\nconstexpr T iroot(cauto &a, cauto &k)\n{\n  assert(a >= 0 &&\
-    \ k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n  if (k == 2 && a <= ULLONG_MAX)\n\
-    \    return sqrtl(a);\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n\
-    \      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n      if\
-    \ (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n  \
-    \      res *= x;\n      }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n\
-    \      if (x > T(a) / x)\n        return false;\n      x *= x;\n    }\n    return\
-    \ res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n\
-    \    up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max()\
-    \ && isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
-    template <class D = decltype(EPS)>\nint SGN(cauto &a, const D &eps = EPS) { return\
-    \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
-    \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\n// 0\
-    \ \u306B\u5BFE\u3057\u3066\u306F {0} \u304C\u8FD4\u308B\ntemplate <class T = ll>\n\
-    vc<T> base_repr(auto val, auto base)\n{\n  assert(val >= 0);\n  assert(base >=\
-    \ 2);\n  if (val == 0)\n    return {0};\n  vc<T> a;\n  while (val > 0)\n  {\n\
-    \    a.emplace_back(val % base);\n    val /= base;\n  }\n  reverse(a.begin(),\
+    \ docs/template/template_math.md\n */\n\ntemplate <class T, class U>\ninline bool\
+    \ chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate <class T,\
+    \ class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true : false;\
+    \ }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T divfloor(U\
+    \ a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate\
+    \ <class T = ll, class U, class V>\ninline constexpr T divceil(U a, V b) { return\
+    \ T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll,\
+    \ class U, class V>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V>\ninline\
+    \ constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
+    template <class T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b\
+    \ >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
+    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
+    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
+    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
+    \ T = ll, class A, class B, class M>\nT mul_limited(A a, B b, M m = INF)\n{\n\
+    \  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return\
+    \ T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A,\
+    \ class B, class M>\nT pow_limited(A a, B b, M m = INF)\n{\n  assert(a >= 0 &&\
+    \ b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n\
+    \  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n    {\n     \
+    \ if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n    }\n    b >>=\
+    \ 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n      return m;\n\
+    \    tmp *= tmp;\n  }\n  return res;\n}\n\ntemplate <class T = ll, class A, class\
+    \ K>\nconstexpr T iroot(A a, K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <=\
+    \ 1 || k == 1)\n    return a;\n  if (k == 2 && a <= ULLONG_MAX)\n    return sqrtl(a);\n\
+    \n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n      return true;\n \
+    \   T res = 1, k2 = k;\n    while (true)\n    {\n      if (k2 & 1)\n      {\n\
+    \        if (res > T(a) / x)\n          return false;\n        res *= x;\n   \
+    \   }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n      if (x > T(a)\
+    \ / x)\n        return false;\n      x *= x;\n    }\n    return res <= T(a);\n\
+    \  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n   \
+    \ up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max() &&\
+    \ isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    template <class D = decltype(EPS), class A>\nint SGN(A a, const D &eps = EPS)\
+    \ { return int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\
+    \u6CD5\u3068\u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\
+    \uFF09\n// 0 \u306B\u5BFE\u3057\u3066\u306F {0} \u304C\u8FD4\u308B\ntemplate <class\
+    \ T = ll, class U, class V>\nvc<T> base_repr(U val, V base)\n{\n  assert(val >=\
+    \ 0);\n  assert(base >= 2);\n  if (val == 0)\n    return {0};\n  vc<T> a;\n  while\
+    \ (val > 0)\n  {\n    a.emplace_back(val % base);\n    val /= base;\n  }\n  reverse(a.begin(),\
     \ a.end());\n  return a;\n}\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\u540C\
     \u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate <class\
-    \ T = ll>\nvc<T> base_repr(auto val, auto base, int n)\n{\n  assert(val >= 0);\n\
-    \  assert(base >= 2);\n  assert(n >= 0);\n  vc<T> a(n);\n  repi(i, n)\n  {\n \
-    \   a[i] = val % base;\n    val /= base;\n  }\n  reverse(a.begin(), a.end());\n\
-    \  return a;\n}\ntemplate <const bool use_upper = true>\nstring base_repr_str(auto\
+    \ T = ll, class U, class V>\nvc<T> base_repr(U val, V base, int n)\n{\n  assert(val\
+    \ >= 0);\n  assert(base >= 2);\n  assert(n >= 0);\n  vc<T> a(n);\n  repi(i, n)\n\
+    \  {\n    a[i] = val % base;\n    val /= base;\n  }\n  reverse(a.begin(), a.end());\n\
+    \  return a;\n}\ntemplate <const bool use_upper = true, class U>\nstring base_repr_str(U\
     \ val, int base)\n{\n  assert(val >= 0);\n  assert(2 <= base && base <= 36);\n\
     \  auto a = base_repr(val, base);\n  string s = \"\";\n  for (cauto &ai : a)\n\
     \    s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return\
-    \ s;\n}\ntemplate <const bool use_upper = true>\nstring base_repr_str(auto val,\
-    \ int base, int n)\n{\n  assert(val >= 0);\n  assert(2 <= base && base <= 36);\n\
-    \  assert(n >= 0);\n  auto a = base_repr(val, base, n);\n  string s = \"\";\n\
-    \  for (cauto &ai : a)\n    s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a')\
-    \ + (ai - 10));\n  return s;\n}\n#line 6 \"template/template_vector.hpp\"\n\n\
-    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs\
-    \ docs/template/template_vector.md\n */\n\n#define ALL(a) (a).begin(), (a).end()\n\
-    template <class T = ll>\ninline T SZ(cauto &x) { return x.size(); }\n#define eb\
-    \ emplace_back\n\ntemplate <class F>\nauto gen_vec(const int &n, const F &f)\n\
-    {\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n  return res;\n\
-    }\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
-    template <class T, size_t d, size_t i = 0>\nauto dvec(cauto (&sz)[d], const T\
-    \ &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i + 1>(sz,\
-    \ init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT ctol(const\
-    \ char &c, const string &s)\n{\n  repi(i, SZ<int>(s)) if (s[i] == c) return i;\n\
-    \  return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string &s, const char\
-    \ &first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n                 {\
-    \ return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T> stov(const string\
-    \ &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n    \
-    \             { return ctol(s[i], t); });\n}\n\ntemplate <class T>\nvc<T> concat(const\
-    \ vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n    res.insert(res.end(),\
-    \ ALL(v));\n  return res;\n}\ntemplate <class T>\nvc<T> concat(const vc<T> &v)\
-    \ { return v; }\ntemplate <class T, class... Ts>\nvc<T> concat(vc<T> v, const\
-    \ vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)), ...);\n  return v;\n}\n\n\
-    template <class T>\nT vecget(const vc<T> &v, cauto &i, const T &dflt_negative\
-    \ = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n    return dflt_negative;\n\
-    \  if (i >= SZ<int>(v))\n    return dflt_positive;\n  return v[i];\n}\n#line 10\
-    \ \"template/template_algo.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\u30E0\uFF09\n * @docs docs/template/template_algo.md\n\
-    \ */\n\nauto SUM(cauto &v) { return accumulate(ALL(v), (decltype(v[0]))0); }\n\
-    template <class T>\nT SUM(cauto &v) { return accumulate(ALL(v), T(0)); }\nauto\
-    \ MAX(cauto &v) { return *max_element(ALL(v)); }\nauto MIN(cauto &v) { return\
-    \ *min_element(ALL(v)); }\ntemplate <class I = ll>\nI ARGMAX(cauto &v) { return\
-    \ max_element(ALL(v)) - v.begin(); }\ntemplate <class I = ll>\nI ARGMIN(cauto\
-    \ &v) { return min_element(ALL(v)) - v.begin(); }\n\ntemplate<class T = ll>\n\
-    T mex(cauto &a)\n{\n  int n = a.size();\n  vector<bool> exists(n, false);\n  repi(i,\
-    \ n) if (0 <= a[i] && a[i] < n) exists[a[i]] = true;\n  repi(x, n) if (!exists[x])\
-    \ return x;\n  return n;\n}\n\ntemplate <class T = ll>\nvc<T> permid(const int\
-    \ &n, const int &base_index = 0)\n{\n  vc<T> p(n);\n  repi(i, n) p[i] = i + base_index;\n\
-    \  return p;\n}\ntemplate <class T>\nvc<T> perminv(const vc<T> &p)\n{\n  if (p.empty())\n\
+    \ s;\n}\ntemplate <const bool use_upper = true, class U>\nstring base_repr_str(U\
+    \ val, int base, int n)\n{\n  assert(val >= 0);\n  assert(2 <= base && base <=\
+    \ 36);\n  assert(n >= 0);\n  auto a = base_repr(val, base, n);\n  string s = \"\
+    \";\n  for (cauto &ai : a)\n    s += (ai < 10 ? '0' + ai : (use_upper ? 'A' :\
+    \ 'a') + (ai - 10));\n  return s;\n}\n#line 6 \"template/template_vector.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09\n *\
+    \ @docs docs/template/template_vector.md\n */\n\n#define ALL(a) (a).begin(), (a).end()\n\
+    template <class T = ll, class V>\ninline T SZ(const V &x) { return x.size(); }\n\
+    #define eb emplace_back\n\ntemplate <class F>\nauto gen_vec(const int &n, const\
+    \ F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n  return\
+    \ res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    template <class T, size_t d, size_t i = 0, class V>\nauto dvec(const V (&sz)[d],\
+    \ const T &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i\
+    \ + 1>(sz, init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT\
+    \ ctol(const char &c, const string &s)\n{\n  repi(i, SZ<int>(s)) if (s[i] == c)\
+    \ return i;\n  return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string\
+    \ &s, const char &first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n  \
+    \               { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T>\
+    \ stov(const string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int\
+    \ i) -> T\n                 { return ctol(s[i], t); });\n}\n\ntemplate <class\
+    \ T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n\
+    \    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class T>\nvc<T>\
+    \ concat(const vc<T> &v) { return v; }\ntemplate <class T, class... Ts>\nvc<T>\
+    \ concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)), ...);\n\
+    \  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
+    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
+    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \  return v[i];\n}\n#line 10 \"template/template_algo.hpp\"\n\n/**\n * @brief\
+    \ \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\u30E0\
+    \uFF09\n * @docs docs/template/template_algo.md\n */\n\ntemplate <class V>\nauto\
+    \ SUM(const V &v) { return accumulate(ALL(v), (decltype(v[0]))0); }\ntemplate\
+    \ <class T, class V>\nT SUM(const V &v) { return accumulate(ALL(v), T(0)); }\n\
+    template <class V>\nauto MAX(const V &v) { return *max_element(ALL(v)); }\ntemplate\
+    \ <class V>\nauto MIN(const V &v) { return *min_element(ALL(v)); }\ntemplate <class\
+    \ I = ll, class V>\nI ARGMAX(const V &v) { return max_element(ALL(v)) - v.begin();\
+    \ }\ntemplate <class I = ll, class V>\nI ARGMIN(const V &v) { return min_element(ALL(v))\
+    \ - v.begin(); }\n\ntemplate<class T = ll, class V>\nT mex(const V &a)\n{\n  int\
+    \ n = a.size();\n  vector<bool> exists(n, false);\n  repi(i, n) if (0 <= a[i]\
+    \ && a[i] < n) exists[a[i]] = true;\n  repi(x, n) if (!exists[x]) return x;\n\
+    \  return n;\n}\n\ntemplate <class T = ll>\nvc<T> permid(const int &n, const int\
+    \ &base_index = 0)\n{\n  vc<T> p(n);\n  repi(i, n) p[i] = i + base_index;\n  return\
+    \ p;\n}\ntemplate <class T>\nvc<T> perminv(const vc<T> &p)\n{\n  if (p.empty())\n\
     \    return {};\n  const int n = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i,\
     \ n) if (p[i] >= 0) q[p[i]] = i;\n  return q;\n}\n// a[p[i]] for all i\ntemplate\
     \ <class T, class U>\nvc<T> permuted(const vc<T> &a, const vc<U> &p)\n{\n  const\
@@ -318,7 +322,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_bit.test.cpp
   requiredBy: []
-  timestamp: '2025-02-17 01:49:35+09:00'
+  timestamp: '2025-03-12 06:54:29+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_bit.test.cpp

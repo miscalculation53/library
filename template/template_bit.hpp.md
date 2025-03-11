@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy:
@@ -29,32 +29,32 @@ data:
   - icon: ':heavy_check_mark:'
     path: itertools/direct_product.hpp
     title: "\u76F4\u7A4D\u5168\u63A2\u7D22"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - icon: ':heavy_check_mark:'
     path: math/modint/binomial.hpp
     title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint64_internal.hpp
     title: math/modint/modint64_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
   - icon: ':heavy_check_mark:'
@@ -64,7 +64,7 @@ data:
     path: math/prime/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
   - icon: ':heavy_check_mark:'
@@ -76,17 +76,17 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/prime/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
   - icon: ':heavy_check_mark:'
     path: math/prime/zeta_mobius_divisor_multiple.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/zeta_mobius_divisor_multiple_large.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
@@ -102,7 +102,7 @@ data:
   - icon: ':warning:'
     path: template/template.cpp
     title: template/template.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all.hpp
     title: template/template_all.hpp
   _extendedVerifiedWith:
@@ -211,12 +211,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
     title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/template/template_bit.md
     document_title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\
@@ -260,25 +260,25 @@ data:
     \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
     #line 5 \"template/template_bit.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
     \u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n\
-    \ */\n\ninline constexpr ull pow2(auto k) { return 1ULL << k; }\ninline constexpr\
-    \ ull MASK(auto k) { return (1ULL << k) - 1ULL; }\n\n#if __cplusplus < 202002L\n\
-    // x == 0 \u306A\u3089\u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\u3070\
-    \ 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ull bit_width(ull x) { return x == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0,\
-    \ 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ull bit_floor(ull x) { return\
-    \ x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8,\
-    \ 16, ...\ninline constexpr ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL\
-    \ << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull x) { assert(x !=\
-    \ 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull x) { return\
-    \ __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull x) { return\
-    \ popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ll bit_width(ll x) { return std::bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4,\
-    \ 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return std::bit_floor((ull)x);\
-    \ }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ll bit_ceil(ll x)\
-    \ { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll x) { assert(x\
-    \ != 0); return std::countr_zero((ull)x); }\ninline constexpr ll popcount(ll x)\
-    \ { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll x)\
-    \ { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
+    \ */\n\ntemplate <class T>\ninline constexpr ull pow2(T k) { return 1ULL << k;\
+    \ }\ntemplate <class T>\ninline constexpr ull MASK(T k) { return (1ULL << k) -\
+    \ 1ULL; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\
+    \u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3,\
+    \ 3, 3, 4, 4, ... \ninline constexpr ull bit_width(ull x) { return x == 0 ? 0\
+    \ : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr\
+    \ ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n\
+    // 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ull bit_ceil(ull x) {\
+    \ return x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull\
+    \ x) { assert(x != 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull\
+    \ x) { return __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull\
+    \ x) { return popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ...\
+    \ \ninline constexpr ll bit_width(ll x) { return std::bit_width((ull)x); }\n//\
+    \ 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return\
+    \ std::bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr\
+    \ ll bit_ceil(ll x) { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll\
+    \ x) { assert(x != 0); return std::countr_zero((ull)x); }\ninline constexpr ll\
+    \ popcount(ll x) { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll\
+    \ x) { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
     \ x) { assert(x != 0); return countr_zero(x); }\ninline constexpr ull msb_pos(ull\
     \ x) { assert(x != 0); return bit_width(x) - 1; }\ninline constexpr ull lsb_mask(ull\
     \ x) { assert(x != 0); return x & -x; }\ninline constexpr ull msb_mask(ull x)\
@@ -291,35 +291,36 @@ data:
     \ y) { return x & ~y; }\n"
   code: "#pragma once\n\n#include \"template_types.hpp\"\n#include \"template_rep.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\
-    \u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ninline constexpr\
-    \ ull pow2(auto k) { return 1ULL << k; }\ninline constexpr ull MASK(auto k) {\
-    \ return (1ULL << k) - 1ULL; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\
-    \u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n\
-    // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr ull bit_width(ull x) {\
-    \ return x == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8,\
-    \ 8, ...\ninline constexpr ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL\
-    \ << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr\
-    \ ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline\
-    \ constexpr ull countr_zero(ull x) { assert(x != 0); return __builtin_ctzll(x);\
-    \ }\ninline constexpr ull popcount(ull x) { return __builtin_popcountll(x); }\n\
-    inline constexpr bool has_single_bit(ull x) { return popcount(x) == 1; }\n#else\n\
-    // 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr ll bit_width(ll x) { return\
-    \ std::bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr\
-    \ ll bit_floor(ll x) { return std::bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8,\
-    \ 8, 8, 8, 16, ...\ninline constexpr ll bit_ceil(ll x) { return std::bit_ceil((ull)x);\
-    \ }\ninline constexpr ll countr_zero(ll x) { assert(x != 0); return std::countr_zero((ull)x);\
-    \ }\ninline constexpr ll popcount(ll x) { return std::popcount((ull)x); }\ninline\
-    \ constexpr bool has_single_bit(ll x) { return std::has_single_bit((ull)x); }\n\
-    #endif\n\ninline constexpr ull lsb_pos(ull x) { assert(x != 0); return countr_zero(x);\
-    \ }\ninline constexpr ull msb_pos(ull x) { assert(x != 0); return bit_width(x)\
-    \ - 1; }\ninline constexpr ull lsb_mask(ull x) { assert(x != 0); return x & -x;\
-    \ }\ninline constexpr ull msb_mask(ull x) { assert(x != 0); return bit_floor(x);\
-    \ }\n\ninline constexpr bool btest(ull x, uint k) { return (x >> k) & 1; }\ntemplate\
-    \ <class T>\ninline void bset(T &x, uint k, bool b = 1) { b ? x |= (1ULL << k)\
-    \ : x &= ~(1ULL << k); }\ntemplate <class T>\ninline void bflip(T &x, uint k)\
-    \ { x ^= (1ULL << k); }\ninline constexpr bool bsubset(ull x, ull y) { return\
-    \ (x & y) == x; }\ninline constexpr bool bsupset(ull x, ull y) { return (x & y)\
-    \ == y; }\ninline constexpr ull bsetminus(ull x, ull y) { return x & ~y; }"
+    \u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ntemplate <class\
+    \ T>\ninline constexpr ull pow2(T k) { return 1ULL << k; }\ntemplate <class T>\n\
+    inline constexpr ull MASK(T k) { return (1ULL << k) - 1ULL; }\n\n#if __cplusplus\
+    \ < 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\
+    \u308C\u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline\
+    \ constexpr ull bit_width(ull x) { return x == 0 ? 0 : 64 - __builtin_clzll(x);\
+    \ }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ull bit_floor(ull\
+    \ x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4,\
+    \ 8, 8, 8, 8, 16, ...\ninline constexpr ull bit_ceil(ull x) { return x == 0 ?\
+    \ 1ULL : 1ULL << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull x)\
+    \ { assert(x != 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull\
+    \ x) { return __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull\
+    \ x) { return popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ...\
+    \ \ninline constexpr ll bit_width(ll x) { return std::bit_width((ull)x); }\n//\
+    \ 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return\
+    \ std::bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr\
+    \ ll bit_ceil(ll x) { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll\
+    \ x) { assert(x != 0); return std::countr_zero((ull)x); }\ninline constexpr ll\
+    \ popcount(ll x) { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll\
+    \ x) { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
+    \ x) { assert(x != 0); return countr_zero(x); }\ninline constexpr ull msb_pos(ull\
+    \ x) { assert(x != 0); return bit_width(x) - 1; }\ninline constexpr ull lsb_mask(ull\
+    \ x) { assert(x != 0); return x & -x; }\ninline constexpr ull msb_mask(ull x)\
+    \ { assert(x != 0); return bit_floor(x); }\n\ninline constexpr bool btest(ull\
+    \ x, uint k) { return (x >> k) & 1; }\ntemplate <class T>\ninline void bset(T\
+    \ &x, uint k, bool b = 1) { b ? x |= (1ULL << k) : x &= ~(1ULL << k); }\ntemplate\
+    \ <class T>\ninline void bflip(T &x, uint k) { x ^= (1ULL << k); }\ninline constexpr\
+    \ bool bsubset(ull x, ull y) { return (x & y) == x; }\ninline constexpr bool bsupset(ull\
+    \ x, ull y) { return (x & y) == y; }\ninline constexpr ull bsetminus(ull x, ull\
+    \ y) { return x & ~y; }"
   dependsOn:
   - template/template_types.hpp
   - template/template_rep.hpp
@@ -357,8 +358,8 @@ data:
   - ds/csr.hpp
   - ds/coordinate_compression.hpp
   - ds/group_index.hpp
-  timestamp: '2025-02-12 07:45:54+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2025-03-12 06:54:29+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/aoj/modpow.test.cpp
   - verify/aoj/csr.test.cpp
