@@ -92,7 +92,7 @@ constexpr T iroot(A a, K k)
   assert(a >= 0 && k >= 1);
   if (a <= 1 || k == 1)
     return a;
-  if (k == 2 && a <= ULLONG_MAX)
+  if (k == 2 && make_unsigned_t<A>(a) <= ULLONG_MAX)
     return sqrtl(a);
 
   auto isok = [&](T x) -> bool
