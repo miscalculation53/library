@@ -536,25 +536,48 @@ data:
     \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
     \ = Group<typename R::S, R::add, R::e0, R::minus>;\n#line 5 \"math/algebra/polynomial_ring.hpp\"\
     \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\
-    \uFF09\n * @docs docs/math/algebra/polynomial_ring.md\n */\n\ntemplate <class\
-    \ R>\nstruct PolynomialRing\n{\n  using S = vc<typename R::S>;\n  static constexpr\
-    \ S add(const S &a, const S &b)\n  {\n    S c(max(a.size(), b.size()), R::e0());\n\
-    \    repi(i, a.size()) c[i] = R::add(c[i], a[i]);\n    repi(i, b.size()) c[i]\
-    \ = R::add(c[i], b[i]);\n    return c;\n  }\n  static constexpr S e0() { return\
-    \ {}; }\n  static constexpr S minus(const S &a)\n  {\n    S b(a.size());\n   \
-    \ repi(i, a.size()) b[i] = R::minus(a[i]);\n    return b;\n  }\n  static constexpr\
-    \ S mul(const S &a, const S &b)\n  {\n    const int n = a.size(), m = b.size();\n\
-    \    S c(n + m - 1, R::e0());\n    repi(i, n) repi(j, m) c[i + j] = R::add(c[i\
-    \ + j], R::mul(a[i], b[j]));\n    return c;\n  }\n  static constexpr S e1() {\
-    \ return {R::e1()}; }\n};\n"
+    \uFF09\n * @docs docs/math/algebra/polynomial_ring.md\n */\n\n// \u30B5\u30A4\u30BA\
+    \ n (\u3064\u307E\u308A n-1 \u6B21) \u3067\u6253\u3061\u5207\u308B\ntemplate <class\
+    \ R, int n>\nstruct PolynomialRingArray\n{\n  using S = array<typename R::S, n>;\n\
+    \  static constexpr S add(const S &a, const S &b)\n  {\n    S c;\n    repi(i,\
+    \ n) c[i] = R::add(a[i], b[i]);\n    return c;\n  }\n  static constexpr S e0()\n\
+    \  {\n    S a;\n    fill(ALL(a), R::e0());\n    return a;\n  }\n  static constexpr\
+    \ S minus(const S &a)\n  {\n    S b;\n    repi(i, n) b[i] = R::minus(a[i]);\n\
+    \    return b;\n  }\n  static constexpr S mul(const S &a, const S &b)\n  {\n \
+    \   S c;\n    fill(ALL(c), R::e0());\n    repi(i, n) repi(j, n - i) c[i + j] =\
+    \ R::add(c[i + j], R::mul(a[i], b[j]));\n    return c;\n  }\n  static constexpr\
+    \ S e1()\n  {\n    S a;\n    fill(ALL(a), R::e0());\n    if constexpr (n >= 1)\n\
+    \      a[0] = R::e1();\n    return a;\n  }\n};\n\n// \u6253\u3061\u5207\u3089\u306A\
+    \u3044 (\u639B\u3051\u7B97\u3082)\ntemplate <class R>\nstruct PolynomialRingVector\n\
+    {\n  using S = vc<typename R::S>;\n  static constexpr S add(const S &a, const\
+    \ S &b)\n  {\n    S c(max(a.size(), b.size()), R::e0());\n    repi(i, a.size())\
+    \ c[i] = R::add(c[i], a[i]);\n    repi(i, b.size()) c[i] = R::add(c[i], b[i]);\n\
+    \    return c;\n  }\n  static constexpr S e0() { return {}; }\n  static constexpr\
+    \ S minus(const S &a)\n  {\n    S b(a.size());\n    repi(i, a.size()) b[i] = R::minus(a[i]);\n\
+    \    return b;\n  }\n  static constexpr S mul(const S &a, const S &b)\n  {\n \
+    \   const int n = a.size(), m = b.size();\n    S c(n + m - 1, R::e0());\n    repi(i,\
+    \ n) repi(j, m) c[i + j] = R::add(c[i + j], R::mul(a[i], b[j]));\n    return c;\n\
+    \  }\n  static constexpr S e1() { return {R::e1()}; }\n};\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
     algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\
     \u9805\u5F0F\u74B0\uFF09\n * @docs docs/math/algebra/polynomial_ring.md\n */\n\
-    \ntemplate <class R>\nstruct PolynomialRing\n{\n  using S = vc<typename R::S>;\n\
-    \  static constexpr S add(const S &a, const S &b)\n  {\n    S c(max(a.size(),\
-    \ b.size()), R::e0());\n    repi(i, a.size()) c[i] = R::add(c[i], a[i]);\n   \
-    \ repi(i, b.size()) c[i] = R::add(c[i], b[i]);\n    return c;\n  }\n  static constexpr\
-    \ S e0() { return {}; }\n  static constexpr S minus(const S &a)\n  {\n    S b(a.size());\n\
+    \n// \u30B5\u30A4\u30BA n (\u3064\u307E\u308A n-1 \u6B21) \u3067\u6253\u3061\u5207\
+    \u308B\ntemplate <class R, int n>\nstruct PolynomialRingArray\n{\n  using S =\
+    \ array<typename R::S, n>;\n  static constexpr S add(const S &a, const S &b)\n\
+    \  {\n    S c;\n    repi(i, n) c[i] = R::add(a[i], b[i]);\n    return c;\n  }\n\
+    \  static constexpr S e0()\n  {\n    S a;\n    fill(ALL(a), R::e0());\n    return\
+    \ a;\n  }\n  static constexpr S minus(const S &a)\n  {\n    S b;\n    repi(i,\
+    \ n) b[i] = R::minus(a[i]);\n    return b;\n  }\n  static constexpr S mul(const\
+    \ S &a, const S &b)\n  {\n    S c;\n    fill(ALL(c), R::e0());\n    repi(i, n)\
+    \ repi(j, n - i) c[i + j] = R::add(c[i + j], R::mul(a[i], b[j]));\n    return\
+    \ c;\n  }\n  static constexpr S e1()\n  {\n    S a;\n    fill(ALL(a), R::e0());\n\
+    \    if constexpr (n >= 1)\n      a[0] = R::e1();\n    return a;\n  }\n};\n\n\
+    // \u6253\u3061\u5207\u3089\u306A\u3044 (\u639B\u3051\u7B97\u3082)\ntemplate <class\
+    \ R>\nstruct PolynomialRingVector\n{\n  using S = vc<typename R::S>;\n  static\
+    \ constexpr S add(const S &a, const S &b)\n  {\n    S c(max(a.size(), b.size()),\
+    \ R::e0());\n    repi(i, a.size()) c[i] = R::add(c[i], a[i]);\n    repi(i, b.size())\
+    \ c[i] = R::add(c[i], b[i]);\n    return c;\n  }\n  static constexpr S e0() {\
+    \ return {}; }\n  static constexpr S minus(const S &a)\n  {\n    S b(a.size());\n\
     \    repi(i, a.size()) b[i] = R::minus(a[i]);\n    return b;\n  }\n  static constexpr\
     \ S mul(const S &a, const S &b)\n  {\n    const int n = a.size(), m = b.size();\n\
     \    S c(n + m - 1, R::e0());\n    repi(i, n) repi(j, m) c[i + j] = R::add(c[i\
@@ -577,7 +600,7 @@ data:
   requiredBy:
   - verify/yosupo/subset_convolution.cpp
   - math/set/subset_convolution.hpp
-  timestamp: '2025-03-13 06:32:54+09:00'
+  timestamp: '2025-03-13 08:11:23+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: math/algebra/polynomial_ring.hpp
