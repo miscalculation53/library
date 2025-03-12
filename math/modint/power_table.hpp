@@ -22,8 +22,10 @@ public:
   void reserve(int n)
   {
     if (mod != T::mod())
+    {
+      mod = T::mod();
       pw = {1};
-    mod = T::mod();
+    }
     int i = pw.size();
     if (n < i)
       return;
