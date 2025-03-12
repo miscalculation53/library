@@ -7,7 +7,7 @@
 "verify/mytest/linear_sieve.test.cpp": "2025-03-13 01:57:54 +0900",
 "verify/mytest/modint.test.cpp": "2025-03-13 01:57:54 +0900",
 "verify/mytest/modint64.test.cpp": "2025-03-13 01:57:54 +0900",
-"verify/mytest/power_table.test.cpp": "2025-03-13 01:57:54 +0900",
+"verify/mytest/power_table.test.cpp": "2025-03-13 03:24:09 +0900",
 "verify/mytest/template_algo.test.cpp": "2025-03-13 01:57:54 +0900",
 "verify/mytest/template_binsearch.test.cpp": "2025-03-13 01:57:54 +0900",
 "verify/mytest/template_bit.test.cpp": "2025-03-13 01:57:54 +0900",
@@ -40,5 +40,6 @@
 "verify/yukicoder/order_mod_carmichael.test.cpp": "2025-03-13 01:57:54 +0900",
 "verify/yukicoder/order_mod_euler_phi.test.cpp": "2025-03-13 01:57:54 +0900",
 "verify/yukicoder/static_modint.test.cpp": "2025-03-13 01:57:54 +0900",
-"verify/yukicoder/zeta_mobius_divisor_large.test.cpp": "2025-03-13 01:57:54 +0900"
+"verify/yukicoder/zeta_mobius_divisor_large.test.cpp": "2025-03-13 01:57:54 +0900",
+"verify/yukicoder/zeta_mobius_multiple_large.test.cpp": "2025-03-13 01:57:54 +0900"
 }
