@@ -40,5 +40,6 @@
 "verify/yukicoder/order_mod_carmichael.test.cpp": "2025-03-12 06:54:29 +0900",
 "verify/yukicoder/order_mod_euler_phi.test.cpp": "2025-03-12 06:54:29 +0900",
 "verify/yukicoder/static_modint.test.cpp": "2025-03-12 06:54:29 +0900",
-"verify/yukicoder/zeta_mobius_divisor_large.test.cpp": "2025-03-12 06:54:29 +0900"
+"verify/yukicoder/zeta_mobius_divisor_large.test.cpp": "2025-03-12 06:54:29 +0900",
+"verify/yukicoder/zeta_mobius_multiple_large.test.cpp": "2025-03-12 06:54:29 +0900"
 }
