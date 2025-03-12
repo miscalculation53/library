@@ -10,23 +10,24 @@
  */
 
 // R は環
-// |a| = |b| = 2^n を仮定、O(n^2 2^n) 時間
-template <class R>
+// |a| = |b| = 2^k <= 2^n を仮定、O(k^2 2^k) 時間
+template <class R, int n>
 vc<typename R::S> subset_convolution
 (const vc<typename R::S> &a, const vc<typename R::S> &b)
 {
-  using P = PolynomialRing<R>;
+  using P = PolynomialRingArray<R, n + 1>;
   assert(a.size() == b.size());
-  const int n = a.size();
-  vc<typename P::S> fa(n), fb(n);
-  repi(i, n)
+  const int m = a.size();
+  assert(m <= (1 << n));
+  vc<typename P::S> fa(m), fb(m);
+  repi(i, m)
   {
     const int j = popcount(i);
-    fa[i].resize(j + 1, R::e0()), fb[i].resize(j + 1, R::e0());
+    fill(ALL(fa[i]), R::e0()), fill(ALL(fb[i]), R::e0());
     fa[i][j] = a[i], fb[i][j] = b[i];
   }
-  auto fc = or_convolution<P>(fa, fb);
-  vc<typename R::S> c(n);
-  repi(i, n) c[i] = fc[i][popcount(i)];
+  or_convolution_destructive<P>(fa, fb);
+  vc<typename R::S> c(m);
+  repi(i, m) c[i] = fa[i][popcount(i)];
   return c;
 }
