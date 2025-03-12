@@ -36,6 +36,9 @@ data:
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
+  - icon: ':warning:'
+    path: math/algebra/polynomial_ring.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\uFF09"
   - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
@@ -96,6 +99,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/set/and_or_convolution.hpp
     title: "and/or \u7573\u307F\u8FBC\u307F"
+  - icon: ':warning:'
+    path: math/set/subset_convolution.hpp
+    title: subset convolution
   - icon: ':heavy_check_mark:'
     path: math/set/zeta_mobius.hpp
     title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
@@ -115,6 +121,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':warning:'
+    path: verify/yosupo/subset_convolution.cpp
+    title: verify/yosupo/subset_convolution.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/csr.test.cpp
@@ -410,8 +419,10 @@ data:
   isVerificationFile: false
   path: template/template_math.hpp
   requiredBy:
+  - verify/yosupo/subset_convolution.cpp
   - math/extgcd.hpp
   - math/set/zeta_mobius.hpp
+  - math/set/subset_convolution.hpp
   - math/set/and_or_convolution.hpp
   - math/prime/order_primitive_root.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
@@ -431,6 +442,7 @@ data:
   - math/modint/power_table.hpp
   - math/quotients.hpp
   - math/algebra/algebra_basic_ops.hpp
+  - math/algebra/polynomial_ring.hpp
   - math/algebra/algebra_base.hpp
   - template/template_vector.hpp
   - template/template_all.hpp

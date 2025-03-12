@@ -43,7 +43,13 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy: []
+  _extendedRequiredBy:
+  - icon: ':warning:'
+    path: math/set/subset_convolution.hpp
+    title: subset convolution
+  - icon: ':warning:'
+    path: verify/yosupo/subset_convolution.cpp
+    title: verify/yosupo/subset_convolution.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/and_or_convolution.test.cpp
@@ -641,7 +647,9 @@ data:
   - math/algebra/algebra_base.hpp
   isVerificationFile: false
   path: math/set/and_or_convolution.hpp
-  requiredBy: []
+  requiredBy:
+  - verify/yosupo/subset_convolution.cpp
+  - math/set/subset_convolution.hpp
   timestamp: '2025-03-13 01:57:54+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:

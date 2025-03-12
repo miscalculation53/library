@@ -2,6 +2,22 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_basic_ops.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+      \ max\uFF09"
+  - icon: ':warning:'
+    path: math/algebra/polynomial_ring.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/set/and_or_convolution.hpp
+    title: "and/or \u7573\u307F\u8FBC\u307F"
+  - icon: ':heavy_check_mark:'
+    path: math/set/zeta_mobius.hpp
+    title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -34,61 +50,18 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: math/algebra/algebra_basic_ops.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
-      \ max\uFF09"
-  - icon: ':warning:'
-    path: math/algebra/polynomial_ring.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/lcm_gcd_convolution.hpp
-    title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/set/and_or_convolution.hpp
-    title: "and/or \u7573\u307F\u8FBC\u307F"
-  - icon: ':warning:'
-    path: math/set/subset_convolution.hpp
-    title: subset convolution
-  - icon: ':heavy_check_mark:'
-    path: math/set/zeta_mobius.hpp
-    title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
   - icon: ':warning:'
     path: verify/yosupo/subset_convolution.cpp
     title: verify/yosupo/subset_convolution.cpp
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/and_or_convolution.test.cpp
-    title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/gcd_convolution.test.cpp
-    title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/lcm_convolution.test.cpp
-    title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':warning:'
   attributes:
-    _deprecated_at_docs: docs/math/algebra/algebra_base.md
-    document_title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
-      \uFF09"
+    _deprecated_at_docs: docs/math/set/subset_convolution.md
+    document_title: subset convolution
     links: []
-  bundledCode: "#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+  bundledCode: "#line 2 \"math/set/subset_convolution.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -554,14 +527,16 @@ data:
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n *\
-    \ @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n\
-    \ * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_, auto op_,\
-    \ auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto op = op_;\n\
-    \  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_, auto e_,\
-    \ auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto op = op_;\n\
-    \  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n};\n\n\
-    template <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
+    \ vt;\n}\n// ----------\n#line 2 \"math/set/and_or_convolution.hpp\"\n\n#line\
+    \ 2 \"math/set/zeta_mobius.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
+    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
+    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
+    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
+    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
     {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
     \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
     \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
@@ -571,25 +546,110 @@ data:
     template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
     \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
     \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
-    \ R::S, R::add, R::e0, R::minus>;\n"
-  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs\
-    \ docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_, auto op_, auto\
-    \ e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto op = op_;\n\
-    \  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_, auto e_,\
-    \ auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto op = op_;\n\
-    \  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n};\n\n\
-    template <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
-    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
-    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
-    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
-    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
-    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
-    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
-    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
-    \ R::S, R::add, R::e0, R::minus>;"
+    \ R::S, R::add, R::e0, R::minus>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
+    \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
+    template <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
+    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
+    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
+    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
+    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
+    \ static constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct\
+    \ GroupAddSub\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
+    \ + b; }\n  static constexpr S e() { return 0; }\n  static constexpr S inv(S a)\
+    \ { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return a * b; }\n  static constexpr S e()\
+    \ { return 1; }\n  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate\
+    \ <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return min(a, b); }\n  static constexpr\
+    \ S e0() { return infty; }\n  static constexpr S mul(S a, S b) { return a + b;\
+    \ }\n  static constexpr S e1() { return 0; }\n};\ntemplate <class T, const T infty\
+    \ = INF>\nstruct SemiRingMaxPlus\n{\n  using S = T;\n  static constexpr S add(S\
+    \ a, S b) { return max(a, b); }\n  static constexpr S e0() { return -infty; }\n\
+    \  static constexpr S mul(S a, S b) { return a + b; }\n  static constexpr S e1()\
+    \ { return 0; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using S\
+    \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
+    \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
+    \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
+    \ 1; }\n};\n#line 5 \"math/set/zeta_mobius.hpp\"\n\n/**\n * @brief \u30BC\u30FC\
+    \u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB\n * @docs docs/math/set/zeta_mobius.md\n\
+    \ */\n\n// \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\
+    \u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001\
+    O(n 2^n) \u6642\u9593\ntemplate <class M>\nvc<typename M::S> zeta_subset(const\
+    \ vc<typename M::S> &a)\n{\n  if (a.empty())\n    return {};\n  assert(has_single_bit(a.size()));\n\
+    \  const int n = countr_zero(a.size());\n  auto b = a;\n  repi(i, n) repi(s, 1\
+    \ << n)\n  {\n    if (!btest(s, i))\n    {\n      int t = s;\n      bset(t, i);\n\
+    \      b[t] = M::op(b[t], b[s]);\n    }\n  }\n  return b;\n}\n// \u03BC \u306F\
+    \ \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286 s} (-1)^{|s\\\
+    t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n\
+    \ \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class G>\nvc<typename\
+    \ G::S> mobius_subset(const vc<typename G::S> &a)\n{\n  if (a.empty())\n    return\
+    \ {};\n  assert(has_single_bit(a.size()));\n  const int n = countr_zero(a.size());\n\
+    \  auto b = a;\n  repi(i, n) repi(s, 1 << n)\n  {\n    if (!btest(s, i))\n   \
+    \ {\n      int t = s;\n      bset(t, i);\n      b[t] = G::op(b[t], G::inv(b[s]));\n\
+    \    }\n  }\n  return b;\n}\n\n// \u03B6'a[s] = \u03A3{s \u2286 t} a[t]\n// M\
+    \ \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| =\
+    \ 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class M>\nvc<typename\
+    \ M::S> zeta_supset(const vc<typename M::S> &a)\n{\n  if (a.empty())\n    return\
+    \ {};\n  assert(has_single_bit(a.size()));\n  const int n = countr_zero(a.size());\n\
+    \  auto b = a;\n  repi(i, n) repi(s, 1 << n)\n  {\n    if (!btest(s, i))\n   \
+    \ {\n      int t = s;\n      bset(t, i);\n      b[s] = M::op(b[s], b[t]);\n  \
+    \  }\n  }\n  return b;\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n\
+    // \u03BC'a[s] = \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n// G \u306F\u53EF\u63DB\
+    \u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n)\
+    \ \u6642\u9593\ntemplate <class G>\nvc<typename G::S> mobius_supset(const vc<typename\
+    \ G::S> &a)\n{\n  if (a.empty())\n    return {};\n  assert(has_single_bit(a.size()));\n\
+    \  const int n = countr_zero(a.size());\n  auto b = a;\n  repi(i, n) repi(s, 1\
+    \ << n)\n  {\n    if (!btest(s, i))\n    {\n      int t = s;\n      bset(t, i);\n\
+    \      b[s] = G::op(b[s], G::inv(b[t]));\n    }\n  }\n  return b;\n}\n#line 5\
+    \ \"math/set/and_or_convolution.hpp\"\n\n/**\n * @brief and/or \u7573\u307F\u8FBC\
+    \u307F\n * @docs docs/math/set/and_or_convolution.md\n */\n\n// R \u306F\u74B0\
+    \n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class\
+    \ R>\nvc<typename R::S> and_convolution\n(const vc<typename R::S> &a, const vc<typename\
+    \ R::S> &b)\n{\n  assert(a.size() == b.size());\n  auto za = zeta_supset<MonoidOfSemiRingAdd<R>>(a);\n\
+    \  auto zb = zeta_supset<MonoidOfSemiRingAdd<R>>(b);\n  repi(i, za.size()) za[i]\
+    \ = R::mul(za[i], zb[i]);\n  return mobius_supset<GroupOfRingAdd<R>>(za);\n}\n\
+    // R \u306F\u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\
+    \ntemplate <class R>\nvc<typename R::S> or_convolution\n(const vc<typename R::S>\
+    \ &a, const vc<typename R::S> &b)\n{\n  assert(a.size() == b.size());\n  auto\
+    \ za = zeta_subset<MonoidOfSemiRingAdd<R>>(a);\n  auto zb = zeta_subset<MonoidOfSemiRingAdd<R>>(b);\n\
+    \  repi(i, za.size()) za[i] = R::mul(za[i], zb[i]);\n  return mobius_subset<GroupOfRingAdd<R>>(za);\n\
+    }\n#line 2 \"math/algebra/polynomial_ring.hpp\"\n\n#line 5 \"math/algebra/polynomial_ring.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\
+    \uFF09\n * @docs docs/math/algebra/polynomial_ring.md\n */\n\ntemplate <class\
+    \ R>\nstruct PolynomialRing\n{\n  using S = vc<typename R::S>;\n  static constexpr\
+    \ S add(const S &a, const S &b)\n  {\n    S c(max(a.size(), b.size()), R::e0());\n\
+    \    repi(i, a.size()) c[i] = R::add(c[i], a[i]);\n    repi(i, b.size()) c[i]\
+    \ = R::add(c[i], b[i]);\n    return c;\n  }\n  static constexpr S e0() { return\
+    \ {}; }\n  static constexpr S minus(const S &a)\n  {\n    S b(a.size());\n   \
+    \ repi(i, a.size()) b[i] = R::minus(a[i]);\n    return b;\n  }\n  static constexpr\
+    \ S mul(const S &a, const S &b)\n  {\n    const int n = a.size(), m = b.size();\n\
+    \    S c(n + m - 1, R::e0());\n    repi(i, n) repi(j, m) c[i + j] = R::add(c[i\
+    \ + j], R::mul(a[i], b[j]));\n    return c;\n  }\n  static constexpr S e1() {\
+    \ return {R::e1()}; }\n};\n#line 6 \"math/set/subset_convolution.hpp\"\n\n/**\n\
+    \ * @brief subset convolution\n * @docs docs/math/set/subset_convolution.md\n\
+    \ */\n\n// R \u306F\u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n^2 2^n)\
+    \ \u6642\u9593\ntemplate <class R>\nvc<typename R::S> subset_convolution\n(const\
+    \ vc<typename R::S> &a, const vc<typename R::S> &b)\n{\n  using P = PolynomialRing<R>;\n\
+    \  assert(a.size() == b.size());\n  const int n = a.size();\n  vc<typename P::S>\
+    \ fa(n), fb(n);\n  repi(i, n)\n  {\n    const int j = popcount(i);\n    fa[i].resize(j\
+    \ + 1, R::e0()), fb[i].resize(j + 1, R::e0());\n    fa[i][j] = a[i], fb[i][j]\
+    \ = b[i];\n  }\n  auto fc = or_convolution<P>(fa, fb);\n  vc<typename R::S> c(n);\n\
+    \  repi(i, n) c[i] = fc[i][popcount(i)];\n  return c;\n}\n"
+  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
+    and_or_convolution.hpp\"\n#include \"../../math/algebra/polynomial_ring.hpp\"\n\
+    \n/**\n * @brief subset convolution\n * @docs docs/math/set/subset_convolution.md\n\
+    \ */\n\n// R \u306F\u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n^2 2^n)\
+    \ \u6642\u9593\ntemplate <class R>\nvc<typename R::S> subset_convolution\n(const\
+    \ vc<typename R::S> &a, const vc<typename R::S> &b)\n{\n  using P = PolynomialRing<R>;\n\
+    \  assert(a.size() == b.size());\n  const int n = a.size();\n  vc<typename P::S>\
+    \ fa(n), fb(n);\n  repi(i, n)\n  {\n    const int j = popcount(i);\n    fa[i].resize(j\
+    \ + 1, R::e0()), fb[i].resize(j + 1, R::e0());\n    fa[i][j] = a[i], fb[i][j]\
+    \ = b[i];\n  }\n  auto fc = or_convolution<P>(fa, fb);\n  vc<typename R::S> c(n);\n\
+    \  repi(i, n) c[i] = fc[i][popcount(i)];\n  return c;\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -601,144 +661,61 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
+  - math/set/and_or_convolution.hpp
+  - math/set/zeta_mobius.hpp
+  - math/algebra/algebra_basic_ops.hpp
+  - math/algebra/algebra_base.hpp
+  - math/algebra/polynomial_ring.hpp
   isVerificationFile: false
-  path: math/algebra/algebra_base.hpp
+  path: math/set/subset_convolution.hpp
   requiredBy:
   - verify/yosupo/subset_convolution.cpp
-  - math/set/zeta_mobius.hpp
-  - math/set/subset_convolution.hpp
-  - math/set/and_or_convolution.hpp
-  - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/lcm_gcd_convolution.hpp
-  - math/prime/zeta_mobius_divisor_multiple.hpp
-  - math/algebra/algebra_basic_ops.hpp
-  - math/algebra/polynomial_ring.hpp
-  timestamp: '2025-03-13 01:57:54+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-documentation_of: math/algebra/algebra_base.hpp
+  timestamp: '2025-03-13 06:32:54+09:00'
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
+documentation_of: math/set/subset_convolution.hpp
 layout: document
 redirect_from:
-- /library/math/algebra/algebra_base.hpp
-- /library/math/algebra/algebra_base.hpp.html
-title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+- /library/math/set/subset_convolution.hpp
+- /library/math/set/subset_convolution.hpp.html
+title: subset convolution
 ---
-## 代数的構造の struct（基本）
+## subset convolution
 
-データ構造などに代数的構造を載せるとき、代数的構造を struct で表現することにする。
+### 定義
 
-https://noshi91.hatenablog.com/entry/2020/04/22/212649 の E の方法を採用。
+一般には環が載る。
 
-### 使い方
+$\begin{aligned}
+\displaystyle c(u) &= \sum_{u = s \coprod t} a(s)b(t) \\\\  
+&= \sum_{\substack{u = s \cup t \\\\  \emptyset = s \cap t}} a(s)b(t) \\\\  
+&= \sum_{s \subseteq u} a(s)b(u\setminus s)
+\end{aligned}$
 
-- よく使うものはライブラリにしておく
-- 変なのが出たら struct を書く
-  - コピペするとよさそう
-  - スニペットにしたい
-  - 一応 `Monoid`, `Group`, `SemiRing`, `Ring` のテンプレート引数に型と関数を渡すことで作れる（ACL の使い方と大差ない感じになる）。しかし、この使い方はあまり想定していない（struct を 1 個しか使わないならこれでもいいかも。2 個以上使うとき名前をいちいちつけないといけないのが微妙だと（個人的には）思う）
-- 群をモノイドとして使う、環を半環として使う は OK
-- 半環や環から $+$ や $\cdot$ だけのモノイド・群をとってくるものとして次がある（使用頻度はそんなに高くないかも）
-  - `MonoidOfSemiRingAdd<SR>`
-  - `MonoidOfSemiRingMul<SR>`
-  - `GroupOfRingAdd<R>`
+### 計算方法
 
+$\displaystyle c(u) = \sum_{\substack{u = s \cup t \\\\  \lvert u \rvert = \lvert s \rvert + \lvert t \rvert}} a(s)b(t)$
 
-### 群に似た構造
+と解釈して、or 畳み込みに多項式環を載せる。
 
-#### 半群 (semigroup)
+$f_a(s)(x) = a(s) x^{\lvert s \rvert}$（$f_b, f_c$ も同様）とすると $f_c$ は $f_a$ と $f_b$ の or 畳み込みになっている。
 
-- 集合 $S$ (`S`)
-- 二項演算 $\cdot\colon S \to S$ (`S op(S a, S b)`)
+### ライブラリ
 
-の組であって、
+#### subset_convolution
 
-- 結合則 $(a\cdot b) \cdot c = a\cdot (b\cdot c)$
+```cpp
+vc<R::S> subset_convolution(vc<R::S> a, vc<R::S> b)
+```
 
-を満たすもの。
+##### 制約
 
-データ構造に載せる目的だと、単位元を添加してモノイドにできる（上に、よく使うものはだいたい単位元がある）ので、あまり出番がなさそう。
+- `R` は環
+- $\lvert a \rvert = \lvert b \rvert$
+- $\lvert a \rvert$ は $0$ または $2$ べき
 
+##### 計算量
 
-#### モノイド (monoid)
+$\lvert a \rvert = 2^n$ として
 
-単位元を持つ半群。
-
-競技プログラマにはセグ木に載るでおなじみ（？）
-
-`S`, `S op(S a, S b)` に加えて `S e()` を持つ。
-
-演算が可換なものは可換モノイドと呼ばれる（実装上では変えていない）。
-
-
-#### 群 (group)
-
-逆元を持つモノイド。
-
-`S`, `S op(S a, S b)`, `S e()` に加えて `S inv(S a)` を持つ。
-
-演算が可換なものは可換群やアーベル群と呼ばれる（実装上では変えていない）。
-
-
-#### 作用つきモノイド
-
-競技プログラマには遅延セグ木に載るでおなじみ（？）
-
-遅延セグ木を整備した時に書く
-
-
-### 環に似た構造
-
-#### 半環 (semiring)
-
-気持ち：足し算と掛け算ができる
-
-競技プログラマには行列累乗に載るでおなじみ（？）
-
-- 集合 $S$ (`S`)
-- 和 $+$ (`S add(S a, S b)`)
-- 和の単位元 $0$ (`S e0()`)
-- 積 $\cdot$ (`S mul(S a, S b)`)
-- 積の単位元 $1$ (`S e1()`)
-
-の組であって、
-
-- $(S, +, 0)$ は可換モノイド
-  - $(a+b) + c = a+(b+c)$
-  - $0+a=a+0=a$
-  - $a+b=b+a$
-- $(S, \cdot, 1)$ はモノイド
-  - $(a\cdot b)\cdot c = a\cdot (b\cdot c)$
-  - $1\cdot a = a\cdot 1 = a$
-- 分配則
-  - $a\cdot (b+c) = (a\cdot b) + (a\cdot c)$
-  - $(a+b)\cdot c = (a\cdot c) + (b\cdot c)$
-- $0$ 倍
-  - $0\cdot a = a\cdot 0 = 0$
-
-を満たすもの。
-
-#### 環 (ring)
-
-気持ち：足し算と引き算と掛け算ができる
-
-加法逆元 $-a$ を持つ半環。
-
-`S`, `S add(S a, S b)`, `S e0()`, `S mul(S a, S b)`, `S e1()` に加えて、`S minus(S a)` も持つ。
-
-乗法が可換である環は可換環と呼ばれる（実装上では変えていない）。
-
-
-#### （可換）体 (field)
-
-気持ち：足し算と引き算と掛け算と割り算ができる
-
-乗法が可換で、乗法逆元 $a^{-1}$ を持つ環。
-
-`S`, `S add(S a, S b)`, `S e0()`, `S mul(S a, S b)`, `S e1()`, `S minus(S a)` に加えて、`S inv(S a)` も持つ。
-
-これ使うことある？
+- $O(n^2 2^n)$

@@ -44,6 +44,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/set/and_or_convolution.hpp
     title: "and/or \u7573\u307F\u8FBC\u307F"
+  - icon: ':warning:'
+    path: math/set/subset_convolution.hpp
+    title: subset convolution
+  - icon: ':warning:'
+    path: verify/yosupo/subset_convolution.cpp
+    title: verify/yosupo/subset_convolution.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/and_or_convolution.test.cpp
@@ -646,6 +652,8 @@ data:
   isVerificationFile: false
   path: math/set/zeta_mobius.hpp
   requiredBy:
+  - verify/yosupo/subset_convolution.cpp
+  - math/set/subset_convolution.hpp
   - math/set/and_or_convolution.hpp
   timestamp: '2025-03-13 01:57:54+09:00'
   verificationStatus: LIBRARY_ALL_AC

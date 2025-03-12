@@ -60,6 +60,9 @@ data:
   - icon: ':warning:'
     path: template/template.cpp
     title: template/template.cpp
+  - icon: ':warning:'
+    path: verify/yosupo/subset_convolution.cpp
+    title: verify/yosupo/subset_convolution.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/extgcd.test.cpp
@@ -638,6 +641,7 @@ data:
   isVerificationFile: false
   path: math/extgcd.hpp
   requiredBy:
+  - verify/yosupo/subset_convolution.cpp
   - math/prime/order_primitive_root.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
   - math/prime/euler_phi_carmichael.hpp
