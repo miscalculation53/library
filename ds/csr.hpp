@@ -29,7 +29,7 @@ private:
     inline iterator end() const { return endi; }
     template <class I = ll>
     inline I size() const { return endi - begi; }
-    inline bool empty() const { return size() > 0; }
+    inline bool empty() const { return size() == 0; }
 
     inline T get(int i) const
     {
