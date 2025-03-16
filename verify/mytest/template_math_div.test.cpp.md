@@ -1,16 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy: []
