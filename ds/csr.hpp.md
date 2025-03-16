@@ -529,8 +529,8 @@ data:
     \ : begi(begi), endi(endi) {}\n    inline iterator begin() const { return begi;\
     \ }\n    inline iterator end() const { return endi; }\n    template <class I =\
     \ ll>\n    inline I size() const { return endi - begi; }\n    inline bool empty()\
-    \ const { return size() > 0; }\n\n    inline T get(int i) const\n    {\n     \
-    \ assert(0 <= i && i < size());\n      return *(begi + i);\n    }\n    inline\
+    \ const { return size() == 0; }\n\n    inline T get(int i) const\n    {\n    \
+    \  assert(0 <= i && i < size());\n      return *(begi + i);\n    }\n    inline\
     \ T front() const\n    {\n      assert(!empty());\n      return *begi;\n    }\n\
     \    inline T back() const\n    {\n      assert(!empty());\n      return *prev(endi);\n\
     \    }\n  };\n\npublic:\n  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\
@@ -557,8 +557,8 @@ data:
     \ : begi(begi), endi(endi) {}\n    inline iterator begin() const { return begi;\
     \ }\n    inline iterator end() const { return endi; }\n    template <class I =\
     \ ll>\n    inline I size() const { return endi - begi; }\n    inline bool empty()\
-    \ const { return size() > 0; }\n\n    inline T get(int i) const\n    {\n     \
-    \ assert(0 <= i && i < size());\n      return *(begi + i);\n    }\n    inline\
+    \ const { return size() == 0; }\n\n    inline T get(int i) const\n    {\n    \
+    \  assert(0 <= i && i < size());\n      return *(begi + i);\n    }\n    inline\
     \ T front() const\n    {\n      assert(!empty());\n      return *begi;\n    }\n\
     \    inline T back() const\n    {\n      assert(!empty());\n      return *prev(endi);\n\
     \    }\n  };\n\npublic:\n  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\
@@ -592,7 +592,7 @@ data:
   requiredBy:
   - graph/graph.hpp
   - ds/group_index.hpp
-  timestamp: '2025-03-13 01:57:54+09:00'
+  timestamp: '2025-03-16 22:10:58+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/aoj/csr.test.cpp

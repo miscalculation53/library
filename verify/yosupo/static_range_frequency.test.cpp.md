@@ -553,7 +553,7 @@ data:
     \ const iterator &endi) : begi(begi), endi(endi) {}\n    inline iterator begin()\
     \ const { return begi; }\n    inline iterator end() const { return endi; }\n \
     \   template <class I = ll>\n    inline I size() const { return endi - begi; }\n\
-    \    inline bool empty() const { return size() > 0; }\n\n    inline T get(int\
+    \    inline bool empty() const { return size() == 0; }\n\n    inline T get(int\
     \ i) const\n    {\n      assert(0 <= i && i < size());\n      return *(begi +\
     \ i);\n    }\n    inline T front() const\n    {\n      assert(!empty());\n   \
     \   return *begi;\n    }\n    inline T back() const\n    {\n      assert(!empty());\n\
@@ -673,7 +673,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/static_range_frequency.test.cpp
   requiredBy: []
-  timestamp: '2025-03-13 01:57:54+09:00'
+  timestamp: '2025-03-16 22:10:58+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/static_range_frequency.test.cpp
