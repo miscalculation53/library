@@ -34,15 +34,18 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/quadratic_equation.test.cpp
+    title: verify/yukicoder/quadratic_equation.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/algo/merge_sort.md
-    document_title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
+    _deprecated_at_docs: docs/math/quadratic_equation_integer.md
+    document_title: "\u4E8C\u6B21\u65B9\u7A0B\u5F0F\u306E\u6574\u6570\u89E3"
     links: []
-  bundledCode: "#line 2 \"algo/merge_sort.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+  bundledCode: "#line 2 \"math/quadratic_equation_integer.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -510,18 +513,42 @@ data:
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 4 \"algo/merge_sort.hpp\"\n\n/**\n * @brief \u30DE\
-    \u30FC\u30B8\u30BD\u30FC\u30C8\n * @docs docs/algo/merge_sort.md\n */\n\ntemplate\
-    \ <class T, class Compare>\nvoid merge_sort(vc<T> &v, const Compare &comp)\n{\n\
-    \  const int n = v.size();\n  if (n <= 1)\n    return;\n  vc<T> l{v.begin(), v.begin()\
-    \ + n / 2};\n  vc<T> r{v.begin() + n / 2, v.end()};\n  merge_sort(l, comp);\n\
-    \  merge_sort(r, comp);\n  merge(ALL(l), ALL(r), v.begin(), comp);\n}\n"
+    \ vt;\n}\n// ----------\n#line 4 \"math/quadratic_equation_integer.hpp\"\n\n/**\n\
+    \ * @brief \u4E8C\u6B21\u65B9\u7A0B\u5F0F\u306E\u6574\u6570\u89E3\n * @docs docs/math/quadratic_equation_integer.md\n\
+    \ */\n\n// \u4E8C\u6B21\u65B9\u7A0B\u5F0F ax^2 + bx + c == 0 \u306E\u6574\u6570\
+    \u89E3\u3092\u6C42\u3081\u308B\n// first \u306B\u306F\u6574\u6570\u89E3\u306E\u500B\
+    \u6570\u304C\u5165\u308B\n// second \u306B\u306F\u89E3\u304C\u5165\u308B\uFF08\
+    \u306A\u3044\u3068\u3053\u308D\u306F\u672A\u5B9A\u7FA9\uFF09\n// T \u306F a, b,\
+    \ c \u304C\uFF08\u4F59\u88D5\u3092\u6301\u3063\u3066\uFF09\u53CE\u307E\u308B\u7BC4\
+    \u56F2\u306E\u578B\n// U \u306F T \u306E 2 \u4E57\u304C\u53CE\u307E\u308B\u7BC4\
+    \u56F2\u306E\u578B\ntemplate <class T = ll, class U = i128, class A, class B,\
+    \ class C>\npair<int, array<T, 2>> quadratic_equation_integer(A a, B b, C c)\n\
+    {\n  U D = U(b) * U(b) - U(4) * U(a) * U(c);\n  if (D < 0)\n    return {0, {}};\n\
+    \  if (D == 0)\n  {\n    if (-T(b) % (T(2) * T(a)) == 0)\n      return {1, {-T(b)\
+    \ / (T(2) * T(a)), 0}};\n    else\n      return {0, {}};\n  }\n  T sqrtD = iroot<U>(D,\
+    \ 2);\n  if (U(sqrtD) * U(sqrtD) != D)\n    return {0, {}};\n  int cnt = 0;\n\
+    \  array<T, 2> res{};\n  if ((-T(b) - sqrtD) % (T(2) * T(a)) == 0)\n    res[cnt++]\
+    \ = (-T(b) - sqrtD) / (T(2) * T(a));\n  if ((-T(b) + sqrtD) % (T(2) * T(a)) ==\
+    \ 0)\n    res[cnt++] = (-T(b) + sqrtD) / (T(2) * T(a));\n  return {cnt, res};\n\
+    }\n"
   code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u30DE\u30FC\u30B8\u30BD\u30FC\u30C8\n * @docs docs/algo/merge_sort.md\n */\n\
-    \ntemplate <class T, class Compare>\nvoid merge_sort(vc<T> &v, const Compare &comp)\n\
-    {\n  const int n = v.size();\n  if (n <= 1)\n    return;\n  vc<T> l{v.begin(),\
-    \ v.begin() + n / 2};\n  vc<T> r{v.begin() + n / 2, v.end()};\n  merge_sort(l,\
-    \ comp);\n  merge_sort(r, comp);\n  merge(ALL(l), ALL(r), v.begin(), comp);\n}"
+    \ \u4E8C\u6B21\u65B9\u7A0B\u5F0F\u306E\u6574\u6570\u89E3\n * @docs docs/math/quadratic_equation_integer.md\n\
+    \ */\n\n// \u4E8C\u6B21\u65B9\u7A0B\u5F0F ax^2 + bx + c == 0 \u306E\u6574\u6570\
+    \u89E3\u3092\u6C42\u3081\u308B\n// first \u306B\u306F\u6574\u6570\u89E3\u306E\u500B\
+    \u6570\u304C\u5165\u308B\n// second \u306B\u306F\u89E3\u304C\u5165\u308B\uFF08\
+    \u306A\u3044\u3068\u3053\u308D\u306F\u672A\u5B9A\u7FA9\uFF09\n// T \u306F a, b,\
+    \ c \u304C\uFF08\u4F59\u88D5\u3092\u6301\u3063\u3066\uFF09\u53CE\u307E\u308B\u7BC4\
+    \u56F2\u306E\u578B\n// U \u306F T \u306E 2 \u4E57\u304C\u53CE\u307E\u308B\u7BC4\
+    \u56F2\u306E\u578B\ntemplate <class T = ll, class U = i128, class A, class B,\
+    \ class C>\npair<int, array<T, 2>> quadratic_equation_integer(A a, B b, C c)\n\
+    {\n  U D = U(b) * U(b) - U(4) * U(a) * U(c);\n  if (D < 0)\n    return {0, {}};\n\
+    \  if (D == 0)\n  {\n    if (-T(b) % (T(2) * T(a)) == 0)\n      return {1, {-T(b)\
+    \ / (T(2) * T(a)), 0}};\n    else\n      return {0, {}};\n  }\n  T sqrtD = iroot<U>(D,\
+    \ 2);\n  if (U(sqrtD) * U(sqrtD) != D)\n    return {0, {}};\n  int cnt = 0;\n\
+    \  array<T, 2> res{};\n  if ((-T(b) - sqrtD) % (T(2) * T(a)) == 0)\n    res[cnt++]\
+    \ = (-T(b) - sqrtD) / (T(2) * T(a));\n  if ((-T(b) + sqrtD) % (T(2) * T(a)) ==\
+    \ 0)\n    res[cnt++] = (-T(b) + sqrtD) / (T(2) * T(a));\n  return {cnt, res};\n\
+    }"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -534,28 +561,34 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   isVerificationFile: false
-  path: algo/merge_sort.hpp
+  path: math/quadratic_equation_integer.hpp
   requiredBy: []
   timestamp: '2025-03-16 23:12:25+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
-documentation_of: algo/merge_sort.hpp
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - verify/yukicoder/quadratic_equation.test.cpp
+documentation_of: math/quadratic_equation_integer.hpp
 layout: document
 redirect_from:
-- /library/algo/merge_sort.hpp
-- /library/algo/merge_sort.hpp.html
-title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
+- /library/math/quadratic_equation_integer.hpp
+- /library/math/quadratic_equation_integer.hpp.html
+title: "\u4E8C\u6B21\u65B9\u7A0B\u5F0F\u306E\u6574\u6570\u89E3"
 ---
-## マージソート
-
-比較回数がたかだか $n\lceil\log_2 n \rceil$ 回のソート（インタラクティブで役立つ）。
-
-正確な比較回数はたぶんこれ？ https://oeis.org/A003071
-
-`std::stable_sort` を使うというテクがあるが小さいときにマージソートじゃないとかで比較回数が多くなることがあるらしい（？）（よくわかってない）
-
-#### merge_sort
+## 二次方程式の整数解
 
 ```cpp
-void merge_sort(vc<T> v)
+pair<int, array<T, 2>> quadratic_equation_integer<T=ll, U=i128>(T a, T b, T c)
 ```
+
+二次方程式 $ax^2 + bx + c$ の整数解をすべて求める。
+
+first には整数解の個数を、second には整数解を格納する。second のうち整数解の個数を超えた部分は未定義。
+
+##### 制約
+
+- $a, b, c$ は余裕を持って `T` に収まる
+- `U` は `T` の $2$ 乗が収まる
+
+##### 計算量
+
+- `iroot(k=2)` がボトルネック

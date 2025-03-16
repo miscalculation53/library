@@ -4,36 +4,36 @@ data:
   - icon: ':heavy_check_mark:'
     path: ds/csr.hpp
     title: CSR
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -110,15 +110,17 @@ data:
     \ 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n      return m;\n\
     \    tmp *= tmp;\n  }\n  return res;\n}\n\ntemplate <class T = ll, class A, class\
     \ K>\nconstexpr T iroot(A a, K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <=\
-    \ 1 || k == 1)\n    return a;\n  if (k == 2 && make_unsigned_t<A>(a) <= ULLONG_MAX)\n\
-    \    return sqrtl(a);\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n\
-    \      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n      if\
-    \ (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n  \
-    \      res *= x;\n      }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n\
-    \      if (x > T(a) / x)\n        return false;\n      x *= x;\n    }\n    return\
-    \ res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n\
-    \    up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max()\
-    \ && isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    \ 1 || k == 1)\n    return a;\n  if (k == 2)\n  {\n    if constexpr (sizeof(T)\
+    \ > sizeof(ull))\n    {\n      if ((u128)a < ((u128)1 << 120))\n        return\
+    \ sqrtl(a);\n    }\n    else\n      return sqrtl(a);\n  }\n\n  auto isok = [&](T\
+    \ x) -> bool\n  {\n    if (x == 0)\n      return true;\n    T res = 1, k2 = k;\n\
+    \    while (true)\n    {\n      if (k2 & 1)\n      {\n        if (res > T(a) /\
+    \ x)\n          return false;\n        res *= x;\n      }\n      k2 >>= 1;\n \
+    \     if (k2 == 0)\n        break;\n      if (x > T(a) / x)\n        return false;\n\
+    \      x *= x;\n    }\n    return res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n\
+    \  bool up = true;\n  while (!isok(x))\n    up = false, x--;\n  if (up)\n  {\n\
+    \    while (x < numeric_limits<T>::max() && isok(x + 1))\n      x++;\n  }\n  return\
+    \ x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS), class A>\nint SGN(A a, const D &eps = EPS)\
     \ { return int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\
     \u6CD5\u3068\u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\
@@ -602,7 +604,7 @@ data:
   isVerificationFile: false
   path: graph/graph.hpp
   requiredBy: []
-  timestamp: '2025-03-16 22:10:58+09:00'
+  timestamp: '2025-03-16 23:12:25+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: graph/graph.hpp
