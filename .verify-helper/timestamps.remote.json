@@ -41,5 +41,6 @@
 "verify/yukicoder/order_mod_euler_phi.test.cpp": "2025-03-16 23:12:25 +0900",
 "verify/yukicoder/quadratic_equation.test.cpp": "2025-03-16 23:12:25 +0900",
 "verify/yukicoder/static_modint.test.cpp": "2025-03-16 23:12:25 +0900",
-"verify/yukicoder/zeta_mobius_divisor_large.test.cpp": "2025-03-16 23:12:25 +0900"
+"verify/yukicoder/zeta_mobius_divisor_large.test.cpp": "2025-03-16 23:12:25 +0900",
+"verify/yukicoder/zeta_mobius_multiple_large.test.cpp": "2025-03-16 23:12:25 +0900"
 }
