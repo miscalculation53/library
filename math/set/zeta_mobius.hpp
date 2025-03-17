@@ -18,16 +18,10 @@ void zeta_subset_destructive(vc<typename M::S> &a)
   if (a.empty())
     return;
   assert(has_single_bit(a.size()));
-  const int n = countr_zero(a.size());
-  repi(i, n) repi(s, 1 << n)
-  {
-    if (!btest(s, i))
-    {
-      int t = s;
-      bset(t, i);
-      a[t] = M::op(a[t], a[s]);
-    }
-  }
+  const int n = a.size();
+  for (int w = 1; w < n; w <<= 1)
+    repi(k, 0, n, w * 2) repi(i, w)
+      a[k + w + i] = M::op(a[k + w + i], a[k + i]);
 }
 // μ は ζ の逆変換
 // μa[s] = Σ{t ⊆ s} (-1)^{|s\t|} a[t]
@@ -40,16 +34,10 @@ void mobius_subset_destructive(vc<typename G::S> &a)
   if (a.empty())
     return;
   assert(has_single_bit(a.size()));
-  const int n = countr_zero(a.size());
-  repi(i, n) repi(s, 1 << n)
-  {
-    if (!btest(s, i))
-    {
-      int t = s;
-      bset(t, i);
-      a[t] = G::op(a[t], G::inv(a[s]));
-    }
-  }
+  const int n = a.size();
+  for (int w = n >> 1; w; w >>= 1)
+    repi(k, 0, n, w * 2) repi(i, w)
+      a[k + w + i] = G::op(a[k + w + i], G::inv(a[k + i]));
 }
 
 // ζ'a[s] = Σ{s ⊆ t} a[t]
@@ -62,16 +50,10 @@ void zeta_supset_destructive(vc<typename M::S> &a)
   if (a.empty())
     return;
   assert(has_single_bit(a.size()));
-  const int n = countr_zero(a.size());
-  repi(i, n) repi(s, 1 << n)
-  {
-    if (!btest(s, i))
-    {
-      int t = s;
-      bset(t, i);
-      a[s] = M::op(a[s], a[t]);
-    }
-  }
+  const int n = a.size();
+  for (int w = 1; w < n; w <<= 1)
+    repi(k, 0, n, w * 2) repi(i, w)
+      a[k + i] = M::op(a[k + i], a[k + w + i]);
 }
 // μ' は ζ' の逆変換
 // μ'a[s] = Σ{s ⊆ t} (-1)^{|t\s|} a[t]
@@ -84,16 +66,10 @@ void mobius_supset_destructive(vc<typename G::S> &a)
   if (a.empty())
     return;
   assert(has_single_bit(a.size()));
-  const int n = countr_zero(a.size());
-  repi(i, n) repi(s, 1 << n)
-  {
-    if (!btest(s, i))
-    {
-      int t = s;
-      bset(t, i);
-      a[s] = G::op(a[s], G::inv(a[t]));
-    }
-  }
+  const int n = a.size();
+  for (int w = n >> 1; w; w >>= 1)
+    repi(k, 0, n, w * 2) repi(i, w)
+      a[k + i] = G::op(a[k + i], G::inv(a[k + w + i]));
 }
 
 // ζa[s] = Σ{t ⊆ s} a[t]
