@@ -23,7 +23,7 @@ void main2()
 {
   LL(N);
   VEC(mint, 1 << N, A, B);
-  auto C = subset_convolution<RingAddSubMul<mint>, 20>(A, B);
+  auto C = subset_convolution<RingAddSubMul<mint>>(A, B);
   PRINT(C);
 }
 
