@@ -582,34 +582,33 @@ data:
     \u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001\
     O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
     \ <class M>\nvoid zeta_subset_destructive(vc<typename M::S> &a)\n{\n  if (a.empty())\n\
-    \    return;\n  assert(has_single_bit(a.size()));\n  const int n = countr_zero(a.size());\n\
-    \  repi(i, n) repi(s, 1 << n)\n  {\n    if (!btest(s, i))\n    {\n      int t\
-    \ = s;\n      bset(t, i);\n      a[t] = M::op(a[t], a[s]);\n    }\n  }\n}\n//\
-    \ \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286\
-    \ s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n\
-    // |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\
-    \u5909\u66F4\u3092\u884C\u3046\ntemplate <class G>\nvoid mobius_subset_destructive(vc<typename\
-    \ G::S> &a)\n{\n  if (a.empty())\n    return;\n  assert(has_single_bit(a.size()));\n\
-    \  const int n = countr_zero(a.size());\n  repi(i, n) repi(s, 1 << n)\n  {\n \
-    \   if (!btest(s, i))\n    {\n      int t = s;\n      bset(t, i);\n      a[t]\
-    \ = G::op(a[t], G::inv(a[s]));\n    }\n  }\n}\n\n// \u03B6'a[s] = \u03A3{s \u2286\
-    \ t} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068\
-    \ +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n// \u7834\u58CA\
-    \u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate <class M>\nvoid zeta_supset_destructive(vc<typename\
-    \ M::S> &a)\n{\n  if (a.empty())\n    return;\n  assert(has_single_bit(a.size()));\n\
-    \  const int n = countr_zero(a.size());\n  repi(i, n) repi(s, 1 << n)\n  {\n \
-    \   if (!btest(s, i))\n    {\n      int t = s;\n      bset(t, i);\n      a[s]\
-    \ = M::op(a[s], a[t]);\n    }\n  }\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\
-    \u63DB\n// \u03BC'a[s] = \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n// G \u306F\u53EF\
-    \u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n\
-    \ 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
-    \ <class G>\nvoid mobius_supset_destructive(vc<typename G::S> &a)\n{\n  if (a.empty())\n\
-    \    return;\n  assert(has_single_bit(a.size()));\n  const int n = countr_zero(a.size());\n\
-    \  repi(i, n) repi(s, 1 << n)\n  {\n    if (!btest(s, i))\n    {\n      int t\
-    \ = s;\n      bset(t, i);\n      a[s] = G::op(a[s], G::inv(a[t]));\n    }\n  }\n\
-    }\n\n// \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\
+    \    return;\n  assert(has_single_bit(a.size()));\n  const int n = a.size();\n\
+    \  for (int w = 1; w < n; w <<= 1)\n    repi(k, 0, n, w * 2) repi(i, w)\n    \
+    \  a[k + w + i] = M::op(a[k + w + i], a[k + i]);\n}\n// \u03BC \u306F \u03B6 \u306E\
+    \u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286 s} (-1)^{|s\\t|} a[t]\n//\
+    \ G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
+    \u5B9A\u3001O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\
+    \u3046\ntemplate <class G>\nvoid mobius_subset_destructive(vc<typename G::S> &a)\n\
+    {\n  if (a.empty())\n    return;\n  assert(has_single_bit(a.size()));\n  const\
+    \ int n = a.size();\n  for (int w = n >> 1; w; w >>= 1)\n    repi(k, 0, n, w *\
+    \ 2) repi(i, w)\n      a[k + w + i] = G::op(a[k + w + i], G::inv(a[k + i]));\n\
+    }\n\n// \u03B6'a[s] = \u03A3{s \u2286 t} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\
     \u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n\
-    \ 2^n) \u6642\u9593\ntemplate <class M>\nvc<typename M::S> zeta_subset(const vc<typename\
+    \ 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
+    \ <class M>\nvoid zeta_supset_destructive(vc<typename M::S> &a)\n{\n  if (a.empty())\n\
+    \    return;\n  assert(has_single_bit(a.size()));\n  const int n = a.size();\n\
+    \  for (int w = 1; w < n; w <<= 1)\n    repi(k, 0, n, w * 2) repi(i, w)\n    \
+    \  a[k + i] = M::op(a[k + i], a[k + w + i]);\n}\n// \u03BC' \u306F \u03B6' \u306E\
+    \u9006\u5909\u63DB\n// \u03BC'a[s] = \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n//\
+    \ G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
+    \u5B9A\u3001O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\
+    \u3046\ntemplate <class G>\nvoid mobius_supset_destructive(vc<typename G::S> &a)\n\
+    {\n  if (a.empty())\n    return;\n  assert(has_single_bit(a.size()));\n  const\
+    \ int n = a.size();\n  for (int w = n >> 1; w; w >>= 1)\n    repi(k, 0, n, w *\
+    \ 2) repi(i, w)\n      a[k + i] = G::op(a[k + i], G::inv(a[k + w + i]));\n}\n\n\
+    // \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\
+    \u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n)\
+    \ \u6642\u9593\ntemplate <class M>\nvc<typename M::S> zeta_subset(const vc<typename\
     \ M::S> &a)\n{\n  auto b = a;\n  zeta_subset_destructive(b);\n  return b;\n}\n\
     // \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286\
     \ s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n\
@@ -713,7 +712,7 @@ data:
   path: math/set/subset_convolution.hpp
   requiredBy:
   - verify/yosupo/subset_convolution.cpp
-  timestamp: '2025-03-16 23:12:25+09:00'
+  timestamp: '2025-03-17 13:49:33+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: math/set/subset_convolution.hpp
