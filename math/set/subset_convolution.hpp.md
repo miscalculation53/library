@@ -8,15 +8,6 @@ data:
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':warning:'
-    path: math/algebra/polynomial_ring.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/set/and_or_convolution.hpp
-    title: "and/or \u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
-    path: math/set/zeta_mobius.hpp
-    title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
   - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
@@ -529,9 +520,8 @@ data:
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 2 \"math/set/and_or_convolution.hpp\"\n\n#line\
-    \ 2 \"math/set/zeta_mobius.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
-    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
+    \ vt;\n}\n// ----------\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n#line\
+    \ 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
     \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
     \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
     \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
@@ -576,122 +566,53 @@ data:
     \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
     \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
     \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
-    \ 1; }\n};\n#line 5 \"math/set/zeta_mobius.hpp\"\n\n/**\n * @brief \u30BC\u30FC\
-    \u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB\n * @docs docs/math/set/zeta_mobius.md\n\
-    \ */\n\n// \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\
-    \u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001\
-    O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
-    \ <class M>\nvoid zeta_subset_destructive(vc<typename M::S> &a)\n{\n  if (a.empty())\n\
-    \    return;\n  assert(has_single_bit(a.size()));\n  const int n = a.size();\n\
-    \  for (int w = 1; w < n; w <<= 1)\n    repi(k, 0, n, w * 2) repi(i, w)\n    \
-    \  a[k + w + i] = M::op(a[k + w + i], a[k + i]);\n}\n// \u03BC \u306F \u03B6 \u306E\
-    \u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286 s} (-1)^{|s\\t|} a[t]\n//\
-    \ G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
-    \u5B9A\u3001O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\
-    \u3046\ntemplate <class G>\nvoid mobius_subset_destructive(vc<typename G::S> &a)\n\
-    {\n  if (a.empty())\n    return;\n  assert(has_single_bit(a.size()));\n  const\
-    \ int n = a.size();\n  for (int w = n >> 1; w; w >>= 1)\n    repi(k, 0, n, w *\
-    \ 2) repi(i, w)\n      a[k + w + i] = G::op(a[k + w + i], G::inv(a[k + i]));\n\
-    }\n\n// \u03B6'a[s] = \u03A3{s \u2286 t} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\
-    \u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n\
-    \ 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
-    \ <class M>\nvoid zeta_supset_destructive(vc<typename M::S> &a)\n{\n  if (a.empty())\n\
-    \    return;\n  assert(has_single_bit(a.size()));\n  const int n = a.size();\n\
-    \  for (int w = 1; w < n; w <<= 1)\n    repi(k, 0, n, w * 2) repi(i, w)\n    \
-    \  a[k + i] = M::op(a[k + i], a[k + w + i]);\n}\n// \u03BC' \u306F \u03B6' \u306E\
-    \u9006\u5909\u63DB\n// \u03BC'a[s] = \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n//\
-    \ G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
-    \u5B9A\u3001O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\
-    \u3046\ntemplate <class G>\nvoid mobius_supset_destructive(vc<typename G::S> &a)\n\
-    {\n  if (a.empty())\n    return;\n  assert(has_single_bit(a.size()));\n  const\
-    \ int n = a.size();\n  for (int w = n >> 1; w; w >>= 1)\n    repi(k, 0, n, w *\
-    \ 2) repi(i, w)\n      a[k + i] = G::op(a[k + i], G::inv(a[k + w + i]));\n}\n\n\
-    // \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\
-    \u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n)\
-    \ \u6642\u9593\ntemplate <class M>\nvc<typename M::S> zeta_subset(const vc<typename\
-    \ M::S> &a)\n{\n  auto b = a;\n  zeta_subset_destructive(b);\n  return b;\n}\n\
-    // \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286\
-    \ s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n\
-    // |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class G>\n\
-    vc<typename G::S> mobius_subset(const vc<typename G::S> &a)\n{\n  auto b = a;\n\
-    \  mobius_subset_destructive(b);\n  return b;\n}\n\n// \u03B6'a[s] = \u03A3{s\
-    \ \u2286 t} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\
-    \u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate\
-    \ <class M>\nvc<typename M::S> zeta_supset(const vc<typename M::S> &a)\n{\n  auto\
-    \ b = a;\n  zeta_supset_destructive(b);\n  return b;\n}\n// \u03BC' \u306F \u03B6\
-    ' \u306E\u9006\u5909\u63DB\n// \u03BC'a[s] = \u03A3{s \u2286 t} (-1)^{|t\\s|}\
-    \ a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\
-    \u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class G>\nvc<typename G::S>\
-    \ mobius_supset(const vc<typename G::S> &a)\n{\n  auto b = a;\n  mobius_supset_destructive(b);\n\
-    \  return b;\n}\n#line 5 \"math/set/and_or_convolution.hpp\"\n\n/**\n * @brief\
-    \ and/or \u7573\u307F\u8FBC\u307F\n * @docs docs/math/set/and_or_convolution.md\n\
-    \ */\n\n// R \u306F\u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n)\
-    \ \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046: a \u306B\u7D50\
-    \u679C (and conv) \u304C\u3001b \u306B\u306F zeta_supset \u304C\u5165\u308B\n\
-    template <class R>\nvoid and_convolution_destructive\n(vc<typename R::S> &a, vc<typename\
-    \ R::S> &b)\n{\n  assert(a.size() == b.size());\n  zeta_supset_destructive<MonoidOfSemiRingAdd<R>>(a);\n\
-    \  zeta_supset_destructive<MonoidOfSemiRingAdd<R>>(b);\n  repi(i, a.size()) a[i]\
-    \ = R::mul(a[i], b[i]);\n  mobius_supset_destructive<GroupOfRingAdd<R>>(a);\n\
-    }\n// R \u306F\u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\
-    \u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046: a \u306B\u7D50\u679C\
-    \ (or conv) \u304C\u3001b \u306B\u306F zeta_subset \u304C\u5165\u308B\ntemplate\
-    \ <class R>\nvoid or_convolution_destructive\n(vc<typename R::S> &a, vc<typename\
-    \ R::S> &b)\n{\n  assert(a.size() == b.size());\n  zeta_subset_destructive<MonoidOfSemiRingAdd<R>>(a);\n\
-    \  zeta_subset_destructive<MonoidOfSemiRingAdd<R>>(b);\n  repi(i, a.size()) a[i]\
-    \ = R::mul(a[i], b[i]);\n  mobius_subset_destructive<GroupOfRingAdd<R>>(a);\n\
-    }\n\n// R \u306F\u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\
-    \u9593\ntemplate <class R>\nvc<typename R::S> and_convolution\n(const vc<typename\
-    \ R::S> &a, const vc<typename R::S> &b)\n{\n  auto a_ = a, b_ = b;\n  and_convolution_destructive<R>(a_,\
-    \ b_);\n  return a_;\n}\n// R \u306F\u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\
-    \u3001O(n 2^n) \u6642\u9593\ntemplate <class R>\nvc<typename R::S> or_convolution\n\
-    (const vc<typename R::S> &a, const vc<typename R::S> &b)\n{\n  auto a_ = a, b_\
-    \ = b;\n  or_convolution_destructive<R>(a_, b_);\n  return a_;\n}\n#line 2 \"\
-    math/algebra/polynomial_ring.hpp\"\n\n#line 5 \"math/algebra/polynomial_ring.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\
-    \uFF09\n * @docs docs/math/algebra/polynomial_ring.md\n */\n\n// \u30B5\u30A4\u30BA\
-    \ n (\u3064\u307E\u308A n-1 \u6B21) \u3067\u6253\u3061\u5207\u308B\ntemplate <class\
-    \ R, int n>\nstruct PolynomialRingArray\n{\n  using S = array<typename R::S, n>;\n\
-    \  static constexpr S add(const S &a, const S &b)\n  {\n    S c;\n    repi(i,\
-    \ n) c[i] = R::add(a[i], b[i]);\n    return c;\n  }\n  static constexpr S e0()\n\
-    \  {\n    S a;\n    fill(ALL(a), R::e0());\n    return a;\n  }\n  static constexpr\
-    \ S minus(const S &a)\n  {\n    S b;\n    repi(i, n) b[i] = R::minus(a[i]);\n\
-    \    return b;\n  }\n  static constexpr S mul(const S &a, const S &b)\n  {\n \
-    \   S c;\n    fill(ALL(c), R::e0());\n    repi(i, n) repi(j, n - i) c[i + j] =\
-    \ R::add(c[i + j], R::mul(a[i], b[j]));\n    return c;\n  }\n  static constexpr\
-    \ S e1()\n  {\n    S a;\n    fill(ALL(a), R::e0());\n    if constexpr (n >= 1)\n\
-    \      a[0] = R::e1();\n    return a;\n  }\n};\n\n// \u6253\u3061\u5207\u3089\u306A\
-    \u3044 (\u639B\u3051\u7B97\u3082)\ntemplate <class R>\nstruct PolynomialRingVector\n\
-    {\n  using S = vc<typename R::S>;\n  static constexpr S add(const S &a, const\
-    \ S &b)\n  {\n    S c(max(a.size(), b.size()), R::e0());\n    repi(i, a.size())\
-    \ c[i] = R::add(c[i], a[i]);\n    repi(i, b.size()) c[i] = R::add(c[i], b[i]);\n\
-    \    return c;\n  }\n  static constexpr S e0() { return {}; }\n  static constexpr\
-    \ S minus(const S &a)\n  {\n    S b(a.size());\n    repi(i, a.size()) b[i] = R::minus(a[i]);\n\
-    \    return b;\n  }\n  static constexpr S mul(const S &a, const S &b)\n  {\n \
-    \   const int n = a.size(), m = b.size();\n    S c(n + m - 1, R::e0());\n    repi(i,\
-    \ n) repi(j, m) c[i + j] = R::add(c[i + j], R::mul(a[i], b[j]));\n    return c;\n\
-    \  }\n  static constexpr S e1() { return {R::e1()}; }\n};\n#line 6 \"math/set/subset_convolution.hpp\"\
-    \n\n/**\n * @brief subset convolution\n * @docs docs/math/set/subset_convolution.md\n\
-    \ */\n\n// R \u306F\u74B0\n// |a| = |b| = 2^k <= 2^n \u3092\u4EEE\u5B9A\u3001\
-    O(k^2 2^k) \u6642\u9593\ntemplate <class R, int n>\nvc<typename R::S> subset_convolution\n\
-    (const vc<typename R::S> &a, const vc<typename R::S> &b)\n{\n  using P = PolynomialRingArray<R,\
-    \ n + 1>;\n  assert(a.size() == b.size());\n  const int m = a.size();\n  assert(m\
-    \ <= (1 << n));\n  vc<typename P::S> fa(m), fb(m);\n  repi(i, m)\n  {\n    const\
-    \ int j = popcount(i);\n    fill(ALL(fa[i]), R::e0()), fill(ALL(fb[i]), R::e0());\n\
-    \    fa[i][j] = a[i], fb[i][j] = b[i];\n  }\n  or_convolution_destructive<P>(fa,\
-    \ fb);\n  vc<typename R::S> c(m);\n  repi(i, m) c[i] = fa[i][popcount(i)];\n \
-    \ return c;\n}\n"
+    \ 1; }\n};\n#line 5 \"math/set/subset_convolution.hpp\"\n// #include \"and_or_convolution.hpp\"\
+    \n// #include \"../../math/algebra/polynomial_ring.hpp\"\n\n/**\n * @brief subset\
+    \ convolution\n * @docs docs/math/set/subset_convolution.md\n */\n\n// R \u306F\
+    \u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n^2 2^n) \u6642\u9593\ntemplate\
+    \ <class R>\nvc<typename R::S> subset_convolution\n(const vc<typename R::S> &a,\
+    \ const vc<typename R::S> &b)\n{\n  // using P = PolynomialRingArray<R, 30>;\n\
+    \  using F = array<typename R::S, 30>;\n  assert(a.size() == b.size());\n  const\
+    \ int len = a.size();\n  if (len == 0)\n    return {};\n  assert(has_single_bit(len));\n\
+    \  const int lg = countr_zero(len);\n  static vc<int> pc{0};\n  if (int i = pc.size();\
+    \ i <= len)\n  {\n    pc.resize(len);\n    for (; i < len; i++)\n      pc[i] =\
+    \ pc[i - (i & -i)] + 1;\n  }\n  vc<F> fa(len), fb(len);\n  repi(i, len)\n  {\n\
+    \    fill(ALL(fa[i]), R::e0()), fill(ALL(fb[i]), R::e0());\n    fa[i][pc[i]] =\
+    \ a[i], fb[i][pc[i]] = b[i];\n  }\n  // or_convolution_destructive<P>(fa, fb);\n\
+    \  auto zeta = [&](vc<F> &f) -> void\n  {\n    for (int w = 1; w < len; w <<=\
+    \ 1)\n    {\n      repi(k, 0, len, w * 2) repi(i, w)\n      {\n        int s =\
+    \ k + i, t = s + w;\n        repi(j, pc[t]) f[t][j] = R::add(f[t][j], f[s][j]);\n\
+    \      }\n    }\n  };\n  zeta(fa), zeta(fb);\n  repi(s, len)\n  {\n    F fc;\n\
+    \    fill(ALL(fc), R::e0());\n    repi(i, lg + 1) repi(j, lg + 1 - i) fc[i + j]\
+    \ = R::add(fc[i + j], R::mul(fa[s][i], fb[s][j]));\n    swap(fa[s], fc);\n  }\n\
+    \  for (int w = len >> 1; w; w >>= 1)\n  {\n    repi(k, 0, len, w * 2) repi(i,\
+    \ w)\n    {\n      int s = k + i, t = s + w;\n      repi(j, pc[t], lg + 1) fa[t][j]\
+    \ = R::add(fa[t][j], R::minus(fa[s][j]));\n    }\n  }\n  vc<typename R::S> c(len);\n\
+    \  repi(i, len) c[i] = fa[i][pc[i]];\n  return c;\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
-    and_or_convolution.hpp\"\n#include \"../../math/algebra/polynomial_ring.hpp\"\n\
-    \n/**\n * @brief subset convolution\n * @docs docs/math/set/subset_convolution.md\n\
-    \ */\n\n// R \u306F\u74B0\n// |a| = |b| = 2^k <= 2^n \u3092\u4EEE\u5B9A\u3001\
-    O(k^2 2^k) \u6642\u9593\ntemplate <class R, int n>\nvc<typename R::S> subset_convolution\n\
-    (const vc<typename R::S> &a, const vc<typename R::S> &b)\n{\n  using P = PolynomialRingArray<R,\
-    \ n + 1>;\n  assert(a.size() == b.size());\n  const int m = a.size();\n  assert(m\
-    \ <= (1 << n));\n  vc<typename P::S> fa(m), fb(m);\n  repi(i, m)\n  {\n    const\
-    \ int j = popcount(i);\n    fill(ALL(fa[i]), R::e0()), fill(ALL(fb[i]), R::e0());\n\
-    \    fa[i][j] = a[i], fb[i][j] = b[i];\n  }\n  or_convolution_destructive<P>(fa,\
-    \ fb);\n  vc<typename R::S> c(m);\n  repi(i, m) c[i] = fa[i][popcount(i)];\n \
-    \ return c;\n}"
+    ../../math/algebra/algebra_basic_ops.hpp\"\n// #include \"and_or_convolution.hpp\"\
+    \n// #include \"../../math/algebra/polynomial_ring.hpp\"\n\n/**\n * @brief subset\
+    \ convolution\n * @docs docs/math/set/subset_convolution.md\n */\n\n// R \u306F\
+    \u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n^2 2^n) \u6642\u9593\ntemplate\
+    \ <class R>\nvc<typename R::S> subset_convolution\n(const vc<typename R::S> &a,\
+    \ const vc<typename R::S> &b)\n{\n  // using P = PolynomialRingArray<R, 30>;\n\
+    \  using F = array<typename R::S, 30>;\n  assert(a.size() == b.size());\n  const\
+    \ int len = a.size();\n  if (len == 0)\n    return {};\n  assert(has_single_bit(len));\n\
+    \  const int lg = countr_zero(len);\n  static vc<int> pc{0};\n  if (int i = pc.size();\
+    \ i <= len)\n  {\n    pc.resize(len);\n    for (; i < len; i++)\n      pc[i] =\
+    \ pc[i - (i & -i)] + 1;\n  }\n  vc<F> fa(len), fb(len);\n  repi(i, len)\n  {\n\
+    \    fill(ALL(fa[i]), R::e0()), fill(ALL(fb[i]), R::e0());\n    fa[i][pc[i]] =\
+    \ a[i], fb[i][pc[i]] = b[i];\n  }\n  // or_convolution_destructive<P>(fa, fb);\n\
+    \  auto zeta = [&](vc<F> &f) -> void\n  {\n    for (int w = 1; w < len; w <<=\
+    \ 1)\n    {\n      repi(k, 0, len, w * 2) repi(i, w)\n      {\n        int s =\
+    \ k + i, t = s + w;\n        repi(j, pc[t]) f[t][j] = R::add(f[t][j], f[s][j]);\n\
+    \      }\n    }\n  };\n  zeta(fa), zeta(fb);\n  repi(s, len)\n  {\n    F fc;\n\
+    \    fill(ALL(fc), R::e0());\n    repi(i, lg + 1) repi(j, lg + 1 - i) fc[i + j]\
+    \ = R::add(fc[i + j], R::mul(fa[s][i], fb[s][j]));\n    swap(fa[s], fc);\n  }\n\
+    \  for (int w = len >> 1; w; w >>= 1)\n  {\n    repi(k, 0, len, w * 2) repi(i,\
+    \ w)\n    {\n      int s = k + i, t = s + w;\n      repi(j, pc[t], lg + 1) fa[t][j]\
+    \ = R::add(fa[t][j], R::minus(fa[s][j]));\n    }\n  }\n  vc<typename R::S> c(len);\n\
+    \  repi(i, len) c[i] = fa[i][pc[i]];\n  return c;\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -703,16 +624,13 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
-  - math/set/and_or_convolution.hpp
-  - math/set/zeta_mobius.hpp
   - math/algebra/algebra_basic_ops.hpp
   - math/algebra/algebra_base.hpp
-  - math/algebra/polynomial_ring.hpp
   isVerificationFile: false
   path: math/set/subset_convolution.hpp
   requiredBy:
   - verify/yosupo/subset_convolution.cpp
-  timestamp: '2025-03-17 13:49:33+09:00'
+  timestamp: '2025-03-17 17:47:50+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: math/set/subset_convolution.hpp
@@ -740,7 +658,7 @@ $\displaystyle c(u) = \sum_{\substack{u = s \cup t \\\\  \lvert u \rvert = \lver
 
 と解釈して、or 畳み込みに多項式環を載せる。
 
-$f_a(s)(x) = a(s) x^{\lvert s \rvert}$（$f_b, f_c$ も同様）とすると $f_c$ は $f_a$ と $f_b$ の or 畳み込みになっている。
+$f(s) = a(s) x^{\lvert s \rvert}, g(t) = b(t) x^{\lvert t \rvert}$ として $f$ と $g$ の or 畳み込み $h$ を計算すると、$[x^{\lvert u \rvert}] h(u) = c(u)$ となっている。
 
 ### ライブラリ
 

@@ -16,7 +16,7 @@ $\displaystyle c(u) = \sum_{\substack{u = s \cup t \\\\  \lvert u \rvert = \lver
 
 と解釈して、or 畳み込みに多項式環を載せる。
 
-$f_a(s)(x) = a(s) x^{\lvert s \rvert}$（$f_b, f_c$ も同様）とすると $f_c$ は $f_a$ と $f_b$ の or 畳み込みになっている。
+$f(s) = a(s) x^{\lvert s \rvert}, g(t) = b(t) x^{\lvert t \rvert}$ として $f$ と $g$ の or 畳み込み $h$ を計算すると、$[x^{\lvert u \rvert}] h(u) = c(u)$ となっている。
 
 ### ライブラリ
 

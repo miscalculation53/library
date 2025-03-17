@@ -36,13 +36,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':warning:'
-    path: math/set/subset_convolution.hpp
-    title: subset convolution
-  - icon: ':warning:'
-    path: verify/yosupo/subset_convolution.cpp
-    title: verify/yosupo/subset_convolution.cpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: hpp
@@ -599,9 +593,7 @@ data:
   - math/algebra/algebra_base.hpp
   isVerificationFile: false
   path: math/algebra/polynomial_ring.hpp
-  requiredBy:
-  - verify/yosupo/subset_convolution.cpp
-  - math/set/subset_convolution.hpp
+  requiredBy: []
   timestamp: '2025-03-16 23:12:25+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
