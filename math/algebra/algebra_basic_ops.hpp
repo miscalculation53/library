@@ -83,3 +83,28 @@ struct RingAddSubMul
   static constexpr S mul(S a, S b) { return a * b; }
   static constexpr S e1() { return 1; }
 };
+
+template <class T>
+struct FieldAddSubMulDiv
+{
+  using S = T;
+  static constexpr S add(S a, S b) { return a + b; }
+  static constexpr S minus(S a) { return -a; }
+  static constexpr S e0() { return 0; }
+  static constexpr S mul(S a, S b) { return a * b; }
+  static constexpr S e1() { return 1; }
+  static constexpr S inv(S a) { return 1 / a; }
+};
+
+template <class M>
+typename M::S pow_monoid(typename M::S a, ll k)
+{
+  typename M::S c = M::e();
+  for (; k; k >>= 1)
+  {
+    if (k & 1)
+      c = M::op(c, a);
+    a = M::op(a, a);
+  }
+  return c;
+}

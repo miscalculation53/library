@@ -15,13 +15,13 @@
 template <class M>
 void zeta_subset_destructive(vc<typename M::S> &a)
 {
-  if (a.empty())
+  const int len = a.size();
+  if (len == 0)
     return;
-  assert(has_single_bit(a.size()));
-  const int n = a.size();
-  for (int w = 1; w < n; w <<= 1)
-    repi(k, 0, n, w * 2) repi(i, w)
-      a[k + w + i] = M::op(a[k + w + i], a[k + i]);
+  assert(has_single_bit(len));
+  for (int d = 1; d < len; d *= 2)
+    repi(iu, 0, len, d * 2) repi(i, iu, iu + d)
+      a[i + d] = M::op(a[i + d], a[i]);
 }
 // μ は ζ の逆変換
 // μa[s] = Σ{t ⊆ s} (-1)^{|s\t|} a[t]
@@ -31,13 +31,13 @@ void zeta_subset_destructive(vc<typename M::S> &a)
 template <class G>
 void mobius_subset_destructive(vc<typename G::S> &a)
 {
-  if (a.empty())
+  const int len = a.size();
+  if (len == 0)
     return;
-  assert(has_single_bit(a.size()));
-  const int n = a.size();
-  for (int w = n >> 1; w; w >>= 1)
-    repi(k, 0, n, w * 2) repi(i, w)
-      a[k + w + i] = G::op(a[k + w + i], G::inv(a[k + i]));
+  assert(has_single_bit(len));
+  for (int d = len >> 1; d; d >>= 1)
+    repi(iu, 0, len, d * 2) repi(i, iu, iu + d)
+      a[i + d] = G::op(a[i + d], G::inv(a[i]));
 }
 
 // ζ'a[s] = Σ{s ⊆ t} a[t]
@@ -47,13 +47,13 @@ void mobius_subset_destructive(vc<typename G::S> &a)
 template <class M>
 void zeta_supset_destructive(vc<typename M::S> &a)
 {
-  if (a.empty())
+  const int len = a.size();
+  if (len == 0)
     return;
-  assert(has_single_bit(a.size()));
-  const int n = a.size();
-  for (int w = 1; w < n; w <<= 1)
-    repi(k, 0, n, w * 2) repi(i, w)
-      a[k + i] = M::op(a[k + i], a[k + w + i]);
+  assert(has_single_bit(len));
+  for (int d = 1; d < len; d *= 2)
+    repi(iu, 0, len, d * 2) repi(i, iu, iu + d)
+      a[i] = M::op(a[i], a[i + d]);
 }
 // μ' は ζ' の逆変換
 // μ'a[s] = Σ{s ⊆ t} (-1)^{|t\s|} a[t]
@@ -63,13 +63,13 @@ void zeta_supset_destructive(vc<typename M::S> &a)
 template <class G>
 void mobius_supset_destructive(vc<typename G::S> &a)
 {
-  if (a.empty())
+  const int len = a.size();
+  if (len == 0)
     return;
-  assert(has_single_bit(a.size()));
-  const int n = a.size();
-  for (int w = n >> 1; w; w >>= 1)
-    repi(k, 0, n, w * 2) repi(i, w)
-      a[k + i] = G::op(a[k + i], G::inv(a[k + w + i]));
+  assert(has_single_bit(len));
+  for (int d = len >> 1; d; d >>= 1)
+    repi(iu, 0, len, d * 2) repi(i, iu, iu + d)
+      a[i] = G::op(a[i], G::inv(a[i + d]));
 }
 
 // ζa[s] = Σ{t ⊆ s} a[t]

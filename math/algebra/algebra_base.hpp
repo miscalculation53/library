@@ -45,9 +45,23 @@ struct Ring
   static constexpr auto e1 = e1_;
 };
 
+template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto inv_>
+struct Field
+{
+  using S = S_;
+  static constexpr auto add = add_;
+  static constexpr auto e0 = e0_;
+  static constexpr auto minus = minus_;
+  static constexpr auto mul = mul_;
+  static constexpr auto e1 = e1_;
+  static constexpr auto inv = inv_;
+};
+
 template <class SR>
 using MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add, SR::e0>;
 template <class SR>
 using MonoidOfSemiRingMul = Monoid<typename SR::S, SR::mul, SR::e1>;
 template <class R>
 using GroupOfRingAdd = Group<typename R::S, R::add, R::e0, R::minus>;
+template <class K>
+using GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;

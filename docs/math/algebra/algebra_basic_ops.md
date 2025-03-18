@@ -22,3 +22,15 @@
 ### 環
 
 - `RingAddSubMul<T>`
+
+### 体
+
+- `FieldAddSubMulDiv<T>`
+
+---
+
+また、モノイドを渡すと累乗を計算してくれる関数 `pow_monoid` を用意した。
+
+```cpp
+M::S pow_monoid(M::S a, ll k)
+```
