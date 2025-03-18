@@ -60,9 +60,6 @@ data:
   - icon: ':warning:'
     path: template/template.cpp
     title: template/template.cpp
-  - icon: ':warning:'
-    path: verify/yosupo/subset_convolution.cpp
-    title: verify/yosupo/subset_convolution.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/extgcd.test.cpp
@@ -95,6 +92,12 @@ data:
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/kronecker_power_hadamard.test.cpp
+    title: verify/yosupo/kronecker_power_hadamard.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
   - icon: ':heavy_check_mark:'
@@ -106,6 +109,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root_min.test.cpp
     title: verify/yosupo/primitive_root_min.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/subset_convolution.test.cpp
+    title: verify/yosupo/subset_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/xor_convolution.test.cpp
+    title: verify/yosupo/xor_convolution.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/binomial.test.cpp
     title: verify/yukicoder/binomial.test.cpp
@@ -689,7 +698,6 @@ data:
   isVerificationFile: false
   path: math/modint/modint_base.hpp
   requiredBy:
-  - verify/yosupo/subset_convolution.cpp
   - math/prime/order_primitive_root.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
   - math/prime/euler_phi_carmichael.hpp
@@ -711,13 +719,17 @@ data:
   - verify/yukicoder/static_modint.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
   - verify/yukicoder/binomial.test.cpp
+  - verify/yosupo/kronecker_power_hadamard.test.cpp
   - verify/yosupo/and_or_convolution.test.cpp
   - verify/yosupo/primitive_root_min.test.cpp
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/gcd_convolution.test.cpp
   - verify/yosupo/primality_test.test.cpp
+  - verify/yosupo/xor_convolution.test.cpp
   - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/subset_convolution.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/binomial.test.cpp
   - verify/mytest/modint64.test.cpp
   - verify/mytest/power_table.test.cpp

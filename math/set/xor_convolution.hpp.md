@@ -2,9 +2,19 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_basic_ops.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+      \ max\uFF09"
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: template/template_all.hpp
+    title: template/template_all.hpp
   - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
@@ -30,318 +40,95 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':warning:'
-    path: algo/merge_sort.hpp
-    title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
-  - icon: ':heavy_check_mark:'
-    path: ds/coordinate_compression.hpp
-    title: "\u5EA7\u6A19\u5727\u7E2E"
-  - icon: ':heavy_check_mark:'
-    path: ds/csr.hpp
-    title: CSR
-  - icon: ':heavy_check_mark:'
-    path: ds/group_index.hpp
-    title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
-  - icon: ':warning:'
-    path: graph/graph.hpp
-    title: "\u30B0\u30E9\u30D5\uFF08\u57FA\u5E95\u30AF\u30E9\u30B9\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: itertools/bit.hpp
-    title: "\u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\u7D22"
-  - icon: ':heavy_check_mark:'
-    path: itertools/direct_product.hpp
-    title: "\u76F4\u7A4D\u5168\u63A2\u7D22"
-  - icon: ':heavy_check_mark:'
-    path: math/algebra/algebra_base.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/algebra/algebra_basic_ops.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
-      \ max\uFF09"
-  - icon: ':warning:'
-    path: math/algebra/polynomial_ring.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/extgcd.hpp
-    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/binomial.hpp
-    title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint32_internal.hpp
-    title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64.hpp
-    title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64_internal.hpp
-    title: math/modint/modint64_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint_base.hpp
-    title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/power_table.hpp
-    title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/euler_phi_carmichael.hpp
-    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
-      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/lcm_gcd_convolution.hpp
-    title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/linear_sieve.hpp
-    title: "\u7DDA\u5F62\u7BE9"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/order_primitive_root.hpp
-    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/primality_test.hpp
-    title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/prime_power.hpp
-    title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/quadratic_equation_integer.hpp
-    title: "\u4E8C\u6B21\u65B9\u7A0B\u5F0F\u306E\u6574\u6570\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/quotients.hpp
-    title: "\u5546\u5217\u6319"
-  - icon: ':heavy_check_mark:'
-    path: math/set/and_or_convolution.hpp
-    title: "and/or \u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
-    path: math/set/kronecker_power.hpp
-    title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
-  - icon: ':heavy_check_mark:'
-    path: math/set/subset_convolution.hpp
-    title: subset convolution
-  - icon: ':heavy_check_mark:'
-    path: math/set/xor_convolution.hpp
-    title: "\u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\u30FBxor \u7573\u307F\u8FBC\
-      \u307F"
-  - icon: ':heavy_check_mark:'
-    path: math/set/zeta_mobius.hpp
-    title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
-  - icon: ':warning:'
-    path: template/template.cpp
-    title: template/template.cpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/csr.test.cpp
-    title: verify/aoj/csr.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/extgcd.test.cpp
-    title: verify/aoj/extgcd.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/modpow.test.cpp
-    title: verify/aoj/modpow.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/itertools_bit.test.cpp
-    title: verify/mytest/itertools_bit.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/itertools_direct_product.test.cpp
-    title: verify/mytest/itertools_direct_product.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/linear_sieve.test.cpp
-    title: verify/mytest/linear_sieve.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint.test.cpp
-    title: verify/mytest/modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint64.test.cpp
-    title: verify/mytest/modint64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/power_table.test.cpp
-    title: verify/mytest/power_table.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/and_or_convolution.test.cpp
-    title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/aplusb.test.cpp
-    title: verify/yosupo/aplusb.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/associative_array_lower_bound.test.cpp
-    title: verify/yosupo/associative_array_lower_bound.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/binomial.test.cpp
-    title: verify/yosupo/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/gcd_convolution.test.cpp
-    title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_hadamard.test.cpp
-    title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kth_root_integer.test.cpp
-    title: verify/yosupo/kth_root_integer.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/lcm_convolution.test.cpp
-    title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb.test.cpp
-    title: verify/yosupo/many_aplusb.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb_128bit.test.cpp
-    title: verify/yosupo/many_aplusb_128bit.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb_tuple.test.cpp
-    title: verify/yosupo/many_aplusb_tuple.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/predecessor_problem.test.cpp
-    title: verify/yosupo/predecessor_problem.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root.test.cpp
-    title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root_min.test.cpp
-    title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/quotients.test.cpp
-    title: verify/yosupo/quotients.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/static_range_frequency.test.cpp
-    title: verify/yosupo/static_range_frequency.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/subset_convolution.test.cpp
-    title: verify/yosupo/subset_convolution.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/xor_convolution.test.cpp
     title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/base_repr.test.cpp
-    title: verify/yukicoder/base_repr.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/binomial.test.cpp
-    title: verify/yukicoder/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/dynamic_modint.test.cpp
-    title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_carmichael.test.cpp
-    title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_euler_phi.test.cpp
-    title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/quadratic_equation.test.cpp
-    title: verify/yukicoder/quadratic_equation.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/static_modint.test.cpp
-    title: verify/yukicoder/static_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
+    _deprecated_at_docs: docs/math/set/xor_convolution.md
+    document_title: "\u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\u30FBxor \u7573\u307F\
+      \u8FBC\u307F"
     links: []
-  bundledCode: "#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
-    \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
-    \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
-    \nusing ll = long long;\nusing uint = unsigned int;\nusing ull = unsigned long\
-    \ long;\nusing pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll\
-    \ = tuple<ll, ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc\
-    \ = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb =\
-    \ vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\n\
-    using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
-    using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
-    \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
-    using i128 = __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string\
-    \ &s)\n{\n  i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i\
-    \ < (int)s.size(); i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n\
-    \  }\n  else\n  {\n    for (auto &&c : s)\n      res = 10 * res + c - '0';\n \
-    \ }\n  return res;\n}\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n\
-    \  string sign = \"\", res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n\
-    \  while (x > 0)\n  {\n    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(),\
-    \ res.end());\n  return sign + res;\n}\nistream &operator>>(istream &is, i128\
-    \ &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream\
-    \ &operator<<(ostream &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n\
-    }\n#endif\n\n#define cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\
-    \n#line 4 \"template/template_rep.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
-    \u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n */\n\n//\
-    \ https://trap.jp/post/1224/\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n\
-    #define rep1(i, n) for (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i,\
-    \ l, r) for (ll i = ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define rep3(i, l,\
-    \ r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr\
-    \ : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n\
-    #define repi1(i, n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i,\
-    \ l, r) for (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i,\
-    \ l, r, d) for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i\
-    \ < rrrrr : i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3,\
-    \ repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n#define\
-    \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
-    #line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
-    #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
-    \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
-    inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
-    \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
-    \ : false; }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T\
-    \ divfloor(U a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0);\
-    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T divceil(U a,\
-    \ V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divround(U a, V b) { return\
-    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U,\
-    \ class V>\ninline constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a,\
-    \ b); }\n\ntemplate <class T = ll, class U, class V>\nconstexpr T ipow(U a, V\
-    \ b)\n{\n  assert(b >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a ==\
-    \ 1)\n    return a;\n  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n \
-    \ T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n\
-    \    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n\
-    }\ntemplate <class T = ll, class A, class B, class M>\nT mul_limited(A a, B b,\
-    \ M m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return\
-    \ 0;\n  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T\
-    \ = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m = INF)\n{\n  assert(a\
-    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
-    \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
-    \    {\n      if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n  \
-    \  }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n\
-    \      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\n\ntemplate <class T\
-    \ = ll, class A, class K>\nconstexpr T iroot(A a, K k)\n{\n  assert(a >= 0 &&\
-    \ k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n  if (k == 2)\n  {\n    if\
-    \ constexpr (sizeof(T) > sizeof(ull))\n    {\n      if ((u128)a < ((u128)1 <<\
-    \ 120))\n        return sqrtl(a);\n    }\n    else\n      return sqrtl(a);\n \
-    \ }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n      return true;\n\
-    \    T res = 1, k2 = k;\n    while (true)\n    {\n      if (k2 & 1)\n      {\n\
-    \        if (res > T(a) / x)\n          return false;\n        res *= x;\n   \
-    \   }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n      if (x > T(a)\
-    \ / x)\n        return false;\n      x *= x;\n    }\n    return res <= T(a);\n\
-    \  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n   \
-    \ up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max() &&\
-    \ isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+  bundledCode: "#line 2 \"math/set/xor_convolution.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+    \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
+    \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
+    \ EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing\
+    \ uint = unsigned int;\nusing ull = unsigned long long;\nusing pll = pair<ll,\
+    \ ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\
+    \n#define vc vector\ntemplate <class T>\nusing vvc = vc<vc<T>>;\ntemplate <class\
+    \ T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb = vc<bool>;\nusing vl = vc<ll>;\n\
+    using vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing\
+    \ vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate\
+    \ <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate <class\
+    \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing i128 =\
+    \ __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string &s)\n{\n \
+    \ i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size();\
+    \ i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n\
+    \    for (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n\
+    }\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\"\
+    , res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n\
+    \    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n\
+    \  return sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string\
+    \ s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream\
+    \ &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define\
+    \ cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
+    \ docs/template/template_rep.md\n */\n\n// https://trap.jp/post/1224/\n\n#define\
+    \ overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0,\
+    \ nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i = ll(l), rrrrr\
+    \ = ll(r); i < rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i = ll(l), rrrrr\
+    \ = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define\
+    \ rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n#define repi1(i,\
+    \ n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i, l, r) for\
+    \ (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i, l, r, d)\
+    \ for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i < rrrrr :\
+    \ i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\
+    \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
+    #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\
+    \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
+    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
+    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
+    \ docs/template/template_math.md\n */\n\ntemplate <class T, class U>\ninline bool\
+    \ chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate <class T,\
+    \ class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true : false;\
+    \ }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T divfloor(U\
+    \ a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate\
+    \ <class T = ll, class U, class V>\ninline constexpr T divceil(U a, V b) { return\
+    \ T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll,\
+    \ class U, class V>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V>\ninline\
+    \ constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
+    template <class T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b\
+    \ >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
+    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
+    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
+    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
+    \ T = ll, class A, class B, class M>\nT mul_limited(A a, B b, M m = INF)\n{\n\
+    \  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return\
+    \ T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A,\
+    \ class B, class M>\nT pow_limited(A a, B b, M m = INF)\n{\n  assert(a >= 0 &&\
+    \ b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n\
+    \  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n    {\n     \
+    \ if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n    }\n    b >>=\
+    \ 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n      return m;\n\
+    \    tmp *= tmp;\n  }\n  return res;\n}\n\ntemplate <class T = ll, class A, class\
+    \ K>\nconstexpr T iroot(A a, K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <=\
+    \ 1 || k == 1)\n    return a;\n  if (k == 2)\n  {\n    if constexpr (sizeof(T)\
+    \ > sizeof(ull))\n    {\n      if ((u128)a < ((u128)1 << 120))\n        return\
+    \ sqrtl(a);\n    }\n    else\n      return sqrtl(a);\n  }\n\n  auto isok = [&](T\
+    \ x) -> bool\n  {\n    if (x == 0)\n      return true;\n    T res = 1, k2 = k;\n\
+    \    while (true)\n    {\n      if (k2 & 1)\n      {\n        if (res > T(a) /\
+    \ x)\n          return false;\n        res *= x;\n      }\n      k2 >>= 1;\n \
+    \     if (k2 == 0)\n        break;\n      if (x > T(a) / x)\n        return false;\n\
+    \      x *= x;\n    }\n    return res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n\
+    \  bool up = true;\n  while (!isok(x))\n    up = false, x--;\n  if (up)\n  {\n\
+    \    while (x < numeric_limits<T>::max() && isok(x + 1))\n      x++;\n  }\n  return\
+    \ x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS), class A>\nint SGN(A a, const D &eps = EPS)\
     \ { return int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\
     \u6CD5\u3068\u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\
@@ -734,28 +521,138 @@ data:
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 12 \"template/template_all.hpp\"\n"
-  code: '#pragma once
-
-
-    #include "template_types.hpp"
-
-    #include "template_rep.hpp"
-
-    #include "template_math.hpp"
-
-    #include "template_vector.hpp"
-
-    #include "template_algo.hpp"
-
-    #include "template_binsearch.hpp"
-
-    #include "template_bit.hpp"
-
-    #include "template_inout.hpp"
-
-    #include "template_dump.hpp"'
+    \ vt;\n}\n// ----------\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n#line\
+    \ 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
+    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
+    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
+    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
+    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
+    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
+    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
+    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
+    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
+    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
+    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
+    \ constexpr auto inv = inv_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
+    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
+    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
+    \ = Group<typename R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing\
+    \ GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
+    \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
+    template <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
+    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
+    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
+    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
+    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
+    \ static constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct\
+    \ GroupAddSub\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
+    \ + b; }\n  static constexpr S e() { return 0; }\n  static constexpr S inv(S a)\
+    \ { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return a * b; }\n  static constexpr S e()\
+    \ { return 1; }\n  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate\
+    \ <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return min(a, b); }\n  static constexpr\
+    \ S e0() { return infty; }\n  static constexpr S mul(S a, S b) { return a + b;\
+    \ }\n  static constexpr S e1() { return 0; }\n};\ntemplate <class T, const T infty\
+    \ = INF>\nstruct SemiRingMaxPlus\n{\n  using S = T;\n  static constexpr S add(S\
+    \ a, S b) { return max(a, b); }\n  static constexpr S e0() { return -infty; }\n\
+    \  static constexpr S mul(S a, S b) { return a + b; }\n  static constexpr S e1()\
+    \ { return 0; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using S\
+    \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
+    \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
+    \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
+    \ 1; }\n};\n\ntemplate <class T>\nstruct FieldAddSubMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr S minus(S\
+    \ a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static constexpr\
+    \ S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return 1; }\n\
+    \  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate <class M>\ntypename\
+    \ M::S pow_monoid(typename M::S a, ll k)\n{\n  typename M::S c = M::e();\n  for\
+    \ (; k; k >>= 1)\n  {\n    if (k & 1)\n      c = M::op(c, a);\n    a = M::op(a,\
+    \ a);\n  }\n  return c;\n}\n#line 5 \"math/set/xor_convolution.hpp\"\n\n/**\n\
+    \ * @brief \u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\u30FBxor \u7573\u307F\u8FBC\
+    \u307F\n * @docs docs/math/set/xor_convolution.md\n */\n\n// \u30A2\u30C0\u30DE\
+    \u30FC\u30EB\u5909\u63DB\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\
+    \u9593\n// G \u306F\u53EF\u63DB\u7FA4\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\
+    \u884C\u3046\ntemplate <class G>\nvoid hadamard_abel_group_destructive(vc<typename\
+    \ G::S> &a)\n{\n  const int len = a.size();\n  if (len == 0)\n    return;\n  assert(has_single_bit(len));\n\
+    \  for (int d = 1; d < len; d *= 2)\n    repi(iu, 0, len, d * 2) repi(i, iu, iu\
+    \ + d)\n    {\n      auto x = G::op(a[i], a[i + d]);\n      auto y = G::op(a[i],\
+    \ G::inv(a[i + d]));\n      a[i] = x;\n      a[i + d] = y;\n    }\n}\n\n// \u30A2\
+    \u30C0\u30DE\u30FC\u30EB\u5909\u63DB (inv == true \u306E\u3068\u304D\u306F\u9006\
+    \u5909\u63DB)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n//\
+    \ K \u306F\u4F53\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
+    \ <class K>\nvoid hadamard_field_destructive(vc<typename K::S> &a, bool inv)\n\
+    {\n  hadamard_abel_group_destructive<GroupOfRingAdd<K>>(a);\n  if (inv)\n  {\n\
+    \    const int lg = countr_zero(a.size());\n    auto div = pow_monoid<MonoidOfSemiRingMul<K>>(K::inv(K::add(K::e1(),\
+    \ K::e1())), lg);\n    repi(i, a.size()) a[i] = K::mul(a[i], div);\n  }\n}\n\n\
+    // \u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\n// |a| = 2^n \u3092\u4EEE\u5B9A\
+    \u3001O(n 2^n) \u6642\u9593\n// G \u306F\u53EF\u63DB\u7FA4\ntemplate <class G>\n\
+    vc<typename G::S> hadamard_abel_group(const vc<typename G::S> &a)\n{\n  auto a_\
+    \ = a;\n  hadamard_abel_group_destructive<G>(a_);\n  return a_;\n}\n\n// \u30A2\
+    \u30C0\u30DE\u30FC\u30EB\u5909\u63DB (inv == true \u306E\u3068\u304D\u306F\u9006\
+    \u5909\u63DB)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n//\
+    \ K \u306F\u4F53\ntemplate <class K>\nvc<typename K::S> hadamard_field(const vc<typename\
+    \ K::S> &a, bool inv)\n{\n  auto a_ = a;\n  hadamard_field_destructive<K>(a_,\
+    \ inv);\n  return a_;\n}\n\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n)\
+    \ \u6642\u9593\n// K \u306F\u4F53\n// \u7834\u58CA\u7684\u306B\u5909\u66F4\u3059\
+    \u308B: a \u306B\u7D50\u679C (xor conv) \u304C\u3001b \u306B hadamard \u304C\u5165\
+    \u308B\ntemplate <class K>\nvoid xor_convolution_destructive\n(vc<typename K::S>\
+    \ &a, vc<typename K::S> &b)\n{\n  assert(a.size() == b.size());\n  hadamard_field_destructive<K>(a,\
+    \ false);\n  hadamard_field_destructive<K>(b, false);\n  repi(i, a.size()) a[i]\
+    \ = K::mul(a[i], b[i]);\n  hadamard_field_destructive<K>(a, true);\n}\n\n// |a|\
+    \ = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n// K \u306F\u4F53\
+    \ntemplate <class K>\nvc<typename K::S> xor_convolution\n(const vc<typename K::S>\
+    \ &a, const vc<typename K::S> &b)\n{\n  auto a_ = a, b_ = b;\n  xor_convolution_destructive<K>(a_,\
+    \ b_);\n  return a_;\n}\n"
+  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
+    ../algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief \u30A2\u30C0\u30DE\u30FC\u30EB\
+    \u5909\u63DB\u30FBxor \u7573\u307F\u8FBC\u307F\n * @docs docs/math/set/xor_convolution.md\n\
+    \ */\n\n// \u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\n// |a| = 2^n \u3092\u4EEE\
+    \u5B9A\u3001O(n 2^n) \u6642\u9593\n// G \u306F\u53EF\u63DB\u7FA4\n// \u7834\u58CA\
+    \u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate <class G>\nvoid hadamard_abel_group_destructive(vc<typename\
+    \ G::S> &a)\n{\n  const int len = a.size();\n  if (len == 0)\n    return;\n  assert(has_single_bit(len));\n\
+    \  for (int d = 1; d < len; d *= 2)\n    repi(iu, 0, len, d * 2) repi(i, iu, iu\
+    \ + d)\n    {\n      auto x = G::op(a[i], a[i + d]);\n      auto y = G::op(a[i],\
+    \ G::inv(a[i + d]));\n      a[i] = x;\n      a[i + d] = y;\n    }\n}\n\n// \u30A2\
+    \u30C0\u30DE\u30FC\u30EB\u5909\u63DB (inv == true \u306E\u3068\u304D\u306F\u9006\
+    \u5909\u63DB)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n//\
+    \ K \u306F\u4F53\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
+    \ <class K>\nvoid hadamard_field_destructive(vc<typename K::S> &a, bool inv)\n\
+    {\n  hadamard_abel_group_destructive<GroupOfRingAdd<K>>(a);\n  if (inv)\n  {\n\
+    \    const int lg = countr_zero(a.size());\n    auto div = pow_monoid<MonoidOfSemiRingMul<K>>(K::inv(K::add(K::e1(),\
+    \ K::e1())), lg);\n    repi(i, a.size()) a[i] = K::mul(a[i], div);\n  }\n}\n\n\
+    // \u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\n// |a| = 2^n \u3092\u4EEE\u5B9A\
+    \u3001O(n 2^n) \u6642\u9593\n// G \u306F\u53EF\u63DB\u7FA4\ntemplate <class G>\n\
+    vc<typename G::S> hadamard_abel_group(const vc<typename G::S> &a)\n{\n  auto a_\
+    \ = a;\n  hadamard_abel_group_destructive<G>(a_);\n  return a_;\n}\n\n// \u30A2\
+    \u30C0\u30DE\u30FC\u30EB\u5909\u63DB (inv == true \u306E\u3068\u304D\u306F\u9006\
+    \u5909\u63DB)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n//\
+    \ K \u306F\u4F53\ntemplate <class K>\nvc<typename K::S> hadamard_field(const vc<typename\
+    \ K::S> &a, bool inv)\n{\n  auto a_ = a;\n  hadamard_field_destructive<K>(a_,\
+    \ inv);\n  return a_;\n}\n\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n)\
+    \ \u6642\u9593\n// K \u306F\u4F53\n// \u7834\u58CA\u7684\u306B\u5909\u66F4\u3059\
+    \u308B: a \u306B\u7D50\u679C (xor conv) \u304C\u3001b \u306B hadamard \u304C\u5165\
+    \u308B\ntemplate <class K>\nvoid xor_convolution_destructive\n(vc<typename K::S>\
+    \ &a, vc<typename K::S> &b)\n{\n  assert(a.size() == b.size());\n  hadamard_field_destructive<K>(a,\
+    \ false);\n  hadamard_field_destructive<K>(b, false);\n  repi(i, a.size()) a[i]\
+    \ = K::mul(a[i], b[i]);\n  hadamard_field_destructive<K>(a, true);\n}\n\n// |a|\
+    \ = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n// K \u306F\u4F53\
+    \ntemplate <class K>\nvc<typename K::S> xor_convolution\n(const vc<typename K::S>\
+    \ &a, const vc<typename K::S> &b)\n{\n  auto a_ = a, b_ = b;\n  xor_convolution_destructive<K>(a_,\
+    \ b_);\n  return a_;\n}"
   dependsOn:
+  - template/template_all.hpp
   - template/template_types.hpp
   - template/template_rep.hpp
   - template/template_math.hpp
@@ -765,91 +662,40 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
-  isVerificationFile: false
-  path: template/template_all.hpp
-  requiredBy:
-  - math/extgcd.hpp
-  - math/set/zeta_mobius.hpp
-  - math/set/kronecker_power.hpp
-  - math/set/subset_convolution.hpp
-  - math/set/and_or_convolution.hpp
-  - math/set/xor_convolution.hpp
-  - math/prime/order_primitive_root.hpp
-  - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/euler_phi_carmichael.hpp
-  - math/prime/prime_power.hpp
-  - math/prime/factorize.hpp
-  - math/prime/lcm_gcd_convolution.hpp
-  - math/prime/primality_test.hpp
-  - math/prime/zeta_mobius_divisor_multiple.hpp
-  - math/prime/linear_sieve.hpp
-  - math/modint/modint64_internal.hpp
-  - math/modint/modint32_internal.hpp
-  - math/modint/modint.hpp
-  - math/modint/binomial.hpp
-  - math/modint/modint_base.hpp
-  - math/modint/modint64.hpp
-  - math/modint/power_table.hpp
-  - math/quotients.hpp
   - math/algebra/algebra_basic_ops.hpp
-  - math/algebra/polynomial_ring.hpp
   - math/algebra/algebra_base.hpp
-  - math/quadratic_equation_integer.hpp
-  - template/template.cpp
-  - algo/merge_sort.hpp
-  - graph/graph.hpp
-  - itertools/direct_product.hpp
-  - itertools/bit.hpp
-  - ds/csr.hpp
-  - ds/coordinate_compression.hpp
-  - ds/group_index.hpp
-  timestamp: '2025-03-16 23:12:25+09:00'
+  isVerificationFile: false
+  path: math/set/xor_convolution.hpp
+  requiredBy: []
+  timestamp: '2025-03-18 21:50:59+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/aoj/modpow.test.cpp
-  - verify/aoj/csr.test.cpp
-  - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/quadratic_equation.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yukicoder/base_repr.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/static_modint.test.cpp
-  - verify/yukicoder/dynamic_modint.test.cpp
-  - verify/yukicoder/binomial.test.cpp
-  - verify/yosupo/quotients.test.cpp
-  - verify/yosupo/kronecker_power_hadamard.test.cpp
-  - verify/yosupo/many_aplusb_tuple.test.cpp
-  - verify/yosupo/static_range_frequency.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/many_aplusb_128bit.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/aplusb.test.cpp
-  - verify/yosupo/kth_root_integer.test.cpp
   - verify/yosupo/xor_convolution.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/subset_convolution.test.cpp
-  - verify/yosupo/predecessor_problem.test.cpp
-  - verify/yosupo/many_aplusb.test.cpp
-  - verify/yosupo/associative_array_lower_bound.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - verify/yosupo/binomial.test.cpp
-  - verify/mytest/modint64.test.cpp
-  - verify/mytest/power_table.test.cpp
-  - verify/mytest/itertools_direct_product.test.cpp
-  - verify/mytest/modint.test.cpp
-  - verify/mytest/linear_sieve.test.cpp
-  - verify/mytest/itertools_bit.test.cpp
-documentation_of: template/template_all.hpp
+documentation_of: math/set/xor_convolution.hpp
 layout: document
 redirect_from:
-- /library/template/template_all.hpp
-- /library/template/template_all.hpp.html
-title: template/template_all.hpp
+- /library/math/set/xor_convolution.hpp
+- /library/math/set/xor_convolution.hpp.html
+title: "\u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\u30FBxor \u7573\u307F\u8FBC\u307F"
 ---
+## アダマール変換・xor 畳み込み
+
+### 概要
+
+#### アダマール変換
+
+アダマール変換は、クロネッカー冪の作用で行列を $\begin{bmatrix}1 & 1\\\\  1 & -1\end{bmatrix}$ としたもの。一般には可換群が載る。
+
+アダマール変換の逆変換は、クロネッカー冪の作用で行列をこの逆行列 $\dfrac{1}{2} \begin{bmatrix}1 & 1\\\\  1 & -1\end{bmatrix}$ としたもの。順変換をやってから $2^n$ で割ればよい。乗法逆元が必要なので体である必要がある。
+
+アダマール変換は $n$ 次元フーリエ変換の各次元の長さが $2$ の場合と解釈できる。
+
+$\displaystyle b(t) = \sum_{0 \leq s \lt 2^n} a(s) \prod_{0 \leq i \lt n} (-1)^{[i \in s] \cdot [i \in t]}$
+
+#### xor 畳み込み
+
+一般には体が載る。
+
+$\displaystyle c(u) = \sum_{s \oplus t = u} a(s)b(t)$
+
+アダマール変換して、各点積をとって、逆アダマール変換する。

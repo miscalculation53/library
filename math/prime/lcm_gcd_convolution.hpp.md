@@ -604,10 +604,16 @@ data:
     \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
     \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
     \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
-    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
-    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
-    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
-    \ = Group<typename R::S, R::add, R::e0, R::minus>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto minus_, auto mul_, auto e1_, auto inv_>\nstruct Field\n{\n  using\
+    \ S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n  static constexpr auto inv = inv_;\n};\n\n\
+    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
+    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
+    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
+    \ R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul =\
+    \ Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
     \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
     \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
     template <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S\
@@ -635,38 +641,45 @@ data:
     \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
     \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
     \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
-    \ 1; }\n};\n#line 6 \"math/prime/zeta_mobius_divisor_multiple.hpp\"\n\n/**\n *\
-    \ @brief \u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-    \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09\n * @docs docs/math/prime/zeta_mobius_divisor_multiple.md\n\
-    \ */\n\n// \u03B6a(n) = \u03A3[d | n] a(d)\n// M \u306F\u53EF\u63DB\u30E2\u30CE\
-    \u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// 1-indexed (a[0] \u306F\u4F7F\u308F\u306A\
-    \u3044)\ntemplate <class M>\nvc<typename M::S> zeta_divisor(const vc<typename\
-    \ M::S> &a)\n{\n  const int n = SZ<int>(a) - 1;\n  LinearSieve::reserve(n);\n\
-    \  auto b = a;\n  fec(p : LinearSieve::primes)\n  {\n    if (p > n)\n      break;\n\
-    \    for (int i = 1; i * p <= n; i++)\n      b[i * p] = M::op(b[i * p], b[i]);\n\
-    \  }\n  return b;\n}\n\n// \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BC\
-    a(n) = \u03A3{d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\
-    \u8EE2\u516C\u5F0F\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n//\
-    \ 1-indexed (a[0] \u306F\u4F7F\u308F\u306A\u3044)\ntemplate <class G>\nvc<typename\
-    \ G::S> mobius_divisor(const vc<typename G::S> &a)\n{\n  const int n = SZ<int>(a)\
-    \ - 1;\n  LinearSieve::reserve(n);\n  auto b = a;\n  fec(p : LinearSieve::primes)\n\
-    \  {\n    if (p > n)\n      break;\n    for (int i = n / p; i >= 1; i--)\n   \
-    \   b[i * p] = G::op(b[i * p], G::inv(b[i]));\n  }\n  return b;\n}\n\n// \u03B6\
-    'a(n) = \u03A3{n | m} a(m)\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3\
+    \ 1; }\n};\n\ntemplate <class T>\nstruct FieldAddSubMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr S minus(S\
+    \ a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static constexpr\
+    \ S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return 1; }\n\
+    \  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate <class M>\ntypename\
+    \ M::S pow_monoid(typename M::S a, ll k)\n{\n  typename M::S c = M::e();\n  for\
+    \ (; k; k >>= 1)\n  {\n    if (k & 1)\n      c = M::op(c, a);\n    a = M::op(a,\
+    \ a);\n  }\n  return c;\n}\n#line 6 \"math/prime/zeta_mobius_divisor_multiple.hpp\"\
+    \n\n/**\n * @brief \u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\
+    \u30D3\u30A6\u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09\n\
+    \ * @docs docs/math/prime/zeta_mobius_divisor_multiple.md\n */\n\n// \u03B6a(n)\
+    \ = \u03A3[d | n] a(d)\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3\
     \ \u3060\u3068 +)\n// 1-indexed (a[0] \u306F\u4F7F\u308F\u306A\u3044)\ntemplate\
-    \ <class M>\nvc<typename M::S> zeta_multiple(const vc<typename M::S> &a)\n{\n\
+    \ <class M>\nvc<typename M::S> zeta_divisor(const vc<typename M::S> &a)\n{\n \
+    \ const int n = SZ<int>(a) - 1;\n  LinearSieve::reserve(n);\n  auto b = a;\n \
+    \ fec(p : LinearSieve::primes)\n  {\n    if (p > n)\n      break;\n    for (int\
+    \ i = 1; i * p <= n; i++)\n      b[i * p] = M::op(b[i * p], b[i]);\n  }\n  return\
+    \ b;\n}\n\n// \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BCa(n) = \u03A3\
+    {d | n} \u03BC(n/d)a(d)  cf. \u30E1\u30D3\u30A6\u30B9\u306E\u53CD\u8EE2\u516C\u5F0F\
+    \n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// 1-indexed (a[0] \u306F\
+    \u4F7F\u308F\u306A\u3044)\ntemplate <class G>\nvc<typename G::S> mobius_divisor(const\
+    \ vc<typename G::S> &a)\n{\n  const int n = SZ<int>(a) - 1;\n  LinearSieve::reserve(n);\n\
+    \  auto b = a;\n  fec(p : LinearSieve::primes)\n  {\n    if (p > n)\n      break;\n\
+    \    for (int i = n / p; i >= 1; i--)\n      b[i * p] = G::op(b[i * p], G::inv(b[i]));\n\
+    \  }\n  return b;\n}\n\n// \u03B6'a(n) = \u03A3{n | m} a(m)\n// M \u306F\u53EF\
+    \u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// 1-indexed (a[0] \u306F\
+    \u4F7F\u308F\u306A\u3044)\ntemplate <class M>\nvc<typename M::S> zeta_multiple(const\
+    \ vc<typename M::S> &a)\n{\n  const int n = SZ<int>(a) - 1;\n  LinearSieve::reserve(n);\n\
+    \  auto b = a;\n  fec(p : LinearSieve::primes)\n  {\n    if (p > n)\n      break;\n\
+    \    for (int i = n / p; i >= 1; i--)\n      b[i] = M::op(b[i], b[i * p]);\n \
+    \ }\n  return b;\n}\n\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n//\
+    \ \u03BC'a(n) = \u03A3{n | m} \u03BC(m/n)g(m)\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3\
+    \ \u3060\u3068 +)\n// 1-indexed (a[0] \u306F\u4F7F\u308F\u306A\u3044)\ntemplate\
+    \ <class G>\nvc<typename G::S> mobius_multiple(const vc<typename G::S> &a)\n{\n\
     \  const int n = SZ<int>(a) - 1;\n  LinearSieve::reserve(n);\n  auto b = a;\n\
     \  fec(p : LinearSieve::primes)\n  {\n    if (p > n)\n      break;\n    for (int\
-    \ i = n / p; i >= 1; i--)\n      b[i] = M::op(b[i], b[i * p]);\n  }\n  return\
-    \ b;\n}\n\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n// \u03BC'a(n)\
-    \ = \u03A3{n | m} \u03BC(m/n)g(m)\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\
-    \u3068 +)\n// 1-indexed (a[0] \u306F\u4F7F\u308F\u306A\u3044)\ntemplate <class\
-    \ G>\nvc<typename G::S> mobius_multiple(const vc<typename G::S> &a)\n{\n  const\
-    \ int n = SZ<int>(a) - 1;\n  LinearSieve::reserve(n);\n  auto b = a;\n  fec(p\
-    \ : LinearSieve::primes)\n  {\n    if (p > n)\n      break;\n    for (int i =\
-    \ 1; i * p <= n; i++)\n      b[i] = G::op(b[i], G::inv(b[i * p]));\n  }\n  return\
-    \ b;\n}\n#line 5 \"math/prime/lcm_gcd_convolution.hpp\"\n\n/**\n * @brief LCM/GCD\
-    \ \u7573\u307F\u8FBC\u307F\n * @docs docs/math/prime/lcm_gcd_convolution.md\n\
+    \ i = 1; i * p <= n; i++)\n      b[i] = G::op(b[i], G::inv(b[i * p]));\n  }\n\
+    \  return b;\n}\n#line 5 \"math/prime/lcm_gcd_convolution.hpp\"\n\n/**\n * @brief\
+    \ LCM/GCD \u7573\u307F\u8FBC\u307F\n * @docs docs/math/prime/lcm_gcd_convolution.md\n\
     \ */\n\n// |a| = |b| \u3092\u4EEE\u5B9A\n// 1-indexed (a[0], b[0] \u306F\u4F7F\
     \u308F\u306A\u3044)\ntemplate <class R>\nvc<typename R::S> lcm_convolution\n(const\
     \ vc<typename R::S> &a, const vc<typename R::S> &b)\n{\n  assert(a.size() == b.size());\n\
@@ -711,7 +724,7 @@ data:
   isVerificationFile: false
   path: math/prime/lcm_gcd_convolution.hpp
   requiredBy: []
-  timestamp: '2025-03-16 23:12:25+09:00'
+  timestamp: '2025-03-18 21:50:59+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/gcd_convolution.test.cpp

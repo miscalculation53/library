@@ -2,9 +2,37 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_basic_ops.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+      \ max\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/extgcd.hpp
+    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
+  - icon: ':heavy_check_mark:'
+    path: math/modint/binomial.hpp
+    title: "\u4E8C\u9805\u4FC2\u6570"
+  - icon: ':heavy_check_mark:'
+    path: math/modint/modint.hpp
+    title: modint (32 bit)
+  - icon: ':heavy_check_mark:'
+    path: math/modint/modint32_internal.hpp
+    title: math/modint/modint32_internal.hpp
+  - icon: ':heavy_check_mark:'
+    path: math/modint/modint_base.hpp
+    title: math/modint/modint_base.hpp
+  - icon: ':heavy_check_mark:'
+    path: math/set/kronecker_power.hpp
+    title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: template/template_all.hpp
+    title: template/template_all.hpp
   - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
@@ -30,244 +58,21 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':warning:'
-    path: algo/merge_sort.hpp
-    title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
-  - icon: ':heavy_check_mark:'
-    path: ds/coordinate_compression.hpp
-    title: "\u5EA7\u6A19\u5727\u7E2E"
-  - icon: ':heavy_check_mark:'
-    path: ds/csr.hpp
-    title: CSR
-  - icon: ':heavy_check_mark:'
-    path: ds/group_index.hpp
-    title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
-  - icon: ':warning:'
-    path: graph/graph.hpp
-    title: "\u30B0\u30E9\u30D5\uFF08\u57FA\u5E95\u30AF\u30E9\u30B9\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: itertools/bit.hpp
-    title: "\u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\u7D22"
-  - icon: ':heavy_check_mark:'
-    path: itertools/direct_product.hpp
-    title: "\u76F4\u7A4D\u5168\u63A2\u7D22"
-  - icon: ':heavy_check_mark:'
-    path: math/algebra/algebra_base.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/algebra/algebra_basic_ops.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
-      \ max\uFF09"
-  - icon: ':warning:'
-    path: math/algebra/polynomial_ring.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/extgcd.hpp
-    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/binomial.hpp
-    title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint32_internal.hpp
-    title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64.hpp
-    title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64_internal.hpp
-    title: math/modint/modint64_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint_base.hpp
-    title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/power_table.hpp
-    title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/euler_phi_carmichael.hpp
-    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
-      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/lcm_gcd_convolution.hpp
-    title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/linear_sieve.hpp
-    title: "\u7DDA\u5F62\u7BE9"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/order_primitive_root.hpp
-    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/primality_test.hpp
-    title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/prime_power.hpp
-    title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/quadratic_equation_integer.hpp
-    title: "\u4E8C\u6B21\u65B9\u7A0B\u5F0F\u306E\u6574\u6570\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/quotients.hpp
-    title: "\u5546\u5217\u6319"
-  - icon: ':heavy_check_mark:'
-    path: math/set/and_or_convolution.hpp
-    title: "and/or \u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
-    path: math/set/kronecker_power.hpp
-    title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
-  - icon: ':heavy_check_mark:'
-    path: math/set/subset_convolution.hpp
-    title: subset convolution
-  - icon: ':heavy_check_mark:'
-    path: math/set/xor_convolution.hpp
-    title: "\u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\u30FBxor \u7573\u307F\u8FBC\
-      \u307F"
-  - icon: ':heavy_check_mark:'
-    path: math/set/zeta_mobius.hpp
-    title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
-  - icon: ':warning:'
-    path: template/template.cpp
-    title: template/template.cpp
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/csr.test.cpp
-    title: verify/aoj/csr.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/extgcd.test.cpp
-    title: verify/aoj/extgcd.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/modpow.test.cpp
-    title: verify/aoj/modpow.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/itertools_bit.test.cpp
-    title: verify/mytest/itertools_bit.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/itertools_direct_product.test.cpp
-    title: verify/mytest/itertools_direct_product.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/linear_sieve.test.cpp
-    title: verify/mytest/linear_sieve.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint.test.cpp
-    title: verify/mytest/modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint64.test.cpp
-    title: verify/mytest/modint64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/power_table.test.cpp
-    title: verify/mytest/power_table.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/and_or_convolution.test.cpp
-    title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/aplusb.test.cpp
-    title: verify/yosupo/aplusb.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/associative_array_lower_bound.test.cpp
-    title: verify/yosupo/associative_array_lower_bound.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/binomial.test.cpp
-    title: verify/yosupo/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/gcd_convolution.test.cpp
-    title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_hadamard.test.cpp
-    title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kth_root_integer.test.cpp
-    title: verify/yosupo/kth_root_integer.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/lcm_convolution.test.cpp
-    title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb.test.cpp
-    title: verify/yosupo/many_aplusb.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb_128bit.test.cpp
-    title: verify/yosupo/many_aplusb_128bit.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb_tuple.test.cpp
-    title: verify/yosupo/many_aplusb_tuple.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/predecessor_problem.test.cpp
-    title: verify/yosupo/predecessor_problem.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root.test.cpp
-    title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root_min.test.cpp
-    title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/quotients.test.cpp
-    title: verify/yosupo/quotients.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/static_range_frequency.test.cpp
-    title: verify/yosupo/static_range_frequency.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/subset_convolution.test.cpp
-    title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/xor_convolution.test.cpp
-    title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/base_repr.test.cpp
-    title: verify/yukicoder/base_repr.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/binomial.test.cpp
-    title: verify/yukicoder/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/dynamic_modint.test.cpp
-    title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_carmichael.test.cpp
-    title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_euler_phi.test.cpp
-    title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/quadratic_equation.test.cpp
-    title: verify/yukicoder/quadratic_equation.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/static_modint.test.cpp
-    title: verify/yukicoder/static_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
-  _pathExtension: hpp
+  _pathExtension: cpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    links: []
-  bundledCode: "#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.yosupo.jp/problem/bitwise_and_convolution
+    links:
+    - https://judge.yosupo.jp/problem/bitwise_and_convolution
+  bundledCode: "#line 1 \"verify/yosupo/kronecker_power_zeta_mobius.test.cpp\"\n#define\
+    \ PROBLEM \"https://judge.yosupo.jp/problem/bitwise_and_convolution\"\n\n#define\
+    \ SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define\
+    \ FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
+    #define EPS 1e-11\n\n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
     \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
     \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
@@ -734,28 +539,271 @@ data:
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 12 \"template/template_all.hpp\"\n"
-  code: '#pragma once
-
-
-    #include "template_types.hpp"
-
-    #include "template_rep.hpp"
-
-    #include "template_math.hpp"
-
-    #include "template_vector.hpp"
-
-    #include "template_algo.hpp"
-
-    #include "template_binsearch.hpp"
-
-    #include "template_bit.hpp"
-
-    #include "template_inout.hpp"
-
-    #include "template_dump.hpp"'
+    \ vt;\n}\n// ----------\n#line 15 \"verify/yosupo/kronecker_power_zeta_mobius.test.cpp\"\
+    \n\n#line 2 \"math/modint/modint.hpp\"\n\n#line 2 \"math/modint/modint32_internal.hpp\"\
+    \n\n#line 4 \"math/modint/modint32_internal.hpp\"\n\nnamespace internal\n{\n\n\
+    constexpr ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n    return\
+    \ 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while (n)\n\
+    \  {\n    if (n & 1)\n      r = (r * y) % _m;\n    y = (y * y) % _m;\n    n >>=\
+    \ 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int n)\n{\n  if\
+    \ (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n    return\
+    \ true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2\
+    \ == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll a : bases)\n\
+    \  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n    while (t !=\
+    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n      t <<= 1;\n\
+    \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
+    \ true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
+    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
+    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
+    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
+    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
+    \ }\n};\n\n}\n#line 2 \"math/modint/modint_base.hpp\"\n\n#line 4 \"math/modint/modint_base.hpp\"\
+    \n\nnamespace internal\n{\n\n#define REF static_cast<mint &>(*this)\n#define CREF\
+    \ static_cast<const mint &>(*this)\n#define VAL *static_cast<const mint *>(this)\n\
+    \ntemplate <class mint>\nstruct modint_base\n{\n  mint &operator+=(const mint\
+    \ &rhs)\n  {\n    mint &self = REF;\n    self._v += rhs._v;\n    if (self._v >=\
+    \ self.umod())\n      self._v -= self.umod();\n    return self;\n  }\n  mint &operator-=(const\
+    \ mint &rhs)\n  {\n    mint &self = REF;\n    self._v -= rhs._v;\n    if (self._v\
+    \ >= self.umod())\n      self._v += self.umod();\n    return self;\n  }\n  mint\
+    \ &operator/=(const mint &rhs)\n  {\n    mint &self = REF;\n    return self =\
+    \ self * rhs.inv();\n  }\n\n  mint &operator++()\n  {\n    mint &self = REF;\n\
+    \    self._v++;\n    if (self._v == self.umod())\n      self._v = 0;\n    return\
+    \ self;\n  }\n  mint &operator--()\n  {\n    mint &self = REF;\n    if (self._v\
+    \ == 0)\n      self._v = self.umod();\n    self._v--;\n    return self;\n  }\n\
+    \  mint operator++(int)\n  {\n    mint res = VAL;\n    ++REF;\n    return res;\n\
+    \  }\n  mint operator--(int)\n  {\n    mint res = VAL;\n    --REF;\n    return\
+    \ res;\n  }\n\n  mint operator+() const { return VAL; }\n  mint operator-() const\
+    \ { return mint() - VAL; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n\
+    \    mint x = VAL, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r *=\
+    \ x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n\n  friend mint\
+    \ operator+(const mint &lhs, const mint &rhs)\n  { return mint(lhs) += rhs; }\n\
+    \  friend mint operator-(const mint &lhs, const mint &rhs)\n  { return mint(lhs)\
+    \ -= rhs; }\n  friend mint operator*(const mint &lhs, const mint &rhs)\n  { return\
+    \ mint(lhs) *= rhs; }\n  friend mint operator/(const mint &lhs, const mint &rhs)\n\
+    \  { return mint(lhs) /= rhs; }\n  friend bool operator==(const mint &lhs, const\
+    \ mint &rhs)\n  { return mint(lhs).eq(rhs); }\n  friend bool operator!=(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs).neq(rhs); }\nprivate:\n  bool\
+    \ eq(const mint &rhs) { return REF._v == rhs._v; }\n  bool neq(const mint &rhs)\
+    \ { return REF._v != rhs._v; }\n};\n\n}\n\n#if defined LOCAL or not defined FAST_IO\n\
+    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
+    \ T>, int> = 0>\nistream &operator>>(istream &is, T &x)\n{\n  ll a;\n  is >> a;\n\
+    \  x = a;\n  return is;\n}\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
+    \ T>, int> = 0>\nostream &operator<<(ostream &os, const T &x)\n{\n  os << x.val();\n\
+    \  return os;\n}\n#else\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
+    \ T>, int> = 0>\nvoid rd1(T &x)\n{\n  ll a;\n  fastio::rd1(a);\n  x = a;\n}\n\
+    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
+    \ T>, int> = 0>\nvoid wt1(const T &x) { fastio::wt1(x.val()); }\n#endif\n#line\
+    \ 2 \"math/extgcd.hpp\"\n\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\
+    \u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs\
+    \ docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\
+    \u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T =\
+    \ ll>\nconstexpr tuple<T, T, T> extgcd(const T &a, const T &b)\n{\n  if (a ==\
+    \ 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  //\
+    \ a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1,\
+    \ z2 = b;\n  while (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n\
+    \    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1,\
+    \ y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q *\
+    \ z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1,\
+    \ y1};\n}\n#line 7 \"math/modint/modint.hpp\"\n\n/**\n * @brief modint (32 bit)\n\
+    \ * @docs docs/math/modint/modint.md\n */\n\ntemplate <int m>\nstruct static_modint\
+    \ : internal::modint_base<static_modint<m>>\n{\n  using mint = static_modint;\n\
+    private:\n  friend struct internal::modint_base<static_modint<m>>;\n  uint _v;\n\
+    \  static constexpr uint umod() { return m; }\n  static constexpr bool prime =\
+    \ internal::isprime32<m>;\n\npublic:\n  static constexpr int mod() { return m;\
+    \ }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
+    \  }\n\n  static_modint() : _v(0) {}\n  template <class T>\n  static_modint(T\
+    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
+    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
+    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
+    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
+    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
+    \n  mint& operator*=(const mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n\
+    \    _v = (uint)(z % umod());\n    return *this;\n  }\n\n  mint inv() const\n\
+    \  {\n    if (prime)\n    {\n      assert(_v != 0);\n      return CREF.pow(umod()\
+    \ - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<int>(_v, m);\n\
+    \      assert(g == 1);\n      return x;\n    }\n  }\n};\n\ntemplate <int id>\n\
+    struct dynamic_modint : internal::modint_base<dynamic_modint<id>>\n{\n  using\
+    \ mint = dynamic_modint;\nprivate:\n  friend struct internal::modint_base<dynamic_modint<id>>;\n\
+    \  uint _v;\n  static internal::barrett32 bt;\n  static uint umod() { return bt.umod();\
+    \ }\n\npublic:\n  static int mod() { return (int)(bt.umod()); }\n  static void\
+    \ set_mod(int m)\n  {\n    assert(m >= 1);\n    bt = internal::barrett32(m);\n\
+    \  }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
+    \  }\n\n  dynamic_modint() : _v(0) {}\n  template <class T>\n  dynamic_modint(T\
+    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
+    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
+    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
+    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
+    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
+    \n  mint& operator*=(const mint &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n   \
+    \ return *this;\n  }\n\n  mint inv() const\n  {\n    auto [g, x, y] = extgcd<int>(_v,\
+    \ mod());\n    assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::barrett32\
+    \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
+    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
+    #line 17 \"verify/yosupo/kronecker_power_zeta_mobius.test.cpp\"\nusing mint =\
+    \ modint998244353;\n// using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
+    // using mint = modint;\n#line 2 \"math/modint/binomial.hpp\"\n\n#line 4 \"math/modint/binomial.hpp\"\
+    \n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\n * @docs docs/math/modint/binomial.md\n\
+    \ */\n\ntemplate <class T>\nstruct Binomial\n{\nprivate:\n  static decltype(T::mod())\
+    \ mod;\n  static vc<T> fac_, finv_, inv_;\n\npublic:\n  static void reserve(int\
+    \ n)\n  {\n    if (mod != T::mod())\n    {\n      mod = T::mod();\n      fac_\
+    \ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};\n    }\n    int i = fac_.size();\n\
+    \    chmin(n, T::mod() - 1);\n    if (n < i)\n      return;\n    fac_.resize(n\
+    \ + 1), finv_.resize(n + 1), inv_.resize(n + 1);\n    for (; i <= n; i++)\n  \
+    \  {\n      fac_[i] = fac_[i - 1] * T::raw(i);\n      inv_[i] = -inv_[T::mod()\
+    \ % i] * T::raw(T::mod() / i);\n      finv_[i] = finv_[i - 1] * inv_[i];\n   \
+    \ }\n  }\n  static T fac(int n)\n  {\n    assert(n >= 0);\n    if (n >= T::mod())\n\
+    \      return 0;\n    reserve(n);\n    return fac_[n];\n  }\n  static T finv(int\
+    \ n)\n  {\n    assert(n < T::mod());\n    if (n < 0)\n      return 0;\n    reserve(n);\n\
+    \    return finv_[n];\n  }\n  static T inv(T n)\n  {\n    assert(n != 0);\n  \
+    \  reserve(n.val());\n    return inv_[n.val()];\n  }\n\n  static T P(int n, int\
+    \ k)\n  {\n    if (n < k)\n      return 0;\n    if (n < 0 || k < 0)\n      return\
+    \ 0;\n    reserve(n);\n    return fac_[n] * finv_[n - k];\n  }\n  static T C(int\
+    \ n, int k)\n  {\n    if (n < k)\n      return 0;\n    if (n < 0 || k < 0)\n \
+    \     return 0;\n    reserve(n);\n    return fac_[n] * finv_[k] * finv_[n - k];\n\
+    \  }\n  static T H(int n, int k)\n  {\n    if (n == 0 && k == 0)\n      return\
+    \ 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate <class T> decltype(T::mod())\
+    \ Binomial<T>::mod{T::mod()};\ntemplate <class T> vc<T> Binomial<T>::fac_{1, 1};\n\
+    template <class T> vc<T> Binomial<T>::finv_{1, 1};\ntemplate <class T> vc<T> Binomial<T>::inv_{0,\
+    \ 1};\n#line 22 \"verify/yosupo/kronecker_power_zeta_mobius.test.cpp\"\nusing\
+    \ bi = Binomial<mint>;\n\n#line 2 \"math/set/kronecker_power.hpp\"\n\n#line 4\
+    \ \"math/set/kronecker_power.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
+    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
+    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
+    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
+    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
+    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
+    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
+    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
+    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
+    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
+    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
+    \ constexpr auto inv = inv_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
+    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
+    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
+    \ = Group<typename R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing\
+    \ GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
+    \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
+    template <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
+    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
+    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
+    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
+    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
+    \ static constexpr S e() { return -infty; }\n};\n\ntemplate <class T>\nstruct\
+    \ GroupAddSub\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
+    \ + b; }\n  static constexpr S e() { return 0; }\n  static constexpr S inv(S a)\
+    \ { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return a * b; }\n  static constexpr S e()\
+    \ { return 1; }\n  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate\
+    \ <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return min(a, b); }\n  static constexpr\
+    \ S e0() { return infty; }\n  static constexpr S mul(S a, S b) { return a + b;\
+    \ }\n  static constexpr S e1() { return 0; }\n};\ntemplate <class T, const T infty\
+    \ = INF>\nstruct SemiRingMaxPlus\n{\n  using S = T;\n  static constexpr S add(S\
+    \ a, S b) { return max(a, b); }\n  static constexpr S e0() { return -infty; }\n\
+    \  static constexpr S mul(S a, S b) { return a + b; }\n  static constexpr S e1()\
+    \ { return 0; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using S\
+    \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
+    \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
+    \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
+    \ 1; }\n};\n\ntemplate <class T>\nstruct FieldAddSubMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr S minus(S\
+    \ a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static constexpr\
+    \ S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return 1; }\n\
+    \  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate <class M>\ntypename\
+    \ M::S pow_monoid(typename M::S a, ll k)\n{\n  typename M::S c = M::e();\n  for\
+    \ (; k; k >>= 1)\n  {\n    if (k & 1)\n      c = M::op(c, a);\n    a = M::op(a,\
+    \ a);\n  }\n  return c;\n}\n#line 6 \"math/set/kronecker_power.hpp\"\n\n/**\n\
+    \ * @brief \u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528\n * @docs\
+    \ docs/math/set/kronecker_power.md\n */\n\n// SR \u306F\u534A\u74B0\n// k \xD7\
+    \ k \u884C\u5217 mat \u306E\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u3092 k^n\
+    \ \u6B21\u5143\u30D9\u30AF\u30C8\u30EB v \u306B\u4F5C\u7528\u3055\u305B\u308B\n\
+    // v \u3092\u7834\u58CA\u7684\u306B\u5909\u66F4\u3059\u308B\n// O(n k^{n+1}) \u6642\
+    \u9593\ntemplate <class SR, int k>\nvoid kronecker_power_destructive\n(const array<array<typename\
+    \ SR::S, k>, k> &mat, vc<typename SR::S> &v)\n{\n  const int len = v.size();\n\
+    \  if (len == 0)\n    return;\n  {\n    int len_ = len;\n    while (len_ % k ==\
+    \ 0)\n      len_ /= k;\n    assert(len_ == 1 && \"v.size() must be a power of\
+    \ k\");\n  }\n  for (int d = 1; d < len; d *= k)\n    repi(iu, 0, len, d * k)\
+    \ repi(i, iu, iu + d)\n    {\n      array<typename SR::S, k> nxt;\n      fill(ALL(nxt),\
+    \ SR::e0());\n      repi(r, k) repi(c, k)\n        nxt[r] = SR::add(nxt[r], SR::mul(mat[r][c],\
+    \ v[i + c * d]));\n      repi(j, k) v[i + j * d] = nxt[j];\n    }\n}\n\ntemplate\
+    \ <class SR, int k>\nvc<typename SR::S> kronecker_power\n(const array<array<typename\
+    \ SR::S, k>, k> &mat, const vc<typename SR::S> &v)\n{\n  auto v_ = v;\n  kronecker_power_destructive<SR,\
+    \ k>(mat, v_);\n  return v_;\n}\n#line 25 \"verify/yosupo/kronecker_power_zeta_mobius.test.cpp\"\
+    \n\nvoid zeta(vc<mint> &A)\n{\n  kronecker_power_destructive<RingAddSubMul<mint>,\
+    \ 2>({{{1, 0}, {1, 1}}}, A);\n}\nvoid mobius(vc<mint> &A)\n{\n  kronecker_power_destructive<RingAddSubMul<mint>,\
+    \ 2>({{{1, 0}, {-1, 1}}}, A);\n}\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n\
+    \  VEC(mint, 1 << N, A, B);\n  reverse(ALL(A)), reverse(ALL(B));\n  zeta(A), zeta(B);\n\
+    \  dump(A, B);\n  rep(i, 1 << N) A.at(i) *= B.at(i);\n  mobius(A);\n  reverse(ALL(A));\n\
+    \  PRINT(A);\n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase, 100000)\n\
+    \    {\n      cout << endl;\n      dump(testcase);\n\n\n      // ----- generate\
+    \ cases -----\n      ll N = 1 + rand() % 5;\n      vl A(N);\n      rep(i, N) A.at(i)\
+    \ = 1 + rand() % 10;\n      // --------------------------\n\n      // ------ check\
+    \ output ------\n      #define INPUT A\n      auto god = naive(INPUT);\n     \
+    \ auto ans = solve(INPUT);\n      if (god != ans)\n      {\n        dump(INPUT);\n\
+    \        dump(god, ans);\n        exit(0);\n      }\n      // --------------------------\n\
+    \    }\n    dump(\"ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](string\
+    \ val, string color)\n  {\n    string s = \"\\033[\" + color + \"m\" + val + \"\
+    \\033[m\";\n    #ifdef LOCAL\n    cerr << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\
+    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
+    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n    cerr << val;\n    //*/\n  };\n\
+    \n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\",\
+    \ \"32\");\n  #endif\n  #if defined FAST_CIO and not defined LOCAL\n  CERR(\"\\\
+    n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
+    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
+    \\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n  {\n    dump(\"new testcase\"\
+    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\\n[SINGLE_TESTCASE]\\\
+    n\\n\", \"36\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\\
+    n\\n\", \"33\");\n  dump(\"T\");\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"\
+    new testcase\");\n    main2();\n  }\n  #endif\n}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/bitwise_and_convolution\"\
+    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
+    \n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF\
+    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"template/template_all.hpp\"\
+    \n\n#include \"math/modint/modint.hpp\"\nusing mint = modint998244353;\n// using\
+    \ mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n// using\
+    \ mint = modint;\n#include \"math/modint/binomial.hpp\"\nusing bi = Binomial<mint>;\n\
+    \n#include \"math/set/kronecker_power.hpp\"\n\nvoid zeta(vc<mint> &A)\n{\n  kronecker_power_destructive<RingAddSubMul<mint>,\
+    \ 2>({{{1, 0}, {1, 1}}}, A);\n}\nvoid mobius(vc<mint> &A)\n{\n  kronecker_power_destructive<RingAddSubMul<mint>,\
+    \ 2>({{{1, 0}, {-1, 1}}}, A);\n}\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n\
+    \  VEC(mint, 1 << N, A, B);\n  reverse(ALL(A)), reverse(ALL(B));\n  zeta(A), zeta(B);\n\
+    \  dump(A, B);\n  rep(i, 1 << N) A.at(i) *= B.at(i);\n  mobius(A);\n  reverse(ALL(A));\n\
+    \  PRINT(A);\n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase, 100000)\n\
+    \    {\n      cout << endl;\n      dump(testcase);\n\n\n      // ----- generate\
+    \ cases -----\n      ll N = 1 + rand() % 5;\n      vl A(N);\n      rep(i, N) A.at(i)\
+    \ = 1 + rand() % 10;\n      // --------------------------\n\n      // ------ check\
+    \ output ------\n      #define INPUT A\n      auto god = naive(INPUT);\n     \
+    \ auto ans = solve(INPUT);\n      if (god != ans)\n      {\n        dump(INPUT);\n\
+    \        dump(god, ans);\n        exit(0);\n      }\n      // --------------------------\n\
+    \    }\n    dump(\"ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](string\
+    \ val, string color)\n  {\n    string s = \"\\033[\" + color + \"m\" + val + \"\
+    \\033[m\";\n    #ifdef LOCAL\n    cerr << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\
+    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
+    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n    cerr << val;\n    //*/\n  };\n\
+    \n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\",\
+    \ \"32\");\n  #endif\n  #if defined FAST_CIO and not defined LOCAL\n  CERR(\"\\\
+    n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
+    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
+    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
+    \\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n  {\n    dump(\"new testcase\"\
+    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\\n[SINGLE_TESTCASE]\\\
+    n\\n\", \"36\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\\
+    n\\n\", \"33\");\n  dump(\"T\");\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"\
+    new testcase\");\n    main2();\n  }\n  #endif\n}"
   dependsOn:
+  - template/template_all.hpp
   - template/template_types.hpp
   - template/template_rep.hpp
   - template/template_math.hpp
@@ -765,91 +813,24 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
-  isVerificationFile: false
-  path: template/template_all.hpp
-  requiredBy:
-  - math/extgcd.hpp
-  - math/set/zeta_mobius.hpp
-  - math/set/kronecker_power.hpp
-  - math/set/subset_convolution.hpp
-  - math/set/and_or_convolution.hpp
-  - math/set/xor_convolution.hpp
-  - math/prime/order_primitive_root.hpp
-  - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/euler_phi_carmichael.hpp
-  - math/prime/prime_power.hpp
-  - math/prime/factorize.hpp
-  - math/prime/lcm_gcd_convolution.hpp
-  - math/prime/primality_test.hpp
-  - math/prime/zeta_mobius_divisor_multiple.hpp
-  - math/prime/linear_sieve.hpp
-  - math/modint/modint64_internal.hpp
-  - math/modint/modint32_internal.hpp
   - math/modint/modint.hpp
-  - math/modint/binomial.hpp
+  - math/modint/modint32_internal.hpp
   - math/modint/modint_base.hpp
-  - math/modint/modint64.hpp
-  - math/modint/power_table.hpp
-  - math/quotients.hpp
+  - math/extgcd.hpp
+  - math/modint/binomial.hpp
+  - math/set/kronecker_power.hpp
   - math/algebra/algebra_basic_ops.hpp
-  - math/algebra/polynomial_ring.hpp
   - math/algebra/algebra_base.hpp
-  - math/quadratic_equation_integer.hpp
-  - template/template.cpp
-  - algo/merge_sort.hpp
-  - graph/graph.hpp
-  - itertools/direct_product.hpp
-  - itertools/bit.hpp
-  - ds/csr.hpp
-  - ds/coordinate_compression.hpp
-  - ds/group_index.hpp
-  timestamp: '2025-03-16 23:12:25+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/aoj/modpow.test.cpp
-  - verify/aoj/csr.test.cpp
-  - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/quadratic_equation.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yukicoder/base_repr.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/static_modint.test.cpp
-  - verify/yukicoder/dynamic_modint.test.cpp
-  - verify/yukicoder/binomial.test.cpp
-  - verify/yosupo/quotients.test.cpp
-  - verify/yosupo/kronecker_power_hadamard.test.cpp
-  - verify/yosupo/many_aplusb_tuple.test.cpp
-  - verify/yosupo/static_range_frequency.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/many_aplusb_128bit.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/aplusb.test.cpp
-  - verify/yosupo/kth_root_integer.test.cpp
-  - verify/yosupo/xor_convolution.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/subset_convolution.test.cpp
-  - verify/yosupo/predecessor_problem.test.cpp
-  - verify/yosupo/many_aplusb.test.cpp
-  - verify/yosupo/associative_array_lower_bound.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - verify/yosupo/binomial.test.cpp
-  - verify/mytest/modint64.test.cpp
-  - verify/mytest/power_table.test.cpp
-  - verify/mytest/itertools_direct_product.test.cpp
-  - verify/mytest/modint.test.cpp
-  - verify/mytest/linear_sieve.test.cpp
-  - verify/mytest/itertools_bit.test.cpp
-documentation_of: template/template_all.hpp
+  isVerificationFile: true
+  path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+  requiredBy: []
+  timestamp: '2025-03-18 21:50:59+09:00'
+  verificationStatus: TEST_ACCEPTED
+  verifiedWith: []
+documentation_of: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
 layout: document
 redirect_from:
-- /library/template/template_all.hpp
-- /library/template/template_all.hpp.html
-title: template/template_all.hpp
+- /verify/verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+- /verify/verify/yosupo/kronecker_power_zeta_mobius.test.cpp.html
+title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
 ---

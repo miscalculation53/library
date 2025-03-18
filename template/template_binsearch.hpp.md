@@ -108,9 +108,16 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/set/and_or_convolution.hpp
     title: "and/or \u7573\u307F\u8FBC\u307F"
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
+    path: math/set/kronecker_power.hpp
+    title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
+  - icon: ':heavy_check_mark:'
     path: math/set/subset_convolution.hpp
     title: subset convolution
+  - icon: ':heavy_check_mark:'
+    path: math/set/xor_convolution.hpp
+    title: "\u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\u30FBxor \u7573\u307F\u8FBC\
+      \u307F"
   - icon: ':heavy_check_mark:'
     path: math/set/zeta_mobius.hpp
     title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
@@ -120,9 +127,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':warning:'
-    path: verify/yosupo/subset_convolution.cpp
-    title: verify/yosupo/subset_convolution.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/csr.test.cpp
@@ -173,6 +177,12 @@ data:
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/kronecker_power_hadamard.test.cpp
+    title: verify/yosupo/kronecker_power_hadamard.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kth_root_integer.test.cpp
     title: verify/yosupo/kth_root_integer.test.cpp
   - icon: ':heavy_check_mark:'
@@ -205,6 +215,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/subset_convolution.test.cpp
+    title: verify/yosupo/subset_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/xor_convolution.test.cpp
+    title: verify/yosupo/xor_convolution.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/base_repr.test.cpp
     title: verify/yukicoder/base_repr.test.cpp
@@ -503,11 +519,12 @@ data:
   isVerificationFile: false
   path: template/template_binsearch.hpp
   requiredBy:
-  - verify/yosupo/subset_convolution.cpp
   - math/extgcd.hpp
   - math/set/zeta_mobius.hpp
+  - math/set/kronecker_power.hpp
   - math/set/subset_convolution.hpp
   - math/set/and_or_convolution.hpp
+  - math/set/xor_convolution.hpp
   - math/prime/order_primitive_root.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
   - math/prime/euler_phi_carmichael.hpp
@@ -555,6 +572,7 @@ data:
   - verify/yukicoder/dynamic_modint.test.cpp
   - verify/yukicoder/binomial.test.cpp
   - verify/yosupo/quotients.test.cpp
+  - verify/yosupo/kronecker_power_hadamard.test.cpp
   - verify/yosupo/many_aplusb_tuple.test.cpp
   - verify/yosupo/static_range_frequency.test.cpp
   - verify/yosupo/and_or_convolution.test.cpp
@@ -565,11 +583,14 @@ data:
   - verify/yosupo/primality_test.test.cpp
   - verify/yosupo/aplusb.test.cpp
   - verify/yosupo/kth_root_integer.test.cpp
+  - verify/yosupo/xor_convolution.test.cpp
   - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/subset_convolution.test.cpp
   - verify/yosupo/predecessor_problem.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
   - verify/yosupo/associative_array_lower_bound.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/binomial.test.cpp
   - verify/mytest/modint64.test.cpp
   - verify/mytest/template_binsearch.test.cpp

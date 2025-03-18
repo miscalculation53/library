@@ -808,10 +808,16 @@ data:
     \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
     \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
     \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
-    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
-    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
-    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
-    \ = Group<typename R::S, R::add, R::e0, R::minus>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto minus_, auto mul_, auto e1_, auto inv_>\nstruct Field\n{\n  using\
+    \ S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n  static constexpr auto inv = inv_;\n};\n\n\
+    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
+    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
+    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
+    \ R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul =\
+    \ Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
     \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
     \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
     template <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S\
@@ -839,10 +845,17 @@ data:
     \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
     \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
     \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
-    \ 1; }\n};\n#line 6 \"math/prime/zeta_mobius_divisor_multiple_large.hpp\"\n\n\
-    /**\n * @brief \u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\
-    \u30A6\u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09\n\
-    \ * @docs docs/math/prime/zeta_mobius_divisor_multiple_large.md\n */\n\nstruct\
+    \ 1; }\n};\n\ntemplate <class T>\nstruct FieldAddSubMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr S minus(S\
+    \ a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static constexpr\
+    \ S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return 1; }\n\
+    \  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate <class M>\ntypename\
+    \ M::S pow_monoid(typename M::S a, ll k)\n{\n  typename M::S c = M::e();\n  for\
+    \ (; k; k >>= 1)\n  {\n    if (k & 1)\n      c = M::op(c, a);\n    a = M::op(a,\
+    \ a);\n  }\n  return c;\n}\n#line 6 \"math/prime/zeta_mobius_divisor_multiple_large.hpp\"\
+    \n\n/**\n * @brief \u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\
+    \u30D3\u30A6\u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09\
+    \n * @docs docs/math/prime/zeta_mobius_divisor_multiple_large.md\n */\n\nstruct\
     \ ZetaMobiusDivisorMultipleLarge\n{\npublic:\n  ll m;\n  vc<PrimePower<ll>> fac;\n\
     \  ll pnum, dnum;\n  vc<ll> ds;\n\nprivate:\n  vc<int> f01;  // f01[d] \u306F\u3001\
     d \u304C f[j] == e[j] \u306A\u3089 j \u30D3\u30C3\u30C8\u76EE\u304C 1\n\npublic:\n\
@@ -1022,7 +1035,7 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
   requiredBy: []
-  timestamp: '2025-03-16 23:12:25+09:00'
+  timestamp: '2025-03-18 21:50:59+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/zeta_mobius_divisor_large.test.cpp

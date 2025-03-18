@@ -538,10 +538,15 @@ data:
     \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
     \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
     \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
-    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
-    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
-    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
-    \ R::S, R::add, R::e0, R::minus>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
+    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
+    \ constexpr auto inv = inv_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
+    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
+    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
+    \ = Group<typename R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing\
+    \ GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
     \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
     \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
     template <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S\
@@ -569,62 +574,68 @@ data:
     \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
     \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
     \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
-    \ 1; }\n};\n#line 5 \"math/set/zeta_mobius.hpp\"\n\n/**\n * @brief \u30BC\u30FC\
-    \u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB\n * @docs docs/math/set/zeta_mobius.md\n\
+    \ 1; }\n};\n\ntemplate <class T>\nstruct FieldAddSubMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr S minus(S\
+    \ a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static constexpr\
+    \ S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return 1; }\n\
+    \  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate <class M>\ntypename\
+    \ M::S pow_monoid(typename M::S a, ll k)\n{\n  typename M::S c = M::e();\n  for\
+    \ (; k; k >>= 1)\n  {\n    if (k & 1)\n      c = M::op(c, a);\n    a = M::op(a,\
+    \ a);\n  }\n  return c;\n}\n#line 5 \"math/set/zeta_mobius.hpp\"\n\n/**\n * @brief\
+    \ \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB\n * @docs docs/math/set/zeta_mobius.md\n\
     \ */\n\n// \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\
     \u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001\
     O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
-    \ <class M>\nvoid zeta_subset_destructive(vc<typename M::S> &a)\n{\n  if (a.empty())\n\
-    \    return;\n  assert(has_single_bit(a.size()));\n  const int n = a.size();\n\
-    \  for (int w = 1; w < n; w <<= 1)\n    repi(k, 0, n, w * 2) repi(i, w)\n    \
-    \  a[k + w + i] = M::op(a[k + w + i], a[k + i]);\n}\n// \u03BC \u306F \u03B6 \u306E\
+    \ <class M>\nvoid zeta_subset_destructive(vc<typename M::S> &a)\n{\n  const int\
+    \ len = a.size();\n  if (len == 0)\n    return;\n  assert(has_single_bit(len));\n\
+    \  for (int d = 1; d < len; d *= 2)\n    repi(iu, 0, len, d * 2) repi(i, iu, iu\
+    \ + d)\n      a[i + d] = M::op(a[i + d], a[i]);\n}\n// \u03BC \u306F \u03B6 \u306E\
     \u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286 s} (-1)^{|s\\t|} a[t]\n//\
     \ G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
     \u5B9A\u3001O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\
     \u3046\ntemplate <class G>\nvoid mobius_subset_destructive(vc<typename G::S> &a)\n\
-    {\n  if (a.empty())\n    return;\n  assert(has_single_bit(a.size()));\n  const\
-    \ int n = a.size();\n  for (int w = n >> 1; w; w >>= 1)\n    repi(k, 0, n, w *\
-    \ 2) repi(i, w)\n      a[k + w + i] = G::op(a[k + w + i], G::inv(a[k + i]));\n\
-    }\n\n// \u03B6'a[s] = \u03A3{s \u2286 t} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\
-    \u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n\
+    {\n  const int len = a.size();\n  if (len == 0)\n    return;\n  assert(has_single_bit(len));\n\
+    \  for (int d = len >> 1; d; d >>= 1)\n    repi(iu, 0, len, d * 2) repi(i, iu,\
+    \ iu + d)\n      a[i + d] = G::op(a[i + d], G::inv(a[i]));\n}\n\n// \u03B6'a[s]\
+    \ = \u03A3{s \u2286 t} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3\
+    \ \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n\
+    // \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate <class M>\nvoid\
+    \ zeta_supset_destructive(vc<typename M::S> &a)\n{\n  const int len = a.size();\n\
+    \  if (len == 0)\n    return;\n  assert(has_single_bit(len));\n  for (int d =\
+    \ 1; d < len; d *= 2)\n    repi(iu, 0, len, d * 2) repi(i, iu, iu + d)\n     \
+    \ a[i] = M::op(a[i], a[i + d]);\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\
+    \u63DB\n// \u03BC'a[s] = \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n// G \u306F\u53EF\
+    \u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n\
     \ 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
-    \ <class M>\nvoid zeta_supset_destructive(vc<typename M::S> &a)\n{\n  if (a.empty())\n\
-    \    return;\n  assert(has_single_bit(a.size()));\n  const int n = a.size();\n\
-    \  for (int w = 1; w < n; w <<= 1)\n    repi(k, 0, n, w * 2) repi(i, w)\n    \
-    \  a[k + i] = M::op(a[k + i], a[k + w + i]);\n}\n// \u03BC' \u306F \u03B6' \u306E\
-    \u9006\u5909\u63DB\n// \u03BC'a[s] = \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n//\
-    \ G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
-    \u5B9A\u3001O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\
-    \u3046\ntemplate <class G>\nvoid mobius_supset_destructive(vc<typename G::S> &a)\n\
-    {\n  if (a.empty())\n    return;\n  assert(has_single_bit(a.size()));\n  const\
-    \ int n = a.size();\n  for (int w = n >> 1; w; w >>= 1)\n    repi(k, 0, n, w *\
-    \ 2) repi(i, w)\n      a[k + i] = G::op(a[k + i], G::inv(a[k + w + i]));\n}\n\n\
-    // \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\
-    \u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n)\
-    \ \u6642\u9593\ntemplate <class M>\nvc<typename M::S> zeta_subset(const vc<typename\
-    \ M::S> &a)\n{\n  auto b = a;\n  zeta_subset_destructive(b);\n  return b;\n}\n\
-    // \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286\
-    \ s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n\
-    // |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class G>\n\
-    vc<typename G::S> mobius_subset(const vc<typename G::S> &a)\n{\n  auto b = a;\n\
-    \  mobius_subset_destructive(b);\n  return b;\n}\n\n// \u03B6'a[s] = \u03A3{s\
-    \ \u2286 t} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\
+    \ <class G>\nvoid mobius_supset_destructive(vc<typename G::S> &a)\n{\n  const\
+    \ int len = a.size();\n  if (len == 0)\n    return;\n  assert(has_single_bit(len));\n\
+    \  for (int d = len >> 1; d; d >>= 1)\n    repi(iu, 0, len, d * 2) repi(i, iu,\
+    \ iu + d)\n      a[i] = G::op(a[i], G::inv(a[i + d]));\n}\n\n// \u03B6a[s] = \u03A3\
+    {t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\
     \u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate\
-    \ <class M>\nvc<typename M::S> zeta_supset(const vc<typename M::S> &a)\n{\n  auto\
-    \ b = a;\n  zeta_supset_destructive(b);\n  return b;\n}\n// \u03BC' \u306F \u03B6\
-    ' \u306E\u9006\u5909\u63DB\n// \u03BC'a[s] = \u03A3{s \u2286 t} (-1)^{|t\\s|}\
-    \ a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\
-    \u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class G>\nvc<typename G::S>\
-    \ mobius_supset(const vc<typename G::S> &a)\n{\n  auto b = a;\n  mobius_supset_destructive(b);\n\
-    \  return b;\n}\n#line 5 \"math/set/and_or_convolution.hpp\"\n\n/**\n * @brief\
-    \ and/or \u7573\u307F\u8FBC\u307F\n * @docs docs/math/set/and_or_convolution.md\n\
-    \ */\n\n// R \u306F\u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n)\
-    \ \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046: a \u306B\u7D50\
-    \u679C (and conv) \u304C\u3001b \u306B\u306F zeta_supset \u304C\u5165\u308B\n\
-    template <class R>\nvoid and_convolution_destructive\n(vc<typename R::S> &a, vc<typename\
-    \ R::S> &b)\n{\n  assert(a.size() == b.size());\n  zeta_supset_destructive<MonoidOfSemiRingAdd<R>>(a);\n\
-    \  zeta_supset_destructive<MonoidOfSemiRingAdd<R>>(b);\n  repi(i, a.size()) a[i]\
-    \ = R::mul(a[i], b[i]);\n  mobius_supset_destructive<GroupOfRingAdd<R>>(a);\n\
+    \ <class M>\nvc<typename M::S> zeta_subset(const vc<typename M::S> &a)\n{\n  auto\
+    \ b = a;\n  zeta_subset_destructive(b);\n  return b;\n}\n// \u03BC \u306F \u03B6\
+    \ \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286 s} (-1)^{|s\\t|} a[t]\n\
+    // G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
+    \u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class G>\nvc<typename G::S> mobius_subset(const\
+    \ vc<typename G::S> &a)\n{\n  auto b = a;\n  mobius_subset_destructive(b);\n \
+    \ return b;\n}\n\n// \u03B6'a[s] = \u03A3{s \u2286 t} a[t]\n// M \u306F\u53EF\u63DB\
+    \u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\
+    \u3001O(n 2^n) \u6642\u9593\ntemplate <class M>\nvc<typename M::S> zeta_supset(const\
+    \ vc<typename M::S> &a)\n{\n  auto b = a;\n  zeta_supset_destructive(b);\n  return\
+    \ b;\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n// \u03BC'a[s] =\
+    \ \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3\
+    \ \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n\
+    template <class G>\nvc<typename G::S> mobius_supset(const vc<typename G::S> &a)\n\
+    {\n  auto b = a;\n  mobius_supset_destructive(b);\n  return b;\n}\n#line 5 \"\
+    math/set/and_or_convolution.hpp\"\n\n/**\n * @brief and/or \u7573\u307F\u8FBC\u307F\
+    \n * @docs docs/math/set/and_or_convolution.md\n */\n\n// R \u306F\u74B0\n// |a|\
+    \ = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\
+    \u5909\u66F4\u3092\u884C\u3046: a \u306B\u7D50\u679C (and conv) \u304C\u3001b\
+    \ \u306B\u306F zeta_supset \u304C\u5165\u308B\ntemplate <class R>\nvoid and_convolution_destructive\n\
+    (vc<typename R::S> &a, vc<typename R::S> &b)\n{\n  assert(a.size() == b.size());\n\
+    \  zeta_supset_destructive<MonoidOfSemiRingAdd<R>>(a);\n  zeta_supset_destructive<MonoidOfSemiRingAdd<R>>(b);\n\
+    \  repi(i, a.size()) a[i] = R::mul(a[i], b[i]);\n  mobius_supset_destructive<GroupOfRingAdd<R>>(a);\n\
     }\n// R \u306F\u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\
     \u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046: a \u306B\u7D50\u679C\
     \ (or conv) \u304C\u3001b \u306B\u306F zeta_subset \u304C\u5165\u308B\ntemplate\
@@ -679,7 +690,7 @@ data:
   isVerificationFile: false
   path: math/set/and_or_convolution.hpp
   requiredBy: []
-  timestamp: '2025-03-17 13:49:33+09:00'
+  timestamp: '2025-03-18 21:50:59+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/and_or_convolution.test.cpp

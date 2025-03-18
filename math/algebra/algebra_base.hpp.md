@@ -55,15 +55,19 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/set/and_or_convolution.hpp
     title: "and/or \u7573\u307F\u8FBC\u307F"
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
+    path: math/set/kronecker_power.hpp
+    title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
+  - icon: ':heavy_check_mark:'
     path: math/set/subset_convolution.hpp
     title: subset convolution
   - icon: ':heavy_check_mark:'
+    path: math/set/xor_convolution.hpp
+    title: "\u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\u30FBxor \u7573\u307F\u8FBC\
+      \u307F"
+  - icon: ':heavy_check_mark:'
     path: math/set/zeta_mobius.hpp
     title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
-  - icon: ':warning:'
-    path: verify/yosupo/subset_convolution.cpp
-    title: verify/yosupo/subset_convolution.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/and_or_convolution.test.cpp
@@ -72,8 +76,20 @@ data:
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/kronecker_power_hadamard.test.cpp
+    title: verify/yosupo/kronecker_power_hadamard.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/subset_convolution.test.cpp
+    title: verify/yosupo/subset_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/xor_convolution.test.cpp
+    title: verify/yosupo/xor_convolution.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -570,10 +586,15 @@ data:
     \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
     \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
     \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
-    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
-    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
-    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
-    \ R::S, R::add, R::e0, R::minus>;\n"
+    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
+    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
+    \ constexpr auto inv = inv_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
+    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
+    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
+    \ = Group<typename R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing\
+    \ GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n\n/**\n * @brief\
     \ \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs\
     \ docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_, auto op_, auto\
@@ -588,10 +609,15 @@ data:
     \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
     \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
     \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
-    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
-    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
-    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
-    \ R::S, R::add, R::e0, R::minus>;"
+    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
+    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
+    \ constexpr auto inv = inv_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
+    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
+    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
+    \ = Group<typename R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing\
+    \ GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -606,23 +632,28 @@ data:
   isVerificationFile: false
   path: math/algebra/algebra_base.hpp
   requiredBy:
-  - verify/yosupo/subset_convolution.cpp
   - math/set/zeta_mobius.hpp
+  - math/set/kronecker_power.hpp
   - math/set/subset_convolution.hpp
   - math/set/and_or_convolution.hpp
+  - math/set/xor_convolution.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
   - math/prime/lcm_gcd_convolution.hpp
   - math/prime/zeta_mobius_divisor_multiple.hpp
   - math/algebra/algebra_basic_ops.hpp
   - math/algebra/polynomial_ring.hpp
-  timestamp: '2025-03-16 23:12:25+09:00'
+  timestamp: '2025-03-18 21:50:59+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/yosupo/kronecker_power_hadamard.test.cpp
   - verify/yosupo/and_or_convolution.test.cpp
   - verify/yosupo/gcd_convolution.test.cpp
+  - verify/yosupo/xor_convolution.test.cpp
+  - verify/yosupo/subset_convolution.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
 documentation_of: math/algebra/algebra_base.hpp
 layout: document
 redirect_from:
@@ -642,12 +673,13 @@ https://noshi91.hatenablog.com/entry/2020/04/22/212649 の E の方法を採用�
 - 変なのが出たら struct を書く
   - コピペするとよさそう
   - スニペットにしたい
-  - 一応 `Monoid`, `Group`, `SemiRing`, `Ring` のテンプレート引数に型と関数を渡すことで作れる（ACL の使い方と大差ない感じになる）。しかし、この使い方はあまり想定していない（struct を 1 個しか使わないならこれでもいいかも。2 個以上使うとき名前をいちいちつけないといけないのが微妙だと（個人的には）思う）
-- 群をモノイドとして使う、環を半環として使う は OK
-- 半環や環から $+$ や $\cdot$ だけのモノイド・群をとってくるものとして次がある（使用頻度はそんなに高くないかも）
-  - `MonoidOfSemiRingAdd<SR>`
-  - `MonoidOfSemiRingMul<SR>`
-  - `GroupOfRingAdd<R>`
+  - 一応 `Monoid`, `Group`, `SemiRing`, `Ring`, `Field` のテンプレート引数に型と関数を渡すことで作れる（ACL の使い方と大差ない感じになる）。しかし、この使い方はあまり想定していない（struct を 1 個しか使わないならこれでもいいかも。2 個以上使うとき名前をいちいちつけないといけないのが微妙だと（個人的には）思う）
+- 群をモノイドとして使う、環を半環として使う、体を半環や環として使う は OK
+- 半環、環、体から $+$ や $\cdot$ だけのモノイド・群をとってくるものとして次がある（使用頻度はそんなに高くないかも）
+  - `MonoidOfSemiRingAdd<SR>`（半環・環・体の $+$ のモノイド）
+  - `MonoidOfSemiRingMul<SR>`（半環・環・体の $\cdot$ のモノイド）
+  - `GroupOfRingAdd<R>`（環・体の $+$ の群）
+  - `GroupOfFieldMul<K>`（体の $\cdot$ の群）
 
 
 ### 群に似た構造
@@ -742,5 +774,3 @@ https://noshi91.hatenablog.com/entry/2020/04/22/212649 の E の方法を採用�
 乗法が可換で、乗法逆元 $a^{-1}$ を持つ環。
 
 `S`, `S add(S a, S b)`, `S e0()`, `S mul(S a, S b)`, `S e1()`, `S minus(S a)` に加えて、`S inv(S a)` も持つ。
-
-これ使うことある？

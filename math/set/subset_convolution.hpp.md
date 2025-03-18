@@ -40,14 +40,14 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':warning:'
-    path: verify/yosupo/subset_convolution.cpp
-    title: verify/yosupo/subset_convolution.cpp
-  _extendedVerifiedWith: []
+  _extendedRequiredBy: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/subset_convolution.test.cpp
+    title: verify/yosupo/subset_convolution.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/set/subset_convolution.md
     document_title: subset convolution
@@ -535,10 +535,15 @@ data:
     \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
     \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
     \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
-    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
-    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
-    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
-    \ R::S, R::add, R::e0, R::minus>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
+    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
+    \ constexpr auto inv = inv_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
+    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
+    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
+    \ = Group<typename R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing\
+    \ GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
     \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
     \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
     template <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S\
@@ -566,14 +571,21 @@ data:
     \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
     \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
     \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
-    \ 1; }\n};\n#line 5 \"math/set/subset_convolution.hpp\"\n// #include \"and_or_convolution.hpp\"\
-    \n// #include \"../../math/algebra/polynomial_ring.hpp\"\n\n/**\n * @brief subset\
-    \ convolution\n * @docs docs/math/set/subset_convolution.md\n */\n\n// R \u306F\
-    \u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n^2 2^n) \u6642\u9593\ntemplate\
-    \ <class R>\nvc<typename R::S> subset_convolution\n(const vc<typename R::S> &a,\
-    \ const vc<typename R::S> &b)\n{\n  // using P = PolynomialRingArray<R, 30>;\n\
-    \  using F = array<typename R::S, 30>;\n  assert(a.size() == b.size());\n  const\
-    \ int len = a.size();\n  if (len == 0)\n    return {};\n  assert(has_single_bit(len));\n\
+    \ 1; }\n};\n\ntemplate <class T>\nstruct FieldAddSubMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr S minus(S\
+    \ a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static constexpr\
+    \ S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return 1; }\n\
+    \  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate <class M>\ntypename\
+    \ M::S pow_monoid(typename M::S a, ll k)\n{\n  typename M::S c = M::e();\n  for\
+    \ (; k; k >>= 1)\n  {\n    if (k & 1)\n      c = M::op(c, a);\n    a = M::op(a,\
+    \ a);\n  }\n  return c;\n}\n#line 5 \"math/set/subset_convolution.hpp\"\n// #include\
+    \ \"and_or_convolution.hpp\"\n// #include \"../../math/algebra/polynomial_ring.hpp\"\
+    \n\n/**\n * @brief subset convolution\n * @docs docs/math/set/subset_convolution.md\n\
+    \ */\n\n// R \u306F\u74B0\n// |a| = |b| = 2^n \u3092\u4EEE\u5B9A\u3001O(n^2 2^n)\
+    \ \u6642\u9593\ntemplate <class R>\nvc<typename R::S> subset_convolution\n(const\
+    \ vc<typename R::S> &a, const vc<typename R::S> &b)\n{\n  // using P = PolynomialRingArray<R,\
+    \ 30>;\n  using F = array<typename R::S, 30>;\n  assert(a.size() == b.size());\n\
+    \  const int len = a.size();\n  if (len == 0)\n    return {};\n  assert(has_single_bit(len));\n\
     \  const int lg = countr_zero(len);\n  static vc<int> pc{0};\n  if (int i = pc.size();\
     \ i <= len)\n  {\n    pc.resize(len);\n    for (; i < len; i++)\n      pc[i] =\
     \ pc[i - (i & -i)] + 1;\n  }\n  vc<F> fa(len), fb(len);\n  repi(i, len)\n  {\n\
@@ -628,11 +640,11 @@ data:
   - math/algebra/algebra_base.hpp
   isVerificationFile: false
   path: math/set/subset_convolution.hpp
-  requiredBy:
-  - verify/yosupo/subset_convolution.cpp
-  timestamp: '2025-03-17 17:47:50+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  requiredBy: []
+  timestamp: '2025-03-18 21:50:59+09:00'
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - verify/yosupo/subset_convolution.test.cpp
 documentation_of: math/set/subset_convolution.hpp
 layout: document
 redirect_from:

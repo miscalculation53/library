@@ -51,15 +51,19 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/set/and_or_convolution.hpp
     title: "and/or \u7573\u307F\u8FBC\u307F"
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
+    path: math/set/kronecker_power.hpp
+    title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
+  - icon: ':heavy_check_mark:'
     path: math/set/subset_convolution.hpp
     title: subset convolution
   - icon: ':heavy_check_mark:'
+    path: math/set/xor_convolution.hpp
+    title: "\u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\u30FBxor \u7573\u307F\u8FBC\
+      \u307F"
+  - icon: ':heavy_check_mark:'
     path: math/set/zeta_mobius.hpp
     title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
-  - icon: ':warning:'
-    path: verify/yosupo/subset_convolution.cpp
-    title: verify/yosupo/subset_convolution.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/and_or_convolution.test.cpp
@@ -68,8 +72,20 @@ data:
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/kronecker_power_hadamard.test.cpp
+    title: verify/yosupo/kronecker_power_hadamard.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/subset_convolution.test.cpp
+    title: verify/yosupo/subset_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/xor_convolution.test.cpp
+    title: verify/yosupo/xor_convolution.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -566,10 +582,16 @@ data:
     \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
     \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
     \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
-    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
-    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
-    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
-    \ = Group<typename R::S, R::add, R::e0, R::minus>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto minus_, auto mul_, auto e1_, auto inv_>\nstruct Field\n{\n  using\
+    \ S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n  static constexpr auto inv = inv_;\n};\n\n\
+    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
+    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
+    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
+    \ R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul =\
+    \ Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
     \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
     \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
     template <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr S\
@@ -597,7 +619,14 @@ data:
     \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
     \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
     \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
-    \ 1; }\n};\n"
+    \ 1; }\n};\n\ntemplate <class T>\nstruct FieldAddSubMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr S minus(S\
+    \ a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static constexpr\
+    \ S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return 1; }\n\
+    \  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate <class M>\ntypename\
+    \ M::S pow_monoid(typename M::S a, ll k)\n{\n  typename M::S c = M::e();\n  for\
+    \ (; k; k >>= 1)\n  {\n    if (k & 1)\n      c = M::op(c, a);\n    a = M::op(a,\
+    \ a);\n  }\n  return c;\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
     algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\
     \u5247\u6F14\u7B97\u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n\
@@ -626,7 +655,14 @@ data:
     \ = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
     \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
     \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
-    \ 1; }\n};"
+    \ 1; }\n};\n\ntemplate <class T>\nstruct FieldAddSubMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr S minus(S\
+    \ a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static constexpr\
+    \ S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return 1; }\n\
+    \  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate <class M>\ntypename\
+    \ M::S pow_monoid(typename M::S a, ll k)\n{\n  typename M::S c = M::e();\n  for\
+    \ (; k; k >>= 1)\n  {\n    if (k & 1)\n      c = M::op(c, a);\n    a = M::op(a,\
+    \ a);\n  }\n  return c;\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -642,21 +678,26 @@ data:
   isVerificationFile: false
   path: math/algebra/algebra_basic_ops.hpp
   requiredBy:
-  - verify/yosupo/subset_convolution.cpp
   - math/set/zeta_mobius.hpp
+  - math/set/kronecker_power.hpp
   - math/set/subset_convolution.hpp
   - math/set/and_or_convolution.hpp
+  - math/set/xor_convolution.hpp
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
   - math/prime/lcm_gcd_convolution.hpp
   - math/prime/zeta_mobius_divisor_multiple.hpp
-  timestamp: '2025-03-16 23:12:25+09:00'
+  timestamp: '2025-03-18 21:50:59+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/yosupo/kronecker_power_hadamard.test.cpp
   - verify/yosupo/and_or_convolution.test.cpp
   - verify/yosupo/gcd_convolution.test.cpp
+  - verify/yosupo/xor_convolution.test.cpp
+  - verify/yosupo/subset_convolution.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
 documentation_of: math/algebra/algebra_basic_ops.hpp
 layout: document
 redirect_from:
@@ -688,3 +729,15 @@ title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min, 
 ### 環
 
 - `RingAddSubMul<T>`
+
+### 体
+
+- `FieldAddSubMulDiv<T>`
+
+---
+
+また、モノイドを渡すと累乗を計算してくれる関数 `pow_monoid` を用意した。
+
+```cpp
+M::S pow_monoid(M::S a, ll k)
+```

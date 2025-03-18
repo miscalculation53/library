@@ -45,6 +45,12 @@ data:
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/kronecker_power_hadamard.test.cpp
+    title: verify/yosupo/kronecker_power_hadamard.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
   - icon: ':heavy_check_mark:'
@@ -590,8 +596,10 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/binomial.test.cpp
+  - verify/yosupo/kronecker_power_hadamard.test.cpp
   - verify/yosupo/gcd_convolution.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/binomial.test.cpp
 documentation_of: math/modint/binomial.hpp
 layout: document
