@@ -8,6 +8,7 @@
  * @docs docs/math/algebra/polynomial_ring.md
  */
 
+// R は環
 // サイズ n (つまり n-1 次) で打ち切る
 template <class R, int n>
 struct PolynomialRingArray
@@ -48,6 +49,7 @@ struct PolynomialRingArray
   }
 };
 
+// R は環
 // 打ち切らない (掛け算も)
 template <class R>
 struct PolynomialRingVector
