@@ -14,9 +14,9 @@ a_{11}B & \dots & a_{1n}B \\\\
 a_{n1}B & \dots & a_{nm}B
 \end{bmatrix}$
 
-で定義される。またクロネッカー冪は $A^{\otimes n} \coloneqq \underbrace{A \otimes \dots \otimes A}_{n}$ で定義される。
+で定義される。またクロネッカー冪は $A^{\otimes n} =  \underbrace{A \otimes \dots \otimes A}_{n}$ で定義される。
 
-$k \times k$ 行列 $A$ と $k^n$ 次元ベクトル $\bm{v}$ が与えられたとき、ベクトル $A^{\otimes n}\bm{v}$ を高速に計算する方法がある。ゼータ変換、メビウス変換、アダマール変換などがその例。
+$k \times k$ 行列 $A$ と $k^n$ 次元ベクトル $v$ が与えられたとき、ベクトル $A^{\otimes n}v$ を高速に計算する方法がある。ゼータ変換、メビウス変換、アダマール変換などがその例。
 
 また、クロネッカー積の混合積性質
 
@@ -110,7 +110,7 @@ c...d...  ....a.b.  ....ab..
 vc<SR::S> kronecker_power(array<array<SR::S, k>, k> mat, vc<SR::S> v)
 ```
 
-$\mathrm{mat}^{\otimes k} \bm{v}$ を返す。
+$\mathrm{mat}^{\otimes k} v$ を返す。
 
 ##### 制約
 
