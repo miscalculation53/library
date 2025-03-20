@@ -2,6 +2,9 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: ds/coordinate_compression.hpp
+    title: "\u5EA7\u6A19\u5727\u7E2E"
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -39,10 +42,11 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':warning:'
   attributes:
-    _deprecated_at_docs: docs/algo/merge_sort.md
-    document_title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
+    _deprecated_at_docs: docs/ds/flat_map.md
+    document_title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\
+      \u5834\u5408\u306E map"
     links: []
-  bundledCode: "#line 2 \"algo/merge_sort.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+  bundledCode: "#line 2 \"ds/flat_map.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -568,18 +572,61 @@ data:
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 4 \"algo/merge_sort.hpp\"\n\n/**\n * @brief \u30DE\
-    \u30FC\u30B8\u30BD\u30FC\u30C8\n * @docs docs/algo/merge_sort.md\n */\n\ntemplate\
-    \ <class T, class Compare>\nvoid merge_sort(vc<T> &v, const Compare &comp)\n{\n\
-    \  const int n = v.size();\n  if (n <= 1)\n    return;\n  vc<T> l{v.begin(), v.begin()\
-    \ + n / 2};\n  vc<T> r{v.begin() + n / 2, v.end()};\n  merge_sort(l, comp);\n\
-    \  merge_sort(r, comp);\n  merge(ALL(l), ALL(r), v.begin(), comp);\n}\n"
-  code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u30DE\u30FC\u30B8\u30BD\u30FC\u30C8\n * @docs docs/algo/merge_sort.md\n */\n\
-    \ntemplate <class T, class Compare>\nvoid merge_sort(vc<T> &v, const Compare &comp)\n\
-    {\n  const int n = v.size();\n  if (n <= 1)\n    return;\n  vc<T> l{v.begin(),\
-    \ v.begin() + n / 2};\n  vc<T> r{v.begin() + n / 2, v.end()};\n  merge_sort(l,\
-    \ comp);\n  merge_sort(r, comp);\n  merge(ALL(l), ALL(r), v.begin(), comp);\n}"
+    \ vt;\n}\n// ----------\n#line 4 \"ds/flat_map.hpp\"\n\n#line 2 \"ds/coordinate_compression.hpp\"\
+    \n\n#line 4 \"ds/coordinate_compression.hpp\"\n\n/**\n * @brief \u5EA7\u6A19\u5727\
+    \u7E2E\n * @docs docs/ds/coordinate_compression.md\n */\n\ntemplate <class T>\n\
+    struct CoordinateCompression\n{\n  vc<T> vals;\n  CoordinateCompression() {}\n\
+    \  CoordinateCompression(const vc<T> &vec) : vals(sortuniqued(vec)) {}\n\n  //\
+    \ \u6DFB\u5B57 i \u306B\u5BFE\u5FDC\u3059\u308B\u5024\n  T get_val(const int i)\
+    \ const\n  {\n    assert(0 <= i && i < SZ(vals));\n    return vals[i];\n  }\n\
+    \  // \u5024 val \u306B\u5BFE\u5FDC\u3059\u308B\u6DFB\u5B57 (\u306A\u3051\u308C\
+    \u3070 -1)\n  template <class I = ll>\n  I get_id(const T &val) const\n  {\n \
+    \   auto it = lower_bound(ALL(vals), val);\n    if (it == vals.end() || *it !=\
+    \ val)\n      return -1;\n    return it - vals.begin();\n  }\n\n  template <class\
+    \ I = ll>\n  I size() const { return vals.size(); }\n};\n\n// \u5EA7\u6A19\u5727\
+    \u7E2E\u3057\u305F\u5F8C\u306E\u914D\u5217\u3092\u8FD4\u3059\ntemplate <class\
+    \ T, class I = ll>\nvc<I> compressed(const vc<T> &vec)\n{\n  CoordinateCompression\
+    \ cc(vec);\n  vc<I> res(vec.size());\n  repi(i, vec.size()) res[i] = cc.get_id(vec[i]);\n\
+    \  return res;\n}\n// \u540C\u3058\u5024\u306B\u306F\u540C\u3058 id \u3092\u632F\
+    \u308B\u304C\u3001id \u306F\u914D\u5217\u5185\u3067\u5148\u306B\u73FE\u308C\u308B\
+    \u3082\u306E\u304B\u3089\u5148\u306B\u632F\u308B\ntemplate <class T, class I =\
+    \ ll>\nvc<I> compressed_unordered(const vc<T> &vec)\n{\n  auto cv = compressed(vec);\n\
+    \  vc<int> id(vec.size(), -1);\n  vc<I> res(vec.size());\n  int j = 0;\n  repi(i,\
+    \ vec.size())\n  {\n    int &tmp = id[cv[i]];\n    if (tmp == -1)\n      tmp =\
+    \ j++;\n    res[i] = tmp;\n  }\n  return res;\n}\n#line 6 \"ds/flat_map.hpp\"\n\
+    \n/**\n * @brief \u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\
+    \u5834\u5408\u306E map\n * @docs docs/ds/flat_map.md\n */\n\ntemplate <class Key,\
+    \ class Value>\nstruct FlatMap\n{\n  CoordinateCompression<Key> cc;\n  vc<Value>\
+    \ vals;\n\n  FlatMap() {}\n  FlatMap(const vc<Key> &keys) : cc(keys), vals(cc.size())\
+    \ {}\n  Value &operator[](const Key &key)\n  {\n    const int i = cc.get_id(key);\n\
+    \    assert(i != -1);\n    return vals[i];\n  }\n  Value &at(const Key &key) {\
+    \ return operator[](key); }\n  bool contains(const Key &key) { return cc.get_id(key)\
+    \ != -1; }\n\n  template <class I = ll>\n  inline I size() const { return cc.size();\
+    \ }\n  inline bool empty() const { return size() == 0; }\n  struct Iterator\n\
+    \  {\n  private:\n    int i;\n    const FlatMap &mp;\n  public:\n    Iterator(int\
+    \ i, const FlatMap &mp) : i(i), mp(mp) {}\n    pair<Key, Value> operator*() const\n\
+    \    {\n      assert(i != mp.cc.size());\n      return pair{mp.cc.vals[i], mp.vals[i]};\n\
+    \    }\n    Iterator &operator++()\n    {\n      i++;\n      return *this;\n \
+    \   }\n    bool operator!=(const Iterator &other) const { return i != other.i;\
+    \ }\n  };\n  Iterator begin() const { return Iterator(0, *this); }\n  Iterator\
+    \ end() const { return Iterator(cc.size(), *this); }\n};\n"
+  code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n#include \"\
+    coordinate_compression.hpp\"\n\n/**\n * @brief \u30AD\u30FC\u304C\u3059\u3079\u3066\
+    \u5148\u306B\u308F\u304B\u308B\u5834\u5408\u306E map\n * @docs docs/ds/flat_map.md\n\
+    \ */\n\ntemplate <class Key, class Value>\nstruct FlatMap\n{\n  CoordinateCompression<Key>\
+    \ cc;\n  vc<Value> vals;\n\n  FlatMap() {}\n  FlatMap(const vc<Key> &keys) : cc(keys),\
+    \ vals(cc.size()) {}\n  Value &operator[](const Key &key)\n  {\n    const int\
+    \ i = cc.get_id(key);\n    assert(i != -1);\n    return vals[i];\n  }\n  Value\
+    \ &at(const Key &key) { return operator[](key); }\n  bool contains(const Key &key)\
+    \ { return cc.get_id(key) != -1; }\n\n  template <class I = ll>\n  inline I size()\
+    \ const { return cc.size(); }\n  inline bool empty() const { return size() ==\
+    \ 0; }\n  struct Iterator\n  {\n  private:\n    int i;\n    const FlatMap &mp;\n\
+    \  public:\n    Iterator(int i, const FlatMap &mp) : i(i), mp(mp) {}\n    pair<Key,\
+    \ Value> operator*() const\n    {\n      assert(i != mp.cc.size());\n      return\
+    \ pair{mp.cc.vals[i], mp.vals[i]};\n    }\n    Iterator &operator++()\n    {\n\
+    \      i++;\n      return *this;\n    }\n    bool operator!=(const Iterator &other)\
+    \ const { return i != other.i; }\n  };\n  Iterator begin() const { return Iterator(0,\
+    \ *this); }\n  Iterator end() const { return Iterator(cc.size(), *this); }\n};"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -591,29 +638,37 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
+  - ds/coordinate_compression.hpp
   isVerificationFile: false
-  path: algo/merge_sort.hpp
+  path: ds/flat_map.hpp
   requiredBy: []
-  timestamp: '2025-03-20 22:54:40+09:00'
+  timestamp: '2025-03-20 23:35:20+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
-documentation_of: algo/merge_sort.hpp
+documentation_of: ds/flat_map.hpp
 layout: document
 redirect_from:
-- /library/algo/merge_sort.hpp
-- /library/algo/merge_sort.hpp.html
-title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
+- /library/ds/flat_map.hpp
+- /library/ds/flat_map.hpp.html
+title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\u5408\
+  \u306E map"
 ---
-## マージソート
+## キーがすべて先にわかる場合の map
 
-比較回数がたかだか $n\lceil\log_2 n \rceil$ 回のソート（インタラクティブで役立つ）。
+座圧と同じ仕組み、map と似たインターフェース
 
-正確な比較回数はたぶんこれ？ https://oeis.org/A003071
+おそらく C++ に追加予定の `flat_map` と似た思想？
 
-`std::stable_sort` を使うというテクがあるが小さいときにマージソートじゃないとかで比較回数が多くなることがあるらしい（？）（よくわかってない）
-
-#### merge_sort
+### コンストラクタ
 
 ```cpp
-void merge_sort(vc<T> v)
+FlatMap<Key, Value>(vc<Key> keys)
 ```
+
+存在するキーすべてを格納したもの（順番や重複の有無は問わない）を渡して初期化する。
+
+### メンバ関数
+
+`[]`, `at`, `contains`, `size`, `empty` が使える。
+
+また簡単なイテレータを実装しているので範囲 for が回せる。
