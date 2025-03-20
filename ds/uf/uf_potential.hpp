@@ -18,6 +18,7 @@ struct UnionFindPotential : UnionFind<UFDataEmpty<typename G::S>, true>
   using UF = UnionFind<UFData, true>;
 
 protected:
+  using UF::par;
   vc<typename G::S> weight_;
   vc<bool> valid_;
   typename G::S weight(int x)
@@ -29,7 +30,6 @@ protected:
 public:
   UnionFindPotential(int n)
   : UF(n), weight_(n, G::e()), valid_(n, true) {}
-  using UF::par;
   using UF::same;
 
   int leader(int x) override
