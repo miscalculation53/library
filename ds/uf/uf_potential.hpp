@@ -7,7 +7,7 @@
 
 /**
  * @brief ポテンシャルつき UnionFind
- * @docs docs/ds/uf/uf.md
+ * @docs docs/ds/uf/uf_potential.md
  */
 
 // G は群
