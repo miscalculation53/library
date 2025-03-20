@@ -81,6 +81,50 @@ void test2()
   assert(i1 == i2);
 }
 
+void test3()
+{
+  vc<int> v = {1, 3, 5, 7, 9};
+  int i = leq_max(v, 6);
+  assert(v[i] == 5);
+  set<int> s = {1, 3, 5, 7, 9};
+  auto it = leq_max(s, 6);
+  assert(*it == 5);
+}
+
+// https://atcoder.jp/contests/kupc2013/tasks/kupc2013_a
+void test4()
+{
+  using P = pair<int, string>;
+  auto solve = [](int q, vc<P> v) -> string
+  {
+    v.insert(v.begin(), {1, "kogakubu10gokan"});
+#if __cplusplus < 202002L
+    int i = LB(v, q, {}, [](const P &p)
+               { return p.first; });
+#else
+    int i = leq_max(v, q, {}, [](const P &p)
+                    { return p.first; });
+#endif
+    return v[i].second;
+  };
+
+  assert(solve(12, {
+    {5, "sogo5gokan"},
+    {10, "sogo10gokan"},
+    {15, "sogo15gokan"}
+  }) == "sogo10gokan");
+  assert(solve(10, {
+    {5, "kogakubu11gokan"},
+    {10, "sogo10gokan"},
+    {15, "KyotoUniversityResearchPark"}
+  }) == "sogo10gokan");
+  assert(solve(3, {
+    {5, "kogakubu11gokan"},
+    {10, "sogo10gokan"},
+    {15, "KyotoUniversityResearchPark"}
+  }) == "kogakubu10gokan");
+}
+
 int main()
 {
   rep(_, 10000) test1();
