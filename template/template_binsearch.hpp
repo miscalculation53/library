@@ -51,14 +51,14 @@ template <class T = ll, class V, class Value, class Comp = less<>, class Proj = 
 inline T LB(const V &v, const Value &val, Comp comp = {}, Proj proj = {})
 {
   return internal::bound_helper(v, [&](int i) -> bool
-                                { return comp(proj(v[i]), val); });
+                                { return comp(proj(*(v.begin() + i)), val); });
 }
 // val < v[i] となる最小の i (val 以下の値の個数)
 template <class T = ll, class V, class Value, class Comp = less<>, class Proj = identity>
 inline T UB(const V &v, const Value &val, Comp comp = {}, Proj proj = {})
 {
   return internal::bound_helper(v, [&](int i) -> bool
-                                { return !comp(val, proj(v[i])); });
+                                { return !comp(val, proj(*(v.begin() + i))); });
 }
 #define DEFAULT_COMP less<>
 #else
