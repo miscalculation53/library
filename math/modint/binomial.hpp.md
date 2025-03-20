@@ -66,8 +66,11 @@ data:
     path: verify/yukicoder/binomial.test.cpp
     title: verify/yukicoder/binomial.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/unionfind_min_max_leader.test.cpp
-    title: verify/yukicoder/unionfind_min_max_leader.test.cpp
+    path: verify/yukicoder/uf_min_max_leader.test.cpp
+    title: verify/yukicoder/uf_min_max_leader.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/uf_partially_persistent.test.cpp
+    title: verify/yukicoder/uf_partially_persistent.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -665,7 +668,8 @@ data:
   timestamp: '2025-03-20 22:54:40+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/unionfind_min_max_leader.test.cpp
+  - verify/yukicoder/uf_partially_persistent.test.cpp
+  - verify/yukicoder/uf_min_max_leader.test.cpp
   - verify/yukicoder/binomial.test.cpp
   - verify/yosupo/kronecker_power_hadamard.test.cpp
   - verify/yosupo/gcd_convolution.test.cpp

@@ -688,58 +688,59 @@ data:
     \ \u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind\n * @docs docs/ds/uf/uf_potential.md\n\
     \ */\n\n// G \u306F\u7FA4\ntemplate <class G>\nstruct UnionFindPotential : UnionFind<UFDataEmpty<typename\
     \ G::S>, true>\n{\n  using UFData = UFDataEmpty<typename G::S>;\n  using UF =\
-    \ UnionFind<UFData, true>;\n\nprotected:\n  vc<typename G::S> weight_;\n  vc<bool>\
-    \ valid_;\n  typename G::S weight(int x)\n  {\n    leader(x);\n    return weight_[x];\n\
-    \  }\n\npublic:\n  UnionFindPotential(int n)\n  : UF(n), weight_(n, G::e()), valid_(n,\
-    \ true) {}\n  using UF::par;\n  using UF::same;\n\n  int leader(int x) override\n\
-    \  {\n    assert(0 <= x && x < SZ<int>(par));\n    if (par[x] < 0)\n      return\
-    \ x;\n    int lx = leader(par[x]);\n    weight_[x] = G::op(weight_[par[x]], weight_[x]);\n\
-    \    return par[x] = lx;\n  }\n  // \u3069\u306E\u60C5\u5831\u3082\u7121\u8996\
-    \u3057\u306A\u304B\u3063\u305F\u3068\u3057\u3066\u3001x \u3092\u542B\u3080\u9023\
-    \u7D50\u6210\u5206\u306E\u60C5\u5831\u304C valid \u304B\u3069\u3046\u304B\n  bool\
-    \ valid(int x) { return valid_[leader(x)]; }\n  // same(x, y) \u306E\u3068\u304D\
-    \u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\u307E\u308B\n  // \u305F\u3060\u3057\u3001\
-    invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3059\u308B\u3082\u306E\u3068\u3059\
-    \u308B\n  typename G::S diff(int x, int y)\n  {\n    assert(same(x, y));\n   \
-    \ return G::op(G::inv(weight_[x]), weight_[y]);\n  }\n  // a[x]^{-1} a[y] == w\
-    \ \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\u3092\u8FFD\u52A0\u3059\u308B\
-    \n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3057\
-    \u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\u5831\u304C valid \u304B\u3069\
-    \u3046\u304B\n  bool merge(int x, int y, typename UFData::EWeight w)\n  {\n  \
-    \  int lx = leader(x), ly = leader(y);\n    if (lx == ly)\n    {\n      bool ok\
-    \ = G::op(G::inv(weight_[x]), weight_[y]) == w;\n      if (!ok)\n        valid_[lx]\
-    \ = false;\n      return ok;\n    }\n    w = G::op(G::op(weight_[x], w), G::inv(weight_[y]));\n\
-    \    if (-par[lx] < -par[ly])\n      swap(lx, ly), w = G::inv(w);\n    par[lx]\
-    \ += par[ly], par[ly] = lx;\n    weight_[ly] = w;\n    return true;\n  }\n};\n"
+    \ UnionFind<UFData, true>;\n\nprotected:\n  using UF::par;\n  vc<typename G::S>\
+    \ weight_;\n  vc<bool> valid_;\n  typename G::S weight(int x)\n  {\n    leader(x);\n\
+    \    return weight_[x];\n  }\n\npublic:\n  UnionFindPotential(int n)\n  : UF(n),\
+    \ weight_(n, G::e()), valid_(n, true) {}\n  using UF::same;\n\n  int leader(int\
+    \ x) override\n  {\n    assert(0 <= x && x < SZ<int>(par));\n    if (par[x] <\
+    \ 0)\n      return x;\n    int lx = leader(par[x]);\n    weight_[x] = G::op(weight_[par[x]],\
+    \ weight_[x]);\n    return par[x] = lx;\n  }\n  // \u3069\u306E\u60C5\u5831\u3082\
+    \u7121\u8996\u3057\u306A\u304B\u3063\u305F\u3068\u3057\u3066\u3001x \u3092\u542B\
+    \u3080\u9023\u7D50\u6210\u5206\u306E\u60C5\u5831\u304C valid \u304B\u3069\u3046\
+    \u304B\n  bool valid(int x) { return valid_[leader(x)]; }\n  // same(x, y) \u306E\
+    \u3068\u304D\u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\u307E\u308B\n  // \u305F\u3060\
+    \u3057\u3001invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3059\u308B\u3082\u306E\
+    \u3068\u3059\u308B\n  typename G::S diff(int x, int y)\n  {\n    assert(same(x,\
+    \ y));\n    return G::op(G::inv(weight_[x]), weight_[y]);\n  }\n  // a[x]^{-1}\
+    \ a[y] == w \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\u3092\u8FFD\u52A0\
+    \u3059\u308B\n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\u5831\u306F\u7121\
+    \u8996\u3057\u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\u5831\u304C valid\
+    \ \u304B\u3069\u3046\u304B\n  bool merge(int x, int y, typename UFData::EWeight\
+    \ w)\n  {\n    int lx = leader(x), ly = leader(y);\n    if (lx == ly)\n    {\n\
+    \      bool ok = G::op(G::inv(weight_[x]), weight_[y]) == w;\n      if (!ok)\n\
+    \        valid_[lx] = false;\n      return ok;\n    }\n    w = G::op(G::op(weight_[x],\
+    \ w), G::inv(weight_[y]));\n    if (-par[lx] < -par[ly])\n      swap(lx, ly),\
+    \ w = G::inv(w);\n    par[lx] += par[ly], par[ly] = lx;\n    weight_[ly] = w;\n\
+    \    return true;\n  }\n};\n"
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n\n#include\
     \ \"uf.hpp\"\n#include \"../../math/algebra/algebra_basic_ops.hpp\"\n\n/**\n *\
     \ @brief \u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind\n * @docs\
     \ docs/ds/uf/uf_potential.md\n */\n\n// G \u306F\u7FA4\ntemplate <class G>\nstruct\
     \ UnionFindPotential : UnionFind<UFDataEmpty<typename G::S>, true>\n{\n  using\
     \ UFData = UFDataEmpty<typename G::S>;\n  using UF = UnionFind<UFData, true>;\n\
-    \nprotected:\n  vc<typename G::S> weight_;\n  vc<bool> valid_;\n  typename G::S\
-    \ weight(int x)\n  {\n    leader(x);\n    return weight_[x];\n  }\n\npublic:\n\
-    \  UnionFindPotential(int n)\n  : UF(n), weight_(n, G::e()), valid_(n, true) {}\n\
-    \  using UF::par;\n  using UF::same;\n\n  int leader(int x) override\n  {\n  \
-    \  assert(0 <= x && x < SZ<int>(par));\n    if (par[x] < 0)\n      return x;\n\
-    \    int lx = leader(par[x]);\n    weight_[x] = G::op(weight_[par[x]], weight_[x]);\n\
-    \    return par[x] = lx;\n  }\n  // \u3069\u306E\u60C5\u5831\u3082\u7121\u8996\
-    \u3057\u306A\u304B\u3063\u305F\u3068\u3057\u3066\u3001x \u3092\u542B\u3080\u9023\
-    \u7D50\u6210\u5206\u306E\u60C5\u5831\u304C valid \u304B\u3069\u3046\u304B\n  bool\
-    \ valid(int x) { return valid_[leader(x)]; }\n  // same(x, y) \u306E\u3068\u304D\
-    \u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\u307E\u308B\n  // \u305F\u3060\u3057\u3001\
-    invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3059\u308B\u3082\u306E\u3068\u3059\
-    \u308B\n  typename G::S diff(int x, int y)\n  {\n    assert(same(x, y));\n   \
-    \ return G::op(G::inv(weight_[x]), weight_[y]);\n  }\n  // a[x]^{-1} a[y] == w\
-    \ \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\u3092\u8FFD\u52A0\u3059\u308B\
-    \n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3057\
-    \u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\u5831\u304C valid \u304B\u3069\
-    \u3046\u304B\n  bool merge(int x, int y, typename UFData::EWeight w)\n  {\n  \
-    \  int lx = leader(x), ly = leader(y);\n    if (lx == ly)\n    {\n      bool ok\
-    \ = G::op(G::inv(weight_[x]), weight_[y]) == w;\n      if (!ok)\n        valid_[lx]\
-    \ = false;\n      return ok;\n    }\n    w = G::op(G::op(weight_[x], w), G::inv(weight_[y]));\n\
-    \    if (-par[lx] < -par[ly])\n      swap(lx, ly), w = G::inv(w);\n    par[lx]\
-    \ += par[ly], par[ly] = lx;\n    weight_[ly] = w;\n    return true;\n  }\n};"
+    \nprotected:\n  using UF::par;\n  vc<typename G::S> weight_;\n  vc<bool> valid_;\n\
+    \  typename G::S weight(int x)\n  {\n    leader(x);\n    return weight_[x];\n\
+    \  }\n\npublic:\n  UnionFindPotential(int n)\n  : UF(n), weight_(n, G::e()), valid_(n,\
+    \ true) {}\n  using UF::same;\n\n  int leader(int x) override\n  {\n    assert(0\
+    \ <= x && x < SZ<int>(par));\n    if (par[x] < 0)\n      return x;\n    int lx\
+    \ = leader(par[x]);\n    weight_[x] = G::op(weight_[par[x]], weight_[x]);\n  \
+    \  return par[x] = lx;\n  }\n  // \u3069\u306E\u60C5\u5831\u3082\u7121\u8996\u3057\
+    \u306A\u304B\u3063\u305F\u3068\u3057\u3066\u3001x \u3092\u542B\u3080\u9023\u7D50\
+    \u6210\u5206\u306E\u60C5\u5831\u304C valid \u304B\u3069\u3046\u304B\n  bool valid(int\
+    \ x) { return valid_[leader(x)]; }\n  // same(x, y) \u306E\u3068\u304D\u306E\u307F\
+    \ a[x]^{-1} a[y] \u304C\u5B9A\u307E\u308B\n  // \u305F\u3060\u3057\u3001invalid\
+    \ \u306A\u60C5\u5831\u306F\u7121\u8996\u3059\u308B\u3082\u306E\u3068\u3059\u308B\
+    \n  typename G::S diff(int x, int y)\n  {\n    assert(same(x, y));\n    return\
+    \ G::op(G::inv(weight_[x]), weight_[y]);\n  }\n  // a[x]^{-1} a[y] == w \u3067\
+    \u3042\u308B\u3068\u3044\u3046\u60C5\u5831\u3092\u8FFD\u52A0\u3059\u308B\n  //\
+    \ \u8FD4\u308A\u5024: (invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3057\u305F\
+    \u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\u5831\u304C valid \u304B\u3069\u3046\
+    \u304B\n  bool merge(int x, int y, typename UFData::EWeight w)\n  {\n    int lx\
+    \ = leader(x), ly = leader(y);\n    if (lx == ly)\n    {\n      bool ok = G::op(G::inv(weight_[x]),\
+    \ weight_[y]) == w;\n      if (!ok)\n        valid_[lx] = false;\n      return\
+    \ ok;\n    }\n    w = G::op(G::op(weight_[x], w), G::inv(weight_[y]));\n    if\
+    \ (-par[lx] < -par[ly])\n      swap(lx, ly), w = G::inv(w);\n    par[lx] += par[ly],\
+    \ par[ly] = lx;\n    weight_[ly] = w;\n    return true;\n  }\n};"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -757,7 +758,7 @@ data:
   isVerificationFile: false
   path: ds/uf/uf_potential.hpp
   requiredBy: []
-  timestamp: '2025-03-20 22:54:40+09:00'
+  timestamp: '2025-03-21 03:33:31+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/unionfind_potential_non_commutative.test.cpp

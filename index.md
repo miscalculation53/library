@@ -14,7 +14,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: ds/csr.hpp
       title: CSR
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: ds/flat_map.hpp
       title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
         \u5408\u306E map"
@@ -26,6 +26,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: ds/uf/uf.hpp
       title: UnionFind
+    - icon: ':heavy_check_mark:'
+      path: ds/uf/uf_partially_persistent.hpp
+      title: "\u90E8\u5206\u6C38\u7D9A UnionFind"
     - icon: ':heavy_check_mark:'
       path: ds/uf/uf_potential.hpp
       title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
@@ -244,6 +247,9 @@ data:
       path: verify/yosupo/aplusb.test.cpp
       title: verify/yosupo/aplusb.test.cpp
     - icon: ':heavy_check_mark:'
+      path: verify/yosupo/associative_array_flat_map.test.cpp
+      title: verify/yosupo/associative_array_flat_map.test.cpp
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/associative_array_lower_bound.test.cpp
       title: verify/yosupo/associative_array_lower_bound.test.cpp
     - icon: ':heavy_check_mark:'
@@ -336,8 +342,11 @@ data:
       path: verify/yukicoder/static_modint.test.cpp
       title: verify/yukicoder/static_modint.test.cpp
     - icon: ':heavy_check_mark:'
-      path: verify/yukicoder/unionfind_min_max_leader.test.cpp
-      title: verify/yukicoder/unionfind_min_max_leader.test.cpp
+      path: verify/yukicoder/uf_min_max_leader.test.cpp
+      title: verify/yukicoder/uf_min_max_leader.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yukicoder/uf_partially_persistent.test.cpp
+      title: verify/yukicoder/uf_partially_persistent.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
       title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp

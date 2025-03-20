@@ -35,6 +35,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
+    path: ds/uf/uf_partially_persistent.hpp
+    title: "\u90E8\u5206\u6C38\u7D9A UnionFind"
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
   _extendedVerifiedWith:
@@ -48,8 +51,11 @@ data:
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/unionfind_min_max_leader.test.cpp
-    title: verify/yukicoder/unionfind_min_max_leader.test.cpp
+    path: verify/yukicoder/uf_min_max_leader.test.cpp
+    title: verify/yukicoder/uf_min_max_leader.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/uf_partially_persistent.test.cpp
+    title: verify/yukicoder/uf_partially_persistent.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -695,11 +701,13 @@ data:
   isVerificationFile: false
   path: ds/uf/uf.hpp
   requiredBy:
+  - ds/uf/uf_partially_persistent.hpp
   - ds/uf/uf_potential.hpp
   timestamp: '2025-03-20 22:54:40+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/unionfind_min_max_leader.test.cpp
+  - verify/yukicoder/uf_partially_persistent.test.cpp
+  - verify/yukicoder/uf_min_max_leader.test.cpp
   - verify/yosupo/unionfind.test.cpp
   - verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - verify/yosupo/unionfind_potential.test.cpp
@@ -821,20 +829,6 @@ bool same(int x, int y)
 - `leader` と同じ
 
 
-#### merge
-
-```cpp
-I=ll merge(int x, int y, UFData::EWeight w = 1)
-```
-
-頂点 $x$ と頂点 $y$ の間に重み $w$ の辺を追加し、この連結成分の新たな代表元を返す。
-
-`EWeight` が整数型などの場合はデフォルトで重みが $1$ になるが、そうでない場合は重みを指定しなければならない。
-
-##### 制約
-
-- $0 \leq x,y \lt n$
-
 ##### 計算量
 
 - `leader` と同じ
@@ -856,6 +850,20 @@ UFData::VData get_vdata(int x)
 ##### 計算量
 
 - `leader` と同じ
+
+#### merge
+
+```cpp
+I=ll merge(int x, int y, UFData::EWeight w = 1)
+```
+
+頂点 $x$ と頂点 $y$ の間に重み $w$ の辺を追加し、この連結成分の新たな代表元を返す。
+
+`EWeight` が整数型などの場合はデフォルトで重みが $1$ になるが、そうでない場合は重みを指定しなければならない。
+
+##### 制約
+
+- $0 \leq x,y \lt n$
 
 #### group_ids
 

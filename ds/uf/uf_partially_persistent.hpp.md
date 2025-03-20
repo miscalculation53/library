@@ -5,35 +5,6 @@ data:
     path: ds/uf/uf.hpp
     title: UnionFind
   - icon: ':heavy_check_mark:'
-    path: ds/uf/uf_potential.hpp
-    title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
-  - icon: ':heavy_check_mark:'
-    path: math/algebra/algebra_base.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/algebra/algebra_basic_ops.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
-      \ max\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/algebra/matmul22.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\u306E\u7A4D\
-      \uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/extgcd.hpp
-    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/binomial.hpp
-    title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint32_internal.hpp
-    title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint_base.hpp
-    title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -66,20 +37,18 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/uf_partially_persistent.test.cpp
+    title: verify/yukicoder/uf_partially_persistent.test.cpp
   _isVerificationFailed: false
-  _pathExtension: cpp
+  _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/unionfind_with_potential_non_commutative_group
-    links:
-    - https://judge.yosupo.jp/problem/unionfind_with_potential_non_commutative_group
-  bundledCode: "#line 1 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\
-    \n#define PROBLEM \"https://judge.yosupo.jp/problem/unionfind_with_potential_non_commutative_group\"\
-    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
-    \n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF\
-    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#line 2 \"template/template_all.hpp\"\
+    _deprecated_at_docs: docs/ds/uf/uf_partially_persistent.md
+    document_title: "\u90E8\u5206\u6C38\u7D9A UnionFind"
+    links: []
+  bundledCode: "#line 2 \"ds/uf/uf_partially_persistent.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -605,331 +574,129 @@ data:
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 15 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\
-    \n\n#line 2 \"math/modint/modint.hpp\"\n\n#line 2 \"math/modint/modint32_internal.hpp\"\
-    \n\n#line 4 \"math/modint/modint32_internal.hpp\"\n\nnamespace internal\n{\n\n\
-    constexpr ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n    return\
-    \ 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while (n)\n\
-    \  {\n    if (n & 1)\n      r = (r * y) % _m;\n    y = (y * y) % _m;\n    n >>=\
-    \ 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int n)\n{\n  if\
-    \ (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n    return\
-    \ true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2\
-    \ == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll a : bases)\n\
-    \  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n      t <<= 1;\n\
-    \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
-    \ true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
-    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}\n#line 2 \"math/modint/modint_base.hpp\"\n\n#line 4 \"math/modint/modint_base.hpp\"\
-    \n\nnamespace internal\n{\n\n#define REF static_cast<mint &>(*this)\n#define CREF\
-    \ static_cast<const mint &>(*this)\n#define VAL *static_cast<const mint *>(this)\n\
-    \ntemplate <class mint>\nstruct modint_base\n{\n  mint &operator+=(const mint\
-    \ &rhs)\n  {\n    mint &self = REF;\n    self._v += rhs._v;\n    if (self._v >=\
-    \ self.umod())\n      self._v -= self.umod();\n    return self;\n  }\n  mint &operator-=(const\
-    \ mint &rhs)\n  {\n    mint &self = REF;\n    self._v -= rhs._v;\n    if (self._v\
-    \ >= self.umod())\n      self._v += self.umod();\n    return self;\n  }\n  mint\
-    \ &operator/=(const mint &rhs)\n  {\n    mint &self = REF;\n    return self =\
-    \ self * rhs.inv();\n  }\n\n  mint &operator++()\n  {\n    mint &self = REF;\n\
-    \    self._v++;\n    if (self._v == self.umod())\n      self._v = 0;\n    return\
-    \ self;\n  }\n  mint &operator--()\n  {\n    mint &self = REF;\n    if (self._v\
-    \ == 0)\n      self._v = self.umod();\n    self._v--;\n    return self;\n  }\n\
-    \  mint operator++(int)\n  {\n    mint res = VAL;\n    ++REF;\n    return res;\n\
-    \  }\n  mint operator--(int)\n  {\n    mint res = VAL;\n    --REF;\n    return\
-    \ res;\n  }\n\n  mint operator+() const { return VAL; }\n  mint operator-() const\
-    \ { return mint() - VAL; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n\
-    \    mint x = VAL, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r *=\
-    \ x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n\n  friend mint\
-    \ operator+(const mint &lhs, const mint &rhs)\n  { return mint(lhs) += rhs; }\n\
-    \  friend mint operator-(const mint &lhs, const mint &rhs)\n  { return mint(lhs)\
-    \ -= rhs; }\n  friend mint operator*(const mint &lhs, const mint &rhs)\n  { return\
-    \ mint(lhs) *= rhs; }\n  friend mint operator/(const mint &lhs, const mint &rhs)\n\
-    \  { return mint(lhs) /= rhs; }\n  friend bool operator==(const mint &lhs, const\
-    \ mint &rhs)\n  { return mint(lhs).eq(rhs); }\n  friend bool operator!=(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs).neq(rhs); }\nprivate:\n  bool\
-    \ eq(const mint &rhs) { return REF._v == rhs._v; }\n  bool neq(const mint &rhs)\
-    \ { return REF._v != rhs._v; }\n};\n\n}\n\n#if defined LOCAL or not defined FAST_IO\n\
-    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nistream &operator>>(istream &is, T &x)\n{\n  ll a;\n  is >> a;\n\
-    \  x = a;\n  return is;\n}\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nostream &operator<<(ostream &os, const T &x)\n{\n  os << x.val();\n\
-    \  return os;\n}\n#else\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nvoid rd1(T &x)\n{\n  ll a;\n  fastio::rd1(a);\n  x = a;\n}\n\
-    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nvoid wt1(const T &x) { fastio::wt1(x.val()); }\n#endif\n#line\
-    \ 2 \"math/extgcd.hpp\"\n\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\
-    \u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs\
-    \ docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\
-    \u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T =\
-    \ ll>\nconstexpr tuple<T, T, T> extgcd(const T &a, const T &b)\n{\n  if (a ==\
-    \ 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  //\
-    \ a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1,\
-    \ z2 = b;\n  while (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n\
-    \    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1,\
-    \ y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q *\
-    \ z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1,\
-    \ y1};\n}\n#line 7 \"math/modint/modint.hpp\"\n\n/**\n * @brief modint (32 bit)\n\
-    \ * @docs docs/math/modint/modint.md\n */\n\ntemplate <int m>\nstruct static_modint\
-    \ : internal::modint_base<static_modint<m>>\n{\n  using mint = static_modint;\n\
-    private:\n  friend struct internal::modint_base<static_modint<m>>;\n  uint _v;\n\
-    \  static constexpr uint umod() { return m; }\n  static constexpr bool prime =\
-    \ internal::isprime32<m>;\n\npublic:\n  static constexpr int mod() { return m;\
-    \ }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  static_modint() : _v(0) {}\n  template <class T>\n  static_modint(T\
-    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
-    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
-    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
-    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
-    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
-    \n  mint& operator*=(const mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n\
-    \    _v = (uint)(z % umod());\n    return *this;\n  }\n\n  mint inv() const\n\
-    \  {\n    if (prime)\n    {\n      assert(_v != 0);\n      return CREF.pow(umod()\
-    \ - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<int>(_v, m);\n\
-    \      assert(g == 1);\n      return x;\n    }\n  }\n};\n\ntemplate <int id>\n\
-    struct dynamic_modint : internal::modint_base<dynamic_modint<id>>\n{\n  using\
-    \ mint = dynamic_modint;\nprivate:\n  friend struct internal::modint_base<dynamic_modint<id>>;\n\
-    \  uint _v;\n  static internal::barrett32 bt;\n  static uint umod() { return bt.umod();\
-    \ }\n\npublic:\n  static int mod() { return (int)(bt.umod()); }\n  static void\
-    \ set_mod(int m)\n  {\n    assert(m >= 1);\n    bt = internal::barrett32(m);\n\
-    \  }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  dynamic_modint() : _v(0) {}\n  template <class T>\n  dynamic_modint(T\
-    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
-    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
-    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
-    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
-    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
-    \n  mint& operator*=(const mint &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n   \
-    \ return *this;\n  }\n\n  mint inv() const\n  {\n    auto [g, x, y] = extgcd<int>(_v,\
-    \ mod());\n    assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::barrett32\
-    \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
-    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
-    #line 17 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\nusing\
-    \ mint = modint998244353;\n// using mint = modint1000000007;\n// using mint =\
-    \ static_modint<1000000000>;\n// using mint = modint;\n#line 2 \"math/modint/binomial.hpp\"\
-    \n\n#line 4 \"math/modint/binomial.hpp\"\n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\
-    \n * @docs docs/math/modint/binomial.md\n */\n\ntemplate <class T>\nstruct Binomial\n\
-    {\nprivate:\n  static decltype(T::mod()) mod;\n  static vc<T> fac_, finv_, inv_;\n\
-    \npublic:\n  static void reserve(int n)\n  {\n    if (mod != T::mod())\n    {\n\
-    \      mod = T::mod();\n      fac_ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};\n\
-    \    }\n    int i = fac_.size();\n    chmin(n, T::mod() - 1);\n    if (n < i)\n\
-    \      return;\n    fac_.resize(n + 1), finv_.resize(n + 1), inv_.resize(n + 1);\n\
-    \    for (; i <= n; i++)\n    {\n      fac_[i] = fac_[i - 1] * T::raw(i);\n  \
-    \    inv_[i] = -inv_[T::mod() % i] * T::raw(T::mod() / i);\n      finv_[i] = finv_[i\
-    \ - 1] * inv_[i];\n    }\n  }\n  static T fac(int n)\n  {\n    assert(n >= 0);\n\
-    \    if (n >= T::mod())\n      return 0;\n    reserve(n);\n    return fac_[n];\n\
-    \  }\n  static T finv(int n)\n  {\n    assert(n < T::mod());\n    if (n < 0)\n\
-    \      return 0;\n    reserve(n);\n    return finv_[n];\n  }\n  static T inv(T\
-    \ n)\n  {\n    assert(n != 0);\n    reserve(n.val());\n    return inv_[n.val()];\n\
-    \  }\n\n  static T P(int n, int k)\n  {\n    if (n < k)\n      return 0;\n   \
-    \ if (n < 0 || k < 0)\n      return 0;\n    reserve(n);\n    return fac_[n] *\
-    \ finv_[n - k];\n  }\n  static T C(int n, int k)\n  {\n    if (n < k)\n      return\
-    \ 0;\n    if (n < 0 || k < 0)\n      return 0;\n    reserve(n);\n    return fac_[n]\
-    \ * finv_[k] * finv_[n - k];\n  }\n  static T H(int n, int k)\n  {\n    if (n\
-    \ == 0 && k == 0)\n      return 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate\
-    \ <class T> decltype(T::mod()) Binomial<T>::mod{T::mod()};\ntemplate <class T>\
-    \ vc<T> Binomial<T>::fac_{1, 1};\ntemplate <class T> vc<T> Binomial<T>::finv_{1,\
-    \ 1};\ntemplate <class T> vc<T> Binomial<T>::inv_{0, 1};\n#line 22 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\
-    \nusing bi = Binomial<mint>;\n\n#line 2 \"ds/uf/uf_potential.hpp\"\n\n#line 4\
-    \ \"ds/uf/uf_potential.hpp\"\n\n#line 2 \"ds/uf/uf.hpp\"\n\n#line 4 \"ds/uf/uf.hpp\"\
-    \n\n/**\n * @brief UnionFind\n * @docs docs/ds/uf/uf.md\n */\n\n// UFData \u306B\
-    \u30C7\u30D5\u30A9\u30EB\u30C8\u3067\u7528\u610F\u3055\u308C\u3066\u3044\u308B\
-    \u3082\u306E\n// - UFDataEmpty (\u4F55\u3082\u306A\u3057\u3001ACL \u76F8\u5F53\
-    )\n// - UFDataEverything (\u5168\u90E8\u8F09\u305B)\ntemplate <class UFData, bool\
-    \ compress = true>\nstruct UnionFind\n{\n  friend UFData;\n\nprotected:\n  vc<int>\
-    \ par;\n  vc<typename UFData::VData> vdat;\n\npublic:\n  typename UFData::GData\
-    \ gdat;\n\n  UnionFind() {}\n  UnionFind(int n) : par(n, -1), vdat(n), gdat(n)\n\
-    \  { repi(i, n) vdat[i] = typename UFData::VData(i); }\n\n  virtual int leader(int\
-    \ x)\n  {\n    assert(0 <= x && x < SZ<int>(par));\n    if (par[x] < 0)\n    \
-    \  return x;\n    if constexpr (compress)\n      return par[x] = leader(par[x]);\n\
-    \    else\n      return leader(par[x]);\n  }\n  // \u9802\u70B9 x \u3092\u542B\
-    \u3080\u9023\u7D50\u6210\u5206\u306E\u9802\u70B9\u6570\n  template <class I =\
-    \ ll>\n  I size(int x) { return -par[leader(x)]; }\n  typename UFData::VData &get_vdata(int\
-    \ x) { return vdat[leader(x)]; }\n  bool same(int x, int y) { return leader(x)\
-    \ == leader(y); }\n  // \u8FD4\u308A\u5024: \u30DE\u30FC\u30B8\u3057\u305F\u5F8C\
-    \u306E\u65B0\u305F\u306A\u4EE3\u8868\u5143\n  template <class I = ll>\n  I merge(int\
-    \ x, int y, typename UFData::EWeight w = 1)\n  {\n    x = leader(x), y = leader(y);\n\
-    \    if (x == y)\n    {\n      UFData::add_edge_same(*this, x, w);\n      return\
-    \ x;\n    }\n    if (-par[x] < -par[y])\n      swap(x, y);\n    par[x] += par[y],\
-    \ par[y] = x;\n    UFData::add_edge_diff(*this, x, y, w);\n    return x;\n  }\n\
-    \n  // \u5404\u9802\u70B9\u304C\u5C5E\u3059\u308B\u9023\u7D50\u6210\u5206\u306E\
-    \u756A\u53F7 (\u9806\u756A\u306F\u672A\u5B9A\u7FA9)\n  // ACL \u306E groups \u304C\
-    \u6B32\u3057\u3044\u5834\u5408: \u3053\u308C\u306B group_index \u3092\u4F7F\u3046\
-    \n  template <class I = ll>\n  vc<I> group_ids()\n  {\n    const int n = par.size();\n\
-    \    vc<I> gid(n, -1);\n    for (int v = 0, i = 0; v < n; v++)\n    {\n      int\
-    \ l = leader(v);\n      if (gid[l] == -1)\n        gid[l] = i++;\n      gid[v]\
-    \ = gid[l];\n    }\n    return gid;\n  }\n};\n\ntemplate <class EWeight_ = ll>\n\
-    struct UFDataEmpty\n{\n  struct VData\n  {\n    VData() {}\n    VData(int) {}\n\
-    \  };\n  struct GData\n  {\n    GData() {}\n    GData(int) {}\n  };\n  using EWeight\
-    \ = EWeight_;\n  template <class UF>\n  static void add_edge_diff(UF &, int, int,\
-    \ EWeight) {}\n  template <class UF>\n  static void add_edge_same(UF &, int, EWeight)\
-    \ {}\n};\n\ntemplate <class EWeight_ = ll, bool need_vlist = false>\nstruct UFDataEverything\n\
-    {\n  struct VData\n  {\n    VData() {}\n\n    ll vsum;\n    ll esum;\n    vc<ll>\
-    \ vlist;\n\n    // \u9802\u70B9 i \u306E\u521D\u671F\u5316\n    VData(int i)\n\
-    \    {\n      vsum = 1;\n      esum = 0;\n      if constexpr (need_vlist)\n  \
-    \      vlist = {i};\n    }\n  };\n  struct GData\n  {\n    GData() {}\n\n    ll\
-    \ cmp_cnt;\n    ll min_leader, max_leader;\n\n    // \u9802\u70B9\u6570 n \u306E\
-    \u30B0\u30E9\u30D5\u306E\u521D\u671F\u5316\n    GData(int n)\n    {\n      cmp_cnt\
-    \ = n;\n      min_leader = 0, max_leader = n - 1;\n    }\n  };\n  using EWeight\
-    \ = EWeight_;\n  template <class UF>\n  static void add_edge_diff(UF &uf, int\
-    \ x, int y, EWeight w)\n  {\n    VData &xd = uf.vdat[x], &yd = uf.vdat[y];\n \
-    \   GData &gd = uf.gdat;\n    xd.vsum += yd.vsum;\n    xd.esum += w;\n    if constexpr\
-    \ (need_vlist)\n    {\n      xd.vlist.insert(xd.vlist.end(), ALL(yd.vlist));\n\
-    \      yd.vlist.clear();\n    }\n    gd.cmp_cnt--;\n    while (uf.leader(gd.min_leader)\
-    \ != gd.min_leader)\n      gd.min_leader++;\n    while (uf.leader(gd.max_leader)\
-    \ != gd.max_leader)\n      gd.max_leader--;\n  }\n  template <class UF>\n  static\
-    \ void add_edge_same(UF &uf, int x, EWeight w)\n  {\n    VData &xd = uf.vdat[x];\n\
-    \    xd.esum += w;\n  }\n};\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n\
-    #line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
-    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
-    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
-    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
-    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
-    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
-    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
-    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
-    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
-    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
-    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
-    \ constexpr auto inv = inv_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
-    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
-    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
-    \ = Group<typename R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing\
-    \ GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
-    \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
-    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
-    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
-    \ntemplate <class T>\nstruct GroupAddSub\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n \
-    \ static constexpr S inv(S a) { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n\
-    {\n  using S = T;\n  static constexpr S op(S a, S b) { return a * b; }\n  static\
-    \ constexpr S e() { return 1; }\n  static constexpr S inv(S a) { return 1 / a;\
-    \ }\n};\n\ntemplate <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n\
-    \  using S = T;\n  static constexpr S add(S a, S b) { return min(a, b); }\n  static\
-    \ constexpr S e0() { return infty; }\n  static constexpr S mul(S a, S b) { return\
-    \ a + b; }\n  static constexpr S e1() { return 0; }\n};\ntemplate <class T, const\
-    \ T infty = INF>\nstruct SemiRingMaxPlus\n{\n  using S = T;\n  static constexpr\
-    \ S add(S a, S b) { return max(a, b); }\n  static constexpr S e0() { return -infty;\
-    \ }\n  static constexpr S mul(S a, S b) { return a + b; }\n  static constexpr\
-    \ S e1() { return 0; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using\
-    \ S = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
-    \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
-    \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
-    \ 1; }\n};\n\ntemplate <class T>\nstruct FieldAddSubMulDiv\n{\n  using S = T;\n\
-    \  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr S minus(S\
-    \ a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static constexpr\
-    \ S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return 1; }\n\
-    \  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate <class M>\ntypename\
-    \ M::S pow_monoid(typename M::S a, ll k)\n{\n  typename M::S c = M::e();\n  for\
-    \ (; k; k >>= 1)\n  {\n    if (k & 1)\n      c = M::op(c, a);\n    a = M::op(a,\
-    \ a);\n  }\n  return c;\n}\n#line 7 \"ds/uf/uf_potential.hpp\"\n\n/**\n * @brief\
-    \ \u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind\n * @docs docs/ds/uf/uf_potential.md\n\
-    \ */\n\n// G \u306F\u7FA4\ntemplate <class G>\nstruct UnionFindPotential : UnionFind<UFDataEmpty<typename\
-    \ G::S>, true>\n{\n  using UFData = UFDataEmpty<typename G::S>;\n  using UF =\
-    \ UnionFind<UFData, true>;\n\nprotected:\n  using UF::par;\n  vc<typename G::S>\
-    \ weight_;\n  vc<bool> valid_;\n  typename G::S weight(int x)\n  {\n    leader(x);\n\
-    \    return weight_[x];\n  }\n\npublic:\n  UnionFindPotential(int n)\n  : UF(n),\
-    \ weight_(n, G::e()), valid_(n, true) {}\n  using UF::same;\n\n  int leader(int\
-    \ x) override\n  {\n    assert(0 <= x && x < SZ<int>(par));\n    if (par[x] <\
-    \ 0)\n      return x;\n    int lx = leader(par[x]);\n    weight_[x] = G::op(weight_[par[x]],\
-    \ weight_[x]);\n    return par[x] = lx;\n  }\n  // \u3069\u306E\u60C5\u5831\u3082\
-    \u7121\u8996\u3057\u306A\u304B\u3063\u305F\u3068\u3057\u3066\u3001x \u3092\u542B\
-    \u3080\u9023\u7D50\u6210\u5206\u306E\u60C5\u5831\u304C valid \u304B\u3069\u3046\
-    \u304B\n  bool valid(int x) { return valid_[leader(x)]; }\n  // same(x, y) \u306E\
-    \u3068\u304D\u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\u307E\u308B\n  // \u305F\u3060\
-    \u3057\u3001invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3059\u308B\u3082\u306E\
-    \u3068\u3059\u308B\n  typename G::S diff(int x, int y)\n  {\n    assert(same(x,\
-    \ y));\n    return G::op(G::inv(weight_[x]), weight_[y]);\n  }\n  // a[x]^{-1}\
-    \ a[y] == w \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\u3092\u8FFD\u52A0\
-    \u3059\u308B\n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\u5831\u306F\u7121\
-    \u8996\u3057\u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\u5831\u304C valid\
-    \ \u304B\u3069\u3046\u304B\n  bool merge(int x, int y, typename UFData::EWeight\
-    \ w)\n  {\n    int lx = leader(x), ly = leader(y);\n    if (lx == ly)\n    {\n\
-    \      bool ok = G::op(G::inv(weight_[x]), weight_[y]) == w;\n      if (!ok)\n\
-    \        valid_[lx] = false;\n      return ok;\n    }\n    w = G::op(G::op(weight_[x],\
-    \ w), G::inv(weight_[y]));\n    if (-par[lx] < -par[ly])\n      swap(lx, ly),\
-    \ w = G::inv(w);\n    par[lx] += par[ly], par[ly] = lx;\n    weight_[ly] = w;\n\
-    \    return true;\n  }\n};\n#line 2 \"math/algebra/matmul22.hpp\"\n\n#line 5 \"\
-    math/algebra/matmul22.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\
-    $2 \\times 2$ \u884C\u5217\u306E\u7A4D\uFF09\n * @docs docs/math/algebra/matmul22.md\n\
-    \ */\n\ntemplate <class mint>\nstruct GroupMatMul22\n{\n  using S = array<mint,\
-    \ 4>;\n  static constexpr S op(S l, S r)\n  {\n    auto [a, b, c, d] = l;\n  \
-    \  auto [e, f, g, h] = r;\n    return {{a * e + b * g, a * f + b * h, c * e +\
-    \ d * g, c * f + d * h}};\n  }\n  static constexpr S e() { return {{1, 0, 0, 1}};\
-    \ }\n  static constexpr S inv(S m)\n  {\n    auto [a, b, c, d] = m;\n    mint\
-    \ detinv = (a * d - b * c).inv();\n    return {{d * detinv, -b * detinv, -c *\
-    \ detinv, a * detinv}};\n  }\n};\n#line 26 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFindPotential<GroupMatMul22<mint>>\
-    \ uf(N);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(u, v,\
-    \ a, b, c, d);\n      PRINT(uf.merge(v, u, {{a, b, c, d}}));\n    }\n    else\
-    \ if (t == 1)\n    {\n      LL(u, v);\n      if (uf.same(u, v))\n        PRINT(uf.diff(v,\
-    \ u));\n      else\n        PRINT(-1);\n    }\n  }\n}\n\nvoid test()\n{\n  /*\n\
-    \  local(\n    rep(testcase, 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\
-    \n\n      // ----- generate cases -----\n      ll N = 1 + rand() % 5;\n      vl\
-    \ A(N);\n      rep(i, N) A.at(i) = 1 + rand() % 10;\n      // --------------------------\n\
-    \n      // ------ check output ------\n      #define INPUT A\n      auto god =\
-    \ naive(INPUT);\n      auto ans = solve(INPUT);\n      if (god != ans)\n     \
-    \ {\n        dump(INPUT);\n        dump(god, ans);\n        exit(0);\n      }\n\
-    \      // --------------------------\n    }\n    dump(\"ok\");\n  );\n  //*/\n\
-    }\n\nint main()\n{\n  cauto CERR = [](string val, string color)\n  {\n    string\
-    \ s = \"\\033[\" + color + \"m\" + val + \"\\033[m\";\n    #ifdef LOCAL\n    cerr\
-    \ << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\
-    \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\
-    \u3059\n    cerr << val;\n    //*/\n  };\n\n  #if defined FAST_IO and not defined\
-    \ LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n  #endif\n  #if defined FAST_CIO\
-    \ and not defined LOCAL\n  CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n\
-    \  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
-    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
-    \ SINGLE_TESTCASE)\n  CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n\
-    \  {\n    dump(\"new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n\
-    \  CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n  main2();\n  #elif defined\
-    \ MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n  dump(\"T\"\
-    );\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
-    \  }\n  #endif\n}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/unionfind_with_potential_non_commutative_group\"\
-    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
-    \n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF\
-    \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"template/template_all.hpp\"\
-    \n\n#include \"math/modint/modint.hpp\"\nusing mint = modint998244353;\n// using\
-    \ mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n// using\
-    \ mint = modint;\n#include \"math/modint/binomial.hpp\"\nusing bi = Binomial<mint>;\n\
-    \n#include \"ds/uf/uf_potential.hpp\"\n#include \"math/algebra/matmul22.hpp\"\n\
-    \nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFindPotential<GroupMatMul22<mint>>\
-    \ uf(N);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(u, v,\
-    \ a, b, c, d);\n      PRINT(uf.merge(v, u, {{a, b, c, d}}));\n    }\n    else\
-    \ if (t == 1)\n    {\n      LL(u, v);\n      if (uf.same(u, v))\n        PRINT(uf.diff(v,\
-    \ u));\n      else\n        PRINT(-1);\n    }\n  }\n}\n\nvoid test()\n{\n  /*\n\
-    \  local(\n    rep(testcase, 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\
-    \n\n      // ----- generate cases -----\n      ll N = 1 + rand() % 5;\n      vl\
-    \ A(N);\n      rep(i, N) A.at(i) = 1 + rand() % 10;\n      // --------------------------\n\
-    \n      // ------ check output ------\n      #define INPUT A\n      auto god =\
-    \ naive(INPUT);\n      auto ans = solve(INPUT);\n      if (god != ans)\n     \
-    \ {\n        dump(INPUT);\n        dump(god, ans);\n        exit(0);\n      }\n\
-    \      // --------------------------\n    }\n    dump(\"ok\");\n  );\n  //*/\n\
-    }\n\nint main()\n{\n  cauto CERR = [](string val, string color)\n  {\n    string\
-    \ s = \"\\033[\" + color + \"m\" + val + \"\\033[m\";\n    #ifdef LOCAL\n    cerr\
-    \ << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\
-    \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\
-    \u3059\n    cerr << val;\n    //*/\n  };\n\n  #if defined FAST_IO and not defined\
-    \ LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n  #endif\n  #if defined FAST_CIO\
-    \ and not defined LOCAL\n  CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n\
-    \  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
-    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
-    \ SINGLE_TESTCASE)\n  CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n\
-    \  {\n    dump(\"new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n\
-    \  CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n  main2();\n  #elif defined\
-    \ MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n  dump(\"T\"\
-    );\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
-    \  }\n  #endif\n}"
+    \ vt;\n}\n// ----------\n#line 4 \"ds/uf/uf_partially_persistent.hpp\"\n\n#line\
+    \ 2 \"ds/uf/uf.hpp\"\n\n#line 4 \"ds/uf/uf.hpp\"\n\n/**\n * @brief UnionFind\n\
+    \ * @docs docs/ds/uf/uf.md\n */\n\n// UFData \u306B\u30C7\u30D5\u30A9\u30EB\u30C8\
+    \u3067\u7528\u610F\u3055\u308C\u3066\u3044\u308B\u3082\u306E\n// - UFDataEmpty\
+    \ (\u4F55\u3082\u306A\u3057\u3001ACL \u76F8\u5F53)\n// - UFDataEverything (\u5168\
+    \u90E8\u8F09\u305B)\ntemplate <class UFData, bool compress = true>\nstruct UnionFind\n\
+    {\n  friend UFData;\n\nprotected:\n  vc<int> par;\n  vc<typename UFData::VData>\
+    \ vdat;\n\npublic:\n  typename UFData::GData gdat;\n\n  UnionFind() {}\n  UnionFind(int\
+    \ n) : par(n, -1), vdat(n), gdat(n)\n  { repi(i, n) vdat[i] = typename UFData::VData(i);\
+    \ }\n\n  virtual int leader(int x)\n  {\n    assert(0 <= x && x < SZ<int>(par));\n\
+    \    if (par[x] < 0)\n      return x;\n    if constexpr (compress)\n      return\
+    \ par[x] = leader(par[x]);\n    else\n      return leader(par[x]);\n  }\n  //\
+    \ \u9802\u70B9 x \u3092\u542B\u3080\u9023\u7D50\u6210\u5206\u306E\u9802\u70B9\u6570\
+    \n  template <class I = ll>\n  I size(int x) { return -par[leader(x)]; }\n  typename\
+    \ UFData::VData &get_vdata(int x) { return vdat[leader(x)]; }\n  bool same(int\
+    \ x, int y) { return leader(x) == leader(y); }\n  // \u8FD4\u308A\u5024: \u30DE\
+    \u30FC\u30B8\u3057\u305F\u5F8C\u306E\u65B0\u305F\u306A\u4EE3\u8868\u5143\n  template\
+    \ <class I = ll>\n  I merge(int x, int y, typename UFData::EWeight w = 1)\n  {\n\
+    \    x = leader(x), y = leader(y);\n    if (x == y)\n    {\n      UFData::add_edge_same(*this,\
+    \ x, w);\n      return x;\n    }\n    if (-par[x] < -par[y])\n      swap(x, y);\n\
+    \    par[x] += par[y], par[y] = x;\n    UFData::add_edge_diff(*this, x, y, w);\n\
+    \    return x;\n  }\n\n  // \u5404\u9802\u70B9\u304C\u5C5E\u3059\u308B\u9023\u7D50\
+    \u6210\u5206\u306E\u756A\u53F7 (\u9806\u756A\u306F\u672A\u5B9A\u7FA9)\n  // ACL\
+    \ \u306E groups \u304C\u6B32\u3057\u3044\u5834\u5408: \u3053\u308C\u306B group_index\
+    \ \u3092\u4F7F\u3046\n  template <class I = ll>\n  vc<I> group_ids()\n  {\n  \
+    \  const int n = par.size();\n    vc<I> gid(n, -1);\n    for (int v = 0, i = 0;\
+    \ v < n; v++)\n    {\n      int l = leader(v);\n      if (gid[l] == -1)\n    \
+    \    gid[l] = i++;\n      gid[v] = gid[l];\n    }\n    return gid;\n  }\n};\n\n\
+    template <class EWeight_ = ll>\nstruct UFDataEmpty\n{\n  struct VData\n  {\n \
+    \   VData() {}\n    VData(int) {}\n  };\n  struct GData\n  {\n    GData() {}\n\
+    \    GData(int) {}\n  };\n  using EWeight = EWeight_;\n  template <class UF>\n\
+    \  static void add_edge_diff(UF &, int, int, EWeight) {}\n  template <class UF>\n\
+    \  static void add_edge_same(UF &, int, EWeight) {}\n};\n\ntemplate <class EWeight_\
+    \ = ll, bool need_vlist = false>\nstruct UFDataEverything\n{\n  struct VData\n\
+    \  {\n    VData() {}\n\n    ll vsum;\n    ll esum;\n    vc<ll> vlist;\n\n    //\
+    \ \u9802\u70B9 i \u306E\u521D\u671F\u5316\n    VData(int i)\n    {\n      vsum\
+    \ = 1;\n      esum = 0;\n      if constexpr (need_vlist)\n        vlist = {i};\n\
+    \    }\n  };\n  struct GData\n  {\n    GData() {}\n\n    ll cmp_cnt;\n    ll min_leader,\
+    \ max_leader;\n\n    // \u9802\u70B9\u6570 n \u306E\u30B0\u30E9\u30D5\u306E\u521D\
+    \u671F\u5316\n    GData(int n)\n    {\n      cmp_cnt = n;\n      min_leader =\
+    \ 0, max_leader = n - 1;\n    }\n  };\n  using EWeight = EWeight_;\n  template\
+    \ <class UF>\n  static void add_edge_diff(UF &uf, int x, int y, EWeight w)\n \
+    \ {\n    VData &xd = uf.vdat[x], &yd = uf.vdat[y];\n    GData &gd = uf.gdat;\n\
+    \    xd.vsum += yd.vsum;\n    xd.esum += w;\n    if constexpr (need_vlist)\n \
+    \   {\n      xd.vlist.insert(xd.vlist.end(), ALL(yd.vlist));\n      yd.vlist.clear();\n\
+    \    }\n    gd.cmp_cnt--;\n    while (uf.leader(gd.min_leader) != gd.min_leader)\n\
+    \      gd.min_leader++;\n    while (uf.leader(gd.max_leader) != gd.max_leader)\n\
+    \      gd.max_leader--;\n  }\n  template <class UF>\n  static void add_edge_same(UF\
+    \ &uf, int x, EWeight w)\n  {\n    VData &xd = uf.vdat[x];\n    xd.esum += w;\n\
+    \  }\n};\n#line 6 \"ds/uf/uf_partially_persistent.hpp\"\n\n/**\n * @brief \u90E8\
+    \u5206\u6C38\u7D9A UnionFind\n * @docs docs/ds/uf/uf_partially_persistent.md\n\
+    \ */\n\ntemplate <class UFData>\nstruct UnionFindPartiallyPersistent\n{\n  friend\
+    \ UFData;\n\nprotected:\n  vc<int> par;\n  vc<typename UFData::VData> vdat;\n\
+    \  typename UFData::GData gdat;\n  // upd_time[x]: \u9802\u70B9 x \u304C\u4EE3\
+    \u8868\u5143\u3067\u306A\u304F\u306A\u3063\u305F\u6642\u523B\n  vc<int> upd_time;\n\
+    \  int cur_time;\n  // vhis[x]: (vdat[x] \u306E\u5909\u66F4\u6642\u523B, \u5909\
+    \u66F4\u524D\u306E vdat[x]) \u3092\u4E26\u3079\u305F\u3082\u306E\n  vvc<pair<int,\
+    \ typename UFData::VData>> vhis;\n  // ghis[t]: \u6642\u523B t \u306B\u304A\u3051\
+    \u308B gdat\n  vc<typename UFData::GData> ghis;\n  \npublic:\n  UnionFindPartiallyPersistent(int\
+    \ n)\n  : par(n, -1), vdat(n), gdat(n),\n  upd_time(n, (int)1e9), cur_time(0),\n\
+    \  vhis(n, {{0, typename UFData::VData()}}), ghis{gdat}\n  { repi(i, n) vdat[i]\
+    \ = typename UFData::VData(i); }\n\n  int leader(int t, int x)\n  {\n    assert(0\
+    \ <= x && x < SZ<int>(par));\n    if (upd_time[x] > t)\n      return x;\n    return\
+    \ leader(t, par[x]);\n  }\n  typename UFData::VData &get_vdata(int t, int x)\n\
+    \  {\n    x = leader(t, x);\n    int i = leq_max(vhis[x], t, {}, [&](cauto &p)\n\
+    \                    { return p.first; });\n    return vhis[x][i].second;\n  }\n\
+    \  typename UFData::GData &get_gdata(int t) const { return ghis[t]; }\n  bool\
+    \ same(int t, int x, int y) { return leader(t, x) == leader(t, y); }\n  // \u8FD4\
+    \u308A\u5024: (\u65B0\u305F\u306A\u4EE3\u8868\u5143, \u8FBA\u306E\u8FFD\u52A0\u304C\
+    \u884C\u308F\u308C\u305F\u6642\u523B)\n  // \u6642\u523B\u306F\u521D\u671F\u72B6\
+    \u614B\u304C 0 \u3067\u3001\u8FBA\u304C\u8FFD\u52A0\u3055\u308C\u308B\u3054\u3068\
+    \u306B 1, 2, 3, ...\n  template <class V = ll, class Time = ll>\n  pair<V, Time>\
+    \ merge(int x, int y, const typename UFData::EWeight &w = 1)\n  {\n    x = leader(cur_time,\
+    \ x), y = leader(cur_time, y);\n    cur_time++;\n    if (x == y)\n    {\n    \
+    \  UFData::add_edge_same(*this, x, w);\n      vhis[x].eb(cur_time, vdat[x]);\n\
+    \      ghis.eb(gdat);\n      return {x, cur_time};\n    }\n    if (-par[x] < -par[y])\n\
+    \      swap(x, y);\n    par[x] += par[y], par[y] = x;\n    UFData::add_edge_diff(*this,\
+    \ x, y, w);\n    vhis[x].eb(cur_time, vdat[x]);\n    ghis.eb(gdat);\n    upd_time[y]\
+    \ = cur_time;\n    return {x, cur_time};\n  }\n\n  // \u5404\u9802\u70B9\u304C\
+    \u5C5E\u3059\u308B\u9023\u7D50\u6210\u5206\u306E\u756A\u53F7 (\u9806\u756A\u306F\
+    \u672A\u5B9A\u7FA9)\n  // ACL \u306E groups \u304C\u6B32\u3057\u3044\u5834\u5408\
+    : \u3053\u308C\u306B group_index \u3092\u4F7F\u3046\n  template <class I = ll>\n\
+    \  vc<I> group_ids()\n  {\n    const int n = par.size();\n    vc<I> gid(n, -1);\n\
+    \    for (int v = 0, i = 0; v < n; v++)\n    {\n      int l = leader(v);\n   \
+    \   if (gid[l] == -1)\n        gid[l] = i++;\n      gid[v] = gid[l];\n    }\n\
+    \    return gid;\n  }\n};\n"
+  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n\n#include\
+    \ \"uf.hpp\"\n\n/**\n * @brief \u90E8\u5206\u6C38\u7D9A UnionFind\n * @docs docs/ds/uf/uf_partially_persistent.md\n\
+    \ */\n\ntemplate <class UFData>\nstruct UnionFindPartiallyPersistent\n{\n  friend\
+    \ UFData;\n\nprotected:\n  vc<int> par;\n  vc<typename UFData::VData> vdat;\n\
+    \  typename UFData::GData gdat;\n  // upd_time[x]: \u9802\u70B9 x \u304C\u4EE3\
+    \u8868\u5143\u3067\u306A\u304F\u306A\u3063\u305F\u6642\u523B\n  vc<int> upd_time;\n\
+    \  int cur_time;\n  // vhis[x]: (vdat[x] \u306E\u5909\u66F4\u6642\u523B, \u5909\
+    \u66F4\u524D\u306E vdat[x]) \u3092\u4E26\u3079\u305F\u3082\u306E\n  vvc<pair<int,\
+    \ typename UFData::VData>> vhis;\n  // ghis[t]: \u6642\u523B t \u306B\u304A\u3051\
+    \u308B gdat\n  vc<typename UFData::GData> ghis;\n  \npublic:\n  UnionFindPartiallyPersistent(int\
+    \ n)\n  : par(n, -1), vdat(n), gdat(n),\n  upd_time(n, (int)1e9), cur_time(0),\n\
+    \  vhis(n, {{0, typename UFData::VData()}}), ghis{gdat}\n  { repi(i, n) vdat[i]\
+    \ = typename UFData::VData(i); }\n\n  int leader(int t, int x)\n  {\n    assert(0\
+    \ <= x && x < SZ<int>(par));\n    if (upd_time[x] > t)\n      return x;\n    return\
+    \ leader(t, par[x]);\n  }\n  typename UFData::VData &get_vdata(int t, int x)\n\
+    \  {\n    x = leader(t, x);\n    int i = leq_max(vhis[x], t, {}, [&](cauto &p)\n\
+    \                    { return p.first; });\n    return vhis[x][i].second;\n  }\n\
+    \  typename UFData::GData &get_gdata(int t) const { return ghis[t]; }\n  bool\
+    \ same(int t, int x, int y) { return leader(t, x) == leader(t, y); }\n  // \u8FD4\
+    \u308A\u5024: (\u65B0\u305F\u306A\u4EE3\u8868\u5143, \u8FBA\u306E\u8FFD\u52A0\u304C\
+    \u884C\u308F\u308C\u305F\u6642\u523B)\n  // \u6642\u523B\u306F\u521D\u671F\u72B6\
+    \u614B\u304C 0 \u3067\u3001\u8FBA\u304C\u8FFD\u52A0\u3055\u308C\u308B\u3054\u3068\
+    \u306B 1, 2, 3, ...\n  template <class V = ll, class Time = ll>\n  pair<V, Time>\
+    \ merge(int x, int y, const typename UFData::EWeight &w = 1)\n  {\n    x = leader(cur_time,\
+    \ x), y = leader(cur_time, y);\n    cur_time++;\n    if (x == y)\n    {\n    \
+    \  UFData::add_edge_same(*this, x, w);\n      vhis[x].eb(cur_time, vdat[x]);\n\
+    \      ghis.eb(gdat);\n      return {x, cur_time};\n    }\n    if (-par[x] < -par[y])\n\
+    \      swap(x, y);\n    par[x] += par[y], par[y] = x;\n    UFData::add_edge_diff(*this,\
+    \ x, y, w);\n    vhis[x].eb(cur_time, vdat[x]);\n    ghis.eb(gdat);\n    upd_time[y]\
+    \ = cur_time;\n    return {x, cur_time};\n  }\n\n  // \u5404\u9802\u70B9\u304C\
+    \u5C5E\u3059\u308B\u9023\u7D50\u6210\u5206\u306E\u756A\u53F7 (\u9806\u756A\u306F\
+    \u672A\u5B9A\u7FA9)\n  // ACL \u306E groups \u304C\u6B32\u3057\u3044\u5834\u5408\
+    : \u3053\u308C\u306B group_index \u3092\u4F7F\u3046\n  template <class I = ll>\n\
+    \  vc<I> group_ids()\n  {\n    const int n = par.size();\n    vc<I> gid(n, -1);\n\
+    \    for (int v = 0, i = 0; v < n; v++)\n    {\n      int l = leader(v);\n   \
+    \   if (gid[l] == -1)\n        gid[l] = i++;\n      gid[v] = gid[l];\n    }\n\
+    \    return gid;\n  }\n};"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -941,26 +708,136 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
-  - math/modint/modint.hpp
-  - math/modint/modint32_internal.hpp
-  - math/modint/modint_base.hpp
-  - math/extgcd.hpp
-  - math/modint/binomial.hpp
-  - ds/uf/uf_potential.hpp
   - ds/uf/uf.hpp
-  - math/algebra/algebra_basic_ops.hpp
-  - math/algebra/algebra_base.hpp
-  - math/algebra/matmul22.hpp
-  isVerificationFile: true
-  path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
+  isVerificationFile: false
+  path: ds/uf/uf_partially_persistent.hpp
   requiredBy: []
   timestamp: '2025-03-21 03:33:31+09:00'
-  verificationStatus: TEST_ACCEPTED
-  verifiedWith: []
-documentation_of: verify/yosupo/unionfind_potential_non_commutative.test.cpp
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - verify/yukicoder/uf_partially_persistent.test.cpp
+documentation_of: ds/uf/uf_partially_persistent.hpp
 layout: document
 redirect_from:
-- /verify/verify/yosupo/unionfind_potential_non_commutative.test.cpp
-- /verify/verify/yosupo/unionfind_potential_non_commutative.test.cpp.html
-title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
+- /library/ds/uf/uf_partially_persistent.hpp
+- /library/ds/uf/uf_partially_persistent.hpp.html
+title: "\u90E8\u5206\u6C38\u7D9A UnionFind"
 ---
+## 部分永続 Unionfind
+
+部分永続とは、「ある時点での状態を取得する」ができるということ。
+
+（全永続はこれよりも強く、「ある時点に変更を加えたものを今の状態とする」ができる。大変（多分）。）
+
+本ライブラリでは、辺が $t$ 本のときの状態を時刻 $t$ と呼ぶことにして管理する（特に、初期状態は時刻 $0$）。また、時刻 $0$ より小さい時刻は時刻 $0$ とみなされ、現在時刻より大きい時刻は現在時刻とみなされる。
+
+なお、経路圧縮はできないので $\log$ がつくことに注意。
+
+
+### コンストラクタ
+
+```cpp
+UnionFindPartiallyPersistent<class UFData>(int n)
+```
+
+頂点数 $n$ で初期化する。`UFData` は通常の Unionfind と同じ仕様。
+
+ただし、**`GData` は (辺の追加回数) 倍のメモリを消費する**ことに注意。たとえば $O(n)$ のメモリを `GData` に持たせてはいけない。
+
+### メンバ関数
+
+#### leader
+
+```cpp
+int leader(int t, int x)
+```
+
+時刻 $t$ において、頂点 $x$ が属する連結成分の代表元を返す。
+
+##### 制約
+
+- $0 \leq x \lt n$
+
+##### 計算量
+
+- $O(\log n)$
+
+#### same
+
+```cpp
+bool same(int t, int x, int y)
+```
+
+時刻 $t$ において、頂点 $x$ と頂点 $y$ が同じ連結成分に属するかどうかを返す。
+
+##### 制約
+
+- $0 \leq x,y \lt n$
+
+
+##### 計算量
+
+- $O(\log n)$
+
+
+
+#### get_vdata
+
+```cpp
+UFData::VData get_vdata(int t, int x)
+```
+
+時刻 $t$ において、頂点 $x$ が属する連結成分の `UFData::VData` を取得する。
+
+**`UnionFind` と違って、size が存在しない仕様になっている**。そのため、「（時刻 $t$ における）連結成分のサイズ」が欲しい場合、`VData` にサイズの情報を入れること。
+
+
+##### 制約
+
+- $0 \leq x \lt n$
+
+##### 計算量
+
+- $O(\log n + \log(現在時刻))$
+
+#### get_gdata
+
+```cpp
+UFData::GData get_gdata(int t)
+```
+
+時刻 $t$ における `UFData::GData` を取得する。
+
+##### 制約
+
+- $0 \leq t \leq (現在時刻)$
+
+
+##### 計算量
+
+- $O(1)$
+
+
+#### merge
+
+```cpp
+pair<V=ll, Time=ll> merge(int x, int y, UFData::EWeight w = 1)
+```
+
+頂点 $x$ と頂点 $y$ の間に重み $w$ の辺を追加し、(この連結成分の新たな代表元, 追加後の時刻) を返す。
+
+`EWeight` が整数型などの場合はデフォルトで重みが $1$ になるが、そうでない場合は重みを指定しなければならない。
+
+#### group_ids
+
+```cpp
+vc<I=ll> group_ids()
+```
+
+長さ $n$ の vector を返す。$i$ 番目の要素には頂点 $i$ が属する連結成分の番号が格納される。番号の順番は未定義。
+
+ACL の `groups()` 相当のものが欲しい場合、これに `group_index` を噛ませること。
+
+##### 計算量
+
+- $O(n \log n)$

@@ -34,11 +34,14 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: ds/flat_map.hpp
     title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
       \u5408\u306E map"
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/associative_array_flat_map.test.cpp
+    title: verify/yosupo/associative_array_flat_map.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/associative_array_lower_bound.test.cpp
     title: verify/yosupo/associative_array_lower_bound.test.cpp
@@ -640,6 +643,7 @@ data:
   verifiedWith:
   - verify/yosupo/static_range_frequency.test.cpp
   - verify/yosupo/associative_array_lower_bound.test.cpp
+  - verify/yosupo/associative_array_flat_map.test.cpp
 documentation_of: ds/coordinate_compression.hpp
 layout: document
 redirect_from:

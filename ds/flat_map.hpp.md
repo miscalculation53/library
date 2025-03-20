@@ -37,10 +37,13 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/associative_array_flat_map.test.cpp
+    title: verify/yosupo/associative_array_flat_map.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/flat_map.md
     document_title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\
@@ -643,8 +646,9 @@ data:
   path: ds/flat_map.hpp
   requiredBy: []
   timestamp: '2025-03-20 23:35:20+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - verify/yosupo/associative_array_flat_map.test.cpp
 documentation_of: ds/flat_map.hpp
 layout: document
 redirect_from:

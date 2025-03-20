@@ -830,56 +830,57 @@ data:
     \ \u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind\n * @docs docs/ds/uf/uf_potential.md\n\
     \ */\n\n// G \u306F\u7FA4\ntemplate <class G>\nstruct UnionFindPotential : UnionFind<UFDataEmpty<typename\
     \ G::S>, true>\n{\n  using UFData = UFDataEmpty<typename G::S>;\n  using UF =\
-    \ UnionFind<UFData, true>;\n\nprotected:\n  vc<typename G::S> weight_;\n  vc<bool>\
-    \ valid_;\n  typename G::S weight(int x)\n  {\n    leader(x);\n    return weight_[x];\n\
-    \  }\n\npublic:\n  UnionFindPotential(int n)\n  : UF(n), weight_(n, G::e()), valid_(n,\
-    \ true) {}\n  using UF::par;\n  using UF::same;\n\n  int leader(int x) override\n\
-    \  {\n    assert(0 <= x && x < SZ<int>(par));\n    if (par[x] < 0)\n      return\
-    \ x;\n    int lx = leader(par[x]);\n    weight_[x] = G::op(weight_[par[x]], weight_[x]);\n\
-    \    return par[x] = lx;\n  }\n  // \u3069\u306E\u60C5\u5831\u3082\u7121\u8996\
-    \u3057\u306A\u304B\u3063\u305F\u3068\u3057\u3066\u3001x \u3092\u542B\u3080\u9023\
-    \u7D50\u6210\u5206\u306E\u60C5\u5831\u304C valid \u304B\u3069\u3046\u304B\n  bool\
-    \ valid(int x) { return valid_[leader(x)]; }\n  // same(x, y) \u306E\u3068\u304D\
-    \u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\u307E\u308B\n  // \u305F\u3060\u3057\u3001\
-    invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3059\u308B\u3082\u306E\u3068\u3059\
-    \u308B\n  typename G::S diff(int x, int y)\n  {\n    assert(same(x, y));\n   \
-    \ return G::op(G::inv(weight_[x]), weight_[y]);\n  }\n  // a[x]^{-1} a[y] == w\
-    \ \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\u3092\u8FFD\u52A0\u3059\u308B\
-    \n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3057\
-    \u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\u5831\u304C valid \u304B\u3069\
-    \u3046\u304B\n  bool merge(int x, int y, typename UFData::EWeight w)\n  {\n  \
-    \  int lx = leader(x), ly = leader(y);\n    if (lx == ly)\n    {\n      bool ok\
-    \ = G::op(G::inv(weight_[x]), weight_[y]) == w;\n      if (!ok)\n        valid_[lx]\
-    \ = false;\n      return ok;\n    }\n    w = G::op(G::op(weight_[x], w), G::inv(weight_[y]));\n\
-    \    if (-par[lx] < -par[ly])\n      swap(lx, ly), w = G::inv(w);\n    par[lx]\
-    \ += par[ly], par[ly] = lx;\n    weight_[ly] = w;\n    return true;\n  }\n};\n\
-    #line 25 \"verify/yosupo/unionfind_potential.test.cpp\"\n\nvoid init() {}\n\n\
-    void main2()\n{\n  LL(N, Q);\n  UnionFindPotential<GroupAddSub<mint>> uf(N);\n\
-    \  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(u, v, w);\n  \
-    \    PRINT(uf.merge(v, u, w));\n    }\n    else if (t == 1)\n    {\n      LL(u,\
-    \ v);\n      if (uf.same(u, v))\n        PRINT(uf.diff(v, u));\n      else\n \
-    \       PRINT(-1);\n    }\n  }\n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase,\
-    \ 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\n\n      // -----\
-    \ generate cases -----\n      ll N = 1 + rand() % 5;\n      vl A(N);\n      rep(i,\
-    \ N) A.at(i) = 1 + rand() % 10;\n      // --------------------------\n\n     \
-    \ // ------ check output ------\n      #define INPUT A\n      auto god = naive(INPUT);\n\
-    \      auto ans = solve(INPUT);\n      if (god != ans)\n      {\n        dump(INPUT);\n\
-    \        dump(god, ans);\n        exit(0);\n      }\n      // --------------------------\n\
-    \    }\n    dump(\"ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](string\
-    \ val, string color)\n  {\n    string s = \"\\033[\" + color + \"m\" + val + \"\
-    \\033[m\";\n    #ifdef LOCAL\n    cerr << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\
-    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
-    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n    cerr << val;\n    //*/\n  };\n\
-    \n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\",\
-    \ \"32\");\n  #endif\n  #if defined FAST_CIO and not defined LOCAL\n  CERR(\"\\\
-    n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
-    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
-    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
-    \\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n  {\n    dump(\"new testcase\"\
-    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\\n[SINGLE_TESTCASE]\\\
-    n\\n\", \"36\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\\
-    n\\n\", \"33\");\n  dump(\"T\");\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"\
-    new testcase\");\n    main2();\n  }\n  #endif\n}\n"
+    \ UnionFind<UFData, true>;\n\nprotected:\n  using UF::par;\n  vc<typename G::S>\
+    \ weight_;\n  vc<bool> valid_;\n  typename G::S weight(int x)\n  {\n    leader(x);\n\
+    \    return weight_[x];\n  }\n\npublic:\n  UnionFindPotential(int n)\n  : UF(n),\
+    \ weight_(n, G::e()), valid_(n, true) {}\n  using UF::same;\n\n  int leader(int\
+    \ x) override\n  {\n    assert(0 <= x && x < SZ<int>(par));\n    if (par[x] <\
+    \ 0)\n      return x;\n    int lx = leader(par[x]);\n    weight_[x] = G::op(weight_[par[x]],\
+    \ weight_[x]);\n    return par[x] = lx;\n  }\n  // \u3069\u306E\u60C5\u5831\u3082\
+    \u7121\u8996\u3057\u306A\u304B\u3063\u305F\u3068\u3057\u3066\u3001x \u3092\u542B\
+    \u3080\u9023\u7D50\u6210\u5206\u306E\u60C5\u5831\u304C valid \u304B\u3069\u3046\
+    \u304B\n  bool valid(int x) { return valid_[leader(x)]; }\n  // same(x, y) \u306E\
+    \u3068\u304D\u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\u307E\u308B\n  // \u305F\u3060\
+    \u3057\u3001invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3059\u308B\u3082\u306E\
+    \u3068\u3059\u308B\n  typename G::S diff(int x, int y)\n  {\n    assert(same(x,\
+    \ y));\n    return G::op(G::inv(weight_[x]), weight_[y]);\n  }\n  // a[x]^{-1}\
+    \ a[y] == w \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\u3092\u8FFD\u52A0\
+    \u3059\u308B\n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\u5831\u306F\u7121\
+    \u8996\u3057\u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\u5831\u304C valid\
+    \ \u304B\u3069\u3046\u304B\n  bool merge(int x, int y, typename UFData::EWeight\
+    \ w)\n  {\n    int lx = leader(x), ly = leader(y);\n    if (lx == ly)\n    {\n\
+    \      bool ok = G::op(G::inv(weight_[x]), weight_[y]) == w;\n      if (!ok)\n\
+    \        valid_[lx] = false;\n      return ok;\n    }\n    w = G::op(G::op(weight_[x],\
+    \ w), G::inv(weight_[y]));\n    if (-par[lx] < -par[ly])\n      swap(lx, ly),\
+    \ w = G::inv(w);\n    par[lx] += par[ly], par[ly] = lx;\n    weight_[ly] = w;\n\
+    \    return true;\n  }\n};\n#line 25 \"verify/yosupo/unionfind_potential.test.cpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFindPotential<GroupAddSub<mint>>\
+    \ uf(N);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(u, v,\
+    \ w);\n      PRINT(uf.merge(v, u, w));\n    }\n    else if (t == 1)\n    {\n \
+    \     LL(u, v);\n      if (uf.same(u, v))\n        PRINT(uf.diff(v, u));\n   \
+    \   else\n        PRINT(-1);\n    }\n  }\n}\n\nvoid test()\n{\n  /*\n  local(\n\
+    \    rep(testcase, 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\
+    \n\n      // ----- generate cases -----\n      ll N = 1 + rand() % 5;\n      vl\
+    \ A(N);\n      rep(i, N) A.at(i) = 1 + rand() % 10;\n      // --------------------------\n\
+    \n      // ------ check output ------\n      #define INPUT A\n      auto god =\
+    \ naive(INPUT);\n      auto ans = solve(INPUT);\n      if (god != ans)\n     \
+    \ {\n        dump(INPUT);\n        dump(god, ans);\n        exit(0);\n      }\n\
+    \      // --------------------------\n    }\n    dump(\"ok\");\n  );\n  //*/\n\
+    }\n\nint main()\n{\n  cauto CERR = [](string val, string color)\n  {\n    string\
+    \ s = \"\\033[\" + color + \"m\" + val + \"\\033[m\";\n    #ifdef LOCAL\n    cerr\
+    \ << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\
+    \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\
+    \u3059\n    cerr << val;\n    //*/\n  };\n\n  #if defined FAST_IO and not defined\
+    \ LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n  #endif\n  #if defined FAST_CIO\
+    \ and not defined LOCAL\n  CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n\
+    \  ios::sync_with_stdio(false);\n  #endif\n  cout << fixed << setprecision(20);\n\
+    \n  test();\n  init();\n\n  #if defined AOJ_TESTCASE or (defined LOCAL and defined\
+    \ SINGLE_TESTCASE)\n  CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n\
+    \  {\n    dump(\"new testcase\");\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n\
+    \  CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n  main2();\n  #elif defined\
+    \ MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n  dump(\"T\"\
+    );\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"new testcase\");\n    main2();\n\
+    \  }\n  #endif\n}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/unionfind_with_potential\"\
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF\
@@ -937,7 +938,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/unionfind_potential.test.cpp
   requiredBy: []
-  timestamp: '2025-03-20 22:54:40+09:00'
+  timestamp: '2025-03-21 03:33:31+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/unionfind_potential.test.cpp

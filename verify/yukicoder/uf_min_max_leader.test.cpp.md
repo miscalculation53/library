@@ -61,11 +61,11 @@ data:
     PROBLEM: https://yukicoder.me/problems/no/2290
     links:
     - https://yukicoder.me/problems/no/2290
-  bundledCode: "#line 1 \"verify/yukicoder/unionfind_min_max_leader.test.cpp\"\n#define\
-    \ PROBLEM \"https://yukicoder.me/problems/no/2290\"\n\n#define SINGLE_TESTCASE\n\
-    // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n// #define\
-    \ FAST_CIO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
-    #define EPS 1e-11\n\n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+  bundledCode: "#line 1 \"verify/yukicoder/uf_min_max_leader.test.cpp\"\n#define PROBLEM\
+    \ \"https://yukicoder.me/problems/no/2290\"\n\n#define SINGLE_TESTCASE\n// #define\
+    \ MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n// #define FAST_CIO\n\
+    // #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS\
+    \ 1e-11\n\n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
     \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
     \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
@@ -590,7 +590,7 @@ data:
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 15 \"verify/yukicoder/unionfind_min_max_leader.test.cpp\"\
+    \ vt;\n}\n// ----------\n#line 15 \"verify/yukicoder/uf_min_max_leader.test.cpp\"\
     \n\n#line 2 \"math/modint/modint.hpp\"\n\n#line 2 \"math/modint/modint32_internal.hpp\"\
     \n\n#line 4 \"math/modint/modint32_internal.hpp\"\n\nnamespace internal\n{\n\n\
     constexpr ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n    return\
@@ -690,8 +690,8 @@ data:
     \ mod());\n    assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::barrett32\
     \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
     using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
-    #line 17 \"verify/yukicoder/unionfind_min_max_leader.test.cpp\"\nusing mint =\
-    \ modint998244353;\n// using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
+    #line 17 \"verify/yukicoder/uf_min_max_leader.test.cpp\"\nusing mint = modint998244353;\n\
+    // using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
     // using mint = modint;\n#line 2 \"math/modint/binomial.hpp\"\n\n#line 4 \"math/modint/binomial.hpp\"\
     \n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\n * @docs docs/math/modint/binomial.md\n\
     \ */\n\ntemplate <class T>\nstruct Binomial\n{\nprivate:\n  static decltype(T::mod())\
@@ -715,60 +715,60 @@ data:
     \ 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate <class T> decltype(T::mod())\
     \ Binomial<T>::mod{T::mod()};\ntemplate <class T> vc<T> Binomial<T>::fac_{1, 1};\n\
     template <class T> vc<T> Binomial<T>::finv_{1, 1};\ntemplate <class T> vc<T> Binomial<T>::inv_{0,\
-    \ 1};\n#line 22 \"verify/yukicoder/unionfind_min_max_leader.test.cpp\"\nusing\
-    \ bi = Binomial<mint>;\n\n#line 2 \"ds/uf/uf.hpp\"\n\n#line 4 \"ds/uf/uf.hpp\"\
-    \n\n/**\n * @brief UnionFind\n * @docs docs/ds/uf/uf.md\n */\n\n// UFData \u306B\
-    \u30C7\u30D5\u30A9\u30EB\u30C8\u3067\u7528\u610F\u3055\u308C\u3066\u3044\u308B\
-    \u3082\u306E\n// - UFDataEmpty (\u4F55\u3082\u306A\u3057\u3001ACL \u76F8\u5F53\
-    )\n// - UFDataEverything (\u5168\u90E8\u8F09\u305B)\ntemplate <class UFData, bool\
-    \ compress = true>\nstruct UnionFind\n{\n  friend UFData;\n\nprotected:\n  vc<int>\
-    \ par;\n  vc<typename UFData::VData> vdat;\n\npublic:\n  typename UFData::GData\
-    \ gdat;\n\n  UnionFind() {}\n  UnionFind(int n) : par(n, -1), vdat(n), gdat(n)\n\
-    \  { repi(i, n) vdat[i] = typename UFData::VData(i); }\n\n  virtual int leader(int\
-    \ x)\n  {\n    assert(0 <= x && x < SZ<int>(par));\n    if (par[x] < 0)\n    \
-    \  return x;\n    if constexpr (compress)\n      return par[x] = leader(par[x]);\n\
-    \    else\n      return leader(par[x]);\n  }\n  // \u9802\u70B9 x \u3092\u542B\
-    \u3080\u9023\u7D50\u6210\u5206\u306E\u9802\u70B9\u6570\n  template <class I =\
-    \ ll>\n  I size(int x) { return -par[leader(x)]; }\n  typename UFData::VData &get_vdata(int\
-    \ x) { return vdat[leader(x)]; }\n  bool same(int x, int y) { return leader(x)\
-    \ == leader(y); }\n  // \u8FD4\u308A\u5024: \u30DE\u30FC\u30B8\u3057\u305F\u5F8C\
-    \u306E\u65B0\u305F\u306A\u4EE3\u8868\u5143\n  template <class I = ll>\n  I merge(int\
-    \ x, int y, typename UFData::EWeight w = 1)\n  {\n    x = leader(x), y = leader(y);\n\
-    \    if (x == y)\n    {\n      UFData::add_edge_same(*this, x, w);\n      return\
-    \ x;\n    }\n    if (-par[x] < -par[y])\n      swap(x, y);\n    par[x] += par[y],\
-    \ par[y] = x;\n    UFData::add_edge_diff(*this, x, y, w);\n    return x;\n  }\n\
-    \n  // \u5404\u9802\u70B9\u304C\u5C5E\u3059\u308B\u9023\u7D50\u6210\u5206\u306E\
-    \u756A\u53F7 (\u9806\u756A\u306F\u672A\u5B9A\u7FA9)\n  // ACL \u306E groups \u304C\
-    \u6B32\u3057\u3044\u5834\u5408: \u3053\u308C\u306B group_index \u3092\u4F7F\u3046\
-    \n  template <class I = ll>\n  vc<I> group_ids()\n  {\n    const int n = par.size();\n\
-    \    vc<I> gid(n, -1);\n    for (int v = 0, i = 0; v < n; v++)\n    {\n      int\
-    \ l = leader(v);\n      if (gid[l] == -1)\n        gid[l] = i++;\n      gid[v]\
-    \ = gid[l];\n    }\n    return gid;\n  }\n};\n\ntemplate <class EWeight_ = ll>\n\
-    struct UFDataEmpty\n{\n  struct VData\n  {\n    VData() {}\n    VData(int) {}\n\
-    \  };\n  struct GData\n  {\n    GData() {}\n    GData(int) {}\n  };\n  using EWeight\
-    \ = EWeight_;\n  template <class UF>\n  static void add_edge_diff(UF &, int, int,\
-    \ EWeight) {}\n  template <class UF>\n  static void add_edge_same(UF &, int, EWeight)\
-    \ {}\n};\n\ntemplate <class EWeight_ = ll, bool need_vlist = false>\nstruct UFDataEverything\n\
-    {\n  struct VData\n  {\n    VData() {}\n\n    ll vsum;\n    ll esum;\n    vc<ll>\
-    \ vlist;\n\n    // \u9802\u70B9 i \u306E\u521D\u671F\u5316\n    VData(int i)\n\
-    \    {\n      vsum = 1;\n      esum = 0;\n      if constexpr (need_vlist)\n  \
-    \      vlist = {i};\n    }\n  };\n  struct GData\n  {\n    GData() {}\n\n    ll\
-    \ cmp_cnt;\n    ll min_leader, max_leader;\n\n    // \u9802\u70B9\u6570 n \u306E\
-    \u30B0\u30E9\u30D5\u306E\u521D\u671F\u5316\n    GData(int n)\n    {\n      cmp_cnt\
-    \ = n;\n      min_leader = 0, max_leader = n - 1;\n    }\n  };\n  using EWeight\
-    \ = EWeight_;\n  template <class UF>\n  static void add_edge_diff(UF &uf, int\
-    \ x, int y, EWeight w)\n  {\n    VData &xd = uf.vdat[x], &yd = uf.vdat[y];\n \
-    \   GData &gd = uf.gdat;\n    xd.vsum += yd.vsum;\n    xd.esum += w;\n    if constexpr\
-    \ (need_vlist)\n    {\n      xd.vlist.insert(xd.vlist.end(), ALL(yd.vlist));\n\
-    \      yd.vlist.clear();\n    }\n    gd.cmp_cnt--;\n    while (uf.leader(gd.min_leader)\
-    \ != gd.min_leader)\n      gd.min_leader++;\n    while (uf.leader(gd.max_leader)\
-    \ != gd.max_leader)\n      gd.max_leader--;\n  }\n  template <class UF>\n  static\
-    \ void add_edge_same(UF &uf, int x, EWeight w)\n  {\n    VData &xd = uf.vdat[x];\n\
-    \    xd.esum += w;\n  }\n};\n#line 25 \"verify/yukicoder/unionfind_min_max_leader.test.cpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFind<UFDataEverything<>>\
-    \ uf(N);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 1)\n    {\n      LL(u, v);\n\
-    \      u--, v--;\n      uf.merge(u, v);\n    }\n    else if (t == 2)\n    {\n\
-    \      LL(w);\n      w--;\n      ll u = uf.gdat.min_leader, v = uf.gdat.max_leader;\n\
+    \ 1};\n#line 22 \"verify/yukicoder/uf_min_max_leader.test.cpp\"\nusing bi = Binomial<mint>;\n\
+    \n#line 2 \"ds/uf/uf.hpp\"\n\n#line 4 \"ds/uf/uf.hpp\"\n\n/**\n * @brief UnionFind\n\
+    \ * @docs docs/ds/uf/uf.md\n */\n\n// UFData \u306B\u30C7\u30D5\u30A9\u30EB\u30C8\
+    \u3067\u7528\u610F\u3055\u308C\u3066\u3044\u308B\u3082\u306E\n// - UFDataEmpty\
+    \ (\u4F55\u3082\u306A\u3057\u3001ACL \u76F8\u5F53)\n// - UFDataEverything (\u5168\
+    \u90E8\u8F09\u305B)\ntemplate <class UFData, bool compress = true>\nstruct UnionFind\n\
+    {\n  friend UFData;\n\nprotected:\n  vc<int> par;\n  vc<typename UFData::VData>\
+    \ vdat;\n\npublic:\n  typename UFData::GData gdat;\n\n  UnionFind() {}\n  UnionFind(int\
+    \ n) : par(n, -1), vdat(n), gdat(n)\n  { repi(i, n) vdat[i] = typename UFData::VData(i);\
+    \ }\n\n  virtual int leader(int x)\n  {\n    assert(0 <= x && x < SZ<int>(par));\n\
+    \    if (par[x] < 0)\n      return x;\n    if constexpr (compress)\n      return\
+    \ par[x] = leader(par[x]);\n    else\n      return leader(par[x]);\n  }\n  //\
+    \ \u9802\u70B9 x \u3092\u542B\u3080\u9023\u7D50\u6210\u5206\u306E\u9802\u70B9\u6570\
+    \n  template <class I = ll>\n  I size(int x) { return -par[leader(x)]; }\n  typename\
+    \ UFData::VData &get_vdata(int x) { return vdat[leader(x)]; }\n  bool same(int\
+    \ x, int y) { return leader(x) == leader(y); }\n  // \u8FD4\u308A\u5024: \u30DE\
+    \u30FC\u30B8\u3057\u305F\u5F8C\u306E\u65B0\u305F\u306A\u4EE3\u8868\u5143\n  template\
+    \ <class I = ll>\n  I merge(int x, int y, typename UFData::EWeight w = 1)\n  {\n\
+    \    x = leader(x), y = leader(y);\n    if (x == y)\n    {\n      UFData::add_edge_same(*this,\
+    \ x, w);\n      return x;\n    }\n    if (-par[x] < -par[y])\n      swap(x, y);\n\
+    \    par[x] += par[y], par[y] = x;\n    UFData::add_edge_diff(*this, x, y, w);\n\
+    \    return x;\n  }\n\n  // \u5404\u9802\u70B9\u304C\u5C5E\u3059\u308B\u9023\u7D50\
+    \u6210\u5206\u306E\u756A\u53F7 (\u9806\u756A\u306F\u672A\u5B9A\u7FA9)\n  // ACL\
+    \ \u306E groups \u304C\u6B32\u3057\u3044\u5834\u5408: \u3053\u308C\u306B group_index\
+    \ \u3092\u4F7F\u3046\n  template <class I = ll>\n  vc<I> group_ids()\n  {\n  \
+    \  const int n = par.size();\n    vc<I> gid(n, -1);\n    for (int v = 0, i = 0;\
+    \ v < n; v++)\n    {\n      int l = leader(v);\n      if (gid[l] == -1)\n    \
+    \    gid[l] = i++;\n      gid[v] = gid[l];\n    }\n    return gid;\n  }\n};\n\n\
+    template <class EWeight_ = ll>\nstruct UFDataEmpty\n{\n  struct VData\n  {\n \
+    \   VData() {}\n    VData(int) {}\n  };\n  struct GData\n  {\n    GData() {}\n\
+    \    GData(int) {}\n  };\n  using EWeight = EWeight_;\n  template <class UF>\n\
+    \  static void add_edge_diff(UF &, int, int, EWeight) {}\n  template <class UF>\n\
+    \  static void add_edge_same(UF &, int, EWeight) {}\n};\n\ntemplate <class EWeight_\
+    \ = ll, bool need_vlist = false>\nstruct UFDataEverything\n{\n  struct VData\n\
+    \  {\n    VData() {}\n\n    ll vsum;\n    ll esum;\n    vc<ll> vlist;\n\n    //\
+    \ \u9802\u70B9 i \u306E\u521D\u671F\u5316\n    VData(int i)\n    {\n      vsum\
+    \ = 1;\n      esum = 0;\n      if constexpr (need_vlist)\n        vlist = {i};\n\
+    \    }\n  };\n  struct GData\n  {\n    GData() {}\n\n    ll cmp_cnt;\n    ll min_leader,\
+    \ max_leader;\n\n    // \u9802\u70B9\u6570 n \u306E\u30B0\u30E9\u30D5\u306E\u521D\
+    \u671F\u5316\n    GData(int n)\n    {\n      cmp_cnt = n;\n      min_leader =\
+    \ 0, max_leader = n - 1;\n    }\n  };\n  using EWeight = EWeight_;\n  template\
+    \ <class UF>\n  static void add_edge_diff(UF &uf, int x, int y, EWeight w)\n \
+    \ {\n    VData &xd = uf.vdat[x], &yd = uf.vdat[y];\n    GData &gd = uf.gdat;\n\
+    \    xd.vsum += yd.vsum;\n    xd.esum += w;\n    if constexpr (need_vlist)\n \
+    \   {\n      xd.vlist.insert(xd.vlist.end(), ALL(yd.vlist));\n      yd.vlist.clear();\n\
+    \    }\n    gd.cmp_cnt--;\n    while (uf.leader(gd.min_leader) != gd.min_leader)\n\
+    \      gd.min_leader++;\n    while (uf.leader(gd.max_leader) != gd.max_leader)\n\
+    \      gd.max_leader--;\n  }\n  template <class UF>\n  static void add_edge_same(UF\
+    \ &uf, int x, EWeight w)\n  {\n    VData &xd = uf.vdat[x];\n    xd.esum += w;\n\
+    \  }\n};\n#line 25 \"verify/yukicoder/uf_min_max_leader.test.cpp\"\n\nvoid init()\
+    \ {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFind<UFDataEverything<>> uf(N);\n\
+    \  rep(_, Q)\n  {\n    LL(t);\n    if (t == 1)\n    {\n      LL(u, v);\n     \
+    \ u--, v--;\n      uf.merge(u, v);\n    }\n    else if (t == 2)\n    {\n     \
+    \ LL(w);\n      w--;\n      ll u = uf.gdat.min_leader, v = uf.gdat.max_leader;\n\
     \      if (u == v)\n        PRINT(-1);\n      else\n        PRINT(uf.same(w, u)\
     \ ? v + 1 : u + 1);\n    }\n  }\n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase,\
     \ 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\n\n      // -----\
@@ -844,15 +844,15 @@ data:
   - math/modint/binomial.hpp
   - ds/uf/uf.hpp
   isVerificationFile: true
-  path: verify/yukicoder/unionfind_min_max_leader.test.cpp
+  path: verify/yukicoder/uf_min_max_leader.test.cpp
   requiredBy: []
-  timestamp: '2025-03-20 22:54:40+09:00'
+  timestamp: '2025-03-21 03:33:31+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/yukicoder/unionfind_min_max_leader.test.cpp
+documentation_of: verify/yukicoder/uf_min_max_leader.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/yukicoder/unionfind_min_max_leader.test.cpp
-- /verify/verify/yukicoder/unionfind_min_max_leader.test.cpp.html
-title: verify/yukicoder/unionfind_min_max_leader.test.cpp
+- /verify/verify/yukicoder/uf_min_max_leader.test.cpp
+- /verify/verify/yukicoder/uf_min_max_leader.test.cpp.html
+title: verify/yukicoder/uf_min_max_leader.test.cpp
 ---

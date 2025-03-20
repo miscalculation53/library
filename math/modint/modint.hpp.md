@@ -143,8 +143,11 @@ data:
     path: verify/yukicoder/static_modint.test.cpp
     title: verify/yukicoder/static_modint.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/unionfind_min_max_leader.test.cpp
-    title: verify/yukicoder/unionfind_min_max_leader.test.cpp
+    path: verify/yukicoder/uf_min_max_leader.test.cpp
+    title: verify/yukicoder/uf_min_max_leader.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/uf_partially_persistent.test.cpp
+    title: verify/yukicoder/uf_partially_persistent.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -849,11 +852,12 @@ data:
   - verify/aoj/extgcd.test.cpp
   - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  - verify/yukicoder/uf_partially_persistent.test.cpp
   - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/divisors.test.cpp
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/unionfind_min_max_leader.test.cpp
   - verify/yukicoder/static_modint.test.cpp
+  - verify/yukicoder/uf_min_max_leader.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
   - verify/yukicoder/binomial.test.cpp
   - verify/yosupo/kronecker_power_hadamard.test.cpp
