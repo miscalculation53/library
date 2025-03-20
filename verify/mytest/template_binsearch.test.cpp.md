@@ -1,22 +1,22 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -28,6 +28,7 @@ data:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
     links:
+    - https://atcoder.jp/contests/kupc2013/tasks/kupc2013_a
     - https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
   bundledCode: "#line 1 \"verify/mytest/template_binsearch.test.cpp\"\n#define PROBLEM\
     \ \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\n\n#line\
@@ -152,73 +153,114 @@ data:
     \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
     \  return v[i];\n}\n#line 6 \"template/template_binsearch.hpp\"\n\n/**\n * @brief\
     \ \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09\n *\
-    \ @docs docs/template/template_binsearch.md\n */\n\n#if __cplusplus < 202002L\n\
-    // val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\
-    \u306E\u500B\u6570)\n// \u5F15\u6570: comp\ntemplate <class T = ll, class V, class...\
-    \ Args>\ninline T LB(const V &v, Args&&... args)\n{ return lower_bound(ALL(v),\
-    \ forward<Args>(args)...) - v.begin(); }\n// val < v[i] \u3068\u306A\u308B\u6700\
-    \u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570\
-    : comp\ntemplate <class T = ll, class V, class... Args>\ninline T UB(const V &v,\
-    \ Args&&... args)\n{ return upper_bound(ALL(v), forward<Args>(args)...) - v.begin();\
-    \ }\n#else\n// val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\
-    \u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class\
-    \ T = ll, class V, class... Args>\ninline T LB(const V &v, Args&&... args)\n{\
-    \ return ranges::lower_bound(v, forward<Args>(args)...) - v.begin(); }\n// val\
-    \ < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\
-    \u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class T = ll, class V, class...\
-    \ Args>\ninline T UB(const V &v, Args&&... args)\n{ return ranges::upper_bound(v,\
-    \ forward<Args>(args)...) - v.begin(); }\n#endif\n\ntemplate <class T>\nstruct\
+    \ @docs docs/template/template_binsearch.md\n */\n\ntemplate <class T>\nstruct\
     \ is_random_access_iterator\n{\n  static constexpr bool value = is_same_v<\n \
     \   typename iterator_traits<T>::iterator_category,\n    random_access_iterator_tag\n\
     \  >;\n};\ntemplate <class T>\nconstexpr bool is_random_access_iterator_v = is_random_access_iterator<T>::value;\n\
-    \ntemplate <class T = ll, class V, class... Args>\ninline auto lt_max(const V\
-    \ &v, Args&&... args)\n{\n  if constexpr (is_random_access_iterator_v<typename\
-    \ V::iterator>)\n    return LB<T>(v, forward<Args>(args)...) - 1;\n  else\n  {\n\
-    \    auto it = v.lower_bound(forward<Args>(args)...);\n    if (it == v.begin())\n\
-    \      return v.end();\n    else\n      return prev(it);\n  }\n}\ntemplate <class\
-    \ T = ll, class V, class... Args>\ninline auto leq_max(const V &v, Args&&... args)\n\
-    {\n  if constexpr (is_random_access_iterator_v<typename V::iterator>)\n    return\
-    \ UB<T>(v, forward<Args>(args)...) - 1;\n  else\n  {\n    auto it = v.upper_bound(forward<Args>(args)...);\n\
-    \    if (it == v.begin())\n      return v.end();\n    else\n      return prev(it);\n\
-    \  }\n}\ntemplate <class T = ll, class V, class... Args>\ninline auto gt_min(const\
-    \ V &v, Args&&... args)\n{\n  if constexpr (is_random_access_iterator_v<typename\
-    \ V::iterator>)\n    return UB<T>(v, forward<Args>(args)...);\n  else\n    return\
-    \ v.upper_bound(forward<Args>(args)...);\n}\ntemplate <class T = ll, class V,\
-    \ class... Args>\ninline auto geq_min(const V &v, Args&&... args)\n{\n  if constexpr\
-    \ (is_random_access_iterator_v<typename V::iterator>)\n    return LB<T>(v, forward<Args>(args)...);\n\
-    \  else\n    return v.lower_bound(forward<Args>(args)...);\n}\n\ntemplate <class\
-    \ T = ll, class V, class... Args>\ninline T lt_cnt(const V &v, Args&&... args)\n\
-    { return LB<T>(v, forward<Args>(args)...); }\ntemplate <class T = ll, class V,\
-    \ class... Args>\ninline T leq_cnt(const V &v, Args&&... args)\n{ return UB<T>(v,\
-    \ forward<Args>(args)...); }\ntemplate <class T = ll, class V, class... Args>\n\
-    inline T gt_cnt(const V &v, Args&&... args)\n{ return SZ<T>(v) - UB<T>(v, forward<Args>(args)...);\
-    \ }\ntemplate <class T = ll, class V, class... Args>\ninline T geq_cnt(const V\
-    \ &v, Args&&... args)\n{ return SZ<T>(v) - LB<T>(v, forward<Args>(args)...); }\n\
-    \ntemplate <class T = ll, class V, class L, class R, class... Args>\ninline T\
-    \ in_cnt(const V &v, L l, R r, Args&&... args)\n{\n  if (l > r)\n    return 0;\n\
-    \  return lt_cnt<T>(v, r, forward<Args>(args)...) - lt_cnt<T>(v, l, forward<Args>(args)...);\n\
-    }\n\ntemplate <class T = ll, class Judge, class InitOk, class InitNg>\npair<T,\
-    \ T> binsearch(const Judge &judge, const InitOk &init_ok, const InitNg &init_ng)\n\
-    {\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
-    \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
-    \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n\
-    }\ntemplate <class T = ld, class Judge, class InitOk, class InitNg>\nT binsearch_real(const\
-    \ Judge &judge, const InitOk &init_ok, const InitNg &init_ng, int iteration_count\
-    \ = 100)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
-    \  repi(_, iteration_count)\n  {\n    T mid = (ok + ng) / 2;\n    (judge(mid)\
-    \ ? ok : ng) = mid;\n  }\n  return ok;\n}\ntemplate <class T = ll, class Judge,\
-    \ class InitVal>\npair<T, T> expsearch(const Judge &judge, const InitVal &init_val,\
-    \ const bool &positive = true)\n{\n  T ok, ng;\n  if (judge(init_val))\n  {\n\
-    \    ok = init_val, ng = init_val + (positive ? 1 : -1);\n    for (int i = 1;\
-    \ judge(ng); i++)\n      ok = ng, ng = init_val + (positive ? 1 : -1) * (T(1)\
-    \ << i);\n  }\n  else\n  {\n    ng = init_val, ok = init_val + (positive ? 1 :\
-    \ -1);\n    for (int i = 1; !judge(ok); i++)\n      ng = ok, ok = init_val + (positive\
-    \ ? 1 : -1) * (T(1) << i);\n  }\n  while (ok - ng != 1 && ng - ok != 1)\n  {\n\
-    \    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) = mid;\n\
-    \  }\n  return make_pair(ok, ng);\n}\n#line 2 \"template/template_dump.hpp\"\n\
-    \n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
-    \u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n\
-    #ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    \n// --- LB, UB ---\n\n#if __cplusplus < 202002L\nstruct identity\n{\n  template\
+    \ <class T>\n  constexpr T &&operator()(T &&t) const noexcept\n  { return forward<T>(t);\
+    \ }\n};\nnamespace internal\n{\n  template <class T = ll, class V, class Judge>\n\
+    \  inline T bound_helper(const V &v, Judge judge)\n  {\n    int l = -1, r = v.size();\n\
+    \    while (r - l > 1)\n    {\n      int m = (l + r) / 2;\n      if (judge(m))\n\
+    \        l = m;\n      else\n        r = m;\n    }\n    return r;\n  }\n};\n//\
+    \ val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\
+    \u306E\u500B\u6570)\ntemplate <class T = ll, class V, class Value, class Comp\
+    \ = less<>, class Proj = identity>\ninline T LB(const V &v, const Value &val,\
+    \ Comp comp = {}, Proj proj = {})\n{\n  return internal::bound_helper(v, [&](int\
+    \ i) -> bool\n                                { return comp(proj(v[i]), val);\
+    \ });\n}\n// val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\
+    \u306E\u5024\u306E\u500B\u6570)\ntemplate <class T = ll, class V, class Value,\
+    \ class Comp = less<>, class Proj = identity>\ninline T UB(const V &v, const Value\
+    \ &val, Comp comp = {}, Proj proj = {})\n{\n  return internal::bound_helper(v,\
+    \ [&](int i) -> bool\n                                { return !comp(val, proj(v[i]));\
+    \ });\n}\n#define DEFAULT_COMP less<>\n#else\n// val <= v[i] \u3068\u306A\u308B\
+    \u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\ntemplate\
+    \ <class T = ll, class V, class Value, class Comp = ranges::less, class Proj =\
+    \ identity>\ninline T LB(const V &v, const Value &val, Comp comp = {}, Proj proj\
+    \ = {})\n{ return ranges::lower_bound(v, val, comp, proj) - v.begin(); }\n// val\
+    \ < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\
+    \u500B\u6570)\ntemplate <class T = ll, class V, class Value, class Comp = ranges::less,\
+    \ class Proj = identity>\ninline T UB(const V &v, const Value &val, Comp comp\
+    \ = {}, Proj proj = {})\n{ return ranges::upper_bound(v, val, comp, proj) - v.begin();\
+    \ }\n#define DEFAULT_COMP ranges::less\n#endif\n\n// --- vector \u7B49\u306E lt,\
+    \ leq, gt, geq ---\n\n// v[i] < val \u3068\u306A\u308B\u6700\u5927\u306E i (\u306A\
+    \u3051\u308C\u3070 -1)\ntemplate <class T = ll, class V, class Value, class Comp\
+    \ = DEFAULT_COMP, class Proj = identity>\ninline auto lt_max(const V &v, const\
+    \ Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return LB<T>(v, val, comp, proj) - 1; }\n// v[i] <= val\
+    \ \u3068\u306A\u308B\u6700\u5927\u306E i (\u306A\u3051\u308C\u3070 -1)\ntemplate\
+    \ <class T = ll, class V, class Value, class Comp = DEFAULT_COMP, class Proj =\
+    \ identity>\ninline auto leq_max(const V &v, const Value &val, Comp comp = {},\
+    \ Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename V::iterator>,\
+    \ T>\n{ return UB<T>(v, val, comp, proj) - 1; }\n// val < v[i] \u3068\u306A\u308B\
+    \u6700\u5C0F\u306E i (\u306A\u3051\u308C\u3070 n)\ntemplate <class T = ll, class\
+    \ V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto\
+    \ gt_min(const V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return UB<T>(v, val, comp, proj); }\n// val <= v[i] \u3068\
+    \u306A\u308B\u6700\u5C0F\u306E i (\u306A\u3051\u308C\u3070 n)\ntemplate <class\
+    \ T = ll, class V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>\n\
+    inline auto geq_min(const V &v, const Value &val, Comp comp = {}, Proj proj =\
+    \ {})\n-> enable_if_t<is_random_access_iterator_v<typename V::iterator>, T>\n\
+    { return LB<T>(v, val, comp, proj); }\n// v[i] < val \u3068\u306A\u308B i \u306E\
+    \u500B\u6570\ntemplate <class T = ll, class V, class Value, class Comp = DEFAULT_COMP,\
+    \ class Proj = identity>\ninline auto lt_cnt(const V &v, const Value &val, Comp\
+    \ comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return LB<T>(v, val, comp, proj); }\n// v[i] <= val \u3068\
+    \u306A\u308B i \u306E\u500B\u6570\ntemplate <class T = ll, class V, class Value,\
+    \ class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto leq_cnt(const\
+    \ V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return UB<T>(v, val, comp, proj); }\n// val < v[i] \u3068\
+    \u306A\u308B i \u306E\u500B\u6570\ntemplate <class T = ll, class V, class Value,\
+    \ class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto gt_cnt(const\
+    \ V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return SZ<T>(v) - UB<T>(v, val, comp, proj); }\n// val <=\
+    \ v[i] \u3068\u306A\u308B i \u306E\u500B\u6570\ntemplate <class T = ll, class\
+    \ V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto\
+    \ geq_cnt(const V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return SZ<T>(v) - LB<T>(v, val, comp, proj); }\n// l <=\
+    \ v[i] < r \u3068\u306A\u308B i \u306E\u500B\u6570\ntemplate <class T = ll, class\
+    \ V, class L, class R, class Comp = DEFAULT_COMP, class Proj = identity>\ninline\
+    \ auto in_cnt(const V &v, L l, R r, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{\n  if (l > r)\n    return 0;\n  return lt_cnt<T>(v, r, comp,\
+    \ proj) - lt_cnt<T>(v, l, comp, proj);\n}\n\n// --- set \u7B49\u306E lt, leq,\
+    \ gt, geq ---\n\n// *it < val \u3068\u306A\u308B\u6700\u5927\u306E it (\u306A\u3051\
+    \u308C\u3070 end())\ntemplate <class V, class Value>\ninline auto lt_max(const\
+    \ V &v, const Value &val)\n-> enable_if_t<!is_random_access_iterator_v<typename\
+    \ V::iterator>, typename V::const_iterator>\n{\n  auto it = v.lower_bound(val);\n\
+    \  return it == v.begin() ? v.end() : prev(it);\n}\n// *it <= val \u3068\u306A\
+    \u308B\u6700\u5927\u306E it (\u306A\u3051\u308C\u3070 end())\ntemplate <class\
+    \ V, class Value>\ninline auto leq_max(const V &v, const Value &val)\n-> enable_if_t<!is_random_access_iterator_v<typename\
+    \ V::iterator>, typename V::const_iterator>\n{\n  auto it = v.upper_bound(val);\n\
+    \  return it == v.begin() ? v.end() : prev(it);\n}\n// val < *it \u3068\u306A\u308B\
+    \u6700\u5C0F\u306E it (\u306A\u3051\u308C\u3070 end())\ntemplate <class V, class\
+    \ Value>\ninline auto gt_min(const V &v, const Value &val)\n-> enable_if_t<!is_random_access_iterator_v<typename\
+    \ V::iterator>, typename V::const_iterator>\n{ return v.upper_bound(val); }\n\
+    // val <= *it \u3068\u306A\u308B\u6700\u5C0F\u306E it (\u306A\u3051\u308C\u3070\
+    \ end())\ntemplate <class V, class Value>\ninline auto geq_min(const V &v, const\
+    \ Value &val)\n-> enable_if_t<!is_random_access_iterator_v<typename V::iterator>,\
+    \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
+    \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\ntemplate <class T = ll, class Judge, class\
+    \ InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge, const InitOk\
+    \ &init_ok, const InitNg &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n\
+    \  assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid\
+    \ = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return\
+    \ make_pair(ok, ng);\n}\ntemplate <class T = ld, class Judge, class InitOk, class\
+    \ InitNg>\nT binsearch_real(const Judge &judge, const InitOk &init_ok, const InitNg\
+    \ &init_ng, int iteration_count = 100)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n\
+    \  assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n    T mid = (ok + ng)\
+    \ / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n}\ntemplate <class\
+    \ T = ll, class Judge, class InitVal>\npair<T, T> expsearch(const Judge &judge,\
+    \ const InitVal &init_val, const bool &positive = true)\n{\n  T ok, ng;\n  if\
+    \ (judge(init_val))\n  {\n    ok = init_val, ng = init_val + (positive ? 1 : -1);\n\
+    \    for (int i = 1; judge(ng); i++)\n      ok = ng, ng = init_val + (positive\
+    \ ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng = init_val, ok = init_val\
+    \ + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok); i++)\n      ng = ok,\
+    \ ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  while (ok - ng !=\
+    \ 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid)\
+    \ ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n}\n#line 2 \"template/template_dump.hpp\"\
+    \n\n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
+    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
     namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
     \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
     \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
@@ -251,9 +293,22 @@ data:
     \         { return ai <= k; });\n  assert(i1 == i2);\n  i1 = gt_cnt(a, k);\n \
     \ i2 = count_if(ALL(a), [&](ll ai)\n                { return k < ai; });\n  assert(i1\
     \ == i2);\n  i1 = geq_cnt(a, k);\n  i2 = count_if(ALL(a), [&](ll ai)\n       \
-    \         { return k <= ai; });\n  assert(i1 == i2);\n}\n\nint main()\n{\n  rep(_,\
-    \ 10000) test1();\n  rep(_, 10000) test2();\n\n  cout << \"Hello World\" << endl;\n\
-    }\n"
+    \         { return k <= ai; });\n  assert(i1 == i2);\n}\n\nvoid test3()\n{\n \
+    \ vc<int> v = {1, 3, 5, 7, 9};\n  int i = leq_max(v, 6);\n  assert(v[i] == 5);\n\
+    \  set<int> s = {1, 3, 5, 7, 9};\n  auto it = leq_max(s, 6);\n  assert(*it ==\
+    \ 5);\n}\n\n// https://atcoder.jp/contests/kupc2013/tasks/kupc2013_a\nvoid test4()\n\
+    {\n  using P = pair<int, string>;\n  auto solve = [](int q, vc<P> v) -> string\n\
+    \  {\n    v.insert(v.begin(), {1, \"kogakubu10gokan\"});\n#if __cplusplus < 202002L\n\
+    \    int i = LB(v, q, {}, [](const P &p)\n               { return p.first; });\n\
+    #else\n    int i = leq_max(v, q, {}, [](const P &p)\n                    { return\
+    \ p.first; });\n#endif\n    return v[i].second;\n  };\n\n  assert(solve(12, {\n\
+    \    {5, \"sogo5gokan\"},\n    {10, \"sogo10gokan\"},\n    {15, \"sogo15gokan\"\
+    }\n  }) == \"sogo10gokan\");\n  assert(solve(10, {\n    {5, \"kogakubu11gokan\"\
+    },\n    {10, \"sogo10gokan\"},\n    {15, \"KyotoUniversityResearchPark\"}\n  })\
+    \ == \"sogo10gokan\");\n  assert(solve(3, {\n    {5, \"kogakubu11gokan\"},\n \
+    \   {10, \"sogo10gokan\"},\n    {15, \"KyotoUniversityResearchPark\"}\n  }) ==\
+    \ \"kogakubu10gokan\");\n}\n\nint main()\n{\n  rep(_, 10000) test1();\n  rep(_,\
+    \ 10000) test2();\n\n  cout << \"Hello World\" << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#include \"template/template_binsearch.hpp\"\n#include \"template/template_dump.hpp\"\
     \n\nmt19937 mt;\nvoid test1()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i,\
@@ -280,9 +335,22 @@ data:
     \         { return ai <= k; });\n  assert(i1 == i2);\n  i1 = gt_cnt(a, k);\n \
     \ i2 = count_if(ALL(a), [&](ll ai)\n                { return k < ai; });\n  assert(i1\
     \ == i2);\n  i1 = geq_cnt(a, k);\n  i2 = count_if(ALL(a), [&](ll ai)\n       \
-    \         { return k <= ai; });\n  assert(i1 == i2);\n}\n\nint main()\n{\n  rep(_,\
-    \ 10000) test1();\n  rep(_, 10000) test2();\n\n  cout << \"Hello World\" << endl;\n\
-    }"
+    \         { return k <= ai; });\n  assert(i1 == i2);\n}\n\nvoid test3()\n{\n \
+    \ vc<int> v = {1, 3, 5, 7, 9};\n  int i = leq_max(v, 6);\n  assert(v[i] == 5);\n\
+    \  set<int> s = {1, 3, 5, 7, 9};\n  auto it = leq_max(s, 6);\n  assert(*it ==\
+    \ 5);\n}\n\n// https://atcoder.jp/contests/kupc2013/tasks/kupc2013_a\nvoid test4()\n\
+    {\n  using P = pair<int, string>;\n  auto solve = [](int q, vc<P> v) -> string\n\
+    \  {\n    v.insert(v.begin(), {1, \"kogakubu10gokan\"});\n#if __cplusplus < 202002L\n\
+    \    int i = LB(v, q, {}, [](const P &p)\n               { return p.first; });\n\
+    #else\n    int i = leq_max(v, q, {}, [](const P &p)\n                    { return\
+    \ p.first; });\n#endif\n    return v[i].second;\n  };\n\n  assert(solve(12, {\n\
+    \    {5, \"sogo5gokan\"},\n    {10, \"sogo10gokan\"},\n    {15, \"sogo15gokan\"\
+    }\n  }) == \"sogo10gokan\");\n  assert(solve(10, {\n    {5, \"kogakubu11gokan\"\
+    },\n    {10, \"sogo10gokan\"},\n    {15, \"KyotoUniversityResearchPark\"}\n  })\
+    \ == \"sogo10gokan\");\n  assert(solve(3, {\n    {5, \"kogakubu11gokan\"},\n \
+    \   {10, \"sogo10gokan\"},\n    {15, \"KyotoUniversityResearchPark\"}\n  }) ==\
+    \ \"kogakubu10gokan\");\n}\n\nint main()\n{\n  rep(_, 10000) test1();\n  rep(_,\
+    \ 10000) test2();\n\n  cout << \"Hello World\" << endl;\n}"
   dependsOn:
   - template/template_binsearch.hpp
   - template/template_types.hpp
@@ -293,7 +361,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_binsearch.test.cpp
   requiredBy: []
-  timestamp: '2025-03-16 23:12:25+09:00'
+  timestamp: '2025-03-20 22:04:05+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_binsearch.test.cpp

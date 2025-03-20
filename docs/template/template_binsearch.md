@@ -3,8 +3,8 @@
 ### LB, UB
 
 ```cpp
-(1) U=ll LB(V v, T val, ...)
-(2) U=ll UB(V v, T val, ...)
+(1) U=ll LB(V v, T val, Comp comp, Proj proj)
+(2) U=ll UB(V v, T val, Comp comp, Proj proj)
 ```
 
 `ranges::lower_bound` や `ranges::upper_bound` で返るイテレータの `begin` からの距離を整数で返す。
@@ -19,7 +19,7 @@ $v$ がソート済みで、後ろの引数がデフォルトの場合、
 
 を返す。
 
-後ろには C++17 以前なら `std::lower_bound`, C++20 以降なら `std::ranges::lower_bound` の引数をとれる。
+後ろの引数は `std::ranges::lower_bound` に準拠（ただし C++17 以前の場合は `&pair<int, int>::first` などの一部機能は使えない）。
 
 ##### 制約
 

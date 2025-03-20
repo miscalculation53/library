@@ -1,49 +1,49 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
   - icon: ':warning:'
     path: algo/merge_sort.hpp
     title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/coordinate_compression.hpp
     title: "\u5EA7\u6A19\u5727\u7E2E"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/csr.hpp
     title: CSR
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/group_index.hpp
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/uf/uf.hpp
     title: UnionFind
   - icon: ':heavy_check_mark:'
@@ -58,10 +58,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: itertools/direct_product.hpp
     title: "\u76F4\u7A4D\u5168\u63A2\u7D22"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
@@ -72,35 +72,35 @@ data:
   - icon: ':warning:'
     path: math/algebra/polynomial_ring.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/binomial.hpp
     title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint64_internal.hpp
     title: math/modint/modint64_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
   - icon: ':heavy_check_mark:'
     path: math/modint/power_table.hpp
     title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
   - icon: ':heavy_check_mark:'
@@ -109,24 +109,24 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/prime/linear_sieve.hpp
     title: "\u7DDA\u5F62\u7BE9"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
   - icon: ':heavy_check_mark:'
     path: math/prime/zeta_mobius_divisor_multiple.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/zeta_mobius_divisor_multiple_large.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/quadratic_equation_integer.hpp
     title: "\u4E8C\u6B21\u65B9\u7A0B\u5F0F\u306E\u6574\u6570\u89E3"
   - icon: ':heavy_check_mark:'
@@ -141,7 +141,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/set/subset_convolution.hpp
     title: subset convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/set/xor_convolution.hpp
     title: "\u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\u30FBxor \u7573\u307F\u8FBC\
       \u307F"
@@ -233,7 +233,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/quotients.test.cpp
     title: verify/yosupo/quotients.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
   - icon: ':heavy_check_mark:'
@@ -248,45 +248,45 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/xor_convolution.test.cpp
     title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/base_repr.test.cpp
     title: verify/yukicoder/base_repr.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/binomial.test.cpp
     title: verify/yukicoder/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/divisors.test.cpp
     title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/dynamic_modint.test.cpp
     title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/order_mod_carmichael.test.cpp
     title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/order_mod_euler_phi.test.cpp
     title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/quadratic_equation.test.cpp
     title: verify/yukicoder/quadratic_equation.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/static_modint.test.cpp
     title: verify/yukicoder/static_modint.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/unionfind_min_max_leader.test.cpp
     title: verify/yukicoder/unionfind_min_max_leader.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
     title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
@@ -476,72 +476,113 @@ data:
     \ 0}, {0, 1}, {-1, 0}};\n#line 2 \"template/template_binsearch.hpp\"\n\n#line\
     \ 6 \"template/template_binsearch.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
     \u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09\n * @docs docs/template/template_binsearch.md\n\
-    \ */\n\n#if __cplusplus < 202002L\n// val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\
-    \u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570: comp\n\
-    template <class T = ll, class V, class... Args>\ninline T LB(const V &v, Args&&...\
-    \ args)\n{ return lower_bound(ALL(v), forward<Args>(args)...) - v.begin(); }\n\
-    // val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\
-    \u306E\u500B\u6570)\n// \u5F15\u6570: comp\ntemplate <class T = ll, class V, class...\
-    \ Args>\ninline T UB(const V &v, Args&&... args)\n{ return upper_bound(ALL(v),\
-    \ forward<Args>(args)...) - v.begin(); }\n#else\n// val <= v[i] \u3068\u306A\u308B\
-    \u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\
-    \u6570: comp, proj\ntemplate <class T = ll, class V, class... Args>\ninline T\
-    \ LB(const V &v, Args&&... args)\n{ return ranges::lower_bound(v, forward<Args>(args)...)\
-    \ - v.begin(); }\n// val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\
-    \u4E0B\u306E\u5024\u306E\u500B\u6570)\n// \u5F15\u6570: comp, proj\ntemplate <class\
-    \ T = ll, class V, class... Args>\ninline T UB(const V &v, Args&&... args)\n{\
-    \ return ranges::upper_bound(v, forward<Args>(args)...) - v.begin(); }\n#endif\n\
-    \ntemplate <class T>\nstruct is_random_access_iterator\n{\n  static constexpr\
+    \ */\n\ntemplate <class T>\nstruct is_random_access_iterator\n{\n  static constexpr\
     \ bool value = is_same_v<\n    typename iterator_traits<T>::iterator_category,\n\
     \    random_access_iterator_tag\n  >;\n};\ntemplate <class T>\nconstexpr bool\
-    \ is_random_access_iterator_v = is_random_access_iterator<T>::value;\n\ntemplate\
-    \ <class T = ll, class V, class... Args>\ninline auto lt_max(const V &v, Args&&...\
-    \ args)\n{\n  if constexpr (is_random_access_iterator_v<typename V::iterator>)\n\
-    \    return LB<T>(v, forward<Args>(args)...) - 1;\n  else\n  {\n    auto it =\
-    \ v.lower_bound(forward<Args>(args)...);\n    if (it == v.begin())\n      return\
-    \ v.end();\n    else\n      return prev(it);\n  }\n}\ntemplate <class T = ll,\
-    \ class V, class... Args>\ninline auto leq_max(const V &v, Args&&... args)\n{\n\
-    \  if constexpr (is_random_access_iterator_v<typename V::iterator>)\n    return\
-    \ UB<T>(v, forward<Args>(args)...) - 1;\n  else\n  {\n    auto it = v.upper_bound(forward<Args>(args)...);\n\
-    \    if (it == v.begin())\n      return v.end();\n    else\n      return prev(it);\n\
-    \  }\n}\ntemplate <class T = ll, class V, class... Args>\ninline auto gt_min(const\
-    \ V &v, Args&&... args)\n{\n  if constexpr (is_random_access_iterator_v<typename\
-    \ V::iterator>)\n    return UB<T>(v, forward<Args>(args)...);\n  else\n    return\
-    \ v.upper_bound(forward<Args>(args)...);\n}\ntemplate <class T = ll, class V,\
-    \ class... Args>\ninline auto geq_min(const V &v, Args&&... args)\n{\n  if constexpr\
-    \ (is_random_access_iterator_v<typename V::iterator>)\n    return LB<T>(v, forward<Args>(args)...);\n\
-    \  else\n    return v.lower_bound(forward<Args>(args)...);\n}\n\ntemplate <class\
-    \ T = ll, class V, class... Args>\ninline T lt_cnt(const V &v, Args&&... args)\n\
-    { return LB<T>(v, forward<Args>(args)...); }\ntemplate <class T = ll, class V,\
-    \ class... Args>\ninline T leq_cnt(const V &v, Args&&... args)\n{ return UB<T>(v,\
-    \ forward<Args>(args)...); }\ntemplate <class T = ll, class V, class... Args>\n\
-    inline T gt_cnt(const V &v, Args&&... args)\n{ return SZ<T>(v) - UB<T>(v, forward<Args>(args)...);\
-    \ }\ntemplate <class T = ll, class V, class... Args>\ninline T geq_cnt(const V\
-    \ &v, Args&&... args)\n{ return SZ<T>(v) - LB<T>(v, forward<Args>(args)...); }\n\
-    \ntemplate <class T = ll, class V, class L, class R, class... Args>\ninline T\
-    \ in_cnt(const V &v, L l, R r, Args&&... args)\n{\n  if (l > r)\n    return 0;\n\
-    \  return lt_cnt<T>(v, r, forward<Args>(args)...) - lt_cnt<T>(v, l, forward<Args>(args)...);\n\
-    }\n\ntemplate <class T = ll, class Judge, class InitOk, class InitNg>\npair<T,\
-    \ T> binsearch(const Judge &judge, const InitOk &init_ok, const InitNg &init_ng)\n\
-    {\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
-    \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
-    \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n\
-    }\ntemplate <class T = ld, class Judge, class InitOk, class InitNg>\nT binsearch_real(const\
-    \ Judge &judge, const InitOk &init_ok, const InitNg &init_ng, int iteration_count\
-    \ = 100)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n\
-    \  repi(_, iteration_count)\n  {\n    T mid = (ok + ng) / 2;\n    (judge(mid)\
-    \ ? ok : ng) = mid;\n  }\n  return ok;\n}\ntemplate <class T = ll, class Judge,\
-    \ class InitVal>\npair<T, T> expsearch(const Judge &judge, const InitVal &init_val,\
-    \ const bool &positive = true)\n{\n  T ok, ng;\n  if (judge(init_val))\n  {\n\
-    \    ok = init_val, ng = init_val + (positive ? 1 : -1);\n    for (int i = 1;\
-    \ judge(ng); i++)\n      ok = ng, ng = init_val + (positive ? 1 : -1) * (T(1)\
-    \ << i);\n  }\n  else\n  {\n    ng = init_val, ok = init_val + (positive ? 1 :\
-    \ -1);\n    for (int i = 1; !judge(ok); i++)\n      ng = ok, ok = init_val + (positive\
-    \ ? 1 : -1) * (T(1) << i);\n  }\n  while (ok - ng != 1 && ng - ok != 1)\n  {\n\
-    \    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) = mid;\n\
-    \  }\n  return make_pair(ok, ng);\n}\n#line 2 \"template/template_bit.hpp\"\n\n\
-    #line 5 \"template/template_bit.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
-    \u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n\
+    \ is_random_access_iterator_v = is_random_access_iterator<T>::value;\n\n// ---\
+    \ LB, UB ---\n\n#if __cplusplus < 202002L\nstruct identity\n{\n  template <class\
+    \ T>\n  constexpr T &&operator()(T &&t) const noexcept\n  { return forward<T>(t);\
+    \ }\n};\nnamespace internal\n{\n  template <class T = ll, class V, class Judge>\n\
+    \  inline T bound_helper(const V &v, Judge judge)\n  {\n    int l = -1, r = v.size();\n\
+    \    while (r - l > 1)\n    {\n      int m = (l + r) / 2;\n      if (judge(m))\n\
+    \        l = m;\n      else\n        r = m;\n    }\n    return r;\n  }\n};\n//\
+    \ val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\
+    \u306E\u500B\u6570)\ntemplate <class T = ll, class V, class Value, class Comp\
+    \ = less<>, class Proj = identity>\ninline T LB(const V &v, const Value &val,\
+    \ Comp comp = {}, Proj proj = {})\n{\n  return internal::bound_helper(v, [&](int\
+    \ i) -> bool\n                                { return comp(proj(v[i]), val);\
+    \ });\n}\n// val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\
+    \u306E\u5024\u306E\u500B\u6570)\ntemplate <class T = ll, class V, class Value,\
+    \ class Comp = less<>, class Proj = identity>\ninline T UB(const V &v, const Value\
+    \ &val, Comp comp = {}, Proj proj = {})\n{\n  return internal::bound_helper(v,\
+    \ [&](int i) -> bool\n                                { return !comp(val, proj(v[i]));\
+    \ });\n}\n#define DEFAULT_COMP less<>\n#else\n// val <= v[i] \u3068\u306A\u308B\
+    \u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\ntemplate\
+    \ <class T = ll, class V, class Value, class Comp = ranges::less, class Proj =\
+    \ identity>\ninline T LB(const V &v, const Value &val, Comp comp = {}, Proj proj\
+    \ = {})\n{ return ranges::lower_bound(v, val, comp, proj) - v.begin(); }\n// val\
+    \ < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\
+    \u500B\u6570)\ntemplate <class T = ll, class V, class Value, class Comp = ranges::less,\
+    \ class Proj = identity>\ninline T UB(const V &v, const Value &val, Comp comp\
+    \ = {}, Proj proj = {})\n{ return ranges::upper_bound(v, val, comp, proj) - v.begin();\
+    \ }\n#define DEFAULT_COMP ranges::less\n#endif\n\n// --- vector \u7B49\u306E lt,\
+    \ leq, gt, geq ---\n\n// v[i] < val \u3068\u306A\u308B\u6700\u5927\u306E i (\u306A\
+    \u3051\u308C\u3070 -1)\ntemplate <class T = ll, class V, class Value, class Comp\
+    \ = DEFAULT_COMP, class Proj = identity>\ninline auto lt_max(const V &v, const\
+    \ Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return LB<T>(v, val, comp, proj) - 1; }\n// v[i] <= val\
+    \ \u3068\u306A\u308B\u6700\u5927\u306E i (\u306A\u3051\u308C\u3070 -1)\ntemplate\
+    \ <class T = ll, class V, class Value, class Comp = DEFAULT_COMP, class Proj =\
+    \ identity>\ninline auto leq_max(const V &v, const Value &val, Comp comp = {},\
+    \ Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename V::iterator>,\
+    \ T>\n{ return UB<T>(v, val, comp, proj) - 1; }\n// val < v[i] \u3068\u306A\u308B\
+    \u6700\u5C0F\u306E i (\u306A\u3051\u308C\u3070 n)\ntemplate <class T = ll, class\
+    \ V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto\
+    \ gt_min(const V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return UB<T>(v, val, comp, proj); }\n// val <= v[i] \u3068\
+    \u306A\u308B\u6700\u5C0F\u306E i (\u306A\u3051\u308C\u3070 n)\ntemplate <class\
+    \ T = ll, class V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>\n\
+    inline auto geq_min(const V &v, const Value &val, Comp comp = {}, Proj proj =\
+    \ {})\n-> enable_if_t<is_random_access_iterator_v<typename V::iterator>, T>\n\
+    { return LB<T>(v, val, comp, proj); }\n// v[i] < val \u3068\u306A\u308B i \u306E\
+    \u500B\u6570\ntemplate <class T = ll, class V, class Value, class Comp = DEFAULT_COMP,\
+    \ class Proj = identity>\ninline auto lt_cnt(const V &v, const Value &val, Comp\
+    \ comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return LB<T>(v, val, comp, proj); }\n// v[i] <= val \u3068\
+    \u306A\u308B i \u306E\u500B\u6570\ntemplate <class T = ll, class V, class Value,\
+    \ class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto leq_cnt(const\
+    \ V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return UB<T>(v, val, comp, proj); }\n// val < v[i] \u3068\
+    \u306A\u308B i \u306E\u500B\u6570\ntemplate <class T = ll, class V, class Value,\
+    \ class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto gt_cnt(const\
+    \ V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return SZ<T>(v) - UB<T>(v, val, comp, proj); }\n// val <=\
+    \ v[i] \u3068\u306A\u308B i \u306E\u500B\u6570\ntemplate <class T = ll, class\
+    \ V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto\
+    \ geq_cnt(const V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return SZ<T>(v) - LB<T>(v, val, comp, proj); }\n// l <=\
+    \ v[i] < r \u3068\u306A\u308B i \u306E\u500B\u6570\ntemplate <class T = ll, class\
+    \ V, class L, class R, class Comp = DEFAULT_COMP, class Proj = identity>\ninline\
+    \ auto in_cnt(const V &v, L l, R r, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{\n  if (l > r)\n    return 0;\n  return lt_cnt<T>(v, r, comp,\
+    \ proj) - lt_cnt<T>(v, l, comp, proj);\n}\n\n// --- set \u7B49\u306E lt, leq,\
+    \ gt, geq ---\n\n// *it < val \u3068\u306A\u308B\u6700\u5927\u306E it (\u306A\u3051\
+    \u308C\u3070 end())\ntemplate <class V, class Value>\ninline auto lt_max(const\
+    \ V &v, const Value &val)\n-> enable_if_t<!is_random_access_iterator_v<typename\
+    \ V::iterator>, typename V::const_iterator>\n{\n  auto it = v.lower_bound(val);\n\
+    \  return it == v.begin() ? v.end() : prev(it);\n}\n// *it <= val \u3068\u306A\
+    \u308B\u6700\u5927\u306E it (\u306A\u3051\u308C\u3070 end())\ntemplate <class\
+    \ V, class Value>\ninline auto leq_max(const V &v, const Value &val)\n-> enable_if_t<!is_random_access_iterator_v<typename\
+    \ V::iterator>, typename V::const_iterator>\n{\n  auto it = v.upper_bound(val);\n\
+    \  return it == v.begin() ? v.end() : prev(it);\n}\n// val < *it \u3068\u306A\u308B\
+    \u6700\u5C0F\u306E it (\u306A\u3051\u308C\u3070 end())\ntemplate <class V, class\
+    \ Value>\ninline auto gt_min(const V &v, const Value &val)\n-> enable_if_t<!is_random_access_iterator_v<typename\
+    \ V::iterator>, typename V::const_iterator>\n{ return v.upper_bound(val); }\n\
+    // val <= *it \u3068\u306A\u308B\u6700\u5C0F\u306E it (\u306A\u3051\u308C\u3070\
+    \ end())\ntemplate <class V, class Value>\ninline auto geq_min(const V &v, const\
+    \ Value &val)\n-> enable_if_t<!is_random_access_iterator_v<typename V::iterator>,\
+    \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
+    \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\ntemplate <class T = ll, class Judge, class\
+    \ InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge, const InitOk\
+    \ &init_ok, const InitNg &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n\
+    \  assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid\
+    \ = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return\
+    \ make_pair(ok, ng);\n}\ntemplate <class T = ld, class Judge, class InitOk, class\
+    \ InitNg>\nT binsearch_real(const Judge &judge, const InitOk &init_ok, const InitNg\
+    \ &init_ng, int iteration_count = 100)\n{\n  T ok(init_ok), ng(init_ng);\n  assert(judge(ok));\n\
+    \  assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n    T mid = (ok + ng)\
+    \ / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n}\ntemplate <class\
+    \ T = ll, class Judge, class InitVal>\npair<T, T> expsearch(const Judge &judge,\
+    \ const InitVal &init_val, const bool &positive = true)\n{\n  T ok, ng;\n  if\
+    \ (judge(init_val))\n  {\n    ok = init_val, ng = init_val + (positive ? 1 : -1);\n\
+    \    for (int i = 1; judge(ng); i++)\n      ok = ng, ng = init_val + (positive\
+    \ ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng = init_val, ok = init_val\
+    \ + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok); i++)\n      ng = ok,\
+    \ ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  while (ok - ng !=\
+    \ 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid)\
+    \ ? ok : ng) = mid;\n  }\n  return make_pair(ok, ng);\n}\n#line 2 \"template/template_bit.hpp\"\
+    \n\n#line 5 \"template/template_bit.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n\
     \ */\n\ntemplate <class T>\ninline constexpr ull pow2(T k) { return 1ULL << k;\
     \ }\ntemplate <class T>\ninline constexpr ull MASK(T k) { return (1ULL << k) -\
     \ 1ULL; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\
@@ -828,8 +869,8 @@ data:
   - ds/uf/uf.hpp
   - ds/uf/uf_potential.hpp
   - ds/group_index.hpp
-  timestamp: '2025-03-16 23:12:25+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2025-03-20 22:04:05+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/aoj/modpow.test.cpp
   - verify/aoj/csr.test.cpp
