@@ -29,7 +29,7 @@ data:
   - icon: ':question:'
     path: ds/uf/uf.hpp
     title: UnionFind
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
   - icon: ':warning:'
@@ -48,7 +48,7 @@ data:
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/matmul22.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\u306E\u7A4D\
       \uFF09"
@@ -237,7 +237,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential.test.cpp
     title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - icon: ':x:'
@@ -453,23 +453,40 @@ data:
     \ - 1 - i][m - 1 - j] = a[i][j];\n    }\n    return b;\n  }\n  else\n  {\n   \
     \ VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
     \ == m);\n      repi(j, m) b[j][n - 1 - i] = a[i][j];\n    }\n    return b;\n\
-    \  }\n}\n\ntemplate <class T, class F = decltype(plus<>())>\nvc<T> cuml(const\
-    \ vc<T> &v, F op = plus<>(), const T &e = 0)\n{\n  const int n = v.size();\n \
-    \ vc<T> res(n + 1, e);\n  repi(i, n) res[i + 1] = op(res[i], v[i]);\n  return\
-    \ res;\n}\ntemplate <class T, class F = decltype(plus<>())>\nvc<T> cumr(const\
-    \ vc<T> &v, const F &op = plus<>(), const T &e = 0)\n{ return reversed(cuml<T,\
-    \ F>(reversed(v), op, e)); }\ntemplate <class T, const T infty = INF>\nvc<T> cumlmax(const\
-    \ vc<T> &v)\n{ return cuml(v, [](T a, T b) { return max(a, b); }, -infty); }\n\
-    template <class T, const T infty = INF>\nvc<T> cumrmax(const vc<T> &v)\n{ return\
-    \ cumr(v, [](T a, T b) { return max(a, b); }, -infty); }\ntemplate <class T, const\
-    \ T infty = INF>\nvc<T> cumlmin(const vc<T> &v)\n{ return cuml(v, [](T a, T b)\
-    \ { return min(a, b); }, infty); }\ntemplate <class T, const T infty = INF>\n\
-    vc<T> cumrmin(const vc<T> &v)\n{ return cumr(v, [](T a, T b) { return min(a, b);\
-    \ }, infty); }\n\ntemplate <class T>\nvc<T> adjd(const vc<T> &v)\n{\n  int n =\
-    \ v.size();\n  vc<T> res(n + 1);\n  res[0] = v[0];\n  repi(i, 1, n) res[i] = v[i]\
-    \ - v[i - 1];\n  res[n] = -v[n - 1];\n  return res;\n}\n\nconst vpll DRULgrid\
-    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane = {{0, -1}, {1,\
-    \ 0}, {0, 1}, {-1, 0}};\n"
+    \  }\n}\n\ntemplate <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
+    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
+    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
+    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
+    \ static constexpr S e() { return -infty; }\n};\n\n// left_index \u304C 0 \u306A\
+    \u3089\u3001\u9577\u3055 n+1 \u3067 a.front() \u304C e()\n// left_index \u304C\
+    \ 1 \u306A\u3089\u3001\u9577\u3055 n \u3067 e() \u304C\u306A\u3044\ntemplate <class\
+    \ M>\nvc<typename M::S> cuml(const vc<typename M::S> &v, int left_index = 0)\n\
+    {\n  const int n = v.size();\n  vc<typename M::S> res(n + 1);\n  res[0] = M::e();\n\
+    \  repi(i, n) res[i + 1] = M::op(res[i], v[i]);\n  res.erase(res.begin(), res.begin()\
+    \ + left_index);\n  return res;\n}\n// right_index \u304C 0 \u306A\u3089\u3001\
+    \u9577\u3055 n+1 \u3067 a.back() \u304C e()\n// right_index \u304C 1 \u306A\u3089\
+    \u3001\u9577\u3055 n \u3067 e() \u304C\u306A\u3044\ntemplate <class M>\nvc<typename\
+    \ M::S> cumr(const vc<typename M::S> &v, int right_index = 0)\n{ return reversed(cuml<M>(reversed(v),\
+    \ right_index)); }\ntemplate <class T>\nvc<T> cumlsum(const vc<T> &v, int left_index\
+    \ = 0)\n{ return cuml<MonoidAdd<T>>(v, left_index); }\ntemplate <class T>\nvc<T>\
+    \ cumrsum(const vc<T> &v, int right_index = 0)\n{ return cumr<MonoidAdd<T>>(v,\
+    \ right_index); }\ntemplate <class T>\nvc<T> cumlmin(const vc<T> &v, int left_index\
+    \ = 0)\n{ return cuml<MonoidMin<T>>(v, left_index); }\ntemplate <class T>\nvc<T>\
+    \ cumrmin(const vc<T> &v, int right_index = 0)\n{ return cumr<MonoidMin<T>>(v,\
+    \ right_index); }\ntemplate <class T>\nvc<T> cumlmax(const vc<T> &v, int left_index\
+    \ = 0)\n{ return cuml<MonoidMax<T>>(v, left_index); }\ntemplate <class T>\nvc<T>\
+    \ cumrmax(const vc<T> &v, int right_index = 0)\n{ return cumr<MonoidMax<T>>(v,\
+    \ right_index); }\n\n// \u30C7\u30D5\u30A9\u30EB\u30C8\u3067\u306F\u9577\u3055\
+    \ n+1\n// left_index, right_index \u3092\u305D\u308C\u305E\u308C 1 \u306B\u3059\
+    \u308B\u3068\u3001\u5DE6\u53F3\u304C\u524A\u9664\u3055\u308C\u308B\ntemplate <class\
+    \ T>\nvc<T> adjd(const vc<T> &v, int left_index = 0, int right_index = 0)\n{\n\
+    \  int n = v.size();\n  vc<T> res(n + 1);\n  res[0] = v[0];\n  repi(i, 1, n) res[i]\
+    \ = v[i] - v[i - 1];\n  res[n] = -v[n - 1];\n  res.erase(res.end() - right_index,\
+    \ res.end());\n  res.erase(res.begin(), res.begin() + left_index);\n  return res;\n\
+    }\n\nconst vpll DRULgrid = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane\
+    \ = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};\n"
   code: "#pragma once\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n\
     \n#include \"template_types.hpp\"\n#include \"template_rep.hpp\"\n#include \"\
     template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\
@@ -520,23 +537,40 @@ data:
     \ - 1 - i][m - 1 - j] = a[i][j];\n    }\n    return b;\n  }\n  else\n  {\n   \
     \ VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
     \ == m);\n      repi(j, m) b[j][n - 1 - i] = a[i][j];\n    }\n    return b;\n\
-    \  }\n}\n\ntemplate <class T, class F = decltype(plus<>())>\nvc<T> cuml(const\
-    \ vc<T> &v, F op = plus<>(), const T &e = 0)\n{\n  const int n = v.size();\n \
-    \ vc<T> res(n + 1, e);\n  repi(i, n) res[i + 1] = op(res[i], v[i]);\n  return\
-    \ res;\n}\ntemplate <class T, class F = decltype(plus<>())>\nvc<T> cumr(const\
-    \ vc<T> &v, const F &op = plus<>(), const T &e = 0)\n{ return reversed(cuml<T,\
-    \ F>(reversed(v), op, e)); }\ntemplate <class T, const T infty = INF>\nvc<T> cumlmax(const\
-    \ vc<T> &v)\n{ return cuml(v, [](T a, T b) { return max(a, b); }, -infty); }\n\
-    template <class T, const T infty = INF>\nvc<T> cumrmax(const vc<T> &v)\n{ return\
-    \ cumr(v, [](T a, T b) { return max(a, b); }, -infty); }\ntemplate <class T, const\
-    \ T infty = INF>\nvc<T> cumlmin(const vc<T> &v)\n{ return cuml(v, [](T a, T b)\
-    \ { return min(a, b); }, infty); }\ntemplate <class T, const T infty = INF>\n\
-    vc<T> cumrmin(const vc<T> &v)\n{ return cumr(v, [](T a, T b) { return min(a, b);\
-    \ }, infty); }\n\ntemplate <class T>\nvc<T> adjd(const vc<T> &v)\n{\n  int n =\
-    \ v.size();\n  vc<T> res(n + 1);\n  res[0] = v[0];\n  repi(i, 1, n) res[i] = v[i]\
-    \ - v[i - 1];\n  res[n] = -v[n - 1];\n  return res;\n}\n\nconst vpll DRULgrid\
-    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane = {{0, -1}, {1,\
-    \ 0}, {0, 1}, {-1, 0}};"
+    \  }\n}\n\ntemplate <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
+    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
+    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
+    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
+    \ static constexpr S e() { return -infty; }\n};\n\n// left_index \u304C 0 \u306A\
+    \u3089\u3001\u9577\u3055 n+1 \u3067 a.front() \u304C e()\n// left_index \u304C\
+    \ 1 \u306A\u3089\u3001\u9577\u3055 n \u3067 e() \u304C\u306A\u3044\ntemplate <class\
+    \ M>\nvc<typename M::S> cuml(const vc<typename M::S> &v, int left_index = 0)\n\
+    {\n  const int n = v.size();\n  vc<typename M::S> res(n + 1);\n  res[0] = M::e();\n\
+    \  repi(i, n) res[i + 1] = M::op(res[i], v[i]);\n  res.erase(res.begin(), res.begin()\
+    \ + left_index);\n  return res;\n}\n// right_index \u304C 0 \u306A\u3089\u3001\
+    \u9577\u3055 n+1 \u3067 a.back() \u304C e()\n// right_index \u304C 1 \u306A\u3089\
+    \u3001\u9577\u3055 n \u3067 e() \u304C\u306A\u3044\ntemplate <class M>\nvc<typename\
+    \ M::S> cumr(const vc<typename M::S> &v, int right_index = 0)\n{ return reversed(cuml<M>(reversed(v),\
+    \ right_index)); }\ntemplate <class T>\nvc<T> cumlsum(const vc<T> &v, int left_index\
+    \ = 0)\n{ return cuml<MonoidAdd<T>>(v, left_index); }\ntemplate <class T>\nvc<T>\
+    \ cumrsum(const vc<T> &v, int right_index = 0)\n{ return cumr<MonoidAdd<T>>(v,\
+    \ right_index); }\ntemplate <class T>\nvc<T> cumlmin(const vc<T> &v, int left_index\
+    \ = 0)\n{ return cuml<MonoidMin<T>>(v, left_index); }\ntemplate <class T>\nvc<T>\
+    \ cumrmin(const vc<T> &v, int right_index = 0)\n{ return cumr<MonoidMin<T>>(v,\
+    \ right_index); }\ntemplate <class T>\nvc<T> cumlmax(const vc<T> &v, int left_index\
+    \ = 0)\n{ return cuml<MonoidMax<T>>(v, left_index); }\ntemplate <class T>\nvc<T>\
+    \ cumrmax(const vc<T> &v, int right_index = 0)\n{ return cumr<MonoidMax<T>>(v,\
+    \ right_index); }\n\n// \u30C7\u30D5\u30A9\u30EB\u30C8\u3067\u306F\u9577\u3055\
+    \ n+1\n// left_index, right_index \u3092\u305D\u308C\u305E\u308C 1 \u306B\u3059\
+    \u308B\u3068\u3001\u5DE6\u53F3\u304C\u524A\u9664\u3055\u308C\u308B\ntemplate <class\
+    \ T>\nvc<T> adjd(const vc<T> &v, int left_index = 0, int right_index = 0)\n{\n\
+    \  int n = v.size();\n  vc<T> res(n + 1);\n  res[0] = v[0];\n  repi(i, 1, n) res[i]\
+    \ = v[i] - v[i - 1];\n  res[n] = -v[n - 1];\n  res.erase(res.end() - right_index,\
+    \ res.end());\n  res.erase(res.begin(), res.begin() + left_index);\n  return res;\n\
+    }\n\nconst vpll DRULgrid = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane\
+    \ = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};"
   dependsOn:
   - template/template_types.hpp
   - template/template_rep.hpp
@@ -584,7 +618,7 @@ data:
   - ds/uf/uf.hpp
   - ds/uf/uf_potential.hpp
   - ds/group_index.hpp
-  timestamp: '2025-03-16 23:12:25+09:00'
+  timestamp: '2025-03-20 22:54:40+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/aoj/modpow.test.cpp
@@ -898,25 +932,23 @@ $a$ のサイズを $n \times m$ として
 #### cuml, cumr
 
 ```cpp
-(1) vc<T> cuml(vc<T> v, F op = plus<>(), T e = 0)
-(2) vc<T> cumr(vc<T> v, F op = plus<>(), T e = 0)
-(3) vc<T> cumlmax(vc<T> v)
-(4) vc<T> cumrmax(vc<T> v)
-(5) vc<T> cumlmin(vc<T> v)
-(6) vc<T> cumrmin(vc<T> v)
+(1) vc<M::S> cuml(vc<M::S> v)
+(2) vc<M::S> cumr(vc<M::S> v)
+(3) vc<T> cumlsum(vc<T> v)
+(4) vc<T> cumrsum(vc<T> v)
+(5) vc<T> cumlmax(vc<T> v)
+(6) vc<T> cumrmax(vc<T> v)
+(7) vc<T> cumlmin(vc<T> v)
+(8) vc<T> cumrmin(vc<T> v)
 ```
 
 $\lvert v \rvert = n$ とする。
 
-- (1)：長さ $n + 1$ の配列を返す。$i \: (0 \leq i \leq n)$ 番目には、$v[0, i)$ 全体に二項演算 $\mathrm{op}$ を行った結果を格納する。単位元は $\mathrm{e}$ 。デフォルトでは、$\mathrm{op}$ は $+$ 、$\mathrm{e}$ は $0$ 。
-- (2)：長さ $n + 1$ の配列を返す。$i \: (0 \leq i \leq n)$ 番目には、$v[i, n)$ 全体に二項演算 $\mathrm{op}$ を行った結果を格納する。単位元は $\mathrm{e}$ 。デフォルトでは、$\mathrm{op}$ は $+$ 、$\mathrm{e}$ は $0$ 。
-- (3), (4), (5), (6)：(1) や (2) で、$(\mathrm{op}, \mathrm{e})$ を $(\max, -\mathrm{INF})$ や $(\min, \mathrm{INF})$ としたもの。
+- (1)：`M` はモノイド。長さ $n + 1$ の配列を返す。$i \: (0 \leq i \leq n)$ 番目には、$v[0, i)$ に左から順に `M` の積演算を行った結果を返す。
+- (2)：`M` はモノイド。長さ $n + 1$ の配列を返す。$i \: (0 \leq i \leq n)$ 番目には、$v[i, n)$ に右から順に `M` の積演算を行った結果を返す。
+- (3), (4), (5), (6), (7), (8)：モノイドをそれぞれ `MonoidAdd<T>`, `MonoidMin<T>`, `MonoidMax<T>` としたもの。
 
-例 (cuml)：$(3, 1, 4, 1) \to (0, 3, 4, 8, 9)$
-
-##### 制約
-
-- $\mathrm{op}$ は可換
+例 (cumlsum)：$(3, 1, 4, 1) \to (0, 3, 4, 8, 9)$
 
 ##### 計算量
 

@@ -118,7 +118,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential.test.cpp
     title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - icon: ':x:'
@@ -328,25 +328,42 @@ data:
     \ - 1 - i][m - 1 - j] = a[i][j];\n    }\n    return b;\n  }\n  else\n  {\n   \
     \ VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
     \ == m);\n      repi(j, m) b[j][n - 1 - i] = a[i][j];\n    }\n    return b;\n\
-    \  }\n}\n\ntemplate <class T, class F = decltype(plus<>())>\nvc<T> cuml(const\
-    \ vc<T> &v, F op = plus<>(), const T &e = 0)\n{\n  const int n = v.size();\n \
-    \ vc<T> res(n + 1, e);\n  repi(i, n) res[i + 1] = op(res[i], v[i]);\n  return\
-    \ res;\n}\ntemplate <class T, class F = decltype(plus<>())>\nvc<T> cumr(const\
-    \ vc<T> &v, const F &op = plus<>(), const T &e = 0)\n{ return reversed(cuml<T,\
-    \ F>(reversed(v), op, e)); }\ntemplate <class T, const T infty = INF>\nvc<T> cumlmax(const\
-    \ vc<T> &v)\n{ return cuml(v, [](T a, T b) { return max(a, b); }, -infty); }\n\
-    template <class T, const T infty = INF>\nvc<T> cumrmax(const vc<T> &v)\n{ return\
-    \ cumr(v, [](T a, T b) { return max(a, b); }, -infty); }\ntemplate <class T, const\
-    \ T infty = INF>\nvc<T> cumlmin(const vc<T> &v)\n{ return cuml(v, [](T a, T b)\
-    \ { return min(a, b); }, infty); }\ntemplate <class T, const T infty = INF>\n\
-    vc<T> cumrmin(const vc<T> &v)\n{ return cumr(v, [](T a, T b) { return min(a, b);\
-    \ }, infty); }\n\ntemplate <class T>\nvc<T> adjd(const vc<T> &v)\n{\n  int n =\
-    \ v.size();\n  vc<T> res(n + 1);\n  res[0] = v[0];\n  repi(i, 1, n) res[i] = v[i]\
-    \ - v[i - 1];\n  res[n] = -v[n - 1];\n  return res;\n}\n\nconst vpll DRULgrid\
-    \ = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane = {{0, -1}, {1,\
-    \ 0}, {0, 1}, {-1, 0}};\n#line 2 \"template/template_binsearch.hpp\"\n\n#line\
-    \ 6 \"template/template_binsearch.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
-    \u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09\n * @docs docs/template/template_binsearch.md\n\
+    \  }\n}\n\ntemplate <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
+    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
+    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
+    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
+    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
+    \ static constexpr S e() { return -infty; }\n};\n\n// left_index \u304C 0 \u306A\
+    \u3089\u3001\u9577\u3055 n+1 \u3067 a.front() \u304C e()\n// left_index \u304C\
+    \ 1 \u306A\u3089\u3001\u9577\u3055 n \u3067 e() \u304C\u306A\u3044\ntemplate <class\
+    \ M>\nvc<typename M::S> cuml(const vc<typename M::S> &v, int left_index = 0)\n\
+    {\n  const int n = v.size();\n  vc<typename M::S> res(n + 1);\n  res[0] = M::e();\n\
+    \  repi(i, n) res[i + 1] = M::op(res[i], v[i]);\n  res.erase(res.begin(), res.begin()\
+    \ + left_index);\n  return res;\n}\n// right_index \u304C 0 \u306A\u3089\u3001\
+    \u9577\u3055 n+1 \u3067 a.back() \u304C e()\n// right_index \u304C 1 \u306A\u3089\
+    \u3001\u9577\u3055 n \u3067 e() \u304C\u306A\u3044\ntemplate <class M>\nvc<typename\
+    \ M::S> cumr(const vc<typename M::S> &v, int right_index = 0)\n{ return reversed(cuml<M>(reversed(v),\
+    \ right_index)); }\ntemplate <class T>\nvc<T> cumlsum(const vc<T> &v, int left_index\
+    \ = 0)\n{ return cuml<MonoidAdd<T>>(v, left_index); }\ntemplate <class T>\nvc<T>\
+    \ cumrsum(const vc<T> &v, int right_index = 0)\n{ return cumr<MonoidAdd<T>>(v,\
+    \ right_index); }\ntemplate <class T>\nvc<T> cumlmin(const vc<T> &v, int left_index\
+    \ = 0)\n{ return cuml<MonoidMin<T>>(v, left_index); }\ntemplate <class T>\nvc<T>\
+    \ cumrmin(const vc<T> &v, int right_index = 0)\n{ return cumr<MonoidMin<T>>(v,\
+    \ right_index); }\ntemplate <class T>\nvc<T> cumlmax(const vc<T> &v, int left_index\
+    \ = 0)\n{ return cuml<MonoidMax<T>>(v, left_index); }\ntemplate <class T>\nvc<T>\
+    \ cumrmax(const vc<T> &v, int right_index = 0)\n{ return cumr<MonoidMax<T>>(v,\
+    \ right_index); }\n\n// \u30C7\u30D5\u30A9\u30EB\u30C8\u3067\u306F\u9577\u3055\
+    \ n+1\n// left_index, right_index \u3092\u305D\u308C\u305E\u308C 1 \u306B\u3059\
+    \u308B\u3068\u3001\u5DE6\u53F3\u304C\u524A\u9664\u3055\u308C\u308B\ntemplate <class\
+    \ T>\nvc<T> adjd(const vc<T> &v, int left_index = 0, int right_index = 0)\n{\n\
+    \  int n = v.size();\n  vc<T> res(n + 1);\n  res[0] = v[0];\n  repi(i, 1, n) res[i]\
+    \ = v[i] - v[i - 1];\n  res[n] = -v[n - 1];\n  res.erase(res.end() - right_index,\
+    \ res.end());\n  res.erase(res.begin(), res.begin() + left_index);\n  return res;\n\
+    }\n\nconst vpll DRULgrid = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane\
+    \ = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};\n#line 2 \"template/template_binsearch.hpp\"\
+    \n\n#line 6 \"template/template_binsearch.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
+    \u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09\n * @docs docs/template/template_binsearch.md\n\
     \ */\n\ntemplate <class T>\nstruct is_random_access_iterator\n{\n  static constexpr\
     \ bool value = is_same_v<\n    typename iterator_traits<T>::iterator_category,\n\
     \    random_access_iterator_tag\n  >;\n};\ntemplate <class T>\nconstexpr bool\
@@ -713,7 +730,7 @@ data:
   - math/modint/modint.hpp
   - math/modint/modint64.hpp
   - template/template.cpp
-  timestamp: '2025-03-20 22:17:20+09:00'
+  timestamp: '2025-03-20 22:54:40+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/aoj/modpow.test.cpp
