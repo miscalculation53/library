@@ -17,6 +17,14 @@ data:
     - icon: ':heavy_check_mark:'
       path: ds/group_index.hpp
       title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
+  - name: ds/uf
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: ds/uf/uf.hpp
+      title: UnionFind
+    - icon: ':heavy_check_mark:'
+      path: ds/uf/uf_potential.hpp
+      title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
   - name: graph
     pages:
     - icon: ':warning:'
@@ -39,6 +47,10 @@ data:
       path: math/algebra/algebra_basic_ops.hpp
       title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
         \ max\uFF09"
+    - icon: ':heavy_check_mark:'
+      path: math/algebra/matmul22.hpp
+      title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\u306E\
+        \u7A4D\uFF09"
     - icon: ':warning:'
       path: math/algebra/polynomial_ring.hpp
       title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\uFF09"
@@ -282,6 +294,15 @@ data:
       path: verify/yosupo/subset_convolution.test.cpp
       title: verify/yosupo/subset_convolution.test.cpp
     - icon: ':heavy_check_mark:'
+      path: verify/yosupo/unionfind.test.cpp
+      title: verify/yosupo/unionfind.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yosupo/unionfind_potential.test.cpp
+      title: verify/yosupo/unionfind_potential.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
+      title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/xor_convolution.test.cpp
       title: verify/yosupo/xor_convolution.test.cpp
   - name: verify/yukicoder
@@ -310,6 +331,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yukicoder/static_modint.test.cpp
       title: verify/yukicoder/static_modint.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yukicoder/unionfind_min_max_leader.test.cpp
+      title: verify/yukicoder/unionfind_min_max_leader.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
       title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp

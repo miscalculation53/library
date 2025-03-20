@@ -113,6 +113,15 @@ data:
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/unionfind.test.cpp
+    title: verify/yosupo/unionfind.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/unionfind_potential.test.cpp
+    title: verify/yosupo/unionfind_potential.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
+    title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/xor_convolution.test.cpp
     title: verify/yosupo/xor_convolution.test.cpp
   - icon: ':heavy_check_mark:'
@@ -133,6 +142,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/static_modint.test.cpp
     title: verify/yukicoder/static_modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/unionfind_min_max_leader.test.cpp
+    title: verify/yukicoder/unionfind_min_max_leader.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -782,6 +794,7 @@ data:
   - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/divisors.test.cpp
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/yukicoder/unionfind_min_max_leader.test.cpp
   - verify/yukicoder/static_modint.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
   - verify/yukicoder/binomial.test.cpp
@@ -793,8 +806,11 @@ data:
   - verify/yosupo/primality_test.test.cpp
   - verify/yosupo/xor_convolution.test.cpp
   - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/unionfind.test.cpp
   - verify/yosupo/subset_convolution.test.cpp
+  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/unionfind_potential.test.cpp
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/binomial.test.cpp
   - verify/mytest/power_table.test.cpp

@@ -35,83 +35,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64.hpp
-    title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/prime/euler_phi_carmichael.hpp
-    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
-      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/order_primitive_root.hpp
-    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/primality_test.hpp
-    title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':warning:'
-    path: template/template.cpp
-    title: template/template.cpp
+    path: ds/uf/uf_potential.hpp
+    title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/extgcd.test.cpp
-    title: verify/aoj/extgcd.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/modpow.test.cpp
-    title: verify/aoj/modpow.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/linear_sieve.test.cpp
-    title: verify/mytest/linear_sieve.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint.test.cpp
-    title: verify/mytest/modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint64.test.cpp
-    title: verify/mytest/modint64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/power_table.test.cpp
-    title: verify/mytest/power_table.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/and_or_convolution.test.cpp
-    title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/binomial.test.cpp
-    title: verify/yosupo/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/gcd_convolution.test.cpp
-    title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_hadamard.test.cpp
-    title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/lcm_convolution.test.cpp
-    title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root.test.cpp
-    title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root_min.test.cpp
-    title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/subset_convolution.test.cpp
-    title: verify/yosupo/subset_convolution.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind.test.cpp
     title: verify/yosupo/unionfind.test.cpp
@@ -122,45 +48,17 @@ data:
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yosupo/xor_convolution.test.cpp
-    title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/binomial.test.cpp
-    title: verify/yukicoder/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/dynamic_modint.test.cpp
-    title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_carmichael.test.cpp
-    title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_euler_phi.test.cpp
-    title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/static_modint.test.cpp
-    title: verify/yukicoder/static_modint.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/unionfind_min_max_leader.test.cpp
     title: verify/yukicoder/unionfind_min_max_leader.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/extgcd.md
-    document_title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5\
-      \ (extgcd)"
+    _deprecated_at_docs: docs/ds/uf/uf.md
+    document_title: UnionFind
     links: []
-  bundledCode: "#line 2 \"math/extgcd.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
-    \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+  bundledCode: "#line 2 \"ds/uf/uf.hpp\"\n\n#line 2 \"template/template_all.hpp\"\n\
+    \n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
     \ EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing\
@@ -627,29 +525,104 @@ data:
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\u5F35\
-    \u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs docs/math/extgcd.md\n\
-    \ */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\u305F\u3059 (g, x, y)\n\
-    // max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T = ll>\nconstexpr tuple<T,\
-    \ T, T> extgcd(const T &a, const T &b)\n{\n  if (a == 0 && b == 0)\n    return\
-    \ {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  // a*x2 + b*y2 == z2  ...(2)\n\
-    \  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1, z2 = b;\n  while (z2 != 0)\n\
-    \  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n    T q = z1 / z2;\n    tie(x1,\
-    \ x2) = make_pair(x2, x1 - q * x2);\n    tie(y1, y2) = make_pair(y2, y1 - q *\
-    \ y2);\n    tie(z1, z2) = make_pair(z2, z1 - q * z2);\n  }\n  if (z1 < 0)\n  \
-    \  x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1, y1};\n}\n"
-  code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n\
-    \ * @docs docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\
-    \u6E80\u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class\
-    \ T = ll>\nconstexpr tuple<T, T, T> extgcd(const T &a, const T &b)\n{\n  if (a\
-    \ == 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n\
-    \  // a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 =\
-    \ 1, z2 = b;\n  while (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n\
-    \    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1,\
-    \ y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q *\
-    \ z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1,\
-    \ y1};\n}"
+    \ vt;\n}\n// ----------\n#line 4 \"ds/uf/uf.hpp\"\n\n/**\n * @brief UnionFind\n\
+    \ * @docs docs/ds/uf/uf.md\n */\n\n// UFData \u306B\u30C7\u30D5\u30A9\u30EB\u30C8\
+    \u3067\u7528\u610F\u3055\u308C\u3066\u3044\u308B\u3082\u306E\n// - UFDataEmpty\
+    \ (\u4F55\u3082\u306A\u3057\u3001ACL \u76F8\u5F53)\n// - UFDataEverything (\u5168\
+    \u90E8\u8F09\u305B)\ntemplate <class UFData, bool compress = true>\nstruct UnionFind\n\
+    {\n  friend UFData;\n\nprotected:\n  vc<int> par;\n  vc<typename UFData::VData>\
+    \ vdat;\n\npublic:\n  typename UFData::GData gdat;\n\n  UnionFind() {}\n  UnionFind(int\
+    \ n) : par(n, -1), vdat(n), gdat(n)\n  { repi(i, n) vdat[i] = typename UFData::VData(i);\
+    \ }\n\n  virtual int leader(int x)\n  {\n    assert(0 <= x && x < SZ<int>(par));\n\
+    \    if (par[x] < 0)\n      return x;\n    if constexpr (compress)\n      return\
+    \ par[x] = leader(par[x]);\n    else\n      return leader(par[x]);\n  }\n  //\
+    \ \u9802\u70B9 x \u3092\u542B\u3080\u9023\u7D50\u6210\u5206\u306E\u9802\u70B9\u6570\
+    \n  template <class I = ll>\n  I size(int x) { return -par[leader(x)]; }\n  typename\
+    \ UFData::VData &get_vdata(int x) { return vdat[leader(x)]; }\n  bool same(int\
+    \ x, int y) { return leader(x) == leader(y); }\n  // \u8FD4\u308A\u5024: \u30DE\
+    \u30FC\u30B8\u3057\u305F\u5F8C\u306E\u65B0\u305F\u306A\u4EE3\u8868\u5143\n  template\
+    \ <class I = ll>\n  I merge(int x, int y, typename UFData::EWeight w = 1)\n  {\n\
+    \    x = leader(x), y = leader(y);\n    if (x == y)\n    {\n      UFData::add_edge_same(*this,\
+    \ x, w);\n      return x;\n    }\n    if (-par[x] < -par[y])\n      swap(x, y);\n\
+    \    par[x] += par[y], par[y] = x;\n    UFData::add_edge_diff(*this, x, y, w);\n\
+    \    return x;\n  }\n\n  // \u5404\u9802\u70B9\u304C\u5C5E\u3059\u308B\u9023\u7D50\
+    \u6210\u5206\u306E\u756A\u53F7 (\u9806\u756A\u306F\u672A\u5B9A\u7FA9)\n  // ACL\
+    \ \u306E groups \u304C\u6B32\u3057\u3044\u5834\u5408: \u3053\u308C\u306B group_index\
+    \ \u3092\u4F7F\u3046\n  template <class I = ll>\n  vc<I> group_ids()\n  {\n  \
+    \  const int n = par.size();\n    vc<I> gid(n, -1);\n    for (int v = 0, i = 0;\
+    \ v < n; v++)\n    {\n      int l = leader(v);\n      if (gid[l] == -1)\n    \
+    \    gid[l] = i++;\n      gid[v] = gid[l];\n    }\n    return gid;\n  }\n};\n\n\
+    template <class EWeight_ = ll>\nstruct UFDataEmpty\n{\n  struct VData\n  {\n \
+    \   VData() {}\n    VData(int) {}\n  };\n  struct GData\n  {\n    GData() {}\n\
+    \    GData(int) {}\n  };\n  using EWeight = EWeight_;\n  template <class UF>\n\
+    \  static void add_edge_diff(UF &, int, int, EWeight) {}\n  template <class UF>\n\
+    \  static void add_edge_same(UF &, int, EWeight) {}\n};\n\ntemplate <class EWeight_\
+    \ = ll, bool need_vlist = false>\nstruct UFDataEverything\n{\n  struct VData\n\
+    \  {\n    VData() {}\n\n    ll vsum;\n    ll esum;\n    vc<ll> vlist;\n\n    //\
+    \ \u9802\u70B9 i \u306E\u521D\u671F\u5316\n    VData(int i)\n    {\n      vsum\
+    \ = 1;\n      esum = 0;\n      if constexpr (need_vlist)\n        vlist = {i};\n\
+    \    }\n  };\n  struct GData\n  {\n    GData() {}\n\n    ll cmp_cnt;\n    ll min_leader,\
+    \ max_leader;\n\n    // \u9802\u70B9\u6570 n \u306E\u30B0\u30E9\u30D5\u306E\u521D\
+    \u671F\u5316\n    GData(int n)\n    {\n      cmp_cnt = n;\n      min_leader =\
+    \ 0, max_leader = n - 1;\n    }\n  };\n  using EWeight = EWeight_;\n  template\
+    \ <class UF>\n  static void add_edge_diff(UF &uf, int x, int y, EWeight w)\n \
+    \ {\n    VData &xd = uf.vdat[x], &yd = uf.vdat[y];\n    GData &gd = uf.gdat;\n\
+    \    xd.vsum += yd.vsum;\n    xd.esum += w;\n    if constexpr (need_vlist)\n \
+    \   {\n      xd.vlist.insert(xd.vlist.end(), ALL(yd.vlist));\n      yd.vlist.clear();\n\
+    \    }\n    gd.cmp_cnt--;\n    while (uf.leader(gd.min_leader) != gd.min_leader)\n\
+    \      gd.min_leader++;\n    while (uf.leader(gd.max_leader) != gd.max_leader)\n\
+    \      gd.max_leader--;\n  }\n  template <class UF>\n  static void add_edge_same(UF\
+    \ &uf, int x, EWeight w)\n  {\n    VData &xd = uf.vdat[x];\n    xd.esum += w;\n\
+    \  }\n};\n"
+  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n\n/**\n * @brief\
+    \ UnionFind\n * @docs docs/ds/uf/uf.md\n */\n\n// UFData \u306B\u30C7\u30D5\u30A9\
+    \u30EB\u30C8\u3067\u7528\u610F\u3055\u308C\u3066\u3044\u308B\u3082\u306E\n// -\
+    \ UFDataEmpty (\u4F55\u3082\u306A\u3057\u3001ACL \u76F8\u5F53)\n// - UFDataEverything\
+    \ (\u5168\u90E8\u8F09\u305B)\ntemplate <class UFData, bool compress = true>\n\
+    struct UnionFind\n{\n  friend UFData;\n\nprotected:\n  vc<int> par;\n  vc<typename\
+    \ UFData::VData> vdat;\n\npublic:\n  typename UFData::GData gdat;\n\n  UnionFind()\
+    \ {}\n  UnionFind(int n) : par(n, -1), vdat(n), gdat(n)\n  { repi(i, n) vdat[i]\
+    \ = typename UFData::VData(i); }\n\n  virtual int leader(int x)\n  {\n    assert(0\
+    \ <= x && x < SZ<int>(par));\n    if (par[x] < 0)\n      return x;\n    if constexpr\
+    \ (compress)\n      return par[x] = leader(par[x]);\n    else\n      return leader(par[x]);\n\
+    \  }\n  // \u9802\u70B9 x \u3092\u542B\u3080\u9023\u7D50\u6210\u5206\u306E\u9802\
+    \u70B9\u6570\n  template <class I = ll>\n  I size(int x) { return -par[leader(x)];\
+    \ }\n  typename UFData::VData &get_vdata(int x) { return vdat[leader(x)]; }\n\
+    \  bool same(int x, int y) { return leader(x) == leader(y); }\n  // \u8FD4\u308A\
+    \u5024: \u30DE\u30FC\u30B8\u3057\u305F\u5F8C\u306E\u65B0\u305F\u306A\u4EE3\u8868\
+    \u5143\n  template <class I = ll>\n  I merge(int x, int y, typename UFData::EWeight\
+    \ w = 1)\n  {\n    x = leader(x), y = leader(y);\n    if (x == y)\n    {\n   \
+    \   UFData::add_edge_same(*this, x, w);\n      return x;\n    }\n    if (-par[x]\
+    \ < -par[y])\n      swap(x, y);\n    par[x] += par[y], par[y] = x;\n    UFData::add_edge_diff(*this,\
+    \ x, y, w);\n    return x;\n  }\n\n  // \u5404\u9802\u70B9\u304C\u5C5E\u3059\u308B\
+    \u9023\u7D50\u6210\u5206\u306E\u756A\u53F7 (\u9806\u756A\u306F\u672A\u5B9A\u7FA9\
+    )\n  // ACL \u306E groups \u304C\u6B32\u3057\u3044\u5834\u5408: \u3053\u308C\u306B\
+    \ group_index \u3092\u4F7F\u3046\n  template <class I = ll>\n  vc<I> group_ids()\n\
+    \  {\n    const int n = par.size();\n    vc<I> gid(n, -1);\n    for (int v = 0,\
+    \ i = 0; v < n; v++)\n    {\n      int l = leader(v);\n      if (gid[l] == -1)\n\
+    \        gid[l] = i++;\n      gid[v] = gid[l];\n    }\n    return gid;\n  }\n\
+    };\n\ntemplate <class EWeight_ = ll>\nstruct UFDataEmpty\n{\n  struct VData\n\
+    \  {\n    VData() {}\n    VData(int) {}\n  };\n  struct GData\n  {\n    GData()\
+    \ {}\n    GData(int) {}\n  };\n  using EWeight = EWeight_;\n  template <class\
+    \ UF>\n  static void add_edge_diff(UF &, int, int, EWeight) {}\n  template <class\
+    \ UF>\n  static void add_edge_same(UF &, int, EWeight) {}\n};\n\ntemplate <class\
+    \ EWeight_ = ll, bool need_vlist = false>\nstruct UFDataEverything\n{\n  struct\
+    \ VData\n  {\n    VData() {}\n\n    ll vsum;\n    ll esum;\n    vc<ll> vlist;\n\
+    \n    // \u9802\u70B9 i \u306E\u521D\u671F\u5316\n    VData(int i)\n    {\n  \
+    \    vsum = 1;\n      esum = 0;\n      if constexpr (need_vlist)\n        vlist\
+    \ = {i};\n    }\n  };\n  struct GData\n  {\n    GData() {}\n\n    ll cmp_cnt;\n\
+    \    ll min_leader, max_leader;\n\n    // \u9802\u70B9\u6570 n \u306E\u30B0\u30E9\
+    \u30D5\u306E\u521D\u671F\u5316\n    GData(int n)\n    {\n      cmp_cnt = n;\n\
+    \      min_leader = 0, max_leader = n - 1;\n    }\n  };\n  using EWeight = EWeight_;\n\
+    \  template <class UF>\n  static void add_edge_diff(UF &uf, int x, int y, EWeight\
+    \ w)\n  {\n    VData &xd = uf.vdat[x], &yd = uf.vdat[y];\n    GData &gd = uf.gdat;\n\
+    \    xd.vsum += yd.vsum;\n    xd.esum += w;\n    if constexpr (need_vlist)\n \
+    \   {\n      xd.vlist.insert(xd.vlist.end(), ALL(yd.vlist));\n      yd.vlist.clear();\n\
+    \    }\n    gd.cmp_cnt--;\n    while (uf.leader(gd.min_leader) != gd.min_leader)\n\
+    \      gd.min_leader++;\n    while (uf.leader(gd.max_leader) != gd.max_leader)\n\
+    \      gd.max_leader--;\n  }\n  template <class UF>\n  static void add_edge_same(UF\
+    \ &uf, int x, EWeight w)\n  {\n    VData &xd = uf.vdat[x];\n    xd.esum += w;\n\
+    \  }\n};"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -662,93 +635,181 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   isVerificationFile: false
-  path: math/extgcd.hpp
+  path: ds/uf/uf.hpp
   requiredBy:
-  - math/prime/order_primitive_root.hpp
-  - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/euler_phi_carmichael.hpp
-  - math/prime/factorize.hpp
-  - math/prime/primality_test.hpp
-  - math/modint/modint.hpp
-  - math/modint/modint64.hpp
-  - template/template.cpp
-  timestamp: '2025-03-16 23:12:25+09:00'
+  - ds/uf/uf_potential.hpp
+  timestamp: '2025-03-20 18:22:50+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/aoj/modpow.test.cpp
-  - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
   - verify/yukicoder/unionfind_min_max_leader.test.cpp
-  - verify/yukicoder/static_modint.test.cpp
-  - verify/yukicoder/dynamic_modint.test.cpp
-  - verify/yukicoder/binomial.test.cpp
-  - verify/yosupo/kronecker_power_hadamard.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/xor_convolution.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
   - verify/yosupo/unionfind.test.cpp
-  - verify/yosupo/subset_convolution.test.cpp
   - verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/unionfind_potential.test.cpp
-  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - verify/yosupo/binomial.test.cpp
-  - verify/mytest/modint64.test.cpp
-  - verify/mytest/power_table.test.cpp
-  - verify/mytest/modint.test.cpp
-  - verify/mytest/linear_sieve.test.cpp
-documentation_of: math/extgcd.hpp
+documentation_of: ds/uf/uf.hpp
 layout: document
 redirect_from:
-- /library/math/extgcd.hpp
-- /library/math/extgcd.hpp.html
-title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
+- /library/ds/uf/uf.hpp
+- /library/ds/uf/uf.hpp.html
+title: UnionFind
 ---
-## 拡張ユークリッドの互除法 (extgcd)
+## Unionfind
+
+### コンストラクタ
 
 ```cpp
-tuple<T, T, T> extgcd(T a, T b)
+UnionFind<class UFData, bool compress = true>(int n)
 ```
 
-次の条件を満たす $(g, x, y)$ の組を $1$ 組返す。
+頂点数 $n$ で初期化する。`compress` は経路圧縮を行うかどうか。
 
-- $g = \gcd(a, b)$
-  - $g \geq 0$ となるように定める
-  - $\gcd(c, 0) = \gcd(0, c) = c \quad (c \geq 0)$
-  - $\gcd(0, 0) = 0$
-- $ax + by = g$
-- $\max(\lvert x \rvert, \lvert y \rvert) \leq \max(\lvert a \rvert, \lvert b \rvert)$
+#### UFData について
+
+`UFData` の仕様が少し複雑だが、特にカスタマイズしないのであれば
+
+- ACL 相当の機能で十分なら `UFDataEmpty<EWeight_ = ll>` を渡す
+- いろいろな機能を使いたいなら `UFDataEverything<EWeight_ = ll, need_vlist = false>` を渡す
+  - `need_vlist` は頂点集合の vector が欲しいかどうか（これをやると $\log$ がつく）
+
+で使える。
+
+`UFDataEverything` が持っているものは
+
+- `VData`
+  - `vsum`：連結成分の頂点数（`VData` のコンストラクタを変更することで、連結成分の頂点の重みの和にできる）
+  - `esum`：連結成分の辺重みの和（辺重みはデフォルトで $1$ なので、その場合辺数）
+  - `vlist`：連結成分に属する頂点番号の vector（`need_vlist` が `true` のときのみ）
+- `GData`
+  - `cmp_cnt`：連結成分数
+  - `min_leader`, `max_leader`：代表元になっている頂点番号の最小値・最大値
+    - これは「頂点 $v$ と連結でない頂点を $1$ つ求める」をしたいときに便利（この $2$ つを調べればよい） https://yukicoder.me/problems/no/2290
+
+#### UFData の詳細な仕様
+
+`UFData` をカスタマイズするときは `UFDataEverything` を参考に編集するとよい。
+
+ちゃんと書いておくと、実装するものは
+
+- `VData`：連結成分の代表元となる頂点が管理するデータ。次のコンストラクタを実装する：
+  - 引数が空のコンストラクタ
+  - 引数が頂点番号 $i$ のコンストラクタ
+- `GData`：グラフ全体が管理するデータ。次のコンストラクタを実装する：
+  - 引数が空のコンストラクタ
+  - 引数が頂点数 $n$ のコンストラクタ
+- `EWeight`：辺重みの型
+- `static void add_edge_diff(UF &uf, int x, int y, EWeight w)`
+  - $x$ が代表元の連結成分と $y$ が代表元の連結成分に重み $w$ の辺を追加するのに伴って、`uf` の `vdat` および `gdat` を書き換える関数
+    - 新たな代表元は $x$ になる
+      - 計算量が $O(\mathrm{size}(y))$ で済むならマージテクの計算量になる
+    - `uf` の `vdat`, `gdat` **以外**は**マージされた後の状態**であることに注意
+- `static void add_edge_same(UF &uf, int x, EWeight w)`
+  - $x$ が代表元の連結成分の内部で重み $w$ の辺を追加するのに伴って、`uf` の `vdat` および `gdat` を書き換える関数
+
+### メンバ変数
+
+public なのは
+
+- `UFData::GData gdat`
+
+### メンバ関数
+
+#### leader
+
+```cpp
+int leader(int x)
+```
+
+頂点 $x$ が属する連結成分の代表元を返す。
 
 ##### 制約
 
-- `T` は符号つき整数型
+- $0 \leq x \lt n$
+
+##### 計算量
+
+- `compress` が `true` の場合、ならし $O(\alpha(n))$
+- `compress` が `false` の場合、$O(\log n)$
+
+#### size
+
+```cpp
+I=ll size(int x)
+```
+
+頂点 $x$ が属する連結成分の頂点数を返す。
+
+##### 制約
+
+- $0 \leq x \lt n$
+
+##### 計算量
+
+- `leader` と同じ
+
+#### same
+
+```cpp
+bool same(int x, int y)
+```
+
+頂点 $x$ と頂点 $y$ が同じ連結成分に属するかどうかを返す。
+
+##### 制約
+
+- $0 \leq x,y \lt n$
 
 
 ##### 計算量
 
-- $O(1 + \log \min(\lvert a \rvert, \lvert b \rvert))$
+- `leader` と同じ
 
 
-##### 関連事実
+#### merge
 
-- $(a, b) \neq (0, 0)$ とする。$(x, y)$ についての一次不定方程式 $ax + by = c$ が整数解を持つ必要十分条件は、$c$ が $\gcd(a, b)$ で割り切れることである。
-- $(a, b) \neq (0, 0)$ とする。$(x, y)$ についての一次不定方程式 $ax + by = c$ が整数解を持つとき、$g = \gcd(a, b)$、整数解の $1$ つを $(x_0, y_0)$ とすると、一般解は
+```cpp
+I=ll merge(int x, int y, UFData::EWeight w = 1)
+```
 
-  $\displaystyle x = x_0 + k\frac{b}{g}, y = y_0 - k\frac{a}{g} \quad (k \in \mathbb{Z})$
+頂点 $x$ と頂点 $y$ の間に重み $w$ の辺を追加し、この連結成分の新たな代表元を返す。
 
-  と書ける。$g$ で割り忘れないよう注意。
-- $m \geq 1$ とする。$x$ についての合同方程式 $ax \equiv c \pmod m$ の解集合は、$(x, y)$ についての一次不定方程式 $ax + my = c$ の解集合の $x$ だけとってきた集合と一致。つまり、
-  - $ax \equiv c \pmod m$ の解が存在する必要十分条件は $c$ が $\gcd(a, m)$ で割り切れることである（特に、$\bmod \ m$ で $a$ の逆元が存在する必要十分条件は $\gcd(a, m) = 1$ であることである）。
-  - $ax \equiv c \pmod m$ の解が存在するとき、$g = \gcd(a, m)$、解の $1$ つを $x_0$ とすると、一般解は
+`EWeight` が整数型などの場合はデフォルトで重みが $1$ になるが、そうでない場合は重みを指定しなければならない。
 
-    $\displaystyle x \equiv x_0 + k\frac{m}{g} \pmod m \quad (k = 0, \dots, g-1)$
-    
-    と書ける。
+##### 制約
+
+- $0 \leq x,y \lt n$
+
+##### 計算量
+
+- `leader` と同じ
+
+
+#### get_vdata
+
+```cpp
+UFData::VData get_vdata(int x)
+```
+
+頂点 $x$ が属する連結成分の `UFData::VData` を取得する。
+
+
+##### 制約
+
+- $0 \leq x \lt n$
+
+##### 計算量
+
+- `leader` と同じ
+
+#### group_ids
+
+```cpp
+vc<I=ll> group_ids()
+```
+
+長さ $n$ の vector を返す。$i$ 番目の要素には頂点 $i$ が属する連結成分の番号が格納される。番号の順番は未定義。
+
+ACL の `groups()` 相当のものが欲しい場合、これに `group_index` を噛ませること。
+
+##### 計算量
+
+- `compress` が `true` の場合、$O(n)$
+- `compress` が `false` の場合、$O(n \log n)$

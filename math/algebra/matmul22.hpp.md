@@ -2,6 +2,9 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -33,133 +36,20 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64.hpp
-    title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/prime/euler_phi_carmichael.hpp
-    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
-      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/order_primitive_root.hpp
-    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/primality_test.hpp
-    title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':warning:'
-    path: template/template.cpp
-    title: template/template.cpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/extgcd.test.cpp
-    title: verify/aoj/extgcd.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/modpow.test.cpp
-    title: verify/aoj/modpow.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/linear_sieve.test.cpp
-    title: verify/mytest/linear_sieve.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint.test.cpp
-    title: verify/mytest/modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint64.test.cpp
-    title: verify/mytest/modint64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/power_table.test.cpp
-    title: verify/mytest/power_table.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/and_or_convolution.test.cpp
-    title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/binomial.test.cpp
-    title: verify/yosupo/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/gcd_convolution.test.cpp
-    title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_hadamard.test.cpp
-    title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/lcm_convolution.test.cpp
-    title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root.test.cpp
-    title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root_min.test.cpp
-    title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/subset_convolution.test.cpp
-    title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind.test.cpp
-    title: verify/yosupo/unionfind.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind_potential.test.cpp
-    title: verify/yosupo/unionfind_potential.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/xor_convolution.test.cpp
-    title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/binomial.test.cpp
-    title: verify/yukicoder/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/dynamic_modint.test.cpp
-    title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_carmichael.test.cpp
-    title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_euler_phi.test.cpp
-    title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/static_modint.test.cpp
-    title: verify/yukicoder/static_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/unionfind_min_max_leader.test.cpp
-    title: verify/yukicoder/unionfind_min_max_leader.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/extgcd.md
-    document_title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5\
-      \ (extgcd)"
+    _deprecated_at_docs: docs/math/algebra/matmul22.md
+    document_title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\
+      \u306E\u7A4D\uFF09"
     links: []
-  bundledCode: "#line 2 \"math/extgcd.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+  bundledCode: "#line 2 \"math/algebra/matmul22.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -627,29 +517,49 @@ data:
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\u5F35\
-    \u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs docs/math/extgcd.md\n\
-    \ */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\u305F\u3059 (g, x, y)\n\
-    // max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T = ll>\nconstexpr tuple<T,\
-    \ T, T> extgcd(const T &a, const T &b)\n{\n  if (a == 0 && b == 0)\n    return\
-    \ {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  // a*x2 + b*y2 == z2  ...(2)\n\
-    \  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1, z2 = b;\n  while (z2 != 0)\n\
-    \  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n    T q = z1 / z2;\n    tie(x1,\
-    \ x2) = make_pair(x2, x1 - q * x2);\n    tie(y1, y2) = make_pair(y2, y1 - q *\
-    \ y2);\n    tie(z1, z2) = make_pair(z2, z1 - q * z2);\n  }\n  if (z1 < 0)\n  \
-    \  x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1, y1};\n}\n"
-  code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
-    \ \u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n\
-    \ * @docs docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\
-    \u6E80\u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class\
-    \ T = ll>\nconstexpr tuple<T, T, T> extgcd(const T &a, const T &b)\n{\n  if (a\
-    \ == 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n\
-    \  // a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 =\
-    \ 1, z2 = b;\n  while (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n\
-    \    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1,\
-    \ y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q *\
-    \ z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1,\
-    \ y1};\n}"
+    \ vt;\n}\n// ----------\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4\
+    \ \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\
+    \u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
+    \ */\n\ntemplate <class S_, auto op_, auto e_>\nstruct Monoid\n{\n  using S =\
+    \ S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n};\n\
+    \ntemplate <class S_, auto op_, auto e_, auto inv_>\nstruct Group\n{\n  using\
+    \ S = S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n\
+    \  static constexpr auto inv = inv_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto mul_, auto e1_>\nstruct SemiRing\n{\n  using S = S_;\n  static constexpr\
+    \ auto add = add_;\n  static constexpr auto e0 = e0_;\n  static constexpr auto\
+    \ mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto\
+    \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
+    \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto minus_, auto mul_, auto e1_, auto inv_>\nstruct Field\n{\n  using\
+    \ S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n  static constexpr auto inv = inv_;\n};\n\n\
+    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
+    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
+    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
+    \ R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul =\
+    \ Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/matmul22.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\
+    \u306E\u7A4D\uFF09\n * @docs docs/math/algebra/matmul22.md\n */\n\ntemplate <class\
+    \ mint>\nstruct GroupMatMul22\n{\n  using S = array<mint, 4>;\n  static constexpr\
+    \ S op(S l, S r)\n  {\n    auto [a, b, c, d] = l;\n    auto [e, f, g, h] = r;\n\
+    \    return {{a * e + b * g, a * f + b * h, c * e + d * g, c * f + d * h}};\n\
+    \  }\n  static constexpr S e() { return {{1, 0, 0, 1}}; }\n  static constexpr\
+    \ S inv(S m)\n  {\n    auto [a, b, c, d] = m;\n    mint detinv = (a * d - b *\
+    \ c).inv();\n    return {{d * detinv, -b * detinv, -c * detinv, a * detinv}};\n\
+    \  }\n};\n"
+  code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n#include \"\
+    algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\\
+    times 2$ \u884C\u5217\u306E\u7A4D\uFF09\n * @docs docs/math/algebra/matmul22.md\n\
+    \ */\n\ntemplate <class mint>\nstruct GroupMatMul22\n{\n  using S = array<mint,\
+    \ 4>;\n  static constexpr S op(S l, S r)\n  {\n    auto [a, b, c, d] = l;\n  \
+    \  auto [e, f, g, h] = r;\n    return {{a * e + b * g, a * f + b * h, c * e +\
+    \ d * g, c * f + d * h}};\n  }\n  static constexpr S e() { return {{1, 0, 0, 1}};\
+    \ }\n  static constexpr S inv(S m)\n  {\n    auto [a, b, c, d] = m;\n    mint\
+    \ detinv = (a * d - b * c).inv();\n    return {{d * detinv, -b * detinv, -c *\
+    \ detinv, a * detinv}};\n  }\n};"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -661,94 +571,19 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
+  - math/algebra/algebra_base.hpp
   isVerificationFile: false
-  path: math/extgcd.hpp
-  requiredBy:
-  - math/prime/order_primitive_root.hpp
-  - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/euler_phi_carmichael.hpp
-  - math/prime/factorize.hpp
-  - math/prime/primality_test.hpp
-  - math/modint/modint.hpp
-  - math/modint/modint64.hpp
-  - template/template.cpp
-  timestamp: '2025-03-16 23:12:25+09:00'
+  path: math/algebra/matmul22.hpp
+  requiredBy: []
+  timestamp: '2025-03-20 18:22:50+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/aoj/modpow.test.cpp
-  - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/unionfind_min_max_leader.test.cpp
-  - verify/yukicoder/static_modint.test.cpp
-  - verify/yukicoder/dynamic_modint.test.cpp
-  - verify/yukicoder/binomial.test.cpp
-  - verify/yosupo/kronecker_power_hadamard.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/xor_convolution.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/unionfind.test.cpp
-  - verify/yosupo/subset_convolution.test.cpp
   - verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yosupo/unionfind_potential.test.cpp
-  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - verify/yosupo/binomial.test.cpp
-  - verify/mytest/modint64.test.cpp
-  - verify/mytest/power_table.test.cpp
-  - verify/mytest/modint.test.cpp
-  - verify/mytest/linear_sieve.test.cpp
-documentation_of: math/extgcd.hpp
+documentation_of: math/algebra/matmul22.hpp
 layout: document
 redirect_from:
-- /library/math/extgcd.hpp
-- /library/math/extgcd.hpp.html
-title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
+- /library/math/algebra/matmul22.hpp
+- /library/math/algebra/matmul22.hpp.html
+title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\u306E\u7A4D\
+  \uFF09"
 ---
-## 拡張ユークリッドの互除法 (extgcd)
-
-```cpp
-tuple<T, T, T> extgcd(T a, T b)
-```
-
-次の条件を満たす $(g, x, y)$ の組を $1$ 組返す。
-
-- $g = \gcd(a, b)$
-  - $g \geq 0$ となるように定める
-  - $\gcd(c, 0) = \gcd(0, c) = c \quad (c \geq 0)$
-  - $\gcd(0, 0) = 0$
-- $ax + by = g$
-- $\max(\lvert x \rvert, \lvert y \rvert) \leq \max(\lvert a \rvert, \lvert b \rvert)$
-
-##### 制約
-
-- `T` は符号つき整数型
-
-
-##### 計算量
-
-- $O(1 + \log \min(\lvert a \rvert, \lvert b \rvert))$
-
-
-##### 関連事実
-
-- $(a, b) \neq (0, 0)$ とする。$(x, y)$ についての一次不定方程式 $ax + by = c$ が整数解を持つ必要十分条件は、$c$ が $\gcd(a, b)$ で割り切れることである。
-- $(a, b) \neq (0, 0)$ とする。$(x, y)$ についての一次不定方程式 $ax + by = c$ が整数解を持つとき、$g = \gcd(a, b)$、整数解の $1$ つを $(x_0, y_0)$ とすると、一般解は
-
-  $\displaystyle x = x_0 + k\frac{b}{g}, y = y_0 - k\frac{a}{g} \quad (k \in \mathbb{Z})$
-
-  と書ける。$g$ で割り忘れないよう注意。
-- $m \geq 1$ とする。$x$ についての合同方程式 $ax \equiv c \pmod m$ の解集合は、$(x, y)$ についての一次不定方程式 $ax + my = c$ の解集合の $x$ だけとってきた集合と一致。つまり、
-  - $ax \equiv c \pmod m$ の解が存在する必要十分条件は $c$ が $\gcd(a, m)$ で割り切れることである（特に、$\bmod \ m$ で $a$ の逆元が存在する必要十分条件は $\gcd(a, m) = 1$ であることである）。
-  - $ax \equiv c \pmod m$ の解が存在するとき、$g = \gcd(a, m)$、解の $1$ つを $x_0$ とすると、一般解は
-
-    $\displaystyle x \equiv x_0 + k\frac{m}{g} \pmod m \quad (k = 0, \dots, g-1)$
-    
-    と書ける。

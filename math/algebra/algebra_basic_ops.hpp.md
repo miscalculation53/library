@@ -38,6 +38,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
+    path: ds/uf/uf_potential.hpp
+    title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
+  - icon: ':heavy_check_mark:'
     path: math/prime/lcm_gcd_convolution.hpp
     title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
   - icon: ':heavy_check_mark:'
@@ -83,6 +86,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/unionfind_potential.test.cpp
+    title: verify/yosupo/unionfind_potential.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
+    title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/xor_convolution.test.cpp
     title: verify/yosupo/xor_convolution.test.cpp
@@ -686,6 +695,7 @@ data:
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
   - math/prime/lcm_gcd_convolution.hpp
   - math/prime/zeta_mobius_divisor_multiple.hpp
+  - ds/uf/uf_potential.hpp
   timestamp: '2025-03-18 21:50:59+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
@@ -696,7 +706,9 @@ data:
   - verify/yosupo/gcd_convolution.test.cpp
   - verify/yosupo/xor_convolution.test.cpp
   - verify/yosupo/subset_convolution.test.cpp
+  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/unionfind_potential.test.cpp
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
 documentation_of: math/algebra/algebra_basic_ops.hpp
 layout: document

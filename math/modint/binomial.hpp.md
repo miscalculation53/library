@@ -54,8 +54,20 @@ data:
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/unionfind.test.cpp
+    title: verify/yosupo/unionfind.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/unionfind_potential.test.cpp
+    title: verify/yosupo/unionfind_potential.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
+    title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/binomial.test.cpp
     title: verify/yukicoder/binomial.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/unionfind_min_max_leader.test.cpp
+    title: verify/yukicoder/unionfind_min_max_leader.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -595,10 +607,14 @@ data:
   timestamp: '2025-03-16 23:12:25+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yukicoder/unionfind_min_max_leader.test.cpp
   - verify/yukicoder/binomial.test.cpp
   - verify/yosupo/kronecker_power_hadamard.test.cpp
   - verify/yosupo/gcd_convolution.test.cpp
+  - verify/yosupo/unionfind.test.cpp
+  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/unionfind_potential.test.cpp
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/binomial.test.cpp
 documentation_of: math/modint/binomial.hpp

@@ -20,6 +20,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: ds/group_index.hpp
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
+  - icon: ':heavy_check_mark:'
+    path: ds/uf/uf.hpp
+    title: UnionFind
+  - icon: ':heavy_check_mark:'
+    path: ds/uf/uf_potential.hpp
+    title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
   - icon: ':warning:'
     path: graph/graph.hpp
     title: "\u30B0\u30E9\u30D5\uFF08\u57FA\u5E95\u30AF\u30E9\u30B9\uFF09"
@@ -36,6 +42,10 @@ data:
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/algebra/matmul22.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\u306E\u7A4D\
+      \uFF09"
   - icon: ':warning:'
     path: math/algebra/polynomial_ring.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\uFF09"
@@ -213,6 +223,15 @@ data:
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/unionfind.test.cpp
+    title: verify/yosupo/unionfind.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/unionfind_potential.test.cpp
+    title: verify/yosupo/unionfind_potential.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
+    title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/xor_convolution.test.cpp
     title: verify/yosupo/xor_convolution.test.cpp
   - icon: ':heavy_check_mark:'
@@ -239,6 +258,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/static_modint.test.cpp
     title: verify/yukicoder/static_modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/unionfind_min_max_leader.test.cpp
+    title: verify/yukicoder/unionfind_min_max_leader.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -381,6 +403,7 @@ data:
   - math/modint/modint64.hpp
   - math/modint/power_table.hpp
   - math/quotients.hpp
+  - math/algebra/matmul22.hpp
   - math/algebra/algebra_basic_ops.hpp
   - math/algebra/polynomial_ring.hpp
   - math/algebra/algebra_base.hpp
@@ -393,6 +416,8 @@ data:
   - itertools/bit.hpp
   - ds/csr.hpp
   - ds/coordinate_compression.hpp
+  - ds/uf/uf.hpp
+  - ds/uf/uf_potential.hpp
   - ds/group_index.hpp
   timestamp: '2025-03-12 06:54:29+09:00'
   verificationStatus: LIBRARY_ALL_AC
@@ -407,6 +432,7 @@ data:
   - verify/yukicoder/divisors.test.cpp
   - verify/yukicoder/base_repr.test.cpp
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/yukicoder/unionfind_min_max_leader.test.cpp
   - verify/yukicoder/static_modint.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
   - verify/yukicoder/binomial.test.cpp
@@ -424,11 +450,14 @@ data:
   - verify/yosupo/kth_root_integer.test.cpp
   - verify/yosupo/xor_convolution.test.cpp
   - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/unionfind.test.cpp
   - verify/yosupo/subset_convolution.test.cpp
   - verify/yosupo/predecessor_problem.test.cpp
+  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
   - verify/yosupo/associative_array_lower_bound.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/unionfind_potential.test.cpp
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/binomial.test.cpp
   - verify/mytest/modint64.test.cpp
