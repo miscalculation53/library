@@ -184,38 +184,76 @@ VV rot90(const VV &a, U k = 1)
   }
 }
 
-template <class T, class F = decltype(plus<>())>
-vc<T> cuml(const vc<T> &v, F op = plus<>(), const T &e = 0)
+template <class T>
+struct MonoidAdd
+{
+  using S = T;
+  static constexpr S op(S a, S b) { return a + b; }
+  static constexpr S e() { return 0; }
+};
+template <class T, const T infty = INF>
+struct MonoidMin
+{
+  using S = T;
+  static constexpr S op(S a, S b) { return min(a, b); }
+  static constexpr S e() { return infty; }
+};
+template <class T, const T infty = INF>
+struct MonoidMax
+{
+  using S = T;
+  static constexpr S op(S a, S b) { return max(a, b); }
+  static constexpr S e() { return -infty; }
+};
+
+// left_index が 0 なら、長さ n+1 で a.front() が e()
+// left_index が 1 なら、長さ n で e() がない
+template <class M>
+vc<typename M::S> cuml(const vc<typename M::S> &v, int left_index = 0)
 {
   const int n = v.size();
-  vc<T> res(n + 1, e);
-  repi(i, n) res[i + 1] = op(res[i], v[i]);
+  vc<typename M::S> res(n + 1);
+  res[0] = M::e();
+  repi(i, n) res[i + 1] = M::op(res[i], v[i]);
+  res.erase(res.begin(), res.begin() + left_index);
   return res;
 }
-template <class T, class F = decltype(plus<>())>
-vc<T> cumr(const vc<T> &v, const F &op = plus<>(), const T &e = 0)
-{ return reversed(cuml<T, F>(reversed(v), op, e)); }
-template <class T, const T infty = INF>
-vc<T> cumlmax(const vc<T> &v)
-{ return cuml(v, [](T a, T b) { return max(a, b); }, -infty); }
-template <class T, const T infty = INF>
-vc<T> cumrmax(const vc<T> &v)
-{ return cumr(v, [](T a, T b) { return max(a, b); }, -infty); }
-template <class T, const T infty = INF>
-vc<T> cumlmin(const vc<T> &v)
-{ return cuml(v, [](T a, T b) { return min(a, b); }, infty); }
-template <class T, const T infty = INF>
-vc<T> cumrmin(const vc<T> &v)
-{ return cumr(v, [](T a, T b) { return min(a, b); }, infty); }
-
+// right_index が 0 なら、長さ n+1 で a.back() が e()
+// right_index が 1 なら、長さ n で e() がない
+template <class M>
+vc<typename M::S> cumr(const vc<typename M::S> &v, int right_index = 0)
+{ return reversed(cuml<M>(reversed(v), right_index)); }
 template <class T>
-vc<T> adjd(const vc<T> &v)
+vc<T> cumlsum(const vc<T> &v, int left_index = 0)
+{ return cuml<MonoidAdd<T>>(v, left_index); }
+template <class T>
+vc<T> cumrsum(const vc<T> &v, int right_index = 0)
+{ return cumr<MonoidAdd<T>>(v, right_index); }
+template <class T>
+vc<T> cumlmin(const vc<T> &v, int left_index = 0)
+{ return cuml<MonoidMin<T>>(v, left_index); }
+template <class T>
+vc<T> cumrmin(const vc<T> &v, int right_index = 0)
+{ return cumr<MonoidMin<T>>(v, right_index); }
+template <class T>
+vc<T> cumlmax(const vc<T> &v, int left_index = 0)
+{ return cuml<MonoidMax<T>>(v, left_index); }
+template <class T>
+vc<T> cumrmax(const vc<T> &v, int right_index = 0)
+{ return cumr<MonoidMax<T>>(v, right_index); }
+
+// デフォルトでは長さ n+1
+// left_index, right_index をそれぞれ 1 にすると、左右が削除される
+template <class T>
+vc<T> adjd(const vc<T> &v, int left_index = 0, int right_index = 0)
 {
   int n = v.size();
   vc<T> res(n + 1);
   res[0] = v[0];
   repi(i, 1, n) res[i] = v[i] - v[i - 1];
   res[n] = -v[n - 1];
+  res.erase(res.end() - right_index, res.end());
+  res.erase(res.begin(), res.begin() + left_index);
   return res;
 }
 

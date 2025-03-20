@@ -255,25 +255,23 @@ $a$ のサイズを $n \times m$ として
 #### cuml, cumr
 
 ```cpp
-(1) vc<T> cuml(vc<T> v, F op = plus<>(), T e = 0)
-(2) vc<T> cumr(vc<T> v, F op = plus<>(), T e = 0)
-(3) vc<T> cumlmax(vc<T> v)
-(4) vc<T> cumrmax(vc<T> v)
-(5) vc<T> cumlmin(vc<T> v)
-(6) vc<T> cumrmin(vc<T> v)
+(1) vc<M::S> cuml(vc<M::S> v)
+(2) vc<M::S> cumr(vc<M::S> v)
+(3) vc<T> cumlsum(vc<T> v)
+(4) vc<T> cumrsum(vc<T> v)
+(5) vc<T> cumlmax(vc<T> v)
+(6) vc<T> cumrmax(vc<T> v)
+(7) vc<T> cumlmin(vc<T> v)
+(8) vc<T> cumrmin(vc<T> v)
 ```
 
 $\lvert v \rvert = n$ とする。
 
-- (1)：長さ $n + 1$ の配列を返す。$i \: (0 \leq i \leq n)$ 番目には、$v[0, i)$ 全体に二項演算 $\mathrm{op}$ を行った結果を格納する。単位元は $\mathrm{e}$ 。デフォルトでは、$\mathrm{op}$ は $+$ 、$\mathrm{e}$ は $0$ 。
-- (2)：長さ $n + 1$ の配列を返す。$i \: (0 \leq i \leq n)$ 番目には、$v[i, n)$ 全体に二項演算 $\mathrm{op}$ を行った結果を格納する。単位元は $\mathrm{e}$ 。デフォルトでは、$\mathrm{op}$ は $+$ 、$\mathrm{e}$ は $0$ 。
-- (3), (4), (5), (6)：(1) や (2) で、$(\mathrm{op}, \mathrm{e})$ を $(\max, -\mathrm{INF})$ や $(\min, \mathrm{INF})$ としたもの。
+- (1)：`M` はモノイド。長さ $n + 1$ の配列を返す。$i \: (0 \leq i \leq n)$ 番目には、$v[0, i)$ に左から順に `M` の積演算を行った結果を返す。
+- (2)：`M` はモノイド。長さ $n + 1$ の配列を返す。$i \: (0 \leq i \leq n)$ 番目には、$v[i, n)$ に右から順に `M` の積演算を行った結果を返す。
+- (3), (4), (5), (6), (7), (8)：モノイドをそれぞれ `MonoidAdd<T>`, `MonoidMin<T>`, `MonoidMax<T>` としたもの。
 
-例 (cuml)：$(3, 1, 4, 1) \to (0, 3, 4, 8, 9)$
-
-##### 制約
-
-- $\mathrm{op}$ は可換
+例 (cumlsum)：$(3, 1, 4, 1) \to (0, 3, 4, 8, 9)$
 
 ##### 計算量
 

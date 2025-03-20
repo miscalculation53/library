@@ -61,7 +61,7 @@ public:
       assert(0 <= i && i < n);
       start[i]++;
     }
-    start = cuml(start);
+    start = cumlsum(start);
     auto cnt = start;
     fec([ i, e ] : ies) elist[cnt[i]++] = e;
   }

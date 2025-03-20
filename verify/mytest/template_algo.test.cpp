@@ -156,8 +156,8 @@ void test4()
 void test5()
 {
   vl a = {3, 1, 4, 1};
-  assert(cuml(a) == vl({0, 3, 4, 8, 9}));
-  assert(cumr(a) == vl({9, 6, 5, 1, 0}));
+  assert(cumlsum(a) == vl({0, 3, 4, 8, 9}));
+  assert(cumrsum(a) == vl({9, 6, 5, 1, 0}));
   assert(cumlmax(a) == vl({-INF, 3, 3, 4, 4}));
   assert(cumrmax(a) == vl({4, 4, 4, 1, -INF}));
   assert(cumlmin(a) == vl({INF, 3, 1, 1, 1}));

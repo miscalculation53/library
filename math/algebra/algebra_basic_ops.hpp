@@ -9,32 +9,11 @@
  */
 
 template <class T>
-struct MonoidAdd
-{
-  using S = T;
-  static constexpr S op(S a, S b) { return a + b; }
-  static constexpr S e() { return 0; }
-};
-template <class T>
 struct MonoidMul
 {
   using S = T;
   static constexpr S op(S a, S b) { return a * b; }
   static constexpr S e() { return 1; }
-};
-template <class T, const T infty = INF>
-struct MonoidMin
-{
-  using S = T;
-  static constexpr S op(S a, S b) { return min(a, b); }
-  static constexpr S e() { return infty; }
-};
-template <class T, const T infty = INF>
-struct MonoidMax
-{
-  using S = T;
-  static constexpr S op(S a, S b) { return max(a, b); }
-  static constexpr S e() { return -infty; }
 };
 
 template <class T>
