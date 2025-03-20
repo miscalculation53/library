@@ -55,7 +55,7 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/ds/uf/uf.md
+    _deprecated_at_docs: docs/ds/uf/uf_potential.md
     document_title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
     links: []
   bundledCode: "#line 2 \"ds/uf/uf_potential.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
@@ -634,7 +634,7 @@ data:
     \ M::S pow_monoid(typename M::S a, ll k)\n{\n  typename M::S c = M::e();\n  for\
     \ (; k; k >>= 1)\n  {\n    if (k & 1)\n      c = M::op(c, a);\n    a = M::op(a,\
     \ a);\n  }\n  return c;\n}\n#line 7 \"ds/uf/uf_potential.hpp\"\n\n/**\n * @brief\
-    \ \u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind\n * @docs docs/ds/uf/uf.md\n\
+    \ \u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind\n * @docs docs/ds/uf/uf_potential.md\n\
     \ */\n\n// G \u306F\u7FA4\ntemplate <class G>\nstruct UnionFindPotential : UnionFind<UFDataEmpty<typename\
     \ G::S>, true>\n{\n  using UFData = UFDataEmpty<typename G::S>;\n  using UF =\
     \ UnionFind<UFData, true>;\n\nprotected:\n  vc<typename G::S> weight_;\n  vc<bool>\
@@ -663,32 +663,32 @@ data:
   code: "#pragma once\n\n#include \"../../template/template_all.hpp\"\n\n#include\
     \ \"uf.hpp\"\n#include \"../../math/algebra/algebra_basic_ops.hpp\"\n\n/**\n *\
     \ @brief \u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind\n * @docs\
-    \ docs/ds/uf/uf.md\n */\n\n// G \u306F\u7FA4\ntemplate <class G>\nstruct UnionFindPotential\
-    \ : UnionFind<UFDataEmpty<typename G::S>, true>\n{\n  using UFData = UFDataEmpty<typename\
-    \ G::S>;\n  using UF = UnionFind<UFData, true>;\n\nprotected:\n  vc<typename G::S>\
-    \ weight_;\n  vc<bool> valid_;\n  typename G::S weight(int x)\n  {\n    leader(x);\n\
-    \    return weight_[x];\n  }\n\npublic:\n  UnionFindPotential(int n)\n  : UF(n),\
-    \ weight_(n, G::e()), valid_(n, true) {}\n  using UF::par;\n  using UF::same;\n\
-    \n  int leader(int x) override\n  {\n    assert(0 <= x && x < SZ<int>(par));\n\
-    \    if (par[x] < 0)\n      return x;\n    int lx = leader(par[x]);\n    weight_[x]\
-    \ = G::op(weight_[par[x]], weight_[x]);\n    return par[x] = lx;\n  }\n  // \u3069\
-    \u306E\u60C5\u5831\u3082\u7121\u8996\u3057\u306A\u304B\u3063\u305F\u3068\u3057\
-    \u3066\u3001x \u3092\u542B\u3080\u9023\u7D50\u6210\u5206\u306E\u60C5\u5831\u304C\
-    \ valid \u304B\u3069\u3046\u304B\n  bool valid(int x) { return valid_[leader(x)];\
-    \ }\n  // same(x, y) \u306E\u3068\u304D\u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\
-    \u307E\u308B\n  // \u305F\u3060\u3057\u3001invalid \u306A\u60C5\u5831\u306F\u7121\
-    \u8996\u3059\u308B\u3082\u306E\u3068\u3059\u308B\n  typename G::S diff(int x,\
-    \ int y)\n  {\n    assert(same(x, y));\n    return G::op(G::inv(weight_[x]), weight_[y]);\n\
-    \  }\n  // a[x]^{-1} a[y] == w \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\
-    \u3092\u8FFD\u52A0\u3059\u308B\n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\
-    \u5831\u306F\u7121\u8996\u3057\u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\
-    \u5831\u304C valid \u304B\u3069\u3046\u304B\n  bool merge(int x, int y, typename\
-    \ UFData::EWeight w)\n  {\n    int lx = leader(x), ly = leader(y);\n    if (lx\
-    \ == ly)\n    {\n      bool ok = G::op(G::inv(weight_[x]), weight_[y]) == w;\n\
-    \      if (!ok)\n        valid_[lx] = false;\n      return ok;\n    }\n    w =\
-    \ G::op(G::op(weight_[x], w), G::inv(weight_[y]));\n    if (-par[lx] < -par[ly])\n\
-    \      swap(lx, ly), w = G::inv(w);\n    par[lx] += par[ly], par[ly] = lx;\n \
-    \   weight_[ly] = w;\n    return true;\n  }\n};"
+    \ docs/ds/uf/uf_potential.md\n */\n\n// G \u306F\u7FA4\ntemplate <class G>\nstruct\
+    \ UnionFindPotential : UnionFind<UFDataEmpty<typename G::S>, true>\n{\n  using\
+    \ UFData = UFDataEmpty<typename G::S>;\n  using UF = UnionFind<UFData, true>;\n\
+    \nprotected:\n  vc<typename G::S> weight_;\n  vc<bool> valid_;\n  typename G::S\
+    \ weight(int x)\n  {\n    leader(x);\n    return weight_[x];\n  }\n\npublic:\n\
+    \  UnionFindPotential(int n)\n  : UF(n), weight_(n, G::e()), valid_(n, true) {}\n\
+    \  using UF::par;\n  using UF::same;\n\n  int leader(int x) override\n  {\n  \
+    \  assert(0 <= x && x < SZ<int>(par));\n    if (par[x] < 0)\n      return x;\n\
+    \    int lx = leader(par[x]);\n    weight_[x] = G::op(weight_[par[x]], weight_[x]);\n\
+    \    return par[x] = lx;\n  }\n  // \u3069\u306E\u60C5\u5831\u3082\u7121\u8996\
+    \u3057\u306A\u304B\u3063\u305F\u3068\u3057\u3066\u3001x \u3092\u542B\u3080\u9023\
+    \u7D50\u6210\u5206\u306E\u60C5\u5831\u304C valid \u304B\u3069\u3046\u304B\n  bool\
+    \ valid(int x) { return valid_[leader(x)]; }\n  // same(x, y) \u306E\u3068\u304D\
+    \u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\u307E\u308B\n  // \u305F\u3060\u3057\u3001\
+    invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3059\u308B\u3082\u306E\u3068\u3059\
+    \u308B\n  typename G::S diff(int x, int y)\n  {\n    assert(same(x, y));\n   \
+    \ return G::op(G::inv(weight_[x]), weight_[y]);\n  }\n  // a[x]^{-1} a[y] == w\
+    \ \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\u3092\u8FFD\u52A0\u3059\u308B\
+    \n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3057\
+    \u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\u5831\u304C valid \u304B\u3069\
+    \u3046\u304B\n  bool merge(int x, int y, typename UFData::EWeight w)\n  {\n  \
+    \  int lx = leader(x), ly = leader(y);\n    if (lx == ly)\n    {\n      bool ok\
+    \ = G::op(G::inv(weight_[x]), weight_[y]) == w;\n      if (!ok)\n        valid_[lx]\
+    \ = false;\n      return ok;\n    }\n    w = G::op(G::op(weight_[x], w), G::inv(weight_[y]));\n\
+    \    if (-par[lx] < -par[ly])\n      swap(lx, ly), w = G::inv(w);\n    par[lx]\
+    \ += par[ly], par[ly] = lx;\n    weight_[ly] = w;\n    return true;\n  }\n};"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -706,7 +706,7 @@ data:
   isVerificationFile: false
   path: ds/uf/uf_potential.hpp
   requiredBy: []
-  timestamp: '2025-03-20 18:22:50+09:00'
+  timestamp: '2025-03-20 18:44:20+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/unionfind_potential_non_commutative.test.cpp
@@ -718,126 +718,42 @@ redirect_from:
 - /library/ds/uf/uf_potential.hpp.html
 title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
 ---
-## Unionfind
+## ポテンシャルつき Unionfind
+
+### 概要
+
+注意：無向グラフというよりは、双方向に異なる重みがついた有向グラフと思うべき（無向グラフの設定で使えると勘違いするのがありがち）
+
+未知の値（群をなす）の列 $a_0, a_1, \dots, a_{n-1}$ があり、$a_x^{-1} a_y = w$ であるという情報がいくつか与えられる。
+
+各情報に関して、$x$ から $y$ に重み $w$ の有向辺があると考えることにする（同時に $y$ から $x$ に重み $w^{-1}$ の辺があるとみなす）。このとき、
+
+- $x$ と $y$ が同じ（弱／強）連結成分にある $\iff a_x^{-1} a_y$ の値が高々 $1$ 通りに定まる
+- さらに、この情報が矛盾するのも連結成分ごと
+
+---
 
 ### コンストラクタ
 
 ```cpp
-UnionFind<class UFData, bool compress = true>(int n)
+UnionFindPotential<G>(int n)
 ```
 
-頂点数 $n$ で初期化する。`compress` は経路圧縮を行うかどうか。
-
-#### UFData について
-
-`UFData` の仕様が少し複雑だが、特にカスタマイズしないのであれば
-
-- ACL 相当の機能で十分なら `UFDataEmpty<EWeight_ = ll>` を渡す
-- いろいろな機能を使いたいなら `UFDataEverything<EWeight_ = ll, need_vlist = false>` を渡す
-  - `need_vlist` は頂点集合の vector が欲しいかどうか（これをやると $\log$ がつく）
-
-で使える。
-
-`UFDataEverything` が持っているものは
-
-- `VData`
-  - `vsum`：連結成分の頂点数（`VData` のコンストラクタを変更することで、連結成分の頂点の重みの和にできる）
-  - `esum`：連結成分の辺重みの和（辺重みはデフォルトで $1$ なので、その場合辺数）
-  - `vlist`：連結成分に属する頂点番号の vector（`need_vlist` が `true` のときのみ）
-- `GData`
-  - `cmp_cnt`：連結成分数
-  - `min_leader`, `max_leader`：代表元になっている頂点番号の最小値・最大値
-    - これは「頂点 $v$ と連結でない頂点を $1$ つ求める」をしたいときに便利（この $2$ つを調べればよい） https://yukicoder.me/problems/no/2290
-
-#### UFData の詳細な仕様
-
-`UFData` をカスタマイズするときは `UFDataEverything` を参考に編集するとよい。
-
-ちゃんと書いておくと、実装するものは
-
-- `VData`：連結成分の代表元となる頂点が管理するデータ。次のコンストラクタを実装する：
-  - 引数が空のコンストラクタ
-  - 引数が頂点番号 $i$ のコンストラクタ
-- `GData`：グラフ全体が管理するデータ。次のコンストラクタを実装する：
-  - 引数が空のコンストラクタ
-  - 引数が頂点数 $n$ のコンストラクタ
-- `EWeight`：辺重みの型
-- `static void add_edge_diff(UF &uf, int x, int y, EWeight w)`
-  - $x$ が代表元の連結成分と $y$ が代表元の連結成分に重み $w$ の辺を追加するのに伴って、`uf` の `vdat` および `gdat` を書き換える関数
-    - 新たな代表元は $x$ になる
-      - 計算量が $O(\mathrm{size}(y))$ で済むならマージテクの計算量になる
-    - `uf` の `vdat`, `gdat` **以外**は**マージされた後の状態**であることに注意
-- `static void add_edge_same(UF &uf, int x, EWeight w)`
-  - $x$ が代表元の連結成分の内部で重み $w$ の辺を追加するのに伴って、`uf` の `vdat` および `gdat` を書き換える関数
-
-### メンバ変数
-
-public なのは
-
-- `UFData::GData gdat`
+`G` は群、$n$ は頂点数。
 
 ### メンバ関数
 
-#### leader
-
-```cpp
-int leader(int x)
-```
-
-頂点 $x$ が属する連結成分の代表元を返す。
-
-##### 制約
-
-- $0 \leq x \lt n$
-
-##### 計算量
-
-- `compress` が `true` の場合、ならし $O(\alpha(n))$
-- `compress` が `false` の場合、$O(\log n)$
-
-#### size
-
-```cpp
-I=ll size(int x)
-```
-
-頂点 $x$ が属する連結成分の頂点数を返す。
-
-##### 制約
-
-- $0 \leq x \lt n$
-
-##### 計算量
-
-- `leader` と同じ
-
-#### same
-
-```cpp
-bool same(int x, int y)
-```
-
-頂点 $x$ と頂点 $y$ が同じ連結成分に属するかどうかを返す。
-
-##### 制約
-
-- $0 \leq x,y \lt n$
-
-
-##### 計算量
-
-- `leader` と同じ
-
+leader, size, same, group_ids は Unionfind と同じ（経路圧縮を行う実装になっていて、計算量はならし $O(\alpha(n))$）。
 
 #### merge
 
 ```cpp
-I=ll merge(int x, int y, UFData::EWeight w = 1)
+bool merge(int x, int y, G::S w)
 ```
 
-頂点 $x$ と頂点 $y$ の間に重み $w$ の辺を追加し、この連結成分の新たな代表元を返す。
+頂点 $x$ から頂点 $y$ に重み $w$ の辺を追加する。これは $a_x^{-1} a_y = w$ であるという情報に相当する。
 
-`EWeight` が整数型などの場合はデフォルトで重みが $1$ になるが、そうでない場合は重みを指定しなければならない。
+返り値は、この情報が valid である（これまでの valid な情報と矛盾しない）かどうか。
 
 ##### 制約
 
@@ -848,14 +764,13 @@ I=ll merge(int x, int y, UFData::EWeight w = 1)
 - `leader` と同じ
 
 
-#### get_vdata
+#### valid
 
 ```cpp
-UFData::VData get_vdata(int x)
+bool valid(int x)
 ```
 
-頂点 $x$ が属する連結成分の `UFData::VData` を取得する。
-
+これまでの情報をいずれも無視しなかった場合に、$x$ を含む連結成分の情報が valid かどうかを返す。
 
 ##### 制約
 
@@ -865,17 +780,26 @@ UFData::VData get_vdata(int x)
 
 - `leader` と同じ
 
-#### group_ids
+
+#### diff
 
 ```cpp
-vc<I=ll> group_ids()
+G::S diff(int x, int y)
 ```
 
-長さ $n$ の vector を返す。$i$ 番目の要素には頂点 $i$ が属する連結成分の番号が格納される。番号の順番は未定義。
+$x$ と $y$ が同じ連結成分に属するとする。これまでの valid な情報のみを見たとき、$a_x^{-1} a_y$ の値が一意に定まるので、この値を返す。
 
-ACL の `groups()` 相当のものが欲しい場合、これに `group_index` を噛ませること。
+##### 制約
+
+- $0 \leq x,y \lt n$
+- $x$ と $y$ は同じ連結成分に属する（`same(x, y) == true`）
 
 ##### 計算量
 
-- `compress` が `true` の場合、$O(n)$
-- `compress` が `false` の場合、$O(n \log n)$
+- `leader` と同じ
+
+---
+
+### 設計について
+
+原理的には UFData を一緒に持たせたり Undo 可能にしたりといったことも可能であろうが、欲しくなる場面があまりない気がする（？）
