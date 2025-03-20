@@ -4,7 +4,7 @@ data:
   - icon: ':question:'
     path: ds/uf/uf.hpp
     title: UnionFind
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
   - icon: ':question:'
@@ -14,7 +14,7 @@ data:
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/algebra/matmul22.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\u306E\u7A4D\
       \uFF09"
@@ -67,9 +67,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/unionfind_with_potential_non_commutative_group
@@ -281,26 +281,26 @@ data:
     \u306E\u500B\u6570)\ntemplate <class T = ll, class V, class Value, class Comp\
     \ = less<>, class Proj = identity>\ninline T LB(const V &v, const Value &val,\
     \ Comp comp = {}, Proj proj = {})\n{\n  return internal::bound_helper(v, [&](int\
-    \ i) -> bool\n                                { return comp(proj(v[i]), val);\
-    \ });\n}\n// val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\
-    \u306E\u5024\u306E\u500B\u6570)\ntemplate <class T = ll, class V, class Value,\
-    \ class Comp = less<>, class Proj = identity>\ninline T UB(const V &v, const Value\
-    \ &val, Comp comp = {}, Proj proj = {})\n{\n  return internal::bound_helper(v,\
-    \ [&](int i) -> bool\n                                { return !comp(val, proj(v[i]));\
-    \ });\n}\n#define DEFAULT_COMP less<>\n#else\n// val <= v[i] \u3068\u306A\u308B\
-    \u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\ntemplate\
-    \ <class T = ll, class V, class Value, class Comp = ranges::less, class Proj =\
-    \ identity>\ninline T LB(const V &v, const Value &val, Comp comp = {}, Proj proj\
-    \ = {})\n{ return ranges::lower_bound(v, val, comp, proj) - v.begin(); }\n// val\
-    \ < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\
-    \u500B\u6570)\ntemplate <class T = ll, class V, class Value, class Comp = ranges::less,\
-    \ class Proj = identity>\ninline T UB(const V &v, const Value &val, Comp comp\
-    \ = {}, Proj proj = {})\n{ return ranges::upper_bound(v, val, comp, proj) - v.begin();\
-    \ }\n#define DEFAULT_COMP ranges::less\n#endif\n\n// --- vector \u7B49\u306E lt,\
-    \ leq, gt, geq ---\n\n// v[i] < val \u3068\u306A\u308B\u6700\u5927\u306E i (\u306A\
-    \u3051\u308C\u3070 -1)\ntemplate <class T = ll, class V, class Value, class Comp\
-    \ = DEFAULT_COMP, class Proj = identity>\ninline auto lt_max(const V &v, const\
-    \ Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ i) -> bool\n                                { return comp(proj(*(v.begin() +\
+    \ i)), val); });\n}\n// val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val\
+    \ \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570)\ntemplate <class T = ll, class V,\
+    \ class Value, class Comp = less<>, class Proj = identity>\ninline T UB(const\
+    \ V &v, const Value &val, Comp comp = {}, Proj proj = {})\n{\n  return internal::bound_helper(v,\
+    \ [&](int i) -> bool\n                                { return !comp(val, proj(*(v.begin()\
+    \ + i))); });\n}\n#define DEFAULT_COMP less<>\n#else\n// val <= v[i] \u3068\u306A\
+    \u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\n\
+    template <class T = ll, class V, class Value, class Comp = ranges::less, class\
+    \ Proj = identity>\ninline T LB(const V &v, const Value &val, Comp comp = {},\
+    \ Proj proj = {})\n{ return ranges::lower_bound(v, val, comp, proj) - v.begin();\
+    \ }\n// val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\
+    \u5024\u306E\u500B\u6570)\ntemplate <class T = ll, class V, class Value, class\
+    \ Comp = ranges::less, class Proj = identity>\ninline T UB(const V &v, const Value\
+    \ &val, Comp comp = {}, Proj proj = {})\n{ return ranges::upper_bound(v, val,\
+    \ comp, proj) - v.begin(); }\n#define DEFAULT_COMP ranges::less\n#endif\n\n//\
+    \ --- vector \u7B49\u306E lt, leq, gt, geq ---\n\n// v[i] < val \u3068\u306A\u308B\
+    \u6700\u5927\u306E i (\u306A\u3051\u308C\u3070 -1)\ntemplate <class T = ll, class\
+    \ V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto\
+    \ lt_max(const V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
     \ V::iterator>, T>\n{ return LB<T>(v, val, comp, proj) - 1; }\n// v[i] <= val\
     \ \u3068\u306A\u308B\u6700\u5927\u306E i (\u306A\u3051\u308C\u3070 -1)\ntemplate\
     \ <class T = ll, class V, class Value, class Comp = DEFAULT_COMP, class Proj =\
@@ -944,8 +944,8 @@ data:
   isVerificationFile: true
   path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
   requiredBy: []
-  timestamp: '2025-03-20 22:04:05+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2025-03-20 22:17:20+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yosupo/unionfind_potential_non_commutative.test.cpp
 layout: document

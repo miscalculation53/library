@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/coordinate_compression.hpp
     title: "\u5EA7\u6A19\u5727\u7E2E"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/csr.hpp
     title: CSR
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/group_index.hpp
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
   - icon: ':question:'
@@ -44,9 +44,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/static_range_frequency
@@ -257,26 +257,26 @@ data:
     \u306E\u500B\u6570)\ntemplate <class T = ll, class V, class Value, class Comp\
     \ = less<>, class Proj = identity>\ninline T LB(const V &v, const Value &val,\
     \ Comp comp = {}, Proj proj = {})\n{\n  return internal::bound_helper(v, [&](int\
-    \ i) -> bool\n                                { return comp(proj(v[i]), val);\
-    \ });\n}\n// val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\
-    \u306E\u5024\u306E\u500B\u6570)\ntemplate <class T = ll, class V, class Value,\
-    \ class Comp = less<>, class Proj = identity>\ninline T UB(const V &v, const Value\
-    \ &val, Comp comp = {}, Proj proj = {})\n{\n  return internal::bound_helper(v,\
-    \ [&](int i) -> bool\n                                { return !comp(val, proj(v[i]));\
-    \ });\n}\n#define DEFAULT_COMP less<>\n#else\n// val <= v[i] \u3068\u306A\u308B\
-    \u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\ntemplate\
-    \ <class T = ll, class V, class Value, class Comp = ranges::less, class Proj =\
-    \ identity>\ninline T LB(const V &v, const Value &val, Comp comp = {}, Proj proj\
-    \ = {})\n{ return ranges::lower_bound(v, val, comp, proj) - v.begin(); }\n// val\
-    \ < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\u5024\u306E\
-    \u500B\u6570)\ntemplate <class T = ll, class V, class Value, class Comp = ranges::less,\
-    \ class Proj = identity>\ninline T UB(const V &v, const Value &val, Comp comp\
-    \ = {}, Proj proj = {})\n{ return ranges::upper_bound(v, val, comp, proj) - v.begin();\
-    \ }\n#define DEFAULT_COMP ranges::less\n#endif\n\n// --- vector \u7B49\u306E lt,\
-    \ leq, gt, geq ---\n\n// v[i] < val \u3068\u306A\u308B\u6700\u5927\u306E i (\u306A\
-    \u3051\u308C\u3070 -1)\ntemplate <class T = ll, class V, class Value, class Comp\
-    \ = DEFAULT_COMP, class Proj = identity>\ninline auto lt_max(const V &v, const\
-    \ Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ i) -> bool\n                                { return comp(proj(*(v.begin() +\
+    \ i)), val); });\n}\n// val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val\
+    \ \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570)\ntemplate <class T = ll, class V,\
+    \ class Value, class Comp = less<>, class Proj = identity>\ninline T UB(const\
+    \ V &v, const Value &val, Comp comp = {}, Proj proj = {})\n{\n  return internal::bound_helper(v,\
+    \ [&](int i) -> bool\n                                { return !comp(val, proj(*(v.begin()\
+    \ + i))); });\n}\n#define DEFAULT_COMP less<>\n#else\n// val <= v[i] \u3068\u306A\
+    \u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\n\
+    template <class T = ll, class V, class Value, class Comp = ranges::less, class\
+    \ Proj = identity>\ninline T LB(const V &v, const Value &val, Comp comp = {},\
+    \ Proj proj = {})\n{ return ranges::lower_bound(v, val, comp, proj) - v.begin();\
+    \ }\n// val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\
+    \u5024\u306E\u500B\u6570)\ntemplate <class T = ll, class V, class Value, class\
+    \ Comp = ranges::less, class Proj = identity>\ninline T UB(const V &v, const Value\
+    \ &val, Comp comp = {}, Proj proj = {})\n{ return ranges::upper_bound(v, val,\
+    \ comp, proj) - v.begin(); }\n#define DEFAULT_COMP ranges::less\n#endif\n\n//\
+    \ --- vector \u7B49\u306E lt, leq, gt, geq ---\n\n// v[i] < val \u3068\u306A\u308B\
+    \u6700\u5927\u306E i (\u306A\u3051\u308C\u3070 -1)\ntemplate <class T = ll, class\
+    \ V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto\
+    \ lt_max(const V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
     \ V::iterator>, T>\n{ return LB<T>(v, val, comp, proj) - 1; }\n// v[i] <= val\
     \ \u3068\u306A\u308B\u6700\u5927\u306E i (\u306A\u3051\u308C\u3070 -1)\ntemplate\
     \ <class T = ll, class V, class Value, class Comp = DEFAULT_COMP, class Proj =\
@@ -715,8 +715,8 @@ data:
   isVerificationFile: true
   path: verify/yosupo/static_range_frequency.test.cpp
   requiredBy: []
-  timestamp: '2025-03-20 22:04:05+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2025-03-20 22:17:20+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/static_range_frequency.test.cpp
 layout: document

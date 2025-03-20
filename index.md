@@ -8,13 +8,13 @@ data:
       title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
   - name: ds
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: ds/coordinate_compression.hpp
       title: "\u5EA7\u6A19\u5727\u7E2E"
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: ds/csr.hpp
       title: CSR
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: ds/group_index.hpp
       title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
   - name: ds/uf
@@ -22,7 +22,7 @@ data:
     - icon: ':question:'
       path: ds/uf/uf.hpp
       title: UnionFind
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: ds/uf/uf_potential.hpp
       title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
   - name: graph
@@ -47,7 +47,7 @@ data:
       path: math/algebra/algebra_basic_ops.hpp
       title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
         \ max\uFF09"
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: math/algebra/matmul22.hpp
       title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\u306E\
         \u7A4D\uFF09"
@@ -287,7 +287,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/quotients.test.cpp
       title: verify/yosupo/quotients.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/static_range_frequency.test.cpp
       title: verify/yosupo/static_range_frequency.test.cpp
     - icon: ':heavy_check_mark:'
@@ -299,7 +299,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/unionfind_potential.test.cpp
       title: verify/yosupo/unionfind_potential.test.cpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':x:'
       path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
       title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     - icon: ':x:'
