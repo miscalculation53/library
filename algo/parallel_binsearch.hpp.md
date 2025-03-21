@@ -1,9 +1,6 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: ds/coordinate_compression.hpp
-    title: "\u5EA7\u6A19\u5727\u7E2E"
   - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
@@ -38,18 +35,17 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/associative_array_flat_map.test.cpp
-    title: verify/yosupo/associative_array_flat_map.test.cpp
-  _isVerificationFailed: false
+  - icon: ':x:'
+    path: verify/yukicoder/parallel_binsearch.test.cpp
+    title: verify/yukicoder/parallel_binsearch.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
-    _deprecated_at_docs: docs/ds/flat_map.md
-    document_title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\
-      \u5834\u5408\u306E map"
+    _deprecated_at_docs: docs/algo/parallel_binsearch.md
+    document_title: "\u4E26\u5217\u4E8C\u5206\u63A2\u7D22"
     links: []
-  bundledCode: "#line 2 \"ds/flat_map.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+  bundledCode: "#line 2 \"algo/parallel_binsearch.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -576,61 +572,42 @@ data:
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 4 \"ds/flat_map.hpp\"\n\n#line 2 \"ds/coordinate_compression.hpp\"\
-    \n\n#line 4 \"ds/coordinate_compression.hpp\"\n\n/**\n * @brief \u5EA7\u6A19\u5727\
-    \u7E2E\n * @docs docs/ds/coordinate_compression.md\n */\n\ntemplate <class T>\n\
-    struct CoordinateCompression\n{\n  vc<T> vals;\n  CoordinateCompression() {}\n\
-    \  CoordinateCompression(const vc<T> &vec) : vals(sortuniqued(vec)) {}\n\n  //\
-    \ \u6DFB\u5B57 i \u306B\u5BFE\u5FDC\u3059\u308B\u5024\n  T get_val(const int i)\
-    \ const\n  {\n    assert(0 <= i && i < SZ(vals));\n    return vals[i];\n  }\n\
-    \  // \u5024 val \u306B\u5BFE\u5FDC\u3059\u308B\u6DFB\u5B57 (\u306A\u3051\u308C\
-    \u3070 -1)\n  template <class I = ll>\n  I get_id(const T &val) const\n  {\n \
-    \   auto it = lower_bound(ALL(vals), val);\n    if (it == vals.end() || *it !=\
-    \ val)\n      return -1;\n    return it - vals.begin();\n  }\n\n  template <class\
-    \ I = ll>\n  I size() const { return vals.size(); }\n};\n\n// \u5EA7\u6A19\u5727\
-    \u7E2E\u3057\u305F\u5F8C\u306E\u914D\u5217\u3092\u8FD4\u3059\ntemplate <class\
-    \ T, class I = ll>\nvc<I> compressed(const vc<T> &vec)\n{\n  CoordinateCompression\
-    \ cc(vec);\n  vc<I> res(vec.size());\n  repi(i, vec.size()) res[i] = cc.get_id(vec[i]);\n\
-    \  return res;\n}\n// \u540C\u3058\u5024\u306B\u306F\u540C\u3058 id \u3092\u632F\
-    \u308B\u304C\u3001id \u306F\u914D\u5217\u5185\u3067\u5148\u306B\u73FE\u308C\u308B\
-    \u3082\u306E\u304B\u3089\u5148\u306B\u632F\u308B\ntemplate <class T, class I =\
-    \ ll>\nvc<I> compressed_unordered(const vc<T> &vec)\n{\n  auto cv = compressed(vec);\n\
-    \  vc<int> id(vec.size(), -1);\n  vc<I> res(vec.size());\n  int j = 0;\n  repi(i,\
-    \ vec.size())\n  {\n    int &tmp = id[cv[i]];\n    if (tmp == -1)\n      tmp =\
-    \ j++;\n    res[i] = tmp;\n  }\n  return res;\n}\n#line 6 \"ds/flat_map.hpp\"\n\
-    \n/**\n * @brief \u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\
-    \u5834\u5408\u306E map\n * @docs docs/ds/flat_map.md\n */\n\ntemplate <class Key,\
-    \ class Value>\nstruct FlatMap\n{\n  CoordinateCompression<Key> cc;\n  vc<Value>\
-    \ vals;\n\n  FlatMap() {}\n  FlatMap(const vc<Key> &keys) : cc(keys), vals(cc.size())\
-    \ {}\n  Value &operator[](const Key &key)\n  {\n    const int i = cc.get_id(key);\n\
-    \    assert(i != -1);\n    return vals[i];\n  }\n  Value &at(const Key &key) {\
-    \ return operator[](key); }\n  bool contains(const Key &key) { return cc.get_id(key)\
-    \ != -1; }\n\n  template <class I = ll>\n  inline I size() const { return cc.size();\
-    \ }\n  inline bool empty() const { return size() == 0; }\n  struct Iterator\n\
-    \  {\n  private:\n    int i;\n    const FlatMap &mp;\n  public:\n    Iterator(int\
-    \ i, const FlatMap &mp) : i(i), mp(mp) {}\n    pair<Key, Value> operator*() const\n\
-    \    {\n      assert(i != mp.cc.size());\n      return pair{mp.cc.vals[i], mp.vals[i]};\n\
-    \    }\n    Iterator &operator++()\n    {\n      i++;\n      return *this;\n \
-    \   }\n    bool operator!=(const Iterator &other) const { return i != other.i;\
-    \ }\n  };\n  Iterator begin() const { return Iterator(0, *this); }\n  Iterator\
-    \ end() const { return Iterator(cc.size(), *this); }\n};\n"
-  code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n#include \"\
-    coordinate_compression.hpp\"\n\n/**\n * @brief \u30AD\u30FC\u304C\u3059\u3079\u3066\
-    \u5148\u306B\u308F\u304B\u308B\u5834\u5408\u306E map\n * @docs docs/ds/flat_map.md\n\
-    \ */\n\ntemplate <class Key, class Value>\nstruct FlatMap\n{\n  CoordinateCompression<Key>\
-    \ cc;\n  vc<Value> vals;\n\n  FlatMap() {}\n  FlatMap(const vc<Key> &keys) : cc(keys),\
-    \ vals(cc.size()) {}\n  Value &operator[](const Key &key)\n  {\n    const int\
-    \ i = cc.get_id(key);\n    assert(i != -1);\n    return vals[i];\n  }\n  Value\
-    \ &at(const Key &key) { return operator[](key); }\n  bool contains(const Key &key)\
-    \ { return cc.get_id(key) != -1; }\n\n  template <class I = ll>\n  inline I size()\
-    \ const { return cc.size(); }\n  inline bool empty() const { return size() ==\
-    \ 0; }\n  struct Iterator\n  {\n  private:\n    int i;\n    const FlatMap &mp;\n\
-    \  public:\n    Iterator(int i, const FlatMap &mp) : i(i), mp(mp) {}\n    pair<Key,\
-    \ Value> operator*() const\n    {\n      assert(i != mp.cc.size());\n      return\
-    \ pair{mp.cc.vals[i], mp.vals[i]};\n    }\n    Iterator &operator++()\n    {\n\
-    \      i++;\n      return *this;\n    }\n    bool operator!=(const Iterator &other)\
-    \ const { return i != other.i; }\n  };\n  Iterator begin() const { return Iterator(0,\
-    \ *this); }\n  Iterator end() const { return Iterator(cc.size(), *this); }\n};"
+    \ vt;\n}\n// ----------\n#line 4 \"algo/parallel_binsearch.hpp\"\n\n/**\n * @brief\
+    \ \u4E26\u5217\u4E8C\u5206\u63A2\u7D22\n * @docs docs/algo/parallel_binsearch.md\n\
+    \ */\n\n// vc<bool> judge(vc<ll>): q \u500B\u306E\u8CEA\u554F\u306B\u307E\u3068\
+    \u3081\u3066\u7B54\u3048\u308B\n// (oks, ngs)\ntemplate <class T = ll, class Judge,\
+    \ class InitOk, class InitNg>\npair<vc<T>, vc<T>> parallel_binsearch(int q, const\
+    \ Judge &judge, const InitOk &init_ok, const InitNg &init_ng)\n{\n  vc<T> oks(q,\
+    \ init_ok), ngs(q, init_ng);\n  while (true)\n  {\n    vc<T> mids(q);\n    bool\
+    \ end = true;\n    repi(i, q)\n    {\n      if (oks[i] - ngs[i] != 1 && ngs[i]\
+    \ - oks[i] != 1)\n        end = false;\n      mids[i] = (oks[i] & ngs[i]) + ((oks[i]\
+    \ ^ ngs[i]) >> 1);\n    }\n    if (end)\n      break;\n    auto res = judge(mids);\n\
+    \    repi(i, q) (res[i] ? oks[i] : ngs[i]) = mids[i];\n  }\n  return {oks, ngs};\n\
+    }\n// vc<bool> judge(vc<ld>): q \u500B\u306E\u8CEA\u554F\u306B\u307E\u3068\u3081\
+    \u3066\u7B54\u3048\u308B\ntemplate <class T = ld, class Judge, class InitOk, class\
+    \ InitNg>\nvc<T> parallel_binsearch_real(int q, const Judge &judge, const InitOk\
+    \ &init_ok, const InitNg &init_ng, int iteration_count = 100)\n{\n  vc<T> oks(q,\
+    \ init_ok), ngs(q, init_ng);\n  repi(_, iteration_count)\n  {\n    vc<T> mids(q);\n\
+    \    repi(i, q) mids[i] = (oks[i] + ngs[i]) / 2;\n    auto res = judge(mids);\n\
+    \    repi(i, q) (res[i] ? oks[i] : ngs[i]) = mids[i];\n  }\n  return oks;\n}\n"
+  code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n/**\n * @brief\
+    \ \u4E26\u5217\u4E8C\u5206\u63A2\u7D22\n * @docs docs/algo/parallel_binsearch.md\n\
+    \ */\n\n// vc<bool> judge(vc<ll>): q \u500B\u306E\u8CEA\u554F\u306B\u307E\u3068\
+    \u3081\u3066\u7B54\u3048\u308B\n// (oks, ngs)\ntemplate <class T = ll, class Judge,\
+    \ class InitOk, class InitNg>\npair<vc<T>, vc<T>> parallel_binsearch(int q, const\
+    \ Judge &judge, const InitOk &init_ok, const InitNg &init_ng)\n{\n  vc<T> oks(q,\
+    \ init_ok), ngs(q, init_ng);\n  while (true)\n  {\n    vc<T> mids(q);\n    bool\
+    \ end = true;\n    repi(i, q)\n    {\n      if (oks[i] - ngs[i] != 1 && ngs[i]\
+    \ - oks[i] != 1)\n        end = false;\n      mids[i] = (oks[i] & ngs[i]) + ((oks[i]\
+    \ ^ ngs[i]) >> 1);\n    }\n    if (end)\n      break;\n    auto res = judge(mids);\n\
+    \    repi(i, q) (res[i] ? oks[i] : ngs[i]) = mids[i];\n  }\n  return {oks, ngs};\n\
+    }\n// vc<bool> judge(vc<ld>): q \u500B\u306E\u8CEA\u554F\u306B\u307E\u3068\u3081\
+    \u3066\u7B54\u3048\u308B\ntemplate <class T = ld, class Judge, class InitOk, class\
+    \ InitNg>\nvc<T> parallel_binsearch_real(int q, const Judge &judge, const InitOk\
+    \ &init_ok, const InitNg &init_ng, int iteration_count = 100)\n{\n  vc<T> oks(q,\
+    \ init_ok), ngs(q, init_ng);\n  repi(_, iteration_count)\n  {\n    vc<T> mids(q);\n\
+    \    repi(i, q) mids[i] = (oks[i] + ngs[i]) / 2;\n    auto res = judge(mids);\n\
+    \    repi(i, q) (res[i] ? oks[i] : ngs[i]) = mids[i];\n  }\n  return oks;\n}"
   dependsOn:
   - template/template_all.hpp
   - template/template_types.hpp
@@ -642,38 +619,45 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
-  - ds/coordinate_compression.hpp
   isVerificationFile: false
-  path: ds/flat_map.hpp
+  path: algo/parallel_binsearch.hpp
   requiredBy: []
   timestamp: '2025-03-21 12:52:10+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
-  - verify/yosupo/associative_array_flat_map.test.cpp
-documentation_of: ds/flat_map.hpp
+  - verify/yukicoder/parallel_binsearch.test.cpp
+documentation_of: algo/parallel_binsearch.hpp
 layout: document
 redirect_from:
-- /library/ds/flat_map.hpp
-- /library/ds/flat_map.hpp.html
-title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\u5408\
-  \u306E map"
+- /library/algo/parallel_binsearch.hpp
+- /library/algo/parallel_binsearch.hpp.html
+title: "\u4E26\u5217\u4E8C\u5206\u63A2\u7D22"
 ---
-## キーがすべて先にわかる場合の map
+## 並列二分探索
 
-座圧と同じ仕組み、map と似たインターフェース
-
-おそらく C++ に追加予定の `flat_map` と似た思想？
-
-### コンストラクタ
+#### parallel_binsearch
 
 ```cpp
-FlatMap<Key, Value>(vc<Key> keys)
+pair<vc<T>, vc<T>> parallel_binsearch(int q, auto judge, T init_ok, T init_ng)
 ```
 
-存在するキーすべてを格納したもの（順番や重複の有無は問わない）を渡して初期化する。
+$q$ 個の関数 $\mathrm{judge}_i\colon$ `T` $\to$ `bool` があり、いずれも $\mathrm{judge}_i(\textrm{init\_ok}) = \mathrm{true}$, $\mathrm{judge}_i(\textrm{init\_ng}) = \mathrm{false}$ を満たしているとする。このとき各 $i$ について $\mathrm{judge}_i(\mathrm{ok}_i) = \mathrm{true}$, $\mathrm{judge}_i(\mathrm{ng}_i) = \mathrm{false}$, $\lvert \mathrm{ok}_i - \mathrm{ng}_i \rvert = 1$ を満たす $\mathrm{ok}_i, \mathrm{ng}_i$ を求めたい。
 
-### メンバ関数
+これは、$q$ 個の $\mathrm{judge}_i(x_i)$ たちをまとめて求めることが高速にできればよい。（$1$ 個ずつ求めることが可能な場合はそもそも普通の二分探索でよいので、このパートの解法は自然と クエリ先読み + イベントソート のようになる。）
 
-`[]`, `at`, `contains`, `size`, `empty` が使える。
+引数に渡す `judge` は、$x_i$ たちを受け取り、 $\mathrm{judge}_i(x_i)$ たちをまとめて求めて返す関数。
 
-また簡単なイテレータを実装しているので範囲 for が回せる。
+返り値は、first が $\mathrm{ok}_i$ を並べたもの、second が $\mathrm{ng}_i$ を並べたもの。
+
+使う際の注意：**`judge` の中で長い vector を宣言しない（外で宣言する）**。典型定数倍高速化テクではあるのだが、思ったより変わるので注意。
+
+##### 計算量
+
+`judge` の計算量が $O(q + T)$ であるとき
+
+- $O((q + T)\log \lvert \textrm{init\_ok} - \textrm{init\_ng} \rvert)$
+
+
+#### parallel_binsearch_real
+
+実数にしただけ（説明は省略）
