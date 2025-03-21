@@ -1,67 +1,77 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
+    path: ds/offline_dynamic_connectivity.hpp
+    title: "\u30AA\u30D5\u30E9\u30A4\u30F3\u30C0\u30A4\u30B3\u30CD\u306E\u30C6\u30AF\
+      \u30CB\u30C3\u30AF"
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf_partially_persistent.hpp
     title: "\u90E8\u5206\u6C38\u7D9A UnionFind"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
+  - icon: ':heavy_check_mark:'
+    path: ds/uf/uf_undo.hpp
+    title: "undo \u53EF\u80FD UnionFind"
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/offline_dynamic_connectivity.test.cpp
+    title: verify/yosupo/offline_dynamic_connectivity.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind.test.cpp
     title: verify/yosupo/unionfind.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential.test.cpp
     title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/parallel_binsearch.test.cpp
     title: verify/yukicoder/parallel_binsearch.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/uf_min_max_leader.test.cpp
     title: verify/yukicoder/uf_min_max_leader.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/uf_partially_persistent.test.cpp
     title: verify/yukicoder/uf_partially_persistent.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/uf/uf.md
     document_title: UnionFind
@@ -609,8 +619,8 @@ data:
     \ UFData::VData &get_vdata(int x) { return vdat[leader(x)]; }\n  bool same(int\
     \ x, int y) { return leader(x) == leader(y); }\n  // \u8FD4\u308A\u5024: \u30DE\
     \u30FC\u30B8\u3057\u305F\u5F8C\u306E\u65B0\u305F\u306A\u4EE3\u8868\u5143\n  template\
-    \ <class I = ll>\n  I merge(int x, int y, typename UFData::EWeight w = 1)\n  {\n\
-    \    x = leader(x), y = leader(y);\n    if (x == y)\n    {\n      UFData::add_edge_same(*this,\
+    \ <class I = ll>\n  I merge(int x, int y, const typename UFData::EWeight &w =\
+    \ 1)\n  {\n    x = leader(x), y = leader(y);\n    if (x == y)\n    {\n      UFData::add_edge_same(*this,\
     \ x, w);\n      return x;\n    }\n    if (-par[x] < -par[y])\n      swap(x, y);\n\
     \    par[x] += par[y], par[y] = x;\n    UFData::add_edge_diff(*this, x, y, w);\n\
     \    return x;\n  }\n\n  // \u5404\u9802\u70B9\u304C\u5C5E\u3059\u308B\u9023\u7D50\
@@ -658,9 +668,9 @@ data:
     \ }\n  typename UFData::VData &get_vdata(int x) { return vdat[leader(x)]; }\n\
     \  bool same(int x, int y) { return leader(x) == leader(y); }\n  // \u8FD4\u308A\
     \u5024: \u30DE\u30FC\u30B8\u3057\u305F\u5F8C\u306E\u65B0\u305F\u306A\u4EE3\u8868\
-    \u5143\n  template <class I = ll>\n  I merge(int x, int y, typename UFData::EWeight\
-    \ w = 1)\n  {\n    x = leader(x), y = leader(y);\n    if (x == y)\n    {\n   \
-    \   UFData::add_edge_same(*this, x, w);\n      return x;\n    }\n    if (-par[x]\
+    \u5143\n  template <class I = ll>\n  I merge(int x, int y, const typename UFData::EWeight\
+    \ &w = 1)\n  {\n    x = leader(x), y = leader(y);\n    if (x == y)\n    {\n  \
+    \    UFData::add_edge_same(*this, x, w);\n      return x;\n    }\n    if (-par[x]\
     \ < -par[y])\n      swap(x, y);\n    par[x] += par[y], par[y] = x;\n    UFData::add_edge_diff(*this,\
     \ x, y, w);\n    return x;\n  }\n\n  // \u5404\u9802\u70B9\u304C\u5C5E\u3059\u308B\
     \u9023\u7D50\u6210\u5206\u306E\u756A\u53F7 (\u9806\u756A\u306F\u672A\u5B9A\u7FA9\
@@ -705,14 +715,17 @@ data:
   isVerificationFile: false
   path: ds/uf/uf.hpp
   requiredBy:
+  - ds/offline_dynamic_connectivity.hpp
   - ds/uf/uf_partially_persistent.hpp
   - ds/uf/uf_potential.hpp
-  timestamp: '2025-03-21 12:52:10+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  - ds/uf/uf_undo.hpp
+  timestamp: '2025-03-21 17:56:29+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/parallel_binsearch.test.cpp
   - verify/yukicoder/uf_partially_persistent.test.cpp
   - verify/yukicoder/uf_min_max_leader.test.cpp
+  - verify/yosupo/offline_dynamic_connectivity.test.cpp
   - verify/yosupo/unionfind.test.cpp
   - verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - verify/yosupo/unionfind_potential.test.cpp

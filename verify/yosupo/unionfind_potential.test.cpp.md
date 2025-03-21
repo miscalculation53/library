@@ -1,64 +1,64 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf.hpp
     title: UnionFind
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/binomial.hpp
     title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -744,8 +744,8 @@ data:
     \ UFData::VData &get_vdata(int x) { return vdat[leader(x)]; }\n  bool same(int\
     \ x, int y) { return leader(x) == leader(y); }\n  // \u8FD4\u308A\u5024: \u30DE\
     \u30FC\u30B8\u3057\u305F\u5F8C\u306E\u65B0\u305F\u306A\u4EE3\u8868\u5143\n  template\
-    \ <class I = ll>\n  I merge(int x, int y, typename UFData::EWeight w = 1)\n  {\n\
-    \    x = leader(x), y = leader(y);\n    if (x == y)\n    {\n      UFData::add_edge_same(*this,\
+    \ <class I = ll>\n  I merge(int x, int y, const typename UFData::EWeight &w =\
+    \ 1)\n  {\n    x = leader(x), y = leader(y);\n    if (x == y)\n    {\n      UFData::add_edge_same(*this,\
     \ x, w);\n      return x;\n    }\n    if (-par[x] < -par[y])\n      swap(x, y);\n\
     \    par[x] += par[y], par[y] = x;\n    UFData::add_edge_diff(*this, x, y, w);\n\
     \    return x;\n  }\n\n  // \u5404\u9802\u70B9\u304C\u5C5E\u3059\u308B\u9023\u7D50\
@@ -833,28 +833,28 @@ data:
     \ G::S>, true>\n{\n  using UFData = UFDataEmpty<typename G::S>;\n  using UF =\
     \ UnionFind<UFData, true>;\n\nprotected:\n  using UF::par;\n  vc<typename G::S>\
     \ weight_;\n  vc<bool> valid_;\n  typename G::S weight(int x)\n  {\n    leader(x);\n\
-    \    return weight_[x];\n  }\n\npublic:\n  UnionFindPotential(int n)\n  : UF(n),\
-    \ weight_(n, G::e()), valid_(n, true) {}\n  using UF::same;\n\n  int leader(int\
-    \ x) override\n  {\n    assert(0 <= x && x < SZ<int>(par));\n    if (par[x] <\
-    \ 0)\n      return x;\n    int lx = leader(par[x]);\n    weight_[x] = G::op(weight_[par[x]],\
-    \ weight_[x]);\n    return par[x] = lx;\n  }\n  // \u3069\u306E\u60C5\u5831\u3082\
-    \u7121\u8996\u3057\u306A\u304B\u3063\u305F\u3068\u3057\u3066\u3001x \u3092\u542B\
-    \u3080\u9023\u7D50\u6210\u5206\u306E\u60C5\u5831\u304C valid \u304B\u3069\u3046\
-    \u304B\n  bool valid(int x) { return valid_[leader(x)]; }\n  // same(x, y) \u306E\
-    \u3068\u304D\u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\u307E\u308B\n  // \u305F\u3060\
-    \u3057\u3001invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3059\u308B\u3082\u306E\
-    \u3068\u3059\u308B\n  typename G::S diff(int x, int y)\n  {\n    assert(same(x,\
-    \ y));\n    return G::op(G::inv(weight_[x]), weight_[y]);\n  }\n  // a[x]^{-1}\
-    \ a[y] == w \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\u3092\u8FFD\u52A0\
-    \u3059\u308B\n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\u5831\u306F\u7121\
-    \u8996\u3057\u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\u5831\u304C valid\
-    \ \u304B\u3069\u3046\u304B\n  bool merge(int x, int y, typename UFData::EWeight\
-    \ w)\n  {\n    int lx = leader(x), ly = leader(y);\n    if (lx == ly)\n    {\n\
-    \      bool ok = G::op(G::inv(weight_[x]), weight_[y]) == w;\n      if (!ok)\n\
-    \        valid_[lx] = false;\n      return ok;\n    }\n    w = G::op(G::op(weight_[x],\
-    \ w), G::inv(weight_[y]));\n    if (-par[lx] < -par[ly])\n      swap(lx, ly),\
-    \ w = G::inv(w);\n    par[lx] += par[ly], par[ly] = lx;\n    weight_[ly] = w;\n\
-    \    return true;\n  }\n};\n#line 25 \"verify/yosupo/unionfind_potential.test.cpp\"\
+    \    return weight_[x];\n  }\n\npublic:\n  UnionFindPotential() {}\n  UnionFindPotential(int\
+    \ n)\n  : UF(n), weight_(n, G::e()), valid_(n, true) {}\n  using UF::same;\n\n\
+    \  int leader(int x) override\n  {\n    assert(0 <= x && x < SZ<int>(par));\n\
+    \    if (par[x] < 0)\n      return x;\n    int lx = leader(par[x]);\n    weight_[x]\
+    \ = G::op(weight_[par[x]], weight_[x]);\n    return par[x] = lx;\n  }\n  // \u3069\
+    \u306E\u60C5\u5831\u3082\u7121\u8996\u3057\u306A\u304B\u3063\u305F\u3068\u3057\
+    \u3066\u3001x \u3092\u542B\u3080\u9023\u7D50\u6210\u5206\u306E\u60C5\u5831\u304C\
+    \ valid \u304B\u3069\u3046\u304B\n  bool valid(int x) { return valid_[leader(x)];\
+    \ }\n  // same(x, y) \u306E\u3068\u304D\u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\
+    \u307E\u308B\n  // \u305F\u3060\u3057\u3001invalid \u306A\u60C5\u5831\u306F\u7121\
+    \u8996\u3059\u308B\u3082\u306E\u3068\u3059\u308B\n  typename G::S diff(int x,\
+    \ int y)\n  {\n    assert(same(x, y));\n    return G::op(G::inv(weight_[x]), weight_[y]);\n\
+    \  }\n  // a[x]^{-1} a[y] == w \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\
+    \u3092\u8FFD\u52A0\u3059\u308B\n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\
+    \u5831\u306F\u7121\u8996\u3057\u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\
+    \u5831\u304C valid \u304B\u3069\u3046\u304B\n  bool merge(int x, int y, typename\
+    \ UFData::EWeight w)\n  {\n    int lx = leader(x), ly = leader(y);\n    if (lx\
+    \ == ly)\n    {\n      bool ok = G::op(G::inv(weight_[x]), weight_[y]) == w;\n\
+    \      if (!ok)\n        valid_[lx] = false;\n      return ok;\n    }\n    w =\
+    \ G::op(G::op(weight_[x], w), G::inv(weight_[y]));\n    if (-par[lx] < -par[ly])\n\
+    \      swap(lx, ly), w = G::inv(w);\n    par[lx] += par[ly], par[ly] = lx;\n \
+    \   weight_[ly] = w;\n    return true;\n  }\n};\n#line 25 \"verify/yosupo/unionfind_potential.test.cpp\"\
     \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFindPotential<GroupAddSub<mint>>\
     \ uf(N);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(u, v,\
     \ w);\n      PRINT(uf.merge(v, u, w));\n    }\n    else if (t == 1)\n    {\n \
@@ -939,7 +939,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/unionfind_potential.test.cpp
   requiredBy: []
-  timestamp: '2025-03-21 12:52:10+09:00'
+  timestamp: '2025-03-21 17:56:29+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/unionfind_potential.test.cpp

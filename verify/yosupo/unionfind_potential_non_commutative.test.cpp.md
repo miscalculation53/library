@@ -1,75 +1,75 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf.hpp
     title: UnionFind
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/matmul22.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\u306E\u7A4D\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/binomial.hpp
     title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/unionfind_with_potential_non_commutative_group
@@ -750,61 +750,62 @@ data:
     \ x) { return vdat[leader(x)]; }\n  bool same(int x, int y) { return leader(x)\
     \ == leader(y); }\n  // \u8FD4\u308A\u5024: \u30DE\u30FC\u30B8\u3057\u305F\u5F8C\
     \u306E\u65B0\u305F\u306A\u4EE3\u8868\u5143\n  template <class I = ll>\n  I merge(int\
-    \ x, int y, typename UFData::EWeight w = 1)\n  {\n    x = leader(x), y = leader(y);\n\
-    \    if (x == y)\n    {\n      UFData::add_edge_same(*this, x, w);\n      return\
-    \ x;\n    }\n    if (-par[x] < -par[y])\n      swap(x, y);\n    par[x] += par[y],\
-    \ par[y] = x;\n    UFData::add_edge_diff(*this, x, y, w);\n    return x;\n  }\n\
-    \n  // \u5404\u9802\u70B9\u304C\u5C5E\u3059\u308B\u9023\u7D50\u6210\u5206\u306E\
-    \u756A\u53F7 (\u9806\u756A\u306F\u672A\u5B9A\u7FA9)\n  // ACL \u306E groups \u304C\
-    \u6B32\u3057\u3044\u5834\u5408: \u3053\u308C\u306B group_index \u3092\u4F7F\u3046\
-    \n  template <class I = ll>\n  vc<I> group_ids()\n  {\n    const int n = par.size();\n\
-    \    vc<I> gid(n, -1);\n    for (int v = 0, i = 0; v < n; v++)\n    {\n      int\
-    \ l = leader(v);\n      if (gid[l] == -1)\n        gid[l] = i++;\n      gid[v]\
-    \ = gid[l];\n    }\n    return gid;\n  }\n};\n\ntemplate <class EWeight_ = ll>\n\
-    struct UFDataEmpty\n{\n  struct VData\n  {\n    VData() {}\n    VData(int) {}\n\
-    \  };\n  struct GData\n  {\n    GData() {}\n    GData(int) {}\n  };\n  using EWeight\
-    \ = EWeight_;\n  template <class UF>\n  static void add_edge_diff(UF &, int, int,\
-    \ EWeight) {}\n  template <class UF>\n  static void add_edge_same(UF &, int, EWeight)\
-    \ {}\n};\n\ntemplate <class EWeight_ = ll, bool need_vlist = false>\nstruct UFDataEverything\n\
-    {\n  struct VData\n  {\n    VData() {}\n\n    ll vsum;\n    ll esum;\n    vc<ll>\
-    \ vlist;\n\n    // \u9802\u70B9 i \u306E\u521D\u671F\u5316\n    VData(int i)\n\
-    \    {\n      vsum = 1;\n      esum = 0;\n      if constexpr (need_vlist)\n  \
-    \      vlist = {i};\n    }\n  };\n  struct GData\n  {\n    GData() {}\n\n    ll\
-    \ cmp_cnt;\n    ll min_leader, max_leader;\n\n    // \u9802\u70B9\u6570 n \u306E\
-    \u30B0\u30E9\u30D5\u306E\u521D\u671F\u5316\n    GData(int n)\n    {\n      cmp_cnt\
-    \ = n;\n      min_leader = 0, max_leader = n - 1;\n    }\n  };\n  using EWeight\
-    \ = EWeight_;\n  template <class UF>\n  static void add_edge_diff(UF &uf, int\
-    \ x, int y, EWeight w)\n  {\n    VData &xd = uf.vdat[x], &yd = uf.vdat[y];\n \
-    \   GData &gd = uf.gdat;\n    xd.vsum += yd.vsum;\n    xd.esum += w;\n    if constexpr\
-    \ (need_vlist)\n    {\n      xd.vlist.insert(xd.vlist.end(), ALL(yd.vlist));\n\
-    \      yd.vlist.clear();\n    }\n    gd.cmp_cnt--;\n    while (uf.leader(gd.min_leader)\
-    \ != gd.min_leader)\n      gd.min_leader++;\n    while (uf.leader(gd.max_leader)\
-    \ != gd.max_leader)\n      gd.max_leader--;\n  }\n  template <class UF>\n  static\
-    \ void add_edge_same(UF &uf, int x, EWeight w)\n  {\n    VData &xd = uf.vdat[x];\n\
-    \    xd.esum += w;\n  }\n};\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n\
-    #line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
-    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
-    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
-    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
-    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
-    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
-    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
-    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
-    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
-    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
-    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
-    \ constexpr auto inv = inv_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
-    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
-    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
-    \ = Group<typename R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing\
-    \ GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    \ x, int y, const typename UFData::EWeight &w = 1)\n  {\n    x = leader(x), y\
+    \ = leader(y);\n    if (x == y)\n    {\n      UFData::add_edge_same(*this, x,\
+    \ w);\n      return x;\n    }\n    if (-par[x] < -par[y])\n      swap(x, y);\n\
+    \    par[x] += par[y], par[y] = x;\n    UFData::add_edge_diff(*this, x, y, w);\n\
+    \    return x;\n  }\n\n  // \u5404\u9802\u70B9\u304C\u5C5E\u3059\u308B\u9023\u7D50\
+    \u6210\u5206\u306E\u756A\u53F7 (\u9806\u756A\u306F\u672A\u5B9A\u7FA9)\n  // ACL\
+    \ \u306E groups \u304C\u6B32\u3057\u3044\u5834\u5408: \u3053\u308C\u306B group_index\
+    \ \u3092\u4F7F\u3046\n  template <class I = ll>\n  vc<I> group_ids()\n  {\n  \
+    \  const int n = par.size();\n    vc<I> gid(n, -1);\n    for (int v = 0, i = 0;\
+    \ v < n; v++)\n    {\n      int l = leader(v);\n      if (gid[l] == -1)\n    \
+    \    gid[l] = i++;\n      gid[v] = gid[l];\n    }\n    return gid;\n  }\n};\n\n\
+    template <class EWeight_ = ll>\nstruct UFDataEmpty\n{\n  struct VData\n  {\n \
+    \   VData() {}\n    VData(int) {}\n  };\n  struct GData\n  {\n    GData() {}\n\
+    \    GData(int) {}\n  };\n  using EWeight = EWeight_;\n  template <class UF>\n\
+    \  static void add_edge_diff(UF &, int, int, EWeight) {}\n  template <class UF>\n\
+    \  static void add_edge_same(UF &, int, EWeight) {}\n};\n\ntemplate <class EWeight_\
+    \ = ll, bool need_vlist = false>\nstruct UFDataEverything\n{\n  struct VData\n\
+    \  {\n    VData() {}\n\n    ll vsum;\n    ll esum;\n    vc<ll> vlist;\n\n    //\
+    \ \u9802\u70B9 i \u306E\u521D\u671F\u5316\n    VData(int i)\n    {\n      vsum\
+    \ = 1;\n      esum = 0;\n      if constexpr (need_vlist)\n        vlist = {i};\n\
+    \    }\n  };\n  struct GData\n  {\n    GData() {}\n\n    ll cmp_cnt;\n    ll min_leader,\
+    \ max_leader;\n\n    // \u9802\u70B9\u6570 n \u306E\u30B0\u30E9\u30D5\u306E\u521D\
+    \u671F\u5316\n    GData(int n)\n    {\n      cmp_cnt = n;\n      min_leader =\
+    \ 0, max_leader = n - 1;\n    }\n  };\n  using EWeight = EWeight_;\n  template\
+    \ <class UF>\n  static void add_edge_diff(UF &uf, int x, int y, EWeight w)\n \
+    \ {\n    VData &xd = uf.vdat[x], &yd = uf.vdat[y];\n    GData &gd = uf.gdat;\n\
+    \    xd.vsum += yd.vsum;\n    xd.esum += w;\n    if constexpr (need_vlist)\n \
+    \   {\n      xd.vlist.insert(xd.vlist.end(), ALL(yd.vlist));\n      yd.vlist.clear();\n\
+    \    }\n    gd.cmp_cnt--;\n    while (uf.leader(gd.min_leader) != gd.min_leader)\n\
+    \      gd.min_leader++;\n    while (uf.leader(gd.max_leader) != gd.max_leader)\n\
+    \      gd.max_leader--;\n  }\n  template <class UF>\n  static void add_edge_same(UF\
+    \ &uf, int x, EWeight w)\n  {\n    VData &xd = uf.vdat[x];\n    xd.esum += w;\n\
+    \  }\n};\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n#line 2 \"math/algebra/algebra_base.hpp\"\
+    \n\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
+    \u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
+    \ */\n\ntemplate <class S_, auto op_, auto e_>\nstruct Monoid\n{\n  using S =\
+    \ S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n};\n\
+    \ntemplate <class S_, auto op_, auto e_, auto inv_>\nstruct Group\n{\n  using\
+    \ S = S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n\
+    \  static constexpr auto inv = inv_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto mul_, auto e1_>\nstruct SemiRing\n{\n  using S = S_;\n  static constexpr\
+    \ auto add = add_;\n  static constexpr auto e0 = e0_;\n  static constexpr auto\
+    \ mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto\
+    \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
+    \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto minus_, auto mul_, auto e1_, auto inv_>\nstruct Field\n{\n  using\
+    \ S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n  static constexpr auto inv = inv_;\n};\n\n\
+    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
+    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
+    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
+    \ R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul =\
+    \ Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
     \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
     \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
     template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
@@ -838,30 +839,30 @@ data:
     \ G::S>, true>\n{\n  using UFData = UFDataEmpty<typename G::S>;\n  using UF =\
     \ UnionFind<UFData, true>;\n\nprotected:\n  using UF::par;\n  vc<typename G::S>\
     \ weight_;\n  vc<bool> valid_;\n  typename G::S weight(int x)\n  {\n    leader(x);\n\
-    \    return weight_[x];\n  }\n\npublic:\n  UnionFindPotential(int n)\n  : UF(n),\
-    \ weight_(n, G::e()), valid_(n, true) {}\n  using UF::same;\n\n  int leader(int\
-    \ x) override\n  {\n    assert(0 <= x && x < SZ<int>(par));\n    if (par[x] <\
-    \ 0)\n      return x;\n    int lx = leader(par[x]);\n    weight_[x] = G::op(weight_[par[x]],\
-    \ weight_[x]);\n    return par[x] = lx;\n  }\n  // \u3069\u306E\u60C5\u5831\u3082\
-    \u7121\u8996\u3057\u306A\u304B\u3063\u305F\u3068\u3057\u3066\u3001x \u3092\u542B\
-    \u3080\u9023\u7D50\u6210\u5206\u306E\u60C5\u5831\u304C valid \u304B\u3069\u3046\
-    \u304B\n  bool valid(int x) { return valid_[leader(x)]; }\n  // same(x, y) \u306E\
-    \u3068\u304D\u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\u307E\u308B\n  // \u305F\u3060\
-    \u3057\u3001invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3059\u308B\u3082\u306E\
-    \u3068\u3059\u308B\n  typename G::S diff(int x, int y)\n  {\n    assert(same(x,\
-    \ y));\n    return G::op(G::inv(weight_[x]), weight_[y]);\n  }\n  // a[x]^{-1}\
-    \ a[y] == w \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\u3092\u8FFD\u52A0\
-    \u3059\u308B\n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\u5831\u306F\u7121\
-    \u8996\u3057\u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\u5831\u304C valid\
-    \ \u304B\u3069\u3046\u304B\n  bool merge(int x, int y, typename UFData::EWeight\
-    \ w)\n  {\n    int lx = leader(x), ly = leader(y);\n    if (lx == ly)\n    {\n\
-    \      bool ok = G::op(G::inv(weight_[x]), weight_[y]) == w;\n      if (!ok)\n\
-    \        valid_[lx] = false;\n      return ok;\n    }\n    w = G::op(G::op(weight_[x],\
-    \ w), G::inv(weight_[y]));\n    if (-par[lx] < -par[ly])\n      swap(lx, ly),\
-    \ w = G::inv(w);\n    par[lx] += par[ly], par[ly] = lx;\n    weight_[ly] = w;\n\
-    \    return true;\n  }\n};\n#line 2 \"math/algebra/matmul22.hpp\"\n\n#line 5 \"\
-    math/algebra/matmul22.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\
-    $2 \\times 2$ \u884C\u5217\u306E\u7A4D\uFF09\n * @docs docs/math/algebra/matmul22.md\n\
+    \    return weight_[x];\n  }\n\npublic:\n  UnionFindPotential() {}\n  UnionFindPotential(int\
+    \ n)\n  : UF(n), weight_(n, G::e()), valid_(n, true) {}\n  using UF::same;\n\n\
+    \  int leader(int x) override\n  {\n    assert(0 <= x && x < SZ<int>(par));\n\
+    \    if (par[x] < 0)\n      return x;\n    int lx = leader(par[x]);\n    weight_[x]\
+    \ = G::op(weight_[par[x]], weight_[x]);\n    return par[x] = lx;\n  }\n  // \u3069\
+    \u306E\u60C5\u5831\u3082\u7121\u8996\u3057\u306A\u304B\u3063\u305F\u3068\u3057\
+    \u3066\u3001x \u3092\u542B\u3080\u9023\u7D50\u6210\u5206\u306E\u60C5\u5831\u304C\
+    \ valid \u304B\u3069\u3046\u304B\n  bool valid(int x) { return valid_[leader(x)];\
+    \ }\n  // same(x, y) \u306E\u3068\u304D\u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\
+    \u307E\u308B\n  // \u305F\u3060\u3057\u3001invalid \u306A\u60C5\u5831\u306F\u7121\
+    \u8996\u3059\u308B\u3082\u306E\u3068\u3059\u308B\n  typename G::S diff(int x,\
+    \ int y)\n  {\n    assert(same(x, y));\n    return G::op(G::inv(weight_[x]), weight_[y]);\n\
+    \  }\n  // a[x]^{-1} a[y] == w \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\
+    \u3092\u8FFD\u52A0\u3059\u308B\n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\
+    \u5831\u306F\u7121\u8996\u3057\u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\
+    \u5831\u304C valid \u304B\u3069\u3046\u304B\n  bool merge(int x, int y, typename\
+    \ UFData::EWeight w)\n  {\n    int lx = leader(x), ly = leader(y);\n    if (lx\
+    \ == ly)\n    {\n      bool ok = G::op(G::inv(weight_[x]), weight_[y]) == w;\n\
+    \      if (!ok)\n        valid_[lx] = false;\n      return ok;\n    }\n    w =\
+    \ G::op(G::op(weight_[x], w), G::inv(weight_[y]));\n    if (-par[lx] < -par[ly])\n\
+    \      swap(lx, ly), w = G::inv(w);\n    par[lx] += par[ly], par[ly] = lx;\n \
+    \   weight_[ly] = w;\n    return true;\n  }\n};\n#line 2 \"math/algebra/matmul22.hpp\"\
+    \n\n#line 5 \"math/algebra/matmul22.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
+    \u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\u306E\u7A4D\uFF09\n * @docs docs/math/algebra/matmul22.md\n\
     \ */\n\ntemplate <class mint>\nstruct GroupMatMul22\n{\n  using S = array<mint,\
     \ 4>;\n  static constexpr S op(S l, S r)\n  {\n    auto [a, b, c, d] = l;\n  \
     \  auto [e, f, g, h] = r;\n    return {{a * e + b * g, a * f + b * h, c * e +\
@@ -955,8 +956,8 @@ data:
   isVerificationFile: true
   path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
   requiredBy: []
-  timestamp: '2025-03-21 12:52:10+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2025-03-21 17:56:29+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/unionfind_potential_non_commutative.test.cpp
 layout: document
