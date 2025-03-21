@@ -42,41 +42,8 @@ data:
     path: verify/yosupo/binomial.test.cpp
     title: verify/yosupo/binomial.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yosupo/gcd_convolution.test.cpp
-    title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_hadamard.test.cpp
-    title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/lcm_convolution.test.cpp
-    title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/offline_dynamic_connectivity.test.cpp
-    title: verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind.test.cpp
-    title: verify/yosupo/unionfind.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind_potential.test.cpp
-    title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-    title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/binomial.test.cpp
     title: verify/yukicoder/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/parallel_binsearch.test.cpp
-    title: verify/yukicoder/parallel_binsearch.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/uf_min_max_leader.test.cpp
-    title: verify/yukicoder/uf_min_max_leader.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/uf_partially_persistent.test.cpp
-    title: verify/yukicoder/uf_partially_persistent.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -675,18 +642,7 @@ data:
   timestamp: '2025-03-21 12:52:10+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/parallel_binsearch.test.cpp
-  - verify/yukicoder/uf_partially_persistent.test.cpp
-  - verify/yukicoder/uf_min_max_leader.test.cpp
   - verify/yukicoder/binomial.test.cpp
-  - verify/yosupo/kronecker_power_hadamard.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
-  - verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - verify/yosupo/unionfind.test.cpp
-  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yosupo/unionfind_potential.test.cpp
-  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/binomial.test.cpp
 documentation_of: math/modint/binomial.hpp
 layout: document

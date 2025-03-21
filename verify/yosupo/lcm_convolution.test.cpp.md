@@ -12,9 +12,6 @@ data:
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - icon: ':heavy_check_mark:'
-    path: math/modint/binomial.hpp
-    title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
   - icon: ':heavy_check_mark:'
@@ -709,31 +706,6 @@ data:
     \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
     using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
     #line 17 \"verify/yosupo/lcm_convolution.test.cpp\"\nusing mint = modint998244353;\n\
-    // using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
-    // using mint = modint;\n#line 2 \"math/modint/binomial.hpp\"\n\n#line 4 \"math/modint/binomial.hpp\"\
-    \n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\n * @docs docs/math/modint/binomial.md\n\
-    \ */\n\ntemplate <class T>\nstruct Binomial\n{\nprivate:\n  static decltype(T::mod())\
-    \ mod;\n  static vc<T> fac_, finv_, inv_;\n\npublic:\n  static void reserve(int\
-    \ n)\n  {\n    if (mod != T::mod())\n    {\n      mod = T::mod();\n      fac_\
-    \ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};\n    }\n    int i = fac_.size();\n\
-    \    chmin(n, T::mod() - 1);\n    if (n < i)\n      return;\n    fac_.resize(n\
-    \ + 1), finv_.resize(n + 1), inv_.resize(n + 1);\n    for (; i <= n; i++)\n  \
-    \  {\n      fac_[i] = fac_[i - 1] * T::raw(i);\n      inv_[i] = -inv_[T::mod()\
-    \ % i] * T::raw(T::mod() / i);\n      finv_[i] = finv_[i - 1] * inv_[i];\n   \
-    \ }\n  }\n  static T fac(int n)\n  {\n    assert(n >= 0);\n    if (n >= T::mod())\n\
-    \      return 0;\n    reserve(n);\n    return fac_[n];\n  }\n  static T finv(int\
-    \ n)\n  {\n    assert(n < T::mod());\n    if (n < 0)\n      return 0;\n    reserve(n);\n\
-    \    return finv_[n];\n  }\n  static T inv(T n)\n  {\n    assert(n != 0);\n  \
-    \  reserve(n.val());\n    return inv_[n.val()];\n  }\n\n  static T P(int n, int\
-    \ k)\n  {\n    if (n < k)\n      return 0;\n    if (n < 0 || k < 0)\n      return\
-    \ 0;\n    reserve(n);\n    return fac_[n] * finv_[n - k];\n  }\n  static T C(int\
-    \ n, int k)\n  {\n    if (n < k)\n      return 0;\n    if (n < 0 || k < 0)\n \
-    \     return 0;\n    reserve(n);\n    return fac_[n] * finv_[k] * finv_[n - k];\n\
-    \  }\n  static T H(int n, int k)\n  {\n    if (n == 0 && k == 0)\n      return\
-    \ 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate <class T> decltype(T::mod())\
-    \ Binomial<T>::mod{T::mod()};\ntemplate <class T> vc<T> Binomial<T>::fac_{1, 1};\n\
-    template <class T> vc<T> Binomial<T>::finv_{1, 1};\ntemplate <class T> vc<T> Binomial<T>::inv_{0,\
-    \ 1};\n#line 22 \"verify/yosupo/lcm_convolution.test.cpp\"\nusing bi = Binomial<mint>;\n\
     \n#line 2 \"math/prime/lcm_gcd_convolution.hpp\"\n\n#line 2 \"math/prime/zeta_mobius_divisor_multiple.hpp\"\
     \n\n#line 2 \"math/prime/linear_sieve.hpp\"\n\n#line 2 \"math/prime/prime_power.hpp\"\
     \n\n#line 4 \"math/prime/prime_power.hpp\"\n\n/**\n * @brief \u7D20\u3079\u304D\
@@ -884,7 +856,7 @@ data:
     \ R::S> &a, const vc<typename R::S> &b)\n{\n  assert(a.size() == b.size());\n\
     \  auto za = zeta_multiple<MonoidOfSemiRingAdd<R>>(a);\n  auto zb = zeta_multiple<MonoidOfSemiRingAdd<R>>(b);\n\
     \  repi(i, 1, SZ<int>(a)) za[i] = R::mul(za[i], zb[i]);\n  return mobius_multiple<GroupOfRingAdd<R>>(za);\n\
-    }\n#line 25 \"verify/yosupo/lcm_convolution.test.cpp\"\n\nvoid init() {}\n\nvoid\
+    }\n#line 20 \"verify/yosupo/lcm_convolution.test.cpp\"\n\nvoid init() {}\n\nvoid\
     \ main2()\n{\n  LL(N);\n  VEC(mint, N, A, B);\n  A.insert(A.begin(), 0);\n  B.insert(B.begin(),\
     \ 0);\n  auto C = lcm_convolution<RingAddSubMul<mint>>(A, B);\n  C.erase(C.begin());\n\
     \  PRINT(C);\n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase, 100000)\n\
@@ -913,9 +885,7 @@ data:
     \ SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define\
     \ FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
     #define EPS 1e-11\n\n#include \"template/template_all.hpp\"\n\n#include \"math/modint/modint.hpp\"\
-    \nusing mint = modint998244353;\n// using mint = modint1000000007;\n// using mint\
-    \ = static_modint<1000000000>;\n// using mint = modint;\n#include \"math/modint/binomial.hpp\"\
-    \nusing bi = Binomial<mint>;\n\n#include \"math/prime/lcm_gcd_convolution.hpp\"\
+    \nusing mint = modint998244353;\n\n#include \"math/prime/lcm_gcd_convolution.hpp\"\
     \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n  VEC(mint, N, A, B);\n  A.insert(A.begin(),\
     \ 0);\n  B.insert(B.begin(), 0);\n  auto C = lcm_convolution<RingAddSubMul<mint>>(A,\
     \ B);\n  C.erase(C.begin());\n  PRINT(C);\n}\n\nvoid test()\n{\n  /*\n  local(\n\
@@ -956,7 +926,6 @@ data:
   - math/modint/modint32_internal.hpp
   - math/modint/modint_base.hpp
   - math/extgcd.hpp
-  - math/modint/binomial.hpp
   - math/prime/lcm_gcd_convolution.hpp
   - math/prime/zeta_mobius_divisor_multiple.hpp
   - math/prime/linear_sieve.hpp
@@ -966,7 +935,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/lcm_convolution.test.cpp
   requiredBy: []
-  timestamp: '2025-03-21 12:52:10+09:00'
+  timestamp: '2025-03-21 18:20:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/lcm_convolution.test.cpp

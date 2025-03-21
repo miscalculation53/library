@@ -65,9 +65,6 @@ data:
     title: template/template.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/aoj/extgcd.test.cpp
-    title: verify/aoj/extgcd.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/aoj/modpow.test.cpp
     title: verify/aoj/modpow.test.cpp
   - icon: ':heavy_check_mark:'
@@ -104,9 +101,6 @@ data:
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yosupo/offline_dynamic_connectivity.test.cpp
-    title: verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
   - icon: ':heavy_check_mark:'
@@ -118,9 +112,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind.test.cpp
-    title: verify/yosupo/unionfind.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential.test.cpp
     title: verify/yosupo/unionfind_potential.test.cpp
@@ -146,17 +137,8 @@ data:
     path: verify/yukicoder/order_mod_euler_phi.test.cpp
     title: verify/yukicoder/order_mod_euler_phi.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/parallel_binsearch.test.cpp
-    title: verify/yukicoder/parallel_binsearch.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/static_modint.test.cpp
     title: verify/yukicoder/static_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/uf_min_max_leader.test.cpp
-    title: verify/yukicoder/uf_min_max_leader.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/uf_partially_persistent.test.cpp
-    title: verify/yukicoder/uf_partially_persistent.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -756,16 +738,12 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/aoj/modpow.test.cpp
-  - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/parallel_binsearch.test.cpp
   - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/uf_partially_persistent.test.cpp
   - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/divisors.test.cpp
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
   - verify/yukicoder/static_modint.test.cpp
-  - verify/yukicoder/uf_min_max_leader.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
   - verify/yukicoder/binomial.test.cpp
   - verify/yosupo/kronecker_power_hadamard.test.cpp
@@ -775,9 +753,7 @@ data:
   - verify/yosupo/gcd_convolution.test.cpp
   - verify/yosupo/primality_test.test.cpp
   - verify/yosupo/xor_convolution.test.cpp
-  - verify/yosupo/offline_dynamic_connectivity.test.cpp
   - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/unionfind.test.cpp
   - verify/yosupo/subset_convolution.test.cpp
   - verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp

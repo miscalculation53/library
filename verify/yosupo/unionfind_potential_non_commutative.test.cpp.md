@@ -22,9 +22,6 @@ data:
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - icon: ':heavy_check_mark:'
-    path: math/modint/binomial.hpp
-    title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
   - icon: ':heavy_check_mark:'
@@ -707,33 +704,8 @@ data:
     \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
     using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
     #line 17 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\nusing\
-    \ mint = modint998244353;\n// using mint = modint1000000007;\n// using mint =\
-    \ static_modint<1000000000>;\n// using mint = modint;\n#line 2 \"math/modint/binomial.hpp\"\
-    \n\n#line 4 \"math/modint/binomial.hpp\"\n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\
-    \n * @docs docs/math/modint/binomial.md\n */\n\ntemplate <class T>\nstruct Binomial\n\
-    {\nprivate:\n  static decltype(T::mod()) mod;\n  static vc<T> fac_, finv_, inv_;\n\
-    \npublic:\n  static void reserve(int n)\n  {\n    if (mod != T::mod())\n    {\n\
-    \      mod = T::mod();\n      fac_ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};\n\
-    \    }\n    int i = fac_.size();\n    chmin(n, T::mod() - 1);\n    if (n < i)\n\
-    \      return;\n    fac_.resize(n + 1), finv_.resize(n + 1), inv_.resize(n + 1);\n\
-    \    for (; i <= n; i++)\n    {\n      fac_[i] = fac_[i - 1] * T::raw(i);\n  \
-    \    inv_[i] = -inv_[T::mod() % i] * T::raw(T::mod() / i);\n      finv_[i] = finv_[i\
-    \ - 1] * inv_[i];\n    }\n  }\n  static T fac(int n)\n  {\n    assert(n >= 0);\n\
-    \    if (n >= T::mod())\n      return 0;\n    reserve(n);\n    return fac_[n];\n\
-    \  }\n  static T finv(int n)\n  {\n    assert(n < T::mod());\n    if (n < 0)\n\
-    \      return 0;\n    reserve(n);\n    return finv_[n];\n  }\n  static T inv(T\
-    \ n)\n  {\n    assert(n != 0);\n    reserve(n.val());\n    return inv_[n.val()];\n\
-    \  }\n\n  static T P(int n, int k)\n  {\n    if (n < k)\n      return 0;\n   \
-    \ if (n < 0 || k < 0)\n      return 0;\n    reserve(n);\n    return fac_[n] *\
-    \ finv_[n - k];\n  }\n  static T C(int n, int k)\n  {\n    if (n < k)\n      return\
-    \ 0;\n    if (n < 0 || k < 0)\n      return 0;\n    reserve(n);\n    return fac_[n]\
-    \ * finv_[k] * finv_[n - k];\n  }\n  static T H(int n, int k)\n  {\n    if (n\
-    \ == 0 && k == 0)\n      return 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate\
-    \ <class T> decltype(T::mod()) Binomial<T>::mod{T::mod()};\ntemplate <class T>\
-    \ vc<T> Binomial<T>::fac_{1, 1};\ntemplate <class T> vc<T> Binomial<T>::finv_{1,\
-    \ 1};\ntemplate <class T> vc<T> Binomial<T>::inv_{0, 1};\n#line 22 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\
-    \nusing bi = Binomial<mint>;\n\n#line 2 \"ds/uf/uf_potential.hpp\"\n\n#line 4\
-    \ \"ds/uf/uf_potential.hpp\"\n\n#line 2 \"ds/uf/uf.hpp\"\n\n#line 4 \"ds/uf/uf.hpp\"\
+    \ mint = modint998244353;\n\n#line 2 \"ds/uf/uf_potential.hpp\"\n\n#line 4 \"\
+    ds/uf/uf_potential.hpp\"\n\n#line 2 \"ds/uf/uf.hpp\"\n\n#line 4 \"ds/uf/uf.hpp\"\
     \n\n/**\n * @brief UnionFind\n * @docs docs/ds/uf/uf.md\n */\n\n// UFData \u306B\
     \u30C7\u30D5\u30A9\u30EB\u30C8\u3067\u7528\u610F\u3055\u308C\u3066\u3044\u308B\
     \u3082\u306E\n// - UFDataEmpty (\u4F55\u3082\u306A\u3057\u3001ACL \u76F8\u5F53\
@@ -869,7 +841,7 @@ data:
     \ d * g, c * f + d * h}};\n  }\n  static constexpr S e() { return {{1, 0, 0, 1}};\
     \ }\n  static constexpr S inv(S m)\n  {\n    auto [a, b, c, d] = m;\n    mint\
     \ detinv = (a * d - b * c).inv();\n    return {{d * detinv, -b * detinv, -c *\
-    \ detinv, a * detinv}};\n  }\n};\n#line 26 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\
+    \ detinv, a * detinv}};\n  }\n};\n#line 21 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\
     \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFindPotential<GroupMatMul22<mint>>\
     \ uf(N);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(u, v,\
     \ a, b, c, d);\n      PRINT(uf.merge(v, u, {{a, b, c, d}}));\n    }\n    else\
@@ -901,11 +873,9 @@ data:
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF\
     \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"template/template_all.hpp\"\
-    \n\n#include \"math/modint/modint.hpp\"\nusing mint = modint998244353;\n// using\
-    \ mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n// using\
-    \ mint = modint;\n#include \"math/modint/binomial.hpp\"\nusing bi = Binomial<mint>;\n\
-    \n#include \"ds/uf/uf_potential.hpp\"\n#include \"math/algebra/matmul22.hpp\"\n\
-    \nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFindPotential<GroupMatMul22<mint>>\
+    \n\n#include \"math/modint/modint.hpp\"\nusing mint = modint998244353;\n\n#include\
+    \ \"ds/uf/uf_potential.hpp\"\n#include \"math/algebra/matmul22.hpp\"\n\nvoid init()\
+    \ {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFindPotential<GroupMatMul22<mint>>\
     \ uf(N);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(u, v,\
     \ a, b, c, d);\n      PRINT(uf.merge(v, u, {{a, b, c, d}}));\n    }\n    else\
     \ if (t == 1)\n    {\n      LL(u, v);\n      if (uf.same(u, v))\n        PRINT(uf.diff(v,\
@@ -947,7 +917,6 @@ data:
   - math/modint/modint32_internal.hpp
   - math/modint/modint_base.hpp
   - math/extgcd.hpp
-  - math/modint/binomial.hpp
   - ds/uf/uf_potential.hpp
   - ds/uf/uf.hpp
   - math/algebra/algebra_basic_ops.hpp
@@ -956,7 +925,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
   requiredBy: []
-  timestamp: '2025-03-21 17:56:29+09:00'
+  timestamp: '2025-03-21 18:20:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/unionfind_potential_non_commutative.test.cpp

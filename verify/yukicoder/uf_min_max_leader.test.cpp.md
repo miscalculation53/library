@@ -5,21 +5,6 @@ data:
     path: ds/uf/uf.hpp
     title: UnionFind
   - icon: ':heavy_check_mark:'
-    path: math/extgcd.hpp
-    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/binomial.hpp
-    title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint32_internal.hpp
-    title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint_base.hpp
-    title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -592,132 +577,7 @@ data:
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
     \ vt;\n}\n// ----------\n#line 15 \"verify/yukicoder/uf_min_max_leader.test.cpp\"\
-    \n\n#line 2 \"math/modint/modint.hpp\"\n\n#line 2 \"math/modint/modint32_internal.hpp\"\
-    \n\n#line 4 \"math/modint/modint32_internal.hpp\"\n\nnamespace internal\n{\n\n\
-    constexpr ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n    return\
-    \ 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while (n)\n\
-    \  {\n    if (n & 1)\n      r = (r * y) % _m;\n    y = (y * y) % _m;\n    n >>=\
-    \ 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int n)\n{\n  if\
-    \ (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n    return\
-    \ true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2\
-    \ == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll a : bases)\n\
-    \  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n      t <<= 1;\n\
-    \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
-    \ true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
-    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}\n#line 2 \"math/modint/modint_base.hpp\"\n\n#line 4 \"math/modint/modint_base.hpp\"\
-    \n\nnamespace internal\n{\n\n#define REF static_cast<mint &>(*this)\n#define CREF\
-    \ static_cast<const mint &>(*this)\n#define VAL *static_cast<const mint *>(this)\n\
-    \ntemplate <class mint>\nstruct modint_base\n{\n  mint &operator+=(const mint\
-    \ &rhs)\n  {\n    mint &self = REF;\n    self._v += rhs._v;\n    if (self._v >=\
-    \ self.umod())\n      self._v -= self.umod();\n    return self;\n  }\n  mint &operator-=(const\
-    \ mint &rhs)\n  {\n    mint &self = REF;\n    self._v -= rhs._v;\n    if (self._v\
-    \ >= self.umod())\n      self._v += self.umod();\n    return self;\n  }\n  mint\
-    \ &operator/=(const mint &rhs)\n  {\n    mint &self = REF;\n    return self =\
-    \ self * rhs.inv();\n  }\n\n  mint &operator++()\n  {\n    mint &self = REF;\n\
-    \    self._v++;\n    if (self._v == self.umod())\n      self._v = 0;\n    return\
-    \ self;\n  }\n  mint &operator--()\n  {\n    mint &self = REF;\n    if (self._v\
-    \ == 0)\n      self._v = self.umod();\n    self._v--;\n    return self;\n  }\n\
-    \  mint operator++(int)\n  {\n    mint res = VAL;\n    ++REF;\n    return res;\n\
-    \  }\n  mint operator--(int)\n  {\n    mint res = VAL;\n    --REF;\n    return\
-    \ res;\n  }\n\n  mint operator+() const { return VAL; }\n  mint operator-() const\
-    \ { return mint() - VAL; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n\
-    \    mint x = VAL, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r *=\
-    \ x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n\n  friend mint\
-    \ operator+(const mint &lhs, const mint &rhs)\n  { return mint(lhs) += rhs; }\n\
-    \  friend mint operator-(const mint &lhs, const mint &rhs)\n  { return mint(lhs)\
-    \ -= rhs; }\n  friend mint operator*(const mint &lhs, const mint &rhs)\n  { return\
-    \ mint(lhs) *= rhs; }\n  friend mint operator/(const mint &lhs, const mint &rhs)\n\
-    \  { return mint(lhs) /= rhs; }\n  friend bool operator==(const mint &lhs, const\
-    \ mint &rhs)\n  { return mint(lhs).eq(rhs); }\n  friend bool operator!=(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs).neq(rhs); }\nprivate:\n  bool\
-    \ eq(const mint &rhs) { return REF._v == rhs._v; }\n  bool neq(const mint &rhs)\
-    \ { return REF._v != rhs._v; }\n};\n\n}\n\n#if defined LOCAL or not defined FAST_IO\n\
-    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nistream &operator>>(istream &is, T &x)\n{\n  ll a;\n  is >> a;\n\
-    \  x = a;\n  return is;\n}\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nostream &operator<<(ostream &os, const T &x)\n{\n  os << x.val();\n\
-    \  return os;\n}\n#else\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nvoid rd1(T &x)\n{\n  ll a;\n  fastio::rd1(a);\n  x = a;\n}\n\
-    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nvoid wt1(const T &x) { fastio::wt1(x.val()); }\n#endif\n#line\
-    \ 2 \"math/extgcd.hpp\"\n\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\
-    \u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs\
-    \ docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\
-    \u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T =\
-    \ ll>\nconstexpr tuple<T, T, T> extgcd(const T &a, const T &b)\n{\n  if (a ==\
-    \ 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  //\
-    \ a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1,\
-    \ z2 = b;\n  while (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n\
-    \    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1,\
-    \ y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q *\
-    \ z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1,\
-    \ y1};\n}\n#line 7 \"math/modint/modint.hpp\"\n\n/**\n * @brief modint (32 bit)\n\
-    \ * @docs docs/math/modint/modint.md\n */\n\ntemplate <int m>\nstruct static_modint\
-    \ : internal::modint_base<static_modint<m>>\n{\n  using mint = static_modint;\n\
-    private:\n  friend struct internal::modint_base<static_modint<m>>;\n  uint _v;\n\
-    \  static constexpr uint umod() { return m; }\n  static constexpr bool prime =\
-    \ internal::isprime32<m>;\n\npublic:\n  static constexpr int mod() { return m;\
-    \ }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  static_modint() : _v(0) {}\n  template <class T>\n  static_modint(T\
-    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
-    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
-    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
-    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
-    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
-    \n  mint& operator*=(const mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n\
-    \    _v = (uint)(z % umod());\n    return *this;\n  }\n\n  mint inv() const\n\
-    \  {\n    if (prime)\n    {\n      assert(_v != 0);\n      return CREF.pow(umod()\
-    \ - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<int>(_v, m);\n\
-    \      assert(g == 1);\n      return x;\n    }\n  }\n};\n\ntemplate <int id>\n\
-    struct dynamic_modint : internal::modint_base<dynamic_modint<id>>\n{\n  using\
-    \ mint = dynamic_modint;\nprivate:\n  friend struct internal::modint_base<dynamic_modint<id>>;\n\
-    \  uint _v;\n  static internal::barrett32 bt;\n  static uint umod() { return bt.umod();\
-    \ }\n\npublic:\n  static int mod() { return (int)(bt.umod()); }\n  static void\
-    \ set_mod(int m)\n  {\n    assert(m >= 1);\n    bt = internal::barrett32(m);\n\
-    \  }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  dynamic_modint() : _v(0) {}\n  template <class T>\n  dynamic_modint(T\
-    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
-    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
-    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
-    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
-    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
-    \n  mint& operator*=(const mint &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n   \
-    \ return *this;\n  }\n\n  mint inv() const\n  {\n    auto [g, x, y] = extgcd<int>(_v,\
-    \ mod());\n    assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::barrett32\
-    \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
-    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
-    #line 17 \"verify/yukicoder/uf_min_max_leader.test.cpp\"\nusing mint = modint998244353;\n\
-    // using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
-    // using mint = modint;\n#line 2 \"math/modint/binomial.hpp\"\n\n#line 4 \"math/modint/binomial.hpp\"\
-    \n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\n * @docs docs/math/modint/binomial.md\n\
-    \ */\n\ntemplate <class T>\nstruct Binomial\n{\nprivate:\n  static decltype(T::mod())\
-    \ mod;\n  static vc<T> fac_, finv_, inv_;\n\npublic:\n  static void reserve(int\
-    \ n)\n  {\n    if (mod != T::mod())\n    {\n      mod = T::mod();\n      fac_\
-    \ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};\n    }\n    int i = fac_.size();\n\
-    \    chmin(n, T::mod() - 1);\n    if (n < i)\n      return;\n    fac_.resize(n\
-    \ + 1), finv_.resize(n + 1), inv_.resize(n + 1);\n    for (; i <= n; i++)\n  \
-    \  {\n      fac_[i] = fac_[i - 1] * T::raw(i);\n      inv_[i] = -inv_[T::mod()\
-    \ % i] * T::raw(T::mod() / i);\n      finv_[i] = finv_[i - 1] * inv_[i];\n   \
-    \ }\n  }\n  static T fac(int n)\n  {\n    assert(n >= 0);\n    if (n >= T::mod())\n\
-    \      return 0;\n    reserve(n);\n    return fac_[n];\n  }\n  static T finv(int\
-    \ n)\n  {\n    assert(n < T::mod());\n    if (n < 0)\n      return 0;\n    reserve(n);\n\
-    \    return finv_[n];\n  }\n  static T inv(T n)\n  {\n    assert(n != 0);\n  \
-    \  reserve(n.val());\n    return inv_[n.val()];\n  }\n\n  static T P(int n, int\
-    \ k)\n  {\n    if (n < k)\n      return 0;\n    if (n < 0 || k < 0)\n      return\
-    \ 0;\n    reserve(n);\n    return fac_[n] * finv_[n - k];\n  }\n  static T C(int\
-    \ n, int k)\n  {\n    if (n < k)\n      return 0;\n    if (n < 0 || k < 0)\n \
-    \     return 0;\n    reserve(n);\n    return fac_[n] * finv_[k] * finv_[n - k];\n\
-    \  }\n  static T H(int n, int k)\n  {\n    if (n == 0 && k == 0)\n      return\
-    \ 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate <class T> decltype(T::mod())\
-    \ Binomial<T>::mod{T::mod()};\ntemplate <class T> vc<T> Binomial<T>::fac_{1, 1};\n\
-    template <class T> vc<T> Binomial<T>::finv_{1, 1};\ntemplate <class T> vc<T> Binomial<T>::inv_{0,\
-    \ 1};\n#line 22 \"verify/yukicoder/uf_min_max_leader.test.cpp\"\nusing bi = Binomial<mint>;\n\
-    \n#line 2 \"ds/uf/uf.hpp\"\n\n#line 4 \"ds/uf/uf.hpp\"\n\n/**\n * @brief UnionFind\n\
+    \n\n#line 2 \"ds/uf/uf.hpp\"\n\n#line 4 \"ds/uf/uf.hpp\"\n\n/**\n * @brief UnionFind\n\
     \ * @docs docs/ds/uf/uf.md\n */\n\n// UFData \u306B\u30C7\u30D5\u30A9\u30EB\u30C8\
     \u3067\u7528\u610F\u3055\u308C\u3066\u3044\u308B\u3082\u306E\n// - UFDataEmpty\
     \ (\u4F55\u3082\u306A\u3057\u3001ACL \u76F8\u5F53)\n// - UFDataEverything (\u5168\
@@ -765,7 +625,7 @@ data:
     \      gd.min_leader++;\n    while (uf.leader(gd.max_leader) != gd.max_leader)\n\
     \      gd.max_leader--;\n  }\n  template <class UF>\n  static void add_edge_same(UF\
     \ &uf, int x, EWeight w)\n  {\n    VData &xd = uf.vdat[x];\n    xd.esum += w;\n\
-    \  }\n};\n#line 25 \"verify/yukicoder/uf_min_max_leader.test.cpp\"\n\nvoid init()\
+    \  }\n};\n#line 17 \"verify/yukicoder/uf_min_max_leader.test.cpp\"\n\nvoid init()\
     \ {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFind<UFDataEverything<>> uf(N);\n\
     \  rep(_, Q)\n  {\n    LL(t);\n    if (t == 1)\n    {\n      LL(u, v);\n     \
     \ u--, v--;\n      uf.merge(u, v);\n    }\n    else if (t == 2)\n    {\n     \
@@ -796,16 +656,13 @@ data:
   code: "#define PROBLEM \"https://yukicoder.me/problems/no/2290\"\n\n#define SINGLE_TESTCASE\n\
     // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n// #define\
     \ FAST_CIO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
-    #define EPS 1e-11\n\n#include \"template/template_all.hpp\"\n\n#include \"math/modint/modint.hpp\"\
-    \nusing mint = modint998244353;\n// using mint = modint1000000007;\n// using mint\
-    \ = static_modint<1000000000>;\n// using mint = modint;\n#include \"math/modint/binomial.hpp\"\
-    \nusing bi = Binomial<mint>;\n\n#include \"ds/uf/uf.hpp\"\n\nvoid init() {}\n\n\
-    void main2()\n{\n  LL(N, Q);\n  UnionFind<UFDataEverything<>> uf(N);\n  rep(_,\
-    \ Q)\n  {\n    LL(t);\n    if (t == 1)\n    {\n      LL(u, v);\n      u--, v--;\n\
-    \      uf.merge(u, v);\n    }\n    else if (t == 2)\n    {\n      LL(w);\n   \
-    \   w--;\n      ll u = uf.gdat.min_leader, v = uf.gdat.max_leader;\n      if (u\
-    \ == v)\n        PRINT(-1);\n      else\n        PRINT(uf.same(w, u) ? v + 1 :\
-    \ u + 1);\n    }\n  }\n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase,\
+    #define EPS 1e-11\n\n#include \"template/template_all.hpp\"\n\n#include \"ds/uf/uf.hpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFind<UFDataEverything<>>\
+    \ uf(N);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 1)\n    {\n      LL(u, v);\n\
+    \      u--, v--;\n      uf.merge(u, v);\n    }\n    else if (t == 2)\n    {\n\
+    \      LL(w);\n      w--;\n      ll u = uf.gdat.min_leader, v = uf.gdat.max_leader;\n\
+    \      if (u == v)\n        PRINT(-1);\n      else\n        PRINT(uf.same(w, u)\
+    \ ? v + 1 : u + 1);\n    }\n  }\n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase,\
     \ 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\n\n      // -----\
     \ generate cases -----\n      ll N = 1 + rand() % 5;\n      vl A(N);\n      rep(i,\
     \ N) A.at(i) = 1 + rand() % 10;\n      // --------------------------\n\n     \
@@ -838,16 +695,11 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
-  - math/modint/modint.hpp
-  - math/modint/modint32_internal.hpp
-  - math/modint/modint_base.hpp
-  - math/extgcd.hpp
-  - math/modint/binomial.hpp
   - ds/uf/uf.hpp
   isVerificationFile: true
   path: verify/yukicoder/uf_min_max_leader.test.cpp
   requiredBy: []
-  timestamp: '2025-03-21 17:56:29+09:00'
+  timestamp: '2025-03-21 18:20:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/uf_min_max_leader.test.cpp

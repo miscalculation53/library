@@ -12,9 +12,6 @@ data:
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - icon: ':heavy_check_mark:'
-    path: math/modint/binomial.hpp
-    title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
   - icon: ':heavy_check_mark:'
@@ -699,56 +696,31 @@ data:
     \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
     using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
     #line 17 \"verify/yosupo/kronecker_power_zeta_mobius.test.cpp\"\nusing mint =\
-    \ modint998244353;\n// using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
-    // using mint = modint;\n#line 2 \"math/modint/binomial.hpp\"\n\n#line 4 \"math/modint/binomial.hpp\"\
-    \n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\n * @docs docs/math/modint/binomial.md\n\
-    \ */\n\ntemplate <class T>\nstruct Binomial\n{\nprivate:\n  static decltype(T::mod())\
-    \ mod;\n  static vc<T> fac_, finv_, inv_;\n\npublic:\n  static void reserve(int\
-    \ n)\n  {\n    if (mod != T::mod())\n    {\n      mod = T::mod();\n      fac_\
-    \ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};\n    }\n    int i = fac_.size();\n\
-    \    chmin(n, T::mod() - 1);\n    if (n < i)\n      return;\n    fac_.resize(n\
-    \ + 1), finv_.resize(n + 1), inv_.resize(n + 1);\n    for (; i <= n; i++)\n  \
-    \  {\n      fac_[i] = fac_[i - 1] * T::raw(i);\n      inv_[i] = -inv_[T::mod()\
-    \ % i] * T::raw(T::mod() / i);\n      finv_[i] = finv_[i - 1] * inv_[i];\n   \
-    \ }\n  }\n  static T fac(int n)\n  {\n    assert(n >= 0);\n    if (n >= T::mod())\n\
-    \      return 0;\n    reserve(n);\n    return fac_[n];\n  }\n  static T finv(int\
-    \ n)\n  {\n    assert(n < T::mod());\n    if (n < 0)\n      return 0;\n    reserve(n);\n\
-    \    return finv_[n];\n  }\n  static T inv(T n)\n  {\n    assert(n != 0);\n  \
-    \  reserve(n.val());\n    return inv_[n.val()];\n  }\n\n  static T P(int n, int\
-    \ k)\n  {\n    if (n < k)\n      return 0;\n    if (n < 0 || k < 0)\n      return\
-    \ 0;\n    reserve(n);\n    return fac_[n] * finv_[n - k];\n  }\n  static T C(int\
-    \ n, int k)\n  {\n    if (n < k)\n      return 0;\n    if (n < 0 || k < 0)\n \
-    \     return 0;\n    reserve(n);\n    return fac_[n] * finv_[k] * finv_[n - k];\n\
-    \  }\n  static T H(int n, int k)\n  {\n    if (n == 0 && k == 0)\n      return\
-    \ 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate <class T> decltype(T::mod())\
-    \ Binomial<T>::mod{T::mod()};\ntemplate <class T> vc<T> Binomial<T>::fac_{1, 1};\n\
-    template <class T> vc<T> Binomial<T>::finv_{1, 1};\ntemplate <class T> vc<T> Binomial<T>::inv_{0,\
-    \ 1};\n#line 22 \"verify/yosupo/kronecker_power_zeta_mobius.test.cpp\"\nusing\
-    \ bi = Binomial<mint>;\n\n#line 2 \"math/set/kronecker_power.hpp\"\n\n#line 4\
-    \ \"math/set/kronecker_power.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
-    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
-    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
-    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
-    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
-    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
-    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
-    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
-    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
-    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
-    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
-    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
-    \ constexpr auto inv = inv_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
-    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
-    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
-    \ = Group<typename R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing\
-    \ GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    \ modint998244353;\n\n#line 2 \"math/set/kronecker_power.hpp\"\n\n#line 4 \"math/set/kronecker_power.hpp\"\
+    \n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n#line 2 \"math/algebra/algebra_base.hpp\"\
+    \n\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
+    \u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
+    \ */\n\ntemplate <class S_, auto op_, auto e_>\nstruct Monoid\n{\n  using S =\
+    \ S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n};\n\
+    \ntemplate <class S_, auto op_, auto e_, auto inv_>\nstruct Group\n{\n  using\
+    \ S = S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n\
+    \  static constexpr auto inv = inv_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto mul_, auto e1_>\nstruct SemiRing\n{\n  using S = S_;\n  static constexpr\
+    \ auto add = add_;\n  static constexpr auto e0 = e0_;\n  static constexpr auto\
+    \ mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto\
+    \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
+    \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto minus_, auto mul_, auto e1_, auto inv_>\nstruct Field\n{\n  using\
+    \ S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n  static constexpr auto inv = inv_;\n};\n\n\
+    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
+    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
+    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
+    \ R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul =\
+    \ Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
     \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
     \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
     template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
@@ -792,7 +764,7 @@ data:
     \ v[i + c * d]));\n      repi(j, k) v[i + j * d] = nxt[j];\n    }\n}\n\ntemplate\
     \ <class SR, int k>\nvc<typename SR::S> kronecker_power\n(const array<array<typename\
     \ SR::S, k>, k> &mat, const vc<typename SR::S> &v)\n{\n  auto v_ = v;\n  kronecker_power_destructive<SR,\
-    \ k>(mat, v_);\n  return v_;\n}\n#line 25 \"verify/yosupo/kronecker_power_zeta_mobius.test.cpp\"\
+    \ k>(mat, v_);\n  return v_;\n}\n#line 20 \"verify/yosupo/kronecker_power_zeta_mobius.test.cpp\"\
     \n\nvoid zeta(vc<mint> &A)\n{\n  kronecker_power_destructive<RingAddSubMul<mint>,\
     \ 2>({{{1, 0}, {1, 1}}}, A);\n}\nvoid mobius(vc<mint> &A)\n{\n  kronecker_power_destructive<RingAddSubMul<mint>,\
     \ 2>({{{1, 0}, {-1, 1}}}, A);\n}\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n\
@@ -824,10 +796,8 @@ data:
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF\
     \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"template/template_all.hpp\"\
-    \n\n#include \"math/modint/modint.hpp\"\nusing mint = modint998244353;\n// using\
-    \ mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n// using\
-    \ mint = modint;\n#include \"math/modint/binomial.hpp\"\nusing bi = Binomial<mint>;\n\
-    \n#include \"math/set/kronecker_power.hpp\"\n\nvoid zeta(vc<mint> &A)\n{\n  kronecker_power_destructive<RingAddSubMul<mint>,\
+    \n\n#include \"math/modint/modint.hpp\"\nusing mint = modint998244353;\n\n#include\
+    \ \"math/set/kronecker_power.hpp\"\n\nvoid zeta(vc<mint> &A)\n{\n  kronecker_power_destructive<RingAddSubMul<mint>,\
     \ 2>({{{1, 0}, {1, 1}}}, A);\n}\nvoid mobius(vc<mint> &A)\n{\n  kronecker_power_destructive<RingAddSubMul<mint>,\
     \ 2>({{{1, 0}, {-1, 1}}}, A);\n}\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n\
     \  VEC(mint, 1 << N, A, B);\n  reverse(ALL(A)), reverse(ALL(B));\n  zeta(A), zeta(B);\n\
@@ -869,14 +839,13 @@ data:
   - math/modint/modint32_internal.hpp
   - math/modint/modint_base.hpp
   - math/extgcd.hpp
-  - math/modint/binomial.hpp
   - math/set/kronecker_power.hpp
   - math/algebra/algebra_basic_ops.hpp
   - math/algebra/algebra_base.hpp
   isVerificationFile: true
   path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   requiredBy: []
-  timestamp: '2025-03-21 12:52:10+09:00'
+  timestamp: '2025-03-21 18:20:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/kronecker_power_zeta_mobius.test.cpp

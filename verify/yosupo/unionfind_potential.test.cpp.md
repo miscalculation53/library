@@ -18,9 +18,6 @@ data:
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - icon: ':heavy_check_mark:'
-    path: math/modint/binomial.hpp
-    title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
   - icon: ':heavy_check_mark:'
@@ -702,31 +699,6 @@ data:
     \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
     using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
     #line 17 \"verify/yosupo/unionfind_potential.test.cpp\"\nusing mint = modint998244353;\n\
-    // using mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n\
-    // using mint = modint;\n#line 2 \"math/modint/binomial.hpp\"\n\n#line 4 \"math/modint/binomial.hpp\"\
-    \n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\n * @docs docs/math/modint/binomial.md\n\
-    \ */\n\ntemplate <class T>\nstruct Binomial\n{\nprivate:\n  static decltype(T::mod())\
-    \ mod;\n  static vc<T> fac_, finv_, inv_;\n\npublic:\n  static void reserve(int\
-    \ n)\n  {\n    if (mod != T::mod())\n    {\n      mod = T::mod();\n      fac_\
-    \ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};\n    }\n    int i = fac_.size();\n\
-    \    chmin(n, T::mod() - 1);\n    if (n < i)\n      return;\n    fac_.resize(n\
-    \ + 1), finv_.resize(n + 1), inv_.resize(n + 1);\n    for (; i <= n; i++)\n  \
-    \  {\n      fac_[i] = fac_[i - 1] * T::raw(i);\n      inv_[i] = -inv_[T::mod()\
-    \ % i] * T::raw(T::mod() / i);\n      finv_[i] = finv_[i - 1] * inv_[i];\n   \
-    \ }\n  }\n  static T fac(int n)\n  {\n    assert(n >= 0);\n    if (n >= T::mod())\n\
-    \      return 0;\n    reserve(n);\n    return fac_[n];\n  }\n  static T finv(int\
-    \ n)\n  {\n    assert(n < T::mod());\n    if (n < 0)\n      return 0;\n    reserve(n);\n\
-    \    return finv_[n];\n  }\n  static T inv(T n)\n  {\n    assert(n != 0);\n  \
-    \  reserve(n.val());\n    return inv_[n.val()];\n  }\n\n  static T P(int n, int\
-    \ k)\n  {\n    if (n < k)\n      return 0;\n    if (n < 0 || k < 0)\n      return\
-    \ 0;\n    reserve(n);\n    return fac_[n] * finv_[n - k];\n  }\n  static T C(int\
-    \ n, int k)\n  {\n    if (n < k)\n      return 0;\n    if (n < 0 || k < 0)\n \
-    \     return 0;\n    reserve(n);\n    return fac_[n] * finv_[k] * finv_[n - k];\n\
-    \  }\n  static T H(int n, int k)\n  {\n    if (n == 0 && k == 0)\n      return\
-    \ 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate <class T> decltype(T::mod())\
-    \ Binomial<T>::mod{T::mod()};\ntemplate <class T> vc<T> Binomial<T>::fac_{1, 1};\n\
-    template <class T> vc<T> Binomial<T>::finv_{1, 1};\ntemplate <class T> vc<T> Binomial<T>::inv_{0,\
-    \ 1};\n#line 22 \"verify/yosupo/unionfind_potential.test.cpp\"\nusing bi = Binomial<mint>;\n\
     \n#line 2 \"ds/uf/uf_potential.hpp\"\n\n#line 4 \"ds/uf/uf_potential.hpp\"\n\n\
     #line 2 \"ds/uf/uf.hpp\"\n\n#line 4 \"ds/uf/uf.hpp\"\n\n/**\n * @brief UnionFind\n\
     \ * @docs docs/ds/uf/uf.md\n */\n\n// UFData \u306B\u30C7\u30D5\u30A9\u30EB\u30C8\
@@ -854,7 +826,7 @@ data:
     \      if (!ok)\n        valid_[lx] = false;\n      return ok;\n    }\n    w =\
     \ G::op(G::op(weight_[x], w), G::inv(weight_[y]));\n    if (-par[lx] < -par[ly])\n\
     \      swap(lx, ly), w = G::inv(w);\n    par[lx] += par[ly], par[ly] = lx;\n \
-    \   weight_[ly] = w;\n    return true;\n  }\n};\n#line 25 \"verify/yosupo/unionfind_potential.test.cpp\"\
+    \   weight_[ly] = w;\n    return true;\n  }\n};\n#line 20 \"verify/yosupo/unionfind_potential.test.cpp\"\
     \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFindPotential<GroupAddSub<mint>>\
     \ uf(N);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(u, v,\
     \ w);\n      PRINT(uf.merge(v, u, w));\n    }\n    else if (t == 1)\n    {\n \
@@ -886,34 +858,32 @@ data:
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF\
     \ 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"template/template_all.hpp\"\
-    \n\n#include \"math/modint/modint.hpp\"\nusing mint = modint998244353;\n// using\
-    \ mint = modint1000000007;\n// using mint = static_modint<1000000000>;\n// using\
-    \ mint = modint;\n#include \"math/modint/binomial.hpp\"\nusing bi = Binomial<mint>;\n\
-    \n#include \"ds/uf/uf_potential.hpp\"\n\nvoid init() {}\n\nvoid main2()\n{\n \
-    \ LL(N, Q);\n  UnionFindPotential<GroupAddSub<mint>> uf(N);\n  rep(_, Q)\n  {\n\
-    \    LL(t);\n    if (t == 0)\n    {\n      LL(u, v, w);\n      PRINT(uf.merge(v,\
-    \ u, w));\n    }\n    else if (t == 1)\n    {\n      LL(u, v);\n      if (uf.same(u,\
-    \ v))\n        PRINT(uf.diff(v, u));\n      else\n        PRINT(-1);\n    }\n\
-    \  }\n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase, 100000)\n    {\n\
-    \      cout << endl;\n      dump(testcase);\n\n\n      // ----- generate cases\
-    \ -----\n      ll N = 1 + rand() % 5;\n      vl A(N);\n      rep(i, N) A.at(i)\
-    \ = 1 + rand() % 10;\n      // --------------------------\n\n      // ------ check\
-    \ output ------\n      #define INPUT A\n      auto god = naive(INPUT);\n     \
-    \ auto ans = solve(INPUT);\n      if (god != ans)\n      {\n        dump(INPUT);\n\
-    \        dump(god, ans);\n        exit(0);\n      }\n      // --------------------------\n\
-    \    }\n    dump(\"ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](string\
-    \ val, string color)\n  {\n    string s = \"\\033[\" + color + \"m\" + val + \"\
-    \\033[m\";\n    #ifdef LOCAL\n    cerr << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\
-    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
-    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n    cerr << val;\n    //*/\n  };\n\
-    \n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\",\
-    \ \"32\");\n  #endif\n  #if defined FAST_CIO and not defined LOCAL\n  CERR(\"\\\
-    n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
-    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
-    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
-    \\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n  {\n    dump(\"new testcase\"\
-    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\\n[SINGLE_TESTCASE]\\\
-    n\\n\", \"36\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\\
+    \n\n#include \"math/modint/modint.hpp\"\nusing mint = modint998244353;\n\n#include\
+    \ \"ds/uf/uf_potential.hpp\"\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n\
+    \  UnionFindPotential<GroupAddSub<mint>> uf(N);\n  rep(_, Q)\n  {\n    LL(t);\n\
+    \    if (t == 0)\n    {\n      LL(u, v, w);\n      PRINT(uf.merge(v, u, w));\n\
+    \    }\n    else if (t == 1)\n    {\n      LL(u, v);\n      if (uf.same(u, v))\n\
+    \        PRINT(uf.diff(v, u));\n      else\n        PRINT(-1);\n    }\n  }\n}\n\
+    \nvoid test()\n{\n  /*\n  local(\n    rep(testcase, 100000)\n    {\n      cout\
+    \ << endl;\n      dump(testcase);\n\n\n      // ----- generate cases -----\n \
+    \     ll N = 1 + rand() % 5;\n      vl A(N);\n      rep(i, N) A.at(i) = 1 + rand()\
+    \ % 10;\n      // --------------------------\n\n      // ------ check output ------\n\
+    \      #define INPUT A\n      auto god = naive(INPUT);\n      auto ans = solve(INPUT);\n\
+    \      if (god != ans)\n      {\n        dump(INPUT);\n        dump(god, ans);\n\
+    \        exit(0);\n      }\n      // --------------------------\n    }\n    dump(\"\
+    ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](string val, string\
+    \ color)\n  {\n    string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\";\n\
+    \    #ifdef LOCAL\n    cerr << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\u30C6\
+    \u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\
+    \u30A2\u30A6\u30C8\u3092\u5916\u3059\n    cerr << val;\n    //*/\n  };\n\n  #if\
+    \ defined FAST_IO and not defined LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\", \"32\"\
+    );\n  #endif\n  #if defined FAST_CIO and not defined LOCAL\n  CERR(\"\\n[FAST_CIO]\\\
+    n\\n\", \"32\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n  #endif\n  cout\
+    \ << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if defined AOJ_TESTCASE\
+    \ or (defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\\n[AOJ_TESTCASE]\\\
+    n\\n\", \"35\");\n  while (true)\n  {\n    dump(\"new testcase\");\n    main2();\n\
+    \  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\",\
+    \ \"36\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\\
     n\\n\", \"33\");\n  dump(\"T\");\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"\
     new testcase\");\n    main2();\n  }\n  #endif\n}"
   dependsOn:
@@ -931,7 +901,6 @@ data:
   - math/modint/modint32_internal.hpp
   - math/modint/modint_base.hpp
   - math/extgcd.hpp
-  - math/modint/binomial.hpp
   - ds/uf/uf_potential.hpp
   - ds/uf/uf.hpp
   - math/algebra/algebra_basic_ops.hpp
@@ -939,7 +908,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/unionfind_potential.test.cpp
   requiredBy: []
-  timestamp: '2025-03-21 17:56:29+09:00'
+  timestamp: '2025-03-21 18:20:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/unionfind_potential.test.cpp
