@@ -28,6 +28,7 @@ protected:
   }
 
 public:
+  UnionFindPotential() {}
   UnionFindPotential(int n)
   : UF(n), weight_(n, G::e()), valid_(n, true) {}
   using UF::same;

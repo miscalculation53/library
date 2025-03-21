@@ -43,7 +43,7 @@ public:
   bool same(int x, int y) { return leader(x) == leader(y); }
   // 返り値: マージした後の新たな代表元
   template <class I = ll>
-  I merge(int x, int y, typename UFData::EWeight w = 1)
+  I merge(int x, int y, const typename UFData::EWeight &w = 1)
   {
     x = leader(x), y = leader(y);
     if (x == y)
