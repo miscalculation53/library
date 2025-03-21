@@ -98,13 +98,8 @@ void test4()
   auto solve = [](int q, vc<P> v) -> string
   {
     v.insert(v.begin(), {1, "kogakubu10gokan"});
-#if __cplusplus < 202002L
-    int i = LB(v, q, {}, [](const P &p)
-               { return p.first; });
-#else
     int i = leq_max(v, q, {}, [](const P &p)
                     { return p.first; });
-#endif
     return v[i].second;
   };
 
