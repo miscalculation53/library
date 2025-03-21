@@ -13,14 +13,6 @@
 
 #include "template/template_all.hpp"
 
-#include "math/modint/modint.hpp"
-using mint = modint998244353;
-// using mint = modint1000000007;
-// using mint = static_modint<1000000000>;
-// using mint = modint;
-#include "math/modint/binomial.hpp"
-using bi = Binomial<mint>;
-
 #include "ds/uf/uf.hpp"
 #include "algo/parallel_binsearch.hpp"
 
