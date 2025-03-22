@@ -14,9 +14,19 @@
  */
 
 template <class V>
-auto SUM(const V &v) { return accumulate(ALL(v), (decltype(v[0]))0); }
+auto SUM(const V &v)
+{
+  typename V::value_type s{};
+  fec(vi : v) s += vi;
+  return s;
+}
 template <class T, class V>
-T SUM(const V &v) { return accumulate(ALL(v), T(0)); }
+T SUM(const V &v)
+{
+  T s{};
+  fec(vi : v) s += vi;
+  return s;
+}
 template <class V>
 auto MAX(const V &v) { return *max_element(ALL(v)); }
 template <class V>
