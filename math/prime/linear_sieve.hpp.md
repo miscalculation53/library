@@ -1,39 +1,39 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
@@ -184,46 +184,46 @@ data:
     \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 10 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
     \u30EA\u30BA\u30E0\uFF09\n * @docs docs/template/template_algo.md\n */\n\ntemplate\
-    \ <class V>\nauto SUM(const V &v) { return accumulate(ALL(v), (decltype(v[0]))0);\
-    \ }\ntemplate <class T, class V>\nT SUM(const V &v) { return accumulate(ALL(v),\
-    \ T(0)); }\ntemplate <class V>\nauto MAX(const V &v) { return *max_element(ALL(v));\
-    \ }\ntemplate <class V>\nauto MIN(const V &v) { return *min_element(ALL(v)); }\n\
-    template <class I = ll, class V>\nI ARGMAX(const V &v) { return max_element(ALL(v))\
-    \ - v.begin(); }\ntemplate <class I = ll, class V>\nI ARGMIN(const V &v) { return\
-    \ min_element(ALL(v)) - v.begin(); }\n\ntemplate<class T = ll, class V>\nT mex(const\
-    \ V &a)\n{\n  int n = a.size();\n  vector<bool> exists(n, false);\n  repi(i, n)\
-    \ if (0 <= a[i] && a[i] < n) exists[a[i]] = true;\n  repi(x, n) if (!exists[x])\
-    \ return x;\n  return n;\n}\n\ntemplate <class T = ll>\nvc<T> permid(const int\
-    \ &n, const int &base_index = 0)\n{\n  vc<T> p(n);\n  repi(i, n) p[i] = i + base_index;\n\
-    \  return p;\n}\ntemplate <class T>\nvc<T> perminv(const vc<T> &p)\n{\n  if (p.empty())\n\
-    \    return {};\n  const int n = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i,\
-    \ n) if (p[i] >= 0) q[p[i]] = i;\n  return q;\n}\n// a[p[i]] for all i\ntemplate\
-    \ <class T, class U>\nvc<T> permuted(const vc<T> &a, const vc<U> &p)\n{\n  const\
-    \ int n = p.size();\n  vc<T> res(n);\n  repi(i, n)\n  {\n    assert(0 <= p[i]\
-    \ && p[i] < U(a.size()));\n    res[i] = a[p[i]];\n  }\n  return res;\n}\n\ntemplate\
-    \ <class V>\nV reversed(const V &v) { return V(v.rbegin(), v.rend()); }\n\n#if\
-    \ __cplusplus < 202002L\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
-    \ args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n  return v;\n}\n#else\ntemplate\
-    \ <class V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  ranges::sort(v,\
-    \ forward<Args>(args)...);\n  return v;\n}\n#endif\n\ntemplate <class V>\nvoid\
-    \ unique(V &v) { v.erase(std::unique(ALL(v)), v.end()); }\ntemplate <class V>\n\
-    V uniqued(V v) { unique(v); return v; }\n\ntemplate <class V>\nvoid sortunique(V\
-    \ &v)\n{\n  sort(ALL(v));\n  unique(v);\n}\ntemplate <class V>\nV sortuniqued(V\
-    \ v) { sortunique(v); return v; }\n\n// 01234 -> 12340\ntemplate <class V, class\
-    \ U>\nvoid rotate(V &v, U k)\n{ \n  const U n = v.size();\n  k = (k % n + n) %\
-    \ n;\n  std::rotate(v.begin(), v.begin() + k, v.end());\n}\n// 01234 -> 12340\n\
-    template <class V, class U>\nV rotated(V v, U k) { rotate(v, k); return v; }\n\
-    \ntemplate <class T>\nvvc<T> top(const vvc<T> &a)\n{\n  if (a.empty())\n    return\
-    \ {};\n  const int n = a.size(), m = a[0].size();\n  vvc<T> b(m, vc<T>(n));\n\
-    \  repi(i, n)\n  {\n    assert(SZ<int>(a[i]) == m);\n    repi(j, m) b[j][i] =\
-    \ a[i][j];\n  }\n  return b;\n}\nvstr top(const vstr &a)\n{\n  vvc<char> a_(a.size());\n\
-    \  repi(i, SZ<int>(a)) a_[i] = {ALL(a[i])};\n  vvc<char> b_ = top(a_);\n  vstr\
-    \ b(b_.size());\n  repi(i, SZ<int>(b)) b[i] = {ALL(b_[i])};\n  return b;\n}\n\n\
-    // 12\n// 34 -> 246\n// 56    135\n// (\u53CD\u6642\u8A08\u56DE\u308A)\ntemplate\
-    \ <class VV, class U = ll>\nVV rot90(const VV &a, U k = 1)\n{\n  if (a.empty())\n\
-    \    return {};\n  const int n = a.size(), m = a[0].size();\n  k = (k % 4 + 4)\
-    \ % 4;\n  if (k == 0)\n    return a;\n  else if (k == 1)\n  {\n    VV b(m);\n\
-    \    repi(j, m) b[j].resize(n);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
+    \ <class V>\nauto SUM(const V &v)\n{\n  typename V::value_type s{};\n  fec(vi\
+    \ : v) s += vi;\n  return s;\n}\ntemplate <class T, class V>\nT SUM(const V &v)\n\
+    {\n  T s{};\n  fec(vi : v) s += vi;\n  return s;\n}\ntemplate <class V>\nauto\
+    \ MAX(const V &v) { return *max_element(ALL(v)); }\ntemplate <class V>\nauto MIN(const\
+    \ V &v) { return *min_element(ALL(v)); }\ntemplate <class I = ll, class V>\nI\
+    \ ARGMAX(const V &v) { return max_element(ALL(v)) - v.begin(); }\ntemplate <class\
+    \ I = ll, class V>\nI ARGMIN(const V &v) { return min_element(ALL(v)) - v.begin();\
+    \ }\n\ntemplate<class T = ll, class V>\nT mex(const V &a)\n{\n  int n = a.size();\n\
+    \  vector<bool> exists(n, false);\n  repi(i, n) if (0 <= a[i] && a[i] < n) exists[a[i]]\
+    \ = true;\n  repi(x, n) if (!exists[x]) return x;\n  return n;\n}\n\ntemplate\
+    \ <class T = ll>\nvc<T> permid(const int &n, const int &base_index = 0)\n{\n \
+    \ vc<T> p(n);\n  repi(i, n) p[i] = i + base_index;\n  return p;\n}\ntemplate <class\
+    \ T>\nvc<T> perminv(const vc<T> &p)\n{\n  if (p.empty())\n    return {};\n  const\
+    \ int n = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i, n) if (p[i] >= 0) q[p[i]]\
+    \ = i;\n  return q;\n}\n// a[p[i]] for all i\ntemplate <class T, class U>\nvc<T>\
+    \ permuted(const vc<T> &a, const vc<U> &p)\n{\n  const int n = p.size();\n  vc<T>\
+    \ res(n);\n  repi(i, n)\n  {\n    assert(0 <= p[i] && p[i] < U(a.size()));\n \
+    \   res[i] = a[p[i]];\n  }\n  return res;\n}\n\ntemplate <class V>\nV reversed(const\
+    \ V &v) { return V(v.rbegin(), v.rend()); }\n\n#if __cplusplus < 202002L\ntemplate\
+    \ <class V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n\
+    \  return v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
+    \ args)\n{\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\
+    \ntemplate <class V>\nvoid unique(V &v) { v.erase(std::unique(ALL(v)), v.end());\
+    \ }\ntemplate <class V>\nV uniqued(V v) { unique(v); return v; }\n\ntemplate <class\
+    \ V>\nvoid sortunique(V &v)\n{\n  sort(ALL(v));\n  unique(v);\n}\ntemplate <class\
+    \ V>\nV sortuniqued(V v) { sortunique(v); return v; }\n\n// 01234 -> 12340\ntemplate\
+    \ <class V, class U>\nvoid rotate(V &v, U k)\n{ \n  const U n = v.size();\n  k\
+    \ = (k % n + n) % n;\n  std::rotate(v.begin(), v.begin() + k, v.end());\n}\n//\
+    \ 01234 -> 12340\ntemplate <class V, class U>\nV rotated(V v, U k) { rotate(v,\
+    \ k); return v; }\n\ntemplate <class T>\nvvc<T> top(const vvc<T> &a)\n{\n  if\
+    \ (a.empty())\n    return {};\n  const int n = a.size(), m = a[0].size();\n  vvc<T>\
+    \ b(m, vc<T>(n));\n  repi(i, n)\n  {\n    assert(SZ<int>(a[i]) == m);\n    repi(j,\
+    \ m) b[j][i] = a[i][j];\n  }\n  return b;\n}\nvstr top(const vstr &a)\n{\n  vvc<char>\
+    \ a_(a.size());\n  repi(i, SZ<int>(a)) a_[i] = {ALL(a[i])};\n  vvc<char> b_ =\
+    \ top(a_);\n  vstr b(b_.size());\n  repi(i, SZ<int>(b)) b[i] = {ALL(b_[i])};\n\
+    \  return b;\n}\n\n// 12\n// 34 -> 246\n// 56    135\n// (\u53CD\u6642\u8A08\u56DE\
+    \u308A)\ntemplate <class VV, class U = ll>\nVV rot90(const VV &a, U k = 1)\n{\n\
+    \  if (a.empty())\n    return {};\n  const int n = a.size(), m = a[0].size();\n\
+    \  k = (k % 4 + 4) % 4;\n  if (k == 0)\n    return a;\n  else if (k == 1)\n  {\n\
+    \    VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
     \ == m);\n      repi(j, m) b[m - 1 - j][i] = a[i][j];\n    }\n    return b;\n\
     \  }\n  else if (k == 2)\n  {\n    VV b(n);\n    repi(i, n) b[i].resize(m);\n\
     \    repi(i, n)\n    {\n      assert(SZ<int>(a[i]) == m);\n      repi(j, m) b[n\
@@ -679,7 +679,7 @@ data:
   requiredBy:
   - math/prime/lcm_gcd_convolution.hpp
   - math/prime/zeta_mobius_divisor_multiple.hpp
-  timestamp: '2025-03-21 12:52:10+09:00'
+  timestamp: '2025-03-23 02:19:40+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/gcd_convolution.test.cpp

@@ -1,40 +1,40 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
   - icon: ':warning:'
     path: algo/merge_sort.hpp
     title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: algo/parallel_binsearch.hpp
     title: "\u4E26\u5217\u4E8C\u5206\u63A2\u7D22"
   - icon: ':heavy_check_mark:'
@@ -54,13 +54,13 @@ data:
     path: ds/offline_dynamic_connectivity.hpp
     title: "\u30AA\u30D5\u30E9\u30A4\u30F3\u30C0\u30A4\u30B3\u30CD\u306E\u30C6\u30AF\
       \u30CB\u30C3\u30AF"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/uf/uf.hpp
     title: UnionFind
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/uf/uf_partially_persistent.hpp
     title: "\u90E8\u5206\u6C38\u7D9A UnionFind"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
   - icon: ':heavy_check_mark:'
@@ -75,49 +75,49 @@ data:
   - icon: ':heavy_check_mark:'
     path: itertools/direct_product.hpp
     title: "\u76F4\u7A4D\u5168\u63A2\u7D22"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/algebra/matmul22.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\u306E\u7A4D\
       \uFF09"
   - icon: ':warning:'
     path: math/algebra/polynomial_ring.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/binomial.hpp
     title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint64_internal.hpp
     title: math/modint/modint64_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
   - icon: ':heavy_check_mark:'
     path: math/modint/power_table.hpp
     title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
   - icon: ':heavy_check_mark:'
@@ -126,24 +126,24 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/prime/linear_sieve.hpp
     title: "\u7DDA\u5F62\u7BE9"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
   - icon: ':heavy_check_mark:'
     path: math/prime/zeta_mobius_divisor_multiple.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/zeta_mobius_divisor_multiple_large.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/quadratic_equation_integer.hpp
     title: "\u4E8C\u6B21\u65B9\u7A0B\u5F0F\u306E\u6574\u6570\u89E3"
   - icon: ':heavy_check_mark:'
@@ -158,7 +158,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/set/subset_convolution.hpp
     title: subset convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/set/xor_convolution.hpp
     title: "\u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\u30FBxor \u7573\u307F\u8FBC\
       \u307F"
@@ -262,60 +262,60 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/unionfind.test.cpp
     title: verify/yosupo/unionfind.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/unionfind_potential.test.cpp
     title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/xor_convolution.test.cpp
     title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/base_repr.test.cpp
     title: verify/yukicoder/base_repr.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/binomial.test.cpp
     title: verify/yukicoder/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/divisors.test.cpp
     title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/dynamic_modint.test.cpp
     title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/order_mod_carmichael.test.cpp
     title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/order_mod_euler_phi.test.cpp
     title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/parallel_binsearch.test.cpp
     title: verify/yukicoder/parallel_binsearch.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/quadratic_equation.test.cpp
     title: verify/yukicoder/quadratic_equation.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/static_modint.test.cpp
     title: verify/yukicoder/static_modint.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/uf_min_max_leader.test.cpp
     title: verify/yukicoder/uf_min_max_leader.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/uf_partially_persistent.test.cpp
     title: verify/yukicoder/uf_partially_persistent.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
     title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     links: []
   bundledCode: "#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
@@ -440,46 +440,46 @@ data:
     \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 10 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
     \u30EA\u30BA\u30E0\uFF09\n * @docs docs/template/template_algo.md\n */\n\ntemplate\
-    \ <class V>\nauto SUM(const V &v) { return accumulate(ALL(v), (decltype(v[0]))0);\
-    \ }\ntemplate <class T, class V>\nT SUM(const V &v) { return accumulate(ALL(v),\
-    \ T(0)); }\ntemplate <class V>\nauto MAX(const V &v) { return *max_element(ALL(v));\
-    \ }\ntemplate <class V>\nauto MIN(const V &v) { return *min_element(ALL(v)); }\n\
-    template <class I = ll, class V>\nI ARGMAX(const V &v) { return max_element(ALL(v))\
-    \ - v.begin(); }\ntemplate <class I = ll, class V>\nI ARGMIN(const V &v) { return\
-    \ min_element(ALL(v)) - v.begin(); }\n\ntemplate<class T = ll, class V>\nT mex(const\
-    \ V &a)\n{\n  int n = a.size();\n  vector<bool> exists(n, false);\n  repi(i, n)\
-    \ if (0 <= a[i] && a[i] < n) exists[a[i]] = true;\n  repi(x, n) if (!exists[x])\
-    \ return x;\n  return n;\n}\n\ntemplate <class T = ll>\nvc<T> permid(const int\
-    \ &n, const int &base_index = 0)\n{\n  vc<T> p(n);\n  repi(i, n) p[i] = i + base_index;\n\
-    \  return p;\n}\ntemplate <class T>\nvc<T> perminv(const vc<T> &p)\n{\n  if (p.empty())\n\
-    \    return {};\n  const int n = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i,\
-    \ n) if (p[i] >= 0) q[p[i]] = i;\n  return q;\n}\n// a[p[i]] for all i\ntemplate\
-    \ <class T, class U>\nvc<T> permuted(const vc<T> &a, const vc<U> &p)\n{\n  const\
-    \ int n = p.size();\n  vc<T> res(n);\n  repi(i, n)\n  {\n    assert(0 <= p[i]\
-    \ && p[i] < U(a.size()));\n    res[i] = a[p[i]];\n  }\n  return res;\n}\n\ntemplate\
-    \ <class V>\nV reversed(const V &v) { return V(v.rbegin(), v.rend()); }\n\n#if\
-    \ __cplusplus < 202002L\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
-    \ args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n  return v;\n}\n#else\ntemplate\
-    \ <class V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  ranges::sort(v,\
-    \ forward<Args>(args)...);\n  return v;\n}\n#endif\n\ntemplate <class V>\nvoid\
-    \ unique(V &v) { v.erase(std::unique(ALL(v)), v.end()); }\ntemplate <class V>\n\
-    V uniqued(V v) { unique(v); return v; }\n\ntemplate <class V>\nvoid sortunique(V\
-    \ &v)\n{\n  sort(ALL(v));\n  unique(v);\n}\ntemplate <class V>\nV sortuniqued(V\
-    \ v) { sortunique(v); return v; }\n\n// 01234 -> 12340\ntemplate <class V, class\
-    \ U>\nvoid rotate(V &v, U k)\n{ \n  const U n = v.size();\n  k = (k % n + n) %\
-    \ n;\n  std::rotate(v.begin(), v.begin() + k, v.end());\n}\n// 01234 -> 12340\n\
-    template <class V, class U>\nV rotated(V v, U k) { rotate(v, k); return v; }\n\
-    \ntemplate <class T>\nvvc<T> top(const vvc<T> &a)\n{\n  if (a.empty())\n    return\
-    \ {};\n  const int n = a.size(), m = a[0].size();\n  vvc<T> b(m, vc<T>(n));\n\
-    \  repi(i, n)\n  {\n    assert(SZ<int>(a[i]) == m);\n    repi(j, m) b[j][i] =\
-    \ a[i][j];\n  }\n  return b;\n}\nvstr top(const vstr &a)\n{\n  vvc<char> a_(a.size());\n\
-    \  repi(i, SZ<int>(a)) a_[i] = {ALL(a[i])};\n  vvc<char> b_ = top(a_);\n  vstr\
-    \ b(b_.size());\n  repi(i, SZ<int>(b)) b[i] = {ALL(b_[i])};\n  return b;\n}\n\n\
-    // 12\n// 34 -> 246\n// 56    135\n// (\u53CD\u6642\u8A08\u56DE\u308A)\ntemplate\
-    \ <class VV, class U = ll>\nVV rot90(const VV &a, U k = 1)\n{\n  if (a.empty())\n\
-    \    return {};\n  const int n = a.size(), m = a[0].size();\n  k = (k % 4 + 4)\
-    \ % 4;\n  if (k == 0)\n    return a;\n  else if (k == 1)\n  {\n    VV b(m);\n\
-    \    repi(j, m) b[j].resize(n);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
+    \ <class V>\nauto SUM(const V &v)\n{\n  typename V::value_type s{};\n  fec(vi\
+    \ : v) s += vi;\n  return s;\n}\ntemplate <class T, class V>\nT SUM(const V &v)\n\
+    {\n  T s{};\n  fec(vi : v) s += vi;\n  return s;\n}\ntemplate <class V>\nauto\
+    \ MAX(const V &v) { return *max_element(ALL(v)); }\ntemplate <class V>\nauto MIN(const\
+    \ V &v) { return *min_element(ALL(v)); }\ntemplate <class I = ll, class V>\nI\
+    \ ARGMAX(const V &v) { return max_element(ALL(v)) - v.begin(); }\ntemplate <class\
+    \ I = ll, class V>\nI ARGMIN(const V &v) { return min_element(ALL(v)) - v.begin();\
+    \ }\n\ntemplate<class T = ll, class V>\nT mex(const V &a)\n{\n  int n = a.size();\n\
+    \  vector<bool> exists(n, false);\n  repi(i, n) if (0 <= a[i] && a[i] < n) exists[a[i]]\
+    \ = true;\n  repi(x, n) if (!exists[x]) return x;\n  return n;\n}\n\ntemplate\
+    \ <class T = ll>\nvc<T> permid(const int &n, const int &base_index = 0)\n{\n \
+    \ vc<T> p(n);\n  repi(i, n) p[i] = i + base_index;\n  return p;\n}\ntemplate <class\
+    \ T>\nvc<T> perminv(const vc<T> &p)\n{\n  if (p.empty())\n    return {};\n  const\
+    \ int n = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i, n) if (p[i] >= 0) q[p[i]]\
+    \ = i;\n  return q;\n}\n// a[p[i]] for all i\ntemplate <class T, class U>\nvc<T>\
+    \ permuted(const vc<T> &a, const vc<U> &p)\n{\n  const int n = p.size();\n  vc<T>\
+    \ res(n);\n  repi(i, n)\n  {\n    assert(0 <= p[i] && p[i] < U(a.size()));\n \
+    \   res[i] = a[p[i]];\n  }\n  return res;\n}\n\ntemplate <class V>\nV reversed(const\
+    \ V &v) { return V(v.rbegin(), v.rend()); }\n\n#if __cplusplus < 202002L\ntemplate\
+    \ <class V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n\
+    \  return v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
+    \ args)\n{\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\
+    \ntemplate <class V>\nvoid unique(V &v) { v.erase(std::unique(ALL(v)), v.end());\
+    \ }\ntemplate <class V>\nV uniqued(V v) { unique(v); return v; }\n\ntemplate <class\
+    \ V>\nvoid sortunique(V &v)\n{\n  sort(ALL(v));\n  unique(v);\n}\ntemplate <class\
+    \ V>\nV sortuniqued(V v) { sortunique(v); return v; }\n\n// 01234 -> 12340\ntemplate\
+    \ <class V, class U>\nvoid rotate(V &v, U k)\n{ \n  const U n = v.size();\n  k\
+    \ = (k % n + n) % n;\n  std::rotate(v.begin(), v.begin() + k, v.end());\n}\n//\
+    \ 01234 -> 12340\ntemplate <class V, class U>\nV rotated(V v, U k) { rotate(v,\
+    \ k); return v; }\n\ntemplate <class T>\nvvc<T> top(const vvc<T> &a)\n{\n  if\
+    \ (a.empty())\n    return {};\n  const int n = a.size(), m = a[0].size();\n  vvc<T>\
+    \ b(m, vc<T>(n));\n  repi(i, n)\n  {\n    assert(SZ<int>(a[i]) == m);\n    repi(j,\
+    \ m) b[j][i] = a[i][j];\n  }\n  return b;\n}\nvstr top(const vstr &a)\n{\n  vvc<char>\
+    \ a_(a.size());\n  repi(i, SZ<int>(a)) a_[i] = {ALL(a[i])};\n  vvc<char> b_ =\
+    \ top(a_);\n  vstr b(b_.size());\n  repi(i, SZ<int>(b)) b[i] = {ALL(b_[i])};\n\
+    \  return b;\n}\n\n// 12\n// 34 -> 246\n// 56    135\n// (\u53CD\u6642\u8A08\u56DE\
+    \u308A)\ntemplate <class VV, class U = ll>\nVV rot90(const VV &a, U k = 1)\n{\n\
+    \  if (a.empty())\n    return {};\n  const int n = a.size(), m = a[0].size();\n\
+    \  k = (k % 4 + 4) % 4;\n  if (k == 0)\n    return a;\n  else if (k == 1)\n  {\n\
+    \    VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
     \ == m);\n      repi(j, m) b[m - 1 - j][i] = a[i][j];\n    }\n    return b;\n\
     \  }\n  else if (k == 2)\n  {\n    VV b(n);\n    repi(i, n) b[i].resize(m);\n\
     \    repi(i, n)\n    {\n      assert(SZ<int>(a[i]) == m);\n      repi(j, m) b[n\
@@ -921,8 +921,8 @@ data:
   - ds/uf/uf_potential.hpp
   - ds/uf/uf_undo.hpp
   - ds/group_index.hpp
-  timestamp: '2025-03-21 12:52:10+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2025-03-23 02:19:40+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/aoj/modpow.test.cpp
   - verify/aoj/csr.test.cpp
