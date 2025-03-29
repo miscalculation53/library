@@ -102,9 +102,12 @@ data:
     - icon: ':question:'
       path: math/modint/modint_base.hpp
       title: math/modint/modint_base.hpp
-    - icon: ':heavy_check_mark:'
+    - icon: ':question:'
       path: math/modint/power_table.hpp
       title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
+    - icon: ':question:'
+      path: math/modint/template_modint.hpp
+      title: math/modint/template_modint.hpp
   - name: math/prime
     pages:
     - icon: ':question:'
@@ -168,6 +171,9 @@ data:
       path: template/template_all.hpp
       title: template/template_all.hpp
     - icon: ':question:'
+      path: template/template_all_but_modint.hpp
+      title: template/template_all_but_modint.hpp
+    - icon: ':question:'
       path: template/template_binsearch.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
     - icon: ':question:'
@@ -181,8 +187,15 @@ data:
       path: template/template_inout.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
     - icon: ':question:'
+      path: template/template_main.hpp
+      title: template/template_main.hpp
+    - icon: ':question:'
       path: template/template_math.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+    - icon: ':question:'
+      path: template/template_random.hpp
+      title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+        \u6210\uFF09"
     - icon: ':question:'
       path: template/template_rep.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
@@ -371,7 +384,7 @@ data:
       title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
 layout: toppage
 ---
-[miscalc](https://x.com/miscalc53) のライブラリです。
+[miscalc](https://x.com/miscalc53) の競プロ用 C++ ライブラリです。
 
 - 現在移植作業中なのでいろいろなものが足りていないです。
 - 利用は自由です。

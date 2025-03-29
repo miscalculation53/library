@@ -90,9 +90,12 @@ data:
   - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/power_table.hpp
     title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
+  - icon: ':question:'
+    path: math/modint/template_modint.hpp
+    title: math/modint/template_modint.hpp
   - icon: ':question:'
     path: math/prime/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
@@ -151,6 +154,12 @@ data:
   - icon: ':question:'
     path: template/template_all.hpp
     title: template/template_all.hpp
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_main.hpp
+    title: template/template_main.hpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/csr.test.cpp
@@ -354,75 +363,76 @@ data:
     \ &command\n  ) {\n    return export_var(i128tos(x), indent, last_line_length,\
     \ current_depth, fail_on_newline, command);\n  }\n} // namespace cpp_dump::_detail\n\
     #define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
-    \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n\
-    #define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 6 \"template/template_inout.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
-    \u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\n * @docs docs/template/template_inout.md\n\
-    \ */\n\n// https://judge.yosupo.jp/submission/170706 (maspy \u3055\u3093)\n//\
-    \ https://judge.yosupo.jp/submission/21623  (Nyaan \u3055\u3093)\n#if defined\
-    \ FAST_IO and not defined LOCAL\nnamespace fastio {\nstatic constexpr uint32_t\
-    \ SIZ = 1 << 17;\nchar ibuf[SIZ];\nchar obuf[SIZ];\nchar out[100];\n// pointer\
-    \ of ibuf, obuf\nuint32_t pil = 0, pir = 0, por = 0;\n\nstruct Pre {\n  char num[10000][4];\n\
-    \  constexpr Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int\
-    \ n = i;\n      for (int j = 3; j >= 0; j--) {\n        num[i][j] = n % 10 | '0';\n\
-    \        n /= 10;\n      }\n    }\n  }\n} constexpr pre;\n\ninline void load()\
-    \ {\n  memcpy(ibuf, ibuf + pil, pir - pil);\n  pir = pir - pil + fread(ibuf +\
-    \ pir - pil, 1, SIZ - pir + pil, stdin);\n  pil = 0;\n  if (pir < SIZ) ibuf[pir++]\
-    \ = '\\n';\n}\n\ninline void flush() {\n  fwrite(obuf, 1, por, stdout);\n  por\
-    \ = 0;\n}\n\nvoid rd1(char &c) {\n  do {\n    if (pil + 1 > pir) load();\n   \
-    \ c = ibuf[pil++];\n  } while (isspace(c));\n}\n\nvoid rd1(string &x) {\n  x.clear();\n\
-    \  char c;\n  do {\n    if (pil + 1 > pir) load();\n    c = ibuf[pil++];\n  }\
-    \ while (isspace(c));\n  do {\n    x += c;\n    if (pil == pir) load();\n    c\
-    \ = ibuf[pil++];\n  } while (!isspace(c));\n}\n\ntemplate <typename T>\nvoid rd1_real(T\
-    \ &x) {\n  string s;\n  rd1(s);\n  x = stod(s);\n}\n\ntemplate <typename T>\n\
-    void rd1_integer(T &x) {\n  if (pil + 100 > pir) load();\n  char c;\n  do\n  \
-    \  c = ibuf[pil++];\n  while (c < '-');\n  bool minus = 0;\n  if constexpr (is_signed<T>::value\
-    \ || is_same_v<T, i128>) {\n    if (c == '-') { minus = 1, c = ibuf[pil++]; }\n\
-    \  }\n  x = 0;\n  while ('0' <= c) { x = x * 10 + (c & 15), c = ibuf[pil++]; }\n\
-    \  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {\n    if (minus)\
-    \ x = -x;\n  }\n}\n\nvoid rd1(int &x) { rd1_integer(x); }\nvoid rd1(ll &x) { rd1_integer(x);\
-    \ }\nvoid rd1(i128 &x) { rd1_integer(x); }\nvoid rd1(uint &x) { rd1_integer(x);\
-    \ }\nvoid rd1(ull &x) { rd1_integer(x); }\nvoid rd1(u128 &x) { rd1_integer(x);\
-    \ }\nvoid rd1(double &x) { rd1_real(x); }\nvoid rd1(long double &x) { rd1_real(x);\
-    \ }\n// void rd1(f128 &x) { rd1_real(x); }\n\ntemplate <class T, class U>\nvoid\
-    \ rd1(pair<T, U> &p) {\n  return rd1(p.first), rd1(p.second);\n}\ntemplate <size_t\
-    \ N = 0, typename T>\nvoid rd1_tuple(T &t) {\n  if constexpr (N < std::tuple_size<T>::value)\
-    \ {\n    auto &x = std::get<N>(t);\n    rd1(x);\n    rd1_tuple<N + 1>(t);\n  }\n\
-    }\ntemplate <class... T>\nvoid rd1(tuple<T...> &tpl) {\n  rd1_tuple(tpl);\n}\n\
-    \ntemplate <size_t N = 0, typename T>\nvoid rd1(array<T, N> &x) {\n  for (auto\
-    \ &d: x) rd1(d);\n}\ntemplate <class T>\nvoid rd1(vc<T> &x) {\n  for (auto &d:\
-    \ x) rd1(d);\n}\n\nvoid read() {}\ntemplate <class H, class... T>\nvoid read(H\
-    \ &h, T &... t) {\n  rd1(h), read(t...);\n}\n\nvoid wt1(const char c) {\n  if\
-    \ (por == SIZ) flush();\n  obuf[por++] = c;\n}\nvoid wt1(const string s) {\n \
-    \ for (char c: s) wt1(c);\n}\nvoid wt1(const char *s) {\n  size_t len = strlen(s);\n\
-    \  for (size_t i = 0; i < len; i++) wt1(s[i]);\n}\n\ntemplate <typename T>\nvoid\
-    \ wt1_integer(T x) {\n  if (por > SIZ - 100) flush();\n  if (x < 0) { obuf[por++]\
-    \ = '-', x = -x; }\n  int outi;\n  for (outi = 96; x >= 10000; outi -= 4) {\n\
-    \    memcpy(out + outi, pre.num[x % 10000], 4);\n    x /= 10000;\n  }\n  if (x\
-    \ >= 1000) {\n    memcpy(obuf + por, pre.num[x], 4);\n    por += 4;\n  } else\
-    \ if (x >= 100) {\n    memcpy(obuf + por, pre.num[x] + 1, 3);\n    por += 3;\n\
-    \  } else if (x >= 10) {\n    int q = (x * 103) >> 10;\n    obuf[por] = q | '0';\n\
-    \    obuf[por + 1] = (x - q * 10) | '0';\n    por += 2;\n  } else\n    obuf[por++]\
-    \ = x | '0';\n  memcpy(obuf + por, out + outi + 4, 96 - outi);\n  por += 96 -\
-    \ outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T x) {\n  ostringstream oss;\n\
-    \  oss << fixed << setprecision(15) << double(x);\n  string s = oss.str();\n \
-    \ wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>, int> = 0>\nvoid\
-    \ wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x); }\nvoid wt1(u128\
-    \ x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\nvoid wt1(long double\
-    \ x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\ntemplate <class\
-    \ T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n  wt1(' ');\n\
-    \  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid wt1_tuple(const\
-    \ T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n    if constexpr\
-    \ (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n    wt1(x);\n   \
-    \ wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const tuple<T...>\
-    \ &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid wt1(const\
-    \ array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i < n; i++)\
-    \ {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class T>\nvoid\
-    \ wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i\
-    \ < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid write()\
-    \ {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail &&...\
-    \ tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print() {\
-    \ wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
+    \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n\
+    #define local(...) __VA_ARGS__\n#define oj(...)\n#define local_oj(a, b) (a)\n\
+    #else\n#define dump(...)\n#define local(...)\n#define oj(...) __VA_ARGS__\n#define\
+    \ local_oj(a, b) (b)\n#endif\n#line 6 \"template/template_inout.hpp\"\n\n/**\n\
+    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\n\
+    \ * @docs docs/template/template_inout.md\n */\n\n// https://judge.yosupo.jp/submission/170706\
+    \ (maspy \u3055\u3093)\n// https://judge.yosupo.jp/submission/21623  (Nyaan \u3055\
+    \u3093)\n#if defined FAST_IO and not defined LOCAL\nnamespace fastio {\nstatic\
+    \ constexpr uint32_t SIZ = 1 << 17;\nchar ibuf[SIZ];\nchar obuf[SIZ];\nchar out[100];\n\
+    // pointer of ibuf, obuf\nuint32_t pil = 0, pir = 0, por = 0;\n\nstruct Pre {\n\
+    \  char num[10000][4];\n  constexpr Pre() : num() {\n    for (int i = 0; i < 10000;\
+    \ i++) {\n      int n = i;\n      for (int j = 3; j >= 0; j--) {\n        num[i][j]\
+    \ = n % 10 | '0';\n        n /= 10;\n      }\n    }\n  }\n} constexpr pre;\n\n\
+    inline void load() {\n  memcpy(ibuf, ibuf + pil, pir - pil);\n  pir = pir - pil\
+    \ + fread(ibuf + pir - pil, 1, SIZ - pir + pil, stdin);\n  pil = 0;\n  if (pir\
+    \ < SIZ) ibuf[pir++] = '\\n';\n}\n\ninline void flush() {\n  fwrite(obuf, 1, por,\
+    \ stdout);\n  por = 0;\n}\n\nvoid rd1(char &c) {\n  do {\n    if (pil + 1 > pir)\
+    \ load();\n    c = ibuf[pil++];\n  } while (isspace(c));\n}\n\nvoid rd1(string\
+    \ &x) {\n  x.clear();\n  char c;\n  do {\n    if (pil + 1 > pir) load();\n   \
+    \ c = ibuf[pil++];\n  } while (isspace(c));\n  do {\n    x += c;\n    if (pil\
+    \ == pir) load();\n    c = ibuf[pil++];\n  } while (!isspace(c));\n}\n\ntemplate\
+    \ <typename T>\nvoid rd1_real(T &x) {\n  string s;\n  rd1(s);\n  x = stod(s);\n\
+    }\n\ntemplate <typename T>\nvoid rd1_integer(T &x) {\n  if (pil + 100 > pir) load();\n\
+    \  char c;\n  do\n    c = ibuf[pil++];\n  while (c < '-');\n  bool minus = 0;\n\
+    \  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {\n    if (c == '-')\
+    \ { minus = 1, c = ibuf[pil++]; }\n  }\n  x = 0;\n  while ('0' <= c) { x = x *\
+    \ 10 + (c & 15), c = ibuf[pil++]; }\n  if constexpr (is_signed<T>::value || is_same_v<T,\
+    \ i128>) {\n    if (minus) x = -x;\n  }\n}\n\nvoid rd1(int &x) { rd1_integer(x);\
+    \ }\nvoid rd1(ll &x) { rd1_integer(x); }\nvoid rd1(i128 &x) { rd1_integer(x);\
+    \ }\nvoid rd1(uint &x) { rd1_integer(x); }\nvoid rd1(ull &x) { rd1_integer(x);\
+    \ }\nvoid rd1(u128 &x) { rd1_integer(x); }\nvoid rd1(double &x) { rd1_real(x);\
+    \ }\nvoid rd1(long double &x) { rd1_real(x); }\n// void rd1(f128 &x) { rd1_real(x);\
+    \ }\n\ntemplate <class T, class U>\nvoid rd1(pair<T, U> &p) {\n  return rd1(p.first),\
+    \ rd1(p.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid rd1_tuple(T &t)\
+    \ {\n  if constexpr (N < std::tuple_size<T>::value) {\n    auto &x = std::get<N>(t);\n\
+    \    rd1(x);\n    rd1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid rd1(tuple<T...>\
+    \ &tpl) {\n  rd1_tuple(tpl);\n}\n\ntemplate <size_t N = 0, typename T>\nvoid rd1(array<T,\
+    \ N> &x) {\n  for (auto &d: x) rd1(d);\n}\ntemplate <class T>\nvoid rd1(vc<T>\
+    \ &x) {\n  for (auto &d: x) rd1(d);\n}\n\nvoid read() {}\ntemplate <class H, class...\
+    \ T>\nvoid read(H &h, T &... t) {\n  rd1(h), read(t...);\n}\n\nvoid wt1(const\
+    \ char c) {\n  if (por == SIZ) flush();\n  obuf[por++] = c;\n}\nvoid wt1(const\
+    \ string s) {\n  for (char c: s) wt1(c);\n}\nvoid wt1(const char *s) {\n  size_t\
+    \ len = strlen(s);\n  for (size_t i = 0; i < len; i++) wt1(s[i]);\n}\n\ntemplate\
+    \ <typename T>\nvoid wt1_integer(T x) {\n  if (por > SIZ - 100) flush();\n  if\
+    \ (x < 0) { obuf[por++] = '-', x = -x; }\n  int outi;\n  for (outi = 96; x >=\
+    \ 10000; outi -= 4) {\n    memcpy(out + outi, pre.num[x % 10000], 4);\n    x /=\
+    \ 10000;\n  }\n  if (x >= 1000) {\n    memcpy(obuf + por, pre.num[x], 4);\n  \
+    \  por += 4;\n  } else if (x >= 100) {\n    memcpy(obuf + por, pre.num[x] + 1,\
+    \ 3);\n    por += 3;\n  } else if (x >= 10) {\n    int q = (x * 103) >> 10;\n\
+    \    obuf[por] = q | '0';\n    obuf[por + 1] = (x - q * 10) | '0';\n    por +=\
+    \ 2;\n  } else\n    obuf[por++] = x | '0';\n  memcpy(obuf + por, out + outi +\
+    \ 4, 96 - outi);\n  por += 96 - outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T\
+    \ x) {\n  ostringstream oss;\n  oss << fixed << setprecision(15) << double(x);\n\
+    \  string s = oss.str();\n  wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>,\
+    \ int> = 0>\nvoid wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x);\
+    \ }\nvoid wt1(u128 x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\n\
+    void wt1(long double x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\
+    \ntemplate <class T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n\
+    \  wt1(' ');\n  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid\
+    \ wt1_tuple(const T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n\
+    \    if constexpr (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n\
+    \    wt1(x);\n    wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const\
+    \ tuple<T...> &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid\
+    \ wt1(const array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0;\
+    \ i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class\
+    \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
+    \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
+    \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
+    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
+    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
     \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
     }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
     struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
@@ -735,6 +745,7 @@ data:
   - math/modint/modint32_internal.hpp
   - math/modint/modint.hpp
   - math/modint/binomial.hpp
+  - math/modint/template_modint.hpp
   - math/modint/modint_base.hpp
   - math/modint/modint64.hpp
   - math/modint/power_table.hpp
@@ -745,6 +756,8 @@ data:
   - math/algebra/algebra_base.hpp
   - math/quadratic_equation_integer.hpp
   - template/template_all.hpp
+  - template/template_all_but_modint.hpp
+  - template/template_main.hpp
   - template/template.cpp
   - algo/merge_sort.hpp
   - algo/parallel_binsearch.hpp
@@ -760,7 +773,7 @@ data:
   - ds/uf/uf_potential.hpp
   - ds/uf/uf_undo.hpp
   - ds/group_index.hpp
-  timestamp: '2025-03-12 06:54:29+09:00'
+  timestamp: '2025-03-29 20:18:07+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/aoj/modpow.test.cpp

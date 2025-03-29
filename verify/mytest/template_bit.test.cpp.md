@@ -112,48 +112,49 @@ data:
     \ last_line_length, current_depth, fail_on_newline, command);\n  }\n} // namespace\
     \ cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\n\
     CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count,\
-    \ 10000);\n#define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
-    #endif\n\n#line 2 \"template/template_vector.hpp\"\n\n#line 2 \"template/template_math.hpp\"\
-    \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
-    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
-    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
-    \ docs/template/template_math.md\n */\n\ntemplate <class T, class U>\ninline bool\
-    \ chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate <class T,\
-    \ class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true : false;\
-    \ }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T divfloor(U\
-    \ a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divceil(U a, V b) { return\
-    \ T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll,\
-    \ class U, class V>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
-    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V>\ninline\
-    \ constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
-    template <class T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b\
-    \ >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
-    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
-    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
-    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
-    \ T = ll, class A, class B, class M>\nT mul_limited(A a, B b, M m = INF)\n{\n\
-    \  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return\
-    \ T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A,\
-    \ class B, class M>\nT pow_limited(A a, B b, M m = INF)\n{\n  assert(a >= 0 &&\
-    \ b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n\
-    \  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n    {\n     \
-    \ if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n    }\n    b >>=\
-    \ 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n      return m;\n\
-    \    tmp *= tmp;\n  }\n  return res;\n}\n\ntemplate <class T = ll, class A, class\
-    \ K>\nconstexpr T iroot(A a, K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <=\
-    \ 1 || k == 1)\n    return a;\n  if (k == 2)\n  {\n    if constexpr (sizeof(T)\
-    \ > sizeof(ull))\n    {\n      if ((u128)a < ((u128)1 << 120))\n        return\
-    \ sqrtl(a);\n    }\n    else\n      return sqrtl(a);\n  }\n\n  auto isok = [&](T\
-    \ x) -> bool\n  {\n    if (x == 0)\n      return true;\n    T res = 1, k2 = k;\n\
-    \    while (true)\n    {\n      if (k2 & 1)\n      {\n        if (res > T(a) /\
-    \ x)\n          return false;\n        res *= x;\n      }\n      k2 >>= 1;\n \
-    \     if (k2 == 0)\n        break;\n      if (x > T(a) / x)\n        return false;\n\
-    \      x *= x;\n    }\n    return res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n\
-    \  bool up = true;\n  while (!isok(x))\n    up = false, x--;\n  if (up)\n  {\n\
-    \    while (x < numeric_limits<T>::max() && isok(x + 1))\n      x++;\n  }\n  return\
-    \ x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    \ 1000);\n#define local(...) __VA_ARGS__\n#define oj(...)\n#define local_oj(a,\
+    \ b) (a)\n#else\n#define dump(...)\n#define local(...)\n#define oj(...) __VA_ARGS__\n\
+    #define local_oj(a, b) (b)\n#endif\n#line 2 \"template/template_algo.hpp\"\n\n\
+    #ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 2 \"template/template_vector.hpp\"\
+    \n\n#line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
+    #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
+    \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
+    inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
+    \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T\
+    \ divfloor(U a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0);\
+    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T divceil(U a,\
+    \ V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate\
+    \ <class T = ll, class U, class V>\ninline constexpr T divround(U a, V b) { return\
+    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U,\
+    \ class V>\ninline constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a,\
+    \ b); }\n\ntemplate <class T = ll, class U, class V>\nconstexpr T ipow(U a, V\
+    \ b)\n{\n  assert(b >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a ==\
+    \ 1)\n    return a;\n  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n \
+    \ T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n\
+    \    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n\
+    }\ntemplate <class T = ll, class A, class B, class M>\nT mul_limited(A a, B b,\
+    \ M m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return\
+    \ 0;\n  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T\
+    \ = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m = INF)\n{\n  assert(a\
+    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
+    \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
+    \    {\n      if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n  \
+    \  }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n\
+    \      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\n\ntemplate <class T\
+    \ = ll, class A, class K>\nconstexpr T iroot(A a, K k)\n{\n  assert(a >= 0 &&\
+    \ k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n  if (k == 2)\n  {\n    if\
+    \ constexpr (sizeof(T) > sizeof(ull))\n    {\n      if ((u128)a < ((u128)1 <<\
+    \ 120))\n        return sqrtl(a);\n    }\n    else\n      return sqrtl(a);\n \
+    \ }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n      return true;\n\
+    \    T res = 1, k2 = k;\n    while (true)\n    {\n      if (k2 & 1)\n      {\n\
+    \        if (res > T(a) / x)\n          return false;\n        res *= x;\n   \
+    \   }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n      if (x > T(a)\
+    \ / x)\n        return false;\n      x *= x;\n    }\n    return res <= T(a);\n\
+    \  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n   \
+    \ up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max() &&\
+    \ isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS), class A>\nint SGN(A a, const D &eps = EPS)\
     \ { return int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\
     \u6CD5\u3068\u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\
@@ -341,7 +342,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_bit.test.cpp
   requiredBy: []
-  timestamp: '2025-03-23 02:19:40+09:00'
+  timestamp: '2025-03-29 20:18:07+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_bit.test.cpp

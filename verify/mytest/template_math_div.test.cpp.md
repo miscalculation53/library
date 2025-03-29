@@ -130,19 +130,21 @@ data:
     \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
     \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
     \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
-    #else\n#define dump(...)\n#define local(...)\n#endif\n#line 5 \"verify/mytest/template_math_div.test.cpp\"\
-    \n\nmt19937 mt;\nll randll() { return (mt() << 30) + mt(); }\n\ntemplate <class\
-    \ T>\nvoid test1()\n{\n  for (int t = 0; t < 100000; t++)\n  {\n    dump(t);\n\
-    \    T a = randll(), b = randll();\n    if (b == 0)\n      continue;\n    if (mt()\
-    \ % 2) a *= -1;\n    if (mt() % 2) b *= -1;\n\n    T c = divfloor<T>(a, b), d\
-    \ = divceil<T>(a, b), e = safemod<T>(a, b);\n    dump(a, b, c, d, e);\n    if\
-    \ (b > 0)\n    {\n      assert(a >= b * c && a < b * (c + 1));\n      assert(a\
-    \ > b * (d - 1) && a <= b * d);\n      assert(0 <= e && e < b);\n      assert((a\
-    \ - e) % b == 0);\n    }\n    else\n    {\n      assert(a < b * c && a >= b *\
-    \ (c + 1));\n      assert(a <= b * (d - 1) && a > b * d);\n      assert(b < e\
-    \ && e <= 0);\n      assert((a - e) % b == 0);\n    }\n  }\n}\n\nint main()\n\
-    {\n  test1<ll>();\n  test1<i128>();\n\n  cout << \"Hello World\" << endl;\n}\n"
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n#define local(...) __VA_ARGS__\n\
+    #define oj(...)\n#define local_oj(a, b) (a)\n#else\n#define dump(...)\n#define\
+    \ local(...)\n#define oj(...) __VA_ARGS__\n#define local_oj(a, b) (b)\n#endif\n\
+    #line 5 \"verify/mytest/template_math_div.test.cpp\"\n\nmt19937 mt;\nll randll()\
+    \ { return (mt() << 30) + mt(); }\n\ntemplate <class T>\nvoid test1()\n{\n  for\
+    \ (int t = 0; t < 100000; t++)\n  {\n    dump(t);\n    T a = randll(), b = randll();\n\
+    \    if (b == 0)\n      continue;\n    if (mt() % 2) a *= -1;\n    if (mt() %\
+    \ 2) b *= -1;\n\n    T c = divfloor<T>(a, b), d = divceil<T>(a, b), e = safemod<T>(a,\
+    \ b);\n    dump(a, b, c, d, e);\n    if (b > 0)\n    {\n      assert(a >= b *\
+    \ c && a < b * (c + 1));\n      assert(a > b * (d - 1) && a <= b * d);\n     \
+    \ assert(0 <= e && e < b);\n      assert((a - e) % b == 0);\n    }\n    else\n\
+    \    {\n      assert(a < b * c && a >= b * (c + 1));\n      assert(a <= b * (d\
+    \ - 1) && a > b * d);\n      assert(b < e && e <= 0);\n      assert((a - e) %\
+    \ b == 0);\n    }\n  }\n}\n\nint main()\n{\n  test1<ll>();\n  test1<i128>();\n\
+    \n  cout << \"Hello World\" << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#include \"template/template_math.hpp\"\n#include \"template/template_dump.hpp\"\
     \n\nmt19937 mt;\nll randll() { return (mt() << 30) + mt(); }\n\ntemplate <class\
@@ -164,7 +166,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_math_div.test.cpp
   requiredBy: []
-  timestamp: '2025-03-16 23:12:25+09:00'
+  timestamp: '2025-03-29 20:18:07+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_math_div.test.cpp

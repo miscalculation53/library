@@ -93,9 +93,12 @@ data:
   - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/power_table.hpp
     title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
+  - icon: ':question:'
+    path: math/modint/template_modint.hpp
+    title: math/modint/template_modint.hpp
   - icon: ':question:'
     path: math/prime/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
@@ -154,6 +157,12 @@ data:
   - icon: ':question:'
     path: template/template_all.hpp
     title: template/template_all.hpp
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_main.hpp
+    title: template/template_main.hpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/csr.test.cpp
@@ -671,6 +680,7 @@ data:
   - math/modint/modint32_internal.hpp
   - math/modint/modint.hpp
   - math/modint/binomial.hpp
+  - math/modint/template_modint.hpp
   - math/modint/modint_base.hpp
   - math/modint/modint64.hpp
   - math/modint/power_table.hpp
@@ -681,6 +691,8 @@ data:
   - math/algebra/algebra_base.hpp
   - math/quadratic_equation_integer.hpp
   - template/template_all.hpp
+  - template/template_all_but_modint.hpp
+  - template/template_main.hpp
   - template/template.cpp
   - algo/merge_sort.hpp
   - algo/parallel_binsearch.hpp

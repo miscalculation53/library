@@ -130,23 +130,25 @@ data:
     \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
     \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
     \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
-    #else\n#define dump(...)\n#define local(...)\n#endif\n#line 5 \"verify/mytest/template_math_mulpow.test.cpp\"\
-    \n\nmt19937 mt;\n\nvoid test1()\n{\n  assert(ipow(0, 0) == 1);\n  assert(ipow(0,\
-    \ 1) == 0);\n  assert(ipow(1, 1LL << 60) == 1);\n  assert(ipow(-1, 1LL << 60)\
-    \ == 1);\n  assert(ipow(-1, (1LL << 60) - 1) == -1);\n  assert(ipow(2, 10) ==\
-    \ 1024);\n  assert(ipow(2, 60) == 1LL << 60);\n  assert(ipow(3, 10) == 59049);\n\
-    \  assert(ipow(-4, 10) == 1048576);\n  assert(ipow(-4, 11) == -4194304);\n}\n\n\
-    void test2()\n{\n  for (int t = 0; t < 100000; t++)\n  {\n    int a = mt() % (mt()\
-    \ % 2 == 0 ? 1 << 15 : 1 << 30);\n    int b = mt() % (mt() % 2 == 0 ? 1 << 15\
-    \ : 1 << 30);\n    int m = mt() % (1 << 30);\n    int god = min(ll(a) * ll(b),\
-    \ ll(m));\n    int ans = mul_limited<int>(a, b, m);\n    dump(t, god == m);\n\
-    \    assert(god == ans);\n  }\n}\n\nvoid test3()\n{\n  for (int t = 0; t < 100000;\
-    \ t++)\n  {\n    int a = mt() % 11;\n    int b = mt() % 19;\n    int m = mt()\
-    \ % (mt() % 2 == 0 ? 10 : 1 << 30);\n    int god = min(ipow(a, b), (ll)m);\n \
-    \   int ans = pow_limited<int>(a, b, m);\n    dump(t, a, b, ipow(a, b), m, god,\
-    \ ans);\n    assert(god == ans);\n  }\n}\n\nint main()\n{\n  test1();\n  test2();\n\
-    \  test3();\n\n  cout << \"Hello World\" << endl;\n}\n"
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n#define local(...) __VA_ARGS__\n\
+    #define oj(...)\n#define local_oj(a, b) (a)\n#else\n#define dump(...)\n#define\
+    \ local(...)\n#define oj(...) __VA_ARGS__\n#define local_oj(a, b) (b)\n#endif\n\
+    #line 5 \"verify/mytest/template_math_mulpow.test.cpp\"\n\nmt19937 mt;\n\nvoid\
+    \ test1()\n{\n  assert(ipow(0, 0) == 1);\n  assert(ipow(0, 1) == 0);\n  assert(ipow(1,\
+    \ 1LL << 60) == 1);\n  assert(ipow(-1, 1LL << 60) == 1);\n  assert(ipow(-1, (1LL\
+    \ << 60) - 1) == -1);\n  assert(ipow(2, 10) == 1024);\n  assert(ipow(2, 60) ==\
+    \ 1LL << 60);\n  assert(ipow(3, 10) == 59049);\n  assert(ipow(-4, 10) == 1048576);\n\
+    \  assert(ipow(-4, 11) == -4194304);\n}\n\nvoid test2()\n{\n  for (int t = 0;\
+    \ t < 100000; t++)\n  {\n    int a = mt() % (mt() % 2 == 0 ? 1 << 15 : 1 << 30);\n\
+    \    int b = mt() % (mt() % 2 == 0 ? 1 << 15 : 1 << 30);\n    int m = mt() % (1\
+    \ << 30);\n    int god = min(ll(a) * ll(b), ll(m));\n    int ans = mul_limited<int>(a,\
+    \ b, m);\n    dump(t, god == m);\n    assert(god == ans);\n  }\n}\n\nvoid test3()\n\
+    {\n  for (int t = 0; t < 100000; t++)\n  {\n    int a = mt() % 11;\n    int b\
+    \ = mt() % 19;\n    int m = mt() % (mt() % 2 == 0 ? 10 : 1 << 30);\n    int god\
+    \ = min(ipow(a, b), (ll)m);\n    int ans = pow_limited<int>(a, b, m);\n    dump(t,\
+    \ a, b, ipow(a, b), m, god, ans);\n    assert(god == ans);\n  }\n}\n\nint main()\n\
+    {\n  test1();\n  test2();\n  test3();\n\n  cout << \"Hello World\" << endl;\n\
+    }\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#include \"template/template_math.hpp\"\n#include \"template/template_dump.hpp\"\
     \n\nmt19937 mt;\n\nvoid test1()\n{\n  assert(ipow(0, 0) == 1);\n  assert(ipow(0,\
@@ -172,7 +174,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_math_mulpow.test.cpp
   requiredBy: []
-  timestamp: '2025-03-16 23:12:25+09:00'
+  timestamp: '2025-03-29 20:18:07+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_math_mulpow.test.cpp

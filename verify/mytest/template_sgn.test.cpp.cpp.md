@@ -130,16 +130,18 @@ data:
     \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
     \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
     \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
-    #else\n#define dump(...)\n#define local(...)\n#endif\n#line 7 \"verify/mytest/template_sgn.test.cpp.cpp\"\
-    \n\nvoid test1()\n{\n  assert(SGN(-2) == -1);\n  assert(SGN(-1) == -1);\n  assert(SGN(0)\
-    \ == 0);\n  assert(SGN(1) == 1);\n  assert(SGN(2) == 1);\n\n  assert(SGN(-EPS\
-    \ * 2) == -1);\n  assert(SGN(-EPS / 2) == 0);\n  assert(SGN(EPS / 2) == 0);\n\
-    \  assert(SGN(EPS * 2) == 1);\n\n  long double EPS2 = EPS;\n  assert(SGN(-EPS2\
-    \ * 2) == -1);\n  assert(SGN(-EPS2 / 2) == 0);\n  assert(SGN(EPS2 / 2) == 0);\n\
-    \  assert(SGN(EPS2 * 2) == 1);\n\n  dump(typeid(double).name(), typeid(long double).name());\n\
-    \  dump(typeid(EPS).name(), typeid(EPS2).name());\n}\n\nint main()\n{\n  test1();\n\
-    \n  cout << \"Hello World\" << endl;\n}\n"
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n#define local(...) __VA_ARGS__\n\
+    #define oj(...)\n#define local_oj(a, b) (a)\n#else\n#define dump(...)\n#define\
+    \ local(...)\n#define oj(...) __VA_ARGS__\n#define local_oj(a, b) (b)\n#endif\n\
+    #line 7 \"verify/mytest/template_sgn.test.cpp.cpp\"\n\nvoid test1()\n{\n  assert(SGN(-2)\
+    \ == -1);\n  assert(SGN(-1) == -1);\n  assert(SGN(0) == 0);\n  assert(SGN(1) ==\
+    \ 1);\n  assert(SGN(2) == 1);\n\n  assert(SGN(-EPS * 2) == -1);\n  assert(SGN(-EPS\
+    \ / 2) == 0);\n  assert(SGN(EPS / 2) == 0);\n  assert(SGN(EPS * 2) == 1);\n\n\
+    \  long double EPS2 = EPS;\n  assert(SGN(-EPS2 * 2) == -1);\n  assert(SGN(-EPS2\
+    \ / 2) == 0);\n  assert(SGN(EPS2 / 2) == 0);\n  assert(SGN(EPS2 * 2) == 1);\n\n\
+    \  dump(typeid(double).name(), typeid(long double).name());\n  dump(typeid(EPS).name(),\
+    \ typeid(EPS2).name());\n}\n\nint main()\n{\n  test1();\n\n  cout << \"Hello World\"\
+    \ << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#define EPS 1e-11\n\n#include \"../../template/template_math.hpp\"\n#include\
     \ \"../../template/template_dump.hpp\"\n\nvoid test1()\n{\n  assert(SGN(-2) ==\
@@ -158,7 +160,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_sgn.test.cpp.cpp
   requiredBy: []
-  timestamp: '2025-03-16 23:12:25+09:00'
+  timestamp: '2025-03-29 20:18:07+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_sgn.test.cpp.cpp

@@ -8,12 +8,36 @@ data:
     path: ds/uf/uf.hpp
     title: UnionFind
   - icon: ':question:'
+    path: math/extgcd.hpp
+    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
+  - icon: ':question:'
+    path: math/modint/binomial.hpp
+    title: "\u4E8C\u9805\u4FC2\u6570"
+  - icon: ':question:'
+    path: math/modint/modint.hpp
+    title: modint (32 bit)
+  - icon: ':question:'
+    path: math/modint/modint32_internal.hpp
+    title: math/modint/modint32_internal.hpp
+  - icon: ':question:'
+    path: math/modint/modint_base.hpp
+    title: math/modint/modint_base.hpp
+  - icon: ':question:'
+    path: math/modint/power_table.hpp
+    title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
+  - icon: ':question:'
+    path: math/modint/template_modint.hpp
+    title: math/modint/template_modint.hpp
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
   - icon: ':question:'
     path: template/template_all.hpp
     title: template/template_all.hpp
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
   - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
@@ -28,8 +52,15 @@ data:
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
   - icon: ':question:'
+    path: template/template_main.hpp
+    title: template/template_main.hpp
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
   - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
@@ -53,81 +84,82 @@ data:
     \ PROBLEM \"https://yukicoder.me/problems/no/2786\"\n\n#define SINGLE_TESTCASE\n\
     // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n// #define\
     \ FAST_CIO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
-    #define EPS 1e-11\n\n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
-    \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
-    \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
-    \nusing ll = long long;\nusing uint = unsigned int;\nusing ull = unsigned long\
-    \ long;\nusing pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll\
-    \ = tuple<ll, ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc\
-    \ = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb =\
-    \ vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\n\
-    using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
-    using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
-    \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
-    using i128 = __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string\
-    \ &s)\n{\n  i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i\
-    \ < (int)s.size(); i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n\
-    \  }\n  else\n  {\n    for (auto &&c : s)\n      res = 10 * res + c - '0';\n \
-    \ }\n  return res;\n}\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n\
-    \  string sign = \"\", res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n\
-    \  while (x > 0)\n  {\n    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(),\
-    \ res.end());\n  return sign + res;\n}\nistream &operator>>(istream &is, i128\
-    \ &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream\
-    \ &operator<<(ostream &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n\
-    }\n#endif\n\n#define cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\
-    \n#line 4 \"template/template_rep.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
-    \u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n */\n\n//\
-    \ https://trap.jp/post/1224/\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n\
-    #define rep1(i, n) for (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i,\
-    \ l, r) for (ll i = ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define rep3(i, l,\
-    \ r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr\
-    \ : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n\
-    #define repi1(i, n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i,\
-    \ l, r) for (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i,\
-    \ l, r, d) for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i\
-    \ < rrrrr : i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3,\
-    \ repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n#define\
-    \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
-    #line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
-    #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
-    \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
-    inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
-    \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
-    \ : false; }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T\
-    \ divfloor(U a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0);\
-    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T divceil(U a,\
-    \ V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divround(U a, V b) { return\
-    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U,\
-    \ class V>\ninline constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a,\
-    \ b); }\n\ntemplate <class T = ll, class U, class V>\nconstexpr T ipow(U a, V\
-    \ b)\n{\n  assert(b >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a ==\
-    \ 1)\n    return a;\n  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n \
-    \ T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n\
-    \    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n\
-    }\ntemplate <class T = ll, class A, class B, class M>\nT mul_limited(A a, B b,\
-    \ M m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return\
-    \ 0;\n  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T\
-    \ = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m = INF)\n{\n  assert(a\
-    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
-    \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
-    \    {\n      if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n  \
-    \  }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n\
-    \      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\n\ntemplate <class T\
-    \ = ll, class A, class K>\nconstexpr T iroot(A a, K k)\n{\n  assert(a >= 0 &&\
-    \ k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n  if (k == 2)\n  {\n    if\
-    \ constexpr (sizeof(T) > sizeof(ull))\n    {\n      if ((u128)a < ((u128)1 <<\
-    \ 120))\n        return sqrtl(a);\n    }\n    else\n      return sqrtl(a);\n \
-    \ }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n      return true;\n\
-    \    T res = 1, k2 = k;\n    while (true)\n    {\n      if (k2 & 1)\n      {\n\
-    \        if (res > T(a) / x)\n          return false;\n        res *= x;\n   \
-    \   }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n      if (x > T(a)\
-    \ / x)\n        return false;\n      x *= x;\n    }\n    return res <= T(a);\n\
-    \  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n   \
-    \ up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max() &&\
-    \ isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    #define EPS 1e-11\n\n#line 2 \"template/template_all_but_modint.hpp\"\n\n#line\
+    \ 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n */\n\
+    \n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n\
+    #endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing uint = unsigned\
+    \ int;\nusing ull = unsigned long long;\nusing pll = pair<ll, ll>;\nusing tlll\
+    \ = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\n#define vc vector\n\
+    template <class T>\nusing vvc = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\
+    \nusing vb = vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll\
+    \ = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb\
+    \ = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T,\
+    \ vc<T>, greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n\
+    #ifdef __SIZEOF_INT128__\nusing i128 = __int128_t;\nusing u128 = __uint128_t;\n\
+    i128 stoi128(const string &s)\n{\n  i128 res = 0;\n  if (s.front() == '-')\n \
+    \ {\n    for (int i = 1; i < (int)s.size(); i++)\n      res = 10 * res + s[i]\
+    \ - '0';\n    res = -res;\n  }\n  else\n  {\n    for (auto &&c : s)\n      res\
+    \ = 10 * res + c - '0';\n  }\n  return res;\n}\nstring i128tos(i128 x)\n{\n  if\
+    \ (x == 0) return \"0\";\n  string sign = \"\", res = \"\";\n  if (x < 0)\n  \
+    \  x = -x, sign = \"-\";\n  while (x > 0)\n  {\n    res += '0' + x % 10;\n   \
+    \ x /= 10;\n  }\n  reverse(res.begin(), res.end());\n  return sign + res;\n}\n\
+    istream &operator>>(istream &is, i128 &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n\
+    \  return is;\n}\nostream &operator<<(ostream &os, const i128 &a)\n{\n  os <<\
+    \ i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto const auto\n#line 2 \"\
+    template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\n\n/**\n\
+    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n\
+    \ */\n\n// https://trap.jp/post/1224/\n\n#define overload4(_1, _2, _3, _4, name,\
+    \ ...) name\n#define rep1(i, n) for (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n\
+    #define rep2(i, l, r) for (ll i = ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define\
+    \ rep3(i, l, r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0\
+    \ ? i < rrrrr : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__, rep3,\
+    \ rep2, rep1)(__VA_ARGS__)\n#define repi1(i, n) for (int i = 0, nnnnn = int(n);\
+    \ i < nnnnn; i++)\n#define repi2(i, l, r) for (int i = int(l), rrrrr = int(r);\
+    \ i < rrrrr; i++)\n#define repi3(i, l, r, d) for (int i = int(l), rrrrr = int(r),\
+    \ ddddd = int(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define repi(...)\
+    \ overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\n#define fe(...)\
+    \ for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n#define fem(...)\
+    \ for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n\
+    #define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n#define EPS 1e-11\n\
+    #endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
+    \u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs docs/template/template_math.md\n\
+    \ */\n\ntemplate <class T, class U>\ninline bool chmin(T &a, U b) { return a >\
+    \ b ? a = b, true : false; }\ntemplate <class T, class U>\ninline bool chmax(T\
+    \ &a, U b) { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll,\
+    \ class U, class V>\ninline constexpr T divfloor(U a, V b) { return T(a) / T(b)\
+    \ - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class U, class\
+    \ V>\ninline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b)\
+    \ && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V>\ninline\
+    \ constexpr T divround(U a, V b) { return divfloor<T>(2 * T(a) + T(b), 2 * T(b));\
+    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T safemod(U a,\
+    \ V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class T = ll,\
+    \ class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n  if (b\
+    \ == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a < 0 &&\
+    \ a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (true)\n\
+    \  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n     \
+    \ break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll, class\
+    \ A, class B, class M>\nT mul_limited(A a, B b, M m = INF)\n{\n  assert(a >= 0\
+    \ && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) /\
+    \ T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B, class\
+    \ M>\nT pow_limited(A a, B b, M m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >=\
+    \ 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n  \n  T\
+    \ res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n    {\n      if (res\
+    \ > T(m) / tmp)\n        return m;\n      res *= tmp;\n    }\n    b >>= 1;\n \
+    \   if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n      return m;\n  \
+    \  tmp *= tmp;\n  }\n  return res;\n}\n\ntemplate <class T = ll, class A, class\
+    \ K>\nconstexpr T iroot(A a, K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <=\
+    \ 1 || k == 1)\n    return a;\n  if (k == 2)\n  {\n    if constexpr (sizeof(T)\
+    \ > sizeof(ull))\n    {\n      if ((u128)a < ((u128)1 << 120))\n        return\
+    \ sqrtl(a);\n    }\n    else\n      return sqrtl(a);\n  }\n\n  auto isok = [&](T\
+    \ x) -> bool\n  {\n    if (x == 0)\n      return true;\n    T res = 1, k2 = k;\n\
+    \    while (true)\n    {\n      if (k2 & 1)\n      {\n        if (res > T(a) /\
+    \ x)\n          return false;\n        res *= x;\n      }\n      k2 >>= 1;\n \
+    \     if (k2 == 0)\n        break;\n      if (x > T(a) / x)\n        return false;\n\
+    \      x *= x;\n    }\n    return res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n\
+    \  bool up = true;\n  while (!isok(x))\n    up = false, x--;\n  if (up)\n  {\n\
+    \    while (x < numeric_limits<T>::max() && isok(x + 1))\n      x++;\n  }\n  return\
+    \ x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS), class A>\nint SGN(A a, const D &eps = EPS)\
     \ { return int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\
     \u6CD5\u3068\u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\
@@ -403,74 +435,76 @@ data:
     \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
     \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
     \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
-    #else\n#define dump(...)\n#define local(...)\n#endif\n#line 6 \"template/template_inout.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\
-    \uFF09\n * @docs docs/template/template_inout.md\n */\n\n// https://judge.yosupo.jp/submission/170706\
-    \ (maspy \u3055\u3093)\n// https://judge.yosupo.jp/submission/21623  (Nyaan \u3055\
-    \u3093)\n#if defined FAST_IO and not defined LOCAL\nnamespace fastio {\nstatic\
-    \ constexpr uint32_t SIZ = 1 << 17;\nchar ibuf[SIZ];\nchar obuf[SIZ];\nchar out[100];\n\
-    // pointer of ibuf, obuf\nuint32_t pil = 0, pir = 0, por = 0;\n\nstruct Pre {\n\
-    \  char num[10000][4];\n  constexpr Pre() : num() {\n    for (int i = 0; i < 10000;\
-    \ i++) {\n      int n = i;\n      for (int j = 3; j >= 0; j--) {\n        num[i][j]\
-    \ = n % 10 | '0';\n        n /= 10;\n      }\n    }\n  }\n} constexpr pre;\n\n\
-    inline void load() {\n  memcpy(ibuf, ibuf + pil, pir - pil);\n  pir = pir - pil\
-    \ + fread(ibuf + pir - pil, 1, SIZ - pir + pil, stdin);\n  pil = 0;\n  if (pir\
-    \ < SIZ) ibuf[pir++] = '\\n';\n}\n\ninline void flush() {\n  fwrite(obuf, 1, por,\
-    \ stdout);\n  por = 0;\n}\n\nvoid rd1(char &c) {\n  do {\n    if (pil + 1 > pir)\
-    \ load();\n    c = ibuf[pil++];\n  } while (isspace(c));\n}\n\nvoid rd1(string\
-    \ &x) {\n  x.clear();\n  char c;\n  do {\n    if (pil + 1 > pir) load();\n   \
-    \ c = ibuf[pil++];\n  } while (isspace(c));\n  do {\n    x += c;\n    if (pil\
-    \ == pir) load();\n    c = ibuf[pil++];\n  } while (!isspace(c));\n}\n\ntemplate\
-    \ <typename T>\nvoid rd1_real(T &x) {\n  string s;\n  rd1(s);\n  x = stod(s);\n\
-    }\n\ntemplate <typename T>\nvoid rd1_integer(T &x) {\n  if (pil + 100 > pir) load();\n\
-    \  char c;\n  do\n    c = ibuf[pil++];\n  while (c < '-');\n  bool minus = 0;\n\
-    \  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {\n    if (c == '-')\
-    \ { minus = 1, c = ibuf[pil++]; }\n  }\n  x = 0;\n  while ('0' <= c) { x = x *\
-    \ 10 + (c & 15), c = ibuf[pil++]; }\n  if constexpr (is_signed<T>::value || is_same_v<T,\
-    \ i128>) {\n    if (minus) x = -x;\n  }\n}\n\nvoid rd1(int &x) { rd1_integer(x);\
-    \ }\nvoid rd1(ll &x) { rd1_integer(x); }\nvoid rd1(i128 &x) { rd1_integer(x);\
-    \ }\nvoid rd1(uint &x) { rd1_integer(x); }\nvoid rd1(ull &x) { rd1_integer(x);\
-    \ }\nvoid rd1(u128 &x) { rd1_integer(x); }\nvoid rd1(double &x) { rd1_real(x);\
-    \ }\nvoid rd1(long double &x) { rd1_real(x); }\n// void rd1(f128 &x) { rd1_real(x);\
-    \ }\n\ntemplate <class T, class U>\nvoid rd1(pair<T, U> &p) {\n  return rd1(p.first),\
-    \ rd1(p.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid rd1_tuple(T &t)\
-    \ {\n  if constexpr (N < std::tuple_size<T>::value) {\n    auto &x = std::get<N>(t);\n\
-    \    rd1(x);\n    rd1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid rd1(tuple<T...>\
-    \ &tpl) {\n  rd1_tuple(tpl);\n}\n\ntemplate <size_t N = 0, typename T>\nvoid rd1(array<T,\
-    \ N> &x) {\n  for (auto &d: x) rd1(d);\n}\ntemplate <class T>\nvoid rd1(vc<T>\
-    \ &x) {\n  for (auto &d: x) rd1(d);\n}\n\nvoid read() {}\ntemplate <class H, class...\
-    \ T>\nvoid read(H &h, T &... t) {\n  rd1(h), read(t...);\n}\n\nvoid wt1(const\
-    \ char c) {\n  if (por == SIZ) flush();\n  obuf[por++] = c;\n}\nvoid wt1(const\
-    \ string s) {\n  for (char c: s) wt1(c);\n}\nvoid wt1(const char *s) {\n  size_t\
-    \ len = strlen(s);\n  for (size_t i = 0; i < len; i++) wt1(s[i]);\n}\n\ntemplate\
-    \ <typename T>\nvoid wt1_integer(T x) {\n  if (por > SIZ - 100) flush();\n  if\
-    \ (x < 0) { obuf[por++] = '-', x = -x; }\n  int outi;\n  for (outi = 96; x >=\
-    \ 10000; outi -= 4) {\n    memcpy(out + outi, pre.num[x % 10000], 4);\n    x /=\
-    \ 10000;\n  }\n  if (x >= 1000) {\n    memcpy(obuf + por, pre.num[x], 4);\n  \
-    \  por += 4;\n  } else if (x >= 100) {\n    memcpy(obuf + por, pre.num[x] + 1,\
-    \ 3);\n    por += 3;\n  } else if (x >= 10) {\n    int q = (x * 103) >> 10;\n\
-    \    obuf[por] = q | '0';\n    obuf[por + 1] = (x - q * 10) | '0';\n    por +=\
-    \ 2;\n  } else\n    obuf[por++] = x | '0';\n  memcpy(obuf + por, out + outi +\
-    \ 4, 96 - outi);\n  por += 96 - outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T\
-    \ x) {\n  ostringstream oss;\n  oss << fixed << setprecision(15) << double(x);\n\
-    \  string s = oss.str();\n  wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>,\
-    \ int> = 0>\nvoid wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x);\
-    \ }\nvoid wt1(u128 x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\n\
-    void wt1(long double x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\
-    \ntemplate <class T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n\
-    \  wt1(' ');\n  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid\
-    \ wt1_tuple(const T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n\
-    \    if constexpr (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n\
-    \    wt1(x);\n    wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const\
-    \ tuple<T...> &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid\
-    \ wt1(const array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0;\
-    \ i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class\
-    \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
-    \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
-    \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
-    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
-    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n#define local(...) __VA_ARGS__\n\
+    #define oj(...)\n#define local_oj(a, b) (a)\n#else\n#define dump(...)\n#define\
+    \ local(...)\n#define oj(...) __VA_ARGS__\n#define local_oj(a, b) (b)\n#endif\n\
+    #line 6 \"template/template_inout.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\n * @docs docs/template/template_inout.md\n\
+    \ */\n\n// https://judge.yosupo.jp/submission/170706 (maspy \u3055\u3093)\n//\
+    \ https://judge.yosupo.jp/submission/21623  (Nyaan \u3055\u3093)\n#if defined\
+    \ FAST_IO and not defined LOCAL\nnamespace fastio {\nstatic constexpr uint32_t\
+    \ SIZ = 1 << 17;\nchar ibuf[SIZ];\nchar obuf[SIZ];\nchar out[100];\n// pointer\
+    \ of ibuf, obuf\nuint32_t pil = 0, pir = 0, por = 0;\n\nstruct Pre {\n  char num[10000][4];\n\
+    \  constexpr Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int\
+    \ n = i;\n      for (int j = 3; j >= 0; j--) {\n        num[i][j] = n % 10 | '0';\n\
+    \        n /= 10;\n      }\n    }\n  }\n} constexpr pre;\n\ninline void load()\
+    \ {\n  memcpy(ibuf, ibuf + pil, pir - pil);\n  pir = pir - pil + fread(ibuf +\
+    \ pir - pil, 1, SIZ - pir + pil, stdin);\n  pil = 0;\n  if (pir < SIZ) ibuf[pir++]\
+    \ = '\\n';\n}\n\ninline void flush() {\n  fwrite(obuf, 1, por, stdout);\n  por\
+    \ = 0;\n}\n\nvoid rd1(char &c) {\n  do {\n    if (pil + 1 > pir) load();\n   \
+    \ c = ibuf[pil++];\n  } while (isspace(c));\n}\n\nvoid rd1(string &x) {\n  x.clear();\n\
+    \  char c;\n  do {\n    if (pil + 1 > pir) load();\n    c = ibuf[pil++];\n  }\
+    \ while (isspace(c));\n  do {\n    x += c;\n    if (pil == pir) load();\n    c\
+    \ = ibuf[pil++];\n  } while (!isspace(c));\n}\n\ntemplate <typename T>\nvoid rd1_real(T\
+    \ &x) {\n  string s;\n  rd1(s);\n  x = stod(s);\n}\n\ntemplate <typename T>\n\
+    void rd1_integer(T &x) {\n  if (pil + 100 > pir) load();\n  char c;\n  do\n  \
+    \  c = ibuf[pil++];\n  while (c < '-');\n  bool minus = 0;\n  if constexpr (is_signed<T>::value\
+    \ || is_same_v<T, i128>) {\n    if (c == '-') { minus = 1, c = ibuf[pil++]; }\n\
+    \  }\n  x = 0;\n  while ('0' <= c) { x = x * 10 + (c & 15), c = ibuf[pil++]; }\n\
+    \  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {\n    if (minus)\
+    \ x = -x;\n  }\n}\n\nvoid rd1(int &x) { rd1_integer(x); }\nvoid rd1(ll &x) { rd1_integer(x);\
+    \ }\nvoid rd1(i128 &x) { rd1_integer(x); }\nvoid rd1(uint &x) { rd1_integer(x);\
+    \ }\nvoid rd1(ull &x) { rd1_integer(x); }\nvoid rd1(u128 &x) { rd1_integer(x);\
+    \ }\nvoid rd1(double &x) { rd1_real(x); }\nvoid rd1(long double &x) { rd1_real(x);\
+    \ }\n// void rd1(f128 &x) { rd1_real(x); }\n\ntemplate <class T, class U>\nvoid\
+    \ rd1(pair<T, U> &p) {\n  return rd1(p.first), rd1(p.second);\n}\ntemplate <size_t\
+    \ N = 0, typename T>\nvoid rd1_tuple(T &t) {\n  if constexpr (N < std::tuple_size<T>::value)\
+    \ {\n    auto &x = std::get<N>(t);\n    rd1(x);\n    rd1_tuple<N + 1>(t);\n  }\n\
+    }\ntemplate <class... T>\nvoid rd1(tuple<T...> &tpl) {\n  rd1_tuple(tpl);\n}\n\
+    \ntemplate <size_t N = 0, typename T>\nvoid rd1(array<T, N> &x) {\n  for (auto\
+    \ &d: x) rd1(d);\n}\ntemplate <class T>\nvoid rd1(vc<T> &x) {\n  for (auto &d:\
+    \ x) rd1(d);\n}\n\nvoid read() {}\ntemplate <class H, class... T>\nvoid read(H\
+    \ &h, T &... t) {\n  rd1(h), read(t...);\n}\n\nvoid wt1(const char c) {\n  if\
+    \ (por == SIZ) flush();\n  obuf[por++] = c;\n}\nvoid wt1(const string s) {\n \
+    \ for (char c: s) wt1(c);\n}\nvoid wt1(const char *s) {\n  size_t len = strlen(s);\n\
+    \  for (size_t i = 0; i < len; i++) wt1(s[i]);\n}\n\ntemplate <typename T>\nvoid\
+    \ wt1_integer(T x) {\n  if (por > SIZ - 100) flush();\n  if (x < 0) { obuf[por++]\
+    \ = '-', x = -x; }\n  int outi;\n  for (outi = 96; x >= 10000; outi -= 4) {\n\
+    \    memcpy(out + outi, pre.num[x % 10000], 4);\n    x /= 10000;\n  }\n  if (x\
+    \ >= 1000) {\n    memcpy(obuf + por, pre.num[x], 4);\n    por += 4;\n  } else\
+    \ if (x >= 100) {\n    memcpy(obuf + por, pre.num[x] + 1, 3);\n    por += 3;\n\
+    \  } else if (x >= 10) {\n    int q = (x * 103) >> 10;\n    obuf[por] = q | '0';\n\
+    \    obuf[por + 1] = (x - q * 10) | '0';\n    por += 2;\n  } else\n    obuf[por++]\
+    \ = x | '0';\n  memcpy(obuf + por, out + outi + 4, 96 - outi);\n  por += 96 -\
+    \ outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T x) {\n  ostringstream oss;\n\
+    \  oss << fixed << setprecision(15) << double(x);\n  string s = oss.str();\n \
+    \ wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>, int> = 0>\nvoid\
+    \ wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x); }\nvoid wt1(u128\
+    \ x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\nvoid wt1(long double\
+    \ x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\ntemplate <class\
+    \ T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n  wt1(' ');\n\
+    \  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid wt1_tuple(const\
+    \ T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n    if constexpr\
+    \ (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n    wt1(x);\n   \
+    \ wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const tuple<T...>\
+    \ &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid wt1(const\
+    \ array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i < n; i++)\
+    \ {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class T>\nvoid\
+    \ wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i\
+    \ < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid write()\
+    \ {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail &&...\
+    \ tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print() {\
+    \ wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
     \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
     }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
     struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
@@ -579,16 +613,36 @@ data:
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 15 \"verify/yukicoder/parallel_binsearch.test.cpp\"\
-    \n\n#line 2 \"ds/uf/uf.hpp\"\n\n#line 4 \"ds/uf/uf.hpp\"\n\n/**\n * @brief UnionFind\n\
-    \ * @docs docs/ds/uf/uf.md\n */\n\n// UFData \u306B\u30C7\u30D5\u30A9\u30EB\u30C8\
-    \u3067\u7528\u610F\u3055\u308C\u3066\u3044\u308B\u3082\u306E\n// - UFDataEmpty\
-    \ (\u4F55\u3082\u306A\u3057\u3001ACL \u76F8\u5F53)\n// - UFDataEverything (\u5168\
-    \u90E8\u8F09\u305B)\ntemplate <class UFData, bool compress = true>\nstruct UnionFind\n\
-    {\n  friend UFData;\n\nprotected:\n  vc<int> par;\n  vc<typename UFData::VData>\
-    \ vdat;\n\npublic:\n  typename UFData::GData gdat;\n\n  UnionFind() {}\n  UnionFind(int\
-    \ n) : par(n, -1), vdat(n), gdat(n)\n  { repi(i, n) vdat[i] = typename UFData::VData(i);\
-    \ }\n\n  virtual int leader(int x)\n  {\n    assert(0 <= x && x < SZ<int>(par));\n\
+    \ vt;\n}\n// ----------\n#line 2 \"template/template_random.hpp\"\n\n#line 5 \"\
+    template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
+    \u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/random/template_random.md\n\
+    \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
+    \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
+    \  return T(l) + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\
+    \u7387\ntemplate <class T = ll, class U1, class U2>\nT randrange(U1 l, U2 r)\n\
+    {\n  assert(T(l) < T(r));\n  return T(l) + mt() % (T(r) - T(l));\n}\n\n// [l,\
+    \ r) \u304B\u3089\u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n// does_sort:\
+    \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <int k, bool\
+    \ does_sort, class T = ll, class U1, class U2>\narray<T, k> random_sample_range_array(U1\
+    \ l, U2 r)\n{\n  assert(T(r) - T(l) >= T(k));\n  array<T, k> res;\n  repi(i, k)\
+    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n// [l,\
+    \ r) \u304B\u3089\u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n// does_sort:\
+    \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <bool does_sort,\
+    \ class T = ll, class U1, class U2>\nvc<T> random_sample_range_vector(U1 l, U2\
+    \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
+    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
+    \ 15 \"verify/yukicoder/parallel_binsearch.test.cpp\"\n\n#line 2 \"ds/uf/uf.hpp\"\
+    \n\n#line 4 \"ds/uf/uf.hpp\"\n\n/**\n * @brief UnionFind\n * @docs docs/ds/uf/uf.md\n\
+    \ */\n\n// UFData \u306B\u30C7\u30D5\u30A9\u30EB\u30C8\u3067\u7528\u610F\u3055\
+    \u308C\u3066\u3044\u308B\u3082\u306E\n// - UFDataEmpty (\u4F55\u3082\u306A\u3057\
+    \u3001ACL \u76F8\u5F53)\n// - UFDataEverything (\u5168\u90E8\u8F09\u305B)\ntemplate\
+    \ <class UFData, bool compress = true>\nstruct UnionFind\n{\n  friend UFData;\n\
+    \nprotected:\n  vc<int> par;\n  vc<typename UFData::VData> vdat;\n\npublic:\n\
+    \  typename UFData::GData gdat;\n\n  UnionFind() {}\n  UnionFind(int n) : par(n,\
+    \ -1), vdat(n), gdat(n)\n  { repi(i, n) vdat[i] = typename UFData::VData(i); }\n\
+    \n  virtual int leader(int x)\n  {\n    assert(0 <= x && x < SZ<int>(par));\n\
     \    if (par[x] < 0)\n      return x;\n    if constexpr (compress)\n      return\
     \ par[x] = leader(par[x]);\n    else\n      return leader(par[x]);\n  }\n  //\
     \ \u9802\u70B9 x \u3092\u542B\u3080\u9023\u7D50\u6210\u5206\u306E\u9802\u70B9\u6570\
@@ -664,74 +718,182 @@ data:
     \    rep(time, H * W + 1)\n    {\n      fec([ u, v ] : ev_merge.at(time)) uf.merge(u,\
     \ v);\n      fec(q : ev_same.at(time)) res.at(q) = uf.same(S.at(q), T.at(q));\n\
     \    }\n    return res;\n  };\n  auto ans = parallel_binsearch(Q, judge, H * W,\
-    \ 0).first;\n  PRINTV(ans);\n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase,\
-    \ 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\n\n      // -----\
-    \ generate cases -----\n      ll N = 1 + rand() % 5;\n      vl A(N);\n      rep(i,\
-    \ N) A.at(i) = 1 + rand() % 10;\n      // --------------------------\n\n     \
-    \ // ------ check output ------\n      #define INPUT A\n      auto god = naive(INPUT);\n\
-    \      auto ans = solve(INPUT);\n      if (god != ans)\n      {\n        dump(INPUT);\n\
-    \        dump(god, ans);\n        exit(0);\n      }\n      // --------------------------\n\
-    \    }\n    dump(\"ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](string\
-    \ val, string color)\n  {\n    string s = \"\\033[\" + color + \"m\" + val + \"\
-    \\033[m\";\n    #ifdef LOCAL\n    cerr << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\
+    \ 0).first;\n  PRINTV(ans);\n}\n\nvoid test()\n{\n\n}\n\n#line 2 \"template/template_main.hpp\"\
+    \n\n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"math/modint/template_modint.hpp\"\
+    \n\n#line 2 \"math/modint/modint.hpp\"\n\n#line 2 \"math/modint/modint32_internal.hpp\"\
+    \n\n#line 4 \"math/modint/modint32_internal.hpp\"\n\nnamespace internal\n{\n\n\
+    constexpr ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n    return\
+    \ 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while (n)\n\
+    \  {\n    if (n & 1)\n      r = (r * y) % _m;\n    y = (y * y) % _m;\n    n >>=\
+    \ 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int n)\n{\n  if\
+    \ (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n    return\
+    \ true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2\
+    \ == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll a : bases)\n\
+    \  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n    while (t !=\
+    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n      t <<= 1;\n\
+    \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
+    \ true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
+    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
+    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
+    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
+    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
+    \ }\n};\n\n}\n#line 2 \"math/modint/modint_base.hpp\"\n\n#line 4 \"math/modint/modint_base.hpp\"\
+    \n\nnamespace internal\n{\n\n#define REF static_cast<mint &>(*this)\n#define CREF\
+    \ static_cast<const mint &>(*this)\n#define VAL *static_cast<const mint *>(this)\n\
+    \ntemplate <class mint>\nstruct modint_base\n{\n  mint &operator+=(const mint\
+    \ &rhs)\n  {\n    mint &self = REF;\n    self._v += rhs._v;\n    if (self._v >=\
+    \ self.umod())\n      self._v -= self.umod();\n    return self;\n  }\n  mint &operator-=(const\
+    \ mint &rhs)\n  {\n    mint &self = REF;\n    self._v -= rhs._v;\n    if (self._v\
+    \ >= self.umod())\n      self._v += self.umod();\n    return self;\n  }\n  mint\
+    \ &operator/=(const mint &rhs)\n  {\n    mint &self = REF;\n    return self =\
+    \ self * rhs.inv();\n  }\n\n  mint &operator++()\n  {\n    mint &self = REF;\n\
+    \    self._v++;\n    if (self._v == self.umod())\n      self._v = 0;\n    return\
+    \ self;\n  }\n  mint &operator--()\n  {\n    mint &self = REF;\n    if (self._v\
+    \ == 0)\n      self._v = self.umod();\n    self._v--;\n    return self;\n  }\n\
+    \  mint operator++(int)\n  {\n    mint res = VAL;\n    ++REF;\n    return res;\n\
+    \  }\n  mint operator--(int)\n  {\n    mint res = VAL;\n    --REF;\n    return\
+    \ res;\n  }\n\n  mint operator+() const { return VAL; }\n  mint operator-() const\
+    \ { return mint() - VAL; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n\
+    \    mint x = VAL, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r *=\
+    \ x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n\n  friend mint\
+    \ operator+(const mint &lhs, const mint &rhs)\n  { return mint(lhs) += rhs; }\n\
+    \  friend mint operator-(const mint &lhs, const mint &rhs)\n  { return mint(lhs)\
+    \ -= rhs; }\n  friend mint operator*(const mint &lhs, const mint &rhs)\n  { return\
+    \ mint(lhs) *= rhs; }\n  friend mint operator/(const mint &lhs, const mint &rhs)\n\
+    \  { return mint(lhs) /= rhs; }\n  friend bool operator==(const mint &lhs, const\
+    \ mint &rhs)\n  { return mint(lhs).eq(rhs); }\n  friend bool operator!=(const\
+    \ mint &lhs, const mint &rhs)\n  { return mint(lhs).neq(rhs); }\nprivate:\n  bool\
+    \ eq(const mint &rhs) { return REF._v == rhs._v; }\n  bool neq(const mint &rhs)\
+    \ { return REF._v != rhs._v; }\n};\n\n}\n\n#if defined LOCAL or not defined FAST_IO\n\
+    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
+    \ T>, int> = 0>\nistream &operator>>(istream &is, T &x)\n{\n  ll a;\n  is >> a;\n\
+    \  x = a;\n  return is;\n}\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
+    \ T>, int> = 0>\nostream &operator<<(ostream &os, const T &x)\n{\n  os << x.val();\n\
+    \  return os;\n}\n#else\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
+    \ T>, int> = 0>\nvoid rd1(T &x)\n{\n  ll a;\n  fastio::rd1(a);\n  x = a;\n}\n\
+    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
+    \ T>, int> = 0>\nvoid wt1(const T &x) { fastio::wt1(x.val()); }\n#endif\n#line\
+    \ 2 \"math/extgcd.hpp\"\n\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\
+    \u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs\
+    \ docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\
+    \u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T =\
+    \ ll>\nconstexpr tuple<T, T, T> extgcd(const T &a, const T &b)\n{\n  if (a ==\
+    \ 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  //\
+    \ a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1,\
+    \ z2 = b;\n  while (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n\
+    \    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1,\
+    \ y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q *\
+    \ z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1,\
+    \ y1};\n}\n#line 7 \"math/modint/modint.hpp\"\n\n/**\n * @brief modint (32 bit)\n\
+    \ * @docs docs/math/modint/modint.md\n */\n\ntemplate <int m>\nstruct static_modint\
+    \ : internal::modint_base<static_modint<m>>\n{\n  using mint = static_modint;\n\
+    private:\n  friend struct internal::modint_base<static_modint<m>>;\n  uint _v;\n\
+    \  static constexpr uint umod() { return m; }\n  static constexpr bool prime =\
+    \ internal::isprime32<m>;\n\npublic:\n  static constexpr int mod() { return m;\
+    \ }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
+    \  }\n\n  static_modint() : _v(0) {}\n  template <class T>\n  static_modint(T\
+    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
+    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
+    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
+    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
+    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
+    \n  mint& operator*=(const mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n\
+    \    _v = (uint)(z % umod());\n    return *this;\n  }\n\n  mint inv() const\n\
+    \  {\n    if (prime)\n    {\n      assert(_v != 0);\n      return CREF.pow(umod()\
+    \ - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<int>(_v, m);\n\
+    \      assert(g == 1);\n      return x;\n    }\n  }\n};\n\ntemplate <int id>\n\
+    struct dynamic_modint : internal::modint_base<dynamic_modint<id>>\n{\n  using\
+    \ mint = dynamic_modint;\nprivate:\n  friend struct internal::modint_base<dynamic_modint<id>>;\n\
+    \  uint _v;\n  static internal::barrett32 bt;\n  static uint umod() { return bt.umod();\
+    \ }\n\npublic:\n  static int mod() { return (int)(bt.umod()); }\n  static void\
+    \ set_mod(int m)\n  {\n    assert(m >= 1);\n    bt = internal::barrett32(m);\n\
+    \  }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
+    \  }\n\n  dynamic_modint() : _v(0) {}\n  template <class T>\n  dynamic_modint(T\
+    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
+    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
+    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
+    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
+    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
+    \n  mint& operator*=(const mint &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n   \
+    \ return *this;\n  }\n\n  mint inv() const\n  {\n    auto [g, x, y] = extgcd<int>(_v,\
+    \ mod());\n    assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::barrett32\
+    \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
+    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
+    #line 2 \"math/modint/power_table.hpp\"\n\n#line 4 \"math/modint/power_table.hpp\"\
+    \n\n/**\n * @brief \u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB\n * @docs docs/math/modint/power_table.md\n\
+    \ */\n\ntemplate <class T>\nstruct PowerTable\n{\nprivate:\n  decltype(T::mod())\
+    \ mod;\n  T base;\n  vc<T> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(T base)\
+    \ : mod(T::mod()), base(base), pw(1, 1) {}\n\n  void reserve(int n)\n  {\n   \
+    \ if (mod != T::mod())\n    {\n      mod = T::mod();\n      pw = {1};\n    }\n\
+    \    int i = pw.size();\n    if (n < i)\n      return;\n    pw.resize(n + 1);\n\
+    \    for (; i <= n; i++)\n      pw[i] = pw[i - 1] * base;\n  }\n\n  T pow(int\
+    \ n)\n  {\n    reserve(n);\n    return pw[n];\n  }\n};\n#line 2 \"math/modint/binomial.hpp\"\
+    \n\n#line 4 \"math/modint/binomial.hpp\"\n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\
+    \n * @docs docs/math/modint/binomial.md\n */\n\ntemplate <class T>\nstruct Binomial\n\
+    {\nprivate:\n  static decltype(T::mod()) mod;\n  static vc<T> fac_, finv_, inv_;\n\
+    \npublic:\n  static void reserve(int n)\n  {\n    if (mod != T::mod())\n    {\n\
+    \      mod = T::mod();\n      fac_ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};\n\
+    \    }\n    int i = fac_.size();\n    chmin(n, T::mod() - 1);\n    if (n < i)\n\
+    \      return;\n    fac_.resize(n + 1), finv_.resize(n + 1), inv_.resize(n + 1);\n\
+    \    for (; i <= n; i++)\n    {\n      fac_[i] = fac_[i - 1] * T::raw(i);\n  \
+    \    inv_[i] = -inv_[T::mod() % i] * T::raw(T::mod() / i);\n      finv_[i] = finv_[i\
+    \ - 1] * inv_[i];\n    }\n  }\n  static T fac(int n)\n  {\n    assert(n >= 0);\n\
+    \    if (n >= T::mod())\n      return 0;\n    reserve(n);\n    return fac_[n];\n\
+    \  }\n  static T finv(int n)\n  {\n    assert(n < T::mod());\n    if (n < 0)\n\
+    \      return 0;\n    reserve(n);\n    return finv_[n];\n  }\n  static T inv(T\
+    \ n)\n  {\n    assert(n != 0);\n    reserve(n.val());\n    return inv_[n.val()];\n\
+    \  }\n\n  static T P(int n, int k)\n  {\n    if (n < k)\n      return 0;\n   \
+    \ if (n < 0 || k < 0)\n      return 0;\n    reserve(n);\n    return fac_[n] *\
+    \ finv_[n - k];\n  }\n  static T C(int n, int k)\n  {\n    if (n < k)\n      return\
+    \ 0;\n    if (n < 0 || k < 0)\n      return 0;\n    reserve(n);\n    return fac_[n]\
+    \ * finv_[k] * finv_[n - k];\n  }\n  static T H(int n, int k)\n  {\n    if (n\
+    \ == 0 && k == 0)\n      return 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate\
+    \ <class T> decltype(T::mod()) Binomial<T>::mod{};\ntemplate <class T> vc<T> Binomial<T>::fac_{};\n\
+    template <class T> vc<T> Binomial<T>::finv_{};\ntemplate <class T> vc<T> Binomial<T>::inv_{};\n\
+    #line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2, auto\
+    \ test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
+    \ color)\n    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\"\
+    ;\n      #ifdef LOCAL\n      cerr << s;\n      #endif\n      /* \u30B3\u30FC\u30C9\
     \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
-    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n    cerr << val;\n    //*/\n  };\n\
-    \n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\",\
-    \ \"32\");\n  #endif\n  #if defined FAST_CIO and not defined LOCAL\n  CERR(\"\\\
-    n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
-    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
-    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
-    \\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n  {\n    dump(\"new testcase\"\
-    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\\n[SINGLE_TESTCASE]\\\
-    n\\n\", \"36\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\\
-    n\\n\", \"33\");\n  dump(\"T\");\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"\
-    new testcase\");\n    main2();\n  }\n  #endif\n}\n"
+    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n      cerr << val;\n      //*/\n \
+    \   };\n  \n    #if defined FAST_IO and not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\\
+    n\\n\", \"32\");\n    #endif\n    #if defined FAST_CIO and not defined LOCAL\n\
+    \    CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
+    \    #endif\n    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n\
+    \  \n    #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n\
+    \    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n   \
+    \   dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
+    \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
+    \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
+    T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
+    \      main2();\n    }\n    #endif\n  }\n};\n#line 85 \"verify/yukicoder/parallel_binsearch.test.cpp\"\
+    \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   code: "#define PROBLEM \"https://yukicoder.me/problems/no/2786\"\n\n#define SINGLE_TESTCASE\n\
     // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n// #define\
     \ FAST_CIO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
-    #define EPS 1e-11\n\n#include \"template/template_all.hpp\"\n\n#include \"ds/uf/uf.hpp\"\
-    \n#include \"algo/parallel_binsearch.hpp\"\n\nvoid init() {}\n\nvoid main2()\n\
-    {\n  LL(H, W);\n  VEC2(ll, H, W, A);\n  vc<tlll> UVW;\n  rep(i, H) rep(j, W)\n\
-    \  {\n    ll u = i * W + j;\n    if (i != H - 1)\n    {\n      ll v = (i + 1)\
-    \ * W + j;\n      ll w = max(A.at(i).at(j), A.at(i + 1).at(j));\n      UVW.eb(u,\
-    \ v, w);\n    }\n    if (j != W - 1)\n    {\n      ll v = i * W + (j + 1);\n \
-    \     ll w = max(A.at(i).at(j), A.at(i).at(j + 1));\n      UVW.eb(u, v, w);\n\
-    \    }\n  }\n  LL(Q);\n  vl S(Q), T(Q);\n  rep(q, Q)\n  {\n    LL(si, sj, ti,\
-    \ tj);\n    si--, sj--, ti--, tj--;\n    S.at(q) = si * W + sj;\n    T.at(q) =\
-    \ ti * W + tj;\n  }\n\n  vc<bool> res(Q);\n  UnionFind<UFDataEmpty<>> uf(H * W);\n\
-    \  vvc<pll> ev_merge(H * W + 1);\n  vvc<ll> ev_same(H * W + 1);\n  auto judge\
-    \ = [&](const vl &C)\n  {\n    // w 1 u v: \u6642\u523B w+0.1 \u306B\u8FBA u,\
-    \ v \u3092\u8FFD\u52A0\n    // c 2 q -1: \u6642\u523B c+0.2 \u306B S[q], T[q]\
+    #define EPS 1e-11\n\n#include \"template/template_all_but_modint.hpp\"\n\n#include\
+    \ \"ds/uf/uf.hpp\"\n#include \"algo/parallel_binsearch.hpp\"\n\nvoid init() {}\n\
+    \nvoid main2()\n{\n  LL(H, W);\n  VEC2(ll, H, W, A);\n  vc<tlll> UVW;\n  rep(i,\
+    \ H) rep(j, W)\n  {\n    ll u = i * W + j;\n    if (i != H - 1)\n    {\n     \
+    \ ll v = (i + 1) * W + j;\n      ll w = max(A.at(i).at(j), A.at(i + 1).at(j));\n\
+    \      UVW.eb(u, v, w);\n    }\n    if (j != W - 1)\n    {\n      ll v = i * W\
+    \ + (j + 1);\n      ll w = max(A.at(i).at(j), A.at(i).at(j + 1));\n      UVW.eb(u,\
+    \ v, w);\n    }\n  }\n  LL(Q);\n  vl S(Q), T(Q);\n  rep(q, Q)\n  {\n    LL(si,\
+    \ sj, ti, tj);\n    si--, sj--, ti--, tj--;\n    S.at(q) = si * W + sj;\n    T.at(q)\
+    \ = ti * W + tj;\n  }\n\n  vc<bool> res(Q);\n  UnionFind<UFDataEmpty<>> uf(H *\
+    \ W);\n  vvc<pll> ev_merge(H * W + 1);\n  vvc<ll> ev_same(H * W + 1);\n  auto\
+    \ judge = [&](const vl &C)\n  {\n    // w 1 u v: \u6642\u523B w+0.1 \u306B\u8FBA\
+    \ u, v \u3092\u8FFD\u52A0\n    // c 2 q -1: \u6642\u523B c+0.2 \u306B S[q], T[q]\
     \ \u304C\u9023\u7D50\u304B\u7B54\u3048\u308B\n    uf = decltype(uf)(H * W);\n\
     \    rep(time, H * W + 1)\n    {\n      ev_merge.at(time).clear();\n      ev_same.at(time).clear();\n\
     \    }\n    fec([ u, v, w ] : UVW) ev_merge.at(w).eb(u, v);\n    rep(q, Q) ev_same.at(C.at(q)).eb(q);\n\
     \    rep(time, H * W + 1)\n    {\n      fec([ u, v ] : ev_merge.at(time)) uf.merge(u,\
     \ v);\n      fec(q : ev_same.at(time)) res.at(q) = uf.same(S.at(q), T.at(q));\n\
     \    }\n    return res;\n  };\n  auto ans = parallel_binsearch(Q, judge, H * W,\
-    \ 0).first;\n  PRINTV(ans);\n}\n\nvoid test()\n{\n  /*\n  local(\n    rep(testcase,\
-    \ 100000)\n    {\n      cout << endl;\n      dump(testcase);\n\n\n      // -----\
-    \ generate cases -----\n      ll N = 1 + rand() % 5;\n      vl A(N);\n      rep(i,\
-    \ N) A.at(i) = 1 + rand() % 10;\n      // --------------------------\n\n     \
-    \ // ------ check output ------\n      #define INPUT A\n      auto god = naive(INPUT);\n\
-    \      auto ans = solve(INPUT);\n      if (god != ans)\n      {\n        dump(INPUT);\n\
-    \        dump(god, ans);\n        exit(0);\n      }\n      // --------------------------\n\
-    \    }\n    dump(\"ok\");\n  );\n  //*/\n}\n\nint main()\n{\n  cauto CERR = [](string\
-    \ val, string color)\n  {\n    string s = \"\\033[\" + color + \"m\" + val + \"\
-    \\033[m\";\n    #ifdef LOCAL\n    cerr << s;\n    #endif\n    /* \u30B3\u30FC\u30C9\
-    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
-    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n    cerr << val;\n    //*/\n  };\n\
-    \n  #if defined FAST_IO and not defined LOCAL\n  CERR(\"\\n[FAST_IO]\\n\\n\",\
-    \ \"32\");\n  #endif\n  #if defined FAST_CIO and not defined LOCAL\n  CERR(\"\\\
-    n[FAST_CIO]\\n\\n\", \"32\");\n  cin.tie(0);\n  ios::sync_with_stdio(false);\n\
-    \  #endif\n  cout << fixed << setprecision(20);\n\n  test();\n  init();\n\n  #if\
-    \ defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n  CERR(\"\
-    \\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n  while (true)\n  {\n    dump(\"new testcase\"\
-    );\n    main2();\n  }\n  #elif defined SINGLE_TESTCASE\n  CERR(\"\\n[SINGLE_TESTCASE]\\\
-    n\\n\", \"36\");\n  main2();\n  #elif defined MULTI_TESTCASE\n  CERR(\"\\n[MULTI_TESTCASE]\\\
-    n\\n\", \"33\");\n  dump(\"T\");\n  IN(uint, T);\n  while (T--)\n  {\n    dump(\"\
-    new testcase\");\n    main2();\n  }\n  #endif\n}"
+    \ 0).first;\n  PRINTV(ans);\n}\n\nvoid test()\n{\n\n}\n\n#include \"template/template_main.hpp\"\
+    \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   dependsOn:
-  - template/template_all.hpp
+  - template/template_all_but_modint.hpp
   - template/template_types.hpp
   - template/template_rep.hpp
   - template/template_math.hpp
@@ -741,12 +903,22 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
+  - template/template_random.hpp
   - ds/uf/uf.hpp
   - algo/parallel_binsearch.hpp
+  - template/template_main.hpp
+  - template/template_all.hpp
+  - math/modint/template_modint.hpp
+  - math/modint/modint.hpp
+  - math/modint/modint32_internal.hpp
+  - math/modint/modint_base.hpp
+  - math/extgcd.hpp
+  - math/modint/power_table.hpp
+  - math/modint/binomial.hpp
   isVerificationFile: true
   path: verify/yukicoder/parallel_binsearch.test.cpp
   requiredBy: []
-  timestamp: '2025-03-23 02:19:40+09:00'
+  timestamp: '2025-03-29 20:18:07+09:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yukicoder/parallel_binsearch.test.cpp

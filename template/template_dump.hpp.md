@@ -84,9 +84,12 @@ data:
   - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/power_table.hpp
     title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
+  - icon: ':question:'
+    path: math/modint/template_modint.hpp
+    title: math/modint/template_modint.hpp
   - icon: ':question:'
     path: math/prime/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
@@ -146,8 +149,14 @@ data:
     path: template/template_all.hpp
     title: template/template_all.hpp
   - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_main.hpp
+    title: template/template_main.hpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/csr.test.cpp
@@ -356,11 +365,12 @@ data:
     \ &command\n  ) {\n    return export_var(i128tos(x), indent, last_line_length,\
     \ current_depth, fail_on_newline, command);\n  }\n} // namespace cpp_dump::_detail\n\
     #define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
-    \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n\
-    #define local(...) __VA_ARGS__\n#else\n#define dump(...)\n#define local(...)\n\
-    #endif\n"
-  code: "#pragma once\n\n#include \"template/template_types.hpp\"\n\n/**\n * @brief\
-    \ \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
+    \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n\
+    #define local(...) __VA_ARGS__\n#define oj(...)\n#define local_oj(a, b) (a)\n\
+    #else\n#define dump(...)\n#define local(...)\n#define oj(...) __VA_ARGS__\n#define\
+    \ local_oj(a, b) (b)\n#endif\n"
+  code: "#pragma once\n\n#include \"template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
+    \u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
     \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
     namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
     \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
@@ -368,8 +378,9 @@ data:
     \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
     \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
     \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
-    #else\n#define dump(...)\n#define local(...)\n#endif"
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n#define local(...) __VA_ARGS__\n\
+    #define oj(...)\n#define local_oj(a, b) (a)\n#else\n#define dump(...)\n#define\
+    \ local(...)\n#define oj(...) __VA_ARGS__\n#define local_oj(a, b) (b)\n#endif\n"
   dependsOn:
   - template/template_types.hpp
   isVerificationFile: false
@@ -394,6 +405,7 @@ data:
   - math/modint/modint32_internal.hpp
   - math/modint/modint.hpp
   - math/modint/binomial.hpp
+  - math/modint/template_modint.hpp
   - math/modint/modint_base.hpp
   - math/modint/modint64.hpp
   - math/modint/power_table.hpp
@@ -405,6 +417,8 @@ data:
   - math/quadratic_equation_integer.hpp
   - template/template_inout.hpp
   - template/template_all.hpp
+  - template/template_all_but_modint.hpp
+  - template/template_main.hpp
   - template/template.cpp
   - algo/merge_sort.hpp
   - algo/parallel_binsearch.hpp
@@ -420,7 +434,7 @@ data:
   - ds/uf/uf_potential.hpp
   - ds/uf/uf_undo.hpp
   - ds/group_index.hpp
-  timestamp: '2024-12-20 09:47:18+09:00'
+  timestamp: '2025-03-29 20:18:07+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/aoj/modpow.test.cpp
@@ -493,3 +507,11 @@ title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
   - 解説記事 2： https://zenn.dev/sassan/articles/4878e79272ed61
 
 上記のプログラムを手元で利用する。`LOCAL` が define されているときのみ dump 出力をする（特に、オンラインジャッジでは無効化される）。
+
+---
+
+その他マクロ
+
+- `local()`：`LOCAL` のときのみ `()` 内が存在する
+- `oj()`：`LOCAL` でないときのみ `()` 内が存在する
+- `local_oj(a, b)`：`LOCAL` のときは `a`, `LOCAL` でないときは `b`

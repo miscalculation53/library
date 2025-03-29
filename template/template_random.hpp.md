@@ -2,9 +2,6 @@
 data:
   _extendedDependsOn:
   - icon: ':question:'
-    path: template/template_math.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
   - icon: ':question:'
@@ -152,18 +149,11 @@ data:
     path: template/template.cpp
     title: template/template.cpp
   - icon: ':question:'
-    path: template/template_algo.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
-      \u30E0\uFF09"
-  - icon: ':question:'
     path: template/template_all.hpp
     title: template/template_all.hpp
   - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':question:'
-    path: template/template_binsearch.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
   - icon: ':question:'
     path: template/template_main.hpp
     title: template/template_main.hpp
@@ -195,18 +185,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/power_table.test.cpp
     title: verify/mytest/power_table.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/template_algo.test.cpp
-    title: verify/mytest/template_algo.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/template_binsearch.test.cpp
-    title: verify/mytest/template_binsearch.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/template_bit.test.cpp
-    title: verify/mytest/template_bit.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/template_vector.test.cpp
-    title: verify/mytest/template_vector.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/and_or_convolution.test.cpp
     title: verify/yosupo/and_or_convolution.test.cpp
@@ -328,11 +306,11 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':question:'
   attributes:
-    _deprecated_at_docs: docs/template/template_vector.md
-    document_title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-    links:
-    - https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0
-  bundledCode: "#line 2 \"template/template_vector.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+    _deprecated_at_docs: docs/random/template_random.md
+    document_title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\
+      \u751F\u6210\uFF09"
+    links: []
+  bundledCode: "#line 2 \"template/template_random.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
     \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
     \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
@@ -368,119 +346,50 @@ data:
     \ < rrrrr : i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3,\
     \ repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n#define\
     \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
-    #line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
-    #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
-    \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
-    inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
-    \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
-    \ : false; }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T\
-    \ divfloor(U a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0);\
-    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T divceil(U a,\
-    \ V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divround(U a, V b) { return\
-    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U,\
-    \ class V>\ninline constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a,\
-    \ b); }\n\ntemplate <class T = ll, class U, class V>\nconstexpr T ipow(U a, V\
-    \ b)\n{\n  assert(b >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a ==\
-    \ 1)\n    return a;\n  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n \
-    \ T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n\
-    \    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n\
-    }\ntemplate <class T = ll, class A, class B, class M>\nT mul_limited(A a, B b,\
-    \ M m = INF)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return\
-    \ 0;\n  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T\
-    \ = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m = INF)\n{\n  assert(a\
-    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
-    \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
-    \    {\n      if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n  \
-    \  }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n\
-    \      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\n\ntemplate <class T\
-    \ = ll, class A, class K>\nconstexpr T iroot(A a, K k)\n{\n  assert(a >= 0 &&\
-    \ k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n  if (k == 2)\n  {\n    if\
-    \ constexpr (sizeof(T) > sizeof(ull))\n    {\n      if ((u128)a < ((u128)1 <<\
-    \ 120))\n        return sqrtl(a);\n    }\n    else\n      return sqrtl(a);\n \
-    \ }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n      return true;\n\
-    \    T res = 1, k2 = k;\n    while (true)\n    {\n      if (k2 & 1)\n      {\n\
-    \        if (res > T(a) / x)\n          return false;\n        res *= x;\n   \
-    \   }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n      if (x > T(a)\
-    \ / x)\n        return false;\n      x *= x;\n    }\n    return res <= T(a);\n\
-    \  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n   \
-    \ up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max() &&\
-    \ isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
-    template <class D = decltype(EPS), class A>\nint SGN(A a, const D &eps = EPS)\
-    \ { return int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\
-    \u6CD5\u3068\u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\
-    \uFF09\n// 0 \u306B\u5BFE\u3057\u3066\u306F {0} \u304C\u8FD4\u308B\ntemplate <class\
-    \ T = ll, class U, class V>\nvc<T> base_repr(U val, V base)\n{\n  assert(val >=\
-    \ 0);\n  assert(base >= 2);\n  if (val == 0)\n    return {0};\n  vc<T> a;\n  while\
-    \ (val > 0)\n  {\n    a.emplace_back(val % base);\n    val /= base;\n  }\n  reverse(a.begin(),\
-    \ a.end());\n  return a;\n}\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\u540C\
-    \u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate <class\
-    \ T = ll, class U, class V>\nvc<T> base_repr(U val, V base, int n)\n{\n  assert(val\
-    \ >= 0);\n  assert(base >= 2);\n  assert(n >= 0);\n  vc<T> a(n);\n  repi(i, n)\n\
-    \  {\n    a[i] = val % base;\n    val /= base;\n  }\n  reverse(a.begin(), a.end());\n\
-    \  return a;\n}\ntemplate <const bool use_upper = true, class U>\nstring base_repr_str(U\
-    \ val, int base)\n{\n  assert(val >= 0);\n  assert(2 <= base && base <= 36);\n\
-    \  auto a = base_repr(val, base);\n  string s = \"\";\n  for (cauto &ai : a)\n\
-    \    s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return\
-    \ s;\n}\ntemplate <const bool use_upper = true, class U>\nstring base_repr_str(U\
-    \ val, int base, int n)\n{\n  assert(val >= 0);\n  assert(2 <= base && base <=\
-    \ 36);\n  assert(n >= 0);\n  auto a = base_repr(val, base, n);\n  string s = \"\
-    \";\n  for (cauto &ai : a)\n    s += (ai < 10 ? '0' + ai : (use_upper ? 'A' :\
-    \ 'a') + (ai - 10));\n  return s;\n}\n#line 6 \"template/template_vector.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09\n *\
-    \ @docs docs/template/template_vector.md\n */\n\n#define ALL(a) (a).begin(), (a).end()\n\
-    template <class T = ll, class V>\ninline T SZ(const V &x) { return x.size(); }\n\
-    #define eb emplace_back\n\ntemplate <class F>\nauto gen_vec(const int &n, const\
-    \ F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n  return\
-    \ res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
-    template <class T, size_t d, size_t i = 0, class V>\nauto dvec(const V (&sz)[d],\
-    \ const T &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i\
-    \ + 1>(sz, init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT\
-    \ ctol(const char &c, const string &s)\n{\n  repi(i, SZ<int>(s)) if (s[i] == c)\
-    \ return i;\n  return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string\
-    \ &s, const char &first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n  \
-    \               { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T>\
-    \ stov(const string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int\
-    \ i) -> T\n                 { return ctol(s[i], t); });\n}\n\ntemplate <class\
-    \ T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n\
-    \    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class T>\nvc<T>\
-    \ concat(const vc<T> &v) { return v; }\ntemplate <class T, class... Ts>\nvc<T>\
-    \ concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)), ...);\n\
-    \  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
-    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
-    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
-    \  return v[i];\n}\n"
+    #line 5 \"template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/random/template_random.md\n\
+    \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
+    \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
+    \  return T(l) + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\
+    \u7387\ntemplate <class T = ll, class U1, class U2>\nT randrange(U1 l, U2 r)\n\
+    {\n  assert(T(l) < T(r));\n  return T(l) + mt() % (T(r) - T(l));\n}\n\n// [l,\
+    \ r) \u304B\u3089\u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n// does_sort:\
+    \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <int k, bool\
+    \ does_sort, class T = ll, class U1, class U2>\narray<T, k> random_sample_range_array(U1\
+    \ l, U2 r)\n{\n  assert(T(r) - T(l) >= T(k));\n  array<T, k> res;\n  repi(i, k)\
+    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n// [l,\
+    \ r) \u304B\u3089\u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n// does_sort:\
+    \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <bool does_sort,\
+    \ class T = ll, class U1, class U2>\nvc<T> random_sample_range_vector(U1 l, U2\
+    \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
+    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n"
   code: "#pragma once\n\n#include \"template_types.hpp\"\n#include \"template_rep.hpp\"\
-    \n#include \"template_math.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n */\n\n#define\
-    \ ALL(a) (a).begin(), (a).end()\ntemplate <class T = ll, class V>\ninline T SZ(const\
-    \ V &x) { return x.size(); }\n#define eb emplace_back\n\ntemplate <class F>\n\
-    auto gen_vec(const int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i,\
-    \ n) res[i] = f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
-    template <class T, size_t d, size_t i = 0, class V>\nauto dvec(const V (&sz)[d],\
-    \ const T &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i\
-    \ + 1>(sz, init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT\
-    \ ctol(const char &c, const string &s)\n{\n  repi(i, SZ<int>(s)) if (s[i] == c)\
-    \ return i;\n  return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string\
-    \ &s, const char &first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n  \
-    \               { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T>\
-    \ stov(const string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int\
-    \ i) -> T\n                 { return ctol(s[i], t); });\n}\n\ntemplate <class\
-    \ T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n\
-    \    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class T>\nvc<T>\
-    \ concat(const vc<T> &v) { return v; }\ntemplate <class T, class... Ts>\nvc<T>\
-    \ concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)), ...);\n\
-    \  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
-    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
-    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
-    \  return v[i];\n}"
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\
+    \u30E0\u751F\u6210\uFF09\n * @docs docs/random/template_random.md\n */\n\nmt19937_64\
+    \ mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class T = ll, class\
+    \ U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n  return T(l)\
+    \ + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\u7387\ntemplate\
+    \ <class T = ll, class U1, class U2>\nT randrange(U1 l, U2 r)\n{\n  assert(T(l)\
+    \ < T(r));\n  return T(l) + mt() % (T(r) - T(l));\n}\n\n// [l, r) \u304B\u3089\
+    \u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n// does_sort: \u30BD\u30FC\
+    \u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <int k, bool does_sort, class\
+    \ T = ll, class U1, class U2>\narray<T, k> random_sample_range_array(U1 l, U2\
+    \ r)\n{\n  assert(T(r) - T(l) >= T(k));\n  array<T, k> res;\n  repi(i, k) res[i]\
+    \ = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i] +=\
+    \ i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n// [l,\
+    \ r) \u304B\u3089\u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n// does_sort:\
+    \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <bool does_sort,\
+    \ class T = ll, class U1, class U2>\nvc<T> random_sample_range_vector(U1 l, U2\
+    \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
+    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n"
   dependsOn:
   - template/template_types.hpp
   - template/template_rep.hpp
-  - template/template_math.hpp
   isVerificationFile: false
-  path: template/template_vector.hpp
+  path: template/template_random.hpp
   requiredBy:
   - math/extgcd.hpp
   - math/set/zeta_mobius.hpp
@@ -514,8 +423,6 @@ data:
   - template/template_all.hpp
   - template/template_all_but_modint.hpp
   - template/template_main.hpp
-  - template/template_binsearch.hpp
-  - template/template_algo.hpp
   - template/template.cpp
   - algo/merge_sort.hpp
   - algo/parallel_binsearch.hpp
@@ -531,7 +438,7 @@ data:
   - ds/uf/uf_potential.hpp
   - ds/uf/uf_undo.hpp
   - ds/group_index.hpp
-  timestamp: '2025-03-16 23:12:25+09:00'
+  timestamp: '2025-03-29 20:18:07+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/aoj/modpow.test.cpp
@@ -577,107 +484,16 @@ data:
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/binomial.test.cpp
   - verify/mytest/modint64.test.cpp
-  - verify/mytest/template_binsearch.test.cpp
-  - verify/mytest/template_bit.test.cpp
   - verify/mytest/power_table.test.cpp
   - verify/mytest/itertools_direct_product.test.cpp
   - verify/mytest/modint.test.cpp
-  - verify/mytest/template_algo.test.cpp
-  - verify/mytest/template_vector.test.cpp
   - verify/mytest/linear_sieve.test.cpp
   - verify/mytest/itertools_bit.test.cpp
-documentation_of: template/template_vector.hpp
+documentation_of: template/template_random.hpp
 layout: document
 redirect_from:
-- /library/template/template_vector.hpp
-- /library/template/template_vector.hpp.html
-title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+- /library/template/template_random.hpp
+- /library/template/template_random.hpp.html
+title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\
+  \uFF09"
 ---
-## テンプレート（vector）
-
-### マクロ
-
-#### ALL
-
-`ALL(x)`：`begin(x), end(x)`
-
-#### SZ
-
-```cpp
-T SZ<T=ll>(x)
-```
-
-`x.size()` を `T` 型で返す（デフォルトでは `ll`）。
-
-### vector の生成
-
-#### gen_vec
-
-```cpp
-gen_vec(int n, F f)
-```
-
-長さ $n$ で、$i$ 番目が $f(i)$ の vector を返す。
-
-一応、生成する vector の型を書かなくてもよいという利点がある。（が、あまり使わないかも。）
-
-### 多次元 vector の生成
-
-#### dvec
-
-多次元 vector を生成する。DP 配列の初期化などで使う。
-
-使用例：
-
-```cpp
-// dp[i][j][k] (0<=i<N, 0<=j<M, 0<=k<2)
-// 初期値は 0
-// 初期値の部分を 0 と書くと値の型が int になるので注意
-// N, M が ll の場合、定数は 2LL などとする
-auto dp = make_vec({N, M, 2}, 0LL);
-```
-
-### 文字列から数値の vector に変換
-
-#### ctol
-
-`T ctol<T = ll>(char c, string s)`
-
-文字と数値の関係を表す文字列 $s$ を使って、文字 $c$ を数値に変換する。たとえば、`ctol(c, "JOI")` なら、`J` $\to 0$, `O` $\to 1$, `I` $\to 2$ という変換をする。
-
-厳密には、$s$ の中に初めて $c$ が現れる index（見つからなければ $-1$）を返す。（基本的に $s$ の文字が異なることを想定しているが、そうでなくても動作する。）
-
-#### stov
-
-```cpp
-(1) vc<T = ll> stov(string s, char first)
-(2) vc<T = ll> stov(string s, string t)
-```
-
-- (1)：$s$ の各文字 `s[i]` を `s[i] - first` として数値に変換し、それを並べた vector を返す。
-  - `first` は基本的には `'A'`, `'a'`, `'0'` を使うことが多いと思う。
-
-- (2)：$s$ の各文字 `s[i]` を `ctol(s[i], t)` として数値に変換し、それを並べた vector を返す。
-
-### 結合
-
-#### concat
-
-```cpp
-(1) vc<T> concat(vvc<T> vs)
-(2) vc<T> concat(vc<T> v, vc<T1> v1, vc<T2> v2, ...)
-```
-
-vector を結合したものを返す。(2) では、`v1`, `v2`, $\dots$ の型が必ずしも `T` と一致していなくてもよい（`ll` と `int` など）。
-
-### 取得
-
-#### vecget
-
-```cpp
-T vecget(vc<T> v, int i, T dflt_negative = -INF, T dflt_positive = INF)
-```
-
-範囲外も考慮した vector の取得。範囲内なら通常の `[]` や `at` と同じで、範囲外なら負方向は `dflt_negative`, 正方向は `dflt_positive` を返す。
-
-用途としては、ソート済み配列が無限に広がっていると考えたい場合（特に、`binsearch` や `expsearch` に渡すとき）。`LB` や `UB` だと頭が壊れるとき用に。→ 二分探索に lt, leq, gt, geq 系をつけたので出番がないかも。

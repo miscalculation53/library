@@ -11,7 +11,8 @@ tuple<T, T, T> extgcd(T a, T b)
   - $\gcd(c, 0) = \gcd(0, c) = c \quad (c \geq 0)$
   - $\gcd(0, 0) = 0$
 - $ax + by = g$
-- $\max(\lvert x \rvert, \lvert y \rvert) \leq \max(\lvert a \rvert, \lvert b \rvert)$
+- 上記を満たす中で $\lVert(x,y)\rVert_p \: (1 \leq p \leq \infty)$ が最小？
+- $\lVert(x,y)\rVert_p \leq \lVert(a,b)\rVert_p \: (1 \leq p \leq \infty)$ ？
 
 ##### 制約
 

@@ -9,8 +9,8 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
   - icon: ':question:'
-    path: template/template_all.hpp
-    title: template/template_all.hpp
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
   - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
@@ -27,6 +27,10 @@ data:
   - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
   - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
@@ -48,7 +52,7 @@ data:
     _deprecated_at_docs: docs/ds/group_index.md
     document_title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
     links: []
-  bundledCode: "#line 2 \"ds/group_index.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
+  bundledCode: "#line 2 \"ds/group_index.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -399,74 +403,76 @@ data:
     \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
     \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
     \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);\n#define local(...) __VA_ARGS__\n\
-    #else\n#define dump(...)\n#define local(...)\n#endif\n#line 6 \"template/template_inout.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\
-    \uFF09\n * @docs docs/template/template_inout.md\n */\n\n// https://judge.yosupo.jp/submission/170706\
-    \ (maspy \u3055\u3093)\n// https://judge.yosupo.jp/submission/21623  (Nyaan \u3055\
-    \u3093)\n#if defined FAST_IO and not defined LOCAL\nnamespace fastio {\nstatic\
-    \ constexpr uint32_t SIZ = 1 << 17;\nchar ibuf[SIZ];\nchar obuf[SIZ];\nchar out[100];\n\
-    // pointer of ibuf, obuf\nuint32_t pil = 0, pir = 0, por = 0;\n\nstruct Pre {\n\
-    \  char num[10000][4];\n  constexpr Pre() : num() {\n    for (int i = 0; i < 10000;\
-    \ i++) {\n      int n = i;\n      for (int j = 3; j >= 0; j--) {\n        num[i][j]\
-    \ = n % 10 | '0';\n        n /= 10;\n      }\n    }\n  }\n} constexpr pre;\n\n\
-    inline void load() {\n  memcpy(ibuf, ibuf + pil, pir - pil);\n  pir = pir - pil\
-    \ + fread(ibuf + pir - pil, 1, SIZ - pir + pil, stdin);\n  pil = 0;\n  if (pir\
-    \ < SIZ) ibuf[pir++] = '\\n';\n}\n\ninline void flush() {\n  fwrite(obuf, 1, por,\
-    \ stdout);\n  por = 0;\n}\n\nvoid rd1(char &c) {\n  do {\n    if (pil + 1 > pir)\
-    \ load();\n    c = ibuf[pil++];\n  } while (isspace(c));\n}\n\nvoid rd1(string\
-    \ &x) {\n  x.clear();\n  char c;\n  do {\n    if (pil + 1 > pir) load();\n   \
-    \ c = ibuf[pil++];\n  } while (isspace(c));\n  do {\n    x += c;\n    if (pil\
-    \ == pir) load();\n    c = ibuf[pil++];\n  } while (!isspace(c));\n}\n\ntemplate\
-    \ <typename T>\nvoid rd1_real(T &x) {\n  string s;\n  rd1(s);\n  x = stod(s);\n\
-    }\n\ntemplate <typename T>\nvoid rd1_integer(T &x) {\n  if (pil + 100 > pir) load();\n\
-    \  char c;\n  do\n    c = ibuf[pil++];\n  while (c < '-');\n  bool minus = 0;\n\
-    \  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {\n    if (c == '-')\
-    \ { minus = 1, c = ibuf[pil++]; }\n  }\n  x = 0;\n  while ('0' <= c) { x = x *\
-    \ 10 + (c & 15), c = ibuf[pil++]; }\n  if constexpr (is_signed<T>::value || is_same_v<T,\
-    \ i128>) {\n    if (minus) x = -x;\n  }\n}\n\nvoid rd1(int &x) { rd1_integer(x);\
-    \ }\nvoid rd1(ll &x) { rd1_integer(x); }\nvoid rd1(i128 &x) { rd1_integer(x);\
-    \ }\nvoid rd1(uint &x) { rd1_integer(x); }\nvoid rd1(ull &x) { rd1_integer(x);\
-    \ }\nvoid rd1(u128 &x) { rd1_integer(x); }\nvoid rd1(double &x) { rd1_real(x);\
-    \ }\nvoid rd1(long double &x) { rd1_real(x); }\n// void rd1(f128 &x) { rd1_real(x);\
-    \ }\n\ntemplate <class T, class U>\nvoid rd1(pair<T, U> &p) {\n  return rd1(p.first),\
-    \ rd1(p.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid rd1_tuple(T &t)\
-    \ {\n  if constexpr (N < std::tuple_size<T>::value) {\n    auto &x = std::get<N>(t);\n\
-    \    rd1(x);\n    rd1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid rd1(tuple<T...>\
-    \ &tpl) {\n  rd1_tuple(tpl);\n}\n\ntemplate <size_t N = 0, typename T>\nvoid rd1(array<T,\
-    \ N> &x) {\n  for (auto &d: x) rd1(d);\n}\ntemplate <class T>\nvoid rd1(vc<T>\
-    \ &x) {\n  for (auto &d: x) rd1(d);\n}\n\nvoid read() {}\ntemplate <class H, class...\
-    \ T>\nvoid read(H &h, T &... t) {\n  rd1(h), read(t...);\n}\n\nvoid wt1(const\
-    \ char c) {\n  if (por == SIZ) flush();\n  obuf[por++] = c;\n}\nvoid wt1(const\
-    \ string s) {\n  for (char c: s) wt1(c);\n}\nvoid wt1(const char *s) {\n  size_t\
-    \ len = strlen(s);\n  for (size_t i = 0; i < len; i++) wt1(s[i]);\n}\n\ntemplate\
-    \ <typename T>\nvoid wt1_integer(T x) {\n  if (por > SIZ - 100) flush();\n  if\
-    \ (x < 0) { obuf[por++] = '-', x = -x; }\n  int outi;\n  for (outi = 96; x >=\
-    \ 10000; outi -= 4) {\n    memcpy(out + outi, pre.num[x % 10000], 4);\n    x /=\
-    \ 10000;\n  }\n  if (x >= 1000) {\n    memcpy(obuf + por, pre.num[x], 4);\n  \
-    \  por += 4;\n  } else if (x >= 100) {\n    memcpy(obuf + por, pre.num[x] + 1,\
-    \ 3);\n    por += 3;\n  } else if (x >= 10) {\n    int q = (x * 103) >> 10;\n\
-    \    obuf[por] = q | '0';\n    obuf[por + 1] = (x - q * 10) | '0';\n    por +=\
-    \ 2;\n  } else\n    obuf[por++] = x | '0';\n  memcpy(obuf + por, out + outi +\
-    \ 4, 96 - outi);\n  por += 96 - outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T\
-    \ x) {\n  ostringstream oss;\n  oss << fixed << setprecision(15) << double(x);\n\
-    \  string s = oss.str();\n  wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>,\
-    \ int> = 0>\nvoid wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x);\
-    \ }\nvoid wt1(u128 x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\n\
-    void wt1(long double x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\
-    \ntemplate <class T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n\
-    \  wt1(' ');\n  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid\
-    \ wt1_tuple(const T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n\
-    \    if constexpr (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n\
-    \    wt1(x);\n    wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const\
-    \ tuple<T...> &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid\
-    \ wt1(const array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0;\
-    \ i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class\
-    \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
-    \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
-    \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
-    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
-    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n#define local(...) __VA_ARGS__\n\
+    #define oj(...)\n#define local_oj(a, b) (a)\n#else\n#define dump(...)\n#define\
+    \ local(...)\n#define oj(...) __VA_ARGS__\n#define local_oj(a, b) (b)\n#endif\n\
+    #line 6 \"template/template_inout.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\n * @docs docs/template/template_inout.md\n\
+    \ */\n\n// https://judge.yosupo.jp/submission/170706 (maspy \u3055\u3093)\n//\
+    \ https://judge.yosupo.jp/submission/21623  (Nyaan \u3055\u3093)\n#if defined\
+    \ FAST_IO and not defined LOCAL\nnamespace fastio {\nstatic constexpr uint32_t\
+    \ SIZ = 1 << 17;\nchar ibuf[SIZ];\nchar obuf[SIZ];\nchar out[100];\n// pointer\
+    \ of ibuf, obuf\nuint32_t pil = 0, pir = 0, por = 0;\n\nstruct Pre {\n  char num[10000][4];\n\
+    \  constexpr Pre() : num() {\n    for (int i = 0; i < 10000; i++) {\n      int\
+    \ n = i;\n      for (int j = 3; j >= 0; j--) {\n        num[i][j] = n % 10 | '0';\n\
+    \        n /= 10;\n      }\n    }\n  }\n} constexpr pre;\n\ninline void load()\
+    \ {\n  memcpy(ibuf, ibuf + pil, pir - pil);\n  pir = pir - pil + fread(ibuf +\
+    \ pir - pil, 1, SIZ - pir + pil, stdin);\n  pil = 0;\n  if (pir < SIZ) ibuf[pir++]\
+    \ = '\\n';\n}\n\ninline void flush() {\n  fwrite(obuf, 1, por, stdout);\n  por\
+    \ = 0;\n}\n\nvoid rd1(char &c) {\n  do {\n    if (pil + 1 > pir) load();\n   \
+    \ c = ibuf[pil++];\n  } while (isspace(c));\n}\n\nvoid rd1(string &x) {\n  x.clear();\n\
+    \  char c;\n  do {\n    if (pil + 1 > pir) load();\n    c = ibuf[pil++];\n  }\
+    \ while (isspace(c));\n  do {\n    x += c;\n    if (pil == pir) load();\n    c\
+    \ = ibuf[pil++];\n  } while (!isspace(c));\n}\n\ntemplate <typename T>\nvoid rd1_real(T\
+    \ &x) {\n  string s;\n  rd1(s);\n  x = stod(s);\n}\n\ntemplate <typename T>\n\
+    void rd1_integer(T &x) {\n  if (pil + 100 > pir) load();\n  char c;\n  do\n  \
+    \  c = ibuf[pil++];\n  while (c < '-');\n  bool minus = 0;\n  if constexpr (is_signed<T>::value\
+    \ || is_same_v<T, i128>) {\n    if (c == '-') { minus = 1, c = ibuf[pil++]; }\n\
+    \  }\n  x = 0;\n  while ('0' <= c) { x = x * 10 + (c & 15), c = ibuf[pil++]; }\n\
+    \  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {\n    if (minus)\
+    \ x = -x;\n  }\n}\n\nvoid rd1(int &x) { rd1_integer(x); }\nvoid rd1(ll &x) { rd1_integer(x);\
+    \ }\nvoid rd1(i128 &x) { rd1_integer(x); }\nvoid rd1(uint &x) { rd1_integer(x);\
+    \ }\nvoid rd1(ull &x) { rd1_integer(x); }\nvoid rd1(u128 &x) { rd1_integer(x);\
+    \ }\nvoid rd1(double &x) { rd1_real(x); }\nvoid rd1(long double &x) { rd1_real(x);\
+    \ }\n// void rd1(f128 &x) { rd1_real(x); }\n\ntemplate <class T, class U>\nvoid\
+    \ rd1(pair<T, U> &p) {\n  return rd1(p.first), rd1(p.second);\n}\ntemplate <size_t\
+    \ N = 0, typename T>\nvoid rd1_tuple(T &t) {\n  if constexpr (N < std::tuple_size<T>::value)\
+    \ {\n    auto &x = std::get<N>(t);\n    rd1(x);\n    rd1_tuple<N + 1>(t);\n  }\n\
+    }\ntemplate <class... T>\nvoid rd1(tuple<T...> &tpl) {\n  rd1_tuple(tpl);\n}\n\
+    \ntemplate <size_t N = 0, typename T>\nvoid rd1(array<T, N> &x) {\n  for (auto\
+    \ &d: x) rd1(d);\n}\ntemplate <class T>\nvoid rd1(vc<T> &x) {\n  for (auto &d:\
+    \ x) rd1(d);\n}\n\nvoid read() {}\ntemplate <class H, class... T>\nvoid read(H\
+    \ &h, T &... t) {\n  rd1(h), read(t...);\n}\n\nvoid wt1(const char c) {\n  if\
+    \ (por == SIZ) flush();\n  obuf[por++] = c;\n}\nvoid wt1(const string s) {\n \
+    \ for (char c: s) wt1(c);\n}\nvoid wt1(const char *s) {\n  size_t len = strlen(s);\n\
+    \  for (size_t i = 0; i < len; i++) wt1(s[i]);\n}\n\ntemplate <typename T>\nvoid\
+    \ wt1_integer(T x) {\n  if (por > SIZ - 100) flush();\n  if (x < 0) { obuf[por++]\
+    \ = '-', x = -x; }\n  int outi;\n  for (outi = 96; x >= 10000; outi -= 4) {\n\
+    \    memcpy(out + outi, pre.num[x % 10000], 4);\n    x /= 10000;\n  }\n  if (x\
+    \ >= 1000) {\n    memcpy(obuf + por, pre.num[x], 4);\n    por += 4;\n  } else\
+    \ if (x >= 100) {\n    memcpy(obuf + por, pre.num[x] + 1, 3);\n    por += 3;\n\
+    \  } else if (x >= 10) {\n    int q = (x * 103) >> 10;\n    obuf[por] = q | '0';\n\
+    \    obuf[por + 1] = (x - q * 10) | '0';\n    por += 2;\n  } else\n    obuf[por++]\
+    \ = x | '0';\n  memcpy(obuf + por, out + outi + 4, 96 - outi);\n  por += 96 -\
+    \ outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T x) {\n  ostringstream oss;\n\
+    \  oss << fixed << setprecision(15) << double(x);\n  string s = oss.str();\n \
+    \ wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>, int> = 0>\nvoid\
+    \ wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x); }\nvoid wt1(u128\
+    \ x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\nvoid wt1(long double\
+    \ x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\ntemplate <class\
+    \ T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n  wt1(' ');\n\
+    \  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid wt1_tuple(const\
+    \ T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n    if constexpr\
+    \ (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n    wt1(x);\n   \
+    \ wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const tuple<T...>\
+    \ &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid wt1(const\
+    \ array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i < n; i++)\
+    \ {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class T>\nvoid\
+    \ wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i\
+    \ < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid write()\
+    \ {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail &&...\
+    \ tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print() {\
+    \ wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
     \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
     }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
     struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
@@ -575,40 +581,101 @@ data:
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 4 \"ds/group_index.hpp\"\n\n#line 2 \"ds/csr.hpp\"\
-    \n\n#line 4 \"ds/csr.hpp\"\n\n/**\n * @brief CSR\n * @docs docs/ds/csr.md\n */\n\
-    \ntemplate <class T>\nstruct CSR\n{\nprivate:\n  // i (0 <= i < n) \u884C\u76EE\
-    \u3092\u8868\u3059\u306E\u306F elist \u306E [start[i], start[i+1])\n  int n;\n\
-    \  vc<int> start;\n  vc<T> elist;\n\n  struct Row\n  {\n    using iterator = typename\
-    \ vc<T>::const_iterator;\n\n  private:\n    iterator begi, endi;\n\n  public:\n\
-    \    Row(const iterator &begi, const iterator &endi) : begi(begi), endi(endi)\
-    \ {}\n    inline iterator begin() const { return begi; }\n    inline iterator\
-    \ end() const { return endi; }\n    template <class I = ll>\n    inline I size()\
-    \ const { return endi - begi; }\n    inline bool empty() const { return size()\
-    \ == 0; }\n\n    inline T get(int i) const\n    {\n      assert(0 <= i && i <\
-    \ size());\n      return *(begi + i);\n    }\n    inline T front() const\n   \
-    \ {\n      assert(!empty());\n      return *begi;\n    }\n    inline T back()\
-    \ const\n    {\n      assert(!empty());\n      return *prev(endi);\n    }\n  };\n\
-    \npublic:\n  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n\
-    \  template <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) : n(n), elist(ies.size())\n\
-    \  {\n    assert(n >= 0);\n    start.assign(n, 0);\n    fec([ i, e ] : ies)\n\
-    \    {\n      assert(0 <= i && i < n);\n      start[i]++;\n    }\n    start =\
-    \ cumlsum(start);\n    auto cnt = start;\n    fec([ i, e ] : ies) elist[cnt[i]++]\
-    \ = e;\n  }\n  // vv[i] \u306B elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\
-    \u305F vector\n  CSR(const vvc<T> &vv) : n(vv.size()), start(n + 1)\n  {\n   \
-    \ int m = 0;\n    fec(row : vv) m += row.size();\n    elist.resize(m);\n    int\
-    \ k = 0;\n    repi(i, n)\n    {\n      start[i] = k;\n      fec(e : vv[i]) elist[k++]\
-    \ = e;\n    }\n    start.back() = m;\n  }\n\n  // i \u884C\u76EE\n  Row row(int\
-    \ i) const\n  {\n    if (!(0 <= i && i < n))\n      return Row(elist.begin(),\
-    \ elist.begin());\n    return Row(elist.begin() + start[i], elist.begin() + start[i\
-    \ + 1]);\n  }\n\n  template <class I = ll>\n  I size() const { return n; }\n\n\
-    \  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i] = {elist.begin()\
-    \ + start[i], elist.begin() + start[i + 1]};\n    return res;\n  }\n};\n#line\
-    \ 6 \"ds/group_index.hpp\"\n\n/**\n * @brief \u6DFB\u5B57\u3092\u5024\u3067\u5206\
-    \u985E\n * @docs docs/ds/group_index.md\n */\n\nstruct GroupIndex\n{\nprivate:\n\
-    \  int n, m;\n  CSR<int> csr;\n\npublic:\n  GroupIndex() {}\n  template <class\
-    \ T>\n  GroupIndex(const vc<T> &a) : n(a.size()), m(a.empty() ? 0 : MAX(a) + 1)\n\
-    \  {\n    vc<pair<int, int>> ies(n);\n    repi(i, n)\n    {\n      assert(0 <=\
+    \ vt;\n}\n// ----------\n#line 2 \"template/template_random.hpp\"\n\n#line 5 \"\
+    template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
+    \u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/random/template_random.md\n\
+    \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
+    \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
+    \  return T(l) + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\
+    \u7387\ntemplate <class T = ll, class U1, class U2>\nT randrange(U1 l, U2 r)\n\
+    {\n  assert(T(l) < T(r));\n  return T(l) + mt() % (T(r) - T(l));\n}\n\n// [l,\
+    \ r) \u304B\u3089\u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n// does_sort:\
+    \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <int k, bool\
+    \ does_sort, class T = ll, class U1, class U2>\narray<T, k> random_sample_range_array(U1\
+    \ l, U2 r)\n{\n  assert(T(r) - T(l) >= T(k));\n  array<T, k> res;\n  repi(i, k)\
+    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n// [l,\
+    \ r) \u304B\u3089\u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n// does_sort:\
+    \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <bool does_sort,\
+    \ class T = ll, class U1, class U2>\nvc<T> random_sample_range_vector(U1 l, U2\
+    \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
+    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
+    \ 4 \"ds/group_index.hpp\"\n\n#line 2 \"ds/csr.hpp\"\n\n#line 4 \"ds/csr.hpp\"\
+    \n\n/**\n * @brief CSR\n * @docs docs/ds/csr.md\n */\n\ntemplate <class T>\nstruct\
+    \ CSR\n{\nprivate:\n  // i (0 <= i < n) \u884C\u76EE\u3092\u8868\u3059\u306E\u306F\
+    \ elist \u306E [start[i], start[i+1])\n  int n;\n  vc<int> start;\n  vc<T> elist;\n\
+    \n  struct Row\n  {\n    using iterator = typename vc<T>::const_iterator;\n\n\
+    \  private:\n    iterator begi, endi;\n\n  public:\n    Row(const iterator &begi,\
+    \ const iterator &endi) : begi(begi), endi(endi) {}\n    inline iterator begin()\
+    \ const { return begi; }\n    inline iterator end() const { return endi; }\n \
+    \   template <class I = ll>\n    inline I size() const { return endi - begi; }\n\
+    \    inline bool empty() const { return size() == 0; }\n\n    inline T get(int\
+    \ i) const\n    {\n      assert(0 <= i && i < size());\n      return *(begi +\
+    \ i);\n    }\n    inline T front() const\n    {\n      assert(!empty());\n   \
+    \   return *begi;\n    }\n    inline T back() const\n    {\n      assert(!empty());\n\
+    \      return *prev(endi);\n    }\n  };\n\npublic:\n  CSR() {}\n  // (i, elem)\
+    \ \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template <class I>\n  CSR(int\
+    \ n, const vc<pair<I, T>> &ies) : n(n), elist(ies.size())\n  {\n    assert(n >=\
+    \ 0);\n    start.assign(n, 0);\n    fec([ i, e ] : ies)\n    {\n      assert(0\
+    \ <= i && i < n);\n      start[i]++;\n    }\n    start = cumlsum(start);\n   \
+    \ auto cnt = start;\n    fec([ i, e ] : ies) elist[cnt[i]++] = e;\n  }\n  // vv[i]\
+    \ \u306B elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  CSR(const\
+    \ vvc<T> &vv) : n(vv.size()), start(n + 1)\n  {\n    int m = 0;\n    fec(row :\
+    \ vv) m += row.size();\n    elist.resize(m);\n    int k = 0;\n    repi(i, n)\n\
+    \    {\n      start[i] = k;\n      fec(e : vv[i]) elist[k++] = e;\n    }\n   \
+    \ start.back() = m;\n  }\n\n  // i \u884C\u76EE\n  Row row(int i) const\n  {\n\
+    \    if (!(0 <= i && i < n))\n      return Row(elist.begin(), elist.begin());\n\
+    \    return Row(elist.begin() + start[i], elist.begin() + start[i + 1]);\n  }\n\
+    \n  template <class I = ll>\n  I size() const { return n; }\n\n  vvc<T> to_vv()\
+    \ const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i] = {elist.begin() + start[i],\
+    \ elist.begin() + start[i + 1]};\n    return res;\n  }\n};\n#line 6 \"ds/group_index.hpp\"\
+    \n\n/**\n * @brief \u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E\n * @docs docs/ds/group_index.md\n\
+    \ */\n\nstruct GroupIndex\n{\nprivate:\n  int n, m;\n  CSR<int> csr;\n\npublic:\n\
+    \  GroupIndex() {}\n  template <class T>\n  GroupIndex(const vc<T> &a) : n(a.size()),\
+    \ m(a.empty() ? 0 : MAX(a) + 1)\n  {\n    vc<pair<int, int>> ies(n);\n    repi(i,\
+    \ n)\n    {\n      assert(0 <= a[i]);\n      ies[i] = {a[i], i};\n    }\n    csr\
+    \ = CSR(m, ies);\n  }\n\n  // \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u305F\
+    \u3061\n  auto idxs(int val) const { return csr.row(val); }\n\n  // \u5024\u304C\
+    \ val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061 i \u672A\u6E80\u3067\u6700\
+    \u5927\u306E\u3082\u306E (\u306A\u3051\u308C\u3070 -1)\n  template <class I =\
+    \ ll>\n  I lt_max(int val, int i) const\n  {\n    auto is = idxs(val);\n    ll\
+    \ j = ::lt_max(is, i);\n    return j == -1 ? -1 : is.get(j);\n  }\n  // \u5024\
+    \u304C val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061 i \u4EE5\u4E0B\u3067\
+    \u6700\u5927\u306E\u3082\u306E (\u306A\u3051\u308C\u3070 -1)\n  template <class\
+    \ I = ll>\n  I leq_max(int val, int i) const\n  {\n    auto is = idxs(val);\n\
+    \    ll j = ::leq_max(is, i);\n    return j == -1 ? -1 : is.get(j);\n  }\n  //\
+    \ \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061 i \u8D85\u904E\
+    \u3067\u6700\u5C0F\u306E\u3082\u306E (\u306A\u3051\u308C\u3070 n)\n  template\
+    \ <class I = ll>\n  I gt_min(int val, int i) const\n  {\n    auto is = idxs(val);\n\
+    \    ll j = ::gt_min(is, i);\n    return j == is.size() ? n : is.get(j);\n  }\n\
+    \  // \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061 i \u4EE5\
+    \u4E0A\u3067\u6700\u5C0F\u306E\u3082\u306E (\u306A\u3051\u308C\u3070 n)\n  template\
+    \ <class I = ll>\n  I geq_min(int val, int i) const\n  {\n    auto is = idxs(val);\n\
+    \    ll j = ::geq_min(is, i);\n    return j == is.size() ? n : is.get(j);\n  }\n\
+    \  // \u5024\u304C val \u306B\u306A\u308B i \u672A\u6E80\u306E\u6DFB\u5B57\u306E\
+    \u500B\u6570\n  // i \u756A\u76EE\u304C val \u306E\u3068\u304D\u3001\u300C\u3053\
+    \u308C\u306F\u4F55\u756A\u76EE\u306E val \u304B\uFF1F\u300D\u306B\u4E00\u81F4\n\
+    \  template <class I = ll>\n  I lt_cnt(int val, int i) const { return ::lt_cnt(idxs(val),\
+    \ i); }\n  // \u5024\u304C val \u306B\u306A\u308B i \u4EE5\u4E0B\u306E\u6DFB\u5B57\
+    \u306E\u500B\u6570\n  template <class I = ll>\n  I leq_cnt(int val, int i) const\
+    \ { return ::leq_cnt(idxs(val), i); }\n  template <class I = ll>\n  // \u5024\u304C\
+    \ val \u306B\u306A\u308B i \u8D85\u904E\u306E\u6DFB\u5B57\u306E\u500B\u6570\n\
+    \  I gt_cnt(int val, int i) const { return ::gt_cnt(idxs(val), i); }\n  template\
+    \ <class I = ll>\n  // \u5024\u304C val \u306B\u306A\u308B i \u4EE5\u4E0A\u306E\
+    \u6DFB\u5B57\u306E\u500B\u6570\n  I geq_cnt(int val, int i) const { return ::geq_cnt(idxs(val),\
+    \ i); }\n  // \u5024\u304C val \u306B\u306A\u308B [l, r) \u306E\u6DFB\u5B57\u306E\
+    \u500B\u6570\n  template <class I = ll>\n  I in_cnt(int val, int l, int r) const\
+    \ { return ::in_cnt(idxs(val), l, r); }\n\n  template <class I = ll>\n  vvc<I>\
+    \ to_vv() const\n  {\n    auto res = csr.to_vv();\n    vvc<I> res2(res.size());\n\
+    \    rep(i, res.size()) res2[i] = vc<I>(ALL(res[i]));\n    return res2;\n  }\n\
+    };\n"
+  code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
+    #include \"csr.hpp\"\n\n/**\n * @brief \u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E\
+    \n * @docs docs/ds/group_index.md\n */\n\nstruct GroupIndex\n{\nprivate:\n  int\
+    \ n, m;\n  CSR<int> csr;\n\npublic:\n  GroupIndex() {}\n  template <class T>\n\
+    \  GroupIndex(const vc<T> &a) : n(a.size()), m(a.empty() ? 0 : MAX(a) + 1)\n \
+    \ {\n    vc<pair<int, int>> ies(n);\n    repi(i, n)\n    {\n      assert(0 <=\
     \ a[i]);\n      ies[i] = {a[i], i};\n    }\n    csr = CSR(m, ies);\n  }\n\n  //\
     \ \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u305F\u3061\n  auto idxs(int\
     \ val) const { return csr.row(val); }\n\n  // \u5024\u304C val \u306B\u306A\u308B\
@@ -643,50 +710,9 @@ data:
     \n  template <class I = ll>\n  I in_cnt(int val, int l, int r) const { return\
     \ ::in_cnt(idxs(val), l, r); }\n\n  template <class I = ll>\n  vvc<I> to_vv()\
     \ const\n  {\n    auto res = csr.to_vv();\n    vvc<I> res2(res.size());\n    rep(i,\
-    \ res.size()) res2[i] = vc<I>(ALL(res[i]));\n    return res2;\n  }\n};\n"
-  code: "#pragma once\n\n#include \"../template/template_all.hpp\"\n\n#include \"\
-    csr.hpp\"\n\n/**\n * @brief \u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E\n * @docs\
-    \ docs/ds/group_index.md\n */\n\nstruct GroupIndex\n{\nprivate:\n  int n, m;\n\
-    \  CSR<int> csr;\n\npublic:\n  GroupIndex() {}\n  template <class T>\n  GroupIndex(const\
-    \ vc<T> &a) : n(a.size()), m(a.empty() ? 0 : MAX(a) + 1)\n  {\n    vc<pair<int,\
-    \ int>> ies(n);\n    repi(i, n)\n    {\n      assert(0 <= a[i]);\n      ies[i]\
-    \ = {a[i], i};\n    }\n    csr = CSR(m, ies);\n  }\n\n  // \u5024\u304C val \u306B\
-    \u306A\u308B\u6DFB\u5B57\u305F\u3061\n  auto idxs(int val) const { return csr.row(val);\
-    \ }\n\n  // \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061\
-    \ i \u672A\u6E80\u3067\u6700\u5927\u306E\u3082\u306E (\u306A\u3051\u308C\u3070\
-    \ -1)\n  template <class I = ll>\n  I lt_max(int val, int i) const\n  {\n    auto\
-    \ is = idxs(val);\n    ll j = ::lt_max(is, i);\n    return j == -1 ? -1 : is.get(j);\n\
-    \  }\n  // \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061 i\
-    \ \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u3082\u306E (\u306A\u3051\u308C\u3070 -1)\n\
-    \  template <class I = ll>\n  I leq_max(int val, int i) const\n  {\n    auto is\
-    \ = idxs(val);\n    ll j = ::leq_max(is, i);\n    return j == -1 ? -1 : is.get(j);\n\
-    \  }\n  // \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061 i\
-    \ \u8D85\u904E\u3067\u6700\u5C0F\u306E\u3082\u306E (\u306A\u3051\u308C\u3070 n)\n\
-    \  template <class I = ll>\n  I gt_min(int val, int i) const\n  {\n    auto is\
-    \ = idxs(val);\n    ll j = ::gt_min(is, i);\n    return j == is.size() ? n : is.get(j);\n\
-    \  }\n  // \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061 i\
-    \ \u4EE5\u4E0A\u3067\u6700\u5C0F\u306E\u3082\u306E (\u306A\u3051\u308C\u3070 n)\n\
-    \  template <class I = ll>\n  I geq_min(int val, int i) const\n  {\n    auto is\
-    \ = idxs(val);\n    ll j = ::geq_min(is, i);\n    return j == is.size() ? n :\
-    \ is.get(j);\n  }\n  // \u5024\u304C val \u306B\u306A\u308B i \u672A\u6E80\u306E\
-    \u6DFB\u5B57\u306E\u500B\u6570\n  // i \u756A\u76EE\u304C val \u306E\u3068\u304D\
-    \u3001\u300C\u3053\u308C\u306F\u4F55\u756A\u76EE\u306E val \u304B\uFF1F\u300D\u306B\
-    \u4E00\u81F4\n  template <class I = ll>\n  I lt_cnt(int val, int i) const { return\
-    \ ::lt_cnt(idxs(val), i); }\n  // \u5024\u304C val \u306B\u306A\u308B i \u4EE5\
-    \u4E0B\u306E\u6DFB\u5B57\u306E\u500B\u6570\n  template <class I = ll>\n  I leq_cnt(int\
-    \ val, int i) const { return ::leq_cnt(idxs(val), i); }\n  template <class I =\
-    \ ll>\n  // \u5024\u304C val \u306B\u306A\u308B i \u8D85\u904E\u306E\u6DFB\u5B57\
-    \u306E\u500B\u6570\n  I gt_cnt(int val, int i) const { return ::gt_cnt(idxs(val),\
-    \ i); }\n  template <class I = ll>\n  // \u5024\u304C val \u306B\u306A\u308B i\
-    \ \u4EE5\u4E0A\u306E\u6DFB\u5B57\u306E\u500B\u6570\n  I geq_cnt(int val, int i)\
-    \ const { return ::geq_cnt(idxs(val), i); }\n  // \u5024\u304C val \u306B\u306A\
-    \u308B [l, r) \u306E\u6DFB\u5B57\u306E\u500B\u6570\n  template <class I = ll>\n\
-    \  I in_cnt(int val, int l, int r) const { return ::in_cnt(idxs(val), l, r); }\n\
-    \n  template <class I = ll>\n  vvc<I> to_vv() const\n  {\n    auto res = csr.to_vv();\n\
-    \    vvc<I> res2(res.size());\n    rep(i, res.size()) res2[i] = vc<I>(ALL(res[i]));\n\
-    \    return res2;\n  }\n};"
+    \ res.size()) res2[i] = vc<I>(ALL(res[i]));\n    return res2;\n  }\n};"
   dependsOn:
-  - template/template_all.hpp
+  - template/template_all_but_modint.hpp
   - template/template_types.hpp
   - template/template_rep.hpp
   - template/template_math.hpp
@@ -696,11 +722,12 @@ data:
   - template/template_bit.hpp
   - template/template_inout.hpp
   - template/template_dump.hpp
+  - template/template_random.hpp
   - ds/csr.hpp
   isVerificationFile: false
   path: ds/group_index.hpp
   requiredBy: []
-  timestamp: '2025-03-23 02:19:40+09:00'
+  timestamp: '2025-03-29 20:18:07+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/static_range_frequency.test.cpp
