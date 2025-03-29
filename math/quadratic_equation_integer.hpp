@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../template/template_all.hpp"
+#include "../template/template_all_but_modint.hpp"
 
 /**
  * @brief 二次方程式の整数解

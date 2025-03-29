@@ -5,3 +5,11 @@
   - 解説記事 2： https://zenn.dev/sassan/articles/4878e79272ed61
 
 上記のプログラムを手元で利用する。`LOCAL` が define されているときのみ dump 出力をする（特に、オンラインジャッジでは無効化される）。
+
+---
+
+その他マクロ
+
+- `local()`：`LOCAL` のときのみ `()` 内が存在する
+- `oj()`：`LOCAL` でないときのみ `()` 内が存在する
+- `local_oj(a, b)`：`LOCAL` のときは `a`, `LOCAL` でないときは `b`

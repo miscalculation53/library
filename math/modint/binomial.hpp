@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../template/template_all.hpp"
+#include "../../template/template_all_but_modint.hpp"
 
 /**
  * @brief 二項係数
@@ -82,7 +82,7 @@ public:
     return C(n + k - 1, k);
   }
 };
-template <class T> decltype(T::mod()) Binomial<T>::mod{T::mod()};
-template <class T> vc<T> Binomial<T>::fac_{1, 1};
-template <class T> vc<T> Binomial<T>::finv_{1, 1};
-template <class T> vc<T> Binomial<T>::inv_{0, 1};
+template <class T> decltype(T::mod()) Binomial<T>::mod{};
+template <class T> vc<T> Binomial<T>::fac_{};
+template <class T> vc<T> Binomial<T>::finv_{};
+template <class T> vc<T> Binomial<T>::inv_{};

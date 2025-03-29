@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../template/template_all.hpp"
+#include "../../template/template_all_but_modint.hpp"
 #include "../algebra/algebra_basic_ops.hpp"
 
 /**

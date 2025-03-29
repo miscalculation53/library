@@ -1,4 +1,4 @@
-[miscalc](https://x.com/miscalc53) のライブラリです。
+[miscalc](https://x.com/miscalc53) の競プロ用 C++ ライブラリです。
 
 - 現在移植作業中なのでいろいろなものが足りていないです。
 - 利用は自由です。

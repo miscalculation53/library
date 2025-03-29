@@ -2,8 +2,6 @@
 
 #include "math/modint/modint64.hpp"
 
-mt19937_64 mt;
-
 // static
 template <const ll MOD>
 void test1()

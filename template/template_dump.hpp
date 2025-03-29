@@ -1,6 +1,6 @@
 #pragma once
 
-#include "template/template_types.hpp"
+#include "template_types.hpp"
 
 /**
  * @brief テンプレート（dump）
@@ -21,9 +21,13 @@ namespace cpp_dump::_detail
 #define dump(...) cpp_dump(__VA_ARGS__)
 namespace cp = cpp_dump;
 CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());
-CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 10000);
+CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);
 #define local(...) __VA_ARGS__
+#define oj(...)
+#define local_oj(a, b) (a)
 #else
 #define dump(...)
 #define local(...)
+#define oj(...) __VA_ARGS__
+#define local_oj(a, b) (b)
 #endif

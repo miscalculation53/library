@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../template/template_all.hpp"
+#include "../../template/template_all_but_modint.hpp"
 #include "../../math/algebra/algebra_basic_ops.hpp"
 // #include "and_or_convolution.hpp"
 // #include "../../math/algebra/polynomial_ring.hpp"

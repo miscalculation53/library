@@ -2,8 +2,6 @@
 
 #include "math/modint/modint.hpp"
 
-mt19937 mt;
-
 // static
 template <const int MOD>
 void test1()
