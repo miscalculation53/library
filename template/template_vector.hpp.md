@@ -24,6 +24,9 @@ data:
     path: ds/csr.hpp
     title: CSR
   - icon: ':heavy_check_mark:'
+    path: ds/default_map.hpp
+    title: "\u30C7\u30D5\u30A9\u30EB\u30C8\u5024\u3064\u304D map"
+  - icon: ':heavy_check_mark:'
     path: ds/flat_map.hpp
     title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
       \u5408\u306E map"
@@ -177,6 +180,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/modpow.test.cpp
     title: verify/aoj/modpow.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/default_map.test.cpp
+    title: verify/mytest/default_map.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/itertools_bit.test.cpp
     title: verify/mytest/itertools_bit.test.cpp
@@ -531,6 +537,7 @@ data:
   - ds/uf/uf_potential.hpp
   - ds/uf/uf_undo.hpp
   - ds/group_index.hpp
+  - ds/default_map.hpp
   timestamp: '2025-03-16 23:12:25+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
@@ -577,6 +584,7 @@ data:
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/binomial.test.cpp
   - verify/mytest/modint64.test.cpp
+  - verify/mytest/default_map.test.cpp
   - verify/mytest/template_binsearch.test.cpp
   - verify/mytest/template_bit.test.cpp
   - verify/mytest/power_table.test.cpp
