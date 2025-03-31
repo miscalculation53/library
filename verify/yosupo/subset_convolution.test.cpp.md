@@ -1,77 +1,77 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/binomial.hpp
     title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/power_table.hpp
     title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/template_modint.hpp
     title: math/modint/template_modint.hpp
   - icon: ':heavy_check_mark:'
     path: math/set/subset_convolution.hpp
     title: subset convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -86,8 +86,8 @@ data:
     - https://judge.yosupo.jp/problem/subset_convolution
   bundledCode: "#line 1 \"verify/yosupo/subset_convolution.test.cpp\"\n#define PROBLEM\
     \ \"https://judge.yosupo.jp/problem/subset_convolution\"\n\n#define SINGLE_TESTCASE\n\
-    // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#define FAST_IO\n// #define\
-    \ FAST_CIO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
+    // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef LOCAL\n#define FAST_IO\n\
+    // #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\n#define INF 4'000'000'000'000'000'037LL\n\
     #define EPS 1e-11\n\n#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
@@ -767,7 +767,7 @@ data:
     \ == 0 && k == 0)\n      return 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate\
     \ <class T> decltype(T::mod()) Binomial<T>::mod{};\ntemplate <class T> vc<T> Binomial<T>::fac_{};\n\
     template <class T> vc<T> Binomial<T>::finv_{};\ntemplate <class T> vc<T> Binomial<T>::inv_{};\n\
-    #line 15 \"verify/yosupo/subset_convolution.test.cpp\"\nusing mint = modint998244353;\n\
+    #line 17 \"verify/yosupo/subset_convolution.test.cpp\"\nusing mint = modint998244353;\n\
     \n#line 2 \"math/set/subset_convolution.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
     \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
     \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
@@ -841,7 +841,7 @@ data:
     \  for (int w = len >> 1; w; w >>= 1)\n  {\n    repi(k, 0, len, w * 2) repi(i,\
     \ w)\n    {\n      int s = k + i, t = s + w;\n      repi(j, pc[t], lg + 1) fa[t][j]\
     \ = R::add(fa[t][j], R::minus(fa[s][j]));\n    }\n  }\n  vc<typename R::S> c(len);\n\
-    \  repi(i, len) c[i] = fa[i][pc[i]];\n  return c;\n}\n#line 18 \"verify/yosupo/subset_convolution.test.cpp\"\
+    \  repi(i, len) c[i] = fa[i][pc[i]];\n  return c;\n}\n#line 20 \"verify/yosupo/subset_convolution.test.cpp\"\
     \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n  VEC(mint, 1 << N, A, B);\n\
     \  auto C = subset_convolution<RingAddSubMul<mint>>(A, B);\n  PRINT(C);\n}\n\n\
     void test() {}\n\n#line 2 \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\
@@ -861,14 +861,15 @@ data:
     \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
     \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
     T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
-    \      main2();\n    }\n    #endif\n  }\n};\n#line 32 \"verify/yosupo/subset_convolution.test.cpp\"\
+    \      main2();\n    }\n    #endif\n  }\n};\n#line 34 \"verify/yosupo/subset_convolution.test.cpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/subset_convolution\"\n\n\
     #define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n\
-    #define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\n#define INF 4'000'000'000'000'000'037LL\n\
-    #define EPS 1e-11\n\n#include \"template/template_all.hpp\"\nusing mint = modint998244353;\n\
-    \n#include \"math/set/subset_convolution.hpp\"\n\nvoid init() {}\n\nvoid main2()\n\
-    {\n  LL(N);\n  VEC(mint, 1 << N, A, B);\n  auto C = subset_convolution<RingAddSubMul<mint>>(A,\
+    #ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
+    #endif\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include\
+    \ \"template/template_all.hpp\"\nusing mint = modint998244353;\n\n#include \"\
+    math/set/subset_convolution.hpp\"\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n\
+    \  VEC(mint, 1 << N, A, B);\n  auto C = subset_convolution<RingAddSubMul<mint>>(A,\
     \ B);\n  PRINT(C);\n}\n\nvoid test() {}\n\n#include \"template/template_main.hpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   dependsOn:
@@ -898,7 +899,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/subset_convolution.test.cpp
   requiredBy: []
-  timestamp: '2025-03-29 20:18:07+09:00'
+  timestamp: '2025-03-31 14:36:27+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/subset_convolution.test.cpp
