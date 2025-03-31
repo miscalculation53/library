@@ -2,6 +2,7 @@
 "verify/aoj/csr.test.cpp": "2025-03-29 20:18:07 +0900",
 "verify/aoj/extgcd.test.cpp": "2025-03-29 20:18:07 +0900",
 "verify/aoj/modpow.test.cpp": "2025-03-29 20:18:07 +0900",
+"verify/mytest/default_map.test.cpp": "2025-03-31 13:58:14 +0900",
 "verify/mytest/itertools_bit.test.cpp": "2025-03-29 20:18:07 +0900",
 "verify/mytest/itertools_direct_product.test.cpp": "2025-03-29 20:18:07 +0900",
 "verify/mytest/linear_sieve.test.cpp": "2025-03-29 20:18:07 +0900",
