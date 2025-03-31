@@ -4,9 +4,11 @@
 // #define MULTI_TESTCASE
 // #define AOJ_TESTCASE
 
+#ifndef LOCAL
 #define FAST_IO
 // #define FAST_CIO
 // #define INTERACTIVE
+#endif
 
 #define INF 4'000'000'000'000'000'037LL
 #define EPS 1e-11

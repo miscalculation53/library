@@ -1,7 +1,7 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/primitive_root"
+#define PROBLEM "https://yukicoder.me/problems/no/8016"
 
-// #define SINGLE_TESTCASE
-#define MULTI_TESTCASE
+#define SINGLE_TESTCASE
+// #define MULTI_TESTCASE
 // #define AOJ_TESTCASE
 
 #ifndef LOCAL
@@ -15,17 +15,28 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "math/prime/order_primitive_root.hpp"
+#include "ds/safe_unordered_map.hpp"
 
 void init() {}
 
 void main2()
 {
-  LL(p);
-  PRINT(primitive_root_min(p, factorize(p - 1)));
+  LL(N, M);
+  VEC(ll, N, A);
+  VEC(ll, M, B);
+
+  unordered_map<ll, ll, safe_hash> mp;
+  fec(a : A) mp[a]++;
+
+  vl C(M);
+  rep(i, M) C.at(i) = mp[B.at(i)];
+  PRINT(C);
 }
 
-void test() {}
+void test()
+{
+
+}
 
 #include "template/template_main.hpp"
 Main<init, main2, test> main_dummy;
