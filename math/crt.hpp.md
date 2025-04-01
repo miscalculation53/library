@@ -807,7 +807,7 @@ x \equiv r_n \pmod {m_n} \\\\
 を考える。この解は次のいずれか：
 
 - 解なし
-- ある $r, m \: (0 \leq r \lt m)$ が存在して、$x \equiv r \pmod m$ と書ける
+- ある $r, m \ (0 \leq r \lt m)$ が存在して、$x \equiv r \pmod m$ と書ける
 
 後者の場合、$m = \mathrm{lcm}(m_1, \dots, m_n)$ であり、$r$ は連立合同方程式を満たす非負整数 $x$ の最小値となる。
 
