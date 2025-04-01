@@ -869,7 +869,7 @@ pair<T, T> crt<T = ll>(V rs, V ms)
 (3) pair<mint, mint> crt_mod_dynamic_32<mint>(V rs, V ms)
 ```
 
-**$m_i, m_j \: (i \neq j)$ が互いに素であることを前提としている。互いに素でない場合、pre_crt を先に呼ぶこと。**
+**$m_i, m_j \ (i \neq j)$ が互いに素であることを前提としている。互いに素でない場合、pre_crt を先に呼ぶこと。**
 
 この制約のもと、解は必ず存在する。$(r, m)$ を `mint` の mod で求めて返す。
 
@@ -882,7 +882,7 @@ pair<T, T> crt<T = ll>(V rs, V ms)
 - `V` は整数を格納した array または vector
 - `mint` は modint（ull などを $\bmod\ 2^{64}$ の modint として使っても可）
 - $m_i \geq 1$
-- **$m_i, m_j \: (i \neq j)$ は互いに素**
+- **$m_i, m_j \ (i \neq j)$ は互いに素**
 - (1), (2)：`T` は $m_i$ の $2$ 乗が収まる符号つき整数型
 - (2)：
   - `V` は array
@@ -932,7 +932,7 @@ $m = m_1 \cdot \dfrac{m_2}{g}$
 
 #### crt_mod
 
-$m_i, m_j \: (i \neq j)$ が互いに素であるとする。
+$m_i, m_j \ (i \neq j)$ が互いに素であるとする。
 
 $\begin{aligned}
 r_1 &\equiv t_1 & \pmod {m_1} \\\\  
@@ -946,7 +946,7 @@ r_3 &\equiv t_1 + t_2m_1 + t_3m_1m_2 &\pmod {m_3} \\\\
 
 #### pre_crt
 
-各 $i$ について、$m_i$ がどの $m_j \: (j \gt i)$ とも互いに素になるように処理する。
+各 $i$ について、$m_i$ がどの $m_j \ (j \gt i)$ とも互いに素になるように処理する。
 
 $x \equiv r \pmod m$ という条件は、$m$ の素因数分解を $m = p_1^{e_1} \cdots p_k^{e_k}$ とすると
 
