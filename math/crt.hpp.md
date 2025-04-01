@@ -2,6 +2,12 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: math/extgcd.hpp
+    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
+  - icon: ':heavy_check_mark:'
+    path: math/modint/modint32_internal.hpp
+    title: math/modint/modint32_internal.hpp
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -37,166 +43,22 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: math/modint/template_modint.hpp
-    title: math/modint/template_modint.hpp
-  - icon: ':warning:'
-    path: template/template.cpp
-    title: template/template.cpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_all.hpp
-    title: template/template_all.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_main.hpp
-    title: template/template_main.hpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/csr.test.cpp
-    title: verify/aoj/csr.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/extgcd.test.cpp
-    title: verify/aoj/extgcd.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/modpow.test.cpp
-    title: verify/aoj/modpow.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/power_table.test.cpp
-    title: verify/mytest/power_table.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/and_or_convolution.test.cpp
-    title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/aplusb.test.cpp
-    title: verify/yosupo/aplusb.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/associative_array_flat_map.test.cpp
-    title: verify/yosupo/associative_array_flat_map.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/associative_array_lower_bound.test.cpp
-    title: verify/yosupo/associative_array_lower_bound.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/binomial.test.cpp
-    title: verify/yosupo/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/gcd_convolution.test.cpp
-    title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_hadamard.test.cpp
-    title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kth_root_integer.test.cpp
-    title: verify/yosupo/kth_root_integer.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/lcm_convolution.test.cpp
-    title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb.test.cpp
-    title: verify/yosupo/many_aplusb.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb_128bit.test.cpp
-    title: verify/yosupo/many_aplusb_128bit.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb_tuple.test.cpp
-    title: verify/yosupo/many_aplusb_tuple.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/offline_dynamic_connectivity.test.cpp
-    title: verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/predecessor_problem.test.cpp
-    title: verify/yosupo/predecessor_problem.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root.test.cpp
-    title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root_min.test.cpp
-    title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/quotients.test.cpp
-    title: verify/yosupo/quotients.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/static_range_frequency.test.cpp
-    title: verify/yosupo/static_range_frequency.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/subset_convolution.test.cpp
-    title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind.test.cpp
-    title: verify/yosupo/unionfind.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind_potential.test.cpp
-    title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-    title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/xor_convolution.test.cpp
-    title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/base_repr.test.cpp
-    title: verify/yukicoder/base_repr.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/binomial.test.cpp
-    title: verify/yukicoder/binomial.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/crt.test.cpp
     title: verify/yukicoder/crt.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/crt_mod.test.cpp
     title: verify/yukicoder/crt_mod.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/dynamic_modint.test.cpp
-    title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_carmichael.test.cpp
-    title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_euler_phi.test.cpp
-    title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/parallel_binsearch.test.cpp
-    title: verify/yukicoder/parallel_binsearch.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/quadratic_equation.test.cpp
-    title: verify/yukicoder/quadratic_equation.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/safe_unordered_map.test.cpp
-    title: verify/yukicoder/safe_unordered_map.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/static_modint.test.cpp
-    title: verify/yukicoder/static_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/uf_min_max_leader.test.cpp
-    title: verify/yukicoder/uf_min_max_leader.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/uf_partially_persistent.test.cpp
-    title: verify/yukicoder/uf_partially_persistent.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/modint/power_table.md
-    document_title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
+    _deprecated_at_docs: docs/math/crt.md
+    document_title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
     links: []
-  bundledCode: "#line 2 \"math/modint/power_table.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
+  bundledCode: "#line 2 \"math/crt.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -745,24 +607,162 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 4 \"math/modint/power_table.hpp\"\n\n/**\n * @brief \u7D2F\u4E57\u30C6\u30FC\
-    \u30D6\u30EB\n * @docs docs/math/modint/power_table.md\n */\n\ntemplate <class\
-    \ T>\nstruct PowerTable\n{\nprivate:\n  decltype(T::mod()) mod;\n  T base;\n \
-    \ vc<T> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(T base) : mod(T::mod()),\
-    \ base(base), pw(1, 1) {}\n\n  void reserve(int n)\n  {\n    if (mod != T::mod())\n\
-    \    {\n      mod = T::mod();\n      pw = {1};\n    }\n    int i = pw.size();\n\
-    \    if (n < i)\n      return;\n    pw.resize(n + 1);\n    for (; i <= n; i++)\n\
-    \      pw[i] = pw[i - 1] * base;\n  }\n\n  T pow(int n)\n  {\n    reserve(n);\n\
-    \    return pw[n];\n  }\n};\n"
-  code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
-    \n/**\n * @brief \u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB\n * @docs docs/math/modint/power_table.md\n\
-    \ */\n\ntemplate <class T>\nstruct PowerTable\n{\nprivate:\n  decltype(T::mod())\
-    \ mod;\n  T base;\n  vc<T> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(T base)\
-    \ : mod(T::mod()), base(base), pw(1, 1) {}\n\n  void reserve(int n)\n  {\n   \
-    \ if (mod != T::mod())\n    {\n      mod = T::mod();\n      pw = {1};\n    }\n\
-    \    int i = pw.size();\n    if (n < i)\n      return;\n    pw.resize(n + 1);\n\
-    \    for (; i <= n; i++)\n      pw[i] = pw[i - 1] * base;\n  }\n\n  T pow(int\
-    \ n)\n  {\n    reserve(n);\n    return pw[n];\n  }\n};"
+    \ 4 \"math/crt.hpp\"\n\n#line 2 \"math/extgcd.hpp\"\n\n#line 4 \"math/extgcd.hpp\"\
+    \n\n/**\n * @brief \u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\
+    \u6CD5 (extgcd)\n * @docs docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0,\
+    \ ax + by == g \u3092\u6E80\u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|,\
+    \ |b|)\ntemplate <class T = ll>\nconstexpr tuple<T, T, T> extgcd(const T &a, const\
+    \ T &b)\n{\n  if (a == 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1\
+    \ == z1  ...(1)\n  // a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n\
+    \  T x2 = 0, y2 = 1, z2 = b;\n  while (z2 != 0)\n  {\n    // (1)' = (2)\n    //\
+    \ (2)' = (1) - q*(2)\n    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 -\
+    \ q * x2);\n    tie(y1, y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2,\
+    \ z1 - q * z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return\
+    \ {z1, x1, y1};\n}\n#line 2 \"math/modint/modint32_internal.hpp\"\n\n#line 4 \"\
+    math/modint/modint32_internal.hpp\"\n\nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll\
+    \ x, ll n, int m)\n{\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull\
+    \ r = 1;\n  ull y = safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r\
+    \ = (r * y) % _m;\n    y = (y * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\n\
+    constexpr bool isprime32_constexpr(int n)\n{\n  if (n <= 1)\n    return false;\n\
+    \  if (n == 2 || n == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n   \
+    \ return false;\n  ll d = n - 1;\n  while (d % 2 == 0)\n    d /= 2;\n  constexpr\
+    \ ll bases[3] = {2, 7, 61};\n  for (ll a : bases)\n  {\n    ll t = d;\n    ll\
+    \ y = powmod32_constexpr(a, t, n);\n    while (t != n - 1 && y != 1 && y != n\
+    \ - 1)\n    {\n      y = y * y % n;\n      t <<= 1;\n    }\n    if (y != n - 1\
+    \ && t % 2 == 0)\n      return false;\n  }\n  return true;\n}\ntemplate <int n>\n\
+    constexpr bool isprime32 = isprime32_constexpr(n);\n\nstruct barrett32\n{\n  uint\
+    \ m;\n  ull im;\n\n  explicit barrett32(uint m) : m(m), im((ull)(-1) / m + 1)\
+    \ {}\n  uint umod() const { return m; }\n  uint mul(uint a, uint b) const\n  {\n\
+    \    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im) >> 64);\n    ull\
+    \ y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n  }\n};\n\n}\n#line\
+    \ 7 \"math/crt.hpp\"\n\n/**\n * @brief \u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)\n\
+    \ * @docs docs/math/crt.md\n */\n\n// (\u89E3\u304C\u5B58\u5728\u3059\u308B\u304B\
+    , r, m)\ntemplate <class T = ll, class R0, class R1, class M0, class M1>\nconstexpr\
+    \ tuple<bool, T, T> crt2(R0 r0, R1 r1, M0 m0, M1 m1)\n{\n  assert(m0 >= 1 && m1\
+    \ >= 1);\n  r0 = safemod(r0, m0), r1 = safemod(r1, m1);\n  if (m0 < m1)\n    swap(r0,\
+    \ r1), swap(m0, m1);\n  if (m0 % m1 == 0)\n  {\n    if (r0 % m1 != r1)\n     \
+    \ return {false, 0, 0};\n    return {true, r0, m0};\n  }\n  auto [g, im, _] =\
+    \ extgcd<T>(m0, m1);\n  T u1 = m1 / g;\n  if ((r1 - r0) % g)\n    return {false,\
+    \ 0, 0};\n  T x = (r1 - r0) / g % u1 * im % u1;\n  r0 += x * m0;\n  m0 *= u1;\n\
+    \  if (r0 < 0)\n    r0 += m0;\n  return {true, r0, m0};\n}\n\n// (\u89E3\u304C\
+    \u5B58\u5728\u3059\u308B\u304B, r, m)\ntemplate <class T = ll, class V1, class\
+    \ V2>\nconstexpr tuple<bool, T, T> crt(const V1 &rs, const V2 &ms)\n{\n  assert(rs.size()\
+    \ == ms.size());\n  const int n = rs.size();\n  T r = 0, m = 1;\n  repi(i, n)\n\
+    \  {\n    auto [ok, nr, nm] = crt2<T>(r, rs[i], m, ms[i]);\n    if (!ok)\n   \
+    \   return {false, 0, 0};\n    r = nr, m = nm;\n  }\n  return {true, r, m};\n\
+    }\n\n// (r, m)\n// ms[i] \u305F\u3061\u306F pairwise coprime\n// T \u306F ms[i]\
+    \ \u306E\u578B\u306E 2 \u4E57\u304C\u53CE\u307E\u308B (\u7B26\u53F7\u3064\u304D\
+    )\ntemplate <class mint, class T = ll, class V1, class V2>\npair<mint, mint> crt_mod(const\
+    \ V1 &rs, const V2 &ms)\n{\n  assert(rs.size() == ms.size());\n  const int n =\
+    \ rs.size();\n  mint r = 0, m = 1;\n  vc<T> rr(n, 0), mm(n, 1);\n  repi(i, n)\n\
+    \  {\n    // r = t[0] + t[1]m[0] + ... + t[i-1]m[0]...m[i-2] mod mint::mod\n \
+    \   // m = m[0]...m[i-1] mod mint::mod\n    // rr[i] = t[0] + t[1]m[0] + ... +\
+    \ t[i-1]m[0]...m[i-2] mod m[i]\n    // mm[i] = m[0]...m[i-1] mod m[i]\n    assert(ms[i]\
+    \ >= 1);\n    auto [g, im, _] = extgcd<T>(mm[i], ms[i]);\n    assert(g == 1);\n\
+    \    T t = safemod((rs[i] % ms[i] - rr[i]) * im, ms[i]);\n    r += t * m, m *=\
+    \ ms[i];\n    repi(j, i + 1, n)\n    {\n      rr[j] += t * mm[j] % ms[j];\n  \
+    \    if (rr[j] >= ms[j])\n        rr[j] -= ms[j];\n      mm[j] *= ms[i], mm[j]\
+    \ %= ms[j];\n    }\n  }\n  return {r, m};\n}\n\n// (r, m)\n// \u5F15\u6570\u306F\
+    \ array\n// ms[i] \u305F\u3061\u304C\u30B3\u30F3\u30D1\u30A4\u30EB\u6642\u5B9A\
+    \u6570\u3067\u3042\u308B\u3053\u3068\u3092\u4EEE\u5B9A\n// ms[i] \u305F\u3061\u306F\
+    \ pairwise coprime\n// 0 <= rs[i] < ms[i]\n// T \u306F ms[i] \u306E\u578B\u306E\
+    \ 2 \u4E57\u304C\u53CE\u307E\u308B (\u7B26\u53F7\u3064\u304D)\ntemplate <class\
+    \ mint, class T = ll, class ARR1, class ARR2>\nconstexpr pair<mint, mint> crt_mod_constexpr(const\
+    \ ARR1 &rs, const ARR2 &ms)\n{\n  assert(rs.size() == ms.size());\n  const int\
+    \ n = rs.size();\n  mint r = 0, m = 1;\n  array<T, n> rr{}, mm;\n  fill(ALL(mm),\
+    \ 1);\n  repi(i, n)\n  {\n    assert(ms[i] >= 1);\n    assert(0 <= rs[i] && rs[i]\
+    \ < ms[i]);\n    auto [g, im, _] = extgcd<T>(mm[i], ms[i]);\n    assert(g == 1);\n\
+    \    T t = safemod((rs[i] - rr[i]) * im, ms[i]);\n    r += t * m, m *= ms[i];\n\
+    \    repi(j, i + 1, n)\n    {\n      rr[j] += t * mm[j] % ms[j];\n      if (rr[j]\
+    \ >= ms[j])\n        rr[j] -= ms[j];\n      mm[j] *= ms[i], mm[j] %= ms[j];\n\
+    \    }\n  }\n  return {r, m};\n}\n\n// (r, m)\n// ms[i] \u305F\u3061\u306F pairwise\
+    \ coprime\n// ms[i] \u305F\u3061\u304C dynamic 32 bit \u306E\u5834\u5408\u306B\
+    \u9AD8\u901F\u5316\u3057\u305F\u3082\u306E\ntemplate <class mint, class V1, class\
+    \ V2>\npair<mint, mint> crt_mod_dynamic_32(const V1 &rs, const V2 &ms)\n{\n  assert(rs.size()\
+    \ == ms.size());\n  const int n = rs.size();\n  mint r = 0, m = 1;\n  vc<internal::barrett32>\
+    \ ba;\n  ba.reserve(n);\n  repi(i, n) ba.eb(ms[i]);\n  vc<ll> rr(n, 0), mm(n,\
+    \ 1);\n  repi(i, n)\n  {\n    assert(ms[i] >= 1);\n    auto [g, im, _] = extgcd<ll>(mm[i],\
+    \ ms[i]);\n    assert(g == 1);\n    if (im < 0)\n      im += ms[i];\n    ll t\
+    \ = ba[i].mul(safemod(rs[i] - rr[i], ms[i]), im);\n    r += t * m, m *= ms[i];\n\
+    \    repi(j, i + 1, n)\n    {\n      rr[j] += ba[j].mul(t, mm[j]);\n      if (rr[j]\
+    \ >= ms[j])\n        rr[j] -= ms[j];\n      mm[j] = ba[j].mul(mm[j], ms[i]);\n\
+    \    }\n  }\n  return {r, m};\n}\n\n// \u7834\u58CA\u7684\u306B\u5909\u66F4\u3059\
+    \u308B\n// \u89E3\u304C\u5B58\u5728\u3057\u306A\u3044\u306A\u3089 false \u3092\
+    \u8FD4\u3059\n// \u89E3\u304C\u5B58\u5728\u3059\u308B\u306A\u3089 true \u3092\u8FD4\
+    \u3057\u3001ms[i] \u305F\u3061\u304C pairwise coprime \u3067\u3042\u308B\u3088\
+    \u3046\u306A\u7B49\u4FA1\u306A\u65B9\u7A0B\u5F0F\u306B\u5909\u63DB\u3059\u308B\
+    \ntemplate <class V1, class V2>\nbool pre_crt(const V1 &rs, V2 &ms)\n{\n  using\
+    \ T = typename V2::value_type;\n  assert(rs.size() == ms.size());\n  const int\
+    \ n = rs.size();\n  repi(i, n) repi(j, i + 1, n)\n  {\n    T g = gcd(ms[i], ms[j]);\n\
+    \    if ((rs[i] - rs[j]) % g)\n      return false;\n    ms[i] /= g, ms[j] /= g;\n\
+    \    T gi = gcd(ms[i], g), gj = g / gi;\n    do\n    {\n      g = gcd(gi, gj);\n\
+    \      gi *= g, gj /= g;\n    } while (g > 1);\n    ms[i] *= gi, ms[j] *= gj;\n\
+    \  }\n  return true;\n}\n"
+  code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
+    #include \"extgcd.hpp\"\n#include \"modint/modint32_internal.hpp\"\n\n/**\n *\
+    \ @brief \u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)\n * @docs docs/math/crt.md\n\
+    \ */\n\n// (\u89E3\u304C\u5B58\u5728\u3059\u308B\u304B, r, m)\ntemplate <class\
+    \ T = ll, class R0, class R1, class M0, class M1>\nconstexpr tuple<bool, T, T>\
+    \ crt2(R0 r0, R1 r1, M0 m0, M1 m1)\n{\n  assert(m0 >= 1 && m1 >= 1);\n  r0 = safemod(r0,\
+    \ m0), r1 = safemod(r1, m1);\n  if (m0 < m1)\n    swap(r0, r1), swap(m0, m1);\n\
+    \  if (m0 % m1 == 0)\n  {\n    if (r0 % m1 != r1)\n      return {false, 0, 0};\n\
+    \    return {true, r0, m0};\n  }\n  auto [g, im, _] = extgcd<T>(m0, m1);\n  T\
+    \ u1 = m1 / g;\n  if ((r1 - r0) % g)\n    return {false, 0, 0};\n  T x = (r1 -\
+    \ r0) / g % u1 * im % u1;\n  r0 += x * m0;\n  m0 *= u1;\n  if (r0 < 0)\n    r0\
+    \ += m0;\n  return {true, r0, m0};\n}\n\n// (\u89E3\u304C\u5B58\u5728\u3059\u308B\
+    \u304B, r, m)\ntemplate <class T = ll, class V1, class V2>\nconstexpr tuple<bool,\
+    \ T, T> crt(const V1 &rs, const V2 &ms)\n{\n  assert(rs.size() == ms.size());\n\
+    \  const int n = rs.size();\n  T r = 0, m = 1;\n  repi(i, n)\n  {\n    auto [ok,\
+    \ nr, nm] = crt2<T>(r, rs[i], m, ms[i]);\n    if (!ok)\n      return {false, 0,\
+    \ 0};\n    r = nr, m = nm;\n  }\n  return {true, r, m};\n}\n\n// (r, m)\n// ms[i]\
+    \ \u305F\u3061\u306F pairwise coprime\n// T \u306F ms[i] \u306E\u578B\u306E 2\
+    \ \u4E57\u304C\u53CE\u307E\u308B (\u7B26\u53F7\u3064\u304D)\ntemplate <class mint,\
+    \ class T = ll, class V1, class V2>\npair<mint, mint> crt_mod(const V1 &rs, const\
+    \ V2 &ms)\n{\n  assert(rs.size() == ms.size());\n  const int n = rs.size();\n\
+    \  mint r = 0, m = 1;\n  vc<T> rr(n, 0), mm(n, 1);\n  repi(i, n)\n  {\n    //\
+    \ r = t[0] + t[1]m[0] + ... + t[i-1]m[0]...m[i-2] mod mint::mod\n    // m = m[0]...m[i-1]\
+    \ mod mint::mod\n    // rr[i] = t[0] + t[1]m[0] + ... + t[i-1]m[0]...m[i-2] mod\
+    \ m[i]\n    // mm[i] = m[0]...m[i-1] mod m[i]\n    assert(ms[i] >= 1);\n    auto\
+    \ [g, im, _] = extgcd<T>(mm[i], ms[i]);\n    assert(g == 1);\n    T t = safemod((rs[i]\
+    \ % ms[i] - rr[i]) * im, ms[i]);\n    r += t * m, m *= ms[i];\n    repi(j, i +\
+    \ 1, n)\n    {\n      rr[j] += t * mm[j] % ms[j];\n      if (rr[j] >= ms[j])\n\
+    \        rr[j] -= ms[j];\n      mm[j] *= ms[i], mm[j] %= ms[j];\n    }\n  }\n\
+    \  return {r, m};\n}\n\n// (r, m)\n// \u5F15\u6570\u306F array\n// ms[i] \u305F\
+    \u3061\u304C\u30B3\u30F3\u30D1\u30A4\u30EB\u6642\u5B9A\u6570\u3067\u3042\u308B\
+    \u3053\u3068\u3092\u4EEE\u5B9A\n// ms[i] \u305F\u3061\u306F pairwise coprime\n\
+    // 0 <= rs[i] < ms[i]\n// T \u306F ms[i] \u306E\u578B\u306E 2 \u4E57\u304C\u53CE\
+    \u307E\u308B (\u7B26\u53F7\u3064\u304D)\ntemplate <class mint, class T = ll, class\
+    \ ARR1, class ARR2>\nconstexpr pair<mint, mint> crt_mod_constexpr(const ARR1 &rs,\
+    \ const ARR2 &ms)\n{\n  assert(rs.size() == ms.size());\n  const int n = rs.size();\n\
+    \  mint r = 0, m = 1;\n  array<T, n> rr{}, mm;\n  fill(ALL(mm), 1);\n  repi(i,\
+    \ n)\n  {\n    assert(ms[i] >= 1);\n    assert(0 <= rs[i] && rs[i] < ms[i]);\n\
+    \    auto [g, im, _] = extgcd<T>(mm[i], ms[i]);\n    assert(g == 1);\n    T t\
+    \ = safemod((rs[i] - rr[i]) * im, ms[i]);\n    r += t * m, m *= ms[i];\n    repi(j,\
+    \ i + 1, n)\n    {\n      rr[j] += t * mm[j] % ms[j];\n      if (rr[j] >= ms[j])\n\
+    \        rr[j] -= ms[j];\n      mm[j] *= ms[i], mm[j] %= ms[j];\n    }\n  }\n\
+    \  return {r, m};\n}\n\n// (r, m)\n// ms[i] \u305F\u3061\u306F pairwise coprime\n\
+    // ms[i] \u305F\u3061\u304C dynamic 32 bit \u306E\u5834\u5408\u306B\u9AD8\u901F\
+    \u5316\u3057\u305F\u3082\u306E\ntemplate <class mint, class V1, class V2>\npair<mint,\
+    \ mint> crt_mod_dynamic_32(const V1 &rs, const V2 &ms)\n{\n  assert(rs.size()\
+    \ == ms.size());\n  const int n = rs.size();\n  mint r = 0, m = 1;\n  vc<internal::barrett32>\
+    \ ba;\n  ba.reserve(n);\n  repi(i, n) ba.eb(ms[i]);\n  vc<ll> rr(n, 0), mm(n,\
+    \ 1);\n  repi(i, n)\n  {\n    assert(ms[i] >= 1);\n    auto [g, im, _] = extgcd<ll>(mm[i],\
+    \ ms[i]);\n    assert(g == 1);\n    if (im < 0)\n      im += ms[i];\n    ll t\
+    \ = ba[i].mul(safemod(rs[i] - rr[i], ms[i]), im);\n    r += t * m, m *= ms[i];\n\
+    \    repi(j, i + 1, n)\n    {\n      rr[j] += ba[j].mul(t, mm[j]);\n      if (rr[j]\
+    \ >= ms[j])\n        rr[j] -= ms[j];\n      mm[j] = ba[j].mul(mm[j], ms[i]);\n\
+    \    }\n  }\n  return {r, m};\n}\n\n// \u7834\u58CA\u7684\u306B\u5909\u66F4\u3059\
+    \u308B\n// \u89E3\u304C\u5B58\u5728\u3057\u306A\u3044\u306A\u3089 false \u3092\
+    \u8FD4\u3059\n// \u89E3\u304C\u5B58\u5728\u3059\u308B\u306A\u3089 true \u3092\u8FD4\
+    \u3057\u3001ms[i] \u305F\u3061\u304C pairwise coprime \u3067\u3042\u308B\u3088\
+    \u3046\u306A\u7B49\u4FA1\u306A\u65B9\u7A0B\u5F0F\u306B\u5909\u63DB\u3059\u308B\
+    \ntemplate <class V1, class V2>\nbool pre_crt(const V1 &rs, V2 &ms)\n{\n  using\
+    \ T = typename V2::value_type;\n  assert(rs.size() == ms.size());\n  const int\
+    \ n = rs.size();\n  repi(i, n) repi(j, i + 1, n)\n  {\n    T g = gcd(ms[i], ms[j]);\n\
+    \    if ((rs[i] - rs[j]) % g)\n      return false;\n    ms[i] /= g, ms[j] /= g;\n\
+    \    T gi = gcd(ms[i], g), gj = g / gi;\n    do\n    {\n      g = gcd(gi, gj);\n\
+    \      gi *= g, gj /= g;\n    } while (g > 1);\n    ms[i] *= gi, ms[j] *= gj;\n\
+    \  }\n  return true;\n}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -775,111 +775,208 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   - template/template_random.hpp
+  - math/extgcd.hpp
+  - math/modint/modint32_internal.hpp
   isVerificationFile: false
-  path: math/modint/power_table.hpp
-  requiredBy:
-  - math/modint/template_modint.hpp
-  - template/template_all.hpp
-  - template/template_main.hpp
-  - template/template.cpp
-  timestamp: '2025-03-29 20:18:07+09:00'
+  path: math/crt.hpp
+  requiredBy: []
+  timestamp: '2025-04-02 00:05:10+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/aoj/modpow.test.cpp
-  - verify/aoj/csr.test.cpp
-  - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/parallel_binsearch.test.cpp
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/quadratic_equation.test.cpp
   - verify/yukicoder/crt.test.cpp
-  - verify/yukicoder/uf_partially_persistent.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yukicoder/base_repr.test.cpp
   - verify/yukicoder/crt_mod.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/static_modint.test.cpp
-  - verify/yukicoder/uf_min_max_leader.test.cpp
-  - verify/yukicoder/safe_unordered_map.test.cpp
-  - verify/yukicoder/dynamic_modint.test.cpp
-  - verify/yukicoder/binomial.test.cpp
-  - verify/yosupo/quotients.test.cpp
-  - verify/yosupo/kronecker_power_hadamard.test.cpp
-  - verify/yosupo/many_aplusb_tuple.test.cpp
-  - verify/yosupo/static_range_frequency.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/many_aplusb_128bit.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/aplusb.test.cpp
-  - verify/yosupo/kth_root_integer.test.cpp
-  - verify/yosupo/xor_convolution.test.cpp
-  - verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/unionfind.test.cpp
-  - verify/yosupo/subset_convolution.test.cpp
-  - verify/yosupo/predecessor_problem.test.cpp
-  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - verify/yosupo/many_aplusb.test.cpp
-  - verify/yosupo/associative_array_lower_bound.test.cpp
-  - verify/yosupo/associative_array_flat_map.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yosupo/unionfind_potential.test.cpp
-  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - verify/yosupo/binomial.test.cpp
-  - verify/mytest/power_table.test.cpp
-documentation_of: math/modint/power_table.hpp
+documentation_of: math/crt.hpp
 layout: document
 redirect_from:
-- /library/math/modint/power_table.hpp
-- /library/math/modint/power_table.hpp.html
-title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
+- /library/math/crt.hpp
+- /library/math/crt.hpp.html
+title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
 ---
-## 累乗テーブル
+## 中国剰余定理 (CRT)
 
-固定された $\mathrm{base}$ の累乗をテーブルに格納するやつ。
+https://qiita.com/drken/items/ae02240cd1f8edfc86fd
 
-普通に書けばいいんだけど地味に面倒に思って $\log$ のつく累乗で横着して TLE、がありがち。これを貼ろう。
+連立合同方程式
 
-### コンストラクタ
+$\begin{cases}
+x \equiv r_1 \pmod {m_1} \\\\  
+\vdots \\\\  
+x \equiv r_n \pmod {m_n} \\\\  
+\end{cases}$
+
+を考える。この解は次のいずれか：
+
+- 解なし
+- ある $r, m \: (0 \leq r \lt m)$ が存在して、$x \equiv r \pmod m$ と書ける
+
+後者の場合、$m = \mathrm{lcm}(m_1, \dots, m_n)$ であり、$r$ は連立合同方程式を満たす非負整数 $x$ の最小値となる。
+
+使用場面は大きく次の $2$ つがある：
+
+- $r, m$ が `ll` などに収まる場合に $r, m$ そのものを求める
+  - ACL にある
+- $r$ に対し、別の mod をとった値を求める
+  - 任意 mod 畳み込みとか
+  - 前者より計算量が悪い
+
+### ライブラリの使い方
+
+#### crt2
 
 ```cpp
-PowerTable<mint> pw(mint base);
+tuple<bool, T, T> crt2<T = ll>(T r1, T m1, T r2, T m2)
 ```
 
-$\mathrm{base}$ を設定する。
+$2$ 元の場合を解く。解が存在しない場合は $(\mathrm{false}, $ 未定義$, $ 未定義$)$、存在する場合は $(\mathrm{true}, r, m)$ を返す。
 
-### メンバ関数
+$n$ 元の場合は $2$ 元の場合を繰り返し解いていることになる。応用例：たとえば $n$ 元の場合に「$r, m$ がある値 $\mathrm{LIM}$ を超えるかどうか（超えないならもとの値）」を求めるには、繰り返しのたびに超えるかどうかを見ればよい。（$\mathrm{LIM}$ が $10^{18}$ 程度のとき、うまく書き換えると `ll` だけでできる（未実装）のだが、`i128` で計算してしまうと思考停止できそう。） https://atcoder.jp/contests/abc150/tasks/abc150_d
 
-#### reserve
+##### 制約
 
-```cpp
-void reserve(int n)
-```
-
-テーブルを最大 $n$ のところまで前計算する。
-
-なくても動くが、事前に必要な分だけ呼んでおくと定数倍高速化が期待できる。
+- `T` は符号つき整数型
+- $m_1, m_2 \geq 1$
+- $\mathrm{lcm}(m_1, m_2)$ が `T` に収まる
 
 ##### 計算量
 
-$T$ 回呼んだとき、
+- $O(\log \min(m_1, m_2))$
 
-- $O(T + \max(n))$
-
-#### pow
+#### crt
 
 ```cpp
-void pow(int n)
+pair<T, T> crt<T = ll>(V rs, V ms)
 ```
 
-$\mathrm{base}^n$ を計算する。
+解が存在しない場合は $(\mathrm{false}, $ 未定義$, $ 未定義$)$、存在する場合は $(\mathrm{true}, r, m)$ を返す。
+
+##### 制約
+
+- `V` は整数を格納した array または vector
+- `T` は符号つき整数型
+- $m_i \geq 1$
+- $\mathrm{lcm}(m_1, \dots, m_n)$ が `T` に収まる
 
 ##### 計算量
 
-$T$ 回呼んだとき、
+- $O(n \log \mathrm{lcm}(m_1, \dots, m_n))$
 
-- $O(T + \max(n))$
+
+#### crt_mod
+
+```cpp
+(1) pair<mint, mint> crt_mod<mint, T = ll>(V rs, V ms)
+(2) pair<mint, mint> crt_mod_constexpr<mint, T = ll>(V rs, V ms)
+(3) pair<mint, mint> crt_mod_dynamic_32<mint>(V rs, V ms)
+```
+
+**$m_i, m_j \: (i \neq j)$ が互いに素であることを前提としている。互いに素でない場合、pre_crt を先に呼ぶこと。**
+
+この制約のもと、解は必ず存在する。$(r, m)$ を `mint` の mod で求めて返す。
+
+(2) は、`V` が array で $m_i$ がコンパイル時定数のときに高速化したもの。
+
+(3) は、$m_i$ が `int` の範囲で動的に決定されるときに剰余演算を高速化したもの。（$m_i$ が `ll` の範囲のときも作ることは可能であるが、使う場面があまりなさそうなこともあり未実装。）
+
+##### 制約
+
+- `V` は整数を格納した array または vector
+- `mint` は modint（ull などを $\bmod\ 2^{64}$ の modint として使っても可）
+- $m_i \geq 1$
+- **$m_i, m_j \: (i \neq j)$ は互いに素**
+- (1), (2)：`T` は $m_i$ の $2$ 乗が収まる符号つき整数型
+- (2)：
+  - `V` は array
+  - $0 \leq r_i \lt m_i$
+
+##### 計算量
+
+- $O(n^2 + \sum_{i=1}^n \log m_i)$
+
+
+#### pre_crt
+
+```cpp
+bool pre_crt(V rs, V &ms)
+```
+
+**`ms` に対して破壊的変更を行う。**
+
+解が存在しない場合、false を返す（このときの `ms` の内部は未定義）。
+
+解が存在する場合、true を返す。このとき、等価な連立合同方程式である状態を保ったまま、`ms` が $m_i$ たちが互いに素となるように書き換わる。
+
+##### 制約
+
+- `V` は整数を格納した array または vector
+- $m_i \geq 1$
+
+
+##### 計算量
+
+- $O(n^2 \log^2 \max(m_1, \dots, m_n))$
+
+---
+
+### 中身
+
+冒頭の記事の内容を自分用に書き直した。
+
+#### crt2
+
+$g = \gcd(m_1, m_2), $ $k$ を $m_1k \equiv r_2 - r_1 \pmod {m_2}$ の解（解ならば $k \bmod \dfrac{m_1}{g}$ は一意）として
+
+$r = r_1 + m_1 \cdot \left(k \dfrac{r_2 - r_1}{g} \bmod \dfrac{m_1}{g} \right)$
+$m = m_1 \cdot \dfrac{m_2}{g}$
+
+なお、$\mathrm{lcm}(m_1, \dots, m_n)$ が `ll` に収まるならばオーバーフローしないことの証明は https://rsk0315.hatenablog.com/entry/2021/01/18/065720#crt にある。
+
+#### crt_mod
+
+$m_i, m_j \: (i \neq j)$ が互いに素であるとする。
+
+$\begin{aligned}
+r_1 &\equiv t_1 & \pmod {m_1} \\\\  
+r_2 &\equiv t_1 + t_2m_1 &\pmod {m_2} \\\\  
+r_3 &\equiv t_1 + t_2m_1 + t_3m_1m_2 &\pmod {m_3} \\\\  
+\vdots
+\end{aligned}$
+
+を上から順に解いていく形になる（$0 \leq t_i \lt m_i$）。計算途中で、$t_i$ および $m_1\cdots m_i$ の $\bmod \ m_{i+1}, ..., m_n$ および modint の mod での値が必要。
+
+
+#### pre_crt
+
+各 $i$ について、$m_i$ がどの $m_j \: (j \gt i)$ とも互いに素になるように処理する。
+
+$x \equiv r \pmod m$ という条件は、$m$ の素因数分解を $m = p_1^{e_1} \cdots p_k^{e_k}$ とすると
+
+$\begin{cases}
+x \equiv r \pmod {p_1^{e_1}} \\\\  
+\vdots \\\\  
+x \equiv r \pmod {p_k^{e_k}} \\\\  
+\end{cases}$
+
+と分けられる。
+
+$m_i$ と $m_j$ で共通の素因数については、（条件が矛盾しなければ）$e$ が大きいほうの条件となる。共通しない素因数については、そのまま条件となる。
+
+これは陽に素因数分解せずとも、最大公約数を利用して求められる。
+
+$\begin{aligned}
+m_i &= p^a q^b s^c, \\\\  
+m_j &= p^d q^e u^f
+\end{aligned}$
+
+であり、$a \gt d, b \lt e$ であるとする（もっと素因数が多い場合も同様）。このとき（$r_i, r_j$ を変えずに）$m_i$ を $p^as^c$ に、$m_j$ を $q^eu^f$ にすればよい。
+
+$\begin{aligned}
+g := \gcd(m_i, m_j) &= p^d q^b, \\\\  
+m_i/g &= p^{a-d}s^c, \\\\  
+m_j/g &= q^{e-b}u^f, \\\\  
+g_i := \gcd(m_i/g, g) &= p^{\min(d,a-d)}, \\\\  
+g_j := g/g_i &= p^{\max(0,2d-a)} q^b
+\end{aligned}$
+
+となる。あとは $\gcd(g_i, g_j)$ を $g_j$ から $g_i$ に渡していくことを $\max\left(0, \left\lceil\dfrac{2d-a}{a-d}\right\rceil\right)$ 繰り返せば $g_i = p^d, g_j = q^b$ となるので、$(m_i/g) \cdot g_i = p^a s^c, (m_j/g) \cdot g_j = q^e u^f$ となる。
+
+これもうちょっと賢い方法がありそうな予感もするけどどうなんだろう（使う場面があるかもよくわからない）
