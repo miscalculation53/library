@@ -142,3 +142,17 @@ internal::barrett32 dynamic_modint<id>::bt(998244353);
 using modint998244353 = static_modint<998244353>;
 using modint1000000007 = static_modint<1000000007>;
 using modint = dynamic_modint<-1>;
+
+template <class T>
+struct is_static_modint : false_type {};
+template <int m>
+struct is_static_modint<static_modint<m>> : true_type {};
+template <class T>
+inline constexpr bool is_static_modint_v = is_static_modint<T>::value;
+
+template <class T>
+struct is_dynamic_modint : false_type {};
+template <int id>
+struct is_dynamic_modint<dynamic_modint<id>> : true_type {};
+template <class T>
+inline constexpr bool is_dynamic_modint_v = is_dynamic_modint<T>::value;
