@@ -38,7 +38,10 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
+    path: math/convolution/convolution.hpp
+    title: "\u7573\u307F\u8FBC\u307F"
+  - icon: ':question:'
     path: math/crt.hpp
     title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
   - icon: ':question:'
@@ -53,14 +56,14 @@ data:
   - icon: ':question:'
     path: math/modint/template_modint.hpp
     title: math/modint/template_modint.hpp
-  - icon: ':question:'
+  - icon: ':x:'
     path: math/prime/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
   - icon: ':question:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':question:'
+  - icon: ':x:'
     path: math/prime/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
   - icon: ':question:'
@@ -117,6 +120,18 @@ data:
     path: verify/yosupo/binomial.test.cpp
     title: verify/yosupo/binomial.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/convolution.test.cpp
+    title: verify/yosupo/convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/convolution64.test.cpp
+    title: verify/yosupo/convolution64.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
+    title: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/convolution_arbitrary_static.test.cpp
+    title: verify/yosupo/convolution_arbitrary_static.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
   - icon: ':heavy_check_mark:'
@@ -146,28 +161,28 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/offline_dynamic_connectivity.test.cpp
     title: verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/predecessor_problem.test.cpp
     title: verify/yosupo/predecessor_problem.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/primitive_root.test.cpp
     title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/primitive_root_min.test.cpp
     title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/quotients.test.cpp
     title: verify/yosupo/quotients.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/unionfind.test.cpp
     title: verify/yosupo/unionfind.test.cpp
   - icon: ':x:'
@@ -773,13 +788,13 @@ data:
     \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <int k, bool\
     \ does_sort, class T = ll, class U1, class U2>\narray<T, k> random_sample_range_array(U1\
     \ l, U2 r)\n{\n  assert(T(r) - T(l) >= T(k));\n  array<T, k> res;\n  repi(i, k)\
-    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n// [l,\
     \ r) \u304B\u3089\u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n// does_sort:\
     \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <bool does_sort,\
     \ class T = ll, class U1, class U2>\nvc<T> random_sample_range_vector(U1 l, U2\
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
-    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
     \ 4 \"math/modint/modint32_internal.hpp\"\n\nnamespace internal\n{\n\nconstexpr\
     \ ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n    return 0;\n\
@@ -836,6 +851,7 @@ data:
   - math/prime/factorize.hpp
   - math/prime/primality_test.hpp
   - math/crt.hpp
+  - math/convolution/convolution.hpp
   - math/modint/modint64_internal.hpp
   - math/modint/modint.hpp
   - math/modint/template_modint.hpp
@@ -843,7 +859,7 @@ data:
   - template/template_all.hpp
   - template/template_main.hpp
   - template/template.cpp
-  timestamp: '2025-03-29 20:18:07+09:00'
+  timestamp: '2025-04-05 01:36:45+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/aoj/modpow.test.cpp
@@ -877,9 +893,11 @@ data:
   - verify/yosupo/primality_test.test.cpp
   - verify/yosupo/aplusb.test.cpp
   - verify/yosupo/kth_root_integer.test.cpp
+  - verify/yosupo/convolution64.test.cpp
   - verify/yosupo/xor_convolution.test.cpp
   - verify/yosupo/offline_dynamic_connectivity.test.cpp
   - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/convolution_arbitrary_static.test.cpp
   - verify/yosupo/unionfind.test.cpp
   - verify/yosupo/subset_convolution.test.cpp
   - verify/yosupo/predecessor_problem.test.cpp
@@ -887,8 +905,10 @@ data:
   - verify/yosupo/many_aplusb.test.cpp
   - verify/yosupo/associative_array_lower_bound.test.cpp
   - verify/yosupo/associative_array_flat_map.test.cpp
+  - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/unionfind_potential.test.cpp
+  - verify/yosupo/convolution.test.cpp
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/binomial.test.cpp
   - verify/mytest/modint64.test.cpp

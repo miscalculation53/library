@@ -55,7 +55,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/offline_dynamic_connectivity.test.cpp
     title: verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/unionfind.test.cpp
     title: verify/yosupo/unionfind.test.cpp
   - icon: ':x:'
@@ -621,13 +621,13 @@ data:
     \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <int k, bool\
     \ does_sort, class T = ll, class U1, class U2>\narray<T, k> random_sample_range_array(U1\
     \ l, U2 r)\n{\n  assert(T(r) - T(l) >= T(k));\n  array<T, k> res;\n  repi(i, k)\
-    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n// [l,\
     \ r) \u304B\u3089\u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n// does_sort:\
     \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <bool does_sort,\
     \ class T = ll, class U1, class U2>\nvc<T> random_sample_range_vector(U1 l, U2\
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
-    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
     \ 4 \"ds/uf/uf.hpp\"\n\n/**\n * @brief UnionFind\n * @docs docs/ds/uf/uf.md\n\
     \ */\n\n// UFData \u306B\u30C7\u30D5\u30A9\u30EB\u30C8\u3067\u7528\u610F\u3055\
@@ -747,7 +747,7 @@ data:
   - ds/uf/uf_partially_persistent.hpp
   - ds/uf/uf_potential.hpp
   - ds/uf/uf_undo.hpp
-  timestamp: '2025-03-29 20:18:07+09:00'
+  timestamp: '2025-04-05 01:36:45+09:00'
   verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yukicoder/parallel_binsearch.test.cpp

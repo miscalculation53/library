@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/crt.hpp
     title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
   - icon: ':question:'
@@ -625,13 +625,13 @@ data:
     \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <int k, bool\
     \ does_sort, class T = ll, class U1, class U2>\narray<T, k> random_sample_range_array(U1\
     \ l, U2 r)\n{\n  assert(T(r) - T(l) >= T(k));\n  array<T, k> res;\n  repi(i, k)\
-    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n// [l,\
     \ r) \u304B\u3089\u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n// does_sort:\
     \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <bool does_sort,\
     \ class T = ll, class U1, class U2>\nvc<T> random_sample_range_vector(U1 l, U2\
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
-    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
     \ 17 \"verify/yukicoder/crt_mod.test.cpp\"\n\n#line 2 \"math/crt.hpp\"\n\n#line\
     \ 4 \"math/crt.hpp\"\n\n#line 2 \"math/extgcd.hpp\"\n\n#line 4 \"math/extgcd.hpp\"\
@@ -665,67 +665,68 @@ data:
     \ 7 \"math/crt.hpp\"\n\n/**\n * @brief \u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)\n\
     \ * @docs docs/math/crt.md\n */\n\n// (\u89E3\u304C\u5B58\u5728\u3059\u308B\u304B\
     , r, m)\ntemplate <class T = ll, class R0, class R1, class M0, class M1>\nconstexpr\
-    \ tuple<bool, T, T> crt2(R0 r0, R1 r1, M0 m0, M1 m1)\n{\n  assert(m0 >= 1 && m1\
-    \ >= 1);\n  r0 = safemod(r0, m0), r1 = safemod(r1, m1);\n  if (m0 < m1)\n    swap(r0,\
-    \ r1), swap(m0, m1);\n  if (m0 % m1 == 0)\n  {\n    if (r0 % m1 != r1)\n     \
-    \ return {false, 0, 0};\n    return {true, r0, m0};\n  }\n  auto [g, im, _] =\
-    \ extgcd<T>(m0, m1);\n  T u1 = m1 / g;\n  if ((r1 - r0) % g)\n    return {false,\
-    \ 0, 0};\n  T x = (r1 - r0) / g % u1 * im % u1;\n  r0 += x * m0;\n  m0 *= u1;\n\
-    \  if (r0 < 0)\n    r0 += m0;\n  return {true, r0, m0};\n}\n\n// (\u89E3\u304C\
-    \u5B58\u5728\u3059\u308B\u304B, r, m)\ntemplate <class T = ll, class V1, class\
-    \ V2>\nconstexpr tuple<bool, T, T> crt(const V1 &rs, const V2 &ms)\n{\n  assert(rs.size()\
-    \ == ms.size());\n  const int n = rs.size();\n  T r = 0, m = 1;\n  repi(i, n)\n\
-    \  {\n    auto [ok, nr, nm] = crt2<T>(r, rs[i], m, ms[i]);\n    if (!ok)\n   \
-    \   return {false, 0, 0};\n    r = nr, m = nm;\n  }\n  return {true, r, m};\n\
-    }\n\n// (r, m)\n// ms[i] \u305F\u3061\u306F pairwise coprime\n// T \u306F ms[i]\
+    \ tuple<bool, T, T> crt2(R0 r0_, R1 r1_, M0 m0_, M1 m1_)\n{\n  T m0 = m0_, m1\
+    \ = m1_;\n  assert(m0 >= 1 && m1 >= 1);\n  T r0 = safemod(r0_, m0), r1 = safemod(r1_,\
+    \ m1);\n  if (m0 < m1)\n    swap(r0, r1), swap(m0, m1);\n  if (m0 % m1 == 0)\n\
+    \  {\n    if (r0 % m1 != r1)\n      return {false, 0, 0};\n    return {true, r0,\
+    \ m0};\n  }\n  auto [g, im, _] = extgcd<T>(m0, m1);\n  T u1 = m1 / g;\n  if ((r1\
+    \ - r0) % g)\n    return {false, 0, 0};\n  T x = (r1 - r0) / g % u1 * im % u1;\n\
+    \  r0 += x * m0;\n  m0 *= u1;\n  if (r0 < 0)\n    r0 += m0;\n  return {true, r0,\
+    \ m0};\n}\n\n// (\u89E3\u304C\u5B58\u5728\u3059\u308B\u304B, r, m)\ntemplate <class\
+    \ T = ll, class V1, class V2>\nconstexpr tuple<bool, T, T> crt(const V1 &rs, const\
+    \ V2 &ms)\n{\n  assert(rs.size() == ms.size());\n  const int n = rs.size();\n\
+    \  T r = 0, m = 1;\n  repi(i, n)\n  {\n    auto [ok, nr, nm] = crt2<T>(r, rs[i],\
+    \ m, ms[i]);\n    if (!ok)\n      return {false, 0, 0};\n    r = nr, m = nm;\n\
+    \  }\n  return {true, r, m};\n}\n\n// (r, m)\n// ms[i] \u305F\u3061\u306F pairwise\
+    \ coprime\n// T \u306F ms[i] \u306E\u578B\u306E 2 \u4E57\u304C\u53CE\u307E\u308B\
+    \ (\u7B26\u53F7\u3064\u304D)\ntemplate <class mint, class T = ll, class V1, class\
+    \ V2>\npair<mint, mint> crt_mod(const V1 &rs, const V2 &ms)\n{\n  assert(rs.size()\
+    \ == ms.size());\n  const int n = rs.size();\n  mint r = 0, m = 1;\n  vc<T> rr(n,\
+    \ 0), mm(n, 1);\n  repi(i, n)\n  {\n    // r = t[0] + t[1]m[0] + ... + t[i-1]m[0]...m[i-2]\
+    \ mod mint::mod\n    // m = m[0]...m[i-1] mod mint::mod\n    // rr[i] = t[0] +\
+    \ t[1]m[0] + ... + t[i-1]m[0]...m[i-2] mod m[i]\n    // mm[i] = m[0]...m[i-1]\
+    \ mod m[i]\n    assert(ms[i] >= 1);\n    auto [g, im, _] = extgcd<T>(mm[i], ms[i]);\n\
+    \    assert(g == 1);\n    T t = safemod((rs[i] % ms[i] - rr[i]) * im, ms[i]);\n\
+    \    r += t * m, m *= ms[i];\n    repi(j, i + 1, n)\n    {\n      rr[j] += t *\
+    \ mm[j] % ms[j];\n      if (rr[j] >= ms[j])\n        rr[j] -= ms[j];\n      mm[j]\
+    \ *= ms[i], mm[j] %= ms[j];\n    }\n  }\n  return {r, m};\n}\n\n// (r, m)\n//\
+    \ \u5F15\u6570\u306F array\n// ms[i] \u305F\u3061\u304C\u30B3\u30F3\u30D1\u30A4\
+    \u30EB\u6642\u5B9A\u6570\u3067\u3042\u308B\u3053\u3068\u3092\u4EEE\u5B9A\n// ms[i]\
+    \ \u305F\u3061\u306F pairwise coprime\n// 0 <= rs[i] < ms[i]\n// T \u306F ms[i]\
     \ \u306E\u578B\u306E 2 \u4E57\u304C\u53CE\u307E\u308B (\u7B26\u53F7\u3064\u304D\
-    )\ntemplate <class mint, class T = ll, class V1, class V2>\npair<mint, mint> crt_mod(const\
+    )\ntemplate <class mint, class T = ll, class U1, class U2, size_t n>\nconstexpr\
+    \ pair<mint, mint> crt_mod_constexpr(const array<U1, n> &rs, const array<U2, n>\
+    \ &ms)\n{\n  assert(rs.size() == ms.size());\n  mint r = 0, m = 1;\n  array<T,\
+    \ n> rr{}, mm;\n  fill(ALL(mm), 1);\n  repi(i, n)\n  {\n    assert(ms[i] >= U2(1));\n\
+    \    assert(U1(0) <= rs[i] && U2(rs[i]) < ms[i]);\n    auto [g, im, _] = extgcd<T>(mm[i],\
+    \ ms[i]);\n    assert(g == 1);\n    T t = safemod((rs[i] - rr[i]) * im, ms[i]);\n\
+    \    r += t * m, m *= ms[i];\n    repi(j, i + 1, n)\n    {\n      rr[j] += t *\
+    \ mm[j] % ms[j];\n      if (rr[j] >= ms[j])\n        rr[j] -= ms[j];\n      mm[j]\
+    \ *= ms[i], mm[j] %= ms[j];\n    }\n  }\n  return {r, m};\n}\n\n// (r, m)\n//\
+    \ ms[i] \u305F\u3061\u306F pairwise coprime\n// ms[i] \u305F\u3061\u304C dynamic\
+    \ 32 bit \u306E\u5834\u5408\u306B\u9AD8\u901F\u5316\u3057\u305F\u3082\u306E\n\
+    template <class mint, class V1, class V2>\npair<mint, mint> crt_mod_dynamic_32(const\
     \ V1 &rs, const V2 &ms)\n{\n  assert(rs.size() == ms.size());\n  const int n =\
-    \ rs.size();\n  mint r = 0, m = 1;\n  vc<T> rr(n, 0), mm(n, 1);\n  repi(i, n)\n\
-    \  {\n    // r = t[0] + t[1]m[0] + ... + t[i-1]m[0]...m[i-2] mod mint::mod\n \
-    \   // m = m[0]...m[i-1] mod mint::mod\n    // rr[i] = t[0] + t[1]m[0] + ... +\
-    \ t[i-1]m[0]...m[i-2] mod m[i]\n    // mm[i] = m[0]...m[i-1] mod m[i]\n    assert(ms[i]\
-    \ >= 1);\n    auto [g, im, _] = extgcd<T>(mm[i], ms[i]);\n    assert(g == 1);\n\
-    \    T t = safemod((rs[i] % ms[i] - rr[i]) * im, ms[i]);\n    r += t * m, m *=\
-    \ ms[i];\n    repi(j, i + 1, n)\n    {\n      rr[j] += t * mm[j] % ms[j];\n  \
-    \    if (rr[j] >= ms[j])\n        rr[j] -= ms[j];\n      mm[j] *= ms[i], mm[j]\
-    \ %= ms[j];\n    }\n  }\n  return {r, m};\n}\n\n// (r, m)\n// \u5F15\u6570\u306F\
-    \ array\n// ms[i] \u305F\u3061\u304C\u30B3\u30F3\u30D1\u30A4\u30EB\u6642\u5B9A\
-    \u6570\u3067\u3042\u308B\u3053\u3068\u3092\u4EEE\u5B9A\n// ms[i] \u305F\u3061\u306F\
-    \ pairwise coprime\n// 0 <= rs[i] < ms[i]\n// T \u306F ms[i] \u306E\u578B\u306E\
-    \ 2 \u4E57\u304C\u53CE\u307E\u308B (\u7B26\u53F7\u3064\u304D)\ntemplate <class\
-    \ mint, class T = ll, class ARR1, class ARR2>\nconstexpr pair<mint, mint> crt_mod_constexpr(const\
-    \ ARR1 &rs, const ARR2 &ms)\n{\n  assert(rs.size() == ms.size());\n  const int\
-    \ n = rs.size();\n  mint r = 0, m = 1;\n  array<T, n> rr{}, mm;\n  fill(ALL(mm),\
-    \ 1);\n  repi(i, n)\n  {\n    assert(ms[i] >= 1);\n    assert(0 <= rs[i] && rs[i]\
-    \ < ms[i]);\n    auto [g, im, _] = extgcd<T>(mm[i], ms[i]);\n    assert(g == 1);\n\
-    \    T t = safemod((rs[i] - rr[i]) * im, ms[i]);\n    r += t * m, m *= ms[i];\n\
-    \    repi(j, i + 1, n)\n    {\n      rr[j] += t * mm[j] % ms[j];\n      if (rr[j]\
-    \ >= ms[j])\n        rr[j] -= ms[j];\n      mm[j] *= ms[i], mm[j] %= ms[j];\n\
-    \    }\n  }\n  return {r, m};\n}\n\n// (r, m)\n// ms[i] \u305F\u3061\u306F pairwise\
-    \ coprime\n// ms[i] \u305F\u3061\u304C dynamic 32 bit \u306E\u5834\u5408\u306B\
-    \u9AD8\u901F\u5316\u3057\u305F\u3082\u306E\ntemplate <class mint, class V1, class\
-    \ V2>\npair<mint, mint> crt_mod_dynamic_32(const V1 &rs, const V2 &ms)\n{\n  assert(rs.size()\
-    \ == ms.size());\n  const int n = rs.size();\n  mint r = 0, m = 1;\n  vc<internal::barrett32>\
-    \ ba;\n  ba.reserve(n);\n  repi(i, n) ba.eb(ms[i]);\n  vc<ll> rr(n, 0), mm(n,\
-    \ 1);\n  repi(i, n)\n  {\n    assert(ms[i] >= 1);\n    auto [g, im, _] = extgcd<ll>(mm[i],\
-    \ ms[i]);\n    assert(g == 1);\n    if (im < 0)\n      im += ms[i];\n    ll t\
-    \ = ba[i].mul(safemod(rs[i] - rr[i], ms[i]), im);\n    r += t * m, m *= ms[i];\n\
-    \    repi(j, i + 1, n)\n    {\n      rr[j] += ba[j].mul(t, mm[j]);\n      if (rr[j]\
-    \ >= ms[j])\n        rr[j] -= ms[j];\n      mm[j] = ba[j].mul(mm[j], ms[i]);\n\
-    \    }\n  }\n  return {r, m};\n}\n\n// \u7834\u58CA\u7684\u306B\u5909\u66F4\u3059\
-    \u308B\n// \u89E3\u304C\u5B58\u5728\u3057\u306A\u3044\u306A\u3089 false \u3092\
-    \u8FD4\u3059\n// \u89E3\u304C\u5B58\u5728\u3059\u308B\u306A\u3089 true \u3092\u8FD4\
-    \u3057\u3001ms[i] \u305F\u3061\u304C pairwise coprime \u3067\u3042\u308B\u3088\
-    \u3046\u306A\u7B49\u4FA1\u306A\u65B9\u7A0B\u5F0F\u306B\u5909\u63DB\u3059\u308B\
-    \ntemplate <class V1, class V2>\nbool pre_crt(const V1 &rs, V2 &ms)\n{\n  using\
-    \ T = typename V2::value_type;\n  assert(rs.size() == ms.size());\n  const int\
-    \ n = rs.size();\n  repi(i, n) repi(j, i + 1, n)\n  {\n    T g = gcd(ms[i], ms[j]);\n\
-    \    if ((rs[i] - rs[j]) % g)\n      return false;\n    ms[i] /= g, ms[j] /= g;\n\
-    \    T gi = gcd(ms[i], g), gj = g / gi;\n    do\n    {\n      g = gcd(gi, gj);\n\
-    \      gi *= g, gj /= g;\n    } while (g > 1);\n    ms[i] *= gi, ms[j] *= gj;\n\
-    \  }\n  return true;\n}\n#line 2 \"math/modint/modint.hpp\"\n\n#line 2 \"math/modint/modint_base.hpp\"\
-    \n\n#line 4 \"math/modint/modint_base.hpp\"\n\nnamespace internal\n{\n\n#define\
+    \ rs.size();\n  mint r = 0, m = 1;\n  vc<internal::barrett32> ba;\n  ba.reserve(n);\n\
+    \  repi(i, n) ba.eb(ms[i]);\n  vc<ll> rr(n, 0), mm(n, 1);\n  repi(i, n)\n  {\n\
+    \    assert(ms[i] >= 1);\n    auto [g, im, _] = extgcd<ll>(mm[i], ms[i]);\n  \
+    \  assert(g == 1);\n    if (im < 0)\n      im += ms[i];\n    ll t = ba[i].mul(safemod(rs[i]\
+    \ - rr[i], ms[i]), im);\n    r += t * m, m *= ms[i];\n    repi(j, i + 1, n)\n\
+    \    {\n      rr[j] += ba[j].mul(t, mm[j]);\n      if (rr[j] >= ms[j])\n     \
+    \   rr[j] -= ms[j];\n      mm[j] = ba[j].mul(mm[j], ms[i]);\n    }\n  }\n  return\
+    \ {r, m};\n}\n\n// \u7834\u58CA\u7684\u306B\u5909\u66F4\u3059\u308B\n// \u89E3\
+    \u304C\u5B58\u5728\u3057\u306A\u3044\u306A\u3089 false \u3092\u8FD4\u3059\n//\
+    \ \u89E3\u304C\u5B58\u5728\u3059\u308B\u306A\u3089 true \u3092\u8FD4\u3057\u3001\
+    ms[i] \u305F\u3061\u304C pairwise coprime \u3067\u3042\u308B\u3088\u3046\u306A\
+    \u7B49\u4FA1\u306A\u65B9\u7A0B\u5F0F\u306B\u5909\u63DB\u3059\u308B\ntemplate <class\
+    \ V1, class V2>\nbool pre_crt(const V1 &rs, V2 &ms)\n{\n  using T = typename V2::value_type;\n\
+    \  assert(rs.size() == ms.size());\n  const int n = rs.size();\n  repi(i, n) repi(j,\
+    \ i + 1, n)\n  {\n    T g = gcd(ms[i], ms[j]);\n    if ((rs[i] - rs[j]) % g)\n\
+    \      return false;\n    ms[i] /= g, ms[j] /= g;\n    T gi = gcd(ms[i], g), gj\
+    \ = g / gi;\n    do\n    {\n      g = gcd(gi, gj);\n      gi *= g, gj /= g;\n\
+    \    } while (g > 1);\n    ms[i] *= gi, ms[j] *= gj;\n  }\n  return true;\n}\n\
+    #line 2 \"math/modint/modint.hpp\"\n\n#line 2 \"math/modint/modint_base.hpp\"\n\
+    \n#line 4 \"math/modint/modint_base.hpp\"\n\nnamespace internal\n{\n\n#define\
     \ REF static_cast<mint &>(*this)\n#define CREF static_cast<const mint &>(*this)\n\
     #define VAL *static_cast<const mint *>(this)\n\ntemplate <class mint>\nstruct\
     \ modint_base\n{\n  mint &operator+=(const mint &rhs)\n  {\n    mint &self = REF;\n\
@@ -907,7 +908,7 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/crt_mod.test.cpp
   requiredBy: []
-  timestamp: '2025-04-03 02:33:15+09:00'
+  timestamp: '2025-04-05 05:39:56+09:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yukicoder/crt_mod.test.cpp

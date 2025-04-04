@@ -39,12 +39,12 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/quotients.test.cpp
     title: verify/yosupo/quotients.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     _deprecated_at_docs: docs/math/quotients.md
     document_title: "\u5546\u5217\u6319"
@@ -590,13 +590,13 @@ data:
     \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <int k, bool\
     \ does_sort, class T = ll, class U1, class U2>\narray<T, k> random_sample_range_array(U1\
     \ l, U2 r)\n{\n  assert(T(r) - T(l) >= T(k));\n  array<T, k> res;\n  repi(i, k)\
-    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n// [l,\
     \ r) \u304B\u3089\u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n// does_sort:\
     \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <bool does_sort,\
     \ class T = ll, class U1, class U2>\nvc<T> random_sample_range_vector(U1 l, U2\
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
-    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
     \ 4 \"math/quotients.hpp\"\n\n/**\n * @brief \u5546\u5217\u6319\n * @docs docs/math/quotients.md\n\
     \ */\n\n// (y, l, r)\n// y \u306F floor(n / x^d) (x: \u6574\u6570) \u3068\u3057\
@@ -642,8 +642,8 @@ data:
   isVerificationFile: false
   path: math/quotients.hpp
   requiredBy: []
-  timestamp: '2025-03-29 20:18:07+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2025-04-05 01:36:45+09:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - verify/yosupo/quotients.test.cpp
 documentation_of: math/quotients.hpp

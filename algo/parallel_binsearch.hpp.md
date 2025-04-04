@@ -590,13 +590,13 @@ data:
     \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <int k, bool\
     \ does_sort, class T = ll, class U1, class U2>\narray<T, k> random_sample_range_array(U1\
     \ l, U2 r)\n{\n  assert(T(r) - T(l) >= T(k));\n  array<T, k> res;\n  repi(i, k)\
-    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n// [l,\
     \ r) \u304B\u3089\u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n// does_sort:\
     \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <bool does_sort,\
     \ class T = ll, class U1, class U2>\nvc<T> random_sample_range_vector(U1 l, U2\
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
-    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
     \ 4 \"algo/parallel_binsearch.hpp\"\n\n/**\n * @brief \u4E26\u5217\u4E8C\u5206\
     \u63A2\u7D22\n * @docs docs/algo/parallel_binsearch.md\n */\n\n// vc<bool> judge(vc<ll>):\
@@ -649,7 +649,7 @@ data:
   isVerificationFile: false
   path: algo/parallel_binsearch.hpp
   requiredBy: []
-  timestamp: '2025-03-29 20:18:07+09:00'
+  timestamp: '2025-04-05 01:36:45+09:00'
   verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - verify/yukicoder/parallel_binsearch.test.cpp

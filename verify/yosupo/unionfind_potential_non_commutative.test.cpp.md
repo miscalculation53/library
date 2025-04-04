@@ -639,13 +639,13 @@ data:
     \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <int k, bool\
     \ does_sort, class T = ll, class U1, class U2>\narray<T, k> random_sample_range_array(U1\
     \ l, U2 r)\n{\n  assert(T(r) - T(l) >= T(k));\n  array<T, k> res;\n  repi(i, k)\
-    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n// [l,\
     \ r) \u304B\u3089\u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n// does_sort:\
     \ \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate <bool does_sort,\
     \ class T = ll, class U1, class U2>\nvc<T> random_sample_range_vector(U1 l, U2\
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
-    \ res[i] = randrange<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
+    \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
     \ 17 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\n\n#line 2\
     \ \"math/modint/modint.hpp\"\n\n#line 2 \"math/modint/modint32_internal.hpp\"\n\
@@ -865,33 +865,36 @@ data:
     \ n)\n  : UF(n), weight_(n, G::e()), valid_(n, true) {}\n  using UF::same;\n\n\
     \  int leader(int x) override\n  {\n    assert(0 <= x && x < SZ<int>(par));\n\
     \    if (par[x] < 0)\n      return x;\n    int lx = leader(par[x]);\n    weight_[x]\
-    \ = G::op(weight_[par[x]], weight_[x]);\n    return par[x] = lx;\n  }\n  // \u3069\
-    \u306E\u60C5\u5831\u3082\u7121\u8996\u3057\u306A\u304B\u3063\u305F\u3068\u3057\
-    \u3066\u3001x \u3092\u542B\u3080\u9023\u7D50\u6210\u5206\u306E\u60C5\u5831\u304C\
-    \ valid \u304B\u3069\u3046\u304B\n  bool valid(int x) { return valid_[leader(x)];\
-    \ }\n  // same(x, y) \u306E\u3068\u304D\u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\
-    \u307E\u308B\n  // \u305F\u3060\u3057\u3001invalid \u306A\u60C5\u5831\u306F\u7121\
-    \u8996\u3059\u308B\u3082\u306E\u3068\u3059\u308B\n  typename G::S diff(int x,\
-    \ int y)\n  {\n    assert(same(x, y));\n    return G::op(G::inv(weight_[x]), weight_[y]);\n\
-    \  }\n  // a[x]^{-1} a[y] == w \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\
-    \u3092\u8FFD\u52A0\u3059\u308B\n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\
-    \u5831\u306F\u7121\u8996\u3057\u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\
-    \u5831\u304C valid \u304B\u3069\u3046\u304B\n  bool merge(int x, int y, typename\
-    \ UFData::EWeight w)\n  {\n    int lx = leader(x), ly = leader(y);\n    if (lx\
-    \ == ly)\n    {\n      bool ok = G::op(G::inv(weight_[x]), weight_[y]) == w;\n\
+    \ = G::op(weight_[par[x]], weight_[x]);\n    return par[x] = lx;\n  }\n\n  //\
+    \ \u3069\u306E\u60C5\u5831\u3082\u7121\u8996\u3057\u306A\u304B\u3063\u305F\u3068\
+    \u3057\u3066\u3001x \u3092\u542B\u3080\u9023\u7D50\u6210\u5206\u306E\u60C5\u5831\
+    \u304C valid \u304B\u3069\u3046\u304B\n  bool valid(int x) { return valid_[leader(x)];\
+    \ }\n\n  // same(x, y) \u306E\u3068\u304D\u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\
+    \u307E\u308B\u306E\u3067\u3001\u305D\u308C\u3092\u8FD4\u3059\n  // \u305F\u3060\
+    \u3057\u3001invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3059\u308B\u3082\u306E\
+    \u3068\u3059\u308B\n  typename G::S diff(int x, int y)\n  {\n    assert(same(x,\
+    \ y));\n    return G::op(G::inv(weight_[x]), weight_[y]);\n  }\n\n  // a[x]^{-1}\
+    \ a[y] == w \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\u3092\u8FFD\u52A0\
+    \u3059\u308B\n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\u5831\u306F\u7121\
+    \u8996\u3057\u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\u5831\u304C valid\
+    \ \u304B\u3069\u3046\u304B\n  bool merge(int x, int y, typename UFData::EWeight\
+    \ w)\n  {\n    dump(x, y, w);\n    int lx = leader(x), ly = leader(y);\n    if\
+    \ (lx == ly)\n    {\n      bool ok = G::op(G::inv(weight_[x]), weight_[y]) ==\
+    \ w;\n      dump(x, y, w, G::op(G::inv(weight_[x]), weight_[y]));\n      dump(ok);\n\
     \      if (!ok)\n        valid_[lx] = false;\n      return ok;\n    }\n    w =\
     \ G::op(G::op(weight_[x], w), G::inv(weight_[y]));\n    if (-par[lx] < -par[ly])\n\
     \      swap(lx, ly), w = G::inv(w);\n    par[lx] += par[ly], par[ly] = lx;\n \
-    \   weight_[ly] = w;\n    return true;\n  }\n};\n#line 2 \"math/algebra/matmul22.hpp\"\
-    \n\n#line 5 \"math/algebra/matmul22.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
-    \u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\u306E\u7A4D\uFF09\n * @docs docs/math/algebra/matmul22.md\n\
-    \ */\n\ntemplate <class mint>\nstruct GroupMatMul22\n{\n  using S = array<mint,\
-    \ 4>;\n  static constexpr S op(S l, S r)\n  {\n    auto [a, b, c, d] = l;\n  \
-    \  auto [e, f, g, h] = r;\n    return {{a * e + b * g, a * f + b * h, c * e +\
-    \ d * g, c * f + d * h}};\n  }\n  static constexpr S e() { return {{1, 0, 0, 1}};\
-    \ }\n  static constexpr S inv(S m)\n  {\n    auto [a, b, c, d] = m;\n    mint\
-    \ detinv = (a * d - b * c).inv();\n    return {{d * detinv, -b * detinv, -c *\
-    \ detinv, a * detinv}};\n  }\n};\n#line 23 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\
+    \   weight_[ly] = w;\n    if (!valid_[ly])\n      valid_[lx] = false;\n    return\
+    \ true;\n  }\n};\n#line 2 \"math/algebra/matmul22.hpp\"\n\n#line 5 \"math/algebra/matmul22.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\
+    \u306E\u7A4D\uFF09\n * @docs docs/math/algebra/matmul22.md\n */\n\ntemplate <class\
+    \ mint>\nstruct GroupMatMul22\n{\n  using S = array<mint, 4>;\n  static constexpr\
+    \ S op(S l, S r)\n  {\n    auto [a, b, c, d] = l;\n    auto [e, f, g, h] = r;\n\
+    \    return {{a * e + b * g, a * f + b * h, c * e + d * g, c * f + d * h}};\n\
+    \  }\n  static constexpr S e() { return {{1, 0, 0, 1}}; }\n  static constexpr\
+    \ S inv(S m)\n  {\n    auto [a, b, c, d] = m;\n    mint detinv = (a * d - b *\
+    \ c).inv();\n    return {{d * detinv, -b * detinv, -c * detinv, a * detinv}};\n\
+    \  }\n};\n#line 23 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\
     \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFindPotential<GroupMatMul22<mint>>\
     \ uf(N);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(u, v,\
     \ a, b, c, d);\n      PRINT(uf.merge(v, u, {{a, b, c, d}}));\n    }\n    else\
@@ -995,7 +998,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
   requiredBy: []
-  timestamp: '2025-04-03 02:33:15+09:00'
+  timestamp: '2025-04-05 02:17:36+09:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yosupo/unionfind_potential_non_commutative.test.cpp
