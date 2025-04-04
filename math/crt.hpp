@@ -91,18 +91,17 @@ pair<mint, mint> crt_mod(const V1 &rs, const V2 &ms)
 // ms[i] たちは pairwise coprime
 // 0 <= rs[i] < ms[i]
 // T は ms[i] の型の 2 乗が収まる (符号つき)
-template <class mint, class T = ll, class ARR1, class ARR2>
-constexpr pair<mint, mint> crt_mod_constexpr(const ARR1 &rs, const ARR2 &ms)
+template <class mint, class T = ll, class U1, class U2, size_t n>
+constexpr pair<mint, mint> crt_mod_constexpr(const array<U1, n> &rs, const array<U2, n> &ms)
 {
   assert(rs.size() == ms.size());
-  const int n = rs.size();
   mint r = 0, m = 1;
   array<T, n> rr{}, mm;
   fill(ALL(mm), 1);
   repi(i, n)
   {
-    assert(ms[i] >= 1);
-    assert(0 <= rs[i] && rs[i] < ms[i]);
+    assert(ms[i] >= U2(1));
+    assert(U1(0) <= rs[i] && U2(rs[i]) < ms[i]);
     auto [g, im, _] = extgcd<T>(mm[i], ms[i]);
     assert(g == 1);
     T t = safemod((rs[i] - rr[i]) * im, ms[i]);
