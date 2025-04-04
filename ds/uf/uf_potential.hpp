@@ -42,23 +42,29 @@ public:
     weight_[x] = G::op(weight_[par[x]], weight_[x]);
     return par[x] = lx;
   }
+
   // どの情報も無視しなかったとして、x を含む連結成分の情報が valid かどうか
   bool valid(int x) { return valid_[leader(x)]; }
-  // same(x, y) のときのみ a[x]^{-1} a[y] が定まる
+
+  // same(x, y) のときのみ a[x]^{-1} a[y] が定まるので、それを返す
   // ただし、invalid な情報は無視するものとする
   typename G::S diff(int x, int y)
   {
     assert(same(x, y));
     return G::op(G::inv(weight_[x]), weight_[y]);
   }
+
   // a[x]^{-1} a[y] == w であるという情報を追加する
   // 返り値: (invalid な情報は無視したとして、) この情報が valid かどうか
   bool merge(int x, int y, typename UFData::EWeight w)
   {
+    dump(x, y, w);
     int lx = leader(x), ly = leader(y);
     if (lx == ly)
     {
       bool ok = G::op(G::inv(weight_[x]), weight_[y]) == w;
+      dump(x, y, w, G::op(G::inv(weight_[x]), weight_[y]));
+      dump(ok);
       if (!ok)
         valid_[lx] = false;
       return ok;
@@ -68,6 +74,8 @@ public:
       swap(lx, ly), w = G::inv(w);
     par[lx] += par[ly], par[ly] = lx;
     weight_[ly] = w;
+    if (!valid_[ly])
+      valid_[lx] = false;
     return true;
   }
 };
