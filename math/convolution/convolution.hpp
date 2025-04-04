@@ -329,8 +329,8 @@ vc<T> convolution_crt(const vc<T> &a, const vc<T> &b)
     (convolution_crt_helper<Is, ms_arr[Is], T, k>(a, b, cs), ...);
   }(make_index_sequence<k>{});
 
-  vc<mint> c(n + m - 1);
-  repi(i, n + m - 1) c[i] = get<1>(crt<T>(cs[i], ms_arr));
+  vc<T> c(n + m - 1);
+  repi(i, n + m - 1) c[i] = get<1>(crt(cs[i], ms_arr));
   return c;
 }
 

@@ -12,10 +12,11 @@
 
 // (解が存在するか, r, m)
 template <class T = ll, class R0, class R1, class M0, class M1>
-constexpr tuple<bool, T, T> crt2(R0 r0, R1 r1, M0 m0, M1 m1)
+constexpr tuple<bool, T, T> crt2(R0 r0_, R1 r1_, M0 m0_, M1 m1_)
 {
+  T m0 = m0_, m1 = m1_;
   assert(m0 >= 1 && m1 >= 1);
-  r0 = safemod(r0, m0), r1 = safemod(r1, m1);
+  T r0 = safemod(r0_, m0), r1 = safemod(r1_, m1);
   if (m0 < m1)
     swap(r0, r1), swap(m0, m1);
   if (m0 % m1 == 0)
