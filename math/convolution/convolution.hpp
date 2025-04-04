@@ -137,10 +137,16 @@ bool ntt_ok(int n)
     return false;
 }
 
+template <int id>
+void ntt(vc<dynamic_modint<id>> &) {}
+template <int id>
+void intt(vc<dynamic_modint<id>> &) {}
+
 // 破壊的に変更する
-template <class mint>
-void ntt(vc<mint> &a)
+template <int mod>
+void ntt(vc<static_modint<mod>> &a)
 {
+  using mint = static_modint<mod>;
   int n = int(a.size());
   int h = countr_zero((unsigned int)n);
 
@@ -202,9 +208,10 @@ void ntt(vc<mint> &a)
 }
 
 // 破壊的に変更する
-template <class mint>
-void intt(vc<mint> &a)
+template <int mod>
+void intt(vc<static_modint<mod>> &a)
 {
+  using mint = static_modint<mod>;
   int n = int(a.size());
   int h = countr_zero((unsigned int)n);
 
