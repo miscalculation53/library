@@ -32,7 +32,7 @@ array<T, k> random_sample_range_array(U1 l, U2 r)
 {
   assert(T(r) - T(l) >= T(k));
   array<T, k> res;
-  repi(i, k) res[i] = randrange<T>(T(l), T(r) - T(k));
+  repi(i, k) res[i] = randint<T>(T(l), T(r) - T(k));
   sort(ALL(res));
   repi(i, k) res[i] += i;
   if (!does_sort)
@@ -46,7 +46,7 @@ vc<T> random_sample_range_vector(U1 l, U2 r, int k)
 {
   assert(T(r) - T(l) >= T(k));
   vc<T> res(k);
-  repi(i, k) res[i] = randrange<T>(T(l), T(r) - T(k));
+  repi(i, k) res[i] = randint<T>(T(l), T(r) - T(k));
   sort(ALL(res));
   repi(i, k) res[i] += i;
   if (!does_sort)
