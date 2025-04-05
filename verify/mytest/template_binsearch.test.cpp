@@ -124,6 +124,8 @@ int main()
 {
   rep(_, 10000) test1();
   rep(_, 10000) test2();
+  test3();
+  test4();
 
   cout << "Hello World" << endl;
 }
