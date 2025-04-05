@@ -2,30 +2,6 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
-    path: math/extgcd.hpp
-    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/binomial.hpp
-    title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint32_internal.hpp
-    title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint_base.hpp
-    title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/power_table.hpp
-    title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/stom.hpp
-    title: "string \u3092 mint \u306B"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/template_modint.hpp
-    title: math/modint/template_modint.hpp
-  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -61,176 +37,25 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':warning:'
-    path: template/template.cpp
-    title: template/template.cpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_main.hpp
-    title: template/template_main.hpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/aoj/csr.test.cpp
-    title: verify/aoj/csr.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/extgcd.test.cpp
-    title: verify/aoj/extgcd.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/modpow.test.cpp
-    title: verify/aoj/modpow.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/power_table.test.cpp
-    title: verify/mytest/power_table.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/and_or_convolution.test.cpp
-    title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/aplusb.test.cpp
-    title: verify/yosupo/aplusb.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/associative_array_flat_map.test.cpp
-    title: verify/yosupo/associative_array_flat_map.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/associative_array_lower_bound.test.cpp
-    title: verify/yosupo/associative_array_lower_bound.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/binomial.test.cpp
-    title: verify/yosupo/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution.test.cpp
-    title: verify/yosupo/convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution64.test.cpp
-    title: verify/yosupo/convolution64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-    title: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution_arbitrary_static.test.cpp
-    title: verify/yosupo/convolution_arbitrary_static.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/gcd_convolution.test.cpp
-    title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_hadamard.test.cpp
-    title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kth_root_integer.test.cpp
-    title: verify/yosupo/kth_root_integer.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/lcm_convolution.test.cpp
-    title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb.test.cpp
-    title: verify/yosupo/many_aplusb.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb_128bit.test.cpp
-    title: verify/yosupo/many_aplusb_128bit.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/many_aplusb_tuple.test.cpp
-    title: verify/yosupo/many_aplusb_tuple.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/offline_dynamic_connectivity.test.cpp
-    title: verify/yosupo/offline_dynamic_connectivity.test.cpp
+    path: verify/mytest/pbds_set.test.cpp
+    title: verify/mytest/pbds_set.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/ordered_set.test.cpp
     title: verify/yosupo/ordered_set.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yosupo/predecessor_problem.test.cpp
-    title: verify/yosupo/predecessor_problem.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root.test.cpp
-    title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root_min.test.cpp
-    title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/quotients.test.cpp
-    title: verify/yosupo/quotients.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/static_range_frequency.test.cpp
-    title: verify/yosupo/static_range_frequency.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/subset_convolution.test.cpp
-    title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind.test.cpp
-    title: verify/yosupo/unionfind.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind_potential.test.cpp
-    title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-    title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/xor_convolution.test.cpp
-    title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/base_repr.test.cpp
-    title: verify/yukicoder/base_repr.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/binomial.test.cpp
-    title: verify/yukicoder/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/crt.test.cpp
-    title: verify/yukicoder/crt.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/crt_mod.test.cpp
-    title: verify/yukicoder/crt_mod.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/dynamic_modint.test.cpp
-    title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_carmichael.test.cpp
-    title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_euler_phi.test.cpp
-    title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/ordered_multiset.test.cpp
     title: verify/yukicoder/ordered_multiset.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/parallel_binsearch.test.cpp
-    title: verify/yukicoder/parallel_binsearch.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/quadratic_equation.test.cpp
-    title: verify/yukicoder/quadratic_equation.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/safe_unordered_map.test.cpp
-    title: verify/yukicoder/safe_unordered_map.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/static_modint.test.cpp
-    title: verify/yukicoder/static_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/uf_min_max_leader.test.cpp
-    title: verify/yukicoder/uf_min_max_leader.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/uf_partially_persistent.test.cpp
-    title: verify/yukicoder/uf_partially_persistent.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
+    _deprecated_at_docs: docs/ds/pbds_set.md
+    document_title: "pb_ds \u306E set/multiset"
     links: []
-  bundledCode: "#line 2 \"template/template_all.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
+  bundledCode: "#line 2 \"ds/pbds_set.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -779,153 +604,180 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 2 \"math/modint/template_modint.hpp\"\n\n#line 2 \"math/modint/modint.hpp\"\n\
-    \n#line 2 \"math/modint/modint32_internal.hpp\"\n\n#line 4 \"math/modint/modint32_internal.hpp\"\
-    \n\nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll x, ll n, int m)\n\
-    {\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y =\
-    \ safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n\
-    \    y = (y * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int\
-    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
-    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while\
-    \ (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll\
-    \ a : bases)\n  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n  \
-    \  while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n \
-    \     t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n\
-    \  }\n  return true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
-    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}\n#line 2 \"math/modint/modint_base.hpp\"\n\n#line 4 \"math/modint/modint_base.hpp\"\
-    \n\nnamespace internal\n{\n\n#define REF static_cast<mint &>(*this)\n#define CREF\
-    \ static_cast<const mint &>(*this)\n#define VAL *static_cast<const mint *>(this)\n\
-    \ntemplate <class mint>\nstruct modint_base\n{\n  mint &operator+=(const mint\
-    \ &rhs)\n  {\n    mint &self = REF;\n    self._v += rhs._v;\n    if (self._v >=\
-    \ self.umod())\n      self._v -= self.umod();\n    return self;\n  }\n  mint &operator-=(const\
-    \ mint &rhs)\n  {\n    mint &self = REF;\n    self._v -= rhs._v;\n    if (self._v\
-    \ >= self.umod())\n      self._v += self.umod();\n    return self;\n  }\n  mint\
-    \ &operator/=(const mint &rhs)\n  {\n    mint &self = REF;\n    return self =\
-    \ self * rhs.inv();\n  }\n\n  mint &operator++()\n  {\n    mint &self = REF;\n\
-    \    self._v++;\n    if (self._v == self.umod())\n      self._v = 0;\n    return\
-    \ self;\n  }\n  mint &operator--()\n  {\n    mint &self = REF;\n    if (self._v\
-    \ == 0)\n      self._v = self.umod();\n    self._v--;\n    return self;\n  }\n\
-    \  mint operator++(int)\n  {\n    mint res = VAL;\n    ++REF;\n    return res;\n\
-    \  }\n  mint operator--(int)\n  {\n    mint res = VAL;\n    --REF;\n    return\
-    \ res;\n  }\n\n  mint operator+() const { return VAL; }\n  mint operator-() const\
-    \ { return mint() - VAL; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n\
-    \    mint x = VAL, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r *=\
-    \ x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n\n  friend mint\
-    \ operator+(const mint &lhs, const mint &rhs)\n  { return mint(lhs) += rhs; }\n\
-    \  friend mint operator-(const mint &lhs, const mint &rhs)\n  { return mint(lhs)\
-    \ -= rhs; }\n  friend mint operator*(const mint &lhs, const mint &rhs)\n  { return\
-    \ mint(lhs) *= rhs; }\n  friend mint operator/(const mint &lhs, const mint &rhs)\n\
-    \  { return mint(lhs) /= rhs; }\n  friend bool operator==(const mint &lhs, const\
-    \ mint &rhs)\n  { return mint(lhs).eq(rhs); }\n  friend bool operator!=(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs).neq(rhs); }\nprivate:\n  bool\
-    \ eq(const mint &rhs) { return REF._v == rhs._v; }\n  bool neq(const mint &rhs)\
-    \ { return REF._v != rhs._v; }\n};\n\n}\n\n#if defined LOCAL or not defined FAST_IO\n\
-    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nistream &operator>>(istream &is, T &x)\n{\n  ll a;\n  is >> a;\n\
-    \  x = a;\n  return is;\n}\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nostream &operator<<(ostream &os, const T &x)\n{\n  os << x.val();\n\
-    \  return os;\n}\n#else\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nvoid rd1(T &x)\n{\n  ll a;\n  fastio::rd1(a);\n  x = a;\n}\n\
-    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nvoid wt1(const T &x) { fastio::wt1(x.val()); }\n#endif\n#line\
-    \ 2 \"math/extgcd.hpp\"\n\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\
-    \u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs\
-    \ docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\
-    \u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T =\
-    \ ll>\nconstexpr tuple<T, T, T> extgcd(const T &a, const T &b)\n{\n  if (a ==\
-    \ 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  //\
-    \ a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1,\
-    \ z2 = b;\n  while (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n\
-    \    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1,\
-    \ y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q *\
-    \ z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1,\
-    \ y1};\n}\n#line 7 \"math/modint/modint.hpp\"\n\n/**\n * @brief modint (32 bit)\n\
-    \ * @docs docs/math/modint/modint.md\n */\n\ntemplate <int m>\nstruct static_modint\
-    \ : internal::modint_base<static_modint<m>>\n{\n  using mint = static_modint;\n\
-    private:\n  friend struct internal::modint_base<static_modint<m>>;\n  uint _v;\n\
-    \  static constexpr uint umod() { return m; }\n  static constexpr bool prime =\
-    \ internal::isprime32<m>;\n\npublic:\n  static constexpr int mod() { return m;\
-    \ }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  static_modint() : _v(0) {}\n  template <class T>\n  static_modint(T\
-    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
-    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
-    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
-    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
-    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
-    \n  mint& operator*=(const mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n\
-    \    _v = (uint)(z % umod());\n    return *this;\n  }\n\n  mint inv() const\n\
-    \  {\n    if (prime)\n    {\n      assert(_v != 0);\n      return CREF.pow(umod()\
-    \ - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<int>(_v, m);\n\
-    \      assert(g == 1);\n      return x;\n    }\n  }\n};\n\ntemplate <int id>\n\
-    struct dynamic_modint : internal::modint_base<dynamic_modint<id>>\n{\n  using\
-    \ mint = dynamic_modint;\nprivate:\n  friend struct internal::modint_base<dynamic_modint<id>>;\n\
-    \  uint _v;\n  static internal::barrett32 bt;\n  static uint umod() { return bt.umod();\
-    \ }\n\npublic:\n  static int mod() { return (int)(bt.umod()); }\n  static void\
-    \ set_mod(int m)\n  {\n    assert(m >= 1);\n    bt = internal::barrett32(m);\n\
-    \  }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  dynamic_modint() : _v(0) {}\n  template <class T>\n  dynamic_modint(T\
-    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
-    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
-    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
-    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
-    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
-    \n  mint& operator*=(const mint &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n   \
-    \ return *this;\n  }\n\n  mint inv() const\n  {\n    auto [g, x, y] = extgcd<int>(_v,\
-    \ mod());\n    assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::barrett32\
-    \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
-    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
-    \ntemplate <class T>\nstruct is_static_modint : false_type {};\ntemplate <int\
-    \ m>\nstruct is_static_modint<static_modint<m>> : true_type {};\ntemplate <class\
-    \ T>\ninline constexpr bool is_static_modint_v = is_static_modint<T>::value;\n\
-    \ntemplate <class T>\nstruct is_dynamic_modint : false_type {};\ntemplate <int\
-    \ id>\nstruct is_dynamic_modint<dynamic_modint<id>> : true_type {};\ntemplate\
-    \ <class T>\ninline constexpr bool is_dynamic_modint_v = is_dynamic_modint<T>::value;\n\
-    #line 2 \"math/modint/power_table.hpp\"\n\n#line 4 \"math/modint/power_table.hpp\"\
-    \n\n/**\n * @brief \u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB\n * @docs docs/math/modint/power_table.md\n\
-    \ */\n\ntemplate <class T>\nstruct PowerTable\n{\nprivate:\n  decltype(T::mod())\
-    \ mod;\n  T base;\n  vc<T> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(T base)\
-    \ : mod(T::mod()), base(base), pw(1, 1) {}\n\n  void reserve(int n)\n  {\n   \
-    \ if (mod != T::mod())\n    {\n      mod = T::mod();\n      pw = {1};\n    }\n\
-    \    int i = pw.size();\n    if (n < i)\n      return;\n    pw.resize(n + 1);\n\
-    \    for (; i <= n; i++)\n      pw[i] = pw[i - 1] * base;\n  }\n\n  T pow(int\
-    \ n)\n  {\n    reserve(n);\n    return pw[n];\n  }\n};\n#line 2 \"math/modint/binomial.hpp\"\
-    \n\n#line 4 \"math/modint/binomial.hpp\"\n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\
-    \n * @docs docs/math/modint/binomial.md\n */\n\ntemplate <class T>\nstruct Binomial\n\
-    {\nprivate:\n  static decltype(T::mod()) mod;\n  static vc<T> fac_, finv_, inv_;\n\
-    \npublic:\n  static void reserve(int n)\n  {\n    if (mod != T::mod())\n    {\n\
-    \      mod = T::mod();\n      fac_ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};\n\
-    \    }\n    int i = fac_.size();\n    chmin(n, T::mod() - 1);\n    if (n < i)\n\
-    \      return;\n    fac_.resize(n + 1), finv_.resize(n + 1), inv_.resize(n + 1);\n\
-    \    for (; i <= n; i++)\n    {\n      fac_[i] = fac_[i - 1] * T::raw(i);\n  \
-    \    inv_[i] = -inv_[T::mod() % i] * T::raw(T::mod() / i);\n      finv_[i] = finv_[i\
-    \ - 1] * inv_[i];\n    }\n  }\n  static T fac(int n)\n  {\n    assert(n >= 0);\n\
-    \    if (n >= T::mod())\n      return 0;\n    reserve(n);\n    return fac_[n];\n\
-    \  }\n  static T finv(int n)\n  {\n    assert(n < T::mod());\n    if (n < 0)\n\
-    \      return 0;\n    reserve(n);\n    return finv_[n];\n  }\n  static T inv(T\
-    \ n)\n  {\n    assert(n != 0);\n    reserve(n.val());\n    return inv_[n.val()];\n\
-    \  }\n\n  static T P(int n, int k)\n  {\n    if (n < k)\n      return 0;\n   \
-    \ if (n < 0 || k < 0)\n      return 0;\n    reserve(n);\n    return fac_[n] *\
-    \ finv_[n - k];\n  }\n  static T C(int n, int k)\n  {\n    if (n < k)\n      return\
-    \ 0;\n    if (n < 0 || k < 0)\n      return 0;\n    reserve(n);\n    return fac_[n]\
-    \ * finv_[k] * finv_[n - k];\n  }\n  static T H(int n, int k)\n  {\n    if (n\
-    \ == 0 && k == 0)\n      return 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate\
-    \ <class T> decltype(T::mod()) Binomial<T>::mod{};\ntemplate <class T> vc<T> Binomial<T>::fac_{};\n\
-    template <class T> vc<T> Binomial<T>::finv_{};\ntemplate <class T> vc<T> Binomial<T>::inv_{};\n\
-    #line 2 \"math/modint/stom.hpp\"\n\n#line 4 \"math/modint/stom.hpp\"\n\n/**\n\
-    \ * @brief string \u3092 mint \u306B\n * @docs docs/math/modint/stom.md\n */\n\
-    \ntemplate <class mint>\nmint stom(string s)\n{\n  mint res = 0;\n  fec(c : s)\n\
-    \  {\n    res *= 10;\n    res += c - '0';\n  }\n  return res;\n}\n#line 5 \"template/template_all.hpp\"\
-    \n"
-  code: '#pragma once
-
-
-    #include "template_all_but_modint.hpp"
-
-    #include "../math/modint/template_modint.hpp"'
+    \ 4 \"ds/pbds_set.hpp\"\n\n/**\n * @brief pb_ds \u306E set/multiset\n * @docs\
+    \ docs/ds/pbds_set.md\n */\n\n#include <ext/pb_ds/assoc_container.hpp>\n#include\
+    \ <ext/pb_ds/tree_policy.hpp>\nusing namespace __gnu_pbds;\n\ntemplate <class\
+    \ T, class Compare = less<T>>\nstruct pbds_set : tree<T, null_type, Compare, rb_tree_tag,\
+    \ tree_order_statistics_node_update>\n{\n  using base = tree<T, null_type, Compare,\
+    \ rb_tree_tag, tree_order_statistics_node_update>;\n\n  pbds_set() {}\n  pbds_set(initializer_list<T>\
+    \ il) : base(il) {}\n  template <class Iterator>\n  pbds_set(Iterator begi, Iterator\
+    \ endi) : base(begi, endi) {}\n\n  inline bool contains(const T &x) const\n  {\n\
+    \    auto it = this->find(x);\n    return it != this->end() && *it == x;\n  }\n\
+    \n  // x \u672A\u6E80\u306E\u8981\u7D20\u306E\u500B\u6570\n  template <class I\
+    \ = ll>\n  inline I lt_cnt(const T &x) const { return this->order_of_key(x); }\n\
+    \  // x \u4EE5\u4E0B\u306E\u8981\u7D20\u306E\u500B\u6570\n  template <class I\
+    \ = ll>\n  inline I leq_cnt(const T &x) const { return lt_cnt<I>(x) + contains(x);\
+    \ }\n  // x \u4EE5\u4E0A\u306E\u8981\u7D20\u306E\u500B\u6570\n  template <class\
+    \ I = ll>\n  inline I geq_cnt(const T &x) const { return (I)this->size() - lt_cnt<I>(x);\
+    \ }\n  // x \u8D85\u904E\u306E\u8981\u7D20\u306E\u500B\u6570\n  template <class\
+    \ I = ll>\n  inline I gt_cnt(const T &x) const { return (I)this->size() - leq_cnt<I>(x);\
+    \ }\n\n  // x \u672A\u6E80\u3067\u6700\u5927\u306E\u8981\u7D20\u306E\u30A4\u30C6\
+    \u30EC\u30FC\u30BF (\u306A\u3051\u308C\u3070 end())\n  inline auto lt_max_it(const\
+    \ T &x) const\n  {\n    auto it = geq_min_it(x);\n    return it == this->begin()\
+    \ ? this->end() : prev(it);\n  }\n  // x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u8981\
+    \u7D20\u306E\u30A4\u30C6\u30EC\u30FC\u30BF (\u306A\u3051\u308C\u3070 end())\n\
+    \  inline auto leq_max_it(const T &x) const\n  {\n    auto it = gt_min_it(x);\n\
+    \    return it == this->begin() ? this->end() : prev(it);\n  }\n  // x \u4EE5\u4E0A\
+    \u3067\u6700\u5C0F\u306E\u8981\u7D20\u306E\u30A4\u30C6\u30EC\u30FC\u30BF (\u306A\
+    \u3051\u308C\u3070 end())\n  inline auto geq_min_it(const T &x) const { return\
+    \ this->lower_bound(x); }\n  // x \u8D85\u904E\u3067\u6700\u5C0F\u306E\u8981\u7D20\
+    \u306E\u30A4\u30C6\u30EC\u30FC\u30BF (\u306A\u3051\u308C\u3070 end())\n  inline\
+    \ auto gt_min_it(const T &x) const { return this->upper_bound(x); }\n\n  // x\
+    \ \u672A\u6E80\u3067\u6700\u5927\u306E\u8981\u7D20\u306E\u756A\u53F7 (\u306A\u3051\
+    \u308C\u3070 -1)\n  template <class I = ll>\n  inline I lt_max_id(const T &x)\
+    \ const { return lt_cnt<I>(x) - 1; }\n  // x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\
+    \u8981\u7D20\u306E\u756A\u53F7 (\u306A\u3051\u308C\u3070 -1)\n  template <class\
+    \ I = ll>\n  inline I leq_max_id(const T &x) const { return leq_cnt<I>(x) - 1;\
+    \ }\n\n  // x \u4EE5\u4E0A\u3067\u6700\u5C0F\u306E\u8981\u7D20\u306E\u756A\u53F7\
+    \ (\u306A\u3051\u308C\u3070 size())\n  template <class I = ll>\n  inline I geq_min_id(const\
+    \ T &x) const { return lt_cnt<I>(x); }\n  // x \u8D85\u904E\u3067\u6700\u5C0F\u306E\
+    \u8981\u7D20\u306E\u756A\u53F7 (\u306A\u3051\u308C\u3070 size())\n  template <class\
+    \ I = ll>\n  inline I gt_min_id(const T &x) const { return leq_cnt<I>(x); }\n\
+    };\n\ntemplate <class T, class Compare>\nstruct ComparePair\n{\n  bool operator()(const\
+    \ pair<T, int> &a, const pair<T, int> &b) const\n  {\n    if (a.first != b.first)\n\
+    \      return Compare()(a.first, b.first);\n    return a.second < b.second;\n\
+    \  }\n};\n\ntemplate <class T, class Compare = less<T>>\nstruct pbds_multiset\
+    \ : tree<pair<T, int>, null_type, ComparePair<T, Compare>, rb_tree_tag, tree_order_statistics_node_update>\n\
+    {\n  using base = tree<pair<T, int>, null_type, ComparePair<T, Compare>, rb_tree_tag,\
+    \ tree_order_statistics_node_update>;\n  \nprivate:\n  int id = 0;\n\npublic:\n\
+    \  pbds_multiset() {}\n  pbds_multiset(initializer_list<T> il) { fec(x : il) insert(x);\
+    \ }\n  template <class Iterator>\n  pbds_multiset(Iterator begi, Iterator endi)\n\
+    \  {\n    for (auto it = begi; it != endi; it = next(it))\n      insert(*it);\n\
+    \  }\n\n  multiset<T> content() const\n  {\n    multiset<T> res;\n    fec(e :\
+    \ *this) res.insert(e.first);\n    return res;\n  }\n\n  inline void insert(const\
+    \ T &x)\n  {\n    base::insert({x, id++});\n  }\n\n  inline auto find(const T\
+    \ &x) const\n  {\n    auto it = this->lower_bound({x, 0});\n    if (it == this->end()\
+    \ || it->first != x)\n      return this->end();\n    return it;\n  }\n  inline\
+    \ bool contains(const T &x) const\n  {\n    auto it = find(x);\n    return it\
+    \ != this->end() && it->first == x;\n  }\n  // x \u672A\u6E80\u306E\u8981\u7D20\
+    \u306E\u500B\u6570\n  template <class I = ll>\n  inline I lt_cnt(const T &x) const\
+    \ { return this->order_of_key({x, 0}); }\n  // x \u4EE5\u4E0B\u306E\u8981\u7D20\
+    \u306E\u500B\u6570\n  template <class I = ll>\n  inline I leq_cnt(const T &x)\
+    \ const { return this->order_of_key({x, (int)1e9}); }\n  // x \u4EE5\u4E0A\u306E\
+    \u8981\u7D20\u306E\u500B\u6570\n  template <class I = ll>\n  inline I geq_cnt(const\
+    \ T &x) const { return (I)this->size() - lt_cnt<I>(x); }\n  // x \u8D85\u904E\u306E\
+    \u8981\u7D20\u306E\u500B\u6570\n  template <class I = ll>\n  inline I gt_cnt(const\
+    \ T &x) const { return (I)this->size() - leq_cnt<I>(x); }\n  \n  // x \u672A\u6E80\
+    \u3067\u6700\u5927\u306E\u8981\u7D20\u306E\u30A4\u30C6\u30EC\u30FC\u30BF (\u306A\
+    \u3051\u308C\u3070 end())\n  inline auto lt_max_it(const T &x) const\n  {\n  \
+    \  auto it = geq_min_it(x);\n    return it == this->begin() ? this->end() : prev(it);\n\
+    \  }\n  // x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u8981\u7D20\u306E\u30A4\u30C6\
+    \u30EC\u30FC\u30BF (\u306A\u3051\u308C\u3070 end())\n  inline auto leq_max_it(const\
+    \ T &x) const\n  {\n    auto it = gt_min_it(x);\n    return it == this->begin()\
+    \ ? this->end() : prev(it);\n  }\n  // x \u4EE5\u4E0A\u3067\u6700\u5C0F\u306E\u8981\
+    \u7D20\u306E\u30A4\u30C6\u30EC\u30FC\u30BF (\u306A\u3051\u308C\u3070 end())\n\
+    \  inline auto geq_min_it(const T &x) const { return this->lower_bound({x, 0});\
+    \ }\n  // x \u8D85\u904E\u3067\u6700\u5C0F\u306E\u8981\u7D20\u306E\u30A4\u30C6\
+    \u30EC\u30FC\u30BF (\u306A\u3051\u308C\u3070 end())\n  inline auto gt_min_it(const\
+    \ T &x) const { return this->upper_bound({x, (int)1e9}); }\n\n  // x \u672A\u6E80\
+    \u3067\u6700\u5927\u306E\u8981\u7D20\u306E\u756A\u53F7 (\u306A\u3051\u308C\u3070\
+    \ -1)\n  template <class I = ll>\n  inline I lt_max_id(const T &x) const { return\
+    \ lt_cnt<I>(x) - 1; }\n  // x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u8981\u7D20\
+    \u306E\u756A\u53F7 (\u306A\u3051\u308C\u3070 -1)\n  template <class I = ll>\n\
+    \  inline I leq_max_id(const T &x) const { return leq_cnt<I>(x) - 1; }\n  // x\
+    \ \u4EE5\u4E0A\u3067\u6700\u5C0F\u306E\u8981\u7D20\u306E\u756A\u53F7 (\u306A\u3051\
+    \u308C\u3070 size())\n  template <class I = ll>\n  inline I geq_min_id(const T\
+    \ &x) const { return lt_cnt<I>(x); }\n  // x \u8D85\u904E\u3067\u6700\u5C0F\u306E\
+    \u8981\u7D20\u306E\u756A\u53F7 (\u306A\u3051\u308C\u3070 size())\n  template <class\
+    \ I = ll>\n  inline I gt_min_id(const T &x) const { return leq_cnt<I>(x); }\n\
+    };\n"
+  code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
+    /**\n * @brief pb_ds \u306E set/multiset\n * @docs docs/ds/pbds_set.md\n */\n\n\
+    #include <ext/pb_ds/assoc_container.hpp>\n#include <ext/pb_ds/tree_policy.hpp>\n\
+    using namespace __gnu_pbds;\n\ntemplate <class T, class Compare = less<T>>\nstruct\
+    \ pbds_set : tree<T, null_type, Compare, rb_tree_tag, tree_order_statistics_node_update>\n\
+    {\n  using base = tree<T, null_type, Compare, rb_tree_tag, tree_order_statistics_node_update>;\n\
+    \n  pbds_set() {}\n  pbds_set(initializer_list<T> il) : base(il) {}\n  template\
+    \ <class Iterator>\n  pbds_set(Iterator begi, Iterator endi) : base(begi, endi)\
+    \ {}\n\n  inline bool contains(const T &x) const\n  {\n    auto it = this->find(x);\n\
+    \    return it != this->end() && *it == x;\n  }\n\n  // x \u672A\u6E80\u306E\u8981\
+    \u7D20\u306E\u500B\u6570\n  template <class I = ll>\n  inline I lt_cnt(const T\
+    \ &x) const { return this->order_of_key(x); }\n  // x \u4EE5\u4E0B\u306E\u8981\
+    \u7D20\u306E\u500B\u6570\n  template <class I = ll>\n  inline I leq_cnt(const\
+    \ T &x) const { return lt_cnt<I>(x) + contains(x); }\n  // x \u4EE5\u4E0A\u306E\
+    \u8981\u7D20\u306E\u500B\u6570\n  template <class I = ll>\n  inline I geq_cnt(const\
+    \ T &x) const { return (I)this->size() - lt_cnt<I>(x); }\n  // x \u8D85\u904E\u306E\
+    \u8981\u7D20\u306E\u500B\u6570\n  template <class I = ll>\n  inline I gt_cnt(const\
+    \ T &x) const { return (I)this->size() - leq_cnt<I>(x); }\n\n  // x \u672A\u6E80\
+    \u3067\u6700\u5927\u306E\u8981\u7D20\u306E\u30A4\u30C6\u30EC\u30FC\u30BF (\u306A\
+    \u3051\u308C\u3070 end())\n  inline auto lt_max_it(const T &x) const\n  {\n  \
+    \  auto it = geq_min_it(x);\n    return it == this->begin() ? this->end() : prev(it);\n\
+    \  }\n  // x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u8981\u7D20\u306E\u30A4\u30C6\
+    \u30EC\u30FC\u30BF (\u306A\u3051\u308C\u3070 end())\n  inline auto leq_max_it(const\
+    \ T &x) const\n  {\n    auto it = gt_min_it(x);\n    return it == this->begin()\
+    \ ? this->end() : prev(it);\n  }\n  // x \u4EE5\u4E0A\u3067\u6700\u5C0F\u306E\u8981\
+    \u7D20\u306E\u30A4\u30C6\u30EC\u30FC\u30BF (\u306A\u3051\u308C\u3070 end())\n\
+    \  inline auto geq_min_it(const T &x) const { return this->lower_bound(x); }\n\
+    \  // x \u8D85\u904E\u3067\u6700\u5C0F\u306E\u8981\u7D20\u306E\u30A4\u30C6\u30EC\
+    \u30FC\u30BF (\u306A\u3051\u308C\u3070 end())\n  inline auto gt_min_it(const T\
+    \ &x) const { return this->upper_bound(x); }\n\n  // x \u672A\u6E80\u3067\u6700\
+    \u5927\u306E\u8981\u7D20\u306E\u756A\u53F7 (\u306A\u3051\u308C\u3070 -1)\n  template\
+    \ <class I = ll>\n  inline I lt_max_id(const T &x) const { return lt_cnt<I>(x)\
+    \ - 1; }\n  // x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u8981\u7D20\u306E\u756A\u53F7\
+    \ (\u306A\u3051\u308C\u3070 -1)\n  template <class I = ll>\n  inline I leq_max_id(const\
+    \ T &x) const { return leq_cnt<I>(x) - 1; }\n\n  // x \u4EE5\u4E0A\u3067\u6700\
+    \u5C0F\u306E\u8981\u7D20\u306E\u756A\u53F7 (\u306A\u3051\u308C\u3070 size())\n\
+    \  template <class I = ll>\n  inline I geq_min_id(const T &x) const { return lt_cnt<I>(x);\
+    \ }\n  // x \u8D85\u904E\u3067\u6700\u5C0F\u306E\u8981\u7D20\u306E\u756A\u53F7\
+    \ (\u306A\u3051\u308C\u3070 size())\n  template <class I = ll>\n  inline I gt_min_id(const\
+    \ T &x) const { return leq_cnt<I>(x); }\n};\n\ntemplate <class T, class Compare>\n\
+    struct ComparePair\n{\n  bool operator()(const pair<T, int> &a, const pair<T,\
+    \ int> &b) const\n  {\n    if (a.first != b.first)\n      return Compare()(a.first,\
+    \ b.first);\n    return a.second < b.second;\n  }\n};\n\ntemplate <class T, class\
+    \ Compare = less<T>>\nstruct pbds_multiset : tree<pair<T, int>, null_type, ComparePair<T,\
+    \ Compare>, rb_tree_tag, tree_order_statistics_node_update>\n{\n  using base =\
+    \ tree<pair<T, int>, null_type, ComparePair<T, Compare>, rb_tree_tag, tree_order_statistics_node_update>;\n\
+    \  \nprivate:\n  int id = 0;\n\npublic:\n  pbds_multiset() {}\n  pbds_multiset(initializer_list<T>\
+    \ il) { fec(x : il) insert(x); }\n  template <class Iterator>\n  pbds_multiset(Iterator\
+    \ begi, Iterator endi)\n  {\n    for (auto it = begi; it != endi; it = next(it))\n\
+    \      insert(*it);\n  }\n\n  multiset<T> content() const\n  {\n    multiset<T>\
+    \ res;\n    fec(e : *this) res.insert(e.first);\n    return res;\n  }\n\n  inline\
+    \ void insert(const T &x)\n  {\n    base::insert({x, id++});\n  }\n\n  inline\
+    \ auto find(const T &x) const\n  {\n    auto it = this->lower_bound({x, 0});\n\
+    \    if (it == this->end() || it->first != x)\n      return this->end();\n   \
+    \ return it;\n  }\n  inline bool contains(const T &x) const\n  {\n    auto it\
+    \ = find(x);\n    return it != this->end() && it->first == x;\n  }\n  // x \u672A\
+    \u6E80\u306E\u8981\u7D20\u306E\u500B\u6570\n  template <class I = ll>\n  inline\
+    \ I lt_cnt(const T &x) const { return this->order_of_key({x, 0}); }\n  // x \u4EE5\
+    \u4E0B\u306E\u8981\u7D20\u306E\u500B\u6570\n  template <class I = ll>\n  inline\
+    \ I leq_cnt(const T &x) const { return this->order_of_key({x, (int)1e9}); }\n\
+    \  // x \u4EE5\u4E0A\u306E\u8981\u7D20\u306E\u500B\u6570\n  template <class I\
+    \ = ll>\n  inline I geq_cnt(const T &x) const { return (I)this->size() - lt_cnt<I>(x);\
+    \ }\n  // x \u8D85\u904E\u306E\u8981\u7D20\u306E\u500B\u6570\n  template <class\
+    \ I = ll>\n  inline I gt_cnt(const T &x) const { return (I)this->size() - leq_cnt<I>(x);\
+    \ }\n  \n  // x \u672A\u6E80\u3067\u6700\u5927\u306E\u8981\u7D20\u306E\u30A4\u30C6\
+    \u30EC\u30FC\u30BF (\u306A\u3051\u308C\u3070 end())\n  inline auto lt_max_it(const\
+    \ T &x) const\n  {\n    auto it = geq_min_it(x);\n    return it == this->begin()\
+    \ ? this->end() : prev(it);\n  }\n  // x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u8981\
+    \u7D20\u306E\u30A4\u30C6\u30EC\u30FC\u30BF (\u306A\u3051\u308C\u3070 end())\n\
+    \  inline auto leq_max_it(const T &x) const\n  {\n    auto it = gt_min_it(x);\n\
+    \    return it == this->begin() ? this->end() : prev(it);\n  }\n  // x \u4EE5\u4E0A\
+    \u3067\u6700\u5C0F\u306E\u8981\u7D20\u306E\u30A4\u30C6\u30EC\u30FC\u30BF (\u306A\
+    \u3051\u308C\u3070 end())\n  inline auto geq_min_it(const T &x) const { return\
+    \ this->lower_bound({x, 0}); }\n  // x \u8D85\u904E\u3067\u6700\u5C0F\u306E\u8981\
+    \u7D20\u306E\u30A4\u30C6\u30EC\u30FC\u30BF (\u306A\u3051\u308C\u3070 end())\n\
+    \  inline auto gt_min_it(const T &x) const { return this->upper_bound({x, (int)1e9});\
+    \ }\n\n  // x \u672A\u6E80\u3067\u6700\u5927\u306E\u8981\u7D20\u306E\u756A\u53F7\
+    \ (\u306A\u3051\u308C\u3070 -1)\n  template <class I = ll>\n  inline I lt_max_id(const\
+    \ T &x) const { return lt_cnt<I>(x) - 1; }\n  // x \u4EE5\u4E0B\u3067\u6700\u5927\
+    \u306E\u8981\u7D20\u306E\u756A\u53F7 (\u306A\u3051\u308C\u3070 -1)\n  template\
+    \ <class I = ll>\n  inline I leq_max_id(const T &x) const { return leq_cnt<I>(x)\
+    \ - 1; }\n  // x \u4EE5\u4E0A\u3067\u6700\u5C0F\u306E\u8981\u7D20\u306E\u756A\u53F7\
+    \ (\u306A\u3051\u308C\u3070 size())\n  template <class I = ll>\n  inline I geq_min_id(const\
+    \ T &x) const { return lt_cnt<I>(x); }\n  // x \u8D85\u904E\u3067\u6700\u5C0F\u306E\
+    \u8981\u7D20\u306E\u756A\u53F7 (\u306A\u3051\u308C\u3070 size())\n  template <class\
+    \ I = ll>\n  inline I gt_min_id(const T &x) const { return leq_cnt<I>(x); }\n\
+    };\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -938,78 +790,46 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   - template/template_random.hpp
-  - math/modint/template_modint.hpp
-  - math/modint/modint.hpp
-  - math/modint/modint32_internal.hpp
-  - math/modint/modint_base.hpp
-  - math/extgcd.hpp
-  - math/modint/power_table.hpp
-  - math/modint/binomial.hpp
-  - math/modint/stom.hpp
   isVerificationFile: false
-  path: template/template_all.hpp
-  requiredBy:
-  - template/template_main.hpp
-  - template/template.cpp
-  timestamp: '2025-04-05 01:36:45+09:00'
+  path: ds/pbds_set.hpp
+  requiredBy: []
+  timestamp: '2025-04-06 04:01:11+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/aoj/modpow.test.cpp
-  - verify/aoj/csr.test.cpp
-  - verify/aoj/extgcd.test.cpp
-  - verify/yukicoder/parallel_binsearch.test.cpp
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/quadratic_equation.test.cpp
   - verify/yukicoder/ordered_multiset.test.cpp
-  - verify/yukicoder/crt.test.cpp
-  - verify/yukicoder/uf_partially_persistent.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yukicoder/base_repr.test.cpp
-  - verify/yukicoder/crt_mod.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/static_modint.test.cpp
-  - verify/yukicoder/uf_min_max_leader.test.cpp
-  - verify/yukicoder/safe_unordered_map.test.cpp
-  - verify/yukicoder/dynamic_modint.test.cpp
-  - verify/yukicoder/binomial.test.cpp
   - verify/yosupo/ordered_set.test.cpp
-  - verify/yosupo/quotients.test.cpp
-  - verify/yosupo/kronecker_power_hadamard.test.cpp
-  - verify/yosupo/many_aplusb_tuple.test.cpp
-  - verify/yosupo/static_range_frequency.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/many_aplusb_128bit.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/aplusb.test.cpp
-  - verify/yosupo/kth_root_integer.test.cpp
-  - verify/yosupo/convolution64.test.cpp
-  - verify/yosupo/xor_convolution.test.cpp
-  - verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/convolution_arbitrary_static.test.cpp
-  - verify/yosupo/unionfind.test.cpp
-  - verify/yosupo/subset_convolution.test.cpp
-  - verify/yosupo/predecessor_problem.test.cpp
-  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - verify/yosupo/many_aplusb.test.cpp
-  - verify/yosupo/associative_array_lower_bound.test.cpp
-  - verify/yosupo/associative_array_flat_map.test.cpp
-  - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yosupo/unionfind_potential.test.cpp
-  - verify/yosupo/convolution.test.cpp
-  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - verify/yosupo/binomial.test.cpp
-  - verify/mytest/power_table.test.cpp
-documentation_of: template/template_all.hpp
+  - verify/mytest/pbds_set.test.cpp
+documentation_of: ds/pbds_set.hpp
 layout: document
 redirect_from:
-- /library/template/template_all.hpp
-- /library/template/template_all.hpp.html
-title: template/template_all.hpp
+- /library/ds/pbds_set.hpp
+- /library/ds/pbds_set.hpp.html
+title: "pb_ds \u306E set/multiset"
 ---
+## pb_ds の set/multiset
+
+`std::set` および `std::multiset` と比較して、$k$ 番目取得ができる。
+
+### コンストラクタ
+
+- `pbds_set<T>`
+- `pbds_multiset<T>`
+
+
+### メンバ関数
+
+`insert`, `erase`, `find` などはある。
+
+また、`find_by_order(k)` で $k$ 番目の要素のイテレータが取得できる。
+
+新しく定義したもの：
+
+- `contains`
+- `lt_cnt`, `leq_cnt`, `gt_cnt`, `geq_cnt`
+  - 個数を数える
+- `lt_max_it`, `leq_max_it`, `gt_min_it`, `geq_min_it`
+  - イテレータを返す（なければ `end()`）
+- `lt_max_id`, `leq_max_id`, `gt_max_id`, `geq_max_id`
+  - 添字を返す（なければ `lt`, `leq` は $-1$、`gt`, `geq` は $n$）
+
+**注意**：`pbds_multiset` のほうは、イテレータが指す値が `pair<T, int>` になっている（一応、`second` は追加された順番。これを使うことはあまり想定していない）。

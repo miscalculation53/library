@@ -121,6 +121,9 @@ data:
     path: verify/yosupo/offline_dynamic_connectivity.test.cpp
     title: verify/yosupo/offline_dynamic_connectivity.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/ordered_set.test.cpp
+    title: verify/yosupo/ordered_set.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem.test.cpp
     title: verify/yosupo/predecessor_problem.test.cpp
   - icon: ':heavy_check_mark:'
@@ -177,6 +180,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/order_mod_euler_phi.test.cpp
     title: verify/yukicoder/order_mod_euler_phi.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/ordered_multiset.test.cpp
+    title: verify/yukicoder/ordered_multiset.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/parallel_binsearch.test.cpp
     title: verify/yukicoder/parallel_binsearch.test.cpp
@@ -831,6 +837,7 @@ data:
   - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yukicoder/quadratic_equation.test.cpp
+  - verify/yukicoder/ordered_multiset.test.cpp
   - verify/yukicoder/crt.test.cpp
   - verify/yukicoder/uf_partially_persistent.test.cpp
   - verify/yukicoder/order_mod_carmichael.test.cpp
@@ -843,6 +850,7 @@ data:
   - verify/yukicoder/safe_unordered_map.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
   - verify/yukicoder/binomial.test.cpp
+  - verify/yosupo/ordered_set.test.cpp
   - verify/yosupo/quotients.test.cpp
   - verify/yosupo/kronecker_power_hadamard.test.cpp
   - verify/yosupo/many_aplusb_tuple.test.cpp
