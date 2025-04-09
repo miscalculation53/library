@@ -53,15 +53,17 @@ constexpr T ipow(U a, V b)
   return res;
 }
 template <class T = ll, class A, class B, class M>
-T mul_limited(A a, B b, M m = INF)
+T mul_limited(A a, B b, M m)
 {
   assert(a >= 0 && b >= 0 && m >= 0);
   if (b == 0)
     return 0;
   return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);
 }
+template <class T = ll, class A, class B>
+T mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }
 template <class T = ll, class A, class B, class M>
-T pow_limited(A a, B b, M m = INF)
+T pow_limited(A a, B b, M m)
 {
   assert(a >= 0 && b >= 0 && m >= 0);
   if (a <= 1 || b == 0)
@@ -85,6 +87,8 @@ T pow_limited(A a, B b, M m = INF)
   }
   return res;
 }
+template <class T = ll, class A, class B>
+T pow_limited(A a, B b) { return pow_limited<T>(a, b, INF); }
 
 template <class T = ll, class A, class K>
 constexpr T iroot(A a, K k)
