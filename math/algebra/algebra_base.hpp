@@ -65,3 +65,42 @@ template <class R>
 using GroupOfRingAdd = Group<typename R::S, R::add, R::e0, R::minus>;
 template <class K>
 using GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;
+
+// Madd は可換
+template <class Madd, class Mmul>
+struct SemiRingFromMonoidMonoid
+{
+  static_assert(is_same_v<typename Madd::S, typename Mmul::S>, "Madd::S and Mmul::S must be identical");
+  using S = typename Madd::S;
+  static constexpr auto add = Madd::op;
+  static constexpr auto e0 = Madd::e;
+  static constexpr auto mul = Mmul::op;
+  static constexpr auto e1 = Mmul::e;
+};
+
+// Gadd は可換
+template <class Gadd, class Mmul>
+struct RingFromGroupMonoid
+{
+  static_assert(is_same_v<typename Gadd::S, typename Mmul::S>, "Gadd::S and Mmul::S must be identical");
+  using S = typename Gadd::S;
+  static constexpr auto add = Gadd::op;
+  static constexpr auto e0 = Gadd::e;
+  static constexpr auto minus = Gadd::inv;
+  static constexpr auto mul = Mmul::op;
+  static constexpr auto e1 = Mmul::e;
+};
+
+// Gadd, Gmul は可換
+template <class Gadd, class Gmul>
+struct FieldFromGroupGroup
+{
+  static_assert(is_same_v<typename Gadd::S, typename Gmul::S>, "Gadd::S and Gmul::S must be identical");
+  using S = typename Gadd::S;
+  static constexpr auto add = Gadd::op;
+  static constexpr auto e0 = Gadd::e;
+  static constexpr auto minus = Gadd::inv;
+  static constexpr auto mul = Gmul::op;
+  static constexpr auto e1 = Gmul::e;
+  static constexpr auto inv = Gmul::inv;
+};
