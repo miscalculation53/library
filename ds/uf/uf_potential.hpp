@@ -2,34 +2,28 @@
 
 #include "../../template/template_all_but_modint.hpp"
 
-#include "uf.hpp"
 #include "../../math/algebra/algebra_basic_ops.hpp"
+#include "uf.hpp"
 
 /**
  * @brief ポテンシャルつき UnionFind
  * @docs docs/ds/uf/uf_potential.md
  */
 
-// G は群
-template <class G>
-struct UnionFindPotential : UnionFind<UFDataEmpty<typename G::S>, true>
+// G は群で、G::S は UFData::EWeight と一致
+template <class G, class UFData>
+struct UnionFindPotentialBase : UnionFind<UFData, true>
 {
-  using UFData = UFDataEmpty<typename G::S>;
   using UF = UnionFind<UFData, true>;
 
 protected:
   using UF::par;
   vc<typename G::S> weight_;
   vc<bool> valid_;
-  typename G::S weight(int x)
-  {
-    leader(x);
-    return weight_[x];
-  }
 
 public:
-  UnionFindPotential() {}
-  UnionFindPotential(int n)
+  UnionFindPotentialBase() {}
+  UnionFindPotentialBase(int n)
   : UF(n), weight_(n, G::e()), valid_(n, true) {}
   using UF::same;
 
@@ -58,15 +52,13 @@ public:
   // 返り値: (invalid な情報は無視したとして、) この情報が valid かどうか
   bool merge(int x, int y, typename UFData::EWeight w)
   {
-    dump(x, y, w);
     int lx = leader(x), ly = leader(y);
     if (lx == ly)
     {
       bool ok = G::op(G::inv(weight_[x]), weight_[y]) == w;
-      dump(x, y, w, G::op(G::inv(weight_[x]), weight_[y]));
-      dump(ok);
       if (!ok)
         valid_[lx] = false;
+      UFData::add_edge_same(*this, lx, w);
       return ok;
     }
     w = G::op(G::op(weight_[x], w), G::inv(weight_[y]));
@@ -76,6 +68,14 @@ public:
     weight_[ly] = w;
     if (!valid_[ly])
       valid_[lx] = false;
+    UFData::add_edge_diff(*this, lx, ly, w);
     return true;
   }
 };
+
+// G は群
+template <class G>
+using UnionFindPotential = UnionFindPotentialBase<G, UFDataEmpty<typename G::S>>;
+// G は群
+template <class G>
+using UnionFindPotentialEverything = UnionFindPotentialBase<G, UFDataEverything<typename G::S>>;
