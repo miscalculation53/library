@@ -5,10 +5,6 @@ data:
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
   - icon: ':heavy_check_mark:'
-    path: math/algebra/algebra_basic_ops.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
-      \ max\uFF09"
-  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -44,22 +40,17 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: math/set/and_or_convolution.hpp
-    title: "and/or \u7573\u307F\u8FBC\u307F"
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/and_or_convolution.test.cpp
-    title: verify/yosupo/and_or_convolution.test.cpp
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':warning:'
   attributes:
-    _deprecated_at_docs: docs/math/set/zeta_mobius.md
-    document_title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
+    _deprecated_at_docs: docs/math/algebra/bit.md
+    document_title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
     links: []
-  bundledCode: "#line 2 \"math/set/zeta_mobius.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
+  bundledCode: "#line 2 \"math/algebra/bit.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -610,168 +601,72 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n#line 2 \"math/algebra/algebra_base.hpp\"\
-    \n\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
-    \u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
-    \ */\n\ntemplate <class S_, auto op_, auto e_>\nstruct Monoid\n{\n  using S =\
-    \ S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n};\n\
-    \ntemplate <class S_, auto op_, auto e_, auto inv_>\nstruct Group\n{\n  using\
-    \ S = S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n\
-    \  static constexpr auto inv = inv_;\n};\n\ntemplate <class S_, auto add_, auto\
-    \ e0_, auto mul_, auto e1_>\nstruct SemiRing\n{\n  using S = S_;\n  static constexpr\
-    \ auto add = add_;\n  static constexpr auto e0 = e0_;\n  static constexpr auto\
-    \ mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto\
-    \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
-    \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
-    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
-    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto add_, auto\
-    \ e0_, auto minus_, auto mul_, auto e1_, auto inv_>\nstruct Field\n{\n  using\
-    \ S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
-    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
-    \  static constexpr auto e1 = e1_;\n  static constexpr auto inv = inv_;\n};\n\n\
-    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
-    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
-    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
-    \ R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul =\
-    \ Group<typename K::S, K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\n\
-    template <class Madd, class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
-    \ Madd::S, typename Mmul::S>, \"Madd::S and Mmul::S must be identical\");\n  using\
-    \ S = typename Madd::S;\n  static constexpr auto add = Madd::op;\n  static constexpr\
-    \ auto e0 = Madd::e;\n  static constexpr auto mul = Mmul::op;\n  static constexpr\
-    \ auto e1 = Mmul::e;\n};\n\n// Gadd \u306F\u53EF\u63DB\ntemplate <class Gadd,\
-    \ class Mmul>\nstruct RingFromGroupMonoid\n{\n  static_assert(is_same_v<typename\
-    \ Gadd::S, typename Mmul::S>, \"Gadd::S and Mmul::S must be identical\");\n  using\
+    \ 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
+    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
+    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
+    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
+    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
+    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
+    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
+    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
+    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
+    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
+    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
+    \ constexpr auto inv = inv_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
+    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
+    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
+    \ = Group<typename R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing\
+    \ GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;\n\n// Madd \u306F\
+    \u53EF\u63DB\ntemplate <class Madd, class Mmul>\nstruct SemiRingFromMonoidMonoid\n\
+    {\n  static_assert(is_same_v<typename Madd::S, typename Mmul::S>, \"Madd::S and\
+    \ Mmul::S must be identical\");\n  using S = typename Madd::S;\n  static constexpr\
+    \ auto add = Madd::op;\n  static constexpr auto e0 = Madd::e;\n  static constexpr\
+    \ auto mul = Mmul::op;\n  static constexpr auto e1 = Mmul::e;\n};\n\n// Gadd \u306F\
+    \u53EF\u63DB\ntemplate <class Gadd, class Mmul>\nstruct RingFromGroupMonoid\n\
+    {\n  static_assert(is_same_v<typename Gadd::S, typename Mmul::S>, \"Gadd::S and\
+    \ Mmul::S must be identical\");\n  using S = typename Gadd::S;\n  static constexpr\
+    \ auto add = Gadd::op;\n  static constexpr auto e0 = Gadd::e;\n  static constexpr\
+    \ auto minus = Gadd::inv;\n  static constexpr auto mul = Mmul::op;\n  static constexpr\
+    \ auto e1 = Mmul::e;\n};\n\n// Gadd, Gmul \u306F\u53EF\u63DB\ntemplate <class\
+    \ Gadd, class Gmul>\nstruct FieldFromGroupGroup\n{\n  static_assert(is_same_v<typename\
+    \ Gadd::S, typename Gmul::S>, \"Gadd::S and Gmul::S must be identical\");\n  using\
     \ S = typename Gadd::S;\n  static constexpr auto add = Gadd::op;\n  static constexpr\
     \ auto e0 = Gadd::e;\n  static constexpr auto minus = Gadd::inv;\n  static constexpr\
-    \ auto mul = Mmul::op;\n  static constexpr auto e1 = Mmul::e;\n};\n\n// Gadd,\
-    \ Gmul \u306F\u53EF\u63DB\ntemplate <class Gadd, class Gmul>\nstruct FieldFromGroupGroup\n\
-    {\n  static_assert(is_same_v<typename Gadd::S, typename Gmul::S>, \"Gadd::S and\
-    \ Gmul::S must be identical\");\n  using S = typename Gadd::S;\n  static constexpr\
-    \ auto add = Gadd::op;\n  static constexpr auto e0 = Gadd::e;\n  static constexpr\
-    \ auto minus = Gadd::inv;\n  static constexpr auto mul = Gmul::op;\n  static constexpr\
-    \ auto e1 = Gmul::e;\n  static constexpr auto inv = Gmul::inv;\n};\n#line 5 \"\
-    math/algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\
-    \u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n\
-    \ */\n\ntemplate <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
-    \ntemplate <class T>\nstruct GroupAddSub\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n \
-    \ static constexpr S inv(S a) { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n\
-    {\n  using S = T;\n  static constexpr S op(S a, S b) { return a * b; }\n  static\
-    \ constexpr S e() { return 1; }\n  static constexpr S inv(S a) { return 1 / a;\
-    \ }\n};\n\ntemplate <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n\
-    \  using S = T;\n  static constexpr S add(S a, S b) { return min(a, b); }\n  static\
-    \ constexpr S e0() { return infty; }\n  static constexpr S mul(S a, S b) { return\
-    \ a + b; }\n  static constexpr S e1() { return 0; }\n};\ntemplate <class T, const\
-    \ T infty = INF>\nstruct SemiRingMaxPlus\n{\n  using S = T;\n  static constexpr\
-    \ S add(S a, S b) { return max(a, b); }\n  static constexpr S e0() { return -infty;\
-    \ }\n  static constexpr S mul(S a, S b) { return a + b; }\n  static constexpr\
-    \ S e1() { return 0; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using\
-    \ S = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
-    \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
-    \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
-    \ 1; }\n};\n\ntemplate <class T>\nstruct FieldAddSubMulDiv\n{\n  using S = T;\n\
-    \  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr S minus(S\
-    \ a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static constexpr\
-    \ S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return 1; }\n\
-    \  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate <class M>\ntypename\
-    \ M::S pow_monoid(typename M::S a, ll k)\n{\n  typename M::S c = M::e();\n  for\
-    \ (; k; k >>= 1)\n  {\n    if (k & 1)\n      c = M::op(c, a);\n    a = M::op(a,\
-    \ a);\n  }\n  return c;\n}\n#line 5 \"math/set/zeta_mobius.hpp\"\n\n/**\n * @brief\
-    \ \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB\n * @docs docs/math/set/zeta_mobius.md\n\
-    \ */\n\n// \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\
-    \u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001\
-    O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
-    \ <class M>\nvoid zeta_subset_destructive(vc<typename M::S> &a)\n{\n  const int\
-    \ len = a.size();\n  if (len == 0)\n    return;\n  assert(has_single_bit(len));\n\
-    \  for (int d = 1; d < len; d *= 2)\n    repi(iu, 0, len, d * 2) repi(i, iu, iu\
-    \ + d)\n      a[i + d] = M::op(a[i + d], a[i]);\n}\n// \u03BC \u306F \u03B6 \u306E\
-    \u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286 s} (-1)^{|s\\t|} a[t]\n//\
-    \ G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
-    \u5B9A\u3001O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\
-    \u3046\ntemplate <class G>\nvoid mobius_subset_destructive(vc<typename G::S> &a)\n\
-    {\n  const int len = a.size();\n  if (len == 0)\n    return;\n  assert(has_single_bit(len));\n\
-    \  for (int d = len >> 1; d; d >>= 1)\n    repi(iu, 0, len, d * 2) repi(i, iu,\
-    \ iu + d)\n      a[i + d] = G::op(a[i + d], G::inv(a[i]));\n}\n\n// \u03B6'a[s]\
-    \ = \u03A3{s \u2286 t} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3\
-    \ \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n\
-    // \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate <class M>\nvoid\
-    \ zeta_supset_destructive(vc<typename M::S> &a)\n{\n  const int len = a.size();\n\
-    \  if (len == 0)\n    return;\n  assert(has_single_bit(len));\n  for (int d =\
-    \ 1; d < len; d *= 2)\n    repi(iu, 0, len, d * 2) repi(i, iu, iu + d)\n     \
-    \ a[i] = M::op(a[i], a[i + d]);\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\
-    \u63DB\n// \u03BC'a[s] = \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n// G \u306F\u53EF\
-    \u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n\
-    \ 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
-    \ <class G>\nvoid mobius_supset_destructive(vc<typename G::S> &a)\n{\n  const\
-    \ int len = a.size();\n  if (len == 0)\n    return;\n  assert(has_single_bit(len));\n\
-    \  for (int d = len >> 1; d; d >>= 1)\n    repi(iu, 0, len, d * 2) repi(i, iu,\
-    \ iu + d)\n      a[i] = G::op(a[i], G::inv(a[i + d]));\n}\n\n// \u03B6a[s] = \u03A3\
-    {t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\
-    \u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate\
-    \ <class M>\nvc<typename M::S> zeta_subset(const vc<typename M::S> &a)\n{\n  auto\
-    \ b = a;\n  zeta_subset_destructive(b);\n  return b;\n}\n// \u03BC \u306F \u03B6\
-    \ \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286 s} (-1)^{|s\\t|} a[t]\n\
-    // G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
-    \u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class G>\nvc<typename G::S> mobius_subset(const\
-    \ vc<typename G::S> &a)\n{\n  auto b = a;\n  mobius_subset_destructive(b);\n \
-    \ return b;\n}\n\n// \u03B6'a[s] = \u03A3{s \u2286 t} a[t]\n// M \u306F\u53EF\u63DB\
-    \u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\
-    \u3001O(n 2^n) \u6642\u9593\ntemplate <class M>\nvc<typename M::S> zeta_supset(const\
-    \ vc<typename M::S> &a)\n{\n  auto b = a;\n  zeta_supset_destructive(b);\n  return\
-    \ b;\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n// \u03BC'a[s] =\
-    \ \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3\
-    \ \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n\
-    template <class G>\nvc<typename G::S> mobius_supset(const vc<typename G::S> &a)\n\
-    {\n  auto b = a;\n  mobius_supset_destructive(b);\n  return b;\n}\n"
+    \ auto mul = Gmul::op;\n  static constexpr auto e1 = Gmul::e;\n  static constexpr\
+    \ auto inv = Gmul::inv;\n};\n#line 5 \"math/algebra/bit.hpp\"\n\n/**\n * @brief\
+    \ \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09\n *\
+    \ @docs docs/math/algebra/bit.md\n */\n\ntemplate <class T>\nstruct GroupXor\n\
+    {\n  using S = T;\n  static constexpr S op(S x, S y) { return x ^ y; }\n  static\
+    \ constexpr S e() { return 0; }\n  static constexpr S inv(S x) { return x; }\n\
+    };\n\ntemplate <class T>\nstruct MonoidAnd\n{\n  using S = T;\n  static constexpr\
+    \ S op(S x, S y) { return x & y; }\n  static constexpr S e() { return numeric_limits<S>::max();\
+    \ }\n};\n\ntemplate <class T>\nstruct MonoidOr\n{\n  using S = T;\n  static constexpr\
+    \ S op(S x, S y) { return x | y; }\n  static constexpr S e() { return 0; }\n};\n\
+    \ntemplate <class T>\nusing RingXorAnd = RingFromGroupMonoid<GroupXor<T>, MonoidAnd<T>>;\n\
+    template <class T>\nusing SemiRingOrAnd = SemiRingFromMonoidMonoid<MonoidOr<T>,\
+    \ MonoidAnd<T>>;\ntemplate <class T>\nusing SemiRingAndOr = SemiRingFromMonoidMonoid<MonoidAnd<T>,\
+    \ MonoidOr<T>>;\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
-    #include \"../algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief \u30BC\u30FC\u30BF\
-    \u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB\n * @docs docs/math/set/zeta_mobius.md\n\
-    \ */\n\n// \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\
-    \u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001\
-    O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
-    \ <class M>\nvoid zeta_subset_destructive(vc<typename M::S> &a)\n{\n  const int\
-    \ len = a.size();\n  if (len == 0)\n    return;\n  assert(has_single_bit(len));\n\
-    \  for (int d = 1; d < len; d *= 2)\n    repi(iu, 0, len, d * 2) repi(i, iu, iu\
-    \ + d)\n      a[i + d] = M::op(a[i + d], a[i]);\n}\n// \u03BC \u306F \u03B6 \u306E\
-    \u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286 s} (-1)^{|s\\t|} a[t]\n//\
-    \ G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
-    \u5B9A\u3001O(n 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\
-    \u3046\ntemplate <class G>\nvoid mobius_subset_destructive(vc<typename G::S> &a)\n\
-    {\n  const int len = a.size();\n  if (len == 0)\n    return;\n  assert(has_single_bit(len));\n\
-    \  for (int d = len >> 1; d; d >>= 1)\n    repi(iu, 0, len, d * 2) repi(i, iu,\
-    \ iu + d)\n      a[i + d] = G::op(a[i + d], G::inv(a[i]));\n}\n\n// \u03B6'a[s]\
-    \ = \u03A3{s \u2286 t} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3\
-    \ \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n\
-    // \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate <class M>\nvoid\
-    \ zeta_supset_destructive(vc<typename M::S> &a)\n{\n  const int len = a.size();\n\
-    \  if (len == 0)\n    return;\n  assert(has_single_bit(len));\n  for (int d =\
-    \ 1; d < len; d *= 2)\n    repi(iu, 0, len, d * 2) repi(i, iu, iu + d)\n     \
-    \ a[i] = M::op(a[i], a[i + d]);\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\
-    \u63DB\n// \u03BC'a[s] = \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n// G \u306F\u53EF\
-    \u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n\
-    \ 2^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
-    \ <class G>\nvoid mobius_supset_destructive(vc<typename G::S> &a)\n{\n  const\
-    \ int len = a.size();\n  if (len == 0)\n    return;\n  assert(has_single_bit(len));\n\
-    \  for (int d = len >> 1; d; d >>= 1)\n    repi(iu, 0, len, d * 2) repi(i, iu,\
-    \ iu + d)\n      a[i] = G::op(a[i], G::inv(a[i + d]));\n}\n\n// \u03B6a[s] = \u03A3\
-    {t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\
-    \u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate\
-    \ <class M>\nvc<typename M::S> zeta_subset(const vc<typename M::S> &a)\n{\n  auto\
-    \ b = a;\n  zeta_subset_destructive(b);\n  return b;\n}\n// \u03BC \u306F \u03B6\
-    \ \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286 s} (-1)^{|s\\t|} a[t]\n\
-    // G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
-    \u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class G>\nvc<typename G::S> mobius_subset(const\
-    \ vc<typename G::S> &a)\n{\n  auto b = a;\n  mobius_subset_destructive(b);\n \
-    \ return b;\n}\n\n// \u03B6'a[s] = \u03A3{s \u2286 t} a[t]\n// M \u306F\u53EF\u63DB\
-    \u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\
-    \u3001O(n 2^n) \u6642\u9593\ntemplate <class M>\nvc<typename M::S> zeta_supset(const\
-    \ vc<typename M::S> &a)\n{\n  auto b = a;\n  zeta_supset_destructive(b);\n  return\
-    \ b;\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n// \u03BC'a[s] =\
-    \ \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3\
-    \ \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n\
-    template <class G>\nvc<typename G::S> mobius_supset(const vc<typename G::S> &a)\n\
-    {\n  auto b = a;\n  mobius_supset_destructive(b);\n  return b;\n}"
+    #include \"algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\
+    \uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09\n * @docs docs/math/algebra/bit.md\n\
+    \ */\n\ntemplate <class T>\nstruct GroupXor\n{\n  using S = T;\n  static constexpr\
+    \ S op(S x, S y) { return x ^ y; }\n  static constexpr S e() { return 0; }\n \
+    \ static constexpr S inv(S x) { return x; }\n};\n\ntemplate <class T>\nstruct\
+    \ MonoidAnd\n{\n  using S = T;\n  static constexpr S op(S x, S y) { return x &\
+    \ y; }\n  static constexpr S e() { return numeric_limits<S>::max(); }\n};\n\n\
+    template <class T>\nstruct MonoidOr\n{\n  using S = T;\n  static constexpr S op(S\
+    \ x, S y) { return x | y; }\n  static constexpr S e() { return 0; }\n};\n\ntemplate\
+    \ <class T>\nusing RingXorAnd = RingFromGroupMonoid<GroupXor<T>, MonoidAnd<T>>;\n\
+    template <class T>\nusing SemiRingOrAnd = SemiRingFromMonoidMonoid<MonoidOr<T>,\
+    \ MonoidAnd<T>>;\ntemplate <class T>\nusing SemiRingAndOr = SemiRingFromMonoidMonoid<MonoidAnd<T>,\
+    \ MonoidOr<T>>;\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -784,88 +679,17 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   - template/template_random.hpp
-  - math/algebra/algebra_basic_ops.hpp
   - math/algebra/algebra_base.hpp
   isVerificationFile: false
-  path: math/set/zeta_mobius.hpp
-  requiredBy:
-  - math/set/and_or_convolution.hpp
+  path: math/algebra/bit.hpp
+  requiredBy: []
   timestamp: '2025-04-11 04:57:54+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/yosupo/and_or_convolution.test.cpp
-documentation_of: math/set/zeta_mobius.hpp
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
+documentation_of: math/algebra/bit.hpp
 layout: document
 redirect_from:
-- /library/math/set/zeta_mobius.hpp
-- /library/math/set/zeta_mobius.hpp.html
-title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
+- /library/math/algebra/bit.hpp
+- /library/math/algebra/bit.hpp.html
+title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09"
 ---
-## ゼータ・メビウス変換
-
-ゼータ変換には可換モノイドが、メビウス変換には可換群が載る。以下に述べる定義は、演算を $+$ とした場合のもの。
-
-### 定義
-
-#### ゼータ変換（部分集合）
-
-$\displaystyle \zeta a(s) = \sum_{t \subseteq s} a(t)$
-
-#### メビウス変換（部分集合）
-
-$\mu \zeta a(s) = a(s)$
-
-$\displaystyle \mu a(s) = \sum_{t \subseteq s} (-1)^{\lvert s \setminus t \rvert} a(t)$
-
-#### ゼータ変換（上位集合）
-
-$\displaystyle \zeta' a(s) = \sum_{s \subseteq t} a(t)$
-
-#### メビウス変換（上位集合）
-
-$\mu' \zeta' a (s) = a(s)$
-
-$\displaystyle \mu' a(s) = \sum_{s \subseteq t} (-1)^{\lvert t \setminus s \rvert} a(t)$
-
-
-### ライブラリ
-
-#### zeta_subset
-
-```cpp
-vc<M::S> zeta_subset(vc<M::S> a)
-```
-
-##### 制約
-
-- `M` は**可換**モノイド
-- $\lvert a \rvert$ は $0$ または $2$ べき
-
-
-##### 計算量
-
-$\lvert a \rvert = n$ として
-
-- $O(n 2^n)$
-
-#### mobius_subset
-
-```cpp
-vc<G::S> mobius_subset(vc<G::S> a)
-```
-
-##### 制約
-
-- `G` は**可換**群
-- $\lvert a \rvert$ は $0$ または $2$ べき
-
-
-##### 計算量
-
-$\lvert a \rvert = n$ として
-
-- $O(n 2^n)$
-
----
-
-zeta_supset, mobius_supset も同様（省略）

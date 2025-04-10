@@ -1,43 +1,43 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
@@ -51,7 +51,7 @@ data:
     path: math/prime/zeta_mobius_divisor_multiple.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/zeta_mobius_divisor_multiple_large.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
@@ -102,12 +102,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
     title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/algebra/algebra_basic_ops.md
     document_title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068\
@@ -686,14 +686,31 @@ data:
     \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
     \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
     \ = Group<typename R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing\
-    \ GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
-    \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
-    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
-    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
-    \ntemplate <class T>\nstruct GroupAddSub\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n \
-    \ static constexpr S inv(S a) { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n\
+    \ GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;\n\n// Madd \u306F\
+    \u53EF\u63DB\ntemplate <class Madd, class Mmul>\nstruct SemiRingFromMonoidMonoid\n\
+    {\n  static_assert(is_same_v<typename Madd::S, typename Mmul::S>, \"Madd::S and\
+    \ Mmul::S must be identical\");\n  using S = typename Madd::S;\n  static constexpr\
+    \ auto add = Madd::op;\n  static constexpr auto e0 = Madd::e;\n  static constexpr\
+    \ auto mul = Mmul::op;\n  static constexpr auto e1 = Mmul::e;\n};\n\n// Gadd \u306F\
+    \u53EF\u63DB\ntemplate <class Gadd, class Mmul>\nstruct RingFromGroupMonoid\n\
+    {\n  static_assert(is_same_v<typename Gadd::S, typename Mmul::S>, \"Gadd::S and\
+    \ Mmul::S must be identical\");\n  using S = typename Gadd::S;\n  static constexpr\
+    \ auto add = Gadd::op;\n  static constexpr auto e0 = Gadd::e;\n  static constexpr\
+    \ auto minus = Gadd::inv;\n  static constexpr auto mul = Mmul::op;\n  static constexpr\
+    \ auto e1 = Mmul::e;\n};\n\n// Gadd, Gmul \u306F\u53EF\u63DB\ntemplate <class\
+    \ Gadd, class Gmul>\nstruct FieldFromGroupGroup\n{\n  static_assert(is_same_v<typename\
+    \ Gadd::S, typename Gmul::S>, \"Gadd::S and Gmul::S must be identical\");\n  using\
+    \ S = typename Gadd::S;\n  static constexpr auto add = Gadd::op;\n  static constexpr\
+    \ auto e0 = Gadd::e;\n  static constexpr auto minus = Gadd::inv;\n  static constexpr\
+    \ auto mul = Gmul::op;\n  static constexpr auto e1 = Gmul::e;\n  static constexpr\
+    \ auto inv = Gmul::inv;\n};\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\n\n\
+    /**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068\
+    \ min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\ntemplate\
+    \ <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S op(S a,\
+    \ S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\ntemplate\
+    \ <class T>\nstruct GroupAddSub\n{\n  using S = T;\n  static constexpr S op(S\
+    \ a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n  static\
+    \ constexpr S inv(S a) { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n\
     {\n  using S = T;\n  static constexpr S op(S a, S b) { return a * b; }\n  static\
     \ constexpr S e() { return 1; }\n  static constexpr S inv(S a) { return 1 / a;\
     \ }\n};\n\ntemplate <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n\
@@ -769,8 +786,8 @@ data:
   - math/prime/lcm_gcd_convolution.hpp
   - math/prime/zeta_mobius_divisor_multiple.hpp
   - ds/uf/uf_potential.hpp
-  timestamp: '2025-04-10 02:46:07+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2025-04-11 04:57:54+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
