@@ -1,60 +1,60 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/cumulative_sum/imos_2d.hpp
     title: "$2$ \u6B21\u5143 imos \u6CD5"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://yukicoder.me/problems/no/60
@@ -697,25 +697,25 @@ data:
     \ LL(ax, ay, w, h, d);\n    ax += M, ay += M;\n    imos.add(ax, min(2 * M + 2,\
     \ ax + w + 1), ay, min(2 * M + 2, ay + h + 1), -d);\n  }\n  auto res = imos.content();\n\
     \  ll ans = 0;\n  rep(x, 2 * M + 2) rep(y, 2 * M + 2)\n  {\n    if (res.at(x).at(y)\
-    \ > 0)\n      ans += res.at(x).at(y);\n  }\n  PRINT(ans);\n}\n\nvoid test() {}\n\
-    \n#line 2 \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\
-    \n\ntemplate <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n\
-    \    cauto CERR = [](string val, string color)\n    {\n      string s = \"\\033[\"\
-    \ + color + \"m\" + val + \"\\033[m\";\n      #ifdef LOCAL\n      cerr << s;\n\
-    \      #endif\n      /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\
-    \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\
-    \u3059\n      cerr << val;\n      //*/\n    };\n  \n    #if defined FAST_IO and\
-    \ not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n    #endif\n \
-    \   #if defined FAST_CIO and not defined LOCAL\n    CERR(\"\\n[FAST_CIO]\\n\\\
-    n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n    #endif\n\
-    \    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n  \n  \
-    \  #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n \
-    \   CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n    \
-    \  dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
+    \ > 0)\n      ans += res.at(x).at(y);\n  }\n  if (N <= 7)\n    WRITE(ans);\n \
+    \ else \n    PRINT(ans);\n}\n\nvoid test() {}\n\n#line 2 \"template/template_main.hpp\"\
+    \n\n#line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2,\
+    \ auto test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
+    \ color)\n    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\"\
+    ;\n      #ifdef LOCAL\n      cerr << s;\n      #endif\n      /* \u30B3\u30FC\u30C9\
+    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
+    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n      cerr << val;\n      //*/\n \
+    \   };\n  \n    #if defined FAST_IO and not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\\
+    n\\n\", \"32\");\n    #endif\n    #if defined FAST_CIO and not defined LOCAL\n\
+    \    CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
+    \    #endif\n    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n\
+    \  \n    #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n\
+    \    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n   \
+    \   dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
     \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
     \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
     T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
-    \      main2();\n    }\n    #endif\n  }\n};\n#line 49 \"verify/yukicoder/imos_2d.test.cpp\"\
+    \      main2();\n    }\n    #endif\n  }\n};\n#line 52 \"verify/yukicoder/imos_2d.test.cpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   code: "#define PROBLEM \"https://yukicoder.me/problems/no/60\"\n\n#define SINGLE_TESTCASE\n\
     // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef LOCAL\n#define FAST_IO\n\
@@ -728,8 +728,9 @@ data:
     \ M, ay += M;\n    imos.add(ax, min(2 * M + 2, ax + w + 1), ay, min(2 * M + 2,\
     \ ay + h + 1), -d);\n  }\n  auto res = imos.content();\n  ll ans = 0;\n  rep(x,\
     \ 2 * M + 2) rep(y, 2 * M + 2)\n  {\n    if (res.at(x).at(y) > 0)\n      ans +=\
-    \ res.at(x).at(y);\n  }\n  PRINT(ans);\n}\n\nvoid test() {}\n\n#include \"template/template_main.hpp\"\
-    \nMain<init, main2, test> main_dummy;\nint main() {}\n"
+    \ res.at(x).at(y);\n  }\n  if (N <= 7)\n    WRITE(ans);\n  else \n    PRINT(ans);\n\
+    }\n\nvoid test() {}\n\n#include \"template/template_main.hpp\"\nMain<init, main2,\
+    \ test> main_dummy;\nint main() {}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -749,8 +750,8 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/imos_2d.test.cpp
   requiredBy: []
-  timestamp: '2025-04-11 08:06:31+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2025-04-11 08:47:19+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/imos_2d.test.cpp
 layout: document
