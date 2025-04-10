@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf.hpp
     title: UnionFind
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
   - icon: ':question:'
@@ -14,7 +14,7 @@ data:
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/matmul22.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\u306E\u7A4D\
       \uFF09"
@@ -86,9 +86,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/unionfind_with_potential_non_commutative_group
@@ -757,7 +757,58 @@ data:
     \ <class T>\ninline constexpr bool is_dynamic_modint_v = is_dynamic_modint<T>::value;\n\
     #line 19 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\nusing\
     \ mint = modint998244353;\n\n#line 2 \"ds/uf/uf_potential.hpp\"\n\n#line 4 \"\
-    ds/uf/uf_potential.hpp\"\n\n#line 2 \"ds/uf/uf.hpp\"\n\n#line 4 \"ds/uf/uf.hpp\"\
+    ds/uf/uf_potential.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n\
+    #line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
+    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
+    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
+    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
+    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
+    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
+    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
+    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
+    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
+    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
+    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
+    \ constexpr auto inv = inv_;\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd\
+    \ = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul\
+    \ = Monoid<typename SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd\
+    \ = Group<typename R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing\
+    \ GroupOfFieldMul = Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
+    \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
+    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
+    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
+    \ntemplate <class T>\nstruct GroupAddSub\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n \
+    \ static constexpr S inv(S a) { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n\
+    {\n  using S = T;\n  static constexpr S op(S a, S b) { return a * b; }\n  static\
+    \ constexpr S e() { return 1; }\n  static constexpr S inv(S a) { return 1 / a;\
+    \ }\n};\n\ntemplate <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n\
+    \  using S = T;\n  static constexpr S add(S a, S b) { return min(a, b); }\n  static\
+    \ constexpr S e0() { return infty; }\n  static constexpr S mul(S a, S b) { return\
+    \ a + b; }\n  static constexpr S e1() { return 0; }\n};\ntemplate <class T, const\
+    \ T infty = INF>\nstruct SemiRingMaxPlus\n{\n  using S = T;\n  static constexpr\
+    \ S add(S a, S b) { return max(a, b); }\n  static constexpr S e0() { return -infty;\
+    \ }\n  static constexpr S mul(S a, S b) { return a + b; }\n  static constexpr\
+    \ S e1() { return 0; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using\
+    \ S = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
+    \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
+    \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
+    \ 1; }\n};\n\ntemplate <class T>\nstruct FieldAddSubMulDiv\n{\n  using S = T;\n\
+    \  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr S minus(S\
+    \ a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static constexpr\
+    \ S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return 1; }\n\
+    \  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate <class M>\ntypename\
+    \ M::S pow_monoid(typename M::S a, ll k)\n{\n  typename M::S c = M::e();\n  for\
+    \ (; k; k >>= 1)\n  {\n    if (k & 1)\n      c = M::op(c, a);\n    a = M::op(a,\
+    \ a);\n  }\n  return c;\n}\n#line 2 \"ds/uf/uf.hpp\"\n\n#line 4 \"ds/uf/uf.hpp\"\
     \n\n/**\n * @brief UnionFind\n * @docs docs/ds/uf/uf.md\n */\n\n// UFData \u306B\
     \u30C7\u30D5\u30A9\u30EB\u30C8\u3067\u7528\u610F\u3055\u308C\u3066\u3044\u308B\
     \u3082\u306E\n// - UFDataEmpty (\u4F55\u3082\u306A\u3057\u3001ACL \u76F8\u5F53\
@@ -806,97 +857,48 @@ data:
     \      gd.min_leader++;\n    while (uf.leader(gd.max_leader) != gd.max_leader)\n\
     \      gd.max_leader--;\n  }\n  template <class UF>\n  static void add_edge_same(UF\
     \ &uf, int x, EWeight w)\n  {\n    VData &xd = uf.vdat[x];\n    xd.esum += w;\n\
-    \  }\n};\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n#line 2 \"math/algebra/algebra_base.hpp\"\
-    \n\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
-    \u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
-    \ */\n\ntemplate <class S_, auto op_, auto e_>\nstruct Monoid\n{\n  using S =\
-    \ S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n};\n\
-    \ntemplate <class S_, auto op_, auto e_, auto inv_>\nstruct Group\n{\n  using\
-    \ S = S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n\
-    \  static constexpr auto inv = inv_;\n};\n\ntemplate <class S_, auto add_, auto\
-    \ e0_, auto mul_, auto e1_>\nstruct SemiRing\n{\n  using S = S_;\n  static constexpr\
-    \ auto add = add_;\n  static constexpr auto e0 = e0_;\n  static constexpr auto\
-    \ mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto\
-    \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
-    \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
-    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
-    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto add_, auto\
-    \ e0_, auto minus_, auto mul_, auto e1_, auto inv_>\nstruct Field\n{\n  using\
-    \ S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
-    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
-    \  static constexpr auto e1 = e1_;\n  static constexpr auto inv = inv_;\n};\n\n\
-    template <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add,\
-    \ SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S,\
-    \ SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
-    \ R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul =\
-    \ Group<typename K::S, K::mul, K::e1, K::inv>;\n#line 5 \"math/algebra/algebra_basic_ops.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\
-    \u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n */\n\n\
-    template <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr S\
-    \ op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
-    \ntemplate <class T>\nstruct GroupAddSub\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n \
-    \ static constexpr S inv(S a) { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n\
-    {\n  using S = T;\n  static constexpr S op(S a, S b) { return a * b; }\n  static\
-    \ constexpr S e() { return 1; }\n  static constexpr S inv(S a) { return 1 / a;\
-    \ }\n};\n\ntemplate <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n\
-    \  using S = T;\n  static constexpr S add(S a, S b) { return min(a, b); }\n  static\
-    \ constexpr S e0() { return infty; }\n  static constexpr S mul(S a, S b) { return\
-    \ a + b; }\n  static constexpr S e1() { return 0; }\n};\ntemplate <class T, const\
-    \ T infty = INF>\nstruct SemiRingMaxPlus\n{\n  using S = T;\n  static constexpr\
-    \ S add(S a, S b) { return max(a, b); }\n  static constexpr S e0() { return -infty;\
-    \ }\n  static constexpr S mul(S a, S b) { return a + b; }\n  static constexpr\
-    \ S e1() { return 0; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using\
-    \ S = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
-    \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
-    \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
-    \ 1; }\n};\n\ntemplate <class T>\nstruct FieldAddSubMulDiv\n{\n  using S = T;\n\
-    \  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr S minus(S\
-    \ a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static constexpr\
-    \ S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return 1; }\n\
-    \  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate <class M>\ntypename\
-    \ M::S pow_monoid(typename M::S a, ll k)\n{\n  typename M::S c = M::e();\n  for\
-    \ (; k; k >>= 1)\n  {\n    if (k & 1)\n      c = M::op(c, a);\n    a = M::op(a,\
-    \ a);\n  }\n  return c;\n}\n#line 7 \"ds/uf/uf_potential.hpp\"\n\n/**\n * @brief\
-    \ \u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind\n * @docs docs/ds/uf/uf_potential.md\n\
-    \ */\n\n// G \u306F\u7FA4\ntemplate <class G>\nstruct UnionFindPotential : UnionFind<UFDataEmpty<typename\
-    \ G::S>, true>\n{\n  using UFData = UFDataEmpty<typename G::S>;\n  using UF =\
-    \ UnionFind<UFData, true>;\n\nprotected:\n  using UF::par;\n  vc<typename G::S>\
-    \ weight_;\n  vc<bool> valid_;\n  typename G::S weight(int x)\n  {\n    leader(x);\n\
-    \    return weight_[x];\n  }\n\npublic:\n  UnionFindPotential() {}\n  UnionFindPotential(int\
-    \ n)\n  : UF(n), weight_(n, G::e()), valid_(n, true) {}\n  using UF::same;\n\n\
-    \  int leader(int x) override\n  {\n    assert(0 <= x && x < SZ<int>(par));\n\
-    \    if (par[x] < 0)\n      return x;\n    int lx = leader(par[x]);\n    weight_[x]\
-    \ = G::op(weight_[par[x]], weight_[x]);\n    return par[x] = lx;\n  }\n\n  //\
-    \ \u3069\u306E\u60C5\u5831\u3082\u7121\u8996\u3057\u306A\u304B\u3063\u305F\u3068\
-    \u3057\u3066\u3001x \u3092\u542B\u3080\u9023\u7D50\u6210\u5206\u306E\u60C5\u5831\
-    \u304C valid \u304B\u3069\u3046\u304B\n  bool valid(int x) { return valid_[leader(x)];\
-    \ }\n\n  // same(x, y) \u306E\u3068\u304D\u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\
-    \u307E\u308B\u306E\u3067\u3001\u305D\u308C\u3092\u8FD4\u3059\n  // \u305F\u3060\
-    \u3057\u3001invalid \u306A\u60C5\u5831\u306F\u7121\u8996\u3059\u308B\u3082\u306E\
-    \u3068\u3059\u308B\n  typename G::S diff(int x, int y)\n  {\n    assert(same(x,\
-    \ y));\n    return G::op(G::inv(weight_[x]), weight_[y]);\n  }\n\n  // a[x]^{-1}\
-    \ a[y] == w \u3067\u3042\u308B\u3068\u3044\u3046\u60C5\u5831\u3092\u8FFD\u52A0\
-    \u3059\u308B\n  // \u8FD4\u308A\u5024: (invalid \u306A\u60C5\u5831\u306F\u7121\
-    \u8996\u3057\u305F\u3068\u3057\u3066\u3001) \u3053\u306E\u60C5\u5831\u304C valid\
-    \ \u304B\u3069\u3046\u304B\n  bool merge(int x, int y, typename UFData::EWeight\
-    \ w)\n  {\n    dump(x, y, w);\n    int lx = leader(x), ly = leader(y);\n    if\
-    \ (lx == ly)\n    {\n      bool ok = G::op(G::inv(weight_[x]), weight_[y]) ==\
-    \ w;\n      dump(x, y, w, G::op(G::inv(weight_[x]), weight_[y]));\n      dump(ok);\n\
-    \      if (!ok)\n        valid_[lx] = false;\n      return ok;\n    }\n    w =\
-    \ G::op(G::op(weight_[x], w), G::inv(weight_[y]));\n    if (-par[lx] < -par[ly])\n\
-    \      swap(lx, ly), w = G::inv(w);\n    par[lx] += par[ly], par[ly] = lx;\n \
-    \   weight_[ly] = w;\n    if (!valid_[ly])\n      valid_[lx] = false;\n    return\
-    \ true;\n  }\n};\n#line 2 \"math/algebra/matmul22.hpp\"\n\n#line 5 \"math/algebra/matmul22.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08$2 \\times 2$ \u884C\u5217\
-    \u306E\u7A4D\uFF09\n * @docs docs/math/algebra/matmul22.md\n */\n\ntemplate <class\
-    \ mint>\nstruct GroupMatMul22\n{\n  using S = array<mint, 4>;\n  static constexpr\
-    \ S op(S l, S r)\n  {\n    auto [a, b, c, d] = l;\n    auto [e, f, g, h] = r;\n\
-    \    return {{a * e + b * g, a * f + b * h, c * e + d * g, c * f + d * h}};\n\
-    \  }\n  static constexpr S e() { return {{1, 0, 0, 1}}; }\n  static constexpr\
-    \ S inv(S m)\n  {\n    auto [a, b, c, d] = m;\n    mint detinv = (a * d - b *\
-    \ c).inv();\n    return {{d * detinv, -b * detinv, -c * detinv, a * detinv}};\n\
-    \  }\n};\n#line 23 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\
+    \  }\n};\n#line 7 \"ds/uf/uf_potential.hpp\"\n\n/**\n * @brief \u30DD\u30C6\u30F3\
+    \u30B7\u30E3\u30EB\u3064\u304D UnionFind\n * @docs docs/ds/uf/uf_potential.md\n\
+    \ */\n\n// G \u306F\u7FA4\u3067\u3001G::S \u306F UFData::EWeight \u3068\u4E00\u81F4\
+    \ntemplate <class G, class UFData>\nstruct UnionFindPotentialBase : UnionFind<UFData,\
+    \ true>\n{\n  using UF = UnionFind<UFData, true>;\n\nprotected:\n  using UF::par;\n\
+    \  vc<typename G::S> weight_;\n  vc<bool> valid_;\n\npublic:\n  UnionFindPotentialBase()\
+    \ {}\n  UnionFindPotentialBase(int n)\n  : UF(n), weight_(n, G::e()), valid_(n,\
+    \ true) {}\n  using UF::same;\n\n  int leader(int x) override\n  {\n    assert(0\
+    \ <= x && x < SZ<int>(par));\n    if (par[x] < 0)\n      return x;\n    int lx\
+    \ = leader(par[x]);\n    weight_[x] = G::op(weight_[par[x]], weight_[x]);\n  \
+    \  return par[x] = lx;\n  }\n\n  // \u3069\u306E\u60C5\u5831\u3082\u7121\u8996\
+    \u3057\u306A\u304B\u3063\u305F\u3068\u3057\u3066\u3001x \u3092\u542B\u3080\u9023\
+    \u7D50\u6210\u5206\u306E\u60C5\u5831\u304C valid \u304B\u3069\u3046\u304B\n  bool\
+    \ valid(int x) { return valid_[leader(x)]; }\n\n  // same(x, y) \u306E\u3068\u304D\
+    \u306E\u307F a[x]^{-1} a[y] \u304C\u5B9A\u307E\u308B\u306E\u3067\u3001\u305D\u308C\
+    \u3092\u8FD4\u3059\n  // \u305F\u3060\u3057\u3001invalid \u306A\u60C5\u5831\u306F\
+    \u7121\u8996\u3059\u308B\u3082\u306E\u3068\u3059\u308B\n  typename G::S diff(int\
+    \ x, int y)\n  {\n    assert(same(x, y));\n    return G::op(G::inv(weight_[x]),\
+    \ weight_[y]);\n  }\n\n  // a[x]^{-1} a[y] == w \u3067\u3042\u308B\u3068\u3044\
+    \u3046\u60C5\u5831\u3092\u8FFD\u52A0\u3059\u308B\n  // \u8FD4\u308A\u5024: (invalid\
+    \ \u306A\u60C5\u5831\u306F\u7121\u8996\u3057\u305F\u3068\u3057\u3066\u3001) \u3053\
+    \u306E\u60C5\u5831\u304C valid \u304B\u3069\u3046\u304B\n  bool merge(int x, int\
+    \ y, typename UFData::EWeight w)\n  {\n    int lx = leader(x), ly = leader(y);\n\
+    \    if (lx == ly)\n    {\n      bool ok = G::op(G::inv(weight_[x]), weight_[y])\
+    \ == w;\n      if (!ok)\n        valid_[lx] = false;\n      UFData::add_edge_same(*this,\
+    \ lx, w);\n      return ok;\n    }\n    w = G::op(G::op(weight_[x], w), G::inv(weight_[y]));\n\
+    \    if (-par[lx] < -par[ly])\n      swap(lx, ly), w = G::inv(w);\n    par[lx]\
+    \ += par[ly], par[ly] = lx;\n    weight_[ly] = w;\n    if (!valid_[ly])\n    \
+    \  valid_[lx] = false;\n    UFData::add_edge_diff(*this, lx, ly, w);\n    return\
+    \ true;\n  }\n};\n\n// G \u306F\u7FA4\ntemplate <class G>\nusing UnionFindPotential\
+    \ = UnionFindPotentialBase<G, UFDataEmpty<typename G::S>>;\n// G \u306F\u7FA4\n\
+    template <class G>\nusing UnionFindPotentialEverything = UnionFindPotentialBase<G,\
+    \ UFDataEverything<typename G::S>>;\n#line 2 \"math/algebra/matmul22.hpp\"\n\n\
+    #line 5 \"math/algebra/matmul22.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\
+    \u9020\uFF08$2 \\times 2$ \u884C\u5217\u306E\u7A4D\uFF09\n * @docs docs/math/algebra/matmul22.md\n\
+    \ */\n\ntemplate <class mint>\nstruct GroupMatMul22\n{\n  using S = array<mint,\
+    \ 4>;\n  static constexpr S op(S l, S r)\n  {\n    auto [a, b, c, d] = l;\n  \
+    \  auto [e, f, g, h] = r;\n    return {{a * e + b * g, a * f + b * h, c * e +\
+    \ d * g, c * f + d * h}};\n  }\n  static constexpr S e() { return {{1, 0, 0, 1}};\
+    \ }\n  static constexpr S inv(S m)\n  {\n    auto [a, b, c, d] = m;\n    mint\
+    \ detinv = (a * d - b * c).inv();\n    return {{d * detinv, -b * detinv, -c *\
+    \ detinv, a * detinv}};\n  }\n};\n#line 23 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\
     \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFindPotential<GroupMatMul22<mint>>\
     \ uf(N);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(u, v,\
     \ a, b, c, d);\n      PRINT(uf.merge(v, u, {{a, b, c, d}}));\n    }\n    else\
@@ -987,9 +989,9 @@ data:
   - math/modint/modint_base.hpp
   - math/extgcd.hpp
   - ds/uf/uf_potential.hpp
-  - ds/uf/uf.hpp
   - math/algebra/algebra_basic_ops.hpp
   - math/algebra/algebra_base.hpp
+  - ds/uf/uf.hpp
   - math/algebra/matmul22.hpp
   - template/template_main.hpp
   - template/template_all.hpp
@@ -1000,8 +1002,8 @@ data:
   isVerificationFile: true
   path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
   requiredBy: []
-  timestamp: '2025-04-10 02:46:07+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2025-04-10 22:25:59+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/unionfind_potential_non_commutative.test.cpp
 layout: document

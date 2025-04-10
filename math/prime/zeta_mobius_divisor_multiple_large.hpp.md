@@ -73,7 +73,7 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
   - icon: ':x:'
@@ -81,7 +81,7 @@ data:
     title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/math/prime/zeta_mobius_divisor_multiple_large.md
     document_title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\
@@ -1162,7 +1162,7 @@ data:
   path: math/prime/zeta_mobius_divisor_multiple_large.hpp
   requiredBy: []
   timestamp: '2025-04-10 02:46:07+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
