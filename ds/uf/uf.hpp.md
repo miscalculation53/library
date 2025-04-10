@@ -42,10 +42,10 @@ data:
     path: ds/offline_dynamic_connectivity.hpp
     title: "\u30AA\u30D5\u30E9\u30A4\u30F3\u30C0\u30A4\u30B3\u30CD\u306E\u30C6\u30AF\
       \u30CB\u30C3\u30AF"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf_partially_persistent.hpp
     title: "\u90E8\u5206\u6C38\u7D9A UnionFind"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
   - icon: ':heavy_check_mark:'
@@ -55,27 +55,27 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/offline_dynamic_connectivity.test.cpp
     title: verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind.test.cpp
     title: verify/yosupo/unionfind.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential.test.cpp
     title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/parallel_binsearch.test.cpp
     title: verify/yukicoder/parallel_binsearch.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/uf_min_max_leader.test.cpp
     title: verify/yukicoder/uf_min_max_leader.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/uf_partially_persistent.test.cpp
     title: verify/yukicoder/uf_partially_persistent.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/uf/uf.md
     document_title: UnionFind
@@ -750,7 +750,7 @@ data:
   - ds/uf/uf_potential.hpp
   - ds/uf/uf_undo.hpp
   timestamp: '2025-04-10 02:46:07+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/parallel_binsearch.test.cpp
   - verify/yukicoder/uf_partially_persistent.test.cpp

@@ -56,12 +56,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/offline_dynamic_connectivity.test.cpp
     title: verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/coordinate_compression.md
     document_title: "\u5EA7\u6A19\u5727\u7E2E"
@@ -677,7 +677,7 @@ data:
   - ds/flat_map.hpp
   - ds/offline_dynamic_connectivity.hpp
   timestamp: '2025-04-10 02:46:07+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/static_range_frequency.test.cpp
   - verify/yosupo/offline_dynamic_connectivity.test.cpp

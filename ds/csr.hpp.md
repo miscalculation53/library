@@ -38,7 +38,7 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/group_index.hpp
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
   - icon: ':warning:'
@@ -48,12 +48,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/csr.test.cpp
     title: verify/aoj/csr.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/csr.md
     document_title: CSR
@@ -684,7 +684,7 @@ data:
   - graph/graph.hpp
   - ds/group_index.hpp
   timestamp: '2025-04-10 02:46:07+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/aoj/csr.test.cpp
   - verify/yosupo/static_range_frequency.test.cpp

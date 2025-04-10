@@ -46,12 +46,12 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/imos.test.cpp
     title: verify/yukicoder/imos.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/cumulative_sum/imos.md
     document_title: "$1$ \u6B21\u5143 imos \u6CD5"
@@ -702,7 +702,7 @@ data:
   path: ds/cumulative_sum/imos.hpp
   requiredBy: []
   timestamp: '2025-04-11 08:06:31+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/imos.test.cpp
 documentation_of: ds/cumulative_sum/imos.hpp

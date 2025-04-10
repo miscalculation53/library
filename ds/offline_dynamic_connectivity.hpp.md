@@ -1,14 +1,14 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/coordinate_compression.hpp
     title: "\u5EA7\u6A19\u5727\u7E2E"
   - icon: ':heavy_check_mark:'
     path: ds/flat_map.hpp
     title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
       \u5408\u306E map"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf.hpp
     title: UnionFind
   - icon: ':heavy_check_mark:'
