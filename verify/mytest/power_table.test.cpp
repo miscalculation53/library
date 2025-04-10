@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-#include "template/template_all.hpp"
+#include "template/template_all_but_modint.hpp"
 #include "math/modint/modint.hpp"
 #include "math/modint/power_table.hpp"
 using mint = modint;

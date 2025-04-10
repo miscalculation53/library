@@ -1,6 +1,6 @@
 #pragma once
 
-#include "template_all.hpp"
+#include "template_all_but_modint.hpp"
 
 template <auto init, auto main2, auto test>
 struct Main

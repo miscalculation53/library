@@ -13,7 +13,7 @@
 #define INF 4'000'000'000'000'000'037LL
 #define EPS 1e-11
 
-#include "template/template_all.hpp"
+#include "template/template_all_but_modint.hpp"
 
 #include "math/convolution/convolution.hpp"
 

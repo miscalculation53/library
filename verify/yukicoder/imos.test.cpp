@@ -1,4 +1,4 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/convolution_mod"
+#define PROBLEM "https://yukicoder.me/problems/no/2154"
 
 #define SINGLE_TESTCASE
 // #define MULTI_TESTCASE
@@ -14,20 +14,19 @@
 #define EPS 1e-11
 
 #include "template/template_all_but_modint.hpp"
-#include "math/modint/modint.hpp"
-using mint = modint998244353;
 
-#include "math/convolution/convolution.hpp"
+#include "ds/cumulative_sum/imos.hpp"
 
 void init() {}
 
 void main2()
 {
   LL(N, M);
-  VEC(mint, N, A);
-  VEC(mint, M, B);
-  auto C = convolution(A, B);
-  PRINT(C);
+  VEC(pll, M, LR);
+  offset(LR, pll{0, -1});
+  Imos imos(N);
+  fec([ l, r ] : LR) imos.add(r, l, 1);
+  PRINTV(reversed(imos.content()));
 }
 
 void test() {}

@@ -13,7 +13,8 @@
 #define INF 4'000'000'000'000'000'037LL
 #define EPS 1e-11
 
-#include "template/template_all.hpp"
+#include "template/template_all_but_modint.hpp"
+#include "math/modint/modint.hpp"
 using mint = modint998244353;
 
 #include "math/set/subset_convolution.hpp"

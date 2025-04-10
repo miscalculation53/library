@@ -1,4 +1,4 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/convolution_mod"
+#define PROBLEM "https://judge.yosupo.jp/problem/static_range_sum"
 
 #define SINGLE_TESTCASE
 // #define MULTI_TESTCASE
@@ -14,20 +14,21 @@
 #define EPS 1e-11
 
 #include "template/template_all_but_modint.hpp"
-#include "math/modint/modint.hpp"
-using mint = modint998244353;
 
-#include "math/convolution/convolution.hpp"
+#include "ds/cumulative_sum/cumulative_sum.hpp"
 
 void init() {}
 
 void main2()
 {
-  LL(N, M);
-  VEC(mint, N, A);
-  VEC(mint, M, B);
-  auto C = convolution(A, B);
-  PRINT(C);
+  LL(N, Q);
+  VEC(ll, N, A);
+  auto cum = CumulativeSum(A);
+  rep(_, Q)
+  {
+    LL(l, r);
+    PRINT(cum.sum(l, r));
+  }
 }
 
 void test() {}
