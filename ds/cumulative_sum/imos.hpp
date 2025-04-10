@@ -21,6 +21,12 @@ private:
 public:
   Imos() {}
   Imos(int n) : d(n, G::e()) {}
+  Imos(const vc<S> &a)
+  {
+    const int n = a.size();
+    d.assign(n, G::e());
+    repi(i, n) add(i, i + 1, a[i]);
+  }
 
   // [l, r) に v を足す
   void add(int l, int r, const S &v)

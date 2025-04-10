@@ -25,8 +25,9 @@ void main2()
   VEC(tlll, N, XYHP);
   const ll M = 500;
   offset(XYHP, tlll{M, M, 0});
-  Imos2D imos(2 * M + 2, 2 * M + 2);
-  fec([ x, y, hp ] : XYHP) imos.add(x, x + 1, y, y + 1, hp);
+  auto ini = dvec({2 * M + 2, 2 * M + 2}, ll(0));
+  fec([ x, y, hp ] : XYHP) ini.at(x).at(y) = hp;
+  Imos2D imos(ini);
   rep(_, K)
   {
     LL(ax, ay, w, h, d);

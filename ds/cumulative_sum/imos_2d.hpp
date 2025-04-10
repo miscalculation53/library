@@ -21,6 +21,15 @@ private:
 public:
   Imos2D() {}
   Imos2D(int n, int m) : d(n, vc<S>(m, G::e())) {}
+  Imos2D(const vvc<S> &a)
+  {
+    const int n = a.size();
+    if (n == 0)
+      return;
+    const int m = a[0].size();
+    d.assign(n, vc<S>(m, G::e()));
+    repi(i, n) repi(j, m) add(i, i + 1, j, j + 1, a[i][j]);
+  }
 
   // [li, ri) × [lj, rj) に v を足す
   void add(int li, int ri, int lj, int rj, const S &v)
