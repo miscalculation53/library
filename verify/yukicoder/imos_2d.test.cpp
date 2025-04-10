@@ -40,7 +40,10 @@ void main2()
     if (res.at(x).at(y) > 0)
       ans += res.at(x).at(y);
   }
-  PRINT(ans);
+  if (N <= 7)
+    WRITE(ans);
+  else 
+    PRINT(ans);
 }
 
 void test() {}
