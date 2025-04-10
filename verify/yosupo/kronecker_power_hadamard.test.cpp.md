@@ -1,80 +1,65 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/binomial.hpp
-    title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
   - icon: ':heavy_check_mark:'
-    path: math/modint/power_table.hpp
-    title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/stom.hpp
-    title: "string \u3092 mint \u306B"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/template_modint.hpp
-    title: math/modint/template_modint.hpp
-  - icon: ':heavy_check_mark:'
     path: math/set/kronecker_power.hpp
     title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_all.hpp
-    title: template/template_all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -794,41 +779,31 @@ data:
     \ */\n\ntemplate <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr\
     \ S op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
     \ntemplate <class T>\nstruct GroupAddSub\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n \
-    \ static constexpr S inv(S a) { return -a; }\n};\ntemplate <class T>\nstruct GroupMulDiv\n\
-    {\n  using S = T;\n  static constexpr S op(S a, S b) { return a * b; }\n  static\
-    \ constexpr S e() { return 1; }\n  static constexpr S inv(S a) { return 1 / a;\
-    \ }\n};\n\ntemplate <class T, const T infty = INF>\nstruct SemiRingMinPlus\n{\n\
-    \  using S = T;\n  static constexpr S add(S a, S b) { return min(a, b); }\n  static\
-    \ constexpr S e0() { return infty; }\n  static constexpr S mul(S a, S b) { return\
-    \ a + b; }\n  static constexpr S e1() { return 0; }\n};\ntemplate <class T, const\
-    \ T infty = INF>\nstruct SemiRingMaxPlus\n{\n  using S = T;\n  static constexpr\
-    \ S add(S a, S b) { return max(a, b); }\n  static constexpr S e0() { return -infty;\
-    \ }\n  static constexpr S mul(S a, S b) { return a + b; }\n  static constexpr\
-    \ S e1() { return 0; }\n};\n\ntemplate <class T>\nstruct RingAddSubMul\n{\n  using\
-    \ S = T;\n  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr\
-    \ S minus(S a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static\
-    \ constexpr S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return\
-    \ 1; }\n};\n\ntemplate <class T>\nstruct FieldAddSubMulDiv\n{\n  using S = T;\n\
-    \  static constexpr S add(S a, S b) { return a + b; }\n  static constexpr S minus(S\
-    \ a) { return -a; }\n  static constexpr S e0() { return 0; }\n  static constexpr\
-    \ S mul(S a, S b) { return a * b; }\n  static constexpr S e1() { return 1; }\n\
-    \  static constexpr S inv(S a) { return 1 / a; }\n};\n\ntemplate <class M>\ntypename\
-    \ M::S pow_monoid(typename M::S a, ll k)\n{\n  typename M::S c = M::e();\n  for\
-    \ (; k; k >>= 1)\n  {\n    if (k & 1)\n      c = M::op(c, a);\n    a = M::op(a,\
-    \ a);\n  }\n  return c;\n}\n#line 6 \"math/set/kronecker_power.hpp\"\n\n/**\n\
-    \ * @brief \u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528\n * @docs\
-    \ docs/math/set/kronecker_power.md\n */\n\n// SR \u306F\u534A\u74B0\n// k \xD7\
-    \ k \u884C\u5217 mat \u306E\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u3092 k^n\
-    \ \u6B21\u5143\u30D9\u30AF\u30C8\u30EB v \u306B\u4F5C\u7528\u3055\u305B\u308B\n\
-    // v \u3092\u7834\u58CA\u7684\u306B\u5909\u66F4\u3059\u308B\n// O(n k^{n+1}) \u6642\
-    \u9593\ntemplate <class SR, int k>\nvoid kronecker_power_destructive\n(const array<array<typename\
-    \ SR::S, k>, k> &mat, vc<typename SR::S> &v)\n{\n  const int len = v.size();\n\
-    \  if (len == 0)\n    return;\n  {\n    int len_ = len;\n    while (len_ % k ==\
-    \ 0)\n      len_ /= k;\n    assert(len_ == 1 && \"v.size() must be a power of\
-    \ k\");\n  }\n  for (int d = 1; d < len; d *= k)\n    repi(iu, 0, len, d * k)\
-    \ repi(i, iu, iu + d)\n    {\n      array<typename SR::S, k> nxt;\n      fill(ALL(nxt),\
-    \ SR::e0());\n      repi(r, k) repi(c, k)\n        nxt[r] = SR::add(nxt[r], SR::mul(mat[r][c],\
+    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return S(0); }\n\
+    \  static constexpr S inv(S a) { return -a; }\n};\ntemplate <class T>\nstruct\
+    \ GroupMulDiv\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
+    \ * b; }\n  static constexpr S e() { return S(1); }\n  static constexpr S inv(S\
+    \ a) { return S(1) / a; }\n};\n\ntemplate <class T, const T infty = INF>\nusing\
+    \ SemiRingMinPlus = SemiRingFromMonoidMonoid<MonoidMin<T>, MonoidAdd<T>>;\ntemplate\
+    \ <class T, const T infty = INF>\nusing SemiRingMaxPlus = SemiRingFromMonoidMonoid<MonoidMax<T>,\
+    \ MonoidAdd<T>>;\ntemplate <class T>\nusing RingAddSubMul = RingFromGroupMonoid<GroupAddSub<T>,\
+    \ MonoidMul<T>>;\ntemplate <class T>\nusing FieldAddSubMulDiv = FieldFromGroupGroup<GroupAddSub<T>,\
+    \ GroupMulDiv<T>>;\n\ntemplate <class M>\ntypename M::S pow_monoid(typename M::S\
+    \ a, ll k)\n{\n  typename M::S c = M::e();\n  for (; k; k >>= 1)\n  {\n    if\
+    \ (k & 1)\n      c = M::op(c, a);\n    a = M::op(a, a);\n  }\n  return c;\n}\n\
+    #line 6 \"math/set/kronecker_power.hpp\"\n\n/**\n * @brief \u30AF\u30ED\u30CD\u30C3\
+    \u30AB\u30FC\u51AA\u306E\u4F5C\u7528\n * @docs docs/math/set/kronecker_power.md\n\
+    \ */\n\n// SR \u306F\u534A\u74B0\n// k \xD7 k \u884C\u5217 mat \u306E\u30AF\u30ED\
+    \u30CD\u30C3\u30AB\u30FC\u51AA\u3092 k^n \u6B21\u5143\u30D9\u30AF\u30C8\u30EB\
+    \ v \u306B\u4F5C\u7528\u3055\u305B\u308B\n// v \u3092\u7834\u58CA\u7684\u306B\u5909\
+    \u66F4\u3059\u308B\n// O(n k^{n+1}) \u6642\u9593\ntemplate <class SR, int k>\n\
+    void kronecker_power_destructive\n(const array<array<typename SR::S, k>, k> &mat,\
+    \ vc<typename SR::S> &v)\n{\n  const int len = v.size();\n  if (len == 0)\n  \
+    \  return;\n  {\n    int len_ = len;\n    while (len_ % k == 0)\n      len_ /=\
+    \ k;\n    assert(len_ == 1 && \"v.size() must be a power of k\");\n  }\n  for\
+    \ (int d = 1; d < len; d *= k)\n    repi(iu, 0, len, d * k) repi(i, iu, iu + d)\n\
+    \    {\n      array<typename SR::S, k> nxt;\n      fill(ALL(nxt), SR::e0());\n\
+    \      repi(r, k) repi(c, k)\n        nxt[r] = SR::add(nxt[r], SR::mul(mat[r][c],\
     \ v[i + c * d]));\n      repi(j, k) v[i + j * d] = nxt[j];\n    }\n}\n\ntemplate\
     \ <class SR, int k>\nvc<typename SR::S> kronecker_power\n(const array<array<typename\
     \ SR::S, k>, k> &mat, const vc<typename SR::S> &v)\n{\n  auto v_ = v;\n  kronecker_power_destructive<SR,\
@@ -838,43 +813,7 @@ data:
     \  VEC(mint, 1 << N, A, B);\n  hadamard(A), hadamard(B);\n  dump(A, B);\n  rep(i,\
     \ 1 << N) A.at(i) *= B.at(i);\n  hadamard(A);\n  mint div = mint(1 << N).inv();\n\
     \  rep(i, 1 << N) A.at(i) *= div;\n  PRINT(A);\n}\n\nvoid test()\n{\n  \n}\n\n\
-    #line 2 \"template/template_main.hpp\"\n\n#line 2 \"template/template_all.hpp\"\
-    \n\n#line 2 \"math/modint/template_modint.hpp\"\n\n#line 2 \"math/modint/power_table.hpp\"\
-    \n\n#line 4 \"math/modint/power_table.hpp\"\n\n/**\n * @brief \u7D2F\u4E57\u30C6\
-    \u30FC\u30D6\u30EB\n * @docs docs/math/modint/power_table.md\n */\n\ntemplate\
-    \ <class T>\nstruct PowerTable\n{\nprivate:\n  decltype(T::mod()) mod;\n  T base;\n\
-    \  vc<T> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(T base) : mod(T::mod()),\
-    \ base(base), pw(1, 1) {}\n\n  void reserve(int n)\n  {\n    if (mod != T::mod())\n\
-    \    {\n      mod = T::mod();\n      pw = {1};\n    }\n    int i = pw.size();\n\
-    \    if (n < i)\n      return;\n    pw.resize(n + 1);\n    for (; i <= n; i++)\n\
-    \      pw[i] = pw[i - 1] * base;\n  }\n\n  T pow(int n)\n  {\n    reserve(n);\n\
-    \    return pw[n];\n  }\n};\n#line 2 \"math/modint/binomial.hpp\"\n\n#line 4 \"\
-    math/modint/binomial.hpp\"\n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\n * @docs\
-    \ docs/math/modint/binomial.md\n */\n\ntemplate <class T>\nstruct Binomial\n{\n\
-    private:\n  static decltype(T::mod()) mod;\n  static vc<T> fac_, finv_, inv_;\n\
-    \npublic:\n  static void reserve(int n)\n  {\n    if (mod != T::mod())\n    {\n\
-    \      mod = T::mod();\n      fac_ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};\n\
-    \    }\n    int i = fac_.size();\n    chmin(n, T::mod() - 1);\n    if (n < i)\n\
-    \      return;\n    fac_.resize(n + 1), finv_.resize(n + 1), inv_.resize(n + 1);\n\
-    \    for (; i <= n; i++)\n    {\n      fac_[i] = fac_[i - 1] * T::raw(i);\n  \
-    \    inv_[i] = -inv_[T::mod() % i] * T::raw(T::mod() / i);\n      finv_[i] = finv_[i\
-    \ - 1] * inv_[i];\n    }\n  }\n  static T fac(int n)\n  {\n    assert(n >= 0);\n\
-    \    if (n >= T::mod())\n      return 0;\n    reserve(n);\n    return fac_[n];\n\
-    \  }\n  static T finv(int n)\n  {\n    assert(n < T::mod());\n    if (n < 0)\n\
-    \      return 0;\n    reserve(n);\n    return finv_[n];\n  }\n  static T inv(T\
-    \ n)\n  {\n    assert(n != 0);\n    reserve(n.val());\n    return inv_[n.val()];\n\
-    \  }\n\n  static T P(int n, int k)\n  {\n    if (n < k)\n      return 0;\n   \
-    \ if (n < 0 || k < 0)\n      return 0;\n    reserve(n);\n    return fac_[n] *\
-    \ finv_[n - k];\n  }\n  static T C(int n, int k)\n  {\n    if (n < k)\n      return\
-    \ 0;\n    if (n < 0 || k < 0)\n      return 0;\n    reserve(n);\n    return fac_[n]\
-    \ * finv_[k] * finv_[n - k];\n  }\n  static T H(int n, int k)\n  {\n    if (n\
-    \ == 0 && k == 0)\n      return 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate\
-    \ <class T> decltype(T::mod()) Binomial<T>::mod{};\ntemplate <class T> vc<T> Binomial<T>::fac_{};\n\
-    template <class T> vc<T> Binomial<T>::finv_{};\ntemplate <class T> vc<T> Binomial<T>::inv_{};\n\
-    #line 2 \"math/modint/stom.hpp\"\n\n#line 4 \"math/modint/stom.hpp\"\n\n/**\n\
-    \ * @brief string \u3092 mint \u306B\n * @docs docs/math/modint/stom.md\n */\n\
-    \ntemplate <class mint>\nmint stom(string s)\n{\n  mint res = 0;\n  fec(c : s)\n\
-    \  {\n    res *= 10;\n    res += c - '0';\n  }\n  return res;\n}\n#line 4 \"template/template_main.hpp\"\
+    #line 2 \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\
     \n\ntemplate <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n\
     \    cauto CERR = [](string val, string color)\n    {\n      string s = \"\\033[\"\
     \ + color + \"m\" + val + \"\\033[m\";\n      #ifdef LOCAL\n      cerr << s;\n\
@@ -926,15 +865,10 @@ data:
   - math/algebra/algebra_basic_ops.hpp
   - math/algebra/algebra_base.hpp
   - template/template_main.hpp
-  - template/template_all.hpp
-  - math/modint/template_modint.hpp
-  - math/modint/power_table.hpp
-  - math/modint/binomial.hpp
-  - math/modint/stom.hpp
   isVerificationFile: true
   path: verify/yosupo/kronecker_power_hadamard.test.cpp
   requiredBy: []
-  timestamp: '2025-04-11 04:57:54+09:00'
+  timestamp: '2025-04-11 08:06:31+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/kronecker_power_hadamard.test.cpp
