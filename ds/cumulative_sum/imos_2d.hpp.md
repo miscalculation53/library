@@ -669,9 +669,33 @@ data:
     \ \u6CD5\n * @docs docs/ds/cumulative_sum/imos_2d.md\n */\n\n// G \u306F\u53EF\
     \u63DB\ntemplate <class G = GroupAddSub<ll>>\nstruct Imos2D\n{\n  using S = typename\
     \ G::S;\n\nprivate:\n  vvc<S> d;\n\npublic:\n  Imos2D() {}\n  Imos2D(int n, int\
-    \ m) : d(n, vc<S>(m, G::e())) {}\n\n  // [li, ri) \xD7 [lj, rj) \u306B v \u3092\
-    \u8DB3\u3059\n  void add(int li, int ri, int lj, int rj, const S &v)\n  {\n  \
-    \  if (d.empty())\n      return;\n    const int n = d.size(), m = d[0].size();\n\
+    \ m) : d(n, vc<S>(m, G::e())) {}\n  Imos2D(const vvc<S> &a)\n  {\n    const int\
+    \ n = a.size();\n    if (n == 0)\n      return;\n    const int m = a[0].size();\n\
+    \    d.assign(n, vc<S>(m, G::e()));\n    repi(i, n) repi(j, m) add(i, i + 1, j,\
+    \ j + 1, a[i][j]);\n  }\n\n  // [li, ri) \xD7 [lj, rj) \u306B v \u3092\u8DB3\u3059\
+    \n  void add(int li, int ri, int lj, int rj, const S &v)\n  {\n    if (d.empty())\n\
+    \      return;\n    const int n = d.size(), m = d[0].size();\n    assert(0 <=\
+    \ li && li <= ri && ri <= n);\n    assert(0 <= lj && lj <= rj && rj <= m);\n \
+    \   d[li][lj] = G::op(d[li][lj], v);\n    if (ri == n && rj == m)\n      return;\n\
+    \    S iv = G::inv(v);\n    if (rj != m)\n      d[li][rj] = G::op(d[li][rj], iv);\n\
+    \    if (ri != n)\n      d[ri][lj] = G::op(d[ri][lj], iv);\n    if (ri != n &&\
+    \ rj != m)\n      d[ri][rj] = G::op(d[ri][rj], v);\n  }\n\n  // \u73FE\u72B6\u306E\
+    \ vector \u3092\u8FD4\u3059\n  vvc<S> content() \n  {\n    if (d.empty())\n  \
+    \    return {};\n    const int n = d.size(), m = d[0].size();\n    vvc<S> a(d);\n\
+    \    repi(i, n) repi(j, m - 1) a[i][j + 1] = G::op(a[i][j + 1], a[i][j]);\n  \
+    \  repi(j, m) repi(i, m - 1) a[i + 1][j] = G::op(a[i + 1][j], a[i][j]);\n    return\
+    \ a;\n  }\n};\n"
+  code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
+    \n#include \"../../math/algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief $2$\
+    \ \u6B21\u5143 imos \u6CD5\n * @docs docs/ds/cumulative_sum/imos_2d.md\n */\n\n\
+    // G \u306F\u53EF\u63DB\ntemplate <class G = GroupAddSub<ll>>\nstruct Imos2D\n\
+    {\n  using S = typename G::S;\n\nprivate:\n  vvc<S> d;\n\npublic:\n  Imos2D()\
+    \ {}\n  Imos2D(int n, int m) : d(n, vc<S>(m, G::e())) {}\n  Imos2D(const vvc<S>\
+    \ &a)\n  {\n    const int n = a.size();\n    if (n == 0)\n      return;\n    const\
+    \ int m = a[0].size();\n    d.assign(n, vc<S>(m, G::e()));\n    repi(i, n) repi(j,\
+    \ m) add(i, i + 1, j, j + 1, a[i][j]);\n  }\n\n  // [li, ri) \xD7 [lj, rj) \u306B\
+    \ v \u3092\u8DB3\u3059\n  void add(int li, int ri, int lj, int rj, const S &v)\n\
+    \  {\n    if (d.empty())\n      return;\n    const int n = d.size(), m = d[0].size();\n\
     \    assert(0 <= li && li <= ri && ri <= n);\n    assert(0 <= lj && lj <= rj &&\
     \ rj <= m);\n    d[li][lj] = G::op(d[li][lj], v);\n    if (ri == n && rj == m)\n\
     \      return;\n    S iv = G::inv(v);\n    if (rj != m)\n      d[li][rj] = G::op(d[li][rj],\
@@ -682,24 +706,6 @@ data:
     \    repi(i, n) repi(j, m - 1) a[i][j + 1] = G::op(a[i][j + 1], a[i][j]);\n  \
     \  repi(j, m) repi(i, m - 1) a[i + 1][j] = G::op(a[i + 1][j], a[i][j]);\n    return\
     \ a;\n  }\n};\n"
-  code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
-    \n#include \"../../math/algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief $2$\
-    \ \u6B21\u5143 imos \u6CD5\n * @docs docs/ds/cumulative_sum/imos_2d.md\n */\n\n\
-    // G \u306F\u53EF\u63DB\ntemplate <class G = GroupAddSub<ll>>\nstruct Imos2D\n\
-    {\n  using S = typename G::S;\n\nprivate:\n  vvc<S> d;\n\npublic:\n  Imos2D()\
-    \ {}\n  Imos2D(int n, int m) : d(n, vc<S>(m, G::e())) {}\n\n  // [li, ri) \xD7\
-    \ [lj, rj) \u306B v \u3092\u8DB3\u3059\n  void add(int li, int ri, int lj, int\
-    \ rj, const S &v)\n  {\n    if (d.empty())\n      return;\n    const int n = d.size(),\
-    \ m = d[0].size();\n    assert(0 <= li && li <= ri && ri <= n);\n    assert(0\
-    \ <= lj && lj <= rj && rj <= m);\n    d[li][lj] = G::op(d[li][lj], v);\n    if\
-    \ (ri == n && rj == m)\n      return;\n    S iv = G::inv(v);\n    if (rj != m)\n\
-    \      d[li][rj] = G::op(d[li][rj], iv);\n    if (ri != n)\n      d[ri][lj] =\
-    \ G::op(d[ri][lj], iv);\n    if (ri != n && rj != m)\n      d[ri][rj] = G::op(d[ri][rj],\
-    \ v);\n  }\n\n  // \u73FE\u72B6\u306E vector \u3092\u8FD4\u3059\n  vvc<S> content()\
-    \ \n  {\n    if (d.empty())\n      return {};\n    const int n = d.size(), m =\
-    \ d[0].size();\n    vvc<S> a(d);\n    repi(i, n) repi(j, m - 1) a[i][j + 1] =\
-    \ G::op(a[i][j + 1], a[i][j]);\n    repi(j, m) repi(i, m - 1) a[i + 1][j] = G::op(a[i\
-    \ + 1][j], a[i][j]);\n    return a;\n  }\n};\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -717,7 +723,7 @@ data:
   isVerificationFile: false
   path: ds/cumulative_sum/imos_2d.hpp
   requiredBy: []
-  timestamp: '2025-04-11 08:06:31+09:00'
+  timestamp: '2025-04-11 08:59:04+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/imos_2d.test.cpp

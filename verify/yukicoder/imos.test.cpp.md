@@ -677,13 +677,15 @@ data:
     \ \u6CD5\n * @docs docs/ds/cumulative_sum/imos.md\n */\n\n// G \u306F\u53EF\u63DB\
     \ntemplate <class G = GroupAddSub<ll>>\nstruct Imos\n{\n  using S = typename G::S;\n\
     \nprivate:\n  vc<S> d;\n\npublic:\n  Imos() {}\n  Imos(int n) : d(n, G::e()) {}\n\
-    \n  // [l, r) \u306B v \u3092\u8DB3\u3059\n  void add(int l, int r, const S &v)\n\
-    \  {\n    const int n = d.size();\n    assert(0 <= l && l <= r && r <= n);\n \
-    \   d[l] = G::op(d[l], v);\n    if (r != n)\n      d[r] = G::op(d[r], G::inv(v));\n\
-    \  }\n\n  // \u73FE\u72B6\u306E vector \u3092\u8FD4\u3059\n  vc<S> content() {\
-    \ return cuml<G>(d, 1); }\n};\n#line 19 \"verify/yukicoder/imos.test.cpp\"\n\n\
-    void init() {}\n\nvoid main2()\n{\n  LL(N, M);\n  VEC(pll, M, LR);\n  offset(LR,\
-    \ pll{0, -1});\n  Imos imos(N);\n  fec([ l, r ] : LR) imos.add(r, l, 1);\n  PRINTV(reversed(imos.content()));\n\
+    \  Imos(const vc<S> &a)\n  {\n    const int n = a.size();\n    d.assign(n, G::e());\n\
+    \    repi(i, n) add(i, i + 1, a[i]);\n  }\n\n  // [l, r) \u306B v \u3092\u8DB3\
+    \u3059\n  void add(int l, int r, const S &v)\n  {\n    const int n = d.size();\n\
+    \    assert(0 <= l && l <= r && r <= n);\n    d[l] = G::op(d[l], v);\n    if (r\
+    \ != n)\n      d[r] = G::op(d[r], G::inv(v));\n  }\n\n  // \u73FE\u72B6\u306E\
+    \ vector \u3092\u8FD4\u3059\n  vc<S> content() { return cuml<G>(d, 1); }\n};\n\
+    #line 19 \"verify/yukicoder/imos.test.cpp\"\n\nvoid init() {}\n\nvoid main2()\n\
+    {\n  LL(N, M);\n  VEC(pll, M, LR);\n  offset(LR, pll{0, -1});\n  Imos imos(N);\n\
+    \  fec([ l, r ] : LR) imos.add(r, l, 1);\n  PRINTV(reversed(imos.content()));\n\
     }\n\nvoid test() {}\n\n#line 2 \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\
     \n\ntemplate <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n\
     \    cauto CERR = [](string val, string color)\n    {\n      string s = \"\\033[\"\
@@ -731,7 +733,7 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/imos.test.cpp
   requiredBy: []
-  timestamp: '2025-04-11 08:06:31+09:00'
+  timestamp: '2025-04-11 08:59:04+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/imos.test.cpp

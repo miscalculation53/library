@@ -669,21 +669,24 @@ data:
     \ \u6CD5\n * @docs docs/ds/cumulative_sum/imos.md\n */\n\n// G \u306F\u53EF\u63DB\
     \ntemplate <class G = GroupAddSub<ll>>\nstruct Imos\n{\n  using S = typename G::S;\n\
     \nprivate:\n  vc<S> d;\n\npublic:\n  Imos() {}\n  Imos(int n) : d(n, G::e()) {}\n\
-    \n  // [l, r) \u306B v \u3092\u8DB3\u3059\n  void add(int l, int r, const S &v)\n\
-    \  {\n    const int n = d.size();\n    assert(0 <= l && l <= r && r <= n);\n \
-    \   d[l] = G::op(d[l], v);\n    if (r != n)\n      d[r] = G::op(d[r], G::inv(v));\n\
-    \  }\n\n  // \u73FE\u72B6\u306E vector \u3092\u8FD4\u3059\n  vc<S> content() {\
-    \ return cuml<G>(d, 1); }\n};\n"
+    \  Imos(const vc<S> &a)\n  {\n    const int n = a.size();\n    d.assign(n, G::e());\n\
+    \    repi(i, n) add(i, i + 1, a[i]);\n  }\n\n  // [l, r) \u306B v \u3092\u8DB3\
+    \u3059\n  void add(int l, int r, const S &v)\n  {\n    const int n = d.size();\n\
+    \    assert(0 <= l && l <= r && r <= n);\n    d[l] = G::op(d[l], v);\n    if (r\
+    \ != n)\n      d[r] = G::op(d[r], G::inv(v));\n  }\n\n  // \u73FE\u72B6\u306E\
+    \ vector \u3092\u8FD4\u3059\n  vc<S> content() { return cuml<G>(d, 1); }\n};\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
     \n#include \"../../math/algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief $1$\
     \ \u6B21\u5143 imos \u6CD5\n * @docs docs/ds/cumulative_sum/imos.md\n */\n\n//\
     \ G \u306F\u53EF\u63DB\ntemplate <class G = GroupAddSub<ll>>\nstruct Imos\n{\n\
     \  using S = typename G::S;\n\nprivate:\n  vc<S> d;\n\npublic:\n  Imos() {}\n\
-    \  Imos(int n) : d(n, G::e()) {}\n\n  // [l, r) \u306B v \u3092\u8DB3\u3059\n\
-    \  void add(int l, int r, const S &v)\n  {\n    const int n = d.size();\n    assert(0\
-    \ <= l && l <= r && r <= n);\n    d[l] = G::op(d[l], v);\n    if (r != n)\n  \
-    \    d[r] = G::op(d[r], G::inv(v));\n  }\n\n  // \u73FE\u72B6\u306E vector \u3092\
-    \u8FD4\u3059\n  vc<S> content() { return cuml<G>(d, 1); }\n};\n"
+    \  Imos(int n) : d(n, G::e()) {}\n  Imos(const vc<S> &a)\n  {\n    const int n\
+    \ = a.size();\n    d.assign(n, G::e());\n    repi(i, n) add(i, i + 1, a[i]);\n\
+    \  }\n\n  // [l, r) \u306B v \u3092\u8DB3\u3059\n  void add(int l, int r, const\
+    \ S &v)\n  {\n    const int n = d.size();\n    assert(0 <= l && l <= r && r <=\
+    \ n);\n    d[l] = G::op(d[l], v);\n    if (r != n)\n      d[r] = G::op(d[r], G::inv(v));\n\
+    \  }\n\n  // \u73FE\u72B6\u306E vector \u3092\u8FD4\u3059\n  vc<S> content() {\
+    \ return cuml<G>(d, 1); }\n};\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -701,7 +704,7 @@ data:
   isVerificationFile: false
   path: ds/cumulative_sum/imos.hpp
   requiredBy: []
-  timestamp: '2025-04-11 08:06:31+09:00'
+  timestamp: '2025-04-11 08:59:04+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/imos.test.cpp

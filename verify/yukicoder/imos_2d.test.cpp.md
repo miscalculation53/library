@@ -678,44 +678,48 @@ data:
     \ \u6CD5\n * @docs docs/ds/cumulative_sum/imos_2d.md\n */\n\n// G \u306F\u53EF\
     \u63DB\ntemplate <class G = GroupAddSub<ll>>\nstruct Imos2D\n{\n  using S = typename\
     \ G::S;\n\nprivate:\n  vvc<S> d;\n\npublic:\n  Imos2D() {}\n  Imos2D(int n, int\
-    \ m) : d(n, vc<S>(m, G::e())) {}\n\n  // [li, ri) \xD7 [lj, rj) \u306B v \u3092\
-    \u8DB3\u3059\n  void add(int li, int ri, int lj, int rj, const S &v)\n  {\n  \
-    \  if (d.empty())\n      return;\n    const int n = d.size(), m = d[0].size();\n\
-    \    assert(0 <= li && li <= ri && ri <= n);\n    assert(0 <= lj && lj <= rj &&\
-    \ rj <= m);\n    d[li][lj] = G::op(d[li][lj], v);\n    if (ri == n && rj == m)\n\
-    \      return;\n    S iv = G::inv(v);\n    if (rj != m)\n      d[li][rj] = G::op(d[li][rj],\
-    \ iv);\n    if (ri != n)\n      d[ri][lj] = G::op(d[ri][lj], iv);\n    if (ri\
-    \ != n && rj != m)\n      d[ri][rj] = G::op(d[ri][rj], v);\n  }\n\n  // \u73FE\
-    \u72B6\u306E vector \u3092\u8FD4\u3059\n  vvc<S> content() \n  {\n    if (d.empty())\n\
-    \      return {};\n    const int n = d.size(), m = d[0].size();\n    vvc<S> a(d);\n\
+    \ m) : d(n, vc<S>(m, G::e())) {}\n  Imos2D(const vvc<S> &a)\n  {\n    const int\
+    \ n = a.size();\n    if (n == 0)\n      return;\n    const int m = a[0].size();\n\
+    \    d.assign(n, vc<S>(m, G::e()));\n    repi(i, n) repi(j, m) add(i, i + 1, j,\
+    \ j + 1, a[i][j]);\n  }\n\n  // [li, ri) \xD7 [lj, rj) \u306B v \u3092\u8DB3\u3059\
+    \n  void add(int li, int ri, int lj, int rj, const S &v)\n  {\n    if (d.empty())\n\
+    \      return;\n    const int n = d.size(), m = d[0].size();\n    assert(0 <=\
+    \ li && li <= ri && ri <= n);\n    assert(0 <= lj && lj <= rj && rj <= m);\n \
+    \   d[li][lj] = G::op(d[li][lj], v);\n    if (ri == n && rj == m)\n      return;\n\
+    \    S iv = G::inv(v);\n    if (rj != m)\n      d[li][rj] = G::op(d[li][rj], iv);\n\
+    \    if (ri != n)\n      d[ri][lj] = G::op(d[ri][lj], iv);\n    if (ri != n &&\
+    \ rj != m)\n      d[ri][rj] = G::op(d[ri][rj], v);\n  }\n\n  // \u73FE\u72B6\u306E\
+    \ vector \u3092\u8FD4\u3059\n  vvc<S> content() \n  {\n    if (d.empty())\n  \
+    \    return {};\n    const int n = d.size(), m = d[0].size();\n    vvc<S> a(d);\n\
     \    repi(i, n) repi(j, m - 1) a[i][j + 1] = G::op(a[i][j + 1], a[i][j]);\n  \
     \  repi(j, m) repi(i, m - 1) a[i + 1][j] = G::op(a[i + 1][j], a[i][j]);\n    return\
     \ a;\n  }\n};\n#line 19 \"verify/yukicoder/imos_2d.test.cpp\"\n\nvoid init() {}\n\
     \nvoid main2()\n{\n  LL(N, K);\n  VEC(tlll, N, XYHP);\n  const ll M = 500;\n \
-    \ offset(XYHP, tlll{M, M, 0});\n  Imos2D imos(2 * M + 2, 2 * M + 2);\n  fec([\
-    \ x, y, hp ] : XYHP) imos.add(x, x + 1, y, y + 1, hp);\n  rep(_, K)\n  {\n   \
-    \ LL(ax, ay, w, h, d);\n    ax += M, ay += M;\n    imos.add(ax, min(2 * M + 2,\
-    \ ax + w + 1), ay, min(2 * M + 2, ay + h + 1), -d);\n  }\n  auto res = imos.content();\n\
-    \  ll ans = 0;\n  rep(x, 2 * M + 2) rep(y, 2 * M + 2)\n  {\n    if (res.at(x).at(y)\
-    \ > 0)\n      ans += res.at(x).at(y);\n  }\n  if (N <= 7)\n    WRITE(ans);\n \
-    \ else \n    PRINT(ans);\n}\n\nvoid test() {}\n\n#line 2 \"template/template_main.hpp\"\
-    \n\n#line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2,\
-    \ auto test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
-    \ color)\n    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\"\
-    ;\n      #ifdef LOCAL\n      cerr << s;\n      #endif\n      /* \u30B3\u30FC\u30C9\
-    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
-    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n      cerr << val;\n      //*/\n \
-    \   };\n  \n    #if defined FAST_IO and not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\\
-    n\\n\", \"32\");\n    #endif\n    #if defined FAST_CIO and not defined LOCAL\n\
-    \    CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
-    \    #endif\n    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n\
-    \  \n    #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n\
-    \    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n   \
-    \   dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
+    \ offset(XYHP, tlll{M, M, 0});\n  auto ini = dvec({2 * M + 2, 2 * M + 2}, ll(0));\n\
+    \  fec([ x, y, hp ] : XYHP) ini.at(x).at(y) = hp;\n  Imos2D imos(ini);\n  rep(_,\
+    \ K)\n  {\n    LL(ax, ay, w, h, d);\n    ax += M, ay += M;\n    imos.add(ax, min(2\
+    \ * M + 2, ax + w + 1), ay, min(2 * M + 2, ay + h + 1), -d);\n  }\n  auto res\
+    \ = imos.content();\n  ll ans = 0;\n  rep(x, 2 * M + 2) rep(y, 2 * M + 2)\n  {\n\
+    \    if (res.at(x).at(y) > 0)\n      ans += res.at(x).at(y);\n  }\n  if (N <=\
+    \ 7)\n    WRITE(ans);\n  else \n    PRINT(ans);\n}\n\nvoid test() {}\n\n#line\
+    \ 2 \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\n\
+    \ntemplate <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n\
+    \    cauto CERR = [](string val, string color)\n    {\n      string s = \"\\033[\"\
+    \ + color + \"m\" + val + \"\\033[m\";\n      #ifdef LOCAL\n      cerr << s;\n\
+    \      #endif\n      /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\
+    \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\
+    \u3059\n      cerr << val;\n      //*/\n    };\n  \n    #if defined FAST_IO and\
+    \ not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n    #endif\n \
+    \   #if defined FAST_CIO and not defined LOCAL\n    CERR(\"\\n[FAST_CIO]\\n\\\
+    n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n    #endif\n\
+    \    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n  \n  \
+    \  #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n \
+    \   CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n    \
+    \  dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
     \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
     \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
     T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
-    \      main2();\n    }\n    #endif\n  }\n};\n#line 52 \"verify/yukicoder/imos_2d.test.cpp\"\
+    \      main2();\n    }\n    #endif\n  }\n};\n#line 53 \"verify/yukicoder/imos_2d.test.cpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   code: "#define PROBLEM \"https://yukicoder.me/problems/no/60\"\n\n#define SINGLE_TESTCASE\n\
     // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef LOCAL\n#define FAST_IO\n\
@@ -723,14 +727,14 @@ data:
     #define EPS 1e-11\n\n#include \"template/template_all_but_modint.hpp\"\n\n#include\
     \ \"ds/cumulative_sum/imos_2d.hpp\"\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N,\
     \ K);\n  VEC(tlll, N, XYHP);\n  const ll M = 500;\n  offset(XYHP, tlll{M, M, 0});\n\
-    \  Imos2D imos(2 * M + 2, 2 * M + 2);\n  fec([ x, y, hp ] : XYHP) imos.add(x,\
-    \ x + 1, y, y + 1, hp);\n  rep(_, K)\n  {\n    LL(ax, ay, w, h, d);\n    ax +=\
-    \ M, ay += M;\n    imos.add(ax, min(2 * M + 2, ax + w + 1), ay, min(2 * M + 2,\
-    \ ay + h + 1), -d);\n  }\n  auto res = imos.content();\n  ll ans = 0;\n  rep(x,\
-    \ 2 * M + 2) rep(y, 2 * M + 2)\n  {\n    if (res.at(x).at(y) > 0)\n      ans +=\
-    \ res.at(x).at(y);\n  }\n  if (N <= 7)\n    WRITE(ans);\n  else \n    PRINT(ans);\n\
-    }\n\nvoid test() {}\n\n#include \"template/template_main.hpp\"\nMain<init, main2,\
-    \ test> main_dummy;\nint main() {}\n"
+    \  auto ini = dvec({2 * M + 2, 2 * M + 2}, ll(0));\n  fec([ x, y, hp ] : XYHP)\
+    \ ini.at(x).at(y) = hp;\n  Imos2D imos(ini);\n  rep(_, K)\n  {\n    LL(ax, ay,\
+    \ w, h, d);\n    ax += M, ay += M;\n    imos.add(ax, min(2 * M + 2, ax + w + 1),\
+    \ ay, min(2 * M + 2, ay + h + 1), -d);\n  }\n  auto res = imos.content();\n  ll\
+    \ ans = 0;\n  rep(x, 2 * M + 2) rep(y, 2 * M + 2)\n  {\n    if (res.at(x).at(y)\
+    \ > 0)\n      ans += res.at(x).at(y);\n  }\n  if (N <= 7)\n    WRITE(ans);\n \
+    \ else \n    PRINT(ans);\n}\n\nvoid test() {}\n\n#include \"template/template_main.hpp\"\
+    \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -750,7 +754,7 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/imos_2d.test.cpp
   requiredBy: []
-  timestamp: '2025-04-11 08:47:19+09:00'
+  timestamp: '2025-04-11 08:59:04+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/imos_2d.test.cpp
