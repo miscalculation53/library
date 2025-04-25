@@ -22,7 +22,7 @@ using mint = modint998244353;
 
 void hadamard(vc<mint> &A)
 {
-  kronecker_power_destructive<RingAddSubMul<mint>, 2>({{{1, 1}, {1, -1}}}, A);
+  kronecker_power_array_destructive<RingAddSubMul<mint>, 2>({{{1, 1}, {1, -1}}}, A);
 }
 
 void init() {}

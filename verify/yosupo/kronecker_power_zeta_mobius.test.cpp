@@ -22,11 +22,11 @@ using mint = modint998244353;
 
 void zeta(vc<mint> &A)
 {
-  kronecker_power_destructive<RingAddSubMul<mint>, 2>({{{1, 0}, {1, 1}}}, A);
+  kronecker_power_array_destructive<RingAddSubMul<mint>, 2>({{{1, 0}, {1, 1}}}, A);
 }
 void mobius(vc<mint> &A)
 {
-  kronecker_power_destructive<RingAddSubMul<mint>, 2>({{{1, 0}, {-1, 1}}}, A);
+  kronecker_power_array_destructive<RingAddSubMul<mint>, 2>({{{1, 0}, {-1, 1}}}, A);
 }
 
 void init() {}
