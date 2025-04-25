@@ -110,6 +110,26 @@ void sortunique(V &v)
 template <class V>
 V sortuniqued(V v) { sortunique(v); return v; }
 
+// 引数: vc<pair<T, U>>
+// 返り値: vc<pair<T, vc<U>>
+// T ごとに U をまとめたもの
+// T は比較可能である必要がある
+template <class T, class U>
+vc<pair<T, vc<U>>> sortuniqued_group(vc<pair<T, U>> v)
+{
+  stable_sort(ALL(v), [&](cauto &p1, cauto &p2)
+              { return p1.first < p2.first; });
+  vc<pair<T, vc<U>>> res;
+  fec([x, y] : v)
+  {
+    if (res.empty() || res.back().first != x)
+      res.eb(x, vc{y});
+    else
+      res.back().second.eb(y);
+  }
+  return res;
+}
+
 // 01234 -> 12340
 template <class V, class U>
 void rotate(V &v, U k)

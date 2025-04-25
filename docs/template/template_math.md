@@ -123,6 +123,24 @@ $\mathrm{floor}(a^{1/k})$ を返す。$a, k$ は、型 `T` にキャストして
 - それ以外のとき、標準ライブラリの `pow(a, 1.0/k)` の計算量を $T$ として
   - $O(T + \log k)$
 
+#### iroot_ceil
+
+```cpp
+T iroot_ceil<T = ll>(a, k)
+```
+
+$\mathrm{ceil}(a^{1/k})$ を返す。$a, k$ は、型 `T` にキャストしてから計算する。
+
+##### 制約
+
+- `T` は整数
+- $0 \leq a$
+- $1 \leq k$
+
+##### 計算量
+
+- `iroot` と同じ
+
 ### 上限つきの乗算・累乗
 
 （メモ：`__builtin_mul_overflow` というものもある）
@@ -166,10 +184,10 @@ $\min(a^b, m)$ を返す。$a, b, m$ は、型 `T` にキャストしてから�
 
 https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html
 
-#### sgn
+#### SGN
 
 ```cpp
-int sgn<D = ld>(a, D eps = EPS)
+int SGN<D = ld>(a, D eps = EPS)
 ```
 
 誤差 $\mathrm{eps}$ を考慮した $a$ の符号を、$-1, 0, 1$ で返す。

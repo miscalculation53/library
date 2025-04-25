@@ -141,10 +141,16 @@ constexpr T iroot(A a, K k)
   }
   return x;
 }
+template <class T = ll, class A, class K>
+constexpr T iroot_ceil(A a, K k)
+{
+  T x = iroot<T>(a, k);
+  return ipow<T>(x, k) == a ? x : x + 1;
+}
 
 // https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html
 template <class D = decltype(EPS), class A>
-int SGN(A a, const D &eps = EPS) { return int(a > eps) - int(a < -eps); }
+int SGN(A a, D eps = EPS) { return int(a > eps) - int(a < -eps); }
 
 // 位取り記数法と同じ順番（下位桁が後ろ）
 // 0 に対しては {0} が返る
