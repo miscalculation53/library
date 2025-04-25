@@ -37,7 +37,7 @@ public:
       else
       {
         r = l;
-        y = q.n / ipow(l, q.d);
+        y = q.n / ipow(r, q.d);
         l = iroot(q.n / (y + 1), q.d);
       }
       return *this;
@@ -45,5 +45,46 @@ public:
     bool operator!=(const Iterator &other) const { return y != other.y; }
   };
   Iterator begin() const { return Iterator(1, iroot(n / 2, d), iroot(n, d), *this); }
+  Iterator end() const { return Iterator(-1, -1, -1, *this); }
+};
+
+// (y, l, r)
+// y は ceil(n / x^d) (x: 整数) として表せる整数
+// y == ceil(n / x^d) <=> l <= x < r
+struct quotients_ceil
+{
+private:
+  ll n;
+  int d;
+
+public:
+  quotients_ceil(ll n, int d = 1) : n(n), d(d)
+  {
+    assert(n >= 1 && d >= 1);
+  }
+  struct Iterator
+  {
+  private:
+    ll y, l, r;
+    const quotients_ceil &q;
+
+  public:
+    Iterator(ll y, ll l, ll r, const quotients_ceil &q) : y(y), l(l), r(r), q(q) {}
+    tuple<ll, ll, ll> operator*() const { return {y, l, r}; }
+    Iterator& operator++()
+    {
+      if (l == 1)
+        y = l = r = -1;
+      else
+      {
+        r = l;
+        y = divceil(q.n, ipow(r - 1, q.d));
+        l = iroot(divceil(q.n, y), q.d);
+      }
+      return *this;
+    }
+    bool operator!=(const Iterator &other) const { return y != other.y; }
+  };
+  Iterator begin() const { return Iterator(2, iroot_ceil(divceil(n, 2), d), iroot_ceil(n, d), *this); }
   Iterator end() const { return Iterator(-1, -1, -1, *this); }
 };
