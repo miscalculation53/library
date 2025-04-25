@@ -59,7 +59,7 @@ public:
     const int n = d.size(), m = d[0].size();
     vvc<S> a(d);
     repi(i, n) repi(j, m - 1) a[i][j + 1] = G::op(a[i][j + 1], a[i][j]);
-    repi(j, m) repi(i, m - 1) a[i + 1][j] = G::op(a[i + 1][j], a[i][j]);
+    repi(j, m) repi(i, n - 1) a[i + 1][j] = G::op(a[i + 1][j], a[i][j]);
     return a;
   }
 };
