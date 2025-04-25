@@ -12,11 +12,18 @@ https://noshi91.hatenablog.com/entry/2020/04/22/212649 の E の方法を採用�
   - スニペットにしたい
   - 一応 `Monoid`, `Group`, `SemiRing`, `Ring`, `Field` のテンプレート引数に型と関数を渡すことで作れる（ACL の使い方と大差ない感じになる）。しかし、この使い方はあまり想定していない（struct を 1 個しか使わないならこれでもいいかも。2 個以上使うとき名前をいちいちつけないといけないのが微妙だと（個人的には）思う）
 - 群をモノイドとして使う、環を半環として使う、体を半環や環として使う は OK
+- モノイドや群の演算の順序を逆にしたものをとってくるものとして次がある
+  - `OppositeMonoid<M>`
+  - `OppositeGroup<G>`
 - 半環、環、体から $+$ や $\cdot$ だけのモノイド・群をとってくるものとして次がある（使用頻度はそんなに高くないかも）
   - `MonoidOfSemiRingAdd<SR>`（半環・環・体の $+$ のモノイド）
   - `MonoidOfSemiRingMul<SR>`（半環・環・体の $\cdot$ のモノイド）
   - `GroupOfRingAdd<R>`（環・体の $+$ の群）
   - `GroupOfFieldMul<K>`（体の $\cdot$ の群）
+- モノイドや群 2 つから半環、環、体を作るものとして次がある（実際に満たしているかの確認は使うときに自分で！）
+  - `SemiRingFromMonoidMonoid<Madd, Mmul>`
+  - `RingFromGroupMonoid<Gadd, Mmul>`
+  - `FieldFromGroupGroup<Gadd, Gmul>`
 
 
 ### 群に似た構造

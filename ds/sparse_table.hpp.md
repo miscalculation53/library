@@ -1,16 +1,6 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
-    path: ds/cumulative_sum/cumulative_sum.hpp
-    title: "$1$ \u6B21\u5143\u7D2F\u7A4D\u548C"
-  - icon: ':question:'
-    path: math/algebra/algebra_base.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':question:'
-    path: math/algebra/algebra_basic_ops.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
-      \ max\uFF09"
   - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
@@ -32,9 +22,6 @@ data:
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
   - icon: ':question:'
-    path: template/template_main.hpp
-    title: template/template_main.hpp
-  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
   - icon: ':question:'
@@ -51,97 +38,95 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedVerifiedWith:
+  - icon: ':x:'
+    path: verify/yosupo/sparse_table.test.cpp
+    title: verify/yosupo/sparse_table.test.cpp
   _isVerificationFailed: true
-  _pathExtension: cpp
+  _pathExtension: hpp
   _verificationStatusIcon: ':x:'
   attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/static_range_sum
-    links:
-    - https://judge.yosupo.jp/problem/static_range_sum
-  bundledCode: "#line 1 \"verify/yosupo/static_range_sum.test.cpp\"\n#define PROBLEM\
-    \ \"https://judge.yosupo.jp/problem/static_range_sum\"\n\n#define SINGLE_TESTCASE\n\
-    // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef LOCAL\n#define FAST_IO\n\
-    // #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\n#define INF 4'000'000'000'000'000'037LL\n\
-    #define EPS 1e-11\n\n#line 2 \"template/template_all_but_modint.hpp\"\n\n#line\
-    \ 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
-    \u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n */\n\
-    \n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n\
-    #endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing uint = unsigned\
-    \ int;\nusing ull = unsigned long long;\nusing pll = pair<ll, ll>;\nusing tlll\
-    \ = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\n#define vc vector\n\
-    template <class T>\nusing vvc = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\
-    \nusing vb = vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll\
-    \ = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb\
-    \ = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T,\
-    \ vc<T>, greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n\
-    #ifdef __SIZEOF_INT128__\nusing i128 = __int128_t;\nusing u128 = __uint128_t;\n\
-    i128 stoi128(const string &s)\n{\n  i128 res = 0;\n  if (s.front() == '-')\n \
-    \ {\n    for (int i = 1; i < (int)s.size(); i++)\n      res = 10 * res + s[i]\
-    \ - '0';\n    res = -res;\n  }\n  else\n  {\n    for (auto &&c : s)\n      res\
-    \ = 10 * res + c - '0';\n  }\n  return res;\n}\nstring i128tos(i128 x)\n{\n  if\
-    \ (x == 0) return \"0\";\n  string sign = \"\", res = \"\";\n  if (x < 0)\n  \
-    \  x = -x, sign = \"-\";\n  while (x > 0)\n  {\n    res += '0' + x % 10;\n   \
-    \ x /= 10;\n  }\n  reverse(res.begin(), res.end());\n  return sign + res;\n}\n\
-    istream &operator>>(istream &is, i128 &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n\
-    \  return is;\n}\nostream &operator<<(ostream &os, const i128 &a)\n{\n  os <<\
-    \ i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto const auto\n#line 2 \"\
-    template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\n\n/**\n\
-    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n\
-    \ */\n\n// https://trap.jp/post/1224/\n\n#define overload4(_1, _2, _3, _4, name,\
-    \ ...) name\n#define rep1(i, n) for (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n\
-    #define rep2(i, l, r) for (ll i = ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define\
-    \ rep3(i, l, r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0\
-    \ ? i < rrrrr : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__, rep3,\
-    \ rep2, rep1)(__VA_ARGS__)\n#define repi1(i, n) for (int i = 0, nnnnn = int(n);\
-    \ i < nnnnn; i++)\n#define repi2(i, l, r) for (int i = int(l), rrrrr = int(r);\
-    \ i < rrrrr; i++)\n#define repi3(i, l, r, d) for (int i = int(l), rrrrr = int(r),\
-    \ ddddd = int(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define repi(...)\
-    \ overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\n#define fe(...)\
-    \ for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n#define fem(...)\
-    \ for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n\
-    #define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n#define EPS 1e-11\n\
-    #endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
-    \u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs docs/template/template_math.md\n\
-    \ */\n\ntemplate <class T, class U>\ninline bool chmin(T &a, U b) { return a >\
-    \ b ? a = b, true : false; }\ntemplate <class T, class U>\ninline bool chmax(T\
-    \ &a, U b) { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll,\
-    \ class U, class V>\ninline constexpr T divfloor(U a, V b) { return T(a) / T(b)\
-    \ - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class U, class\
-    \ V>\ninline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b)\
-    \ && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V>\ninline\
-    \ constexpr T divround(U a, V b) { return divfloor<T>(2 * T(a) + T(b), 2 * T(b));\
-    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T safemod(U a,\
-    \ V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class T = ll,\
-    \ class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n  if (b\
-    \ == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a < 0 &&\
-    \ a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (true)\n\
-    \  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n     \
-    \ break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll, class\
-    \ A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0 && b\
-    \ >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) / T(b)\
-    \ ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT mul_limited(A\
-    \ a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class T = ll, class\
-    \ A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a >= 0 && b\
-    \ >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n\
-    \  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n    {\n     \
-    \ if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n    }\n    b >>=\
-    \ 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n      return m;\n\
-    \    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll, class A, class\
-    \ B>\nT pow_limited(A a, B b) { return pow_limited<T>(a, b, INF); }\n\ntemplate\
-    \ <class T = ll, class A, class K>\nconstexpr T iroot(A a, K k)\n{\n  assert(a\
-    \ >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n  if (k == 2)\n  {\n\
-    \    if constexpr (sizeof(T) > sizeof(ull))\n    {\n      if ((u128)a < ((u128)1\
-    \ << 120))\n        return sqrtl(a);\n    }\n    else\n      return sqrtl(a);\n\
-    \  }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n      return true;\n\
-    \    T res = 1, k2 = k;\n    while (true)\n    {\n      if (k2 & 1)\n      {\n\
-    \        if (res > T(a) / x)\n          return false;\n        res *= x;\n   \
-    \   }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n      if (x > T(a)\
-    \ / x)\n        return false;\n      x *= x;\n    }\n    return res <= T(a);\n\
-    \  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n   \
-    \ up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max() &&\
-    \ isok(x + 1))\n      x++;\n  }\n  return x;\n}\ntemplate <class T = ll, class\
+    _deprecated_at_docs: docs/ds/sparse_table.md
+    document_title: sparse table
+    links: []
+  bundledCode: "#line 2 \"ds/sparse_table.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
+    \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
+    \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
+    \ EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing\
+    \ uint = unsigned int;\nusing ull = unsigned long long;\nusing pll = pair<ll,\
+    \ ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\
+    \n#define vc vector\ntemplate <class T>\nusing vvc = vc<vc<T>>;\ntemplate <class\
+    \ T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb = vc<bool>;\nusing vl = vc<ll>;\n\
+    using vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing\
+    \ vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate\
+    \ <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate <class\
+    \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing i128 =\
+    \ __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string &s)\n{\n \
+    \ i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size();\
+    \ i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n\
+    \    for (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n\
+    }\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\"\
+    , res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n\
+    \    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n\
+    \  return sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string\
+    \ s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream\
+    \ &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define\
+    \ cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
+    \ docs/template/template_rep.md\n */\n\n// https://trap.jp/post/1224/\n\n#define\
+    \ overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0,\
+    \ nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i = ll(l), rrrrr\
+    \ = ll(r); i < rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i = ll(l), rrrrr\
+    \ = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define\
+    \ rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n#define repi1(i,\
+    \ n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i, l, r) for\
+    \ (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i, l, r, d)\
+    \ for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i < rrrrr :\
+    \ i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\
+    \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
+    #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\
+    \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
+    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
+    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
+    \ docs/template/template_math.md\n */\n\ntemplate <class T, class U>\ninline bool\
+    \ chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate <class T,\
+    \ class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true : false;\
+    \ }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T divfloor(U\
+    \ a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate\
+    \ <class T = ll, class U, class V>\ninline constexpr T divceil(U a, V b) { return\
+    \ T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll,\
+    \ class U, class V>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V>\ninline\
+    \ constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
+    template <class T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b\
+    \ >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
+    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
+    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
+    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
+    \ T = ll, class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a\
+    \ >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m)\
+    \ / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\n\
+    T mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
+    \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
+    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
+    \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
+    \    {\n      if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n  \
+    \  }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n\
+    \      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T =\
+    \ ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a, b,\
+    \ INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A a,\
+    \ K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n\
+    \  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n     \
+    \ if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
+    \      return sqrtl(a);\n  }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x\
+    \ == 0)\n      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n\
+    \      if (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n\
+    \        res *= x;\n      }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n\
+    \      if (x > T(a) / x)\n        return false;\n      x *= x;\n    }\n    return\
+    \ res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n\
+    \    up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max()\
+    \ && isok(x + 1))\n      x++;\n  }\n  return x;\n}\ntemplate <class T = ll, class\
     \ A, class K>\nconstexpr T iroot_ceil(A a, K k)\n{\n  T x = iroot<T>(a, k);\n\
     \  return ipow<T>(x, k) == a ? x : x + 1;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS), class A>\nint SGN(A a, D eps = EPS) { return\
@@ -624,110 +609,32 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 17 \"verify/yosupo/static_range_sum.test.cpp\"\n\n#line 2 \"ds/cumulative_sum/cumulative_sum.hpp\"\
-    \n\n#line 4 \"ds/cumulative_sum/cumulative_sum.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
-    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
-    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
-    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
-    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
-    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
-    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
-    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
-    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
-    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
-    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
-    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
-    \ constexpr auto inv = inv_;\n};\n\ntemplate <class M>\nstruct OppositeMonoid\n\
-    {\n  using S = typename M::S;\n  static constexpr S op(const S &a, const S &b)\
-    \ { return M::op(b, a); }\n  static constexpr auto e = M::e;\n};\ntemplate <class\
-    \ G>\nstruct OppositeGroup\n{\n  using S = typename G::S;\n  static constexpr\
-    \ S op(const S &a, const S &b) { return G::op(b, a); }\n  static constexpr auto\
-    \ e = G::e;\n  static constexpr auto inv = G::inv;\n};\n\ntemplate <class SR>\n\
-    using MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate\
-    \ <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S, SR::mul, SR::e1>;\n\
-    template <class R>\nusing GroupOfRingAdd = Group<typename R::S, R::add, R::e0,\
-    \ R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul = Group<typename K::S,\
-    \ K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\ntemplate <class Madd,\
-    \ class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
-    \ Madd::S, typename Mmul::S>, \"Madd::S and Mmul::S must be identical\");\n  using\
-    \ S = typename Madd::S;\n  static constexpr auto add = Madd::op;\n  static constexpr\
-    \ auto e0 = Madd::e;\n  static constexpr auto mul = Mmul::op;\n  static constexpr\
-    \ auto e1 = Mmul::e;\n};\n\n// Gadd \u306F\u53EF\u63DB\ntemplate <class Gadd,\
-    \ class Mmul>\nstruct RingFromGroupMonoid\n{\n  static_assert(is_same_v<typename\
-    \ Gadd::S, typename Mmul::S>, \"Gadd::S and Mmul::S must be identical\");\n  using\
-    \ S = typename Gadd::S;\n  static constexpr auto add = Gadd::op;\n  static constexpr\
-    \ auto e0 = Gadd::e;\n  static constexpr auto minus = Gadd::inv;\n  static constexpr\
-    \ auto mul = Mmul::op;\n  static constexpr auto e1 = Mmul::e;\n};\n\n// Gadd,\
-    \ Gmul \u306F\u53EF\u63DB\ntemplate <class Gadd, class Gmul>\nstruct FieldFromGroupGroup\n\
-    {\n  static_assert(is_same_v<typename Gadd::S, typename Gmul::S>, \"Gadd::S and\
-    \ Gmul::S must be identical\");\n  using S = typename Gadd::S;\n  static constexpr\
-    \ auto add = Gadd::op;\n  static constexpr auto e0 = Gadd::e;\n  static constexpr\
-    \ auto minus = Gadd::inv;\n  static constexpr auto mul = Gmul::op;\n  static constexpr\
-    \ auto e1 = Gmul::e;\n  static constexpr auto inv = Gmul::inv;\n};\n#line 5 \"\
-    math/algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\
-    \u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n\
-    \ */\n\ntemplate <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
-    \ntemplate <class T>\nstruct GroupAddSub\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return S(0); }\n\
-    \  static constexpr S inv(S a) { return -a; }\n};\ntemplate <class T>\nstruct\
-    \ GroupMulDiv\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
-    \ * b; }\n  static constexpr S e() { return S(1); }\n  static constexpr S inv(S\
-    \ a) { return S(1) / a; }\n};\n\ntemplate <class T, const T infty = INF>\nusing\
-    \ SemiRingMinPlus = SemiRingFromMonoidMonoid<MonoidMin<T>, MonoidAdd<T>>;\ntemplate\
-    \ <class T, const T infty = INF>\nusing SemiRingMaxPlus = SemiRingFromMonoidMonoid<MonoidMax<T>,\
-    \ MonoidAdd<T>>;\ntemplate <class T>\nusing RingAddSubMul = RingFromGroupMonoid<GroupAddSub<T>,\
-    \ MonoidMul<T>>;\ntemplate <class T>\nusing FieldAddSubMulDiv = FieldFromGroupGroup<GroupAddSub<T>,\
-    \ GroupMulDiv<T>>;\n\ntemplate <class M>\ntypename M::S pow_monoid(typename M::S\
-    \ a, ll k)\n{\n  typename M::S c = M::e();\n  for (; k; k >>= 1)\n  {\n    if\
-    \ (k & 1)\n      c = M::op(c, a);\n    a = M::op(a, a);\n  }\n  return c;\n}\n\
-    #line 6 \"ds/cumulative_sum/cumulative_sum.hpp\"\n\n/**\n * @brief $1$ \u6B21\u5143\
-    \u7D2F\u7A4D\u548C\n * @docs docs/ds/cumulative_sum/cumulative_sum.md\n */\n\n\
-    template <class G = GroupAddSub<ll>>\nstruct CumulativeSum\n{\n  using S = typename\
-    \ G::S;\n\nprivate:\n  vc<S> s;\n\npublic:\n  CumulativeSum() {}\n  CumulativeSum(const\
-    \ vc<S> &a)\n  {\n    const int n = a.size();\n    s.resize(n + 1, G::e());\n\
-    \    repi(i, n) s[i + 1] = G::op(s[i], a[i]);\n  }\n  // [0, r)\n  S sum(int r)\n\
-    \  {\n    const int n = SZ<int>(s) - 1;\n    assert(0 <= r && r <= n);\n    return\
-    \ s[r];\n  }\n  // [l, r)\n  S sum(int l, int r)\n  {\n    const int n = SZ<int>(s)\
-    \ - 1;\n    assert(0 <= l && l <= r && r <= n);\n    return G::op(G::inv(s[l]),\
-    \ s[r]);\n  }\n};\n#line 19 \"verify/yosupo/static_range_sum.test.cpp\"\n\nvoid\
-    \ init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  VEC(ll, N, A);\n  auto cum = CumulativeSum(A);\n\
-    \  rep(_, Q)\n  {\n    LL(l, r);\n    PRINT(cum.sum(l, r));\n  }\n}\n\nvoid test()\
-    \ {}\n\n#line 2 \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\
-    \n\ntemplate <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n\
-    \    cauto CERR = [](string val, string color)\n    {\n      string s = \"\\033[\"\
-    \ + color + \"m\" + val + \"\\033[m\";\n      #ifdef LOCAL\n      cerr << s;\n\
-    \      #endif\n      /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\
-    \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\
-    \u3059\n      cerr << val;\n      //*/\n    };\n  \n    #if defined FAST_IO and\
-    \ not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n    #endif\n \
-    \   #if defined FAST_CIO and not defined LOCAL\n    CERR(\"\\n[FAST_CIO]\\n\\\
-    n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n    #endif\n\
-    \    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n  \n  \
-    \  #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n \
-    \   CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n    \
-    \  dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
-    \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
-    \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
-    T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
-    \      main2();\n    }\n    #endif\n  }\n};\n#line 37 \"verify/yosupo/static_range_sum.test.cpp\"\
-    \nMain<init, main2, test> main_dummy;\nint main() {}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/static_range_sum\"\n\n\
-    #define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n\
-    #ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
-    #endif\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include\
-    \ \"template/template_all_but_modint.hpp\"\n\n#include \"ds/cumulative_sum/cumulative_sum.hpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  VEC(ll, N, A);\n  auto cum\
-    \ = CumulativeSum(A);\n  rep(_, Q)\n  {\n    LL(l, r);\n    PRINT(cum.sum(l, r));\n\
-    \  }\n}\n\nvoid test() {}\n\n#include \"template/template_main.hpp\"\nMain<init,\
-    \ main2, test> main_dummy;\nint main() {}\n"
+    \ 4 \"ds/sparse_table.hpp\"\n\n/**\n * @brief sparse table\n * @docs docs/ds/sparse_table.md\n\
+    \ */\n\n// M \u306F\u51AA\u7B49 (max, min, and, or, gcd, lcm \u306A\u3069)\ntemplate\
+    \ <class M>\nstruct SparseTable\n{\n  using S = typename M::S;\n\nprivate:\n \
+    \ int n;\n  // dat[j][i] = prod[i, i+2^j)\n  vvc<S> dat;\n\npublic:\n  SparseTable()\
+    \ {}\n  SparseTable(const vc<S> &v) : n(v.size())\n  {\n    const int lg = max(1,\
+    \ (int)bit_width(n));\n    if (n == 0)\n      return;\n    dat.resize(lg);\n \
+    \   dat[0] = v;\n    repi(j, 1, lg)\n    {\n      dat[j].resize(n - (1 << j) +\
+    \ 1);\n      repi(i, n - (1 << j) + 1) dat[j][i] = M::op(dat[j - 1][i], dat[j\
+    \ - 1][i + (1 << (j - 1))]);\n    }\n  }\n\n  S get(int p)\n  {\n    assert(0\
+    \ <= p && p < n);\n    return dat[0][p];\n  }\n  S prod(int l, int r)\n  {\n \
+    \   assert(0 <= l && l <= r && r <= n);\n    if (l == r)\n      return M::e();\n\
+    \    int j = bit_width(r - l) - 1;\n    return M::op(dat[j][l], dat[j][r - (1\
+    \ << j)]);\n  }\n};\n"
+  code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
+    /**\n * @brief sparse table\n * @docs docs/ds/sparse_table.md\n */\n\n// M \u306F\
+    \u51AA\u7B49 (max, min, and, or, gcd, lcm \u306A\u3069)\ntemplate <class M>\n\
+    struct SparseTable\n{\n  using S = typename M::S;\n\nprivate:\n  int n;\n  //\
+    \ dat[j][i] = prod[i, i+2^j)\n  vvc<S> dat;\n\npublic:\n  SparseTable() {}\n \
+    \ SparseTable(const vc<S> &v) : n(v.size())\n  {\n    const int lg = max(1, (int)bit_width(n));\n\
+    \    if (n == 0)\n      return;\n    dat.resize(lg);\n    dat[0] = v;\n    repi(j,\
+    \ 1, lg)\n    {\n      dat[j].resize(n - (1 << j) + 1);\n      repi(i, n - (1\
+    \ << j) + 1) dat[j][i] = M::op(dat[j - 1][i], dat[j - 1][i + (1 << (j - 1))]);\n\
+    \    }\n  }\n\n  S get(int p)\n  {\n    assert(0 <= p && p < n);\n    return dat[0][p];\n\
+    \  }\n  S prod(int l, int r)\n  {\n    assert(0 <= l && l <= r && r <= n);\n \
+    \   if (l == r)\n      return M::e();\n    int j = bit_width(r - l) - 1;\n   \
+    \ return M::op(dat[j][l], dat[j][r - (1 << j)]);\n  }\n};\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -740,20 +647,80 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   - template/template_random.hpp
-  - ds/cumulative_sum/cumulative_sum.hpp
-  - math/algebra/algebra_basic_ops.hpp
-  - math/algebra/algebra_base.hpp
-  - template/template_main.hpp
-  isVerificationFile: true
-  path: verify/yosupo/static_range_sum.test.cpp
+  isVerificationFile: false
+  path: ds/sparse_table.hpp
   requiredBy: []
-  timestamp: '2025-04-26 00:47:12+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
-  verifiedWith: []
-documentation_of: verify/yosupo/static_range_sum.test.cpp
+  timestamp: '2025-04-26 00:43:27+09:00'
+  verificationStatus: LIBRARY_ALL_WA
+  verifiedWith:
+  - verify/yosupo/sparse_table.test.cpp
+documentation_of: ds/sparse_table.hpp
 layout: document
 redirect_from:
-- /verify/verify/yosupo/static_range_sum.test.cpp
-- /verify/verify/yosupo/static_range_sum.test.cpp.html
-title: verify/yosupo/static_range_sum.test.cpp
+- /library/ds/sparse_table.hpp
+- /library/ds/sparse_table.hpp.html
+title: sparse table
 ---
+## sparse table
+
+モノイドが冪等（$\max, \min, \gcd, \mathrm{lcm}, \mathrm{and}, \mathrm{or}$ など）のときに、静的な列の区間積クエリを前計算 $O(N\log N)$ 時間・空間、クエリ $O(1)$ 時間で処理する。
+
+### コンストラクタ
+
+```cpp
+SparseTable<M>(vc<M::S> v)
+```
+
+##### 制約
+
+- `M` は**冪等**なモノイド
+
+##### 計算量
+
+`vec` の長さを $n$ として
+
+- $O(n \log n)$
+
+### メンバ関数
+
+#### get
+
+```cpp
+M::S get(int p)
+```
+
+$v_p$ の値を返す。
+
+##### 制約
+
+- $0 \leq p \lt n$
+
+##### 計算量
+
+- $O(1)$
+
+
+#### prod
+
+```cpp
+M::S prod(int l, int r)
+```
+
+$v_l \bullet \cdots \bullet v_{r-1}$ の値を返す。
+
+##### 制約
+
+- $0 \leq l \leq r \leq n$
+
+##### 計算量
+
+- $O(1)$
+  - モノイド演算は $1$ 回
+
+----
+
+### 中身
+
+前計算：各 $i, j \ (0 \leq i + 2^j \lt n)$ に対して $[i, i+2^j)$ の答えを計算しておく（これはダブリング風にできる）。
+
+クエリ：$[l, r)$ の答えは、$l \leq r-2^j \leq l+2^j \leq r$ なる $j$ をとってきて、$[l, l+2^j)$ の答えと $[r-2^j, r)$ の答えの積として計算する（冪等なのでこれでよい）。

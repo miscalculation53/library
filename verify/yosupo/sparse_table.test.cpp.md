@@ -2,15 +2,8 @@
 data:
   _extendedDependsOn:
   - icon: ':x:'
-    path: ds/cumulative_sum/cumulative_sum.hpp
-    title: "$1$ \u6B21\u5143\u7D2F\u7A4D\u548C"
-  - icon: ':question:'
-    path: math/algebra/algebra_base.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':question:'
-    path: math/algebra/algebra_basic_ops.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
-      \ max\uFF09"
+    path: ds/sparse_table.hpp
+    title: sparse table
   - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
@@ -57,12 +50,12 @@ data:
   _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/static_range_sum
+    PROBLEM: https://judge.yosupo.jp/problem/staticrmq
     links:
-    - https://judge.yosupo.jp/problem/static_range_sum
-  bundledCode: "#line 1 \"verify/yosupo/static_range_sum.test.cpp\"\n#define PROBLEM\
-    \ \"https://judge.yosupo.jp/problem/static_range_sum\"\n\n#define SINGLE_TESTCASE\n\
-    // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef LOCAL\n#define FAST_IO\n\
+    - https://judge.yosupo.jp/problem/staticrmq
+  bundledCode: "#line 1 \"verify/yosupo/sparse_table.test.cpp\"\n#define PROBLEM \"\
+    https://judge.yosupo.jp/problem/staticrmq\"\n\n#define SINGLE_TESTCASE\n// #define\
+    \ MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef LOCAL\n#define FAST_IO\n\
     // #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\n#define INF 4'000'000'000'000'000'037LL\n\
     #define EPS 1e-11\n\n#line 2 \"template/template_all_but_modint.hpp\"\n\n#line\
     \ 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
@@ -624,83 +617,23 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 17 \"verify/yosupo/static_range_sum.test.cpp\"\n\n#line 2 \"ds/cumulative_sum/cumulative_sum.hpp\"\
-    \n\n#line 4 \"ds/cumulative_sum/cumulative_sum.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
-    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
-    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
-    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
-    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
-    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
-    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
-    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
-    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
-    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
-    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
-    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
-    \ constexpr auto inv = inv_;\n};\n\ntemplate <class M>\nstruct OppositeMonoid\n\
-    {\n  using S = typename M::S;\n  static constexpr S op(const S &a, const S &b)\
-    \ { return M::op(b, a); }\n  static constexpr auto e = M::e;\n};\ntemplate <class\
-    \ G>\nstruct OppositeGroup\n{\n  using S = typename G::S;\n  static constexpr\
-    \ S op(const S &a, const S &b) { return G::op(b, a); }\n  static constexpr auto\
-    \ e = G::e;\n  static constexpr auto inv = G::inv;\n};\n\ntemplate <class SR>\n\
-    using MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate\
-    \ <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S, SR::mul, SR::e1>;\n\
-    template <class R>\nusing GroupOfRingAdd = Group<typename R::S, R::add, R::e0,\
-    \ R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul = Group<typename K::S,\
-    \ K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\ntemplate <class Madd,\
-    \ class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
-    \ Madd::S, typename Mmul::S>, \"Madd::S and Mmul::S must be identical\");\n  using\
-    \ S = typename Madd::S;\n  static constexpr auto add = Madd::op;\n  static constexpr\
-    \ auto e0 = Madd::e;\n  static constexpr auto mul = Mmul::op;\n  static constexpr\
-    \ auto e1 = Mmul::e;\n};\n\n// Gadd \u306F\u53EF\u63DB\ntemplate <class Gadd,\
-    \ class Mmul>\nstruct RingFromGroupMonoid\n{\n  static_assert(is_same_v<typename\
-    \ Gadd::S, typename Mmul::S>, \"Gadd::S and Mmul::S must be identical\");\n  using\
-    \ S = typename Gadd::S;\n  static constexpr auto add = Gadd::op;\n  static constexpr\
-    \ auto e0 = Gadd::e;\n  static constexpr auto minus = Gadd::inv;\n  static constexpr\
-    \ auto mul = Mmul::op;\n  static constexpr auto e1 = Mmul::e;\n};\n\n// Gadd,\
-    \ Gmul \u306F\u53EF\u63DB\ntemplate <class Gadd, class Gmul>\nstruct FieldFromGroupGroup\n\
-    {\n  static_assert(is_same_v<typename Gadd::S, typename Gmul::S>, \"Gadd::S and\
-    \ Gmul::S must be identical\");\n  using S = typename Gadd::S;\n  static constexpr\
-    \ auto add = Gadd::op;\n  static constexpr auto e0 = Gadd::e;\n  static constexpr\
-    \ auto minus = Gadd::inv;\n  static constexpr auto mul = Gmul::op;\n  static constexpr\
-    \ auto e1 = Gmul::e;\n  static constexpr auto inv = Gmul::inv;\n};\n#line 5 \"\
-    math/algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\
-    \u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n\
-    \ */\n\ntemplate <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
-    \ntemplate <class T>\nstruct GroupAddSub\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return S(0); }\n\
-    \  static constexpr S inv(S a) { return -a; }\n};\ntemplate <class T>\nstruct\
-    \ GroupMulDiv\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
-    \ * b; }\n  static constexpr S e() { return S(1); }\n  static constexpr S inv(S\
-    \ a) { return S(1) / a; }\n};\n\ntemplate <class T, const T infty = INF>\nusing\
-    \ SemiRingMinPlus = SemiRingFromMonoidMonoid<MonoidMin<T>, MonoidAdd<T>>;\ntemplate\
-    \ <class T, const T infty = INF>\nusing SemiRingMaxPlus = SemiRingFromMonoidMonoid<MonoidMax<T>,\
-    \ MonoidAdd<T>>;\ntemplate <class T>\nusing RingAddSubMul = RingFromGroupMonoid<GroupAddSub<T>,\
-    \ MonoidMul<T>>;\ntemplate <class T>\nusing FieldAddSubMulDiv = FieldFromGroupGroup<GroupAddSub<T>,\
-    \ GroupMulDiv<T>>;\n\ntemplate <class M>\ntypename M::S pow_monoid(typename M::S\
-    \ a, ll k)\n{\n  typename M::S c = M::e();\n  for (; k; k >>= 1)\n  {\n    if\
-    \ (k & 1)\n      c = M::op(c, a);\n    a = M::op(a, a);\n  }\n  return c;\n}\n\
-    #line 6 \"ds/cumulative_sum/cumulative_sum.hpp\"\n\n/**\n * @brief $1$ \u6B21\u5143\
-    \u7D2F\u7A4D\u548C\n * @docs docs/ds/cumulative_sum/cumulative_sum.md\n */\n\n\
-    template <class G = GroupAddSub<ll>>\nstruct CumulativeSum\n{\n  using S = typename\
-    \ G::S;\n\nprivate:\n  vc<S> s;\n\npublic:\n  CumulativeSum() {}\n  CumulativeSum(const\
-    \ vc<S> &a)\n  {\n    const int n = a.size();\n    s.resize(n + 1, G::e());\n\
-    \    repi(i, n) s[i + 1] = G::op(s[i], a[i]);\n  }\n  // [0, r)\n  S sum(int r)\n\
-    \  {\n    const int n = SZ<int>(s) - 1;\n    assert(0 <= r && r <= n);\n    return\
-    \ s[r];\n  }\n  // [l, r)\n  S sum(int l, int r)\n  {\n    const int n = SZ<int>(s)\
-    \ - 1;\n    assert(0 <= l && l <= r && r <= n);\n    return G::op(G::inv(s[l]),\
-    \ s[r]);\n  }\n};\n#line 19 \"verify/yosupo/static_range_sum.test.cpp\"\n\nvoid\
-    \ init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  VEC(ll, N, A);\n  auto cum = CumulativeSum(A);\n\
-    \  rep(_, Q)\n  {\n    LL(l, r);\n    PRINT(cum.sum(l, r));\n  }\n}\n\nvoid test()\
-    \ {}\n\n#line 2 \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\
+    \ 17 \"verify/yosupo/sparse_table.test.cpp\"\n\n#line 2 \"ds/sparse_table.hpp\"\
+    \n\n#line 4 \"ds/sparse_table.hpp\"\n\n/**\n * @brief sparse table\n * @docs docs/ds/sparse_table.md\n\
+    \ */\n\n// M \u306F\u51AA\u7B49 (max, min, and, or, gcd, lcm \u306A\u3069)\ntemplate\
+    \ <class M>\nstruct SparseTable\n{\n  using S = typename M::S;\n\nprivate:\n \
+    \ int n;\n  // dat[j][i] = prod[i, i+2^j)\n  vvc<S> dat;\n\npublic:\n  SparseTable()\
+    \ {}\n  SparseTable(const vc<S> &v) : n(v.size())\n  {\n    const int lg = max(1,\
+    \ (int)bit_width(n));\n    if (n == 0)\n      return;\n    dat.resize(lg);\n \
+    \   dat[0] = v;\n    repi(j, 1, lg)\n    {\n      dat[j].resize(n - (1 << j) +\
+    \ 1);\n      repi(i, n - (1 << j) + 1) dat[j][i] = M::op(dat[j - 1][i], dat[j\
+    \ - 1][i + (1 << (j - 1))]);\n    }\n  }\n\n  S get(int p)\n  {\n    assert(0\
+    \ <= p && p < n);\n    return dat[0][p];\n  }\n  S prod(int l, int r)\n  {\n \
+    \   assert(0 <= l && l <= r && r <= n);\n    if (l == r)\n      return M::e();\n\
+    \    int j = bit_width(r - l) - 1;\n    return M::op(dat[j][l], dat[j][r - (1\
+    \ << j)]);\n  }\n};\n#line 19 \"verify/yosupo/sparse_table.test.cpp\"\n\nvoid\
+    \ init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  VEC(ll, N, A);\n  SparseTable<MonoidMin<ll>>\
+    \ spt(A);\n  rep(_, Q)\n  {\n    LL(l, r);\n    PRINT(spt.prod(l, r));\n  }\n\
+    }\n\nvoid test() {}\n\n#line 2 \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\
     \n\ntemplate <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n\
     \    cauto CERR = [](string val, string color)\n    {\n      string s = \"\\033[\"\
     \ + color + \"m\" + val + \"\\033[m\";\n      #ifdef LOCAL\n      cerr << s;\n\
@@ -717,17 +650,17 @@ data:
     \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
     \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
     T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
-    \      main2();\n    }\n    #endif\n  }\n};\n#line 37 \"verify/yosupo/static_range_sum.test.cpp\"\
+    \      main2();\n    }\n    #endif\n  }\n};\n#line 37 \"verify/yosupo/sparse_table.test.cpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/static_range_sum\"\n\n\
-    #define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n\
-    #ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
-    #endif\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include\
-    \ \"template/template_all_but_modint.hpp\"\n\n#include \"ds/cumulative_sum/cumulative_sum.hpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  VEC(ll, N, A);\n  auto cum\
-    \ = CumulativeSum(A);\n  rep(_, Q)\n  {\n    LL(l, r);\n    PRINT(cum.sum(l, r));\n\
-    \  }\n}\n\nvoid test() {}\n\n#include \"template/template_main.hpp\"\nMain<init,\
-    \ main2, test> main_dummy;\nint main() {}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/staticrmq\"\n\n#define\
+    \ SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef\
+    \ LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\
+    \n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"template/template_all_but_modint.hpp\"\
+    \n\n#include \"ds/sparse_table.hpp\"\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N,\
+    \ Q);\n  VEC(ll, N, A);\n  SparseTable<MonoidMin<ll>> spt(A);\n  rep(_, Q)\n \
+    \ {\n    LL(l, r);\n    PRINT(spt.prod(l, r));\n  }\n}\n\nvoid test() {}\n\n#include\
+    \ \"template/template_main.hpp\"\nMain<init, main2, test> main_dummy;\nint main()\
+    \ {}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -740,20 +673,18 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   - template/template_random.hpp
-  - ds/cumulative_sum/cumulative_sum.hpp
-  - math/algebra/algebra_basic_ops.hpp
-  - math/algebra/algebra_base.hpp
+  - ds/sparse_table.hpp
   - template/template_main.hpp
   isVerificationFile: true
-  path: verify/yosupo/static_range_sum.test.cpp
+  path: verify/yosupo/sparse_table.test.cpp
   requiredBy: []
-  timestamp: '2025-04-26 00:47:12+09:00'
+  timestamp: '2025-04-26 00:43:27+09:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
-documentation_of: verify/yosupo/static_range_sum.test.cpp
+documentation_of: verify/yosupo/sparse_table.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/yosupo/static_range_sum.test.cpp
-- /verify/verify/yosupo/static_range_sum.test.cpp.html
-title: verify/yosupo/static_range_sum.test.cpp
+- /verify/verify/yosupo/sparse_table.test.cpp
+- /verify/verify/yosupo/sparse_table.test.cpp.html
+title: verify/yosupo/sparse_table.test.cpp
 ---

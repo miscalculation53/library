@@ -41,6 +41,57 @@ $(A^{\otimes n})^{-1} = (A^{-1})^{\otimes n}$
 - （FFT はクロネッカー冪ではないので仕組みが異なるが、行列で書いて分割統治するという点では似ている）
   - クロネッカー冪ではないが行列で書いて分割統治で解ける例： https://codeforces.com/contest/1967/problem/C
 
+### ライブラリ
+
+使い方のコツ：渡す行列や線型写像は $n=1$ の場合の振る舞いを記述すると考えるとよい。
+
+#### kronecker_power
+
+一般には半環が載る。
+
+```cpp
+vc<SR::S> kronecker_power(array<array<SR::S, k>, k> mat, vc<SR::S> v)
+```
+
+$\mathrm{mat}^{\otimes k} v$ を返す。
+
+##### 制約
+
+- $\lvert v \rvert$ は $0$ か $k$ べき
+
+##### 計算量
+
+$\lvert v \rvert = k^n$ として
+
+- $O(n k^{n+1})$
+
+#### tensor_power_array
+
+行列を陽に渡すのではなく、線型写像として渡す。次のような場合に特に有効：
+
+- 行列が疎であるなどの理由で、行列の定義を使うよりも高速に計算できる場合
+- ゼータ変換・メビウス変換のように行列の要素が $1$ や $-1$ であり、本来加減算だけでよいのに、行列の定義を使うと乗算を書かされる場合（特に加算にあたる部分が通常の乗算であると、その上の乗算って何？ となって苦しい）
+
+```cpp
+vc<SR::S> tensor_power<k>(auto linear_map, vc<SR::S> v)
+```
+
+`linear_map` は `array<T, k>` から `array<T, k>` への関数を渡す。この関数の内部では破壊的変更を行ってもよい。
+
+$\mathrm{linear\_map}^{\otimes k} v$ を返す。
+
+##### 制約
+
+- $\lvert v \rvert$ は $0$ か $k$ べき
+
+##### 計算量
+
+$\lvert v \rvert = k^n$ として
+
+- $O(n k^{n-1})$ 回の `linear_map` 呼び出し
+
+---
+
 ### 中身
 
 $I_n$ を $k^n \times k^n$ 単位行列とする。
@@ -99,25 +150,3 @@ c...d...  ....a.b.  ....ab..
 また、これは特にビット演算を使わずにできるので $k=2$ に限らず使える。
 
 参考：Nyaan さんの提出 https://atcoder.jp/contests/abc288/submissions/38620359
-
-### ライブラリ
-
-#### kronecker_power
-
-一般には半環が載る。
-
-```cpp
-vc<SR::S> kronecker_power(array<array<SR::S, k>, k> mat, vc<SR::S> v)
-```
-
-$\mathrm{mat}^{\otimes k} v$ を返す。
-
-##### 制約
-
-- $\lvert v \rvert$ は $0$ か $k$ べき
-
-##### 計算量
-
-$\lvert v \rvert = k^n$ として
-
-- $O(n k^{n+1})$

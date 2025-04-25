@@ -128,7 +128,7 @@ vc<T> permuted(vc<T> a, vc<U> p)
 
 - $O(n)$
 
-#### SORT, sorted
+#### sorted
 
 ```cpp
 (1) string sorted(string s, ...)
@@ -175,6 +175,26 @@ C++17 以前ならば `std::sort`, C++20 以降ならば `std::ranges::sort` の
 
 - (1), (2), (3), (4)：$O(n)$
 - (5), (6), (7), (8)：$O(n \log n)$
+
+#### sortuniqued_group
+
+```cpp
+vc<pair<T, vc<U>>> sortuniqued_group(vc<pair<T, U>> v)
+```
+
+$v$ の要素を `T` ごとにまとめる。
+
+`map` でも似たようなことができるが、静的なときはこちらのほうが速いし、扱いやすくもあると思う。
+
+##### 制約
+
+- `T` は比較可能
+
+##### 計算量
+
+列の長さを $n$ として
+
+- $O(n \log n)$
 
 #### rotate, rotated
 

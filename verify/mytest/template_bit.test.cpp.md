@@ -1,27 +1,27 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -156,14 +156,16 @@ data:
     \      if (x > T(a) / x)\n        return false;\n      x *= x;\n    }\n    return\
     \ res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n\
     \    up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max()\
-    \ && isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
-    template <class D = decltype(EPS), class A>\nint SGN(A a, const D &eps = EPS)\
-    \ { return int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\
-    \u6CD5\u3068\u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\
-    \uFF09\n// 0 \u306B\u5BFE\u3057\u3066\u306F {0} \u304C\u8FD4\u308B\ntemplate <class\
-    \ T = ll, class U, class V>\nvc<T> base_repr(U val, V base)\n{\n  assert(val >=\
-    \ 0);\n  assert(base >= 2);\n  if (val == 0)\n    return {0};\n  vc<T> a;\n  while\
-    \ (val > 0)\n  {\n    a.emplace_back(val % base);\n    val /= base;\n  }\n  reverse(a.begin(),\
+    \ && isok(x + 1))\n      x++;\n  }\n  return x;\n}\ntemplate <class T = ll, class\
+    \ A, class K>\nconstexpr T iroot_ceil(A a, K k)\n{\n  T x = iroot<T>(a, k);\n\
+    \  return ipow<T>(x, k) == a ? x : x + 1;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    template <class D = decltype(EPS), class A>\nint SGN(A a, D eps = EPS) { return\
+    \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
+    \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\n// 0\
+    \ \u306B\u5BFE\u3057\u3066\u306F {0} \u304C\u8FD4\u308B\ntemplate <class T = ll,\
+    \ class U, class V>\nvc<T> base_repr(U val, V base)\n{\n  assert(val >= 0);\n\
+    \  assert(base >= 2);\n  if (val == 0)\n    return {0};\n  vc<T> a;\n  while (val\
+    \ > 0)\n  {\n    a.emplace_back(val % base);\n    val /= base;\n  }\n  reverse(a.begin(),\
     \ a.end());\n  return a;\n}\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\u540C\
     \u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate <class\
     \ T = ll, class U, class V>\nvc<T> base_repr(U val, V base, int n)\n{\n  assert(val\
@@ -228,77 +230,84 @@ data:
     \ntemplate <class V>\nvoid unique(V &v) { v.erase(std::unique(ALL(v)), v.end());\
     \ }\ntemplate <class V>\nV uniqued(V v) { unique(v); return v; }\n\ntemplate <class\
     \ V>\nvoid sortunique(V &v)\n{\n  sort(ALL(v));\n  unique(v);\n}\ntemplate <class\
-    \ V>\nV sortuniqued(V v) { sortunique(v); return v; }\n\n// 01234 -> 12340\ntemplate\
-    \ <class V, class U>\nvoid rotate(V &v, U k)\n{ \n  const U n = v.size();\n  k\
-    \ = (k % n + n) % n;\n  std::rotate(v.begin(), v.begin() + k, v.end());\n}\n//\
-    \ 01234 -> 12340\ntemplate <class V, class U>\nV rotated(V v, U k) { rotate(v,\
-    \ k); return v; }\n\ntemplate <class T>\nvvc<T> top(const vvc<T> &a)\n{\n  if\
-    \ (a.empty())\n    return {};\n  const int n = a.size(), m = a[0].size();\n  vvc<T>\
-    \ b(m, vc<T>(n));\n  repi(i, n)\n  {\n    assert(SZ<int>(a[i]) == m);\n    repi(j,\
-    \ m) b[j][i] = a[i][j];\n  }\n  return b;\n}\nvstr top(const vstr &a)\n{\n  vvc<char>\
-    \ a_(a.size());\n  repi(i, SZ<int>(a)) a_[i] = {ALL(a[i])};\n  vvc<char> b_ =\
-    \ top(a_);\n  vstr b(b_.size());\n  repi(i, SZ<int>(b)) b[i] = {ALL(b_[i])};\n\
-    \  return b;\n}\n\n// 12\n// 34 -> 246\n// 56    135\n// (\u53CD\u6642\u8A08\u56DE\
-    \u308A)\ntemplate <class VV, class U = ll>\nVV rot90(const VV &a, U k = 1)\n{\n\
-    \  if (a.empty())\n    return {};\n  const int n = a.size(), m = a[0].size();\n\
-    \  k = (k % 4 + 4) % 4;\n  if (k == 0)\n    return a;\n  else if (k == 1)\n  {\n\
-    \    VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
-    \ == m);\n      repi(j, m) b[m - 1 - j][i] = a[i][j];\n    }\n    return b;\n\
-    \  }\n  else if (k == 2)\n  {\n    VV b(n);\n    repi(i, n) b[i].resize(m);\n\
-    \    repi(i, n)\n    {\n      assert(SZ<int>(a[i]) == m);\n      repi(j, m) b[n\
-    \ - 1 - i][m - 1 - j] = a[i][j];\n    }\n    return b;\n  }\n  else\n  {\n   \
-    \ VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
-    \ == m);\n      repi(j, m) b[j][n - 1 - i] = a[i][j];\n    }\n    return b;\n\
-    \  }\n}\n\ntemplate <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return 0; }\n};\n\
-    template <class T, const T infty = INF>\nstruct MonoidMin\n{\n  using S = T;\n\
-    \  static constexpr S op(S a, S b) { return min(a, b); }\n  static constexpr S\
-    \ e() { return infty; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n\
-    {\n  using S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n \
-    \ static constexpr S e() { return -infty; }\n};\n\n// left_index \u304C 0 \u306A\
-    \u3089\u3001\u9577\u3055 n+1 \u3067 a.front() \u304C e()\n// left_index \u304C\
-    \ 1 \u306A\u3089\u3001\u9577\u3055 n \u3067 e() \u304C\u306A\u3044\ntemplate <class\
-    \ M>\nvc<typename M::S> cuml(const vc<typename M::S> &v, int left_index = 0)\n\
-    {\n  const int n = v.size();\n  vc<typename M::S> res(n + 1);\n  res[0] = M::e();\n\
-    \  repi(i, n) res[i + 1] = M::op(res[i], v[i]);\n  res.erase(res.begin(), res.begin()\
-    \ + left_index);\n  return res;\n}\n// right_index \u304C 0 \u306A\u3089\u3001\
-    \u9577\u3055 n+1 \u3067 a.back() \u304C e()\n// right_index \u304C 1 \u306A\u3089\
-    \u3001\u9577\u3055 n \u3067 e() \u304C\u306A\u3044\ntemplate <class M>\nvc<typename\
-    \ M::S> cumr(const vc<typename M::S> &v, int right_index = 0)\n{ return reversed(cuml<M>(reversed(v),\
-    \ right_index)); }\ntemplate <class T>\nvc<T> cumlsum(const vc<T> &v, int left_index\
-    \ = 0)\n{ return cuml<MonoidAdd<T>>(v, left_index); }\ntemplate <class T>\nvc<T>\
-    \ cumrsum(const vc<T> &v, int right_index = 0)\n{ return cumr<MonoidAdd<T>>(v,\
-    \ right_index); }\ntemplate <class T>\nvc<T> cumlmin(const vc<T> &v, int left_index\
-    \ = 0)\n{ return cuml<MonoidMin<T>>(v, left_index); }\ntemplate <class T>\nvc<T>\
-    \ cumrmin(const vc<T> &v, int right_index = 0)\n{ return cumr<MonoidMin<T>>(v,\
-    \ right_index); }\ntemplate <class T>\nvc<T> cumlmax(const vc<T> &v, int left_index\
-    \ = 0)\n{ return cuml<MonoidMax<T>>(v, left_index); }\ntemplate <class T>\nvc<T>\
-    \ cumrmax(const vc<T> &v, int right_index = 0)\n{ return cumr<MonoidMax<T>>(v,\
-    \ right_index); }\n\n// \u30C7\u30D5\u30A9\u30EB\u30C8\u3067\u306F\u9577\u3055\
-    \ n+1\n// left_index, right_index \u3092\u305D\u308C\u305E\u308C 1 \u306B\u3059\
-    \u308B\u3068\u3001\u5DE6\u53F3\u304C\u524A\u9664\u3055\u308C\u308B\ntemplate <class\
-    \ T>\nvc<T> adjd(const vc<T> &v, int left_index = 0, int right_index = 0)\n{\n\
-    \  int n = v.size();\n  vc<T> res(n + 1);\n  res[0] = v[0];\n  repi(i, 1, n) res[i]\
-    \ = v[i] - v[i - 1];\n  res[n] = -v[n - 1];\n  res.erase(res.end() - right_index,\
-    \ res.end());\n  res.erase(res.begin(), res.begin() + left_index);\n  return res;\n\
-    }\n\nconst vpll DRULgrid = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};\nconst vpll DRULplane\
-    \ = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};\n#line 6 \"verify/mytest/template_bit.test.cpp\"\
-    \n\nvoid test1()\n{\n  vc<ll> width_model = {0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 40};\n\
-    \  vc<ll> floor_model = {0, 1, 2, 2, 4, 4, 4, 4, 8, 8, 1LL << 39};\n  vc<ll> ceil_model\
-    \ = {1, 1, 2, 4, 4, 8, 8, 8, 8, 16, 1LL << 40};\n  vc<ll> pp_model = {0, 1, 1,\
-    \ 2, 1, 2, 2, 3, 1, 2, 20};\n  vc<ll> single_model = {0, 1, 1, 0, 1, 0, 0, 0,\
-    \ 1, 0, 0};\n  vc<ll> width, floor, ceil, pp, single;\n  fec(k : vl{0, 1, 2, 3,\
-    \ 4, 5, 6, 7, 8, 9, 0b1010101010101010101010101010101010101010LL})\n  {\n    width.push_back(bit_width(k));\n\
-    \    floor.push_back(bit_floor(k));\n    ceil.push_back(bit_ceil(k));\n    pp.push_back(popcount(k));\n\
-    \    single.push_back(has_single_bit(k));\n  }\n  assert(width == width_model);\n\
-    \  assert(floor == floor_model);\n  assert(ceil == ceil_model);\n  assert(pp ==\
-    \ pp_model);\n  assert(single == single_model);\n}\n\nvoid test2()\n{\n  vc<ll>\
-    \ crz_model = {0, 1, 0, 2, 0, 1, 0, 3, 0, 1};\n  vc<ll> lp_model = {0, 1, 0, 2,\
-    \ 0, 1, 0, 3, 0, 1};\n  vc<ll> lm_model = {1, 2, 1, 4, 1, 2, 1, 8, 1, 2};\n  vc<ll>\
-    \ mp_model = {0, 1, 1, 2, 2, 2, 2, 3, 3, 39};\n  vc<ll> mm_model = {1, 2, 2, 4,\
-    \ 4, 4, 4, 8, 8, 1LL << 39};\n  vc<ll> crz, lp, lm, mp, mm;\n  fec(k : vl{1, 2,\
-    \ 3, 4, 5, 6, 7, 8, 9, 0b1010101010101010101010101010101010101010LL})\n  {\n \
-    \   crz.push_back(countr_zero(k));\n    lp.push_back(lsb_pos(k));\n    mp.push_back(msb_pos(k));\n\
+    \ V>\nV sortuniqued(V v) { sortunique(v); return v; }\n\n// \u5F15\u6570: vc<pair<T,\
+    \ U>>\n// \u8FD4\u308A\u5024: vc<pair<T, vc<U>>\n// T \u3054\u3068\u306B U \u3092\
+    \u307E\u3068\u3081\u305F\u3082\u306E\n// T \u306F\u6BD4\u8F03\u53EF\u80FD\u3067\
+    \u3042\u308B\u5FC5\u8981\u304C\u3042\u308B\ntemplate <class T, class U>\nvc<pair<T,\
+    \ vc<U>>> sortuniqued_group(vc<pair<T, U>> v)\n{\n  stable_sort(ALL(v), [&](cauto\
+    \ &p1, cauto &p2)\n              { return p1.first < p2.first; });\n  vc<pair<T,\
+    \ vc<U>>> res;\n  fec([x, y] : v)\n  {\n    if (res.empty() || res.back().first\
+    \ != x)\n      res.eb(x, vc{y});\n    else\n      res.back().second.eb(y);\n \
+    \ }\n  return res;\n}\n\n// 01234 -> 12340\ntemplate <class V, class U>\nvoid\
+    \ rotate(V &v, U k)\n{ \n  const U n = v.size();\n  k = (k % n + n) % n;\n  std::rotate(v.begin(),\
+    \ v.begin() + k, v.end());\n}\n// 01234 -> 12340\ntemplate <class V, class U>\n\
+    V rotated(V v, U k) { rotate(v, k); return v; }\n\ntemplate <class T>\nvvc<T>\
+    \ top(const vvc<T> &a)\n{\n  if (a.empty())\n    return {};\n  const int n = a.size(),\
+    \ m = a[0].size();\n  vvc<T> b(m, vc<T>(n));\n  repi(i, n)\n  {\n    assert(SZ<int>(a[i])\
+    \ == m);\n    repi(j, m) b[j][i] = a[i][j];\n  }\n  return b;\n}\nvstr top(const\
+    \ vstr &a)\n{\n  vvc<char> a_(a.size());\n  repi(i, SZ<int>(a)) a_[i] = {ALL(a[i])};\n\
+    \  vvc<char> b_ = top(a_);\n  vstr b(b_.size());\n  repi(i, SZ<int>(b)) b[i] =\
+    \ {ALL(b_[i])};\n  return b;\n}\n\n// 12\n// 34 -> 246\n// 56    135\n// (\u53CD\
+    \u6642\u8A08\u56DE\u308A)\ntemplate <class VV, class U = ll>\nVV rot90(const VV\
+    \ &a, U k = 1)\n{\n  if (a.empty())\n    return {};\n  const int n = a.size(),\
+    \ m = a[0].size();\n  k = (k % 4 + 4) % 4;\n  if (k == 0)\n    return a;\n  else\
+    \ if (k == 1)\n  {\n    VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i,\
+    \ n)\n    {\n      assert(SZ<int>(a[i]) == m);\n      repi(j, m) b[m - 1 - j][i]\
+    \ = a[i][j];\n    }\n    return b;\n  }\n  else if (k == 2)\n  {\n    VV b(n);\n\
+    \    repi(i, n) b[i].resize(m);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
+    \ == m);\n      repi(j, m) b[n - 1 - i][m - 1 - j] = a[i][j];\n    }\n    return\
+    \ b;\n  }\n  else\n  {\n    VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i,\
+    \ n)\n    {\n      assert(SZ<int>(a[i]) == m);\n      repi(j, m) b[j][n - 1 -\
+    \ i] = a[i][j];\n    }\n    return b;\n  }\n}\n\ntemplate <class T>\nstruct MonoidAdd\n\
+    {\n  using S = T;\n  static constexpr S op(S a, S b) { return a + b; }\n  static\
+    \ constexpr S e() { return 0; }\n};\ntemplate <class T, const T infty = INF>\n\
+    struct MonoidMin\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return\
+    \ min(a, b); }\n  static constexpr S e() { return infty; }\n};\ntemplate <class\
+    \ T, const T infty = INF>\nstruct MonoidMax\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return max(a, b); }\n  static constexpr S e() { return -infty;\
+    \ }\n};\n\n// left_index \u304C 0 \u306A\u3089\u3001\u9577\u3055 n+1 \u3067 a.front()\
+    \ \u304C e()\n// left_index \u304C 1 \u306A\u3089\u3001\u9577\u3055 n \u3067 e()\
+    \ \u304C\u306A\u3044\ntemplate <class M>\nvc<typename M::S> cuml(const vc<typename\
+    \ M::S> &v, int left_index = 0)\n{\n  const int n = v.size();\n  vc<typename M::S>\
+    \ res(n + 1);\n  res[0] = M::e();\n  repi(i, n) res[i + 1] = M::op(res[i], v[i]);\n\
+    \  res.erase(res.begin(), res.begin() + left_index);\n  return res;\n}\n// right_index\
+    \ \u304C 0 \u306A\u3089\u3001\u9577\u3055 n+1 \u3067 a.back() \u304C e()\n// right_index\
+    \ \u304C 1 \u306A\u3089\u3001\u9577\u3055 n \u3067 e() \u304C\u306A\u3044\ntemplate\
+    \ <class M>\nvc<typename M::S> cumr(const vc<typename M::S> &v, int right_index\
+    \ = 0)\n{ return reversed(cuml<M>(reversed(v), right_index)); }\ntemplate <class\
+    \ T>\nvc<T> cumlsum(const vc<T> &v, int left_index = 0)\n{ return cuml<MonoidAdd<T>>(v,\
+    \ left_index); }\ntemplate <class T>\nvc<T> cumrsum(const vc<T> &v, int right_index\
+    \ = 0)\n{ return cumr<MonoidAdd<T>>(v, right_index); }\ntemplate <class T>\nvc<T>\
+    \ cumlmin(const vc<T> &v, int left_index = 0)\n{ return cuml<MonoidMin<T>>(v,\
+    \ left_index); }\ntemplate <class T>\nvc<T> cumrmin(const vc<T> &v, int right_index\
+    \ = 0)\n{ return cumr<MonoidMin<T>>(v, right_index); }\ntemplate <class T>\nvc<T>\
+    \ cumlmax(const vc<T> &v, int left_index = 0)\n{ return cuml<MonoidMax<T>>(v,\
+    \ left_index); }\ntemplate <class T>\nvc<T> cumrmax(const vc<T> &v, int right_index\
+    \ = 0)\n{ return cumr<MonoidMax<T>>(v, right_index); }\n\n// \u30C7\u30D5\u30A9\
+    \u30EB\u30C8\u3067\u306F\u9577\u3055 n+1\n// left_index, right_index \u3092\u305D\
+    \u308C\u305E\u308C 1 \u306B\u3059\u308B\u3068\u3001\u5DE6\u53F3\u304C\u524A\u9664\
+    \u3055\u308C\u308B\ntemplate <class T>\nvc<T> adjd(const vc<T> &v, int left_index\
+    \ = 0, int right_index = 0)\n{\n  int n = v.size();\n  vc<T> res(n + 1);\n  res[0]\
+    \ = v[0];\n  repi(i, 1, n) res[i] = v[i] - v[i - 1];\n  res[n] = -v[n - 1];\n\
+    \  res.erase(res.end() - right_index, res.end());\n  res.erase(res.begin(), res.begin()\
+    \ + left_index);\n  return res;\n}\n\nconst vpll DRULgrid = {{1, 0}, {0, 1}, {-1,\
+    \ 0}, {0, -1}};\nconst vpll DRULplane = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};\n\
+    #line 6 \"verify/mytest/template_bit.test.cpp\"\n\nvoid test1()\n{\n  vc<ll> width_model\
+    \ = {0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 40};\n  vc<ll> floor_model = {0, 1, 2, 2, 4,\
+    \ 4, 4, 4, 8, 8, 1LL << 39};\n  vc<ll> ceil_model = {1, 1, 2, 4, 4, 8, 8, 8, 8,\
+    \ 16, 1LL << 40};\n  vc<ll> pp_model = {0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 20};\n \
+    \ vc<ll> single_model = {0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0};\n  vc<ll> width, floor,\
+    \ ceil, pp, single;\n  fec(k : vl{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0b1010101010101010101010101010101010101010LL})\n\
+    \  {\n    width.push_back(bit_width(k));\n    floor.push_back(bit_floor(k));\n\
+    \    ceil.push_back(bit_ceil(k));\n    pp.push_back(popcount(k));\n    single.push_back(has_single_bit(k));\n\
+    \  }\n  assert(width == width_model);\n  assert(floor == floor_model);\n  assert(ceil\
+    \ == ceil_model);\n  assert(pp == pp_model);\n  assert(single == single_model);\n\
+    }\n\nvoid test2()\n{\n  vc<ll> crz_model = {0, 1, 0, 2, 0, 1, 0, 3, 0, 1};\n \
+    \ vc<ll> lp_model = {0, 1, 0, 2, 0, 1, 0, 3, 0, 1};\n  vc<ll> lm_model = {1, 2,\
+    \ 1, 4, 1, 2, 1, 8, 1, 2};\n  vc<ll> mp_model = {0, 1, 1, 2, 2, 2, 2, 3, 3, 39};\n\
+    \  vc<ll> mm_model = {1, 2, 2, 4, 4, 4, 4, 8, 8, 1LL << 39};\n  vc<ll> crz, lp,\
+    \ lm, mp, mm;\n  fec(k : vl{1, 2, 3, 4, 5, 6, 7, 8, 9, 0b1010101010101010101010101010101010101010LL})\n\
+    \  {\n    crz.push_back(countr_zero(k));\n    lp.push_back(lsb_pos(k));\n    mp.push_back(msb_pos(k));\n\
     \    lm.push_back(lsb_mask(k));\n    mm.push_back(msb_mask(k));\n  }\n  assert(crz\
     \ == crz_model);\n  assert(lp == lp_model);\n  assert(lm == lm_model);\n  assert(mp\
     \ == mp_model);\n  assert(mm == mm_model);\n}\n\nvoid test3()\n{\n  ll x = 0b1001;\n\
@@ -344,7 +353,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_bit.test.cpp
   requiredBy: []
-  timestamp: '2025-04-10 02:46:07+09:00'
+  timestamp: '2025-04-26 00:43:27+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_bit.test.cpp
