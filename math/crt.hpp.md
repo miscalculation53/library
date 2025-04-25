@@ -60,15 +60,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution_arbitrary_static.test.cpp
     title: verify/yosupo/convolution_arbitrary_static.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/crt.test.cpp
     title: verify/yukicoder/crt.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/crt_mod.test.cpp
     title: verify/yukicoder/crt_mod.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/crt.md
     document_title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
@@ -808,7 +808,7 @@ data:
   requiredBy:
   - math/convolution/convolution.hpp
   timestamp: '2025-04-26 00:43:27+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/crt.test.cpp
   - verify/yukicoder/crt_mod.test.cpp

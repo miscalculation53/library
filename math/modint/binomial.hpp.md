@@ -51,12 +51,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/binomial.test.cpp
     title: verify/yosupo/binomial.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/binomial.test.cpp
     title: verify/yukicoder/binomial.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/modint/binomial.md
     document_title: "\u4E8C\u9805\u4FC2\u6570"
@@ -685,7 +685,7 @@ data:
   - template/template_all.hpp
   - math/modint/template_modint.hpp
   timestamp: '2025-04-26 00:43:27+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/binomial.test.cpp
   - verify/yosupo/binomial.test.cpp

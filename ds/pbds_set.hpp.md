@@ -42,15 +42,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/pbds_set.test.cpp
     title: verify/mytest/pbds_set.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/ordered_set.test.cpp
     title: verify/yosupo/ordered_set.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/ordered_multiset.test.cpp
     title: verify/yukicoder/ordered_multiset.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/pbds_set.md
     document_title: "pb_ds \u306E set/multiset"
@@ -805,7 +805,7 @@ data:
   path: ds/pbds_set.hpp
   requiredBy: []
   timestamp: '2025-04-26 00:43:27+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/ordered_multiset.test.cpp
   - verify/mytest/pbds_set.test.cpp

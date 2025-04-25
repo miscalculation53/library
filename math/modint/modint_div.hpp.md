@@ -39,12 +39,12 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
     title: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/modint/modint_div.md
     document_title: "\u96F6\u306E\u91CD\u8907\u5EA6\u3064\u304D modint"
@@ -667,7 +667,7 @@ data:
   path: math/modint/modint_div.hpp
   requiredBy: []
   timestamp: '2025-04-26 00:43:27+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
 documentation_of: math/modint/modint_div.hpp
