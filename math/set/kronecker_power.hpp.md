@@ -836,10 +836,12 @@ $(A^{\otimes n})^{-1} = (A^{-1})^{\otimes n}$
 一般には半環が載る。
 
 ```cpp
-vc<SR::S> kronecker_power(array<array<SR::S, k>, k> mat, vc<SR::S> v)
+(1) vc<SR::S> kronecker_power_array_destructive(array<array<SR::S, k>, k> mat, vc<SR::S> v)
+(2) vc<SR::S> kronecker_power_array(array<array<SR::S, k>, k> mat, vc<SR::S> v)
 ```
 
-$\mathrm{mat}^{\otimes k} v$ を返す。
+- (1)：$v$ を $\mathrm{mat}^{\otimes k} v$ で置き換える。
+- (2)：$\mathrm{mat}^{\otimes k} v$ を返す。
 
 ##### 制約
 
@@ -851,7 +853,7 @@ $\lvert v \rvert = k^n$ として
 
 - $O(n k^{n+1})$
 
-#### tensor_power_array
+#### tensor_power
 
 行列を陽に渡すのではなく、線型写像として渡す。次のような場合に特に有効：
 
@@ -859,12 +861,14 @@ $\lvert v \rvert = k^n$ として
 - ゼータ変換・メビウス変換のように行列の要素が $1$ や $-1$ であり、本来加減算だけでよいのに、行列の定義を使うと乗算を書かされる場合（特に加算にあたる部分が通常の乗算であると、その上の乗算って何？ となって苦しい）
 
 ```cpp
-vc<SR::S> tensor_power<k>(auto linear_map, vc<SR::S> v)
+(1) auto tensor_power_array_destructive<k>(auto linear_map, vc<T> v)
+(2) vc<T> tensor_power_array<k>(auto linear_map, vc<T> v)
 ```
 
 `linear_map` は `array<T, k>` から `array<T, k>` への関数を渡す。この関数の内部では破壊的変更を行ってもよい。
 
-$\mathrm{linear\_map}^{\otimes k} v$ を返す。
+- (1)：$v$ を $\mathrm{linear\_map}^{\otimes k} v$ で置き換える。
+- (2)：$\mathrm{linear\_map}^{\otimes k} v$ を返す。
 
 ##### 制約
 
