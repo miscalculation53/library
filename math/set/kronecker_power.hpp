@@ -74,3 +74,107 @@ vc<typename SR::S> kronecker_power_array(const array<array<typename SR::S, k>, k
   kronecker_power_array_destructive<SR>(mat, v);
   return v;
 }
+
+// ζa[s] = Σ{t ⊆ s} a[t]
+// M は可換モノイド (Σ だと +)
+// |a| = k^n を仮定、O(n k^n) 時間
+// 破壊的変更を行う
+template <class M, int k>
+void zeta_subset_general_destructive(vc<typename M::S> &a)
+{
+  using S = typename M::S;
+  auto linear_map = [&](array<S, k> &arr) -> array<S, k>
+  {
+    repi(i, k - 1) arr[i + 1] = M::op(arr[i + 1], arr[i]);
+    return arr;
+  };
+  tensor_power_array_destructive<k>(linear_map, a);
+}
+// μ は ζ の逆変換
+// μa[s] = Σ{t ⊆ s} (-1)^{|s\t|} a[t]
+// G は可換群 (Σ だと +)
+// |a| = k^n を仮定、O(n k^n) 時間
+// 破壊的変更を行う
+template <class G, int k>
+void mobius_subset_general_destructive(vc<typename G::S> &a)
+{
+  using S = typename G::S;
+  auto linear_map = [&](array<S, k> &arr) -> array<S, k>
+  {
+    repi(i, k - 2, -1, -1) arr[i + 1] = G::op(arr[i + 1], G::inv(arr[i]));
+    return arr;
+  };
+  tensor_power_array_destructive<k>(linear_map, a);
+}
+
+// ζ'a[s] = Σ{t ⊆ s} a[t]
+// M は可換モノイド (Σ だと +)
+// |a| = k^n を仮定、O(n k^n) 時間
+// 破壊的変更を行う
+template <class M, int k>
+void zeta_supset_general_destructive(vc<typename M::S> &a)
+{
+  using S = typename M::S;
+  auto linear_map = [&](array<S, k> &arr) -> array<S, k>
+  {
+    repi(i, k - 2, -1, -1) arr[i] = M::op(arr[i], arr[i + 1]);
+    return arr;
+  };
+  tensor_power_array_destructive<k>(linear_map, a);
+}
+// μ' は ζ' の逆変換
+// μ'a[s] = Σ{t ⊆ s} (-1)^{|s\t|} a[t]
+// G は可換群 (Σ だと +)
+// |a| = k^n を仮定、O(n k^n) 時間
+// 破壊的変更を行う
+template <class G, int k>
+void mobius_supset_general_destructive(vc<typename G::S> &a)
+{
+  using S = typename G::S;
+  auto linear_map = [&](array<S, k> &arr) -> array<S, k>
+  {
+    repi(i, k - 1) arr[i] = G::op(arr[i], G::inv(arr[i + 1]));
+    return arr;
+  };
+  tensor_power_array_destructive<k>(linear_map, a);
+}
+
+// ζa[s] = Σ{t ⊆ s} a[t]
+// M は可換モノイド (Σ だと +)
+// |a| = k^n を仮定、O(n k^n) 時間
+template <class M, int k>
+vc<typename M::S> zeta_subset_general(vc<typename M::S> a)
+{
+  zeta_subset_general_destructive<M, k>(a);
+  return a;
+}
+// μ は ζ の逆変換
+// μa[s] = Σ{t ⊆ s} (-1)^{|s\t|} a[t]
+// G は可換群 (Σ だと +)
+// |a| = k^n を仮定、O(n k^n) 時間
+template <class G, int k>
+vc<typename G::S> mobius_subset_general(vc<typename G::S> a)
+{
+  mobius_subset_general_destructive<G, k>(a);
+  return a;
+}
+
+// ζ'a[s] = Σ{t ⊆ s} a[t]
+// M は可換モノイド (Σ だと +)
+// |a| = k^n を仮定、O(n k^n) 時間
+template <class M, int k>
+vc<typename M::S> zeta_supset_general(vc<typename M::S> a)
+{
+  zeta_supset_general_destructive<M, k>(a);
+  return a;
+}
+// μ' は ζ' の逆変換
+// μ'a[s] = Σ{t ⊆ s} (-1)^{|s\t|} a[t]
+// G は可換群 (Σ だと +)
+// |a| = k^n を仮定、O(n k^n) 時間
+template <class G, int k>
+vc<typename G::S> mobius_supset_general(vc<typename G::S> a)
+{
+  mobius_supset_general_destructive<G, k>(a);
+  return a;
+}

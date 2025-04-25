@@ -79,7 +79,7 @@ template <class M>
 vc<typename M::S> zeta_subset(const vc<typename M::S> &a)
 {
   auto b = a;
-  zeta_subset_destructive(b);
+  zeta_subset_destructive<M>(b);
   return b;
 }
 // μ は ζ の逆変換
@@ -90,7 +90,7 @@ template <class G>
 vc<typename G::S> mobius_subset(const vc<typename G::S> &a)
 {
   auto b = a;
-  mobius_subset_destructive(b);
+  mobius_subset_destructive<G>(b);
   return b;
 }
 
@@ -101,7 +101,7 @@ template <class M>
 vc<typename M::S> zeta_supset(const vc<typename M::S> &a)
 {
   auto b = a;
-  zeta_supset_destructive(b);
+  zeta_supset_destructive<M>(b);
   return b;
 }
 // μ' は ζ' の逆変換
@@ -112,6 +112,6 @@ template <class G>
 vc<typename G::S> mobius_supset(const vc<typename G::S> &a)
 {
   auto b = a;
-  mobius_supset_destructive(b);
+  mobius_supset_destructive<G>(b);
   return b;
 }
