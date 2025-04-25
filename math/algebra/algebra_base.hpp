@@ -57,6 +57,22 @@ struct Field
   static constexpr auto inv = inv_;
 };
 
+template <class M>
+struct OppositeMonoid
+{
+  using S = typename M::S;
+  static constexpr S op(const S &a, const S &b) { return M::op(b, a); }
+  static constexpr auto e = M::e;
+};
+template <class G>
+struct OppositeGroup
+{
+  using S = typename G::S;
+  static constexpr S op(const S &a, const S &b) { return G::op(b, a); }
+  static constexpr auto e = G::e;
+  static constexpr auto inv = G::inv;
+};
+
 template <class SR>
 using MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add, SR::e0>;
 template <class SR>
