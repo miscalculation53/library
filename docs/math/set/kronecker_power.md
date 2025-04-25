@@ -94,6 +94,29 @@ $\lvert v \rvert = k^n$ として
 
 - $O(n k^{n-1})$ 回の `linear_map` 呼び出し
 
+
+#### zeta, mobius
+
+```cpp
+(1) vc<M::S> zeta_subset_general(vc<M::S> a)
+(2) vc<M::S> zeta_supset_general(vc<M::S> a)
+(3) vc<G::S> mobius_subset_general(vc<G::S> a)
+(4) vc<G::S> mobius_supset_general(vc<G::S> a)
+```
+
+$k$ 進法での各桁の大小によって半順序関係を定め、これに関するゼータ・メビウス変換を行った結果を返す。（省略しているが destructive 版もある。）
+
+##### 制約
+
+- $\lvert v \rvert$ は $0$ か $k$ べき
+- モノイドや群は**可換**
+
+##### 計算量
+
+$\lvert v \rvert = k^n$ として
+
+- $O(n k^n)$
+
 ---
 
 ### 中身

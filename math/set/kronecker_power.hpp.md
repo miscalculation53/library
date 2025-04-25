@@ -47,6 +47,9 @@ data:
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
+    path: verify/aoj/zeta_general.test.cpp
+    title: verify/aoj/zeta_general.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kronecker_power_hadamard.test.cpp
     title: verify/yosupo/kronecker_power_hadamard.test.cpp
   - icon: ':heavy_check_mark:'
@@ -717,7 +720,51 @@ data:
     \ v \u306B\u4F5C\u7528\u3055\u305B\u308B\n// O(n k^{n+1}) \u6642\u9593\ntemplate\
     \ <class SR, int k>\nvc<typename SR::S> kronecker_power_array(const array<array<typename\
     \ SR::S, k>, k> &mat, vc<typename SR::S> v)\n{\n  kronecker_power_array_destructive<SR>(mat,\
-    \ v);\n  return v;\n}\n"
+    \ v);\n  return v;\n}\n\n// \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\
+    \u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\u4EEE\
+    \u5B9A\u3001O(n k^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\
+    \u3046\ntemplate <class M, int k>\nvoid zeta_subset_general_destructive(vc<typename\
+    \ M::S> &a)\n{\n  using S = typename M::S;\n  auto linear_map = [&](array<S, k>\
+    \ &arr) -> array<S, k>\n  {\n    repi(i, k - 1) arr[i + 1] = M::op(arr[i + 1],\
+    \ arr[i]);\n    return arr;\n  };\n  tensor_power_array_destructive<k>(linear_map,\
+    \ a);\n}\n// \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3\
+    {t \u2286 s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068\
+    \ +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001O(n k^n) \u6642\u9593\n// \u7834\u58CA\
+    \u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate <class G, int k>\nvoid mobius_subset_general_destructive(vc<typename\
+    \ G::S> &a)\n{\n  using S = typename G::S;\n  auto linear_map = [&](array<S, k>\
+    \ &arr) -> array<S, k>\n  {\n    repi(i, k - 2, -1, -1) arr[i + 1] = G::op(arr[i\
+    \ + 1], G::inv(arr[i]));\n    return arr;\n  };\n  tensor_power_array_destructive<k>(linear_map,\
+    \ a);\n}\n\n// \u03B6'a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\
+    \u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001\
+    O(n k^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
+    \ <class M, int k>\nvoid zeta_supset_general_destructive(vc<typename M::S> &a)\n\
+    {\n  using S = typename M::S;\n  auto linear_map = [&](array<S, k> &arr) -> array<S,\
+    \ k>\n  {\n    repi(i, k - 2, -1, -1) arr[i] = M::op(arr[i], arr[i + 1]);\n  \
+    \  return arr;\n  };\n  tensor_power_array_destructive<k>(linear_map, a);\n}\n\
+    // \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n// \u03BC'a[s] = \u03A3{t\
+    \ \u2286 s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068\
+    \ +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001O(n k^n) \u6642\u9593\n// \u7834\u58CA\
+    \u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate <class G, int k>\nvoid mobius_supset_general_destructive(vc<typename\
+    \ G::S> &a)\n{\n  using S = typename G::S;\n  auto linear_map = [&](array<S, k>\
+    \ &arr) -> array<S, k>\n  {\n    repi(i, k - 1) arr[i] = G::op(arr[i], G::inv(arr[i\
+    \ + 1]));\n    return arr;\n  };\n  tensor_power_array_destructive<k>(linear_map,\
+    \ a);\n}\n\n// \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\
+    \u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001\
+    O(n k^n) \u6642\u9593\ntemplate <class M, int k>\nvc<typename M::S> zeta_subset_general(vc<typename\
+    \ M::S> a)\n{\n  zeta_subset_general_destructive<M, k>(a);\n  return a;\n}\n//\
+    \ \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286\
+    \ s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n\
+    // |a| = k^n \u3092\u4EEE\u5B9A\u3001O(n k^n) \u6642\u9593\ntemplate <class G,\
+    \ int k>\nvc<typename G::S> mobius_subset_general(vc<typename G::S> a)\n{\n  mobius_subset_general_destructive<G,\
+    \ k>(a);\n  return a;\n}\n\n// \u03B6'a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\
+    \u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\
+    \u4EEE\u5B9A\u3001O(n k^n) \u6642\u9593\ntemplate <class M, int k>\nvc<typename\
+    \ M::S> zeta_supset_general(vc<typename M::S> a)\n{\n  zeta_supset_general_destructive<M,\
+    \ k>(a);\n  return a;\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n\
+    // \u03BC'a[s] = \u03A3{t \u2286 s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\
+    \u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001O(n k^n)\
+    \ \u6642\u9593\ntemplate <class G, int k>\nvc<typename G::S> mobius_supset_general(vc<typename\
+    \ G::S> a)\n{\n  mobius_supset_general_destructive<G, k>(a);\n  return a;\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
     \n#include \"../../math/algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief \u30AF\
     \u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528\n * @docs docs/math/set/kronecker_power.md\n\
@@ -754,7 +801,51 @@ data:
     \ v \u306B\u4F5C\u7528\u3055\u305B\u308B\n// O(n k^{n+1}) \u6642\u9593\ntemplate\
     \ <class SR, int k>\nvc<typename SR::S> kronecker_power_array(const array<array<typename\
     \ SR::S, k>, k> &mat, vc<typename SR::S> v)\n{\n  kronecker_power_array_destructive<SR>(mat,\
-    \ v);\n  return v;\n}\n"
+    \ v);\n  return v;\n}\n\n// \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\
+    \u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\u4EEE\
+    \u5B9A\u3001O(n k^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\
+    \u3046\ntemplate <class M, int k>\nvoid zeta_subset_general_destructive(vc<typename\
+    \ M::S> &a)\n{\n  using S = typename M::S;\n  auto linear_map = [&](array<S, k>\
+    \ &arr) -> array<S, k>\n  {\n    repi(i, k - 1) arr[i + 1] = M::op(arr[i + 1],\
+    \ arr[i]);\n    return arr;\n  };\n  tensor_power_array_destructive<k>(linear_map,\
+    \ a);\n}\n// \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3\
+    {t \u2286 s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068\
+    \ +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001O(n k^n) \u6642\u9593\n// \u7834\u58CA\
+    \u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate <class G, int k>\nvoid mobius_subset_general_destructive(vc<typename\
+    \ G::S> &a)\n{\n  using S = typename G::S;\n  auto linear_map = [&](array<S, k>\
+    \ &arr) -> array<S, k>\n  {\n    repi(i, k - 2, -1, -1) arr[i + 1] = G::op(arr[i\
+    \ + 1], G::inv(arr[i]));\n    return arr;\n  };\n  tensor_power_array_destructive<k>(linear_map,\
+    \ a);\n}\n\n// \u03B6'a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\
+    \u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001\
+    O(n k^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
+    \ <class M, int k>\nvoid zeta_supset_general_destructive(vc<typename M::S> &a)\n\
+    {\n  using S = typename M::S;\n  auto linear_map = [&](array<S, k> &arr) -> array<S,\
+    \ k>\n  {\n    repi(i, k - 2, -1, -1) arr[i] = M::op(arr[i], arr[i + 1]);\n  \
+    \  return arr;\n  };\n  tensor_power_array_destructive<k>(linear_map, a);\n}\n\
+    // \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n// \u03BC'a[s] = \u03A3{t\
+    \ \u2286 s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068\
+    \ +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001O(n k^n) \u6642\u9593\n// \u7834\u58CA\
+    \u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate <class G, int k>\nvoid mobius_supset_general_destructive(vc<typename\
+    \ G::S> &a)\n{\n  using S = typename G::S;\n  auto linear_map = [&](array<S, k>\
+    \ &arr) -> array<S, k>\n  {\n    repi(i, k - 1) arr[i] = G::op(arr[i], G::inv(arr[i\
+    \ + 1]));\n    return arr;\n  };\n  tensor_power_array_destructive<k>(linear_map,\
+    \ a);\n}\n\n// \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\
+    \u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001\
+    O(n k^n) \u6642\u9593\ntemplate <class M, int k>\nvc<typename M::S> zeta_subset_general(vc<typename\
+    \ M::S> a)\n{\n  zeta_subset_general_destructive<M, k>(a);\n  return a;\n}\n//\
+    \ \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286\
+    \ s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n\
+    // |a| = k^n \u3092\u4EEE\u5B9A\u3001O(n k^n) \u6642\u9593\ntemplate <class G,\
+    \ int k>\nvc<typename G::S> mobius_subset_general(vc<typename G::S> a)\n{\n  mobius_subset_general_destructive<G,\
+    \ k>(a);\n  return a;\n}\n\n// \u03B6'a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\
+    \u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\
+    \u4EEE\u5B9A\u3001O(n k^n) \u6642\u9593\ntemplate <class M, int k>\nvc<typename\
+    \ M::S> zeta_supset_general(vc<typename M::S> a)\n{\n  zeta_supset_general_destructive<M,\
+    \ k>(a);\n  return a;\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n\
+    // \u03BC'a[s] = \u03A3{t \u2286 s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\
+    \u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001O(n k^n)\
+    \ \u6642\u9593\ntemplate <class G, int k>\nvc<typename G::S> mobius_supset_general(vc<typename\
+    \ G::S> a)\n{\n  mobius_supset_general_destructive<G, k>(a);\n  return a;\n}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -772,9 +863,10 @@ data:
   isVerificationFile: false
   path: math/set/kronecker_power.hpp
   requiredBy: []
-  timestamp: '2025-04-26 00:47:12+09:00'
+  timestamp: '2025-04-26 05:56:08+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/aoj/zeta_general.test.cpp
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/kronecker_power_hadamard.test.cpp
 documentation_of: math/set/kronecker_power.hpp
@@ -879,6 +971,29 @@ $\lvert v \rvert = k^n$ として
 $\lvert v \rvert = k^n$ として
 
 - $O(n k^{n-1})$ 回の `linear_map` 呼び出し
+
+
+#### zeta, mobius
+
+```cpp
+(1) vc<M::S> zeta_subset_general(vc<M::S> a)
+(2) vc<M::S> zeta_supset_general(vc<M::S> a)
+(3) vc<G::S> mobius_subset_general(vc<G::S> a)
+(4) vc<G::S> mobius_supset_general(vc<G::S> a)
+```
+
+$k$ 進法での各桁の大小によって半順序関係を定め、これに関するゼータ・メビウス変換を行った結果を返す。（省略しているが destructive 版もある。）
+
+##### 制約
+
+- $\lvert v \rvert$ は $0$ か $k$ べき
+- モノイドや群は**可換**
+
+##### 計算量
+
+$\lvert v \rvert = k^n$ として
+
+- $O(n k^n)$
 
 ---
 

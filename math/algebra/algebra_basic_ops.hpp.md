@@ -88,6 +88,9 @@ data:
     path: verify/aoj/cumulative_sum_2d.test.cpp
     title: verify/aoj/cumulative_sum_2d.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/aoj/zeta_general.test.cpp
+    title: verify/aoj/zeta_general.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/and_or_convolution.test.cpp
     title: verify/yosupo/and_or_convolution.test.cpp
   - icon: ':heavy_check_mark:'
@@ -818,6 +821,7 @@ data:
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/aoj/cumulative_sum_2d.test.cpp
+  - verify/aoj/zeta_general.test.cpp
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/static_range_sum.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp

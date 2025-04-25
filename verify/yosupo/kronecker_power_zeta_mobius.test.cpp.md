@@ -840,9 +840,54 @@ data:
     \ v \u306B\u4F5C\u7528\u3055\u305B\u308B\n// O(n k^{n+1}) \u6642\u9593\ntemplate\
     \ <class SR, int k>\nvc<typename SR::S> kronecker_power_array(const array<array<typename\
     \ SR::S, k>, k> &mat, vc<typename SR::S> v)\n{\n  kronecker_power_array_destructive<SR>(mat,\
-    \ v);\n  return v;\n}\n#line 22 \"verify/yosupo/kronecker_power_zeta_mobius.test.cpp\"\
-    \n\nvoid zeta(vc<mint> &A)\n{\n  kronecker_power_array_destructive<RingAddSubMul<mint>,\
-    \ 2>({{{1, 0}, {1, 1}}}, A);\n}\nvoid mobius(vc<mint> &A)\n{\n  kronecker_power_array_destructive<RingAddSubMul<mint>,\
+    \ v);\n  return v;\n}\n\n// \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\
+    \u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\u4EEE\
+    \u5B9A\u3001O(n k^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\
+    \u3046\ntemplate <class M, int k>\nvoid zeta_subset_general_destructive(vc<typename\
+    \ M::S> &a)\n{\n  using S = typename M::S;\n  auto linear_map = [&](array<S, k>\
+    \ &arr) -> array<S, k>\n  {\n    repi(i, k - 1) arr[i + 1] = M::op(arr[i + 1],\
+    \ arr[i]);\n    return arr;\n  };\n  tensor_power_array_destructive<k>(linear_map,\
+    \ a);\n}\n// \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3\
+    {t \u2286 s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068\
+    \ +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001O(n k^n) \u6642\u9593\n// \u7834\u58CA\
+    \u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate <class G, int k>\nvoid mobius_subset_general_destructive(vc<typename\
+    \ G::S> &a)\n{\n  using S = typename G::S;\n  auto linear_map = [&](array<S, k>\
+    \ &arr) -> array<S, k>\n  {\n    repi(i, k - 2, -1, -1) arr[i + 1] = G::op(arr[i\
+    \ + 1], G::inv(arr[i]));\n    return arr;\n  };\n  tensor_power_array_destructive<k>(linear_map,\
+    \ a);\n}\n\n// \u03B6'a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\
+    \u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001\
+    O(n k^n) \u6642\u9593\n// \u7834\u58CA\u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate\
+    \ <class M, int k>\nvoid zeta_supset_general_destructive(vc<typename M::S> &a)\n\
+    {\n  using S = typename M::S;\n  auto linear_map = [&](array<S, k> &arr) -> array<S,\
+    \ k>\n  {\n    repi(i, k - 2, -1, -1) arr[i] = M::op(arr[i], arr[i + 1]);\n  \
+    \  return arr;\n  };\n  tensor_power_array_destructive<k>(linear_map, a);\n}\n\
+    // \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n// \u03BC'a[s] = \u03A3{t\
+    \ \u2286 s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068\
+    \ +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001O(n k^n) \u6642\u9593\n// \u7834\u58CA\
+    \u7684\u5909\u66F4\u3092\u884C\u3046\ntemplate <class G, int k>\nvoid mobius_supset_general_destructive(vc<typename\
+    \ G::S> &a)\n{\n  using S = typename G::S;\n  auto linear_map = [&](array<S, k>\
+    \ &arr) -> array<S, k>\n  {\n    repi(i, k - 1) arr[i] = G::op(arr[i], G::inv(arr[i\
+    \ + 1]));\n    return arr;\n  };\n  tensor_power_array_destructive<k>(linear_map,\
+    \ a);\n}\n\n// \u03B6a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\
+    \u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001\
+    O(n k^n) \u6642\u9593\ntemplate <class M, int k>\nvc<typename M::S> zeta_subset_general(vc<typename\
+    \ M::S> a)\n{\n  zeta_subset_general_destructive<M, k>(a);\n  return a;\n}\n//\
+    \ \u03BC \u306F \u03B6 \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286\
+    \ s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n\
+    // |a| = k^n \u3092\u4EEE\u5B9A\u3001O(n k^n) \u6642\u9593\ntemplate <class G,\
+    \ int k>\nvc<typename G::S> mobius_subset_general(vc<typename G::S> a)\n{\n  mobius_subset_general_destructive<G,\
+    \ k>(a);\n  return a;\n}\n\n// \u03B6'a[s] = \u03A3{t \u2286 s} a[t]\n// M \u306F\
+    \u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\
+    \u4EEE\u5B9A\u3001O(n k^n) \u6642\u9593\ntemplate <class M, int k>\nvc<typename\
+    \ M::S> zeta_supset_general(vc<typename M::S> a)\n{\n  zeta_supset_general_destructive<M,\
+    \ k>(a);\n  return a;\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n\
+    // \u03BC'a[s] = \u03A3{t \u2286 s} (-1)^{|s\\t|} a[t]\n// G \u306F\u53EF\u63DB\
+    \u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001O(n k^n)\
+    \ \u6642\u9593\ntemplate <class G, int k>\nvc<typename G::S> mobius_supset_general(vc<typename\
+    \ G::S> a)\n{\n  mobius_supset_general_destructive<G, k>(a);\n  return a;\n}\n\
+    #line 22 \"verify/yosupo/kronecker_power_zeta_mobius.test.cpp\"\n\nvoid zeta(vc<mint>\
+    \ &A)\n{\n  kronecker_power_array_destructive<RingAddSubMul<mint>, 2>({{{1, 0},\
+    \ {1, 1}}}, A);\n}\nvoid mobius(vc<mint> &A)\n{\n  kronecker_power_array_destructive<RingAddSubMul<mint>,\
     \ 2>({{{1, 0}, {-1, 1}}}, A);\n}\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n\
     \  VEC(mint, 1 << N, A, B);\n  reverse(ALL(A)), reverse(ALL(B));\n  zeta(A), zeta(B);\n\
     \  dump(A, B);\n  rep(i, 1 << N) A.at(i) *= B.at(i);\n  mobius(A);\n  reverse(ALL(A));\n\
@@ -901,7 +946,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   requiredBy: []
-  timestamp: '2025-04-26 03:39:44+09:00'
+  timestamp: '2025-04-26 05:56:08+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/kronecker_power_zeta_mobius.test.cpp

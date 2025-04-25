@@ -9,18 +9,6 @@ data:
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
   - icon: ':heavy_check_mark:'
-    path: math/extgcd.hpp
-    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint32_internal.hpp
-    title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint_base.hpp
-    title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
     path: math/set/kronecker_power.hpp
     title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
   - icon: ':heavy_check_mark:'
@@ -69,83 +57,82 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/bitwise_xor_convolution
+    PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=3184
     links:
-    - https://judge.yosupo.jp/problem/bitwise_xor_convolution
-  bundledCode: "#line 1 \"verify/yosupo/kronecker_power_hadamard.test.cpp\"\n#define\
-    \ PROBLEM \"https://judge.yosupo.jp/problem/bitwise_xor_convolution\"\n\n#define\
-    \ SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef\
-    \ LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\
-    \n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#line 2 \"template/template_all_but_modint.hpp\"\
-    \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
-    \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
-    \ EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing\
-    \ uint = unsigned int;\nusing ull = unsigned long long;\nusing pll = pair<ll,\
-    \ ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\
-    \n#define vc vector\ntemplate <class T>\nusing vvc = vc<vc<T>>;\ntemplate <class\
-    \ T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb = vc<bool>;\nusing vl = vc<ll>;\n\
-    using vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing\
-    \ vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate\
-    \ <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate <class\
-    \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing i128 =\
-    \ __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string &s)\n{\n \
-    \ i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size();\
-    \ i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n\
-    \    for (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n\
-    }\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\"\
-    , res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n\
-    \    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n\
-    \  return sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string\
-    \ s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream\
-    \ &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define\
-    \ cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
-    \ docs/template/template_rep.md\n */\n\n// https://trap.jp/post/1224/\n\n#define\
-    \ overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0,\
-    \ nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i = ll(l), rrrrr\
-    \ = ll(r); i < rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i = ll(l), rrrrr\
-    \ = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define\
-    \ rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n#define repi1(i,\
-    \ n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i, l, r) for\
-    \ (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i, l, r, d)\
-    \ for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i < rrrrr :\
-    \ i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\
-    \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
-    #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\
-    \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
-    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
-    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
-    \ docs/template/template_math.md\n */\n\ntemplate <class T, class U>\ninline bool\
-    \ chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate <class T,\
-    \ class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true : false;\
-    \ }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T divfloor(U\
-    \ a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divceil(U a, V b) { return\
-    \ T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll,\
-    \ class U, class V>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
-    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V>\ninline\
-    \ constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
-    template <class T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b\
-    \ >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
-    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
-    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
-    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
-    \ T = ll, class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a\
-    \ >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m)\
-    \ / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\n\
-    T mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
-    \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
-    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
-    \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
-    \    {\n      if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n  \
-    \  }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n\
-    \      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T =\
-    \ ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a, b,\
-    \ INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A a,\
-    \ K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n\
-    \  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n     \
-    \ if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
+    - https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=3184
+  bundledCode: "#line 1 \"verify/aoj/zeta_general.test.cpp\"\n#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=3184\"\
+    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
+    \n#ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
+    #endif\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#line\
+    \ 2 \"template/template_all_but_modint.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
+    \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
+    \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
+    \nusing ll = long long;\nusing uint = unsigned int;\nusing ull = unsigned long\
+    \ long;\nusing pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll\
+    \ = tuple<ll, ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc\
+    \ = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb =\
+    \ vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\n\
+    using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
+    using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
+    \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
+    using i128 = __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string\
+    \ &s)\n{\n  i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i\
+    \ < (int)s.size(); i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n\
+    \  }\n  else\n  {\n    for (auto &&c : s)\n      res = 10 * res + c - '0';\n \
+    \ }\n  return res;\n}\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n\
+    \  string sign = \"\", res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n\
+    \  while (x > 0)\n  {\n    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(),\
+    \ res.end());\n  return sign + res;\n}\nistream &operator>>(istream &is, i128\
+    \ &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream\
+    \ &operator<<(ostream &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n\
+    }\n#endif\n\n#define cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\
+    \n#line 4 \"template/template_rep.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n */\n\n//\
+    \ https://trap.jp/post/1224/\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n\
+    #define rep1(i, n) for (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i,\
+    \ l, r) for (ll i = ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define rep3(i, l,\
+    \ r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr\
+    \ : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n\
+    #define repi1(i, n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i,\
+    \ l, r) for (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i,\
+    \ l, r, d) for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i\
+    \ < rrrrr : i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3,\
+    \ repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n#define\
+    \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
+    #line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
+    #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
+    \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
+    inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
+    \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T\
+    \ divfloor(U a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0);\
+    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T divceil(U a,\
+    \ V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate\
+    \ <class T = ll, class U, class V>\ninline constexpr T divround(U a, V b) { return\
+    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U,\
+    \ class V>\ninline constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a,\
+    \ b); }\n\ntemplate <class T = ll, class U, class V>\nconstexpr T ipow(U a, V\
+    \ b)\n{\n  assert(b >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a ==\
+    \ 1)\n    return a;\n  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n \
+    \ T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n\
+    \    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n\
+    }\ntemplate <class T = ll, class A, class B, class M>\nT mul_limited(A a, B b,\
+    \ M m)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n\
+    \  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll,\
+    \ class A, class B>\nT mul_limited(A a, B b) { return mul_limited<T>(a, b, INF);\
+    \ }\ntemplate <class T = ll, class A, class B, class M>\nT pow_limited(A a, B\
+    \ b, M m)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n\
+    \    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n\
+    \  {\n    if (b & 1)\n    {\n      if (res > T(m) / tmp)\n        return m;\n\
+    \      res *= tmp;\n    }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if\
+    \ (tmp > T(m) / tmp)\n      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\n\
+    template <class T = ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a,\
+    \ b, INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A\
+    \ a, K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return\
+    \ a;\n  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n\
+    \      if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
     \      return sqrtl(a);\n  }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x\
     \ == 0)\n      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n\
     \      if (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n\
@@ -636,143 +623,38 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 17 \"verify/yosupo/kronecker_power_hadamard.test.cpp\"\n\n#line 2 \"math/modint/modint.hpp\"\
-    \n\n#line 2 \"math/modint/modint32_internal.hpp\"\n\n#line 4 \"math/modint/modint32_internal.hpp\"\
-    \n\nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll x, ll n, int m)\n\
-    {\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y =\
-    \ safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n\
-    \    y = (y * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int\
-    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
-    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while\
-    \ (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll\
-    \ a : bases)\n  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n  \
-    \  while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n \
-    \     t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n\
-    \  }\n  return true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
-    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}\n#line 2 \"math/modint/modint_base.hpp\"\n\n#line 4 \"math/modint/modint_base.hpp\"\
-    \n\nnamespace internal\n{\n\n#define REF static_cast<mint &>(*this)\n#define CREF\
-    \ static_cast<const mint &>(*this)\n#define VAL *static_cast<const mint *>(this)\n\
-    \ntemplate <class mint>\nstruct modint_base\n{\n  mint &operator+=(const mint\
-    \ &rhs)\n  {\n    mint &self = REF;\n    self._v += rhs._v;\n    if (self._v >=\
-    \ self.umod())\n      self._v -= self.umod();\n    return self;\n  }\n  mint &operator-=(const\
-    \ mint &rhs)\n  {\n    mint &self = REF;\n    self._v -= rhs._v;\n    if (self._v\
-    \ >= self.umod())\n      self._v += self.umod();\n    return self;\n  }\n  mint\
-    \ &operator/=(const mint &rhs)\n  {\n    mint &self = REF;\n    return self =\
-    \ self * rhs.inv();\n  }\n\n  mint &operator++()\n  {\n    mint &self = REF;\n\
-    \    self._v++;\n    if (self._v == self.umod())\n      self._v = 0;\n    return\
-    \ self;\n  }\n  mint &operator--()\n  {\n    mint &self = REF;\n    if (self._v\
-    \ == 0)\n      self._v = self.umod();\n    self._v--;\n    return self;\n  }\n\
-    \  mint operator++(int)\n  {\n    mint res = VAL;\n    ++REF;\n    return res;\n\
-    \  }\n  mint operator--(int)\n  {\n    mint res = VAL;\n    --REF;\n    return\
-    \ res;\n  }\n\n  mint operator+() const { return VAL; }\n  mint operator-() const\
-    \ { return mint() - VAL; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n\
-    \    mint x = VAL, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r *=\
-    \ x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n\n  friend mint\
-    \ operator+(const mint &lhs, const mint &rhs)\n  { return mint(lhs) += rhs; }\n\
-    \  friend mint operator-(const mint &lhs, const mint &rhs)\n  { return mint(lhs)\
-    \ -= rhs; }\n  friend mint operator*(const mint &lhs, const mint &rhs)\n  { return\
-    \ mint(lhs) *= rhs; }\n  friend mint operator/(const mint &lhs, const mint &rhs)\n\
-    \  { return mint(lhs) /= rhs; }\n  friend bool operator==(const mint &lhs, const\
-    \ mint &rhs)\n  { return mint(lhs).eq(rhs); }\n  friend bool operator!=(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs).neq(rhs); }\nprivate:\n  bool\
-    \ eq(const mint &rhs) { return REF._v == rhs._v; }\n  bool neq(const mint &rhs)\
-    \ { return REF._v != rhs._v; }\n};\n\n}\n\n#if defined LOCAL or not defined FAST_IO\n\
-    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nistream &operator>>(istream &is, T &x)\n{\n  ll a;\n  is >> a;\n\
-    \  x = a;\n  return is;\n}\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nostream &operator<<(ostream &os, const T &x)\n{\n  os << x.val();\n\
-    \  return os;\n}\n#else\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nvoid rd1(T &x)\n{\n  ll a;\n  fastio::rd1(a);\n  x = a;\n}\n\
-    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nvoid wt1(const T &x) { fastio::wt1(x.val()); }\n#endif\n#line\
-    \ 2 \"math/extgcd.hpp\"\n\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\
-    \u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs\
-    \ docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\
-    \u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T =\
-    \ ll>\nconstexpr tuple<T, T, T> extgcd(const T &a, const T &b)\n{\n  if (a ==\
-    \ 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  //\
-    \ a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1,\
-    \ z2 = b;\n  while (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n\
-    \    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1,\
-    \ y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q *\
-    \ z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1,\
-    \ y1};\n}\n#line 7 \"math/modint/modint.hpp\"\n\n/**\n * @brief modint (32 bit)\n\
-    \ * @docs docs/math/modint/modint.md\n */\n\ntemplate <int m>\nstruct static_modint\
-    \ : internal::modint_base<static_modint<m>>\n{\n  using mint = static_modint;\n\
-    private:\n  friend struct internal::modint_base<static_modint<m>>;\n  uint _v;\n\
-    \  static constexpr uint umod() { return m; }\n  static constexpr bool prime =\
-    \ internal::isprime32<m>;\n\npublic:\n  static constexpr int mod() { return m;\
-    \ }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  static_modint() : _v(0) {}\n  template <class T>\n  static_modint(T\
-    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
-    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
-    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
-    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
-    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
-    \n  mint& operator*=(const mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n\
-    \    _v = (uint)(z % umod());\n    return *this;\n  }\n\n  mint inv() const\n\
-    \  {\n    if (prime)\n    {\n      assert(_v != 0);\n      return CREF.pow(umod()\
-    \ - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<int>(_v, m);\n\
-    \      assert(g == 1);\n      return x;\n    }\n  }\n};\n\ntemplate <int id>\n\
-    struct dynamic_modint : internal::modint_base<dynamic_modint<id>>\n{\n  using\
-    \ mint = dynamic_modint;\nprivate:\n  friend struct internal::modint_base<dynamic_modint<id>>;\n\
-    \  uint _v;\n  static internal::barrett32 bt;\n  static uint umod() { return bt.umod();\
-    \ }\n\npublic:\n  static int mod() { return (int)(bt.umod()); }\n  static void\
-    \ set_mod(int m)\n  {\n    assert(m >= 1);\n    bt = internal::barrett32(m);\n\
-    \  }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  dynamic_modint() : _v(0) {}\n  template <class T>\n  dynamic_modint(T\
-    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
-    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
-    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
-    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
-    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
-    \n  mint& operator*=(const mint &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n   \
-    \ return *this;\n  }\n\n  mint inv() const\n  {\n    auto [g, x, y] = extgcd<int>(_v,\
-    \ mod());\n    assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::barrett32\
-    \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
-    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
-    \ntemplate <class T>\nstruct is_static_modint : false_type {};\ntemplate <int\
-    \ m>\nstruct is_static_modint<static_modint<m>> : true_type {};\ntemplate <class\
-    \ T>\ninline constexpr bool is_static_modint_v = is_static_modint<T>::value;\n\
-    \ntemplate <class T>\nstruct is_dynamic_modint : false_type {};\ntemplate <int\
-    \ id>\nstruct is_dynamic_modint<dynamic_modint<id>> : true_type {};\ntemplate\
-    \ <class T>\ninline constexpr bool is_dynamic_modint_v = is_dynamic_modint<T>::value;\n\
-    #line 19 \"verify/yosupo/kronecker_power_hadamard.test.cpp\"\nusing mint = modint998244353;\n\
-    \n#line 2 \"math/set/kronecker_power.hpp\"\n\n#line 4 \"math/set/kronecker_power.hpp\"\
-    \n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n#line 2 \"math/algebra/algebra_base.hpp\"\
-    \n\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
-    \u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
-    \ */\n\ntemplate <class S_, auto op_, auto e_>\nstruct Monoid\n{\n  using S =\
-    \ S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n};\n\
-    \ntemplate <class S_, auto op_, auto e_, auto inv_>\nstruct Group\n{\n  using\
-    \ S = S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n\
-    \  static constexpr auto inv = inv_;\n};\n\ntemplate <class S_, auto add_, auto\
-    \ e0_, auto mul_, auto e1_>\nstruct SemiRing\n{\n  using S = S_;\n  static constexpr\
-    \ auto add = add_;\n  static constexpr auto e0 = e0_;\n  static constexpr auto\
-    \ mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto\
-    \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
-    \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
-    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
-    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto add_, auto\
-    \ e0_, auto minus_, auto mul_, auto e1_, auto inv_>\nstruct Field\n{\n  using\
-    \ S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
-    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
-    \  static constexpr auto e1 = e1_;\n  static constexpr auto inv = inv_;\n};\n\n\
-    template <class M>\nstruct OppositeMonoid\n{\n  using S = typename M::S;\n  static\
-    \ constexpr S op(const S &a, const S &b) { return M::op(b, a); }\n  static constexpr\
-    \ auto e = M::e;\n};\ntemplate <class G>\nstruct OppositeGroup\n{\n  using S =\
-    \ typename G::S;\n  static constexpr S op(const S &a, const S &b) { return G::op(b,\
-    \ a); }\n  static constexpr auto e = G::e;\n  static constexpr auto inv = G::inv;\n\
-    };\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S,\
-    \ SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename\
-    \ SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
-    \ R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul =\
-    \ Group<typename K::S, K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\n\
-    template <class Madd, class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
+    \ 17 \"verify/aoj/zeta_general.test.cpp\"\n\n#line 2 \"math/set/kronecker_power.hpp\"\
+    \n\n#line 4 \"math/set/kronecker_power.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
+    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
+    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
+    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
+    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
+    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
+    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
+    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
+    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
+    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
+    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
+    \ constexpr auto inv = inv_;\n};\n\ntemplate <class M>\nstruct OppositeMonoid\n\
+    {\n  using S = typename M::S;\n  static constexpr S op(const S &a, const S &b)\
+    \ { return M::op(b, a); }\n  static constexpr auto e = M::e;\n};\ntemplate <class\
+    \ G>\nstruct OppositeGroup\n{\n  using S = typename G::S;\n  static constexpr\
+    \ S op(const S &a, const S &b) { return G::op(b, a); }\n  static constexpr auto\
+    \ e = G::e;\n  static constexpr auto inv = G::inv;\n};\n\ntemplate <class SR>\n\
+    using MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate\
+    \ <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S, SR::mul, SR::e1>;\n\
+    template <class R>\nusing GroupOfRingAdd = Group<typename R::S, R::add, R::e0,\
+    \ R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul = Group<typename K::S,\
+    \ K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\ntemplate <class Madd,\
+    \ class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
     \ Madd::S, typename Mmul::S>, \"Madd::S and Mmul::S must be identical\");\n  using\
     \ S = typename Madd::S;\n  static constexpr auto add = Madd::op;\n  static constexpr\
     \ auto e0 = Madd::e;\n  static constexpr auto mul = Mmul::op;\n  static constexpr\
@@ -885,15 +767,18 @@ data:
     \u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = k^n \u3092\u4EEE\u5B9A\u3001O(n k^n)\
     \ \u6642\u9593\ntemplate <class G, int k>\nvc<typename G::S> mobius_supset_general(vc<typename\
     \ G::S> a)\n{\n  mobius_supset_general_destructive<G, k>(a);\n  return a;\n}\n\
-    #line 22 \"verify/yosupo/kronecker_power_hadamard.test.cpp\"\n\nvoid hadamard(vc<mint>\
-    \ &A)\n{\n  kronecker_power_array_destructive<RingAddSubMul<mint>, 2>({{{1, 1},\
-    \ {1, -1}}}, A);\n}\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n  VEC(mint,\
-    \ 1 << N, A, B);\n  hadamard(A), hadamard(B);\n  dump(A, B);\n  rep(i, 1 << N)\
-    \ A.at(i) *= B.at(i);\n  hadamard(A);\n  mint div = mint(1 << N).inv();\n  rep(i,\
-    \ 1 << N) A.at(i) *= div;\n  PRINT(A);\n}\n\nvoid test()\n{\n  \n}\n\n#line 2\
-    \ \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\n\n\
-    template <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n \
-    \   cauto CERR = [](string val, string color)\n    {\n      string s = \"\\033[\"\
+    #line 19 \"verify/aoj/zeta_general.test.cpp\"\n\nvoid init()\n{\n  oj(mt.seed(random_device()()));\n\
+    }\n\nvoid main2()\n{\n  LL(Q, M);\n  VEC(string, Q, S);\n  fem(s : S) rep(i, M)\
+    \ s.at(i)--;\n  vl A(Q);\n  rep(i, Q) A.at(i) = stol(S.at(i), nullptr, 3);\n \
+    \ dump(S, A);\n\n  vl f(ipow(3, M), INF);\n  rep(i, Q) chmin(f.at(A.at(i)), i);\n\
+    \  auto g = zeta_supset_general<MonoidMin<ll>, 3>(f);\n  dump(g | cp::index());\n\
+    \  string ans(Q, '0');\n  rep(i, Q)\n  {\n    vl s = reversed(base_repr(A.at(i),\
+    \ 3, M));\n    rep(j, M)\n    {\n      if (s.at(j) == 2)\n        continue;\n\
+    \      ll na = A.at(i) + ipow(3, j);\n      dump(s, A.at(i), na);\n      if (g.at(na)\
+    \ < i)\n        ans.at(i) = '1';\n    }\n  }\n  PRINT(ans);\n}\n\nvoid test()\n\
+    {\n\n}\n\n#line 2 \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\
+    \n\ntemplate <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n\
+    \    cauto CERR = [](string val, string color)\n    {\n      string s = \"\\033[\"\
     \ + color + \"m\" + val + \"\\033[m\";\n      #ifdef LOCAL\n      cerr << s;\n\
     \      #endif\n      /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\
     \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\
@@ -908,21 +793,23 @@ data:
     \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
     \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
     T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
-    \      main2();\n    }\n    #endif\n  }\n};\n#line 49 \"verify/yosupo/kronecker_power_hadamard.test.cpp\"\
+    \      main2();\n    }\n    #endif\n  }\n};\n#line 61 \"verify/aoj/zeta_general.test.cpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/bitwise_xor_convolution\"\
+  code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=3184\"\
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
     #endif\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include\
-    \ \"template/template_all_but_modint.hpp\"\n\n#include \"math/modint/modint.hpp\"\
-    \nusing mint = modint998244353;\n\n#include \"math/set/kronecker_power.hpp\"\n\
-    \nvoid hadamard(vc<mint> &A)\n{\n  kronecker_power_array_destructive<RingAddSubMul<mint>,\
-    \ 2>({{{1, 1}, {1, -1}}}, A);\n}\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n\
-    \  VEC(mint, 1 << N, A, B);\n  hadamard(A), hadamard(B);\n  dump(A, B);\n  rep(i,\
-    \ 1 << N) A.at(i) *= B.at(i);\n  hadamard(A);\n  mint div = mint(1 << N).inv();\n\
-    \  rep(i, 1 << N) A.at(i) *= div;\n  PRINT(A);\n}\n\nvoid test()\n{\n  \n}\n\n\
-    #include \"template/template_main.hpp\"\nMain<init, main2, test> main_dummy;\n\
-    int main() {}\n"
+    \ \"template/template_all_but_modint.hpp\"\n\n#include \"math/set/kronecker_power.hpp\"\
+    \n\nvoid init()\n{\n  oj(mt.seed(random_device()()));\n}\n\nvoid main2()\n{\n\
+    \  LL(Q, M);\n  VEC(string, Q, S);\n  fem(s : S) rep(i, M) s.at(i)--;\n  vl A(Q);\n\
+    \  rep(i, Q) A.at(i) = stol(S.at(i), nullptr, 3);\n  dump(S, A);\n\n  vl f(ipow(3,\
+    \ M), INF);\n  rep(i, Q) chmin(f.at(A.at(i)), i);\n  auto g = zeta_supset_general<MonoidMin<ll>,\
+    \ 3>(f);\n  dump(g | cp::index());\n  string ans(Q, '0');\n  rep(i, Q)\n  {\n\
+    \    vl s = reversed(base_repr(A.at(i), 3, M));\n    rep(j, M)\n    {\n      if\
+    \ (s.at(j) == 2)\n        continue;\n      ll na = A.at(i) + ipow(3, j);\n   \
+    \   dump(s, A.at(i), na);\n      if (g.at(na) < i)\n        ans.at(i) = '1';\n\
+    \    }\n  }\n  PRINT(ans);\n}\n\nvoid test()\n{\n\n}\n\n#include \"template/template_main.hpp\"\
+    \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -935,24 +822,20 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   - template/template_random.hpp
-  - math/modint/modint.hpp
-  - math/modint/modint32_internal.hpp
-  - math/modint/modint_base.hpp
-  - math/extgcd.hpp
   - math/set/kronecker_power.hpp
   - math/algebra/algebra_basic_ops.hpp
   - math/algebra/algebra_base.hpp
   - template/template_main.hpp
   isVerificationFile: true
-  path: verify/yosupo/kronecker_power_hadamard.test.cpp
+  path: verify/aoj/zeta_general.test.cpp
   requiredBy: []
   timestamp: '2025-04-26 05:56:08+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/yosupo/kronecker_power_hadamard.test.cpp
+documentation_of: verify/aoj/zeta_general.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/yosupo/kronecker_power_hadamard.test.cpp
-- /verify/verify/yosupo/kronecker_power_hadamard.test.cpp.html
-title: verify/yosupo/kronecker_power_hadamard.test.cpp
+- /verify/verify/aoj/zeta_general.test.cpp
+- /verify/verify/aoj/zeta_general.test.cpp.html
+title: verify/aoj/zeta_general.test.cpp
 ---

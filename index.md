@@ -264,6 +264,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/aoj/modpow.test.cpp
       title: verify/aoj/modpow.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/aoj/zeta_general.test.cpp
+      title: verify/aoj/zeta_general.test.cpp
   - name: verify/mytest
     pages:
     - icon: ':heavy_check_mark:'

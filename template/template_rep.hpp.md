@@ -231,6 +231,9 @@ data:
     path: verify/aoj/modpow.test.cpp
     title: verify/aoj/modpow.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/aoj/zeta_general.test.cpp
+    title: verify/aoj/zeta_general.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/default_map.test.cpp
     title: verify/mytest/default_map.test.cpp
   - icon: ':heavy_check_mark:'
@@ -610,6 +613,7 @@ data:
   - verify/aoj/extgcd.test.cpp
   - verify/aoj/csr.test.cpp
   - verify/aoj/cumulative_sum_2d.test.cpp
+  - verify/aoj/zeta_general.test.cpp
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/predecessor_problem.test.cpp
   - verify/yosupo/kth_root_integer.test.cpp

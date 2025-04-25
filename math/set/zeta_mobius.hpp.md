@@ -714,20 +714,20 @@ data:
     {t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\
     \u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate\
     \ <class M>\nvc<typename M::S> zeta_subset(const vc<typename M::S> &a)\n{\n  auto\
-    \ b = a;\n  zeta_subset_destructive(b);\n  return b;\n}\n// \u03BC \u306F \u03B6\
+    \ b = a;\n  zeta_subset_destructive<M>(b);\n  return b;\n}\n// \u03BC \u306F \u03B6\
     \ \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286 s} (-1)^{|s\\t|} a[t]\n\
     // G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
     \u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class G>\nvc<typename G::S> mobius_subset(const\
-    \ vc<typename G::S> &a)\n{\n  auto b = a;\n  mobius_subset_destructive(b);\n \
-    \ return b;\n}\n\n// \u03B6'a[s] = \u03A3{s \u2286 t} a[t]\n// M \u306F\u53EF\u63DB\
-    \u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\
-    \u3001O(n 2^n) \u6642\u9593\ntemplate <class M>\nvc<typename M::S> zeta_supset(const\
-    \ vc<typename M::S> &a)\n{\n  auto b = a;\n  zeta_supset_destructive(b);\n  return\
-    \ b;\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n// \u03BC'a[s] =\
-    \ \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3\
+    \ vc<typename G::S> &a)\n{\n  auto b = a;\n  mobius_subset_destructive<G>(b);\n\
+    \  return b;\n}\n\n// \u03B6'a[s] = \u03A3{s \u2286 t} a[t]\n// M \u306F\u53EF\
+    \u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
+    \u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class M>\nvc<typename M::S> zeta_supset(const\
+    \ vc<typename M::S> &a)\n{\n  auto b = a;\n  zeta_supset_destructive<M>(b);\n\
+    \  return b;\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n// \u03BC\
+    'a[s] = \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3\
     \ \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n\
     template <class G>\nvc<typename G::S> mobius_supset(const vc<typename G::S> &a)\n\
-    {\n  auto b = a;\n  mobius_supset_destructive(b);\n  return b;\n}\n"
+    {\n  auto b = a;\n  mobius_supset_destructive<G>(b);\n  return b;\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
     #include \"../algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief \u30BC\u30FC\u30BF\
     \u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB\n * @docs docs/math/set/zeta_mobius.md\n\
@@ -762,20 +762,20 @@ data:
     {t \u2286 s} a[t]\n// M \u306F\u53EF\u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\
     \u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate\
     \ <class M>\nvc<typename M::S> zeta_subset(const vc<typename M::S> &a)\n{\n  auto\
-    \ b = a;\n  zeta_subset_destructive(b);\n  return b;\n}\n// \u03BC \u306F \u03B6\
+    \ b = a;\n  zeta_subset_destructive<M>(b);\n  return b;\n}\n// \u03BC \u306F \u03B6\
     \ \u306E\u9006\u5909\u63DB\n// \u03BCa[s] = \u03A3{t \u2286 s} (-1)^{|s\\t|} a[t]\n\
     // G \u306F\u53EF\u63DB\u7FA4 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
     \u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class G>\nvc<typename G::S> mobius_subset(const\
-    \ vc<typename G::S> &a)\n{\n  auto b = a;\n  mobius_subset_destructive(b);\n \
-    \ return b;\n}\n\n// \u03B6'a[s] = \u03A3{s \u2286 t} a[t]\n// M \u306F\u53EF\u63DB\
-    \u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\
-    \u3001O(n 2^n) \u6642\u9593\ntemplate <class M>\nvc<typename M::S> zeta_supset(const\
-    \ vc<typename M::S> &a)\n{\n  auto b = a;\n  zeta_supset_destructive(b);\n  return\
-    \ b;\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n// \u03BC'a[s] =\
-    \ \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3\
+    \ vc<typename G::S> &a)\n{\n  auto b = a;\n  mobius_subset_destructive<G>(b);\n\
+    \  return b;\n}\n\n// \u03B6'a[s] = \u03A3{s \u2286 t} a[t]\n// M \u306F\u53EF\
+    \u63DB\u30E2\u30CE\u30A4\u30C9 (\u03A3 \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\
+    \u5B9A\u3001O(n 2^n) \u6642\u9593\ntemplate <class M>\nvc<typename M::S> zeta_supset(const\
+    \ vc<typename M::S> &a)\n{\n  auto b = a;\n  zeta_supset_destructive<M>(b);\n\
+    \  return b;\n}\n// \u03BC' \u306F \u03B6' \u306E\u9006\u5909\u63DB\n// \u03BC\
+    'a[s] = \u03A3{s \u2286 t} (-1)^{|t\\s|} a[t]\n// G \u306F\u53EF\u63DB\u7FA4 (\u03A3\
     \ \u3060\u3068 +)\n// |a| = 2^n \u3092\u4EEE\u5B9A\u3001O(n 2^n) \u6642\u9593\n\
     template <class G>\nvc<typename G::S> mobius_supset(const vc<typename G::S> &a)\n\
-    {\n  auto b = a;\n  mobius_supset_destructive(b);\n  return b;\n}"
+    {\n  auto b = a;\n  mobius_supset_destructive<G>(b);\n  return b;\n}"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -794,7 +794,7 @@ data:
   path: math/set/zeta_mobius.hpp
   requiredBy:
   - math/set/and_or_convolution.hpp
-  timestamp: '2025-04-26 00:47:12+09:00'
+  timestamp: '2025-04-26 05:56:08+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/and_or_convolution.test.cpp
