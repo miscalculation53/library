@@ -1,47 +1,47 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -697,7 +697,7 @@ data:
     \ vector \u3092\u8FD4\u3059\n  vvc<S> content() \n  {\n    if (d.empty())\n  \
     \    return {};\n    const int n = d.size(), m = d[0].size();\n    vvc<S> a(d);\n\
     \    repi(i, n) repi(j, m - 1) a[i][j + 1] = G::op(a[i][j + 1], a[i][j]);\n  \
-    \  repi(j, m) repi(i, m - 1) a[i + 1][j] = G::op(a[i + 1][j], a[i][j]);\n    return\
+    \  repi(j, m) repi(i, n - 1) a[i + 1][j] = G::op(a[i + 1][j], a[i][j]);\n    return\
     \ a;\n  }\n};\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
     \n#include \"../../math/algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief $2$\
@@ -718,7 +718,7 @@ data:
     \u72B6\u306E vector \u3092\u8FD4\u3059\n  vvc<S> content() \n  {\n    if (d.empty())\n\
     \      return {};\n    const int n = d.size(), m = d[0].size();\n    vvc<S> a(d);\n\
     \    repi(i, n) repi(j, m - 1) a[i][j + 1] = G::op(a[i][j + 1], a[i][j]);\n  \
-    \  repi(j, m) repi(i, m - 1) a[i + 1][j] = G::op(a[i + 1][j], a[i][j]);\n    return\
+    \  repi(j, m) repi(i, n - 1) a[i + 1][j] = G::op(a[i + 1][j], a[i][j]);\n    return\
     \ a;\n  }\n};\n"
   dependsOn:
   - template/template_all_but_modint.hpp
@@ -737,7 +737,7 @@ data:
   isVerificationFile: false
   path: ds/cumulative_sum/imos_2d.hpp
   requiredBy: []
-  timestamp: '2025-04-26 00:47:12+09:00'
+  timestamp: '2025-04-26 03:40:06+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/imos_2d.test.cpp

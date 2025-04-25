@@ -1,72 +1,72 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/set/kronecker_power.hpp
     title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/bitwise_and_convolution
@@ -841,8 +841,8 @@ data:
     \ <class SR, int k>\nvc<typename SR::S> kronecker_power_array(const array<array<typename\
     \ SR::S, k>, k> &mat, vc<typename SR::S> v)\n{\n  kronecker_power_array_destructive<SR>(mat,\
     \ v);\n  return v;\n}\n#line 22 \"verify/yosupo/kronecker_power_zeta_mobius.test.cpp\"\
-    \n\nvoid zeta(vc<mint> &A)\n{\n  kronecker_power_destructive<RingAddSubMul<mint>,\
-    \ 2>({{{1, 0}, {1, 1}}}, A);\n}\nvoid mobius(vc<mint> &A)\n{\n  kronecker_power_destructive<RingAddSubMul<mint>,\
+    \n\nvoid zeta(vc<mint> &A)\n{\n  kronecker_power_array_destructive<RingAddSubMul<mint>,\
+    \ 2>({{{1, 0}, {1, 1}}}, A);\n}\nvoid mobius(vc<mint> &A)\n{\n  kronecker_power_array_destructive<RingAddSubMul<mint>,\
     \ 2>({{{1, 0}, {-1, 1}}}, A);\n}\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n\
     \  VEC(mint, 1 << N, A, B);\n  reverse(ALL(A)), reverse(ALL(B));\n  zeta(A), zeta(B);\n\
     \  dump(A, B);\n  rep(i, 1 << N) A.at(i) *= B.at(i);\n  mobius(A);\n  reverse(ALL(A));\n\
@@ -871,8 +871,8 @@ data:
     #endif\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include\
     \ \"template/template_all_but_modint.hpp\"\n\n#include \"math/modint/modint.hpp\"\
     \nusing mint = modint998244353;\n\n#include \"math/set/kronecker_power.hpp\"\n\
-    \nvoid zeta(vc<mint> &A)\n{\n  kronecker_power_destructive<RingAddSubMul<mint>,\
-    \ 2>({{{1, 0}, {1, 1}}}, A);\n}\nvoid mobius(vc<mint> &A)\n{\n  kronecker_power_destructive<RingAddSubMul<mint>,\
+    \nvoid zeta(vc<mint> &A)\n{\n  kronecker_power_array_destructive<RingAddSubMul<mint>,\
+    \ 2>({{{1, 0}, {1, 1}}}, A);\n}\nvoid mobius(vc<mint> &A)\n{\n  kronecker_power_array_destructive<RingAddSubMul<mint>,\
     \ 2>({{{1, 0}, {-1, 1}}}, A);\n}\n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N);\n\
     \  VEC(mint, 1 << N, A, B);\n  reverse(ALL(A)), reverse(ALL(B));\n  zeta(A), zeta(B);\n\
     \  dump(A, B);\n  rep(i, 1 << N) A.at(i) *= B.at(i);\n  mobius(A);\n  reverse(ALL(A));\n\
@@ -901,8 +901,8 @@ data:
   isVerificationFile: true
   path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   requiredBy: []
-  timestamp: '2025-04-26 00:47:12+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2025-04-26 03:39:44+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
 layout: document
