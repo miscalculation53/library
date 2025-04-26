@@ -199,6 +199,9 @@ data:
     path: verify/yukicoder/quadratic_equation.test.cpp
     title: verify/yukicoder/quadratic_equation.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/rle.test.cpp
+    title: verify/yukicoder/rle.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/safe_unordered_map.test.cpp
     title: verify/yukicoder/safe_unordered_map.test.cpp
   - icon: ':heavy_check_mark:'
@@ -840,6 +843,7 @@ data:
   - verify/yukicoder/imos.test.cpp
   - verify/yukicoder/parallel_binsearch.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
+  - verify/yukicoder/rle.test.cpp
   - verify/yukicoder/uf_partially_persistent.test.cpp
   - verify/yukicoder/uf_min_max_leader.test.cpp
   - verify/yukicoder/base_repr.test.cpp

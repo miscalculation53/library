@@ -14,7 +14,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: algo/parallel_binsearch.hpp
     title: "\u4E26\u5217\u4E8C\u5206\u63A2\u7D22"
-  - icon: ':warning:'
+  - icon: ':heavy_check_mark:'
     path: algo/rle.hpp
     title: "\u30E9\u30F3\u30EC\u30F3\u30B0\u30B9\u5727\u7E2E"
   - icon: ':heavy_check_mark:'
@@ -381,6 +381,9 @@ data:
     path: verify/yukicoder/quadratic_equation.test.cpp
     title: verify/yukicoder/quadratic_equation.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/rle.test.cpp
+    title: verify/yukicoder/rle.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/safe_unordered_map.test.cpp
     title: verify/yukicoder/safe_unordered_map.test.cpp
   - icon: ':heavy_check_mark:'
@@ -557,6 +560,7 @@ data:
   - verify/yukicoder/imos.test.cpp
   - verify/yukicoder/parallel_binsearch.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
+  - verify/yukicoder/rle.test.cpp
   - verify/yukicoder/uf_partially_persistent.test.cpp
   - verify/yukicoder/uf_min_max_leader.test.cpp
   - verify/yukicoder/base_repr.test.cpp
