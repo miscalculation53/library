@@ -10,6 +10,15 @@
  * @docs docs/math/convolution/convolution.md
  */
 
+template <class T>
+T convolution_point_get(const vc<T> &a, const vc<T> &b, int p)
+{
+  const int n = a.size(), m = b.size();
+  T res = 0;
+  repi(i, max(0, p - m + 1), min(n, p + 1)) res += a[i] * b[p - i];
+  return res;
+}
+
 namespace internal
 {
 
@@ -129,7 +138,7 @@ bool ntt_ok(int n)
   if constexpr (is_static_modint_v<mint>)
   {
     if constexpr (!internal::isprime32<mint::mod()>)
-    return false;
+      return false;
     static constexpr int rank2 = countr_zero(mint::mod() - 1);
     return n <= (1 << rank2);
   }
@@ -291,11 +300,26 @@ template <class mint>
 vc<mint> convolution_naive(const vc<mint> &a, const vc<mint> &b)
 {
   const int n = a.size(), m = b.size();
+  const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);
   vc<mint> c(n + m - 1);
-  if (n < m)
-    repi(j, m) repi(i, n) c[i + j] += a[i] * b[j];
+  if ((ll)m * cnta > (ll)n * cntb)
+  {
+    repi(j, m)
+    {
+      if (b[j] == 0)
+        continue;
+      repi(i, n) c[i + j] += a[i] * b[j];
+    }
+  }
   else
-    repi(i, n) repi(j, m) c[i + j] += a[i] * b[j];
+  {
+    repi(i, n)
+    {
+      if (a[i] == 0)
+        continue;
+      repi(j, m) c[i + j] += a[i] * b[j];
+    }
+  }
   return c;
 }
 
@@ -368,17 +392,18 @@ template <class mint>
 vc<mint> convolution(const vc<mint> &a, const vc<mint> &b)
 {
   const int n = a.size(), m = b.size();
+  const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);
   if (n == 0 || m == 0)
     return {};
   if (ntt_ok<mint>(n + m - 1))
   {
-    if (min(n, m) <= 60)
+    if (min(cnta, cntb) <= 60)
       return internal::convolution_naive(a, b);
     return internal::convolution_ntt(a, b);
   }
   else
   {
-    if (min(n, m) <= 300)
+    if (min(cnta, cntb) <= 300)
       return internal::convolution_naive(a, b);
     assert(ntt_ok<static_modint<469762049>>(n + m - 1) && "|a| + |b| - 1 <= 2^26");
     vc<ll> a_(n), b_(m);
@@ -404,19 +429,21 @@ vc<T> convolution(const vc<T> &a, const vc<T> &b)
 vc<ull> convolution64(const vc<ull> &a, const vc<ull> &b)
 {
   const int n = a.size(), m = b.size();
-  if (min(n, m) <= 400)
+  const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);
+  if (min(cnta, cntb) <= 400)
     return internal::convolution_naive(a, b);
   assert(ntt_ok<static_modint<754974721>>(n + m - 1) && "|a| + |b| - 1 <= 2^25");
   return internal::convolution_crt_mod<ull, 167772161, 469762049, 1107296257, 1711276033, 1811939329>(a, b);
 }
 
-// 要素が 4.2 × 10^18 程度に収まる場合
+// 最終的な要素が 4.2 × 10^18 程度に収まる場合
 // mod 2 つで計算
 // 列の長さは合計 2^25 程度
 vc<ll> convolution_4e18(const vc<ll> &a, const vc<ll> &b)
 {
   const int n = a.size(), m = b.size();
-  if (min(n, m) <= 150)
+  const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);
+  if (min(cnta, cntb) <= 150)
     return internal::convolution_naive(a, b);
   return internal::convolution_crt<2013265921, 2113929217>(a, b);
 }
