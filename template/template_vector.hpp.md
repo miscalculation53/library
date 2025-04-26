@@ -17,6 +17,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: algo/parallel_binsearch.hpp
     title: "\u4E26\u5217\u4E8C\u5206\u63A2\u7D22"
+  - icon: ':warning:'
+    path: algo/rle.hpp
+    title: "\u30E9\u30F3\u30EC\u30F3\u30B0\u30B9\u5727\u7E2E"
   - icon: ':heavy_check_mark:'
     path: ds/coordinate_compression.hpp
     title: "\u5EA7\u6A19\u5727\u7E2E"
@@ -598,6 +601,7 @@ data:
   - ds/sparse_table.hpp
   - algo/merge_sort.hpp
   - algo/parallel_binsearch.hpp
+  - algo/rle.hpp
   - graph/graph.hpp
   - template/template.cpp
   - template/template_algo.hpp
