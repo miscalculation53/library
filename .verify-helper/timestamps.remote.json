@@ -67,6 +67,7 @@
 "verify/yukicoder/ordered_multiset.test.cpp": "2025-04-26 00:43:27 +0900",
 "verify/yukicoder/parallel_binsearch.test.cpp": "2025-04-26 00:43:27 +0900",
 "verify/yukicoder/quadratic_equation.test.cpp": "2025-04-26 00:43:27 +0900",
+"verify/yukicoder/rle.test.cpp": "2025-04-26 21:35:22 +0900",
 "verify/yukicoder/safe_unordered_map.test.cpp": "2025-04-26 00:43:27 +0900",
 "verify/yukicoder/static_modint.test.cpp": "2025-04-26 00:43:27 +0900",
 "verify/yukicoder/uf_min_max_leader.test.cpp": "2025-04-26 00:43:27 +0900",
