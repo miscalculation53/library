@@ -3,7 +3,7 @@
 #include "../template/template_all_but_modint.hpp"
 
 /**
- * @brief sparse table
+ * @brief Sparse Table
  * @docs docs/ds/sparse_table.md
  */
 
