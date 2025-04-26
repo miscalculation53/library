@@ -37,8 +37,26 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy: []
+  _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: ds/block_sparse_table.hpp
+    title: "\u30D6\u30ED\u30C3\u30AF\u5206\u5272 + (disjoint) sparse table"
+  - icon: ':heavy_check_mark:'
+    path: ds/linear_rmq.hpp
+    title: "\u7DDA\u5F62 RMQ"
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/rmq.test.cpp
+    title: verify/mytest/rmq.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/block_disjoint_sparse_table.test.cpp
+    title: verify/yosupo/block_disjoint_sparse_table.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/block_sparse_table.test.cpp
+    title: verify/yosupo/block_sparse_table.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/linear_rmq.test.cpp
+    title: verify/yosupo/linear_rmq.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/sparse_table.test.cpp
     title: verify/yosupo/sparse_table.test.cpp
@@ -649,11 +667,17 @@ data:
   - template/template_random.hpp
   isVerificationFile: false
   path: ds/sparse_table.hpp
-  requiredBy: []
+  requiredBy:
+  - ds/block_sparse_table.hpp
+  - ds/linear_rmq.hpp
   timestamp: '2025-04-26 00:43:27+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/mytest/rmq.test.cpp
+  - verify/yosupo/block_disjoint_sparse_table.test.cpp
+  - verify/yosupo/linear_rmq.test.cpp
   - verify/yosupo/sparse_table.test.cpp
+  - verify/yosupo/block_sparse_table.test.cpp
 documentation_of: ds/sparse_table.hpp
 layout: document
 redirect_from:
@@ -663,7 +687,7 @@ title: sparse table
 ---
 ## sparse table
 
-モノイドが冪等（$\max, \min, \gcd, \mathrm{lcm}, \mathrm{and}, \mathrm{or}$ など）のときに、静的な列の区間積クエリを前計算 $O(N\log N)$ 時間・空間、クエリ $O(1)$ 時間で処理する。
+静的列に対するモノイドの区間積クエリを、モノイドが冪等（$\max, \min, \gcd, \mathrm{lcm}, \mathrm{and}, \mathrm{or}$ など）のときに限って、前計算 $O(N\log N)$ 時間・空間、クエリ $O(1)$ 時間で処理する。
 
 ### コンストラクタ
 

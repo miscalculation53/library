@@ -805,7 +805,10 @@ data:
     \ = g / gi;\n    do\n    {\n      g = gcd(gi, gj);\n      gi *= g, gj /= g;\n\
     \    } while (g > 1);\n    ms[i] *= gi, ms[j] *= gj;\n  }\n  return true;\n}\n\
     #line 7 \"math/convolution/convolution.hpp\"\n\n/**\n * @brief \u7573\u307F\u8FBC\
-    \u307F\n * @docs docs/math/convolution/convolution.md\n */\n\nnamespace internal\n\
+    \u307F\n * @docs docs/math/convolution/convolution.md\n */\n\ntemplate <class\
+    \ T>\nT convolution_point_get(const vc<T> &a, const vc<T> &b, int p)\n{\n  const\
+    \ int n = a.size(), m = b.size();\n  T res = 0;\n  repi(i, max(0, p - m + 1),\
+    \ min(n, p + 1)) res += a[i] * b[p - i];\n  return res;\n}\n\nnamespace internal\n\
     {\n\nconstexpr int primitive_root_constexpr(int m)\n{\n  if (m == 2)\n    return\
     \ 1;\n  if (m == 167772161)\n    return 3;\n  if (m == 469762049)\n    return\
     \ 3;\n  if (m == 754974721)\n    return 11;\n  if (m == 998244353)\n    return\
@@ -839,7 +842,7 @@ data:
     \      }\n    }\n  }\n};\n\n}  // namespace internal\n\n// mint \u3067\u9577\u3055\
     \ n \u306E\u5217\u306E ntt \u304C\u3067\u304D\u308B\u304B\u5224\u5B9A\ntemplate\
     \ <class mint>\nbool ntt_ok(int n)\n{\n  if constexpr (is_static_modint_v<mint>)\n\
-    \  {\n    if constexpr (!internal::isprime32<mint::mod()>)\n    return false;\n\
+    \  {\n    if constexpr (!internal::isprime32<mint::mod()>)\n      return false;\n\
     \    static constexpr int rank2 = countr_zero(mint::mod() - 1);\n    return n\
     \ <= (1 << rank2);\n  }\n  else\n    return false;\n}\n\ntemplate <int id>\nvoid\
     \ ntt(vc<dynamic_modint<id>> &) {}\ntemplate <int id>\nvoid intt(vc<dynamic_modint<id>>\
@@ -900,11 +903,14 @@ data:
     \  }\n      len -= 2;\n    }\n  }\n\n  mint in = mint(n).inv();\n  fem(ai : a)\
     \ ai *= in;\n}\n\nnamespace internal\n{\n\ntemplate <class mint>\nvc<mint> convolution_naive(const\
     \ vc<mint> &a, const vc<mint> &b)\n{\n  const int n = a.size(), m = b.size();\n\
-    \  vc<mint> c(n + m - 1);\n  if (n < m)\n    repi(j, m) repi(i, n) c[i + j] +=\
-    \ a[i] * b[j];\n  else\n    repi(i, n) repi(j, m) c[i + j] += a[i] * b[j];\n \
-    \ return c;\n}\n\n// n == 0 or m == 0 \u306F\u30D0\u30B0\u308B\u306E\u3067\u6CE8\
-    \u610F\ntemplate <class mint>\nvc<mint> convolution_ntt(vc<mint> a, vc<mint> b)\n\
-    {\n  const int n = a.size(), m = b.size();\n  const int z = bit_ceil(n + m - 1);\n\
+    \  const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);\n  vc<mint>\
+    \ c(n + m - 1);\n  if ((ll)m * cnta > (ll)n * cntb)\n  {\n    repi(j, m)\n   \
+    \ {\n      if (b[j] == 0)\n        continue;\n      repi(i, n) c[i + j] += a[i]\
+    \ * b[j];\n    }\n  }\n  else\n  {\n    repi(i, n)\n    {\n      if (a[i] == 0)\n\
+    \        continue;\n      repi(j, m) c[i + j] += a[i] * b[j];\n    }\n  }\n  return\
+    \ c;\n}\n\n// n == 0 or m == 0 \u306F\u30D0\u30B0\u308B\u306E\u3067\u6CE8\u610F\
+    \ntemplate <class mint>\nvc<mint> convolution_ntt(vc<mint> a, vc<mint> b)\n{\n\
+    \  const int n = a.size(), m = b.size();\n  const int z = bit_ceil(n + m - 1);\n\
     \  a.resize(z), b.resize(z);\n  ntt(a), ntt(b);\n  repi(i, z) a[i] *= b[i];\n\
     \  intt(a);\n  a.resize(n + m - 1);\n  return a;\n}\n\ntemplate <size_t j, int\
     \ mod, class T, size_t k>\nvoid convolution_crt_helper(const vc<T> &a, const vc<T>\
@@ -929,10 +935,11 @@ data:
     \ mod \u306F 10^9 \u7A0B\u5EA6\u3092\u60F3\u5B9A\u3001\u5217\u306E\u9577\u3055\
     \u306F\u5408\u8A08 2^26 \u7A0B\u5EA6\ntemplate <class mint>\nvc<mint> convolution(const\
     \ vc<mint> &a, const vc<mint> &b)\n{\n  const int n = a.size(), m = b.size();\n\
-    \  if (n == 0 || m == 0)\n    return {};\n  if (ntt_ok<mint>(n + m - 1))\n  {\n\
-    \    if (min(n, m) <= 60)\n      return internal::convolution_naive(a, b);\n \
-    \   return internal::convolution_ntt(a, b);\n  }\n  else\n  {\n    if (min(n,\
-    \ m) <= 300)\n      return internal::convolution_naive(a, b);\n    assert(ntt_ok<static_modint<469762049>>(n\
+    \  const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);\n  if (n\
+    \ == 0 || m == 0)\n    return {};\n  if (ntt_ok<mint>(n + m - 1))\n  {\n    if\
+    \ (min(cnta, cntb) <= 60)\n      return internal::convolution_naive(a, b);\n \
+    \   return internal::convolution_ntt(a, b);\n  }\n  else\n  {\n    if (min(cnta,\
+    \ cntb) <= 300)\n      return internal::convolution_naive(a, b);\n    assert(ntt_ok<static_modint<469762049>>(n\
     \ + m - 1) && \"|a| + |b| - 1 <= 2^26\");\n    vc<ll> a_(n), b_(m);\n    repi(i,\
     \ n) a_[i] = a[i].val();\n    repi(j, m) b_[j] = b[j].val();\n    return internal::convolution_crt_mod<mint,\
     \ 469762049, 1811939329, 2013265921>(a_, b_);\n  }\n}\n\ntemplate <int mod = 998244353,\
@@ -942,32 +949,34 @@ data:
     \ c.size()) c_[i] = c[i].val();\n  return c_;\n}\n\n// mod 2^64\n// mod 5 \u3064\
     \u3067\u8A08\u7B97\n// \u5217\u306E\u9577\u3055\u306F\u5408\u8A08 2^25 \u7A0B\u5EA6\
     \nvc<ull> convolution64(const vc<ull> &a, const vc<ull> &b)\n{\n  const int n\
-    \ = a.size(), m = b.size();\n  if (min(n, m) <= 400)\n    return internal::convolution_naive(a,\
+    \ = a.size(), m = b.size();\n  const int cnta = n - count(ALL(a), 0), cntb = m\
+    \ - count(ALL(b), 0);\n  if (min(cnta, cntb) <= 400)\n    return internal::convolution_naive(a,\
     \ b);\n  assert(ntt_ok<static_modint<754974721>>(n + m - 1) && \"|a| + |b| - 1\
     \ <= 2^25\");\n  return internal::convolution_crt_mod<ull, 167772161, 469762049,\
-    \ 1107296257, 1711276033, 1811939329>(a, b);\n}\n\n// \u8981\u7D20\u304C 4.2 \xD7\
-    \ 10^18 \u7A0B\u5EA6\u306B\u53CE\u307E\u308B\u5834\u5408\n// mod 2 \u3064\u3067\
-    \u8A08\u7B97\n// \u5217\u306E\u9577\u3055\u306F\u5408\u8A08 2^25 \u7A0B\u5EA6\n\
-    vc<ll> convolution_4e18(const vc<ll> &a, const vc<ll> &b)\n{\n  const int n =\
-    \ a.size(), m = b.size();\n  if (min(n, m) <= 150)\n    return internal::convolution_naive(a,\
-    \ b);\n  return internal::convolution_crt<2013265921, 2113929217>(a, b);\n}\n\
-    #line 21 \"verify/yosupo/convolution_arbitrary_dynamic.test.cpp\"\n\nvoid init()\
-    \ {}\n\nvoid main2()\n{\n  mint::set_mod(1'000'000'007);\n  LL(N, M);\n  VEC(mint,\
-    \ N, A);\n  VEC(mint, M, B);\n  auto C = convolution(A, B);\n  PRINT(C);\n}\n\n\
-    void test() {}\n\n#line 2 \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\
-    \n\ntemplate <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n\
-    \    cauto CERR = [](string val, string color)\n    {\n      string s = \"\\033[\"\
-    \ + color + \"m\" + val + \"\\033[m\";\n      #ifdef LOCAL\n      cerr << s;\n\
-    \      #endif\n      /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\
-    \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\
-    \u3059\n      cerr << val;\n      //*/\n    };\n  \n    #if defined FAST_IO and\
-    \ not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n    #endif\n \
-    \   #if defined FAST_CIO and not defined LOCAL\n    CERR(\"\\n[FAST_CIO]\\n\\\
-    n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n    #endif\n\
-    \    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n  \n  \
-    \  #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n \
-    \   CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n    \
-    \  dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
+    \ 1107296257, 1711276033, 1811939329>(a, b);\n}\n\n// \u6700\u7D42\u7684\u306A\
+    \u8981\u7D20\u304C 4.2 \xD7 10^18 \u7A0B\u5EA6\u306B\u53CE\u307E\u308B\u5834\u5408\
+    \n// mod 2 \u3064\u3067\u8A08\u7B97\n// \u5217\u306E\u9577\u3055\u306F\u5408\u8A08\
+    \ 2^25 \u7A0B\u5EA6\nvc<ll> convolution_4e18(const vc<ll> &a, const vc<ll> &b)\n\
+    {\n  const int n = a.size(), m = b.size();\n  const int cnta = n - count(ALL(a),\
+    \ 0), cntb = m - count(ALL(b), 0);\n  if (min(cnta, cntb) <= 150)\n    return\
+    \ internal::convolution_naive(a, b);\n  return internal::convolution_crt<2013265921,\
+    \ 2113929217>(a, b);\n}\n#line 21 \"verify/yosupo/convolution_arbitrary_dynamic.test.cpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  mint::set_mod(1'000'000'007);\n  LL(N,\
+    \ M);\n  VEC(mint, N, A);\n  VEC(mint, M, B);\n  auto C = convolution(A, B);\n\
+    \  PRINT(C);\n}\n\nvoid test() {}\n\n#line 2 \"template/template_main.hpp\"\n\n\
+    #line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2, auto\
+    \ test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
+    \ color)\n    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\"\
+    ;\n      #ifdef LOCAL\n      cerr << s;\n      #endif\n      /* \u30B3\u30FC\u30C9\
+    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
+    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n      cerr << val;\n      //*/\n \
+    \   };\n  \n    #if defined FAST_IO and not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\\
+    n\\n\", \"32\");\n    #endif\n    #if defined FAST_CIO and not defined LOCAL\n\
+    \    CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
+    \    #endif\n    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n\
+    \  \n    #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n\
+    \    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n   \
+    \   dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
     \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
     \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
     T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
@@ -1005,7 +1014,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
   requiredBy: []
-  timestamp: '2025-04-26 00:43:27+09:00'
+  timestamp: '2025-04-26 23:10:30+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/convolution_arbitrary_dynamic.test.cpp

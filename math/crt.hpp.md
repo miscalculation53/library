@@ -66,6 +66,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/crt_mod.test.cpp
     title: verify/yukicoder/crt_mod.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki2215_dc.test.cpp
+    title: verify/yukicoder/yuki2215_dc.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki2215_swag.test.cpp
+    title: verify/yukicoder/yuki2215_swag.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -810,8 +816,10 @@ data:
   timestamp: '2025-04-26 00:43:27+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yukicoder/yuki2215_dc.test.cpp
   - verify/yukicoder/crt.test.cpp
   - verify/yukicoder/crt_mod.test.cpp
+  - verify/yukicoder/yuki2215_swag.test.cpp
   - verify/yosupo/convolution.test.cpp
   - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
   - verify/yosupo/convolution_arbitrary_static.test.cpp

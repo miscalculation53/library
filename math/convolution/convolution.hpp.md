@@ -66,6 +66,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution_arbitrary_static.test.cpp
     title: verify/yosupo/convolution_arbitrary_static.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki2215_dc.test.cpp
+    title: verify/yukicoder/yuki2215_dc.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki2215_swag.test.cpp
+    title: verify/yukicoder/yuki2215_swag.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -803,7 +809,10 @@ data:
     \ = g / gi;\n    do\n    {\n      g = gcd(gi, gj);\n      gi *= g, gj /= g;\n\
     \    } while (g > 1);\n    ms[i] *= gi, ms[j] *= gj;\n  }\n  return true;\n}\n\
     #line 7 \"math/convolution/convolution.hpp\"\n\n/**\n * @brief \u7573\u307F\u8FBC\
-    \u307F\n * @docs docs/math/convolution/convolution.md\n */\n\nnamespace internal\n\
+    \u307F\n * @docs docs/math/convolution/convolution.md\n */\n\ntemplate <class\
+    \ T>\nT convolution_point_get(const vc<T> &a, const vc<T> &b, int p)\n{\n  const\
+    \ int n = a.size(), m = b.size();\n  T res = 0;\n  repi(i, max(0, p - m + 1),\
+    \ min(n, p + 1)) res += a[i] * b[p - i];\n  return res;\n}\n\nnamespace internal\n\
     {\n\nconstexpr int primitive_root_constexpr(int m)\n{\n  if (m == 2)\n    return\
     \ 1;\n  if (m == 167772161)\n    return 3;\n  if (m == 469762049)\n    return\
     \ 3;\n  if (m == 754974721)\n    return 11;\n  if (m == 998244353)\n    return\
@@ -837,7 +846,7 @@ data:
     \      }\n    }\n  }\n};\n\n}  // namespace internal\n\n// mint \u3067\u9577\u3055\
     \ n \u306E\u5217\u306E ntt \u304C\u3067\u304D\u308B\u304B\u5224\u5B9A\ntemplate\
     \ <class mint>\nbool ntt_ok(int n)\n{\n  if constexpr (is_static_modint_v<mint>)\n\
-    \  {\n    if constexpr (!internal::isprime32<mint::mod()>)\n    return false;\n\
+    \  {\n    if constexpr (!internal::isprime32<mint::mod()>)\n      return false;\n\
     \    static constexpr int rank2 = countr_zero(mint::mod() - 1);\n    return n\
     \ <= (1 << rank2);\n  }\n  else\n    return false;\n}\n\ntemplate <int id>\nvoid\
     \ ntt(vc<dynamic_modint<id>> &) {}\ntemplate <int id>\nvoid intt(vc<dynamic_modint<id>>\
@@ -898,11 +907,14 @@ data:
     \  }\n      len -= 2;\n    }\n  }\n\n  mint in = mint(n).inv();\n  fem(ai : a)\
     \ ai *= in;\n}\n\nnamespace internal\n{\n\ntemplate <class mint>\nvc<mint> convolution_naive(const\
     \ vc<mint> &a, const vc<mint> &b)\n{\n  const int n = a.size(), m = b.size();\n\
-    \  vc<mint> c(n + m - 1);\n  if (n < m)\n    repi(j, m) repi(i, n) c[i + j] +=\
-    \ a[i] * b[j];\n  else\n    repi(i, n) repi(j, m) c[i + j] += a[i] * b[j];\n \
-    \ return c;\n}\n\n// n == 0 or m == 0 \u306F\u30D0\u30B0\u308B\u306E\u3067\u6CE8\
-    \u610F\ntemplate <class mint>\nvc<mint> convolution_ntt(vc<mint> a, vc<mint> b)\n\
-    {\n  const int n = a.size(), m = b.size();\n  const int z = bit_ceil(n + m - 1);\n\
+    \  const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);\n  vc<mint>\
+    \ c(n + m - 1);\n  if ((ll)m * cnta > (ll)n * cntb)\n  {\n    repi(j, m)\n   \
+    \ {\n      if (b[j] == 0)\n        continue;\n      repi(i, n) c[i + j] += a[i]\
+    \ * b[j];\n    }\n  }\n  else\n  {\n    repi(i, n)\n    {\n      if (a[i] == 0)\n\
+    \        continue;\n      repi(j, m) c[i + j] += a[i] * b[j];\n    }\n  }\n  return\
+    \ c;\n}\n\n// n == 0 or m == 0 \u306F\u30D0\u30B0\u308B\u306E\u3067\u6CE8\u610F\
+    \ntemplate <class mint>\nvc<mint> convolution_ntt(vc<mint> a, vc<mint> b)\n{\n\
+    \  const int n = a.size(), m = b.size();\n  const int z = bit_ceil(n + m - 1);\n\
     \  a.resize(z), b.resize(z);\n  ntt(a), ntt(b);\n  repi(i, z) a[i] *= b[i];\n\
     \  intt(a);\n  a.resize(n + m - 1);\n  return a;\n}\n\ntemplate <size_t j, int\
     \ mod, class T, size_t k>\nvoid convolution_crt_helper(const vc<T> &a, const vc<T>\
@@ -927,10 +939,11 @@ data:
     \ mod \u306F 10^9 \u7A0B\u5EA6\u3092\u60F3\u5B9A\u3001\u5217\u306E\u9577\u3055\
     \u306F\u5408\u8A08 2^26 \u7A0B\u5EA6\ntemplate <class mint>\nvc<mint> convolution(const\
     \ vc<mint> &a, const vc<mint> &b)\n{\n  const int n = a.size(), m = b.size();\n\
-    \  if (n == 0 || m == 0)\n    return {};\n  if (ntt_ok<mint>(n + m - 1))\n  {\n\
-    \    if (min(n, m) <= 60)\n      return internal::convolution_naive(a, b);\n \
-    \   return internal::convolution_ntt(a, b);\n  }\n  else\n  {\n    if (min(n,\
-    \ m) <= 300)\n      return internal::convolution_naive(a, b);\n    assert(ntt_ok<static_modint<469762049>>(n\
+    \  const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);\n  if (n\
+    \ == 0 || m == 0)\n    return {};\n  if (ntt_ok<mint>(n + m - 1))\n  {\n    if\
+    \ (min(cnta, cntb) <= 60)\n      return internal::convolution_naive(a, b);\n \
+    \   return internal::convolution_ntt(a, b);\n  }\n  else\n  {\n    if (min(cnta,\
+    \ cntb) <= 300)\n      return internal::convolution_naive(a, b);\n    assert(ntt_ok<static_modint<469762049>>(n\
     \ + m - 1) && \"|a| + |b| - 1 <= 2^26\");\n    vc<ll> a_(n), b_(m);\n    repi(i,\
     \ n) a_[i] = a[i].val();\n    repi(j, m) b_[j] = b[j].val();\n    return internal::convolution_crt_mod<mint,\
     \ 469762049, 1811939329, 2013265921>(a_, b_);\n  }\n}\n\ntemplate <int mod = 998244353,\
@@ -940,18 +953,24 @@ data:
     \ c.size()) c_[i] = c[i].val();\n  return c_;\n}\n\n// mod 2^64\n// mod 5 \u3064\
     \u3067\u8A08\u7B97\n// \u5217\u306E\u9577\u3055\u306F\u5408\u8A08 2^25 \u7A0B\u5EA6\
     \nvc<ull> convolution64(const vc<ull> &a, const vc<ull> &b)\n{\n  const int n\
-    \ = a.size(), m = b.size();\n  if (min(n, m) <= 400)\n    return internal::convolution_naive(a,\
+    \ = a.size(), m = b.size();\n  const int cnta = n - count(ALL(a), 0), cntb = m\
+    \ - count(ALL(b), 0);\n  if (min(cnta, cntb) <= 400)\n    return internal::convolution_naive(a,\
     \ b);\n  assert(ntt_ok<static_modint<754974721>>(n + m - 1) && \"|a| + |b| - 1\
     \ <= 2^25\");\n  return internal::convolution_crt_mod<ull, 167772161, 469762049,\
-    \ 1107296257, 1711276033, 1811939329>(a, b);\n}\n\n// \u8981\u7D20\u304C 4.2 \xD7\
-    \ 10^18 \u7A0B\u5EA6\u306B\u53CE\u307E\u308B\u5834\u5408\n// mod 2 \u3064\u3067\
-    \u8A08\u7B97\n// \u5217\u306E\u9577\u3055\u306F\u5408\u8A08 2^25 \u7A0B\u5EA6\n\
-    vc<ll> convolution_4e18(const vc<ll> &a, const vc<ll> &b)\n{\n  const int n =\
-    \ a.size(), m = b.size();\n  if (min(n, m) <= 150)\n    return internal::convolution_naive(a,\
-    \ b);\n  return internal::convolution_crt<2013265921, 2113929217>(a, b);\n}\n"
+    \ 1107296257, 1711276033, 1811939329>(a, b);\n}\n\n// \u6700\u7D42\u7684\u306A\
+    \u8981\u7D20\u304C 4.2 \xD7 10^18 \u7A0B\u5EA6\u306B\u53CE\u307E\u308B\u5834\u5408\
+    \n// mod 2 \u3064\u3067\u8A08\u7B97\n// \u5217\u306E\u9577\u3055\u306F\u5408\u8A08\
+    \ 2^25 \u7A0B\u5EA6\nvc<ll> convolution_4e18(const vc<ll> &a, const vc<ll> &b)\n\
+    {\n  const int n = a.size(), m = b.size();\n  const int cnta = n - count(ALL(a),\
+    \ 0), cntb = m - count(ALL(b), 0);\n  if (min(cnta, cntb) <= 150)\n    return\
+    \ internal::convolution_naive(a, b);\n  return internal::convolution_crt<2013265921,\
+    \ 2113929217>(a, b);\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
     \n#include \"../modint/modint.hpp\"\n#include \"../crt.hpp\"\n\n/**\n * @brief\
     \ \u7573\u307F\u8FBC\u307F\n * @docs docs/math/convolution/convolution.md\n */\n\
+    \ntemplate <class T>\nT convolution_point_get(const vc<T> &a, const vc<T> &b,\
+    \ int p)\n{\n  const int n = a.size(), m = b.size();\n  T res = 0;\n  repi(i,\
+    \ max(0, p - m + 1), min(n, p + 1)) res += a[i] * b[p - i];\n  return res;\n}\n\
     \nnamespace internal\n{\n\nconstexpr int primitive_root_constexpr(int m)\n{\n\
     \  if (m == 2)\n    return 1;\n  if (m == 167772161)\n    return 3;\n  if (m ==\
     \ 469762049)\n    return 3;\n  if (m == 754974721)\n    return 11;\n  if (m ==\
@@ -985,7 +1004,7 @@ data:
     \      }\n    }\n  }\n};\n\n}  // namespace internal\n\n// mint \u3067\u9577\u3055\
     \ n \u306E\u5217\u306E ntt \u304C\u3067\u304D\u308B\u304B\u5224\u5B9A\ntemplate\
     \ <class mint>\nbool ntt_ok(int n)\n{\n  if constexpr (is_static_modint_v<mint>)\n\
-    \  {\n    if constexpr (!internal::isprime32<mint::mod()>)\n    return false;\n\
+    \  {\n    if constexpr (!internal::isprime32<mint::mod()>)\n      return false;\n\
     \    static constexpr int rank2 = countr_zero(mint::mod() - 1);\n    return n\
     \ <= (1 << rank2);\n  }\n  else\n    return false;\n}\n\ntemplate <int id>\nvoid\
     \ ntt(vc<dynamic_modint<id>> &) {}\ntemplate <int id>\nvoid intt(vc<dynamic_modint<id>>\
@@ -1046,11 +1065,14 @@ data:
     \  }\n      len -= 2;\n    }\n  }\n\n  mint in = mint(n).inv();\n  fem(ai : a)\
     \ ai *= in;\n}\n\nnamespace internal\n{\n\ntemplate <class mint>\nvc<mint> convolution_naive(const\
     \ vc<mint> &a, const vc<mint> &b)\n{\n  const int n = a.size(), m = b.size();\n\
-    \  vc<mint> c(n + m - 1);\n  if (n < m)\n    repi(j, m) repi(i, n) c[i + j] +=\
-    \ a[i] * b[j];\n  else\n    repi(i, n) repi(j, m) c[i + j] += a[i] * b[j];\n \
-    \ return c;\n}\n\n// n == 0 or m == 0 \u306F\u30D0\u30B0\u308B\u306E\u3067\u6CE8\
-    \u610F\ntemplate <class mint>\nvc<mint> convolution_ntt(vc<mint> a, vc<mint> b)\n\
-    {\n  const int n = a.size(), m = b.size();\n  const int z = bit_ceil(n + m - 1);\n\
+    \  const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);\n  vc<mint>\
+    \ c(n + m - 1);\n  if ((ll)m * cnta > (ll)n * cntb)\n  {\n    repi(j, m)\n   \
+    \ {\n      if (b[j] == 0)\n        continue;\n      repi(i, n) c[i + j] += a[i]\
+    \ * b[j];\n    }\n  }\n  else\n  {\n    repi(i, n)\n    {\n      if (a[i] == 0)\n\
+    \        continue;\n      repi(j, m) c[i + j] += a[i] * b[j];\n    }\n  }\n  return\
+    \ c;\n}\n\n// n == 0 or m == 0 \u306F\u30D0\u30B0\u308B\u306E\u3067\u6CE8\u610F\
+    \ntemplate <class mint>\nvc<mint> convolution_ntt(vc<mint> a, vc<mint> b)\n{\n\
+    \  const int n = a.size(), m = b.size();\n  const int z = bit_ceil(n + m - 1);\n\
     \  a.resize(z), b.resize(z);\n  ntt(a), ntt(b);\n  repi(i, z) a[i] *= b[i];\n\
     \  intt(a);\n  a.resize(n + m - 1);\n  return a;\n}\n\ntemplate <size_t j, int\
     \ mod, class T, size_t k>\nvoid convolution_crt_helper(const vc<T> &a, const vc<T>\
@@ -1075,10 +1097,11 @@ data:
     \ mod \u306F 10^9 \u7A0B\u5EA6\u3092\u60F3\u5B9A\u3001\u5217\u306E\u9577\u3055\
     \u306F\u5408\u8A08 2^26 \u7A0B\u5EA6\ntemplate <class mint>\nvc<mint> convolution(const\
     \ vc<mint> &a, const vc<mint> &b)\n{\n  const int n = a.size(), m = b.size();\n\
-    \  if (n == 0 || m == 0)\n    return {};\n  if (ntt_ok<mint>(n + m - 1))\n  {\n\
-    \    if (min(n, m) <= 60)\n      return internal::convolution_naive(a, b);\n \
-    \   return internal::convolution_ntt(a, b);\n  }\n  else\n  {\n    if (min(n,\
-    \ m) <= 300)\n      return internal::convolution_naive(a, b);\n    assert(ntt_ok<static_modint<469762049>>(n\
+    \  const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);\n  if (n\
+    \ == 0 || m == 0)\n    return {};\n  if (ntt_ok<mint>(n + m - 1))\n  {\n    if\
+    \ (min(cnta, cntb) <= 60)\n      return internal::convolution_naive(a, b);\n \
+    \   return internal::convolution_ntt(a, b);\n  }\n  else\n  {\n    if (min(cnta,\
+    \ cntb) <= 300)\n      return internal::convolution_naive(a, b);\n    assert(ntt_ok<static_modint<469762049>>(n\
     \ + m - 1) && \"|a| + |b| - 1 <= 2^26\");\n    vc<ll> a_(n), b_(m);\n    repi(i,\
     \ n) a_[i] = a[i].val();\n    repi(j, m) b_[j] = b[j].val();\n    return internal::convolution_crt_mod<mint,\
     \ 469762049, 1811939329, 2013265921>(a_, b_);\n  }\n}\n\ntemplate <int mod = 998244353,\
@@ -1088,15 +1111,18 @@ data:
     \ c.size()) c_[i] = c[i].val();\n  return c_;\n}\n\n// mod 2^64\n// mod 5 \u3064\
     \u3067\u8A08\u7B97\n// \u5217\u306E\u9577\u3055\u306F\u5408\u8A08 2^25 \u7A0B\u5EA6\
     \nvc<ull> convolution64(const vc<ull> &a, const vc<ull> &b)\n{\n  const int n\
-    \ = a.size(), m = b.size();\n  if (min(n, m) <= 400)\n    return internal::convolution_naive(a,\
+    \ = a.size(), m = b.size();\n  const int cnta = n - count(ALL(a), 0), cntb = m\
+    \ - count(ALL(b), 0);\n  if (min(cnta, cntb) <= 400)\n    return internal::convolution_naive(a,\
     \ b);\n  assert(ntt_ok<static_modint<754974721>>(n + m - 1) && \"|a| + |b| - 1\
     \ <= 2^25\");\n  return internal::convolution_crt_mod<ull, 167772161, 469762049,\
-    \ 1107296257, 1711276033, 1811939329>(a, b);\n}\n\n// \u8981\u7D20\u304C 4.2 \xD7\
-    \ 10^18 \u7A0B\u5EA6\u306B\u53CE\u307E\u308B\u5834\u5408\n// mod 2 \u3064\u3067\
-    \u8A08\u7B97\n// \u5217\u306E\u9577\u3055\u306F\u5408\u8A08 2^25 \u7A0B\u5EA6\n\
-    vc<ll> convolution_4e18(const vc<ll> &a, const vc<ll> &b)\n{\n  const int n =\
-    \ a.size(), m = b.size();\n  if (min(n, m) <= 150)\n    return internal::convolution_naive(a,\
-    \ b);\n  return internal::convolution_crt<2013265921, 2113929217>(a, b);\n}\n"
+    \ 1107296257, 1711276033, 1811939329>(a, b);\n}\n\n// \u6700\u7D42\u7684\u306A\
+    \u8981\u7D20\u304C 4.2 \xD7 10^18 \u7A0B\u5EA6\u306B\u53CE\u307E\u308B\u5834\u5408\
+    \n// mod 2 \u3064\u3067\u8A08\u7B97\n// \u5217\u306E\u9577\u3055\u306F\u5408\u8A08\
+    \ 2^25 \u7A0B\u5EA6\nvc<ll> convolution_4e18(const vc<ll> &a, const vc<ll> &b)\n\
+    {\n  const int n = a.size(), m = b.size();\n  const int cnta = n - count(ALL(a),\
+    \ 0), cntb = m - count(ALL(b), 0);\n  if (min(cnta, cntb) <= 150)\n    return\
+    \ internal::convolution_naive(a, b);\n  return internal::convolution_crt<2013265921,\
+    \ 2113929217>(a, b);\n}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -1117,9 +1143,11 @@ data:
   isVerificationFile: false
   path: math/convolution/convolution.hpp
   requiredBy: []
-  timestamp: '2025-04-26 00:43:27+09:00'
+  timestamp: '2025-04-26 23:10:30+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yukicoder/yuki2215_dc.test.cpp
+  - verify/yukicoder/yuki2215_swag.test.cpp
   - verify/yosupo/convolution.test.cpp
   - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
   - verify/yosupo/convolution_arbitrary_static.test.cpp
@@ -1134,6 +1162,19 @@ title: "\u7573\u307F\u8FBC\u307F"
 ## 畳み込み
 
 ACL の畳み込みにだいたい準拠。
+
+#### convolution_point_get
+
+```cpp
+T convolution_point_get(vc<T> a, vc<T> b)
+```
+
+$a$ と $b$ を畳み込んだときの $p$ 番目の要素を返す。長さが足りないときは $0$ を返す。
+
+##### 計算量
+
+- $O(\lvert a \rvert + \lvert b \rvert)$
+
 
 #### ntt, intt
 
@@ -1174,6 +1215,7 @@ $a$ に対し NTT / INTT を行う（破壊的に変更する）。
 
 - $O((n+m)\log(n+m))$
   - NTT が可能**でない**場合、定数倍が $3$ 倍程度つく。
+  - サイズが小さい場合や $a$ と $b$ のどちらかが疎な場合、$a, b$ の非零要素の個数を $n', m'$ として $O(n + m + \min(n'm, nm'))$ の実装に切り替える。
 
 #### convolution64
 
@@ -1192,6 +1234,7 @@ vc<ull> convolution64(vc<ull> a, vc<ull> b)
 
 - $O((n+m)\log(n+m))$
   - 定数倍は NTT の $5$ 倍程度つく。
+  - サイズが小さい場合や $a$ と $b$ のどちらかが疎な場合、$a, b$ の非零要素の個数を $n', m'$ として $O(n + m + \min(n'm, nm'))$ の実装に切り替える。
 
 #### convolution_4e18
 
@@ -1212,3 +1255,4 @@ ACL の `convolution_ll` は `ll` の範囲を全部できるようにしてい�
 
 - $O((n+m)\log(n+m))$
   - 定数倍は NTT の $2$ 倍程度つく。
+  - サイズが小さい場合や $a$ と $b$ のどちらかが疎な場合、$a, b$ の非零要素の個数を $n', m'$ として $O(n + m + \min(n'm, nm'))$ の実装に切り替える。

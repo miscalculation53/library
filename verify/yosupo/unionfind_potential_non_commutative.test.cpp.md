@@ -898,12 +898,12 @@ data:
     #line 5 \"math/algebra/matmul22.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\
     \u9020\uFF08$2 \\times 2$ \u884C\u5217\u306E\u7A4D\uFF09\n * @docs docs/math/algebra/matmul22.md\n\
     \ */\n\ntemplate <class mint>\nstruct GroupMatMul22\n{\n  using S = array<mint,\
-    \ 4>;\n  static constexpr S op(S l, S r)\n  {\n    auto [a, b, c, d] = l;\n  \
-    \  auto [e, f, g, h] = r;\n    return {{a * e + b * g, a * f + b * h, c * e +\
-    \ d * g, c * f + d * h}};\n  }\n  static constexpr S e() { return {{1, 0, 0, 1}};\
-    \ }\n  static constexpr S inv(S m)\n  {\n    auto [a, b, c, d] = m;\n    mint\
-    \ detinv = (a * d - b * c).inv();\n    return {{d * detinv, -b * detinv, -c *\
-    \ detinv, a * detinv}};\n  }\n};\n#line 23 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\
+    \ 4>;\n  static constexpr S op(const S &l, const S &r)\n  {\n    cauto &[a, b,\
+    \ c, d] = l;\n    cauto &[e, f, g, h] = r;\n    return {{a * e + b * g, a * f\
+    \ + b * h, c * e + d * g, c * f + d * h}};\n  }\n  static constexpr S e() { return\
+    \ {{1, 0, 0, 1}}; }\n  static constexpr S inv(const S &m)\n  {\n    cauto &[a,\
+    \ b, c, d] = m;\n    mint detinv = (a * d - b * c).inv();\n    return {{d * detinv,\
+    \ -b * detinv, -c * detinv, a * detinv}};\n  }\n};\n#line 23 \"verify/yosupo/unionfind_potential_non_commutative.test.cpp\"\
     \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  UnionFindPotential<GroupMatMul22<mint>>\
     \ uf(N);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(u, v,\
     \ a, b, c, d);\n      PRINT(uf.merge(v, u, {{a, b, c, d}}));\n    }\n    else\
@@ -966,7 +966,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
   requiredBy: []
-  timestamp: '2025-04-26 00:47:12+09:00'
+  timestamp: '2025-04-26 23:10:30+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/unionfind_potential_non_commutative.test.cpp

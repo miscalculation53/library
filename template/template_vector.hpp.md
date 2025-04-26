@@ -21,6 +21,9 @@ data:
     path: algo/rle.hpp
     title: "\u30E9\u30F3\u30EC\u30F3\u30B0\u30B9\u5727\u7E2E"
   - icon: ':heavy_check_mark:'
+    path: ds/block_sparse_table.hpp
+    title: "\u30D6\u30ED\u30C3\u30AF\u5206\u5272 + (disjoint) sparse table"
+  - icon: ':heavy_check_mark:'
     path: ds/coordinate_compression.hpp
     title: "\u5EA7\u6A19\u5727\u7E2E"
   - icon: ':heavy_check_mark:'
@@ -39,8 +42,15 @@ data:
     path: ds/cumulative_sum/imos_2d.hpp
     title: "$2$ \u6B21\u5143 imos \u6CD5"
   - icon: ':heavy_check_mark:'
+    path: ds/dc_range_prod.hpp
+    title: "\u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\u30A8\
+      \u30EA"
+  - icon: ':heavy_check_mark:'
     path: ds/default_map.hpp
     title: "\u30C7\u30D5\u30A9\u30EB\u30C8\u5024\u3064\u304D map"
+  - icon: ':heavy_check_mark:'
+    path: ds/disjoint_sparse_table.hpp
+    title: disjoint sparse table
   - icon: ':heavy_check_mark:'
     path: ds/flat_map.hpp
     title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
@@ -48,6 +58,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: ds/group_index.hpp
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
+  - icon: ':heavy_check_mark:'
+    path: ds/linear_rmq.hpp
+    title: "\u7DDA\u5F62 RMQ"
   - icon: ':heavy_check_mark:'
     path: ds/offline_dynamic_connectivity.hpp
     title: "\u30AA\u30D5\u30E9\u30A4\u30F3\u30C0\u30A4\u30B3\u30CD\u306E\u30C6\u30AF\
@@ -61,6 +74,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: ds/sparse_table.hpp
     title: sparse table
+  - icon: ':heavy_check_mark:'
+    path: ds/swag.hpp
+    title: SWAG
   - icon: ':heavy_check_mark:'
     path: ds/uf/uf.hpp
     title: UnionFind
@@ -82,6 +98,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: itertools/direct_product.hpp
     title: "\u76F4\u7A4D\u5168\u63A2\u7D22"
+  - icon: ':heavy_check_mark:'
+    path: math/algebra/affine_function.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
   - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
@@ -250,6 +269,9 @@ data:
     path: verify/mytest/power_table.test.cpp
     title: verify/mytest/power_table.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/mytest/rmq.test.cpp
+    title: verify/mytest/rmq.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/template_algo.test.cpp
     title: verify/mytest/template_algo.test.cpp
   - icon: ':heavy_check_mark:'
@@ -277,6 +299,12 @@ data:
     path: verify/yosupo/binomial.test.cpp
     title: verify/yosupo/binomial.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/block_disjoint_sparse_table.test.cpp
+    title: verify/yosupo/block_disjoint_sparse_table.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/block_sparse_table.test.cpp
+    title: verify/yosupo/block_sparse_table.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution.test.cpp
     title: verify/yosupo/convolution.test.cpp
   - icon: ':heavy_check_mark:'
@@ -288,6 +316,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution_arbitrary_static.test.cpp
     title: verify/yosupo/convolution_arbitrary_static.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/dc_range_prod.test.cpp
+    title: verify/yosupo/dc_range_prod.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/deque_operate_all_composite.test.cpp
+    title: verify/yosupo/deque_operate_all_composite.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/disjoint_sparse_table.test.cpp
+    title: verify/yosupo/disjoint_sparse_table.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
@@ -306,6 +343,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/linear_rmq.test.cpp
+    title: verify/yosupo/linear_rmq.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb.test.cpp
     title: verify/yosupo/many_aplusb.test.cpp
@@ -333,6 +373,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root_min.test.cpp
     title: verify/yosupo/primitive_root_min.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/queue_operate_all_composite.test.cpp
+    title: verify/yosupo/queue_operate_all_composite.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/quotients.test.cpp
     title: verify/yosupo/quotients.test.cpp
@@ -417,6 +460,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/uf_partially_persistent.test.cpp
     title: verify/yukicoder/uf_partially_persistent.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki2215_dc.test.cpp
+    title: verify/yukicoder/yuki2215_dc.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki2215_swag.test.cpp
+    title: verify/yukicoder/yuki2215_swag.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -585,8 +634,13 @@ data:
   isVerificationFile: false
   path: template/template_vector.hpp
   requiredBy:
+  - ds/block_sparse_table.hpp
+  - ds/disjoint_sparse_table.hpp
+  - ds/swag.hpp
   - ds/safe_unordered_map.hpp
   - ds/coordinate_compression.hpp
+  - ds/linear_rmq.hpp
+  - ds/dc_range_prod.hpp
   - ds/offline_dynamic_connectivity.hpp
   - ds/default_map.hpp
   - ds/csr.hpp
@@ -628,6 +682,7 @@ data:
   - math/modint/modint_base.hpp
   - math/modint/template_modint.hpp
   - math/modint/modint.hpp
+  - math/algebra/affine_function.hpp
   - math/algebra/algebra_base.hpp
   - math/algebra/bit.hpp
   - math/algebra/matmul22.hpp
@@ -660,6 +715,7 @@ data:
   - verify/yukicoder/rle.test.cpp
   - verify/yukicoder/uf_partially_persistent.test.cpp
   - verify/yukicoder/uf_min_max_leader.test.cpp
+  - verify/yukicoder/yuki2215_dc.test.cpp
   - verify/yukicoder/base_repr.test.cpp
   - verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
   - verify/yukicoder/crt.test.cpp
@@ -669,10 +725,12 @@ data:
   - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/binomial.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  - verify/yukicoder/yuki2215_swag.test.cpp
   - verify/yukicoder/quadratic_equation.test.cpp
   - verify/yukicoder/divisors.test.cpp
   - verify/yukicoder/static_modint.test.cpp
   - verify/mytest/itertools_direct_product.test.cpp
+  - verify/mytest/rmq.test.cpp
   - verify/mytest/template_bit.test.cpp
   - verify/mytest/modint64.test.cpp
   - verify/mytest/pbds_set.test.cpp
@@ -692,12 +750,15 @@ data:
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/predecessor_problem.test.cpp
   - verify/yosupo/kth_root_integer.test.cpp
+  - verify/yosupo/block_disjoint_sparse_table.test.cpp
+  - verify/yosupo/linear_rmq.test.cpp
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/unionfind.test.cpp
   - verify/yosupo/aplusb.test.cpp
   - verify/yosupo/static_range_sum.test.cpp
   - verify/yosupo/convolution.test.cpp
   - verify/yosupo/ordered_set.test.cpp
+  - verify/yosupo/queue_operate_all_composite.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/sparse_table.test.cpp
   - verify/yosupo/static_range_frequency.test.cpp
@@ -705,6 +766,7 @@ data:
   - verify/yosupo/unionfind_potential.test.cpp
   - verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/dc_range_prod.test.cpp
   - verify/yosupo/subset_convolution.test.cpp
   - verify/yosupo/and_or_convolution.test.cpp
   - verify/yosupo/primitive_root_min.test.cpp
@@ -714,9 +776,12 @@ data:
   - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
   - verify/yosupo/offline_dynamic_connectivity.test.cpp
   - verify/yosupo/associative_array_lower_bound.test.cpp
+  - verify/yosupo/deque_operate_all_composite.test.cpp
   - verify/yosupo/associative_array_flat_map.test.cpp
   - verify/yosupo/primality_test.test.cpp
   - verify/yosupo/binomial.test.cpp
+  - verify/yosupo/block_sparse_table.test.cpp
+  - verify/yosupo/disjoint_sparse_table.test.cpp
   - verify/yosupo/many_aplusb_128bit.test.cpp
   - verify/yosupo/convolution_arbitrary_static.test.cpp
   - verify/yosupo/many_aplusb.test.cpp

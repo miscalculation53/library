@@ -39,167 +39,35 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
   - icon: ':heavy_check_mark:'
-    path: math/convolution/convolution.hpp
-    title: "\u7573\u307F\u8FBC\u307F"
+    path: ds/block_sparse_table.hpp
+    title: "\u30D6\u30ED\u30C3\u30AF\u5206\u5272 + (disjoint) sparse table"
   - icon: ':heavy_check_mark:'
-    path: math/crt.hpp
-    title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64.hpp
-    title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64_internal.hpp
-    title: math/modint/modint64_internal.hpp
-  - icon: ':warning:'
-    path: math/modint/template_modint.hpp
-    title: math/modint/template_modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/prime/euler_phi_carmichael.hpp
-    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
-      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/order_primitive_root.hpp
-    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/primality_test.hpp
-    title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':warning:'
-    path: template/template.cpp
-    title: template/template.cpp
-  - icon: ':warning:'
-    path: template/template_all.hpp
-    title: template/template_all.hpp
+    path: ds/linear_rmq.hpp
+    title: "\u7DDA\u5F62 RMQ"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/aoj/modpow.test.cpp
-    title: verify/aoj/modpow.test.cpp
+    path: verify/mytest/rmq.test.cpp
+    title: verify/mytest/rmq.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/mytest/linear_sieve.test.cpp
-    title: verify/mytest/linear_sieve.test.cpp
+    path: verify/yosupo/block_disjoint_sparse_table.test.cpp
+    title: verify/yosupo/block_disjoint_sparse_table.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint.test.cpp
-    title: verify/mytest/modint.test.cpp
+    path: verify/yosupo/block_sparse_table.test.cpp
+    title: verify/yosupo/block_sparse_table.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint64.test.cpp
-    title: verify/mytest/modint64.test.cpp
+    path: verify/yosupo/disjoint_sparse_table.test.cpp
+    title: verify/yosupo/disjoint_sparse_table.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/mytest/power_table.test.cpp
-    title: verify/mytest/power_table.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/and_or_convolution.test.cpp
-    title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/binomial.test.cpp
-    title: verify/yosupo/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution.test.cpp
-    title: verify/yosupo/convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution64.test.cpp
-    title: verify/yosupo/convolution64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-    title: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution_arbitrary_static.test.cpp
-    title: verify/yosupo/convolution_arbitrary_static.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/deque_operate_all_composite.test.cpp
-    title: verify/yosupo/deque_operate_all_composite.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/gcd_convolution.test.cpp
-    title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_hadamard.test.cpp
-    title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/lcm_convolution.test.cpp
-    title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root.test.cpp
-    title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root_min.test.cpp
-    title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/queue_operate_all_composite.test.cpp
-    title: verify/yosupo/queue_operate_all_composite.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/subset_convolution.test.cpp
-    title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind_potential.test.cpp
-    title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-    title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/xor_convolution.test.cpp
-    title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/binomial.test.cpp
-    title: verify/yukicoder/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/crt.test.cpp
-    title: verify/yukicoder/crt.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/crt_mod.test.cpp
-    title: verify/yukicoder/crt_mod.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-    title: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/dynamic_modint.test.cpp
-    title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_carmichael.test.cpp
-    title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_euler_phi.test.cpp
-    title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/static_modint.test.cpp
-    title: verify/yukicoder/static_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki2215_dc.test.cpp
-    title: verify/yukicoder/yuki2215_dc.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki2215_swag.test.cpp
-    title: verify/yukicoder/yuki2215_swag.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+    path: verify/yosupo/linear_rmq.test.cpp
+    title: verify/yosupo/linear_rmq.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
+    _deprecated_at_docs: docs/ds/disjoint_sparse_table.md
+    document_title: disjoint sparse table
     links: []
-  bundledCode: "#line 2 \"math/modint/modint32_internal.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
+  bundledCode: "#line 2 \"ds/disjoint_sparse_table.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -759,40 +627,49 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 4 \"math/modint/modint32_internal.hpp\"\n\nnamespace internal\n{\n\nconstexpr\
-    \ ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n    return 0;\n\
-    \  uint _m = (uint)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while (n)\n \
-    \ {\n    if (n & 1)\n      r = (r * y) % _m;\n    y = (y * y) % _m;\n    n >>=\
-    \ 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int n)\n{\n  if\
-    \ (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n    return\
-    \ true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2\
-    \ == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll a : bases)\n\
-    \  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n      t <<= 1;\n\
-    \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
-    \ true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
-    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}\n"
-  code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
-    \nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll x, ll n, int m)\n\
-    {\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y =\
-    \ safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n\
-    \    y = (y * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int\
-    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
-    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while\
-    \ (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll\
-    \ a : bases)\n  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n  \
-    \  while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n \
-    \     t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n\
-    \  }\n  return true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
-    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}"
+    \ 4 \"ds/disjoint_sparse_table.hpp\"\n\n/**\n * @brief disjoint sparse table\n\
+    \ * @docs docs/ds/disjoint_sparse_table.md\n */\n\ntemplate <class M>\nstruct\
+    \ DisjointSparseTable\n{\n  using S = typename M::S;\n\nprivate:\n  int n;\n \
+    \ // dat[j][i] \u306F [i, mid) \u304B [mid, i]\n  vvc<S> dat;\n\npublic:\n  DisjointSparseTable()\
+    \ {}\n  DisjointSparseTable(const vc<S> &v) : n(v.size())\n  {\n    const int\
+    \ lg = bit_width(n);\n    dat.assign(lg, vc<S>(n));\n    repi(j, lg)\n    {\n\
+    \      const int len = 1 << j;\n      repi(m, len, n + 1, 2 * len)\n      {\n\
+    \        const int l = m - len, r = min(n, m + len);\n        dat[j][m - 1] =\
+    \ v[m - 1];\n        repi(i, m - 2, l - 1, -1) dat[j][i] = M::op(v[i], dat[j][i\
+    \ + 1]);\n        if (m < n)\n        {\n          dat[j][m] = v[m];\n       \
+    \   repi(i, m + 1, r) dat[j][i] = M::op(dat[j][i - 1], v[i]);\n        }\n   \
+    \   }\n    }\n  }\n\n  S get(int p)\n  {\n    assert(0 <= p && p < n);\n    return\
+    \ dat[0][p];\n  }\n  S prod(int l, int r)\n  {\n    auto [wl, wr] = prod_left_right(l,\
+    \ r);\n    return M::op(wl, wr);\n  }\n  // prod[l, r) = wl \u2022 wr \u3068\u306A\
+    \u308B\u3088\u3046\u306A (wl, wr) \u3092\u8FD4\u3059\n  // \u4F7F\u7528\u5834\u9762\
+    \uFF1A\u6700\u7D42\u7684\u306A\u7B54\u3048\u3068\u3057\u3066\u306F\u4E00\u822C\
+    \u306E\u5143\u306E\u7A4D\u304C\u3044\u3089\u306A\u3044\u5834\u5408\n  pair<S,\
+    \ S> prod_left_right(int l, int r)\n  {\n    assert(0 <= l && l <= r && r <= n);\n\
+    \    if (l == r)\n      return {M::e(), M::e()};\n    if (l + 1 == r)\n      return\
+    \ {dat[0][l], M::e()};\n    const int j = msb_pos(l ^ (r - 1));\n    return {dat[j][l],\
+    \ dat[j][r - 1]};\n  }\n};\n"
+  code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
+    /**\n * @brief disjoint sparse table\n * @docs docs/ds/disjoint_sparse_table.md\n\
+    \ */\n\ntemplate <class M>\nstruct DisjointSparseTable\n{\n  using S = typename\
+    \ M::S;\n\nprivate:\n  int n;\n  // dat[j][i] \u306F [i, mid) \u304B [mid, i]\n\
+    \  vvc<S> dat;\n\npublic:\n  DisjointSparseTable() {}\n  DisjointSparseTable(const\
+    \ vc<S> &v) : n(v.size())\n  {\n    const int lg = bit_width(n);\n    dat.assign(lg,\
+    \ vc<S>(n));\n    repi(j, lg)\n    {\n      const int len = 1 << j;\n      repi(m,\
+    \ len, n + 1, 2 * len)\n      {\n        const int l = m - len, r = min(n, m +\
+    \ len);\n        dat[j][m - 1] = v[m - 1];\n        repi(i, m - 2, l - 1, -1)\
+    \ dat[j][i] = M::op(v[i], dat[j][i + 1]);\n        if (m < n)\n        {\n   \
+    \       dat[j][m] = v[m];\n          repi(i, m + 1, r) dat[j][i] = M::op(dat[j][i\
+    \ - 1], v[i]);\n        }\n      }\n    }\n  }\n\n  S get(int p)\n  {\n    assert(0\
+    \ <= p && p < n);\n    return dat[0][p];\n  }\n  S prod(int l, int r)\n  {\n \
+    \   auto [wl, wr] = prod_left_right(l, r);\n    return M::op(wl, wr);\n  }\n \
+    \ // prod[l, r) = wl \u2022 wr \u3068\u306A\u308B\u3088\u3046\u306A (wl, wr) \u3092\
+    \u8FD4\u3059\n  // \u4F7F\u7528\u5834\u9762\uFF1A\u6700\u7D42\u7684\u306A\u7B54\
+    \u3048\u3068\u3057\u3066\u306F\u4E00\u822C\u306E\u5143\u306E\u7A4D\u304C\u3044\
+    \u3089\u306A\u3044\u5834\u5408\n  pair<S, S> prod_left_right(int l, int r)\n \
+    \ {\n    assert(0 <= l && l <= r && r <= n);\n    if (l == r)\n      return {M::e(),\
+    \ M::e()};\n    if (l + 1 == r)\n      return {dat[0][l], M::e()};\n    const\
+    \ int j = msb_pos(l ^ (r - 1));\n    return {dat[j][l], dat[j][r - 1]};\n  }\n\
+    };\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -806,66 +683,102 @@ data:
   - template/template_dump.hpp
   - template/template_random.hpp
   isVerificationFile: false
-  path: math/modint/modint32_internal.hpp
+  path: ds/disjoint_sparse_table.hpp
   requiredBy:
-  - template/template.cpp
-  - template/template_all.hpp
-  - math/modint/modint64_internal.hpp
-  - math/modint/modint64.hpp
-  - math/modint/template_modint.hpp
-  - math/modint/modint.hpp
-  - math/prime/factorize.hpp
-  - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/euler_phi_carmichael.hpp
-  - math/prime/primality_test.hpp
-  - math/prime/order_primitive_root.hpp
-  - math/convolution/convolution.hpp
-  - math/crt.hpp
-  timestamp: '2025-04-26 00:43:27+09:00'
+  - ds/block_sparse_table.hpp
+  - ds/linear_rmq.hpp
+  timestamp: '2025-04-26 23:10:30+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/dynamic_modint.test.cpp
-  - verify/yukicoder/yuki2215_dc.test.cpp
-  - verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  - verify/yukicoder/crt.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/crt_mod.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/binomial.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/yuki2215_swag.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yukicoder/static_modint.test.cpp
-  - verify/mytest/modint64.test.cpp
-  - verify/mytest/power_table.test.cpp
-  - verify/mytest/linear_sieve.test.cpp
-  - verify/mytest/modint.test.cpp
-  - verify/aoj/modpow.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - verify/yosupo/convolution.test.cpp
-  - verify/yosupo/queue_operate_all_composite.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yosupo/kronecker_power_hadamard.test.cpp
-  - verify/yosupo/unionfind_potential.test.cpp
-  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/subset_convolution.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
-  - verify/yosupo/xor_convolution.test.cpp
-  - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-  - verify/yosupo/deque_operate_all_composite.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/binomial.test.cpp
-  - verify/yosupo/convolution_arbitrary_static.test.cpp
-  - verify/yosupo/convolution64.test.cpp
-documentation_of: math/modint/modint32_internal.hpp
+  - verify/mytest/rmq.test.cpp
+  - verify/yosupo/block_disjoint_sparse_table.test.cpp
+  - verify/yosupo/linear_rmq.test.cpp
+  - verify/yosupo/block_sparse_table.test.cpp
+  - verify/yosupo/disjoint_sparse_table.test.cpp
+documentation_of: ds/disjoint_sparse_table.hpp
 layout: document
 redirect_from:
-- /library/math/modint/modint32_internal.hpp
-- /library/math/modint/modint32_internal.hpp.html
-title: math/modint/modint32_internal.hpp
+- /library/ds/disjoint_sparse_table.hpp
+- /library/ds/disjoint_sparse_table.hpp.html
+title: disjoint sparse table
 ---
+## disjoint sparse table
+
+静的列に対するモノイドの区間積クエリを、前計算 $O(N \log N)$ 時間・空間、クエリ $O(1)$ 時間で処理する。
+
+- sparse table と計算量オーダーが同じ。こちらのほうが適用範囲が広い。
+- 「一般の $2$ 元の積は時間がかかるが、列にもとある元と一般の元の積は高速」なときにも使える。具体的には、前計算では列にもとある元と一般の元の積を $O(N \log N)$ 回、クエリでは一般の元の積を $1$ 回。
+  - 他にこの特徴を持つ手法：
+    - 分割統治でオフラインクエリを処理するやつ
+      - これはアイデアも似ている
+    - SWAG
+      - これはクエリが queue や deque のようになっている場合だけ
+
+### コンストラクタ
+
+```cpp
+DisjointSparseTable<M>(vc<M::S> v)
+```
+
+##### 制約
+
+- `M` はモノイド
+
+##### 計算量
+
+`vec` の長さを $n$ として
+
+- $O(n \log n)$
+
+### メンバ関数
+
+#### get
+
+```cpp
+M::S get(int p)
+```
+
+$v_p$ の値を返す。
+
+##### 制約
+
+- $0 \leq p \lt n$
+
+##### 計算量
+
+- $O(1)$
+
+
+#### prod
+
+```cpp
+(1) M::S prod(int l, int r)
+(2) pair<M::S, M::S> prod_left_right(int l, int r)
+```
+
+- (1)：$v_l \bullet \cdots \bullet v_{r-1}$ の値を返す。
+- (2)：$v_l \bullet \cdots \bullet v_{r-1} = w_l \bullet w_r$ となるような $(w_l, w_r)$ を返す。
+  - 使用場面：最終的な答えとしては一般の元の積がいらない場合（例： https://yukicoder.me/problems/no/2215 ）。
+
+##### 制約
+
+- $0 \leq l \leq r \leq n$
+
+##### 計算量
+
+- $O(1)$
+
+-----
+
+### 仕組み
+
+```
+ 000 001 010 011 100 101 110 111
+| 0   1   2   3 | 4   5   6   7 |
+| 0   1 | 2   3 ; 4   5 | 6   7 |
+| 0 | 1 ; 2 | 3 ; 4 | 5 ; 6 | 7 |
+```
+
+このように仕切りを入れると、どんな（長さ $2$ 以上の）区間クエリもどこかの仕切りを跨ぐ。各ブロックについて、仕切りの場所を $M$ として $[i, M)$ または $[M, i)$ の形の累積積を適切に計算しておくことで、$[l, r)$ クエリを $[l, M)$ と $[M, r-1]$ に分けて処理できるようになる。
+
+どの段を参照すればよいかの計算は、$l$ と $r-1$ で異なるビットのうち最上位のものを見ればよく、`msb_pos(l ^ (r - 1))` で計算できる。

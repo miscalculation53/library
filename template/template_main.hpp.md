@@ -73,6 +73,12 @@ data:
     path: verify/yosupo/binomial.test.cpp
     title: verify/yosupo/binomial.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/block_disjoint_sparse_table.test.cpp
+    title: verify/yosupo/block_disjoint_sparse_table.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/block_sparse_table.test.cpp
+    title: verify/yosupo/block_sparse_table.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution.test.cpp
     title: verify/yosupo/convolution.test.cpp
   - icon: ':heavy_check_mark:'
@@ -84,6 +90,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution_arbitrary_static.test.cpp
     title: verify/yosupo/convolution_arbitrary_static.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/dc_range_prod.test.cpp
+    title: verify/yosupo/dc_range_prod.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/deque_operate_all_composite.test.cpp
+    title: verify/yosupo/deque_operate_all_composite.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/disjoint_sparse_table.test.cpp
+    title: verify/yosupo/disjoint_sparse_table.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
@@ -102,6 +117,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/linear_rmq.test.cpp
+    title: verify/yosupo/linear_rmq.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb.test.cpp
     title: verify/yosupo/many_aplusb.test.cpp
@@ -129,6 +147,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root_min.test.cpp
     title: verify/yosupo/primitive_root_min.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/queue_operate_all_composite.test.cpp
+    title: verify/yosupo/queue_operate_all_composite.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/quotients.test.cpp
     title: verify/yosupo/quotients.test.cpp
@@ -213,6 +234,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/uf_partially_persistent.test.cpp
     title: verify/yukicoder/uf_partially_persistent.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki2215_dc.test.cpp
+    title: verify/yukicoder/yuki2215_dc.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki2215_swag.test.cpp
+    title: verify/yukicoder/yuki2215_swag.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -846,6 +873,7 @@ data:
   - verify/yukicoder/rle.test.cpp
   - verify/yukicoder/uf_partially_persistent.test.cpp
   - verify/yukicoder/uf_min_max_leader.test.cpp
+  - verify/yukicoder/yuki2215_dc.test.cpp
   - verify/yukicoder/base_repr.test.cpp
   - verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
   - verify/yukicoder/crt.test.cpp
@@ -855,6 +883,7 @@ data:
   - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/binomial.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  - verify/yukicoder/yuki2215_swag.test.cpp
   - verify/yukicoder/quadratic_equation.test.cpp
   - verify/yukicoder/divisors.test.cpp
   - verify/yukicoder/static_modint.test.cpp
@@ -866,12 +895,15 @@ data:
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/predecessor_problem.test.cpp
   - verify/yosupo/kth_root_integer.test.cpp
+  - verify/yosupo/block_disjoint_sparse_table.test.cpp
+  - verify/yosupo/linear_rmq.test.cpp
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/unionfind.test.cpp
   - verify/yosupo/aplusb.test.cpp
   - verify/yosupo/static_range_sum.test.cpp
   - verify/yosupo/convolution.test.cpp
   - verify/yosupo/ordered_set.test.cpp
+  - verify/yosupo/queue_operate_all_composite.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/sparse_table.test.cpp
   - verify/yosupo/static_range_frequency.test.cpp
@@ -879,6 +911,7 @@ data:
   - verify/yosupo/unionfind_potential.test.cpp
   - verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/dc_range_prod.test.cpp
   - verify/yosupo/subset_convolution.test.cpp
   - verify/yosupo/and_or_convolution.test.cpp
   - verify/yosupo/primitive_root_min.test.cpp
@@ -888,9 +921,12 @@ data:
   - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
   - verify/yosupo/offline_dynamic_connectivity.test.cpp
   - verify/yosupo/associative_array_lower_bound.test.cpp
+  - verify/yosupo/deque_operate_all_composite.test.cpp
   - verify/yosupo/associative_array_flat_map.test.cpp
   - verify/yosupo/primality_test.test.cpp
   - verify/yosupo/binomial.test.cpp
+  - verify/yosupo/block_sparse_table.test.cpp
+  - verify/yosupo/disjoint_sparse_table.test.cpp
   - verify/yosupo/many_aplusb_128bit.test.cpp
   - verify/yosupo/convolution_arbitrary_static.test.cpp
   - verify/yosupo/many_aplusb.test.cpp

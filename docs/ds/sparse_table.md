@@ -1,6 +1,6 @@
 ## sparse table
 
-モノイドが冪等（$\max, \min, \gcd, \mathrm{lcm}, \mathrm{and}, \mathrm{or}$ など）のときに、静的な列の区間積クエリを前計算 $O(N\log N)$ 時間・空間、クエリ $O(1)$ 時間で処理する。
+静的列に対するモノイドの区間積クエリを、モノイドが冪等（$\max, \min, \gcd, \mathrm{lcm}, \mathrm{and}, \mathrm{or}$ など）のときに限って、前計算 $O(N\log N)$ 時間・空間、クエリ $O(1)$ 時間で処理する。
 
 ### コンストラクタ
 

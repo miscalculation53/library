@@ -2,6 +2,12 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: ds/csr.hpp
+    title: CSR
+  - icon: ':heavy_check_mark:'
+    path: ds/group_index.hpp
+    title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -37,169 +43,26 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: math/convolution/convolution.hpp
-    title: "\u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
-    path: math/crt.hpp
-    title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64.hpp
-    title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64_internal.hpp
-    title: math/modint/modint64_internal.hpp
-  - icon: ':warning:'
-    path: math/modint/template_modint.hpp
-    title: math/modint/template_modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/prime/euler_phi_carmichael.hpp
-    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
-      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/order_primitive_root.hpp
-    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/primality_test.hpp
-    title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':warning:'
-    path: template/template.cpp
-    title: template/template.cpp
-  - icon: ':warning:'
-    path: template/template_all.hpp
-    title: template/template_all.hpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/aoj/modpow.test.cpp
-    title: verify/aoj/modpow.test.cpp
+    path: verify/mytest/rmq.test.cpp
+    title: verify/mytest/rmq.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/mytest/linear_sieve.test.cpp
-    title: verify/mytest/linear_sieve.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint.test.cpp
-    title: verify/mytest/modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint64.test.cpp
-    title: verify/mytest/modint64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/power_table.test.cpp
-    title: verify/mytest/power_table.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/and_or_convolution.test.cpp
-    title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/binomial.test.cpp
-    title: verify/yosupo/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution.test.cpp
-    title: verify/yosupo/convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution64.test.cpp
-    title: verify/yosupo/convolution64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-    title: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution_arbitrary_static.test.cpp
-    title: verify/yosupo/convolution_arbitrary_static.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/deque_operate_all_composite.test.cpp
-    title: verify/yosupo/deque_operate_all_composite.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/gcd_convolution.test.cpp
-    title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_hadamard.test.cpp
-    title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/lcm_convolution.test.cpp
-    title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root.test.cpp
-    title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root_min.test.cpp
-    title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/queue_operate_all_composite.test.cpp
-    title: verify/yosupo/queue_operate_all_composite.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/subset_convolution.test.cpp
-    title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind_potential.test.cpp
-    title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-    title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/xor_convolution.test.cpp
-    title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/binomial.test.cpp
-    title: verify/yukicoder/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/crt.test.cpp
-    title: verify/yukicoder/crt.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/crt_mod.test.cpp
-    title: verify/yukicoder/crt_mod.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-    title: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/dynamic_modint.test.cpp
-    title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_carmichael.test.cpp
-    title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_euler_phi.test.cpp
-    title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/static_modint.test.cpp
-    title: verify/yukicoder/static_modint.test.cpp
+    path: verify/yosupo/dc_range_prod.test.cpp
+    title: verify/yosupo/dc_range_prod.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki2215_dc.test.cpp
     title: verify/yukicoder/yuki2215_dc.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki2215_swag.test.cpp
-    title: verify/yukicoder/yuki2215_swag.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
+    _deprecated_at_docs: docs/ds/dc_range_prod.md
+    document_title: "\u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\
+      \u30A8\u30EA"
     links: []
-  bundledCode: "#line 2 \"math/modint/modint32_internal.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
+  bundledCode: "#line 2 \"ds/dc_range_prod.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -759,40 +622,133 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 4 \"math/modint/modint32_internal.hpp\"\n\nnamespace internal\n{\n\nconstexpr\
-    \ ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n    return 0;\n\
-    \  uint _m = (uint)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while (n)\n \
-    \ {\n    if (n & 1)\n      r = (r * y) % _m;\n    y = (y * y) % _m;\n    n >>=\
-    \ 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int n)\n{\n  if\
-    \ (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n    return\
-    \ true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2\
-    \ == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll a : bases)\n\
-    \  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n      t <<= 1;\n\
-    \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
-    \ true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
-    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}\n"
-  code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
-    \nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll x, ll n, int m)\n\
-    {\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y =\
-    \ safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n\
-    \    y = (y * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int\
-    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
-    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while\
-    \ (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll\
-    \ a : bases)\n  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n  \
-    \  while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n \
-    \     t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n\
-    \  }\n  return true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
-    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}"
+    \ 4 \"ds/dc_range_prod.hpp\"\n\n/**\n * @brief \u5206\u5272\u7D71\u6CBB\u306B\u3088\
+    \u308B\u533A\u9593\u7A4D\u30AF\u30A8\u30EA\n * @docs docs/ds/dc_range_prod.md\n\
+    \ */\n\n#line 2 \"ds/group_index.hpp\"\n\n#line 4 \"ds/group_index.hpp\"\n\n#line\
+    \ 2 \"ds/csr.hpp\"\n\n#line 4 \"ds/csr.hpp\"\n\n/**\n * @brief CSR\n * @docs docs/ds/csr.md\n\
+    \ */\n\ntemplate <class T>\nstruct CSR\n{\nprivate:\n  // i (0 <= i < n) \u884C\
+    \u76EE\u3092\u8868\u3059\u306E\u306F elist \u306E [start[i], start[i+1])\n  int\
+    \ n;\n  vc<int> start;\n  vc<T> elist;\n\n  struct Row\n  {\n    using iterator\
+    \ = typename vc<T>::const_iterator;\n\n  private:\n    iterator begi, endi;\n\n\
+    \  public:\n    Row(const iterator &begi, const iterator &endi) : begi(begi),\
+    \ endi(endi) {}\n    inline iterator begin() const { return begi; }\n    inline\
+    \ iterator end() const { return endi; }\n    template <class I = ll>\n    inline\
+    \ I size() const { return endi - begi; }\n    inline bool empty() const { return\
+    \ size() == 0; }\n\n    inline T get(int i) const\n    {\n      assert(0 <= i\
+    \ && i < size());\n      return *(begi + i);\n    }\n    inline T front() const\n\
+    \    {\n      assert(!empty());\n      return *begi;\n    }\n    inline T back()\
+    \ const\n    {\n      assert(!empty());\n      return *prev(endi);\n    }\n  };\n\
+    \npublic:\n  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n\
+    \  template <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) : n(n), elist(ies.size())\n\
+    \  {\n    assert(n >= 0);\n    start.assign(n, 0);\n    fec([ i, e ] : ies)\n\
+    \    {\n      assert(0 <= i && i < n);\n      start[i]++;\n    }\n    start =\
+    \ cumlsum(start);\n    auto cnt = start;\n    fec([ i, e ] : ies) elist[cnt[i]++]\
+    \ = e;\n  }\n  // vv[i] \u306B elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\
+    \u305F vector\n  CSR(const vvc<T> &vv) : n(vv.size()), start(n + 1)\n  {\n   \
+    \ int m = 0;\n    fec(row : vv) m += row.size();\n    elist.resize(m);\n    int\
+    \ k = 0;\n    repi(i, n)\n    {\n      start[i] = k;\n      fec(e : vv[i]) elist[k++]\
+    \ = e;\n    }\n    start.back() = m;\n  }\n\n  // i \u884C\u76EE\n  Row row(int\
+    \ i) const\n  {\n    if (!(0 <= i && i < n))\n      return Row(elist.begin(),\
+    \ elist.begin());\n    return Row(elist.begin() + start[i], elist.begin() + start[i\
+    \ + 1]);\n  }\n\n  template <class I = ll>\n  I size() const { return n; }\n\n\
+    \  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i] = {elist.begin()\
+    \ + start[i], elist.begin() + start[i + 1]};\n    return res;\n  }\n};\n#line\
+    \ 6 \"ds/group_index.hpp\"\n\n/**\n * @brief \u6DFB\u5B57\u3092\u5024\u3067\u5206\
+    \u985E\n * @docs docs/ds/group_index.md\n */\n\nstruct GroupIndex\n{\nprivate:\n\
+    \  int n, m;\n  CSR<int> csr;\n\npublic:\n  GroupIndex() {}\n  template <class\
+    \ T>\n  GroupIndex(const vc<T> &a) : n(a.size()), m(a.empty() ? 0 : MAX(a) + 1)\n\
+    \  {\n    vc<pair<int, int>> ies(n);\n    repi(i, n)\n    {\n      assert(0 <=\
+    \ a[i]);\n      ies[i] = {a[i], i};\n    }\n    csr = CSR(m, ies);\n  }\n\n  //\
+    \ \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u305F\u3061\n  auto idxs(int\
+    \ val) const { return csr.row(val); }\n\n  // \u5024\u304C val \u306B\u306A\u308B\
+    \u6DFB\u5B57\u306E\u3046\u3061 i \u672A\u6E80\u3067\u6700\u5927\u306E\u3082\u306E\
+    \ (\u306A\u3051\u308C\u3070 -1)\n  template <class I = ll>\n  I lt_max(int val,\
+    \ int i) const\n  {\n    auto is = idxs(val);\n    ll j = ::lt_max(is, i);\n \
+    \   return j == -1 ? -1 : is.get(j);\n  }\n  // \u5024\u304C val \u306B\u306A\u308B\
+    \u6DFB\u5B57\u306E\u3046\u3061 i \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u3082\u306E\
+    \ (\u306A\u3051\u308C\u3070 -1)\n  template <class I = ll>\n  I leq_max(int val,\
+    \ int i) const\n  {\n    auto is = idxs(val);\n    ll j = ::leq_max(is, i);\n\
+    \    return j == -1 ? -1 : is.get(j);\n  }\n  // \u5024\u304C val \u306B\u306A\
+    \u308B\u6DFB\u5B57\u306E\u3046\u3061 i \u8D85\u904E\u3067\u6700\u5C0F\u306E\u3082\
+    \u306E (\u306A\u3051\u308C\u3070 n)\n  template <class I = ll>\n  I gt_min(int\
+    \ val, int i) const\n  {\n    auto is = idxs(val);\n    ll j = ::gt_min(is, i);\n\
+    \    return j == is.size() ? n : is.get(j);\n  }\n  // \u5024\u304C val \u306B\
+    \u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061 i \u4EE5\u4E0A\u3067\u6700\u5C0F\u306E\
+    \u3082\u306E (\u306A\u3051\u308C\u3070 n)\n  template <class I = ll>\n  I geq_min(int\
+    \ val, int i) const\n  {\n    auto is = idxs(val);\n    ll j = ::geq_min(is, i);\n\
+    \    return j == is.size() ? n : is.get(j);\n  }\n  // \u5024\u304C val \u306B\
+    \u306A\u308B i \u672A\u6E80\u306E\u6DFB\u5B57\u306E\u500B\u6570\n  // i \u756A\
+    \u76EE\u304C val \u306E\u3068\u304D\u3001\u300C\u3053\u308C\u306F\u4F55\u756A\u76EE\
+    \u306E val \u304B\uFF1F\u300D\u306B\u4E00\u81F4\n  template <class I = ll>\n \
+    \ I lt_cnt(int val, int i) const { return ::lt_cnt(idxs(val), i); }\n  // \u5024\
+    \u304C val \u306B\u306A\u308B i \u4EE5\u4E0B\u306E\u6DFB\u5B57\u306E\u500B\u6570\
+    \n  template <class I = ll>\n  I leq_cnt(int val, int i) const { return ::leq_cnt(idxs(val),\
+    \ i); }\n  template <class I = ll>\n  // \u5024\u304C val \u306B\u306A\u308B i\
+    \ \u8D85\u904E\u306E\u6DFB\u5B57\u306E\u500B\u6570\n  I gt_cnt(int val, int i)\
+    \ const { return ::gt_cnt(idxs(val), i); }\n  template <class I = ll>\n  // \u5024\
+    \u304C val \u306B\u306A\u308B i \u4EE5\u4E0A\u306E\u6DFB\u5B57\u306E\u500B\u6570\
+    \n  I geq_cnt(int val, int i) const { return ::geq_cnt(idxs(val), i); }\n  //\
+    \ \u5024\u304C val \u306B\u306A\u308B [l, r) \u306E\u6DFB\u5B57\u306E\u500B\u6570\
+    \n  template <class I = ll>\n  I in_cnt(int val, int l, int r) const { return\
+    \ ::in_cnt(idxs(val), l, r); }\n\n  template <class I = ll>\n  vvc<I> to_vv()\
+    \ const\n  {\n    auto res = csr.to_vv();\n    vvc<I> res2(res.size());\n    rep(i,\
+    \ res.size()) res2[i] = vc<I>(ALL(res[i]));\n    return res2;\n  }\n};\n#line\
+    \ 11 \"ds/dc_range_prod.hpp\"\n\n// M: \u30E2\u30CE\u30A4\u30C9\n// v \u306E [l,\
+    \ r) \u306E\u7A4D\u3092\u7B54\u3048\u308B\u30AF\u30A8\u30EA\u306B\u307E\u3068\u3081\
+    \u3066\u7B54\u3048\u308B\n// \u305F\u3060\u3057\u3001\u5404\u30AF\u30A8\u30EA\u306B\
+    \u3064\u3044\u3066\u306F ans == x \u2022 y \u3068\u306A\u308B (x, y) \u3092\u8FD4\
+    \u3059\n// \u4F7F\u7528\u5834\u9762\uFF1A\u6700\u7D42\u7684\u306A\u7B54\u3048\u3068\
+    \u3057\u3066\u306F\u4E00\u822C\u306E\u5143\u306E\u7A4D\u304C\u3044\u3089\u306A\
+    \u3044\u5834\u5408\ntemplate <class M, class I>\nvc<pair<typename M::S, typename\
+    \ M::S>> dc_range_prod_left_right\n(const vc<typename M::S> &v, const vc<pair<I,\
+    \ I>> &lrs)\n{\n  using S = typename M::S;\n  const int n = v.size(), q = lrs.size();\n\
+    \  vc<pair<S, S>> res(q);\n  vc<int> mids(q, n + 1);\n  rep(qi, q)\n  {\n    auto\
+    \ [l, r] = lrs[qi];\n    if (l == r)\n    {\n      res[qi] = pair{M::e(), M::e()};\n\
+    \      continue;\n    }\n    if (l + 1 == r)\n    {\n      res[qi] = pair{v[l],\
+    \ M::e()};\n      continue;\n    }\n    const int j = msb_pos(l ^ (r - 1));\n\
+    \    mids[qi] = (l | (1 << j)) & ~((1 << j) - 1);\n  }\n  vc<S> dat(n);\n  GroupIndex\
+    \ grp(mids);\n  repi(mid, 1, n)\n  {\n    auto qis = grp.idxs(mid);\n    int l\
+    \ = n + 1, r = -1;\n    fec(qi : qis)\n    {\n      auto [l_, r_] = lrs[qi];\n\
+    \      chmin(l, l_), chmax(r, r_);\n    }\n    dat[mid - 1] = v[mid - 1];\n  \
+    \  repi(i, mid - 2, l - 1, -1) dat[i] = M::op(v[i], dat[i + 1]);\n    dat[mid]\
+    \ = v[mid];\n    repi(i, mid + 1, r) dat[i] = M::op(dat[i - 1], v[i]);\n    fec(qi\
+    \ : qis)\n    {\n      auto [l_, r_] = lrs[qi];\n      res[qi] = {dat[l_], dat[r_\
+    \ - 1]};\n    }\n  }\n  return res;\n}\n\n// M: \u30E2\u30CE\u30A4\u30C9\n// v\
+    \ \u306E [l, r) \u306E\u7A4D\u3092\u7B54\u3048\u308B\u30AF\u30A8\u30EA\u306B\u307E\
+    \u3068\u3081\u3066\u7B54\u3048\u308B\ntemplate <class M, class I>\nvc<typename\
+    \ M::S> dc_range_prod\n(const vc<typename M::S> &v, const vc<pair<I, I>> &lrs)\n\
+    {\n  auto tmp = dc_range_prod_left_right<M, I>(v, lrs);\n  const int q = lrs.size();\n\
+    \  vc<typename M::S> res(q);\n  repi(i, q) res[i] = M::op(tmp[i].first, tmp[i].second);\n\
+    \  return res;\n}\n"
+  code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
+    /**\n * @brief \u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\
+    \u30A8\u30EA\n * @docs docs/ds/dc_range_prod.md\n */\n\n#include \"ds/group_index.hpp\"\
+    \n\n// M: \u30E2\u30CE\u30A4\u30C9\n// v \u306E [l, r) \u306E\u7A4D\u3092\u7B54\
+    \u3048\u308B\u30AF\u30A8\u30EA\u306B\u307E\u3068\u3081\u3066\u7B54\u3048\u308B\
+    \n// \u305F\u3060\u3057\u3001\u5404\u30AF\u30A8\u30EA\u306B\u3064\u3044\u3066\u306F\
+    \ ans == x \u2022 y \u3068\u306A\u308B (x, y) \u3092\u8FD4\u3059\n// \u4F7F\u7528\
+    \u5834\u9762\uFF1A\u6700\u7D42\u7684\u306A\u7B54\u3048\u3068\u3057\u3066\u306F\
+    \u4E00\u822C\u306E\u5143\u306E\u7A4D\u304C\u3044\u3089\u306A\u3044\u5834\u5408\
+    \ntemplate <class M, class I>\nvc<pair<typename M::S, typename M::S>> dc_range_prod_left_right\n\
+    (const vc<typename M::S> &v, const vc<pair<I, I>> &lrs)\n{\n  using S = typename\
+    \ M::S;\n  const int n = v.size(), q = lrs.size();\n  vc<pair<S, S>> res(q);\n\
+    \  vc<int> mids(q, n + 1);\n  rep(qi, q)\n  {\n    auto [l, r] = lrs[qi];\n  \
+    \  if (l == r)\n    {\n      res[qi] = pair{M::e(), M::e()};\n      continue;\n\
+    \    }\n    if (l + 1 == r)\n    {\n      res[qi] = pair{v[l], M::e()};\n    \
+    \  continue;\n    }\n    const int j = msb_pos(l ^ (r - 1));\n    mids[qi] = (l\
+    \ | (1 << j)) & ~((1 << j) - 1);\n  }\n  vc<S> dat(n);\n  GroupIndex grp(mids);\n\
+    \  repi(mid, 1, n)\n  {\n    auto qis = grp.idxs(mid);\n    int l = n + 1, r =\
+    \ -1;\n    fec(qi : qis)\n    {\n      auto [l_, r_] = lrs[qi];\n      chmin(l,\
+    \ l_), chmax(r, r_);\n    }\n    dat[mid - 1] = v[mid - 1];\n    repi(i, mid -\
+    \ 2, l - 1, -1) dat[i] = M::op(v[i], dat[i + 1]);\n    dat[mid] = v[mid];\n  \
+    \  repi(i, mid + 1, r) dat[i] = M::op(dat[i - 1], v[i]);\n    fec(qi : qis)\n\
+    \    {\n      auto [l_, r_] = lrs[qi];\n      res[qi] = {dat[l_], dat[r_ - 1]};\n\
+    \    }\n  }\n  return res;\n}\n\n// M: \u30E2\u30CE\u30A4\u30C9\n// v \u306E [l,\
+    \ r) \u306E\u7A4D\u3092\u7B54\u3048\u308B\u30AF\u30A8\u30EA\u306B\u307E\u3068\u3081\
+    \u3066\u7B54\u3048\u308B\ntemplate <class M, class I>\nvc<typename M::S> dc_range_prod\n\
+    (const vc<typename M::S> &v, const vc<pair<I, I>> &lrs)\n{\n  auto tmp = dc_range_prod_left_right<M,\
+    \ I>(v, lrs);\n  const int q = lrs.size();\n  vc<typename M::S> res(q);\n  repi(i,\
+    \ q) res[i] = M::op(tmp[i].first, tmp[i].second);\n  return res;\n}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -805,67 +761,57 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   - template/template_random.hpp
+  - ds/group_index.hpp
+  - ds/csr.hpp
   isVerificationFile: false
-  path: math/modint/modint32_internal.hpp
-  requiredBy:
-  - template/template.cpp
-  - template/template_all.hpp
-  - math/modint/modint64_internal.hpp
-  - math/modint/modint64.hpp
-  - math/modint/template_modint.hpp
-  - math/modint/modint.hpp
-  - math/prime/factorize.hpp
-  - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/euler_phi_carmichael.hpp
-  - math/prime/primality_test.hpp
-  - math/prime/order_primitive_root.hpp
-  - math/convolution/convolution.hpp
-  - math/crt.hpp
-  timestamp: '2025-04-26 00:43:27+09:00'
+  path: ds/dc_range_prod.hpp
+  requiredBy: []
+  timestamp: '2025-04-26 23:10:30+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/dynamic_modint.test.cpp
   - verify/yukicoder/yuki2215_dc.test.cpp
-  - verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  - verify/yukicoder/crt.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/crt_mod.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/binomial.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/yuki2215_swag.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yukicoder/static_modint.test.cpp
-  - verify/mytest/modint64.test.cpp
-  - verify/mytest/power_table.test.cpp
-  - verify/mytest/linear_sieve.test.cpp
-  - verify/mytest/modint.test.cpp
-  - verify/aoj/modpow.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - verify/yosupo/convolution.test.cpp
-  - verify/yosupo/queue_operate_all_composite.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yosupo/kronecker_power_hadamard.test.cpp
-  - verify/yosupo/unionfind_potential.test.cpp
-  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/subset_convolution.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
-  - verify/yosupo/xor_convolution.test.cpp
-  - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-  - verify/yosupo/deque_operate_all_composite.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/binomial.test.cpp
-  - verify/yosupo/convolution_arbitrary_static.test.cpp
-  - verify/yosupo/convolution64.test.cpp
-documentation_of: math/modint/modint32_internal.hpp
+  - verify/mytest/rmq.test.cpp
+  - verify/yosupo/dc_range_prod.test.cpp
+documentation_of: ds/dc_range_prod.hpp
 layout: document
 redirect_from:
-- /library/math/modint/modint32_internal.hpp
-- /library/math/modint/modint32_internal.hpp.html
-title: math/modint/modint32_internal.hpp
+- /library/ds/dc_range_prod.hpp
+- /library/ds/dc_range_prod.hpp.html
+title: "\u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\u30A8\u30EA"
 ---
+## 分割統治による静的列の区間積クエリ
+
+https://maspypy.com/%e5%88%86%e5%89%b2%e7%b5%b1%e6%b2%bb%e3%81%ab%e3%82%88%e3%82%8b%e9%9d%99%e7%9a%84%e5%88%97%e3%81%ae%e5%8c%ba%e9%96%93%e7%a9%8d%e3%82%af%e3%82%a8%e3%83%aa
+
+静的列に対するモノイドの区間積クエリ $Q$ 個を、$O(N \log N + Q)$ 時間、$O(N + Q)$ 空間でまとめて処理する。
+
+- 似たようなアイデアでオンラインでできるようにしたのが disjoint sparse table とみなせる。
+- 「一般の $2$ 元の積は時間がかかるが、列にもとある元と一般の元の積は高速」なときにも使える。具体的には、列にもとある元と一般の元の積を $O(N \log N)$ 回、一般の元の積を $O(Q)$ 回。
+  - 他にこの特徴を持つ手法：
+    - disjoint sparse table
+    - SWAG
+      - これはクエリが queue や deque のようになっている場合だけ
+- その他、クエリの区間幅が常に小さいときなどに速いらしい（冒頭の maspy さんの記事参照）。
+
+#### dc_range_prod
+
+```cpp
+(1) vc<M::S> dc_range_prod<M>(vc<M::S> v, vc<pair<I, I>> lrs)
+(2) vc<pair<M::S, M::S>> dc_range_prod_left_right<M>(vc<M::S> v, vc<pair<I, I>> lrs)
+```
+
+$\mathrm{lrs}$ の長さを $q$ とし、$i$ 番目の要素を $(l_i, r_i)$ と書く。
+
+- (1)：長さ $q$ の vector を返す。$i$ 番目の要素は、$v_{l_i} \bullet \cdots \bullet v_{r_i-1}$ である。
+- (2)：長さ $q$ の vector を返す。$i$ 番目の要素は、$v_{l_i} \bullet \cdots \bullet v_{r_i-1} = w_l \bullet w_r$ を満たす $(w_l, w_r)$ のひとつである。
+  - 使用場面：最終的な答えとしては一般の元の積がいらない場合（例： https://yukicoder.me/problems/no/2215 ）。
+
+##### 制約
+
+$v$ の長さを $n$ として
+
+- $0 \leq l_i \leq r_i \leq n$
+
+##### 計算量
+
+- $O(n \log n + q)$

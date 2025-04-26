@@ -2,6 +2,19 @@
 
 ACL の畳み込みにだいたい準拠。
 
+#### convolution_point_get
+
+```cpp
+T convolution_point_get(vc<T> a, vc<T> b)
+```
+
+$a$ と $b$ を畳み込んだときの $p$ 番目の要素を返す。長さが足りないときは $0$ を返す。
+
+##### 計算量
+
+- $O(\lvert a \rvert + \lvert b \rvert)$
+
+
 #### ntt, intt
 
 ```cpp
@@ -41,6 +54,7 @@ $a$ に対し NTT / INTT を行う（破壊的に変更する）。
 
 - $O((n+m)\log(n+m))$
   - NTT が可能**でない**場合、定数倍が $3$ 倍程度つく。
+  - サイズが小さい場合や $a$ と $b$ のどちらかが疎な場合、$a, b$ の非零要素の個数を $n', m'$ として $O(n + m + \min(n'm, nm'))$ の実装に切り替える。
 
 #### convolution64
 
@@ -59,6 +73,7 @@ vc<ull> convolution64(vc<ull> a, vc<ull> b)
 
 - $O((n+m)\log(n+m))$
   - 定数倍は NTT の $5$ 倍程度つく。
+  - サイズが小さい場合や $a$ と $b$ のどちらかが疎な場合、$a, b$ の非零要素の個数を $n', m'$ として $O(n + m + \min(n'm, nm'))$ の実装に切り替える。
 
 #### convolution_4e18
 
@@ -79,3 +94,4 @@ ACL の `convolution_ll` は `ll` の範囲を全部できるようにしてい�
 
 - $O((n+m)\log(n+m))$
   - 定数倍は NTT の $2$ 倍程度つく。
+  - サイズが小さい場合や $a$ と $b$ のどちらかが疎な場合、$a, b$ の非零要素の個数を $n', m'$ として $O(n + m + \min(n'm, nm'))$ の実装に切り替える。

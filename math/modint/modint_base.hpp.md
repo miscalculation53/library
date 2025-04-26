@@ -108,6 +108,9 @@ data:
     path: verify/yosupo/convolution_arbitrary_static.test.cpp
     title: verify/yosupo/convolution_arbitrary_static.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/deque_operate_all_composite.test.cpp
+    title: verify/yosupo/deque_operate_all_composite.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
   - icon: ':heavy_check_mark:'
@@ -131,6 +134,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root_min.test.cpp
     title: verify/yosupo/primitive_root_min.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/queue_operate_all_composite.test.cpp
+    title: verify/yosupo/queue_operate_all_composite.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
@@ -167,6 +173,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/static_modint.test.cpp
     title: verify/yukicoder/static_modint.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki2215_dc.test.cpp
+    title: verify/yukicoder/yuki2215_dc.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki2215_swag.test.cpp
+    title: verify/yukicoder/yuki2215_swag.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -840,12 +852,14 @@ data:
   verifiedWith:
   - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/dynamic_modint.test.cpp
+  - verify/yukicoder/yuki2215_dc.test.cpp
   - verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
   - verify/yukicoder/crt_mod.test.cpp
   - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/binomial.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  - verify/yukicoder/yuki2215_swag.test.cpp
   - verify/yukicoder/divisors.test.cpp
   - verify/yukicoder/static_modint.test.cpp
   - verify/mytest/modint64.test.cpp
@@ -856,6 +870,7 @@ data:
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/convolution.test.cpp
+  - verify/yosupo/queue_operate_all_composite.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/kronecker_power_hadamard.test.cpp
   - verify/yosupo/unionfind_potential.test.cpp
@@ -867,6 +882,7 @@ data:
   - verify/yosupo/gcd_convolution.test.cpp
   - verify/yosupo/xor_convolution.test.cpp
   - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
+  - verify/yosupo/deque_operate_all_composite.test.cpp
   - verify/yosupo/primality_test.test.cpp
   - verify/yosupo/binomial.test.cpp
   - verify/yosupo/convolution_arbitrary_static.test.cpp

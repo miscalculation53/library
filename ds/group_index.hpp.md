@@ -40,11 +40,24 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy: []
+  _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: ds/dc_range_prod.hpp
+    title: "\u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\u30A8\
+      \u30EA"
   _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/rmq.test.cpp
+    title: verify/mytest/rmq.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/dc_range_prod.test.cpp
+    title: verify/yosupo/dc_range_prod.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki2215_dc.test.cpp
+    title: verify/yukicoder/yuki2215_dc.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -737,11 +750,15 @@ data:
   - ds/csr.hpp
   isVerificationFile: false
   path: ds/group_index.hpp
-  requiredBy: []
+  requiredBy:
+  - ds/dc_range_prod.hpp
   timestamp: '2025-04-26 00:43:27+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yukicoder/yuki2215_dc.test.cpp
+  - verify/mytest/rmq.test.cpp
   - verify/yosupo/static_range_frequency.test.cpp
+  - verify/yosupo/dc_range_prod.test.cpp
 documentation_of: ds/group_index.hpp
 layout: document
 redirect_from:
