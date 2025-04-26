@@ -1,6 +1,6 @@
 ## ランレングス圧縮
 
-### rle
+#### rle
 
 ```cpp
 (1) vc<rle_info<T>> rle(vc<T> a)
