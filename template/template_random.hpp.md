@@ -49,6 +49,12 @@ data:
     path: ds/disjoint_sparse_table.hpp
     title: Disjoint Sparse Table
   - icon: ':heavy_check_mark:'
+    path: ds/fenwick_tree/fenwick_tree.hpp
+    title: Fenwick Tree
+  - icon: ':warning:'
+    path: ds/fenwick_tree/fenwick_tree_01.hpp
+    title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
+  - icon: ':heavy_check_mark:'
     path: ds/flat_map.hpp
     title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
       \u5408\u306E map"
@@ -218,6 +224,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_main.hpp
     title: template/template_main.hpp
+  - icon: ':warning:'
+    path: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
+    title: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/csr.test.cpp
@@ -339,6 +348,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/ordered_set.test.cpp
     title: verify/yosupo/ordered_set.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/point_add_range_sum.test.cpp
+    title: verify/yosupo/point_add_range_sum.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_std_set.test.cpp
     title: verify/yosupo/predecessor_problem_std_set.test.cpp
@@ -540,6 +552,8 @@ data:
   path: template/template_random.hpp
   requiredBy:
   - ds/block_sparse_table.hpp
+  - ds/fenwick_tree/fenwick_tree.hpp
+  - ds/fenwick_tree/fenwick_tree_01.hpp
   - ds/disjoint_sparse_table.hpp
   - ds/swag.hpp
   - ds/safe_unordered_map.hpp
@@ -606,6 +620,7 @@ data:
   - math/crt.hpp
   - itertools/direct_product.hpp
   - itertools/bit.hpp
+  - verify/yukicoder/ordered_multiset_fenwick_tree.cpp
   timestamp: '2025-04-05 01:36:45+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
@@ -682,6 +697,7 @@ data:
   - verify/yosupo/block_sparse_table.test.cpp
   - verify/yosupo/disjoint_sparse_table.test.cpp
   - verify/yosupo/many_aplusb_128bit.test.cpp
+  - verify/yosupo/point_add_range_sum.test.cpp
   - verify/yosupo/convolution_arbitrary_static.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
   - verify/yosupo/convolution64.test.cpp

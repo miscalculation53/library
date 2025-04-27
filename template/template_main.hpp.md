@@ -41,6 +41,9 @@ data:
   - icon: ':warning:'
     path: template/template.cpp
     title: template/template.cpp
+  - icon: ':warning:'
+    path: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
+    title: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/csr.test.cpp
@@ -135,6 +138,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/ordered_set.test.cpp
     title: verify/yosupo/ordered_set.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/point_add_range_sum.test.cpp
+    title: verify/yosupo/point_add_range_sum.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_std_set.test.cpp
     title: verify/yosupo/predecessor_problem_std_set.test.cpp
@@ -861,6 +867,7 @@ data:
   path: template/template_main.hpp
   requiredBy:
   - template/template.cpp
+  - verify/yukicoder/ordered_multiset_fenwick_tree.cpp
   timestamp: '2025-04-26 00:43:27+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
@@ -928,6 +935,7 @@ data:
   - verify/yosupo/block_sparse_table.test.cpp
   - verify/yosupo/disjoint_sparse_table.test.cpp
   - verify/yosupo/many_aplusb_128bit.test.cpp
+  - verify/yosupo/point_add_range_sum.test.cpp
   - verify/yosupo/convolution_arbitrary_static.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
   - verify/yosupo/convolution64.test.cpp

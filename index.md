@@ -76,9 +76,12 @@ data:
       title: "$2$ \u6B21\u5143 imos \u6CD5"
   - name: ds/fenwick_tree
     pages:
-    - icon: ':warning:'
+    - icon: ':heavy_check_mark:'
       path: ds/fenwick_tree/fenwick_tree.hpp
       title: Fenwick Tree
+    - icon: ':warning:'
+      path: ds/fenwick_tree/fenwick_tree_01.hpp
+      title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
   - name: ds/uf
     pages:
     - icon: ':heavy_check_mark:'
@@ -432,7 +435,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/ordered_set.test.cpp
       title: verify/yosupo/ordered_set.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/point_add_range_sum.test.cpp
       title: verify/yosupo/point_add_range_sum.test.cpp
     - icon: ':heavy_check_mark:'

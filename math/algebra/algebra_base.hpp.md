@@ -51,6 +51,12 @@ data:
     path: ds/cumulative_sum/imos_2d.hpp
     title: "$2$ \u6B21\u5143 imos \u6CD5"
   - icon: ':heavy_check_mark:'
+    path: ds/fenwick_tree/fenwick_tree.hpp
+    title: Fenwick Tree
+  - icon: ':warning:'
+    path: ds/fenwick_tree/fenwick_tree_01.hpp
+    title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
+  - icon: ':heavy_check_mark:'
     path: ds/swag.hpp
     title: SWAG
   - icon: ':heavy_check_mark:'
@@ -100,6 +106,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/set/zeta_mobius.hpp
     title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
+  - icon: ':warning:'
+    path: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
+    title: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/cumulative_sum_2d.test.cpp
@@ -125,6 +134,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/point_add_range_sum.test.cpp
+    title: verify/yosupo/point_add_range_sum.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/queue_operate_all_composite.test.cpp
     title: verify/yosupo/queue_operate_all_composite.test.cpp
@@ -833,6 +845,8 @@ data:
   isVerificationFile: false
   path: math/algebra/algebra_base.hpp
   requiredBy:
+  - ds/fenwick_tree/fenwick_tree.hpp
+  - ds/fenwick_tree/fenwick_tree_01.hpp
   - ds/swag.hpp
   - ds/uf/uf_potential.hpp
   - ds/cumulative_sum/cumulative_sum_2d.hpp
@@ -852,6 +866,7 @@ data:
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
   - math/prime/zeta_mobius_divisor_multiple.hpp
   - math/prime/lcm_gcd_convolution.hpp
+  - verify/yukicoder/ordered_multiset_fenwick_tree.cpp
   timestamp: '2025-04-26 00:47:12+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
@@ -875,6 +890,7 @@ data:
   - verify/yosupo/gcd_convolution.test.cpp
   - verify/yosupo/xor_convolution.test.cpp
   - verify/yosupo/deque_operate_all_composite.test.cpp
+  - verify/yosupo/point_add_range_sum.test.cpp
 documentation_of: math/algebra/algebra_base.hpp
 layout: document
 redirect_from:

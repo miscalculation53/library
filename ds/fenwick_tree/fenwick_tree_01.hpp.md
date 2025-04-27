@@ -2,6 +2,16 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: ds/fenwick_tree/fenwick_tree.hpp
+    title: Fenwick Tree
+  - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: math/algebra/algebra_basic_ops.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+      \ max\uFF09"
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -37,39 +47,16 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: ds/flat_map.hpp
-    title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
-      \u5408\u306E map"
-  - icon: ':heavy_check_mark:'
-    path: ds/offline_dynamic_connectivity.hpp
-    title: "\u30AA\u30D5\u30E9\u30A4\u30F3\u30C0\u30A4\u30B3\u30CD\u306E\u30C6\u30AF\
-      \u30CB\u30C3\u30AF"
-  - icon: ':warning:'
-    path: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
-    title: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/associative_array_flat_map.test.cpp
-    title: verify/yosupo/associative_array_flat_map.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/associative_array_lower_bound.test.cpp
-    title: verify/yosupo/associative_array_lower_bound.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/offline_dynamic_connectivity.test.cpp
-    title: verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/static_range_frequency.test.cpp
-    title: verify/yosupo/static_range_frequency.test.cpp
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':warning:'
   attributes:
-    _deprecated_at_docs: docs/ds/coordinate_compression.md
-    document_title: "\u5EA7\u6A19\u5727\u7E2E"
+    _deprecated_at_docs: docs/ds/fenwick_tree/fenwick_tree_01.md
+    document_title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
     links: []
-  bundledCode: "#line 2 \"ds/coordinate_compression.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
+  bundledCode: "#line 2 \"ds/fenwick_tree/fenwick_tree_01.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -629,48 +616,118 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 4 \"ds/coordinate_compression.hpp\"\n\n/**\n * @brief \u5EA7\u6A19\u5727\u7E2E\
-    \n * @docs docs/ds/coordinate_compression.md\n */\n\ntemplate <class T>\nstruct\
-    \ CoordinateCompression\n{\n  vc<T> vals;\n  CoordinateCompression() {}\n  CoordinateCompression(const\
-    \ vc<T> &vec) : vals(sortuniqued(vec)) {}\n\n  // \u6DFB\u5B57 i \u306B\u5BFE\u5FDC\
-    \u3059\u308B\u5024\n  T get_val(const int i) const\n  {\n    assert(0 <= i &&\
-    \ i < SZ(vals));\n    return vals[i];\n  }\n  // \u5024 val \u306B\u5BFE\u5FDC\
-    \u3059\u308B\u6DFB\u5B57 (\u306A\u3051\u308C\u3070 -1)\n  template <class I =\
-    \ ll>\n  I get_id(const T &val) const\n  {\n    auto it = lower_bound(ALL(vals),\
-    \ val);\n    if (it == vals.end() || *it != val)\n      return -1;\n    return\
-    \ it - vals.begin();\n  }\n\n  template <class I = ll>\n  I size() const { return\
-    \ vals.size(); }\n};\n\n// \u5EA7\u6A19\u5727\u7E2E\u3057\u305F\u5F8C\u306E\u914D\
-    \u5217\u3092\u8FD4\u3059\ntemplate <class T, class I = ll>\nvc<I> compressed(const\
-    \ vc<T> &vec)\n{\n  CoordinateCompression cc(vec);\n  vc<I> res(vec.size());\n\
-    \  repi(i, vec.size()) res[i] = cc.get_id(vec[i]);\n  return res;\n}\n// \u540C\
-    \u3058\u5024\u306B\u306F\u540C\u3058 id \u3092\u632F\u308B\u304C\u3001id \u306F\
-    \u914D\u5217\u5185\u3067\u5148\u306B\u73FE\u308C\u308B\u3082\u306E\u304B\u3089\
-    \u5148\u306B\u632F\u308B\ntemplate <class T, class I = ll>\nvc<I> compressed_unordered(const\
-    \ vc<T> &vec)\n{\n  auto cv = compressed(vec);\n  vc<int> id(vec.size(), -1);\n\
-    \  vc<I> res(vec.size());\n  int j = 0;\n  repi(i, vec.size())\n  {\n    int &tmp\
-    \ = id[cv[i]];\n    if (tmp == -1)\n      tmp = j++;\n    res[i] = tmp;\n  }\n\
-    \  return res;\n}\n"
-  code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
-    /**\n * @brief \u5EA7\u6A19\u5727\u7E2E\n * @docs docs/ds/coordinate_compression.md\n\
-    \ */\n\ntemplate <class T>\nstruct CoordinateCompression\n{\n  vc<T> vals;\n \
-    \ CoordinateCompression() {}\n  CoordinateCompression(const vc<T> &vec) : vals(sortuniqued(vec))\
-    \ {}\n\n  // \u6DFB\u5B57 i \u306B\u5BFE\u5FDC\u3059\u308B\u5024\n  T get_val(const\
-    \ int i) const\n  {\n    assert(0 <= i && i < SZ(vals));\n    return vals[i];\n\
-    \  }\n  // \u5024 val \u306B\u5BFE\u5FDC\u3059\u308B\u6DFB\u5B57 (\u306A\u3051\
-    \u308C\u3070 -1)\n  template <class I = ll>\n  I get_id(const T &val) const\n\
-    \  {\n    auto it = lower_bound(ALL(vals), val);\n    if (it == vals.end() ||\
-    \ *it != val)\n      return -1;\n    return it - vals.begin();\n  }\n\n  template\
-    \ <class I = ll>\n  I size() const { return vals.size(); }\n};\n\n// \u5EA7\u6A19\
-    \u5727\u7E2E\u3057\u305F\u5F8C\u306E\u914D\u5217\u3092\u8FD4\u3059\ntemplate <class\
-    \ T, class I = ll>\nvc<I> compressed(const vc<T> &vec)\n{\n  CoordinateCompression\
-    \ cc(vec);\n  vc<I> res(vec.size());\n  repi(i, vec.size()) res[i] = cc.get_id(vec[i]);\n\
-    \  return res;\n}\n// \u540C\u3058\u5024\u306B\u306F\u540C\u3058 id \u3092\u632F\
-    \u308B\u304C\u3001id \u306F\u914D\u5217\u5185\u3067\u5148\u306B\u73FE\u308C\u308B\
-    \u3082\u306E\u304B\u3089\u5148\u306B\u632F\u308B\ntemplate <class T, class I =\
-    \ ll>\nvc<I> compressed_unordered(const vc<T> &vec)\n{\n  auto cv = compressed(vec);\n\
-    \  vc<int> id(vec.size(), -1);\n  vc<I> res(vec.size());\n  int j = 0;\n  repi(i,\
-    \ vec.size())\n  {\n    int &tmp = id[cv[i]];\n    if (tmp == -1)\n      tmp =\
-    \ j++;\n    res[i] = tmp;\n  }\n  return res;\n}"
+    \ 4 \"ds/fenwick_tree/fenwick_tree_01.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
+    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
+    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
+    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
+    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
+    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
+    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
+    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
+    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
+    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
+    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
+    \ constexpr auto inv = inv_;\n};\n\ntemplate <class M>\nstruct OppositeMonoid\n\
+    {\n  using S = typename M::S;\n  static constexpr S op(const S &a, const S &b)\
+    \ { return M::op(b, a); }\n  static constexpr auto e = M::e;\n};\ntemplate <class\
+    \ G>\nstruct OppositeGroup\n{\n  using S = typename G::S;\n  static constexpr\
+    \ S op(const S &a, const S &b) { return G::op(b, a); }\n  static constexpr auto\
+    \ e = G::e;\n  static constexpr auto inv = G::inv;\n};\n\ntemplate <class SR>\n\
+    using MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate\
+    \ <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S, SR::mul, SR::e1>;\n\
+    template <class R>\nusing GroupOfRingAdd = Group<typename R::S, R::add, R::e0,\
+    \ R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul = Group<typename K::S,\
+    \ K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\ntemplate <class Madd,\
+    \ class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
+    \ Madd::S, typename Mmul::S>, \"Madd::S and Mmul::S must be identical\");\n  using\
+    \ S = typename Madd::S;\n  static constexpr auto add = Madd::op;\n  static constexpr\
+    \ auto e0 = Madd::e;\n  static constexpr auto mul = Mmul::op;\n  static constexpr\
+    \ auto e1 = Mmul::e;\n};\n\n// Gadd \u306F\u53EF\u63DB\ntemplate <class Gadd,\
+    \ class Mmul>\nstruct RingFromGroupMonoid\n{\n  static_assert(is_same_v<typename\
+    \ Gadd::S, typename Mmul::S>, \"Gadd::S and Mmul::S must be identical\");\n  using\
+    \ S = typename Gadd::S;\n  static constexpr auto add = Gadd::op;\n  static constexpr\
+    \ auto e0 = Gadd::e;\n  static constexpr auto minus = Gadd::inv;\n  static constexpr\
+    \ auto mul = Mmul::op;\n  static constexpr auto e1 = Mmul::e;\n};\n\n// Gadd,\
+    \ Gmul \u306F\u53EF\u63DB\ntemplate <class Gadd, class Gmul>\nstruct FieldFromGroupGroup\n\
+    {\n  static_assert(is_same_v<typename Gadd::S, typename Gmul::S>, \"Gadd::S and\
+    \ Gmul::S must be identical\");\n  using S = typename Gadd::S;\n  static constexpr\
+    \ auto add = Gadd::op;\n  static constexpr auto e0 = Gadd::e;\n  static constexpr\
+    \ auto minus = Gadd::inv;\n  static constexpr auto mul = Gmul::op;\n  static constexpr\
+    \ auto e1 = Gmul::e;\n  static constexpr auto inv = Gmul::inv;\n};\n#line 5 \"\
+    math/algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\
+    \u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n\
+    \ */\n\ntemplate <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
+    \ntemplate <class T>\nstruct GroupAddSub\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return S(0); }\n\
+    \  static constexpr S inv(S a) { return -a; }\n};\ntemplate <class T>\nstruct\
+    \ GroupMulDiv\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
+    \ * b; }\n  static constexpr S e() { return S(1); }\n  static constexpr S inv(S\
+    \ a) { return S(1) / a; }\n};\n\ntemplate <class T, const T infty = INF>\nusing\
+    \ SemiRingMinPlus = SemiRingFromMonoidMonoid<MonoidMin<T>, MonoidAdd<T>>;\ntemplate\
+    \ <class T, const T infty = INF>\nusing SemiRingMaxPlus = SemiRingFromMonoidMonoid<MonoidMax<T>,\
+    \ MonoidAdd<T>>;\ntemplate <class T>\nusing RingAddSubMul = RingFromGroupMonoid<GroupAddSub<T>,\
+    \ MonoidMul<T>>;\ntemplate <class T>\nusing FieldAddSubMulDiv = FieldFromGroupGroup<GroupAddSub<T>,\
+    \ GroupMulDiv<T>>;\n\ntemplate <class M>\ntypename M::S pow_monoid(typename M::S\
+    \ a, ll k)\n{\n  typename M::S c = M::e();\n  for (; k; k >>= 1)\n  {\n    if\
+    \ (k & 1)\n      c = M::op(c, a);\n    a = M::op(a, a);\n  }\n  return c;\n}\n\
+    #line 2 \"ds/fenwick_tree/fenwick_tree.hpp\"\n\n#line 4 \"ds/fenwick_tree/fenwick_tree.hpp\"\
+    \n\n#line 6 \"ds/fenwick_tree/fenwick_tree.hpp\"\n\n/**\n * @brief Fenwick Tree\n\
+    \ * @docs docs/ds/fenwick_tree/fenwick_tree.md\n */\n\n// G \u306F\u53EF\u63DB\
+    \u7FA4 (prefix \u3060\u3051\u306A\u3069\u3067\u3042\u308C\u3070\u53EF\u63DB\u30E2\
+    \u30CE\u30A4\u30C9\u3067\u3082 OK)\ntemplate <class G>\nstruct FenwickTree\n{\n\
+    \  using S = typename G::S;\n\nprivate:\n  int n;\n  vc<S> dat;\n\npublic:\n \
+    \ FenwickTree() {}\n  FenwickTree(int n) : n(n), dat(n + 1, G::e()) {}\n  FenwickTree(const\
+    \ vc<S> &v) : FenwickTree(v.size())\n  {\n    repi(i, n) add(i, v[i]);\n  }\n\n\
+    \  template <class I = ll>\n  I size() const { return n; }\n\n  // [0, r)\n  //\
+    \ \u9006\u5143\u306F\u5FC5\u8981\u306A\u3044\n  S sum(int r) const\n  {\n    assert(0\
+    \ <= r && r <= n);\n    S s = G::e();\n    while (r > 0)\n    {\n      s = G::op(s,\
+    \ dat[r]);\n      r -= r & -r;\n    }\n    return s;\n  }\n  // [l, r)\n  // \u9006\
+    \u5143\u304C\u5FC5\u8981\n  S sum(int l, int r) const\n  {\n    assert(0 <= l\
+    \ && l <= r && r <= n);\n    return G::op(G::inv(sum(l)), sum(r));\n  }\n  //\
+    \ \u9006\u5143\u304C\u5FC5\u8981\n  S get(int i) const\n  {\n    assert(0 <= i\
+    \ && i < n);\n    return sum(i, i + 1);\n  }\n\n  // \u9006\u5143\u306F\u5FC5\u8981\
+    \u306A\u3044\n  void add(int i, S x)\n  {\n    assert(0 <= i && i < n);\n    i++;\n\
+    \    while (i <= n)\n    {\n      dat[i] = G::op(dat[i], x);\n      i += i & -i;\n\
+    \    }\n  }\n  // \u9006\u5143\u304C\u5FC5\u8981\n  void set(int i, S x) { add(i,\
+    \ G::op(G::inv(get(i)), x)); }\n\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
+    \u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  //\
+    \ sum[0, r) >= w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
+    \ n)\n  template <class I = ll>\n  I geq_min(S w) const\n  {\n    int k = bit_ceil(n);\n\
+    \    int x = 0;\n    while (k > 0)\n    {\n      if (x + k - 1 < n && dat[x +\
+    \ k] < w)\n      {\n        w = G::op(w, G::inv(dat[x + k]));\n        x += k;\n\
+    \      }\n      k >>= 1;\n    }\n    return x;\n  }\n  // \u6574\u6570\u306E\u666E\
+    \u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\
+    \u3068\u304D\n  // sum[0, r) < w \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\
+    \u3051\u308C\u3070 -1)\n  template <class I = ll>\n  inline I lt_max(S w) const\
+    \ { return geq_min<I>(w) - 1; }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
+    \u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  //\
+    \ sum[0, r) > w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
+    \ n)\n  template <class I = ll>\n  inline I gt_min(S w) const { return geq_min<I>(w\
+    \ + 1); }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\
+    \u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) <= w \u3068\u306A\
+    \u308B\u6700\u5927\u306E r (\u306A\u3051\u308C\u3070 -1)\n  template <class I\
+    \ = ll>\n  inline I leq_max(S w) const { return gt_min<I>(w) - 1; }\n\n  // \u8981\
+    \u7D20\u304C [0, n) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\
+    \u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001k \u756A\u76EE\u306E\u5024 (\u306A\
+    \u3051\u308C\u3070 n)\n  template <class I = ll>\n  inline I kth_of_multiset(S\
+    \ k) const { return gt_min<I>(k); }\n\n  vc<S> content() const\n  {\n    vc<S>\
+    \ res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n  }\n};\n#line 7\
+    \ \"ds/fenwick_tree/fenwick_tree_01.hpp\"\n\n/**\n * @brief 01 \u5217\u306B\u5BFE\
+    \u3059\u308B Fenwick Tree\n * @docs docs/ds/fenwick_tree/fenwick_tree_01.md\n\
+    \ */\n\ntemplate <class Word = uint64_t>\nstruct FenwickTree01\n{\n\n};\n"
+  code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
+    \n#include \"../../math/algebra/algebra_basic_ops.hpp\"\n#include \"fenwick_tree.hpp\"\
+    \n\n/**\n * @brief 01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree\n * @docs docs/ds/fenwick_tree/fenwick_tree_01.md\n\
+    \ */\n\ntemplate <class Word = uint64_t>\nstruct FenwickTree01\n{\n\n};\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -683,129 +740,19 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   - template/template_random.hpp
+  - math/algebra/algebra_basic_ops.hpp
+  - math/algebra/algebra_base.hpp
+  - ds/fenwick_tree/fenwick_tree.hpp
   isVerificationFile: false
-  path: ds/coordinate_compression.hpp
-  requiredBy:
-  - ds/offline_dynamic_connectivity.hpp
-  - ds/flat_map.hpp
-  - verify/yukicoder/ordered_multiset_fenwick_tree.cpp
-  timestamp: '2025-04-26 00:43:27+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/yosupo/static_range_frequency.test.cpp
-  - verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - verify/yosupo/associative_array_lower_bound.test.cpp
-  - verify/yosupo/associative_array_flat_map.test.cpp
-documentation_of: ds/coordinate_compression.hpp
+  path: ds/fenwick_tree/fenwick_tree_01.hpp
+  requiredBy: []
+  timestamp: '2025-04-27 20:44:15+09:00'
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
+documentation_of: ds/fenwick_tree/fenwick_tree_01.hpp
 layout: document
 redirect_from:
-- /library/ds/coordinate_compression.hpp
-- /library/ds/coordinate_compression.hpp.html
-title: "\u5EA7\u6A19\u5727\u7E2E"
+- /library/ds/fenwick_tree/fenwick_tree_01.hpp
+- /library/ds/fenwick_tree/fenwick_tree_01.hpp.html
+title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
 ---
-## 座標圧縮
-
-### CoordinateCompression
-
-座標圧縮を行うクラス。
-
-~~（別に sortunique して lower_bound をそのまま書けばよくない？）~~
-
-使う際の注意点：同じ $i$ に対して `get_id(A[i])` を毎回呼び出すのは実行時間の観点から効率的でない。これで TLE することもある。このような場面では、前計算した値（`compressed(A)` にあたる）を使うようにする。
-
-#### コンストラクタ
-
-```cpp
-CoordinateCompression(vc<T> a)
-```
-
-$a$ の重複を除いた値たち（$n$ 個あるとする）に対して、小さいほうから $0, 1, \dots, n-1$ の添字に対応させて管理する。つまり、大小関係を保ったまま番号を振る。
-
-`vals = sortuniqued(a)` と同じこと。
-
-#### メンバ変数
-
-- `val`：$i$ 番目には、$a$ のうち（重複を除いて）$i$ 番目に小さい値、つまり添字 $i$ に対応する値が入る。
-
-#### get_val
-
-```cpp
-T get_val(int i)
-```
-
-添字 $i$ に対応する値を返す。
-
-`vals[i]` と同じこと。
-
-##### 制約
-
-- $0 \leq i \lt n$
-
-##### 計算量
-
-- $O(1)$
-
-#### get_id
-
-```cpp
-I=ll get_id(T v)
-```
-
-値 $v$ に対応する添字を返す。$v$ が存在しない場合 $-1$ を返す。
-
-$v$ が存在する場合は `LB(vals, v)` と同じこと。
-
-##### 計算量
-
-- $O(\log n)$
-
-#### size
-
-```cpp
-I=ll size()
-```
-
-値の個数 $n$ を返す。`vals.size()` と同じこと。
-
-##### 計算量
-
-- $O(1)$
-
-
-### compressed
-
-```cpp
-vc<I> compressed(vc<T> a)
-```
-
-長さ $\lvert a \rvert$ で、$i$ 番目が `get_id(a[i])` であるような vector を返す。
-
-言い換えると、次の条件を満たす「最小の」非負整数列 $b$ を返す。
-
-- $a_i < a_j \iff b_i < b_j$
-- $a_i = a_j \iff b_i = b_j$
-- $a_i > a_j \iff b_i > b_j$
-
-##### 計算量
-
-- $O(\lvert a \rvert \log \lvert a \rvert)$
-
-
-### compressed_unordered
-
-```cpp
-vc<I> compressed_unordered(vc<T> a)
-```
-
-次の条件を満たす辞書順最小の非負整数列 $b$ を返す。
-
-- $a_i = a_j \iff b_i = b_j$
-- $a_i \neq a_j \iff b_i \neq b_j$
-
-つまり、同じ値には同じ番号、違う値には違う番号を振るようにしつつ、先に登場した値ほど小さい番号を振るようにする。
-
-使用例のひとつに、DP の状態の圧縮がある（例題：[TDPC S - マス目](https://atcoder.jp/contests/tdpc/tasks/tdpc_grid)）。
-
-##### 計算量
-
-- $O(\lvert a \rvert \log \lvert a \rvert)$
