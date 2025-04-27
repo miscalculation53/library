@@ -14,7 +14,7 @@
 #define EPS 1e-11
 
 #include "template/template_all_but_modint.hpp"
-#include "ds/fenwick_tree.hpp"
+#include "ds/fenwick_tree/fenwick_tree.hpp"
 
 void init() {}
 

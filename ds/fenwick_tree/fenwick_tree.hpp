@@ -6,7 +6,7 @@
 
 /**
  * @brief Fenwick Tree
- * @docs docs/ds/fenwick_tree.md
+ * @docs docs/ds/fenwick_tree/fenwick_tree.md
  */
 
 // G は可換群 (prefix だけなどであれば可換モノイドでも OK)
@@ -94,11 +94,11 @@ public:
   template <class I = ll>
   inline I lt_max(S w) const { return geq_min<I>(w) - 1; }
   // 整数の普通の足し算で、要素が非負のとき
-  // sum[0, r) > w となる最小の r (なければ -1)
+  // sum[0, r) > w となる最小の r (なければ n)
   template <class I = ll>
   inline I gt_min(S w) const { return geq_min<I>(w + 1); }
   // 整数の普通の足し算で、要素が非負のとき
-  // sum[0, r) <= w となる最大の r (なければ n)
+  // sum[0, r) <= w となる最大の r (なければ -1)
   template <class I = ll>
   inline I leq_max(S w) const { return gt_min<I>(w) - 1; }
 
