@@ -6,10 +6,10 @@ data:
     title: "\u30D6\u30ED\u30C3\u30AF\u5206\u5272 + (disjoint) sparse table"
   - icon: ':heavy_check_mark:'
     path: ds/disjoint_sparse_table.hpp
-    title: disjoint sparse table
+    title: Disjoint Sparse Table
   - icon: ':heavy_check_mark:'
     path: ds/sparse_table.hpp
-    title: sparse table
+    title: Sparse Table
   - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
@@ -623,7 +623,7 @@ data:
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
     \ 4 \"ds/linear_rmq.hpp\"\n\n#line 2 \"ds/block_sparse_table.hpp\"\n\n#line 4\
     \ \"ds/block_sparse_table.hpp\"\n\n#line 2 \"ds/sparse_table.hpp\"\n\n#line 4\
-    \ \"ds/sparse_table.hpp\"\n\n/**\n * @brief sparse table\n * @docs docs/ds/sparse_table.md\n\
+    \ \"ds/sparse_table.hpp\"\n\n/**\n * @brief Sparse Table\n * @docs docs/ds/sparse_table.md\n\
     \ */\n\n// M \u306F\u51AA\u7B49 (max, min, and, or, gcd, lcm \u306A\u3069)\ntemplate\
     \ <class M>\nstruct SparseTable\n{\n  using S = typename M::S;\n\nprivate:\n \
     \ int n;\n  // dat[j][i] = prod[i, i+2^j)\n  vvc<S> dat;\n\npublic:\n  SparseTable()\
@@ -636,7 +636,7 @@ data:
     \   assert(0 <= l && l <= r && r <= n);\n    if (l == r)\n      return M::e();\n\
     \    int j = bit_width(r - l) - 1;\n    return M::op(dat[j][l], dat[j][r - (1\
     \ << j)]);\n  }\n};\n#line 2 \"ds/disjoint_sparse_table.hpp\"\n\n#line 4 \"ds/disjoint_sparse_table.hpp\"\
-    \n\n/**\n * @brief disjoint sparse table\n * @docs docs/ds/disjoint_sparse_table.md\n\
+    \n\n/**\n * @brief Disjoint Sparse Table\n * @docs docs/ds/disjoint_sparse_table.md\n\
     \ */\n\ntemplate <class M>\nstruct DisjointSparseTable\n{\n  using S = typename\
     \ M::S;\n\nprivate:\n  int n;\n  // dat[j][i] \u306F [i, mid) \u304B [mid, i]\n\
     \  vvc<S> dat;\n\npublic:\n  DisjointSparseTable() {}\n  DisjointSparseTable(const\
@@ -743,7 +743,7 @@ data:
   isVerificationFile: false
   path: ds/linear_rmq.hpp
   requiredBy: []
-  timestamp: '2025-04-26 23:10:30+09:00'
+  timestamp: '2025-04-27 03:22:16+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/rmq.test.cpp

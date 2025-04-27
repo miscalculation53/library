@@ -65,7 +65,7 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/sparse_table.md
-    document_title: sparse table
+    document_title: Sparse Table
     links: []
   bundledCode: "#line 2 \"ds/sparse_table.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
@@ -627,7 +627,7 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 4 \"ds/sparse_table.hpp\"\n\n/**\n * @brief sparse table\n * @docs docs/ds/sparse_table.md\n\
+    \ 4 \"ds/sparse_table.hpp\"\n\n/**\n * @brief Sparse Table\n * @docs docs/ds/sparse_table.md\n\
     \ */\n\n// M \u306F\u51AA\u7B49 (max, min, and, or, gcd, lcm \u306A\u3069)\ntemplate\
     \ <class M>\nstruct SparseTable\n{\n  using S = typename M::S;\n\nprivate:\n \
     \ int n;\n  // dat[j][i] = prod[i, i+2^j)\n  vvc<S> dat;\n\npublic:\n  SparseTable()\
@@ -641,7 +641,7 @@ data:
     \    int j = bit_width(r - l) - 1;\n    return M::op(dat[j][l], dat[j][r - (1\
     \ << j)]);\n  }\n};\n"
   code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
-    /**\n * @brief sparse table\n * @docs docs/ds/sparse_table.md\n */\n\n// M \u306F\
+    /**\n * @brief Sparse Table\n * @docs docs/ds/sparse_table.md\n */\n\n// M \u306F\
     \u51AA\u7B49 (max, min, and, or, gcd, lcm \u306A\u3069)\ntemplate <class M>\n\
     struct SparseTable\n{\n  using S = typename M::S;\n\nprivate:\n  int n;\n  //\
     \ dat[j][i] = prod[i, i+2^j)\n  vvc<S> dat;\n\npublic:\n  SparseTable() {}\n \
@@ -670,7 +670,7 @@ data:
   requiredBy:
   - ds/block_sparse_table.hpp
   - ds/linear_rmq.hpp
-  timestamp: '2025-04-26 00:43:27+09:00'
+  timestamp: '2025-04-27 03:22:16+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/rmq.test.cpp
@@ -683,7 +683,7 @@ layout: document
 redirect_from:
 - /library/ds/sparse_table.hpp
 - /library/ds/sparse_table.hpp.html
-title: sparse table
+title: Sparse Table
 ---
 ## sparse table
 

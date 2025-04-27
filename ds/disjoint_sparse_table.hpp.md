@@ -65,7 +65,7 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/disjoint_sparse_table.md
-    document_title: disjoint sparse table
+    document_title: Disjoint Sparse Table
     links: []
   bundledCode: "#line 2 \"ds/disjoint_sparse_table.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
@@ -627,7 +627,7 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 4 \"ds/disjoint_sparse_table.hpp\"\n\n/**\n * @brief disjoint sparse table\n\
+    \ 4 \"ds/disjoint_sparse_table.hpp\"\n\n/**\n * @brief Disjoint Sparse Table\n\
     \ * @docs docs/ds/disjoint_sparse_table.md\n */\n\ntemplate <class M>\nstruct\
     \ DisjointSparseTable\n{\n  using S = typename M::S;\n\nprivate:\n  int n;\n \
     \ // dat[j][i] \u306F [i, mid) \u304B [mid, i]\n  vvc<S> dat;\n\npublic:\n  DisjointSparseTable()\
@@ -649,7 +649,7 @@ data:
     \ {dat[0][l], M::e()};\n    const int j = msb_pos(l ^ (r - 1));\n    return {dat[j][l],\
     \ dat[j][r - 1]};\n  }\n};\n"
   code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
-    /**\n * @brief disjoint sparse table\n * @docs docs/ds/disjoint_sparse_table.md\n\
+    /**\n * @brief Disjoint Sparse Table\n * @docs docs/ds/disjoint_sparse_table.md\n\
     \ */\n\ntemplate <class M>\nstruct DisjointSparseTable\n{\n  using S = typename\
     \ M::S;\n\nprivate:\n  int n;\n  // dat[j][i] \u306F [i, mid) \u304B [mid, i]\n\
     \  vvc<S> dat;\n\npublic:\n  DisjointSparseTable() {}\n  DisjointSparseTable(const\
@@ -687,7 +687,7 @@ data:
   requiredBy:
   - ds/block_sparse_table.hpp
   - ds/linear_rmq.hpp
-  timestamp: '2025-04-26 23:10:30+09:00'
+  timestamp: '2025-04-27 03:22:16+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/rmq.test.cpp
@@ -700,7 +700,7 @@ layout: document
 redirect_from:
 - /library/ds/disjoint_sparse_table.hpp
 - /library/ds/disjoint_sparse_table.hpp.html
-title: disjoint sparse table
+title: Disjoint Sparse Table
 ---
 ## disjoint sparse table
 

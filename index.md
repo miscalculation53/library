@@ -32,7 +32,7 @@ data:
       title: "\u30C7\u30D5\u30A9\u30EB\u30C8\u5024\u3064\u304D map"
     - icon: ':heavy_check_mark:'
       path: ds/disjoint_sparse_table.hpp
-      title: disjoint sparse table
+      title: Disjoint Sparse Table
     - icon: ':heavy_check_mark:'
       path: ds/flat_map.hpp
       title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
@@ -56,7 +56,7 @@ data:
         \u6570"
     - icon: ':heavy_check_mark:'
       path: ds/sparse_table.hpp
-      title: sparse table
+      title: Sparse Table
     - icon: ':heavy_check_mark:'
       path: ds/swag.hpp
       title: SWAG
@@ -74,6 +74,11 @@ data:
     - icon: ':heavy_check_mark:'
       path: ds/cumulative_sum/imos_2d.hpp
       title: "$2$ \u6B21\u5143 imos \u6CD5"
+  - name: ds/fenwick_tree
+    pages:
+    - icon: ':warning:'
+      path: ds/fenwick_tree/fenwick_tree.hpp
+      title: Fenwick Tree
   - name: ds/uf
     pages:
     - icon: ':heavy_check_mark:'
@@ -271,6 +276,11 @@ data:
     - icon: ':heavy_check_mark:'
       path: template/template_vector.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - name: verify/yukicoder
+    pages:
+    - icon: ':warning:'
+      path: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
+      title: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
   verificationCategories:
   - name: verify/aoj
     pages:
@@ -422,9 +432,12 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/ordered_set.test.cpp
       title: verify/yosupo/ordered_set.test.cpp
+    - icon: ':x:'
+      path: verify/yosupo/point_add_range_sum.test.cpp
+      title: verify/yosupo/point_add_range_sum.test.cpp
     - icon: ':heavy_check_mark:'
-      path: verify/yosupo/predecessor_problem.test.cpp
-      title: verify/yosupo/predecessor_problem.test.cpp
+      path: verify/yosupo/predecessor_problem_std_set.test.cpp
+      title: verify/yosupo/predecessor_problem_std_set.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/primality_test.test.cpp
       title: verify/yosupo/primality_test.test.cpp

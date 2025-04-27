@@ -47,7 +47,7 @@ data:
     title: "\u30C7\u30D5\u30A9\u30EB\u30C8\u5024\u3064\u304D map"
   - icon: ':heavy_check_mark:'
     path: ds/disjoint_sparse_table.hpp
-    title: disjoint sparse table
+    title: Disjoint Sparse Table
   - icon: ':heavy_check_mark:'
     path: ds/flat_map.hpp
     title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
@@ -70,7 +70,7 @@ data:
     title: "unordered_map \u306E\u5B89\u5168\u306A\u30CF\u30C3\u30B7\u30E5\u95A2\u6570"
   - icon: ':heavy_check_mark:'
     path: ds/sparse_table.hpp
-    title: sparse table
+    title: Sparse Table
   - icon: ':heavy_check_mark:'
     path: ds/swag.hpp
     title: SWAG
@@ -340,8 +340,8 @@ data:
     path: verify/yosupo/ordered_set.test.cpp
     title: verify/yosupo/ordered_set.test.cpp
   - icon: ':heavy_check_mark:'
-    path: verify/yosupo/predecessor_problem.test.cpp
-    title: verify/yosupo/predecessor_problem.test.cpp
+    path: verify/yosupo/predecessor_problem_std_set.test.cpp
+    title: verify/yosupo/predecessor_problem_std_set.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
@@ -647,7 +647,6 @@ data:
   - verify/aoj/cumulative_sum_2d.test.cpp
   - verify/aoj/zeta_general.test.cpp
   - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/predecessor_problem.test.cpp
   - verify/yosupo/kth_root_integer.test.cpp
   - verify/yosupo/block_disjoint_sparse_table.test.cpp
   - verify/yosupo/linear_rmq.test.cpp
@@ -656,6 +655,7 @@ data:
   - verify/yosupo/aplusb.test.cpp
   - verify/yosupo/static_range_sum.test.cpp
   - verify/yosupo/convolution.test.cpp
+  - verify/yosupo/predecessor_problem_std_set.test.cpp
   - verify/yosupo/ordered_set.test.cpp
   - verify/yosupo/queue_operate_all_composite.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp

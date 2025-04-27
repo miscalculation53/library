@@ -50,8 +50,8 @@ data:
     PROBLEM: https://judge.yosupo.jp/problem/predecessor_problem
     links:
     - https://judge.yosupo.jp/problem/predecessor_problem
-  bundledCode: "#line 1 \"verify/yosupo/predecessor_problem.test.cpp\"\n#define PROBLEM\
-    \ \"https://judge.yosupo.jp/problem/predecessor_problem\"\n\n#define SINGLE_TESTCASE\n\
+  bundledCode: "#line 1 \"verify/yosupo/predecessor_problem_std_set.test.cpp\"\n#define\
+    \ PROBLEM \"https://judge.yosupo.jp/problem/predecessor_problem\"\n\n#define SINGLE_TESTCASE\n\
     // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef LOCAL\n#define FAST_IO\n\
     // #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\n#define INF 4'000'000'000'000'000'037LL\n\
     #define EPS 1e-11\n\n#line 2 \"template/template_all_but_modint.hpp\"\n\n#line\
@@ -614,17 +614,17 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 17 \"verify/yosupo/predecessor_problem.test.cpp\"\n\nvoid init() {}\n\nvoid\
-    \ main2()\n{\n  LL(N, Q);\n  STR(T);\n  set<ll> st;\n  rep(i, N) if (T.at(i) ==\
-    \ '1') st.insert(i);\n  rep(_, Q)\n  {\n    LL(c, k);\n    if (c == 0)\n     \
-    \ st.insert(k);\n    else if (c == 1)\n      st.erase(k);\n    else if (c == 2)\n\
-    \      PRINT(st.find(k) != st.end());\n    else if (c == 3)\n    {\n      auto\
-    \ it = geq_min(st, k);\n      if (it == st.end())\n        PRINT(-1);\n      else\n\
-    \        PRINT(*it);\n    }\n    else if (c == 4)\n    {\n      auto it = leq_max(st,\
-    \ k);\n      if (it == st.end())\n        PRINT(-1);\n      else\n        PRINT(*it);\n\
-    \    }\n  }\n}\n\nvoid test() {}\n\n#line 2 \"template/template_main.hpp\"\n\n\
-    #line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2, auto\
-    \ test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
+    \ 17 \"verify/yosupo/predecessor_problem_std_set.test.cpp\"\n\nvoid init() {}\n\
+    \nvoid main2()\n{\n  LL(N, Q);\n  STR(T);\n  set<ll> st;\n  rep(i, N) if (T.at(i)\
+    \ == '1') st.insert(i);\n  rep(_, Q)\n  {\n    LL(c, k);\n    if (c == 0)\n  \
+    \    st.insert(k);\n    else if (c == 1)\n      st.erase(k);\n    else if (c ==\
+    \ 2)\n      PRINT(st.find(k) != st.end());\n    else if (c == 3)\n    {\n    \
+    \  auto it = geq_min(st, k);\n      if (it == st.end())\n        PRINT(-1);\n\
+    \      else\n        PRINT(*it);\n    }\n    else if (c == 4)\n    {\n      auto\
+    \ it = leq_max(st, k);\n      if (it == st.end())\n        PRINT(-1);\n      else\n\
+    \        PRINT(*it);\n    }\n  }\n}\n\nvoid test() {}\n\n#line 2 \"template/template_main.hpp\"\
+    \n\n#line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2,\
+    \ auto test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
     \ color)\n    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\"\
     ;\n      #ifdef LOCAL\n      cerr << s;\n      #endif\n      /* \u30B3\u30FC\u30C9\
     \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
@@ -639,7 +639,7 @@ data:
     \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
     \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
     T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
-    \      main2();\n    }\n    #endif\n  }\n};\n#line 57 \"verify/yosupo/predecessor_problem.test.cpp\"\
+    \      main2();\n    }\n    #endif\n  }\n};\n#line 57 \"verify/yosupo/predecessor_problem_std_set.test.cpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/predecessor_problem\"\n\
     \n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
@@ -669,15 +669,15 @@ data:
   - template/template_random.hpp
   - template/template_main.hpp
   isVerificationFile: true
-  path: verify/yosupo/predecessor_problem.test.cpp
+  path: verify/yosupo/predecessor_problem_std_set.test.cpp
   requiredBy: []
-  timestamp: '2025-04-26 00:43:27+09:00'
+  timestamp: '2025-04-27 03:22:16+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/yosupo/predecessor_problem.test.cpp
+documentation_of: verify/yosupo/predecessor_problem_std_set.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/yosupo/predecessor_problem.test.cpp
-- /verify/verify/yosupo/predecessor_problem.test.cpp.html
-title: verify/yosupo/predecessor_problem.test.cpp
+- /verify/verify/yosupo/predecessor_problem_std_set.test.cpp
+- /verify/verify/yosupo/predecessor_problem_std_set.test.cpp.html
+title: verify/yosupo/predecessor_problem_std_set.test.cpp
 ---

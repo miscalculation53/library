@@ -3,7 +3,7 @@ data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
     path: ds/disjoint_sparse_table.hpp
-    title: disjoint sparse table
+    title: Disjoint Sparse Table
   - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
@@ -618,8 +618,8 @@ data:
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
     \ 17 \"verify/yosupo/disjoint_sparse_table.test.cpp\"\n\n#line 2 \"ds/disjoint_sparse_table.hpp\"\
-    \n\n#line 4 \"ds/disjoint_sparse_table.hpp\"\n\n/**\n * @brief disjoint sparse\
-    \ table\n * @docs docs/ds/disjoint_sparse_table.md\n */\n\ntemplate <class M>\n\
+    \n\n#line 4 \"ds/disjoint_sparse_table.hpp\"\n\n/**\n * @brief Disjoint Sparse\
+    \ Table\n * @docs docs/ds/disjoint_sparse_table.md\n */\n\ntemplate <class M>\n\
     struct DisjointSparseTable\n{\n  using S = typename M::S;\n\nprivate:\n  int n;\n\
     \  // dat[j][i] \u306F [i, mid) \u304B [mid, i]\n  vvc<S> dat;\n\npublic:\n  DisjointSparseTable()\
     \ {}\n  DisjointSparseTable(const vc<S> &v) : n(v.size())\n  {\n    const int\
@@ -686,7 +686,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/disjoint_sparse_table.test.cpp
   requiredBy: []
-  timestamp: '2025-04-26 23:10:30+09:00'
+  timestamp: '2025-04-27 03:22:16+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/disjoint_sparse_table.test.cpp
