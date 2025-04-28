@@ -47,6 +47,7 @@
 "verify/yosupo/many_aplusb_tuple.test.cpp": "2025-04-26 00:43:27 +0900",
 "verify/yosupo/offline_dynamic_connectivity.test.cpp": "2025-04-26 00:43:27 +0900",
 "verify/yosupo/ordered_set.test.cpp": "2025-04-26 00:43:27 +0900",
+"verify/yosupo/point_add_range_sum.test.cpp": "2025-04-27 20:44:15 +0900",
 "verify/yosupo/predecessor_problem_std_set.test.cpp": "2025-04-27 03:22:16 +0900",
 "verify/yosupo/primality_test.test.cpp": "2025-04-26 00:43:27 +0900",
 "verify/yosupo/primitive_root.test.cpp": "2025-04-26 00:43:27 +0900",
