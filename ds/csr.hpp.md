@@ -58,7 +58,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/dc_range_prod.test.cpp
     title: verify/yosupo/dc_range_prod.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
   - icon: ':x:'

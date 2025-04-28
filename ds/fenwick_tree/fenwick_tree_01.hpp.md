@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: bit/kth_bit.hpp
     title: "\u4E0B\u304B\u3089 $k$ \u756A\u76EE\u306E\u30D3\u30C3\u30C8\u3092\u53D6\
       \u5F97"
@@ -62,15 +62,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/fenwick_tree_set.test.cpp
     title: verify/mytest/fenwick_tree_set.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/ordered_set_fenwick_tree.test.cpp
     title: verify/yosupo/ordered_set_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
     title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/fenwick_tree/fenwick_tree_01.md
     document_title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
@@ -928,7 +928,7 @@ data:
   requiredBy:
   - ds/fenwick_tree/inversion.hpp
   timestamp: '2025-04-28 22:08:42+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/fenwick_tree_set.test.cpp
   - verify/aoj/inversion.test.cpp

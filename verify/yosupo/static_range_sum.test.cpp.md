@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/cumulative_sum/cumulative_sum.hpp
     title: "$1$ \u6B21\u5143\u7D2F\u7A4D\u548C"
   - icon: ':question:'
@@ -52,9 +52,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/static_range_sum
@@ -750,7 +750,7 @@ data:
   path: verify/yosupo/static_range_sum.test.cpp
   requiredBy: []
   timestamp: '2025-04-28 22:08:42+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/static_range_sum.test.cpp
 layout: document

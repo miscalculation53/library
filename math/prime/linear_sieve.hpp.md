@@ -41,10 +41,10 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/lcm_gcd_convolution.hpp
     title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/zeta_mobius_divisor_multiple.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
@@ -52,15 +52,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/linear_sieve.test.cpp
     title: verify/mytest/linear_sieve.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/prime/linear_sieve.md
     document_title: "\u7DDA\u5F62\u7BE9"
@@ -720,7 +720,7 @@ data:
   - math/prime/zeta_mobius_divisor_multiple.hpp
   - math/prime/lcm_gcd_convolution.hpp
   timestamp: '2025-04-28 22:08:42+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/linear_sieve.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp

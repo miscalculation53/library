@@ -1,14 +1,14 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: bit/kth_bit.hpp
     title: "\u4E0B\u304B\u3089 $k$ \u756A\u76EE\u306E\u30D3\u30C3\u30C8\u3092\u53D6\
       \u5F97"
   - icon: ':question:'
     path: ds/fenwick_tree/fenwick_tree.hpp
     title: Fenwick Tree
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/fenwick_tree/fenwick_tree_01.hpp
     title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
   - icon: ':question:'
@@ -883,3 +883,20 @@ redirect_from:
 - /library/ds/fenwick_tree/inversion.hpp.html
 title: "\u8EE2\u5012\u6570"
 ---
+## 転倒数
+
+#### inversion_number
+
+```cpp
+ll inversion_number(V v)
+```
+
+$0 \leq i \lt j \lt \lvert v \rvert$ かつ $v_i \gt v_j$ を満たす $(i, j)$ の個数を返す。
+
+##### 制約
+
+- $v$ の要素は比較可能
+
+##### 計算量
+
+- $O(\lvert v \rvert \log \lvert v \rvert)$

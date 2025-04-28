@@ -58,6 +58,9 @@ data:
     path: verify/aoj/modpow.test.cpp
     title: verify/aoj/modpow.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/aoj/range_add_point_get.test.cpp
+    title: verify/aoj/range_add_point_get.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/zeta_general.test.cpp
     title: verify/aoj/zeta_general.test.cpp
   - icon: ':heavy_check_mark:'
@@ -105,76 +108,76 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kronecker_power_hadamard.test.cpp
     title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
     title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kth_root_integer.test.cpp
     title: verify/yosupo/kth_root_integer.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/linear_rmq.test.cpp
     title: verify/yosupo/linear_rmq.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb.test.cpp
     title: verify/yosupo/many_aplusb.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb_128bit.test.cpp
     title: verify/yosupo/many_aplusb_128bit.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb_tuple.test.cpp
     title: verify/yosupo/many_aplusb_tuple.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/offline_dynamic_connectivity.test.cpp
     title: verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/ordered_set.test.cpp
     title: verify/yosupo/ordered_set.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/ordered_set_fenwick_tree.test.cpp
     title: verify/yosupo/ordered_set_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_add_range_sum.test.cpp
     title: verify/yosupo/point_add_range_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
     title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_std_set.test.cpp
     title: verify/yosupo/predecessor_problem_std_set.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root.test.cpp
     title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root_min.test.cpp
     title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/queue_operate_all_composite.test.cpp
     title: verify/yosupo/queue_operate_all_composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/quotients.test.cpp
     title: verify/yosupo/quotients.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/sparse_table.test.cpp
     title: verify/yosupo/sparse_table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_sum.test.cpp
     title: verify/yosupo/static_range_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
   - icon: ':x:'
@@ -907,6 +910,7 @@ data:
   - verify/yukicoder/static_modint.test.cpp
   - verify/aoj/modpow.test.cpp
   - verify/aoj/extgcd.test.cpp
+  - verify/aoj/range_add_point_get.test.cpp
   - verify/aoj/csr.test.cpp
   - verify/aoj/cumulative_sum_2d.test.cpp
   - verify/aoj/inversion.test.cpp

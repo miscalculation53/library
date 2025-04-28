@@ -38,7 +38,7 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/cumulative_sum/cumulative_sum.hpp
     title: "$1$ \u6B21\u5143\u7D2F\u7A4D\u548C"
   - icon: ':question:'
@@ -53,19 +53,22 @@ data:
   - icon: ':question:'
     path: ds/fenwick_tree/fenwick_tree.hpp
     title: Fenwick Tree
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/fenwick_tree/fenwick_tree_01.hpp
     title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
   - icon: ':heavy_check_mark:'
     path: ds/fenwick_tree/inversion.hpp
     title: "\u8EE2\u5012\u6570"
+  - icon: ':heavy_check_mark:'
+    path: ds/fenwick_tree/range_add_point_get.hpp
+    title: "\u533A\u9593\u52A0\u7B97\u4E00\u70B9\u53D6\u5F97"
   - icon: ':question:'
     path: ds/swag.hpp
     title: SWAG
   - icon: ':x:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/affine_function.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
   - icon: ':question:'
@@ -82,10 +85,10 @@ data:
   - icon: ':warning:'
     path: math/algebra/polynomial_ring.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/lcm_gcd_convolution.hpp
     title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/zeta_mobius_divisor_multiple.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
@@ -96,10 +99,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/set/and_or_convolution.hpp
     title: "and/or \u7573\u307F\u8FBC\u307F"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/set/kronecker_power.hpp
     title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/set/subset_convolution.hpp
     title: subset convolution
   - icon: ':x:'
@@ -117,6 +120,9 @@ data:
     path: verify/aoj/inversion.test.cpp
     title: verify/aoj/inversion.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/aoj/range_add_point_get.test.cpp
+    title: verify/aoj/range_add_point_get.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/zeta_general.test.cpp
     title: verify/aoj/zeta_general.test.cpp
   - icon: ':heavy_check_mark:'
@@ -128,34 +134,34 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/deque_operate_all_composite.test.cpp
     title: verify/yosupo/deque_operate_all_composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kronecker_power_hadamard.test.cpp
     title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
     title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/ordered_set_fenwick_tree.test.cpp
     title: verify/yosupo/ordered_set_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_add_range_sum.test.cpp
     title: verify/yosupo/point_add_range_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
     title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/queue_operate_all_composite.test.cpp
     title: verify/yosupo/queue_operate_all_composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_sum.test.cpp
     title: verify/yosupo/static_range_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
   - icon: ':x:'
@@ -863,6 +869,7 @@ data:
   path: math/algebra/algebra_base.hpp
   requiredBy:
   - ds/fenwick_tree/fenwick_tree.hpp
+  - ds/fenwick_tree/range_add_point_get.hpp
   - ds/fenwick_tree/inversion.hpp
   - ds/fenwick_tree/fenwick_tree_01.hpp
   - ds/swag.hpp
@@ -895,6 +902,7 @@ data:
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yukicoder/yuki2215_swag.test.cpp
   - verify/mytest/fenwick_tree_set.test.cpp
+  - verify/aoj/range_add_point_get.test.cpp
   - verify/aoj/cumulative_sum_2d.test.cpp
   - verify/aoj/inversion.test.cpp
   - verify/aoj/zeta_general.test.cpp

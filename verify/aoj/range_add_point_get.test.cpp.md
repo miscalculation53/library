@@ -2,6 +2,19 @@
 data:
   _extendedDependsOn:
   - icon: ':question:'
+    path: ds/fenwick_tree/fenwick_tree.hpp
+    title: Fenwick Tree
+  - icon: ':heavy_check_mark:'
+    path: ds/fenwick_tree/range_add_point_get.hpp
+    title: "\u533A\u9593\u52A0\u7B97\u4E00\u70B9\u53D6\u5F97"
+  - icon: ':question:'
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+  - icon: ':question:'
+    path: math/algebra/algebra_basic_ops.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+      \ max\uFF09"
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -47,91 +60,91 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/many_aplusb
+    PROBLEM: https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/2/DSL_2_E
     links:
-    - https://judge.yosupo.jp/problem/many_aplusb
-  bundledCode: "#line 1 \"verify/yosupo/many_aplusb.test.cpp\"\n#define PROBLEM \"\
-    https://judge.yosupo.jp/problem/many_aplusb\"\n\n// #define SINGLE_TESTCASE\n\
-    #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef LOCAL\n#define FAST_IO\n\
-    // #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\n#define INF 4'000'000'000'000'000'037LL\n\
-    #define EPS 1e-11\n\n#line 2 \"template/template_all_but_modint.hpp\"\n\n#line\
-    \ 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
-    \u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n */\n\
-    \n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n\
-    #endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing uint = unsigned\
-    \ int;\nusing ull = unsigned long long;\nusing pll = pair<ll, ll>;\nusing tlll\
-    \ = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\n#define vc vector\n\
-    template <class T>\nusing vvc = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\
-    \nusing vb = vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll\
-    \ = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb\
-    \ = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T,\
-    \ vc<T>, greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n\
-    #ifdef __SIZEOF_INT128__\nusing i128 = __int128_t;\nusing u128 = __uint128_t;\n\
-    i128 stoi128(const string &s)\n{\n  i128 res = 0;\n  if (s.front() == '-')\n \
-    \ {\n    for (int i = 1; i < (int)s.size(); i++)\n      res = 10 * res + s[i]\
-    \ - '0';\n    res = -res;\n  }\n  else\n  {\n    for (auto &&c : s)\n      res\
-    \ = 10 * res + c - '0';\n  }\n  return res;\n}\nstring i128tos(i128 x)\n{\n  if\
-    \ (x == 0) return \"0\";\n  string sign = \"\", res = \"\";\n  if (x < 0)\n  \
-    \  x = -x, sign = \"-\";\n  while (x > 0)\n  {\n    res += '0' + x % 10;\n   \
-    \ x /= 10;\n  }\n  reverse(res.begin(), res.end());\n  return sign + res;\n}\n\
-    istream &operator>>(istream &is, i128 &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n\
-    \  return is;\n}\nostream &operator<<(ostream &os, const i128 &a)\n{\n  os <<\
-    \ i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto const auto\n#line 2 \"\
-    template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\n\n/**\n\
-    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n\
-    \ */\n\n// https://trap.jp/post/1224/\n\n#define overload4(_1, _2, _3, _4, name,\
-    \ ...) name\n#define rep1(i, n) for (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n\
-    #define rep2(i, l, r) for (ll i = ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define\
-    \ rep3(i, l, r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0\
-    \ ? i < rrrrr : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__, rep3,\
-    \ rep2, rep1)(__VA_ARGS__)\n#define repi1(i, n) for (int i = 0, nnnnn = int(n);\
-    \ i < nnnnn; i++)\n#define repi2(i, l, r) for (int i = int(l), rrrrr = int(r);\
-    \ i < rrrrr; i++)\n#define repi3(i, l, r, d) for (int i = int(l), rrrrr = int(r),\
-    \ ddddd = int(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define repi(...)\
-    \ overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\n#define fe(...)\
-    \ for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n#define fem(...)\
-    \ for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n\
-    #define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n#define EPS 1e-11\n\
-    #endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
-    \u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs docs/template/template_math.md\n\
-    \ */\n\ntemplate <class T, class U>\ninline bool chmin(T &a, U b) { return a >\
-    \ b ? a = b, true : false; }\ntemplate <class T, class U>\ninline bool chmax(T\
-    \ &a, U b) { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll,\
-    \ class U, class V>\ninline constexpr T divfloor(U a, V b) { return T(a) / T(b)\
-    \ - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class U, class\
-    \ V>\ninline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b)\
-    \ && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V>\ninline\
-    \ constexpr T divround(U a, V b) { return divfloor<T>(2 * T(a) + T(b), 2 * T(b));\
-    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T safemod(U a,\
-    \ V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class T = ll,\
-    \ class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n  if (b\
-    \ == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a < 0 &&\
-    \ a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (true)\n\
-    \  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n     \
-    \ break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll, class\
-    \ A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0 && b\
-    \ >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) / T(b)\
-    \ ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT mul_limited(A\
-    \ a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class T = ll, class\
-    \ A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a >= 0 && b\
-    \ >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n\
-    \  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n    {\n     \
-    \ if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n    }\n    b >>=\
-    \ 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n      return m;\n\
-    \    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll, class A, class\
-    \ B>\nT pow_limited(A a, B b) { return pow_limited<T>(a, b, INF); }\n\ntemplate\
-    \ <class T = ll, class A, class K>\nconstexpr T iroot(A a, K k)\n{\n  assert(a\
-    \ >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n  if (k == 2)\n  {\n\
-    \    if constexpr (sizeof(T) > sizeof(ull))\n    {\n      if ((u128)a < ((u128)1\
-    \ << 120))\n        return sqrtl(a);\n    }\n    else\n      return sqrtl(a);\n\
-    \  }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n      return true;\n\
-    \    T res = 1, k2 = k;\n    while (true)\n    {\n      if (k2 & 1)\n      {\n\
-    \        if (res > T(a) / x)\n          return false;\n        res *= x;\n   \
-    \   }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n      if (x > T(a)\
-    \ / x)\n        return false;\n      x *= x;\n    }\n    return res <= T(a);\n\
-    \  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n   \
-    \ up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max() &&\
-    \ isok(x + 1))\n      x++;\n  }\n  return x;\n}\ntemplate <class T = ll, class\
+    - https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/2/DSL_2_E
+  bundledCode: "#line 1 \"verify/aoj/range_add_point_get.test.cpp\"\n#define PROBLEM\
+    \ \"https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/2/DSL_2_E\"\n\n#define\
+    \ SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef\
+    \ LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\
+    \n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#line 2 \"template/template_all_but_modint.hpp\"\
+    \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
+    \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
+    \ EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing\
+    \ uint = unsigned int;\nusing ull = unsigned long long;\nusing pll = pair<ll,\
+    \ ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\
+    \n#define vc vector\ntemplate <class T>\nusing vvc = vc<vc<T>>;\ntemplate <class\
+    \ T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb = vc<bool>;\nusing vl = vc<ll>;\n\
+    using vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing\
+    \ vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate\
+    \ <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate <class\
+    \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing i128 =\
+    \ __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string &s)\n{\n \
+    \ i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size();\
+    \ i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n\
+    \    for (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n\
+    }\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\"\
+    , res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n\
+    \    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n\
+    \  return sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string\
+    \ s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream\
+    \ &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define\
+    \ cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
+    \ docs/template/template_rep.md\n */\n\n// https://trap.jp/post/1224/\n\n#define\
+    \ overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0,\
+    \ nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i = ll(l), rrrrr\
+    \ = ll(r); i < rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i = ll(l), rrrrr\
+    \ = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define\
+    \ rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n#define repi1(i,\
+    \ n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i, l, r) for\
+    \ (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i, l, r, d)\
+    \ for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i < rrrrr :\
+    \ i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\
+    \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
+    #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\
+    \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
+    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
+    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
+    \ docs/template/template_math.md\n */\n\ntemplate <class T, class U>\ninline bool\
+    \ chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate <class T,\
+    \ class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true : false;\
+    \ }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T divfloor(U\
+    \ a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate\
+    \ <class T = ll, class U, class V>\ninline constexpr T divceil(U a, V b) { return\
+    \ T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll,\
+    \ class U, class V>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V>\ninline\
+    \ constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
+    template <class T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b\
+    \ >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
+    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
+    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
+    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
+    \ T = ll, class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a\
+    \ >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m)\
+    \ / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\n\
+    T mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
+    \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
+    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
+    \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
+    \    {\n      if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n  \
+    \  }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n\
+    \      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T =\
+    \ ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a, b,\
+    \ INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A a,\
+    \ K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n\
+    \  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n     \
+    \ if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
+    \      return sqrtl(a);\n  }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x\
+    \ == 0)\n      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n\
+    \      if (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n\
+    \        res *= x;\n      }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n\
+    \      if (x > T(a) / x)\n        return false;\n      x *= x;\n    }\n    return\
+    \ res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n\
+    \    up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max()\
+    \ && isok(x + 1))\n      x++;\n  }\n  return x;\n}\ntemplate <class T = ll, class\
     \ A, class K>\nconstexpr T iroot_ceil(A a, K k)\n{\n  T x = iroot<T>(a, k);\n\
     \  return ipow<T>(x, k) == a ? x : x + 1;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS), class A>\nint SGN(A a, D eps = EPS) { return\
@@ -616,8 +629,164 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 17 \"verify/yosupo/many_aplusb.test.cpp\"\n\nvoid init() {}\n\nvoid main2()\n\
-    {\n  LL(A, B);\n  PRINT(A + B);\n}\n\nvoid test() {}\n\n#line 2 \"template/template_main.hpp\"\
+    \ 17 \"verify/aoj/range_add_point_get.test.cpp\"\n\n#line 2 \"ds/fenwick_tree/range_add_point_get.hpp\"\
+    \n\n#line 4 \"ds/fenwick_tree/range_add_point_get.hpp\"\n\n#line 2 \"ds/fenwick_tree/fenwick_tree.hpp\"\
+    \n\n#line 4 \"ds/fenwick_tree/fenwick_tree.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
+    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
+    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
+    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
+    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
+    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
+    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
+    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
+    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
+    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
+    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
+    \ constexpr auto inv = inv_;\n};\n\ntemplate <class M>\nstruct OppositeMonoid\n\
+    {\n  using S = typename M::S;\n  static constexpr S op(const S &a, const S &b)\
+    \ { return M::op(b, a); }\n  static constexpr auto e = M::e;\n};\ntemplate <class\
+    \ G>\nstruct OppositeGroup\n{\n  using S = typename G::S;\n  static constexpr\
+    \ S op(const S &a, const S &b) { return G::op(b, a); }\n  static constexpr auto\
+    \ e = G::e;\n  static constexpr auto inv = G::inv;\n};\n\ntemplate <class SR>\n\
+    using MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate\
+    \ <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S, SR::mul, SR::e1>;\n\
+    template <class R>\nusing GroupOfRingAdd = Group<typename R::S, R::add, R::e0,\
+    \ R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul = Group<typename K::S,\
+    \ K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\ntemplate <class Madd,\
+    \ class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
+    \ Madd::S, typename Mmul::S>, \"Madd::S and Mmul::S must be identical\");\n  using\
+    \ S = typename Madd::S;\n  static constexpr auto add = Madd::op;\n  static constexpr\
+    \ auto e0 = Madd::e;\n  static constexpr auto mul = Mmul::op;\n  static constexpr\
+    \ auto e1 = Mmul::e;\n};\n\n// Gadd \u306F\u53EF\u63DB\ntemplate <class Gadd,\
+    \ class Mmul>\nstruct RingFromGroupMonoid\n{\n  static_assert(is_same_v<typename\
+    \ Gadd::S, typename Mmul::S>, \"Gadd::S and Mmul::S must be identical\");\n  using\
+    \ S = typename Gadd::S;\n  static constexpr auto add = Gadd::op;\n  static constexpr\
+    \ auto e0 = Gadd::e;\n  static constexpr auto minus = Gadd::inv;\n  static constexpr\
+    \ auto mul = Mmul::op;\n  static constexpr auto e1 = Mmul::e;\n};\n\n// Gadd,\
+    \ Gmul \u306F\u53EF\u63DB\ntemplate <class Gadd, class Gmul>\nstruct FieldFromGroupGroup\n\
+    {\n  static_assert(is_same_v<typename Gadd::S, typename Gmul::S>, \"Gadd::S and\
+    \ Gmul::S must be identical\");\n  using S = typename Gadd::S;\n  static constexpr\
+    \ auto add = Gadd::op;\n  static constexpr auto e0 = Gadd::e;\n  static constexpr\
+    \ auto minus = Gadd::inv;\n  static constexpr auto mul = Gmul::op;\n  static constexpr\
+    \ auto e1 = Gmul::e;\n  static constexpr auto inv = Gmul::inv;\n};\n#line 5 \"\
+    math/algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\
+    \u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n\
+    \ */\n\ntemplate <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
+    \ntemplate <class T>\nstruct GroupAddSub\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return S(0); }\n\
+    \  static constexpr S inv(S a) { return -a; }\n};\ntemplate <class T>\nstruct\
+    \ GroupMulDiv\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
+    \ * b; }\n  static constexpr S e() { return S(1); }\n  static constexpr S inv(S\
+    \ a) { return S(1) / a; }\n};\n\ntemplate <class T, const T infty = INF>\nusing\
+    \ SemiRingMinPlus = SemiRingFromMonoidMonoid<MonoidMin<T>, MonoidAdd<T>>;\ntemplate\
+    \ <class T, const T infty = INF>\nusing SemiRingMaxPlus = SemiRingFromMonoidMonoid<MonoidMax<T>,\
+    \ MonoidAdd<T>>;\ntemplate <class T>\nusing RingAddSubMul = RingFromGroupMonoid<GroupAddSub<T>,\
+    \ MonoidMul<T>>;\ntemplate <class T>\nusing FieldAddSubMulDiv = FieldFromGroupGroup<GroupAddSub<T>,\
+    \ GroupMulDiv<T>>;\n\ntemplate <class M>\ntypename M::S pow_monoid(typename M::S\
+    \ a, ll k)\n{\n  typename M::S c = M::e();\n  for (; k; k >>= 1)\n  {\n    if\
+    \ (k & 1)\n      c = M::op(c, a);\n    a = M::op(a, a);\n  }\n  return c;\n}\n\
+    #line 6 \"ds/fenwick_tree/fenwick_tree.hpp\"\n\n/**\n * @brief Fenwick Tree\n\
+    \ * @docs docs/ds/fenwick_tree/fenwick_tree.md\n */\n\n// G \u306F\u53EF\u63DB\
+    \u7FA4 (prefix \u3060\u3051\u306A\u3069\u3067\u3042\u308C\u3070\u53EF\u63DB\u30E2\
+    \u30CE\u30A4\u30C9\u3067\u3082 OK)\ntemplate <class G>\nstruct FenwickTree\n{\n\
+    \  using S = typename G::S;\n\nprivate:\n  int n;\n  vc<S> dat;\n\npublic:\n \
+    \ FenwickTree() {}\n  FenwickTree(int n) : n(n), dat(n + 1, G::e()) {}\n  FenwickTree(const\
+    \ vc<S> &v) : FenwickTree(v.size())\n  {\n    repi(i, n) add(i, v[i]);\n  }\n\n\
+    \  template <class I = ll>\n  I size() const { return n; }\n\n  // [0, r)\n  //\
+    \ \u9006\u5143\u306F\u5FC5\u8981\u306A\u3044\n  S sum(int r) const\n  {\n    assert(0\
+    \ <= r && r <= n);\n    S s = G::e();\n    while (r > 0)\n    {\n      s = G::op(s,\
+    \ dat[r]);\n      r -= r & -r;\n    }\n    return s;\n  }\n  // [l, r)\n  // \u9006\
+    \u5143\u304C\u5FC5\u8981\n  S sum(int l, int r) const\n  {\n    assert(0 <= l\
+    \ && l <= r && r <= n);\n    return G::op(G::inv(sum(l)), sum(r));\n  }\n  //\
+    \ \u9006\u5143\u304C\u5FC5\u8981\n  S get(int i) const\n  {\n    assert(0 <= i\
+    \ && i < n);\n    return sum(i, i + 1);\n  }\n\n  // \u9006\u5143\u306F\u5FC5\u8981\
+    \u306A\u3044\n  void add(int i, S x)\n  {\n    assert(0 <= i && i < n);\n    i++;\n\
+    \    while (i <= n)\n    {\n      dat[i] = G::op(dat[i], x);\n      i += i & -i;\n\
+    \    }\n  }\n  // \u9006\u5143\u304C\u5FC5\u8981\n  void set(int i, S x) { add(i,\
+    \ G::op(G::inv(get(i)), x)); }\n\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
+    \u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  //\
+    \ sum[0, r) < w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
+    \ -1)\n  // \u3068\u3001\u305D\u306E r \u306B\u5BFE\u3059\u308B sum[0, r) \u306E\
+    \u30DA\u30A2\n  template <class I = ll>\n  pair<I, S> lt_max_id_sum(S w) const\n\
+    \  {\n    if (w <= G::e())\n      return {-1, G::e()};\n    int k = bit_floor(n);\n\
+    \    int x = 0;\n    S v = G::e();\n    while (k > 0)\n    {\n      if (x + k\
+    \ <= n)\n      {\n        S nv = G::op(v, dat[x + k]);\n        if (nv < w)\n\
+    \          v = nv, x += k;\n      }\n      k >>= 1;\n    }\n    return {x, v};\n\
+    \  }\n\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\
+    \u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) < w \u3068\u306A\
+    \u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070 -1)\n  template <class I\
+    \ = ll>\n  I lt_max(S w) const { return lt_max_id_sum<I>(w).first; }\n  // \u6574\
+    \u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\
+    \u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) >= w \u3068\u306A\u308B\u6700\u5927\
+    \u306E r (\u306A\u3051\u308C\u3070 n+1)\n  template <class I = ll>\n  inline I\
+    \ geq_min(S w) const { return lt_max<I>(w) + 1; }\n  // \u6574\u6570\u306E\u666E\
+    \u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\
+    \u3068\u304D\n  // sum[0, r) <= w \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\
+    \u3051\u308C\u3070 -1)\n  template <class I = ll>\n  inline I leq_max(S w) const\
+    \ { return lt_max<I>(w + 1); }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
+    \u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  //\
+    \ sum[0, r) > w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
+    \ n+1)\n  template <class I = ll>\n  inline I gt_min(S w) const { return geq_min<I>(w\
+    \ + 1); }\n\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\
+    \u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001\
+    \u591A\u91CD\u96C6\u5408\u306E\u30B5\u30A4\u30BA\u3092\u8FD4\u3059\n  inline S\
+    \ size_of_multiset() const { return sum(n); }\n\n  // \u8981\u7D20\u304C [0, size())\
+    \ \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\
+    \u3063\u305F\u3068\u304D\u3001\u5024 x \u306F\u4F55\u756A\u76EE\u304B\u3089\u4F55\
+    \u756A\u76EE\u304B [l, r)\n  inline pair<S, S> order_in_multiset(int x) const\
+    \ { return {sum(x), sum(x + 1)}; }\n  // \u8981\u7D20\u304C [0, size()) \u306E\
+    \u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\
+    \u305F\u3068\u304D\u3001k \u756A\u76EE\u306E\u5024\n  // \u305F\u3060\u3057\u3001\
+    k < 0 \u306A\u3089 -1, k >= size_of_multiset() \u306A\u3089 size()\n  template\
+    \ <class I = ll>\n  inline I kth_in_multiset(S k) const\n  {\n    if (k < 0)\n\
+    \      return -1;\n    return leq_max<I>(k);\n  }\n  // \u8981\u7D20\u304C [0,\
+    \ size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\
+    \u4F7F\u3063\u305F\u3068\u304D\u3001x \u672A\u6E80\u3067\u6700\u5927\u306E\u8981\
+    \u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template\
+    \ <class T, class I = ll>\n  inline I lt_max_in_multiset(T x) const\n  {\n   \
+    \ return sum(clamp(x, T(0), T(n))) - 1;\n  }\n  // \u8981\u7D20\u304C [0, size())\
+    \ \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\
+    \u3063\u305F\u3068\u304D\u3001x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u8981\u7D20\
+    \u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template <class\
+    \ T, class I = ll>\n  inline I leq_max_in_multiset(T x) const { return lt_max_in_multiset<I>(x\
+    \ + 1); }\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\
+    \u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u4EE5\
+    \u4E0A\u3067\u6700\u5C0F\u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\
+    \u3051\u308C\u3070 size())\n  template <class T, class I = ll>\n  inline I geq_min_in_multiset(T\
+    \ x) const\n  {\n    return sum(clamp(x, T(0), T(n)));\n  }\n  // \u8981\u7D20\
+    \u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\
+    \u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u8D85\u904E\u3067\u6700\u5C0F\
+    \u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070\
+    \ size())\n  template <class T, class I = ll>\n  inline I gt_min_in_multiset(T\
+    \ x) const { return geq_min_in_multiset<I>(x + 1); }\n\n  vc<S> content() const\n\
+    \  {\n    vc<S> res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n  }\n\
+    };\n#line 6 \"ds/fenwick_tree/range_add_point_get.hpp\"\n\n/**\n * @brief \u533A\
+    \u9593\u52A0\u7B97\u4E00\u70B9\u53D6\u5F97\n * @docs docs/ds/fenwick_tree/range_add_point_get.md\n\
+    \ */\n\ntemplate <class G>\nstruct RangeAddPointGet\n{\n  using S = typename G::S;\n\
+    \nprivate:\n  int n;\n  FenwickTree<G> fw;\n\npublic:\n  RangeAddPointGet() {}\n\
+    \  RangeAddPointGet(int n) : n(n), fw(n + 1) {}\n  RangeAddPointGet(const vc<S>\
+    \ &v) : RangeAddPointGet(v.size())\n  {\n    repi(i, n) add(i, v[i]);\n  }\n\n\
+    \  void add(int l, int r, S x)\n  {\n    assert(0 <= l && l <= r && r <= n);\n\
+    \    fw.add(l, x);\n    fw.add(r, G::inv(x));\n  }\n  void add(int p, S x) { add(p,\
+    \ p + 1, x); }\n  void set(int p, S x) { add(p, p + 1, x - get(p)); }\n  S get(int\
+    \ p)\n  {\n    assert(0 <= p && p < n);\n    return fw.sum(0, p + 1);\n  }\n\n\
+    \  vc<S> content()\n  {\n    vc<S> res(n);\n    repi(i, n) res[i] = get(i);\n\
+    \    return res;\n  }\n};\n#line 19 \"verify/aoj/range_add_point_get.test.cpp\"\
+    \n\nvoid init()\n{\n  oj(mt.seed(random_device()()));\n}\n\nvoid main2()\n{\n\
+    \  LL(N, Q);\n  vl A(N);\n  rep(i, N) A.at(i) = randint(0, 1000);\n  RangeAddPointGet<GroupAddSub<ll>>\
+    \ fw(A);\n  dump(A);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n \
+    \     LL(l, r, x);\n      l--;\n      fw.add(l, r, x);\n    }\n    else if (t\
+    \ == 1)\n    {\n      LL(i);\n      i--;\n      PRINT(fw.get(i) - A.at(i));\n\
+    \    }\n    dump(fw.content());\n  }\n}\n\nvoid test()\n{\n\n}\n\n#line 2 \"template/template_main.hpp\"\
     \n\n#line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2,\
     \ auto test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
     \ color)\n    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\"\
@@ -634,15 +803,21 @@ data:
     \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
     \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
     T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
-    \      main2();\n    }\n    #endif\n  }\n};\n#line 29 \"verify/yosupo/many_aplusb.test.cpp\"\
+    \      main2();\n    }\n    #endif\n  }\n};\n#line 57 \"verify/aoj/range_add_point_get.test.cpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/many_aplusb\"\n\n// #define\
-    \ SINGLE_TESTCASE\n#define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef\
-    \ LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\
-    \n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"template/template_all_but_modint.hpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(A, B);\n  PRINT(A + B);\n}\n\nvoid\
-    \ test() {}\n\n#include \"template/template_main.hpp\"\nMain<init, main2, test>\
-    \ main_dummy;\nint main() {}\n"
+  code: "#define PROBLEM \"https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/2/DSL_2_E\"\
+    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
+    \n#ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
+    #endif\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include\
+    \ \"template/template_all_but_modint.hpp\"\n\n#include \"ds/fenwick_tree/range_add_point_get.hpp\"\
+    \n\nvoid init()\n{\n  oj(mt.seed(random_device()()));\n}\n\nvoid main2()\n{\n\
+    \  LL(N, Q);\n  vl A(N);\n  rep(i, N) A.at(i) = randint(0, 1000);\n  RangeAddPointGet<GroupAddSub<ll>>\
+    \ fw(A);\n  dump(A);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n \
+    \     LL(l, r, x);\n      l--;\n      fw.add(l, r, x);\n    }\n    else if (t\
+    \ == 1)\n    {\n      LL(i);\n      i--;\n      PRINT(fw.get(i) - A.at(i));\n\
+    \    }\n    dump(fw.content());\n  }\n}\n\nvoid test()\n{\n\n}\n\n#include \"\
+    template/template_main.hpp\"\nMain<init, main2, test> main_dummy;\nint main()\
+    \ {}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -655,17 +830,21 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   - template/template_random.hpp
+  - ds/fenwick_tree/range_add_point_get.hpp
+  - ds/fenwick_tree/fenwick_tree.hpp
+  - math/algebra/algebra_basic_ops.hpp
+  - math/algebra/algebra_base.hpp
   - template/template_main.hpp
   isVerificationFile: true
-  path: verify/yosupo/many_aplusb.test.cpp
+  path: verify/aoj/range_add_point_get.test.cpp
   requiredBy: []
-  timestamp: '2025-04-28 22:08:42+09:00'
+  timestamp: '2025-04-28 22:59:54+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/yosupo/many_aplusb.test.cpp
+documentation_of: verify/aoj/range_add_point_get.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/yosupo/many_aplusb.test.cpp
-- /verify/verify/yosupo/many_aplusb.test.cpp.html
-title: verify/yosupo/many_aplusb.test.cpp
+- /verify/verify/aoj/range_add_point_get.test.cpp
+- /verify/verify/aoj/range_add_point_get.test.cpp.html
+title: verify/aoj/range_add_point_get.test.cpp
 ---

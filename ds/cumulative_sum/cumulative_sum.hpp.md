@@ -46,12 +46,12 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_sum.test.cpp
     title: verify/yosupo/static_range_sum.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/cumulative_sum/cumulative_sum.md
     document_title: "$1$ \u6B21\u5143\u7D2F\u7A4D\u548C"
@@ -720,7 +720,7 @@ data:
   path: ds/cumulative_sum/cumulative_sum.hpp
   requiredBy: []
   timestamp: '2025-04-28 22:08:42+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/static_range_sum.test.cpp
 documentation_of: ds/cumulative_sum/cumulative_sum.hpp

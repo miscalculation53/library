@@ -45,26 +45,32 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/fenwick_tree/fenwick_tree_01.hpp
     title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
   - icon: ':heavy_check_mark:'
     path: ds/fenwick_tree/inversion.hpp
     title: "\u8EE2\u5012\u6570"
+  - icon: ':heavy_check_mark:'
+    path: ds/fenwick_tree/range_add_point_get.hpp
+    title: "\u533A\u9593\u52A0\u7B97\u4E00\u70B9\u53D6\u5F97"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/inversion.test.cpp
     title: verify/aoj/inversion.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/aoj/range_add_point_get.test.cpp
+    title: verify/aoj/range_add_point_get.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/fenwick_tree_set.test.cpp
     title: verify/mytest/fenwick_tree_set.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/ordered_set_fenwick_tree.test.cpp
     title: verify/yosupo/ordered_set_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_add_range_sum.test.cpp
     title: verify/yosupo/point_add_range_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
     title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
   - icon: ':x:'
@@ -872,6 +878,7 @@ data:
   isVerificationFile: false
   path: ds/fenwick_tree/fenwick_tree.hpp
   requiredBy:
+  - ds/fenwick_tree/range_add_point_get.hpp
   - ds/fenwick_tree/inversion.hpp
   - ds/fenwick_tree/fenwick_tree_01.hpp
   timestamp: '2025-04-28 22:08:42+09:00'
@@ -879,6 +886,7 @@ data:
   verifiedWith:
   - verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
   - verify/mytest/fenwick_tree_set.test.cpp
+  - verify/aoj/range_add_point_get.test.cpp
   - verify/aoj/inversion.test.cpp
   - verify/yosupo/ordered_set_fenwick_tree.test.cpp
   - verify/yosupo/point_add_range_sum.test.cpp
