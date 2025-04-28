@@ -1,49 +1,49 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/block_sparse_table.hpp
     title: "\u30D6\u30ED\u30C3\u30AF\u5206\u5272 + (disjoint) sparse table"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/disjoint_sparse_table.hpp
     title: Disjoint Sparse Table
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/sparse_table.hpp
     title: Sparse Table
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -51,12 +51,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/rmq.test.cpp
     title: verify/mytest/rmq.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/linear_rmq.test.cpp
     title: verify/yosupo/linear_rmq.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/ds/linear_rmq.md
     document_title: "\u7DDA\u5F62 RMQ"
@@ -365,16 +365,18 @@ data:
     \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
     \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\n// (ok, ng)\ntemplate <class T = ll, class\
     \ Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge,\
-    \ const InitOk &init_ok, const InitNg &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n\
-    \  assert(judge(ok));\n  assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok\
-    \ != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok\
-    \ : ng) = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge,\
-    \ class InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk\
-    \ &init_ok, const InitNg &init_ng, int iteration_count = 100)\n{\n  T ok(init_ok),\
-    \ ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n  repi(_, iteration_count)\n\
-    \  {\n    T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return\
-    \ ok;\n}\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T,\
-    \ T> expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
+    \ const InitOk &init_ok, const InitNg &init_ng, bool check_ok = true, bool check_ng\
+    \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
+    \  if (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok !=\
+    \ 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng)\
+    \ = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
+    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk &init_ok,\
+    \ const InitNg &init_ng, int iteration_count = 100, bool check_ok = true, bool\
+    \ check_ng = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
+    \  if (check_ng)\n    assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n \
+    \   T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n\
+    }\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T, T>\
+    \ expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
     {\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val\
     \ + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng,\
     \ ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng\
@@ -743,8 +745,8 @@ data:
   isVerificationFile: false
   path: ds/linear_rmq.hpp
   requiredBy: []
-  timestamp: '2025-04-27 03:22:16+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2025-04-28 22:08:42+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/mytest/rmq.test.cpp
   - verify/yosupo/linear_rmq.test.cpp

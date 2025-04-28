@@ -1,155 +1,170 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/cumulative_sum/cumulative_sum.hpp
     title: "$1$ \u6B21\u5143\u7D2F\u7A4D\u548C"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/cumulative_sum/cumulative_sum_2d.hpp
     title: "$2$ \u6B21\u5143\u7D2F\u7A4D\u548C"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/cumulative_sum/imos.hpp
     title: "$1$ \u6B21\u5143 imos \u6CD5"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/cumulative_sum/imos_2d.hpp
     title: "$2$ \u6B21\u5143 imos \u6CD5"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/fenwick_tree/fenwick_tree.hpp
     title: Fenwick Tree
-  - icon: ':warning:'
+  - icon: ':question:'
     path: ds/fenwick_tree/fenwick_tree_01.hpp
     title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
   - icon: ':heavy_check_mark:'
+    path: ds/fenwick_tree/inversion.hpp
+    title: "\u8EE2\u5012\u6570"
+  - icon: ':x:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/lcm_gcd_convolution.hpp
     title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/zeta_mobius_divisor_multiple.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/zeta_mobius_divisor_multiple_large.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
   - icon: ':heavy_check_mark:'
     path: math/set/and_or_convolution.hpp
     title: "and/or \u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/set/kronecker_power.hpp
     title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/set/subset_convolution.hpp
     title: subset convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/set/xor_convolution.hpp
     title: "\u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\u30FBxor \u7573\u307F\u8FBC\
       \u307F"
   - icon: ':heavy_check_mark:'
     path: math/set/zeta_mobius.hpp
     title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
-  - icon: ':warning:'
-    path: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
-    title: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/cumulative_sum_2d.test.cpp
     title: verify/aoj/cumulative_sum_2d.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/aoj/inversion.test.cpp
+    title: verify/aoj/inversion.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/zeta_general.test.cpp
     title: verify/aoj/zeta_general.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/mytest/fenwick_tree_set.test.cpp
+    title: verify/mytest/fenwick_tree_set.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/and_or_convolution.test.cpp
     title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/kronecker_power_hadamard.test.cpp
     title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
     title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: verify/yosupo/ordered_set_fenwick_tree.test.cpp
+    title: verify/yosupo/ordered_set_fenwick_tree.test.cpp
+  - icon: ':x:'
     path: verify/yosupo/point_add_range_sum.test.cpp
     title: verify/yosupo/point_add_range_sum.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
+    title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
+  - icon: ':x:'
     path: verify/yosupo/static_range_sum.test.cpp
     title: verify/yosupo/static_range_sum.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/unionfind_potential.test.cpp
     title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/xor_convolution.test.cpp
     title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
     title: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/imos.test.cpp
     title: verify/yukicoder/imos.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/imos_2d.test.cpp
     title: verify/yukicoder/imos_2d.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
+    title: verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
+  - icon: ':x:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
     title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/math/algebra/algebra_basic_ops.md
     document_title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068\
@@ -459,16 +474,18 @@ data:
     \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
     \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\n// (ok, ng)\ntemplate <class T = ll, class\
     \ Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge,\
-    \ const InitOk &init_ok, const InitNg &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n\
-    \  assert(judge(ok));\n  assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok\
-    \ != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok\
-    \ : ng) = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge,\
-    \ class InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk\
-    \ &init_ok, const InitNg &init_ng, int iteration_count = 100)\n{\n  T ok(init_ok),\
-    \ ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n  repi(_, iteration_count)\n\
-    \  {\n    T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return\
-    \ ok;\n}\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T,\
-    \ T> expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
+    \ const InitOk &init_ok, const InitNg &init_ng, bool check_ok = true, bool check_ng\
+    \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
+    \  if (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok !=\
+    \ 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng)\
+    \ = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
+    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk &init_ok,\
+    \ const InitNg &init_ng, int iteration_count = 100, bool check_ok = true, bool\
+    \ check_ng = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
+    \  if (check_ng)\n    assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n \
+    \   T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n\
+    }\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T, T>\
+    \ expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
     {\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val\
     \ + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng,\
     \ ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng\
@@ -812,6 +829,7 @@ data:
   path: math/algebra/algebra_basic_ops.hpp
   requiredBy:
   - ds/fenwick_tree/fenwick_tree.hpp
+  - ds/fenwick_tree/inversion.hpp
   - ds/fenwick_tree/fenwick_tree_01.hpp
   - ds/uf/uf_potential.hpp
   - ds/cumulative_sum/cumulative_sum_2d.hpp
@@ -826,19 +844,22 @@ data:
   - math/prime/zeta_mobius_divisor_multiple_large.hpp
   - math/prime/zeta_mobius_divisor_multiple.hpp
   - math/prime/lcm_gcd_convolution.hpp
-  - verify/yukicoder/ordered_multiset_fenwick_tree.cpp
-  timestamp: '2025-04-26 00:47:12+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2025-04-28 22:08:42+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yukicoder/imos_2d.test.cpp
   - verify/yukicoder/imos.test.cpp
+  - verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
   - verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  - verify/mytest/fenwick_tree_set.test.cpp
   - verify/aoj/cumulative_sum_2d.test.cpp
+  - verify/aoj/inversion.test.cpp
   - verify/aoj/zeta_general.test.cpp
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/static_range_sum.test.cpp
+  - verify/yosupo/ordered_set_fenwick_tree.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/kronecker_power_hadamard.test.cpp
   - verify/yosupo/unionfind_potential.test.cpp
@@ -848,6 +869,7 @@ data:
   - verify/yosupo/gcd_convolution.test.cpp
   - verify/yosupo/xor_convolution.test.cpp
   - verify/yosupo/point_add_range_sum.test.cpp
+  - verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
 documentation_of: math/algebra/algebra_basic_ops.hpp
 layout: document
 redirect_from:

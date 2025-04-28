@@ -1,63 +1,78 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':warning:'
+  - icon: ':question:'
     path: ds/fenwick_tree/fenwick_tree_01.hpp
     title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
-  - icon: ':warning:'
-    path: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
-    title: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
+  - icon: ':heavy_check_mark:'
+    path: ds/fenwick_tree/inversion.hpp
+    title: "\u8EE2\u5012\u6570"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
+    path: verify/aoj/inversion.test.cpp
+    title: verify/aoj/inversion.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/fenwick_tree_set.test.cpp
+    title: verify/mytest/fenwick_tree_set.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/ordered_set_fenwick_tree.test.cpp
+    title: verify/yosupo/ordered_set_fenwick_tree.test.cpp
+  - icon: ':x:'
     path: verify/yosupo/point_add_range_sum.test.cpp
     title: verify/yosupo/point_add_range_sum.test.cpp
-  _isVerificationFailed: false
+  - icon: ':x:'
+    path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
+    title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
+    title: verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/ds/fenwick_tree/fenwick_tree.md
     document_title: Fenwick Tree
@@ -366,16 +381,18 @@ data:
     \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
     \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\n// (ok, ng)\ntemplate <class T = ll, class\
     \ Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge,\
-    \ const InitOk &init_ok, const InitNg &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n\
-    \  assert(judge(ok));\n  assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok\
-    \ != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok\
-    \ : ng) = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge,\
-    \ class InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk\
-    \ &init_ok, const InitNg &init_ng, int iteration_count = 100)\n{\n  T ok(init_ok),\
-    \ ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n  repi(_, iteration_count)\n\
-    \  {\n    T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return\
-    \ ok;\n}\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T,\
-    \ T> expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
+    \ const InitOk &init_ok, const InitNg &init_ng, bool check_ok = true, bool check_ng\
+    \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
+    \  if (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok !=\
+    \ 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng)\
+    \ = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
+    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk &init_ok,\
+    \ const InitNg &init_ng, int iteration_count = 100, bool check_ok = true, bool\
+    \ check_ng = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
+    \  if (check_ng)\n    assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n \
+    \   T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n\
+    }\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T, T>\
+    \ expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
     {\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val\
     \ + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng,\
     \ ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng\
@@ -705,27 +722,62 @@ data:
     \    }\n  }\n  // \u9006\u5143\u304C\u5FC5\u8981\n  void set(int i, S x) { add(i,\
     \ G::op(G::inv(get(i)), x)); }\n\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
     \u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  //\
-    \ sum[0, r) >= w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
-    \ n)\n  template <class I = ll>\n  I geq_min(S w) const\n  {\n    int k = bit_ceil(n);\n\
-    \    int x = 0;\n    while (k > 0)\n    {\n      if (x + k - 1 < n && dat[x +\
-    \ k] < w)\n      {\n        w = G::op(w, G::inv(dat[x + k]));\n        x += k;\n\
-    \      }\n      k >>= 1;\n    }\n    return x;\n  }\n  // \u6574\u6570\u306E\u666E\
+    \ sum[0, r) < w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
+    \ -1)\n  // \u3068\u3001\u305D\u306E r \u306B\u5BFE\u3059\u308B sum[0, r) \u306E\
+    \u30DA\u30A2\n  template <class I = ll>\n  pair<I, S> lt_max_id_sum(S w) const\n\
+    \  {\n    if (w <= G::e())\n      return {-1, G::e()};\n    int k = bit_floor(n);\n\
+    \    int x = 0;\n    S v = G::e();\n    while (k > 0)\n    {\n      if (x + k\
+    \ <= n)\n      {\n        S nv = G::op(v, dat[x + k]);\n        if (nv < w)\n\
+    \          v = nv, x += k;\n      }\n      k >>= 1;\n    }\n    return {x, v};\n\
+    \  }\n\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\
+    \u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) < w \u3068\u306A\
+    \u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070 -1)\n  template <class I\
+    \ = ll>\n  I lt_max(S w) const { return lt_max_id_sum<I>(w).first; }\n  // \u6574\
+    \u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\
+    \u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) >= w \u3068\u306A\u308B\u6700\u5927\
+    \u306E r (\u306A\u3051\u308C\u3070 n+1)\n  template <class I = ll>\n  inline I\
+    \ geq_min(S w) const { return lt_max<I>(w) + 1; }\n  // \u6574\u6570\u306E\u666E\
     \u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\
-    \u3068\u304D\n  // sum[0, r) < w \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\
-    \u3051\u308C\u3070 -1)\n  template <class I = ll>\n  inline I lt_max(S w) const\
-    \ { return geq_min<I>(w) - 1; }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
+    \u3068\u304D\n  // sum[0, r) <= w \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\
+    \u3051\u308C\u3070 -1)\n  template <class I = ll>\n  inline I leq_max(S w) const\
+    \ { return lt_max<I>(w + 1); }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
     \u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  //\
     \ sum[0, r) > w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
-    \ n)\n  template <class I = ll>\n  inline I gt_min(S w) const { return geq_min<I>(w\
-    \ + 1); }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\
-    \u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) <= w \u3068\u306A\
-    \u308B\u6700\u5927\u306E r (\u306A\u3051\u308C\u3070 -1)\n  template <class I\
-    \ = ll>\n  inline I leq_max(S w) const { return gt_min<I>(w) - 1; }\n\n  // \u8981\
-    \u7D20\u304C [0, n) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\
-    \u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001k \u756A\u76EE\u306E\u5024 (\u306A\
-    \u3051\u308C\u3070 n)\n  template <class I = ll>\n  inline I kth_of_multiset(S\
-    \ k) const { return gt_min<I>(k); }\n\n  vc<S> content() const\n  {\n    vc<S>\
-    \ res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n  }\n};\n"
+    \ n+1)\n  template <class I = ll>\n  inline I gt_min(S w) const { return geq_min<I>(w\
+    \ + 1); }\n\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\
+    \u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001\
+    \u591A\u91CD\u96C6\u5408\u306E\u30B5\u30A4\u30BA\u3092\u8FD4\u3059\n  inline S\
+    \ size_of_multiset() const { return sum(n); }\n\n  // \u8981\u7D20\u304C [0, size())\
+    \ \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\
+    \u3063\u305F\u3068\u304D\u3001\u5024 x \u306F\u4F55\u756A\u76EE\u304B\u3089\u4F55\
+    \u756A\u76EE\u304B [l, r)\n  inline pair<S, S> order_in_multiset(int x) const\
+    \ { return {sum(x), sum(x + 1)}; }\n  // \u8981\u7D20\u304C [0, size()) \u306E\
+    \u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\
+    \u305F\u3068\u304D\u3001k \u756A\u76EE\u306E\u5024\n  // \u305F\u3060\u3057\u3001\
+    k < 0 \u306A\u3089 -1, k >= size_of_multiset() \u306A\u3089 size()\n  template\
+    \ <class I = ll>\n  inline I kth_in_multiset(S k) const\n  {\n    if (k < 0)\n\
+    \      return -1;\n    return leq_max<I>(k);\n  }\n  // \u8981\u7D20\u304C [0,\
+    \ size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\
+    \u4F7F\u3063\u305F\u3068\u304D\u3001x \u672A\u6E80\u3067\u6700\u5927\u306E\u8981\
+    \u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template\
+    \ <class T, class I = ll>\n  inline I lt_max_in_multiset(T x) const\n  {\n   \
+    \ return sum(clamp(x, T(0), T(n))) - 1;\n  }\n  // \u8981\u7D20\u304C [0, size())\
+    \ \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\
+    \u3063\u305F\u3068\u304D\u3001x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u8981\u7D20\
+    \u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template <class\
+    \ T, class I = ll>\n  inline I leq_max_in_multiset(T x) const { return lt_max_in_multiset<I>(x\
+    \ + 1); }\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\
+    \u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u4EE5\
+    \u4E0A\u3067\u6700\u5C0F\u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\
+    \u3051\u308C\u3070 size())\n  template <class T, class I = ll>\n  inline I geq_min_in_multiset(T\
+    \ x) const\n  {\n    return sum(clamp(x, T(0), T(n)));\n  }\n  // \u8981\u7D20\
+    \u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\
+    \u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u8D85\u904E\u3067\u6700\u5C0F\
+    \u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070\
+    \ size())\n  template <class T, class I = ll>\n  inline I gt_min_in_multiset(T\
+    \ x) const { return geq_min_in_multiset<I>(x + 1); }\n\n  vc<S> content() const\n\
+    \  {\n    vc<S> res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n  }\n\
+    };\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
     \n#include \"../../math/algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief Fenwick\
     \ Tree\n * @docs docs/ds/fenwick_tree/fenwick_tree.md\n */\n\n// G \u306F\u53EF\
@@ -747,27 +799,62 @@ data:
     \    }\n  }\n  // \u9006\u5143\u304C\u5FC5\u8981\n  void set(int i, S x) { add(i,\
     \ G::op(G::inv(get(i)), x)); }\n\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
     \u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  //\
-    \ sum[0, r) >= w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
-    \ n)\n  template <class I = ll>\n  I geq_min(S w) const\n  {\n    int k = bit_ceil(n);\n\
-    \    int x = 0;\n    while (k > 0)\n    {\n      if (x + k - 1 < n && dat[x +\
-    \ k] < w)\n      {\n        w = G::op(w, G::inv(dat[x + k]));\n        x += k;\n\
-    \      }\n      k >>= 1;\n    }\n    return x;\n  }\n  // \u6574\u6570\u306E\u666E\
+    \ sum[0, r) < w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
+    \ -1)\n  // \u3068\u3001\u305D\u306E r \u306B\u5BFE\u3059\u308B sum[0, r) \u306E\
+    \u30DA\u30A2\n  template <class I = ll>\n  pair<I, S> lt_max_id_sum(S w) const\n\
+    \  {\n    if (w <= G::e())\n      return {-1, G::e()};\n    int k = bit_floor(n);\n\
+    \    int x = 0;\n    S v = G::e();\n    while (k > 0)\n    {\n      if (x + k\
+    \ <= n)\n      {\n        S nv = G::op(v, dat[x + k]);\n        if (nv < w)\n\
+    \          v = nv, x += k;\n      }\n      k >>= 1;\n    }\n    return {x, v};\n\
+    \  }\n\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\
+    \u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) < w \u3068\u306A\
+    \u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070 -1)\n  template <class I\
+    \ = ll>\n  I lt_max(S w) const { return lt_max_id_sum<I>(w).first; }\n  // \u6574\
+    \u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\
+    \u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) >= w \u3068\u306A\u308B\u6700\u5927\
+    \u306E r (\u306A\u3051\u308C\u3070 n+1)\n  template <class I = ll>\n  inline I\
+    \ geq_min(S w) const { return lt_max<I>(w) + 1; }\n  // \u6574\u6570\u306E\u666E\
     \u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\
-    \u3068\u304D\n  // sum[0, r) < w \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\
-    \u3051\u308C\u3070 -1)\n  template <class I = ll>\n  inline I lt_max(S w) const\
-    \ { return geq_min<I>(w) - 1; }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
+    \u3068\u304D\n  // sum[0, r) <= w \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\
+    \u3051\u308C\u3070 -1)\n  template <class I = ll>\n  inline I leq_max(S w) const\
+    \ { return lt_max<I>(w + 1); }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
     \u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  //\
     \ sum[0, r) > w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
-    \ n)\n  template <class I = ll>\n  inline I gt_min(S w) const { return geq_min<I>(w\
-    \ + 1); }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\
-    \u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) <= w \u3068\u306A\
-    \u308B\u6700\u5927\u306E r (\u306A\u3051\u308C\u3070 -1)\n  template <class I\
-    \ = ll>\n  inline I leq_max(S w) const { return gt_min<I>(w) - 1; }\n\n  // \u8981\
-    \u7D20\u304C [0, n) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\
-    \u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001k \u756A\u76EE\u306E\u5024 (\u306A\
-    \u3051\u308C\u3070 n)\n  template <class I = ll>\n  inline I kth_of_multiset(S\
-    \ k) const { return gt_min<I>(k); }\n\n  vc<S> content() const\n  {\n    vc<S>\
-    \ res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n  }\n};\n"
+    \ n+1)\n  template <class I = ll>\n  inline I gt_min(S w) const { return geq_min<I>(w\
+    \ + 1); }\n\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\
+    \u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001\
+    \u591A\u91CD\u96C6\u5408\u306E\u30B5\u30A4\u30BA\u3092\u8FD4\u3059\n  inline S\
+    \ size_of_multiset() const { return sum(n); }\n\n  // \u8981\u7D20\u304C [0, size())\
+    \ \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\
+    \u3063\u305F\u3068\u304D\u3001\u5024 x \u306F\u4F55\u756A\u76EE\u304B\u3089\u4F55\
+    \u756A\u76EE\u304B [l, r)\n  inline pair<S, S> order_in_multiset(int x) const\
+    \ { return {sum(x), sum(x + 1)}; }\n  // \u8981\u7D20\u304C [0, size()) \u306E\
+    \u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\
+    \u305F\u3068\u304D\u3001k \u756A\u76EE\u306E\u5024\n  // \u305F\u3060\u3057\u3001\
+    k < 0 \u306A\u3089 -1, k >= size_of_multiset() \u306A\u3089 size()\n  template\
+    \ <class I = ll>\n  inline I kth_in_multiset(S k) const\n  {\n    if (k < 0)\n\
+    \      return -1;\n    return leq_max<I>(k);\n  }\n  // \u8981\u7D20\u304C [0,\
+    \ size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\
+    \u4F7F\u3063\u305F\u3068\u304D\u3001x \u672A\u6E80\u3067\u6700\u5927\u306E\u8981\
+    \u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template\
+    \ <class T, class I = ll>\n  inline I lt_max_in_multiset(T x) const\n  {\n   \
+    \ return sum(clamp(x, T(0), T(n))) - 1;\n  }\n  // \u8981\u7D20\u304C [0, size())\
+    \ \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\
+    \u3063\u305F\u3068\u304D\u3001x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u8981\u7D20\
+    \u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template <class\
+    \ T, class I = ll>\n  inline I leq_max_in_multiset(T x) const { return lt_max_in_multiset<I>(x\
+    \ + 1); }\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\
+    \u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u4EE5\
+    \u4E0A\u3067\u6700\u5C0F\u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\
+    \u3051\u308C\u3070 size())\n  template <class T, class I = ll>\n  inline I geq_min_in_multiset(T\
+    \ x) const\n  {\n    return sum(clamp(x, T(0), T(n)));\n  }\n  // \u8981\u7D20\
+    \u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\
+    \u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u8D85\u904E\u3067\u6700\u5C0F\
+    \u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070\
+    \ size())\n  template <class T, class I = ll>\n  inline I gt_min_in_multiset(T\
+    \ x) const { return geq_min_in_multiset<I>(x + 1); }\n\n  vc<S> content() const\n\
+    \  {\n    vc<S> res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n  }\n\
+    };\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -785,12 +872,17 @@ data:
   isVerificationFile: false
   path: ds/fenwick_tree/fenwick_tree.hpp
   requiredBy:
+  - ds/fenwick_tree/inversion.hpp
   - ds/fenwick_tree/fenwick_tree_01.hpp
-  - verify/yukicoder/ordered_multiset_fenwick_tree.cpp
-  timestamp: '2025-04-27 20:44:15+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2025-04-28 22:08:42+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
+  - verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
+  - verify/mytest/fenwick_tree_set.test.cpp
+  - verify/aoj/inversion.test.cpp
+  - verify/yosupo/ordered_set_fenwick_tree.test.cpp
   - verify/yosupo/point_add_range_sum.test.cpp
+  - verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
 documentation_of: ds/fenwick_tree/fenwick_tree.hpp
 layout: document
 redirect_from:
@@ -818,6 +910,11 @@ title: Fenwick Tree
 
 - `G` は**可換**
   - 群であることが多いが、モノイドでも一部機能は OK
+
+#### 計算量
+
+- (1)：$O(n)$
+- (2)：$O(n\log n)$
 
 
 ### メンバ関数
@@ -927,15 +1024,69 @@ $i$ 番目の要素を $x$ にする。群であることが必要。
 - $O(\log n)$
 
 
-#### kth_of_multiset
-
-```cpp
-I kth_of_multiset<I=ll>(G::S k)
-```
+---
 
 Fenwick Tree は $[0, n)$ の要素からなる多重集合を管理するのにも使える： `G` は整数の通常の足し算にして、要素 $i$ を $c$ 個追加（削除）するときに $i$ 番目の要素に $c$ を加算（減算）すればよい。（クエリ先読み + 座標圧縮と組み合わせることもしばしば）
 
-このとき、「多重集合の $k$ 番目に小さい要素」を返す（なければ $n$ を返す）。なおこれは `gt_min` と一致する。
+以下は、この使い方をしたとき用のメソッドである。
+
+（`sum` を使うと「$x$ 以上の値の個数」などがわかるがこれは別のメソッドにはしていない。）
+
+#### size_of_multiset
+
+```cpp
+S size_of_multiset()
+```
+
+多重集合のサイズを返す。`sum(n)` に一致。
+
+##### 計算量
+
+- $O(\log n)$
+
+#### order_in_multiset
+
+```cpp
+pair<I, I> order_in_multiset<I=ll>(int x)
+```
+
+$x$ が $[l, r)$ 番目であるとして $l, r$ を返す。$l$ は `sum(x)` に、$r$ は `sum(x + 1)` に一致。
+
+##### 制約
+
+- $0 \leq x \lt n$
+
+##### 計算量
+
+- $O(\log n)$
+
+#### kth_in_multiset
+
+```cpp
+I kth_in_multiset<I=ll>(G::S k)
+```
+
+「集合の $k$ 番目に小さい要素」を返す。ただし、$k \lt 0$ なら $-1$ を、$k \geq (多重集合のサイズ)$ なら $n$ を返す。
+
+なおこれは（$k \geq 0$ のとき）`leq_max` と一致する。
+
+##### 計算量
+
+- $O(\log n)$
+
+#### lt_max_in_multiset など
+
+```cpp
+(1) I lt_max_in_multiset<I=ll>(T x)
+(2) I leq_max_in_multiset<I=ll>(T x)
+(3) I geq_max_in_multiset<I=ll>(T x)
+(4) I gt_max_in_multiset<I=ll>(T x)
+```
+
+- (1)：$x$ 未満で最大の要素が**小さい方から何番目か**を返す。なければ $-1$ を返す。
+- (2)：$x$ 以下で最大の要素が**小さい方から何番目か**を返す。なければ $-1$ を返す。
+- (3)：$x$ 以上で最小の要素が**小さい方から何番目か**を返す。なければ多重集合の要素数を返す。
+- (4)：$x$ 超過で最小の要素が**小さい方から何番目か**を返す。なければ多重集合の要素数を返す。
 
 ##### 計算量
 

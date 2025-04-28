@@ -1,148 +1,154 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: ds/coordinate_compression.hpp
-    title: "\u5EA7\u6A19\u5727\u7E2E"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
+    path: bit/kth_bit.hpp
+    title: "\u4E0B\u304B\u3089 $k$ \u756A\u76EE\u306E\u30D3\u30C3\u30C8\u3092\u53D6\
+      \u5F97"
+  - icon: ':question:'
     path: ds/fenwick_tree/fenwick_tree.hpp
     title: Fenwick Tree
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
+    path: ds/fenwick_tree/fenwick_tree_01.hpp
+    title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
+  - icon: ':question:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':x:'
   attributes:
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.yosupo.jp/problem/predecessor_problem
     links:
-    - https://yukicoder.me/problems/no/649
-  bundledCode: "#line 1 \"verify/yukicoder/ordered_multiset_fenwick_tree.cpp\"\n#define\
-    \ PROBLEM \"https://yukicoder.me/problems/no/649\"\n\n#define SINGLE_TESTCASE\n\
-    // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef LOCAL\n#define FAST_IO\n\
-    // #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\n#define INF 4'000'000'000'000'000'037LL\n\
-    #define EPS 1e-11\n\n#line 2 \"template/template_all_but_modint.hpp\"\n\n#line\
-    \ 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
-    \u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n */\n\
-    \n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n\
-    #endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing uint = unsigned\
-    \ int;\nusing ull = unsigned long long;\nusing pll = pair<ll, ll>;\nusing tlll\
-    \ = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\n#define vc vector\n\
-    template <class T>\nusing vvc = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\
-    \nusing vb = vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll\
-    \ = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb\
-    \ = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T,\
-    \ vc<T>, greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n\
-    #ifdef __SIZEOF_INT128__\nusing i128 = __int128_t;\nusing u128 = __uint128_t;\n\
-    i128 stoi128(const string &s)\n{\n  i128 res = 0;\n  if (s.front() == '-')\n \
-    \ {\n    for (int i = 1; i < (int)s.size(); i++)\n      res = 10 * res + s[i]\
-    \ - '0';\n    res = -res;\n  }\n  else\n  {\n    for (auto &&c : s)\n      res\
-    \ = 10 * res + c - '0';\n  }\n  return res;\n}\nstring i128tos(i128 x)\n{\n  if\
-    \ (x == 0) return \"0\";\n  string sign = \"\", res = \"\";\n  if (x < 0)\n  \
-    \  x = -x, sign = \"-\";\n  while (x > 0)\n  {\n    res += '0' + x % 10;\n   \
-    \ x /= 10;\n  }\n  reverse(res.begin(), res.end());\n  return sign + res;\n}\n\
-    istream &operator>>(istream &is, i128 &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n\
-    \  return is;\n}\nostream &operator<<(ostream &os, const i128 &a)\n{\n  os <<\
-    \ i128tos(a);\n  return os;\n}\n#endif\n\n#define cauto const auto\n#line 2 \"\
-    template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\n\n/**\n\
-    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n\
-    \ */\n\n// https://trap.jp/post/1224/\n\n#define overload4(_1, _2, _3, _4, name,\
-    \ ...) name\n#define rep1(i, n) for (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n\
-    #define rep2(i, l, r) for (ll i = ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define\
-    \ rep3(i, l, r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0\
-    \ ? i < rrrrr : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__, rep3,\
-    \ rep2, rep1)(__VA_ARGS__)\n#define repi1(i, n) for (int i = 0, nnnnn = int(n);\
-    \ i < nnnnn; i++)\n#define repi2(i, l, r) for (int i = int(l), rrrrr = int(r);\
-    \ i < rrrrr; i++)\n#define repi3(i, l, r, d) for (int i = int(l), rrrrr = int(r),\
-    \ ddddd = int(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define repi(...)\
-    \ overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\n#define fe(...)\
-    \ for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n#define fem(...)\
-    \ for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n\
-    #define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n#define EPS 1e-11\n\
-    #endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
-    \u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs docs/template/template_math.md\n\
-    \ */\n\ntemplate <class T, class U>\ninline bool chmin(T &a, U b) { return a >\
-    \ b ? a = b, true : false; }\ntemplate <class T, class U>\ninline bool chmax(T\
-    \ &a, U b) { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll,\
-    \ class U, class V>\ninline constexpr T divfloor(U a, V b) { return T(a) / T(b)\
-    \ - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class U, class\
-    \ V>\ninline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b)\
-    \ && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V>\ninline\
-    \ constexpr T divround(U a, V b) { return divfloor<T>(2 * T(a) + T(b), 2 * T(b));\
-    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T safemod(U a,\
-    \ V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class T = ll,\
-    \ class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n  if (b\
-    \ == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a < 0 &&\
-    \ a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (true)\n\
-    \  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n     \
-    \ break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll, class\
-    \ A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0 && b\
-    \ >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) / T(b)\
-    \ ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT mul_limited(A\
-    \ a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class T = ll, class\
-    \ A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a >= 0 && b\
-    \ >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n\
-    \  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n    {\n     \
-    \ if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n    }\n    b >>=\
-    \ 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n      return m;\n\
-    \    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll, class A, class\
-    \ B>\nT pow_limited(A a, B b) { return pow_limited<T>(a, b, INF); }\n\ntemplate\
-    \ <class T = ll, class A, class K>\nconstexpr T iroot(A a, K k)\n{\n  assert(a\
-    \ >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n  if (k == 2)\n  {\n\
-    \    if constexpr (sizeof(T) > sizeof(ull))\n    {\n      if ((u128)a < ((u128)1\
-    \ << 120))\n        return sqrtl(a);\n    }\n    else\n      return sqrtl(a);\n\
-    \  }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n      return true;\n\
-    \    T res = 1, k2 = k;\n    while (true)\n    {\n      if (k2 & 1)\n      {\n\
-    \        if (res > T(a) / x)\n          return false;\n        res *= x;\n   \
-    \   }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n      if (x > T(a)\
-    \ / x)\n        return false;\n      x *= x;\n    }\n    return res <= T(a);\n\
-    \  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n   \
-    \ up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max() &&\
-    \ isok(x + 1))\n      x++;\n  }\n  return x;\n}\ntemplate <class T = ll, class\
+    - https://judge.yosupo.jp/problem/predecessor_problem
+  bundledCode: "#line 1 \"verify/yosupo/predecessor_problem_fenwick_tree.test.cpp\"\
+    \n#define PROBLEM \"https://judge.yosupo.jp/problem/predecessor_problem\"\n\n\
+    #define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n\
+    #ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
+    #endif\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#line\
+    \ 2 \"template/template_all_but_modint.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
+    \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
+    \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
+    \nusing ll = long long;\nusing uint = unsigned int;\nusing ull = unsigned long\
+    \ long;\nusing pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll\
+    \ = tuple<ll, ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc\
+    \ = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb =\
+    \ vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\n\
+    using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
+    using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
+    \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
+    using i128 = __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string\
+    \ &s)\n{\n  i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i\
+    \ < (int)s.size(); i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n\
+    \  }\n  else\n  {\n    for (auto &&c : s)\n      res = 10 * res + c - '0';\n \
+    \ }\n  return res;\n}\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n\
+    \  string sign = \"\", res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n\
+    \  while (x > 0)\n  {\n    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(),\
+    \ res.end());\n  return sign + res;\n}\nistream &operator>>(istream &is, i128\
+    \ &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream\
+    \ &operator<<(ostream &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n\
+    }\n#endif\n\n#define cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\
+    \n#line 4 \"template/template_rep.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n */\n\n//\
+    \ https://trap.jp/post/1224/\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n\
+    #define rep1(i, n) for (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i,\
+    \ l, r) for (ll i = ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define rep3(i, l,\
+    \ r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr\
+    \ : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n\
+    #define repi1(i, n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i,\
+    \ l, r) for (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i,\
+    \ l, r, d) for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i\
+    \ < rrrrr : i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3,\
+    \ repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n#define\
+    \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
+    #line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
+    #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
+    \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
+    inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
+    \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T\
+    \ divfloor(U a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0);\
+    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T divceil(U a,\
+    \ V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate\
+    \ <class T = ll, class U, class V>\ninline constexpr T divround(U a, V b) { return\
+    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U,\
+    \ class V>\ninline constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a,\
+    \ b); }\n\ntemplate <class T = ll, class U, class V>\nconstexpr T ipow(U a, V\
+    \ b)\n{\n  assert(b >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a ==\
+    \ 1)\n    return a;\n  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n \
+    \ T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n\
+    \    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n\
+    }\ntemplate <class T = ll, class A, class B, class M>\nT mul_limited(A a, B b,\
+    \ M m)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n\
+    \  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll,\
+    \ class A, class B>\nT mul_limited(A a, B b) { return mul_limited<T>(a, b, INF);\
+    \ }\ntemplate <class T = ll, class A, class B, class M>\nT pow_limited(A a, B\
+    \ b, M m)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n\
+    \    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n\
+    \  {\n    if (b & 1)\n    {\n      if (res > T(m) / tmp)\n        return m;\n\
+    \      res *= tmp;\n    }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if\
+    \ (tmp > T(m) / tmp)\n      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\n\
+    template <class T = ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a,\
+    \ b, INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A\
+    \ a, K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return\
+    \ a;\n  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n\
+    \      if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
+    \      return sqrtl(a);\n  }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x\
+    \ == 0)\n      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n\
+    \      if (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n\
+    \        res *= x;\n      }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n\
+    \      if (x > T(a) / x)\n        return false;\n      x *= x;\n    }\n    return\
+    \ res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n\
+    \    up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max()\
+    \ && isok(x + 1))\n      x++;\n  }\n  return x;\n}\ntemplate <class T = ll, class\
     \ A, class K>\nconstexpr T iroot_ceil(A a, K k)\n{\n  T x = iroot<T>(a, k);\n\
     \  return ipow<T>(x, k) == a ? x : x + 1;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS), class A>\nint SGN(A a, D eps = EPS) { return\
@@ -369,16 +375,18 @@ data:
     \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
     \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\n// (ok, ng)\ntemplate <class T = ll, class\
     \ Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge,\
-    \ const InitOk &init_ok, const InitNg &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n\
-    \  assert(judge(ok));\n  assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok\
-    \ != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok\
-    \ : ng) = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge,\
-    \ class InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk\
-    \ &init_ok, const InitNg &init_ng, int iteration_count = 100)\n{\n  T ok(init_ok),\
-    \ ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n  repi(_, iteration_count)\n\
-    \  {\n    T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return\
-    \ ok;\n}\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T,\
-    \ T> expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
+    \ const InitOk &init_ok, const InitNg &init_ng, bool check_ok = true, bool check_ng\
+    \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
+    \  if (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok !=\
+    \ 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng)\
+    \ = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
+    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk &init_ok,\
+    \ const InitNg &init_ng, int iteration_count = 100, bool check_ok = true, bool\
+    \ check_ng = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
+    \  if (check_ng)\n    assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n \
+    \   T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n\
+    }\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T, T>\
+    \ expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
     {\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val\
     \ + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng,\
     \ ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng\
@@ -625,58 +633,37 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 2 \"ds/coordinate_compression.hpp\"\n\n#line 4 \"ds/coordinate_compression.hpp\"\
-    \n\n/**\n * @brief \u5EA7\u6A19\u5727\u7E2E\n * @docs docs/ds/coordinate_compression.md\n\
-    \ */\n\ntemplate <class T>\nstruct CoordinateCompression\n{\n  vc<T> vals;\n \
-    \ CoordinateCompression() {}\n  CoordinateCompression(const vc<T> &vec) : vals(sortuniqued(vec))\
-    \ {}\n\n  // \u6DFB\u5B57 i \u306B\u5BFE\u5FDC\u3059\u308B\u5024\n  T get_val(const\
-    \ int i) const\n  {\n    assert(0 <= i && i < SZ(vals));\n    return vals[i];\n\
-    \  }\n  // \u5024 val \u306B\u5BFE\u5FDC\u3059\u308B\u6DFB\u5B57 (\u306A\u3051\
-    \u308C\u3070 -1)\n  template <class I = ll>\n  I get_id(const T &val) const\n\
-    \  {\n    auto it = lower_bound(ALL(vals), val);\n    if (it == vals.end() ||\
-    \ *it != val)\n      return -1;\n    return it - vals.begin();\n  }\n\n  template\
-    \ <class I = ll>\n  I size() const { return vals.size(); }\n};\n\n// \u5EA7\u6A19\
-    \u5727\u7E2E\u3057\u305F\u5F8C\u306E\u914D\u5217\u3092\u8FD4\u3059\ntemplate <class\
-    \ T, class I = ll>\nvc<I> compressed(const vc<T> &vec)\n{\n  CoordinateCompression\
-    \ cc(vec);\n  vc<I> res(vec.size());\n  repi(i, vec.size()) res[i] = cc.get_id(vec[i]);\n\
-    \  return res;\n}\n// \u540C\u3058\u5024\u306B\u306F\u540C\u3058 id \u3092\u632F\
-    \u308B\u304C\u3001id \u306F\u914D\u5217\u5185\u3067\u5148\u306B\u73FE\u308C\u308B\
-    \u3082\u306E\u304B\u3089\u5148\u306B\u632F\u308B\ntemplate <class T, class I =\
-    \ ll>\nvc<I> compressed_unordered(const vc<T> &vec)\n{\n  auto cv = compressed(vec);\n\
-    \  vc<int> id(vec.size(), -1);\n  vc<I> res(vec.size());\n  int j = 0;\n  repi(i,\
-    \ vec.size())\n  {\n    int &tmp = id[cv[i]];\n    if (tmp == -1)\n      tmp =\
-    \ j++;\n    res[i] = tmp;\n  }\n  return res;\n}\n#line 2 \"ds/fenwick_tree/fenwick_tree.hpp\"\
-    \n\n#line 4 \"ds/fenwick_tree/fenwick_tree.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
-    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
-    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
-    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
-    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
-    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
-    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
-    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
-    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
-    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
-    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
-    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
-    \ constexpr auto inv = inv_;\n};\n\ntemplate <class M>\nstruct OppositeMonoid\n\
-    {\n  using S = typename M::S;\n  static constexpr S op(const S &a, const S &b)\
-    \ { return M::op(b, a); }\n  static constexpr auto e = M::e;\n};\ntemplate <class\
-    \ G>\nstruct OppositeGroup\n{\n  using S = typename G::S;\n  static constexpr\
-    \ S op(const S &a, const S &b) { return G::op(b, a); }\n  static constexpr auto\
-    \ e = G::e;\n  static constexpr auto inv = G::inv;\n};\n\ntemplate <class SR>\n\
-    using MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate\
-    \ <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S, SR::mul, SR::e1>;\n\
-    template <class R>\nusing GroupOfRingAdd = Group<typename R::S, R::add, R::e0,\
-    \ R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul = Group<typename K::S,\
-    \ K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\ntemplate <class Madd,\
-    \ class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
+    \ 2 \"ds/fenwick_tree/fenwick_tree_01.hpp\"\n\n#line 4 \"ds/fenwick_tree/fenwick_tree_01.hpp\"\
+    \n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n#line 2 \"math/algebra/algebra_base.hpp\"\
+    \n\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
+    \u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
+    \ */\n\ntemplate <class S_, auto op_, auto e_>\nstruct Monoid\n{\n  using S =\
+    \ S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n};\n\
+    \ntemplate <class S_, auto op_, auto e_, auto inv_>\nstruct Group\n{\n  using\
+    \ S = S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n\
+    \  static constexpr auto inv = inv_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto mul_, auto e1_>\nstruct SemiRing\n{\n  using S = S_;\n  static constexpr\
+    \ auto add = add_;\n  static constexpr auto e0 = e0_;\n  static constexpr auto\
+    \ mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto\
+    \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
+    \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto minus_, auto mul_, auto e1_, auto inv_>\nstruct Field\n{\n  using\
+    \ S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n  static constexpr auto inv = inv_;\n};\n\n\
+    template <class M>\nstruct OppositeMonoid\n{\n  using S = typename M::S;\n  static\
+    \ constexpr S op(const S &a, const S &b) { return M::op(b, a); }\n  static constexpr\
+    \ auto e = M::e;\n};\ntemplate <class G>\nstruct OppositeGroup\n{\n  using S =\
+    \ typename G::S;\n  static constexpr S op(const S &a, const S &b) { return G::op(b,\
+    \ a); }\n  static constexpr auto e = G::e;\n  static constexpr auto inv = G::inv;\n\
+    };\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S,\
+    \ SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename\
+    \ SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
+    \ R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul =\
+    \ Group<typename K::S, K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\n\
+    template <class Madd, class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
     \ Madd::S, typename Mmul::S>, \"Madd::S and Mmul::S must be identical\");\n  using\
     \ S = typename Madd::S;\n  static constexpr auto add = Madd::op;\n  static constexpr\
     \ auto e0 = Madd::e;\n  static constexpr auto mul = Mmul::op;\n  static constexpr\
@@ -709,7 +696,8 @@ data:
     \ GroupMulDiv<T>>;\n\ntemplate <class M>\ntypename M::S pow_monoid(typename M::S\
     \ a, ll k)\n{\n  typename M::S c = M::e();\n  for (; k; k >>= 1)\n  {\n    if\
     \ (k & 1)\n      c = M::op(c, a);\n    a = M::op(a, a);\n  }\n  return c;\n}\n\
-    #line 6 \"ds/fenwick_tree/fenwick_tree.hpp\"\n\n/**\n * @brief Fenwick Tree\n\
+    #line 2 \"ds/fenwick_tree/fenwick_tree.hpp\"\n\n#line 4 \"ds/fenwick_tree/fenwick_tree.hpp\"\
+    \n\n#line 6 \"ds/fenwick_tree/fenwick_tree.hpp\"\n\n/**\n * @brief Fenwick Tree\n\
     \ * @docs docs/ds/fenwick_tree/fenwick_tree.md\n */\n\n// G \u306F\u53EF\u63DB\
     \u7FA4 (prefix \u3060\u3051\u306A\u3069\u3067\u3042\u308C\u3070\u53EF\u63DB\u30E2\
     \u30CE\u30A4\u30C9\u3067\u3082 OK)\ntemplate <class G>\nstruct FenwickTree\n{\n\
@@ -729,71 +717,169 @@ data:
     \    }\n  }\n  // \u9006\u5143\u304C\u5FC5\u8981\n  void set(int i, S x) { add(i,\
     \ G::op(G::inv(get(i)), x)); }\n\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
     \u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  //\
-    \ sum[0, r) >= w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
-    \ n)\n  template <class I = ll>\n  I geq_min(S w) const\n  {\n    int k = bit_ceil(n);\n\
-    \    int x = 0;\n    while (k > 0)\n    {\n      if (x + k - 1 < n && dat[x +\
-    \ k] < w)\n      {\n        w = G::op(w, G::inv(dat[x + k]));\n        x += k;\n\
-    \      }\n      k >>= 1;\n    }\n    return x;\n  }\n  // \u6574\u6570\u306E\u666E\
+    \ sum[0, r) < w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
+    \ -1)\n  // \u3068\u3001\u305D\u306E r \u306B\u5BFE\u3059\u308B sum[0, r) \u306E\
+    \u30DA\u30A2\n  template <class I = ll>\n  pair<I, S> lt_max_id_sum(S w) const\n\
+    \  {\n    if (w <= G::e())\n      return {-1, G::e()};\n    int k = bit_floor(n);\n\
+    \    int x = 0;\n    S v = G::e();\n    while (k > 0)\n    {\n      if (x + k\
+    \ <= n)\n      {\n        S nv = G::op(v, dat[x + k]);\n        if (nv < w)\n\
+    \          v = nv, x += k;\n      }\n      k >>= 1;\n    }\n    return {x, v};\n\
+    \  }\n\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\
+    \u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) < w \u3068\u306A\
+    \u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070 -1)\n  template <class I\
+    \ = ll>\n  I lt_max(S w) const { return lt_max_id_sum<I>(w).first; }\n  // \u6574\
+    \u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\
+    \u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) >= w \u3068\u306A\u308B\u6700\u5927\
+    \u306E r (\u306A\u3051\u308C\u3070 n+1)\n  template <class I = ll>\n  inline I\
+    \ geq_min(S w) const { return lt_max<I>(w) + 1; }\n  // \u6574\u6570\u306E\u666E\
     \u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\
-    \u3068\u304D\n  // sum[0, r) < w \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\
-    \u3051\u308C\u3070 -1)\n  template <class I = ll>\n  inline I lt_max(S w) const\
-    \ { return geq_min<I>(w) - 1; }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
+    \u3068\u304D\n  // sum[0, r) <= w \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\
+    \u3051\u308C\u3070 -1)\n  template <class I = ll>\n  inline I leq_max(S w) const\
+    \ { return lt_max<I>(w + 1); }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
     \u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  //\
     \ sum[0, r) > w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
-    \ n)\n  template <class I = ll>\n  inline I gt_min(S w) const { return geq_min<I>(w\
-    \ + 1); }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\
-    \u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) <= w \u3068\u306A\
-    \u308B\u6700\u5927\u306E r (\u306A\u3051\u308C\u3070 -1)\n  template <class I\
-    \ = ll>\n  inline I leq_max(S w) const { return gt_min<I>(w) - 1; }\n\n  // \u8981\
-    \u7D20\u304C [0, n) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\
-    \u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001k \u756A\u76EE\u306E\u5024 (\u306A\
-    \u3051\u308C\u3070 n)\n  template <class I = ll>\n  inline I kth_of_multiset(S\
-    \ k) const { return gt_min<I>(k); }\n\n  vc<S> content() const\n  {\n    vc<S>\
-    \ res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n  }\n};\n#line 19\
-    \ \"verify/yukicoder/ordered_multiset_fenwick_tree.cpp\"\n\nvoid init() {}\n\n\
-    void main2()\n{\n  LL(Q, K);\n  K--;\n\n  vl vals;\n  vc<pll> queries(Q);\n  rep(q,\
-    \ Q)\n  {\n    LL(t);\n    if (t == 1)\n    {\n      LL(v);\n      vals.eb(v);\n\
-    \      queries.at(q) = {t, v};\n    }\n    else if (t == 2)\n    {\n      queries.at(q)\
-    \ = {t, -1};\n    }\n  }\n  CoordinateCompression cc(vals);\n  FenwickTree<GroupAddSub<ll>>\
-    \ fw(cc.size());\n  fec([t, v] : queries)\n  {\n    if (t == 1)\n    {\n     \
-    \ ll i = cc.get_id(v);\n      fw.add(i, 1);\n    }\n    else if (t == 2)\n   \
-    \ {\n      ll i = fw.kth_of_multiset(K);\n      if (i == fw.size())\n        PRINT(-1);\n\
-    \      else\n      {\n        PRINT(cc.get_val(i));\n        fw.add(i, -1);\n\
-    \      }\n    }\n  }\n}\n\nvoid test()\n{\n  \n}\n\n#line 2 \"template/template_main.hpp\"\
-    \n\n#line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2,\
-    \ auto test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
-    \ color)\n    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\"\
-    ;\n      #ifdef LOCAL\n      cerr << s;\n      #endif\n      /* \u30B3\u30FC\u30C9\
-    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
-    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n      cerr << val;\n      //*/\n \
-    \   };\n  \n    #if defined FAST_IO and not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\\
-    n\\n\", \"32\");\n    #endif\n    #if defined FAST_CIO and not defined LOCAL\n\
-    \    CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
-    \    #endif\n    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n\
-    \  \n    #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n\
-    \    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n   \
-    \   dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
+    \ n+1)\n  template <class I = ll>\n  inline I gt_min(S w) const { return geq_min<I>(w\
+    \ + 1); }\n\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\
+    \u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001\
+    \u591A\u91CD\u96C6\u5408\u306E\u30B5\u30A4\u30BA\u3092\u8FD4\u3059\n  inline S\
+    \ size_of_multiset() const { return sum(n); }\n\n  // \u8981\u7D20\u304C [0, size())\
+    \ \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\
+    \u3063\u305F\u3068\u304D\u3001\u5024 x \u306F\u4F55\u756A\u76EE\u304B\u3089\u4F55\
+    \u756A\u76EE\u304B [l, r)\n  inline pair<S, S> order_in_multiset(int x) const\
+    \ { return {sum(x), sum(x + 1)}; }\n  // \u8981\u7D20\u304C [0, size()) \u306E\
+    \u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\
+    \u305F\u3068\u304D\u3001k \u756A\u76EE\u306E\u5024\n  // \u305F\u3060\u3057\u3001\
+    k < 0 \u306A\u3089 -1, k >= size_of_multiset() \u306A\u3089 size()\n  template\
+    \ <class I = ll>\n  inline I kth_in_multiset(S k) const\n  {\n    if (k < 0)\n\
+    \      return -1;\n    return leq_max<I>(k);\n  }\n  // \u8981\u7D20\u304C [0,\
+    \ size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\
+    \u4F7F\u3063\u305F\u3068\u304D\u3001x \u672A\u6E80\u3067\u6700\u5927\u306E\u8981\
+    \u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template\
+    \ <class T, class I = ll>\n  inline I lt_max_in_multiset(T x) const\n  {\n   \
+    \ return sum(clamp(x, T(0), T(n))) - 1;\n  }\n  // \u8981\u7D20\u304C [0, size())\
+    \ \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\
+    \u3063\u305F\u3068\u304D\u3001x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u8981\u7D20\
+    \u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template <class\
+    \ T, class I = ll>\n  inline I leq_max_in_multiset(T x) const { return lt_max_in_multiset<I>(x\
+    \ + 1); }\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\
+    \u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u4EE5\
+    \u4E0A\u3067\u6700\u5C0F\u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\
+    \u3051\u308C\u3070 size())\n  template <class T, class I = ll>\n  inline I geq_min_in_multiset(T\
+    \ x) const\n  {\n    return sum(clamp(x, T(0), T(n)));\n  }\n  // \u8981\u7D20\
+    \u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\
+    \u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u8D85\u904E\u3067\u6700\u5C0F\
+    \u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070\
+    \ size())\n  template <class T, class I = ll>\n  inline I gt_min_in_multiset(T\
+    \ x) const { return geq_min_in_multiset<I>(x + 1); }\n\n  vc<S> content() const\n\
+    \  {\n    vc<S> res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n  }\n\
+    };\n#line 2 \"bit/kth_bit.hpp\"\n\n#line 4 \"bit/kth_bit.hpp\"\n\n/**\n * @brief\
+    \ \u4E0B\u304B\u3089 $k$ \u756A\u76EE\u306E\u30D3\u30C3\u30C8\u3092\u53D6\u5F97\
+    \n * @docs docs/bit/kth_bit.md\n */\n\n// x \u306E\u7ACB\u3063\u3066\u3044\u308B\
+    \u30D3\u30C3\u30C8\u306E\u3046\u3061\u4E0B\u304B\u3089 k \u756A\u76EE\u306E\u3082\
+    \u306E\u306E\u4F4D\u7F6E\u3092\u53D6\u5F97\null kth_bit_pos(ull x, int k)\n{\n\
+    \  assert(0 <= k && k < (int)popcount(x));\n  auto judge = [&](int i) -> bool\n\
+    \  { return (int)popcount(x & ((1ULL << i) - 1)) <= k; };\n  return binsearch(judge,\
+    \ 0, 64, true, false).first;\n}\n#line 8 \"ds/fenwick_tree/fenwick_tree_01.hpp\"\
+    \n\n/**\n * @brief 01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree\n * @docs docs/ds/fenwick_tree/fenwick_tree_01.md\n\
+    \ */\n\ntemplate <class T = ll, class Word = uint64_t>\nstruct FenwickTree01\n\
+    {\nprivate:\n  const int B = 8 * sizeof(Word);\n  int n;\n  vc<Word> dat;\n  FenwickTree<GroupAddSub<T>>\
+    \ fw;\n\npublic:\n  FenwickTree01() {}\n  FenwickTree01(int n) : n(n), dat(n /\
+    \ B + 1), fw(n / B + 1) {}\n  template <class U>\n  FenwickTree01(const vc<U>\
+    \ &v) : n(v.size())\n  {\n    dat.resize(n / B + 1);\n    repi(i, n)\n    {\n\
+    \      assert(v[i] == T(0) || v[i] == T(1));\n      bset(dat[i / B], i % B, v[i]);\n\
+    \    }\n    vc<T> vec(dat.size());\n    repi(i, n / B + 1) vec[i] = popcount(dat[i]);\n\
+    \    fw = decltype(fw)(vec);\n  }\n\n  template <class I = ll>\n  I size() const\
+    \ { return n; }\n\n  // [0, r)\n  T sum(int r) const\n  {\n    assert(0 <= r &&\
+    \ r <= n);\n    int res = fw.sum(r / B);\n    res += popcount(dat[r / B] & ((Word(1)\
+    \ << (r % B)) - 1));\n    return res;\n  }\n  // [l, r)\n  T sum(int l, int r)\
+    \ const\n  {\n    assert(0 <= l && l <= r && r <= n);\n    return sum(r) - sum(l);\n\
+    \  }\n  bool get(int i) const\n  {\n    assert(0 <= i && i < n);\n    return btest(dat[i\
+    \ / B], i % B);\n  }\n\n  void set(int i, bool b)\n  {\n    assert(0 <= i && i\
+    \ < n);\n    if (btest(dat[i / B], i % B) == b)\n      return;\n    bset(dat[i\
+    \ / B], i % B, b);\n    fw.add(i / B, b ? 1 : -1);\n  }\n\n  // sum[0, r) < w\
+    \ \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\u3051\u308C\u3070 -1)\n  template\
+    \ <class I = ll>\n  inline I lt_max(T w) const\n  {\n    if (w <= 0)\n      return\
+    \ -1;\n    if (w > sum(n))\n      return n;\n    const auto [i, v] = fw.lt_max_id_sum(w);\n\
+    \    I res = B * i + kth_bit_pos(dat[i], w - v - 1);\n    return res;\n  }\n \
+    \ // sum[0, r) >= w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\
+    \u3070 size())\n  template <class I = ll>\n  I geq_min(T w) const { return lt_max<I>(w)\
+    \ + 1; }\n  // sum[0, r) <= w \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\u3051\
+    \u308C\u3070 -1)\n  template <class I = ll>\n  inline I leq_max(T w) const { return\
+    \ lt_max<I>(w + 1); }\n  // sum[0, r) > w \u3068\u306A\u308B\u6700\u5C0F\u306E\
+    \ r (\u306A\u3051\u308C\u3070 size())\n  template <class I = ll>\n  inline I gt_min(T\
+    \ w) const { return geq_min<I>(w + 1); }\n\n  // \u8981\u7D20\u304C [0, size())\
+    \ \u306E\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\
+    \u3068\u304D\u3001\u96C6\u5408\u306E\u30B5\u30A4\u30BA\u3092\u8FD4\u3059\n  inline\
+    \ T size_of_set() const { return sum(n); }\n\n  // \u8981\u7D20\u304C [0, size())\
+    \ \u306E\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\
+    \u3068\u304D\u3001\u5024 x \u306F (\u3042\u308C\u3070) \u4F55\u756A\u76EE\u304B\
+    \n  template <class I = ll>\n  inline I order_in_set(int x) const { return sum(x);\
+    \ }\n  // \u8981\u7D20\u304C [0, size()) \u306E\u96C6\u5408\u3092\u7BA1\u7406\u3059\
+    \u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001k \u756A\u76EE\u306E\u5024\
+    \n  // \u305F\u3060\u3057\u3001k < 0 \u306A\u3089 -1, k >= size_of_set() \u306A\
+    \u3089 size()\n  template <class I = ll>\n  inline I kth_in_set(int k) const\n\
+    \  {\n    if (k < 0)\n      return -1;\n    return leq_max<I>(k);\n  }\n  // \u8981\
+    \u7D20\u304C [0, size()) \u306E\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\
+    \u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u672A\u6E80\u3067\u6700\u5927\u306E\
+    \u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n\
+    \  template <class I = ll>\n  inline I lt_max_in_set(T x) const\n  {\n    if (x\
+    \ < 0)\n      return -1;\n    return sum(min(x, T(n))) - 1;\n  }\n  // \u8981\u7D20\
+    \u304C [0, size()) \u306E\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\
+    \u4F7F\u3063\u305F\u3068\u304D\u3001x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u8981\
+    \u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template\
+    \ <class I = ll>\n  inline I leq_max_in_set(T x) const { return lt_max_in_set<I>(x\
+    \ + 1); }\n  // \u8981\u7D20\u304C [0, size()) \u306E\u96C6\u5408\u3092\u7BA1\u7406\
+    \u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u4EE5\u4E0A\u3067\
+    \u6700\u5C0F\u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\
+    \u308C\u3070 size())\n  template <class I = ll>\n  inline I geq_min_in_set(T x)\
+    \ const\n  {\n    if (x > n)\n      return sum(n);\n    return sum(max(T(0), x));\n\
+    \  }\n  // \u8981\u7D20\u304C [0, size()) \u306E\u96C6\u5408\u3092\u7BA1\u7406\
+    \u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u8D85\u904E\u3067\
+    \u6700\u5C0F\u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\
+    \u308C\u3070 size())\n  template <class I = ll>\n  inline I gt_min_in_set(T x)\
+    \ const { return geq_min_in_set<I>(x + 1); }\n\n  string content() const\n  {\n\
+    \    string res;\n    repi(i, n) res += get(i) + '0';\n    return res;\n  }\n\
+    };\n#line 18 \"verify/yosupo/predecessor_problem_fenwick_tree.test.cpp\"\n\nvoid\
+    \ init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  STR(T);\n  FenwickTree01 fw(stov(T,\
+    \ '0'));\n  dump(fw.content());\n  rep(_, Q)\n  {\n    LL(c, k);\n    if (c ==\
+    \ 0)\n      fw.set(k, 1);\n    else if (c == 1)\n      fw.set(k, 0);\n    else\
+    \ if (c == 2)\n      PRINT(fw.get(k));\n    else if (c == 3)\n    {\n      ll\
+    \ i = fw.geq_min_in_set(k);\n      PRINT(i < fw.size_of_set() ? fw.kth_in_set(i)\
+    \ : -1);\n    }\n    else if (c == 4)\n    {\n      ll i = fw.leq_max_in_set(k);\n\
+    \      PRINT(i >= 0 ? fw.kth_in_set(i) : -1);\n    }\n  }\n}\n\nvoid test() {}\n\
+    \n#line 2 \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\
+    \n\ntemplate <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n\
+    \    cauto CERR = [](string val, string color)\n    {\n      string s = \"\\033[\"\
+    \ + color + \"m\" + val + \"\\033[m\";\n      #ifdef LOCAL\n      cerr << s;\n\
+    \      #endif\n      /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\
+    \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\
+    \u3059\n      cerr << val;\n      //*/\n    };\n  \n    #if defined FAST_IO and\
+    \ not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n    #endif\n \
+    \   #if defined FAST_CIO and not defined LOCAL\n    CERR(\"\\n[FAST_CIO]\\n\\\
+    n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n    #endif\n\
+    \    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n  \n  \
+    \  #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n \
+    \   CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n    \
+    \  dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
     \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
     \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
     T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
-    \      main2();\n    }\n    #endif\n  }\n};\n#line 72 \"verify/yukicoder/ordered_multiset_fenwick_tree.cpp\"\
+    \      main2();\n    }\n    #endif\n  }\n};\n#line 52 \"verify/yosupo/predecessor_problem_fenwick_tree.test.cpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
-  code: "#define PROBLEM \"https://yukicoder.me/problems/no/649\"\n\n#define SINGLE_TESTCASE\n\
-    // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef LOCAL\n#define FAST_IO\n\
-    // #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\n#define INF 4'000'000'000'000'000'037LL\n\
-    #define EPS 1e-11\n\n#include \"template/template_all_but_modint.hpp\"\n#include\
-    \ \"ds/coordinate_compression.hpp\"\n#include \"ds/fenwick_tree/fenwick_tree.hpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(Q, K);\n  K--;\n\n  vl vals;\n  vc<pll>\
-    \ queries(Q);\n  rep(q, Q)\n  {\n    LL(t);\n    if (t == 1)\n    {\n      LL(v);\n\
-    \      vals.eb(v);\n      queries.at(q) = {t, v};\n    }\n    else if (t == 2)\n\
-    \    {\n      queries.at(q) = {t, -1};\n    }\n  }\n  CoordinateCompression cc(vals);\n\
-    \  FenwickTree<GroupAddSub<ll>> fw(cc.size());\n  fec([t, v] : queries)\n  {\n\
-    \    if (t == 1)\n    {\n      ll i = cc.get_id(v);\n      fw.add(i, 1);\n   \
-    \ }\n    else if (t == 2)\n    {\n      ll i = fw.kth_of_multiset(K);\n      if\
-    \ (i == fw.size())\n        PRINT(-1);\n      else\n      {\n        PRINT(cc.get_val(i));\n\
-    \        fw.add(i, -1);\n      }\n    }\n  }\n}\n\nvoid test()\n{\n  \n}\n\n#include\
-    \ \"template/template_main.hpp\"\nMain<init, main2, test> main_dummy;\nint main()\
-    \ {}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/predecessor_problem\"\n\
+    \n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
+    \n#ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
+    #endif\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include\
+    \ \"template/template_all_but_modint.hpp\"\n#include \"ds/fenwick_tree/fenwick_tree_01.hpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  STR(T);\n  FenwickTree01\
+    \ fw(stov(T, '0'));\n  dump(fw.content());\n  rep(_, Q)\n  {\n    LL(c, k);\n\
+    \    if (c == 0)\n      fw.set(k, 1);\n    else if (c == 1)\n      fw.set(k, 0);\n\
+    \    else if (c == 2)\n      PRINT(fw.get(k));\n    else if (c == 3)\n    {\n\
+    \      ll i = fw.geq_min_in_set(k);\n      PRINT(i < fw.size_of_set() ? fw.kth_in_set(i)\
+    \ : -1);\n    }\n    else if (c == 4)\n    {\n      ll i = fw.leq_max_in_set(k);\n\
+    \      PRINT(i >= 0 ? fw.kth_in_set(i) : -1);\n    }\n  }\n}\n\nvoid test() {}\n\
+    \n#include \"template/template_main.hpp\"\nMain<init, main2, test> main_dummy;\n\
+    int main() {}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -806,21 +892,22 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   - template/template_random.hpp
-  - ds/coordinate_compression.hpp
-  - ds/fenwick_tree/fenwick_tree.hpp
+  - ds/fenwick_tree/fenwick_tree_01.hpp
   - math/algebra/algebra_basic_ops.hpp
   - math/algebra/algebra_base.hpp
+  - ds/fenwick_tree/fenwick_tree.hpp
+  - bit/kth_bit.hpp
   - template/template_main.hpp
-  isVerificationFile: false
-  path: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
+  isVerificationFile: true
+  path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
   requiredBy: []
-  timestamp: '2025-04-27 20:44:15+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
+  timestamp: '2025-04-28 22:08:42+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
-documentation_of: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
+documentation_of: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
 layout: document
 redirect_from:
-- /library/verify/yukicoder/ordered_multiset_fenwick_tree.cpp
-- /library/verify/yukicoder/ordered_multiset_fenwick_tree.cpp.html
-title: verify/yukicoder/ordered_multiset_fenwick_tree.cpp
+- /verify/verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
+- /verify/verify/yosupo/predecessor_problem_fenwick_tree.test.cpp.html
+title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
 ---

@@ -1,60 +1,60 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/fenwick_tree/fenwick_tree.hpp
     title: Fenwick Tree
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/point_add_range_sum
@@ -368,16 +368,18 @@ data:
     \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
     \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\n// (ok, ng)\ntemplate <class T = ll, class\
     \ Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge,\
-    \ const InitOk &init_ok, const InitNg &init_ng)\n{\n  T ok(init_ok), ng(init_ng);\n\
-    \  assert(judge(ok));\n  assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok\
-    \ != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok\
-    \ : ng) = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge,\
-    \ class InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk\
-    \ &init_ok, const InitNg &init_ng, int iteration_count = 100)\n{\n  T ok(init_ok),\
-    \ ng(init_ng);\n  assert(judge(ok));\n  assert(!judge(ng));\n  repi(_, iteration_count)\n\
-    \  {\n    T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return\
-    \ ok;\n}\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T,\
-    \ T> expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
+    \ const InitOk &init_ok, const InitNg &init_ng, bool check_ok = true, bool check_ng\
+    \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
+    \  if (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok !=\
+    \ 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng)\
+    \ = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
+    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk &init_ok,\
+    \ const InitNg &init_ng, int iteration_count = 100, bool check_ok = true, bool\
+    \ check_ng = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
+    \  if (check_ng)\n    assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n \
+    \   T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n\
+    }\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T, T>\
+    \ expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
     {\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val\
     \ + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng,\
     \ ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng\
@@ -707,50 +709,85 @@ data:
     \    }\n  }\n  // \u9006\u5143\u304C\u5FC5\u8981\n  void set(int i, S x) { add(i,\
     \ G::op(G::inv(get(i)), x)); }\n\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
     \u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  //\
-    \ sum[0, r) >= w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
-    \ n)\n  template <class I = ll>\n  I geq_min(S w) const\n  {\n    int k = bit_ceil(n);\n\
-    \    int x = 0;\n    while (k > 0)\n    {\n      if (x + k - 1 < n && dat[x +\
-    \ k] < w)\n      {\n        w = G::op(w, G::inv(dat[x + k]));\n        x += k;\n\
-    \      }\n      k >>= 1;\n    }\n    return x;\n  }\n  // \u6574\u6570\u306E\u666E\
+    \ sum[0, r) < w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
+    \ -1)\n  // \u3068\u3001\u305D\u306E r \u306B\u5BFE\u3059\u308B sum[0, r) \u306E\
+    \u30DA\u30A2\n  template <class I = ll>\n  pair<I, S> lt_max_id_sum(S w) const\n\
+    \  {\n    if (w <= G::e())\n      return {-1, G::e()};\n    int k = bit_floor(n);\n\
+    \    int x = 0;\n    S v = G::e();\n    while (k > 0)\n    {\n      if (x + k\
+    \ <= n)\n      {\n        S nv = G::op(v, dat[x + k]);\n        if (nv < w)\n\
+    \          v = nv, x += k;\n      }\n      k >>= 1;\n    }\n    return {x, v};\n\
+    \  }\n\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\
+    \u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) < w \u3068\u306A\
+    \u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070 -1)\n  template <class I\
+    \ = ll>\n  I lt_max(S w) const { return lt_max_id_sum<I>(w).first; }\n  // \u6574\
+    \u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\
+    \u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) >= w \u3068\u306A\u308B\u6700\u5927\
+    \u306E r (\u306A\u3051\u308C\u3070 n+1)\n  template <class I = ll>\n  inline I\
+    \ geq_min(S w) const { return lt_max<I>(w) + 1; }\n  // \u6574\u6570\u306E\u666E\
     \u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\
-    \u3068\u304D\n  // sum[0, r) < w \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\
-    \u3051\u308C\u3070 -1)\n  template <class I = ll>\n  inline I lt_max(S w) const\
-    \ { return geq_min<I>(w) - 1; }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
+    \u3068\u304D\n  // sum[0, r) <= w \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\
+    \u3051\u308C\u3070 -1)\n  template <class I = ll>\n  inline I leq_max(S w) const\
+    \ { return lt_max<I>(w + 1); }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
     \u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  //\
     \ sum[0, r) > w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
-    \ n)\n  template <class I = ll>\n  inline I gt_min(S w) const { return geq_min<I>(w\
-    \ + 1); }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\
-    \u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) <= w \u3068\u306A\
-    \u308B\u6700\u5927\u306E r (\u306A\u3051\u308C\u3070 -1)\n  template <class I\
-    \ = ll>\n  inline I leq_max(S w) const { return gt_min<I>(w) - 1; }\n\n  // \u8981\
-    \u7D20\u304C [0, n) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\
-    \u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001k \u756A\u76EE\u306E\u5024 (\u306A\
-    \u3051\u308C\u3070 n)\n  template <class I = ll>\n  inline I kth_of_multiset(S\
-    \ k) const { return gt_min<I>(k); }\n\n  vc<S> content() const\n  {\n    vc<S>\
-    \ res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n  }\n};\n#line 18\
-    \ \"verify/yosupo/point_add_range_sum.test.cpp\"\n\nvoid init() {}\n\nvoid main2()\n\
-    {\n  LL(N, Q);\n  VEC(ll, N, A);\n\n  FenwickTree<GroupAddSub<ll>> fw(A);\n  rep(_,\
-    \ Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(p, x);\n      fw.add(p,\
-    \ x);\n    }\n    else if (t == 1)\n    {\n      LL(l, r);\n      PRINT(fw.sum(l,\
-    \ r));\n    }\n  }\n}\n\nvoid test()\n{\n  \n}\n\n#line 2 \"template/template_main.hpp\"\
-    \n\n#line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2,\
-    \ auto test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
-    \ color)\n    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\"\
-    ;\n      #ifdef LOCAL\n      cerr << s;\n      #endif\n      /* \u30B3\u30FC\u30C9\
-    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
-    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n      cerr << val;\n      //*/\n \
-    \   };\n  \n    #if defined FAST_IO and not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\\
-    n\\n\", \"32\");\n    #endif\n    #if defined FAST_CIO and not defined LOCAL\n\
-    \    CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
-    \    #endif\n    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n\
-    \  \n    #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n\
-    \    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n   \
-    \   dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
-    \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
-    \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
-    T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
-    \      main2();\n    }\n    #endif\n  }\n};\n#line 49 \"verify/yosupo/point_add_range_sum.test.cpp\"\
-    \nMain<init, main2, test> main_dummy;\nint main() {}\n"
+    \ n+1)\n  template <class I = ll>\n  inline I gt_min(S w) const { return geq_min<I>(w\
+    \ + 1); }\n\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\
+    \u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001\
+    \u591A\u91CD\u96C6\u5408\u306E\u30B5\u30A4\u30BA\u3092\u8FD4\u3059\n  inline S\
+    \ size_of_multiset() const { return sum(n); }\n\n  // \u8981\u7D20\u304C [0, size())\
+    \ \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\
+    \u3063\u305F\u3068\u304D\u3001\u5024 x \u306F\u4F55\u756A\u76EE\u304B\u3089\u4F55\
+    \u756A\u76EE\u304B [l, r)\n  inline pair<S, S> order_in_multiset(int x) const\
+    \ { return {sum(x), sum(x + 1)}; }\n  // \u8981\u7D20\u304C [0, size()) \u306E\
+    \u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\
+    \u305F\u3068\u304D\u3001k \u756A\u76EE\u306E\u5024\n  // \u305F\u3060\u3057\u3001\
+    k < 0 \u306A\u3089 -1, k >= size_of_multiset() \u306A\u3089 size()\n  template\
+    \ <class I = ll>\n  inline I kth_in_multiset(S k) const\n  {\n    if (k < 0)\n\
+    \      return -1;\n    return leq_max<I>(k);\n  }\n  // \u8981\u7D20\u304C [0,\
+    \ size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\
+    \u4F7F\u3063\u305F\u3068\u304D\u3001x \u672A\u6E80\u3067\u6700\u5927\u306E\u8981\
+    \u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template\
+    \ <class T, class I = ll>\n  inline I lt_max_in_multiset(T x) const\n  {\n   \
+    \ return sum(clamp(x, T(0), T(n))) - 1;\n  }\n  // \u8981\u7D20\u304C [0, size())\
+    \ \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\
+    \u3063\u305F\u3068\u304D\u3001x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u8981\u7D20\
+    \u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template <class\
+    \ T, class I = ll>\n  inline I leq_max_in_multiset(T x) const { return lt_max_in_multiset<I>(x\
+    \ + 1); }\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\
+    \u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u4EE5\
+    \u4E0A\u3067\u6700\u5C0F\u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\
+    \u3051\u308C\u3070 size())\n  template <class T, class I = ll>\n  inline I geq_min_in_multiset(T\
+    \ x) const\n  {\n    return sum(clamp(x, T(0), T(n)));\n  }\n  // \u8981\u7D20\
+    \u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\
+    \u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u8D85\u904E\u3067\u6700\u5C0F\
+    \u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070\
+    \ size())\n  template <class T, class I = ll>\n  inline I gt_min_in_multiset(T\
+    \ x) const { return geq_min_in_multiset<I>(x + 1); }\n\n  vc<S> content() const\n\
+    \  {\n    vc<S> res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n  }\n\
+    };\n#line 18 \"verify/yosupo/point_add_range_sum.test.cpp\"\n\nvoid init() {}\n\
+    \nvoid main2()\n{\n  LL(N, Q);\n  VEC(ll, N, A);\n\n  FenwickTree<GroupAddSub<ll>>\
+    \ fw(A);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(p, x);\n\
+    \      fw.add(p, x);\n    }\n    else if (t == 1)\n    {\n      LL(l, r);\n  \
+    \    PRINT(fw.sum(l, r));\n    }\n  }\n}\n\nvoid test()\n{\n  \n}\n\n#line 2 \"\
+    template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\n\ntemplate\
+    \ <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n    cauto\
+    \ CERR = [](string val, string color)\n    {\n      string s = \"\\033[\" + color\
+    \ + \"m\" + val + \"\\033[m\";\n      #ifdef LOCAL\n      cerr << s;\n      #endif\n\
+    \      /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\
+    \u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n      cerr\
+    \ << val;\n      //*/\n    };\n  \n    #if defined FAST_IO and not defined LOCAL\n\
+    \    CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n    #endif\n    #if defined FAST_CIO\
+    \ and not defined LOCAL\n    CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n    cin.tie(0);\n\
+    \    ios::sync_with_stdio(false);\n    #endif\n    cout << fixed << setprecision(20);\n\
+    \  \n    test();\n    init();\n  \n    #if defined AOJ_TESTCASE or (defined LOCAL\
+    \ and defined SINGLE_TESTCASE)\n    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n\
+    \    while (true)\n    {\n      dump(\"new testcase\");\n      main2();\n    }\n\
+    \    #elif defined SINGLE_TESTCASE\n    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"\
+    36\");\n    main2();\n    #elif defined MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\\
+    n\\n\", \"33\");\n    dump(\"T\");\n    IN(uint, T);\n    while (T--)\n    {\n\
+    \      dump(\"new testcase\");\n      main2();\n    }\n    #endif\n  }\n};\n#line\
+    \ 49 \"verify/yosupo/point_add_range_sum.test.cpp\"\nMain<init, main2, test> main_dummy;\n\
+    int main() {}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/point_add_range_sum\"\n\
     \n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
@@ -781,8 +818,8 @@ data:
   isVerificationFile: true
   path: verify/yosupo/point_add_range_sum.test.cpp
   requiredBy: []
-  timestamp: '2025-04-27 20:44:15+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2025-04-28 22:08:42+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yosupo/point_add_range_sum.test.cpp
 layout: document
