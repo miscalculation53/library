@@ -72,39 +72,78 @@ public:
   void set(int i, S x) { add(i, G::op(G::inv(get(i)), x)); }
 
   // 整数の普通の足し算で、要素が非負のとき
-  // sum[0, r) >= w となる最小の r (なければ n)
+  // sum[0, r) < w となる最小の r (なければ -1)
+  // と、その r に対する sum[0, r) のペア
   template <class I = ll>
-  I geq_min(S w) const
+  pair<I, S> lt_max_id_sum(S w) const
   {
-    int k = bit_ceil(n);
+    if (w <= G::e())
+      return {-1, G::e()};
+    int k = bit_floor(n);
     int x = 0;
+    S v = G::e();
     while (k > 0)
     {
-      if (x + k - 1 < n && dat[x + k] < w)
+      if (x + k <= n)
       {
-        w = G::op(w, G::inv(dat[x + k]));
-        x += k;
+        S nv = G::op(v, dat[x + k]);
+        if (nv < w)
+          v = nv, x += k;
       }
       k >>= 1;
     }
-    return x;
+    return {x, v};
   }
+
   // 整数の普通の足し算で、要素が非負のとき
-  // sum[0, r) < w となる最大の r (なければ -1)
+  // sum[0, r) < w となる最小の r (なければ -1)
   template <class I = ll>
-  inline I lt_max(S w) const { return geq_min<I>(w) - 1; }
+  I lt_max(S w) const { return lt_max_id_sum<I>(w).first; }
   // 整数の普通の足し算で、要素が非負のとき
-  // sum[0, r) > w となる最小の r (なければ n)
+  // sum[0, r) >= w となる最大の r (なければ n+1)
   template <class I = ll>
-  inline I gt_min(S w) const { return geq_min<I>(w + 1); }
+  inline I geq_min(S w) const { return lt_max<I>(w) + 1; }
   // 整数の普通の足し算で、要素が非負のとき
   // sum[0, r) <= w となる最大の r (なければ -1)
   template <class I = ll>
-  inline I leq_max(S w) const { return gt_min<I>(w) - 1; }
-
-  // 要素が [0, n) の多重集合を管理するのに使ったとき、k 番目の値 (なければ n)
+  inline I leq_max(S w) const { return lt_max<I>(w + 1); }
+  // 整数の普通の足し算で、要素が非負のとき
+  // sum[0, r) > w となる最小の r (なければ n+1)
   template <class I = ll>
-  inline I kth_of_multiset(S k) const { return gt_min<I>(k); }
+  inline I gt_min(S w) const { return geq_min<I>(w + 1); }
+
+  // 要素が [0, size()) の多重集合を管理するのに使ったとき、多重集合のサイズを返す
+  inline S size_of_multiset() const { return sum(n); }
+
+  // 要素が [0, size()) の多重集合を管理するのに使ったとき、値 x は何番目から何番目か [l, r)
+  inline pair<S, S> order_in_multiset(int x) const { return {sum(x), sum(x + 1)}; }
+  // 要素が [0, size()) の多重集合を管理するのに使ったとき、k 番目の値
+  // ただし、k < 0 なら -1, k >= size_of_multiset() なら size()
+  template <class I = ll>
+  inline I kth_in_multiset(S k) const
+  {
+    if (k < 0)
+      return -1;
+    return leq_max<I>(k);
+  }
+  // 要素が [0, size()) の多重集合を管理するのに使ったとき、x 未満で最大の要素が**何番目か** (なければ -1)
+  template <class T, class I = ll>
+  inline I lt_max_in_multiset(T x) const
+  {
+    return sum(clamp(x, T(0), T(n))) - 1;
+  }
+  // 要素が [0, size()) の多重集合を管理するのに使ったとき、x 以下で最大の要素が**何番目か** (なければ -1)
+  template <class T, class I = ll>
+  inline I leq_max_in_multiset(T x) const { return lt_max_in_multiset<I>(x + 1); }
+  // 要素が [0, size()) の多重集合を管理するのに使ったとき、x 以上で最小の要素が**何番目か** (なければ size())
+  template <class T, class I = ll>
+  inline I geq_min_in_multiset(T x) const
+  {
+    return sum(clamp(x, T(0), T(n)));
+  }
+  // 要素が [0, size()) の多重集合を管理するのに使ったとき、x 超過で最小の要素が**何番目か** (なければ size())
+  template <class T, class I = ll>
+  inline I gt_min_in_multiset(T x) const { return geq_min_in_multiset<I>(x + 1); }
 
   vc<S> content() const
   {

@@ -51,7 +51,7 @@ void main2()
     }
     else if (t == 2)
     {
-      ll i = fw.kth_of_multiset(K);
+      ll i = fw.kth_in_multiset(K);
       if (i == fw.size())
         PRINT(-1);
       else

@@ -158,11 +158,13 @@ inline auto geq_min(const V &v, const Value &val)
 
 // (ok, ng)
 template <class T = ll, class Judge, class InitOk, class InitNg>
-pair<T, T> binsearch(const Judge &judge, const InitOk &init_ok, const InitNg &init_ng)
+pair<T, T> binsearch(const Judge &judge, const InitOk &init_ok, const InitNg &init_ng, bool check_ok = true, bool check_ng = true)
 {
   T ok(init_ok), ng(init_ng);
-  assert(judge(ok));
-  assert(!judge(ng));
+  if (check_ok)
+    assert(judge(ok));
+  if (check_ng)
+    assert(!judge(ng));
   while (ok - ng != 1 && ng - ok != 1)
   {
     T mid = (ok & ng) + ((ok ^ ng) >> 1);
@@ -171,11 +173,13 @@ pair<T, T> binsearch(const Judge &judge, const InitOk &init_ok, const InitNg &in
   return {ok, ng};
 }
 template <class T = ld, class Judge, class InitOk, class InitNg>
-T binsearch_real(const Judge &judge, const InitOk &init_ok, const InitNg &init_ng, int iteration_count = 100)
+T binsearch_real(const Judge &judge, const InitOk &init_ok, const InitNg &init_ng, int iteration_count = 100, bool check_ok = true, bool check_ng = true)
 {
   T ok(init_ok), ng(init_ng);
-  assert(judge(ok));
-  assert(!judge(ng));
+  if (check_ok)
+    assert(judge(ok));
+  if (check_ng)
+    assert(!judge(ng));
   repi(_, iteration_count)
   {
     T mid = (ok + ng) / 2;
