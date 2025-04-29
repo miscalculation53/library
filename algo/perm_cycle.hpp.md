@@ -39,18 +39,17 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/itertools_bit.test.cpp
-    title: verify/mytest/itertools_bit.test.cpp
-  _isVerificationFailed: false
+  - icon: ':x:'
+    path: verify/yukicoder/perm_cycle.test.cpp
+    title: verify/yukicoder/perm_cycle.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
-    _deprecated_at_docs: docs/itertools/bit.md
-    document_title: "\u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\
-      \u7D22"
+    _deprecated_at_docs: docs/algo/perm_cycle.md
+    document_title: "\u9806\u5217\u306E\u30B5\u30A4\u30AF\u30EB\u5206\u89E3"
     links: []
-  bundledCode: "#line 2 \"itertools/bit.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
+  bundledCode: "#line 2 \"algo/perm_cycle.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -619,44 +618,41 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 4 \"itertools/bit.hpp\"\n\n/**\n * @brief \u90E8\u5206\u96C6\u5408\u30FB\u4E0A\
-    \u4F4D\u96C6\u5408\u5168\u63A2\u7D22\n * @docs docs/itertools/bit.md\n */\n\n\
-    template <class T>\nstruct bsubsets\n{\nprivate:\n  T x;\npublic:\n  bsubsets(T\
-    \ x) : x(x) {}\n  struct Iterator\n  {\n  private:\n    T y;\n    bool is_end;\n\
-    \    const bsubsets &bs;\n  public:\n    Iterator(T y, bool is_end, const bsubsets\
-    \ &bs) : y(y), is_end(is_end), bs(bs) {}\n    T operator*() const { return y;\
-    \ }\n    Iterator& operator++()\n    {\n      if (y == 0)\n        is_end = true;\n\
-    \      y = (y - 1) & bs.x;\n      return *this;\n    }\n    bool operator!=(const\
-    \ Iterator &other) const { return y != other.y || is_end != other.is_end; }\n\
-    \  };\n  Iterator begin() const { return Iterator(x, false, *this); }\n  Iterator\
-    \ end() const { return Iterator(x, true, *this); }\n};\ntemplate <class T>\nstruct\
-    \ bsupsets\n{\nprivate:\n  int n;\n  T x;\npublic:\n  bsupsets(int n, T x) : n(n),\
-    \ x(x) {}\n  struct Iterator\n  {\n  private:\n    T y;\n    const bsupsets &bs;\n\
-    \  public:\n    Iterator(T y, const bsupsets &bs) : y(y), bs(bs) {}\n    T operator*()\
-    \ const { return y; }\n    Iterator& operator++()\n    {\n      y = (y + 1) |\
-    \ bs.x;\n      return *this;\n    }\n    bool operator!=(const Iterator &other)\
-    \ const { return y != other.y; }\n  };\n  Iterator begin() const { return Iterator(x,\
-    \ *this); }\n  Iterator end() const { return Iterator((T(1) << n) | x, *this);\
-    \ }\n};\n"
+    \ 4 \"algo/perm_cycle.hpp\"\n\n/**\n * @brief \u9806\u5217\u306E\u30B5\u30A4\u30AF\
+    \u30EB\u5206\u89E3\n * @docs docs/algo/perm_cycle.md\n */\n\n// \u9806\u5217\u3092\
+    \u30B5\u30A4\u30AF\u30EB\u5206\u89E3\u3057\u305F\u3082\u306E\ntemplate <class\
+    \ I>\nstruct PermCycle\n{\n  // i \u756A\u76EE\u306E\u8981\u7D20\u306E (\u30B5\
+    \u30A4\u30AF\u30EB\u306E\u756A\u53F7, \u30B5\u30A4\u30AF\u30EB\u5185\u3067\u306E\
+    \u9806\u756A)\n  vc<pair<I, I>> cycle_id;\n  vvc<I> cycles;\n\n  PermCycle() {}\n\
+    \  PermCycle(const vc<I> &p)\n  {\n    assert(is_permutation(p));\n    const int\
+    \ n = p.size();\n    cycle_id.resize(n);\n    vc<bool> visited(n, false);\n  \
+    \  repi(si, n)\n    {\n      if (visited[si])\n        continue;\n      int i\
+    \ = si;\n      cycles.eb();\n      do\n      {\n        visited[i] = true;\n \
+    \       cycles.back().eb(i);\n        cycle_id[i] = {SZ<int>(cycles) - 1, SZ<int>(cycles.back())\
+    \ - 1};\n        i = p[i];\n      } while (i != si);\n    }\n  }\n\n  // p^k[i]\
+    \ \u3092\u8FD4\u3059\n  I get_pow(ll k, int i)\n  {\n    cauto & [ j, l ] = cycle_id[i];\n\
+    \    const int len = cycles[j].size();\n    return cycles[j][safemod(l + k, len)];\n\
+    \  }\n};\n\n// p^k \u3092\u8FD4\u3059\ntemplate <class I>\nvc<I> perm_pow(const\
+    \ vc<I> &p, ll k)\n{\n  const int n = p.size();\n  PermCycle cy(p);\n  vc<I> q(n);\n\
+    \  repi(i, n) q[i] = cy.get_pow(k, i);\n  return q;\n}\n"
   code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
-    /**\n * @brief \u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\
-    \u7D22\n * @docs docs/itertools/bit.md\n */\n\ntemplate <class T>\nstruct bsubsets\n\
-    {\nprivate:\n  T x;\npublic:\n  bsubsets(T x) : x(x) {}\n  struct Iterator\n \
-    \ {\n  private:\n    T y;\n    bool is_end;\n    const bsubsets &bs;\n  public:\n\
-    \    Iterator(T y, bool is_end, const bsubsets &bs) : y(y), is_end(is_end), bs(bs)\
-    \ {}\n    T operator*() const { return y; }\n    Iterator& operator++()\n    {\n\
-    \      if (y == 0)\n        is_end = true;\n      y = (y - 1) & bs.x;\n      return\
-    \ *this;\n    }\n    bool operator!=(const Iterator &other) const { return y !=\
-    \ other.y || is_end != other.is_end; }\n  };\n  Iterator begin() const { return\
-    \ Iterator(x, false, *this); }\n  Iterator end() const { return Iterator(x, true,\
-    \ *this); }\n};\ntemplate <class T>\nstruct bsupsets\n{\nprivate:\n  int n;\n\
-    \  T x;\npublic:\n  bsupsets(int n, T x) : n(n), x(x) {}\n  struct Iterator\n\
-    \  {\n  private:\n    T y;\n    const bsupsets &bs;\n  public:\n    Iterator(T\
-    \ y, const bsupsets &bs) : y(y), bs(bs) {}\n    T operator*() const { return y;\
-    \ }\n    Iterator& operator++()\n    {\n      y = (y + 1) | bs.x;\n      return\
-    \ *this;\n    }\n    bool operator!=(const Iterator &other) const { return y !=\
-    \ other.y; }\n  };\n  Iterator begin() const { return Iterator(x, *this); }\n\
-    \  Iterator end() const { return Iterator((T(1) << n) | x, *this); }\n};"
+    /**\n * @brief \u9806\u5217\u306E\u30B5\u30A4\u30AF\u30EB\u5206\u89E3\n * @docs\
+    \ docs/algo/perm_cycle.md\n */\n\n// \u9806\u5217\u3092\u30B5\u30A4\u30AF\u30EB\
+    \u5206\u89E3\u3057\u305F\u3082\u306E\ntemplate <class I>\nstruct PermCycle\n{\n\
+    \  // i \u756A\u76EE\u306E\u8981\u7D20\u306E (\u30B5\u30A4\u30AF\u30EB\u306E\u756A\
+    \u53F7, \u30B5\u30A4\u30AF\u30EB\u5185\u3067\u306E\u9806\u756A)\n  vc<pair<I,\
+    \ I>> cycle_id;\n  vvc<I> cycles;\n\n  PermCycle() {}\n  PermCycle(const vc<I>\
+    \ &p)\n  {\n    assert(is_permutation(p));\n    const int n = p.size();\n    cycle_id.resize(n);\n\
+    \    vc<bool> visited(n, false);\n    repi(si, n)\n    {\n      if (visited[si])\n\
+    \        continue;\n      int i = si;\n      cycles.eb();\n      do\n      {\n\
+    \        visited[i] = true;\n        cycles.back().eb(i);\n        cycle_id[i]\
+    \ = {SZ<int>(cycles) - 1, SZ<int>(cycles.back()) - 1};\n        i = p[i];\n  \
+    \    } while (i != si);\n    }\n  }\n\n  // p^k[i] \u3092\u8FD4\u3059\n  I get_pow(ll\
+    \ k, int i)\n  {\n    cauto & [ j, l ] = cycle_id[i];\n    const int len = cycles[j].size();\n\
+    \    return cycles[j][safemod(l + k, len)];\n  }\n};\n\n// p^k \u3092\u8FD4\u3059\
+    \ntemplate <class I>\nvc<I> perm_pow(const vc<I> &p, ll k)\n{\n  const int n =\
+    \ p.size();\n  PermCycle cy(p);\n  vc<I> q(n);\n  repi(i, n) q[i] = cy.get_pow(k,\
+    \ i);\n  return q;\n}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -670,45 +666,93 @@ data:
   - template/template_dump.hpp
   - template/template_random.hpp
   isVerificationFile: false
-  path: itertools/bit.hpp
+  path: algo/perm_cycle.hpp
   requiredBy: []
   timestamp: '2025-04-29 20:25:40+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
-  - verify/mytest/itertools_bit.test.cpp
-documentation_of: itertools/bit.hpp
+  - verify/yukicoder/perm_cycle.test.cpp
+documentation_of: algo/perm_cycle.hpp
 layout: document
 redirect_from:
-- /library/itertools/bit.hpp
-- /library/itertools/bit.hpp.html
-title: "\u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\u7D22"
+- /library/algo/perm_cycle.hpp
+- /library/algo/perm_cycle.hpp.html
+title: "\u9806\u5217\u306E\u30B5\u30A4\u30AF\u30EB\u5206\u89E3"
 ---
-## 部分集合・上位集合全探索
+## 順列のサイクル分解
 
-#### bsubsets
-
-次のように書くと、$y \subseteq x$ なる $y$ を値の大きい方から列挙できる。
+### コンストラクタ
 
 ```cpp
-fec(y : bsubsets(x))
+PermCycle(vc<I> p)
 ```
+
+順列 $p$ のサイクル分解を保持する。
+
+##### 制約
+
+- $p$ は $0, 1, \dots, n-1$ の順列
 
 ##### 計算量
 
-- $1$ 回のイテレーションに $O(1)$
+- $O(n)$
 
-$y \subseteq x \subseteq [n]$ なる $(x, y)$ の個数は $3^n$ であることは有名。この列挙を $O(3^n)$ で行うのが主な用途。
 
-#### bsupsets
+### メンバ変数
 
-次のように書くと、$y \subseteq x \subseteq [n]$ なる $x$ を値の小さい方から列挙できる。
+$p$ の $i$ 個目のサイクルが $u_{i,0} \to u_{i,1} \to \dots u_{i,\ell_i-1}$ と書けるとき、
+
+- `cycle_id[u]` は、$u = u_{i,j}$ となる $(i, j)$
+- `cycles[i]` は、$(u_{i,0}, u_{i,1}, \dots u_{i,\ell_i-1})$
+
+が格納される。（条件を満たすものは複数あるが、そのうちどれになるかは未定義。）
+
+アクセス可能にしているが、変更してはならない。
+
+
+### メンバ関数
+
+#### get_pow
 
 ```cpp
-fec(x : bsupsets(n, y))
+I get_pow(ll k, int i)
 ```
+
+サイクル分解から定まる順列 $p$ について、$p^k(i)$ を求める。
+
+##### 制約
+
+- $k$ は負でもよい
+- $0 \leq i \lt n$
 
 ##### 計算量
 
-- $1$ 回のイテレーションに $O(1)$
+- $O(1)$
 
-$y \subseteq x \subseteq [n]$ なる $(x, y)$ の個数は $3^n$ であることは有名。この列挙を $O(3^n)$ で行うのが主な用途。
+
+### 外部の関数
+
+#### perm_pow
+
+```cpp
+vc<I> perm_pow(vc<I> p, ll k)
+```
+
+$p^k$ を返す。
+
+##### 制約
+
+- $p$ は $0, 1, \dots, n-1$ の順列
+- $k$ は負でもよい
+
+##### 計算量
+
+- $O(n)$
+
+----
+
+### 関連事実
+
+- 順列の位数は、サイクル長の LCM となる。
+  - これを mod 998 で求める → 素因数分解すればよい
+- 順列に**任意の 2 点**の swap を繰り返して恒等順列にするための最小操作回数は、$N - (サイクル数)$ となる。特にこの偶奇は転倒数の偶奇に一致する。

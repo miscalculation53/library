@@ -65,9 +65,24 @@ $v$ の要素はすべて非負整数であることを仮定。負の数があ�
 
 ### 順列
 
+#### is_permutation
+
+```cpp
+bool is_permutation(vc<I> p)
+```
+
+$p$ が $0, 1, \dots, \lvert p \rvert -1$ の順列かどうか判定する。
+
+##### 計算量
+
+- $O(\lvert p \rvert)$
+
+
 #### permid
 
-`vc<T = ll> permid(int n, int base_index = 0)`
+```cpp
+vc<T = ll> permid(int n, int base_index = 0)
+```
 
 長さ $n$ の恒等順列 $(0, 1, \dots, n-1)$ を返す。
 
@@ -92,10 +107,12 @@ $p$ が $(0, 1, \dots, \lvert p \rvert-1)$ の順列でない場合は、$p_i \g
 #### permuted
 
 ```cpp
-vc<T> permuted(vc<T> a, vc<U> p)
+(1) vc<T> permuted(vc<T> a, vc<U> p)
+(2) vc<T> permuted(vc<T> p, vc<T> q, vc<T> r, ...)
 ```
 
-配列 $a$ を配列 $p$ にしたがって並べ替えた配列を返す。すなわち、$(a_{p_0}, a_{p_1}, \dots, a_{p_{\lvert p \rvert-1}})$ を返す。特に、$p$ が順列の場合や $a, p$ ともに順列の場合の使用を想定している。
+- (1)：配列 $a$ を配列 $p$ にしたがって並べ替えた配列を返す。すなわち、$(a_{p_0}, a_{p_1}, \dots, a_{p_{\lvert p \rvert-1}})$ を返す。特に、$p$ が順列の場合や $a, p$ ともに順列の場合の使用を想定している。
+- (2)：$s_i = p_{q_{r_{\ddots i}}}$ となる $s$ を返す。（対称群の元の積）
 
 ##### 制約
 

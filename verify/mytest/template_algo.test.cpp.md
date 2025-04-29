@@ -1,23 +1,23 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -167,23 +167,30 @@ data:
     \ V>\nI ARGMIN(const V &v) { return min_element(ALL(v)) - v.begin(); }\n\ntemplate<class\
     \ T = ll, class V>\nT mex(const V &a)\n{\n  int n = a.size();\n  vector<bool>\
     \ exists(n, false);\n  repi(i, n) if (0 <= a[i] && a[i] < n) exists[a[i]] = true;\n\
-    \  repi(x, n) if (!exists[x]) return x;\n  return n;\n}\n\ntemplate <class T =\
-    \ ll>\nvc<T> permid(const int &n, const int &base_index = 0)\n{\n  vc<T> p(n);\n\
-    \  repi(i, n) p[i] = i + base_index;\n  return p;\n}\ntemplate <class T>\nvc<T>\
-    \ perminv(const vc<T> &p)\n{\n  if (p.empty())\n    return {};\n  const int n\
-    \ = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i, n) if (p[i] >= 0) q[p[i]] = i;\n\
-    \  return q;\n}\n// a[p[i]] for all i\ntemplate <class T, class U>\nvc<T> permuted(const\
-    \ vc<T> &a, const vc<U> &p)\n{\n  const int n = p.size();\n  vc<T> res(n);\n \
-    \ repi(i, n)\n  {\n    assert(0 <= p[i] && p[i] < U(a.size()));\n    res[i] =\
-    \ a[p[i]];\n  }\n  return res;\n}\n\ntemplate <class V>\nV reversed(const V &v)\
-    \ { return V(v.rbegin(), v.rend()); }\n\n#if __cplusplus < 202002L\ntemplate <class\
-    \ V, class... Args>\nV sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n\
-    \  return v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&...\
-    \ args)\n{\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\
-    \ntemplate <class V>\nvoid unique(V &v) { v.erase(std::unique(ALL(v)), v.end());\
-    \ }\ntemplate <class V>\nV uniqued(V v) { unique(v); return v; }\n\ntemplate <class\
-    \ V>\nvoid sortunique(V &v)\n{\n  sort(ALL(v));\n  unique(v);\n}\ntemplate <class\
-    \ V>\nV sortuniqued(V v) { sortunique(v); return v; }\n\n// \u5F15\u6570: vc<pair<T,\
+    \  repi(x, n) if (!exists[x]) return x;\n  return n;\n}\n\n// (0, 1. ..., n-1)\
+    \ \u306E\u9806\u5217\u304B\u5224\u5B9A\ntemplate <class I>\nbool is_permutation(const\
+    \ vc<I> &p)\n{\n  const int n = p.size();\n  vc<bool> b(n, false);\n  repi(i,\
+    \ n)\n  {\n    if (!(0 <= p[i] && p[i] < n))\n      return false;\n    b[p[i]]\
+    \ = true;\n  }\n  return all_of(ALL(b), [](bool bi)\n                { return\
+    \ bi; });\n}\n\ntemplate <class T = ll>\nvc<T> permid(const int &n, const int\
+    \ &base_index = 0)\n{\n  vc<T> p(n);\n  repi(i, n) p[i] = i + base_index;\n  return\
+    \ p;\n}\ntemplate <class T>\nvc<T> perminv(const vc<T> &p)\n{\n  if (p.empty())\n\
+    \    return {};\n  const int n = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i,\
+    \ n) if (p[i] >= 0) q[p[i]] = i;\n  return q;\n}\n// a[p[i]] for all i\ntemplate\
+    \ <class T, class U>\nvc<T> permuted(const vc<T> &a, const vc<U> &p)\n{\n  const\
+    \ int n = p.size();\n  vc<T> res(n);\n  repi(i, n)\n  {\n    assert(0 <= p[i]\
+    \ && p[i] < U(a.size()));\n    res[i] = a[p[i]];\n  }\n  return res;\n}\n// p[q[r[i]]]\
+    \ for all i \u306A\u3069\ntemplate <class T, class U, class... Ts>\nvc<T> permuted(const\
+    \ vc<T> &p, const vc<U> &q, const vc<Ts> &...rs)\n{\n  return permuted(permuted(p,\
+    \ q), rs...);\n}\n\ntemplate <class V>\nV reversed(const V &v) { return V(v.rbegin(),\
+    \ v.rend()); }\n\n#if __cplusplus < 202002L\ntemplate <class V, class... Args>\n\
+    V sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n  return\
+    \ v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&... args)\n\
+    {\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\ntemplate\
+    \ <class V>\nvoid unique(V &v) { v.erase(std::unique(ALL(v)), v.end()); }\ntemplate\
+    \ <class V>\nV uniqued(V v) { unique(v); return v; }\n\ntemplate <class V>\nvoid\
+    \ sortunique(V &v)\n{\n  sort(ALL(v));\n  unique(v);\n}\ntemplate <class V>\n\
+    V sortuniqued(V v) { sortunique(v); return v; }\n\n// \u5F15\u6570: vc<pair<T,\
     \ U>>\n// \u8FD4\u308A\u5024: vc<pair<T, vc<U>>\n// T \u3054\u3068\u306B U \u3092\
     \u307E\u3068\u3081\u305F\u3082\u306E\n// T \u306F\u6BD4\u8F03\u53EF\u80FD\u3067\
     \u3042\u308B\u5FC5\u8981\u304C\u3042\u308B\ntemplate <class T, class U>\nvc<pair<T,\
@@ -266,12 +273,16 @@ data:
     \ == vl({1, 2, 3, 4, 5}));\n  }\n\n  {\n    vl p = {1, 2, 0, 4, 3};\n    vl q\
     \ = perminv(p);\n    repi(i, 5) assert(q[p[i]] == i);\n    assert(perminv(q) ==\
     \ p);\n  }\n\n  {\n    vl p = {1, 4, 2, 0, 3};\n    vl q = {3, 1, 4, 0, 2};\n\
-    \    vl r = permuted(p, q);\n    repi(i, 5) assert(r[i] == p[q[i]]);\n  }\n}\n\
-    \n// string \u3084 vector \u306E\u64CD\u4F5C\nvoid test3()\n{\n  {\n    string\
-    \ s = \"abcde\";\n    vl v = {0, 1, 2, 3, 4};\n    assert(reversed(s) == \"edcba\"\
-    );\n    assert(s == \"abcde\");\n    assert(reversed(v) == vl({4, 3, 2, 1, 0}));\n\
-    \    assert(v == vl({0, 1, 2, 3, 4}));\n  }\n\n  {\n    string s = \"bdcae\";\n\
-    \    vl v = {4, 2, 1, 0, 3};\n    assert(sorted(s) == \"abcde\");\n    assert(sorted(s,\
+    \    vl r = permuted(p, q);\n    repi(i, 5) assert(r[i] == p[q[i]]);\n  }\n\n\
+    \  mt19937 mt;\n  repi(_, 100)\n  {\n    ll n = 1 + rand() % 10;\n    vl p = permid(n),\
+    \ q = permid(n), r = permid(n), s = permid(n);\n    shuffle(ALL(p), mt), shuffle(ALL(q),\
+    \ mt), shuffle(ALL(r), mt), shuffle(ALL(s), mt);\n    auto t = permuted(p, q,\
+    \ r, s);\n    repi(i, n) assert(t[i] == p[q[r[s[i]]]]);\n  }\n}\n\n// string \u3084\
+    \ vector \u306E\u64CD\u4F5C\nvoid test3()\n{\n  {\n    string s = \"abcde\";\n\
+    \    vl v = {0, 1, 2, 3, 4};\n    assert(reversed(s) == \"edcba\");\n    assert(s\
+    \ == \"abcde\");\n    assert(reversed(v) == vl({4, 3, 2, 1, 0}));\n    assert(v\
+    \ == vl({0, 1, 2, 3, 4}));\n  }\n\n  {\n    string s = \"bdcae\";\n    vl v =\
+    \ {4, 2, 1, 0, 3};\n    assert(sorted(s) == \"abcde\");\n    assert(sorted(s,\
     \ greater{}) == \"edcba\");\n    assert(s == \"bdcae\");\n    assert(sorted(v)\
     \ == vl({0, 1, 2, 3, 4}));\n    assert(sorted(v, greater{}) == vl({4, 3, 2, 1,\
     \ 0}));\n    assert(v == vl({4, 2, 1, 0, 3}));\n  }\n\n  {\n    string s = \"\
@@ -318,12 +329,16 @@ data:
     \ == vl({1, 2, 3, 4, 5}));\n  }\n\n  {\n    vl p = {1, 2, 0, 4, 3};\n    vl q\
     \ = perminv(p);\n    repi(i, 5) assert(q[p[i]] == i);\n    assert(perminv(q) ==\
     \ p);\n  }\n\n  {\n    vl p = {1, 4, 2, 0, 3};\n    vl q = {3, 1, 4, 0, 2};\n\
-    \    vl r = permuted(p, q);\n    repi(i, 5) assert(r[i] == p[q[i]]);\n  }\n}\n\
-    \n// string \u3084 vector \u306E\u64CD\u4F5C\nvoid test3()\n{\n  {\n    string\
-    \ s = \"abcde\";\n    vl v = {0, 1, 2, 3, 4};\n    assert(reversed(s) == \"edcba\"\
-    );\n    assert(s == \"abcde\");\n    assert(reversed(v) == vl({4, 3, 2, 1, 0}));\n\
-    \    assert(v == vl({0, 1, 2, 3, 4}));\n  }\n\n  {\n    string s = \"bdcae\";\n\
-    \    vl v = {4, 2, 1, 0, 3};\n    assert(sorted(s) == \"abcde\");\n    assert(sorted(s,\
+    \    vl r = permuted(p, q);\n    repi(i, 5) assert(r[i] == p[q[i]]);\n  }\n\n\
+    \  mt19937 mt;\n  repi(_, 100)\n  {\n    ll n = 1 + rand() % 10;\n    vl p = permid(n),\
+    \ q = permid(n), r = permid(n), s = permid(n);\n    shuffle(ALL(p), mt), shuffle(ALL(q),\
+    \ mt), shuffle(ALL(r), mt), shuffle(ALL(s), mt);\n    auto t = permuted(p, q,\
+    \ r, s);\n    repi(i, n) assert(t[i] == p[q[r[s[i]]]]);\n  }\n}\n\n// string \u3084\
+    \ vector \u306E\u64CD\u4F5C\nvoid test3()\n{\n  {\n    string s = \"abcde\";\n\
+    \    vl v = {0, 1, 2, 3, 4};\n    assert(reversed(s) == \"edcba\");\n    assert(s\
+    \ == \"abcde\");\n    assert(reversed(v) == vl({4, 3, 2, 1, 0}));\n    assert(v\
+    \ == vl({0, 1, 2, 3, 4}));\n  }\n\n  {\n    string s = \"bdcae\";\n    vl v =\
+    \ {4, 2, 1, 0, 3};\n    assert(sorted(s) == \"abcde\");\n    assert(sorted(s,\
     \ greater{}) == \"edcba\");\n    assert(s == \"bdcae\");\n    assert(sorted(v)\
     \ == vl({0, 1, 2, 3, 4}));\n    assert(sorted(v, greater{}) == vl({4, 3, 2, 1,\
     \ 0}));\n    assert(v == vl({4, 2, 1, 0, 3}));\n  }\n\n  {\n    string s = \"\
@@ -370,7 +385,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_algo.test.cpp
   requiredBy: []
-  timestamp: '2025-04-26 00:43:27+09:00'
+  timestamp: '2025-04-29 19:49:56+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_algo.test.cpp
