@@ -15,6 +15,7 @@ struct GroupAffineFunction
   struct S
   {
     mint a, b;
+    S() {}
     S(mint a, mint b) : a(a), b(b) {}
   };
   static constexpr S op(const S &f, const S &g)
