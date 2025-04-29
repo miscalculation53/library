@@ -156,6 +156,9 @@ data:
     path: verify/yosupo/point_set_range_composite.test.cpp
     title: verify/yosupo/point_set_range_composite.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/point_set_range_composite_large_array.test.cpp
+    title: verify/yosupo/point_set_range_composite_large_array.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
     title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
   - icon: ':heavy_check_mark:'
@@ -916,6 +919,7 @@ data:
   - verify/aoj/cumulative_sum_2d.test.cpp
   - verify/aoj/inversion.test.cpp
   - verify/aoj/zeta_general.test.cpp
+  - verify/yosupo/point_set_range_composite_large_array.test.cpp
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/static_range_sum.test.cpp
   - verify/yosupo/ordered_set_fenwick_tree.test.cpp

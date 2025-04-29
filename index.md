@@ -105,6 +105,10 @@ data:
     - icon: ':warning:'
       path: ds/segtree/segtree_segment.hpp
       title: "\u30BB\u30B0\u6728\u306E\u533A\u9593\u306B\u95A2\u308F\u308B\u7B97\u6570"
+    - icon: ':heavy_check_mark:'
+      path: ds/segtree/sparse_segtree.hpp
+      title: "\u5FC5\u8981\u306A\u3068\u3053\u308D\u3060\u3051\u4F5C\u308B\u30BB\u30B0\
+        \u30E1\u30F3\u30C8\u6728"
   - name: ds/uf
     pages:
     - icon: ':heavy_check_mark:'
@@ -471,6 +475,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/point_set_range_composite.test.cpp
       title: verify/yosupo/point_set_range_composite.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yosupo/point_set_range_composite_large_array.test.cpp
+      title: verify/yosupo/point_set_range_composite_large_array.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
       title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp

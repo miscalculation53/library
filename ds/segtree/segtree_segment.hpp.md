@@ -638,7 +638,7 @@ data:
     \u9593\u304B\u3089\u306B\u306A\u308B\n// \u8A08\u7B97\u91CF: O(d)\ntemplate <class\
     \ T = ll>\nvc<T> segtree_nodes_from_left(int d, T l, T r)\n{\n  const T n = T(1)\
     \ << d;\n  assert(0 <= l && l <= r && r <= n);\n  vc<T> segs;\n  auto dfs = [&](auto\
-    \ dfs, int i, T a, T b) -> void\n  {\n    if (b < l || r <= a)\n      return;\n\
+    \ dfs, int i, T a, T b) -> void\n  {\n    if (b <= l || r <= a)\n      return;\n\
     \    if (l <= a && b <= r)\n    {\n      segs.eb(i);\n      return;\n    }\n \
     \   if (b - a <= 1)\n      return;\n    const T c = (a + b) / 2;\n    dfs(dfs,\
     \ 2 * i, a, c), dfs(dfs, 2 * i + 1, c, b);\n  };\n  dfs(dfs, 1, 0, n);\n  return\
@@ -675,8 +675,8 @@ data:
     \u308B\n// \u8A08\u7B97\u91CF: O(d)\ntemplate <class T = ll>\nvc<T> segtree_nodes_from_left(int\
     \ d, T l, T r)\n{\n  const T n = T(1) << d;\n  assert(0 <= l && l <= r && r <=\
     \ n);\n  vc<T> segs;\n  auto dfs = [&](auto dfs, int i, T a, T b) -> void\n  {\n\
-    \    if (b < l || r <= a)\n      return;\n    if (l <= a && b <= r)\n    {\n \
-    \     segs.eb(i);\n      return;\n    }\n    if (b - a <= 1)\n      return;\n\
+    \    if (b <= l || r <= a)\n      return;\n    if (l <= a && b <= r)\n    {\n\
+    \      segs.eb(i);\n      return;\n    }\n    if (b - a <= 1)\n      return;\n\
     \    const T c = (a + b) / 2;\n    dfs(dfs, 2 * i, a, c), dfs(dfs, 2 * i + 1,\
     \ c, b);\n  };\n  dfs(dfs, 1, 0, n);\n  return segs;\n}\n\n// \u6DF1\u3055 d+1\
     \ \u306E\u30BB\u30B0\u6728: 2^{d+1} - 1 \u9802\u70B9\u3067\u3001[0, 2^d) \u306E\
@@ -703,7 +703,7 @@ data:
   isVerificationFile: false
   path: ds/segtree/segtree_segment.hpp
   requiredBy: []
-  timestamp: '2025-04-29 22:10:28+09:00'
+  timestamp: '2025-04-30 04:50:50+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: ds/segtree/segtree_segment.hpp

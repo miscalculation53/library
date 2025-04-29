@@ -652,7 +652,8 @@ data:
     \     r = 2 * r + 1;\n          if (g(M::op(dat[r], sm)))\n          {\n     \
     \       sm = M::op(dat[r], sm);\n            r--;\n          }\n        }\n  \
     \      return r + 1 - siz;\n      }\n      sm = M::op(dat[r], sm);\n    } while\
-    \ ((r & -r) != r);\n    return 0;\n  }\n};\n"
+    \ ((r & -r) != r);\n    return 0;\n  }\n\n  vc<S> content() const\n  {\n    vc<S>\
+    \ res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n  }\n};\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
     \n/**\n * @brief \u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n * @docs docs/ds/segtree/segtree.md\n\
     \ */\n\ntemplate <class M>\nstruct SegmentTree\n{\n  using S = typename M::S;\n\
@@ -687,7 +688,9 @@ data:
     \        while (r < siz)\n        {\n          r = 2 * r + 1;\n          if (g(M::op(dat[r],\
     \ sm)))\n          {\n            sm = M::op(dat[r], sm);\n            r--;\n\
     \          }\n        }\n        return r + 1 - siz;\n      }\n      sm = M::op(dat[r],\
-    \ sm);\n    } while ((r & -r) != r);\n    return 0;\n  }\n};\n"
+    \ sm);\n    } while ((r & -r) != r);\n    return 0;\n  }\n\n  vc<S> content()\
+    \ const\n  {\n    vc<S> res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n\
+    \  }\n};\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -703,7 +706,7 @@ data:
   isVerificationFile: false
   path: ds/segtree/segtree.hpp
   requiredBy: []
-  timestamp: '2025-04-29 22:10:28+09:00'
+  timestamp: '2025-04-30 04:50:50+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/point_set_range_composite.test.cpp

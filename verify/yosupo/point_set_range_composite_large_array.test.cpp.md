@@ -2,8 +2,9 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
-    path: ds/swag.hpp
-    title: SWAG
+    path: ds/segtree/sparse_segtree.hpp
+    title: "\u5FC5\u8981\u306A\u3068\u3053\u308D\u3060\u3051\u4F5C\u308B\u30BB\u30B0\
+      \u30E1\u30F3\u30C8\u6728"
   - icon: ':heavy_check_mark:'
     path: math/algebra/affine_function.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
@@ -68,13 +69,13 @@ data:
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/deque_operate_all_composite
+    PROBLEM: https://judge.yosupo.jp/problem/point_set_range_composite_large_array
     links:
-    - https://judge.yosupo.jp/problem/deque_operate_all_composite
-  bundledCode: "#line 1 \"verify/yosupo/deque_operate_all_composite.test.cpp\"\n#define\
-    \ PROBLEM \"https://judge.yosupo.jp/problem/deque_operate_all_composite\"\n\n\
-    #define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n\
-    #ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
+    - https://judge.yosupo.jp/problem/point_set_range_composite_large_array
+  bundledCode: "#line 1 \"verify/yosupo/point_set_range_composite_large_array.test.cpp\"\
+    \n#define PROBLEM \"https://judge.yosupo.jp/problem/point_set_range_composite_large_array\"\
+    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
+    \n#ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
     #endif\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#line\
     \ 2 \"template/template_all_but_modint.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
@@ -749,38 +750,72 @@ data:
     \ntemplate <class T>\nstruct is_dynamic_modint : false_type {};\ntemplate <int\
     \ id>\nstruct is_dynamic_modint<dynamic_modint<id>> : true_type {};\ntemplate\
     \ <class T>\ninline constexpr bool is_dynamic_modint_v = is_dynamic_modint<T>::value;\n\
-    #line 18 \"verify/yosupo/deque_operate_all_composite.test.cpp\"\nusing mint =\
-    \ modint998244353;\n\n#line 2 \"ds/swag.hpp\"\n\n#line 4 \"ds/swag.hpp\"\n\n#line\
-    \ 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
-    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
-    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
-    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
-    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
-    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
-    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
-    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
-    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
-    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
-    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
-    \ constexpr auto inv = inv_;\n};\n\ntemplate <class M>\nstruct OppositeMonoid\n\
-    {\n  using S = typename M::S;\n  static constexpr S op(const S &a, const S &b)\
-    \ { return M::op(b, a); }\n  static constexpr auto e = M::e;\n};\ntemplate <class\
-    \ G>\nstruct OppositeGroup\n{\n  using S = typename G::S;\n  static constexpr\
-    \ S op(const S &a, const S &b) { return G::op(b, a); }\n  static constexpr auto\
-    \ e = G::e;\n  static constexpr auto inv = G::inv;\n};\n\ntemplate <class SR>\n\
-    using MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate\
-    \ <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S, SR::mul, SR::e1>;\n\
-    template <class R>\nusing GroupOfRingAdd = Group<typename R::S, R::add, R::e0,\
-    \ R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul = Group<typename K::S,\
-    \ K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\ntemplate <class Madd,\
-    \ class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
+    #line 18 \"verify/yosupo/point_set_range_composite_large_array.test.cpp\"\nusing\
+    \ mint = modint998244353;\n#line 2 \"ds/segtree/sparse_segtree.hpp\"\n\n#line\
+    \ 4 \"ds/segtree/sparse_segtree.hpp\"\n\n/**\n * @brief \u5FC5\u8981\u306A\u3068\
+    \u3053\u308D\u3060\u3051\u4F5C\u308B\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n * @docs\
+    \ docs/ds/segtree/sparse_segtree.md\n */\n\ntemplate <class M>\nstruct SparseSegmentTree\n\
+    {\n  using S = typename M::S;\n\nprivate:\n  ll n;\n  struct Node\n  {\n    ll\
+    \ l, r;\n    S val;\n    int par;\n    array<int, 2> chi;\n    Node() {}\n   \
+    \ Node(ll l, ll r, S val, int par) : l(l), r(r), val(val), par(par), chi{-1, -1}\
+    \ {}\n  };\n  vc<Node> nodes;\n  S chi_val(int i, int dir)\n  {\n    Node &node\
+    \ = nodes[i];\n    if (node.chi[dir] == -1)\n      return M::e();\n    return\
+    \ nodes[node.chi[dir]].val;\n  }\n  void update(int i) { nodes[i].val = M::op(chi_val(i,\
+    \ 0), chi_val(i, 1)); }\n  int visit_or_make(int i, int dir)\n  {\n    if (nodes[i].chi[dir]\
+    \ == -1)\n    {\n      const ll l = nodes[i].l, r = nodes[i].r;\n      const ll\
+    \ m = (l + r) / 2;\n      const ll nl = dir == 0 ? l : m;\n      const ll nr =\
+    \ dir == 0 ? m : r;\n      nodes[i].chi[dir] = nodes.size();\n      nodes.eb(nl,\
+    \ nr, M::e(), i);\n    }\n    return nodes[i].chi[dir];\n  }\n\n  S prod_internal(ll\
+    \ l, ll r, int i) const\n  {\n    if (i < 0)\n      return M::e();\n    const\
+    \ Node &node = nodes[i];\n    if (node.r <= l || r <= node.l)\n      return M::e();\n\
+    \    if (l <= node.l && node.r <= r)\n      return node.val;\n    if (node.r -\
+    \ node.l <= 1)\n      return M::e();\n    return M::op(prod_internal(l, r, nodes[i].chi[0]),\
+    \ prod_internal(l, r, nodes[i].chi[1]));\n  }\n\npublic:\n  SparseSegmentTree()\
+    \ {}\n  SparseSegmentTree(ll n, int reserve = 1 << 24) : n(n), nodes(1, {0, n,\
+    \ M::e(), -1}) { nodes.reserve(reserve); }\n\n  void set(ll p, const S &x)\n \
+    \ {\n    assert(0 <= p && p < n);\n    ll l = 0, r = n;\n    int i = 0;\n    while\
+    \ (r - l > 1)\n    {\n      ll m = (l + r) / 2;\n      if (p < m)\n        i =\
+    \ visit_or_make(i, 0), r = m;\n      else\n        i = visit_or_make(i, 1), l\
+    \ = m;\n    }\n    nodes[i].val = x;\n    while (i > 0)\n      i = nodes[i].par,\
+    \ update(i);\n  }\n\n  S get(ll p) const\n  {\n    assert(0 <= p && p < n);\n\
+    \    ll l = 0, r = n;\n    int i = 0;\n    while (r - l > 1 && i >= 0)\n    {\n\
+    \      ll m = (l + r) / 2;\n      if (p < m)\n        i = nodes[i].chi[0], r =\
+    \ m;\n      else\n        i = nodes[i].chi[1], l = m;\n    }\n    if (i == -1)\n\
+    \      return M::e();\n    return nodes[i].val;\n  }\n\n  S prod(ll l, ll r) const\n\
+    \  {\n    assert(0 <= l && l <= r && r <= n);\n    return prod_internal(l, r,\
+    \ 0);\n  }\n\n  S all_prod() const { return nodes[0].val; }\n\n  map<ll, S> content()\
+    \ const\n  {\n    map<ll, S> res;\n    fec(node : nodes)\n    {\n      if (node.r\
+    \ - node.l == 1)\n        res[node.l] = node.val;\n    }\n    return res;\n  }\n\
+    };\n#line 2 \"math/algebra/affine_function.hpp\"\n\n#line 2 \"math/algebra/algebra_base.hpp\"\
+    \n\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
+    \u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
+    \ */\n\ntemplate <class S_, auto op_, auto e_>\nstruct Monoid\n{\n  using S =\
+    \ S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n};\n\
+    \ntemplate <class S_, auto op_, auto e_, auto inv_>\nstruct Group\n{\n  using\
+    \ S = S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n\
+    \  static constexpr auto inv = inv_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto mul_, auto e1_>\nstruct SemiRing\n{\n  using S = S_;\n  static constexpr\
+    \ auto add = add_;\n  static constexpr auto e0 = e0_;\n  static constexpr auto\
+    \ mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto\
+    \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
+    \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto minus_, auto mul_, auto e1_, auto inv_>\nstruct Field\n{\n  using\
+    \ S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n  static constexpr auto inv = inv_;\n};\n\n\
+    template <class M>\nstruct OppositeMonoid\n{\n  using S = typename M::S;\n  static\
+    \ constexpr S op(const S &a, const S &b) { return M::op(b, a); }\n  static constexpr\
+    \ auto e = M::e;\n};\ntemplate <class G>\nstruct OppositeGroup\n{\n  using S =\
+    \ typename G::S;\n  static constexpr S op(const S &a, const S &b) { return G::op(b,\
+    \ a); }\n  static constexpr auto e = G::e;\n  static constexpr auto inv = G::inv;\n\
+    };\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S,\
+    \ SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename\
+    \ SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
+    \ R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul =\
+    \ Group<typename K::S, K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\n\
+    template <class Madd, class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
     \ Madd::S, typename Mmul::S>, \"Madd::S and Mmul::S must be identical\");\n  using\
     \ S = typename Madd::S;\n  static constexpr auto add = Madd::op;\n  static constexpr\
     \ auto e0 = Madd::e;\n  static constexpr auto mul = Mmul::op;\n  static constexpr\
@@ -795,78 +830,29 @@ data:
     \ Gmul::S must be identical\");\n  using S = typename Gadd::S;\n  static constexpr\
     \ auto add = Gadd::op;\n  static constexpr auto e0 = Gadd::e;\n  static constexpr\
     \ auto minus = Gadd::inv;\n  static constexpr auto mul = Gmul::op;\n  static constexpr\
-    \ auto e1 = Gmul::e;\n  static constexpr auto inv = Gmul::inv;\n};\n#line 6 \"\
-    ds/swag.hpp\"\n\n/**\n * @brief SWAG\n * @docs docs/ds/swag.md\n */\n\ntemplate\
-    \ <class M>\nstruct FoldableStack\n{\n  using S = typename M::S;\n\nprivate:\n\
-    \  stack<pair<S, S>> sta;\n\npublic:\n  FoldableStack() {}\n\n  template <class\
-    \ I = ll>\n  I size() const { return sta.size(); }\n  bool empty() const { return\
-    \ sta.empty(); }\n\n  S all_prod() const { return sta.empty() ? M::e() : sta.top().second;\
-    \ }\n  S top() const\n  {\n    assert(!sta.empty());\n    return sta.top().first;\n\
-    \  }\n  void push(const S &x) { sta.emplace(x, M::op(all_prod(), x)); }\n  void\
-    \ pop()\n  {\n    assert(!sta.empty());\n    sta.pop();\n  }\n\n  vc<S> content()\
-    \ const\n  {\n    auto tmp(*this);\n    vc<S> res;\n    while (!tmp.empty())\n\
-    \    {\n      res.eb(tmp.top());\n      tmp.pop();\n    }\n    return reversed(res);\n\
-    \  }\n};\n\ntemplate <class M>\nstruct FoldableQueue\n{\n  using S = typename\
-    \ M::S;\n\nprivate:\n  FoldableStack<OppositeMonoid<M>> sta1;\n  FoldableStack<M>\
-    \ sta2;\n  void move2to1()\n  {\n    if (!sta1.empty())\n      return;\n    while\
-    \ (!sta2.empty())\n    {\n      sta1.push(sta2.top());\n      sta2.pop();\n  \
-    \  }\n  }\n\npublic:\n  FoldableQueue() {}\n\n  template <class I = ll>\n  I size()\
-    \ const { return sta1.template size<I>() + sta2.template size<I>(); }\n  bool\
-    \ empty() const { return size<int>() == 0; }\n\n  S all_prod() const { return\
-    \ M::op(sta1.all_prod(), sta2.all_prod()); }\n  pair<S, S> all_prod_left_right()\
-    \ const { return {sta1.all_prod(), sta2.all_prod()}; }\n  S front()\n  {\n   \
-    \ move2to1();\n    return sta1.top();\n  }\n  void push(const S &x) { sta2.push(x);\
-    \ }\n  void pop()\n  {\n    move2to1();\n    sta1.pop();\n  }\n\n  vc<S> content()\
-    \ const\n  {\n    auto tmp(*this);\n    vc<S> res;\n    while (!tmp.empty())\n\
-    \    {\n      res.eb(tmp.front());\n      tmp.pop();\n    }\n    return res;\n\
-    \  }\n};\n\ntemplate <class M>\nstruct FoldableDeque\n{\n  using S = typename\
-    \ M::S;\n\nprivate:\n  FoldableStack<OppositeMonoid<M>> sta1;\n  FoldableStack<M>\
-    \ sta2;\n  void move2to1()\n  {\n    if (!sta1.empty())\n      return;\n    const\
-    \ int k = sta2.size();\n    vc<S> vec(k / 2, M::e());\n    repi(i, k / 2)\n  \
-    \  {\n      vec[i] = sta2.top();\n      sta2.pop();\n    }\n    repi(_, k - k\
-    \ / 2)\n    {\n      sta1.push(sta2.top());\n      sta2.pop();\n    }\n    repi(i,\
-    \ k / 2 - 1, -1, -1) sta2.push(vec[i]);\n  }\n  void move1to2()\n  {\n    if (!sta2.empty())\n\
-    \      return;\n    const int k = sta1.size();\n    vc<S> vec(k / 2, M::e());\n\
-    \    repi(i, k / 2)\n    {\n      vec[i] = sta1.top();\n      sta1.pop();\n  \
-    \  }\n    repi(_, k - k / 2)\n    {\n      sta2.push(sta1.top());\n      sta1.pop();\n\
-    \    }\n    repi(i, k / 2 - 1, -1, -1) sta1.push(vec[i]);\n  }\n\npublic:\n  FoldableDeque()\
-    \ {}\n\n  template <class I = ll>\n  I size() const { return sta1.template size<I>()\
-    \ + sta2.template size<I>(); }\n  bool empty() const { return size<int>() == 0;\
-    \ }\n\n  S all_prod() const { return M::op(sta1.all_prod(), sta2.all_prod());\
-    \ }\n  pair<S, S> all_prod_left_right() const { return {sta1.all_prod(), sta2.all_prod()};\
-    \ }\n  S front()\n  {\n    move2to1();\n    return sta1.top();\n  }\n  S back()\n\
-    \  {\n    move1to2();\n    return sta2.top();\n  }\n  void push_front(const S\
-    \ &x) { sta1.push(x); }\n  void push_back(const S &x) { sta2.push(x); }\n  void\
-    \ pop_front()\n  {\n    move2to1();\n    sta1.pop();\n  }\n  void pop_back()\n\
-    \  {\n    move1to2();\n    sta2.pop();\n  }\n\n  vc<S> content() const\n  {\n\
-    \    auto tmp(*this);\n    vc<S> res;\n    while (!tmp.empty())\n    {\n     \
-    \ res.eb(tmp.front());\n      tmp.pop_front();\n    }\n    return res;\n  }\n\
-    };\n#line 2 \"math/algebra/affine_function.hpp\"\n\n#line 5 \"math/algebra/affine_function.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\
-    \uFF09\n * @docs docs/math/algebra/affine_function.md\n */\n\n// op(f, g) = f\
-    \ \u2218 g\ntemplate <class mint>\nstruct GroupAffineFunction\n{\n  struct S\n\
-    \  {\n    mint a, b;\n    S() {}\n    S(mint a, mint b) : a(a), b(b) {}\n  };\n\
-    \  static constexpr S op(const S &f, const S &g)\n  {\n    // f.a (g.a x + g.b)\
-    \ + f.b\n    return {f.a * g.a, f.a * g.b + f.b};\n  }\n  static constexpr S e()\
-    \ { return {1, 0}; }\n  static constexpr S inv(const S &f)\n  {\n    // y = ax\
-    \ + b <=> x = (y-b)/a\n    mint ainv = 1 / f.a;\n    return {ainv, -f.b * ainv};\n\
-    \  }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(a, b);\n#endif\n\
-    #line 22 \"verify/yosupo/deque_operate_all_composite.test.cpp\"\n\nvoid init()\n\
-    {\n  oj(mt.seed(random_device()()));\n}\n\nvoid main2()\n{\n  FoldableDeque<OppositeMonoid<GroupAffineFunction<mint>>>\
-    \ deq;\n  LL(Q);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n     \
-    \ IN(mint, a, b);\n      deq.push_front({a, b});\n    }\n    else if (t == 1)\n\
-    \    {\n      IN(mint, a, b);\n      deq.push_back({a, b});\n    }\n    else if\
-    \ (t == 2)\n    {\n      deq.pop_front();\n    }\n    else if (t == 3)\n    {\n\
-    \      deq.pop_back();\n    }\n    else if (t == 4)\n    {\n      IN(mint, x);\n\
-    \      auto [a, b] = deq.all_prod();\n      PRINT(a * x + b);\n    }\n  }\n}\n\
-    \nvoid test()\n{\n\n}\n\n#line 2 \"template/template_main.hpp\"\n\n#line 4 \"\
-    template/template_main.hpp\"\n\ntemplate <auto init, auto main2, auto test>\n\
-    struct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string color)\n\
-    \    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\";\n   \
-    \   #ifdef LOCAL\n      cerr << s;\n      #endif\n      /* \u30B3\u30FC\u30C9\u30C6\
-    \u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\
-    \u30A2\u30A6\u30C8\u3092\u5916\u3059\n      cerr << val;\n      //*/\n    };\n\
-    \  \n    #if defined FAST_IO and not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\\
+    \ auto e1 = Gmul::e;\n  static constexpr auto inv = Gmul::inv;\n};\n#line 5 \"\
+    math/algebra/affine_function.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\
+    \uFF08\u4E00\u6B21\u95A2\u6570\uFF09\n * @docs docs/math/algebra/affine_function.md\n\
+    \ */\n\n// op(f, g) = f \u2218 g\ntemplate <class mint>\nstruct GroupAffineFunction\n\
+    {\n  struct S\n  {\n    mint a, b;\n    S() {}\n    S(mint a, mint b) : a(a),\
+    \ b(b) {}\n  };\n  static constexpr S op(const S &f, const S &g)\n  {\n    //\
+    \ f.a (g.a x + g.b) + f.b\n    return {f.a * g.a, f.a * g.b + f.b};\n  }\n  static\
+    \ constexpr S e() { return {1, 0}; }\n  static constexpr S inv(const S &f)\n \
+    \ {\n    // y = ax + b <=> x = (y-b)/a\n    mint ainv = 1 / f.a;\n    return {ainv,\
+    \ -f.b * ainv};\n  }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(a,\
+    \ b);\n#endif\n#line 21 \"verify/yosupo/point_set_range_composite_large_array.test.cpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n\n  SparseSegmentTree<OppositeMonoid<GroupAffineFunction<mint>>>\
+    \ seg(N);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(p, c,\
+    \ d);\n      seg.set(p, {c, d});\n    }\n    else if (t == 1)\n    {\n      LL(l,\
+    \ r, x);\n      auto [a, b] = seg.prod(l, r);\n      PRINT(a * x + b);\n    }\n\
+    \    dump(seg.content());\n  }\n}\n\nvoid test()\n{\n  \n}\n\n#line 2 \"template/template_main.hpp\"\
+    \n\n#line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2,\
+    \ auto test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
+    \ color)\n    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\"\
+    ;\n      #ifdef LOCAL\n      cerr << s;\n      #endif\n      /* \u30B3\u30FC\u30C9\
+    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
+    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n      cerr << val;\n      //*/\n \
+    \   };\n  \n    #if defined FAST_IO and not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\\
     n\\n\", \"32\");\n    #endif\n    #if defined FAST_CIO and not defined LOCAL\n\
     \    CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
     \    #endif\n    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n\
@@ -876,24 +862,21 @@ data:
     \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
     \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
     T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
-    \      main2();\n    }\n    #endif\n  }\n};\n#line 68 \"verify/yosupo/deque_operate_all_composite.test.cpp\"\
+    \      main2();\n    }\n    #endif\n  }\n};\n#line 53 \"verify/yosupo/point_set_range_composite_large_array.test.cpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/deque_operate_all_composite\"\
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/point_set_range_composite_large_array\"\
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
     #endif\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include\
     \ \"template/template_all_but_modint.hpp\"\n#include \"math/modint/modint.hpp\"\
-    \nusing mint = modint998244353;\n\n#include \"ds/swag.hpp\"\n#include \"math/algebra/affine_function.hpp\"\
-    \n\nvoid init()\n{\n  oj(mt.seed(random_device()()));\n}\n\nvoid main2()\n{\n\
-    \  FoldableDeque<OppositeMonoid<GroupAffineFunction<mint>>> deq;\n  LL(Q);\n \
-    \ rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      IN(mint, a, b);\n\
-    \      deq.push_front({a, b});\n    }\n    else if (t == 1)\n    {\n      IN(mint,\
-    \ a, b);\n      deq.push_back({a, b});\n    }\n    else if (t == 2)\n    {\n \
-    \     deq.pop_front();\n    }\n    else if (t == 3)\n    {\n      deq.pop_back();\n\
-    \    }\n    else if (t == 4)\n    {\n      IN(mint, x);\n      auto [a, b] = deq.all_prod();\n\
-    \      PRINT(a * x + b);\n    }\n  }\n}\n\nvoid test()\n{\n\n}\n\n#include \"\
-    template/template_main.hpp\"\nMain<init, main2, test> main_dummy;\nint main()\
-    \ {}\n"
+    \nusing mint = modint998244353;\n#include \"ds/segtree/sparse_segtree.hpp\"\n\
+    #include \"math/algebra/affine_function.hpp\"\n\nvoid init() {}\n\nvoid main2()\n\
+    {\n  LL(N, Q);\n\n  SparseSegmentTree<OppositeMonoid<GroupAffineFunction<mint>>>\
+    \ seg(N);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(p, c,\
+    \ d);\n      seg.set(p, {c, d});\n    }\n    else if (t == 1)\n    {\n      LL(l,\
+    \ r, x);\n      auto [a, b] = seg.prod(l, r);\n      PRINT(a * x + b);\n    }\n\
+    \    dump(seg.content());\n  }\n}\n\nvoid test()\n{\n  \n}\n\n#include \"template/template_main.hpp\"\
+    \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -910,20 +893,20 @@ data:
   - math/modint/modint32_internal.hpp
   - math/modint/modint_base.hpp
   - math/extgcd.hpp
-  - ds/swag.hpp
-  - math/algebra/algebra_base.hpp
+  - ds/segtree/sparse_segtree.hpp
   - math/algebra/affine_function.hpp
+  - math/algebra/algebra_base.hpp
   - template/template_main.hpp
   isVerificationFile: true
-  path: verify/yosupo/deque_operate_all_composite.test.cpp
+  path: verify/yosupo/point_set_range_composite_large_array.test.cpp
   requiredBy: []
   timestamp: '2025-04-30 04:50:50+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/yosupo/deque_operate_all_composite.test.cpp
+documentation_of: verify/yosupo/point_set_range_composite_large_array.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/yosupo/deque_operate_all_composite.test.cpp
-- /verify/verify/yosupo/deque_operate_all_composite.test.cpp.html
-title: verify/yosupo/deque_operate_all_composite.test.cpp
+- /verify/verify/yosupo/point_set_range_composite_large_array.test.cpp
+- /verify/verify/yosupo/point_set_range_composite_large_array.test.cpp.html
+title: verify/yosupo/point_set_range_composite_large_array.test.cpp
 ---

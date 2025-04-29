@@ -129,6 +129,9 @@ data:
     path: verify/yosupo/point_set_range_composite.test.cpp
     title: verify/yosupo/point_set_range_composite.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/point_set_range_composite_large_array.test.cpp
+    title: verify/yosupo/point_set_range_composite_large_array.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
   - icon: ':heavy_check_mark:'
@@ -884,6 +887,7 @@ data:
   - verify/mytest/modint.test.cpp
   - verify/aoj/modpow.test.cpp
   - verify/yosupo/factorize.test.cpp
+  - verify/yosupo/point_set_range_composite_large_array.test.cpp
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/point_set_range_composite.test.cpp
   - verify/yosupo/convolution.test.cpp

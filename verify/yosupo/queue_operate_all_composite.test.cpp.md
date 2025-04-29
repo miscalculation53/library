@@ -850,8 +850,9 @@ data:
     \ + f.b\n    return {f.a * g.a, f.a * g.b + f.b};\n  }\n  static constexpr S e()\
     \ { return {1, 0}; }\n  static constexpr S inv(const S &f)\n  {\n    // y = ax\
     \ + b <=> x = (y-b)/a\n    mint ainv = 1 / f.a;\n    return {ainv, -f.b * ainv};\n\
-    \  }\n};\n#line 22 \"verify/yosupo/queue_operate_all_composite.test.cpp\"\n\n\
-    void init()\n{\n  oj(mt.seed(random_device()()));\n}\n\nvoid main2()\n{\n  FoldableQueue<OppositeMonoid<GroupAffineFunction<mint>>>\
+    \  }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(a, b);\n#endif\n\
+    #line 22 \"verify/yosupo/queue_operate_all_composite.test.cpp\"\n\nvoid init()\n\
+    {\n  oj(mt.seed(random_device()()));\n}\n\nvoid main2()\n{\n  FoldableQueue<OppositeMonoid<GroupAffineFunction<mint>>>\
     \ que;\n  LL(Q);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n     \
     \ IN(mint, a, b);\n      que.push({a, b});\n    }\n    else if (t == 1)\n    {\n\
     \      que.pop();\n    }\n    else if (t == 2)\n    {\n      IN(mint, x);\n  \
@@ -912,7 +913,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/queue_operate_all_composite.test.cpp
   requiredBy: []
-  timestamp: '2025-04-29 22:10:28+09:00'
+  timestamp: '2025-04-30 04:50:50+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/queue_operate_all_composite.test.cpp

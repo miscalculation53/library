@@ -784,37 +784,38 @@ data:
     \        while (r < siz)\n        {\n          r = 2 * r + 1;\n          if (g(M::op(dat[r],\
     \ sm)))\n          {\n            sm = M::op(dat[r], sm);\n            r--;\n\
     \          }\n        }\n        return r + 1 - siz;\n      }\n      sm = M::op(dat[r],\
-    \ sm);\n    } while ((r & -r) != r);\n    return 0;\n  }\n};\n#line 2 \"math/algebra/affine_function.hpp\"\
-    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
-    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
-    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
-    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
-    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
-    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
-    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
-    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
-    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
-    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
-    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
-    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
-    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
-    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
-    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
-    \ constexpr auto inv = inv_;\n};\n\ntemplate <class M>\nstruct OppositeMonoid\n\
-    {\n  using S = typename M::S;\n  static constexpr S op(const S &a, const S &b)\
-    \ { return M::op(b, a); }\n  static constexpr auto e = M::e;\n};\ntemplate <class\
-    \ G>\nstruct OppositeGroup\n{\n  using S = typename G::S;\n  static constexpr\
-    \ S op(const S &a, const S &b) { return G::op(b, a); }\n  static constexpr auto\
-    \ e = G::e;\n  static constexpr auto inv = G::inv;\n};\n\ntemplate <class SR>\n\
-    using MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate\
-    \ <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S, SR::mul, SR::e1>;\n\
-    template <class R>\nusing GroupOfRingAdd = Group<typename R::S, R::add, R::e0,\
-    \ R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul = Group<typename K::S,\
-    \ K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\ntemplate <class Madd,\
-    \ class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
+    \ sm);\n    } while ((r & -r) != r);\n    return 0;\n  }\n\n  vc<S> content()\
+    \ const\n  {\n    vc<S> res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n\
+    \  }\n};\n#line 2 \"math/algebra/affine_function.hpp\"\n\n#line 2 \"math/algebra/algebra_base.hpp\"\
+    \n\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
+    \u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
+    \ */\n\ntemplate <class S_, auto op_, auto e_>\nstruct Monoid\n{\n  using S =\
+    \ S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n};\n\
+    \ntemplate <class S_, auto op_, auto e_, auto inv_>\nstruct Group\n{\n  using\
+    \ S = S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n\
+    \  static constexpr auto inv = inv_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto mul_, auto e1_>\nstruct SemiRing\n{\n  using S = S_;\n  static constexpr\
+    \ auto add = add_;\n  static constexpr auto e0 = e0_;\n  static constexpr auto\
+    \ mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto\
+    \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
+    \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto minus_, auto mul_, auto e1_, auto inv_>\nstruct Field\n{\n  using\
+    \ S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n  static constexpr auto inv = inv_;\n};\n\n\
+    template <class M>\nstruct OppositeMonoid\n{\n  using S = typename M::S;\n  static\
+    \ constexpr S op(const S &a, const S &b) { return M::op(b, a); }\n  static constexpr\
+    \ auto e = M::e;\n};\ntemplate <class G>\nstruct OppositeGroup\n{\n  using S =\
+    \ typename G::S;\n  static constexpr S op(const S &a, const S &b) { return G::op(b,\
+    \ a); }\n  static constexpr auto e = G::e;\n  static constexpr auto inv = G::inv;\n\
+    };\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S,\
+    \ SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename\
+    \ SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
+    \ R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul =\
+    \ Group<typename K::S, K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\n\
+    template <class Madd, class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
     \ Madd::S, typename Mmul::S>, \"Madd::S and Mmul::S must be identical\");\n  using\
     \ S = typename Madd::S;\n  static constexpr auto add = Madd::op;\n  static constexpr\
     \ auto e0 = Madd::e;\n  static constexpr auto mul = Mmul::op;\n  static constexpr\
@@ -838,28 +839,29 @@ data:
     \ f.a (g.a x + g.b) + f.b\n    return {f.a * g.a, f.a * g.b + f.b};\n  }\n  static\
     \ constexpr S e() { return {1, 0}; }\n  static constexpr S inv(const S &f)\n \
     \ {\n    // y = ax + b <=> x = (y-b)/a\n    mint ainv = 1 / f.a;\n    return {ainv,\
-    \ -f.b * ainv};\n  }\n};\n#line 21 \"verify/yosupo/point_set_range_composite.test.cpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  VEC(pll, N, AB);\n  auto\
-    \ [A, B] = top(AB);\n\n  SegmentTree<OppositeMonoid<GroupAffineFunction<mint>>>\
-    \ seg(gen_vec(N, [&](ll i)\n                                                 \
-    \                    { return GroupAffineFunction<mint>::S{A.at(i), B.at(i)};\
-    \ }));\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(p, c, d);\n\
-    \      seg.set(p, {c, d});\n    }\n    else if (t == 1)\n    {\n      LL(l, r,\
-    \ x);\n      auto [a, b] = seg.prod(l, r);\n      PRINT(a * x + b);\n    }\n \
-    \ }\n}\n\nvoid test()\n{\n  \n}\n\n#line 2 \"template/template_main.hpp\"\n\n\
-    #line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2, auto\
-    \ test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
-    \ color)\n    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\"\
-    ;\n      #ifdef LOCAL\n      cerr << s;\n      #endif\n      /* \u30B3\u30FC\u30C9\
-    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
-    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n      cerr << val;\n      //*/\n \
-    \   };\n  \n    #if defined FAST_IO and not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\\
-    n\\n\", \"32\");\n    #endif\n    #if defined FAST_CIO and not defined LOCAL\n\
-    \    CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
-    \    #endif\n    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n\
-    \  \n    #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n\
-    \    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n   \
-    \   dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
+    \ -f.b * ainv};\n  }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(a,\
+    \ b);\n#endif\n#line 21 \"verify/yosupo/point_set_range_composite.test.cpp\"\n\
+    \nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  VEC(pll, N, AB);\n  auto [A,\
+    \ B] = top(AB);\n\n  SegmentTree<OppositeMonoid<GroupAffineFunction<mint>>> seg(gen_vec(N,\
+    \ [&](ll i)\n                                                                \
+    \     { return GroupAffineFunction<mint>::S{A.at(i), B.at(i)}; }));\n  rep(_,\
+    \ Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(p, c, d);\n      seg.set(p,\
+    \ {c, d});\n    }\n    else if (t == 1)\n    {\n      LL(l, r, x);\n      auto\
+    \ [a, b] = seg.prod(l, r);\n      PRINT(a * x + b);\n    }\n  }\n}\n\nvoid test()\n\
+    {\n  \n}\n\n#line 2 \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\
+    \n\ntemplate <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n\
+    \    cauto CERR = [](string val, string color)\n    {\n      string s = \"\\033[\"\
+    \ + color + \"m\" + val + \"\\033[m\";\n      #ifdef LOCAL\n      cerr << s;\n\
+    \      #endif\n      /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\
+    \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\
+    \u3059\n      cerr << val;\n      //*/\n    };\n  \n    #if defined FAST_IO and\
+    \ not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n    #endif\n \
+    \   #if defined FAST_CIO and not defined LOCAL\n    CERR(\"\\n[FAST_CIO]\\n\\\
+    n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n    #endif\n\
+    \    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n  \n  \
+    \  #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n \
+    \   CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n    \
+    \  dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
     \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
     \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
     T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
@@ -903,7 +905,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/point_set_range_composite.test.cpp
   requiredBy: []
-  timestamp: '2025-04-29 22:10:28+09:00'
+  timestamp: '2025-04-30 04:50:50+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/point_set_range_composite.test.cpp
