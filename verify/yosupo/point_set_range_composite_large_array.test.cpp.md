@@ -755,38 +755,38 @@ data:
     \ 4 \"ds/segtree/sparse_segtree.hpp\"\n\n/**\n * @brief \u5FC5\u8981\u306A\u3068\
     \u3053\u308D\u3060\u3051\u4F5C\u308B\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n * @docs\
     \ docs/ds/segtree/sparse_segtree.md\n */\n\ntemplate <class M>\nstruct SparseSegmentTree\n\
-    {\n  using S = typename M::S;\n\nprivate:\n  ll n;\n  struct Node\n  {\n    ll\
-    \ l, r;\n    S val;\n    int par;\n    array<int, 2> chi;\n    Node() {}\n   \
-    \ Node(ll l, ll r, S val, int par) : l(l), r(r), val(val), par(par), chi{-1, -1}\
-    \ {}\n  };\n  vc<Node> nodes;\n  S chi_val(int i, int dir)\n  {\n    Node &node\
-    \ = nodes[i];\n    if (node.chi[dir] == -1)\n      return M::e();\n    return\
+    {\n  using S = typename M::S;\n\nprivate:\n  ll n;\n  struct Node\n  {\n    S\
+    \ val;\n    array<int, 2> chi;\n    Node() {}\n    Node(S val) : val(val), chi{-1,\
+    \ -1} {}\n  };\n  vc<Node> nodes;\n  S chi_val(int i, int dir)\n  {\n    Node\
+    \ &node = nodes[i];\n    if (node.chi[dir] == -1)\n      return M::e();\n    return\
     \ nodes[node.chi[dir]].val;\n  }\n  void update(int i) { nodes[i].val = M::op(chi_val(i,\
     \ 0), chi_val(i, 1)); }\n  int visit_or_make(int i, int dir)\n  {\n    if (nodes[i].chi[dir]\
-    \ == -1)\n    {\n      const ll l = nodes[i].l, r = nodes[i].r;\n      const ll\
-    \ m = (l + r) / 2;\n      const ll nl = dir == 0 ? l : m;\n      const ll nr =\
-    \ dir == 0 ? m : r;\n      nodes[i].chi[dir] = nodes.size();\n      nodes.eb(nl,\
-    \ nr, M::e(), i);\n    }\n    return nodes[i].chi[dir];\n  }\n\n  S prod_internal(ll\
-    \ l, ll r, int i) const\n  {\n    if (i < 0)\n      return M::e();\n    const\
-    \ Node &node = nodes[i];\n    if (node.r <= l || r <= node.l)\n      return M::e();\n\
-    \    if (l <= node.l && node.r <= r)\n      return node.val;\n    if (node.r -\
-    \ node.l <= 1)\n      return M::e();\n    return M::op(prod_internal(l, r, nodes[i].chi[0]),\
-    \ prod_internal(l, r, nodes[i].chi[1]));\n  }\n\npublic:\n  SparseSegmentTree()\
-    \ {}\n  SparseSegmentTree(ll n, int reserve = 1 << 24) : n(n), nodes(1, {0, n,\
-    \ M::e(), -1}) { nodes.reserve(reserve); }\n\n  void set(ll p, const S &x)\n \
-    \ {\n    assert(0 <= p && p < n);\n    ll l = 0, r = n;\n    int i = 0;\n    while\
-    \ (r - l > 1)\n    {\n      ll m = (l + r) / 2;\n      if (p < m)\n        i =\
-    \ visit_or_make(i, 0), r = m;\n      else\n        i = visit_or_make(i, 1), l\
-    \ = m;\n    }\n    nodes[i].val = x;\n    while (i > 0)\n      i = nodes[i].par,\
-    \ update(i);\n  }\n\n  S get(ll p) const\n  {\n    assert(0 <= p && p < n);\n\
-    \    ll l = 0, r = n;\n    int i = 0;\n    while (r - l > 1 && i >= 0)\n    {\n\
-    \      ll m = (l + r) / 2;\n      if (p < m)\n        i = nodes[i].chi[0], r =\
-    \ m;\n      else\n        i = nodes[i].chi[1], l = m;\n    }\n    if (i == -1)\n\
-    \      return M::e();\n    return nodes[i].val;\n  }\n\n  S prod(ll l, ll r) const\n\
-    \  {\n    assert(0 <= l && l <= r && r <= n);\n    return prod_internal(l, r,\
-    \ 0);\n  }\n\n  S all_prod() const { return nodes[0].val; }\n\n  map<ll, S> content()\
-    \ const\n  {\n    map<ll, S> res;\n    fec(node : nodes)\n    {\n      if (node.r\
-    \ - node.l == 1)\n        res[node.l] = node.val;\n    }\n    return res;\n  }\n\
-    };\n#line 2 \"math/algebra/affine_function.hpp\"\n\n#line 2 \"math/algebra/algebra_base.hpp\"\
+    \ == -1)\n    {\n      nodes[i].chi[dir] = nodes.size();\n      nodes.eb(M::e());\n\
+    \    }\n    return nodes[i].chi[dir];\n  }\n\npublic:\n  SparseSegmentTree() {}\n\
+    \  SparseSegmentTree(ll n, int reserve = 1 << 24) : n(n), nodes(1, M::e()) { nodes.reserve(reserve);\
+    \ }\n\n  void set(ll p, const S &x)\n  {\n    assert(0 <= p && p < n);\n    auto\
+    \ dfs = [&](auto dfs, ll a, ll b, int i) -> void\n    {\n      if (b - a == 1)\n\
+    \      {\n        nodes[i].val = x;\n        return;\n      }\n      ll c = (a\
+    \ + b) / 2;\n      if (p < c)\n        dfs(dfs, a, c, visit_or_make(i, 0));\n\
+    \      else\n        dfs(dfs, c, b, visit_or_make(i, 1));\n      update(i);\n\
+    \    };\n    dfs(dfs, 0, n, 0);\n  }\n\n  S get(ll p) const\n  {\n    assert(0\
+    \ <= p && p < n);\n    ll a = 0, b = n;\n    int i = 0;\n    while (b - a > 1\
+    \ && i >= 0)\n    {\n      ll c = (a + b) / 2;\n      if (p < c)\n        i =\
+    \ nodes[i].chi[0], b = c;\n      else\n        i = nodes[i].chi[1], a = c;\n \
+    \   }\n    if (i == -1)\n      return M::e();\n    return nodes[i].val;\n  }\n\
+    \n  S prod(ll l, ll r) const\n  {\n    assert(0 <= l && l <= r && r <= n);\n \
+    \   auto dfs = [&](auto dfs, ll a, ll b, int i) -> S\n    {\n      if (i < 0)\n\
+    \        return M::e();\n      if (b <= l || r <= a)\n        return M::e();\n\
+    \      if (l <= a && b <= r)\n        return nodes[i].val;\n      if (b - a ==\
+    \ 1)\n        return M::e();\n      ll c = (a + b) / 2;\n      return M::op(dfs(dfs,\
+    \ a, c, nodes[i].chi[0]), dfs(dfs, c, b, nodes[i].chi[1]));\n    };\n    return\
+    \ dfs(dfs, 0, n, 0);\n  }\n\n  S all_prod() const { return nodes[0].val; }\n\n\
+    \  map<ll, S> content() const\n  {\n    map<ll, S> res;\n    auto dfs = [&](auto\
+    \ dfs, ll a, ll b, int i) -> void\n    {\n      if (i < 0)\n        return;\n\
+    \      if (b - a == 1)\n      {\n        res[a] = nodes[i].val;\n        return;\n\
+    \      }\n      ll c = (a + b) / 2;\n      dfs(dfs, a, c, nodes[i].chi[0]), dfs(dfs,\
+    \ c, b, nodes[i].chi[1]);\n    };\n    dfs(dfs, 0, n, 0);\n    return res;\n \
+    \ }\n};\n#line 2 \"math/algebra/affine_function.hpp\"\n\n#line 2 \"math/algebra/algebra_base.hpp\"\
     \n\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
     \u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
     \ */\n\ntemplate <class S_, auto op_, auto e_>\nstruct Monoid\n{\n  using S =\
@@ -900,7 +900,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/point_set_range_composite_large_array.test.cpp
   requiredBy: []
-  timestamp: '2025-04-30 04:50:50+09:00'
+  timestamp: '2025-04-30 05:45:33+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/point_set_range_composite_large_array.test.cpp
