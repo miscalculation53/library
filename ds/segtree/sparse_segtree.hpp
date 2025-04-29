@@ -16,12 +16,10 @@ private:
   ll n;
   struct Node
   {
-    ll l, r;
     S val;
-    int par;
     array<int, 2> chi;
     Node() {}
-    Node(ll l, ll r, S val, int par) : l(l), r(r), val(val), par(par), chi{-1, -1} {}
+    Node(S val) : val(val), chi{-1, -1} {}
   };
   vc<Node> nodes;
   S chi_val(int i, int dir)
@@ -36,64 +34,48 @@ private:
   {
     if (nodes[i].chi[dir] == -1)
     {
-      const ll l = nodes[i].l, r = nodes[i].r;
-      const ll m = (l + r) / 2;
-      const ll nl = dir == 0 ? l : m;
-      const ll nr = dir == 0 ? m : r;
       nodes[i].chi[dir] = nodes.size();
-      nodes.eb(nl, nr, M::e(), i);
+      nodes.eb(M::e());
     }
     return nodes[i].chi[dir];
   }
 
-  S prod_internal(ll l, ll r, int i) const
-  {
-    if (i < 0)
-      return M::e();
-    const Node &node = nodes[i];
-    if (node.r <= l || r <= node.l)
-      return M::e();
-    if (l <= node.l && node.r <= r)
-      return node.val;
-    if (node.r - node.l <= 1)
-      return M::e();
-    return M::op(prod_internal(l, r, nodes[i].chi[0]), prod_internal(l, r, nodes[i].chi[1]));
-  }
-
 public:
   SparseSegmentTree() {}
-  SparseSegmentTree(ll n, int reserve = 1 << 24) : n(n), nodes(1, {0, n, M::e(), -1}) { nodes.reserve(reserve); }
+  SparseSegmentTree(ll n, int reserve = 1 << 24) : n(n), nodes(1, M::e()) { nodes.reserve(reserve); }
 
   void set(ll p, const S &x)
   {
     assert(0 <= p && p < n);
-    ll l = 0, r = n;
-    int i = 0;
-    while (r - l > 1)
+    auto dfs = [&](auto dfs, ll a, ll b, int i) -> void
     {
-      ll m = (l + r) / 2;
-      if (p < m)
-        i = visit_or_make(i, 0), r = m;
+      if (b - a == 1)
+      {
+        nodes[i].val = x;
+        return;
+      }
+      ll c = (a + b) / 2;
+      if (p < c)
+        dfs(dfs, a, c, visit_or_make(i, 0));
       else
-        i = visit_or_make(i, 1), l = m;
-    }
-    nodes[i].val = x;
-    while (i > 0)
-      i = nodes[i].par, update(i);
+        dfs(dfs, c, b, visit_or_make(i, 1));
+      update(i);
+    };
+    dfs(dfs, 0, n, 0);
   }
 
   S get(ll p) const
   {
     assert(0 <= p && p < n);
-    ll l = 0, r = n;
+    ll a = 0, b = n;
     int i = 0;
-    while (r - l > 1 && i >= 0)
+    while (b - a > 1 && i >= 0)
     {
-      ll m = (l + r) / 2;
-      if (p < m)
-        i = nodes[i].chi[0], r = m;
+      ll c = (a + b) / 2;
+      if (p < c)
+        i = nodes[i].chi[0], b = c;
       else
-        i = nodes[i].chi[1], l = m;
+        i = nodes[i].chi[1], a = c;
     }
     if (i == -1)
       return M::e();
@@ -103,7 +85,20 @@ public:
   S prod(ll l, ll r) const
   {
     assert(0 <= l && l <= r && r <= n);
-    return prod_internal(l, r, 0);
+    auto dfs = [&](auto dfs, ll a, ll b, int i) -> S
+    {
+      if (i < 0)
+        return M::e();
+      if (b <= l || r <= a)
+        return M::e();
+      if (l <= a && b <= r)
+        return nodes[i].val;
+      if (b - a == 1)
+        return M::e();
+      ll c = (a + b) / 2;
+      return M::op(dfs(dfs, a, c, nodes[i].chi[0]), dfs(dfs, c, b, nodes[i].chi[1]));
+    };
+    return dfs(dfs, 0, n, 0);
   }
 
   S all_prod() const { return nodes[0].val; }
@@ -111,11 +106,19 @@ public:
   map<ll, S> content() const
   {
     map<ll, S> res;
-    fec(node : nodes)
+    auto dfs = [&](auto dfs, ll a, ll b, int i) -> void
     {
-      if (node.r - node.l == 1)
-        res[node.l] = node.val;
-    }
+      if (i < 0)
+        return;
+      if (b - a == 1)
+      {
+        res[a] = nodes[i].val;
+        return;
+      }
+      ll c = (a + b) / 2;
+      dfs(dfs, a, c, nodes[i].chi[0]), dfs(dfs, c, b, nodes[i].chi[1]);
+    };
+    dfs(dfs, 0, n, 0);
     return res;
   }
 };
