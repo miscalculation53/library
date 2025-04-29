@@ -52,8 +52,6 @@ vc<T> segtree_nodes_from_left(int d, T l, T r)
       segs.eb(i);
       return;
     }
-    if (b - a <= 1)
-      return;
     const T c = (a + b) / 2;
     dfs(dfs, 2 * i, a, c), dfs(dfs, 2 * i + 1, c, b);
   };
