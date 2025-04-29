@@ -4,7 +4,7 @@ data:
   - icon: ':question:'
     path: ds/swag.hpp
     title: SWAG
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/affine_function.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
   - icon: ':question:'
@@ -63,9 +63,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/queue_operate_all_composite
@@ -845,13 +845,13 @@ data:
     \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\
     \uFF09\n * @docs docs/math/algebra/affine_function.md\n */\n\n// op(f, g) = f\
     \ \u2218 g\ntemplate <class mint>\nstruct GroupAffineFunction\n{\n  struct S\n\
-    \  {\n    mint a, b;\n    S(mint a, mint b) : a(a), b(b) {}\n  };\n  static constexpr\
-    \ S op(const S &f, const S &g)\n  {\n    // f.a (g.a x + g.b) + f.b\n    return\
-    \ {f.a * g.a, f.a * g.b + f.b};\n  }\n  static constexpr S e() { return {1, 0};\
-    \ }\n  static constexpr S inv(const S &f)\n  {\n    // y = ax + b <=> x = (y-b)/a\n\
-    \    mint ainv = 1 / f.a;\n    return {ainv, -f.b * ainv};\n  }\n};\n#line 22\
-    \ \"verify/yosupo/queue_operate_all_composite.test.cpp\"\n\nvoid init()\n{\n \
-    \ oj(mt.seed(random_device()()));\n}\n\nvoid main2()\n{\n  FoldableQueue<OppositeMonoid<GroupAffineFunction<mint>>>\
+    \  {\n    mint a, b;\n    S() {}\n    S(mint a, mint b) : a(a), b(b) {}\n  };\n\
+    \  static constexpr S op(const S &f, const S &g)\n  {\n    // f.a (g.a x + g.b)\
+    \ + f.b\n    return {f.a * g.a, f.a * g.b + f.b};\n  }\n  static constexpr S e()\
+    \ { return {1, 0}; }\n  static constexpr S inv(const S &f)\n  {\n    // y = ax\
+    \ + b <=> x = (y-b)/a\n    mint ainv = 1 / f.a;\n    return {ainv, -f.b * ainv};\n\
+    \  }\n};\n#line 22 \"verify/yosupo/queue_operate_all_composite.test.cpp\"\n\n\
+    void init()\n{\n  oj(mt.seed(random_device()()));\n}\n\nvoid main2()\n{\n  FoldableQueue<OppositeMonoid<GroupAffineFunction<mint>>>\
     \ que;\n  LL(Q);\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n     \
     \ IN(mint, a, b);\n      que.push({a, b});\n    }\n    else if (t == 1)\n    {\n\
     \      que.pop();\n    }\n    else if (t == 2)\n    {\n      IN(mint, x);\n  \
@@ -912,8 +912,8 @@ data:
   isVerificationFile: true
   path: verify/yosupo/queue_operate_all_composite.test.cpp
   requiredBy: []
-  timestamp: '2025-04-29 20:25:40+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2025-04-29 22:10:28+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/queue_operate_all_composite.test.cpp
 layout: document

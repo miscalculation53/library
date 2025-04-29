@@ -45,7 +45,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/deque_operate_all_composite.test.cpp
     title: verify/yosupo/deque_operate_all_composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/queue_operate_all_composite.test.cpp
     title: verify/yosupo/queue_operate_all_composite.test.cpp
   - icon: ':x:'

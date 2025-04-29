@@ -45,12 +45,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/deque_operate_all_composite.test.cpp
     title: verify/yosupo/deque_operate_all_composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/point_set_range_composite.test.cpp
+    title: verify/yosupo/point_set_range_composite.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/queue_operate_all_composite.test.cpp
     title: verify/yosupo/queue_operate_all_composite.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/algebra/affine_function.md
     document_title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
@@ -672,22 +675,22 @@ data:
     math/algebra/affine_function.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\
     \uFF08\u4E00\u6B21\u95A2\u6570\uFF09\n * @docs docs/math/algebra/affine_function.md\n\
     \ */\n\n// op(f, g) = f \u2218 g\ntemplate <class mint>\nstruct GroupAffineFunction\n\
-    {\n  struct S\n  {\n    mint a, b;\n    S(mint a, mint b) : a(a), b(b) {}\n  };\n\
-    \  static constexpr S op(const S &f, const S &g)\n  {\n    // f.a (g.a x + g.b)\
-    \ + f.b\n    return {f.a * g.a, f.a * g.b + f.b};\n  }\n  static constexpr S e()\
-    \ { return {1, 0}; }\n  static constexpr S inv(const S &f)\n  {\n    // y = ax\
-    \ + b <=> x = (y-b)/a\n    mint ainv = 1 / f.a;\n    return {ainv, -f.b * ainv};\n\
-    \  }\n};\n"
+    {\n  struct S\n  {\n    mint a, b;\n    S() {}\n    S(mint a, mint b) : a(a),\
+    \ b(b) {}\n  };\n  static constexpr S op(const S &f, const S &g)\n  {\n    //\
+    \ f.a (g.a x + g.b) + f.b\n    return {f.a * g.a, f.a * g.b + f.b};\n  }\n  static\
+    \ constexpr S e() { return {1, 0}; }\n  static constexpr S inv(const S &f)\n \
+    \ {\n    // y = ax + b <=> x = (y-b)/a\n    mint ainv = 1 / f.a;\n    return {ainv,\
+    \ -f.b * ainv};\n  }\n};\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
     #include \"algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\
     \uFF08\u4E00\u6B21\u95A2\u6570\uFF09\n * @docs docs/math/algebra/affine_function.md\n\
     \ */\n\n// op(f, g) = f \u2218 g\ntemplate <class mint>\nstruct GroupAffineFunction\n\
-    {\n  struct S\n  {\n    mint a, b;\n    S(mint a, mint b) : a(a), b(b) {}\n  };\n\
-    \  static constexpr S op(const S &f, const S &g)\n  {\n    // f.a (g.a x + g.b)\
-    \ + f.b\n    return {f.a * g.a, f.a * g.b + f.b};\n  }\n  static constexpr S e()\
-    \ { return {1, 0}; }\n  static constexpr S inv(const S &f)\n  {\n    // y = ax\
-    \ + b <=> x = (y-b)/a\n    mint ainv = 1 / f.a;\n    return {ainv, -f.b * ainv};\n\
-    \  }\n};\n"
+    {\n  struct S\n  {\n    mint a, b;\n    S() {}\n    S(mint a, mint b) : a(a),\
+    \ b(b) {}\n  };\n  static constexpr S op(const S &f, const S &g)\n  {\n    //\
+    \ f.a (g.a x + g.b) + f.b\n    return {f.a * g.a, f.a * g.b + f.b};\n  }\n  static\
+    \ constexpr S e() { return {1, 0}; }\n  static constexpr S inv(const S &f)\n \
+    \ {\n    // y = ax + b <=> x = (y-b)/a\n    mint ainv = 1 / f.a;\n    return {ainv,\
+    \ -f.b * ainv};\n  }\n};\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -704,9 +707,10 @@ data:
   isVerificationFile: false
   path: math/algebra/affine_function.hpp
   requiredBy: []
-  timestamp: '2025-04-29 20:25:40+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  timestamp: '2025-04-29 22:10:28+09:00'
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yosupo/point_set_range_composite.test.cpp
   - verify/yosupo/queue_operate_all_composite.test.cpp
   - verify/yosupo/deque_operate_all_composite.test.cpp
 documentation_of: math/algebra/affine_function.hpp

@@ -1,6 +1,15 @@
 ---
 data:
   _extendedDependsOn:
+  - icon: ':heavy_check_mark:'
+    path: ds/segtree/segtree.hpp
+    title: "\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
+  - icon: ':heavy_check_mark:'
+    path: math/algebra/affine_function.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
+  - icon: ':question:'
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
   - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
@@ -10,12 +19,6 @@ data:
   - icon: ':question:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':question:'
-    path: math/modint/modint64.hpp
-    title: modint (64 bit)
-  - icon: ':question:'
-    path: math/modint/modint64_internal.hpp
-    title: math/modint/modint64_internal.hpp
   - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
@@ -40,6 +43,9 @@ data:
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
   - icon: ':question:'
+    path: template/template_main.hpp
+    title: template/template_main.hpp
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
   - icon: ':question:'
@@ -55,60 +61,21 @@ data:
   - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':question:'
-    path: math/prime/euler_phi_carmichael.hpp
-    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
-      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':question:'
-    path: math/prime/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':question:'
-    path: math/prime/order_primitive_root.hpp
-    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':x:'
-    path: math/prime/zeta_mobius_divisor_multiple_large.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/linear_sieve.test.cpp
-    title: verify/mytest/linear_sieve.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root.test.cpp
-    title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root_min.test.cpp
-    title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':x:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
-  - icon: ':x:'
-    path: verify/yukicoder/order_mod_carmichael.test.cpp
-    title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':x:'
-    path: verify/yukicoder/order_mod_euler_phi.test.cpp
-    title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':x:'
-    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':x:'
-    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  _isVerificationFailed: true
-  _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
+  _isVerificationFailed: false
+  _pathExtension: cpp
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/prime/primality_test.md
-    document_title: "\u7D20\u6570\u5224\u5B9A"
-    links: []
-  bundledCode: "#line 2 \"math/prime/primality_test.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.yosupo.jp/problem/point_set_range_composite
+    links:
+    - https://judge.yosupo.jp/problem/point_set_range_composite
+  bundledCode: "#line 1 \"verify/yosupo/point_set_range_composite.test.cpp\"\n#define\
+    \ PROBLEM \"https://judge.yosupo.jp/problem/point_set_range_composite\"\n\n#define\
+    \ SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef\
+    \ LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\
+    \n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -782,107 +749,137 @@ data:
     \ntemplate <class T>\nstruct is_dynamic_modint : false_type {};\ntemplate <int\
     \ id>\nstruct is_dynamic_modint<dynamic_modint<id>> : true_type {};\ntemplate\
     \ <class T>\ninline constexpr bool is_dynamic_modint_v = is_dynamic_modint<T>::value;\n\
-    #line 2 \"math/modint/modint64.hpp\"\n\n#line 2 \"math/modint/modint64_internal.hpp\"\
-    \n\n#line 5 \"math/modint/modint64_internal.hpp\"\n\nnamespace internal\n{\n\n\
-    constexpr ll powmod64_constexpr(ll x, ll n, ll m)\n{\n  if (m == 1)\n    return\
-    \ 0;\n  ull _m = (ull)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while (n)\n\
-    \  {\n    u128 y128(y);\n    if (n & 1)\n      r = (y128 * r) % _m;\n    y = (y128\
-    \ * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime64_constexpr(ll\
-    \ n)\n{\n  if (n <= INT_MAX)\n    return isprime32_constexpr(n);\n  if (n % 2\
-    \ == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2 == 0)\n    d /= 2;\n\
-    \  constexpr ll bases[7] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};\n\
-    \  for (ll a : bases)\n  {\n    ll t = d;\n    ll y = powmod64_constexpr(a, t,\
-    \ n);\n    while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = (u128(y)\
-    \ * y) % n;\n      t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return\
-    \ false;\n  }\n  return true;\n}\ntemplate <ll n>\nconstexpr bool isprime64 =\
-    \ isprime64_constexpr(n);\n\ninline constexpr ull inv64(ull a)\n{\n  ull x = a;\n\
-    \  while (a * x != 1) x *= 2 - a * x;\n  return x;\n}\n\nstruct montgomery64odd\n\
-    {\n  ull m, im, sq;\n  // sq = (2^64)^2 % m = (2^128 - m) % m = (-m % 2^128) %\
-    \ m\n  explicit montgomery64odd(ull m) : m(m), im(inv64(m)), sq(-u128(m) % m)\
-    \ {}\n  ull umod() const { return m; }\n  ull reduce(u128 x) const\n  {\n    auto\
-    \ t = (x + u128(m) * (-im * ull(x))) >> 64;\n    if (t >= m)\n      t -= m;\n\
-    \    return (ull)t;\n  }\n  ull inv_reduce(i128 v) const\n  { return reduce(u128(v\
-    \ % m + m) * sq); }\n};\n\n// https://www.mathenachia.blog/even-mod-montgomery-impl/\n\
-    struct montgomery64\n{\n  ull m, mx, imx, d, q;\n  uint b;\n\n  explicit montgomery64(ull\
-    \ m) : m(m)\n  {\n    b = countr_zero(m), mx = m >> b;  // m == 2^b * mx, mx is\
-    \ odd\n    imx = inv64(mx);\n    d = powmod64_constexpr((mx + 1) / 2, b, mx);\
-    \  // 2^{-b} mod mx\n    u128 sq = -u128(mx) % mx;  // 2^128 mod mx\n    q = (1\
-    \ + (((sq - 1) * d) << b)) % m;\n  }\n  ull umod() const { return m; }\n  ull\
-    \ reduce(u128 x) const\n  {\n    ull p = x & MASK(b);  // x mod 2^b\n    x = (x\
-    \ >> b) + p * d;\n    ull y = p << (64 - b);\n    auto t = (x + u128(mx) * (imx\
-    \ * (y - ull(x)))) >> (64 - b);\n    if (t >= m)\n    {\n      t -= m;\n     \
-    \ if (t >= m)\n        t -= m;\n    }\n    return (ull)t;\n  }\n  ull inv_reduce(i128\
-    \ v) const\n  { return reduce(u128(v % m + m) * q); }\n};\n\n}\n#line 7 \"math/modint/modint64.hpp\"\
-    \n\n/**\n * @brief modint (64 bit)\n * @docs docs/math/modint/modint64.md\n */\n\
-    \ntemplate <ll m>\nstruct static_modint64 : internal::modint_base<static_modint64<m>>\n\
-    {\n  using mint = static_modint64;\nprivate:\n  friend struct internal::modint_base<static_modint64<m>>;\n\
-    \  ull _v;\n  static constexpr ull umod() { return m; }\n  static constexpr bool\
-    \ prime = internal::isprime64<m>;\n\npublic:\n  static constexpr ll mod() { return\
-    \ m; }\n  static mint raw(ll v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  static_modint64() : _v(0) {}\n  template <class T>\n  static_modint64(T\
-    \ v)\n  {\n    if constexpr (is_unsigned_v<T>)\n    {\n      _v = (ull)(v % umod());\n\
-    \    }\n    else\n    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x < 0)\n\
-    \        x += umod();\n      _v = (ull)x;\n    }\n  }\n\n  ll val() const { return\
-    \ (ll)_v; }\n\n  mint& operator*=(const mint &rhs)\n  {\n    u128 z = _v;\n  \
-    \  z *= rhs._v;\n    _v = (ull)(z % umod());\n    return *this;\n  }\n\n  mint\
-    \ inv() const\n  {\n    if (prime)\n    {\n      assert(_v != 0);\n      return\
-    \ CREF.pow(umod() - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<ll>(_v,\
-    \ m);\n      assert(g == 1);\n      return x;\n    }\n  }\n};\n\ntemplate <int\
-    \ id>\nstruct dynamic_modint64_odd : internal::modint_base<dynamic_modint64_odd<id>>\n\
-    {\n  using mint = dynamic_modint64_odd;\nprivate:\n  friend struct internal::modint_base<dynamic_modint64_odd<id>>;\n\
-    \  ull _v; // montgomery expression\n  static internal::montgomery64odd mg;\n\
-    \  static ull umod() { return mg.umod(); }\n\npublic:\n  static ll mod() { return\
-    \ (ll)(mg.umod()); }\n  static void set_mod(ll m)\n  {\n    assert(m >= 1 && m\
-    \ % 2 == 1);\n    mg = internal::montgomery64odd(m);\n  }\n\n  dynamic_modint64_odd()\
-    \ : _v(0) {}\n  dynamic_modint64_odd(i128 v)\n  { _v = mg.inv_reduce(v); }\n\n\
-    \  ll val() const { return (ll)mg.reduce(_v); }\n\n  mint& operator*=(const mint\
-    \ &rhs)\n  {\n    _v = mg.reduce(u128(_v) * rhs._v);\n    return *this;\n  }\n\
-    \n  mint inv() const\n  {\n    auto [g, x, y] = extgcd<ll>(val(), mod());\n  \
-    \  assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::montgomery64odd\
-    \ dynamic_modint64_odd<id>::mg((1LL << 61) - 1);\n\ntemplate <int id>\nstruct\
-    \ dynamic_modint64 : internal::modint_base<dynamic_modint64<id>>\n{\n  using mint\
-    \ = dynamic_modint64;\nprivate:\n  friend struct internal::modint_base<dynamic_modint64<id>>;\n\
-    \  ull _v; // montgomery expression\n  static internal::montgomery64 mg;\n  static\
-    \ ull umod() { return mg.umod(); }\n\npublic:\n  static ll mod() { return (ll)(mg.umod());\
-    \ }\n  static void set_mod(ll m)\n  {\n    assert(m >= 1);\n    mg = internal::montgomery64(m);\n\
-    \  }\n\n  dynamic_modint64() : _v(0) {}\n  dynamic_modint64(i128 v)\n  { _v =\
-    \ mg.inv_reduce(v); }\n\n  ll val() const { return (ll)mg.reduce(_v); }\n\n  mint&\
-    \ operator*=(const mint &rhs)\n  {\n    _v = mg.reduce(u128(_v) * rhs._v);\n \
-    \   return *this;\n  }\n\n  mint inv() const\n  {\n    auto [g, x, y] = extgcd<ll>(val(),\
-    \ mod());\n    assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::montgomery64\
-    \ dynamic_modint64<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
-    \ << 61) - 1>;\nusing modint64_odd = dynamic_modint64_odd<-1>;\nusing modint64\
-    \ = dynamic_modint64<-1>;\n#line 6 \"math/prime/primality_test.hpp\"\n\n/**\n\
-    \ * @brief \u7D20\u6570\u5224\u5B9A\n * @docs docs/math/prime/primality_test.md\n\
-    \ */\n\nnamespace internal\n{\n\ntemplate <class mint, class Array>\nbool is_prime_impl(ll\
-    \ n, const Array &bases)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 ||\
-    \ n == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return false;\n\
-    \  ll d = (n - 1) >> countr_zero(n - 1);\n  mint::set_mod(n);\n  for (ll a : bases)\n\
-    \  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t != n - 1 && y\
-    \ != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n    if (y\
-    \ != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n}\n\n}; //\
-    \ namespace internal\n\nbool is_prime(ll n)\n{\n  static constexpr array<ll, 3>\
-    \ bases32 = {2, 7, 61};\n  static constexpr array<ll, 7> bases64 = {2, 325, 9375,\
-    \ 28178, 450775, 9780504, 1795265022};\n  if (n <= INT_MAX)\n  {\n    using mint\
-    \ = dynamic_modint<INT_MIN>;\n    return internal::is_prime_impl<mint>(n, bases32);\n\
-    \  }\n  else\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n    return\
-    \ internal::is_prime_impl<mint>(n, bases64);\n  }\n}\n"
-  code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
-    #include \"../modint/modint.hpp\"\n#include \"../modint/modint64.hpp\"\n\n/**\n\
-    \ * @brief \u7D20\u6570\u5224\u5B9A\n * @docs docs/math/prime/primality_test.md\n\
-    \ */\n\nnamespace internal\n{\n\ntemplate <class mint, class Array>\nbool is_prime_impl(ll\
-    \ n, const Array &bases)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 ||\
-    \ n == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return false;\n\
-    \  ll d = (n - 1) >> countr_zero(n - 1);\n  mint::set_mod(n);\n  for (ll a : bases)\n\
-    \  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t != n - 1 && y\
-    \ != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n    if (y\
-    \ != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n}\n\n}; //\
-    \ namespace internal\n\nbool is_prime(ll n)\n{\n  static constexpr array<ll, 3>\
-    \ bases32 = {2, 7, 61};\n  static constexpr array<ll, 7> bases64 = {2, 325, 9375,\
-    \ 28178, 450775, 9780504, 1795265022};\n  if (n <= INT_MAX)\n  {\n    using mint\
-    \ = dynamic_modint<INT_MIN>;\n    return internal::is_prime_impl<mint>(n, bases32);\n\
-    \  }\n  else\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n    return\
-    \ internal::is_prime_impl<mint>(n, bases64);\n  }\n}"
+    #line 18 \"verify/yosupo/point_set_range_composite.test.cpp\"\nusing mint = modint998244353;\n\
+    #line 2 \"ds/segtree/segtree.hpp\"\n\n#line 4 \"ds/segtree/segtree.hpp\"\n\n/**\n\
+    \ * @brief \u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n * @docs docs/ds/segtree/segtree.md\n\
+    \ */\n\ntemplate <class M>\nstruct SegmentTree\n{\n  using S = typename M::S;\n\
+    \nprivate:\n  int n, siz;\n  vc<S> dat;\n  void update(int i) { dat[i] = M::op(dat[2\
+    \ * i], dat[2 * i + 1]); }\n\npublic:\n  SegmentTree() {}\n  SegmentTree(int n)\
+    \ : SegmentTree(vc<S>(n, M::e())) {}\n  SegmentTree(const vc<S> &vec) : n(vec.size()),\
+    \ siz(bit_ceil(vec.size())), dat(2 * siz, M::e())\n  {\n    repi(i, vec.size())\
+    \ dat[siz + i] = vec[i];\n    repi(i, siz - 1, 0, -1) update(i);\n  }\n\n  void\
+    \ set(int p, const S &x)\n  {\n    assert(0 <= p && p < n);\n    p += siz;\n \
+    \   dat[p] = x;\n    while (p)\n      p >>= 1, update(p);\n  }\n\n  S get(int\
+    \ p) const\n  {\n    assert(0 <= p && p < n);\n    return dat[siz + p];\n  }\n\
+    \  S prod(int l, int r) const\n  {\n    assert(0 <= l && l <= r && r <= n);\n\
+    \    l += siz, r += siz;\n    S sml = M::e(), smr = M::e();\n    while (l < r)\n\
+    \    {\n      if (l & 1)\n        sml = M::op(sml, dat[l++]);\n      if (r & 1)\n\
+    \        smr = M::op(dat[--r], smr);\n      l >>= 1, r >>= 1;\n    }\n    return\
+    \ M::op(sml, smr);\n  }\n  S all_prod() const { return dat[1]; }\n\n  // g \u304C\
+    \u5358\u8ABF\u306E\u3068\u304D g( prod[l, r) ) == true \u3068\u306A\u308B\u6700\
+    \u5927\u306E r\n  // \u5236\u7D04: g( e() ) == true\n  template <class I = ll,\
+    \ class G>\n  I max_right(int l, const G &g)\n  {\n    assert(0 <= l && l <= n);\n\
+    \    assert(g(M::e()));\n    if (l == n)\n      return n;\n    l += siz;\n   \
+    \ S sm = M::e();\n    do\n    {\n      while (l % 2 == 0)\n        l >>= 1;\n\
+    \      if (!g(M::op(sm, dat[l])))\n      {\n        while (l < siz)\n        {\n\
+    \          l *= 2;\n          if (g(M::op(sm, dat[l])))\n          {\n       \
+    \     sm = M::op(sm, dat[l]);\n            l++;\n          }\n        }\n    \
+    \    return l - siz;\n      }\n    } while ((l & -l) != l);\n    return n;\n \
+    \ }\n\n  // g \u304C\u5358\u8ABF\u306E\u3068\u304D g( prod[l, r) ) == true \u3068\
+    \u306A\u308B\u6700\u5C0F\u306E l\n  // \u5236\u7D04: g( e() ) == true\n  template\
+    \ <class I = ll, class G>\n  I min_left(int r, const G &g)\n  {\n    assert(0\
+    \ <= r && r <= n);\n    assert(g(M::e()));\n    if (r == 0)\n      return 0;\n\
+    \    r += siz;\n    S sm = M::e();\n    do\n    {\n      r--;\n      while (r\
+    \ > 1 && (r % 2))\n        r >>= 1;\n      if (!g(M::op(dat[r], sm)))\n      {\n\
+    \        while (r < siz)\n        {\n          r = 2 * r + 1;\n          if (g(M::op(dat[r],\
+    \ sm)))\n          {\n            sm = M::op(dat[r], sm);\n            r--;\n\
+    \          }\n        }\n        return r + 1 - siz;\n      }\n      sm = M::op(dat[r],\
+    \ sm);\n    } while ((r & -r) != r);\n    return 0;\n  }\n};\n#line 2 \"math/algebra/affine_function.hpp\"\
+    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
+    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
+    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
+    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
+    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
+    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
+    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
+    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
+    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
+    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
+    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
+    \ constexpr auto inv = inv_;\n};\n\ntemplate <class M>\nstruct OppositeMonoid\n\
+    {\n  using S = typename M::S;\n  static constexpr S op(const S &a, const S &b)\
+    \ { return M::op(b, a); }\n  static constexpr auto e = M::e;\n};\ntemplate <class\
+    \ G>\nstruct OppositeGroup\n{\n  using S = typename G::S;\n  static constexpr\
+    \ S op(const S &a, const S &b) { return G::op(b, a); }\n  static constexpr auto\
+    \ e = G::e;\n  static constexpr auto inv = G::inv;\n};\n\ntemplate <class SR>\n\
+    using MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate\
+    \ <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S, SR::mul, SR::e1>;\n\
+    template <class R>\nusing GroupOfRingAdd = Group<typename R::S, R::add, R::e0,\
+    \ R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul = Group<typename K::S,\
+    \ K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\ntemplate <class Madd,\
+    \ class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
+    \ Madd::S, typename Mmul::S>, \"Madd::S and Mmul::S must be identical\");\n  using\
+    \ S = typename Madd::S;\n  static constexpr auto add = Madd::op;\n  static constexpr\
+    \ auto e0 = Madd::e;\n  static constexpr auto mul = Mmul::op;\n  static constexpr\
+    \ auto e1 = Mmul::e;\n};\n\n// Gadd \u306F\u53EF\u63DB\ntemplate <class Gadd,\
+    \ class Mmul>\nstruct RingFromGroupMonoid\n{\n  static_assert(is_same_v<typename\
+    \ Gadd::S, typename Mmul::S>, \"Gadd::S and Mmul::S must be identical\");\n  using\
+    \ S = typename Gadd::S;\n  static constexpr auto add = Gadd::op;\n  static constexpr\
+    \ auto e0 = Gadd::e;\n  static constexpr auto minus = Gadd::inv;\n  static constexpr\
+    \ auto mul = Mmul::op;\n  static constexpr auto e1 = Mmul::e;\n};\n\n// Gadd,\
+    \ Gmul \u306F\u53EF\u63DB\ntemplate <class Gadd, class Gmul>\nstruct FieldFromGroupGroup\n\
+    {\n  static_assert(is_same_v<typename Gadd::S, typename Gmul::S>, \"Gadd::S and\
+    \ Gmul::S must be identical\");\n  using S = typename Gadd::S;\n  static constexpr\
+    \ auto add = Gadd::op;\n  static constexpr auto e0 = Gadd::e;\n  static constexpr\
+    \ auto minus = Gadd::inv;\n  static constexpr auto mul = Gmul::op;\n  static constexpr\
+    \ auto e1 = Gmul::e;\n  static constexpr auto inv = Gmul::inv;\n};\n#line 5 \"\
+    math/algebra/affine_function.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\
+    \uFF08\u4E00\u6B21\u95A2\u6570\uFF09\n * @docs docs/math/algebra/affine_function.md\n\
+    \ */\n\n// op(f, g) = f \u2218 g\ntemplate <class mint>\nstruct GroupAffineFunction\n\
+    {\n  struct S\n  {\n    mint a, b;\n    S() {}\n    S(mint a, mint b) : a(a),\
+    \ b(b) {}\n  };\n  static constexpr S op(const S &f, const S &g)\n  {\n    //\
+    \ f.a (g.a x + g.b) + f.b\n    return {f.a * g.a, f.a * g.b + f.b};\n  }\n  static\
+    \ constexpr S e() { return {1, 0}; }\n  static constexpr S inv(const S &f)\n \
+    \ {\n    // y = ax + b <=> x = (y-b)/a\n    mint ainv = 1 / f.a;\n    return {ainv,\
+    \ -f.b * ainv};\n  }\n};\n#line 21 \"verify/yosupo/point_set_range_composite.test.cpp\"\
+    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  VEC(pll, N, AB);\n  auto\
+    \ [A, B] = top(AB);\n\n  SegmentTree<OppositeMonoid<GroupAffineFunction<mint>>>\
+    \ seg(gen_vec(N, [&](ll i)\n                                                 \
+    \                    { return GroupAffineFunction<mint>::S{A.at(i), B.at(i)};\
+    \ }));\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(p, c, d);\n\
+    \      seg.set(p, {c, d});\n    }\n    else if (t == 1)\n    {\n      LL(l, r,\
+    \ x);\n      auto [a, b] = seg.prod(l, r);\n      PRINT(a * x + b);\n    }\n \
+    \ }\n}\n\nvoid test()\n{\n  \n}\n\n#line 2 \"template/template_main.hpp\"\n\n\
+    #line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2, auto\
+    \ test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
+    \ color)\n    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\"\
+    ;\n      #ifdef LOCAL\n      cerr << s;\n      #endif\n      /* \u30B3\u30FC\u30C9\
+    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
+    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n      cerr << val;\n      //*/\n \
+    \   };\n  \n    #if defined FAST_IO and not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\\
+    n\\n\", \"32\");\n    #endif\n    #if defined FAST_CIO and not defined LOCAL\n\
+    \    CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
+    \    #endif\n    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n\
+    \  \n    #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n\
+    \    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n   \
+    \   dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
+    \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
+    \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
+    T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
+    \      main2();\n    }\n    #endif\n  }\n};\n#line 55 \"verify/yosupo/point_set_range_composite.test.cpp\"\
+    \nMain<init, main2, test> main_dummy;\nint main() {}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/point_set_range_composite\"\
+    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
+    \n#ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
+    #endif\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include\
+    \ \"template/template_all_but_modint.hpp\"\n#include \"math/modint/modint.hpp\"\
+    \nusing mint = modint998244353;\n#include \"ds/segtree/segtree.hpp\"\n#include\
+    \ \"math/algebra/affine_function.hpp\"\n\nvoid init() {}\n\nvoid main2()\n{\n\
+    \  LL(N, Q);\n  VEC(pll, N, AB);\n  auto [A, B] = top(AB);\n\n  SegmentTree<OppositeMonoid<GroupAffineFunction<mint>>>\
+    \ seg(gen_vec(N, [&](ll i)\n                                                 \
+    \                    { return GroupAffineFunction<mint>::S{A.at(i), B.at(i)};\
+    \ }));\n  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(p, c, d);\n\
+    \      seg.set(p, {c, d});\n    }\n    else if (t == 1)\n    {\n      LL(l, r,\
+    \ x);\n      auto [a, b] = seg.prod(l, r);\n      PRINT(a * x + b);\n    }\n \
+    \ }\n}\n\nvoid test()\n{\n  \n}\n\n#include \"template/template_main.hpp\"\nMain<init,\
+    \ main2, test> main_dummy;\nint main() {}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -899,51 +896,20 @@ data:
   - math/modint/modint32_internal.hpp
   - math/modint/modint_base.hpp
   - math/extgcd.hpp
-  - math/modint/modint64.hpp
-  - math/modint/modint64_internal.hpp
-  isVerificationFile: false
-  path: math/prime/primality_test.hpp
-  requiredBy:
-  - math/prime/factorize.hpp
-  - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/euler_phi_carmichael.hpp
-  - math/prime/order_primitive_root.hpp
-  timestamp: '2025-04-29 20:25:40+09:00'
-  verificationStatus: LIBRARY_SOME_WA
-  verifiedWith:
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/mytest/linear_sieve.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-documentation_of: math/prime/primality_test.hpp
+  - ds/segtree/segtree.hpp
+  - math/algebra/affine_function.hpp
+  - math/algebra/algebra_base.hpp
+  - template/template_main.hpp
+  isVerificationFile: true
+  path: verify/yosupo/point_set_range_composite.test.cpp
+  requiredBy: []
+  timestamp: '2025-04-29 22:10:28+09:00'
+  verificationStatus: TEST_ACCEPTED
+  verifiedWith: []
+documentation_of: verify/yosupo/point_set_range_composite.test.cpp
 layout: document
 redirect_from:
-- /library/math/prime/primality_test.hpp
-- /library/math/prime/primality_test.hpp.html
-title: "\u7D20\u6570\u5224\u5B9A"
+- /verify/verify/yosupo/point_set_range_composite.test.cpp
+- /verify/verify/yosupo/point_set_range_composite.test.cpp.html
+title: verify/yosupo/point_set_range_composite.test.cpp
 ---
-## 素数判定
-
-与えられた整数が素数かどうかをミラー・ラビン素数判定法で判定する。
-
-```cpp
-bool is_prime_int(int n)
-```
-
-```cpp
-bool is_prime(ll n)
-```
-
-##### 制約
-
-- 特になし（それぞれ `int`, `ll` に収まっていれば OK）
-
-##### 計算量
-
-- $O(\log n)$

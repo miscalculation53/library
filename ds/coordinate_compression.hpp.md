@@ -38,11 +38,11 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/flat_map.hpp
     title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
       \u5408\u306E map"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/offline_dynamic_connectivity.hpp
     title: "\u30AA\u30D5\u30E9\u30A4\u30F3\u30C0\u30A4\u30B3\u30CD\u306E\u30C6\u30AF\
       \u30CB\u30C3\u30AF"
@@ -53,13 +53,13 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/associative_array_lower_bound.test.cpp
     title: verify/yosupo/associative_array_lower_bound.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/offline_dynamic_connectivity.test.cpp
     title: verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/ordered_set_fenwick_tree.test.cpp
     title: verify/yosupo/ordered_set_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
   - icon: ':x:'

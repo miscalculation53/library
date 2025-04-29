@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/disjoint_sparse_table.hpp
     title: Disjoint Sparse Table
   - icon: ':question:'
