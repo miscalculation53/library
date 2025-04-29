@@ -5,7 +5,7 @@
 
 /**
  * @brief テンプレート（ランダム生成）
- * @docs docs/random/template_random.md
+ * @docs docs/template/template_random.md
  */
 
 mt19937_64 mt;
