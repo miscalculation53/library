@@ -39,6 +39,16 @@ void test2()
     vl r = permuted(p, q);
     repi(i, 5) assert(r[i] == p[q[i]]);
   }
+
+  mt19937 mt;
+  repi(_, 100)
+  {
+    ll n = 1 + rand() % 10;
+    vl p = permid(n), q = permid(n), r = permid(n), s = permid(n);
+    shuffle(ALL(p), mt), shuffle(ALL(q), mt), shuffle(ALL(r), mt), shuffle(ALL(s), mt);
+    auto t = permuted(p, q, r, s);
+    repi(i, n) assert(t[i] == p[q[r[s[i]]]]);
+  }
 }
 
 // string や vector の操作

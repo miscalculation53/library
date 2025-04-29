@@ -46,6 +46,22 @@ T mex(const V &a)
   return n;
 }
 
+// (0, 1. ..., n-1) の順列か判定
+template <class I>
+bool is_permutation(const vc<I> &p)
+{
+  const int n = p.size();
+  vc<bool> b(n, false);
+  repi(i, n)
+  {
+    if (!(0 <= p[i] && p[i] < n))
+      return false;
+    b[p[i]] = true;
+  }
+  return all_of(ALL(b), [](bool bi)
+                { return bi; });
+}
+
 template <class T = ll>
 vc<T> permid(const int &n, const int &base_index = 0)
 {
@@ -75,6 +91,12 @@ vc<T> permuted(const vc<T> &a, const vc<U> &p)
     res[i] = a[p[i]];
   }
   return res;
+}
+// p[q[r[i]]] for all i など
+template <class T, class U, class... Ts>
+vc<T> permuted(const vc<T> &p, const vc<U> &q, const vc<Ts> &...rs)
+{
+  return permuted(permuted(p, q), rs...);
 }
 
 template <class V>
