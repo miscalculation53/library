@@ -122,4 +122,11 @@ public:
     } while ((r & -r) != r);
     return 0;
   }
+
+  vc<S> content() const
+  {
+    vc<S> res(n);
+    repi(i, n) res[i] = get(i);
+    return res;
+  }
 };

@@ -45,7 +45,7 @@ vc<T> segtree_nodes_from_left(int d, T l, T r)
   vc<T> segs;
   auto dfs = [&](auto dfs, int i, T a, T b) -> void
   {
-    if (b < l || r <= a)
+    if (b <= l || r <= a)
       return;
     if (l <= a && b <= r)
     {

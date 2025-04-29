@@ -31,3 +31,6 @@ struct GroupAffineFunction
     return {ainv, -f.b * ainv};
   }
 };
+#ifdef LOCAL
+CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(a, b);
+#endif
