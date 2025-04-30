@@ -31,3 +31,26 @@ CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);
 #define oj(...) __VA_ARGS__
 #define local_oj(a, b) (b)
 #endif
+
+template <class T, class Sequence>
+vc<T> content(queue<T, Sequence> que)
+{
+  vc<T> res;
+  while (!que.empty())
+  {
+    res.eb(que.front());
+    que.pop();
+  }
+  return res;
+}
+template <class T, class Sequence, class Compare>
+vc<T> content(priority_queue<T, Sequence, Compare> pque)
+{
+  vc<T> res;
+  while (!pque.empty())
+  {
+    res.eb(pque.top());
+    pque.pop();
+  }
+  return res;
+}
