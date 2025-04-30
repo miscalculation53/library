@@ -640,18 +640,17 @@ data:
     \ << d;\n  assert(0 <= l && l <= r && r <= n);\n  vc<T> segs;\n  auto dfs = [&](auto\
     \ dfs, int i, T a, T b) -> void\n  {\n    if (b <= l || r <= a)\n      return;\n\
     \    if (l <= a && b <= r)\n    {\n      segs.eb(i);\n      return;\n    }\n \
-    \   if (b - a <= 1)\n      return;\n    const T c = (a + b) / 2;\n    dfs(dfs,\
-    \ 2 * i, a, c), dfs(dfs, 2 * i + 1, c, b);\n  };\n  dfs(dfs, 1, 0, n);\n  return\
-    \ segs;\n}\n\n// \u6DF1\u3055 d+1 \u306E\u30BB\u30B0\u6728: 2^{d+1} - 1 \u9802\
-    \u70B9\u3067\u3001[0, 2^d) \u306E\u533A\u9593\u304C\u6271\u3048\u308B\n// [l,\
-    \ r) \u3092\u8868\u3059\u30CE\u30FC\u30C9\u306E\u96C6\u5408\u3092\u8FD4\u3059\n\
-    // \u9806\u756A: \u30BB\u30B0\u6728\u3067\u4E0B\u306B\u3042\u308B\u90E8\u5206\u304B\
-    \u3089 (\u540C\u3058\u6BB5\u306A\u3089\u5DE6\u304B\u3089)\n// \u8A08\u7B97\u91CF\
-    : O(d)\ntemplate <class T = ll>\nvc<T> segtree_nodes_from_bottom(int d, T l, T\
-    \ r)\n{\n  const T n = T(1) << d;\n  assert(0 <= l && l <= r && r <= n);\n  vc<T>\
-    \ segs;\n  l += n, r += n;\n  while (l < r)\n  {\n    if (l & 1)\n      segs.eb(l++);\n\
-    \    if (r & 1)\n      segs.eb(--r);\n    l >>= 1, r >>= 1;\n  }\n  return segs;\n\
-    }\n"
+    \   const T c = (a + b) / 2;\n    dfs(dfs, 2 * i, a, c), dfs(dfs, 2 * i + 1, c,\
+    \ b);\n  };\n  dfs(dfs, 1, 0, n);\n  return segs;\n}\n\n// \u6DF1\u3055 d+1 \u306E\
+    \u30BB\u30B0\u6728: 2^{d+1} - 1 \u9802\u70B9\u3067\u3001[0, 2^d) \u306E\u533A\u9593\
+    \u304C\u6271\u3048\u308B\n// [l, r) \u3092\u8868\u3059\u30CE\u30FC\u30C9\u306E\
+    \u96C6\u5408\u3092\u8FD4\u3059\n// \u9806\u756A: \u30BB\u30B0\u6728\u3067\u4E0B\
+    \u306B\u3042\u308B\u90E8\u5206\u304B\u3089 (\u540C\u3058\u6BB5\u306A\u3089\u5DE6\
+    \u304B\u3089)\n// \u8A08\u7B97\u91CF: O(d)\ntemplate <class T = ll>\nvc<T> segtree_nodes_from_bottom(int\
+    \ d, T l, T r)\n{\n  const T n = T(1) << d;\n  assert(0 <= l && l <= r && r <=\
+    \ n);\n  vc<T> segs;\n  l += n, r += n;\n  while (l < r)\n  {\n    if (l & 1)\n\
+    \      segs.eb(l++);\n    if (r & 1)\n      segs.eb(--r);\n    l >>= 1, r >>=\
+    \ 1;\n  }\n  return segs;\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
     \n/**\n * @brief \u30BB\u30B0\u6728\u306E\u533A\u9593\u306B\u95A2\u308F\u308B\u7B97\
     \u6570\n * @docs docs/ds/segtree/segtree_segment.md\n */\n\n// \u6DF1\u3055 d+1\
@@ -676,18 +675,18 @@ data:
     \ d, T l, T r)\n{\n  const T n = T(1) << d;\n  assert(0 <= l && l <= r && r <=\
     \ n);\n  vc<T> segs;\n  auto dfs = [&](auto dfs, int i, T a, T b) -> void\n  {\n\
     \    if (b <= l || r <= a)\n      return;\n    if (l <= a && b <= r)\n    {\n\
-    \      segs.eb(i);\n      return;\n    }\n    if (b - a <= 1)\n      return;\n\
-    \    const T c = (a + b) / 2;\n    dfs(dfs, 2 * i, a, c), dfs(dfs, 2 * i + 1,\
-    \ c, b);\n  };\n  dfs(dfs, 1, 0, n);\n  return segs;\n}\n\n// \u6DF1\u3055 d+1\
-    \ \u306E\u30BB\u30B0\u6728: 2^{d+1} - 1 \u9802\u70B9\u3067\u3001[0, 2^d) \u306E\
-    \u533A\u9593\u304C\u6271\u3048\u308B\n// [l, r) \u3092\u8868\u3059\u30CE\u30FC\
-    \u30C9\u306E\u96C6\u5408\u3092\u8FD4\u3059\n// \u9806\u756A: \u30BB\u30B0\u6728\
-    \u3067\u4E0B\u306B\u3042\u308B\u90E8\u5206\u304B\u3089 (\u540C\u3058\u6BB5\u306A\
-    \u3089\u5DE6\u304B\u3089)\n// \u8A08\u7B97\u91CF: O(d)\ntemplate <class T = ll>\n\
-    vc<T> segtree_nodes_from_bottom(int d, T l, T r)\n{\n  const T n = T(1) << d;\n\
-    \  assert(0 <= l && l <= r && r <= n);\n  vc<T> segs;\n  l += n, r += n;\n  while\
-    \ (l < r)\n  {\n    if (l & 1)\n      segs.eb(l++);\n    if (r & 1)\n      segs.eb(--r);\n\
-    \    l >>= 1, r >>= 1;\n  }\n  return segs;\n}\n"
+    \      segs.eb(i);\n      return;\n    }\n    const T c = (a + b) / 2;\n    dfs(dfs,\
+    \ 2 * i, a, c), dfs(dfs, 2 * i + 1, c, b);\n  };\n  dfs(dfs, 1, 0, n);\n  return\
+    \ segs;\n}\n\n// \u6DF1\u3055 d+1 \u306E\u30BB\u30B0\u6728: 2^{d+1} - 1 \u9802\
+    \u70B9\u3067\u3001[0, 2^d) \u306E\u533A\u9593\u304C\u6271\u3048\u308B\n// [l,\
+    \ r) \u3092\u8868\u3059\u30CE\u30FC\u30C9\u306E\u96C6\u5408\u3092\u8FD4\u3059\n\
+    // \u9806\u756A: \u30BB\u30B0\u6728\u3067\u4E0B\u306B\u3042\u308B\u90E8\u5206\u304B\
+    \u3089 (\u540C\u3058\u6BB5\u306A\u3089\u5DE6\u304B\u3089)\n// \u8A08\u7B97\u91CF\
+    : O(d)\ntemplate <class T = ll>\nvc<T> segtree_nodes_from_bottom(int d, T l, T\
+    \ r)\n{\n  const T n = T(1) << d;\n  assert(0 <= l && l <= r && r <= n);\n  vc<T>\
+    \ segs;\n  l += n, r += n;\n  while (l < r)\n  {\n    if (l & 1)\n      segs.eb(l++);\n\
+    \    if (r & 1)\n      segs.eb(--r);\n    l >>= 1, r >>= 1;\n  }\n  return segs;\n\
+    }\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -703,7 +702,7 @@ data:
   isVerificationFile: false
   path: ds/segtree/segtree_segment.hpp
   requiredBy: []
-  timestamp: '2025-04-30 04:50:50+09:00'
+  timestamp: '2025-04-30 08:59:34+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: ds/segtree/segtree_segment.hpp

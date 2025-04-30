@@ -622,74 +622,84 @@ data:
     \ 4 \"ds/segtree/sparse_segtree.hpp\"\n\n/**\n * @brief \u5FC5\u8981\u306A\u3068\
     \u3053\u308D\u3060\u3051\u4F5C\u308B\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\n * @docs\
     \ docs/ds/segtree/sparse_segtree.md\n */\n\ntemplate <class M>\nstruct SparseSegmentTree\n\
-    {\n  using S = typename M::S;\n\nprivate:\n  ll n;\n  struct Node\n  {\n    S\
-    \ val;\n    array<int, 2> chi;\n    Node() {}\n    Node(S val) : val(val), chi{-1,\
-    \ -1} {}\n  };\n  vc<Node> nodes;\n  S chi_val(int i, int dir)\n  {\n    Node\
-    \ &node = nodes[i];\n    if (node.chi[dir] == -1)\n      return M::e();\n    return\
-    \ nodes[node.chi[dir]].val;\n  }\n  void update(int i) { nodes[i].val = M::op(chi_val(i,\
-    \ 0), chi_val(i, 1)); }\n  int visit_or_make(int i, int dir)\n  {\n    if (nodes[i].chi[dir]\
-    \ == -1)\n    {\n      nodes[i].chi[dir] = nodes.size();\n      nodes.eb(M::e());\n\
-    \    }\n    return nodes[i].chi[dir];\n  }\n\npublic:\n  SparseSegmentTree() {}\n\
-    \  SparseSegmentTree(ll n, int reserve = 1 << 24) : n(n), nodes(1, M::e()) { nodes.reserve(reserve);\
-    \ }\n\n  void set(ll p, const S &x)\n  {\n    assert(0 <= p && p < n);\n    auto\
-    \ dfs = [&](auto dfs, ll a, ll b, int i) -> void\n    {\n      if (b - a == 1)\n\
-    \      {\n        nodes[i].val = x;\n        return;\n      }\n      ll c = (a\
-    \ + b) / 2;\n      if (p < c)\n        dfs(dfs, a, c, visit_or_make(i, 0));\n\
-    \      else\n        dfs(dfs, c, b, visit_or_make(i, 1));\n      update(i);\n\
+    {\n  using S = typename M::S;\n\nprivate:\n  ll n;\n  struct Node\n  {\n    //\
+    \ p \u756A\u76EE\u306E\u5024\u306F val\n    // \u5DE6\u306E\u5B50, p \u756A\u76EE\
+    , \u53F3\u306E\u5B50 \u306E\u9806\u306B\u4E26\u3076\u3088\u3046\u306B\u3059\u308B\
+    \u3001\u305D\u306E\u7A4D\u304C prod\n    ll p;\n    S val, prod;\n    array<int,\
+    \ 2> chi;\n    Node() {}\n    Node(ll p, S val) : p(p), val(val), prod(val), chi{-1,\
+    \ -1} {}\n  };\n  vc<Node> nodes;\n  void update(int i)\n  {\n    int ni0 = nodes[i].chi[0],\
+    \ ni1 = nodes[i].chi[1];\n    S sml = ni0 == -1 ? M::e() : nodes[ni0].prod;\n\
+    \    S smr = ni1 == -1 ? M::e() : nodes[ni1].prod;\n    nodes[i].prod = M::op(M::op(sml,\
+    \ nodes[i].val), smr);\n  }\n\npublic:\n  SparseSegmentTree() {}\n  SparseSegmentTree(ll\
+    \ n, int reserve = 1 << 20) : n(n), nodes(1, {-1, M::e()})\n  {\n    assert(n\
+    \ >= 0);\n    nodes.reserve(reserve);\n  }\n\n  void set(ll p, S x)\n  {\n   \
+    \ assert(0 <= p && p < n);\n    auto dfs = [&](auto dfs, ll a, ll b, int i) ->\
+    \ void\n    {\n      if (nodes[i].p == p)\n      {\n        nodes[i].val = x;\n\
+    \        update(i);\n        return;\n      }\n      ll c = (a + b) / 2;\n   \
+    \   if (p < c)\n      {\n        if (i != 0 && p > nodes[i].p)\n          swap(p,\
+    \ nodes[i].p), swap(x, nodes[i].val);\n        int &ni = nodes[i].chi[0];\n  \
+    \      if (ni == -1)\n        {\n          ni = nodes.size();\n          nodes.eb(p,\
+    \ x);\n        }\n        else\n          dfs(dfs, a, c, ni);\n      }\n     \
+    \ else\n      {\n        if (i != 0 && nodes[i].p > p)\n          swap(p, nodes[i].p),\
+    \ swap(x, nodes[i].val);\n        int &ni = nodes[i].chi[1];\n        if (ni ==\
+    \ -1)\n        {\n          ni = nodes.size();\n          nodes.eb(p, x);\n  \
+    \      }\n        else\n          dfs(dfs, c, b, ni);\n      }\n      update(i);\n\
     \    };\n    dfs(dfs, 0, n, 0);\n  }\n\n  S get(ll p) const\n  {\n    assert(0\
-    \ <= p && p < n);\n    ll a = 0, b = n;\n    int i = 0;\n    while (b - a > 1\
-    \ && i >= 0)\n    {\n      ll c = (a + b) / 2;\n      if (p < c)\n        i =\
-    \ nodes[i].chi[0], b = c;\n      else\n        i = nodes[i].chi[1], a = c;\n \
-    \   }\n    if (i == -1)\n      return M::e();\n    return nodes[i].val;\n  }\n\
-    \n  S prod(ll l, ll r) const\n  {\n    assert(0 <= l && l <= r && r <= n);\n \
-    \   auto dfs = [&](auto dfs, ll a, ll b, int i) -> S\n    {\n      if (i < 0)\n\
-    \        return M::e();\n      if (b <= l || r <= a)\n        return M::e();\n\
-    \      if (l <= a && b <= r)\n        return nodes[i].val;\n      if (b - a ==\
-    \ 1)\n        return M::e();\n      ll c = (a + b) / 2;\n      return M::op(dfs(dfs,\
-    \ a, c, nodes[i].chi[0]), dfs(dfs, c, b, nodes[i].chi[1]));\n    };\n    return\
-    \ dfs(dfs, 0, n, 0);\n  }\n\n  S all_prod() const { return nodes[0].val; }\n\n\
-    \  map<ll, S> content() const\n  {\n    map<ll, S> res;\n    auto dfs = [&](auto\
-    \ dfs, ll a, ll b, int i) -> void\n    {\n      if (i < 0)\n        return;\n\
-    \      if (b - a == 1)\n      {\n        res[a] = nodes[i].val;\n        return;\n\
-    \      }\n      ll c = (a + b) / 2;\n      dfs(dfs, a, c, nodes[i].chi[0]), dfs(dfs,\
-    \ c, b, nodes[i].chi[1]);\n    };\n    dfs(dfs, 0, n, 0);\n    return res;\n \
-    \ }\n};\n"
+    \ <= p && p < n);\n    ll a = 0, b = n;\n    int i = 0;\n    while (i != -1)\n\
+    \    {\n      if (nodes[i].p == p)\n        return nodes[i].val;\n      ll c =\
+    \ (a + b) / 2;\n      if (p < c)\n        i = nodes[i].chi[0], b = c;\n      else\n\
+    \        i = nodes[i].chi[1], a = c;\n    }\n    return M::e();\n  }\n\n  S prod(ll\
+    \ l, ll r) const\n  {\n    assert(0 <= l && l <= r && r <= n);\n    auto dfs =\
+    \ [&](auto dfs, ll a, ll b, int i) -> S\n    {\n      if (i == -1)\n        return\
+    \ M::e();\n      if (b <= l || r <= a)\n        return M::e();\n      if (l <=\
+    \ a && b <= r)\n        return nodes[i].prod;\n      ll c = (a + b) / 2;\n   \
+    \   S sml = dfs(dfs, a, c, nodes[i].chi[0]);\n      S smm = l <= nodes[i].p &&\
+    \ nodes[i].p < r ? nodes[i].val : M::e();\n      S smr = dfs(dfs, c, b, nodes[i].chi[1]);\n\
+    \      return M::op(M::op(sml, smm), smr);\n    };\n    return dfs(dfs, 0, n,\
+    \ 0);\n  }\n\n  S all_prod() const { return nodes[0].prod; }\n\n  map<ll, S> content()\
+    \ const\n  {\n    map<ll, S> res;\n    fec(node : nodes) if (node.p != -1) res[node.p]\
+    \ = node.val;\n    return res;\n  }\n};\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
     \n/**\n * @brief \u5FC5\u8981\u306A\u3068\u3053\u308D\u3060\u3051\u4F5C\u308B\u30BB\
     \u30B0\u30E1\u30F3\u30C8\u6728\n * @docs docs/ds/segtree/sparse_segtree.md\n */\n\
     \ntemplate <class M>\nstruct SparseSegmentTree\n{\n  using S = typename M::S;\n\
-    \nprivate:\n  ll n;\n  struct Node\n  {\n    S val;\n    array<int, 2> chi;\n\
-    \    Node() {}\n    Node(S val) : val(val), chi{-1, -1} {}\n  };\n  vc<Node> nodes;\n\
-    \  S chi_val(int i, int dir)\n  {\n    Node &node = nodes[i];\n    if (node.chi[dir]\
-    \ == -1)\n      return M::e();\n    return nodes[node.chi[dir]].val;\n  }\n  void\
-    \ update(int i) { nodes[i].val = M::op(chi_val(i, 0), chi_val(i, 1)); }\n  int\
-    \ visit_or_make(int i, int dir)\n  {\n    if (nodes[i].chi[dir] == -1)\n    {\n\
-    \      nodes[i].chi[dir] = nodes.size();\n      nodes.eb(M::e());\n    }\n   \
-    \ return nodes[i].chi[dir];\n  }\n\npublic:\n  SparseSegmentTree() {}\n  SparseSegmentTree(ll\
-    \ n, int reserve = 1 << 24) : n(n), nodes(1, M::e()) { nodes.reserve(reserve);\
-    \ }\n\n  void set(ll p, const S &x)\n  {\n    assert(0 <= p && p < n);\n    auto\
-    \ dfs = [&](auto dfs, ll a, ll b, int i) -> void\n    {\n      if (b - a == 1)\n\
-    \      {\n        nodes[i].val = x;\n        return;\n      }\n      ll c = (a\
-    \ + b) / 2;\n      if (p < c)\n        dfs(dfs, a, c, visit_or_make(i, 0));\n\
-    \      else\n        dfs(dfs, c, b, visit_or_make(i, 1));\n      update(i);\n\
-    \    };\n    dfs(dfs, 0, n, 0);\n  }\n\n  S get(ll p) const\n  {\n    assert(0\
-    \ <= p && p < n);\n    ll a = 0, b = n;\n    int i = 0;\n    while (b - a > 1\
-    \ && i >= 0)\n    {\n      ll c = (a + b) / 2;\n      if (p < c)\n        i =\
-    \ nodes[i].chi[0], b = c;\n      else\n        i = nodes[i].chi[1], a = c;\n \
-    \   }\n    if (i == -1)\n      return M::e();\n    return nodes[i].val;\n  }\n\
-    \n  S prod(ll l, ll r) const\n  {\n    assert(0 <= l && l <= r && r <= n);\n \
-    \   auto dfs = [&](auto dfs, ll a, ll b, int i) -> S\n    {\n      if (i < 0)\n\
-    \        return M::e();\n      if (b <= l || r <= a)\n        return M::e();\n\
-    \      if (l <= a && b <= r)\n        return nodes[i].val;\n      if (b - a ==\
-    \ 1)\n        return M::e();\n      ll c = (a + b) / 2;\n      return M::op(dfs(dfs,\
-    \ a, c, nodes[i].chi[0]), dfs(dfs, c, b, nodes[i].chi[1]));\n    };\n    return\
-    \ dfs(dfs, 0, n, 0);\n  }\n\n  S all_prod() const { return nodes[0].val; }\n\n\
-    \  map<ll, S> content() const\n  {\n    map<ll, S> res;\n    auto dfs = [&](auto\
-    \ dfs, ll a, ll b, int i) -> void\n    {\n      if (i < 0)\n        return;\n\
-    \      if (b - a == 1)\n      {\n        res[a] = nodes[i].val;\n        return;\n\
-    \      }\n      ll c = (a + b) / 2;\n      dfs(dfs, a, c, nodes[i].chi[0]), dfs(dfs,\
-    \ c, b, nodes[i].chi[1]);\n    };\n    dfs(dfs, 0, n, 0);\n    return res;\n \
-    \ }\n};\n"
+    \nprivate:\n  ll n;\n  struct Node\n  {\n    // p \u756A\u76EE\u306E\u5024\u306F\
+    \ val\n    // \u5DE6\u306E\u5B50, p \u756A\u76EE, \u53F3\u306E\u5B50 \u306E\u9806\
+    \u306B\u4E26\u3076\u3088\u3046\u306B\u3059\u308B\u3001\u305D\u306E\u7A4D\u304C\
+    \ prod\n    ll p;\n    S val, prod;\n    array<int, 2> chi;\n    Node() {}\n \
+    \   Node(ll p, S val) : p(p), val(val), prod(val), chi{-1, -1} {}\n  };\n  vc<Node>\
+    \ nodes;\n  void update(int i)\n  {\n    int ni0 = nodes[i].chi[0], ni1 = nodes[i].chi[1];\n\
+    \    S sml = ni0 == -1 ? M::e() : nodes[ni0].prod;\n    S smr = ni1 == -1 ? M::e()\
+    \ : nodes[ni1].prod;\n    nodes[i].prod = M::op(M::op(sml, nodes[i].val), smr);\n\
+    \  }\n\npublic:\n  SparseSegmentTree() {}\n  SparseSegmentTree(ll n, int reserve\
+    \ = 1 << 20) : n(n), nodes(1, {-1, M::e()})\n  {\n    assert(n >= 0);\n    nodes.reserve(reserve);\n\
+    \  }\n\n  void set(ll p, S x)\n  {\n    assert(0 <= p && p < n);\n    auto dfs\
+    \ = [&](auto dfs, ll a, ll b, int i) -> void\n    {\n      if (nodes[i].p == p)\n\
+    \      {\n        nodes[i].val = x;\n        update(i);\n        return;\n   \
+    \   }\n      ll c = (a + b) / 2;\n      if (p < c)\n      {\n        if (i !=\
+    \ 0 && p > nodes[i].p)\n          swap(p, nodes[i].p), swap(x, nodes[i].val);\n\
+    \        int &ni = nodes[i].chi[0];\n        if (ni == -1)\n        {\n      \
+    \    ni = nodes.size();\n          nodes.eb(p, x);\n        }\n        else\n\
+    \          dfs(dfs, a, c, ni);\n      }\n      else\n      {\n        if (i !=\
+    \ 0 && nodes[i].p > p)\n          swap(p, nodes[i].p), swap(x, nodes[i].val);\n\
+    \        int &ni = nodes[i].chi[1];\n        if (ni == -1)\n        {\n      \
+    \    ni = nodes.size();\n          nodes.eb(p, x);\n        }\n        else\n\
+    \          dfs(dfs, c, b, ni);\n      }\n      update(i);\n    };\n    dfs(dfs,\
+    \ 0, n, 0);\n  }\n\n  S get(ll p) const\n  {\n    assert(0 <= p && p < n);\n \
+    \   ll a = 0, b = n;\n    int i = 0;\n    while (i != -1)\n    {\n      if (nodes[i].p\
+    \ == p)\n        return nodes[i].val;\n      ll c = (a + b) / 2;\n      if (p\
+    \ < c)\n        i = nodes[i].chi[0], b = c;\n      else\n        i = nodes[i].chi[1],\
+    \ a = c;\n    }\n    return M::e();\n  }\n\n  S prod(ll l, ll r) const\n  {\n\
+    \    assert(0 <= l && l <= r && r <= n);\n    auto dfs = [&](auto dfs, ll a, ll\
+    \ b, int i) -> S\n    {\n      if (i == -1)\n        return M::e();\n      if\
+    \ (b <= l || r <= a)\n        return M::e();\n      if (l <= a && b <= r)\n  \
+    \      return nodes[i].prod;\n      ll c = (a + b) / 2;\n      S sml = dfs(dfs,\
+    \ a, c, nodes[i].chi[0]);\n      S smm = l <= nodes[i].p && nodes[i].p < r ? nodes[i].val\
+    \ : M::e();\n      S smr = dfs(dfs, c, b, nodes[i].chi[1]);\n      return M::op(M::op(sml,\
+    \ smm), smr);\n    };\n    return dfs(dfs, 0, n, 0);\n  }\n\n  S all_prod() const\
+    \ { return nodes[0].prod; }\n\n  map<ll, S> content() const\n  {\n    map<ll,\
+    \ S> res;\n    fec(node : nodes) if (node.p != -1) res[node.p] = node.val;\n \
+    \   return res;\n  }\n};\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -705,7 +715,7 @@ data:
   isVerificationFile: false
   path: ds/segtree/sparse_segtree.hpp
   requiredBy: []
-  timestamp: '2025-04-30 05:45:33+09:00'
+  timestamp: '2025-04-30 08:59:34+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/point_set_range_composite_large_array.test.cpp
@@ -719,7 +729,7 @@ title: "\u5FC5\u8981\u306A\u3068\u3053\u308D\u3060\u3051\u4F5C\u308B\u30BB\u30B0
 ---
 ## 必要なところだけ作るセグメント木
 
-$n$ が $10^9$ のように大きくても、必要なノード数が少ないので空間 $O(q \log n)$、クエリ $O(\log n)$ 時間で処理できる。
+$n$ が $10^9$ のように大きくても、必要なノード数が少ないので空間 $O(q)$、クエリ $O(\log n)$ 時間で処理できる。
 
 オフラインなら座圧してセグ木を使った方が高速。オンラインで処理できるのが利点。
 
@@ -728,5 +738,18 @@ $n$ が $10^9$ のように大きくても、必要なノード数が少ない�
 TODO：
 
 - 二分探索は未実装
-- 実装にポインタを使っていない。ポインタ使った方が高速なのかな？
-- 空間が $O(q \log n)$ から $O(q)$ に削減できるらしいがよくわかっていない（定数倍改善にも寄与しそう）
+- 実装にポインタを使っていないが、どちらがどのくらい速いか等は未検証
+
+
+----
+
+普通にやると空間 $O(q \log n)$ なのだが、うまくやると空間 $O(q)$ にできて、高速化にもなる。
+
+普通にやった場合、各ノードが区間 $[a, b)$ を管理することになるとする。このとき、$p \in [a, b)$ をとって、「$p$ 番目の値が $v$ である」という情報も追加で持っておくことにする。普通にやると長さ $1$ の区間まで深く伸びていたところを、$1$ 点の情報の持たせ方を工夫している。これにより、一点更新 $1$ 回で増えるノードは高々 $1$ 個となる。
+
+ノードが管理する区間は、もとの $[a, b)$ のうち祖先の $p$ にないところ、としている（これが区間になるように適当に処理する）。あるノードの区間積は、$(左の子の区間積) \cdot v \cdot (右の子の区間積)$ となる。
+
+参考：
+
+- https://lorent-kyopro.hatenablog.com/entry/2021/03/12/025644
+- https://kazuma8128.hatenablog.com/entry/2018/11/29/093827
