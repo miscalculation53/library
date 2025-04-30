@@ -1,23 +1,23 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -264,8 +264,13 @@ data:
     \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n\
     #define local(...) __VA_ARGS__\n#define oj(...)\n#define local_oj(a, b) (a)\n\
     #else\n#define dump(...)\n#define local(...)\n#define oj(...) __VA_ARGS__\n#define\
-    \ local_oj(a, b) (b)\n#endif\n#line 5 \"verify/mytest/template_algo.test.cpp\"\
-    \n\n// \u96C6\u7D04\nvoid test1()\n{\n  vl a = {2, 7, 1, 8, 2, 8, 1};\n  assert(SUM(a)\
+    \ local_oj(a, b) (b)\n#endif\n\ntemplate <class T, class Sequence>\nvc<T> content(queue<T,\
+    \ Sequence> que)\n{\n  vc<T> res;\n  while (!que.empty())\n  {\n    res.eb(que.front());\n\
+    \    que.pop();\n  }\n  return res;\n}\ntemplate <class T, class Sequence, class\
+    \ Compare>\nvc<T> content(priority_queue<T, Sequence, Compare> pque)\n{\n  vc<T>\
+    \ res;\n  while (!pque.empty())\n  {\n    res.eb(pque.top());\n    pque.pop();\n\
+    \  }\n  return res;\n}\n#line 5 \"verify/mytest/template_algo.test.cpp\"\n\n//\
+    \ \u96C6\u7D04\nvoid test1()\n{\n  vl a = {2, 7, 1, 8, 2, 8, 1};\n  assert(SUM(a)\
     \ == 29);\n  assert(MAX(a) == 8);\n  assert(MIN(a) == 1);\n  assert(ARGMAX(a)\
     \ == 3);\n  assert(ARGMIN(a) == 2);\n  assert(mex(a) == 0);\n\n  vl b = {4, 0,\
     \ 1, 0, 1, 100};\n  assert(mex(b) == 2);\n}\n\n// \u9806\u5217\nvoid test2()\n\
@@ -385,7 +390,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_algo.test.cpp
   requiredBy: []
-  timestamp: '2025-04-29 19:49:56+09:00'
+  timestamp: '2025-04-30 22:43:54+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_algo.test.cpp

@@ -1,22 +1,22 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -276,8 +276,13 @@ data:
     \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n\
     #define local(...) __VA_ARGS__\n#define oj(...)\n#define local_oj(a, b) (a)\n\
     #else\n#define dump(...)\n#define local(...)\n#define oj(...) __VA_ARGS__\n#define\
-    \ local_oj(a, b) (b)\n#endif\n#line 5 \"verify/mytest/template_binsearch.test.cpp\"\
-    \n\nmt19937 mt;\nvoid test1()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i,\
+    \ local_oj(a, b) (b)\n#endif\n\ntemplate <class T, class Sequence>\nvc<T> content(queue<T,\
+    \ Sequence> que)\n{\n  vc<T> res;\n  while (!que.empty())\n  {\n    res.eb(que.front());\n\
+    \    que.pop();\n  }\n  return res;\n}\ntemplate <class T, class Sequence, class\
+    \ Compare>\nvc<T> content(priority_queue<T, Sequence, Compare> pque)\n{\n  vc<T>\
+    \ res;\n  while (!pque.empty())\n  {\n    res.eb(pque.top());\n    pque.pop();\n\
+    \  }\n  return res;\n}\n#line 5 \"verify/mytest/template_binsearch.test.cpp\"\n\
+    \nmt19937 mt;\nvoid test1()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i,\
     \ n) a[i] = 1 + mt() % 10;\n  sort(ALL(a));\n  ll k = -1 + mt() % 12;\n\n  ll\
     \ i1, i2, i3;\n\n  i1 = LB(a, k);\n  i2 = binsearch([&](ll i)\n              \
     \    { return k <= vecget(a, i); }, SZ<int>(a), -1)\n            .first;\n  i3\
@@ -367,7 +372,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_binsearch.test.cpp
   requiredBy: []
-  timestamp: '2025-04-28 22:08:42+09:00'
+  timestamp: '2025-04-30 22:43:54+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_binsearch.test.cpp

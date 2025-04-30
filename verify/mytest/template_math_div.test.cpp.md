@@ -1,16 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy: []
@@ -137,17 +137,22 @@ data:
     CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n#define local(...) __VA_ARGS__\n\
     #define oj(...)\n#define local_oj(a, b) (a)\n#else\n#define dump(...)\n#define\
     \ local(...)\n#define oj(...) __VA_ARGS__\n#define local_oj(a, b) (b)\n#endif\n\
-    #line 5 \"verify/mytest/template_math_div.test.cpp\"\n\nmt19937 mt;\nll randll()\
-    \ { return (mt() << 30) + mt(); }\n\ntemplate <class T>\nvoid test1()\n{\n  for\
-    \ (int t = 0; t < 100000; t++)\n  {\n    dump(t);\n    T a = randll(), b = randll();\n\
-    \    if (b == 0)\n      continue;\n    if (mt() % 2) a *= -1;\n    if (mt() %\
-    \ 2) b *= -1;\n\n    T c = divfloor<T>(a, b), d = divceil<T>(a, b), e = safemod<T>(a,\
-    \ b);\n    dump(a, b, c, d, e);\n    if (b > 0)\n    {\n      assert(a >= b *\
-    \ c && a < b * (c + 1));\n      assert(a > b * (d - 1) && a <= b * d);\n     \
-    \ assert(0 <= e && e < b);\n      assert((a - e) % b == 0);\n    }\n    else\n\
-    \    {\n      assert(a < b * c && a >= b * (c + 1));\n      assert(a <= b * (d\
-    \ - 1) && a > b * d);\n      assert(b < e && e <= 0);\n      assert((a - e) %\
-    \ b == 0);\n    }\n  }\n}\n\nint main()\n{\n  test1<ll>();\n  test1<i128>();\n\
+    \ntemplate <class T, class Sequence>\nvc<T> content(queue<T, Sequence> que)\n\
+    {\n  vc<T> res;\n  while (!que.empty())\n  {\n    res.eb(que.front());\n    que.pop();\n\
+    \  }\n  return res;\n}\ntemplate <class T, class Sequence, class Compare>\nvc<T>\
+    \ content(priority_queue<T, Sequence, Compare> pque)\n{\n  vc<T> res;\n  while\
+    \ (!pque.empty())\n  {\n    res.eb(pque.top());\n    pque.pop();\n  }\n  return\
+    \ res;\n}\n#line 5 \"verify/mytest/template_math_div.test.cpp\"\n\nmt19937 mt;\n\
+    ll randll() { return (mt() << 30) + mt(); }\n\ntemplate <class T>\nvoid test1()\n\
+    {\n  for (int t = 0; t < 100000; t++)\n  {\n    dump(t);\n    T a = randll(),\
+    \ b = randll();\n    if (b == 0)\n      continue;\n    if (mt() % 2) a *= -1;\n\
+    \    if (mt() % 2) b *= -1;\n\n    T c = divfloor<T>(a, b), d = divceil<T>(a,\
+    \ b), e = safemod<T>(a, b);\n    dump(a, b, c, d, e);\n    if (b > 0)\n    {\n\
+    \      assert(a >= b * c && a < b * (c + 1));\n      assert(a > b * (d - 1) &&\
+    \ a <= b * d);\n      assert(0 <= e && e < b);\n      assert((a - e) % b == 0);\n\
+    \    }\n    else\n    {\n      assert(a < b * c && a >= b * (c + 1));\n      assert(a\
+    \ <= b * (d - 1) && a > b * d);\n      assert(b < e && e <= 0);\n      assert((a\
+    \ - e) % b == 0);\n    }\n  }\n}\n\nint main()\n{\n  test1<ll>();\n  test1<i128>();\n\
     \n  cout << \"Hello World\" << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#include \"template/template_math.hpp\"\n#include \"template/template_dump.hpp\"\
@@ -170,7 +175,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_math_div.test.cpp
   requiredBy: []
-  timestamp: '2025-04-26 00:43:27+09:00'
+  timestamp: '2025-04-30 22:43:54+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_math_div.test.cpp

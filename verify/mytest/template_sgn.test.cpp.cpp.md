@@ -1,16 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy: []
@@ -137,15 +137,20 @@ data:
     CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n#define local(...) __VA_ARGS__\n\
     #define oj(...)\n#define local_oj(a, b) (a)\n#else\n#define dump(...)\n#define\
     \ local(...)\n#define oj(...) __VA_ARGS__\n#define local_oj(a, b) (b)\n#endif\n\
-    #line 7 \"verify/mytest/template_sgn.test.cpp.cpp\"\n\nvoid test1()\n{\n  assert(SGN(-2)\
-    \ == -1);\n  assert(SGN(-1) == -1);\n  assert(SGN(0) == 0);\n  assert(SGN(1) ==\
-    \ 1);\n  assert(SGN(2) == 1);\n\n  assert(SGN(-EPS * 2) == -1);\n  assert(SGN(-EPS\
-    \ / 2) == 0);\n  assert(SGN(EPS / 2) == 0);\n  assert(SGN(EPS * 2) == 1);\n\n\
-    \  long double EPS2 = EPS;\n  assert(SGN(-EPS2 * 2) == -1);\n  assert(SGN(-EPS2\
-    \ / 2) == 0);\n  assert(SGN(EPS2 / 2) == 0);\n  assert(SGN(EPS2 * 2) == 1);\n\n\
-    \  dump(typeid(double).name(), typeid(long double).name());\n  dump(typeid(EPS).name(),\
-    \ typeid(EPS2).name());\n}\n\nint main()\n{\n  test1();\n\n  cout << \"Hello World\"\
-    \ << endl;\n}\n"
+    \ntemplate <class T, class Sequence>\nvc<T> content(queue<T, Sequence> que)\n\
+    {\n  vc<T> res;\n  while (!que.empty())\n  {\n    res.eb(que.front());\n    que.pop();\n\
+    \  }\n  return res;\n}\ntemplate <class T, class Sequence, class Compare>\nvc<T>\
+    \ content(priority_queue<T, Sequence, Compare> pque)\n{\n  vc<T> res;\n  while\
+    \ (!pque.empty())\n  {\n    res.eb(pque.top());\n    pque.pop();\n  }\n  return\
+    \ res;\n}\n#line 7 \"verify/mytest/template_sgn.test.cpp.cpp\"\n\nvoid test1()\n\
+    {\n  assert(SGN(-2) == -1);\n  assert(SGN(-1) == -1);\n  assert(SGN(0) == 0);\n\
+    \  assert(SGN(1) == 1);\n  assert(SGN(2) == 1);\n\n  assert(SGN(-EPS * 2) == -1);\n\
+    \  assert(SGN(-EPS / 2) == 0);\n  assert(SGN(EPS / 2) == 0);\n  assert(SGN(EPS\
+    \ * 2) == 1);\n\n  long double EPS2 = EPS;\n  assert(SGN(-EPS2 * 2) == -1);\n\
+    \  assert(SGN(-EPS2 / 2) == 0);\n  assert(SGN(EPS2 / 2) == 0);\n  assert(SGN(EPS2\
+    \ * 2) == 1);\n\n  dump(typeid(double).name(), typeid(long double).name());\n\
+    \  dump(typeid(EPS).name(), typeid(EPS2).name());\n}\n\nint main()\n{\n  test1();\n\
+    \n  cout << \"Hello World\" << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#define EPS 1e-11\n\n#include \"../../template/template_math.hpp\"\n#include\
     \ \"../../template/template_dump.hpp\"\n\nvoid test1()\n{\n  assert(SGN(-2) ==\
@@ -164,7 +169,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_sgn.test.cpp.cpp
   requiredBy: []
-  timestamp: '2025-04-26 00:43:27+09:00'
+  timestamp: '2025-04-30 22:43:54+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_sgn.test.cpp.cpp

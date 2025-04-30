@@ -1,16 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy: []
@@ -73,9 +73,14 @@ data:
     \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n\
     #define local(...) __VA_ARGS__\n#define oj(...)\n#define local_oj(a, b) (a)\n\
     #else\n#define dump(...)\n#define local(...)\n#define oj(...) __VA_ARGS__\n#define\
-    \ local_oj(a, b) (b)\n#endif\n#line 6 \"template/template_inout.hpp\"\n\n/**\n\
-    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\n\
-    \ * @docs docs/template/template_inout.md\n */\n\n// https://judge.yosupo.jp/submission/170706\
+    \ local_oj(a, b) (b)\n#endif\n\ntemplate <class T, class Sequence>\nvc<T> content(queue<T,\
+    \ Sequence> que)\n{\n  vc<T> res;\n  while (!que.empty())\n  {\n    res.eb(que.front());\n\
+    \    que.pop();\n  }\n  return res;\n}\ntemplate <class T, class Sequence, class\
+    \ Compare>\nvc<T> content(priority_queue<T, Sequence, Compare> pque)\n{\n  vc<T>\
+    \ res;\n  while (!pque.empty())\n  {\n    res.eb(pque.top());\n    pque.pop();\n\
+    \  }\n  return res;\n}\n#line 6 \"template/template_inout.hpp\"\n\n/**\n * @brief\
+    \ \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\n * @docs\
+    \ docs/template/template_inout.md\n */\n\n// https://judge.yosupo.jp/submission/170706\
     \ (maspy \u3055\u3093)\n// https://judge.yosupo.jp/submission/21623  (Nyaan \u3055\
     \u3093)\n#if defined FAST_IO and not defined LOCAL\nnamespace fastio {\nstatic\
     \ constexpr uint32_t SIZ = 1 << 17;\nchar ibuf[SIZ];\nchar obuf[SIZ];\nchar out[100];\n\
@@ -293,7 +298,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_inout_top.test.cpp
   requiredBy: []
-  timestamp: '2025-03-29 20:18:07+09:00'
+  timestamp: '2025-04-30 22:43:54+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_inout_top.test.cpp
