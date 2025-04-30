@@ -762,23 +762,20 @@ data:
     c \u306F\u6574\u6570)\n// \u3068\u8868\u3057\u305F\u3068\u304D\u306E b (mod p)\
     \ \u3068 c \u3092\u4FDD\u6301\u3059\u308B\n// \u639B\u3051\u7B97\u5272\u308A\u7B97\
     \u304C\u53EF\u80FD\ntemplate <class mint>\nstruct ModintDiv\n{\n  mint b;\n  ll\
-    \ c;\n  ModintDiv() {}\n  ModintDiv(mint r)\n  {\n    if (r == 0)\n      b = 1,\
-    \ c = 1;\n    else\n      b = r, c = 0;\n  }\n  ModintDiv(mint b, ll c) : b(b),\
-    \ c(c) {}\n  ModintDiv &operator*=(const ModintDiv &rhs)\n  {\n    b *= rhs.b,\
-    \ c += rhs.c;\n    return *this;\n  }\n  ModintDiv &operator/=(const ModintDiv\
-    \ &rhs)\n  {\n    assert(rhs.b != 0);\n    b /= rhs.b, c -= rhs.c;\n    return\
-    \ *this;\n  }\n  ModintDiv inv() const\n  {\n    assert(b != 0);\n    return {b.inv(),\
-    \ -c};\n  }\n  ModintDiv operator*(const ModintDiv &rhs) const { return ModintDiv(*this)\
-    \ *= rhs; }\n  ModintDiv operator/(const ModintDiv &rhs) const { return ModintDiv(*this)\
-    \ /= rhs; }\n  // (mod p \u3067\u8868\u73FE\u53EF\u80FD\u304B, mod p \u3067\u306E\
-    \u5024)\n  pair<bool, mint> to_modint() const\n  {\n    return {c >= 0, c == 0\
-    \ ? b : mint(0)};\n  }\n  // r \u2260 0 -> (b, c) = (r, 0)\n  // r = 0 -> (b,\
-    \ c) = (1, 1)\n  // \u3068\u3059\u308B\n  friend ModintDiv modint_to_modint_div(const\
-    \ mint &r)\n  {\n    return r == 0 ? ModintDiv(1, 1) : ModintDiv(r, 0);\n  }\n\
-    };\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(b, c);\n#endif\n#line\
-    \ 21 \"verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp\"\nusing mintd =\
-    \ ModintDiv<mint>;\n#line 2 \"ds/cumulative_sum/cumulative_sum_2d.hpp\"\n\n#line\
-    \ 4 \"ds/cumulative_sum/cumulative_sum_2d.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
+    \ c;\n  ModintDiv() {}\n  ModintDiv(const mint &r)\n  {\n    if (r == 0)\n   \
+    \   b = 1, c = 1;\n    else\n      b = r, c = 0;\n  }\n  ModintDiv(const mint\
+    \ &b, ll c) : b(b), c(c) {}\n  ModintDiv &operator*=(const ModintDiv &rhs)\n \
+    \ {\n    b *= rhs.b, c += rhs.c;\n    return *this;\n  }\n  ModintDiv &operator/=(const\
+    \ ModintDiv &rhs)\n  {\n    assert(rhs.b != 0);\n    b /= rhs.b, c -= rhs.c;\n\
+    \    return *this;\n  }\n  ModintDiv inv() const\n  {\n    assert(b != 0);\n \
+    \   return {b.inv(), -c};\n  }\n  ModintDiv operator*(const ModintDiv &rhs) const\
+    \ { return ModintDiv(*this) *= rhs; }\n  ModintDiv operator/(const ModintDiv &rhs)\
+    \ const { return ModintDiv(*this) /= rhs; }\n  // (mod p \u3067\u8868\u73FE\u53EF\
+    \u80FD\u304B, mod p \u3067\u306E\u5024)\n  pair<bool, mint> to_modint() const\n\
+    \  {\n    return {c >= 0, c == 0 ? b : mint(0)};\n  }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(b,\
+    \ c);\n#endif\n#line 21 \"verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp\"\
+    \nusing mintd = ModintDiv<mint>;\n#line 2 \"ds/cumulative_sum/cumulative_sum_2d.hpp\"\
+    \n\n#line 4 \"ds/cumulative_sum/cumulative_sum_2d.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
     \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
     \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
     \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
@@ -925,7 +922,7 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
   requiredBy: []
-  timestamp: '2025-04-29 20:25:40+09:00'
+  timestamp: '2025-04-30 17:40:49+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
