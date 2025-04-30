@@ -79,20 +79,3 @@ pair<bool, mint> to_modint()
 
 - $O(1)$
 
-
-### フレンド関数
-
-#### modint_to_modint_div
-
-```cpp
-ModintDiv modint_to_modint_div(mint r)
-```
-
-- $r \equiv 0$ なら $(b, c) = (1, 1)$
-- $r \not\equiv 0$ なら $(b, c) = (r, 0)$
-
-を返す。
-
-##### 計算量
-
-- $O(1)$

@@ -16,14 +16,14 @@ struct ModintDiv
   mint b;
   ll c;
   ModintDiv() {}
-  ModintDiv(mint r)
+  ModintDiv(const mint &r)
   {
     if (r == 0)
       b = 1, c = 1;
     else
       b = r, c = 0;
   }
-  ModintDiv(mint b, ll c) : b(b), c(c) {}
+  ModintDiv(const mint &b, ll c) : b(b), c(c) {}
   ModintDiv &operator*=(const ModintDiv &rhs)
   {
     b *= rhs.b, c += rhs.c;
@@ -46,13 +46,6 @@ struct ModintDiv
   pair<bool, mint> to_modint() const
   {
     return {c >= 0, c == 0 ? b : mint(0)};
-  }
-  // r ≠ 0 -> (b, c) = (r, 0)
-  // r = 0 -> (b, c) = (1, 1)
-  // とする
-  friend ModintDiv modint_to_modint_div(const mint &r)
-  {
-    return r == 0 ? ModintDiv(1, 1) : ModintDiv(r, 0);
   }
 };
 #ifdef LOCAL
