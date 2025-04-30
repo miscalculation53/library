@@ -13,3 +13,7 @@
 - `local()`：`LOCAL` のときのみ `()` 内が存在する
 - `oj()`：`LOCAL` でないときのみ `()` 内が存在する
 - `local_oj(a, b)`：`LOCAL` のときは `a`, `LOCAL` でないときは `b`
+
+---
+
+関数 `content()`：std の queue または priority_queue を引数に取り、中身を表す vector を返す。`dump(content(que))` のように使う。

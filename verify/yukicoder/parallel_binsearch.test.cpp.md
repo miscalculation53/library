@@ -4,7 +4,7 @@ data:
   - icon: ':x:'
     path: algo/parallel_binsearch.hpp
     title: "\u4E26\u5217\u4E8C\u5206\u63A2\u7D22"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/uf/uf.hpp
     title: UnionFind
   - icon: ':question:'
