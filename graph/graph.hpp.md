@@ -1,50 +1,56 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/csr.hpp
     title: CSR
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedRequiredBy:
+  - icon: ':heavy_check_mark:'
+    path: graph/connected_components.hpp
+    title: "\u9023\u7D50\u6210\u5206\u3078\u306E\u5206\u89E3"
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/connected_components.test.cpp
+    title: verify/aoj/connected_components.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/graph/graph.md
     document_title: "\u30B0\u30E9\u30D5\uFF08\u57FA\u5E95\u30AF\u30E9\u30B9\uFF09"
@@ -654,50 +660,74 @@ data:
     \ 5 \"graph/graph.hpp\"\n\n/**\n * @brief \u30B0\u30E9\u30D5\uFF08\u57FA\u5E95\
     \u30AF\u30E9\u30B9\uFF09\n * @docs docs/graph/graph.md\n */\n\ntemplate <class\
     \ Cost, const Cost dflt_cost = 1>\nstruct Edge\n{\n  int from, to;\n  Cost cost;\n\
-    \  int index;\n  Edge() {}\n  Edge(int s, int t, Cost c = dflt_cost, int i = -1)\
-    \ : from(s), to(t), cost(c), index(i) {}\n  operator int() const { return to;\
-    \ }\n};\n\ntemplate <class Cost, const Cost dflt_cost = 1>\nstruct Graph\n{\n\
-    \  int n;\n  CSR<Edge<Cost>> g;\n  Graph() : n(0) {}\n  template <class EdgeId>\n\
-    \  Graph(int n, const vc<pair<EdgeId, EdgeId>> &es, bool is_directed) : n(n)\n\
-    \  {\n    const int m = es.size();\n    if (is_directed)\n    {\n      vc<Edge<Cost>>\
-    \ edges(m);\n      repi(i, m)\n      {\n        auto [u, v] = es[i];\n       \
-    \ edges[i] = Edge<Cost>(u, v, dflt_cost, i);\n      }\n      g = CSR<Edge<Cost>>(edges);\n\
-    \    }\n    else\n    {\n      vc<Edge<Cost>> edges(2 * m);\n      repi(i, m)\n\
-    \      {\n        auto [u, v] = es[i];\n        edges[2 * i] = Edge<Cost>(u, v,\
-    \ dflt_cost, i);\n        edges[2 * i + 1] = Edge<Cost>(v, u, dflt_cost, i);\n\
-    \      }\n      g = CSR<Edge<Cost>>(edges);\n    }\n  }\n  template <class EdgeId>\n\
-    \  Graph(int n, const vc<tuple<EdgeId, EdgeId, Cost>> &es, bool is_directed) :\
-    \ n(n)\n  {\n    const int m = es.size();\n    if (is_directed)\n    {\n     \
-    \ vc<Edge<Cost>> edges(m);\n      repi(i, m)\n      {\n        auto [u, v, w]\
-    \ = es[i];\n        edges[i] = Edge<Cost>(u, v, w, i);\n      }\n      g = CSR<Edge<Cost>>(edges);\n\
-    \    }\n    else\n    {\n      vc<Edge<Cost>> edges(2 * m);\n      repi(i, m)\n\
-    \      {\n        auto [u, v, w] = es[i];\n        edges[2 * i] = Edge<Cost>(u,\
-    \ v, w, i);\n        edges[2 * i + 1] = Edge<Cost>(v, u, w, i);\n      }\n   \
-    \   g = CSR<Edge<Cost>>(edges);\n    }\n  }\n};\n"
+    \  int index;\n  Edge() : index(-1) {}\n  Edge(int s, int t, Cost c, int i) :\
+    \ from(s), to(t), cost(c), index(i) {}\n  operator int() const { return to; }\n\
+    };\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<int>, from, to, cost)\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<ll>,\
+    \ from, to, cost)\n#endif\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF: n,\
+    \ es, is_directed\ntemplate <class Cost, Cost dflt_cost = 1>\nstruct Graph\n{\n\
+    private:\n  int n;\n  CSR<Edge<Cost>> g;\n\npublic:\n  // n, es, is_directed\n\
+    \  Graph() : n(0) {}\n  template <class I>\n  Graph(int n, const vc<pair<I, I>>\
+    \ &es, bool is_directed) : n(n)\n  {\n    const int m = es.size();\n    if (is_directed)\n\
+    \    {\n      vc<pair<int, Edge<Cost>>> edges(m);\n      repi(i, m)\n      {\n\
+    \        auto [u, v] = es[i];\n        assert(0 <= u && u < n);\n        assert(0\
+    \ <= v && v < n);\n        edges[i] = {u, Edge<Cost>(u, v, dflt_cost, i)};\n \
+    \     }\n      g = CSR<Edge<Cost>>(n, edges);\n    }\n    else\n    {\n      vc<pair<int,\
+    \ Edge<Cost>>> edges(2 * m);\n      repi(i, m)\n      {\n        auto [u, v] =\
+    \ es[i];\n        assert(0 <= u && u < n);\n        assert(0 <= v && v < n);\n\
+    \        edges[2 * i] = {u, Edge<Cost>(u, v, dflt_cost, i)};\n        edges[2\
+    \ * i + 1] = {v, Edge<Cost>(v, u, dflt_cost, i)};\n      }\n      g = CSR<Edge<Cost>>(n,\
+    \ edges);\n    }\n  }\n  template <class I>\n  Graph(int n, const vc<tuple<I,\
+    \ I, Cost>> &es, bool is_directed) : n(n)\n  {\n    const int m = es.size();\n\
+    \    if (is_directed)\n    {\n      vc<pair<int, Edge<Cost>>> edges(m);\n    \
+    \  repi(i, m)\n      {\n        auto [u, v, w] = es[i];\n        assert(0 <= u\
+    \ && u < n);\n        assert(0 <= v && v < n);\n        edges[i] = {u, Edge<Cost>(u,\
+    \ v, w, i)};\n      }\n      g = CSR<Edge<Cost>>(n, edges);\n    }\n    else\n\
+    \    {\n      vc<pair<int, Edge<Cost>>> edges(2 * m);\n      repi(i, m)\n    \
+    \  {\n        auto [u, v, w] = es[i];\n        assert(0 <= u && u < n);\n    \
+    \    assert(0 <= v && v < n);\n        edges[2 * i] = {u, Edge<Cost>(u, v, w,\
+    \ i)};\n        edges[2 * i + 1] = {v, Edge<Cost>(v, u, w, i)};\n      }\n   \
+    \   g = CSR<Edge<Cost>>(n, edges);\n    }\n  }\n\n  template <class I = ll>\n\
+    \  I size() const { return n; }\n\n  auto out_edges(int v) const { return g.row(v);\
+    \ }\n\n  vc<Edge<Cost>> edges() const\n  {\n    int m = 0;\n    repi(i, n) fe(e\
+    \ : out_edges(i)) chmax(m, e.index);\n    vc<Edge<Cost>> res(m);\n    repi(i,\
+    \ n - 1, -1, -1) fe(e : out_edges(i)) res[e.index] = e;\n    return res;\n  }\n\
+    \  vvc<Edge<Cost>> adj_list() const { return g.to_vv(); }\n};\n"
   code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n#include\
     \ \"../ds/csr.hpp\"\n\n/**\n * @brief \u30B0\u30E9\u30D5\uFF08\u57FA\u5E95\u30AF\
     \u30E9\u30B9\uFF09\n * @docs docs/graph/graph.md\n */\n\ntemplate <class Cost,\
     \ const Cost dflt_cost = 1>\nstruct Edge\n{\n  int from, to;\n  Cost cost;\n \
-    \ int index;\n  Edge() {}\n  Edge(int s, int t, Cost c = dflt_cost, int i = -1)\
-    \ : from(s), to(t), cost(c), index(i) {}\n  operator int() const { return to;\
-    \ }\n};\n\ntemplate <class Cost, const Cost dflt_cost = 1>\nstruct Graph\n{\n\
-    \  int n;\n  CSR<Edge<Cost>> g;\n  Graph() : n(0) {}\n  template <class EdgeId>\n\
-    \  Graph(int n, const vc<pair<EdgeId, EdgeId>> &es, bool is_directed) : n(n)\n\
-    \  {\n    const int m = es.size();\n    if (is_directed)\n    {\n      vc<Edge<Cost>>\
-    \ edges(m);\n      repi(i, m)\n      {\n        auto [u, v] = es[i];\n       \
-    \ edges[i] = Edge<Cost>(u, v, dflt_cost, i);\n      }\n      g = CSR<Edge<Cost>>(edges);\n\
-    \    }\n    else\n    {\n      vc<Edge<Cost>> edges(2 * m);\n      repi(i, m)\n\
-    \      {\n        auto [u, v] = es[i];\n        edges[2 * i] = Edge<Cost>(u, v,\
-    \ dflt_cost, i);\n        edges[2 * i + 1] = Edge<Cost>(v, u, dflt_cost, i);\n\
-    \      }\n      g = CSR<Edge<Cost>>(edges);\n    }\n  }\n  template <class EdgeId>\n\
-    \  Graph(int n, const vc<tuple<EdgeId, EdgeId, Cost>> &es, bool is_directed) :\
-    \ n(n)\n  {\n    const int m = es.size();\n    if (is_directed)\n    {\n     \
-    \ vc<Edge<Cost>> edges(m);\n      repi(i, m)\n      {\n        auto [u, v, w]\
-    \ = es[i];\n        edges[i] = Edge<Cost>(u, v, w, i);\n      }\n      g = CSR<Edge<Cost>>(edges);\n\
-    \    }\n    else\n    {\n      vc<Edge<Cost>> edges(2 * m);\n      repi(i, m)\n\
-    \      {\n        auto [u, v, w] = es[i];\n        edges[2 * i] = Edge<Cost>(u,\
-    \ v, w, i);\n        edges[2 * i + 1] = Edge<Cost>(v, u, w, i);\n      }\n   \
-    \   g = CSR<Edge<Cost>>(edges);\n    }\n  }\n};"
+    \ int index;\n  Edge() : index(-1) {}\n  Edge(int s, int t, Cost c, int i) : from(s),\
+    \ to(t), cost(c), index(i) {}\n  operator int() const { return to; }\n};\n#ifdef\
+    \ LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<int>, from, to, cost)\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<ll>,\
+    \ from, to, cost)\n#endif\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF: n,\
+    \ es, is_directed\ntemplate <class Cost, Cost dflt_cost = 1>\nstruct Graph\n{\n\
+    private:\n  int n;\n  CSR<Edge<Cost>> g;\n\npublic:\n  // n, es, is_directed\n\
+    \  Graph() : n(0) {}\n  template <class I>\n  Graph(int n, const vc<pair<I, I>>\
+    \ &es, bool is_directed) : n(n)\n  {\n    const int m = es.size();\n    if (is_directed)\n\
+    \    {\n      vc<pair<int, Edge<Cost>>> edges(m);\n      repi(i, m)\n      {\n\
+    \        auto [u, v] = es[i];\n        assert(0 <= u && u < n);\n        assert(0\
+    \ <= v && v < n);\n        edges[i] = {u, Edge<Cost>(u, v, dflt_cost, i)};\n \
+    \     }\n      g = CSR<Edge<Cost>>(n, edges);\n    }\n    else\n    {\n      vc<pair<int,\
+    \ Edge<Cost>>> edges(2 * m);\n      repi(i, m)\n      {\n        auto [u, v] =\
+    \ es[i];\n        assert(0 <= u && u < n);\n        assert(0 <= v && v < n);\n\
+    \        edges[2 * i] = {u, Edge<Cost>(u, v, dflt_cost, i)};\n        edges[2\
+    \ * i + 1] = {v, Edge<Cost>(v, u, dflt_cost, i)};\n      }\n      g = CSR<Edge<Cost>>(n,\
+    \ edges);\n    }\n  }\n  template <class I>\n  Graph(int n, const vc<tuple<I,\
+    \ I, Cost>> &es, bool is_directed) : n(n)\n  {\n    const int m = es.size();\n\
+    \    if (is_directed)\n    {\n      vc<pair<int, Edge<Cost>>> edges(m);\n    \
+    \  repi(i, m)\n      {\n        auto [u, v, w] = es[i];\n        assert(0 <= u\
+    \ && u < n);\n        assert(0 <= v && v < n);\n        edges[i] = {u, Edge<Cost>(u,\
+    \ v, w, i)};\n      }\n      g = CSR<Edge<Cost>>(n, edges);\n    }\n    else\n\
+    \    {\n      vc<pair<int, Edge<Cost>>> edges(2 * m);\n      repi(i, m)\n    \
+    \  {\n        auto [u, v, w] = es[i];\n        assert(0 <= u && u < n);\n    \
+    \    assert(0 <= v && v < n);\n        edges[2 * i] = {u, Edge<Cost>(u, v, w,\
+    \ i)};\n        edges[2 * i + 1] = {v, Edge<Cost>(v, u, w, i)};\n      }\n   \
+    \   g = CSR<Edge<Cost>>(n, edges);\n    }\n  }\n\n  template <class I = ll>\n\
+    \  I size() const { return n; }\n\n  auto out_edges(int v) const { return g.row(v);\
+    \ }\n\n  vc<Edge<Cost>> edges() const\n  {\n    int m = 0;\n    repi(i, n) fe(e\
+    \ : out_edges(i)) chmax(m, e.index);\n    vc<Edge<Cost>> res(m);\n    repi(i,\
+    \ n - 1, -1, -1) fe(e : out_edges(i)) res[e.index] = e;\n    return res;\n  }\n\
+    \  vvc<Edge<Cost>> adj_list() const { return g.to_vv(); }\n};\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -713,10 +743,12 @@ data:
   - ds/csr.hpp
   isVerificationFile: false
   path: graph/graph.hpp
-  requiredBy: []
-  timestamp: '2025-04-30 22:43:54+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  requiredBy:
+  - graph/connected_components.hpp
+  timestamp: '2025-04-30 23:59:04+09:00'
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - verify/aoj/connected_components.test.cpp
 documentation_of: graph/graph.hpp
 layout: document
 redirect_from:

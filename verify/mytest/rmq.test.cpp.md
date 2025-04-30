@@ -4,59 +4,59 @@ data:
   - icon: ':heavy_check_mark:'
     path: ds/block_sparse_table.hpp
     title: "\u30D6\u30ED\u30C3\u30AF\u5206\u5272 + (disjoint) sparse table"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/csr.hpp
     title: CSR
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/dc_range_prod.hpp
     title: "\u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\u30A8\
       \u30EA"
   - icon: ':heavy_check_mark:'
     path: ds/disjoint_sparse_table.hpp
     title: Disjoint Sparse Table
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/group_index.hpp
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
   - icon: ':heavy_check_mark:'
     path: ds/linear_rmq.hpp
     title: "\u7DDA\u5F62 RMQ"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/sparse_table.hpp
     title: Sparse Table
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
