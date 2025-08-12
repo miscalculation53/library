@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/segtree/lazy_segtree.hpp
     title: "\u9045\u5EF6\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
   - icon: ':question:'
@@ -42,12 +42,12 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/range_affine_range.sum.test.cpp
     title: verify/yosupo/range_affine_range.sum.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/algebra/acted_monoid/affine_sum.md
     document_title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u4E00\u6B21\
@@ -734,7 +734,7 @@ data:
   path: math/algebra/acted_monoid/affine_sum.hpp
   requiredBy: []
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/range_affine_range.sum.test.cpp
 documentation_of: math/algebra/acted_monoid/affine_sum.hpp

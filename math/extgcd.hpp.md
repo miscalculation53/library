@@ -59,10 +59,10 @@ data:
   - icon: ':question:'
     path: math/crt.hpp
     title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/bmbm.hpp
     title: BMBM
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
   - icon: ':question:'
@@ -109,14 +109,14 @@ data:
   - icon: ':warning:'
     path: math/modint/template_modint.hpp
     title: math/modint/template_modint.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/prime/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
   - icon: ':question:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/prime/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
   - icon: ':question:'
@@ -126,7 +126,7 @@ data:
     path: math/prime/zeta_mobius_divisor_multiple_large.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/sbt.hpp
     title: Stern Brocot Tree
   - icon: ':warning:'
@@ -310,61 +310,61 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root.test.cpp
     title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root_min.test.cpp
     title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/queue_operate_all_composite.test.cpp
     title: verify/yosupo/queue_operate_all_composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/range_affine_range.sum.test.cpp
     title: verify/yosupo/range_affine_range.sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/rational_approximation.test.cpp
     title: verify/yosupo/rational_approximation.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/retooting.test.cpp
     title: verify/yosupo/retooting.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/sqrt_mod.test.cpp
     title: verify/yosupo/sqrt_mod.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
     title: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/stern_brocot_tree.test.cpp
     title: verify/yosupo/stern_brocot_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential.test.cpp
     title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/xor_convolution.test.cpp
     title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/binomial.test.cpp
     title: verify/yukicoder/binomial.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/bmbm.test.cpp
     title: verify/yukicoder/bmbm.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/crt.test.cpp
     title: verify/yukicoder/crt.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/crt_mod.test.cpp
     title: verify/yukicoder/crt_mod.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
     title: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/divisors.test.cpp
     title: verify/yukicoder/divisors.test.cpp
   - icon: ':x:'

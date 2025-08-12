@@ -10,7 +10,7 @@ data:
   - icon: ':question:'
     path: graph/graph.hpp
     title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/rooted_tree.hpp
     title: "\u6839\u3064\u304D\u6728\u30AF\u30E9\u30B9"
   - icon: ':question:'

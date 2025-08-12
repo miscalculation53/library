@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/offline/rectangle_sum.hpp
     title: "\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\u30F3\uFF09"
   - icon: ':question:'
@@ -52,12 +52,12 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
     title: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/2d/offline/static_rectangle_add_rectangle_sum.md
     document_title: "\u77E9\u5F62\u52A0\u7B97 \u2192 \u77E9\u5F62\u548C\uFF08\u30AA\
@@ -912,7 +912,7 @@ data:
   path: ds/2d/offline/static_rectangle_add_rectangle_sum.hpp
   requiredBy: []
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
 documentation_of: ds/2d/offline/static_rectangle_add_rectangle_sum.hpp

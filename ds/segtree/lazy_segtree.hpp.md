@@ -42,7 +42,7 @@ data:
     path: math/algebra/acted_monoid/add_sum.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u52A0\u7B97\u30FB\
       \u548C\u53D6\u5F97"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/acted_monoid/affine_sum.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u4E00\u6B21\u95A2\
       \u6570\u4F5C\u7528\u30FB\u548C\u53D6\u5F97"
@@ -63,12 +63,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/range_upd_range_sum.test.cpp
     title: verify/aoj/range_upd_range_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/range_affine_range.sum.test.cpp
     title: verify/yosupo/range_affine_range.sum.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/segtree/lazy_segtree.md
     document_title: "\u9045\u5EF6\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
@@ -788,7 +788,7 @@ data:
   - math/algebra/acted_monoid/upd_sum.hpp
   - math/algebra/acted_monoid/affine_sum.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/aoj/range_upd_range_min.test.cpp
   - verify/aoj/range_upd_range_sum.test.cpp

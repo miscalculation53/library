@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/segtree/lazy_segtree.hpp
     title: "\u9045\u5EF6\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/acted_monoid/affine_sum.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u4E00\u6B21\u95A2\
       \u6570\u4F5C\u7528\u30FB\u548C\u53D6\u5F97"
@@ -61,9 +61,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/range_affine_range_sum
@@ -891,7 +891,7 @@ data:
   path: verify/yosupo/range_affine_range.sum.test.cpp
   requiredBy: []
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/range_affine_range.sum.test.cpp
 layout: document

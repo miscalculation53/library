@@ -10,10 +10,10 @@ data:
   - icon: ':question:'
     path: graph/graph.hpp
     title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/diameter.hpp
     title: "\u6728\u306E\u76F4\u5F84"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/rooted_tree.hpp
     title: "\u6839\u3064\u304D\u6728\u30AF\u30E9\u30B9"
   - icon: ':question:'
@@ -57,9 +57,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/tree_diameter
@@ -938,7 +938,7 @@ data:
   path: verify/yosupo/tree_diameter.test.cpp
   requiredBy: []
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/tree_diameter.test.cpp
 layout: document

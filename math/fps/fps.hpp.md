@@ -71,10 +71,10 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/bmbm.hpp
     title: BMBM
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
   - icon: ':heavy_check_mark:'
@@ -164,7 +164,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_taylor_shift.test.cpp
     title: verify/yosupo/poly_taylor_shift.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/bmbm.test.cpp
     title: verify/yukicoder/bmbm.test.cpp
   - icon: ':x:'

@@ -53,7 +53,7 @@ data:
   - icon: ':question:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/scc.hpp
     title: "\u5F37\u9023\u7D50\u6210\u5206\u5206\u89E3"
   - icon: ':heavy_check_mark:'
@@ -62,13 +62,13 @@ data:
   - icon: ':warning:'
     path: graph/subgraphs.hpp
     title: "\u90E8\u5206\u30B0\u30E9\u30D5\u3078\u306E\u5206\u89E3"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/diameter.hpp
     title: "\u6728\u306E\u76F4\u5F84"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/rerooting.hpp
     title: "\u5168\u65B9\u4F4D\u6728 DP"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/rooted_tree.hpp
     title: "\u6839\u3064\u304D\u6728\u30AF\u30E9\u30B9"
   _extendedVerifiedWith:
@@ -108,13 +108,13 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/dijkstra.test.cpp
     title: verify/yosupo/dijkstra.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/retooting.test.cpp
     title: verify/yosupo/retooting.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/scc.test.cpp
     title: verify/yosupo/scc.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/tree_diameter.test.cpp
     title: verify/yosupo/tree_diameter.test.cpp
   - icon: ':x:'

@@ -20,7 +20,7 @@ data:
   - icon: ':question:'
     path: math/fps/berlekamp_massey.hpp
     title: "Berlekamp\u2013Massey"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
   - icon: ':question:'
@@ -91,12 +91,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
     title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/bmbm.test.cpp
     title: verify/yukicoder/bmbm.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/fps/bmbm.md
     document_title: BMBM
@@ -1439,7 +1439,7 @@ data:
   path: math/fps/bmbm.hpp
   requiredBy: []
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/bmbm.test.cpp
   - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp

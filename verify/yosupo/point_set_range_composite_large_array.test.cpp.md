@@ -5,7 +5,7 @@ data:
     path: ds/segtree/sparse_segtree.hpp
     title: "\u5FC5\u8981\u306A\u3068\u3053\u308D\u3060\u3051\u4F5C\u308B\u30BB\u30B0\
       \u30E1\u30F3\u30C8\u6728"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/affine_function.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
   - icon: ':question:'

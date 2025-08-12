@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/cumulative_sum/imos.hpp
     title: "$1$ \u6B21\u5143 imos \u6CD5"
   - icon: ':question:'

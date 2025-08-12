@@ -65,10 +65,10 @@ data:
   - icon: ':warning:'
     path: math/convolution/ntt_doubling.hpp
     title: "$2$ \u500D\u306E\u9577\u3055\u306E NTT"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/bmbm.hpp
     title: BMBM
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
   - icon: ':question:'
@@ -173,7 +173,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_taylor_shift.test.cpp
     title: verify/yosupo/poly_taylor_shift.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/bmbm.test.cpp
     title: verify/yukicoder/bmbm.test.cpp
   - icon: ':x:'

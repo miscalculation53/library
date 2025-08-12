@@ -46,7 +46,7 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/bmbm.test.cpp
     title: verify/yukicoder/bmbm.test.cpp
   - icon: ':x:'
@@ -54,7 +54,7 @@ data:
     title: verify/yukicoder/imos.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/ds/cumulative_sum/imos.md
     document_title: "$1$ \u6B21\u5143 imos \u6CD5"
@@ -740,7 +740,7 @@ data:
   path: ds/cumulative_sum/imos.hpp
   requiredBy: []
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yukicoder/bmbm.test.cpp
   - verify/yukicoder/imos.test.cpp

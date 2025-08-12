@@ -41,22 +41,22 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/offline/point_add_rectangle_sum.hpp
     title: "\u70B9\u52A0\u7B97\u30FB\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\
       \u30F3\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/offline/rectangle_add_point_get.hpp
     title: "\u77E9\u5F62\u52A0\u7B97\u30FB\u70B9\u53D6\u5F97\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/offline/rectangle_sum.hpp
     title: "\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\u30F3\uFF09"
   - icon: ':warning:'
     path: ds/2d/offline/static_rectangle_add_point_get.hpp
     title: "\u77E9\u5F62\u52A0\u7B97 \u2192 \u70B9\u53D6\u5F97\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/offline/static_rectangle_add_rectangle_sum.hpp
     title: "\u77E9\u5F62\u52A0\u7B97 \u2192 \u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
@@ -64,13 +64,13 @@ data:
     path: ds/2d/sparse/fenwick_tree.hpp
     title: "$2$ \u6B21\u5143 Fenwick Tree\uFF08\u758E\u3001\u30AF\u30A8\u30EA\u70B9\
       \u5148\u8AAD\u307F\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/cumulative_sum/cumulative_sum.hpp
     title: "$1$ \u6B21\u5143\u7D2F\u7A4D\u548C"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/cumulative_sum/cumulative_sum_2d.hpp
     title: "$2$ \u6B21\u5143\u7D2F\u7A4D\u548C"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/cumulative_sum/imos.hpp
     title: "$1$ \u6B21\u5143 imos \u6CD5"
   - icon: ':x:'
@@ -79,10 +79,10 @@ data:
   - icon: ':question:'
     path: ds/fenwick_tree/fenwick_tree.hpp
     title: Fenwick Tree
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/fenwick_tree/fenwick_tree_01.hpp
     title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/fenwick_tree/inversion.hpp
     title: "\u8EE2\u5012\u6570"
   - icon: ':heavy_check_mark:'
@@ -96,7 +96,7 @@ data:
     path: ds/sqrt_decomposition_range_sum.hpp
     title: "\u5E73\u65B9\u5206\u5272\u306B\u3088\u308B\u4E00\u70B9\u52A0\u7B97\u30FB\
       \u533A\u9593\u548C\u30AF\u30A8\u30EA $\\langle O(1), O(\\sqrt{N}) \\rangle$"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
   - icon: ':question:'
@@ -105,7 +105,7 @@ data:
   - icon: ':question:'
     path: math/fps/berlekamp_massey.hpp
     title: "Berlekamp\u2013Massey"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/bmbm.hpp
     title: BMBM
   - icon: ':question:'
@@ -134,10 +134,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/set/kronecker_power.hpp
     title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/set/subset_convolution.hpp
     title: subset convolution
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/set/xor_convolution.hpp
     title: "\u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\u30FBxor \u7573\u307F\u8FBC\
       \u307F"
@@ -253,37 +253,37 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
     title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/rectangle_add_point_get.test.cpp
     title: verify/yosupo/rectangle_add_point_get.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/rectangle_sum.test.cpp
     title: verify/yosupo/rectangle_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_inversions_query.test.cpp
     title: verify/yosupo/static_range_inversions_query.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_sum.test.cpp
     title: verify/yosupo/static_range_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
     title: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential.test.cpp
     title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/xor_convolution.test.cpp
     title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/bmbm.test.cpp
     title: verify/yukicoder/bmbm.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
     title: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
   - icon: ':x:'
