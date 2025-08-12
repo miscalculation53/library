@@ -1,63 +1,63 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/coordinate_compression.hpp
     title: "\u5EA7\u6A19\u5727\u7E2E"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/flat_map.hpp
     title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
       \u5408\u306E map"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/uf/uf.hpp
     title: UnionFind
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/uf/uf_undo.hpp
     title: "undo \u53EF\u80FD UnionFind"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/offline_dynamic_connectivity.test.cpp
     title: verify/yosupo/offline_dynamic_connectivity.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     _deprecated_at_docs: docs/ds/offline_dynamic_connectivity.md
     document_title: "\u30AA\u30D5\u30E9\u30A4\u30F3\u30C0\u30A4\u30B3\u30CD\u306E\u30C6\
@@ -167,25 +167,29 @@ data:
     \n\n#line 6 \"template/template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n\
     \ */\n\n#define ALL(a) (a).begin(), (a).end()\ntemplate <class T = ll, class V>\n\
-    inline T SZ(const V &x) { return x.size(); }\n#define eb emplace_back\n\ntemplate\
-    \ <class F>\nauto gen_vec(const int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n\
-    \  repi(i, n) res[i] = f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    inline T SZ(const V &x) { return x.size(); }\n#define eb emplace_back\n\n#define\
+    \ LMD(x, fx) ([&](auto x) { return fx; })\ntemplate <class F>\nauto gen_vec(int\
+    \ n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n\
+    \  return res;\n}\n#define GEN_VEC(n, i, fi) (gen_vec(n, LMD(i, fi)))\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
     template <class T, size_t d, size_t i = 0, class V>\nauto dvec(const V (&sz)[d],\
     \ const T &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i\
     \ + 1>(sz, init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT\
     \ ctol(const char &c, const string &s)\n{\n  repi(i, SZ<int>(s)) if (s[i] == c)\
     \ return i;\n  return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string\
-    \ &s, const char &first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n  \
-    \               { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T>\
-    \ stov(const string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int\
-    \ i) -> T\n                 { return ctol(s[i], t); });\n}\n\ntemplate <class\
-    \ T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n\
-    \    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class T>\nvc<T>\
-    \ concat(const vc<T> &v) { return v; }\ntemplate <class T, class... Ts>\nvc<T>\
-    \ concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)), ...);\n\
-    \  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
-    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
-    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \ &s, char first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n         \
+    \        { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T> stov(const\
+    \ string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n\
+    \                 { return ctol(s[i], t); });\n}\ntemplate <class T>\nstring vtos(const\
+    \ vc<T> &v, char first)\n{\n  string res = \"\";\n  fe(vi : v) res += vi + first;\n\
+    \  return res;\n}\ntemplate <class T>\nstring vtos(const vc<T> &v, const string\
+    \ &t)\n{\n  string res = \"\";\n  fe(vi : v) res += t[vi];\n  return res;\n}\n\
+    \ntemplate <class T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto\
+    \ &v : vs)\n    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class\
+    \ T>\nvc<T> concat(const vc<T> &v) { return v; }\ntemplate <class T, class...\
+    \ Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)),\
+    \ ...);\n  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v,\
+    \ I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i\
+    \ < 0)\n    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
     \  return v[i];\n}\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define\
     \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 10 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
@@ -492,23 +496,23 @@ data:
     \ = x | '0';\n  memcpy(obuf + por, out + outi + 4, 96 - outi);\n  por += 96 -\
     \ outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T x) {\n  ostringstream oss;\n\
     \  oss << fixed << setprecision(15) << double(x);\n  string s = oss.str();\n \
-    \ wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>, int> = 0>\nvoid\
-    \ wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x); }\nvoid wt1(u128\
-    \ x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\nvoid wt1(long double\
-    \ x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\ntemplate <class\
-    \ T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n  wt1(' ');\n\
-    \  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid wt1_tuple(const\
-    \ T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n    if constexpr\
-    \ (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n    wt1(x);\n   \
-    \ wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const tuple<T...>\
-    \ &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid wt1(const\
-    \ array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i < n; i++)\
-    \ {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class T>\nvoid\
-    \ wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i\
-    \ < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid write()\
-    \ {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail &&...\
-    \ tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print() {\
-    \ wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
+    \ wt1(s);\n}\n\nvoid wt1(int x) { wt1_integer(x); }\ntemplate <class T, enable_if_t<is_integral_v<T>,\
+    \ int> = 0>\nvoid wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x);\
+    \ }\nvoid wt1(u128 x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\n\
+    void wt1(long double x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\
+    \ntemplate <class T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n\
+    \  wt1(' ');\n  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid\
+    \ wt1_tuple(const T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n\
+    \    if constexpr (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n\
+    \    wt1(x);\n    wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const\
+    \ tuple<T...> &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid\
+    \ wt1(const array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0;\
+    \ i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class\
+    \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
+    \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
+    \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
+    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
+    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
     \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
     }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
     struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
@@ -663,39 +667,42 @@ data:
     \u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\u5408\u306E map\n * @docs\
     \ docs/ds/flat_map.md\n */\n\ntemplate <class Key, class Value>\nstruct FlatMap\n\
     {\n  CoordinateCompression<Key> cc;\n  vc<Value> vals;\n\n  FlatMap() {}\n  FlatMap(const\
-    \ vc<Key> &keys) : cc(keys), vals(cc.size()) {}\n  Value &operator[](const Key\
-    \ &key)\n  {\n    const int i = cc.get_id(key);\n    assert(i != -1);\n    return\
-    \ vals[i];\n  }\n  Value &at(const Key &key) { return operator[](key); }\n  bool\
-    \ contains(const Key &key) { return cc.get_id(key) != -1; }\n\n  template <class\
-    \ I = ll>\n  inline I size() const { return cc.size(); }\n  inline bool empty()\
-    \ const { return size() == 0; }\n  struct Iterator\n  {\n  private:\n    int i;\n\
-    \    const FlatMap &mp;\n  public:\n    Iterator(int i, const FlatMap &mp) : i(i),\
-    \ mp(mp) {}\n    pair<Key, Value> operator*() const\n    {\n      assert(i !=\
-    \ mp.cc.size());\n      return pair{mp.cc.vals[i], mp.vals[i]};\n    }\n    Iterator\
-    \ &operator++()\n    {\n      i++;\n      return *this;\n    }\n    bool operator!=(const\
-    \ Iterator &other) const { return i != other.i; }\n  };\n  Iterator begin() const\
-    \ { return Iterator(0, *this); }\n  Iterator end() const { return Iterator(cc.size(),\
-    \ *this); }\n};\n#line 6 \"ds/offline_dynamic_connectivity.hpp\"\n\n#line 2 \"\
-    ds/uf/uf_undo.hpp\"\n\n#line 4 \"ds/uf/uf_undo.hpp\"\n\n#line 2 \"ds/uf/uf.hpp\"\
-    \n\n#line 4 \"ds/uf/uf.hpp\"\n\n/**\n * @brief UnionFind\n * @docs docs/ds/uf/uf.md\n\
-    \ */\n\n// UFData \u306B\u30C7\u30D5\u30A9\u30EB\u30C8\u3067\u7528\u610F\u3055\
-    \u308C\u3066\u3044\u308B\u3082\u306E\n// - UFDataEmpty (\u4F55\u3082\u306A\u3057\
-    \u3001ACL \u76F8\u5F53)\n// - UFDataEverything (\u5168\u90E8\u8F09\u305B)\ntemplate\
-    \ <class UFData, bool compress = true>\nstruct UnionFind\n{\n  friend UFData;\n\
-    \nprotected:\n  vc<int> par;\n  vc<typename UFData::VData> vdat;\n\npublic:\n\
-    \  typename UFData::GData gdat;\n\n  UnionFind() {}\n  UnionFind(int n) : par(n,\
-    \ -1), vdat(n), gdat(n)\n  { repi(i, n) vdat[i] = typename UFData::VData(i); }\n\
-    \n  virtual int leader(int x)\n  {\n    assert(0 <= x && x < SZ<int>(par));\n\
-    \    if (par[x] < 0)\n      return x;\n    if constexpr (compress)\n      return\
-    \ par[x] = leader(par[x]);\n    else\n      return leader(par[x]);\n  }\n  //\
-    \ \u9802\u70B9 x \u3092\u542B\u3080\u9023\u7D50\u6210\u5206\u306E\u9802\u70B9\u6570\
-    \n  template <class I = ll>\n  I size(int x) { return -par[leader(x)]; }\n  typename\
-    \ UFData::VData &get_vdata(int x) { return vdat[leader(x)]; }\n  bool same(int\
-    \ x, int y) { return leader(x) == leader(y); }\n  // \u8FD4\u308A\u5024: \u30DE\
-    \u30FC\u30B8\u3057\u305F\u5F8C\u306E\u65B0\u305F\u306A\u4EE3\u8868\u5143\n  template\
-    \ <class I = ll>\n  I merge(int x, int y, const typename UFData::EWeight &w =\
-    \ 1)\n  {\n    x = leader(x), y = leader(y);\n    if (x == y)\n    {\n      UFData::add_edge_same(*this,\
-    \ x, w);\n      return x;\n    }\n    if (-par[x] < -par[y])\n      swap(x, y);\n\
+    \ vc<Key> &keys) : cc(keys), vals(cc.size()) {}\n  \n  const Value &operator[](const\
+    \ Key &key) const\n  {\n    const int i = cc.get_id(key);\n    assert(i != -1);\n\
+    \    return vals[i];\n  }\n  Value &operator[](const Key &key)\n  {\n    const\
+    \ int i = cc.get_id(key);\n    assert(i != -1);\n    return vals[i];\n  }\n  const\
+    \ Value &at(const Key &key) const { return operator[](key); }\n  Value &at(const\
+    \ Key &key) { return operator[](key); }\n\n  bool contains(const Key &key) { return\
+    \ cc.get_id(key) != -1; }\n\n  template <class I = ll>\n  inline I size() const\
+    \ { return cc.size(); }\n  inline bool empty() const { return size() == 0; }\n\
+    \  struct Iterator\n  {\n  private:\n    int i;\n    const FlatMap &mp;\n  public:\n\
+    \    Iterator(int i, const FlatMap &mp) : i(i), mp(mp) {}\n    pair<Key, Value>\
+    \ operator*() const\n    {\n      assert(i != mp.cc.size());\n      return pair{mp.cc.vals[i],\
+    \ mp.vals[i]};\n    }\n    Iterator &operator++()\n    {\n      i++;\n      return\
+    \ *this;\n    }\n    bool operator!=(const Iterator &other) const { return i !=\
+    \ other.i; }\n  };\n  Iterator begin() const { return Iterator(0, *this); }\n\
+    \  Iterator end() const { return Iterator(cc.size(), *this); }\n};\n#line 6 \"\
+    ds/offline_dynamic_connectivity.hpp\"\n\n#line 2 \"ds/uf/uf_undo.hpp\"\n\n#line\
+    \ 4 \"ds/uf/uf_undo.hpp\"\n\n#line 2 \"ds/uf/uf.hpp\"\n\n#line 4 \"ds/uf/uf.hpp\"\
+    \n\n/**\n * @brief UnionFind\n * @docs docs/ds/uf/uf.md\n */\n\n// UFData \u306B\
+    \u30C7\u30D5\u30A9\u30EB\u30C8\u3067\u7528\u610F\u3055\u308C\u3066\u3044\u308B\
+    \u3082\u306E\n// - UFDataEmpty (\u4F55\u3082\u306A\u3057\u3001ACL \u76F8\u5F53\
+    )\n// - UFDataEverything (\u5168\u90E8\u8F09\u305B)\ntemplate <class UFData, bool\
+    \ compress = true>\nstruct UnionFind\n{\n  friend UFData;\n\nprotected:\n  vc<int>\
+    \ par;\n  vc<typename UFData::VData> vdat;\n\npublic:\n  typename UFData::GData\
+    \ gdat;\n\n  UnionFind() {}\n  UnionFind(int n) : par(n, -1), vdat(n), gdat(n)\n\
+    \  { repi(i, n) vdat[i] = typename UFData::VData(i); }\n\n  virtual int leader(int\
+    \ x)\n  {\n    assert(0 <= x && x < SZ<int>(par));\n    if (par[x] < 0)\n    \
+    \  return x;\n    if constexpr (compress)\n      return par[x] = leader(par[x]);\n\
+    \    else\n      return leader(par[x]);\n  }\n  // \u9802\u70B9 x \u3092\u542B\
+    \u3080\u9023\u7D50\u6210\u5206\u306E\u9802\u70B9\u6570\n  template <class I =\
+    \ ll>\n  I size(int x) { return -par[leader(x)]; }\n  typename UFData::VData &get_vdata(int\
+    \ x) { return vdat[leader(x)]; }\n  bool same(int x, int y) { return leader(x)\
+    \ == leader(y); }\n  // \u8FD4\u308A\u5024: \u30DE\u30FC\u30B8\u3057\u305F\u5F8C\
+    \u306E\u65B0\u305F\u306A\u4EE3\u8868\u5143\n  template <class I = ll>\n  I merge(int\
+    \ x, int y, const typename UFData::EWeight &w = 1)\n  {\n    x = leader(x), y\
+    \ = leader(y);\n    if (x == y)\n    {\n      UFData::add_edge_same(*this, x,\
+    \ w);\n      return x;\n    }\n    if (-par[x] < -par[y])\n      swap(x, y);\n\
     \    par[x] += par[y], par[y] = x;\n    UFData::add_edge_diff(*this, x, y, w);\n\
     \    return x;\n  }\n\n  // \u5404\u9802\u70B9\u304C\u5C5E\u3059\u308B\u9023\u7D50\
     \u6210\u5206\u306E\u756A\u53F7 (\u9806\u756A\u306F\u672A\u5B9A\u7FA9)\n  // ACL\
@@ -846,8 +853,8 @@ data:
   isVerificationFile: false
   path: ds/offline_dynamic_connectivity.hpp
   requiredBy: []
-  timestamp: '2025-04-30 22:43:54+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2025-08-12 21:38:21+09:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - verify/yosupo/offline_dynamic_connectivity.test.cpp
 documentation_of: ds/offline_dynamic_connectivity.hpp

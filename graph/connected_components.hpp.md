@@ -1,49 +1,49 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/csr.hpp
     title: CSR
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/my_queue.hpp
     title: "\u81EA\u4F5C queue"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: graph/graph.hpp
-    title: "\u30B0\u30E9\u30D5\uFF08\u57FA\u5E95\u30AF\u30E9\u30B9\uFF09"
-  - icon: ':heavy_check_mark:'
+    title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -162,25 +162,29 @@ data:
     \n\n#line 6 \"template/template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n\
     \ */\n\n#define ALL(a) (a).begin(), (a).end()\ntemplate <class T = ll, class V>\n\
-    inline T SZ(const V &x) { return x.size(); }\n#define eb emplace_back\n\ntemplate\
-    \ <class F>\nauto gen_vec(const int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n\
-    \  repi(i, n) res[i] = f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    inline T SZ(const V &x) { return x.size(); }\n#define eb emplace_back\n\n#define\
+    \ LMD(x, fx) ([&](auto x) { return fx; })\ntemplate <class F>\nauto gen_vec(int\
+    \ n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n\
+    \  return res;\n}\n#define GEN_VEC(n, i, fi) (gen_vec(n, LMD(i, fi)))\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
     template <class T, size_t d, size_t i = 0, class V>\nauto dvec(const V (&sz)[d],\
     \ const T &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i\
     \ + 1>(sz, init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT\
     \ ctol(const char &c, const string &s)\n{\n  repi(i, SZ<int>(s)) if (s[i] == c)\
     \ return i;\n  return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string\
-    \ &s, const char &first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n  \
-    \               { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T>\
-    \ stov(const string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int\
-    \ i) -> T\n                 { return ctol(s[i], t); });\n}\n\ntemplate <class\
-    \ T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n\
-    \    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class T>\nvc<T>\
-    \ concat(const vc<T> &v) { return v; }\ntemplate <class T, class... Ts>\nvc<T>\
-    \ concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)), ...);\n\
-    \  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
-    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
-    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \ &s, char first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n         \
+    \        { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T> stov(const\
+    \ string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n\
+    \                 { return ctol(s[i], t); });\n}\ntemplate <class T>\nstring vtos(const\
+    \ vc<T> &v, char first)\n{\n  string res = \"\";\n  fe(vi : v) res += vi + first;\n\
+    \  return res;\n}\ntemplate <class T>\nstring vtos(const vc<T> &v, const string\
+    \ &t)\n{\n  string res = \"\";\n  fe(vi : v) res += t[vi];\n  return res;\n}\n\
+    \ntemplate <class T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto\
+    \ &v : vs)\n    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class\
+    \ T>\nvc<T> concat(const vc<T> &v) { return v; }\ntemplate <class T, class...\
+    \ Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)),\
+    \ ...);\n  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v,\
+    \ I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i\
+    \ < 0)\n    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
     \  return v[i];\n}\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define\
     \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 10 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
@@ -487,23 +491,23 @@ data:
     \ = x | '0';\n  memcpy(obuf + por, out + outi + 4, 96 - outi);\n  por += 96 -\
     \ outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T x) {\n  ostringstream oss;\n\
     \  oss << fixed << setprecision(15) << double(x);\n  string s = oss.str();\n \
-    \ wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>, int> = 0>\nvoid\
-    \ wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x); }\nvoid wt1(u128\
-    \ x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\nvoid wt1(long double\
-    \ x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\ntemplate <class\
-    \ T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n  wt1(' ');\n\
-    \  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid wt1_tuple(const\
-    \ T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n    if constexpr\
-    \ (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n    wt1(x);\n   \
-    \ wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const tuple<T...>\
-    \ &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid wt1(const\
-    \ array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i < n; i++)\
-    \ {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class T>\nvoid\
-    \ wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i\
-    \ < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid write()\
-    \ {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail &&...\
-    \ tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print() {\
-    \ wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
+    \ wt1(s);\n}\n\nvoid wt1(int x) { wt1_integer(x); }\ntemplate <class T, enable_if_t<is_integral_v<T>,\
+    \ int> = 0>\nvoid wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x);\
+    \ }\nvoid wt1(u128 x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\n\
+    void wt1(long double x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\
+    \ntemplate <class T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n\
+    \  wt1(' ');\n  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid\
+    \ wt1_tuple(const T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n\
+    \    if constexpr (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n\
+    \    wt1(x);\n    wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const\
+    \ tuple<T...> &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid\
+    \ wt1(const array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0;\
+    \ i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class\
+    \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
+    \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
+    \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
+    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
+    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
     \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
     }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
     struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
@@ -634,68 +638,105 @@ data:
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
     \ 4 \"graph/connected_components.hpp\"\n\n#line 2 \"graph/graph.hpp\"\n\n#line\
     \ 2 \"ds/csr.hpp\"\n\n#line 4 \"ds/csr.hpp\"\n\n/**\n * @brief CSR\n * @docs docs/ds/csr.md\n\
-    \ */\n\ntemplate <class T>\nstruct CSR\n{\nprivate:\n  // i (0 <= i < n) \u884C\
-    \u76EE\u3092\u8868\u3059\u306E\u306F elist \u306E [start[i], start[i+1])\n  int\
-    \ n;\n  vc<int> start;\n  vc<T> elist;\n\n  struct Row\n  {\n    using iterator\
-    \ = typename vc<T>::const_iterator;\n\n  private:\n    iterator begi, endi;\n\n\
-    \  public:\n    Row(const iterator &begi, const iterator &endi) : begi(begi),\
-    \ endi(endi) {}\n    inline iterator begin() const { return begi; }\n    inline\
-    \ iterator end() const { return endi; }\n    template <class I = ll>\n    inline\
-    \ I size() const { return endi - begi; }\n    inline bool empty() const { return\
-    \ size() == 0; }\n\n    inline T get(int i) const\n    {\n      assert(0 <= i\
-    \ && i < size());\n      return *(begi + i);\n    }\n    inline T front() const\n\
-    \    {\n      assert(!empty());\n      return *begi;\n    }\n    inline T back()\
-    \ const\n    {\n      assert(!empty());\n      return *prev(endi);\n    }\n  };\n\
-    \npublic:\n  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n\
-    \  template <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) : n(n), elist(ies.size())\n\
-    \  {\n    assert(n >= 0);\n    start.assign(n, 0);\n    fec([ i, e ] : ies)\n\
-    \    {\n      assert(0 <= i && i < n);\n      start[i]++;\n    }\n    start =\
-    \ cumlsum(start);\n    auto cnt = start;\n    fec([ i, e ] : ies) elist[cnt[i]++]\
-    \ = e;\n  }\n  // vv[i] \u306B elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\
-    \u305F vector\n  CSR(const vvc<T> &vv) : n(vv.size()), start(n + 1)\n  {\n   \
-    \ int m = 0;\n    fec(row : vv) m += row.size();\n    elist.resize(m);\n    int\
-    \ k = 0;\n    repi(i, n)\n    {\n      start[i] = k;\n      fec(e : vv[i]) elist[k++]\
-    \ = e;\n    }\n    start.back() = m;\n  }\n\n  // i \u884C\u76EE\n  Row row(int\
-    \ i) const\n  {\n    if (!(0 <= i && i < n))\n      return Row(elist.begin(),\
-    \ elist.begin());\n    return Row(elist.begin() + start[i], elist.begin() + start[i\
-    \ + 1]);\n  }\n\n  template <class I = ll>\n  I size() const { return n; }\n\n\
-    \  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i] = {elist.begin()\
-    \ + start[i], elist.begin() + start[i + 1]};\n    return res;\n  }\n};\n#line\
-    \ 5 \"graph/graph.hpp\"\n\n/**\n * @brief \u30B0\u30E9\u30D5\uFF08\u57FA\u5E95\
-    \u30AF\u30E9\u30B9\uFF09\n * @docs docs/graph/graph.md\n */\n\ntemplate <class\
-    \ Cost, const Cost dflt_cost = 1>\nstruct Edge\n{\n  int from, to;\n  Cost cost;\n\
-    \  int index;\n  Edge() : index(-1) {}\n  Edge(int s, int t, Cost c, int i) :\
-    \ from(s), to(t), cost(c), index(i) {}\n  operator int() const { return to; }\n\
-    };\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<int>, from, to, cost)\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<ll>,\
-    \ from, to, cost)\n#endif\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\u30BF: n,\
-    \ es, is_directed\ntemplate <class Cost, Cost dflt_cost = 1>\nstruct Graph\n{\n\
-    private:\n  int n;\n  CSR<Edge<Cost>> g;\n\npublic:\n  // n, es, is_directed\n\
-    \  Graph() : n(0) {}\n  template <class I>\n  Graph(int n, const vc<pair<I, I>>\
-    \ &es, bool is_directed) : n(n)\n  {\n    const int m = es.size();\n    if (is_directed)\n\
-    \    {\n      vc<pair<int, Edge<Cost>>> edges(m);\n      repi(i, m)\n      {\n\
-    \        auto [u, v] = es[i];\n        assert(0 <= u && u < n);\n        assert(0\
-    \ <= v && v < n);\n        edges[i] = {u, Edge<Cost>(u, v, dflt_cost, i)};\n \
-    \     }\n      g = CSR<Edge<Cost>>(n, edges);\n    }\n    else\n    {\n      vc<pair<int,\
-    \ Edge<Cost>>> edges(2 * m);\n      repi(i, m)\n      {\n        auto [u, v] =\
-    \ es[i];\n        assert(0 <= u && u < n);\n        assert(0 <= v && v < n);\n\
-    \        edges[2 * i] = {u, Edge<Cost>(u, v, dflt_cost, i)};\n        edges[2\
-    \ * i + 1] = {v, Edge<Cost>(v, u, dflt_cost, i)};\n      }\n      g = CSR<Edge<Cost>>(n,\
-    \ edges);\n    }\n  }\n  template <class I>\n  Graph(int n, const vc<tuple<I,\
-    \ I, Cost>> &es, bool is_directed) : n(n)\n  {\n    const int m = es.size();\n\
-    \    if (is_directed)\n    {\n      vc<pair<int, Edge<Cost>>> edges(m);\n    \
+    \ */\n\ntemplate <class T>\nstruct CSR\n{\nprotected:\n  int n, m;\n  // i (0\
+    \ <= i < n) \u884C\u76EE\u3092\u8868\u3059\u306E\u306F elist \u306E [start[i],\
+    \ start[i+1])\n  vc<int> start;\n  vc<T> elist;\n  vc<int> eid_to_elistid;\n\n\
+    \  struct Row\n  {\n    using iterator = typename vc<T>::const_iterator;\n\n \
+    \ private:\n    iterator begi, endi;\n\n  public:\n    Row(const iterator &begi,\
+    \ const iterator &endi) : begi(begi), endi(endi) {}\n    inline iterator begin()\
+    \ const { return begi; }\n    inline iterator end() const { return endi; }\n \
+    \   template <class I = ll>\n    inline I size() const { return endi - begi; }\n\
+    \    inline bool empty() const { return size() == 0; }\n\n    inline T operator[](int\
+    \ i) const { return *(begi + i); }\n    inline T at(int i) const\n    {\n    \
+    \  assert(0 <= i && i < size());\n      return *(begi + i);\n    }\n\n    inline\
+    \ T front() const\n    {\n      assert(!empty());\n      return *begi;\n    }\n\
+    \    inline T back() const\n    {\n      assert(!empty());\n      return *prev(endi);\n\
+    \    }\n\n    vc<T> to_v() const { return vc<T>(ALL(*this)); }\n  };\n\npublic:\n\
+    \  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template\
+    \ <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) : n(n), m(ies.size()), start(n,\
+    \ 0), elist(m), eid_to_elistid(m)\n  {\n    fec([ i, e ] : ies)\n    {\n     \
+    \ assert(0 <= i && i < n);\n      start[i]++;\n    }\n    start = cumlsum(start);\n\
+    \    auto cnt = start;\n    repi(j, m)\n    {\n      cauto &[i, e] = ies[j];\n\
+    \      int &k = cnt[i];\n      elist[k] = e;\n      eid_to_elistid[j] = k;\n \
+    \     k++;\n    }\n  }\n  // vv[i] \u306B elem \u305F\u3061\u304C\u683C\u7D0D\u3055\
+    \u308C\u305F vector\n  CSR(const vvc<T> &vv) : n(vv.size()), start(n + 1, 0)\n\
+    \  {\n    m = 0;\n    fec(row : vv) m += row.size();\n    elist.resize(m);\n \
+    \   eid_to_elistid.resize(m);\n    int k = 0;\n    for (int i = 0, j = 0; i <\
+    \ n; i++)\n    {\n      start[i] = k;\n      fec(e : vv[i])\n      {\n       \
+    \ elist[k] = e;\n        eid_to_elistid[j++] = k;\n        k++;\n      }\n   \
+    \ }\n    start.back() = m;\n  }\n\n  Row operator[](int i) const { return Row(elist.begin()\
+    \ + start[i], elist.begin() + start[i + 1]); }\n  Row at(int i) const\n  {\n \
+    \   if (!(0 <= i && i < n))\n      return Row(elist.begin(), elist.begin());\n\
+    \    return Row(elist.begin() + start[i], elist.begin() + start[i + 1]);\n  }\n\
+    \n  template <class I = ll>\n  I size() const { return n; }\n\n  const T &find_by_eid(int\
+    \ eid) const\n  {\n    assert(0 <= eid && eid < m);\n    return elist[eid_to_elistid[eid]];\n\
+    \  }\n\n  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i]\
+    \ = {elist.begin() + start[i], elist.begin() + start[i + 1]};\n    return res;\n\
+    \  }\n};\n#line 5 \"graph/graph.hpp\"\n\n/**\n * @brief \u30B0\u30E9\u30D5\u30AF\
+    \u30E9\u30B9\n * @docs docs/graph/graph.md\n */\n\ntemplate <class Cost>\nstruct\
+    \ Edge\n{\n  int from, to;\n  Cost cost;\n  int index;\n  Edge() : from(-1), to(-1),\
+    \ index(-1) {}\n  Edge(int s, int t, Cost c, int i = -1) : from(s), to(t), cost(c),\
+    \ index(i) {}\n  operator int() const { return to; }\n  bool operator<(const Edge\
+    \ &rhs) const { return cost < rhs.cost; }\n  // \u9006\u8FBA\u3092\u8FD4\u3059\
+    \ (\u3082\u3068\u306E\u8FBA\u306F\u5909\u66F4\u3057\u306A\u3044)\n  Edge rev()\
+    \ const { return Edge(to, from, cost, index); }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<int>,\
+    \ from, to, cost)\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<ll>, from, to, cost)\n#endif\n\
+    \ntemplate <class Cost>\nvc<Edge<Cost>> rev_path(const vc<Edge<Cost>> &path)\n\
+    {\n  const int len = path.size();\n  vc<Edge<Cost>> res(len);\n  repi(i, len)\
+    \ res[i] = path[len - 1 - i].rev();\n  return res;\n}\n\n// \u30B3\u30F3\u30B9\
+    \u30C8\u30E9\u30AF\u30BF: n, es\ntemplate <bool is_directed, class Cost>\nstruct\
+    \ Graph\n{\n  using E = Edge<Cost>;\n\nprotected:\n  int n, m;\n  CSR<E> g;\n\n\
+    public:\n  Graph() {}\n  template <class I>\n  Graph(int n, const vc<pair<I, I>>\
+    \ &es, const Cost &dflt_cost = 1) : n(n), m(es.size())\n  {\n    if constexpr\
+    \ (is_directed)\n    {\n      vc<pair<int, E>> edges(m);\n      repi(i, m)\n \
+    \     {\n        auto [u, v] = es[i];\n        assert(0 <= u && u < n);\n    \
+    \    assert(0 <= v && v < n);\n        edges[i] = {u, E(u, v, dflt_cost, i)};\n\
+    \      }\n      g = CSR<E>(n, edges);\n    }\n    else\n    {\n      vc<pair<int,\
+    \ E>> edges(2 * m);\n      repi(i, m)\n      {\n        auto [u, v] = es[i];\n\
+    \        assert(0 <= u && u < n);\n        assert(0 <= v && v < n);\n        edges[2\
+    \ * i] = {u, E(u, v, dflt_cost, i)};\n        edges[2 * i + 1] = {v, E(v, u, dflt_cost,\
+    \ i)};\n      }\n      g = CSR<E>(n, edges);\n    }\n  }\n  template <class I>\n\
+    \  Graph(int n, const vc<tuple<I, I, Cost>> &es) : n(n), m(es.size())\n  {\n \
+    \   if constexpr (is_directed)\n    {\n      vc<pair<int, E>> edges(m);\n    \
     \  repi(i, m)\n      {\n        auto [u, v, w] = es[i];\n        assert(0 <= u\
-    \ && u < n);\n        assert(0 <= v && v < n);\n        edges[i] = {u, Edge<Cost>(u,\
-    \ v, w, i)};\n      }\n      g = CSR<Edge<Cost>>(n, edges);\n    }\n    else\n\
-    \    {\n      vc<pair<int, Edge<Cost>>> edges(2 * m);\n      repi(i, m)\n    \
-    \  {\n        auto [u, v, w] = es[i];\n        assert(0 <= u && u < n);\n    \
-    \    assert(0 <= v && v < n);\n        edges[2 * i] = {u, Edge<Cost>(u, v, w,\
-    \ i)};\n        edges[2 * i + 1] = {v, Edge<Cost>(v, u, w, i)};\n      }\n   \
-    \   g = CSR<Edge<Cost>>(n, edges);\n    }\n  }\n\n  template <class I = ll>\n\
-    \  I size() const { return n; }\n\n  auto out_edges(int v) const { return g.row(v);\
-    \ }\n\n  vc<Edge<Cost>> edges() const\n  {\n    int m = 0;\n    repi(i, n) fe(e\
-    \ : out_edges(i)) chmax(m, e.index);\n    vc<Edge<Cost>> res(m);\n    repi(i,\
-    \ n - 1, -1, -1) fe(e : out_edges(i)) res[e.index] = e;\n    return res;\n  }\n\
-    \  vvc<Edge<Cost>> adj_list() const { return g.to_vv(); }\n};\n#line 2 \"ds/my_queue.hpp\"\
+    \ && u < n);\n        assert(0 <= v && v < n);\n        edges[i] = {u, E(u, v,\
+    \ w, i)};\n      }\n      g = CSR<E>(n, edges);\n    }\n    else\n    {\n    \
+    \  vc<pair<int, E>> edges(2 * m);\n      repi(i, m)\n      {\n        auto [u,\
+    \ v, w] = es[i];\n        assert(0 <= u && u < n);\n        assert(0 <= v && v\
+    \ < n);\n        edges[2 * i] = {u, E(u, v, w, i)};\n        edges[2 * i + 1]\
+    \ = {v, E(v, u, w, i)};\n      }\n      g = CSR<E>(n, edges);\n    }\n  }\n\n\
+    \  // \u9802\u70B9\u6570\n  template <class I = ll>\n  I size() const { return\
+    \ n; }\n  // \u8FBA\u6570\n  template <class I = ll>\n  I num_of_edges() const\
+    \ { return m; }\n\n  // v \u304B\u3089\u51FA\u308B\u8FBA\u306E\u96C6\u5408\n \
+    \ auto out_edges(int v) const { return g[v]; }\n  // v \u304B\u3089\u51FA\u308B\
+    \u9802\u70B9\u306E\u96C6\u5408\n  template <class I = ll>\n  vc<I> out_vertices(int\
+    \ v) const\n  {\n    vc<I> res;\n    res.reserve(g[v].size());\n    fec(e : g[v])\
+    \ res.eb(e.to);\n    return res;\n  }\n\n  // \u8FBA\u756A\u53F7\u304B\u3089\u8FBA\
+    \u3092\u53D6\u5F97\u3059\u308B\n  // \u7121\u5411\u30B0\u30E9\u30D5\u306E\u5834\
+    \u5408 from <= to \u3092\u6E80\u305F\u3059\u3088\u3046\u306B\u8FD4\u3059\n  E\
+    \ get_edge(int eid) const\n  {\n    if constexpr (is_directed)\n      return g.find_by_eid(eid);\n\
+    \    else\n    {\n      E e = g.find_by_eid(eid * 2);\n      return e.from > e.to\
+    \ ? e.rev() : e;\n    }\n  }\n\n  // \u3059\u3079\u3066\u306E\u8FBA\u3092\u8FD4\
+    \u3059 (\u8FBA\u756A\u53F7\u9806)\n  // \u7121\u5411\u30B0\u30E9\u30D5\u306E\u5834\
+    \u5408\u3001\u5404\u8FBA\u306F from <= to \u3092\u6E80\u305F\u3059\n  vc<E> edges()\
+    \ const\n  {\n    vc<E> res(m);\n    repi(i, m) res[i] = get_edge(i);\n    return\
+    \ res;\n  }\n  // \u96A3\u63A5\u30EA\u30B9\u30C8\n  vvc<E> adj_list() const {\
+    \ return g.to_vv(); }\n  // \u96A3\u63A5\u884C\u5217 (\u8FBA\u306E\u672C\u6570\
+    \u3092\u683C\u7D0D)\n  template <class I = ll>\n  vvc<I> adj_matrix_ecnt() const\n\
+    \  {\n    vvc<I> res(n, vc<I>(n, 0));\n    fec(e : edges())\n    {\n      res[e.from][e.to]++;\n\
+    \      if (!is_directed && e.from != e.to)\n        res[e.to][e.from]++;\n   \
+    \ }\n    return res;\n  }\n\n  // \u5165\u6B21\u6570\u306E\u5217\n  template <class\
+    \ I = ll>\n  vc<I> indegs() const\n  {\n    vc<I> res(n);\n    fec(e : edges())\n\
+    \    {\n      res[e.to]++;\n      if (!is_directed && e.from != e.to)\n      \
+    \  res[e.from]++;\n    }\n    return res;\n  }\n  // \u51FA\u6B21\u6570\u306E\u5217\
+    \n  template <class I = ll>\n  vc<I> outdegs() const\n  {\n    vc<I> res(n);\n\
+    \    fec(e : edges()) \n    {\n      res[e.from]++;\n      if (!is_directed &&\
+    \ e.from != e.to)\n        res[e.to]++;\n    }\n    return res;\n  }\n};\n\ntemplate\
+    \ <class Cost>\nusing GraphDirected = Graph<true, Cost>;\ntemplate <class Cost>\n\
+    using GraphUndirected = Graph<false, Cost>;\n\ntemplate <class Cost>\nGraphDirected<Cost>\
+    \ rev_graph(const GraphDirected<Cost> &g)\n{\n  const int n = g.size(), m = g.num_of_edges();\n\
+    \  vc<tuple<int, int, Cost>> uvw;\n  uvw.reserve(m);\n  fec(e : g.edges()) uvw.eb(e.to,\
+    \ e.from, e.cost);\n  return GraphDirected<Cost>(n, uvw);\n}\n#line 2 \"ds/my_queue.hpp\"\
     \n\n#line 4 \"ds/my_queue.hpp\"\n\n/**\n * @brief \u81EA\u4F5C queue\n * @docs\
     \ docs/ds/my_queue.md\n */\n\ntemplate <class T>\nstruct MyQueue\n{\nprivate:\n\
     \  vc<T> d;\n  int pos = 0;\n\npublic:\n  void reserve(int n) { d.reserve(n);\
@@ -711,27 +752,25 @@ data:
     \u6210\u5206\u3078\u306E\u5206\u89E3\n * @docs docs/graph/connected_components.md\n\
     \ */\n\n// \u7121\u5411\u30B0\u30E9\u30D5\u3092\u53D7\u3051\u53D6\u308A\u3001\u5404\
     \u9802\u70B9\u306E\u9023\u7D50\u6210\u5206\u306E\u756A\u53F7\u3092\u8FD4\u3059\
-    \ntemplate <class I = ll, class Cost, Cost dflt_cost>\nvc<I> connected_component_ids(const\
-    \ Graph<Cost, dflt_cost> &g)\n{\n  const int n = g.size();\n  vc<I> res(n, -1);\n\
-    \  int id = 0;\n  MyQueue<int> que;\n  repi(sv, n)\n  {\n    if (res[sv] != -1)\n\
-    \      continue;\n    res[sv] = id;\n    que.clear();\n    que.push(sv);\n   \
-    \ while (!que.empty())\n    {\n      int v = que.front();\n      que.pop();\n\
-    \      fe(nv : g.out_edges(v))\n      {\n        if (res[nv] != -1)\n        \
-    \  continue;\n        res[nv] = id;\n        que.push(nv);\n      }\n    }\n \
-    \   id++;\n  }\n  return res;\n}\n"
+    \ntemplate <class I = ll, class Cost>\nvc<I> connected_component_ids(const GraphUndirected<Cost>\
+    \ &g)\n{\n  const int n = g.size();\n  vc<I> res(n, -1);\n  int id = 0;\n  MyQueue<int>\
+    \ que;\n  repi(sv, n)\n  {\n    if (res[sv] != -1)\n      continue;\n    res[sv]\
+    \ = id;\n    que.clear();\n    que.push(sv);\n    while (!que.empty())\n    {\n\
+    \      int v = que.front();\n      que.pop();\n      fe(nv : g.out_edges(v))\n\
+    \      {\n        if (res[nv] != -1)\n          continue;\n        res[nv] = id;\n\
+    \        que.push(nv);\n      }\n    }\n    id++;\n  }\n  return res;\n}\n"
   code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
     #include \"graph.hpp\"\n#include \"../ds/my_queue.hpp\"\n\n/**\n * @brief \u9023\
     \u7D50\u6210\u5206\u3078\u306E\u5206\u89E3\n * @docs docs/graph/connected_components.md\n\
     \ */\n\n// \u7121\u5411\u30B0\u30E9\u30D5\u3092\u53D7\u3051\u53D6\u308A\u3001\u5404\
     \u9802\u70B9\u306E\u9023\u7D50\u6210\u5206\u306E\u756A\u53F7\u3092\u8FD4\u3059\
-    \ntemplate <class I = ll, class Cost, Cost dflt_cost>\nvc<I> connected_component_ids(const\
-    \ Graph<Cost, dflt_cost> &g)\n{\n  const int n = g.size();\n  vc<I> res(n, -1);\n\
-    \  int id = 0;\n  MyQueue<int> que;\n  repi(sv, n)\n  {\n    if (res[sv] != -1)\n\
-    \      continue;\n    res[sv] = id;\n    que.clear();\n    que.push(sv);\n   \
-    \ while (!que.empty())\n    {\n      int v = que.front();\n      que.pop();\n\
-    \      fe(nv : g.out_edges(v))\n      {\n        if (res[nv] != -1)\n        \
-    \  continue;\n        res[nv] = id;\n        que.push(nv);\n      }\n    }\n \
-    \   id++;\n  }\n  return res;\n}\n"
+    \ntemplate <class I = ll, class Cost>\nvc<I> connected_component_ids(const GraphUndirected<Cost>\
+    \ &g)\n{\n  const int n = g.size();\n  vc<I> res(n, -1);\n  int id = 0;\n  MyQueue<int>\
+    \ que;\n  repi(sv, n)\n  {\n    if (res[sv] != -1)\n      continue;\n    res[sv]\
+    \ = id;\n    que.clear();\n    que.push(sv);\n    while (!que.empty())\n    {\n\
+    \      int v = que.front();\n      que.pop();\n      fe(nv : g.out_edges(v))\n\
+    \      {\n        if (res[nv] != -1)\n          continue;\n        res[nv] = id;\n\
+    \        que.push(nv);\n      }\n    }\n    id++;\n  }\n  return res;\n}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -750,7 +789,7 @@ data:
   isVerificationFile: false
   path: graph/connected_components.hpp
   requiredBy: []
-  timestamp: '2025-04-30 23:59:04+09:00'
+  timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/aoj/connected_components.test.cpp
@@ -761,3 +800,17 @@ redirect_from:
 - /library/graph/connected_components.hpp.html
 title: "\u9023\u7D50\u6210\u5206\u3078\u306E\u5206\u89E3"
 ---
+## 連結成分への分解
+
+#### connected_component_ids
+
+```cpp
+vc<I> connected_component_ids<I = ll>(const GraphUndirected<Cost> &g)
+```
+
+無向グラフを受け取り、各頂点の連結成分の番号を返す。
+
+##### 計算量
+
+- $O(n + m)$
+

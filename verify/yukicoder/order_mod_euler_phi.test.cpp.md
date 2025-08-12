@@ -1,84 +1,84 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint64_internal.hpp
     title: math/modint/modint64_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://yukicoder.me/problems/no/1255
@@ -192,25 +192,29 @@ data:
     \n\n#line 6 \"template/template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n\
     \ */\n\n#define ALL(a) (a).begin(), (a).end()\ntemplate <class T = ll, class V>\n\
-    inline T SZ(const V &x) { return x.size(); }\n#define eb emplace_back\n\ntemplate\
-    \ <class F>\nauto gen_vec(const int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n\
-    \  repi(i, n) res[i] = f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    inline T SZ(const V &x) { return x.size(); }\n#define eb emplace_back\n\n#define\
+    \ LMD(x, fx) ([&](auto x) { return fx; })\ntemplate <class F>\nauto gen_vec(int\
+    \ n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n\
+    \  return res;\n}\n#define GEN_VEC(n, i, fi) (gen_vec(n, LMD(i, fi)))\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
     template <class T, size_t d, size_t i = 0, class V>\nauto dvec(const V (&sz)[d],\
     \ const T &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i\
     \ + 1>(sz, init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT\
     \ ctol(const char &c, const string &s)\n{\n  repi(i, SZ<int>(s)) if (s[i] == c)\
     \ return i;\n  return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string\
-    \ &s, const char &first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n  \
-    \               { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T>\
-    \ stov(const string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int\
-    \ i) -> T\n                 { return ctol(s[i], t); });\n}\n\ntemplate <class\
-    \ T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n\
-    \    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class T>\nvc<T>\
-    \ concat(const vc<T> &v) { return v; }\ntemplate <class T, class... Ts>\nvc<T>\
-    \ concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)), ...);\n\
-    \  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
-    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
-    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \ &s, char first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n         \
+    \        { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T> stov(const\
+    \ string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n\
+    \                 { return ctol(s[i], t); });\n}\ntemplate <class T>\nstring vtos(const\
+    \ vc<T> &v, char first)\n{\n  string res = \"\";\n  fe(vi : v) res += vi + first;\n\
+    \  return res;\n}\ntemplate <class T>\nstring vtos(const vc<T> &v, const string\
+    \ &t)\n{\n  string res = \"\";\n  fe(vi : v) res += t[vi];\n  return res;\n}\n\
+    \ntemplate <class T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto\
+    \ &v : vs)\n    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class\
+    \ T>\nvc<T> concat(const vc<T> &v) { return v; }\ntemplate <class T, class...\
+    \ Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)),\
+    \ ...);\n  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v,\
+    \ I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i\
+    \ < 0)\n    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
     \  return v[i];\n}\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define\
     \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 10 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
@@ -517,23 +521,23 @@ data:
     \ = x | '0';\n  memcpy(obuf + por, out + outi + 4, 96 - outi);\n  por += 96 -\
     \ outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T x) {\n  ostringstream oss;\n\
     \  oss << fixed << setprecision(15) << double(x);\n  string s = oss.str();\n \
-    \ wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>, int> = 0>\nvoid\
-    \ wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x); }\nvoid wt1(u128\
-    \ x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\nvoid wt1(long double\
-    \ x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\ntemplate <class\
-    \ T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n  wt1(' ');\n\
-    \  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid wt1_tuple(const\
-    \ T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n    if constexpr\
-    \ (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n    wt1(x);\n   \
-    \ wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const tuple<T...>\
-    \ &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid wt1(const\
-    \ array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i < n; i++)\
-    \ {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class T>\nvoid\
-    \ wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i\
-    \ < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid write()\
-    \ {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail &&...\
-    \ tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print() {\
-    \ wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
+    \ wt1(s);\n}\n\nvoid wt1(int x) { wt1_integer(x); }\ntemplate <class T, enable_if_t<is_integral_v<T>,\
+    \ int> = 0>\nvoid wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x);\
+    \ }\nvoid wt1(u128 x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\n\
+    void wt1(long double x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\
+    \ntemplate <class T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n\
+    \  wt1(' ');\n  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid\
+    \ wt1_tuple(const T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n\
+    \    if constexpr (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n\
+    \    wt1(x);\n    wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const\
+    \ tuple<T...> &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid\
+    \ wt1(const array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0;\
+    \ i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class\
+    \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
+    \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
+    \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
+    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
+    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
     \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
     }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
     struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
@@ -720,27 +724,25 @@ data:
     \u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs\
     \ docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\
     \u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T =\
-    \ ll>\nconstexpr tuple<T, T, T> extgcd(const T &a, const T &b)\n{\n  if (a ==\
-    \ 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  //\
-    \ a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1,\
-    \ z2 = b;\n  while (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n\
-    \    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1,\
-    \ y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q *\
-    \ z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1,\
-    \ y1};\n}\n#line 7 \"math/modint/modint.hpp\"\n\n/**\n * @brief modint (32 bit)\n\
-    \ * @docs docs/math/modint/modint.md\n */\n\ntemplate <int m>\nstruct static_modint\
-    \ : internal::modint_base<static_modint<m>>\n{\n  using mint = static_modint;\n\
-    private:\n  friend struct internal::modint_base<static_modint<m>>;\n  uint _v;\n\
-    \  static constexpr uint umod() { return m; }\n  static constexpr bool prime =\
-    \ internal::isprime32<m>;\n\npublic:\n  static constexpr int mod() { return m;\
-    \ }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  static_modint() : _v(0) {}\n  template <class T>\n  static_modint(T\
-    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
-    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
-    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
-    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
-    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
-    \n  mint& operator*=(const mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n\
+    \ ll>\nconstexpr tuple<T, T, T> extgcd(T a, T b)\n{\n  if (a == 0 && b == 0)\n\
+    \    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  // a*x2 + b*y2 ==\
+    \ z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1, z2 = b;\n  while\
+    \ (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n    T q = z1 /\
+    \ z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1, y2) = make_pair(y2,\
+    \ y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q * z2);\n  }\n  if (z1\
+    \ < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1, y1};\n}\n#line 7\
+    \ \"math/modint/modint.hpp\"\n\n/**\n * @brief modint (32 bit)\n * @docs docs/math/modint/modint.md\n\
+    \ */\n\ntemplate <int m>\nstruct static_modint : internal::modint_base<static_modint<m>>\n\
+    {\n  using mint = static_modint;\nprivate:\n  friend struct internal::modint_base<static_modint<m>>;\n\
+    \  uint _v;\n  static constexpr uint umod() { return m; }\n  static constexpr\
+    \ bool prime = internal::isprime32<m>;\n\npublic:\n  static constexpr int mod()\
+    \ { return m; }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n \
+    \   return x;\n  }\n\n  static_modint() : _v(0) {}\n  template <class T, typename\
+    \ = enable_if_t<is_integral<T>::value>>\n  static_modint(T v)\n  {\n    if constexpr\
+    \ (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x <\
+    \ 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\n    {\n    \
+    \  _v = (uint)(v % umod());\n    }\n  }\n\n  int val() const { return (int)_v;\
+    \ }\n\n  mint& operator*=(const mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n\
     \    _v = (uint)(z % umod());\n    return *this;\n  }\n\n  mint inv() const\n\
     \  {\n    if (prime)\n    {\n      assert(_v != 0);\n      return CREF.pow(umod()\
     \ - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<int>(_v, m);\n\
@@ -751,24 +753,26 @@ data:
     \ }\n\npublic:\n  static int mod() { return (int)(bt.umod()); }\n  static void\
     \ set_mod(int m)\n  {\n    assert(m >= 1);\n    bt = internal::barrett32(m);\n\
     \  }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  dynamic_modint() : _v(0) {}\n  template <class T>\n  dynamic_modint(T\
-    \ v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n\
-    \      if (x < 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\
-    \ if constexpr (is_unsigned_v<T>)\n    {\n      _v = (uint)(v % umod());\n   \
-    \ }\n    else\n    {\n      static_assert(is_signed_v<T> || is_unsigned_v<T>,\
-    \ \"Unsupported Type\");\n    }\n  }\n\n  int val() const { return (int)_v; }\n\
-    \n  mint& operator*=(const mint &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n   \
-    \ return *this;\n  }\n\n  mint inv() const\n  {\n    auto [g, x, y] = extgcd<int>(_v,\
-    \ mod());\n    assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::barrett32\
-    \ dynamic_modint<id>::bt(998244353);\n\nusing modint998244353 = static_modint<998244353>;\n\
-    using modint1000000007 = static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\
-    \ntemplate <class T>\nstruct is_static_modint : false_type {};\ntemplate <int\
-    \ m>\nstruct is_static_modint<static_modint<m>> : true_type {};\ntemplate <class\
-    \ T>\ninline constexpr bool is_static_modint_v = is_static_modint<T>::value;\n\
-    \ntemplate <class T>\nstruct is_dynamic_modint : false_type {};\ntemplate <int\
-    \ id>\nstruct is_dynamic_modint<dynamic_modint<id>> : true_type {};\ntemplate\
-    \ <class T>\ninline constexpr bool is_dynamic_modint_v = is_dynamic_modint<T>::value;\n\
-    #line 2 \"math/modint/modint64.hpp\"\n\n#line 2 \"math/modint/modint64_internal.hpp\"\
+    \  }\n\n  dynamic_modint() : _v(0) {}\n  template <class T, typename = enable_if_t<is_integral<T>::value>>\n\
+    \  dynamic_modint(T v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll\
+    \ x = (ll)(v % (ll)(umod()));\n      if (x < 0)\n        x += umod();\n      _v\
+    \ = (uint)x;\n    }\n    else\n    {\n      _v = (uint)(v % umod());\n    }\n\
+    \  }\n\n  int val() const { return (int)_v; }\n\n  mint& operator*=(const mint\
+    \ &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n    return *this;\n  }\n\n  mint inv()\
+    \ const\n  {\n    auto [g, x, y] = extgcd<int>(_v, mod());\n    assert(g == 1);\n\
+    \    return x;\n  }\n};\ntemplate <int id>\ninternal::barrett32 dynamic_modint<id>::bt(998244353);\n\
+    \nusing modint998244353 = static_modint<998244353>;\nusing modint1000000007 =\
+    \ static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\ntemplate <class\
+    \ T>\nstruct is_static_modint : false_type {};\ntemplate <int m>\nstruct is_static_modint<static_modint<m>>\
+    \ : true_type {};\ntemplate <class T>\ninline constexpr bool is_static_modint_v\
+    \ = is_static_modint<T>::value;\n\ntemplate <class T>\nstruct is_dynamic_modint\
+    \ : false_type {};\ntemplate <int id>\nstruct is_dynamic_modint<dynamic_modint<id>>\
+    \ : true_type {};\ntemplate <class T>\ninline constexpr bool is_dynamic_modint_v\
+    \ = is_dynamic_modint<T>::value;\n\ntemplate <class T>\ninline constexpr bool\
+    \ is_modint_v = is_static_modint_v<T> || is_dynamic_modint_v<T>;\n\ntemplate <typename,\
+    \ typename = void>\nstruct has_mod : false_type {};\n\ntemplate <typename T>\n\
+    struct has_mod<T, void_t<decltype(declval<T>().mod)>> : true_type {};\n#line 2\
+    \ \"math/modint/modint64.hpp\"\n\n#line 2 \"math/modint/modint64_internal.hpp\"\
     \n\n#line 5 \"math/modint/modint64_internal.hpp\"\n\nnamespace internal\n{\n\n\
     constexpr ll powmod64_constexpr(ll x, ll n, ll m)\n{\n  if (m == 1)\n    return\
     \ 0;\n  ull _m = (ull)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while (n)\n\
@@ -838,29 +842,36 @@ data:
     \ mod());\n    assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::montgomery64\
     \ dynamic_modint64<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
     \ << 61) - 1>;\nusing modint64_odd = dynamic_modint64_odd<-1>;\nusing modint64\
-    \ = dynamic_modint64<-1>;\n#line 2 \"math/prime/prime_power.hpp\"\n\n#line 4 \"\
-    math/prime/prime_power.hpp\"\n\n/**\n * @brief \u7D20\u3079\u304D\u69CB\u9020\u4F53\
-    \n * @docs docs/math/prime/prime_power.md\n */\n\ntemplate <class P>\nstruct PrimePower\n\
-    {\n  P p;\n  int e;\n  P pe;\n\n  PrimePower() : p(-1), e(-1), pe(-1) {}\n  PrimePower(P\
-    \ p, int e = 1) : p(p), e(e), pe(ipow(p, e)) {}\n  PrimePower(P p, int e, P pe)\
-    \ : p(p), e(e), pe(pe) {}\n  template <class P2>\n  PrimePower(const PrimePower<P2>\
-    \ &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\n  template <class P2>\n  bool operator==(const\
-    \ PrimePower<P2> &rhs) const\n  { return p == rhs.p && e == rhs.e && pe == rhs.pe;\
-    \ }\n  template <class P2>\n  bool operator!=(const PrimePower<P2> &rhs) const\
-    \ { return *this != rhs; }\n\n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n\
-    \  void div_p() { e--, pe /= p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>,\
-    \ p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\
-    \n// n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\u6570 e \u306B\u3064\
-    \u3044\u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll n, ll m)\n\
-    {\n  assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n    return\
-    \ {e, 1LL << e, n >> e};\n  }\n  if (n % m != 0)\n    return {0, 1, n};\n  n /=\
-    \ m;\n  if (n % m != 0)\n    return {1, m, n};\n  n /= m;\n  ll m2 = m * m;\n\
-    \  auto [f, m2f, nn] = ord_pow_div(n, m2);\n  int e = 2 + 2 * f;\n  ll me = m2f\
-    \ * m2;\n  if (nn % m == 0)\n    e++, me *= m, nn /= m;\n  return {e, me, nn};\n\
-    }\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class P>\nvc<P>\
-    \ factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n  repi(i,\
-    \ fac.size()) res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570 fac \u306F\
-    \u7D20\u56E0\u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const\
+    \ = dynamic_modint64<-1>;\n\ntemplate <class T>\nstruct is_static_modint64 : false_type\
+    \ {};\ntemplate <int m>\nstruct is_static_modint64<static_modint64<m>> : true_type\
+    \ {};\ntemplate <class T>\ninline constexpr bool is_static_modint64_v = is_static_modint64<T>::value;\n\
+    \ntemplate <class T>\nstruct is_dynamic_modint64 : false_type {};\ntemplate <int\
+    \ id>\nstruct is_dynamic_modint64<dynamic_modint64<id>> : true_type {};\ntemplate\
+    \ <class T>\ninline constexpr bool is_dynamic_modint64_v = is_dynamic_modint64<T>::value;\n\
+    \ntemplate <class T>\ninline constexpr bool is_modint64_v = is_static_modint64_v<T>\
+    \ || is_dynamic_modint64_v<T>;\n#line 2 \"math/prime/prime_power.hpp\"\n\n#line\
+    \ 4 \"math/prime/prime_power.hpp\"\n\n/**\n * @brief \u7D20\u3079\u304D\u69CB\u9020\
+    \u4F53\n * @docs docs/math/prime/prime_power.md\n */\n\ntemplate <class P>\nstruct\
+    \ PrimePower\n{\n  P p;\n  int e;\n  P pe;\n\n  PrimePower() : p(-1), e(-1), pe(-1)\
+    \ {}\n  PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e)) {}\n  PrimePower(P\
+    \ p, int e, P pe) : p(p), e(e), pe(pe) {}\n  template <class P2>\n  PrimePower(const\
+    \ PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\n  template <class P2>\n\
+    \  bool operator==(const PrimePower<P2> &rhs) const\n  { return p == rhs.p &&\
+    \ e == rhs.e && pe == rhs.pe; }\n  template <class P2>\n  bool operator!=(const\
+    \ PrimePower<P2> &rhs) const { return *this != rhs; }\n\n  void mul_p() { e++,\
+    \ pe = ull(pe) * ull(p); }\n  void div_p() { e--, pe /= p; }\n};\n#ifdef LOCAL\n\
+    CPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>,\
+    \ p, e, pe);\n#endif\n\n// n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\
+    \u6570 e \u306B\u3064\u3044\u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll\
+    \ n, ll m)\n{\n  assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n\
+    \    return {e, 1LL << e, n >> e};\n  }\n  if (n % m != 0)\n    return {0, 1,\
+    \ n};\n  n /= m;\n  if (n % m != 0)\n    return {1, m, n};\n  n /= m;\n  ll m2\
+    \ = m * m;\n  auto [f, m2f, nn] = ord_pow_div(n, m2);\n  int e = 2 + 2 * f;\n\
+    \  ll me = m2f * m2;\n  if (nn % m == 0)\n    e++, me *= m, nn /= m;\n  return\
+    \ {e, me, nn};\n}\n\n// \u76F8\u7570\u306A\u308B\u7D20\u56E0\u6570\ntemplate <class\
+    \ P>\nvc<P> factors(const vc<PrimePower<P>> &fac)\n{\n  vc<P> res(fac.size());\n\
+    \  repi(i, fac.size()) res[i] = fac[i].p;\n  return res;\n}\n\n// \u5F15\u6570\
+    \ fac \u306F\u7D20\u56E0\u6570\u5206\u89E3\u5F62\ntemplate <class P>\nvc<ll> divisors(const\
     \ vc<PrimePower<P>> &fac)\n{\n  vc<ll> res;\n  auto dfs = [&](auto dfs, ll d,\
     \ int i) -> void\n  {\n    if (i == SZ<int>(fac))\n    {\n      res.emplace_back(d);\n\
     \      return;\n    }\n    auto &pp = fac[i];\n    ull nd = d;\n    repi(j, pp.e\
@@ -892,18 +903,18 @@ data:
     \n\n#line 8 \"math/prime/factorize.hpp\"\n\n/**\n * @brief \u7D20\u56E0\u6570\u5206\
     \u89E3\n * @docs docs/math/prime/factorize.md\n */\n\nnamespace internal\n{\n\n\
     template <class mint>\nll get_prime_factor_impl(ll n)\n{\n  mint::set_mod(n);\n\
-    \  int m = pow(n, .125);\n  mt19937 _mt;\n  while (true)\n  {\n    int c = 1 +\
-    \ _mt() % 100;\n    mint x = 2, y = 2, prod = 1;\n    ll g = 1;\n    while (g\
-    \ == 1)\n    {\n      repi(i, m)\n      {\n        x = x * x + c;\n        y =\
-    \ y * y + c, y = y * y + c;\n        prod *= x - y;\n      }\n      g = gcd(prod.val(),\
-    \ n);\n    }\n    if (g == n)\n      continue;\n    if (is_prime(g))\n      return\
-    \ g;\n    else if (is_prime(n / g))\n      return n / g;\n    else\n      return\
-    \ get_prime_factor_impl<mint>(g);\n  }\n}\n\nll get_prime_factor(ll n)\n{\n  if\
-    \ (n <= INT_MAX)\n  {\n    using mint = dynamic_modint<INT_MIN>;\n    return get_prime_factor_impl<mint>(n);\n\
-    \  }\n  else\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n    return\
-    \ get_prime_factor_impl<mint>(n);\n  }\n}\n\n}; // namespace internal\n\nvc<PrimePower<ll>>\
-    \ factorize(ll n)\n{\n  vc<PrimePower<ll>> res;\n  repi(p, 2, 100)\n  {\n    if\
-    \ (n % p == 0)\n    {\n      auto [e, pe, nn] = ord_pow_div(n, p);\n      res.emplace_back(PrimePower<ll>(p,\
+    \  int m = pow(n, .125);\n  while (true)\n  {\n    int c = randrange(1, 100);\n\
+    \    mint x = 2, y = 2, prod = 1;\n    ll g = 1;\n    while (g == 1)\n    {\n\
+    \      repi(i, m)\n      {\n        x = x * x + c;\n        y = y * y + c, y =\
+    \ y * y + c;\n        prod *= x - y;\n      }\n      g = gcd(prod.val(), n);\n\
+    \    }\n    if (g == n)\n      continue;\n    if (is_prime(g))\n      return g;\n\
+    \    else if (is_prime(n / g))\n      return n / g;\n    else\n      return get_prime_factor_impl<mint>(g);\n\
+    \  }\n}\n\nll get_prime_factor(ll n)\n{\n  if (n <= INT_MAX)\n  {\n    using mint\
+    \ = dynamic_modint<INT_MIN>;\n    return get_prime_factor_impl<mint>(n);\n  }\n\
+    \  else\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n    return get_prime_factor_impl<mint>(n);\n\
+    \  }\n}\n\n}; // namespace internal\n\nvc<PrimePower<ll>> factorize(ll n)\n{\n\
+    \  vc<PrimePower<ll>> res;\n  repi(p, 2, 100)\n  {\n    if (n % p == 0)\n    {\n\
+    \      auto [e, pe, nn] = ord_pow_div(n, p);\n      res.emplace_back(PrimePower<ll>(p,\
     \ e, pe));\n      n = nn;\n    }\n  }\n  while (n > 1)\n  {\n    if (is_prime(n))\n\
     \    {\n      res.emplace_back(n);\n      break;\n    }\n    ll p = internal::get_prime_factor(n);\n\
     \    auto [e, pe, nn] = ord_pow_div(n, p);\n    res.emplace_back(PrimePower<ll>(p,\
@@ -934,24 +945,23 @@ data:
     \ mint(x));\n  repi(i, k)\n  {\n    if (b[i].pow(fac[i].pe / fac[i].p) == 1)\n\
     \      return false;\n  }\n  return true;\n}\n\ntemplate <class mint, class P>\n\
     ll internal_primitive_root(ll p, const vc<PrimePower<P>> &fac)\n{\n  if (p ==\
-    \ 2)\n    return 1;\n  mt19937 _mt;\n  while (true)\n  {\n    ll g = 1 + _mt()\
-    \ % (p - 1);\n    if (internal_is_primitive_root<mint>(g, p, fac))\n      return\
-    \ g;\n  }\n}\ntemplate <class mint, class P>\nll internal_primitive_root_min(ll\
-    \ p, const vc<PrimePower<P>> &fac)\n{\n  if (p == 2)\n    return 1;\n  for (int\
-    \ g = 2; g < p; g++)\n  {\n    if (internal_is_primitive_root<mint>(g, p, fac))\n\
-    \      return g;\n  }\n  assert(false);\n}\n\ntemplate <class mint, class P>\n\
-    ll internal_order_mod(ll x, ll m, const vc<PrimePower<P>> &fac)\n{\n  const int\
-    \ k = fac.size();\n  mint::set_mod(m);\n  vc<ll> a(k);\n  repi(i, k) a[i] = fac[i].pe;\n\
-    \  auto b = internal::lagrange_basis(a, mint(x));\n  ll res = 1;\n  repi(i, k)\n\
-    \  {\n    mint tmp = b[i];\n    repi(j, fac[i].e + 1)\n    {\n      if (tmp ==\
-    \ 1)\n        break;\n      tmp = tmp.pow(fac[i].p);\n      res *= fac[i].p;\n\
-    \    }\n  }\n  return res;\n}\n\n}; // namespace internal\n\n// m >= 2\n// mod\
-    \ m \u3067\u306E x \u306E\u4F4D\u6570\n// fac \u306B\u306F\u30AA\u30A4\u30E9\u30FC\
-    \u95A2\u6570 \u03C6(m) \u304B\u30AB\u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570\
-    \ \u03BB(m) \u306E\u7D20\u56E0\u6570\u5206\u89E3\u3092\u6E21\u3059 (\u7D20\u6570\
-    \u306A\u3089 p-1)\n// O( log(m) loglog(m) )\ntemplate <class P>\nll order_mod(ll\
-    \ x, ll m, const vc<PrimePower<P>> &fac)\n{\n  assert(m >= 2);\n  assert(gcd(x,\
-    \ m) == 1);\n  if (m <= INT_MAX)\n  {\n    using mint = dynamic_modint<INT_MIN>;\n\
+    \ 2)\n    return 1;\n  while (true)\n  {\n    ll g = randrange(1, p);\n    if\
+    \ (internal_is_primitive_root<mint>(g, p, fac))\n      return g;\n  }\n}\ntemplate\
+    \ <class mint, class P>\nll internal_primitive_root_min(ll p, const vc<PrimePower<P>>\
+    \ &fac)\n{\n  if (p == 2)\n    return 1;\n  for (int g = 2; g < p; g++)\n  {\n\
+    \    if (internal_is_primitive_root<mint>(g, p, fac))\n      return g;\n  }\n\
+    \  assert(false);\n}\n\ntemplate <class mint, class P>\nll internal_order_mod(ll\
+    \ x, ll m, const vc<PrimePower<P>> &fac)\n{\n  const int k = fac.size();\n  mint::set_mod(m);\n\
+    \  vc<ll> a(k);\n  repi(i, k) a[i] = fac[i].pe;\n  auto b = internal::lagrange_basis(a,\
+    \ mint(x));\n  ll res = 1;\n  repi(i, k)\n  {\n    mint tmp = b[i];\n    repi(j,\
+    \ fac[i].e + 1)\n    {\n      if (tmp == 1)\n        break;\n      tmp = tmp.pow(fac[i].p);\n\
+    \      res *= fac[i].p;\n    }\n  }\n  return res;\n}\n\n}; // namespace internal\n\
+    \n// m >= 2\n// mod m \u3067\u306E x \u306E\u4F4D\u6570\n// fac \u306B\u306F\u30AA\
+    \u30A4\u30E9\u30FC\u95A2\u6570 \u03C6(m) \u304B\u30AB\u30FC\u30DE\u30A4\u30B1\u30EB\
+    \u95A2\u6570 \u03BB(m) \u306E\u7D20\u56E0\u6570\u5206\u89E3\u3092\u6E21\u3059\
+    \ (\u7D20\u6570\u306A\u3089 p-1)\n// O( log(m) loglog(m) )\ntemplate <class P>\n\
+    ll order_mod(ll x, ll m, const vc<PrimePower<P>> &fac)\n{\n  assert(m >= 2);\n\
+    \  assert(gcd(x, m) == 1);\n  if (m <= INT_MAX)\n  {\n    using mint = dynamic_modint<INT_MIN>;\n\
     \    return internal::internal_order_mod<mint>(x, m, fac);\n  }\n  else if (m\
     \ % 2 == 1)\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n    return\
     \ internal::internal_order_mod<mint>(x, m, fac);\n  }\n  else\n  {\n    using\
@@ -982,14 +992,15 @@ data:
     \ not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n    #endif\n \
     \   #if defined FAST_CIO and not defined LOCAL\n    CERR(\"\\n[FAST_CIO]\\n\\\
     n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n    #endif\n\
-    \    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n  \n  \
-    \  #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n \
-    \   CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n    \
-    \  dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
-    \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
-    \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
-    T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
-    \      main2();\n    }\n    #endif\n  }\n};\n#line 34 \"verify/yukicoder/order_mod_euler_phi.test.cpp\"\
+    \    cout << fixed << setprecision(20);\n  \n    init();\n    #ifdef LOCAL\n \
+    \   test();\n    #endif\n  \n    #if defined AOJ_TESTCASE or (defined LOCAL and\
+    \ defined SINGLE_TESTCASE)\n    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n \
+    \   while (true)\n    {\n      dump(\"new testcase\");\n      main2();\n    }\n\
+    \    #elif defined SINGLE_TESTCASE\n    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"\
+    36\");\n    main2();\n    #elif defined MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\\
+    n\\n\", \"33\");\n    local(while (true))\n    {\n      dump(\"T\");\n      IN(uint,\
+    \ T);\n      while (T--)\n      {\n        dump(\"new testcase\");\n        main2();\n\
+    \      }\n    }\n    #endif\n  }\n};\n#line 34 \"verify/yukicoder/order_mod_euler_phi.test.cpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   code: "#define PROBLEM \"https://yukicoder.me/problems/no/1255\"\n\n// #define SINGLE_TESTCASE\n\
     #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef LOCAL\n#define FAST_IO\n\
@@ -1027,8 +1038,8 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/order_mod_euler_phi.test.cpp
   requiredBy: []
-  timestamp: '2025-04-30 22:43:54+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2025-08-12 21:38:21+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yukicoder/order_mod_euler_phi.test.cpp
 layout: document

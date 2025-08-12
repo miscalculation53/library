@@ -1,16 +1,16 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy: []
@@ -128,26 +128,27 @@ data:
     \ 2;\n  } else\n    obuf[por++] = x | '0';\n  memcpy(obuf + por, out + outi +\
     \ 4, 96 - outi);\n  por += 96 - outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T\
     \ x) {\n  ostringstream oss;\n  oss << fixed << setprecision(15) << double(x);\n\
-    \  string s = oss.str();\n  wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>,\
-    \ int> = 0>\nvoid wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x);\
-    \ }\nvoid wt1(u128 x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\n\
-    void wt1(long double x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\
-    \ntemplate <class T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n\
-    \  wt1(' ');\n  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid\
-    \ wt1_tuple(const T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n\
-    \    if constexpr (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n\
-    \    wt1(x);\n    wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const\
-    \ tuple<T...> &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid\
-    \ wt1(const array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0;\
-    \ i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class\
-    \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
-    \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
-    \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
-    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
-    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
-    \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
-    }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
-    struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
+    \  string s = oss.str();\n  wt1(s);\n}\n\nvoid wt1(int x) { wt1_integer(x); }\n\
+    template <class T, enable_if_t<is_integral_v<T>, int> = 0>\nvoid wt1(T x) { wt1_integer(x);\
+    \ }\nvoid wt1(i128 x) { wt1_integer(x); }\nvoid wt1(u128 x) { wt1_integer(x);\
+    \ }\nvoid wt1(double x) { wt1_real(x); }\nvoid wt1(long double x) { wt1_real(x);\
+    \ }\n// void wt1(f128 x) { wt1_real(x); }\n\ntemplate <class T, class U>\nvoid\
+    \ wt1(const pair<T, U> &val) {\n  wt1(val.first);\n  wt1(' ');\n  wt1(val.second);\n\
+    }\ntemplate <size_t N = 0, typename T>\nvoid wt1_tuple(const T &t) {\n  if constexpr\
+    \ (N < std::tuple_size<T>::value) {\n    if constexpr (N > 0) { wt1(' '); }\n\
+    \    const auto x = std::get<N>(t);\n    wt1(x);\n    wt1_tuple<N + 1>(t);\n \
+    \ }\n}\ntemplate <class... T>\nvoid wt1(const tuple<T...> &tpl) {\n  wt1_tuple(tpl);\n\
+    }\ntemplate <class T, size_t S>\nvoid wt1(const array<T, S> &val) {\n  auto n\
+    \ = val.size();\n  for (size_t i = 0; i < n; i++) {\n    if (i) wt1(' ');\n  \
+    \  wt1(val[i]);\n  }\n}\ntemplate <class T>\nvoid wt1(const vector<T> &val) {\n\
+    \  auto n = val.size();\n  for (size_t i = 0; i < n; i++) {\n    if (i) wt1('\
+    \ ');\n    wt1(val[i]);\n  }\n}\n\nvoid write() {}\ntemplate <class Head, class...\
+    \ Tail>\nvoid write(Head &&head, Tail &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n\
+    }\n\nvoid print() { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid\
+    \ print(Head &&head, Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail))\
+    \ wt1(' ');\n  print(forward<Tail>(tail)...);\n}\n\n} // namespace fastio\n\n\
+    #endif\n\n#if defined FAST_IO and not defined LOCAL\nstruct Dummy {\n  Dummy()\
+    \ { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
     \n// ---- \u5165\u529B ----\n#if defined LOCAL or not defined FAST_IO\ntemplate\
     \ <class T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  is\
     \ >> p.first >> p.second;\n  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream\
@@ -298,7 +299,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_inout_top.test.cpp
   requiredBy: []
-  timestamp: '2025-04-30 22:43:54+09:00'
+  timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_inout_top.test.cpp

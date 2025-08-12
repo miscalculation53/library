@@ -1,80 +1,193 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/convolution/convolution.hpp
     title: "\u7573\u307F\u8FBC\u307F"
+  - icon: ':x:'
+    path: math/convolution/convolution64.hpp
+    title: "\u7573\u307F\u8FBC\u307F\uFF08$\\bmod \\ 2^{64}$\uFF09"
+  - icon: ':warning:'
+    path: math/convolution/convolution_ll.hpp
+    title: "\u7573\u307F\u8FBC\u307F\uFF08long long\uFF09"
+  - icon: ':x:'
+    path: math/convolution/convolution_many.hpp
+    title: "\u591A\u9805\u5F0F\u306E\u7DCF\u7A4D"
+  - icon: ':warning:'
+    path: math/convolution/ntt_doubling.hpp
+    title: "$2$ \u500D\u306E\u9577\u3055\u306E NTT"
+  - icon: ':x:'
+    path: math/fps/bmbm.hpp
+    title: BMBM
+  - icon: ':x:'
+    path: math/fps/bostan_mori.hpp
+    title: "Bostan\u2013Mori"
+  - icon: ':question:'
+    path: math/fps/fps.hpp
+    title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
+  - icon: ':x:'
+    path: math/fps/interpolation.hpp
+    title: "\u591A\u9805\u5F0F\u88DC\u9593"
+  - icon: ':x:'
+    path: math/fps/interpolation_geo.hpp
+    title: "\u591A\u9805\u5F0F\u88DC\u9593\uFF08\u8A55\u4FA1\u70B9\u304C\u7B49\u6BD4\
+      \u6570\u5217\uFF09"
+  - icon: ':x:'
+    path: math/fps/multipoint_evaluation.hpp
+    title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1"
+  - icon: ':x:'
+    path: math/fps/multipoint_evaluation_geo.hpp
+    title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1\uFF08\u8A55\u4FA1\u70B9\
+      \u304C\u7B49\u6BD4\u6570\u5217\uFF09"
+  - icon: ':question:'
+    path: math/fps/rational_sum.hpp
+    title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
+  - icon: ':x:'
+    path: math/fps/shift_of_sampling_points.hpp
+    title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
+  - icon: ':x:'
+    path: math/fps/taylor_shift.hpp
+    title: Taylor Shift
+  - icon: ':warning:'
+    path: verify/yosupo/fps_inv_sparse.test copy.cpp
+    title: verify/yosupo/fps_inv_sparse.test copy.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
+    path: verify/mytest/rational_plus.test.cpp
+    title: verify/mytest/rational_plus.test.cpp
+  - icon: ':x:'
     path: verify/yosupo/convolution.test.cpp
     title: verify/yosupo/convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/convolution64.test.cpp
     title: verify/yosupo/convolution64.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
     title: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/convolution_arbitrary_static.test.cpp
     title: verify/yosupo/convolution_arbitrary_static.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: verify/yosupo/convolution_many.test.cpp
+    title: verify/yosupo/convolution_many.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_exp.test.cpp
+    title: verify/yosupo/fps_exp.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_exp_sparse.test.cpp
+    title: verify/yosupo/fps_exp_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_inv.test.cpp
+    title: verify/yosupo/fps_inv.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_inv_sparse.test.cpp
+    title: verify/yosupo/fps_inv_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_log.test.cpp
+    title: verify/yosupo/fps_log.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_log_sparse.test.cpp
+    title: verify/yosupo/fps_log_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_pow.test.cpp
+    title: verify/yosupo/fps_pow.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_pow_sparse.test.cpp
+    title: verify/yosupo/fps_pow_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_sqrt.test.cpp
+    title: verify/yosupo/fps_sqrt.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_sqrt_sparse.test.cpp
+    title: verify/yosupo/fps_sqrt_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+    title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_div.test.cpp
+    title: verify/yosupo/poly_div.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_interpolation.test.cpp
+    title: verify/yosupo/poly_interpolation.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_interpolation_geo.test.cpp
+    title: verify/yosupo/poly_interpolation_geo.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_multipoint_evaluation.test.cpp
+    title: verify/yosupo/poly_multipoint_evaluation.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
+    title: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_shift_of_sampling_points.test.cpp
+    title: verify/yosupo/poly_shift_of_sampling_points.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_taylor_shift.test.cpp
+    title: verify/yosupo/poly_taylor_shift.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/bmbm.test.cpp
+    title: verify/yukicoder/bmbm.test.cpp
+  - icon: ':x:'
     path: verify/yukicoder/crt.test.cpp
     title: verify/yukicoder/crt.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/crt_mod.test.cpp
     title: verify/yukicoder/crt_mod.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: verify/yukicoder/poly_rational_sum.test.cpp
+    title: verify/yukicoder/poly_rational_sum.test.cpp
+  - icon: ':x:'
     path: verify/yukicoder/yuki2215_dc.test.cpp
     title: verify/yukicoder/yuki2215_dc.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/yuki2215_swag.test.cpp
     title: verify/yukicoder/yuki2215_swag.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/math/crt.md
     document_title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
@@ -183,25 +296,29 @@ data:
     \n\n#line 6 \"template/template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n\
     \ */\n\n#define ALL(a) (a).begin(), (a).end()\ntemplate <class T = ll, class V>\n\
-    inline T SZ(const V &x) { return x.size(); }\n#define eb emplace_back\n\ntemplate\
-    \ <class F>\nauto gen_vec(const int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n\
-    \  repi(i, n) res[i] = f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    inline T SZ(const V &x) { return x.size(); }\n#define eb emplace_back\n\n#define\
+    \ LMD(x, fx) ([&](auto x) { return fx; })\ntemplate <class F>\nauto gen_vec(int\
+    \ n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n\
+    \  return res;\n}\n#define GEN_VEC(n, i, fi) (gen_vec(n, LMD(i, fi)))\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
     template <class T, size_t d, size_t i = 0, class V>\nauto dvec(const V (&sz)[d],\
     \ const T &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i\
     \ + 1>(sz, init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT\
     \ ctol(const char &c, const string &s)\n{\n  repi(i, SZ<int>(s)) if (s[i] == c)\
     \ return i;\n  return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string\
-    \ &s, const char &first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n  \
-    \               { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T>\
-    \ stov(const string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int\
-    \ i) -> T\n                 { return ctol(s[i], t); });\n}\n\ntemplate <class\
-    \ T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n\
-    \    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class T>\nvc<T>\
-    \ concat(const vc<T> &v) { return v; }\ntemplate <class T, class... Ts>\nvc<T>\
-    \ concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)), ...);\n\
-    \  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
-    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
-    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \ &s, char first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n         \
+    \        { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T> stov(const\
+    \ string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n\
+    \                 { return ctol(s[i], t); });\n}\ntemplate <class T>\nstring vtos(const\
+    \ vc<T> &v, char first)\n{\n  string res = \"\";\n  fe(vi : v) res += vi + first;\n\
+    \  return res;\n}\ntemplate <class T>\nstring vtos(const vc<T> &v, const string\
+    \ &t)\n{\n  string res = \"\";\n  fe(vi : v) res += t[vi];\n  return res;\n}\n\
+    \ntemplate <class T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto\
+    \ &v : vs)\n    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class\
+    \ T>\nvc<T> concat(const vc<T> &v) { return v; }\ntemplate <class T, class...\
+    \ Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)),\
+    \ ...);\n  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v,\
+    \ I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i\
+    \ < 0)\n    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
     \  return v[i];\n}\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define\
     \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 10 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
@@ -508,23 +625,23 @@ data:
     \ = x | '0';\n  memcpy(obuf + por, out + outi + 4, 96 - outi);\n  por += 96 -\
     \ outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T x) {\n  ostringstream oss;\n\
     \  oss << fixed << setprecision(15) << double(x);\n  string s = oss.str();\n \
-    \ wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>, int> = 0>\nvoid\
-    \ wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x); }\nvoid wt1(u128\
-    \ x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\nvoid wt1(long double\
-    \ x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\ntemplate <class\
-    \ T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n  wt1(' ');\n\
-    \  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid wt1_tuple(const\
-    \ T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n    if constexpr\
-    \ (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n    wt1(x);\n   \
-    \ wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const tuple<T...>\
-    \ &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid wt1(const\
-    \ array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i < n; i++)\
-    \ {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class T>\nvoid\
-    \ wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i\
-    \ < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid write()\
-    \ {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail &&...\
-    \ tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print() {\
-    \ wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
+    \ wt1(s);\n}\n\nvoid wt1(int x) { wt1_integer(x); }\ntemplate <class T, enable_if_t<is_integral_v<T>,\
+    \ int> = 0>\nvoid wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x);\
+    \ }\nvoid wt1(u128 x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\n\
+    void wt1(long double x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\
+    \ntemplate <class T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n\
+    \  wt1(' ');\n  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid\
+    \ wt1_tuple(const T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n\
+    \    if constexpr (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n\
+    \    wt1(x);\n    wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const\
+    \ tuple<T...> &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid\
+    \ wt1(const array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0;\
+    \ i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class\
+    \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
+    \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
+    \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
+    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
+    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
     \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
     }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
     struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
@@ -657,93 +774,93 @@ data:
     \n\n/**\n * @brief \u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\
     \u6CD5 (extgcd)\n * @docs docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0,\
     \ ax + by == g \u3092\u6E80\u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|,\
-    \ |b|)\ntemplate <class T = ll>\nconstexpr tuple<T, T, T> extgcd(const T &a, const\
-    \ T &b)\n{\n  if (a == 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1\
-    \ == z1  ...(1)\n  // a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n\
-    \  T x2 = 0, y2 = 1, z2 = b;\n  while (z2 != 0)\n  {\n    // (1)' = (2)\n    //\
-    \ (2)' = (1) - q*(2)\n    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 -\
-    \ q * x2);\n    tie(y1, y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2,\
-    \ z1 - q * z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return\
-    \ {z1, x1, y1};\n}\n#line 2 \"math/modint/modint32_internal.hpp\"\n\n#line 4 \"\
-    math/modint/modint32_internal.hpp\"\n\nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll\
-    \ x, ll n, int m)\n{\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull\
-    \ r = 1;\n  ull y = safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r\
-    \ = (r * y) % _m;\n    y = (y * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\n\
-    constexpr bool isprime32_constexpr(int n)\n{\n  if (n <= 1)\n    return false;\n\
-    \  if (n == 2 || n == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n   \
-    \ return false;\n  ll d = n - 1;\n  while (d % 2 == 0)\n    d /= 2;\n  constexpr\
-    \ ll bases[3] = {2, 7, 61};\n  for (ll a : bases)\n  {\n    ll t = d;\n    ll\
-    \ y = powmod32_constexpr(a, t, n);\n    while (t != n - 1 && y != 1 && y != n\
-    \ - 1)\n    {\n      y = y * y % n;\n      t <<= 1;\n    }\n    if (y != n - 1\
-    \ && t % 2 == 0)\n      return false;\n  }\n  return true;\n}\ntemplate <int n>\n\
-    constexpr bool isprime32 = isprime32_constexpr(n);\n\nstruct barrett32\n{\n  uint\
-    \ m;\n  ull im;\n\n  explicit barrett32(uint m) : m(m), im((ull)(-1) / m + 1)\
-    \ {}\n  uint umod() const { return m; }\n  uint mul(uint a, uint b) const\n  {\n\
-    \    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im) >> 64);\n    ull\
-    \ y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n  }\n};\n\n}\n#line\
-    \ 7 \"math/crt.hpp\"\n\n/**\n * @brief \u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)\n\
-    \ * @docs docs/math/crt.md\n */\n\n// (\u89E3\u304C\u5B58\u5728\u3059\u308B\u304B\
-    , r, m)\ntemplate <class T = ll, class R0, class R1, class M0, class M1>\nconstexpr\
-    \ tuple<bool, T, T> crt2(R0 r0_, R1 r1_, M0 m0_, M1 m1_)\n{\n  T m0 = m0_, m1\
-    \ = m1_;\n  assert(m0 >= 1 && m1 >= 1);\n  T r0 = safemod(r0_, m0), r1 = safemod(r1_,\
-    \ m1);\n  if (m0 < m1)\n    swap(r0, r1), swap(m0, m1);\n  if (m0 % m1 == 0)\n\
-    \  {\n    if (r0 % m1 != r1)\n      return {false, 0, 0};\n    return {true, r0,\
-    \ m0};\n  }\n  auto [g, im, _] = extgcd<T>(m0, m1);\n  T u1 = m1 / g;\n  if ((r1\
-    \ - r0) % g)\n    return {false, 0, 0};\n  T x = (r1 - r0) / g % u1 * im % u1;\n\
-    \  r0 += x * m0;\n  m0 *= u1;\n  if (r0 < 0)\n    r0 += m0;\n  return {true, r0,\
-    \ m0};\n}\n\n// (\u89E3\u304C\u5B58\u5728\u3059\u308B\u304B, r, m)\ntemplate <class\
-    \ T = ll, class V1, class V2>\nconstexpr tuple<bool, T, T> crt(const V1 &rs, const\
+    \ |b|)\ntemplate <class T = ll>\nconstexpr tuple<T, T, T> extgcd(T a, T b)\n{\n\
+    \  if (a == 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n\
+    \  // a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 =\
+    \ 1, z2 = b;\n  while (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n\
+    \    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1,\
+    \ y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q *\
+    \ z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1,\
+    \ y1};\n}\n#line 2 \"math/modint/modint32_internal.hpp\"\n\n#line 4 \"math/modint/modint32_internal.hpp\"\
+    \n\nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll x, ll n, int m)\n\
+    {\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y =\
+    \ safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n\
+    \    y = (y * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int\
+    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
+    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while\
+    \ (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll\
+    \ a : bases)\n  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n  \
+    \  while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n \
+    \     t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n\
+    \  }\n  return true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
+    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
+    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
+    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
+    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
+    \ }\n};\n\n}\n#line 7 \"math/crt.hpp\"\n\n/**\n * @brief \u4E2D\u56FD\u5270\u4F59\
+    \u5B9A\u7406 (CRT)\n * @docs docs/math/crt.md\n */\n\n// (\u89E3\u304C\u5B58\u5728\
+    \u3059\u308B\u304B, r, m)\ntemplate <class T = ll, class R0, class R1, class M0,\
+    \ class M1>\nconstexpr tuple<bool, T, T> crt2(R0 r0_, R1 r1_, M0 m0_, M1 m1_)\n\
+    {\n  T m0 = m0_, m1 = m1_;\n  assert(m0 >= 1 && m1 >= 1);\n  T r0 = safemod(r0_,\
+    \ m0), r1 = safemod(r1_, m1);\n  if (m0 < m1)\n    swap(r0, r1), swap(m0, m1);\n\
+    \  if (m0 % m1 == 0)\n  {\n    if (r0 % m1 != r1)\n      return {false, 0, 0};\n\
+    \    return {true, r0, m0};\n  }\n  auto [g, im, _] = extgcd<T>(m0, m1);\n  T\
+    \ u1 = m1 / g;\n  if ((r1 - r0) % g)\n    return {false, 0, 0};\n  T x = (r1 -\
+    \ r0) / g % u1 * im % u1;\n  r0 += x * m0;\n  m0 *= u1;\n  if (r0 < 0)\n    r0\
+    \ += m0;\n  return {true, r0, m0};\n}\n\n// (\u89E3\u304C\u5B58\u5728\u3059\u308B\
+    \u304B, r, m)\ntemplate <class T = ll, class V1, class V2>\nconstexpr tuple<bool,\
+    \ T, T> crt(const V1 &rs, const V2 &ms)\n{\n  assert(rs.size() == ms.size());\n\
+    \  const int n = rs.size();\n  T r = 0, m = 1;\n  repi(i, n)\n  {\n    auto [ok,\
+    \ nr, nm] = crt2<T>(r, rs[i], m, ms[i]);\n    if (!ok)\n      return {false, 0,\
+    \ 0};\n    r = nr, m = nm;\n  }\n  return {true, r, m};\n}\n\n// (r, m)\n// ms[i]\
+    \ \u305F\u3061\u306F pairwise coprime\n// T \u306F ms[i] \u306E\u578B\u306E 2\
+    \ \u4E57\u304C\u53CE\u307E\u308B (\u7B26\u53F7\u3064\u304D)\ntemplate <class mint,\
+    \ class T = ll, class V1, class V2>\npair<mint, mint> crt_mod(const V1 &rs, const\
     \ V2 &ms)\n{\n  assert(rs.size() == ms.size());\n  const int n = rs.size();\n\
-    \  T r = 0, m = 1;\n  repi(i, n)\n  {\n    auto [ok, nr, nm] = crt2<T>(r, rs[i],\
-    \ m, ms[i]);\n    if (!ok)\n      return {false, 0, 0};\n    r = nr, m = nm;\n\
-    \  }\n  return {true, r, m};\n}\n\n// (r, m)\n// ms[i] \u305F\u3061\u306F pairwise\
-    \ coprime\n// T \u306F ms[i] \u306E\u578B\u306E 2 \u4E57\u304C\u53CE\u307E\u308B\
-    \ (\u7B26\u53F7\u3064\u304D)\ntemplate <class mint, class T = ll, class V1, class\
-    \ V2>\npair<mint, mint> crt_mod(const V1 &rs, const V2 &ms)\n{\n  assert(rs.size()\
-    \ == ms.size());\n  const int n = rs.size();\n  mint r = 0, m = 1;\n  vc<T> rr(n,\
-    \ 0), mm(n, 1);\n  repi(i, n)\n  {\n    // r = t[0] + t[1]m[0] + ... + t[i-1]m[0]...m[i-2]\
-    \ mod mint::mod\n    // m = m[0]...m[i-1] mod mint::mod\n    // rr[i] = t[0] +\
-    \ t[1]m[0] + ... + t[i-1]m[0]...m[i-2] mod m[i]\n    // mm[i] = m[0]...m[i-1]\
-    \ mod m[i]\n    assert(ms[i] >= 1);\n    auto [g, im, _] = extgcd<T>(mm[i], ms[i]);\n\
-    \    assert(g == 1);\n    T t = safemod((rs[i] % ms[i] - rr[i]) * im, ms[i]);\n\
-    \    r += t * m, m *= ms[i];\n    repi(j, i + 1, n)\n    {\n      rr[j] += t *\
-    \ mm[j] % ms[j];\n      if (rr[j] >= ms[j])\n        rr[j] -= ms[j];\n      mm[j]\
-    \ *= ms[i], mm[j] %= ms[j];\n    }\n  }\n  return {r, m};\n}\n\n// (r, m)\n//\
-    \ \u5F15\u6570\u306F array\n// ms[i] \u305F\u3061\u304C\u30B3\u30F3\u30D1\u30A4\
-    \u30EB\u6642\u5B9A\u6570\u3067\u3042\u308B\u3053\u3068\u3092\u4EEE\u5B9A\n// ms[i]\
-    \ \u305F\u3061\u306F pairwise coprime\n// 0 <= rs[i] < ms[i]\n// T \u306F ms[i]\
-    \ \u306E\u578B\u306E 2 \u4E57\u304C\u53CE\u307E\u308B (\u7B26\u53F7\u3064\u304D\
-    )\ntemplate <class mint, class T = ll, class U1, class U2, size_t n>\nconstexpr\
-    \ pair<mint, mint> crt_mod_constexpr(const array<U1, n> &rs, const array<U2, n>\
-    \ &ms)\n{\n  assert(rs.size() == ms.size());\n  mint r = 0, m = 1;\n  array<T,\
-    \ n> rr{}, mm;\n  fill(ALL(mm), 1);\n  repi(i, n)\n  {\n    assert(ms[i] >= U2(1));\n\
-    \    assert(U1(0) <= rs[i] && U2(rs[i]) < ms[i]);\n    auto [g, im, _] = extgcd<T>(mm[i],\
-    \ ms[i]);\n    assert(g == 1);\n    T t = safemod((rs[i] - rr[i]) * im, ms[i]);\n\
-    \    r += t * m, m *= ms[i];\n    repi(j, i + 1, n)\n    {\n      rr[j] += t *\
-    \ mm[j] % ms[j];\n      if (rr[j] >= ms[j])\n        rr[j] -= ms[j];\n      mm[j]\
-    \ *= ms[i], mm[j] %= ms[j];\n    }\n  }\n  return {r, m};\n}\n\n// (r, m)\n//\
-    \ ms[i] \u305F\u3061\u306F pairwise coprime\n// ms[i] \u305F\u3061\u304C dynamic\
-    \ 32 bit \u306E\u5834\u5408\u306B\u9AD8\u901F\u5316\u3057\u305F\u3082\u306E\n\
-    template <class mint, class V1, class V2>\npair<mint, mint> crt_mod_dynamic_32(const\
-    \ V1 &rs, const V2 &ms)\n{\n  assert(rs.size() == ms.size());\n  const int n =\
-    \ rs.size();\n  mint r = 0, m = 1;\n  vc<internal::barrett32> ba;\n  ba.reserve(n);\n\
-    \  repi(i, n) ba.eb(ms[i]);\n  vc<ll> rr(n, 0), mm(n, 1);\n  repi(i, n)\n  {\n\
-    \    assert(ms[i] >= 1);\n    auto [g, im, _] = extgcd<ll>(mm[i], ms[i]);\n  \
-    \  assert(g == 1);\n    if (im < 0)\n      im += ms[i];\n    ll t = ba[i].mul(safemod(rs[i]\
-    \ - rr[i], ms[i]), im);\n    r += t * m, m *= ms[i];\n    repi(j, i + 1, n)\n\
-    \    {\n      rr[j] += ba[j].mul(t, mm[j]);\n      if (rr[j] >= ms[j])\n     \
-    \   rr[j] -= ms[j];\n      mm[j] = ba[j].mul(mm[j], ms[i]);\n    }\n  }\n  return\
-    \ {r, m};\n}\n\n// \u7834\u58CA\u7684\u306B\u5909\u66F4\u3059\u308B\n// \u89E3\
-    \u304C\u5B58\u5728\u3057\u306A\u3044\u306A\u3089 false \u3092\u8FD4\u3059\n//\
-    \ \u89E3\u304C\u5B58\u5728\u3059\u308B\u306A\u3089 true \u3092\u8FD4\u3057\u3001\
-    ms[i] \u305F\u3061\u304C pairwise coprime \u3067\u3042\u308B\u3088\u3046\u306A\
-    \u7B49\u4FA1\u306A\u65B9\u7A0B\u5F0F\u306B\u5909\u63DB\u3059\u308B\ntemplate <class\
-    \ V1, class V2>\nbool pre_crt(const V1 &rs, V2 &ms)\n{\n  using T = typename V2::value_type;\n\
-    \  assert(rs.size() == ms.size());\n  const int n = rs.size();\n  repi(i, n) repi(j,\
-    \ i + 1, n)\n  {\n    T g = gcd(ms[i], ms[j]);\n    if ((rs[i] - rs[j]) % g)\n\
-    \      return false;\n    ms[i] /= g, ms[j] /= g;\n    T gi = gcd(ms[i], g), gj\
-    \ = g / gi;\n    do\n    {\n      g = gcd(gi, gj);\n      gi *= g, gj /= g;\n\
-    \    } while (g > 1);\n    ms[i] *= gi, ms[j] *= gj;\n  }\n  return true;\n}\n"
+    \  mint r = 0, m = 1;\n  vc<T> rr(n, 0), mm(n, 1);\n  repi(i, n)\n  {\n    //\
+    \ r = t[0] + t[1]m[0] + ... + t[i-1]m[0]...m[i-2] mod mint::mod\n    // m = m[0]...m[i-1]\
+    \ mod mint::mod\n    // rr[i] = t[0] + t[1]m[0] + ... + t[i-1]m[0]...m[i-2] mod\
+    \ m[i]\n    // mm[i] = m[0]...m[i-1] mod m[i]\n    assert(ms[i] >= 1);\n    auto\
+    \ [g, im, _] = extgcd<T>(mm[i], ms[i]);\n    assert(g == 1);\n    T t = safemod((rs[i]\
+    \ % ms[i] - rr[i]) * im, ms[i]);\n    r += t * m, m *= ms[i];\n    repi(j, i +\
+    \ 1, n)\n    {\n      rr[j] += t * mm[j] % ms[j];\n      if (rr[j] >= ms[j])\n\
+    \        rr[j] -= ms[j];\n      mm[j] *= ms[i], mm[j] %= ms[j];\n    }\n  }\n\
+    \  return {r, m};\n}\n\n// (r, m)\n// \u5F15\u6570\u306F array\n// ms[i] \u305F\
+    \u3061\u304C\u30B3\u30F3\u30D1\u30A4\u30EB\u6642\u5B9A\u6570\u3067\u3042\u308B\
+    \u3053\u3068\u3092\u4EEE\u5B9A\n// ms[i] \u305F\u3061\u306F pairwise coprime\n\
+    // 0 <= rs[i] < ms[i]\n// T \u306F ms[i] \u306E\u578B\u306E 2 \u4E57\u304C\u53CE\
+    \u307E\u308B (\u7B26\u53F7\u3064\u304D)\ntemplate <class mint, class T = ll, class\
+    \ U1, class U2, size_t n>\nconstexpr pair<mint, mint> crt_mod_constexpr(const\
+    \ array<U1, n> &rs, const array<U2, n> &ms)\n{\n  assert(rs.size() == ms.size());\n\
+    \  mint r = 0, m = 1;\n  array<T, n> rr{}, mm;\n  fill(ALL(mm), 1);\n  repi(i,\
+    \ n)\n  {\n    assert(ms[i] >= U2(1));\n    assert(U1(0) <= rs[i] && U2(rs[i])\
+    \ < ms[i]);\n    auto [g, im, _] = extgcd<T>(mm[i], ms[i]);\n    assert(g == 1);\n\
+    \    T t = safemod((rs[i] - rr[i]) * im, ms[i]);\n    r += t * m, m *= ms[i];\n\
+    \    repi(j, i + 1, n)\n    {\n      rr[j] += t * mm[j] % ms[j];\n      if (rr[j]\
+    \ >= ms[j])\n        rr[j] -= ms[j];\n      mm[j] *= ms[i], mm[j] %= ms[j];\n\
+    \    }\n  }\n  return {r, m};\n}\n\n// (r, m)\n// ms[i] \u305F\u3061\u306F pairwise\
+    \ coprime\n// ms[i] \u305F\u3061\u304C dynamic 32 bit \u306E\u5834\u5408\u306B\
+    \u9AD8\u901F\u5316\u3057\u305F\u3082\u306E\ntemplate <class mint, class V1, class\
+    \ V2>\npair<mint, mint> crt_mod_dynamic_32(const V1 &rs, const V2 &ms)\n{\n  assert(rs.size()\
+    \ == ms.size());\n  const int n = rs.size();\n  mint r = 0, m = 1;\n  vc<internal::barrett32>\
+    \ ba;\n  ba.reserve(n);\n  repi(i, n) ba.eb(ms[i]);\n  vc<ll> rr(n, 0), mm(n,\
+    \ 1);\n  repi(i, n)\n  {\n    assert(ms[i] >= 1);\n    auto [g, im, _] = extgcd<ll>(mm[i],\
+    \ ms[i]);\n    assert(g == 1);\n    if (im < 0)\n      im += ms[i];\n    ll t\
+    \ = ba[i].mul(safemod(rs[i] - rr[i], ms[i]), im);\n    r += t * m, m *= ms[i];\n\
+    \    repi(j, i + 1, n)\n    {\n      rr[j] += ba[j].mul(t, mm[j]);\n      if (rr[j]\
+    \ >= ms[j])\n        rr[j] -= ms[j];\n      mm[j] = ba[j].mul(mm[j], ms[i]);\n\
+    \    }\n  }\n  return {r, m};\n}\n\n// \u7834\u58CA\u7684\u306B\u5909\u66F4\u3059\
+    \u308B\n// \u89E3\u304C\u5B58\u5728\u3057\u306A\u3044\u306A\u3089 false \u3092\
+    \u8FD4\u3059\n// \u89E3\u304C\u5B58\u5728\u3059\u308B\u306A\u3089 true \u3092\u8FD4\
+    \u3057\u3001ms[i] \u305F\u3061\u304C pairwise coprime \u3067\u3042\u308B\u3088\
+    \u3046\u306A\u7B49\u4FA1\u306A\u65B9\u7A0B\u5F0F\u306B\u5909\u63DB\u3059\u308B\
+    \ntemplate <class V1, class V2>\nbool pre_crt(const V1 &rs, V2 &ms)\n{\n  using\
+    \ T = typename V2::value_type;\n  assert(rs.size() == ms.size());\n  const int\
+    \ n = rs.size();\n  repi(i, n) repi(j, i + 1, n)\n  {\n    T g = gcd(ms[i], ms[j]);\n\
+    \    if ((rs[i] - rs[j]) % g)\n      return false;\n    ms[i] /= g, ms[j] /= g;\n\
+    \    T gi = gcd(ms[i], g), gj = g / gi;\n    do\n    {\n      g = gcd(gi, gj);\n\
+    \      gi *= g, gj /= g;\n    } while (g > 1);\n    ms[i] *= gi, ms[j] *= gj;\n\
+    \  }\n  return true;\n}\n"
   code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
     #include \"extgcd.hpp\"\n#include \"modint/modint32_internal.hpp\"\n\n/**\n *\
     \ @brief \u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)\n * @docs docs/math/crt.md\n\
@@ -826,18 +943,55 @@ data:
   isVerificationFile: false
   path: math/crt.hpp
   requiredBy:
+  - math/fps/rational_sum.hpp
+  - math/fps/taylor_shift.hpp
+  - math/fps/bmbm.hpp
+  - math/fps/interpolation.hpp
+  - math/fps/interpolation_geo.hpp
+  - math/fps/multipoint_evaluation_geo.hpp
+  - math/fps/bostan_mori.hpp
+  - math/fps/fps.hpp
+  - math/fps/multipoint_evaluation.hpp
+  - math/fps/shift_of_sampling_points.hpp
+  - math/convolution/convolution_many.hpp
+  - math/convolution/convolution64.hpp
+  - math/convolution/ntt_doubling.hpp
   - math/convolution/convolution.hpp
-  timestamp: '2025-04-30 22:43:54+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  - math/convolution/convolution_ll.hpp
+  - verify/yosupo/fps_inv_sparse.test copy.cpp
+  timestamp: '2025-08-12 21:38:21+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
+  - verify/yukicoder/poly_rational_sum.test.cpp
   - verify/yukicoder/yuki2215_dc.test.cpp
+  - verify/yukicoder/bmbm.test.cpp
   - verify/yukicoder/crt.test.cpp
-  - verify/yukicoder/crt_mod.test.cpp
   - verify/yukicoder/yuki2215_swag.test.cpp
-  - verify/yosupo/convolution.test.cpp
+  - verify/yukicoder/crt_mod.test.cpp
+  - verify/mytest/rational_plus.test.cpp
+  - verify/yosupo/fps_inv_sparse.test.cpp
+  - verify/yosupo/convolution_many.test.cpp
+  - verify/yosupo/fps_exp.test.cpp
+  - verify/yosupo/fps_log_sparse.test.cpp
+  - verify/yosupo/fps_pow.test.cpp
+  - verify/yosupo/poly_multipoint_evaluation.test.cpp
   - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
+  - verify/yosupo/convolution.test.cpp
+  - verify/yosupo/fps_inv.test.cpp
+  - verify/yosupo/fps_sqrt.test.cpp
+  - verify/yosupo/poly_taylor_shift.test.cpp
+  - verify/yosupo/fps_log.test.cpp
+  - verify/yosupo/fps_pow_sparse.test.cpp
+  - verify/yosupo/poly_div.test.cpp
+  - verify/yosupo/poly_interpolation_geo.test.cpp
   - verify/yosupo/convolution_arbitrary_static.test.cpp
+  - verify/yosupo/fps_sqrt_sparse.test.cpp
+  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - verify/yosupo/poly_interpolation.test.cpp
   - verify/yosupo/convolution64.test.cpp
+  - verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
+  - verify/yosupo/fps_exp_sparse.test.cpp
+  - verify/yosupo/poly_shift_of_sampling_points.test.cpp
 documentation_of: math/crt.hpp
 layout: document
 redirect_from:

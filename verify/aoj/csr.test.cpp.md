@@ -1,46 +1,46 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/csr.hpp
     title: CSR
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -160,25 +160,29 @@ data:
     \n\n#line 6 \"template/template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n\
     \ */\n\n#define ALL(a) (a).begin(), (a).end()\ntemplate <class T = ll, class V>\n\
-    inline T SZ(const V &x) { return x.size(); }\n#define eb emplace_back\n\ntemplate\
-    \ <class F>\nauto gen_vec(const int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n\
-    \  repi(i, n) res[i] = f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    inline T SZ(const V &x) { return x.size(); }\n#define eb emplace_back\n\n#define\
+    \ LMD(x, fx) ([&](auto x) { return fx; })\ntemplate <class F>\nauto gen_vec(int\
+    \ n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n\
+    \  return res;\n}\n#define GEN_VEC(n, i, fi) (gen_vec(n, LMD(i, fi)))\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
     template <class T, size_t d, size_t i = 0, class V>\nauto dvec(const V (&sz)[d],\
     \ const T &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i\
     \ + 1>(sz, init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT\
     \ ctol(const char &c, const string &s)\n{\n  repi(i, SZ<int>(s)) if (s[i] == c)\
     \ return i;\n  return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string\
-    \ &s, const char &first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n  \
-    \               { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T>\
-    \ stov(const string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int\
-    \ i) -> T\n                 { return ctol(s[i], t); });\n}\n\ntemplate <class\
-    \ T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n\
-    \    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class T>\nvc<T>\
-    \ concat(const vc<T> &v) { return v; }\ntemplate <class T, class... Ts>\nvc<T>\
-    \ concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)), ...);\n\
-    \  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
-    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
-    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \ &s, char first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n         \
+    \        { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T> stov(const\
+    \ string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n\
+    \                 { return ctol(s[i], t); });\n}\ntemplate <class T>\nstring vtos(const\
+    \ vc<T> &v, char first)\n{\n  string res = \"\";\n  fe(vi : v) res += vi + first;\n\
+    \  return res;\n}\ntemplate <class T>\nstring vtos(const vc<T> &v, const string\
+    \ &t)\n{\n  string res = \"\";\n  fe(vi : v) res += t[vi];\n  return res;\n}\n\
+    \ntemplate <class T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto\
+    \ &v : vs)\n    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class\
+    \ T>\nvc<T> concat(const vc<T> &v) { return v; }\ntemplate <class T, class...\
+    \ Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)),\
+    \ ...);\n  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v,\
+    \ I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i\
+    \ < 0)\n    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
     \  return v[i];\n}\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define\
     \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 10 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
@@ -485,23 +489,23 @@ data:
     \ = x | '0';\n  memcpy(obuf + por, out + outi + 4, 96 - outi);\n  por += 96 -\
     \ outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T x) {\n  ostringstream oss;\n\
     \  oss << fixed << setprecision(15) << double(x);\n  string s = oss.str();\n \
-    \ wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>, int> = 0>\nvoid\
-    \ wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x); }\nvoid wt1(u128\
-    \ x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\nvoid wt1(long double\
-    \ x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\ntemplate <class\
-    \ T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n  wt1(' ');\n\
-    \  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid wt1_tuple(const\
-    \ T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n    if constexpr\
-    \ (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n    wt1(x);\n   \
-    \ wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const tuple<T...>\
-    \ &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid wt1(const\
-    \ array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i < n; i++)\
-    \ {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class T>\nvoid\
-    \ wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i\
-    \ < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid write()\
-    \ {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail &&...\
-    \ tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print() {\
-    \ wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
+    \ wt1(s);\n}\n\nvoid wt1(int x) { wt1_integer(x); }\ntemplate <class T, enable_if_t<is_integral_v<T>,\
+    \ int> = 0>\nvoid wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x);\
+    \ }\nvoid wt1(u128 x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\n\
+    void wt1(long double x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\
+    \ntemplate <class T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n\
+    \  wt1(' ');\n  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid\
+    \ wt1_tuple(const T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n\
+    \    if constexpr (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n\
+    \    wt1(x);\n    wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const\
+    \ tuple<T...> &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid\
+    \ wt1(const array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0;\
+    \ i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class\
+    \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
+    \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
+    \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
+    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
+    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
     \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
     }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
     struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
@@ -632,39 +636,46 @@ data:
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
     \ 17 \"verify/aoj/csr.test.cpp\"\n\n#line 2 \"ds/csr.hpp\"\n\n#line 4 \"ds/csr.hpp\"\
     \n\n/**\n * @brief CSR\n * @docs docs/ds/csr.md\n */\n\ntemplate <class T>\nstruct\
-    \ CSR\n{\nprivate:\n  // i (0 <= i < n) \u884C\u76EE\u3092\u8868\u3059\u306E\u306F\
-    \ elist \u306E [start[i], start[i+1])\n  int n;\n  vc<int> start;\n  vc<T> elist;\n\
-    \n  struct Row\n  {\n    using iterator = typename vc<T>::const_iterator;\n\n\
-    \  private:\n    iterator begi, endi;\n\n  public:\n    Row(const iterator &begi,\
-    \ const iterator &endi) : begi(begi), endi(endi) {}\n    inline iterator begin()\
-    \ const { return begi; }\n    inline iterator end() const { return endi; }\n \
-    \   template <class I = ll>\n    inline I size() const { return endi - begi; }\n\
-    \    inline bool empty() const { return size() == 0; }\n\n    inline T get(int\
-    \ i) const\n    {\n      assert(0 <= i && i < size());\n      return *(begi +\
-    \ i);\n    }\n    inline T front() const\n    {\n      assert(!empty());\n   \
-    \   return *begi;\n    }\n    inline T back() const\n    {\n      assert(!empty());\n\
-    \      return *prev(endi);\n    }\n  };\n\npublic:\n  CSR() {}\n  // (i, elem)\
-    \ \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template <class I>\n  CSR(int\
-    \ n, const vc<pair<I, T>> &ies) : n(n), elist(ies.size())\n  {\n    assert(n >=\
-    \ 0);\n    start.assign(n, 0);\n    fec([ i, e ] : ies)\n    {\n      assert(0\
-    \ <= i && i < n);\n      start[i]++;\n    }\n    start = cumlsum(start);\n   \
-    \ auto cnt = start;\n    fec([ i, e ] : ies) elist[cnt[i]++] = e;\n  }\n  // vv[i]\
-    \ \u306B elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  CSR(const\
-    \ vvc<T> &vv) : n(vv.size()), start(n + 1)\n  {\n    int m = 0;\n    fec(row :\
-    \ vv) m += row.size();\n    elist.resize(m);\n    int k = 0;\n    repi(i, n)\n\
-    \    {\n      start[i] = k;\n      fec(e : vv[i]) elist[k++] = e;\n    }\n   \
-    \ start.back() = m;\n  }\n\n  // i \u884C\u76EE\n  Row row(int i) const\n  {\n\
-    \    if (!(0 <= i && i < n))\n      return Row(elist.begin(), elist.begin());\n\
-    \    return Row(elist.begin() + start[i], elist.begin() + start[i + 1]);\n  }\n\
-    \n  template <class I = ll>\n  I size() const { return n; }\n\n  vvc<T> to_vv()\
-    \ const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i] = {elist.begin() + start[i],\
-    \ elist.begin() + start[i + 1]};\n    return res;\n  }\n};\n#line 19 \"verify/aoj/csr.test.cpp\"\
+    \ CSR\n{\nprotected:\n  int n, m;\n  // i (0 <= i < n) \u884C\u76EE\u3092\u8868\
+    \u3059\u306E\u306F elist \u306E [start[i], start[i+1])\n  vc<int> start;\n  vc<T>\
+    \ elist;\n  vc<int> eid_to_elistid;\n\n  struct Row\n  {\n    using iterator =\
+    \ typename vc<T>::const_iterator;\n\n  private:\n    iterator begi, endi;\n\n\
+    \  public:\n    Row(const iterator &begi, const iterator &endi) : begi(begi),\
+    \ endi(endi) {}\n    inline iterator begin() const { return begi; }\n    inline\
+    \ iterator end() const { return endi; }\n    template <class I = ll>\n    inline\
+    \ I size() const { return endi - begi; }\n    inline bool empty() const { return\
+    \ size() == 0; }\n\n    inline T operator[](int i) const { return *(begi + i);\
+    \ }\n    inline T at(int i) const\n    {\n      assert(0 <= i && i < size());\n\
+    \      return *(begi + i);\n    }\n\n    inline T front() const\n    {\n     \
+    \ assert(!empty());\n      return *begi;\n    }\n    inline T back() const\n \
+    \   {\n      assert(!empty());\n      return *prev(endi);\n    }\n\n    vc<T>\
+    \ to_v() const { return vc<T>(ALL(*this)); }\n  };\n\npublic:\n  CSR() {}\n  //\
+    \ (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template <class I>\n\
+    \  CSR(int n, const vc<pair<I, T>> &ies) : n(n), m(ies.size()), start(n, 0), elist(m),\
+    \ eid_to_elistid(m)\n  {\n    fec([ i, e ] : ies)\n    {\n      assert(0 <= i\
+    \ && i < n);\n      start[i]++;\n    }\n    start = cumlsum(start);\n    auto\
+    \ cnt = start;\n    repi(j, m)\n    {\n      cauto &[i, e] = ies[j];\n      int\
+    \ &k = cnt[i];\n      elist[k] = e;\n      eid_to_elistid[j] = k;\n      k++;\n\
+    \    }\n  }\n  // vv[i] \u306B elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\
+    \u305F vector\n  CSR(const vvc<T> &vv) : n(vv.size()), start(n + 1, 0)\n  {\n\
+    \    m = 0;\n    fec(row : vv) m += row.size();\n    elist.resize(m);\n    eid_to_elistid.resize(m);\n\
+    \    int k = 0;\n    for (int i = 0, j = 0; i < n; i++)\n    {\n      start[i]\
+    \ = k;\n      fec(e : vv[i])\n      {\n        elist[k] = e;\n        eid_to_elistid[j++]\
+    \ = k;\n        k++;\n      }\n    }\n    start.back() = m;\n  }\n\n  Row operator[](int\
+    \ i) const { return Row(elist.begin() + start[i], elist.begin() + start[i + 1]);\
+    \ }\n  Row at(int i) const\n  {\n    if (!(0 <= i && i < n))\n      return Row(elist.begin(),\
+    \ elist.begin());\n    return Row(elist.begin() + start[i], elist.begin() + start[i\
+    \ + 1]);\n  }\n\n  template <class I = ll>\n  I size() const { return n; }\n\n\
+    \  const T &find_by_eid(int eid) const\n  {\n    assert(0 <= eid && eid < m);\n\
+    \    return elist[eid_to_elistid[eid]];\n  }\n\n  vvc<T> to_vv() const\n  {\n\
+    \    vvc<T> res(n);\n    repi(i, n) res[i] = {elist.begin() + start[i], elist.begin()\
+    \ + start[i + 1]};\n    return res;\n  }\n};\n#line 19 \"verify/aoj/csr.test.cpp\"\
     \n\nvoid init()\n{\n  oj(mt.seed(random_device()()));\n}\n\nvoid main2()\n{ \n\
     \  LL(N);\n  vvl vv(N);\n  vpll ies;\n  rep(i, N)\n  {\n    LL(u, k);\n    u--;\n\
     \    READVEC(k, vv.at(u));\n    offset(vv.at(u), -1);\n    fec(v : vv.at(i)) ies.push_back({u,\
     \ v});\n  }\n\n  CSR csr1(vv), csr2(N, ies);\n  assert(csr1.to_vv() == csr2.to_vv()\
     \ && csr1.to_vv() == vv);\n  dump(csr1.to_vv() | cp::index());\n  vvl ans(N, vl(N,\
-    \ 0));\n  rep(i, N)\n  {\n    fec(j : csr1.row(i)) ans.at(i).at(j) = 1;\n  }\n\
+    \ 0));\n  rep(i, N)\n  {\n    fec(j : csr1.at(i)) ans.at(i).at(j) = 1;\n  }\n\
     \  PRINTV(ans);\n}\n\nvoid test()\n{\n  \n}\n\n#line 2 \"template/template_main.hpp\"\
     \n\n#line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2,\
     \ auto test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
@@ -675,15 +686,16 @@ data:
     \   };\n  \n    #if defined FAST_IO and not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\\
     n\\n\", \"32\");\n    #endif\n    #if defined FAST_CIO and not defined LOCAL\n\
     \    CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
-    \    #endif\n    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n\
-    \  \n    #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n\
-    \    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n   \
-    \   dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
-    \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
-    \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
-    T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
-    \      main2();\n    }\n    #endif\n  }\n};\n#line 56 \"verify/aoj/csr.test.cpp\"\
-    \nMain<init, main2, test> main_dummy;\nint main() {}\n"
+    \    #endif\n    cout << fixed << setprecision(20);\n  \n    init();\n    #ifdef\
+    \ LOCAL\n    test();\n    #endif\n  \n    #if defined AOJ_TESTCASE or (defined\
+    \ LOCAL and defined SINGLE_TESTCASE)\n    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"\
+    35\");\n    while (true)\n    {\n      dump(\"new testcase\");\n      main2();\n\
+    \    }\n    #elif defined SINGLE_TESTCASE\n    CERR(\"\\n[SINGLE_TESTCASE]\\n\\\
+    n\", \"36\");\n    main2();\n    #elif defined MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\\
+    n\\n\", \"33\");\n    local(while (true))\n    {\n      dump(\"T\");\n      IN(uint,\
+    \ T);\n      while (T--)\n      {\n        dump(\"new testcase\");\n        main2();\n\
+    \      }\n    }\n    #endif\n  }\n};\n#line 56 \"verify/aoj/csr.test.cpp\"\nMain<init,\
+    \ main2, test> main_dummy;\nint main() {}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_11_A&lang=jp\"\
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
@@ -694,7 +706,7 @@ data:
     \ vv.at(u));\n    offset(vv.at(u), -1);\n    fec(v : vv.at(i)) ies.push_back({u,\
     \ v});\n  }\n\n  CSR csr1(vv), csr2(N, ies);\n  assert(csr1.to_vv() == csr2.to_vv()\
     \ && csr1.to_vv() == vv);\n  dump(csr1.to_vv() | cp::index());\n  vvl ans(N, vl(N,\
-    \ 0));\n  rep(i, N)\n  {\n    fec(j : csr1.row(i)) ans.at(i).at(j) = 1;\n  }\n\
+    \ 0));\n  rep(i, N)\n  {\n    fec(j : csr1.at(i)) ans.at(i).at(j) = 1;\n  }\n\
     \  PRINTV(ans);\n}\n\nvoid test()\n{\n  \n}\n\n#include \"template/template_main.hpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   dependsOn:
@@ -714,7 +726,7 @@ data:
   isVerificationFile: true
   path: verify/aoj/csr.test.cpp
   requiredBy: []
-  timestamp: '2025-04-30 22:43:54+09:00'
+  timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/aoj/csr.test.cpp

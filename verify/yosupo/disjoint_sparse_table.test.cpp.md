@@ -1,53 +1,53 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: ds/disjoint_sparse_table.hpp
+  - icon: ':question:'
+    path: ds/static_range/disjoint_sparse_table.hpp
     title: Disjoint Sparse Table
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/staticrmq
@@ -161,25 +161,29 @@ data:
     \n\n#line 6 \"template/template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n\
     \ */\n\n#define ALL(a) (a).begin(), (a).end()\ntemplate <class T = ll, class V>\n\
-    inline T SZ(const V &x) { return x.size(); }\n#define eb emplace_back\n\ntemplate\
-    \ <class F>\nauto gen_vec(const int &n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n\
-    \  repi(i, n) res[i] = f(i);\n  return res;\n}\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    inline T SZ(const V &x) { return x.size(); }\n#define eb emplace_back\n\n#define\
+    \ LMD(x, fx) ([&](auto x) { return fx; })\ntemplate <class F>\nauto gen_vec(int\
+    \ n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n\
+    \  return res;\n}\n#define GEN_VEC(n, i, fi) (gen_vec(n, LMD(i, fi)))\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
     template <class T, size_t d, size_t i = 0, class V>\nauto dvec(const V (&sz)[d],\
     \ const T &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i\
     \ + 1>(sz, init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT\
     \ ctol(const char &c, const string &s)\n{\n  repi(i, SZ<int>(s)) if (s[i] == c)\
     \ return i;\n  return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string\
-    \ &s, const char &first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n  \
-    \               { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T>\
-    \ stov(const string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int\
-    \ i) -> T\n                 { return ctol(s[i], t); });\n}\n\ntemplate <class\
-    \ T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto &v : vs)\n\
-    \    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class T>\nvc<T>\
-    \ concat(const vc<T> &v) { return v; }\ntemplate <class T, class... Ts>\nvc<T>\
-    \ concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)), ...);\n\
-    \  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
-    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
-    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \ &s, char first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n         \
+    \        { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T> stov(const\
+    \ string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n\
+    \                 { return ctol(s[i], t); });\n}\ntemplate <class T>\nstring vtos(const\
+    \ vc<T> &v, char first)\n{\n  string res = \"\";\n  fe(vi : v) res += vi + first;\n\
+    \  return res;\n}\ntemplate <class T>\nstring vtos(const vc<T> &v, const string\
+    \ &t)\n{\n  string res = \"\";\n  fe(vi : v) res += t[vi];\n  return res;\n}\n\
+    \ntemplate <class T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto\
+    \ &v : vs)\n    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class\
+    \ T>\nvc<T> concat(const vc<T> &v) { return v; }\ntemplate <class T, class...\
+    \ Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)),\
+    \ ...);\n  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v,\
+    \ I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i\
+    \ < 0)\n    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
     \  return v[i];\n}\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define\
     \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 10 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
@@ -486,23 +490,23 @@ data:
     \ = x | '0';\n  memcpy(obuf + por, out + outi + 4, 96 - outi);\n  por += 96 -\
     \ outi;\n}\n\ntemplate <typename T>\nvoid wt1_real(T x) {\n  ostringstream oss;\n\
     \  oss << fixed << setprecision(15) << double(x);\n  string s = oss.str();\n \
-    \ wt1(s);\n}\n\ntemplate <class T, enable_if_t<is_integral_v<T>, int> = 0>\nvoid\
-    \ wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x); }\nvoid wt1(u128\
-    \ x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\nvoid wt1(long double\
-    \ x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\ntemplate <class\
-    \ T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n  wt1(' ');\n\
-    \  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid wt1_tuple(const\
-    \ T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n    if constexpr\
-    \ (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n    wt1(x);\n   \
-    \ wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const tuple<T...>\
-    \ &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid wt1(const\
-    \ array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i < n; i++)\
-    \ {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class T>\nvoid\
-    \ wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t i = 0; i\
-    \ < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid write()\
-    \ {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail &&...\
-    \ tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print() {\
-    \ wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
+    \ wt1(s);\n}\n\nvoid wt1(int x) { wt1_integer(x); }\ntemplate <class T, enable_if_t<is_integral_v<T>,\
+    \ int> = 0>\nvoid wt1(T x) { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x);\
+    \ }\nvoid wt1(u128 x) { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\n\
+    void wt1(long double x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\
+    \ntemplate <class T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n\
+    \  wt1(' ');\n  wt1(val.second);\n}\ntemplate <size_t N = 0, typename T>\nvoid\
+    \ wt1_tuple(const T &t) {\n  if constexpr (N < std::tuple_size<T>::value) {\n\
+    \    if constexpr (N > 0) { wt1(' '); }\n    const auto x = std::get<N>(t);\n\
+    \    wt1(x);\n    wt1_tuple<N + 1>(t);\n  }\n}\ntemplate <class... T>\nvoid wt1(const\
+    \ tuple<T...> &tpl) {\n  wt1_tuple(tpl);\n}\ntemplate <class T, size_t S>\nvoid\
+    \ wt1(const array<T, S> &val) {\n  auto n = val.size();\n  for (size_t i = 0;\
+    \ i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\ntemplate <class\
+    \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
+    \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
+    \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
+    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
+    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
     \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
     }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
     struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
@@ -631,29 +635,30 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 17 \"verify/yosupo/disjoint_sparse_table.test.cpp\"\n\n#line 2 \"ds/disjoint_sparse_table.hpp\"\
-    \n\n#line 4 \"ds/disjoint_sparse_table.hpp\"\n\n/**\n * @brief Disjoint Sparse\
-    \ Table\n * @docs docs/ds/disjoint_sparse_table.md\n */\n\ntemplate <class M>\n\
-    struct DisjointSparseTable\n{\n  using S = typename M::S;\n\nprivate:\n  int n;\n\
-    \  // dat[j][i] \u306F [i, mid) \u304B [mid, i]\n  vvc<S> dat;\n\npublic:\n  DisjointSparseTable()\
-    \ {}\n  DisjointSparseTable(const vc<S> &v) : n(v.size())\n  {\n    const int\
-    \ lg = bit_width(n);\n    dat.assign(lg, vc<S>(n));\n    repi(j, lg)\n    {\n\
-    \      const int len = 1 << j;\n      repi(m, len, n + 1, 2 * len)\n      {\n\
-    \        const int l = m - len, r = min(n, m + len);\n        dat[j][m - 1] =\
-    \ v[m - 1];\n        repi(i, m - 2, l - 1, -1) dat[j][i] = M::op(v[i], dat[j][i\
-    \ + 1]);\n        if (m < n)\n        {\n          dat[j][m] = v[m];\n       \
-    \   repi(i, m + 1, r) dat[j][i] = M::op(dat[j][i - 1], v[i]);\n        }\n   \
-    \   }\n    }\n  }\n\n  S get(int p)\n  {\n    assert(0 <= p && p < n);\n    return\
-    \ dat[0][p];\n  }\n  S prod(int l, int r)\n  {\n    auto [wl, wr] = prod_left_right(l,\
-    \ r);\n    return M::op(wl, wr);\n  }\n  // prod[l, r) = wl \u2022 wr \u3068\u306A\
-    \u308B\u3088\u3046\u306A (wl, wr) \u3092\u8FD4\u3059\n  // \u4F7F\u7528\u5834\u9762\
-    \uFF1A\u6700\u7D42\u7684\u306A\u7B54\u3048\u3068\u3057\u3066\u306F\u4E00\u822C\
-    \u306E\u5143\u306E\u7A4D\u304C\u3044\u3089\u306A\u3044\u5834\u5408\n  pair<S,\
-    \ S> prod_left_right(int l, int r)\n  {\n    assert(0 <= l && l <= r && r <= n);\n\
-    \    if (l == r)\n      return {M::e(), M::e()};\n    if (l + 1 == r)\n      return\
-    \ {dat[0][l], M::e()};\n    const int j = msb_pos(l ^ (r - 1));\n    return {dat[j][l],\
-    \ dat[j][r - 1]};\n  }\n};\n#line 19 \"verify/yosupo/disjoint_sparse_table.test.cpp\"\
-    \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, Q);\n  VEC(ll, N, A);\n  DisjointSparseTable<MonoidMin<ll>>\
+    \ 17 \"verify/yosupo/disjoint_sparse_table.test.cpp\"\n\n#line 2 \"ds/static_range/disjoint_sparse_table.hpp\"\
+    \n\n#line 4 \"ds/static_range/disjoint_sparse_table.hpp\"\n\n/**\n * @brief Disjoint\
+    \ Sparse Table\n * @docs docs/ds/static_range/disjoint_sparse_table.md\n */\n\n\
+    template <class M>\nstruct DisjointSparseTable\n{\n  using S = typename M::S;\n\
+    \nprivate:\n  int n;\n  // dat[j][i] \u306F [i, mid) \u304B [mid, i]\n  vvc<S>\
+    \ dat;\n\npublic:\n  DisjointSparseTable() {}\n  DisjointSparseTable(const vc<S>\
+    \ &v) : n(v.size())\n  {\n    const int lg = bit_width(n);\n    dat.assign(lg,\
+    \ vc<S>(n));\n    repi(j, lg)\n    {\n      const int len = 1 << j;\n      repi(m,\
+    \ len, n + 1, 2 * len)\n      {\n        const int l = m - len, r = min(n, m +\
+    \ len);\n        dat[j][m - 1] = v[m - 1];\n        repi(i, m - 2, l - 1, -1)\
+    \ dat[j][i] = M::op(v[i], dat[j][i + 1]);\n        if (m < n)\n        {\n   \
+    \       dat[j][m] = v[m];\n          repi(i, m + 1, r) dat[j][i] = M::op(dat[j][i\
+    \ - 1], v[i]);\n        }\n      }\n    }\n  }\n\n  S get(int p)\n  {\n    assert(0\
+    \ <= p && p < n);\n    return dat[0][p];\n  }\n  S prod(int l, int r)\n  {\n \
+    \   auto [wl, wr] = prod_left_right(l, r);\n    return M::op(wl, wr);\n  }\n \
+    \ // prod[l, r) = wl \u2022 wr \u3068\u306A\u308B\u3088\u3046\u306A (wl, wr) \u3092\
+    \u8FD4\u3059\n  // \u4F7F\u7528\u5834\u9762\uFF1A\u6700\u7D42\u7684\u306A\u7B54\
+    \u3048\u3068\u3057\u3066\u306F\u4E00\u822C\u306E\u5143\u306E\u7A4D\u304C\u3044\
+    \u3089\u306A\u3044\u5834\u5408\n  pair<S, S> prod_left_right(int l, int r)\n \
+    \ {\n    assert(0 <= l && l <= r && r <= n);\n    if (l == r)\n      return {M::e(),\
+    \ M::e()};\n    if (l + 1 == r)\n      return {dat[0][l], M::e()};\n    const\
+    \ int j = msb_pos(l ^ (r - 1));\n    return {dat[j][l], dat[j][r - 1]};\n  }\n\
+    };\n#line 19 \"verify/yosupo/disjoint_sparse_table.test.cpp\"\n\nvoid init() {}\n\
+    \nvoid main2()\n{\n  LL(N, Q);\n  VEC(ll, N, A);\n  DisjointSparseTable<MonoidMin<ll>>\
     \ spt(A);\n  rep(_, Q)\n  {\n    LL(l, r);\n    PRINT(spt.prod(l, r));\n  }\n\
     }\n\nvoid test() {}\n\n#line 2 \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\
     \n\ntemplate <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n\
@@ -665,24 +670,25 @@ data:
     \ not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n    #endif\n \
     \   #if defined FAST_CIO and not defined LOCAL\n    CERR(\"\\n[FAST_CIO]\\n\\\
     n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n    #endif\n\
-    \    cout << fixed << setprecision(20);\n  \n    test();\n    init();\n  \n  \
-    \  #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)\n \
-    \   CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n    while (true)\n    {\n    \
-    \  dump(\"new testcase\");\n      main2();\n    }\n    #elif defined SINGLE_TESTCASE\n\
-    \    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"36\");\n    main2();\n    #elif defined\
-    \ MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\n\\n\", \"33\");\n    dump(\"\
-    T\");\n    IN(uint, T);\n    while (T--)\n    {\n      dump(\"new testcase\");\n\
-    \      main2();\n    }\n    #endif\n  }\n};\n#line 37 \"verify/yosupo/disjoint_sparse_table.test.cpp\"\
+    \    cout << fixed << setprecision(20);\n  \n    init();\n    #ifdef LOCAL\n \
+    \   test();\n    #endif\n  \n    #if defined AOJ_TESTCASE or (defined LOCAL and\
+    \ defined SINGLE_TESTCASE)\n    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n \
+    \   while (true)\n    {\n      dump(\"new testcase\");\n      main2();\n    }\n\
+    \    #elif defined SINGLE_TESTCASE\n    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"\
+    36\");\n    main2();\n    #elif defined MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\\
+    n\\n\", \"33\");\n    local(while (true))\n    {\n      dump(\"T\");\n      IN(uint,\
+    \ T);\n      while (T--)\n      {\n        dump(\"new testcase\");\n        main2();\n\
+    \      }\n    }\n    #endif\n  }\n};\n#line 37 \"verify/yosupo/disjoint_sparse_table.test.cpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/staticrmq\"\n\n#define\
     \ SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef\
     \ LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\
     \n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include \"template/template_all_but_modint.hpp\"\
-    \n\n#include \"ds/disjoint_sparse_table.hpp\"\n\nvoid init() {}\n\nvoid main2()\n\
-    {\n  LL(N, Q);\n  VEC(ll, N, A);\n  DisjointSparseTable<MonoidMin<ll>> spt(A);\n\
-    \  rep(_, Q)\n  {\n    LL(l, r);\n    PRINT(spt.prod(l, r));\n  }\n}\n\nvoid test()\
-    \ {}\n\n#include \"template/template_main.hpp\"\nMain<init, main2, test> main_dummy;\n\
-    int main() {}\n"
+    \n\n#include \"ds/static_range/disjoint_sparse_table.hpp\"\n\nvoid init() {}\n\
+    \nvoid main2()\n{\n  LL(N, Q);\n  VEC(ll, N, A);\n  DisjointSparseTable<MonoidMin<ll>>\
+    \ spt(A);\n  rep(_, Q)\n  {\n    LL(l, r);\n    PRINT(spt.prod(l, r));\n  }\n\
+    }\n\nvoid test() {}\n\n#include \"template/template_main.hpp\"\nMain<init, main2,\
+    \ test> main_dummy;\nint main() {}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -695,13 +701,13 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   - template/template_random.hpp
-  - ds/disjoint_sparse_table.hpp
+  - ds/static_range/disjoint_sparse_table.hpp
   - template/template_main.hpp
   isVerificationFile: true
   path: verify/yosupo/disjoint_sparse_table.test.cpp
   requiredBy: []
-  timestamp: '2025-04-30 22:43:54+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2025-08-12 21:38:21+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yosupo/disjoint_sparse_table.test.cpp
 layout: document
