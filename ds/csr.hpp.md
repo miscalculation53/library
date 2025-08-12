@@ -41,7 +41,7 @@ data:
   - icon: ':question:'
     path: ds/group_index.hpp
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/query/point_set_range_frequency.hpp
     title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\u30D5\
       \u30E9\u30A4\u30F3\uFF09"
@@ -85,7 +85,7 @@ data:
   - icon: ':question:'
     path: math/linalg/matrix.hpp
     title: "\u884C\u5217"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/linalg/matrix_array.hpp
     title: "\u884C\u5217\uFF08array\uFF09"
   _extendedVerifiedWith:
@@ -167,13 +167,13 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_rank.test.cpp
     title: verify/yosupo/matrix_rank.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_solve.test.cpp
     title: verify/yosupo/matrix_solve.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_solve_array.test.cpp
     title: verify/yosupo/matrix_solve_array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_set_range_frequency.test.cpp
     title: verify/yosupo/point_set_range_frequency.test.cpp
   - icon: ':x:'

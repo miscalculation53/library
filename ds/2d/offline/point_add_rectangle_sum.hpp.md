@@ -56,7 +56,7 @@ data:
     title: "\u77E9\u5F62\u52A0\u7B97\u30FB\u70B9\u53D6\u5F97\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_add_rectangle_sum.test.cpp
     title: verify/yosupo/point_add_rectangle_sum.test.cpp
   - icon: ':x:'
@@ -64,7 +64,7 @@ data:
     title: verify/yosupo/rectangle_add_point_get.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/ds/2d/offline/point_add_rectangle_sum.md
     document_title: "\u70B9\u52A0\u7B97\u30FB\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\
@@ -981,7 +981,7 @@ data:
   requiredBy:
   - ds/2d/offline/rectangle_add_point_get.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yosupo/point_add_rectangle_sum.test.cpp
   - verify/yosupo/rectangle_add_point_get.test.cpp

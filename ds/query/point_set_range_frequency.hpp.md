@@ -62,12 +62,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/majority_voting.test.cpp
     title: verify/yosupo/majority_voting.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_set_range_frequency.test.cpp
     title: verify/yosupo/point_set_range_frequency.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/query/point_set_range_frequency.md
     document_title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\
@@ -976,7 +976,7 @@ data:
   path: ds/query/point_set_range_frequency.hpp
   requiredBy: []
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/majority_voting.test.cpp
   - verify/yosupo/point_set_range_frequency.test.cpp
