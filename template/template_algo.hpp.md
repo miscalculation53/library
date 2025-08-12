@@ -319,10 +319,10 @@ data:
   - icon: ':question:'
     path: math/linalg/matrix.hpp
     title: "\u884C\u5217"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/linalg/matrix_array.hpp
     title: "\u884C\u5217\uFF08array\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/linalg/matrix_mod2.hpp
     title: "\u884C\u5217\uFF08$\\mathbb{F}_2$\uFF09"
   - icon: ':question:'
@@ -666,52 +666,52 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb.test.cpp
     title: verify/yosupo/many_aplusb.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb_128bit.test.cpp
     title: verify/yosupo/many_aplusb_128bit.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb_tuple.test.cpp
     title: verify/yosupo/many_aplusb_tuple.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_det.test.cpp
     title: verify/yosupo/matrix_det.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_det_array.test.cpp
     title: verify/yosupo/matrix_det_array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_det_mod2.test.cpp
     title: verify/yosupo/matrix_det_mod2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_det_sparse.test.cpp
     title: verify/yosupo/matrix_det_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_inv.test.cpp
     title: verify/yosupo/matrix_inv.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_inv_array.test.cpp
     title: verify/yosupo/matrix_inv_array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_inv_mod2.test.cpp
     title: verify/yosupo/matrix_inv_mod2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_pow.test.cpp
     title: verify/yosupo/matrix_pow.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_pow_array.test.cpp
     title: verify/yosupo/matrix_pow_array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_product.test.cpp
     title: verify/yosupo/matrix_product.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_product_array.test.cpp
     title: verify/yosupo/matrix_product_array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_product_mod2.test.cpp
     title: verify/yosupo/matrix_product_mod2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_rank.test.cpp
     title: verify/yosupo/matrix_rank.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_rank_mod2.test.cpp
     title: verify/yosupo/matrix_rank_mod2.test.cpp
   - icon: ':x:'

@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/linalg/matrix_mod2.hpp
     title: "\u884C\u5217\uFF08$\\mathbb{F}_2$\uFF09"
   - icon: ':question:'

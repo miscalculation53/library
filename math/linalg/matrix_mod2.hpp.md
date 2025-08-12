@@ -42,21 +42,21 @@ data:
     path: verify/yosupo/matrix_solve_mod2.cpp
     title: verify/yosupo/matrix_solve_mod2.cpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_det_mod2.test.cpp
     title: verify/yosupo/matrix_det_mod2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_inv_mod2.test.cpp
     title: verify/yosupo/matrix_inv_mod2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_product_mod2.test.cpp
     title: verify/yosupo/matrix_product_mod2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_rank_mod2.test.cpp
     title: verify/yosupo/matrix_rank_mod2.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/linalg/matrix_mod2.md
     document_title: "\u884C\u5217\uFF08$\\mathbb{F}_2$\uFF09"
@@ -797,7 +797,7 @@ data:
   requiredBy:
   - verify/yosupo/matrix_solve_mod2.cpp
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/matrix_inv_mod2.test.cpp
   - verify/yosupo/matrix_det_mod2.test.cpp
