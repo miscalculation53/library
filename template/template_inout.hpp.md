@@ -1,26 +1,26 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy:
   - icon: ':warning:'
     path: algo/merge_sort.hpp
     title: "\u30DE\u30FC\u30B8\u30BD\u30FC\u30C8"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: algo/parallel_binsearch.hpp
     title: "\u4E26\u5217\u4E8C\u5206\u63A2\u7D22"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: algo/perm_cycle.hpp
     title: "\u9806\u5217\u306E\u30B5\u30A4\u30AF\u30EB\u5206\u89E3"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: algo/rle.hpp
     title: "\u30E9\u30F3\u30EC\u30F3\u30B0\u30B9\u5727\u7E2E"
   - icon: ':warning:'
@@ -57,10 +57,10 @@ data:
     path: ds/2d/sparse/segtree.hpp
     title: "$2$ \u6B21\u5143\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\uFF08\u758E\u3001\
       \u30AF\u30A8\u30EA\u70B9\u5148\u8AAD\u307F\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/coordinate_compression.hpp
     title: "\u5EA7\u6A19\u5727\u7E2E"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/csr.hpp
     title: CSR
   - icon: ':heavy_check_mark:'
@@ -69,16 +69,16 @@ data:
   - icon: ':heavy_check_mark:'
     path: ds/cumulative_sum/cumulative_sum_2d.hpp
     title: "$2$ \u6B21\u5143\u7D2F\u7A4D\u548C"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/cumulative_sum/imos.hpp
     title: "$1$ \u6B21\u5143 imos \u6CD5"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/cumulative_sum/imos_2d.hpp
     title: "$2$ \u6B21\u5143 imos \u6CD5"
   - icon: ':heavy_check_mark:'
     path: ds/default_map.hpp
     title: "\u30C7\u30D5\u30A9\u30EB\u30C8\u5024\u3064\u304D map"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/fenwick_tree/fenwick_tree.hpp
     title: Fenwick Tree
   - icon: ':heavy_check_mark:'
@@ -94,27 +94,27 @@ data:
     path: ds/flat_map.hpp
     title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
       \u5408\u306E map"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/group_index.hpp
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
   - icon: ':heavy_check_mark:'
     path: ds/mo.hpp
     title: Mo's algorithm
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/my_queue.hpp
     title: "\u81EA\u4F5C queue"
   - icon: ':heavy_check_mark:'
     path: ds/offline_dynamic_connectivity.hpp
     title: "\u30AA\u30D5\u30E9\u30A4\u30F3\u30C0\u30A4\u30B3\u30CD\u306E\u30C6\u30AF\
       \u30CB\u30C3\u30AF"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/pbds_set.hpp
     title: "pb_ds \u306E set/multiset"
   - icon: ':heavy_check_mark:'
     path: ds/query/point_set_range_frequency.hpp
     title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\u30D5\
       \u30E9\u30A4\u30F3\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/safe_unordered_map.hpp
     title: "unordered_map \u306E\u5B89\u5168\u306A\u30CF\u30C3\u30B7\u30E5\u95A2\u6570"
   - icon: ':heavy_check_mark:'
@@ -137,7 +137,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: ds/static_range/block_sparse_table.hpp
     title: "\u30D6\u30ED\u30C3\u30AF\u5206\u5272 + (disjoint) sparse table"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/static_range/dc_range_prod.hpp
     title: "\u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\u30A8\
       \u30EA"
@@ -150,13 +150,13 @@ data:
   - icon: ':heavy_check_mark:'
     path: ds/static_range/sparse_table.hpp
     title: Sparse Table
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/swag.hpp
     title: SWAG
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf.hpp
     title: UnionFind
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf_partially_persistent.hpp
     title: "\u90E8\u5206\u6C38\u7D9A UnionFind"
   - icon: ':heavy_check_mark:'
@@ -174,10 +174,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: graph/cycle_detection.hpp
     title: "\u30B5\u30A4\u30AF\u30EB\u691C\u51FA"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: graph/graph.hpp
     title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
   - icon: ':heavy_check_mark:'
@@ -230,10 +230,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/algebra/affine_function.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
@@ -254,7 +254,7 @@ data:
   - icon: ':warning:'
     path: math/algebra/polynomial_ring.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/convolution/convolution.hpp
     title: "\u7573\u307F\u8FBC\u307F"
   - icon: ':heavy_check_mark:'
@@ -269,13 +269,13 @@ data:
   - icon: ':warning:'
     path: math/convolution/ntt_doubling.hpp
     title: "$2$ \u500D\u306E\u9577\u3055\u306E NTT"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/crt.hpp
     title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/berlekamp_massey.hpp
     title: "Berlekamp\u2013Massey"
   - icon: ':heavy_check_mark:'
@@ -284,7 +284,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/fps.hpp
     title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
   - icon: ':heavy_check_mark:'
@@ -301,7 +301,7 @@ data:
     path: math/fps/multipoint_evaluation_geo.hpp
     title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1\uFF08\u8A55\u4FA1\u70B9\
       \u304C\u7B49\u6BD4\u6570\u5217\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/rational_sum.hpp
     title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
   - icon: ':heavy_check_mark:'
@@ -310,10 +310,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/fps/taylor_shift.hpp
     title: Taylor Shift
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/linalg/bbla.hpp
     title: Black Box Linear Algebra
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/linalg/matrix.hpp
     title: "\u884C\u5217"
   - icon: ':heavy_check_mark:'
@@ -322,25 +322,25 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/linalg/matrix_mod2.hpp
     title: "\u884C\u5217\uFF08$\\mathbb{F}_2$\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/binomial.hpp
     title: "\u4E8C\u9805\u4FC2\u6570"
   - icon: ':heavy_check_mark:'
     path: math/modint/inv_many.hpp
     title: "\u9006\u5143\u3092\u307E\u3068\u3081\u3066\u6C42\u3081\u308B"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint64_internal.hpp
     title: math/modint/modint64_internal.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
   - icon: ':heavy_check_mark:'
@@ -349,7 +349,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/modint/power_table.hpp
     title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/sqrt_mod.hpp
     title: "mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839"
   - icon: ':warning:'
@@ -358,40 +358,40 @@ data:
   - icon: ':warning:'
     path: math/modint/template_modint.hpp
     title: math/modint/template_modint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
   - icon: ':heavy_check_mark:'
     path: math/prime/lcm_gcd_convolution.hpp
     title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/linear_sieve.hpp
     title: "\u7DDA\u5F62\u7BE9"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/segmented_sieve.hpp
     title: "\u533A\u9593\u7BE9"
   - icon: ':heavy_check_mark:'
     path: math/prime/zeta_mobius_divisor_multiple.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/zeta_mobius_divisor_multiple_large.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/quadratic_equation_integer.hpp
     title: "\u4E8C\u6B21\u65B9\u7A0B\u5F0F\u306E\u6574\u6570\u89E3"
   - icon: ':heavy_check_mark:'
@@ -422,10 +422,10 @@ data:
   - icon: ':warning:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_main.hpp
     title: template/template_main.hpp
   - icon: ':warning:'
@@ -861,75 +861,75 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/divisors.test.cpp
     title: verify/yukicoder/divisors.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/dynamic_modint.test.cpp
     title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/imos.test.cpp
     title: verify/yukicoder/imos.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/imos_2d.test.cpp
     title: verify/yukicoder/imos_2d.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/order_mod_carmichael.test.cpp
     title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/order_mod_euler_phi.test.cpp
     title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/ordered_multiset.test.cpp
     title: verify/yukicoder/ordered_multiset.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
     title: verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/parallel_binsearch.test.cpp
     title: verify/yukicoder/parallel_binsearch.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/perm_cycle.test.cpp
     title: verify/yukicoder/perm_cycle.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/poly_rational_sum.test.cpp
     title: verify/yukicoder/poly_rational_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/quadratic_equation.test.cpp
     title: verify/yukicoder/quadratic_equation.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/rle.test.cpp
     title: verify/yukicoder/rle.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/safe_unordered_map.test.cpp
     title: verify/yukicoder/safe_unordered_map.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/segmented_sieve.test.cpp
     title: verify/yukicoder/segmented_sieve.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/static_modint.test.cpp
     title: verify/yukicoder/static_modint.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/uf_min_max_leader.test.cpp
     title: verify/yukicoder/uf_min_max_leader.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/uf_partially_persistent.test.cpp
     title: verify/yukicoder/uf_partially_persistent.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki2215_dc.test.cpp
     title: verify/yukicoder/yuki2215_dc.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki2215_swag.test.cpp
     title: verify/yukicoder/yuki2215_swag.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki310.test.cpp
     title: verify/yukicoder/yuki310.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
     title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/template/template_inout.md
     document_title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
@@ -1484,7 +1484,7 @@ data:
   - template/template_all_but_modint.hpp
   - template/template_all.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/parallel_binsearch.test.cpp
   - verify/yukicoder/perm_cycle.test.cpp

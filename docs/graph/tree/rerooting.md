@@ -34,7 +34,7 @@ c1 c2 c3
 上のような図をイメージする。
 
 $\begin{aligned}
-h[v] &= \mathrm{pute}_{(p,v)}\left(\mathrm{putv}_p\left(\left(\bigoplus_{\substack{d \in \mathrm{children}(p) \\\\  d \neq v}} \mathrm{pute}_{(p,d)}(g[d]) \right) \oplus h[p]\right)\right) \\  
+h[v] &= \mathrm{pute}_{(p,v)} \left( \mathrm{putv}_p \left( \left( \bigoplus_{\substack{d \in \mathrm{children}(p) \\\\  d \neq v}} \mathrm{pute}_{(p,d)}(g[d]) \right) \oplus h[p] \right) \right) \\\\   
 \mathrm{res}_v[v] &= \mathrm{putv}_v(f[v] \oplus h[v])
 \end{aligned}$
 
