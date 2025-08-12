@@ -1,10 +1,10 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/static_range/block_sparse_table.hpp
     title: "\u30D6\u30ED\u30C3\u30AF\u5206\u5272 + (disjoint) sparse table"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/static_range/disjoint_sparse_table.hpp
     title: Disjoint Sparse Table
   - icon: ':question:'

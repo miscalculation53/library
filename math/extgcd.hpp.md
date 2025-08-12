@@ -59,10 +59,10 @@ data:
   - icon: ':question:'
     path: math/crt.hpp
     title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/bmbm.hpp
     title: BMBM
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
   - icon: ':question:'
@@ -202,46 +202,46 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_exp.test.cpp
     title: verify/yosupo/fps_exp.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_exp_sparse.test.cpp
     title: verify/yosupo/fps_exp_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_inv.test.cpp
     title: verify/yosupo/fps_inv.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_inv_sparse.test.cpp
     title: verify/yosupo/fps_inv_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_log.test.cpp
     title: verify/yosupo/fps_log.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_log_sparse.test.cpp
     title: verify/yosupo/fps_log_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_pow.test.cpp
     title: verify/yosupo/fps_pow.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_pow_sparse.test.cpp
     title: verify/yosupo/fps_pow_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_sqrt.test.cpp
     title: verify/yosupo/fps_sqrt.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_sqrt_sparse.test.cpp
     title: verify/yosupo/fps_sqrt_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kronecker_power_hadamard.test.cpp
     title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
     title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
     title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
   - icon: ':x:'

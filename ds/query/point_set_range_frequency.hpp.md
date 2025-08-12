@@ -59,7 +59,7 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/majority_voting.test.cpp
     title: verify/yosupo/majority_voting.test.cpp
   - icon: ':x:'
@@ -67,7 +67,7 @@ data:
     title: verify/yosupo/point_set_range_frequency.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/ds/query/point_set_range_frequency.md
     document_title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\
@@ -976,7 +976,7 @@ data:
   path: ds/query/point_set_range_frequency.hpp
   requiredBy: []
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yosupo/majority_voting.test.cpp
   - verify/yosupo/point_set_range_frequency.test.cpp

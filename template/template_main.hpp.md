@@ -180,61 +180,61 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_exp.test.cpp
     title: verify/yosupo/fps_exp.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_exp_sparse.test.cpp
     title: verify/yosupo/fps_exp_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_inv.test.cpp
     title: verify/yosupo/fps_inv.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_inv_sparse.test.cpp
     title: verify/yosupo/fps_inv_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_log.test.cpp
     title: verify/yosupo/fps_log.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_log_sparse.test.cpp
     title: verify/yosupo/fps_log_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_pow.test.cpp
     title: verify/yosupo/fps_pow.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_pow_sparse.test.cpp
     title: verify/yosupo/fps_pow_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_sqrt.test.cpp
     title: verify/yosupo/fps_sqrt.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_sqrt_sparse.test.cpp
     title: verify/yosupo/fps_sqrt_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kronecker_power_hadamard.test.cpp
     title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
     title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kth_root_integer.test.cpp
     title: verify/yosupo/kth_root_integer.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
     title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/linear_rmq.test.cpp
     title: verify/yosupo/linear_rmq.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lower_left_sum.test.cpp
     title: verify/yosupo/lower_left_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/majority_voting.test.cpp
     title: verify/yosupo/majority_voting.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb.test.cpp
     title: verify/yosupo/many_aplusb.test.cpp
   - icon: ':x:'

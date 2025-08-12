@@ -62,7 +62,7 @@ data:
     path: ds/2d/offline/rectangle_add_point_get.hpp
     title: "\u77E9\u5F62\u52A0\u7B97\u30FB\u70B9\u53D6\u5F97\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/2d/offline/rectangle_sum.hpp
     title: "\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\u30F3\uFF09"
   - icon: ':warning:'
@@ -134,7 +134,7 @@ data:
   - icon: ':question:'
     path: ds/pbds_set.hpp
     title: "pb_ds \u306E set/multiset"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/query/point_set_range_frequency.hpp
     title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\u30D5\
       \u30E9\u30A4\u30F3\uFF09"
@@ -158,17 +158,17 @@ data:
     path: ds/sqrt_decomposition_range_sum.hpp
     title: "\u5E73\u65B9\u5206\u5272\u306B\u3088\u308B\u4E00\u70B9\u52A0\u7B97\u30FB\
       \u533A\u9593\u548C\u30AF\u30A8\u30EA $\\langle O(1), O(\\sqrt{N}) \\rangle$"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/static_range/block_sparse_table.hpp
     title: "\u30D6\u30ED\u30C3\u30AF\u5206\u5272 + (disjoint) sparse table"
   - icon: ':question:'
     path: ds/static_range/dc_range_prod.hpp
     title: "\u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\u30A8\
       \u30EA"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/static_range/disjoint_sparse_table.hpp
     title: Disjoint Sparse Table
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/static_range/linear_rmq.hpp
     title: "\u7DDA\u5F62 RMQ"
   - icon: ':question:'
@@ -264,7 +264,7 @@ data:
   - icon: ':warning:'
     path: math/algebra/bit.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/majority_vote.hpp
     title: "Boyer\u2013Moore majority vote algorithm"
   - icon: ':x:'
@@ -302,10 +302,10 @@ data:
   - icon: ':question:'
     path: math/fps/berlekamp_massey.hpp
     title: "Berlekamp\u2013Massey"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/bmbm.hpp
     title: BMBM
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
   - icon: ':question:'
@@ -389,7 +389,7 @@ data:
   - icon: ':question:'
     path: math/prime/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/lcm_gcd_convolution.hpp
     title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
   - icon: ':question:'
@@ -407,7 +407,7 @@ data:
   - icon: ':x:'
     path: math/prime/segmented_sieve.hpp
     title: "\u533A\u9593\u7BE9"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/zeta_mobius_divisor_multiple.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
@@ -427,7 +427,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/set/and_or_convolution.hpp
     title: "and/or \u7573\u307F\u8FBC\u307F"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/set/kronecker_power.hpp
     title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
   - icon: ':x:'
@@ -621,61 +621,61 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_exp.test.cpp
     title: verify/yosupo/fps_exp.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_exp_sparse.test.cpp
     title: verify/yosupo/fps_exp_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_inv.test.cpp
     title: verify/yosupo/fps_inv.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_inv_sparse.test.cpp
     title: verify/yosupo/fps_inv_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_log.test.cpp
     title: verify/yosupo/fps_log.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_log_sparse.test.cpp
     title: verify/yosupo/fps_log_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_pow.test.cpp
     title: verify/yosupo/fps_pow.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_pow_sparse.test.cpp
     title: verify/yosupo/fps_pow_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_sqrt.test.cpp
     title: verify/yosupo/fps_sqrt.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_sqrt_sparse.test.cpp
     title: verify/yosupo/fps_sqrt_sparse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kronecker_power_hadamard.test.cpp
     title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
     title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kth_root_integer.test.cpp
     title: verify/yosupo/kth_root_integer.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
     title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/linear_rmq.test.cpp
     title: verify/yosupo/linear_rmq.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lower_left_sum.test.cpp
     title: verify/yosupo/lower_left_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/majority_voting.test.cpp
     title: verify/yosupo/majority_voting.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/many_aplusb.test.cpp
     title: verify/yosupo/many_aplusb.test.cpp
   - icon: ':x:'
