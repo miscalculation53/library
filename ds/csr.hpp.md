@@ -55,19 +55,19 @@ data:
   - icon: ':warning:'
     path: graph/contraction.hpp
     title: "\u30B0\u30E9\u30D5\u306E\u7E2E\u7D04"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/cycle_detection.hpp
     title: "\u30B5\u30A4\u30AF\u30EB\u691C\u51FA"
   - icon: ':question:'
     path: graph/graph.hpp
     title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
-  - icon: ':x:'
+  - icon: ':question:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
   - icon: ':x:'
     path: graph/scc.hpp
     title: "\u5F37\u9023\u7D50\u6210\u5206\u5206\u89E3"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: graph/sssp.hpp
     title: "\u5358\u4E00\u59CB\u70B9\u6700\u77ED\u8DEF\u554F\u984C"
   - icon: ':warning:'
@@ -82,7 +82,7 @@ data:
   - icon: ':question:'
     path: graph/tree/rooted_tree.hpp
     title: "\u6839\u3064\u304D\u6728\u30AF\u30E9\u30B9"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/linalg/matrix.hpp
     title: "\u884C\u5217"
   - icon: ':x:'
@@ -113,25 +113,25 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/rmq.test.cpp
     title: verify/mytest/rmq.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_eularian_circuits.test.cpp
     title: verify/yosupo/counting_eularian_circuits.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_spanning_trees_directed.test.cpp
     title: verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
     title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/cycle_detection_directed.test.cpp
     title: verify/yosupo/cycle_detection_directed.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/cycle_detection_undirected.test.cpp
     title: verify/yosupo/cycle_detection_undirected.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/dc_range_prod.test.cpp
     title: verify/yosupo/dc_range_prod.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/dijkstra.test.cpp
     title: verify/yosupo/dijkstra.test.cpp
   - icon: ':x:'

@@ -90,7 +90,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/range_upd_range_min.test.cpp
     title: verify/aoj/range_upd_range_min.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/range_upd_range_sum.test.cpp
     title: verify/aoj/range_upd_range_sum.test.cpp
   - icon: ':heavy_check_mark:'
@@ -123,61 +123,61 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/binomial.test.cpp
     title: verify/yosupo/binomial.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/block_disjoint_sparse_table.test.cpp
     title: verify/yosupo/block_disjoint_sparse_table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/block_sparse_table.test.cpp
     title: verify/yosupo/block_sparse_table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution.test.cpp
     title: verify/yosupo/convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution64.test.cpp
     title: verify/yosupo/convolution64.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
     title: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution_arbitrary_static.test.cpp
     title: verify/yosupo/convolution_arbitrary_static.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution_many.test.cpp
     title: verify/yosupo/convolution_many.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_eularian_circuits.test.cpp
     title: verify/yosupo/counting_eularian_circuits.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_spanning_trees_directed.test.cpp
     title: verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
     title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/cycle_detection_directed.test.cpp
     title: verify/yosupo/cycle_detection_directed.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/cycle_detection_undirected.test.cpp
     title: verify/yosupo/cycle_detection_undirected.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/dc_range_prod.test.cpp
     title: verify/yosupo/dc_range_prod.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/deque_operate_all_composite.test.cpp
     title: verify/yosupo/deque_operate_all_composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/dijkstra.test.cpp
     title: verify/yosupo/dijkstra.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/disjoint_sparse_table.test.cpp
     title: verify/yosupo/disjoint_sparse_table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/find_linear_recurrence.test.cpp
     title: verify/yosupo/find_linear_recurrence.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_exp.test.cpp
     title: verify/yosupo/fps_exp.test.cpp
   - icon: ':x:'

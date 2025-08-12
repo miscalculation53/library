@@ -46,7 +46,7 @@ data:
     path: math/algebra/acted_monoid/affine_sum.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u4E00\u6B21\u95A2\
       \u6570\u4F5C\u7528\u30FB\u548C\u53D6\u5F97"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/acted_monoid/upd_sum.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u66F4\u65B0\u30FB\
       \u548C\u53D6\u5F97"
@@ -60,7 +60,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/range_upd_range_min.test.cpp
     title: verify/aoj/range_upd_range_min.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/range_upd_range_sum.test.cpp
     title: verify/aoj/range_upd_range_sum.test.cpp
   - icon: ':x:'

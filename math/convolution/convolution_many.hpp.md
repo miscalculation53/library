@@ -60,7 +60,7 @@ data:
     path: math/fps/interpolation.hpp
     title: "\u591A\u9805\u5F0F\u88DC\u9593"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution_many.test.cpp
     title: verify/yosupo/convolution_many.test.cpp
   - icon: ':x:'
@@ -68,7 +68,7 @@ data:
     title: verify/yosupo/poly_interpolation.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/math/convolution/convolution_many.md
     document_title: "\u591A\u9805\u5F0F\u306E\u7DCF\u7A4D"
@@ -1011,7 +1011,7 @@ data:
   requiredBy:
   - math/fps/interpolation.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yosupo/convolution_many.test.cpp
   - verify/yosupo/poly_interpolation.test.cpp

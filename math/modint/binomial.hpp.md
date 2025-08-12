@@ -38,7 +38,7 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':question:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
   - icon: ':x:'
@@ -92,19 +92,19 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/binomial.test.cpp
     title: verify/yosupo/binomial.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution_many.test.cpp
     title: verify/yosupo/convolution_many.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_eularian_circuits.test.cpp
     title: verify/yosupo/counting_eularian_circuits.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_spanning_trees_directed.test.cpp
     title: verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
     title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_exp.test.cpp
     title: verify/yosupo/fps_exp.test.cpp
   - icon: ':x:'

@@ -42,7 +42,7 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/deque_operate_all_composite.test.cpp
     title: verify/yosupo/deque_operate_all_composite.test.cpp
   - icon: ':x:'
@@ -53,7 +53,7 @@ data:
     title: verify/yukicoder/yuki2215_swag.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/ds/swag.md
     document_title: SWAG
@@ -791,7 +791,7 @@ data:
   path: ds/swag.hpp
   requiredBy: []
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yukicoder/yuki2215_swag.test.cpp
   - verify/yosupo/deque_operate_all_composite.test.cpp
