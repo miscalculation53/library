@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "ds/dc_range_prod.hpp"
+#include "ds/static_range/dc_range_prod.hpp"
 
 void init() {}
 

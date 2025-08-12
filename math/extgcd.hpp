@@ -10,7 +10,7 @@
 // g == gcd(x, y) >= 0, ax + by == g を満たす (g, x, y)
 // max(|x|, |y|) <= max(|a|, |b|)
 template <class T = ll>
-constexpr tuple<T, T, T> extgcd(const T &a, const T &b)
+constexpr tuple<T, T, T> extgcd(T a, T b)
 {
   if (a == 0 && b == 0)
     return {0, 0, 0};

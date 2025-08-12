@@ -1,10 +1,10 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-#include "ds/sparse_table.hpp"
-#include "ds/disjoint_sparse_table.hpp"
-#include "ds/dc_range_prod.hpp"
-#include "ds/block_sparse_table.hpp"
-#include "ds/linear_rmq.hpp"
+#include "ds/static_range/sparse_table.hpp"
+#include "ds/static_range/disjoint_sparse_table.hpp"
+#include "ds/static_range/dc_range_prod.hpp"
+#include "ds/static_range/block_sparse_table.hpp"
+#include "ds/static_range/linear_rmq.hpp"
 
 ll naive(vl A, ll l, ll r)
 {

@@ -15,3 +15,7 @@ $0 \leq i \lt j \lt \lvert v \rvert$ かつ $v_i \gt v_j$ を満たす $(i, j)$ 
 ##### 計算量
 
 - $O(\lvert v \rvert \log \lvert v \rvert)$
+
+----
+
+ほかにも、転倒数は区間の伸縮ができる（用途：Mo で区間転倒数など）。これを Mo などに渡せる `InversionSlider` を実装した（`Slider` 系で実装すべきものの説明は Mo を参照）。

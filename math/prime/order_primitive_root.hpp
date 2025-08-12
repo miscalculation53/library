@@ -66,10 +66,9 @@ ll internal_primitive_root(ll p, const vc<PrimePower<P>> &fac)
 {
   if (p == 2)
     return 1;
-  mt19937 _mt;
   while (true)
   {
-    ll g = 1 + _mt() % (p - 1);
+    ll g = randrange(1, p);
     if (internal_is_primitive_root<mint>(g, p, fac))
       return g;
   }

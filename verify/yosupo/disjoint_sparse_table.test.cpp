@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "ds/disjoint_sparse_table.hpp"
+#include "ds/static_range/disjoint_sparse_table.hpp"
 
 void init() {}
 

@@ -30,7 +30,7 @@ public:
   }
 
   static_modint() : _v(0) {}
-  template <class T>
+  template <class T, typename = enable_if_t<is_integral<T>::value>>
   static_modint(T v)
   {
     if constexpr (is_signed_v<T>)
@@ -40,13 +40,9 @@ public:
         x += umod();
       _v = (uint)x;
     }
-    else if constexpr (is_unsigned_v<T>)
-    {
-      _v = (uint)(v % umod());
-    }
     else
     {
-      static_assert(is_signed_v<T> || is_unsigned_v<T>, "Unsupported Type");
+      _v = (uint)(v % umod());
     }
   }
 
@@ -101,7 +97,7 @@ public:
   }
 
   dynamic_modint() : _v(0) {}
-  template <class T>
+  template <class T, typename = enable_if_t<is_integral<T>::value>>
   dynamic_modint(T v)
   {
     if constexpr (is_signed_v<T>)
@@ -111,13 +107,9 @@ public:
         x += umod();
       _v = (uint)x;
     }
-    else if constexpr (is_unsigned_v<T>)
-    {
-      _v = (uint)(v % umod());
-    }
     else
     {
-      static_assert(is_signed_v<T> || is_unsigned_v<T>, "Unsupported Type");
+      _v = (uint)(v % umod());
     }
   }
 
@@ -156,3 +148,12 @@ template <int id>
 struct is_dynamic_modint<dynamic_modint<id>> : true_type {};
 template <class T>
 inline constexpr bool is_dynamic_modint_v = is_dynamic_modint<T>::value;
+
+template <class T>
+inline constexpr bool is_modint_v = is_static_modint_v<T> || is_dynamic_modint_v<T>;
+
+template <typename, typename = void>
+struct has_mod : false_type {};
+
+template <typename T>
+struct has_mod<T, void_t<decltype(declval<T>().mod)>> : true_type {};

@@ -28,3 +28,58 @@ ll inversion_number(const V &v)
   }
   return res;
 }
+
+template <class I>
+struct InversionSlider
+{
+  int n, l, r;
+  ll inversion_num;
+  vc<I> vec;
+  FenwickTree01<> fw;
+
+  InversionSlider() {}
+  InversionSlider(const vc<I> &vec)
+  : n(vec.size()), l(0), r(0), inversion_num(0), vec(vec), fw(vec.size())
+  { assert(is_permutation(vec)); }
+
+  void lpp()
+  {
+    int a = vec[l];
+    inversion_num -= fw.sum(0, a);
+    fw.set(a, 0);
+    l++;
+  }
+  void rpp()
+  {
+    int a = vec[r];
+    inversion_num += fw.sum(a + 1, n);
+    fw.set(a, 1);
+    r++;
+  }
+  void lmm()
+  {
+    l--;
+    int a = vec[l];
+    fw.set(a, 1);
+    inversion_num += fw.sum(0, a);
+  }
+  void rmm()
+  {
+    r--;
+    int a = vec[r];
+    fw.set(a, 0);
+    inversion_num -= fw.sum(a + 1, n);
+  }
+
+  void set(int nl, int nr)
+  {
+    while (nl < l)
+      lmm();
+    while (r < nr)
+      rpp();
+    while (l < nl)
+      lpp();
+    while (nr < r)
+      rmm();
+  }
+};

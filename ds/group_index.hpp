@@ -30,7 +30,7 @@ public:
   }
 
   // 値が val になる添字たち
-  auto idxs(int val) const { return csr.row(val); }
+  auto idxs(int val) const { return csr.at(val); }
 
   // 値が val になる添字のうち i 未満で最大のもの (なければ -1)
   template <class I = ll>
@@ -38,7 +38,7 @@ public:
   {
     auto is = idxs(val);
     ll j = ::lt_max(is, i);
-    return j == -1 ? -1 : is.get(j);
+    return j == -1 ? -1 : is[j];
   }
   // 値が val になる添字のうち i 以下で最大のもの (なければ -1)
   template <class I = ll>
@@ -46,7 +46,7 @@ public:
   {
     auto is = idxs(val);
     ll j = ::leq_max(is, i);
-    return j == -1 ? -1 : is.get(j);
+    return j == -1 ? -1 : is[j];
   }
   // 値が val になる添字のうち i 超過で最小のもの (なければ n)
   template <class I = ll>
@@ -54,7 +54,7 @@ public:
   {
     auto is = idxs(val);
     ll j = ::gt_min(is, i);
-    return j == is.size() ? n : is.get(j);
+    return j == is.size() ? n : is[j];
   }
   // 値が val になる添字のうち i 以上で最小のもの (なければ n)
   template <class I = ll>
@@ -62,7 +62,7 @@ public:
   {
     auto is = idxs(val);
     ll j = ::geq_min(is, i);
-    return j == is.size() ? n : is.get(j);
+    return j == is.size() ? n : is[j];
   }
   // 値が val になる i 未満の添字の個数
   // i 番目が val のとき、「これは何番目の val か？」に一致

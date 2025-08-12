@@ -11,8 +11,8 @@
  */
 
 // 無向グラフを受け取り、各頂点の連結成分の番号を返す
-template <class I = ll, class Cost, Cost dflt_cost>
-vc<I> connected_component_ids(const Graph<Cost, dflt_cost> &g)
+template <class I = ll, class Cost>
+vc<I> connected_component_ids(const GraphUndirected<Cost> &g)
 {
   const int n = g.size();
   vc<I> res(n, -1);

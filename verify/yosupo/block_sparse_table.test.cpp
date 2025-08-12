@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "ds/block_sparse_table.hpp"
+#include "ds/static_range/block_sparse_table.hpp"
 
 void init() {}
 

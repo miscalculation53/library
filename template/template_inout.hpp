@@ -179,6 +179,7 @@ void wt1_real(T x) {
   wt1(s);
 }
 
+void wt1(int x) { wt1_integer(x); }
 template <class T, enable_if_t<is_integral_v<T>, int> = 0>
 void wt1(T x) { wt1_integer(x); }
 void wt1(i128 x) { wt1_integer(x); }

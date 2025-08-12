@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "ds/linear_rmq.hpp"
+#include "ds/static_range/linear_rmq.hpp"
 
 void init() {}
 

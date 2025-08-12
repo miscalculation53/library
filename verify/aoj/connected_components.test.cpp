@@ -26,7 +26,7 @@ void main2()
 {
   LL(N, M);
   VEC(pll, M, AB);
-  Graph<ll> G(N, AB, false);
+  GraphUndirected<ll> G(N, AB);
   dump(G.edges(), G.adj_list());
   auto cid = connected_component_ids(G);
   dump(cid);

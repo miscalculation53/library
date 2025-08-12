@@ -19,10 +19,9 @@ ll get_prime_factor_impl(ll n)
 {
   mint::set_mod(n);
   int m = pow(n, .125);
-  mt19937 _mt;
   while (true)
   {
-    int c = 1 + _mt() % 100;
+    int c = randrange(1, 100);
     mint x = 2, y = 2, prod = 1;
     ll g = 1;
     while (g == 1)

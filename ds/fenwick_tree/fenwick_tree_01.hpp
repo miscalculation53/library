@@ -15,7 +15,7 @@ template <class T = ll, class Word = uint64_t>
 struct FenwickTree01
 {
 private:
-  const int B = 8 * sizeof(Word);
+  static const int B = 8 * sizeof(Word);
   int n;
   vc<Word> dat;
   FenwickTree<GroupAddSub<T>> fw;

@@ -42,7 +42,7 @@ void main2()
   vvl ans(N, vl(N, 0));
   rep(i, N)
   {
-    fec(j : csr1.row(i)) ans.at(i).at(j) = 1;
+    fec(j : csr1.at(i)) ans.at(i).at(j) = 1;
   }
   PRINTV(ans);
 }

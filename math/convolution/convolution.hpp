@@ -147,9 +147,9 @@ bool ntt_ok(int n)
 }
 
 template <int id>
-void ntt(vc<dynamic_modint<id>> &) {}
+void ntt(vc<dynamic_modint<id>> &) { assert(false); }
 template <int id>
-void intt(vc<dynamic_modint<id>> &) {}
+void intt(vc<dynamic_modint<id>> &) { assert(false); }
 
 // 破壊的に変更する
 template <int mod>
@@ -158,6 +158,7 @@ void ntt(vc<static_modint<mod>> &a)
   using mint = static_modint<mod>;
   int n = int(a.size());
   int h = countr_zero((unsigned int)n);
+  assert(n == (1 << h));
 
   static const internal::fft_info<mint> info;
 
@@ -223,6 +224,7 @@ void intt(vc<static_modint<mod>> &a)
   using mint = static_modint<mod>;
   int n = int(a.size());
   int h = countr_zero((unsigned int)n);
+  assert(n == (1 << h));
 
   static const internal::fft_info<mint> info;
 
@@ -288,9 +290,6 @@ void intt(vc<static_modint<mod>> &a)
       len -= 2;
     }
   }
-
-  mint in = mint(n).inv();
-  fem(ai : a) ai *= in;
 }
 
 namespace internal
@@ -329,10 +328,21 @@ vc<mint> convolution_ntt(vc<mint> a, vc<mint> b)
 {
   const int n = a.size(), m = b.size();
   const int z = bit_ceil(n + m - 1);
-  a.resize(z), b.resize(z);
-  ntt(a), ntt(b);
-  repi(i, z) a[i] *= b[i];
+  if (a == b)
+  {
+    a.resize(z);
+    ntt(a);
+    repi(i, z) a[i] *= a[i];
+  }
+  else
+  {
+    a.resize(z), b.resize(z);
+    ntt(a), ntt(b);
+    repi(i, z) a[i] *= b[i];
+  }
   intt(a);
+  mint iz = mint(z).inv();
+  fem(ai : a) ai *= iz;
   a.resize(n + m - 1);
   return a;
 }
@@ -388,7 +398,7 @@ vc<mint> convolution_crt_mod(const vc<T> &a, const vc<T> &b)
 
 // ntt-friendly なら普通、そうでなければ 3 つの mod
 // mod は 10^9 程度を想定、列の長さは合計 2^26 程度
-template <class mint>
+template <class mint, typename = std::enable_if_t<!std::is_integral<mint>::value>>
 vc<mint> convolution(const vc<mint> &a, const vc<mint> &b)
 {
   const int n = a.size(), m = b.size();
@@ -421,29 +431,4 @@ vc<T> convolution(const vc<T> &a, const vc<T> &b)
   vc<T> c_(c.size());
   repi(i, c.size()) c_[i] = c[i].val();
   return c_;
-}
-
-// mod 2^64
-// mod 5 つで計算
-// 列の長さは合計 2^25 程度
-vc<ull> convolution64(const vc<ull> &a, const vc<ull> &b)
-{
-  const int n = a.size(), m = b.size();
-  const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);
-  if (min(cnta, cntb) <= 400)
-    return internal::convolution_naive(a, b);
-  assert(ntt_ok<static_modint<754974721>>(n + m - 1) && "|a| + |b| - 1 <= 2^25");
-  return internal::convolution_crt_mod<ull, 167772161, 469762049, 1107296257, 1711276033, 1811939329>(a, b);
-}
-
-// 最終的な要素が 4.2 × 10^18 程度に収まる場合
-// mod 2 つで計算
-// 列の長さは合計 2^25 程度
-vc<ll> convolution_4e18(const vc<ll> &a, const vc<ll> &b)
-{
-  const int n = a.size(), m = b.size();
-  const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);
-  if (min(cnta, cntb) <= 150)
-    return internal::convolution_naive(a, b);
-  return internal::convolution_crt<2013265921, 2113929217>(a, b);
 }

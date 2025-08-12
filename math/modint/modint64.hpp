@@ -155,3 +155,20 @@ internal::montgomery64 dynamic_modint64<id>::mg((1LL << 61) - 1);
 using modint61 = static_modint64<(1LL << 61) - 1>;
 using modint64_odd = dynamic_modint64_odd<-1>;
 using modint64 = dynamic_modint64<-1>;
+
+template <class T>
+struct is_static_modint64 : false_type {};
+template <int m>
+struct is_static_modint64<static_modint64<m>> : true_type {};
+template <class T>
+inline constexpr bool is_static_modint64_v = is_static_modint64<T>::value;
+
+template <class T>
+struct is_dynamic_modint64 : false_type {};
+template <int id>
+struct is_dynamic_modint64<dynamic_modint64<id>> : true_type {};
+template <class T>
+inline constexpr bool is_dynamic_modint64_v = is_dynamic_modint64<T>::value;
+
+template <class T>
+inline constexpr bool is_modint64_v = is_static_modint64_v<T> || is_dynamic_modint64_v<T>;

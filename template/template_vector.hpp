@@ -14,13 +14,15 @@ template <class T = ll, class V>
 inline T SZ(const V &x) { return x.size(); }
 #define eb emplace_back
 
+#define LMD(x, fx) ([&](auto x) { return fx; })
 template <class F>
-auto gen_vec(const int &n, const F &f)
+auto gen_vec(int n, const F &f)
 {
   vc<decltype(f(0))> res(n);
   repi(i, n) res[i] = f(i);
   return res;
 }
+#define GEN_VEC(n, i, fi) (gen_vec(n, LMD(i, fi)))
 
 // https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0
 template <class T, size_t d, size_t i = 0, class V>
@@ -39,7 +41,7 @@ T ctol(const char &c, const string &s)
   return -1;
 }
 template <class T = ll>
-vc<T> stov(const string &s, const char &first)
+vc<T> stov(const string &s, char first)
 {
   return gen_vec(SZ<int>(s), [&](int i) -> T
                  { return s[i] - first; });
@@ -49,6 +51,20 @@ vc<T> stov(const string &s, const string &t)
 {
   return gen_vec(SZ<int>(s), [&](int i) -> T
                  { return ctol(s[i], t); });
+}
+template <class T>
+string vtos(const vc<T> &v, char first)
+{
+  string res = "";
+  fe(vi : v) res += vi + first;
+  return res;
+}
+template <class T>
+string vtos(const vc<T> &v, const string &t)
+{
+  string res = "";
+  fe(vi : v) res += t[vi];
+  return res;
 }
 
 template <class T>

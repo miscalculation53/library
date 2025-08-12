@@ -28,8 +28,10 @@ struct Main
     #endif
     cout << fixed << setprecision(20);
   
-    test();
     init();
+    #ifdef LOCAL
+    test();
+    #endif
   
     #if defined AOJ_TESTCASE or (defined LOCAL and defined SINGLE_TESTCASE)
     CERR("\n[AOJ_TESTCASE]\n\n", "35");
@@ -43,12 +45,15 @@ struct Main
     main2();
     #elif defined MULTI_TESTCASE
     CERR("\n[MULTI_TESTCASE]\n\n", "33");
-    dump("T");
-    IN(uint, T);
-    while (T--)
+    local(while (true))
     {
-      dump("new testcase");
-      main2();
+      dump("T");
+      IN(uint, T);
+      while (T--)
+      {
+        dump("new testcase");
+        main2();
+      }
     }
     #endif
   }
