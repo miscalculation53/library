@@ -59,6 +59,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: graph/tree/rooted_tree.hpp
     title: "\u6839\u3064\u304D\u6728\u30AF\u30E9\u30B9"
+  - icon: ':heavy_check_mark:'
+    path: string/aho_corasick.hpp
+    title: Aho Corasick
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/bellman_ford.test.cpp
@@ -82,6 +85,9 @@ data:
     path: verify/aoj/rooted_tree_from_parent.test.cpp
     title: verify/aoj/rooted_tree_from_parent.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/aho_corasick.test.cpp
+    title: verify/yosupo/aho_corasick.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_eularian_circuits.test.cpp
     title: verify/yosupo/counting_eularian_circuits.test.cpp
   - icon: ':heavy_check_mark:'
@@ -102,6 +108,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki310.test.cpp
     title: verify/yukicoder/yuki310.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki430_aho_corasick.test.cpp
+    title: verify/yukicoder/yuki430_aho_corasick.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -734,9 +743,11 @@ data:
   - graph/tree/rooted_tree.hpp
   - graph/subgraphs.hpp
   - graph/sssp.hpp
+  - string/aho_corasick.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yukicoder/yuki430_aho_corasick.test.cpp
   - verify/yukicoder/yuki310.test.cpp
   - verify/aoj/my_queue.test.cpp
   - verify/aoj/bfs.test.cpp
@@ -750,6 +761,7 @@ data:
   - verify/yosupo/tree_diameter.test.cpp
   - verify/yosupo/dijkstra.test.cpp
   - verify/yosupo/counting_eularian_circuits.test.cpp
+  - verify/yosupo/aho_corasick.test.cpp
   - verify/yosupo/counting_spanning_trees_directed.test.cpp
 documentation_of: ds/my_queue.hpp
 layout: document

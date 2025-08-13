@@ -772,49 +772,51 @@ data:
     \    siz.assign(n, 1);\n    repi(j, n - 2, -1, -1)\n    {\n      const E &e =\
     \ get_edge(bfs_ordered_eid[j]);\n      siz[e.from] += siz[e.to];\n    }\n  }\n\
     \npublic:\n  RootedTree() {}\n  // p[i] \u306F i \u306E\u89AA\u306E\u9802\u70B9\
-    \u756A\u53F7 (\u6839\u306F -1) \u3092\u6E21\u3059\n  template <class I>\n  RootedTree(const\
-    \ vc<I> &p, const Cost &dflt_cost = 1) : n(p.size())\n  {\n    // par, chi \u3092\
-    \u8A08\u7B97\u3059\u308B\n    par.resize(n);\n    root_ = -1;\n    vc<pair<int,\
-    \ E>> edges(n - 1);\n    for (int i = 0, j = 0; i < n; i++)\n    {\n      if (p[i]\
-    \ < 0)\n      {\n        assert(root_ == -1 && \"There are more than two roots\"\
-    );\n        par[i] = E(i, -1, dflt_cost, -1);\n        root_ = i;\n      }\n \
-    \     else\n      {\n        assert(j < n - 1 && \"There is no root\");\n    \
-    \    par[i] = E(i, p[i], dflt_cost, j);\n        edges[j] = {p[i], E(p[i], i,\
-    \ dflt_cost, j)};\n        j++;\n      }\n    }\n    chi = CSR<E>(n, edges);\n\
-    \n    // bfs_ordered_eid, dep(, dist) \u3092\u8A08\u7B97\u3059\u308B\n    bfs_ordered_eid.reserve(n\
-    \ - 1);\n    MyQueue<int> que;\n    que.push(root_);\n    dep.assign(n, 0);\n\
-    \    if constexpr (need_dist)\n      dis.assign(n, 0);\n    while (!que.empty())\n\
-    \    {\n      int v = que.front();\n      que.pop();\n      fec(e : chi[v])\n\
-    \      {\n        bfs_ordered_eid.eb(e.index);\n        dep[e.to] = dep[e.from]\
-    \ + 1;\n        if constexpr (need_dist)\n          dis[e.to] = dis[e.from] +\
-    \ e.cost;\n        que.push(e.to);\n      }\n    }\n\n    // siz \u3092\u8A08\u7B97\
-    \u3059\u308B\n    calc_siz();\n  }\n  // g \u306F\u6728\u3067\u3042\u308B\u3053\
-    \u3068\u3092\u60F3\u5B9A\u3001\u3082\u3068\u306E g \u306E index \u306F\u305D\u306E\
-    \u307E\u307E\u4FDD\u6301\u3055\u308C\u308B\n  template <bool is_directed>\n  RootedTree(const\
-    \ Graph<is_directed, Cost> &g, int root)\n  : n(g.size()), root_(root)\n  {\n\
-    \    // par, chi, bfs_ordered_eid, dep(, dist) \u3092\u8A08\u7B97\u3059\u308B\n\
-    \    par.resize(n);\n    par[root] = E(root, -1, {}, -1);\n    vc<pair<int, E>>\
-    \ edges(n - 1);\n    MyQueue<int> que;\n    que.push(root);\n    dep.assign(n,\
-    \ 0);\n    if constexpr (need_dist)\n      dis.assign(n, 0);\n    while (!que.empty())\n\
-    \    {\n      int v = que.front();\n      que.pop();\n      fec(e : g.out_edges(v))\n\
-    \      {\n        if (par[e.from] == e.to)\n          continue;\n        par[e.to]\
-    \ = e.rev();\n        edges[e.index] = {e.from, e};\n        bfs_ordered_eid.eb(e.index);\n\
+    \u756A\u53F7\u3092\u6E21\u3059\n  // \u6839 r \u306B\u3064\u3044\u3066\u306F p[r]\
+    \ == -1 \u3068\u3059\u308B\u5F62\u5F0F\u3001p[r] == r \u3068\u3059\u308B\u5F62\
+    \u5F0F\u306E\u3069\u3061\u3089\u3067\u3082\u3088\u3044\n  template <class I>\n\
+    \  RootedTree(const vc<I> &p, const Cost &dflt_cost = 1) : n(p.size())\n  {\n\
+    \    // par, chi \u3092\u8A08\u7B97\u3059\u308B\n    par.resize(n);\n    root_\
+    \ = -1;\n    vc<pair<int, E>> edges(n - 1);\n    for (int i = 0, j = 0; i < n;\
+    \ i++)\n    {\n      if (p[i] < 0 || p[i] == i)\n      {\n        assert(root_\
+    \ == -1 && \"There are more than two roots\");\n        par[i] = E(i, -1, dflt_cost,\
+    \ -1);\n        root_ = i;\n      }\n      else\n      {\n        assert(j < n\
+    \ - 1 && \"There is no root\");\n        par[i] = E(i, p[i], dflt_cost, j);\n\
+    \        edges[j] = {p[i], E(p[i], i, dflt_cost, j)};\n        j++;\n      }\n\
+    \    }\n    chi = CSR<E>(n, edges);\n\n    // bfs_ordered_eid, dep(, dist) \u3092\
+    \u8A08\u7B97\u3059\u308B\n    bfs_ordered_eid.reserve(n - 1);\n    MyQueue<int>\
+    \ que;\n    que.push(root_);\n    dep.assign(n, 0);\n    if constexpr (need_dist)\n\
+    \      dis.assign(n, 0);\n    while (!que.empty())\n    {\n      int v = que.front();\n\
+    \      que.pop();\n      fec(e : chi[v])\n      {\n        bfs_ordered_eid.eb(e.index);\n\
     \        dep[e.to] = dep[e.from] + 1;\n        if constexpr (need_dist)\n    \
     \      dis[e.to] = dis[e.from] + e.cost;\n        que.push(e.to);\n      }\n \
-    \   }\n    chi = CSR<E>(n, edges);\n\n    // siz \u3092\u8A08\u7B97\u3059\u308B\
-    \n    calc_siz();\n  }\n\n  template <class I>\n  RootedTree(int n, const vc<pair<I,\
-    \ I>> &es, int root)\n  : RootedTree(GraphUndirected<Cost>(n, es), root) {}\n\
-    \  template <class I>\n  RootedTree(int n, const vc<tuple<I, I, Cost>> &es, int\
-    \ root)\n  : RootedTree(GraphUndirected<Cost>(n, es), root) {}\n\n  // \u9802\u70B9\
-    \u6570\u3092\u8FD4\u3059\n  template <class I = ll>\n  I size() const { return\
-    \ n; }\n\n  // \u6839\u3092\u8FD4\u3059\n  int root() const { return root_; }\n\
-    \n  // v \u304B\u3089\u89AA\u306B\u5411\u304B\u3046\u8FBA\u3068\u3057\u3066\u8FD4\
-    \u3059 (\u6839\u306A\u3089 to == -1)\n  const E &parent(int v) const\n  {\n  \
-    \  assert(0 <= v && v < n);\n    return par[v];\n  }\n  // v \u304B\u3089\u5B50\
-    \u306B\u5411\u304B\u3046\u8FBA\u306E\u96C6\u5408\n  auto children(int v) const\n\
-    \  {\n    assert(0 <= v && v < n);\n    return chi[v];\n  }\n  // v \u306E\u6DF1\
-    \u3055\n  template <class I = ll>\n  I depth(int v) const\n  {\n    assert(0 <=\
-    \ v && v < n);\n    return dep[v];\n  }\n  // \u6839\u304B\u3089 v \u3078\u306E\
+    \   }\n\n    // siz \u3092\u8A08\u7B97\u3059\u308B\n    calc_siz();\n  }\n  //\
+    \ g \u306F\u6728\u3067\u3042\u308B\u3053\u3068\u3092\u60F3\u5B9A\u3001\u3082\u3068\
+    \u306E g \u306E index \u306F\u305D\u306E\u307E\u307E\u4FDD\u6301\u3055\u308C\u308B\
+    \n  template <bool is_directed>\n  RootedTree(const Graph<is_directed, Cost> &g,\
+    \ int root)\n  : n(g.size()), root_(root)\n  {\n    // par, chi, bfs_ordered_eid,\
+    \ dep(, dist) \u3092\u8A08\u7B97\u3059\u308B\n    par.resize(n);\n    par[root]\
+    \ = E(root, -1, {}, -1);\n    vc<pair<int, E>> edges(n - 1);\n    MyQueue<int>\
+    \ que;\n    que.push(root);\n    dep.assign(n, 0);\n    if constexpr (need_dist)\n\
+    \      dis.assign(n, 0);\n    while (!que.empty())\n    {\n      int v = que.front();\n\
+    \      que.pop();\n      fec(e : g.out_edges(v))\n      {\n        if (par[e.from]\
+    \ == e.to)\n          continue;\n        par[e.to] = e.rev();\n        edges[e.index]\
+    \ = {e.from, e};\n        bfs_ordered_eid.eb(e.index);\n        dep[e.to] = dep[e.from]\
+    \ + 1;\n        if constexpr (need_dist)\n          dis[e.to] = dis[e.from] +\
+    \ e.cost;\n        que.push(e.to);\n      }\n    }\n    chi = CSR<E>(n, edges);\n\
+    \n    // siz \u3092\u8A08\u7B97\u3059\u308B\n    calc_siz();\n  }\n\n  template\
+    \ <class I>\n  RootedTree(int n, const vc<pair<I, I>> &es, int root)\n  : RootedTree(GraphUndirected<Cost>(n,\
+    \ es), root) {}\n  template <class I>\n  RootedTree(int n, const vc<tuple<I, I,\
+    \ Cost>> &es, int root)\n  : RootedTree(GraphUndirected<Cost>(n, es), root) {}\n\
+    \n  // \u9802\u70B9\u6570\u3092\u8FD4\u3059\n  template <class I = ll>\n  I size()\
+    \ const { return n; }\n\n  // \u6839\u3092\u8FD4\u3059\n  int root() const { return\
+    \ root_; }\n\n  // v \u304B\u3089\u89AA\u306B\u5411\u304B\u3046\u8FBA\u3068\u3057\
+    \u3066\u8FD4\u3059 (\u6839\u306A\u3089 to == -1)\n  const E &parent(int v) const\n\
+    \  {\n    assert(0 <= v && v < n);\n    return par[v];\n  }\n  // v \u304B\u3089\
+    \u5B50\u306B\u5411\u304B\u3046\u8FBA\u306E\u96C6\u5408\n  auto children(int v)\
+    \ const\n  {\n    assert(0 <= v && v < n);\n    return chi[v];\n  }\n  // v \u306E\
+    \u6DF1\u3055\n  template <class I = ll>\n  I depth(int v) const\n  {\n    assert(0\
+    \ <= v && v < n);\n    return dep[v];\n  }\n  // \u6839\u304B\u3089 v \u3078\u306E\
     \u8DDD\u96E2 (\u91CD\u307F\u3064\u304D)\n  // need_dist == true \u304C\u5FC5\u8981\
     \n  Cost dist(int v) const\n  {\n    static_assert(need_dist);\n    assert(0 <=\
     \ v && v < n);\n    return dis[v];\n  }\n  // v \u3092\u6839\u3068\u3059\u308B\
@@ -937,7 +939,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/tree_diameter.test.cpp
   requiredBy: []
-  timestamp: '2025-08-12 21:38:21+09:00'
+  timestamp: '2025-08-13 19:59:25+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/tree_diameter.test.cpp

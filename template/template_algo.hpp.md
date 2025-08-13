@@ -419,6 +419,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/set/zeta_mobius.hpp
     title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
+  - icon: ':heavy_check_mark:'
+    path: string/aho_corasick.hpp
+    title: Aho Corasick
+  - icon: ':heavy_check_mark:'
+    path: string/trie.hpp
+    title: trie
   - icon: ':warning:'
     path: template/template.cpp
     title: template/template.cpp
@@ -537,6 +543,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/2d_segtree.test.cpp
     title: verify/yosupo/2d_segtree.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/aho_corasick.test.cpp
+    title: verify/yosupo/aho_corasick.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/and_or_convolution.test.cpp
     title: verify/yosupo/and_or_convolution.test.cpp
@@ -927,6 +936,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki310.test.cpp
     title: verify/yukicoder/yuki310.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yukicoder/yuki430_aho_corasick.test.cpp
+    title: verify/yukicoder/yuki430_aho_corasick.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -1352,6 +1364,8 @@ data:
   - math/set/kronecker_power.hpp
   - math/set/zeta_mobius.hpp
   - math/set/and_or_convolution.hpp
+  - string/aho_corasick.hpp
+  - string/trie.hpp
   - verify/yosupo/matrix_solve_mod2.cpp
   - verify/yosupo/fps_inv_sparse.test copy.cpp
   - ds/uf/uf.hpp
@@ -1408,6 +1422,7 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/parallel_binsearch.test.cpp
+  - verify/yukicoder/yuki430_aho_corasick.test.cpp
   - verify/yukicoder/perm_cycle.test.cpp
   - verify/yukicoder/poly_rational_sum.test.cpp
   - verify/yukicoder/yuki2215_dc.test.cpp
@@ -1561,6 +1576,7 @@ data:
   - verify/yosupo/majority_voting.test.cpp
   - verify/yosupo/fps_exp_sparse.test.cpp
   - verify/yosupo/unionfind_potential_non_commutative.test.cpp
+  - verify/yosupo/aho_corasick.test.cpp
   - verify/yosupo/subset_convolution.test.cpp
   - verify/yosupo/point_set_range_frequency.test.cpp
   - verify/yosupo/aplusb.test.cpp

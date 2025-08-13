@@ -453,6 +453,14 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/set/zeta_mobius.hpp
       title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
+  - name: string
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: string/aho_corasick.hpp
+      title: Aho Corasick
+    - icon: ':heavy_check_mark:'
+      path: string/trie.hpp
+      title: trie
   - name: template
     pages:
     - icon: ':warning:'
@@ -632,6 +640,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/2d_segtree.test.cpp
       title: verify/yosupo/2d_segtree.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yosupo/aho_corasick.test.cpp
+      title: verify/yosupo/aho_corasick.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/and_or_convolution.test.cpp
       title: verify/yosupo/and_or_convolution.test.cpp
@@ -1024,6 +1035,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yukicoder/yuki310.test.cpp
       title: verify/yukicoder/yuki310.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yukicoder/yuki430_aho_corasick.test.cpp
+      title: verify/yukicoder/yuki430_aho_corasick.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
       title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
