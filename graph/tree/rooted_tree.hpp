@@ -44,7 +44,8 @@ protected:
 
 public:
   RootedTree() {}
-  // p[i] は i の親の頂点番号 (根は -1) を渡す
+  // p[i] は i の親の頂点番号を渡す
+  // 根 r については p[r] == -1 とする形式、p[r] == r とする形式のどちらでもよい
   template <class I>
   RootedTree(const vc<I> &p, const Cost &dflt_cost = 1) : n(p.size())
   {
@@ -54,7 +55,7 @@ public:
     vc<pair<int, E>> edges(n - 1);
     for (int i = 0, j = 0; i < n; i++)
     {
-      if (p[i] < 0)
+      if (p[i] < 0 || p[i] == i)
       {
         assert(root_ == -1 && "There are more than two roots");
         par[i] = E(i, -1, dflt_cost, -1);
