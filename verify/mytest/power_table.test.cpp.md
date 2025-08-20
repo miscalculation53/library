@@ -1,55 +1,55 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
   - icon: ':heavy_check_mark:'
     path: math/modint/power_table.hpp
     title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -744,21 +744,27 @@ data:
     \ : true_type {};\ntemplate <class T>\ninline constexpr bool is_dynamic_modint_v\
     \ = is_dynamic_modint<T>::value;\n\ntemplate <class T>\ninline constexpr bool\
     \ is_modint_v = is_static_modint_v<T> || is_dynamic_modint_v<T>;\n\ntemplate <typename,\
-    \ typename = void>\nstruct has_mod : false_type {};\n\ntemplate <typename T>\n\
-    struct has_mod<T, void_t<decltype(declval<T>().mod)>> : true_type {};\n#line 2\
-    \ \"math/modint/power_table.hpp\"\n\n#line 4 \"math/modint/power_table.hpp\"\n\
-    \n/**\n * @brief \u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB\n * @docs docs/math/modint/power_table.md\n\
-    \ */\n\ntemplate <class T>\nstruct PowerTable\n{\nprivate:\n  decltype(T::mod())\
-    \ mod;\n  T base;\n  vc<T> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(T base)\
-    \ : mod(T::mod()), base(base), pw(1, 1) {}\n\n  void reserve(int n)\n  {\n   \
-    \ if (mod != T::mod())\n    {\n      mod = T::mod();\n      pw = {1};\n    }\n\
-    \    int i = pw.size();\n    if (n < i)\n      return;\n    pw.resize(n + 1);\n\
-    \    for (; i <= n; i++)\n      pw[i] = pw[i - 1] * base;\n  }\n\n  T pow(int\
-    \ n)\n  {\n    reserve(n);\n    return pw[n];\n  }\n};\n#line 6 \"verify/mytest/power_table.test.cpp\"\
-    \nusing mint = modint;\n\nvoid test1()\n{\n  mint::set_mod(998244353);\n  PowerTable<mint>\
-    \ pw2(2);\n  rep(i, 1000) assert(pw2.pow(i) == mint(2).pow(i));\n  mint::set_mod(1'000'000'007);\n\
-    \  rep(i, 2000) assert(pw2.pow(i) == mint(2).pow(i));\n}\n\nint main()\n{\n  test1();\n\
-    \n  cout << \"Hello World\" << endl;\n}\n"
+    \ typename = void>\nstruct has_mod : false_type {};\ntemplate <typename T>\nstruct\
+    \ has_mod<T, void_t<decltype(declval<T>().mod)>> : true_type {};\n\ntemplate <class\
+    \ mint>\nstruct modint_less\n{\n  bool operator()(const mint &a, const mint &b)\
+    \ const\n  {\n    if constexpr (has_mod<mint>())\n      return a.val() < b.val();\n\
+    \    else\n      return a < b;\n  }\n};\n\ntemplate <class mint>\nstruct modint_hash\n\
+    {\n  auto operator()(const mint &x) const\n  {\n    if constexpr (has_mod<mint>())\n\
+    \      return hash(x.val());\n    else\n      return hash(x);\n  }\n};\n#line\
+    \ 2 \"math/modint/power_table.hpp\"\n\n#line 4 \"math/modint/power_table.hpp\"\
+    \n\n/**\n * @brief \u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB\n * @docs docs/math/modint/power_table.md\n\
+    \ */\n\ntemplate <class mint>\nstruct PowerTable\n{\nprivate:\n  decltype(mint::mod())\
+    \ mod;\n  mint base;\n  vc<mint> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(const\
+    \ mint &base) : mod(mint::mod()), base(base), pw(1, 1) {}\n\n  void reserve(int\
+    \ n)\n  {\n    if (mod != mint::mod())\n    {\n      mod = mint::mod();\n    \
+    \  pw = {1};\n    }\n    int i = pw.size();\n    if (n < i)\n      return;\n \
+    \   pw.resize(n + 1);\n    for (; i <= n; i++)\n      pw[i] = pw[i - 1] * base;\n\
+    \  }\n\n  mint pow(int n)\n  {\n    reserve(n);\n    return pw[n];\n  }\n};\n\
+    #line 6 \"verify/mytest/power_table.test.cpp\"\nusing mint = modint;\n\nvoid test1()\n\
+    {\n  mint::set_mod(998244353);\n  PowerTable<mint> pw2(2);\n  rep(i, 1000) assert(pw2.pow(i)\
+    \ == mint(2).pow(i));\n  mint::set_mod(1'000'000'007);\n  rep(i, 2000) assert(pw2.pow(i)\
+    \ == mint(2).pow(i));\n}\n\nint main()\n{\n  test1();\n\n  cout << \"Hello World\"\
+    \ << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#include \"template/template_all_but_modint.hpp\"\n#include \"math/modint/modint.hpp\"\
     \n#include \"math/modint/power_table.hpp\"\nusing mint = modint;\n\nvoid test1()\n\
@@ -786,7 +792,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/power_table.test.cpp
   requiredBy: []
-  timestamp: '2025-08-12 21:38:21+09:00'
+  timestamp: '2025-08-20 23:10:57+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/power_table.test.cpp

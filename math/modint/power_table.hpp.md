@@ -1,46 +1,49 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
   - icon: ':warning:'
     path: math/modint/template_modint.hpp
     title: math/modint/template_modint.hpp
+  - icon: ':heavy_check_mark:'
+    path: string/rolling_hash.hpp
+    title: Rolling Hash
   - icon: ':warning:'
     path: template/template.cpp
     title: template/template.cpp
@@ -51,6 +54,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/power_table.test.cpp
     title: verify/mytest/power_table.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/rolling_hash.test.cpp
+    title: verify/mytest/rolling_hash.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -638,22 +644,22 @@ data:
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
     \ 4 \"math/modint/power_table.hpp\"\n\n/**\n * @brief \u7D2F\u4E57\u30C6\u30FC\
     \u30D6\u30EB\n * @docs docs/math/modint/power_table.md\n */\n\ntemplate <class\
-    \ T>\nstruct PowerTable\n{\nprivate:\n  decltype(T::mod()) mod;\n  T base;\n \
-    \ vc<T> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(T base) : mod(T::mod()),\
-    \ base(base), pw(1, 1) {}\n\n  void reserve(int n)\n  {\n    if (mod != T::mod())\n\
-    \    {\n      mod = T::mod();\n      pw = {1};\n    }\n    int i = pw.size();\n\
-    \    if (n < i)\n      return;\n    pw.resize(n + 1);\n    for (; i <= n; i++)\n\
-    \      pw[i] = pw[i - 1] * base;\n  }\n\n  T pow(int n)\n  {\n    reserve(n);\n\
-    \    return pw[n];\n  }\n};\n"
+    \ mint>\nstruct PowerTable\n{\nprivate:\n  decltype(mint::mod()) mod;\n  mint\
+    \ base;\n  vc<mint> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(const mint\
+    \ &base) : mod(mint::mod()), base(base), pw(1, 1) {}\n\n  void reserve(int n)\n\
+    \  {\n    if (mod != mint::mod())\n    {\n      mod = mint::mod();\n      pw =\
+    \ {1};\n    }\n    int i = pw.size();\n    if (n < i)\n      return;\n    pw.resize(n\
+    \ + 1);\n    for (; i <= n; i++)\n      pw[i] = pw[i - 1] * base;\n  }\n\n  mint\
+    \ pow(int n)\n  {\n    reserve(n);\n    return pw[n];\n  }\n};\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
     \n/**\n * @brief \u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB\n * @docs docs/math/modint/power_table.md\n\
-    \ */\n\ntemplate <class T>\nstruct PowerTable\n{\nprivate:\n  decltype(T::mod())\
-    \ mod;\n  T base;\n  vc<T> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(T base)\
-    \ : mod(T::mod()), base(base), pw(1, 1) {}\n\n  void reserve(int n)\n  {\n   \
-    \ if (mod != T::mod())\n    {\n      mod = T::mod();\n      pw = {1};\n    }\n\
-    \    int i = pw.size();\n    if (n < i)\n      return;\n    pw.resize(n + 1);\n\
-    \    for (; i <= n; i++)\n      pw[i] = pw[i - 1] * base;\n  }\n\n  T pow(int\
-    \ n)\n  {\n    reserve(n);\n    return pw[n];\n  }\n};"
+    \ */\n\ntemplate <class mint>\nstruct PowerTable\n{\nprivate:\n  decltype(mint::mod())\
+    \ mod;\n  mint base;\n  vc<mint> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(const\
+    \ mint &base) : mod(mint::mod()), base(base), pw(1, 1) {}\n\n  void reserve(int\
+    \ n)\n  {\n    if (mod != mint::mod())\n    {\n      mod = mint::mod();\n    \
+    \  pw = {1};\n    }\n    int i = pw.size();\n    if (n < i)\n      return;\n \
+    \   pw.resize(n + 1);\n    for (; i <= n; i++)\n      pw[i] = pw[i - 1] * base;\n\
+    \  }\n\n  mint pow(int n)\n  {\n    reserve(n);\n    return pw[n];\n  }\n};"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -670,11 +676,13 @@ data:
   path: math/modint/power_table.hpp
   requiredBy:
   - math/modint/template_modint.hpp
+  - string/rolling_hash.hpp
   - template/template.cpp
   - template/template_all.hpp
-  timestamp: '2025-08-12 21:38:21+09:00'
+  timestamp: '2025-08-20 23:10:57+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/mytest/rolling_hash.test.cpp
   - verify/mytest/power_table.test.cpp
 documentation_of: math/modint/power_table.hpp
 layout: document

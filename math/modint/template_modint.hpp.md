@@ -1,19 +1,19 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/binomial.hpp
     title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
   - icon: ':heavy_check_mark:'
@@ -22,40 +22,40 @@ data:
   - icon: ':warning:'
     path: math/modint/stom.hpp
     title: "string \u3092 mint \u306B"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
@@ -751,39 +751,45 @@ data:
     \ : true_type {};\ntemplate <class T>\ninline constexpr bool is_dynamic_modint_v\
     \ = is_dynamic_modint<T>::value;\n\ntemplate <class T>\ninline constexpr bool\
     \ is_modint_v = is_static_modint_v<T> || is_dynamic_modint_v<T>;\n\ntemplate <typename,\
-    \ typename = void>\nstruct has_mod : false_type {};\n\ntemplate <typename T>\n\
-    struct has_mod<T, void_t<decltype(declval<T>().mod)>> : true_type {};\n#line 2\
-    \ \"math/modint/power_table.hpp\"\n\n#line 4 \"math/modint/power_table.hpp\"\n\
-    \n/**\n * @brief \u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB\n * @docs docs/math/modint/power_table.md\n\
-    \ */\n\ntemplate <class T>\nstruct PowerTable\n{\nprivate:\n  decltype(T::mod())\
-    \ mod;\n  T base;\n  vc<T> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(T base)\
-    \ : mod(T::mod()), base(base), pw(1, 1) {}\n\n  void reserve(int n)\n  {\n   \
-    \ if (mod != T::mod())\n    {\n      mod = T::mod();\n      pw = {1};\n    }\n\
-    \    int i = pw.size();\n    if (n < i)\n      return;\n    pw.resize(n + 1);\n\
-    \    for (; i <= n; i++)\n      pw[i] = pw[i - 1] * base;\n  }\n\n  T pow(int\
-    \ n)\n  {\n    reserve(n);\n    return pw[n];\n  }\n};\n#line 2 \"math/modint/binomial.hpp\"\
-    \n\n#line 4 \"math/modint/binomial.hpp\"\n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\
-    \n * @docs docs/math/modint/binomial.md\n */\n\ntemplate <class T>\nstruct Binomial\n\
-    {\nprivate:\n  static decltype(T::mod()) mod;\n  static vc<T> fac_, finv_, inv_;\n\
-    \npublic:\n  static void reserve(int n)\n  {\n    if (mod != T::mod())\n    {\n\
-    \      mod = T::mod();\n      fac_ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};\n\
-    \    }\n    int i = fac_.size();\n    chmin(n, T::mod() - 1);\n    if (n < i)\n\
-    \      return;\n    fac_.resize(n + 1), finv_.resize(n + 1), inv_.resize(n + 1);\n\
-    \    for (; i <= n; i++)\n    {\n      fac_[i] = fac_[i - 1] * T::raw(i);\n  \
-    \    inv_[i] = -inv_[T::mod() % i] * T::raw(T::mod() / i);\n      finv_[i] = finv_[i\
-    \ - 1] * inv_[i];\n    }\n  }\n  static T fac(int n)\n  {\n    assert(n >= 0);\n\
-    \    if (n >= T::mod())\n      return 0;\n    reserve(n);\n    return fac_[n];\n\
-    \  }\n  static T finv(int n)\n  {\n    assert(n < T::mod());\n    if (n < 0)\n\
-    \      return 0;\n    reserve(n);\n    return finv_[n];\n  }\n  static T inv(T\
-    \ n)\n  {\n    assert(n != 0);\n    reserve(n.val());\n    return inv_[n.val()];\n\
-    \  }\n\n  static T P(int n, int k)\n  {\n    if (n < k)\n      return 0;\n   \
-    \ if (n < 0 || k < 0)\n      return 0;\n    reserve(n);\n    return fac_[n] *\
-    \ finv_[n - k];\n  }\n  static T C(int n, int k)\n  {\n    if (n < k)\n      return\
-    \ 0;\n    if (n < 0 || k < 0)\n      return 0;\n    reserve(n);\n    return fac_[n]\
-    \ * finv_[k] * finv_[n - k];\n  }\n  static T H(int n, int k)\n  {\n    if (n\
-    \ == 0 && k == 0)\n      return 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate\
-    \ <class T> decltype(T::mod()) Binomial<T>::mod{};\ntemplate <class T> vc<T> Binomial<T>::fac_{};\n\
-    template <class T> vc<T> Binomial<T>::finv_{};\ntemplate <class T> vc<T> Binomial<T>::inv_{};\n\
+    \ typename = void>\nstruct has_mod : false_type {};\ntemplate <typename T>\nstruct\
+    \ has_mod<T, void_t<decltype(declval<T>().mod)>> : true_type {};\n\ntemplate <class\
+    \ mint>\nstruct modint_less\n{\n  bool operator()(const mint &a, const mint &b)\
+    \ const\n  {\n    if constexpr (has_mod<mint>())\n      return a.val() < b.val();\n\
+    \    else\n      return a < b;\n  }\n};\n\ntemplate <class mint>\nstruct modint_hash\n\
+    {\n  auto operator()(const mint &x) const\n  {\n    if constexpr (has_mod<mint>())\n\
+    \      return hash(x.val());\n    else\n      return hash(x);\n  }\n};\n#line\
+    \ 2 \"math/modint/power_table.hpp\"\n\n#line 4 \"math/modint/power_table.hpp\"\
+    \n\n/**\n * @brief \u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB\n * @docs docs/math/modint/power_table.md\n\
+    \ */\n\ntemplate <class mint>\nstruct PowerTable\n{\nprivate:\n  decltype(mint::mod())\
+    \ mod;\n  mint base;\n  vc<mint> pw;\n\npublic:\n  PowerTable() {}\n  PowerTable(const\
+    \ mint &base) : mod(mint::mod()), base(base), pw(1, 1) {}\n\n  void reserve(int\
+    \ n)\n  {\n    if (mod != mint::mod())\n    {\n      mod = mint::mod();\n    \
+    \  pw = {1};\n    }\n    int i = pw.size();\n    if (n < i)\n      return;\n \
+    \   pw.resize(n + 1);\n    for (; i <= n; i++)\n      pw[i] = pw[i - 1] * base;\n\
+    \  }\n\n  mint pow(int n)\n  {\n    reserve(n);\n    return pw[n];\n  }\n};\n\
+    #line 2 \"math/modint/binomial.hpp\"\n\n#line 4 \"math/modint/binomial.hpp\"\n\
+    \n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\n * @docs docs/math/modint/binomial.md\n\
+    \ */\n\ntemplate <class T>\nstruct Binomial\n{\nprivate:\n  static decltype(T::mod())\
+    \ mod;\n  static vc<T> fac_, finv_, inv_;\n\npublic:\n  static void reserve(int\
+    \ n)\n  {\n    if (mod != T::mod())\n    {\n      mod = T::mod();\n      fac_\
+    \ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};\n    }\n    int i = fac_.size();\n\
+    \    chmin(n, T::mod() - 1);\n    if (n < i)\n      return;\n    fac_.resize(n\
+    \ + 1), finv_.resize(n + 1), inv_.resize(n + 1);\n    for (; i <= n; i++)\n  \
+    \  {\n      fac_[i] = fac_[i - 1] * T::raw(i);\n      inv_[i] = -inv_[T::mod()\
+    \ % i] * T::raw(T::mod() / i);\n      finv_[i] = finv_[i - 1] * inv_[i];\n   \
+    \ }\n  }\n  static T fac(int n)\n  {\n    assert(n >= 0);\n    if (n >= T::mod())\n\
+    \      return 0;\n    reserve(n);\n    return fac_[n];\n  }\n  static T finv(int\
+    \ n)\n  {\n    assert(n < T::mod());\n    if (n < 0)\n      return 0;\n    reserve(n);\n\
+    \    return finv_[n];\n  }\n  static T inv(T n)\n  {\n    assert(n != 0);\n  \
+    \  reserve(n.val());\n    return inv_[n.val()];\n  }\n\n  static T P(int n, int\
+    \ k)\n  {\n    if (n < k)\n      return 0;\n    if (n < 0 || k < 0)\n      return\
+    \ 0;\n    reserve(n);\n    return fac_[n] * finv_[n - k];\n  }\n  static T C(int\
+    \ n, int k)\n  {\n    if (n < k)\n      return 0;\n    if (n < 0 || k < 0)\n \
+    \     return 0;\n    reserve(n);\n    return fac_[n] * finv_[k] * finv_[n - k];\n\
+    \  }\n  static T H(int n, int k)\n  {\n    if (n == 0 && k == 0)\n      return\
+    \ 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate <class T> decltype(T::mod())\
+    \ Binomial<T>::mod{};\ntemplate <class T> vc<T> Binomial<T>::fac_{};\ntemplate\
+    \ <class T> vc<T> Binomial<T>::finv_{};\ntemplate <class T> vc<T> Binomial<T>::inv_{};\n\
     #line 2 \"math/modint/stom.hpp\"\n\n#line 4 \"math/modint/stom.hpp\"\n\n/**\n\
     \ * @brief string \u3092 mint \u306B\n * @docs docs/math/modint/stom.md\n */\n\
     \ntemplate <class mint>\nmint stom(string s)\n{\n  mint res = 0;\n  fec(c : s)\n\
@@ -825,7 +831,7 @@ data:
   requiredBy:
   - template/template.cpp
   - template/template_all.hpp
-  timestamp: '2025-08-12 21:38:21+09:00'
+  timestamp: '2025-08-20 23:10:57+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: math/modint/template_modint.hpp
