@@ -154,6 +154,29 @@ inline constexpr bool is_modint_v = is_static_modint_v<T> || is_dynamic_modint_v
 
 template <typename, typename = void>
 struct has_mod : false_type {};
-
 template <typename T>
 struct has_mod<T, void_t<decltype(declval<T>().mod)>> : true_type {};
+
+template <class mint>
+struct modint_less
+{
+  bool operator()(const mint &a, const mint &b) const
+  {
+    if constexpr (has_mod<mint>())
+      return a.val() < b.val();
+    else
+      return a < b;
+  }
+};
+
+template <class mint>
+struct modint_hash
+{
+  auto operator()(const mint &x) const
+  {
+    if constexpr (has_mod<mint>())
+      return hash(x.val());
+    else
+      return hash(x);
+  }
+};

@@ -7,23 +7,23 @@
  * @docs docs/math/modint/power_table.md
  */
 
-template <class T>
+template <class mint>
 struct PowerTable
 {
 private:
-  decltype(T::mod()) mod;
-  T base;
-  vc<T> pw;
+  decltype(mint::mod()) mod;
+  mint base;
+  vc<mint> pw;
 
 public:
   PowerTable() {}
-  PowerTable(T base) : mod(T::mod()), base(base), pw(1, 1) {}
+  PowerTable(const mint &base) : mod(mint::mod()), base(base), pw(1, 1) {}
 
   void reserve(int n)
   {
-    if (mod != T::mod())
+    if (mod != mint::mod())
     {
-      mod = T::mod();
+      mod = mint::mod();
       pw = {1};
     }
     int i = pw.size();
@@ -34,7 +34,7 @@ public:
       pw[i] = pw[i - 1] * base;
   }
 
-  T pow(int n)
+  mint pow(int n)
   {
     reserve(n);
     return pw[n];
