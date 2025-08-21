@@ -67,6 +67,9 @@ data:
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
+    path: verify/aoj/segmented_sieve.test.cpp
+    title: verify/aoj/segmented_sieve.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/linear_sieve.test.cpp
     title: verify/mytest/linear_sieve.test.cpp
   - icon: ':heavy_check_mark:'
@@ -96,9 +99,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/perm_cycle.test.cpp
     title: verify/yukicoder/perm_cycle.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/segmented_sieve.test.cpp
-    title: verify/yukicoder/segmented_sieve.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
@@ -792,9 +792,9 @@ data:
   - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/segmented_sieve.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/mytest/linear_sieve.test.cpp
+  - verify/aoj/segmented_sieve.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/factorize.test.cpp
   - verify/yosupo/primitive_root_min.test.cpp

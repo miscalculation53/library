@@ -516,14 +516,6 @@ data:
     - icon: ':heavy_check_mark:'
       path: template/template_vector.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  - name: verify/yosupo
-    pages:
-    - icon: ':warning:'
-      path: verify/yosupo/fps_inv_sparse.test copy.cpp
-      title: verify/yosupo/fps_inv_sparse.test copy.cpp
-    - icon: ':warning:'
-      path: verify/yosupo/matrix_solve_mod2.cpp
-      title: verify/yosupo/matrix_solve_mod2.cpp
   verificationCategories:
   - name: verify/aoj
     pages:
@@ -578,6 +570,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/aoj/rooted_tree_from_parent.test.cpp
       title: verify/aoj/rooted_tree_from_parent.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/aoj/segmented_sieve.test.cpp
+      title: verify/aoj/segmented_sieve.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/aoj/zeta_general.test.cpp
       title: verify/aoj/zeta_general.test.cpp
@@ -838,6 +833,9 @@ data:
       path: verify/yosupo/matrix_solve_array.test.cpp
       title: verify/yosupo/matrix_solve_array.test.cpp
     - icon: ':heavy_check_mark:'
+      path: verify/yosupo/matrix_solve_mod2.test.cpp
+      title: verify/yosupo/matrix_solve_mod2.test.cpp
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/offline_dynamic_connectivity.test.cpp
       title: verify/yosupo/offline_dynamic_connectivity.test.cpp
     - icon: ':heavy_check_mark:'
@@ -885,6 +883,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/poly_taylor_shift.test.cpp
       title: verify/yosupo/poly_taylor_shift.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yosupo/polynomial_taylor_shift.test.cpp
+      title: verify/yosupo/polynomial_taylor_shift.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
       title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
@@ -1025,9 +1026,6 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yukicoder/safe_unordered_map.test.cpp
       title: verify/yukicoder/safe_unordered_map.test.cpp
-    - icon: ':heavy_check_mark:'
-      path: verify/yukicoder/segmented_sieve.test.cpp
-      title: verify/yukicoder/segmented_sieve.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/yukicoder/static_modint.test.cpp
       title: verify/yukicoder/static_modint.test.cpp

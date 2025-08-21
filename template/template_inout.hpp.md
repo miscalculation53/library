@@ -441,12 +441,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':warning:'
-    path: verify/yosupo/fps_inv_sparse.test copy.cpp
-    title: verify/yosupo/fps_inv_sparse.test copy.cpp
-  - icon: ':warning:'
-    path: verify/yosupo/matrix_solve_mod2.cpp
-    title: verify/yosupo/matrix_solve_mod2.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/bellman_ford.test.cpp
@@ -499,6 +493,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/rooted_tree_from_parent.test.cpp
     title: verify/aoj/rooted_tree_from_parent.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/segmented_sieve.test.cpp
+    title: verify/aoj/segmented_sieve.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/aoj/zeta_general.test.cpp
     title: verify/aoj/zeta_general.test.cpp
@@ -734,6 +731,9 @@ data:
     path: verify/yosupo/matrix_solve_array.test.cpp
     title: verify/yosupo/matrix_solve_array.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/matrix_solve_mod2.test.cpp
+    title: verify/yosupo/matrix_solve_mod2.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/offline_dynamic_connectivity.test.cpp
     title: verify/yosupo/offline_dynamic_connectivity.test.cpp
   - icon: ':heavy_check_mark:'
@@ -781,6 +781,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_taylor_shift.test.cpp
     title: verify/yosupo/poly_taylor_shift.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/polynomial_taylor_shift.test.cpp
+    title: verify/yosupo/polynomial_taylor_shift.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
     title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
@@ -919,9 +922,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/safe_unordered_map.test.cpp
     title: verify/yukicoder/safe_unordered_map.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/segmented_sieve.test.cpp
-    title: verify/yukicoder/segmented_sieve.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/static_modint.test.cpp
     title: verify/yukicoder/static_modint.test.cpp
@@ -1457,8 +1457,6 @@ data:
   - string/rolling_hash.hpp
   - string/trie.hpp
   - string/lcp_compare.hpp
-  - verify/yosupo/matrix_solve_mod2.cpp
-  - verify/yosupo/fps_inv_sparse.test copy.cpp
   - ds/uf/uf.hpp
   - ds/uf/uf_potential.hpp
   - ds/uf/uf_partially_persistent.hpp
@@ -1528,7 +1526,6 @@ data:
   - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
   - verify/yukicoder/base_repr.test.cpp
-  - verify/yukicoder/segmented_sieve.test.cpp
   - verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
   - verify/yukicoder/binomial.test.cpp
   - verify/yukicoder/crt.test.cpp
@@ -1563,6 +1560,7 @@ data:
   - verify/aoj/bfs.test.cpp
   - verify/aoj/extgcd.test.cpp
   - verify/aoj/bfs01.test.cpp
+  - verify/aoj/segmented_sieve.test.cpp
   - verify/aoj/rooted_tree_from_edges.test.cpp
   - verify/aoj/rooted_tree_from_parent.test.cpp
   - verify/aoj/bellman_ford.test.cpp
@@ -1595,6 +1593,7 @@ data:
   - verify/yosupo/counting_spanning_trees_undirected.test.cpp
   - verify/yosupo/fps_log_sparse.test.cpp
   - verify/yosupo/dc_range_prod.test.cpp
+  - verify/yosupo/matrix_solve_mod2.test.cpp
   - verify/yosupo/fps_pow.test.cpp
   - verify/yosupo/find_linear_recurrence.test.cpp
   - verify/yosupo/and_or_convolution.test.cpp
@@ -1648,6 +1647,7 @@ data:
   - verify/yosupo/ordered_set.test.cpp
   - verify/yosupo/quotients.test.cpp
   - verify/yosupo/matrix_product_array.test.cpp
+  - verify/yosupo/polynomial_taylor_shift.test.cpp
   - verify/yosupo/matrix_det_mod2.test.cpp
   - verify/yosupo/cycle_detection_undirected.test.cpp
   - verify/yosupo/gcd_convolution.test.cpp

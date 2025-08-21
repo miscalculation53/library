@@ -73,14 +73,14 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':warning:'
-    path: verify/yosupo/fps_inv_sparse.test copy.cpp
-    title: verify/yosupo/fps_inv_sparse.test copy.cpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_taylor_shift.test.cpp
     title: verify/yosupo/poly_taylor_shift.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/polynomial_taylor_shift.test.cpp
+    title: verify/yosupo/polynomial_taylor_shift.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -1312,12 +1312,12 @@ data:
   - math/prime/primality_test.hpp
   isVerificationFile: false
   path: math/fps/taylor_shift.hpp
-  requiredBy:
-  - verify/yosupo/fps_inv_sparse.test copy.cpp
+  requiredBy: []
   timestamp: '2025-08-20 23:10:57+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/poly_taylor_shift.test.cpp
+  - verify/yosupo/polynomial_taylor_shift.test.cpp
 documentation_of: math/fps/taylor_shift.hpp
 layout: document
 redirect_from:

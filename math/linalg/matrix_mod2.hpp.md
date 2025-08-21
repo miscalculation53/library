@@ -37,10 +37,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':warning:'
-    path: verify/yosupo/matrix_solve_mod2.cpp
-    title: verify/yosupo/matrix_solve_mod2.cpp
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_det_mod2.test.cpp
@@ -54,6 +51,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_rank_mod2.test.cpp
     title: verify/yosupo/matrix_rank_mod2.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/matrix_solve_mod2.test.cpp
+    title: verify/yosupo/matrix_solve_mod2.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -794,11 +794,11 @@ data:
   - template/template_random.hpp
   isVerificationFile: false
   path: math/linalg/matrix_mod2.hpp
-  requiredBy:
-  - verify/yosupo/matrix_solve_mod2.cpp
+  requiredBy: []
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yosupo/matrix_solve_mod2.test.cpp
   - verify/yosupo/matrix_inv_mod2.test.cpp
   - verify/yosupo/matrix_det_mod2.test.cpp
   - verify/yosupo/matrix_rank_mod2.test.cpp

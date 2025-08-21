@@ -46,8 +46,8 @@ data:
   _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/segmented_sieve.test.cpp
-    title: verify/yukicoder/segmented_sieve.test.cpp
+    path: verify/aoj/segmented_sieve.test.cpp
+    title: verify/aoj/segmented_sieve.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -725,7 +725,7 @@ data:
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/segmented_sieve.test.cpp
+  - verify/aoj/segmented_sieve.test.cpp
 documentation_of: math/prime/segmented_sieve.hpp
 layout: document
 redirect_from:

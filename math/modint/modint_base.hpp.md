@@ -132,9 +132,6 @@ data:
   - icon: ':warning:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':warning:'
-    path: verify/yosupo/fps_inv_sparse.test copy.cpp
-    title: verify/yosupo/fps_inv_sparse.test copy.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/modpow.test.cpp
@@ -304,6 +301,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_taylor_shift.test.cpp
     title: verify/yosupo/poly_taylor_shift.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/polynomial_taylor_shift.test.cpp
+    title: verify/yosupo/polynomial_taylor_shift.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
@@ -1085,7 +1085,6 @@ data:
   - math/convolution/convolution.hpp
   - math/convolution/convolution_ll.hpp
   - string/rolling_hash.hpp
-  - verify/yosupo/fps_inv_sparse.test copy.cpp
   - template/template.cpp
   - template/template_all.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
@@ -1162,6 +1161,7 @@ data:
   - verify/yosupo/matrix_inv_array.test.cpp
   - verify/yosupo/matrix_solve.test.cpp
   - verify/yosupo/matrix_product_array.test.cpp
+  - verify/yosupo/polynomial_taylor_shift.test.cpp
   - verify/yosupo/gcd_convolution.test.cpp
   - verify/yosupo/kronecker_power_hadamard.test.cpp
   - verify/yosupo/poly_interpolation.test.cpp

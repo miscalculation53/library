@@ -100,9 +100,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/fps/taylor_shift.hpp
     title: Taylor Shift
-  - icon: ':warning:'
-    path: verify/yosupo/fps_inv_sparse.test copy.cpp
-    title: verify/yosupo/fps_inv_sparse.test copy.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/rational_plus.test.cpp
@@ -164,6 +161,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_taylor_shift.test.cpp
     title: verify/yosupo/poly_taylor_shift.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/polynomial_taylor_shift.test.cpp
+    title: verify/yosupo/polynomial_taylor_shift.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/bmbm.test.cpp
     title: verify/yukicoder/bmbm.test.cpp
@@ -1554,7 +1554,6 @@ data:
   - math/fps/bostan_mori.hpp
   - math/fps/multipoint_evaluation.hpp
   - math/fps/shift_of_sampling_points.hpp
-  - verify/yosupo/fps_inv_sparse.test copy.cpp
   timestamp: '2025-08-20 23:10:57+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
@@ -1576,6 +1575,7 @@ data:
   - verify/yosupo/poly_interpolation_geo.test.cpp
   - verify/yosupo/fps_sqrt_sparse.test.cpp
   - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - verify/yosupo/polynomial_taylor_shift.test.cpp
   - verify/yosupo/poly_interpolation.test.cpp
   - verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
   - verify/yosupo/fps_exp_sparse.test.cpp

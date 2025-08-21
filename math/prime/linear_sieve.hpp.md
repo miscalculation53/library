@@ -53,6 +53,9 @@ data:
       \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
+    path: verify/aoj/segmented_sieve.test.cpp
+    title: verify/aoj/segmented_sieve.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/linear_sieve.test.cpp
     title: verify/mytest/linear_sieve.test.cpp
   - icon: ':heavy_check_mark:'
@@ -64,9 +67,6 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/perm_cycle.test.cpp
     title: verify/yukicoder/perm_cycle.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/segmented_sieve.test.cpp
-    title: verify/yukicoder/segmented_sieve.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
@@ -749,8 +749,8 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/perm_cycle.test.cpp
-  - verify/yukicoder/segmented_sieve.test.cpp
   - verify/mytest/linear_sieve.test.cpp
+  - verify/aoj/segmented_sieve.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/gcd_convolution.test.cpp
 documentation_of: math/prime/linear_sieve.hpp

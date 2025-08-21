@@ -47,12 +47,14 @@ data:
   _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.yosupo.jp/problem/system_of_linear_equations_mod_2
     links:
     - https://judge.yosupo.jp/problem/system_of_linear_equations_mod_2
-  bundledCode: "#line 1 \"verify/yosupo/matrix_solve_mod2.cpp\"\n#define PROBLEM \"\
-    https://judge.yosupo.jp/problem/system_of_linear_equations_mod_2\"\n\n#define\
+  bundledCode: "#line 1 \"verify/yosupo/matrix_solve_mod2.test.cpp\"\n#define PROBLEM\
+    \ \"https://judge.yosupo.jp/problem/system_of_linear_equations_mod_2\"\n\n#define\
     \ SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef\
     \ LOCAL\n// #define FAST_IO\n#define FAST_CIO\n// #define INTERACTIVE\n#endif\n\
     \n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#line 2 \"template/template_all_but_modint.hpp\"\
@@ -703,7 +705,7 @@ data:
     \ {false, {}, {}};\n      sol[j] = a[i][m], piv[j] = i;\n    }\n    repi(j, m)\n\
     \    {\n      if (piv[j] != -1)\n        continue;\n      V ba;\n      ba[j] =\
     \ 1;\n      repi(k, j) if (piv[k] != -1) ba[k] = a[piv[k]][j];\n      basis.eb(ba);\n\
-    \    }\n    return {true, sol, basis};\n  }\n};\n#line 18 \"verify/yosupo/matrix_solve_mod2.cpp\"\
+    \    }\n    return {true, sol, basis};\n  }\n};\n#line 18 \"verify/yosupo/matrix_solve_mod2.test.cpp\"\
     \n\nvoid init() {}\n\nvoid main2()\n{\n  LL(N, M);\n  VEC(string, N, A_);\n  MatrixMod2<4096>\
     \ A(A_);\n  STR(b_);\n  bitset<4096> b;\n  rep(i, N) b.set(i, b_.at(i) - '0');\n\
     \  auto [ok, sol, basis] = A.solve(b);\n  if (!ok)\n    PRINT(-1);\n  else\n \
@@ -729,7 +731,7 @@ data:
     36\");\n    main2();\n    #elif defined MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\\
     n\\n\", \"33\");\n    local(while (true))\n    {\n      dump(\"T\");\n      IN(uint,\
     \ T);\n      while (T--)\n      {\n        dump(\"new testcase\");\n        main2();\n\
-    \      }\n    }\n    #endif\n  }\n};\n#line 47 \"verify/yosupo/matrix_solve_mod2.cpp\"\
+    \      }\n    }\n    #endif\n  }\n};\n#line 47 \"verify/yosupo/matrix_solve_mod2.test.cpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   code: "#define PROBLEM \"https://judge.yosupo.jp/problem/system_of_linear_equations_mod_2\"\
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
@@ -759,16 +761,16 @@ data:
   - template/template_random.hpp
   - math/linalg/matrix_mod2.hpp
   - template/template_main.hpp
-  isVerificationFile: false
-  path: verify/yosupo/matrix_solve_mod2.cpp
+  isVerificationFile: true
+  path: verify/yosupo/matrix_solve_mod2.test.cpp
   requiredBy: []
-  timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
+  timestamp: '2025-08-21 21:00:28+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
-documentation_of: verify/yosupo/matrix_solve_mod2.cpp
+documentation_of: verify/yosupo/matrix_solve_mod2.test.cpp
 layout: document
 redirect_from:
-- /library/verify/yosupo/matrix_solve_mod2.cpp
-- /library/verify/yosupo/matrix_solve_mod2.cpp.html
-title: verify/yosupo/matrix_solve_mod2.cpp
+- /verify/verify/yosupo/matrix_solve_mod2.test.cpp
+- /verify/verify/yosupo/matrix_solve_mod2.test.cpp.html
+title: verify/yosupo/matrix_solve_mod2.test.cpp
 ---
