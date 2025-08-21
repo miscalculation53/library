@@ -49,12 +49,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/majority_voting.test.cpp
     title: verify/yosupo/majority_voting.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_set_range_composite.test.cpp
     title: verify/yosupo/point_set_range_composite.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/segtree/segtree.md
     document_title: "\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
@@ -730,7 +730,7 @@ data:
   requiredBy:
   - ds/2d/sparse/segtree.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/point_set_range_composite.test.cpp
   - verify/yosupo/2d_segtree.test.cpp

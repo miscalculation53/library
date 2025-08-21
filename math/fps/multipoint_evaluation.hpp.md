@@ -74,19 +74,19 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/interpolation.hpp
     title: "\u591A\u9805\u5F0F\u88DC\u9593"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_interpolation.test.cpp
     title: verify/yosupo/poly_interpolation.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_multipoint_evaluation.test.cpp
     title: verify/yosupo/poly_multipoint_evaluation.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/fps/multipoint_evaluation.md
     document_title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1"
@@ -1324,7 +1324,7 @@ data:
   requiredBy:
   - math/fps/interpolation.hpp
   timestamp: '2025-08-20 23:10:57+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/poly_multipoint_evaluation.test.cpp
   - verify/yosupo/poly_interpolation.test.cpp

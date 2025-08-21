@@ -91,13 +91,13 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_pow.test.cpp
     title: verify/yosupo/matrix_pow.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_product.test.cpp
     title: verify/yosupo/matrix_product.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_rank.test.cpp
     title: verify/yosupo/matrix_rank.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_solve.test.cpp
     title: verify/yosupo/matrix_solve.test.cpp
   - icon: ':x:'

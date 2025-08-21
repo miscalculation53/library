@@ -102,7 +102,7 @@ data:
   - icon: ':question:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/affine_function.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
   - icon: ':question:'
@@ -138,7 +138,7 @@ data:
   - icon: ':question:'
     path: math/linalg/matrix.hpp
     title: "\u884C\u5217"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/linalg/matrix_array.hpp
     title: "\u884C\u5217\uFF08array\uFF09"
   - icon: ':heavy_check_mark:'
@@ -244,22 +244,22 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_pow.test.cpp
     title: verify/yosupo/matrix_pow.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_pow_array.test.cpp
     title: verify/yosupo/matrix_pow_array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_product.test.cpp
     title: verify/yosupo/matrix_product.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_product_array.test.cpp
     title: verify/yosupo/matrix_product_array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_rank.test.cpp
     title: verify/yosupo/matrix_rank.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_solve.test.cpp
     title: verify/yosupo/matrix_solve.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_solve_array.test.cpp
     title: verify/yosupo/matrix_solve_array.test.cpp
   - icon: ':heavy_check_mark:'
@@ -274,10 +274,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_add_rectangle_sum.test.cpp
     title: verify/yosupo/point_add_rectangle_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_set_range_composite.test.cpp
     title: verify/yosupo/point_set_range_composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_set_range_composite_large_array.test.cpp
     title: verify/yosupo/point_set_range_composite_large_array.test.cpp
   - icon: ':heavy_check_mark:'
@@ -286,7 +286,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
     title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/queue_operate_all_composite.test.cpp
     title: verify/yosupo/queue_operate_all_composite.test.cpp
   - icon: ':heavy_check_mark:'

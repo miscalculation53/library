@@ -18,7 +18,7 @@ data:
     path: ds/query/point_set_range_frequency.hpp
     title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\u30D5\
       \u30E9\u30A4\u30F3\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/segtree/segtree.hpp
     title: "\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
   - icon: ':question:'

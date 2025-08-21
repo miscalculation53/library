@@ -13,7 +13,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: graph/tree/diameter.hpp
     title: "\u6728\u306E\u76F4\u5F84"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/rooted_tree.hpp
     title: "\u6839\u3064\u304D\u6728\u30AF\u30E9\u30B9"
   - icon: ':question:'

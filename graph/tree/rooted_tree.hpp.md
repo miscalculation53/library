@@ -50,7 +50,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: graph/tree/diameter.hpp
     title: "\u6728\u306E\u76F4\u5F84"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/rerooting.hpp
     title: "\u5168\u65B9\u4F4D\u6728 DP"
   _extendedVerifiedWith:
@@ -60,7 +60,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/rooted_tree_from_parent.test.cpp
     title: verify/aoj/rooted_tree_from_parent.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/retooting.test.cpp
     title: verify/yosupo/retooting.test.cpp
   - icon: ':heavy_check_mark:'
@@ -69,9 +69,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki430_aho_corasick.test.cpp
     title: verify/yukicoder/yuki430_aho_corasick.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/graph/tree/rooted_tree.md
     document_title: "\u6839\u3064\u304D\u6728\u30AF\u30E9\u30B9"
@@ -1004,7 +1004,7 @@ data:
   - graph/tree/diameter.hpp
   - graph/tree/rerooting.hpp
   timestamp: '2025-08-13 19:59:25+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/yuki430_aho_corasick.test.cpp
   - verify/aoj/rooted_tree_from_edges.test.cpp
