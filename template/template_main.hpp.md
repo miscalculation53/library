@@ -172,6 +172,9 @@ data:
     path: verify/yosupo/disjoint_sparse_table.test.cpp
     title: verify/yosupo/disjoint_sparse_table.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/enumerate_triangles.test.cpp
+    title: verify/yosupo/enumerate_triangles.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
   - icon: ':heavy_check_mark:'
@@ -1237,6 +1240,7 @@ data:
   - verify/yosupo/primitive_root_min.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
   - verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
+  - verify/yosupo/enumerate_triangles.test.cpp
   - verify/yosupo/sqrt_mod.test.cpp
   - verify/yosupo/convolution.test.cpp
   - verify/yosupo/block_sparse_table.test.cpp

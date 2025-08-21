@@ -71,6 +71,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: graph/tree/rooted_tree.hpp
     title: "\u6839\u3064\u304D\u6728\u30AF\u30E9\u30B9"
+  - icon: ':heavy_check_mark:'
+    path: graph/triangles.hpp
+    title: "\u4E09\u89D2\u5F62\u5217\u6319"
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/bellman_ford.test.cpp
@@ -108,6 +111,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/dijkstra.test.cpp
     title: verify/yosupo/dijkstra.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/enumerate_triangles.test.cpp
+    title: verify/yosupo/enumerate_triangles.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/retooting.test.cpp
     title: verify/yosupo/retooting.test.cpp
@@ -898,6 +904,7 @@ data:
   - graph/tree/rerooting.hpp
   - graph/tree/rooted_tree.hpp
   - graph/scc.hpp
+  - graph/triangles.hpp
   - graph/subgraphs.hpp
   - graph/sssp.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
@@ -916,6 +923,7 @@ data:
   - verify/yosupo/retooting.test.cpp
   - verify/yosupo/tree_diameter.test.cpp
   - verify/yosupo/dijkstra.test.cpp
+  - verify/yosupo/enumerate_triangles.test.cpp
   - verify/yosupo/scc.test.cpp
   - verify/yosupo/counting_eularian_circuits.test.cpp
   - verify/yosupo/cycle_detection_undirected.test.cpp

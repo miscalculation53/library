@@ -204,6 +204,9 @@ data:
     - icon: ':warning:'
       path: graph/subgraphs.hpp
       title: "\u90E8\u5206\u30B0\u30E9\u30D5\u3078\u306E\u5206\u89E3"
+    - icon: ':heavy_check_mark:'
+      path: graph/triangles.hpp
+      title: "\u4E09\u89D2\u5F62\u5217\u6319"
   - name: graph/tree
     pages:
     - icon: ':heavy_check_mark:'
@@ -712,6 +715,9 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/disjoint_sparse_table.test.cpp
       title: verify/yosupo/disjoint_sparse_table.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: verify/yosupo/enumerate_triangles.test.cpp
+      title: verify/yosupo/enumerate_triangles.test.cpp
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/factorize.test.cpp
       title: verify/yosupo/factorize.test.cpp

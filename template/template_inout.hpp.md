@@ -199,6 +199,9 @@ data:
     path: graph/tree/rooted_tree.hpp
     title: "\u6839\u3064\u304D\u6728\u30AF\u30E9\u30B9"
   - icon: ':heavy_check_mark:'
+    path: graph/triangles.hpp
+    title: "\u4E09\u89D2\u5F62\u5217\u6319"
+  - icon: ':heavy_check_mark:'
     path: itertools/bit.hpp
     title: "\u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\u7D22"
   - icon: ':heavy_check_mark:'
@@ -610,6 +613,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/disjoint_sparse_table.test.cpp
     title: verify/yosupo/disjoint_sparse_table.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/enumerate_triangles.test.cpp
+    title: verify/yosupo/enumerate_triangles.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
@@ -1382,6 +1388,7 @@ data:
   - graph/tree/rerooting.hpp
   - graph/tree/rooted_tree.hpp
   - graph/scc.hpp
+  - graph/triangles.hpp
   - graph/subgraphs.hpp
   - graph/sssp.hpp
   - bit/kth_bit.hpp
@@ -1612,6 +1619,7 @@ data:
   - verify/yosupo/primitive_root_min.test.cpp
   - verify/yosupo/many_aplusb.test.cpp
   - verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
+  - verify/yosupo/enumerate_triangles.test.cpp
   - verify/yosupo/sqrt_mod.test.cpp
   - verify/yosupo/convolution.test.cpp
   - verify/yosupo/block_sparse_table.test.cpp

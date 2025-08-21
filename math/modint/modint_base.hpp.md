@@ -188,6 +188,9 @@ data:
     path: verify/yosupo/deque_operate_all_composite.test.cpp
     title: verify/yosupo/deque_operate_all_composite.test.cpp
   - icon: ':heavy_check_mark:'
+    path: verify/yosupo/enumerate_triangles.test.cpp
+    title: verify/yosupo/enumerate_triangles.test.cpp
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
   - icon: ':heavy_check_mark:'
@@ -1139,6 +1142,7 @@ data:
   - verify/yosupo/retooting.test.cpp
   - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
   - verify/yosupo/primitive_root_min.test.cpp
+  - verify/yosupo/enumerate_triangles.test.cpp
   - verify/yosupo/sqrt_mod.test.cpp
   - verify/yosupo/convolution.test.cpp
   - verify/yosupo/matrix_solve_array.test.cpp

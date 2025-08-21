@@ -2,6 +2,12 @@
 data:
   _extendedDependsOn:
   - icon: ':heavy_check_mark:'
+    path: ds/csr.hpp
+    title: CSR
+  - icon: ':heavy_check_mark:'
+    path: graph/graph.hpp
+    title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
@@ -37,180 +43,19 @@ data:
   - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: ds/group_index.hpp
-    title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
-  - icon: ':heavy_check_mark:'
-    path: ds/query/point_set_range_frequency.hpp
-    title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\u30D5\
-      \u30E9\u30A4\u30F3\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: ds/static_range/dc_range_prod.hpp
-    title: "\u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\u30A8\
-      \u30EA"
-  - icon: ':heavy_check_mark:'
-    path: graph/connected_components.hpp
-    title: "\u9023\u7D50\u6210\u5206\u3078\u306E\u5206\u89E3"
-  - icon: ':warning:'
-    path: graph/contraction.hpp
-    title: "\u30B0\u30E9\u30D5\u306E\u7E2E\u7D04"
-  - icon: ':heavy_check_mark:'
-    path: graph/cycle_detection.hpp
-    title: "\u30B5\u30A4\u30AF\u30EB\u691C\u51FA"
-  - icon: ':heavy_check_mark:'
-    path: graph/graph.hpp
-    title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
-  - icon: ':heavy_check_mark:'
-    path: graph/matrix_tree.hpp
-    title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':heavy_check_mark:'
-    path: graph/scc.hpp
-    title: "\u5F37\u9023\u7D50\u6210\u5206\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: graph/sssp.hpp
-    title: "\u5358\u4E00\u59CB\u70B9\u6700\u77ED\u8DEF\u554F\u984C"
-  - icon: ':warning:'
-    path: graph/subgraphs.hpp
-    title: "\u90E8\u5206\u30B0\u30E9\u30D5\u3078\u306E\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: graph/tree/diameter.hpp
-    title: "\u6728\u306E\u76F4\u5F84"
-  - icon: ':heavy_check_mark:'
-    path: graph/tree/rerooting.hpp
-    title: "\u5168\u65B9\u4F4D\u6728 DP"
-  - icon: ':heavy_check_mark:'
-    path: graph/tree/rooted_tree.hpp
-    title: "\u6839\u3064\u304D\u6728\u30AF\u30E9\u30B9"
-  - icon: ':heavy_check_mark:'
-    path: graph/triangles.hpp
-    title: "\u4E09\u89D2\u5F62\u5217\u6319"
-  - icon: ':heavy_check_mark:'
-    path: math/linalg/matrix.hpp
-    title: "\u884C\u5217"
-  - icon: ':heavy_check_mark:'
-    path: math/linalg/matrix_array.hpp
-    title: "\u884C\u5217\uFF08array\uFF09"
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/bellman_ford.test.cpp
-    title: verify/aoj/bellman_ford.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/bfs.test.cpp
-    title: verify/aoj/bfs.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/bfs01.test.cpp
-    title: verify/aoj/bfs01.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/connected_components.test.cpp
-    title: verify/aoj/connected_components.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/csr.test.cpp
-    title: verify/aoj/csr.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/rooted_tree_from_edges.test.cpp
-    title: verify/aoj/rooted_tree_from_edges.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/rooted_tree_from_parent.test.cpp
-    title: verify/aoj/rooted_tree_from_parent.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/rmq.test.cpp
-    title: verify/mytest/rmq.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/counting_eularian_circuits.test.cpp
-    title: verify/yosupo/counting_eularian_circuits.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/counting_spanning_trees_directed.test.cpp
-    title: verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-    title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/cycle_detection_directed.test.cpp
-    title: verify/yosupo/cycle_detection_directed.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/cycle_detection_undirected.test.cpp
-    title: verify/yosupo/cycle_detection_undirected.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/dc_range_prod.test.cpp
-    title: verify/yosupo/dc_range_prod.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/dijkstra.test.cpp
-    title: verify/yosupo/dijkstra.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/enumerate_triangles.test.cpp
     title: verify/yosupo/enumerate_triangles.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/majority_voting.test.cpp
-    title: verify/yosupo/majority_voting.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_det.test.cpp
-    title: verify/yosupo/matrix_det.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_det_array.test.cpp
-    title: verify/yosupo/matrix_det_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_det_sparse.test.cpp
-    title: verify/yosupo/matrix_det_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_inv.test.cpp
-    title: verify/yosupo/matrix_inv.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_inv_array.test.cpp
-    title: verify/yosupo/matrix_inv_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_pow.test.cpp
-    title: verify/yosupo/matrix_pow.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_pow_array.test.cpp
-    title: verify/yosupo/matrix_pow_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_product.test.cpp
-    title: verify/yosupo/matrix_product.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_product_array.test.cpp
-    title: verify/yosupo/matrix_product_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_rank.test.cpp
-    title: verify/yosupo/matrix_rank.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_solve.test.cpp
-    title: verify/yosupo/matrix_solve.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_solve_array.test.cpp
-    title: verify/yosupo/matrix_solve_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/point_set_range_frequency.test.cpp
-    title: verify/yosupo/point_set_range_frequency.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/retooting.test.cpp
-    title: verify/yosupo/retooting.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/scc.test.cpp
-    title: verify/yosupo/scc.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/static_range_frequency.test.cpp
-    title: verify/yosupo/static_range_frequency.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/tree_diameter.test.cpp
-    title: verify/yosupo/tree_diameter.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki2215_dc.test.cpp
-    title: verify/yukicoder/yuki2215_dc.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki310.test.cpp
-    title: verify/yukicoder/yuki310.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki430_aho_corasick.test.cpp
-    title: verify/yukicoder/yuki430_aho_corasick.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/ds/csr.md
-    document_title: CSR
+    _deprecated_at_docs: docs/graph/triangles.md
+    document_title: "\u4E09\u89D2\u5F62\u5217\u6319"
     links: []
-  bundledCode: "#line 2 \"ds/csr.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
+  bundledCode: "#line 2 \"graph/triangles.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -788,23 +633,24 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 4 \"ds/csr.hpp\"\n\n/**\n * @brief CSR\n * @docs docs/ds/csr.md\n */\n\ntemplate\
-    \ <class T>\nstruct CSR\n{\nprotected:\n  int n, m;\n  // i (0 <= i < n) \u884C\
-    \u76EE\u3092\u8868\u3059\u306E\u306F elist \u306E [start[i], start[i+1])\n  vc<int>\
-    \ start;\n  vc<T> elist;\n  vc<int> eid_to_elistid;\n\n  struct Row\n  {\n   \
-    \ using iterator = typename vc<T>::const_iterator;\n\n  private:\n    iterator\
-    \ begi, endi;\n\n  public:\n    Row(const iterator &begi, const iterator &endi)\
-    \ : begi(begi), endi(endi) {}\n    inline iterator begin() const { return begi;\
-    \ }\n    inline iterator end() const { return endi; }\n    template <class I =\
-    \ ll>\n    inline I size() const { return endi - begi; }\n    inline bool empty()\
-    \ const { return size() == 0; }\n\n    inline T operator[](int i) const { return\
-    \ *(begi + i); }\n    inline T at(int i) const\n    {\n      assert(0 <= i &&\
-    \ i < size());\n      return *(begi + i);\n    }\n\n    inline T front() const\n\
-    \    {\n      assert(!empty());\n      return *begi;\n    }\n    inline T back()\
-    \ const\n    {\n      assert(!empty());\n      return *prev(endi);\n    }\n\n\
-    \    vc<T> to_v() const { return vc<T>(ALL(*this)); }\n  };\n\npublic:\n  CSR()\
-    \ {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template <class\
-    \ I>\n  CSR(int n, const vc<pair<I, T>> &ies) : n(n), m(ies.size()), start(n,\
+    \ 4 \"graph/triangles.hpp\"\n\n#line 2 \"graph/graph.hpp\"\n\n#line 2 \"ds/csr.hpp\"\
+    \n\n#line 4 \"ds/csr.hpp\"\n\n/**\n * @brief CSR\n * @docs docs/ds/csr.md\n */\n\
+    \ntemplate <class T>\nstruct CSR\n{\nprotected:\n  int n, m;\n  // i (0 <= i <\
+    \ n) \u884C\u76EE\u3092\u8868\u3059\u306E\u306F elist \u306E [start[i], start[i+1])\n\
+    \  vc<int> start;\n  vc<T> elist;\n  vc<int> eid_to_elistid;\n\n  struct Row\n\
+    \  {\n    using iterator = typename vc<T>::const_iterator;\n\n  private:\n   \
+    \ iterator begi, endi;\n\n  public:\n    Row(const iterator &begi, const iterator\
+    \ &endi) : begi(begi), endi(endi) {}\n    inline iterator begin() const { return\
+    \ begi; }\n    inline iterator end() const { return endi; }\n    template <class\
+    \ I = ll>\n    inline I size() const { return endi - begi; }\n    inline bool\
+    \ empty() const { return size() == 0; }\n\n    inline T operator[](int i) const\
+    \ { return *(begi + i); }\n    inline T at(int i) const\n    {\n      assert(0\
+    \ <= i && i < size());\n      return *(begi + i);\n    }\n\n    inline T front()\
+    \ const\n    {\n      assert(!empty());\n      return *begi;\n    }\n    inline\
+    \ T back() const\n    {\n      assert(!empty());\n      return *prev(endi);\n\
+    \    }\n\n    vc<T> to_v() const { return vc<T>(ALL(*this)); }\n  };\n\npublic:\n\
+    \  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template\
+    \ <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) : n(n), m(ies.size()), start(n,\
     \ 0), elist(m), eid_to_elistid(m)\n  {\n    fec([ i, e ] : ies)\n    {\n     \
     \ assert(0 <= i && i < n);\n      start[i]++;\n    }\n    start = cumlsum(start);\n\
     \    auto cnt = start;\n    repi(j, m)\n    {\n      cauto &[i, e] = ies[j];\n\
@@ -823,43 +669,106 @@ data:
     \ eid) const\n  {\n    assert(0 <= eid && eid < m);\n    return elist[eid_to_elistid[eid]];\n\
     \  }\n\n  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i]\
     \ = {elist.begin() + start[i], elist.begin() + start[i + 1]};\n    return res;\n\
-    \  }\n};\n"
+    \  }\n};\n#line 5 \"graph/graph.hpp\"\n\n/**\n * @brief \u30B0\u30E9\u30D5\u30AF\
+    \u30E9\u30B9\n * @docs docs/graph/graph.md\n */\n\ntemplate <class Cost>\nstruct\
+    \ Edge\n{\n  int from, to;\n  Cost cost;\n  int index;\n  Edge() : from(-1), to(-1),\
+    \ index(-1) {}\n  Edge(int s, int t, Cost c, int i = -1) : from(s), to(t), cost(c),\
+    \ index(i) {}\n  operator int() const { return to; }\n  bool operator<(const Edge\
+    \ &rhs) const { return cost < rhs.cost; }\n  // \u9006\u8FBA\u3092\u8FD4\u3059\
+    \ (\u3082\u3068\u306E\u8FBA\u306F\u5909\u66F4\u3057\u306A\u3044)\n  Edge rev()\
+    \ const { return Edge(to, from, cost, index); }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<int>,\
+    \ from, to, cost)\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<ll>, from, to, cost)\n#endif\n\
+    \ntemplate <class Cost>\nvc<Edge<Cost>> rev_path(const vc<Edge<Cost>> &path)\n\
+    {\n  const int len = path.size();\n  vc<Edge<Cost>> res(len);\n  repi(i, len)\
+    \ res[i] = path[len - 1 - i].rev();\n  return res;\n}\n\n// \u30B3\u30F3\u30B9\
+    \u30C8\u30E9\u30AF\u30BF: n, es\ntemplate <bool is_directed, class Cost>\nstruct\
+    \ Graph\n{\n  using E = Edge<Cost>;\n\nprotected:\n  int n, m;\n  CSR<E> g;\n\n\
+    public:\n  Graph() {}\n  template <class I>\n  Graph(int n, const vc<pair<I, I>>\
+    \ &es, const Cost &dflt_cost = 1) : n(n), m(es.size())\n  {\n    if constexpr\
+    \ (is_directed)\n    {\n      vc<pair<int, E>> edges(m);\n      repi(i, m)\n \
+    \     {\n        auto [u, v] = es[i];\n        assert(0 <= u && u < n);\n    \
+    \    assert(0 <= v && v < n);\n        edges[i] = {u, E(u, v, dflt_cost, i)};\n\
+    \      }\n      g = CSR<E>(n, edges);\n    }\n    else\n    {\n      vc<pair<int,\
+    \ E>> edges(2 * m);\n      repi(i, m)\n      {\n        auto [u, v] = es[i];\n\
+    \        assert(0 <= u && u < n);\n        assert(0 <= v && v < n);\n        edges[2\
+    \ * i] = {u, E(u, v, dflt_cost, i)};\n        edges[2 * i + 1] = {v, E(v, u, dflt_cost,\
+    \ i)};\n      }\n      g = CSR<E>(n, edges);\n    }\n  }\n  template <class I>\n\
+    \  Graph(int n, const vc<tuple<I, I, Cost>> &es) : n(n), m(es.size())\n  {\n \
+    \   if constexpr (is_directed)\n    {\n      vc<pair<int, E>> edges(m);\n    \
+    \  repi(i, m)\n      {\n        auto [u, v, w] = es[i];\n        assert(0 <= u\
+    \ && u < n);\n        assert(0 <= v && v < n);\n        edges[i] = {u, E(u, v,\
+    \ w, i)};\n      }\n      g = CSR<E>(n, edges);\n    }\n    else\n    {\n    \
+    \  vc<pair<int, E>> edges(2 * m);\n      repi(i, m)\n      {\n        auto [u,\
+    \ v, w] = es[i];\n        assert(0 <= u && u < n);\n        assert(0 <= v && v\
+    \ < n);\n        edges[2 * i] = {u, E(u, v, w, i)};\n        edges[2 * i + 1]\
+    \ = {v, E(v, u, w, i)};\n      }\n      g = CSR<E>(n, edges);\n    }\n  }\n\n\
+    \  // \u9802\u70B9\u6570\n  template <class I = ll>\n  I size() const { return\
+    \ n; }\n  // \u8FBA\u6570\n  template <class I = ll>\n  I num_of_edges() const\
+    \ { return m; }\n\n  // v \u304B\u3089\u51FA\u308B\u8FBA\u306E\u96C6\u5408\n \
+    \ auto out_edges(int v) const { return g[v]; }\n  // v \u304B\u3089\u51FA\u308B\
+    \u9802\u70B9\u306E\u96C6\u5408\n  template <class I = ll>\n  vc<I> out_vertices(int\
+    \ v) const\n  {\n    vc<I> res;\n    res.reserve(g[v].size());\n    fec(e : g[v])\
+    \ res.eb(e.to);\n    return res;\n  }\n\n  // \u8FBA\u756A\u53F7\u304B\u3089\u8FBA\
+    \u3092\u53D6\u5F97\u3059\u308B\n  // \u7121\u5411\u30B0\u30E9\u30D5\u306E\u5834\
+    \u5408 from <= to \u3092\u6E80\u305F\u3059\u3088\u3046\u306B\u8FD4\u3059\n  E\
+    \ get_edge(int eid) const\n  {\n    if constexpr (is_directed)\n      return g.find_by_eid(eid);\n\
+    \    else\n    {\n      E e = g.find_by_eid(eid * 2);\n      return e.from > e.to\
+    \ ? e.rev() : e;\n    }\n  }\n\n  // \u3059\u3079\u3066\u306E\u8FBA\u3092\u8FD4\
+    \u3059 (\u8FBA\u756A\u53F7\u9806)\n  // \u7121\u5411\u30B0\u30E9\u30D5\u306E\u5834\
+    \u5408\u3001\u5404\u8FBA\u306F from <= to \u3092\u6E80\u305F\u3059\n  vc<E> edges()\
+    \ const\n  {\n    vc<E> res(m);\n    repi(i, m) res[i] = get_edge(i);\n    return\
+    \ res;\n  }\n  // \u96A3\u63A5\u30EA\u30B9\u30C8\n  vvc<E> adj_list() const {\
+    \ return g.to_vv(); }\n  // \u96A3\u63A5\u884C\u5217 (\u8FBA\u306E\u672C\u6570\
+    \u3092\u683C\u7D0D)\n  template <class I = ll>\n  vvc<I> adj_matrix_ecnt() const\n\
+    \  {\n    vvc<I> res(n, vc<I>(n, 0));\n    fec(e : edges())\n    {\n      res[e.from][e.to]++;\n\
+    \      if (!is_directed && e.from != e.to)\n        res[e.to][e.from]++;\n   \
+    \ }\n    return res;\n  }\n\n  // \u5165\u6B21\u6570\u306E\u5217\n  template <class\
+    \ I = ll>\n  vc<I> indegs() const\n  {\n    vc<I> res(n);\n    fec(e : edges())\n\
+    \    {\n      res[e.to]++;\n      if (!is_directed && e.from != e.to)\n      \
+    \  res[e.from]++;\n    }\n    return res;\n  }\n  // \u51FA\u6B21\u6570\u306E\u5217\
+    \n  template <class I = ll>\n  vc<I> outdegs() const\n  {\n    vc<I> res(n);\n\
+    \    fec(e : edges()) \n    {\n      res[e.from]++;\n      if (!is_directed &&\
+    \ e.from != e.to)\n        res[e.to]++;\n    }\n    return res;\n  }\n};\n\ntemplate\
+    \ <class Cost>\nusing GraphDirected = Graph<true, Cost>;\ntemplate <class Cost>\n\
+    using GraphUndirected = Graph<false, Cost>;\n\ntemplate <class Cost>\nGraphDirected<Cost>\
+    \ rev_graph(const GraphDirected<Cost> &g)\n{\n  const int n = g.size(), m = g.num_of_edges();\n\
+    \  vc<tuple<int, int, Cost>> uvw;\n  uvw.reserve(m);\n  fec(e : g.edges()) uvw.eb(e.to,\
+    \ e.from, e.cost);\n  return GraphDirected<Cost>(n, uvw);\n}\n#line 6 \"graph/triangles.hpp\"\
+    \n\n/**\n * @brief \u4E09\u89D2\u5F62\u5217\u6319\n * @docs docs/graph/triangles.md\n\
+    \ */\n\n// \u76F8\u4E92\u306B\u8FBA\u304C\u5B58\u5728\u3059\u308B 3 \u9802\u70B9\
+    \ u, v, w \u306E\u7D44\u3059\u3079\u3066\u306B\u5BFE\u3057 f(u, v, w) \u3092\u5B9F\
+    \u884C\n// \u5165\u308C\u66FF\u3048\u305F\u3060\u3051\u306E\u3082\u306E\u306F\u540C\
+    \u4E00\u8996\u3059\u308B\u304C\u3001\u9806\u756A\u306F\u4E0D\u5B9A\n// \u7D44\u306E\
+    \u500B\u6570\u306F\u305F\u304B\u3060\u304B m*sqrt(2m) \u500B\ntemplate <class\
+    \ Cost, class F>\nvoid triangles(const GraphUndirected<Cost> &g, const F &f)\n\
+    {\n  const int n = g.size(), m = g.num_of_edges();\n  // \u5927 \u2192 \u5C0F\
+    \ \u3067\u5411\u304D\u3065\u3051\u3055\u308C\u3066\u3044\u308B\u3068\u8003\u3048\
+    \u3066 u \u2192 v \u2192 w \u3060\u3051\u3092\u8003\u3048\u308B\n  vc<pair<int,\
+    \ int>> es;\n  es.reserve(m);\n  fec(e : g.edges())\n  {\n    int u = e.from,\
+    \ v = e.to;\n    if (u == v)\n      continue;\n    if (g.out_edges(u).size() <\
+    \ g.out_edges(v).size())\n      swap(u, v);\n    es.eb(u, v);\n  }\n  GraphDirected<bool>\
+    \ h(n, es);\n\n  vb exists(n, false);\n  repi(u, n)\n  {\n    fec(v : h.out_edges(u))\
+    \ exists[v] = true;\n    fec(v : h.out_edges(u))\n    {\n      fec(w : h.out_edges(v))\n\
+    \      {\n        if (exists[w])\n          f(u, v, w);\n      }\n    }\n    fec(v\
+    \ : g.out_edges(u)) exists[v] = false;\n  }\n}\n"
   code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
-    /**\n * @brief CSR\n * @docs docs/ds/csr.md\n */\n\ntemplate <class T>\nstruct\
-    \ CSR\n{\nprotected:\n  int n, m;\n  // i (0 <= i < n) \u884C\u76EE\u3092\u8868\
-    \u3059\u306E\u306F elist \u306E [start[i], start[i+1])\n  vc<int> start;\n  vc<T>\
-    \ elist;\n  vc<int> eid_to_elistid;\n\n  struct Row\n  {\n    using iterator =\
-    \ typename vc<T>::const_iterator;\n\n  private:\n    iterator begi, endi;\n\n\
-    \  public:\n    Row(const iterator &begi, const iterator &endi) : begi(begi),\
-    \ endi(endi) {}\n    inline iterator begin() const { return begi; }\n    inline\
-    \ iterator end() const { return endi; }\n    template <class I = ll>\n    inline\
-    \ I size() const { return endi - begi; }\n    inline bool empty() const { return\
-    \ size() == 0; }\n\n    inline T operator[](int i) const { return *(begi + i);\
-    \ }\n    inline T at(int i) const\n    {\n      assert(0 <= i && i < size());\n\
-    \      return *(begi + i);\n    }\n\n    inline T front() const\n    {\n     \
-    \ assert(!empty());\n      return *begi;\n    }\n    inline T back() const\n \
-    \   {\n      assert(!empty());\n      return *prev(endi);\n    }\n\n    vc<T>\
-    \ to_v() const { return vc<T>(ALL(*this)); }\n  };\n\npublic:\n  CSR() {}\n  //\
-    \ (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template <class I>\n\
-    \  CSR(int n, const vc<pair<I, T>> &ies) : n(n), m(ies.size()), start(n, 0), elist(m),\
-    \ eid_to_elistid(m)\n  {\n    fec([ i, e ] : ies)\n    {\n      assert(0 <= i\
-    \ && i < n);\n      start[i]++;\n    }\n    start = cumlsum(start);\n    auto\
-    \ cnt = start;\n    repi(j, m)\n    {\n      cauto &[i, e] = ies[j];\n      int\
-    \ &k = cnt[i];\n      elist[k] = e;\n      eid_to_elistid[j] = k;\n      k++;\n\
-    \    }\n  }\n  // vv[i] \u306B elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\
-    \u305F vector\n  CSR(const vvc<T> &vv) : n(vv.size()), start(n + 1, 0)\n  {\n\
-    \    m = 0;\n    fec(row : vv) m += row.size();\n    elist.resize(m);\n    eid_to_elistid.resize(m);\n\
-    \    int k = 0;\n    for (int i = 0, j = 0; i < n; i++)\n    {\n      start[i]\
-    \ = k;\n      fec(e : vv[i])\n      {\n        elist[k] = e;\n        eid_to_elistid[j++]\
-    \ = k;\n        k++;\n      }\n    }\n    start.back() = m;\n  }\n\n  Row operator[](int\
-    \ i) const { return Row(elist.begin() + start[i], elist.begin() + start[i + 1]);\
-    \ }\n  Row at(int i) const\n  {\n    if (!(0 <= i && i < n))\n      return Row(elist.begin(),\
-    \ elist.begin());\n    return Row(elist.begin() + start[i], elist.begin() + start[i\
-    \ + 1]);\n  }\n\n  template <class I = ll>\n  I size() const { return n; }\n\n\
-    \  const T &find_by_eid(int eid) const\n  {\n    assert(0 <= eid && eid < m);\n\
-    \    return elist[eid_to_elistid[eid]];\n  }\n\n  vvc<T> to_vv() const\n  {\n\
-    \    vvc<T> res(n);\n    repi(i, n) res[i] = {elist.begin() + start[i], elist.begin()\
-    \ + start[i + 1]};\n    return res;\n  }\n};\n"
+    #include \"graph.hpp\"\n\n/**\n * @brief \u4E09\u89D2\u5F62\u5217\u6319\n * @docs\
+    \ docs/graph/triangles.md\n */\n\n// \u76F8\u4E92\u306B\u8FBA\u304C\u5B58\u5728\
+    \u3059\u308B 3 \u9802\u70B9 u, v, w \u306E\u7D44\u3059\u3079\u3066\u306B\u5BFE\
+    \u3057 f(u, v, w) \u3092\u5B9F\u884C\n// \u5165\u308C\u66FF\u3048\u305F\u3060\u3051\
+    \u306E\u3082\u306E\u306F\u540C\u4E00\u8996\u3059\u308B\u304C\u3001\u9806\u756A\
+    \u306F\u4E0D\u5B9A\n// \u7D44\u306E\u500B\u6570\u306F\u305F\u304B\u3060\u304B\
+    \ m*sqrt(2m) \u500B\ntemplate <class Cost, class F>\nvoid triangles(const GraphUndirected<Cost>\
+    \ &g, const F &f)\n{\n  const int n = g.size(), m = g.num_of_edges();\n  // \u5927\
+    \ \u2192 \u5C0F \u3067\u5411\u304D\u3065\u3051\u3055\u308C\u3066\u3044\u308B\u3068\
+    \u8003\u3048\u3066 u \u2192 v \u2192 w \u3060\u3051\u3092\u8003\u3048\u308B\n\
+    \  vc<pair<int, int>> es;\n  es.reserve(m);\n  fec(e : g.edges())\n  {\n    int\
+    \ u = e.from, v = e.to;\n    if (u == v)\n      continue;\n    if (g.out_edges(u).size()\
+    \ < g.out_edges(v).size())\n      swap(u, v);\n    es.eb(u, v);\n  }\n  GraphDirected<bool>\
+    \ h(n, es);\n\n  vb exists(n, false);\n  repi(u, n)\n  {\n    fec(v : h.out_edges(u))\
+    \ exists[v] = true;\n    fec(v : h.out_edges(u))\n    {\n      fec(w : h.out_edges(v))\n\
+    \      {\n        if (exists[w])\n          f(u, v, w);\n      }\n    }\n    fec(v\
+    \ : g.out_edges(u)) exists[v] = false;\n  }\n}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -872,130 +781,30 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   - template/template_random.hpp
-  isVerificationFile: false
-  path: ds/csr.hpp
-  requiredBy:
-  - graph/connected_components.hpp
-  - graph/cycle_detection.hpp
   - graph/graph.hpp
-  - graph/contraction.hpp
-  - graph/matrix_tree.hpp
-  - graph/tree/diameter.hpp
-  - graph/tree/rerooting.hpp
-  - graph/tree/rooted_tree.hpp
-  - graph/scc.hpp
-  - graph/triangles.hpp
-  - graph/subgraphs.hpp
-  - graph/sssp.hpp
-  - math/linalg/matrix_array.hpp
-  - math/linalg/matrix.hpp
-  - ds/static_range/dc_range_prod.hpp
-  - ds/group_index.hpp
-  - ds/query/point_set_range_frequency.hpp
-  timestamp: '2025-08-12 21:38:21+09:00'
+  - ds/csr.hpp
+  isVerificationFile: false
+  path: graph/triangles.hpp
+  requiredBy: []
+  timestamp: '2025-08-22 00:01:33+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/yuki430_aho_corasick.test.cpp
-  - verify/yukicoder/yuki2215_dc.test.cpp
-  - verify/yukicoder/yuki310.test.cpp
-  - verify/mytest/rmq.test.cpp
-  - verify/aoj/bfs.test.cpp
-  - verify/aoj/bfs01.test.cpp
-  - verify/aoj/rooted_tree_from_edges.test.cpp
-  - verify/aoj/rooted_tree_from_parent.test.cpp
-  - verify/aoj/bellman_ford.test.cpp
-  - verify/aoj/csr.test.cpp
-  - verify/aoj/connected_components.test.cpp
-  - verify/yosupo/matrix_pow.test.cpp
-  - verify/yosupo/matrix_product.test.cpp
-  - verify/yosupo/matrix_inv.test.cpp
-  - verify/yosupo/matrix_pow_array.test.cpp
-  - verify/yosupo/matrix_det.test.cpp
-  - verify/yosupo/cycle_detection_directed.test.cpp
-  - verify/yosupo/matrix_rank.test.cpp
-  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - verify/yosupo/dc_range_prod.test.cpp
-  - verify/yosupo/retooting.test.cpp
-  - verify/yosupo/tree_diameter.test.cpp
-  - verify/yosupo/dijkstra.test.cpp
   - verify/yosupo/enumerate_triangles.test.cpp
-  - verify/yosupo/matrix_solve_array.test.cpp
-  - verify/yosupo/matrix_det_array.test.cpp
-  - verify/yosupo/static_range_frequency.test.cpp
-  - verify/yosupo/scc.test.cpp
-  - verify/yosupo/counting_eularian_circuits.test.cpp
-  - verify/yosupo/matrix_det_sparse.test.cpp
-  - verify/yosupo/matrix_inv_array.test.cpp
-  - verify/yosupo/matrix_solve.test.cpp
-  - verify/yosupo/matrix_product_array.test.cpp
-  - verify/yosupo/cycle_detection_undirected.test.cpp
-  - verify/yosupo/majority_voting.test.cpp
-  - verify/yosupo/point_set_range_frequency.test.cpp
-  - verify/yosupo/counting_spanning_trees_directed.test.cpp
-documentation_of: ds/csr.hpp
+documentation_of: graph/triangles.hpp
 layout: document
 redirect_from:
-- /library/ds/csr.hpp
-- /library/ds/csr.hpp.html
-title: CSR
+- /library/graph/triangles.hpp
+- /library/graph/triangles.hpp.html
+title: "\u4E09\u89D2\u5F62\u5217\u6319"
 ---
-## CSR
+## 三角形列挙
 
-グラフの隣接リストに代表されるような `vvc<T>` の構造の代替。一次元の vector のみでよく、高速・省メモリ。
+無向グラフにおいて、相異なる $3$ 頂点 $u, v, w$ の組であって辺 $\{u, v\}, \{u, w\}, \{v, w\}$ がすべて存在するものを列挙する。このような辺の組は、（順番を入れ替えただけのものを同一視すると）たかだか $m\sqrt{2m}$ 個である。
 
-`vvc<T>` と比較してできないことは `v[i].push_back(x)`、それ以外は（実装しているかはともかく）大体できるような気がする（要出典）
+関連する典型：長さ $n$ 総和 $m$ の列から相異なるペアを $q$ 個とったとき、その min の和は $O(m\sqrt{q})$ である。証明：
 
-### CSR
+- $B$ 以上の要素の個数は $O(m/B)$ なので、両方 $B$ 以上のペアの個数は $O(m^2/B^2)$ で、その総和への寄与は $O(m^2/B)$
+- 一方が $B$ 以下のペアは、総和への寄与が $O(qB)$
+- $m^2/B = qB$ つまり $B = m/\sqrt{q}$ ととると総和 $O(m\sqrt{q})$ がわかる
 
-#### コンストラクタ
-
-```cpp
-(1) CSR()
-(2) CSR(int n, vc<pair<I, T>> ies)
-(3) CSR(vvc<T> vv)
-```
-
-- (2)：$n$ は $\mathrm{vv}$ の長さを表す。$\mathrm{ies}$ の要素 $(i, e)$ は、$\mathrm{vv}[i]$ に $e$ が含まれることを表す。この表現を CSR 表現に変換する。
-- (3)：`vvc` での表現を CSR 表現に変換する。
-
-##### 計算量
-
-要素数（(2) では $(i, e)$ の個数、(3) では各 $\mathrm{vv}[i]$ の長さの総和）を $m$ として
-
-- $O(n+m)$
-
-##### 制約
-
-- (2)
-  - $n > 0$
-  - 各 $(i, e)$ に対し $0 \leq i < n$
-
-#### operator[], at
-
-`vvc<T>` と同じように扱えるが、変更はできない。（変更できるように実装することも可能ではあるはず。）
-
-`operator[]` は範囲チェックをしない。`at` に関しては、$1$ 段階目の `at` は範囲外であれば空の行を返し、$2$ 段階目の `at` は範囲外であれば RE にする。
-
-#### size
-
-```cpp
-I=ll size()
-```
-
-$n$ を返す。
-
-##### 計算量
-
-- $O(1)$
-
-#### to_vv
-
-```cpp
-vvc<T> to_vv()
-```
-
-`vvc` での表現にして返す。
-
-##### 計算量
-
-- $O(n+m)$
+この事実を無向グラフの次数列に対して適用することで $\displaystyle \sum_{\{u,v\} \in E} \min(\mathrm{deg}(u), \mathrm{deg}(v)) = O(m\sqrt{m})$ がわかるので、各辺に対して次数の小さいほう（$v$ とする）の頂点の隣接頂点 $w$ をすべて調べ、辺 $\{u, w\}$ が存在するかを判定することで解ける。判定に (unordered) set あるいはソートして lower_bound を用いる方法もあるが、$u$ が固まるような順で辺を見て、配列 $\mathrm{exists}_u[w]$ を持って更新するとそれが不要になる。各辺が次数の大小に従って向きづけされていると考えてちゃんと実装すると、実装が簡潔になる上に定数倍が数分の $1$ になる。
