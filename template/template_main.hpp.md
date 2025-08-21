@@ -1,40 +1,40 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
@@ -384,7 +384,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/sparse_table.test.cpp
     title: verify/yosupo/sparse_table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/sqrt_mod.test.cpp
     title: verify/yosupo/sqrt_mod.test.cpp
   - icon: ':heavy_check_mark:'
@@ -396,13 +396,13 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_sum.test.cpp
     title: verify/yosupo/static_range_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
     title: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/stern_brocot_tree.test.cpp
     title: verify/yosupo/stern_brocot_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
   - icon: ':heavy_check_mark:'
@@ -411,37 +411,37 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind.test.cpp
     title: verify/yosupo/unionfind.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential.test.cpp
     title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/xor_convolution.test.cpp
     title: verify/yosupo/xor_convolution.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/base_repr.test.cpp
     title: verify/yukicoder/base_repr.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/binomial.test.cpp
     title: verify/yukicoder/binomial.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/bmbm.test.cpp
     title: verify/yukicoder/bmbm.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/crt.test.cpp
     title: verify/yukicoder/crt.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/crt_mod.test.cpp
     title: verify/yukicoder/crt_mod.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
     title: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/divisors.test.cpp
     title: verify/yukicoder/divisors.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/dynamic_modint.test.cpp
     title: verify/yukicoder/dynamic_modint.test.cpp
   - icon: ':heavy_check_mark:'
@@ -450,10 +450,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/imos_2d.test.cpp
     title: verify/yukicoder/imos_2d.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/order_mod_carmichael.test.cpp
     title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/order_mod_euler_phi.test.cpp
     title: verify/yukicoder/order_mod_euler_phi.test.cpp
   - icon: ':heavy_check_mark:'
@@ -465,10 +465,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/parallel_binsearch.test.cpp
     title: verify/yukicoder/parallel_binsearch.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/perm_cycle.test.cpp
     title: verify/yukicoder/perm_cycle.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/poly_rational_sum.test.cpp
     title: verify/yukicoder/poly_rational_sum.test.cpp
   - icon: ':heavy_check_mark:'
@@ -483,7 +483,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/segmented_sieve.test.cpp
     title: verify/yukicoder/segmented_sieve.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/static_modint.test.cpp
     title: verify/yukicoder/static_modint.test.cpp
   - icon: ':heavy_check_mark:'
@@ -492,27 +492,27 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/uf_partially_persistent.test.cpp
     title: verify/yukicoder/uf_partially_persistent.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki2215_dc.test.cpp
     title: verify/yukicoder/yuki2215_dc.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki2215_swag.test.cpp
     title: verify/yukicoder/yuki2215_swag.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki310.test.cpp
     title: verify/yukicoder/yuki310.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/yuki430_aho_corasick.test.cpp
     title: verify/yukicoder/yuki430_aho_corasick.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
     title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     links: []
   bundledCode: "#line 2 \"template/template_main.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
@@ -1148,7 +1148,7 @@ data:
   - verify/yosupo/fps_inv_sparse.test copy.cpp
   - template/template.cpp
   timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/parallel_binsearch.test.cpp
   - verify/yukicoder/yuki430_aho_corasick.test.cpp
