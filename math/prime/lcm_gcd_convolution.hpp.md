@@ -845,8 +845,8 @@ data:
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/gcd_convolution.test.cpp
+  - verify/yosupo/lcm_convolution.test.cpp
 documentation_of: math/prime/lcm_gcd_convolution.hpp
 layout: document
 redirect_from:

@@ -756,9 +756,9 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/rmq.test.cpp
-  - verify/yosupo/linear_rmq.test.cpp
-  - verify/yosupo/block_sparse_table.test.cpp
   - verify/yosupo/block_disjoint_sparse_table.test.cpp
+  - verify/yosupo/block_sparse_table.test.cpp
+  - verify/yosupo/linear_rmq.test.cpp
 documentation_of: ds/static_range/block_sparse_table.hpp
 layout: document
 redirect_from:

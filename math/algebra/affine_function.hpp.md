@@ -726,10 +726,10 @@ data:
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/point_set_range_composite.test.cpp
-  - verify/yosupo/deque_operate_all_composite.test.cpp
-  - verify/yosupo/queue_operate_all_composite.test.cpp
   - verify/yosupo/point_set_range_composite_large_array.test.cpp
+  - verify/yosupo/point_set_range_composite.test.cpp
+  - verify/yosupo/queue_operate_all_composite.test.cpp
+  - verify/yosupo/deque_operate_all_composite.test.cpp
 documentation_of: math/algebra/affine_function.hpp
 layout: document
 redirect_from:

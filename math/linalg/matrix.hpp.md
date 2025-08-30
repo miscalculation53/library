@@ -1176,17 +1176,17 @@ data:
   timestamp: '2025-08-20 23:10:57+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/yuki310.test.cpp
-  - verify/yosupo/matrix_pow.test.cpp
-  - verify/yosupo/matrix_product.test.cpp
-  - verify/yosupo/matrix_inv.test.cpp
-  - verify/yosupo/matrix_det.test.cpp
-  - verify/yosupo/matrix_rank.test.cpp
-  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - verify/yosupo/counting_eularian_circuits.test.cpp
   - verify/yosupo/matrix_det_sparse.test.cpp
+  - verify/yosupo/matrix_rank.test.cpp
+  - verify/yosupo/matrix_pow.test.cpp
+  - verify/yosupo/matrix_inv.test.cpp
   - verify/yosupo/matrix_solve.test.cpp
+  - verify/yosupo/counting_eularian_circuits.test.cpp
+  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
+  - verify/yosupo/matrix_product.test.cpp
+  - verify/yosupo/matrix_det.test.cpp
   - verify/yosupo/counting_spanning_trees_directed.test.cpp
+  - verify/yukicoder/yuki310.test.cpp
 documentation_of: math/linalg/matrix.hpp
 layout: document
 redirect_from:

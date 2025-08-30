@@ -948,35 +948,35 @@ data:
   isVerificationFile: false
   path: ds/fenwick_tree/fenwick_tree.hpp
   requiredBy:
-  - ds/fenwick_tree/range_add_point_get.hpp
   - ds/fenwick_tree/fenwick_tree_01.hpp
   - ds/fenwick_tree/inversion.hpp
-  - ds/2d/sparse/fenwick_tree.hpp
-  - ds/2d/offline/rectangle_sum.hpp
+  - ds/fenwick_tree/range_add_point_get.hpp
+  - ds/2d/offline/rectangle_add_point_get.hpp
   - ds/2d/offline/static_rectangle_add_point_get.hpp
   - ds/2d/offline/point_add_rectangle_sum.hpp
   - ds/2d/offline/static_rectangle_add_rectangle_sum.hpp
-  - ds/2d/offline/rectangle_add_point_get.hpp
+  - ds/2d/offline/rectangle_sum.hpp
+  - ds/2d/sparse/fenwick_tree.hpp
   - ds/query/point_set_range_frequency.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
   - verify/mytest/fenwick_tree_set.test.cpp
+  - verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
+  - verify/yosupo/2d_fenwick_tree.test.cpp
+  - verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
+  - verify/yosupo/static_range_inversions_query.test.cpp
+  - verify/yosupo/point_set_range_frequency.test.cpp
+  - verify/yosupo/majority_voting.test.cpp
+  - verify/yosupo/point_add_rectangle_sum.test.cpp
+  - verify/yosupo/point_add_range_sum.test.cpp
+  - verify/yosupo/rectangle_add_point_get.test.cpp
+  - verify/yosupo/ordered_set_fenwick_tree.test.cpp
+  - verify/yosupo/lower_left_sum.test.cpp
+  - verify/yosupo/rectangle_sum.test.cpp
+  - verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
   - verify/aoj/inversion.test.cpp
   - verify/aoj/range_add_point_get.test.cpp
-  - verify/yosupo/static_range_inversions_query.test.cpp
-  - verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
-  - verify/yosupo/ordered_set_fenwick_tree.test.cpp
-  - verify/yosupo/2d_fenwick_tree.test.cpp
-  - verify/yosupo/point_add_range_sum.test.cpp
-  - verify/yosupo/lower_left_sum.test.cpp
-  - verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
-  - verify/yosupo/rectangle_sum.test.cpp
-  - verify/yosupo/point_add_rectangle_sum.test.cpp
-  - verify/yosupo/rectangle_add_point_get.test.cpp
-  - verify/yosupo/majority_voting.test.cpp
-  - verify/yosupo/point_set_range_frequency.test.cpp
 documentation_of: ds/fenwick_tree/fenwick_tree.hpp
 layout: document
 redirect_from:

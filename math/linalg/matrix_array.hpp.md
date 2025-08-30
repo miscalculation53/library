@@ -1105,9 +1105,9 @@ data:
   timestamp: '2025-08-20 23:10:57+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yosupo/matrix_det_array.test.cpp
   - verify/yosupo/matrix_pow_array.test.cpp
   - verify/yosupo/matrix_solve_array.test.cpp
-  - verify/yosupo/matrix_det_array.test.cpp
   - verify/yosupo/matrix_inv_array.test.cpp
   - verify/yosupo/matrix_product_array.test.cpp
 documentation_of: math/linalg/matrix_array.hpp

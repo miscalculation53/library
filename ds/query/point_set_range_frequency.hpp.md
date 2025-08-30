@@ -978,8 +978,8 @@ data:
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/majority_voting.test.cpp
   - verify/yosupo/point_set_range_frequency.test.cpp
+  - verify/yosupo/majority_voting.test.cpp
 documentation_of: ds/query/point_set_range_frequency.hpp
 layout: document
 redirect_from:

@@ -773,19 +773,19 @@ data:
   path: ds/uf/uf.hpp
   requiredBy:
   - ds/uf/uf_potential.hpp
-  - ds/uf/uf_partially_persistent.hpp
   - ds/uf/uf_undo.hpp
+  - ds/uf/uf_partially_persistent.hpp
   - ds/offline_dynamic_connectivity.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/parallel_binsearch.test.cpp
-  - verify/yukicoder/uf_min_max_leader.test.cpp
-  - verify/yukicoder/uf_partially_persistent.test.cpp
-  - verify/yosupo/unionfind_potential.test.cpp
-  - verify/yosupo/unionfind.test.cpp
   - verify/yosupo/offline_dynamic_connectivity.test.cpp
+  - verify/yosupo/unionfind_potential.test.cpp
   - verify/yosupo/unionfind_potential_non_commutative.test.cpp
+  - verify/yosupo/unionfind.test.cpp
+  - verify/yukicoder/uf_partially_persistent.test.cpp
+  - verify/yukicoder/uf_min_max_leader.test.cpp
+  - verify/yukicoder/parallel_binsearch.test.cpp
 documentation_of: ds/uf/uf.hpp
 layout: document
 redirect_from:

@@ -675,15 +675,15 @@ data:
   isVerificationFile: false
   path: math/modint/power_table.hpp
   requiredBy:
-  - math/modint/template_modint.hpp
-  - string/rolling_hash.hpp
   - template/template.cpp
   - template/template_all.hpp
+  - math/modint/template_modint.hpp
+  - string/rolling_hash.hpp
   timestamp: '2025-08-20 23:10:57+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/mytest/rolling_hash.test.cpp
   - verify/mytest/power_table.test.cpp
+  - verify/mytest/rolling_hash.test.cpp
 documentation_of: math/modint/power_table.hpp
 layout: document
 redirect_from:

@@ -793,9 +793,9 @@ data:
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/yuki2215_swag.test.cpp
-  - verify/yosupo/deque_operate_all_composite.test.cpp
   - verify/yosupo/queue_operate_all_composite.test.cpp
+  - verify/yosupo/deque_operate_all_composite.test.cpp
+  - verify/yukicoder/yuki2215_swag.test.cpp
 documentation_of: ds/swag.hpp
 layout: document
 redirect_from:

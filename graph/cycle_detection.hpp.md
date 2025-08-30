@@ -795,8 +795,8 @@ data:
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/cycle_detection_directed.test.cpp
   - verify/yosupo/cycle_detection_undirected.test.cpp
+  - verify/yosupo/cycle_detection_directed.test.cpp
 documentation_of: graph/cycle_detection.hpp
 layout: document
 redirect_from:

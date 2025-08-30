@@ -1006,11 +1006,11 @@ data:
   timestamp: '2025-08-13 19:59:25+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/yuki430_aho_corasick.test.cpp
-  - verify/aoj/rooted_tree_from_edges.test.cpp
-  - verify/aoj/rooted_tree_from_parent.test.cpp
   - verify/yosupo/retooting.test.cpp
   - verify/yosupo/tree_diameter.test.cpp
+  - verify/yukicoder/yuki430_aho_corasick.test.cpp
+  - verify/aoj/rooted_tree_from_parent.test.cpp
+  - verify/aoj/rooted_tree_from_edges.test.cpp
 documentation_of: graph/tree/rooted_tree.hpp
 layout: document
 redirect_from:

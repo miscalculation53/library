@@ -656,9 +656,9 @@ data:
   isVerificationFile: false
   path: math/modint/stom.hpp
   requiredBy:
-  - math/modint/template_modint.hpp
   - template/template.cpp
   - template/template_all.hpp
+  - math/modint/template_modint.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []

@@ -785,16 +785,16 @@ data:
   path: ds/segtree/lazy_segtree.hpp
   requiredBy:
   - math/algebra/acted_monoid/add_sum.hpp
-  - math/algebra/acted_monoid/upd_sum.hpp
   - math/algebra/acted_monoid/affine_sum.hpp
+  - math/algebra/acted_monoid/upd_sum.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/aoj/range_upd_range_min.test.cpp
-  - verify/aoj/range_upd_range_sum.test.cpp
-  - verify/aoj/range_add_range_min.test.cpp
-  - verify/aoj/range_add_range_sum.test.cpp
   - verify/yosupo/range_affine_range.sum.test.cpp
+  - verify/aoj/range_upd_range_min.test.cpp
+  - verify/aoj/range_add_range_min.test.cpp
+  - verify/aoj/range_upd_range_sum.test.cpp
+  - verify/aoj/range_add_range_sum.test.cpp
 documentation_of: ds/segtree/lazy_segtree.hpp
 layout: document
 redirect_from:

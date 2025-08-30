@@ -670,8 +670,8 @@ data:
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/poly_interpolation_geo.test.cpp
   - verify/yosupo/poly_interpolation.test.cpp
+  - verify/yosupo/poly_interpolation_geo.test.cpp
 documentation_of: math/modint/inv_many.hpp
 layout: document
 redirect_from:

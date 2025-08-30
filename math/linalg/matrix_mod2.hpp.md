@@ -799,9 +799,9 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/matrix_solve_mod2.test.cpp
-  - verify/yosupo/matrix_inv_mod2.test.cpp
-  - verify/yosupo/matrix_det_mod2.test.cpp
   - verify/yosupo/matrix_rank_mod2.test.cpp
+  - verify/yosupo/matrix_det_mod2.test.cpp
+  - verify/yosupo/matrix_inv_mod2.test.cpp
   - verify/yosupo/matrix_product_mod2.test.cpp
 documentation_of: math/linalg/matrix_mod2.hpp
 layout: document

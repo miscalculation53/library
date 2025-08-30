@@ -1348,8 +1348,8 @@ data:
   timestamp: '2025-08-20 23:10:57+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/bmbm.test.cpp
   - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - verify/yukicoder/bmbm.test.cpp
 documentation_of: math/fps/bostan_mori.hpp
 layout: document
 redirect_from:

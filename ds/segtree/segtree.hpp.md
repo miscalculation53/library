@@ -732,9 +732,9 @@ data:
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/point_set_range_composite.test.cpp
   - verify/yosupo/2d_segtree.test.cpp
   - verify/yosupo/majority_voting.test.cpp
+  - verify/yosupo/point_set_range_composite.test.cpp
 documentation_of: ds/segtree/segtree.hpp
 layout: document
 redirect_from:

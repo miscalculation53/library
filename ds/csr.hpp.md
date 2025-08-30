@@ -875,63 +875,63 @@ data:
   isVerificationFile: false
   path: ds/csr.hpp
   requiredBy:
-  - graph/connected_components.hpp
-  - graph/cycle_detection.hpp
-  - graph/graph.hpp
-  - graph/contraction.hpp
-  - graph/matrix_tree.hpp
+  - ds/static_range/dc_range_prod.hpp
+  - ds/query/point_set_range_frequency.hpp
+  - ds/group_index.hpp
+  - math/linalg/matrix_array.hpp
+  - math/linalg/matrix.hpp
+  - graph/subgraphs.hpp
+  - graph/triangles.hpp
   - graph/tree/diameter.hpp
   - graph/tree/rerooting.hpp
   - graph/tree/rooted_tree.hpp
-  - graph/scc.hpp
-  - graph/triangles.hpp
-  - graph/subgraphs.hpp
+  - graph/contraction.hpp
+  - graph/cycle_detection.hpp
+  - graph/connected_components.hpp
+  - graph/graph.hpp
   - graph/sssp.hpp
-  - math/linalg/matrix_array.hpp
-  - math/linalg/matrix.hpp
-  - ds/static_range/dc_range_prod.hpp
-  - ds/group_index.hpp
-  - ds/query/point_set_range_frequency.hpp
+  - graph/matrix_tree.hpp
+  - graph/scc.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/mytest/rmq.test.cpp
+  - verify/yosupo/matrix_det_sparse.test.cpp
+  - verify/yosupo/matrix_rank.test.cpp
+  - verify/yosupo/matrix_pow.test.cpp
+  - verify/yosupo/enumerate_triangles.test.cpp
+  - verify/yosupo/matrix_inv.test.cpp
+  - verify/yosupo/retooting.test.cpp
+  - verify/yosupo/dc_range_prod.test.cpp
+  - verify/yosupo/scc.test.cpp
+  - verify/yosupo/matrix_solve.test.cpp
+  - verify/yosupo/counting_eularian_circuits.test.cpp
+  - verify/yosupo/matrix_det_array.test.cpp
+  - verify/yosupo/point_set_range_frequency.test.cpp
+  - verify/yosupo/dijkstra.test.cpp
+  - verify/yosupo/cycle_detection_undirected.test.cpp
+  - verify/yosupo/cycle_detection_directed.test.cpp
+  - verify/yosupo/majority_voting.test.cpp
+  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
+  - verify/yosupo/matrix_product.test.cpp
+  - verify/yosupo/matrix_pow_array.test.cpp
+  - verify/yosupo/matrix_solve_array.test.cpp
+  - verify/yosupo/matrix_det.test.cpp
+  - verify/yosupo/counting_spanning_trees_directed.test.cpp
+  - verify/yosupo/matrix_inv_array.test.cpp
+  - verify/yosupo/static_range_frequency.test.cpp
+  - verify/yosupo/tree_diameter.test.cpp
+  - verify/yosupo/matrix_product_array.test.cpp
   - verify/yukicoder/yuki430_aho_corasick.test.cpp
   - verify/yukicoder/yuki2215_dc.test.cpp
   - verify/yukicoder/yuki310.test.cpp
-  - verify/mytest/rmq.test.cpp
-  - verify/aoj/bfs.test.cpp
-  - verify/aoj/bfs01.test.cpp
-  - verify/aoj/rooted_tree_from_edges.test.cpp
   - verify/aoj/rooted_tree_from_parent.test.cpp
+  - verify/aoj/bfs01.test.cpp
+  - verify/aoj/connected_components.test.cpp
   - verify/aoj/bellman_ford.test.cpp
   - verify/aoj/csr.test.cpp
-  - verify/aoj/connected_components.test.cpp
-  - verify/yosupo/matrix_pow.test.cpp
-  - verify/yosupo/matrix_product.test.cpp
-  - verify/yosupo/matrix_inv.test.cpp
-  - verify/yosupo/matrix_pow_array.test.cpp
-  - verify/yosupo/matrix_det.test.cpp
-  - verify/yosupo/cycle_detection_directed.test.cpp
-  - verify/yosupo/matrix_rank.test.cpp
-  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - verify/yosupo/dc_range_prod.test.cpp
-  - verify/yosupo/retooting.test.cpp
-  - verify/yosupo/tree_diameter.test.cpp
-  - verify/yosupo/dijkstra.test.cpp
-  - verify/yosupo/enumerate_triangles.test.cpp
-  - verify/yosupo/matrix_solve_array.test.cpp
-  - verify/yosupo/matrix_det_array.test.cpp
-  - verify/yosupo/static_range_frequency.test.cpp
-  - verify/yosupo/scc.test.cpp
-  - verify/yosupo/counting_eularian_circuits.test.cpp
-  - verify/yosupo/matrix_det_sparse.test.cpp
-  - verify/yosupo/matrix_inv_array.test.cpp
-  - verify/yosupo/matrix_solve.test.cpp
-  - verify/yosupo/matrix_product_array.test.cpp
-  - verify/yosupo/cycle_detection_undirected.test.cpp
-  - verify/yosupo/majority_voting.test.cpp
-  - verify/yosupo/point_set_range_frequency.test.cpp
-  - verify/yosupo/counting_spanning_trees_directed.test.cpp
+  - verify/aoj/bfs.test.cpp
+  - verify/aoj/rooted_tree_from_edges.test.cpp
 documentation_of: ds/csr.hpp
 layout: document
 redirect_from:

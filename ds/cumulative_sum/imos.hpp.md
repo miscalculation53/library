@@ -742,8 +742,8 @@ data:
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/bmbm.test.cpp
   - verify/yukicoder/imos.test.cpp
+  - verify/yukicoder/bmbm.test.cpp
 documentation_of: ds/cumulative_sum/imos.hpp
 layout: document
 redirect_from:

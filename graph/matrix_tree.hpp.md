@@ -1294,10 +1294,10 @@ data:
   timestamp: '2025-08-20 23:10:57+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/yuki310.test.cpp
-  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
   - verify/yosupo/counting_eularian_circuits.test.cpp
+  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
   - verify/yosupo/counting_spanning_trees_directed.test.cpp
+  - verify/yukicoder/yuki310.test.cpp
 documentation_of: graph/matrix_tree.hpp
 layout: document
 redirect_from:

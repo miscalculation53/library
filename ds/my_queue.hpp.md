@@ -736,33 +736,33 @@ data:
   isVerificationFile: false
   path: ds/my_queue.hpp
   requiredBy:
-  - graph/connected_components.hpp
-  - graph/matrix_tree.hpp
+  - graph/subgraphs.hpp
   - graph/tree/diameter.hpp
   - graph/tree/rerooting.hpp
   - graph/tree/rooted_tree.hpp
-  - graph/subgraphs.hpp
+  - graph/connected_components.hpp
   - graph/sssp.hpp
+  - graph/matrix_tree.hpp
   - string/aho_corasick.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/yuki430_aho_corasick.test.cpp
-  - verify/yukicoder/yuki310.test.cpp
-  - verify/aoj/my_queue.test.cpp
-  - verify/aoj/bfs.test.cpp
-  - verify/aoj/bfs01.test.cpp
-  - verify/aoj/rooted_tree_from_edges.test.cpp
-  - verify/aoj/rooted_tree_from_parent.test.cpp
-  - verify/aoj/bellman_ford.test.cpp
-  - verify/aoj/connected_components.test.cpp
-  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
   - verify/yosupo/retooting.test.cpp
-  - verify/yosupo/tree_diameter.test.cpp
-  - verify/yosupo/dijkstra.test.cpp
   - verify/yosupo/counting_eularian_circuits.test.cpp
   - verify/yosupo/aho_corasick.test.cpp
+  - verify/yosupo/dijkstra.test.cpp
+  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
   - verify/yosupo/counting_spanning_trees_directed.test.cpp
+  - verify/yosupo/tree_diameter.test.cpp
+  - verify/yukicoder/yuki430_aho_corasick.test.cpp
+  - verify/yukicoder/yuki310.test.cpp
+  - verify/aoj/rooted_tree_from_parent.test.cpp
+  - verify/aoj/my_queue.test.cpp
+  - verify/aoj/bfs01.test.cpp
+  - verify/aoj/connected_components.test.cpp
+  - verify/aoj/bellman_ford.test.cpp
+  - verify/aoj/bfs.test.cpp
+  - verify/aoj/rooted_tree_from_edges.test.cpp
 documentation_of: ds/my_queue.hpp
 layout: document
 redirect_from:

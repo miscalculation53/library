@@ -633,17 +633,19 @@ data:
     \ 4 \"itertools/direct_product.hpp\"\n\n/**\n * @brief \u76F4\u7A4D\u5168\u63A2\
     \u7D22\n * @docs docs/itertools/direct_product.md\n */\n\ntemplate <class T =\
     \ ll>\nstruct direct_product\n{\nprivate:\n  vc<T> a;\npublic:\n  direct_product(const\
-    \ vc<T> &a) : a(a)\n  {\n    assert(!a.empty());\n    fec(ai : a) assert(ai >=\
-    \ 1);\n  }\n  struct Iterator\n  {\n  private:\n    vc<T> b;\n    const direct_product\
-    \ &prod;\n\n  public:\n    Iterator(const vc<T> &b, const direct_product &prod)\
-    \ : b(b), prod(prod) {}\n    vc<T> operator*() const { return b; }\n    Iterator&\
-    \ operator++()\n    {\n      b.back()++;\n      repi(i, SZ<int>(prod.a) - 1, 0,\
-    \ -1)\n      {\n        if (b[i] == prod.a[i])\n        {\n          b[i] = 0;\n\
-    \          b[i - 1]++;\n        }\n        else\n          break;\n      }\n \
-    \     return *this;\n    }\n    bool operator!=(const Iterator &other) const {\
-    \ return b != other.b; }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(),\
-    \ 0), *this); }\n  Iterator end() const\n  {\n    vc<T> c(a.size(), 0);\n    c[0]\
-    \ = a[0];\n    return Iterator(c, *this);\n  }\n};\n#line 4 \"verify/mytest/itertools_direct_product.test.cpp\"\
+    \ vc<T> &a) : a(a)\n  {\n    fec(ai : a) assert(ai >= 1);\n  }\n  struct Iterator\n\
+    \  {\n  private:\n    vc<T> b;\n    const direct_product &prod;\n\n  public:\n\
+    \    Iterator(const vc<T> &b, const direct_product &prod) : b(b), prod(prod) {}\n\
+    \    vc<T> operator*() const { return b; }\n    Iterator& operator++()\n    {\n\
+    \      if (b.empty())\n      {\n        b = {0};\n        return *this;\n    \
+    \  }\n      b.back()++;\n      repi(i, SZ<int>(prod.a) - 1, 0, -1)\n      {\n\
+    \        if (b[i] == prod.a[i])\n        {\n          b[i] = 0;\n          b[i\
+    \ - 1]++;\n        }\n        else\n          break;\n      }\n      return *this;\n\
+    \    }\n    bool operator!=(const Iterator &other) const { return b != other.b;\
+    \ }\n  };\n  Iterator begin() const { return Iterator(vc<T>(a.size(), 0), *this);\
+    \ }\n  Iterator end() const\n  {\n    if (a.empty())\n      return Iterator({0},\
+    \ *this);\n    vc<T> c(a.size(), 0);\n    c[0] = a[0];\n    return Iterator(c,\
+    \ *this);\n  }\n};\n#line 4 \"verify/mytest/itertools_direct_product.test.cpp\"\
     \n\nvoid test1()\n{\n  vvl vs;\n  fec(v : direct_product({2, 1, 3})) vs.push_back(v);\n\
     \n  vvl model = {\n    {0, 0, 0},\n    {0, 0, 1},\n    {0, 0, 2},\n    {1, 0,\
     \ 0},\n    {1, 0, 1},\n    {1, 0, 2}\n  };\n  assert(vs == model);\n}\n\nint main()\n\
@@ -670,7 +672,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/itertools_direct_product.test.cpp
   requiredBy: []
-  timestamp: '2025-08-12 21:38:21+09:00'
+  timestamp: '2025-08-30 22:56:26+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/itertools_direct_product.test.cpp

@@ -782,11 +782,11 @@ data:
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/yuki2215_dc.test.cpp
   - verify/mytest/rmq.test.cpp
   - verify/yosupo/dc_range_prod.test.cpp
-  - verify/yosupo/static_range_frequency.test.cpp
   - verify/yosupo/scc.test.cpp
+  - verify/yosupo/static_range_frequency.test.cpp
+  - verify/yukicoder/yuki2215_dc.test.cpp
 documentation_of: ds/group_index.hpp
 layout: document
 redirect_from:

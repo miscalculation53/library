@@ -962,12 +962,12 @@ data:
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/fenwick_tree_set.test.cpp
-  - verify/aoj/inversion.test.cpp
-  - verify/yosupo/static_range_inversions_query.test.cpp
   - verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
-  - verify/yosupo/ordered_set_fenwick_tree.test.cpp
-  - verify/yosupo/majority_voting.test.cpp
+  - verify/yosupo/static_range_inversions_query.test.cpp
   - verify/yosupo/point_set_range_frequency.test.cpp
+  - verify/yosupo/majority_voting.test.cpp
+  - verify/yosupo/ordered_set_fenwick_tree.test.cpp
+  - verify/aoj/inversion.test.cpp
 documentation_of: ds/fenwick_tree/fenwick_tree_01.hpp
 layout: document
 redirect_from:

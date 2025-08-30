@@ -710,18 +710,18 @@ data:
   isVerificationFile: false
   path: ds/coordinate_compression.hpp
   requiredBy:
-  - ds/flat_map.hpp
   - ds/offline_dynamic_connectivity.hpp
+  - ds/flat_map.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
   - verify/yosupo/static_range_inversions_query.test.cpp
+  - verify/yosupo/associative_array_flat_map.test.cpp
   - verify/yosupo/associative_array_lower_bound.test.cpp
+  - verify/yosupo/offline_dynamic_connectivity.test.cpp
   - verify/yosupo/ordered_set_fenwick_tree.test.cpp
   - verify/yosupo/static_range_frequency.test.cpp
-  - verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - verify/yosupo/associative_array_flat_map.test.cpp
+  - verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
 documentation_of: ds/coordinate_compression.hpp
 layout: document
 redirect_from:

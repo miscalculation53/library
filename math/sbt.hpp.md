@@ -791,8 +791,8 @@ data:
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/stern_brocot_tree.test.cpp
   - verify/yosupo/rational_approximation.test.cpp
+  - verify/yosupo/stern_brocot_tree.test.cpp
 documentation_of: math/sbt.hpp
 layout: document
 redirect_from:

@@ -986,93 +986,93 @@ data:
   isVerificationFile: false
   path: math/algebra/algebra_basic_ops.hpp
   requiredBy:
-  - graph/matrix_tree.hpp
-  - math/fps/bmbm.hpp
-  - math/fps/berlekamp_massey.hpp
-  - math/prime/lcm_gcd_convolution.hpp
-  - math/prime/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/zeta_mobius_divisor_multiple.hpp
-  - math/linalg/matrix_array.hpp
-  - math/linalg/matrix.hpp
-  - math/linalg/bbla.hpp
-  - math/set/xor_convolution.hpp
-  - math/set/subset_convolution.hpp
-  - math/set/kronecker_power.hpp
-  - math/set/zeta_mobius.hpp
-  - math/set/and_or_convolution.hpp
   - ds/uf/uf_potential.hpp
-  - ds/sqrt_decomposition_range_sum.hpp
-  - ds/fenwick_tree/range_add_point_get.hpp
-  - ds/fenwick_tree/fenwick_tree.hpp
   - ds/fenwick_tree/fenwick_tree_01.hpp
+  - ds/fenwick_tree/fenwick_tree.hpp
   - ds/fenwick_tree/inversion.hpp
-  - ds/2d/sparse/fenwick_tree.hpp
-  - ds/2d/offline/rectangle_sum.hpp
+  - ds/fenwick_tree/range_add_point_get.hpp
+  - ds/2d/offline/rectangle_add_point_get.hpp
   - ds/2d/offline/static_rectangle_add_point_get.hpp
   - ds/2d/offline/point_add_rectangle_sum.hpp
   - ds/2d/offline/static_rectangle_add_rectangle_sum.hpp
-  - ds/2d/offline/rectangle_add_point_get.hpp
-  - ds/query/point_set_range_frequency.hpp
-  - ds/cumulative_sum/imos_2d.hpp
-  - ds/cumulative_sum/cumulative_sum_2d.hpp
+  - ds/2d/offline/rectangle_sum.hpp
+  - ds/2d/sparse/fenwick_tree.hpp
   - ds/cumulative_sum/imos.hpp
   - ds/cumulative_sum/cumulative_sum.hpp
+  - ds/cumulative_sum/cumulative_sum_2d.hpp
+  - ds/cumulative_sum/imos_2d.hpp
+  - ds/sqrt_decomposition_range_sum.hpp
+  - ds/query/point_set_range_frequency.hpp
+  - math/linalg/bbla.hpp
+  - math/linalg/matrix_array.hpp
+  - math/linalg/matrix.hpp
+  - math/prime/zeta_mobius_divisor_multiple.hpp
+  - math/prime/lcm_gcd_convolution.hpp
+  - math/prime/zeta_mobius_divisor_multiple_large.hpp
+  - math/fps/berlekamp_massey.hpp
+  - math/fps/bmbm.hpp
+  - math/set/zeta_mobius.hpp
+  - math/set/and_or_convolution.hpp
+  - math/set/kronecker_power.hpp
+  - math/set/xor_convolution.hpp
+  - math/set/subset_convolution.hpp
+  - graph/matrix_tree.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/yuki310.test.cpp
-  - verify/yukicoder/bmbm.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/mytest/fenwick_tree_set.test.cpp
+  - verify/yosupo/matrix_det_sparse.test.cpp
+  - verify/yosupo/matrix_rank.test.cpp
+  - verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
+  - verify/yosupo/2d_fenwick_tree.test.cpp
+  - verify/yosupo/matrix_pow.test.cpp
+  - verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
+  - verify/yosupo/matrix_inv.test.cpp
+  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - verify/yosupo/static_range_inversions_query.test.cpp
+  - verify/yosupo/subset_convolution.test.cpp
+  - verify/yosupo/point_add_range_sum_sqrt.test.cpp
+  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+  - verify/yosupo/kronecker_power_hadamard.test.cpp
+  - verify/yosupo/matrix_solve.test.cpp
+  - verify/yosupo/counting_eularian_circuits.test.cpp
+  - verify/yosupo/matrix_det_array.test.cpp
+  - verify/yosupo/find_linear_recurrence.test.cpp
+  - verify/yosupo/gcd_convolution.test.cpp
+  - verify/yosupo/point_set_range_frequency.test.cpp
+  - verify/yosupo/unionfind_potential.test.cpp
+  - verify/yosupo/majority_voting.test.cpp
+  - verify/yosupo/static_range_sum.test.cpp
+  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
+  - verify/yosupo/xor_convolution.test.cpp
+  - verify/yosupo/matrix_product.test.cpp
+  - verify/yosupo/matrix_pow_array.test.cpp
+  - verify/yosupo/matrix_solve_array.test.cpp
+  - verify/yosupo/point_add_rectangle_sum.test.cpp
+  - verify/yosupo/point_add_range_sum.test.cpp
+  - verify/yosupo/rectangle_add_point_get.test.cpp
+  - verify/yosupo/matrix_det.test.cpp
+  - verify/yosupo/counting_spanning_trees_directed.test.cpp
+  - verify/yosupo/ordered_set_fenwick_tree.test.cpp
+  - verify/yosupo/matrix_inv_array.test.cpp
+  - verify/yosupo/and_or_convolution.test.cpp
+  - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
+  - verify/yosupo/lower_left_sum.test.cpp
+  - verify/yosupo/rectangle_sum.test.cpp
+  - verify/yosupo/matrix_product_array.test.cpp
+  - verify/yukicoder/imos.test.cpp
   - verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
+  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/yukicoder/imos_2d.test.cpp
+  - verify/yukicoder/yuki310.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  - verify/yukicoder/imos.test.cpp
-  - verify/yukicoder/imos_2d.test.cpp
-  - verify/mytest/fenwick_tree_set.test.cpp
+  - verify/yukicoder/bmbm.test.cpp
   - verify/aoj/cumulative_sum_2d.test.cpp
-  - verify/aoj/zeta_general.test.cpp
   - verify/aoj/inversion.test.cpp
   - verify/aoj/range_add_point_get.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yosupo/unionfind_potential.test.cpp
-  - verify/yosupo/matrix_pow.test.cpp
-  - verify/yosupo/matrix_product.test.cpp
-  - verify/yosupo/matrix_inv.test.cpp
-  - verify/yosupo/matrix_pow_array.test.cpp
-  - verify/yosupo/static_range_inversions_query.test.cpp
-  - verify/yosupo/matrix_det.test.cpp
-  - verify/yosupo/matrix_rank.test.cpp
-  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - verify/yosupo/find_linear_recurrence.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - verify/yosupo/xor_convolution.test.cpp
-  - verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
-  - verify/yosupo/point_add_range_sum_sqrt.test.cpp
-  - verify/yosupo/ordered_set_fenwick_tree.test.cpp
-  - verify/yosupo/matrix_solve_array.test.cpp
-  - verify/yosupo/2d_fenwick_tree.test.cpp
-  - verify/yosupo/matrix_det_array.test.cpp
-  - verify/yosupo/point_add_range_sum.test.cpp
-  - verify/yosupo/lower_left_sum.test.cpp
-  - verify/yosupo/counting_eularian_circuits.test.cpp
-  - verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
-  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - verify/yosupo/matrix_det_sparse.test.cpp
-  - verify/yosupo/matrix_inv_array.test.cpp
-  - verify/yosupo/matrix_solve.test.cpp
-  - verify/yosupo/matrix_product_array.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
-  - verify/yosupo/kronecker_power_hadamard.test.cpp
-  - verify/yosupo/rectangle_sum.test.cpp
-  - verify/yosupo/point_add_rectangle_sum.test.cpp
-  - verify/yosupo/rectangle_add_point_get.test.cpp
-  - verify/yosupo/majority_voting.test.cpp
-  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - verify/yosupo/subset_convolution.test.cpp
-  - verify/yosupo/point_set_range_frequency.test.cpp
-  - verify/yosupo/static_range_sum.test.cpp
-  - verify/yosupo/counting_spanning_trees_directed.test.cpp
+  - verify/aoj/zeta_general.test.cpp
 documentation_of: math/algebra/algebra_basic_ops.hpp
 layout: document
 redirect_from:

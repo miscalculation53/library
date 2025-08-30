@@ -825,9 +825,9 @@ data:
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/ordered_multiset.test.cpp
   - verify/mytest/pbds_set.test.cpp
   - verify/yosupo/ordered_set.test.cpp
+  - verify/yukicoder/ordered_multiset.test.cpp
 documentation_of: ds/pbds_set.hpp
 layout: document
 redirect_from:

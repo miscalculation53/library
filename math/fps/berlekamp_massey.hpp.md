@@ -822,33 +822,33 @@ data:
   isVerificationFile: false
   path: math/fps/berlekamp_massey.hpp
   requiredBy:
-  - graph/matrix_tree.hpp
-  - math/fps/bmbm.hpp
+  - math/linalg/bbla.hpp
   - math/linalg/matrix_array.hpp
   - math/linalg/matrix.hpp
-  - math/linalg/bbla.hpp
+  - math/fps/bmbm.hpp
+  - graph/matrix_tree.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yosupo/matrix_det_sparse.test.cpp
+  - verify/yosupo/matrix_rank.test.cpp
+  - verify/yosupo/matrix_pow.test.cpp
+  - verify/yosupo/matrix_inv.test.cpp
+  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - verify/yosupo/matrix_solve.test.cpp
+  - verify/yosupo/counting_eularian_circuits.test.cpp
+  - verify/yosupo/matrix_det_array.test.cpp
+  - verify/yosupo/find_linear_recurrence.test.cpp
+  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
+  - verify/yosupo/matrix_product.test.cpp
+  - verify/yosupo/matrix_pow_array.test.cpp
+  - verify/yosupo/matrix_solve_array.test.cpp
+  - verify/yosupo/matrix_det.test.cpp
+  - verify/yosupo/counting_spanning_trees_directed.test.cpp
+  - verify/yosupo/matrix_inv_array.test.cpp
+  - verify/yosupo/matrix_product_array.test.cpp
   - verify/yukicoder/yuki310.test.cpp
   - verify/yukicoder/bmbm.test.cpp
-  - verify/yosupo/matrix_pow.test.cpp
-  - verify/yosupo/matrix_product.test.cpp
-  - verify/yosupo/matrix_inv.test.cpp
-  - verify/yosupo/matrix_pow_array.test.cpp
-  - verify/yosupo/matrix_det.test.cpp
-  - verify/yosupo/matrix_rank.test.cpp
-  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - verify/yosupo/find_linear_recurrence.test.cpp
-  - verify/yosupo/matrix_solve_array.test.cpp
-  - verify/yosupo/matrix_det_array.test.cpp
-  - verify/yosupo/counting_eularian_circuits.test.cpp
-  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - verify/yosupo/matrix_det_sparse.test.cpp
-  - verify/yosupo/matrix_inv_array.test.cpp
-  - verify/yosupo/matrix_solve.test.cpp
-  - verify/yosupo/matrix_product_array.test.cpp
-  - verify/yosupo/counting_spanning_trees_directed.test.cpp
 documentation_of: math/fps/berlekamp_massey.hpp
 layout: document
 redirect_from:

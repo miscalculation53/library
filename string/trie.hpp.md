@@ -713,8 +713,8 @@ data:
   timestamp: '2025-08-13 19:59:25+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/yuki430_aho_corasick.test.cpp
   - verify/yosupo/aho_corasick.test.cpp
+  - verify/yukicoder/yuki430_aho_corasick.test.cpp
 documentation_of: string/trie.hpp
 layout: document
 redirect_from:

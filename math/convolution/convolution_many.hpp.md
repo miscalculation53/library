@@ -1018,8 +1018,8 @@ data:
   timestamp: '2025-08-20 23:10:57+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/convolution_many.test.cpp
   - verify/yosupo/poly_interpolation.test.cpp
+  - verify/yosupo/convolution_many.test.cpp
 documentation_of: math/convolution/convolution_many.hpp
 layout: document
 redirect_from:

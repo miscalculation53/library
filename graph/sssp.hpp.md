@@ -960,10 +960,10 @@ data:
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/aoj/bfs.test.cpp
+  - verify/yosupo/dijkstra.test.cpp
   - verify/aoj/bfs01.test.cpp
   - verify/aoj/bellman_ford.test.cpp
-  - verify/yosupo/dijkstra.test.cpp
+  - verify/aoj/bfs.test.cpp
 documentation_of: graph/sssp.hpp
 layout: document
 redirect_from:

@@ -1359,9 +1359,9 @@ data:
   timestamp: '2025-08-20 23:10:57+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yukicoder/poly_rational_sum.test.cpp
   - verify/mytest/rational_plus.test.cpp
   - verify/yosupo/poly_interpolation.test.cpp
+  - verify/yukicoder/poly_rational_sum.test.cpp
 documentation_of: math/fps/rational_sum.hpp
 layout: document
 redirect_from:

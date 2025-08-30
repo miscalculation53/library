@@ -1068,10 +1068,10 @@ data:
   timestamp: '2025-08-20 23:10:57+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
+  - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/primitive_root_min.test.cpp
   - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
 documentation_of: math/prime/order_primitive_root.hpp
 layout: document
 redirect_from:

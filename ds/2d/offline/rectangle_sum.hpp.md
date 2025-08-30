@@ -917,18 +917,18 @@ data:
   isVerificationFile: false
   path: ds/2d/offline/rectangle_sum.hpp
   requiredBy:
+  - ds/2d/offline/rectangle_add_point_get.hpp
   - ds/2d/offline/static_rectangle_add_point_get.hpp
   - ds/2d/offline/point_add_rectangle_sum.hpp
   - ds/2d/offline/static_rectangle_add_rectangle_sum.hpp
-  - ds/2d/offline/rectangle_add_point_get.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/yosupo/lower_left_sum.test.cpp
   - verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
-  - verify/yosupo/rectangle_sum.test.cpp
   - verify/yosupo/point_add_rectangle_sum.test.cpp
   - verify/yosupo/rectangle_add_point_get.test.cpp
+  - verify/yosupo/lower_left_sum.test.cpp
+  - verify/yosupo/rectangle_sum.test.cpp
 documentation_of: ds/2d/offline/rectangle_sum.hpp
 layout: document
 redirect_from:

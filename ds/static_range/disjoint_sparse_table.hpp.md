@@ -703,16 +703,16 @@ data:
   isVerificationFile: false
   path: ds/static_range/disjoint_sparse_table.hpp
   requiredBy:
-  - ds/static_range/block_sparse_table.hpp
   - ds/static_range/linear_rmq.hpp
+  - ds/static_range/block_sparse_table.hpp
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/rmq.test.cpp
-  - verify/yosupo/disjoint_sparse_table.test.cpp
-  - verify/yosupo/linear_rmq.test.cpp
-  - verify/yosupo/block_sparse_table.test.cpp
   - verify/yosupo/block_disjoint_sparse_table.test.cpp
+  - verify/yosupo/disjoint_sparse_table.test.cpp
+  - verify/yosupo/block_sparse_table.test.cpp
+  - verify/yosupo/linear_rmq.test.cpp
 documentation_of: ds/static_range/disjoint_sparse_table.hpp
 layout: document
 redirect_from:

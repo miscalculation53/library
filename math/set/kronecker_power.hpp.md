@@ -884,9 +884,9 @@ data:
   timestamp: '2025-08-12 21:38:21+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/aoj/zeta_general.test.cpp
   - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
   - verify/yosupo/kronecker_power_hadamard.test.cpp
+  - verify/aoj/zeta_general.test.cpp
 documentation_of: math/set/kronecker_power.hpp
 layout: document
 redirect_from:
