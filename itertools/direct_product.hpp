@@ -15,7 +15,6 @@ private:
 public:
   direct_product(const vc<T> &a) : a(a)
   {
-    assert(!a.empty());
     fec(ai : a) assert(ai >= 1);
   }
   struct Iterator
@@ -29,6 +28,11 @@ public:
     vc<T> operator*() const { return b; }
     Iterator& operator++()
     {
+      if (b.empty())
+      {
+        b = {0};
+        return *this;
+      }
       b.back()++;
       repi(i, SZ<int>(prod.a) - 1, 0, -1)
       {
@@ -47,6 +51,8 @@ public:
   Iterator begin() const { return Iterator(vc<T>(a.size(), 0), *this); }
   Iterator end() const
   {
+    if (a.empty())
+      return Iterator({0}, *this);
     vc<T> c(a.size(), 0);
     c[0] = a[0];
     return Iterator(c, *this);
