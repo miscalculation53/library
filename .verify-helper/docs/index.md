@@ -17,6 +17,8 @@ verification helper についての備忘録：
 - https://maspypy.github.io/library/
 - https://zenn.dev/harui/articles/ec9ad6a3d3e7ce
   - 手元で yukicoder の問題を verify したいときは `export YUKICODER_TOKEN='(ここにAPIキーを入れる)'`
+- https://kaage.hatenablog.com/entry/2020/12/18/162553
+  - これをすると 10 分でタイムアウトするやつがなくなって便利
 - コミットする前は exec ファイルを消す・pch ファイルをコミットしないようにする（そうしないとファイルがでかすぎると怒られる）
   - もしこれを忘れてしまって怒られたら `git log` で履歴を見る → `git reset --soft (戻したいコミットのid)`
   - `.gitignore` でどうにかできないかと思ったが無理そうだった（？）
