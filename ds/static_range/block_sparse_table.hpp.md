@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/static_range/disjoint_sparse_table.hpp
     title: Disjoint Sparse Table
   - icon: ':question:'
@@ -44,7 +44,7 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/static_range/linear_rmq.hpp
     title: "\u7DDA\u5F62 RMQ"
   _extendedVerifiedWith:
@@ -57,12 +57,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/block_sparse_table.test.cpp
     title: verify/yosupo/block_sparse_table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/linear_rmq.test.cpp
     title: verify/yosupo/linear_rmq.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/static_range/block_sparse_table.md
     document_title: "\u30D6\u30ED\u30C3\u30AF\u5206\u5272 + (disjoint) sparse table"
@@ -754,7 +754,7 @@ data:
   requiredBy:
   - ds/static_range/linear_rmq.hpp
   timestamp: '2026-01-04 17:26:22+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/rmq.test.cpp
   - verify/yosupo/linear_rmq.test.cpp
