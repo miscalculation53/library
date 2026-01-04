@@ -57,12 +57,12 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution64.test.cpp
     title: verify/yosupo/convolution64.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/convolution/convolution64.md
     document_title: "\u7573\u307F\u8FBC\u307F\uFF08$\\bmod \\ 2^{64}$\uFF09"
@@ -1008,7 +1008,7 @@ data:
   path: math/convolution/convolution64.hpp
   requiredBy: []
   timestamp: '2026-01-04 17:26:22+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/convolution64.test.cpp
 documentation_of: math/convolution/convolution64.hpp

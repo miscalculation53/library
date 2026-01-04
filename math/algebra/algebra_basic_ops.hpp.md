@@ -99,19 +99,19 @@ data:
   - icon: ':x:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
-  - icon: ':x:'
+  - icon: ':question:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/berlekamp_massey.hpp
     title: "Berlekamp\u2013Massey"
   - icon: ':x:'
     path: math/fps/bmbm.hpp
     title: BMBM
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/linalg/bbla.hpp
     title: Black Box Linear Algebra
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/linalg/matrix.hpp
     title: "\u884C\u5217"
   - icon: ':x:'
@@ -166,16 +166,16 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/and_or_convolution.test.cpp
     title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_eularian_circuits.test.cpp
     title: verify/yosupo/counting_eularian_circuits.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_spanning_trees_directed.test.cpp
     title: verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
     title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/find_linear_recurrence.test.cpp
     title: verify/yosupo/find_linear_recurrence.test.cpp
   - icon: ':x:'

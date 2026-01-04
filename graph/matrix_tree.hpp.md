@@ -20,13 +20,13 @@ data:
   - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/berlekamp_massey.hpp
     title: "Berlekamp\u2013Massey"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/linalg/bbla.hpp
     title: Black Box Linear Algebra
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/linalg/matrix.hpp
     title: "\u884C\u5217"
   - icon: ':question:'
@@ -79,13 +79,13 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_eularian_circuits.test.cpp
     title: verify/yosupo/counting_eularian_circuits.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_spanning_trees_directed.test.cpp
     title: verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
     title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
   - icon: ':x:'
@@ -93,7 +93,7 @@ data:
     title: verify/yukicoder/yuki310.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/graph/matrix_tree.md
     document_title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
@@ -1316,7 +1316,7 @@ data:
   path: graph/matrix_tree.hpp
   requiredBy: []
   timestamp: '2026-01-04 17:26:22+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yukicoder/yuki310.test.cpp
   - verify/yosupo/counting_spanning_trees_directed.test.cpp

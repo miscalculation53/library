@@ -56,7 +56,7 @@ data:
   - icon: ':x:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/factorial.hpp
     title: "\u968E\u4E57"
   - icon: ':question:'
@@ -82,7 +82,7 @@ data:
   - icon: ':question:'
     path: math/fps/rational_sum.hpp
     title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/shift_of_sampling_points.hpp
     title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
   - icon: ':x:'
@@ -124,13 +124,13 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/rolling_hash.test.cpp
     title: verify/mytest/rolling_hash.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution_many.test.cpp
     title: verify/yosupo/convolution_many.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorial.test.cpp
     title: verify/yosupo/factorial.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
   - icon: ':x:'

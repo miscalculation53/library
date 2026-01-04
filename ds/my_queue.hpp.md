@@ -41,10 +41,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: graph/connected_components.hpp
     title: "\u9023\u7D50\u6210\u5206\u3078\u306E\u5206\u89E3"
-  - icon: ':x:'
+  - icon: ':question:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: graph/sssp.hpp
     title: "\u5358\u4E00\u59CB\u70B9\u6700\u77ED\u8DEF\u554F\u984C"
   - icon: ':warning:'
@@ -87,16 +87,16 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/aho_corasick.test.cpp
     title: verify/yosupo/aho_corasick.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_eularian_circuits.test.cpp
     title: verify/yosupo/counting_eularian_circuits.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_spanning_trees_directed.test.cpp
     title: verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
     title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/dijkstra.test.cpp
     title: verify/yosupo/dijkstra.test.cpp
   - icon: ':x:'
