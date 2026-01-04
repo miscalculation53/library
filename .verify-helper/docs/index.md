@@ -19,7 +19,10 @@ verification helper についての備忘録：
   - 手元で yukicoder の問題を verify したいときは `export YUKICODER_TOKEN='(ここにAPIキーを入れる)'`
 - https://kaage.hatenablog.com/entry/2020/12/18/162553
   - これをすると 10 分でタイムアウトするやつがなくなって便利
+  - と思ったが `timeout=6000` でやったらそれより前に 40 分ほどで fail してしまった（謎）
+  - `for i in $(seq 10); do git pull && git commit --allow-empty -m "." && git push; sleep 600; done` で 10 分ごとに自動コミットしてプッシュする
 - コミットする前は exec ファイルを消す・pch ファイルをコミットしないようにする（そうしないとファイルがでかすぎると怒られる）
+  - `find . -type f -name "exec"` で探してから `find . -type f -name "exec" -delete` で消す
   - もしこれを忘れてしまって怒られたら `git log` で履歴を見る → `git reset --soft (戻したいコミットのid)`
   - `.gitignore` でどうにかできないかと思ったが無理そうだった（？）
 - ドキュメントを書くとき
