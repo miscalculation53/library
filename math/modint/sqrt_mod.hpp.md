@@ -1,172 +1,184 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint64_internal.hpp
     title: math/modint/modint64_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/prime/primality_test.hpp
+  - icon: ':question:'
+    path: math/prime/large/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/bmbm.hpp
     title: BMBM
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: math/fps/factorial.hpp
+    title: "\u968E\u4E57"
+  - icon: ':question:'
     path: math/fps/fps.hpp
     title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/interpolation.hpp
     title: "\u591A\u9805\u5F0F\u88DC\u9593"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/interpolation_geo.hpp
     title: "\u591A\u9805\u5F0F\u88DC\u9593\uFF08\u8A55\u4FA1\u70B9\u304C\u7B49\u6BD4\
       \u6570\u5217\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/multipoint_evaluation.hpp
     title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/multipoint_evaluation_geo.hpp
     title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1\uFF08\u8A55\u4FA1\u70B9\
       \u304C\u7B49\u6BD4\u6570\u5217\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':warning:'
+    path: math/fps/pow_sum.hpp
+    title: "$\\sum_{i} A_i^k$ \u306E $k$ \u306B\u95A2\u3059\u308B\u5217\u6319"
+  - icon: ':question:'
     path: math/fps/rational_sum.hpp
     title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/shift_of_sampling_points.hpp
     title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/taylor_shift.hpp
     title: Taylor Shift
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/rational_plus.test.cpp
     title: verify/mytest/rational_plus.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/convolution_many.test.cpp
     title: verify/yosupo/convolution_many.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: verify/yosupo/factorial.test.cpp
+    title: verify/yosupo/factorial.test.cpp
+  - icon: ':x:'
     path: verify/yosupo/fps_exp.test.cpp
     title: verify/yosupo/fps_exp.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_exp_sparse.test.cpp
     title: verify/yosupo/fps_exp_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_inv.test.cpp
     title: verify/yosupo/fps_inv.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_inv_sparse.test.cpp
     title: verify/yosupo/fps_inv_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_log.test.cpp
     title: verify/yosupo/fps_log.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_log_sparse.test.cpp
     title: verify/yosupo/fps_log_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_pow.test.cpp
     title: verify/yosupo/fps_pow.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_pow_sparse.test.cpp
     title: verify/yosupo/fps_pow_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_sqrt.test.cpp
     title: verify/yosupo/fps_sqrt.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_sqrt_sparse.test.cpp
     title: verify/yosupo/fps_sqrt_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
     title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_div.test.cpp
     title: verify/yosupo/poly_div.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_interpolation.test.cpp
     title: verify/yosupo/poly_interpolation.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_interpolation_geo.test.cpp
     title: verify/yosupo/poly_interpolation_geo.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_multipoint_evaluation.test.cpp
     title: verify/yosupo/poly_multipoint_evaluation.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
     title: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_shift_of_sampling_points.test.cpp
     title: verify/yosupo/poly_shift_of_sampling_points.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_taylor_shift.test.cpp
     title: verify/yosupo/poly_taylor_shift.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/polynomial_taylor_shift.test.cpp
     title: verify/yosupo/polynomial_taylor_shift.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/sqrt_mod.test.cpp
     title: verify/yosupo/sqrt_mod.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/bmbm.test.cpp
     title: verify/yukicoder/bmbm.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: verify/yukicoder/factorial.test.cpp
+    title: verify/yukicoder/factorial.test.cpp
+  - icon: ':x:'
     path: verify/yukicoder/poly_rational_sum.test.cpp
     title: verify/yukicoder/poly_rational_sum.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/math/modint/sqrt_mod.md
     document_title: "mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839"
@@ -295,9 +307,11 @@ data:
     \ &v : vs)\n    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class\
     \ T>\nvc<T> concat(const vc<T> &v) { return v; }\ntemplate <class T, class...\
     \ Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)),\
-    \ ...);\n  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v,\
-    \ I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i\
-    \ < 0)\n    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \ ...);\n  return v;\n}\n\ntemplate <class T>\nvc<T> merged(const vc<T> &a, const\
+    \ vc<T> &b)\n{\n  vc<T> res;\n  merge(ALL(a), ALL(b), back_inserter(res));\n \
+    \ return res;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
+    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
+    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
     \  return v[i];\n}\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define\
     \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 10 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
@@ -486,47 +500,46 @@ data:
     \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
     \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\n// (ok, ng)\ntemplate <class T = ll, class\
     \ Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge,\
-    \ const InitOk &init_ok, const InitNg &init_ng, bool check_ok = true, bool check_ng\
+    \ InitOk init_ok, InitNg init_ng, bool check_ok = true, bool check_ng = true)\n\
+    {\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n  if\
+    \ (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok != 1)\n\
+    \  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) =\
+    \ mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
+    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, InitOk init_ok,\
+    \ InitNg init_ng, int iteration_count = 100, bool check_ok = true, bool check_ng\
     \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
-    \  if (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok !=\
-    \ 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng)\
-    \ = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
-    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk &init_ok,\
-    \ const InitNg &init_ng, int iteration_count = 100, bool check_ok = true, bool\
-    \ check_ng = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
     \  if (check_ng)\n    assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n \
     \   T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n\
     }\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T, T>\
-    \ expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
-    {\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val\
-    \ + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng,\
-    \ ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng\
-    \ = init_val, ok = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok);\
-    \ i++)\n      ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n\
-    \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
-    \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line\
-    \ 2 \"template/template_bit.hpp\"\n\n#line 5 \"template/template_bit.hpp\"\n\n\
-    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\
-    \u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ntemplate <class T>\n\
-    inline constexpr ull pow2(T k) { return 1ULL << k; }\ntemplate <class T>\ninline\
-    \ constexpr ull MASK(T k) { return (1ULL << k) - 1ULL; }\n\n#if __cplusplus <\
-    \ 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\
-    \u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ull bit_width(ull x) { return x == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0,\
-    \ 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ull bit_floor(ull x) { return\
-    \ x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8,\
-    \ 16, ...\ninline constexpr ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL\
-    \ << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull x) { assert(x !=\
-    \ 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull x) { return\
-    \ __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull x) { return\
-    \ popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ll bit_width(ll x) { return std::bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4,\
-    \ 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return std::bit_floor((ull)x);\
-    \ }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ll bit_ceil(ll x)\
-    \ { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll x) { assert(x\
-    \ != 0); return std::countr_zero((ull)x); }\ninline constexpr ll popcount(ll x)\
-    \ { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll x)\
-    \ { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
+    \ expsearch(const Judge &judge, InitVal init_val, bool positive = true)\n{\n \
+    \ T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val + (positive\
+    \ ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng, ng = init_val\
+    \ + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng = init_val, ok\
+    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok); i++)\n  \
+    \    ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  while\
+    \ (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n\
+    \    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line 2 \"template/template_bit.hpp\"\
+    \n\n#line 5 \"template/template_bit.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n\
+    \ */\n\ntemplate <class T>\ninline constexpr ull pow2(T k) { return 1ULL << k;\
+    \ }\ntemplate <class T>\ninline constexpr ull MASK(T k) { return (1ULL << k) -\
+    \ 1ULL; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\
+    \u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3,\
+    \ 3, 3, 4, 4, ... \ninline constexpr ull bit_width(ull x) { return x == 0 ? 0\
+    \ : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr\
+    \ ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n\
+    // 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ull bit_ceil(ull x) {\
+    \ return x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull\
+    \ x) { assert(x != 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull\
+    \ x) { return __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull\
+    \ x) { return popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ...\
+    \ \ninline constexpr ll bit_width(ll x) { return std::bit_width((ull)x); }\n//\
+    \ 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return\
+    \ std::bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr\
+    \ ll bit_ceil(ll x) { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll\
+    \ x) { assert(x != 0); return std::countr_zero((ull)x); }\ninline constexpr ll\
+    \ popcount(ll x) { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll\
+    \ x) { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
     \ x) { assert(x != 0); return countr_zero(x); }\ninline constexpr ull msb_pos(ull\
     \ x) { assert(x != 0); return bit_width(x) - 1; }\ninline constexpr ull lsb_mask(ull\
     \ x) { assert(x != 0); return x & -x; }\ninline constexpr ull msb_mask(ull x)\
@@ -936,23 +949,23 @@ data:
     \ id>\nstruct is_dynamic_modint64<dynamic_modint64<id>> : true_type {};\ntemplate\
     \ <class T>\ninline constexpr bool is_dynamic_modint64_v = is_dynamic_modint64<T>::value;\n\
     \ntemplate <class T>\ninline constexpr bool is_modint64_v = is_static_modint64_v<T>\
-    \ || is_dynamic_modint64_v<T>;\n#line 2 \"math/prime/primality_test.hpp\"\n\n\
-    #line 6 \"math/prime/primality_test.hpp\"\n\n/**\n * @brief \u7D20\u6570\u5224\
-    \u5B9A\n * @docs docs/math/prime/primality_test.md\n */\n\nnamespace internal\n\
-    {\n\ntemplate <class mint, class Array>\nbool is_prime_impl(ll n, const Array\
-    \ &bases)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n ==\
-    \ 61)\n    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1)\
-    \ >> countr_zero(n - 1);\n  mint::set_mod(n);\n  for (ll a : bases)\n  {\n   \
-    \ ll t = d;\n    mint y = mint(a).pow(t);\n    while (t != n - 1 && y != 1 &&\
-    \ y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n    if (y != n - 1\
-    \ && t % 2 == 0)\n      return false;\n  }\n  return true;\n}\n\n}; // namespace\
-    \ internal\n\nbool is_prime(ll n)\n{\n  static constexpr array<ll, 3> bases32\
-    \ = {2, 7, 61};\n  static constexpr array<ll, 7> bases64 = {2, 325, 9375, 28178,\
-    \ 450775, 9780504, 1795265022};\n  if (n <= INT_MAX)\n  {\n    using mint = dynamic_modint<INT_MIN>;\n\
-    \    return internal::is_prime_impl<mint>(n, bases32);\n  }\n  else\n  {\n   \
-    \ using mint = dynamic_modint64_odd<INT_MIN>;\n    return internal::is_prime_impl<mint>(n,\
-    \ bases64);\n  }\n}\n#line 7 \"math/modint/sqrt_mod.hpp\"\n\n/**\n * @brief mod\
-    \ \u7D20\u6570 \u306E\u5E73\u65B9\u6839\n * @docs docs/math/modint/sqrt_mod.md\n\
+    \ || is_dynamic_modint64_v<T>;\n#line 2 \"math/prime/large/primality_test.hpp\"\
+    \n\n#line 6 \"math/prime/large/primality_test.hpp\"\n\n/**\n * @brief \u7D20\u6570\
+    \u5224\u5B9A\n * @docs docs/math/prime/large/primality_test.md\n */\n\nnamespace\
+    \ internal\n{\n\ntemplate <class mint, class Array>\nbool is_prime_impl(ll n,\
+    \ const Array &bases)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n\
+    \ == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return false;\n \
+    \ ll d = (n - 1) >> countr_zero(n - 1);\n  mint::set_mod(n);\n  for (ll a : bases)\n\
+    \  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t != n - 1 && y\
+    \ != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n    if (y\
+    \ != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n}\n\n}; //\
+    \ namespace internal\n\nbool is_prime(ll n)\n{\n  static constexpr array<ll, 3>\
+    \ bases32 = {2, 7, 61};\n  static constexpr array<ll, 7> bases64 = {2, 325, 9375,\
+    \ 28178, 450775, 9780504, 1795265022};\n  if (n <= INT_MAX)\n  {\n    using mint\
+    \ = dynamic_modint<INT_MIN>;\n    return internal::is_prime_impl<mint>(n, bases32);\n\
+    \  }\n  else\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n    return\
+    \ internal::is_prime_impl<mint>(n, bases64);\n  }\n}\n#line 7 \"math/modint/sqrt_mod.hpp\"\
+    \n\n/**\n * @brief mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839\n * @docs docs/math/modint/sqrt_mod.md\n\
     \ */\n\n// \u5E73\u65B9\u6839\u304C\u5B58\u5728\u3057\u306A\u3051\u308C\u3070\
     \ (false, 0)\n// \u5E73\u65B9\u6839\u304C\u5B58\u5728\u3059\u308C\u3070 (true,\
     \ \u5E73\u65B9\u6839\u306E\u3072\u3068\u3064)\n// \u5E73\u65B9\u6839\u306E\u3082\
@@ -967,7 +980,7 @@ data:
     \ t; tmp != 1; tmp *= tmp, m2++)\n      ;\n    mint b = c.pow(1 << (m - m2 - 1));\n\
     \    m = m2, c = b * b, t *= c, r *= b;\n  }\n  return {true, r};\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
-    #include \"modint.hpp\"\n#include \"modint64.hpp\"\n#include \"../prime/primality_test.hpp\"\
+    #include \"modint.hpp\"\n#include \"modint64.hpp\"\n#include \"../prime/large/primality_test.hpp\"\
     \n\n/**\n * @brief mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839\n * @docs docs/math/modint/sqrt_mod.md\n\
     \ */\n\n// \u5E73\u65B9\u6839\u304C\u5B58\u5728\u3057\u306A\u3051\u308C\u3070\
     \ (false, 0)\n// \u5E73\u65B9\u6839\u304C\u5B58\u5728\u3059\u308C\u3070 (true,\
@@ -1000,47 +1013,51 @@ data:
   - math/extgcd.hpp
   - math/modint/modint64.hpp
   - math/modint/modint64_internal.hpp
-  - math/prime/primality_test.hpp
+  - math/prime/large/primality_test.hpp
   isVerificationFile: false
   path: math/modint/sqrt_mod.hpp
   requiredBy:
-  - math/fps/interpolation.hpp
-  - math/fps/taylor_shift.hpp
-  - math/fps/interpolation_geo.hpp
-  - math/fps/multipoint_evaluation.hpp
-  - math/fps/shift_of_sampling_points.hpp
+  - math/fps/pow_sum.hpp
   - math/fps/bmbm.hpp
-  - math/fps/rational_sum.hpp
-  - math/fps/multipoint_evaluation_geo.hpp
-  - math/fps/fps.hpp
   - math/fps/bostan_mori.hpp
-  timestamp: '2025-08-20 23:10:57+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  - math/fps/fps.hpp
+  - math/fps/rational_sum.hpp
+  - math/fps/factorial.hpp
+  - math/fps/shift_of_sampling_points.hpp
+  - math/fps/taylor_shift.hpp
+  - math/fps/interpolation.hpp
+  - math/fps/interpolation_geo.hpp
+  - math/fps/multipoint_evaluation_geo.hpp
+  - math/fps/multipoint_evaluation.hpp
+  timestamp: '2026-01-04 17:26:22+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/mytest/rational_plus.test.cpp
-  - verify/yosupo/fps_inv_sparse.test.cpp
-  - verify/yosupo/fps_pow.test.cpp
-  - verify/yosupo/fps_exp.test.cpp
-  - verify/yosupo/fps_inv.test.cpp
-  - verify/yosupo/poly_div.test.cpp
-  - verify/yosupo/fps_pow_sparse.test.cpp
-  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - verify/yosupo/sqrt_mod.test.cpp
-  - verify/yosupo/fps_exp_sparse.test.cpp
-  - verify/yosupo/fps_log_sparse.test.cpp
-  - verify/yosupo/poly_interpolation.test.cpp
-  - verify/yosupo/poly_interpolation_geo.test.cpp
-  - verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-  - verify/yosupo/convolution_many.test.cpp
-  - verify/yosupo/poly_taylor_shift.test.cpp
-  - verify/yosupo/fps_log.test.cpp
-  - verify/yosupo/poly_shift_of_sampling_points.test.cpp
-  - verify/yosupo/poly_multipoint_evaluation.test.cpp
-  - verify/yosupo/fps_sqrt.test.cpp
-  - verify/yosupo/polynomial_taylor_shift.test.cpp
-  - verify/yosupo/fps_sqrt_sparse.test.cpp
   - verify/yukicoder/poly_rational_sum.test.cpp
   - verify/yukicoder/bmbm.test.cpp
+  - verify/yukicoder/factorial.test.cpp
+  - verify/yosupo/poly_taylor_shift.test.cpp
+  - verify/yosupo/poly_interpolation_geo.test.cpp
+  - verify/yosupo/fps_pow.test.cpp
+  - verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
+  - verify/yosupo/fps_log_sparse.test.cpp
+  - verify/yosupo/sqrt_mod.test.cpp
+  - verify/yosupo/factorial.test.cpp
+  - verify/yosupo/fps_exp_sparse.test.cpp
+  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - verify/yosupo/fps_exp.test.cpp
+  - verify/yosupo/fps_inv_sparse.test.cpp
+  - verify/yosupo/fps_sqrt.test.cpp
+  - verify/yosupo/poly_div.test.cpp
+  - verify/yosupo/fps_sqrt_sparse.test.cpp
+  - verify/yosupo/fps_log.test.cpp
+  - verify/yosupo/poly_interpolation.test.cpp
+  - verify/yosupo/poly_shift_of_sampling_points.test.cpp
+  - verify/yosupo/fps_inv.test.cpp
+  - verify/yosupo/poly_multipoint_evaluation.test.cpp
+  - verify/yosupo/convolution_many.test.cpp
+  - verify/yosupo/fps_pow_sparse.test.cpp
+  - verify/yosupo/polynomial_taylor_shift.test.cpp
 documentation_of: math/modint/sqrt_mod.hpp
 layout: document
 redirect_from:

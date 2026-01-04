@@ -10,6 +10,8 @@ Binomial<mint>::C(n, k)
 
 といった感じで使う。
 
+任意 mod のときは、`fac` のみを使うなら正しく動く。
+
 ##### 制約
 
 - `mint` は modint 系

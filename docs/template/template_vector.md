@@ -89,6 +89,20 @@ auto dp = make_vec({N, M, 2}, 0LL);
 
 vector を結合したものを返す。(2) では、`v1`, `v2`, $\dots$ の型が必ずしも `T` と一致していなくてもよい（`ll` と `int` など）。
 
+### マージ
+
+#### merged
+
+```cpp
+vc<T> merged(vc<T> a, vc<T> b)
+```
+
+$a$, $b$ はともに昇順にソートされているとき、$a$ と $b$ をマージして昇順にソートされた vector を返す。（特定の用途での）`std::merge` を使いやすくしたもの。
+
+##### 計算量
+
+- $O(\lvert a \rvert + \lvert b \rvert)$
+
 ### 取得
 
 #### vecget

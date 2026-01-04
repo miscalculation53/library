@@ -1,50 +1,50 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/static_range_inversions_query.test.cpp
     title: verify/yosupo/static_range_inversions_query.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     _deprecated_at_docs: docs/ds/mo.md
     document_title: Mo's algorithm
@@ -173,9 +173,11 @@ data:
     \ &v : vs)\n    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class\
     \ T>\nvc<T> concat(const vc<T> &v) { return v; }\ntemplate <class T, class...\
     \ Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)),\
-    \ ...);\n  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v,\
-    \ I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i\
-    \ < 0)\n    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \ ...);\n  return v;\n}\n\ntemplate <class T>\nvc<T> merged(const vc<T> &a, const\
+    \ vc<T> &b)\n{\n  vc<T> res;\n  merge(ALL(a), ALL(b), back_inserter(res));\n \
+    \ return res;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
+    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
+    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
     \  return v[i];\n}\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define\
     \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 10 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
@@ -364,47 +366,46 @@ data:
     \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
     \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\n// (ok, ng)\ntemplate <class T = ll, class\
     \ Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge,\
-    \ const InitOk &init_ok, const InitNg &init_ng, bool check_ok = true, bool check_ng\
+    \ InitOk init_ok, InitNg init_ng, bool check_ok = true, bool check_ng = true)\n\
+    {\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n  if\
+    \ (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok != 1)\n\
+    \  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) =\
+    \ mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
+    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, InitOk init_ok,\
+    \ InitNg init_ng, int iteration_count = 100, bool check_ok = true, bool check_ng\
     \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
-    \  if (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok !=\
-    \ 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng)\
-    \ = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
-    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk &init_ok,\
-    \ const InitNg &init_ng, int iteration_count = 100, bool check_ok = true, bool\
-    \ check_ng = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
     \  if (check_ng)\n    assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n \
     \   T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n\
     }\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T, T>\
-    \ expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
-    {\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val\
-    \ + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng,\
-    \ ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng\
-    \ = init_val, ok = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok);\
-    \ i++)\n      ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n\
-    \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
-    \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line\
-    \ 2 \"template/template_bit.hpp\"\n\n#line 5 \"template/template_bit.hpp\"\n\n\
-    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\
-    \u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ntemplate <class T>\n\
-    inline constexpr ull pow2(T k) { return 1ULL << k; }\ntemplate <class T>\ninline\
-    \ constexpr ull MASK(T k) { return (1ULL << k) - 1ULL; }\n\n#if __cplusplus <\
-    \ 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\
-    \u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ull bit_width(ull x) { return x == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0,\
-    \ 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ull bit_floor(ull x) { return\
-    \ x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8,\
-    \ 16, ...\ninline constexpr ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL\
-    \ << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull x) { assert(x !=\
-    \ 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull x) { return\
-    \ __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull x) { return\
-    \ popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ll bit_width(ll x) { return std::bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4,\
-    \ 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return std::bit_floor((ull)x);\
-    \ }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ll bit_ceil(ll x)\
-    \ { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll x) { assert(x\
-    \ != 0); return std::countr_zero((ull)x); }\ninline constexpr ll popcount(ll x)\
-    \ { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll x)\
-    \ { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
+    \ expsearch(const Judge &judge, InitVal init_val, bool positive = true)\n{\n \
+    \ T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val + (positive\
+    \ ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng, ng = init_val\
+    \ + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng = init_val, ok\
+    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok); i++)\n  \
+    \    ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  while\
+    \ (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n\
+    \    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line 2 \"template/template_bit.hpp\"\
+    \n\n#line 5 \"template/template_bit.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n\
+    \ */\n\ntemplate <class T>\ninline constexpr ull pow2(T k) { return 1ULL << k;\
+    \ }\ntemplate <class T>\ninline constexpr ull MASK(T k) { return (1ULL << k) -\
+    \ 1ULL; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\
+    \u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3,\
+    \ 3, 3, 4, 4, ... \ninline constexpr ull bit_width(ull x) { return x == 0 ? 0\
+    \ : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr\
+    \ ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n\
+    // 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ull bit_ceil(ull x) {\
+    \ return x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull\
+    \ x) { assert(x != 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull\
+    \ x) { return __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull\
+    \ x) { return popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ...\
+    \ \ninline constexpr ll bit_width(ll x) { return std::bit_width((ull)x); }\n//\
+    \ 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return\
+    \ std::bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr\
+    \ ll bit_ceil(ll x) { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll\
+    \ x) { assert(x != 0); return std::countr_zero((ull)x); }\ninline constexpr ll\
+    \ popcount(ll x) { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll\
+    \ x) { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
     \ x) { assert(x != 0); return countr_zero(x); }\ninline constexpr ull msb_pos(ull\
     \ x) { assert(x != 0); return bit_width(x) - 1; }\ninline constexpr ull lsb_mask(ull\
     \ x) { assert(x != 0); return x & -x; }\ninline constexpr ull msb_mask(ull x)\
@@ -639,9 +640,9 @@ data:
     \ & 1) ? (rs[i] > rs[j]) : (rs[i] < rs[j]);\n  };\n  vc<int> ord = permid<int>(q);\n\
     \  sort(ALL(ord), comp);\n  return ord;\n}\n\ntemplate <class I>\nvc<int> mo_order(int\
     \ n, const vc<pair<I, I>> &lrs)\n{\n  const int q = lrs.size();\n  const int b1\
-    \ = max(1, int(n / sqrt(q)));\n  const int b2 = max(1, int(sqrt(3) * n / sqrt(2\
-    \ * q)));\n  array<vc<int>, 4> ords = {\n    mo_order_params(lrs, b1, 0),\n  \
-    \  mo_order_params(lrs, b1, 1),\n    mo_order_params(lrs, b2, 0),\n    mo_order_params(lrs,\
+    \ = max(1, int(n / sqrt(q + 1)));\n  const int b2 = max(1, int(sqrt(3) * n / sqrt(2\
+    \ * q + 1)));\n  array<vc<int>, 4> ords = {\n    mo_order_params(lrs, b1, 0),\n\
+    \    mo_order_params(lrs, b1, 1),\n    mo_order_params(lrs, b2, 0),\n    mo_order_params(lrs,\
     \ b2, 1)\n  };\n  array<int, 4> costs;\n  repi(i, 4) costs[i] = mo_order_cost(lrs,\
     \ ords[i]);\n  int j = ARGMAX(costs);\n  return ords[j];\n}\n\n};\n\n// add_l(l,\
     \ r): \u4ECA\u306E\u533A\u9593\u304C [l+1, r) \u3067\u3042\u308B\u3068\u304D\u3001\
@@ -693,25 +694,25 @@ data:
     \ segi < segj;\n    return (segi & 1) ? (rs[i] > rs[j]) : (rs[i] < rs[j]);\n \
     \ };\n  vc<int> ord = permid<int>(q);\n  sort(ALL(ord), comp);\n  return ord;\n\
     }\n\ntemplate <class I>\nvc<int> mo_order(int n, const vc<pair<I, I>> &lrs)\n\
-    {\n  const int q = lrs.size();\n  const int b1 = max(1, int(n / sqrt(q)));\n \
-    \ const int b2 = max(1, int(sqrt(3) * n / sqrt(2 * q)));\n  array<vc<int>, 4>\
-    \ ords = {\n    mo_order_params(lrs, b1, 0),\n    mo_order_params(lrs, b1, 1),\n\
-    \    mo_order_params(lrs, b2, 0),\n    mo_order_params(lrs, b2, 1)\n  };\n  array<int,\
-    \ 4> costs;\n  repi(i, 4) costs[i] = mo_order_cost(lrs, ords[i]);\n  int j = ARGMAX(costs);\n\
-    \  return ords[j];\n}\n\n};\n\n// add_l(l, r): \u4ECA\u306E\u533A\u9593\u304C\
-    \ [l+1, r) \u3067\u3042\u308B\u3068\u304D\u3001l \u3092\u8FFD\u52A0\u3057\u3066\
-    \ [l, r) \u306B\u3059\u308B\n// add_r(l, r): \u4ECA\u306E\u533A\u9593\u304C [l,\
-    \ r) \u3067\u3042\u308B\u3068\u304D\u3001r \u3092\u8FFD\u52A0\u3057\u3066 [l,\
-    \ r+1) \u306B\u3059\u308B\n// del_l(l, r): \u4ECA\u306E\u533A\u9593\u304C [l,\
-    \ r) \u3067\u3042\u308B\u3068\u304D\u3001l \u3092\u524A\u9664\u3057\u3066 [l+1,\
-    \ r) \u306B\u3059\u308B\n// del_r(l, r): \u4ECA\u306E\u533A\u9593\u304C [l, r+1)\
-    \ \u3067\u3042\u308B\u3068\u304D\u3001r \u3092\u524A\u9664\u3057\u3066 [l, r)\
-    \ \u306B\u3059\u308B\n// rem(qid): \u4ECA\u304C qid \u756A\u76EE\u306E\u533A\u9593\
-    \u3060\u3068\u3057\u3066\u305D\u306E\u90E8\u5206\u306E\u7B54\u3048\u3092\u78BA\
-    \u5B9A\u3055\u305B\u308B\ntemplate <class I, class ADD_L, class ADD_R, class DEL_L,\
-    \ class DEL_R, class REM>\nvoid mo(int n, const vc<pair<I, I>> &lrs, ADD_L add_l,\
-    \ ADD_R add_r, DEL_L del_l, DEL_R del_r, REM rem)\n{\n  fec([ l, r ] : lrs) {\
-    \ assert(0 <= l && l <= n && 0 <= r && r <= n); }\n  vc<int> ord = internal::mo_order(n,\
+    {\n  const int q = lrs.size();\n  const int b1 = max(1, int(n / sqrt(q + 1)));\n\
+    \  const int b2 = max(1, int(sqrt(3) * n / sqrt(2 * q + 1)));\n  array<vc<int>,\
+    \ 4> ords = {\n    mo_order_params(lrs, b1, 0),\n    mo_order_params(lrs, b1,\
+    \ 1),\n    mo_order_params(lrs, b2, 0),\n    mo_order_params(lrs, b2, 1)\n  };\n\
+    \  array<int, 4> costs;\n  repi(i, 4) costs[i] = mo_order_cost(lrs, ords[i]);\n\
+    \  int j = ARGMAX(costs);\n  return ords[j];\n}\n\n};\n\n// add_l(l, r): \u4ECA\
+    \u306E\u533A\u9593\u304C [l+1, r) \u3067\u3042\u308B\u3068\u304D\u3001l \u3092\
+    \u8FFD\u52A0\u3057\u3066 [l, r) \u306B\u3059\u308B\n// add_r(l, r): \u4ECA\u306E\
+    \u533A\u9593\u304C [l, r) \u3067\u3042\u308B\u3068\u304D\u3001r \u3092\u8FFD\u52A0\
+    \u3057\u3066 [l, r+1) \u306B\u3059\u308B\n// del_l(l, r): \u4ECA\u306E\u533A\u9593\
+    \u304C [l, r) \u3067\u3042\u308B\u3068\u304D\u3001l \u3092\u524A\u9664\u3057\u3066\
+    \ [l+1, r) \u306B\u3059\u308B\n// del_r(l, r): \u4ECA\u306E\u533A\u9593\u304C\
+    \ [l, r+1) \u3067\u3042\u308B\u3068\u304D\u3001r \u3092\u524A\u9664\u3057\u3066\
+    \ [l, r) \u306B\u3059\u308B\n// rem(qid): \u4ECA\u304C qid \u756A\u76EE\u306E\u533A\
+    \u9593\u3060\u3068\u3057\u3066\u305D\u306E\u90E8\u5206\u306E\u7B54\u3048\u3092\
+    \u78BA\u5B9A\u3055\u305B\u308B\ntemplate <class I, class ADD_L, class ADD_R, class\
+    \ DEL_L, class DEL_R, class REM>\nvoid mo(int n, const vc<pair<I, I>> &lrs, ADD_L\
+    \ add_l, ADD_R add_r, DEL_L del_l, DEL_R del_r, REM rem)\n{\n  fec([ l, r ] :\
+    \ lrs) { assert(0 <= l && l <= n && 0 <= r && r <= n); }\n  vc<int> ord = internal::mo_order(n,\
     \ lrs);\n  cauto & [ ls, rs ] = top(lrs);\n  int l = 0, r = 0;\n  fe(i : ord)\n\
     \  {\n    while (ls[i] < l)\n      add_l(--l, r);\n    while (r < rs[i])\n   \
     \   add_r(l, r++);\n    while (l < ls[i])\n      del_l(l++, r);\n    while (rs[i]\
@@ -751,8 +752,8 @@ data:
   isVerificationFile: false
   path: ds/mo.hpp
   requiredBy: []
-  timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2026-01-04 17:26:22+09:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - verify/yosupo/static_range_inversions_query.test.cpp
 documentation_of: ds/mo.hpp

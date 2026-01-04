@@ -1,98 +1,98 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/convolution/convolution.hpp
     title: "\u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/convolution/convolution_many.hpp
     title: "\u591A\u9805\u5F0F\u306E\u7DCF\u7A4D"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/crt.hpp
     title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/fps/fps.hpp
     title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/multipoint_evaluation.hpp
     title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/fps/rational_sum.hpp
     title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/binomial.hpp
     title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/inv_many.hpp
     title: "\u9006\u5143\u3092\u307E\u3068\u3081\u3066\u6C42\u3081\u308B"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint64_internal.hpp
     title: math/modint/modint64_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/modint/sqrt_mod.hpp
     title: "mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/primality_test.hpp
+  - icon: ':question:'
+    path: math/prime/large/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_interpolation.test.cpp
     title: verify/yosupo/poly_interpolation.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     _deprecated_at_docs: docs/math/fps/interpolation.md
     document_title: "\u591A\u9805\u5F0F\u88DC\u9593"
@@ -221,9 +221,11 @@ data:
     \ &v : vs)\n    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class\
     \ T>\nvc<T> concat(const vc<T> &v) { return v; }\ntemplate <class T, class...\
     \ Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)),\
-    \ ...);\n  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v,\
-    \ I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i\
-    \ < 0)\n    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \ ...);\n  return v;\n}\n\ntemplate <class T>\nvc<T> merged(const vc<T> &a, const\
+    \ vc<T> &b)\n{\n  vc<T> res;\n  merge(ALL(a), ALL(b), back_inserter(res));\n \
+    \ return res;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
+    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
+    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
     \  return v[i];\n}\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define\
     \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 10 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
@@ -412,47 +414,46 @@ data:
     \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
     \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\n// (ok, ng)\ntemplate <class T = ll, class\
     \ Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge,\
-    \ const InitOk &init_ok, const InitNg &init_ng, bool check_ok = true, bool check_ng\
+    \ InitOk init_ok, InitNg init_ng, bool check_ok = true, bool check_ng = true)\n\
+    {\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n  if\
+    \ (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok != 1)\n\
+    \  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) =\
+    \ mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
+    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, InitOk init_ok,\
+    \ InitNg init_ng, int iteration_count = 100, bool check_ok = true, bool check_ng\
     \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
-    \  if (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok !=\
-    \ 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng)\
-    \ = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
-    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk &init_ok,\
-    \ const InitNg &init_ng, int iteration_count = 100, bool check_ok = true, bool\
-    \ check_ng = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
     \  if (check_ng)\n    assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n \
     \   T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n\
     }\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T, T>\
-    \ expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
-    {\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val\
-    \ + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng,\
-    \ ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng\
-    \ = init_val, ok = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok);\
-    \ i++)\n      ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n\
-    \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
-    \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line\
-    \ 2 \"template/template_bit.hpp\"\n\n#line 5 \"template/template_bit.hpp\"\n\n\
-    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\
-    \u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ntemplate <class T>\n\
-    inline constexpr ull pow2(T k) { return 1ULL << k; }\ntemplate <class T>\ninline\
-    \ constexpr ull MASK(T k) { return (1ULL << k) - 1ULL; }\n\n#if __cplusplus <\
-    \ 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\
-    \u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ull bit_width(ull x) { return x == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0,\
-    \ 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ull bit_floor(ull x) { return\
-    \ x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8,\
-    \ 16, ...\ninline constexpr ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL\
-    \ << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull x) { assert(x !=\
-    \ 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull x) { return\
-    \ __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull x) { return\
-    \ popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ll bit_width(ll x) { return std::bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4,\
-    \ 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return std::bit_floor((ull)x);\
-    \ }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ll bit_ceil(ll x)\
-    \ { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll x) { assert(x\
-    \ != 0); return std::countr_zero((ull)x); }\ninline constexpr ll popcount(ll x)\
-    \ { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll x)\
-    \ { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
+    \ expsearch(const Judge &judge, InitVal init_val, bool positive = true)\n{\n \
+    \ T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val + (positive\
+    \ ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng, ng = init_val\
+    \ + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng = init_val, ok\
+    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok); i++)\n  \
+    \    ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  while\
+    \ (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n\
+    \    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line 2 \"template/template_bit.hpp\"\
+    \n\n#line 5 \"template/template_bit.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n\
+    \ */\n\ntemplate <class T>\ninline constexpr ull pow2(T k) { return 1ULL << k;\
+    \ }\ntemplate <class T>\ninline constexpr ull MASK(T k) { return (1ULL << k) -\
+    \ 1ULL; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\
+    \u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3,\
+    \ 3, 3, 4, 4, ... \ninline constexpr ull bit_width(ull x) { return x == 0 ? 0\
+    \ : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr\
+    \ ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n\
+    // 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ull bit_ceil(ull x) {\
+    \ return x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull\
+    \ x) { assert(x != 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull\
+    \ x) { return __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull\
+    \ x) { return popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ...\
+    \ \ninline constexpr ll bit_width(ll x) { return std::bit_width((ull)x); }\n//\
+    \ 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return\
+    \ std::bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr\
+    \ ll bit_ceil(ll x) { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll\
+    \ x) { assert(x != 0); return std::countr_zero((ull)x); }\ninline constexpr ll\
+    \ popcount(ll x) { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll\
+    \ x) { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
     \ x) { assert(x != 0); return countr_zero(x); }\ninline constexpr ull msb_pos(ull\
     \ x) { assert(x != 0); return bit_width(x) - 1; }\ninline constexpr ull lsb_mask(ull\
     \ x) { assert(x != 0); return x & -x; }\ninline constexpr ull msb_mask(ull x)\
@@ -1097,23 +1098,23 @@ data:
     \ id>\nstruct is_dynamic_modint64<dynamic_modint64<id>> : true_type {};\ntemplate\
     \ <class T>\ninline constexpr bool is_dynamic_modint64_v = is_dynamic_modint64<T>::value;\n\
     \ntemplate <class T>\ninline constexpr bool is_modint64_v = is_static_modint64_v<T>\
-    \ || is_dynamic_modint64_v<T>;\n#line 2 \"math/prime/primality_test.hpp\"\n\n\
-    #line 6 \"math/prime/primality_test.hpp\"\n\n/**\n * @brief \u7D20\u6570\u5224\
-    \u5B9A\n * @docs docs/math/prime/primality_test.md\n */\n\nnamespace internal\n\
-    {\n\ntemplate <class mint, class Array>\nbool is_prime_impl(ll n, const Array\
-    \ &bases)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n ==\
-    \ 61)\n    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = (n - 1)\
-    \ >> countr_zero(n - 1);\n  mint::set_mod(n);\n  for (ll a : bases)\n  {\n   \
-    \ ll t = d;\n    mint y = mint(a).pow(t);\n    while (t != n - 1 && y != 1 &&\
-    \ y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n    if (y != n - 1\
-    \ && t % 2 == 0)\n      return false;\n  }\n  return true;\n}\n\n}; // namespace\
-    \ internal\n\nbool is_prime(ll n)\n{\n  static constexpr array<ll, 3> bases32\
-    \ = {2, 7, 61};\n  static constexpr array<ll, 7> bases64 = {2, 325, 9375, 28178,\
-    \ 450775, 9780504, 1795265022};\n  if (n <= INT_MAX)\n  {\n    using mint = dynamic_modint<INT_MIN>;\n\
-    \    return internal::is_prime_impl<mint>(n, bases32);\n  }\n  else\n  {\n   \
-    \ using mint = dynamic_modint64_odd<INT_MIN>;\n    return internal::is_prime_impl<mint>(n,\
-    \ bases64);\n  }\n}\n#line 7 \"math/modint/sqrt_mod.hpp\"\n\n/**\n * @brief mod\
-    \ \u7D20\u6570 \u306E\u5E73\u65B9\u6839\n * @docs docs/math/modint/sqrt_mod.md\n\
+    \ || is_dynamic_modint64_v<T>;\n#line 2 \"math/prime/large/primality_test.hpp\"\
+    \n\n#line 6 \"math/prime/large/primality_test.hpp\"\n\n/**\n * @brief \u7D20\u6570\
+    \u5224\u5B9A\n * @docs docs/math/prime/large/primality_test.md\n */\n\nnamespace\
+    \ internal\n{\n\ntemplate <class mint, class Array>\nbool is_prime_impl(ll n,\
+    \ const Array &bases)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n\
+    \ == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return false;\n \
+    \ ll d = (n - 1) >> countr_zero(n - 1);\n  mint::set_mod(n);\n  for (ll a : bases)\n\
+    \  {\n    ll t = d;\n    mint y = mint(a).pow(t);\n    while (t != n - 1 && y\
+    \ != 1 && y != n - 1)\n    {\n      y *= y;\n      t <<= 1;\n    }\n    if (y\
+    \ != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return true;\n}\n\n}; //\
+    \ namespace internal\n\nbool is_prime(ll n)\n{\n  static constexpr array<ll, 3>\
+    \ bases32 = {2, 7, 61};\n  static constexpr array<ll, 7> bases64 = {2, 325, 9375,\
+    \ 28178, 450775, 9780504, 1795265022};\n  if (n <= INT_MAX)\n  {\n    using mint\
+    \ = dynamic_modint<INT_MIN>;\n    return internal::is_prime_impl<mint>(n, bases32);\n\
+    \  }\n  else\n  {\n    using mint = dynamic_modint64_odd<INT_MIN>;\n    return\
+    \ internal::is_prime_impl<mint>(n, bases64);\n  }\n}\n#line 7 \"math/modint/sqrt_mod.hpp\"\
+    \n\n/**\n * @brief mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839\n * @docs docs/math/modint/sqrt_mod.md\n\
     \ */\n\n// \u5E73\u65B9\u6839\u304C\u5B58\u5728\u3057\u306A\u3051\u308C\u3070\
     \ (false, 0)\n// \u5E73\u65B9\u6839\u304C\u5B58\u5728\u3059\u308C\u3070 (true,\
     \ \u5E73\u65B9\u6839\u306E\u3072\u3068\u3064)\n// \u5E73\u65B9\u6839\u306E\u3082\
@@ -1159,15 +1160,15 @@ data:
     \  }\n  F operator-(const F &g) const { return F(*this) -= g; }\n  F &operator*=(const\
     \ F &g) { return *this = *this * g; }\n  F operator*(const F &g) const { return\
     \ convolution(*this, g); }\n\n  F div_sparse_destructive(const F &g, int d = -1)\n\
-    \  {\n    assert(g.get(0) != 0);\n    if (d < 0)\n      d = sz();\n    mint iv\
-    \ = g.front().inv();\n    auto gnz = g.nz();\n    resize(d);\n    repi(i, d)\n\
-    \    {\n      fec([j, b] : gnz)\n      {\n        if (j == 0)\n          continue;\n\
-    \        if (j > i)\n          break;\n        (*this)[i] -= (*this)[i - j] *\
-    \ b;\n      }\n      (*this)[i] *= iv;\n    }\n    return pre(d);\n  }\n  F div_sparse(const\
-    \ F &g, int d = -1) const { return F(*this).div_sparse_destructive(g, d); }\n\n\
-    \  // \u5B9A\u6570\u9805\u304C\u975E\u96F6\n  F inv(int d = -1) const\n  {\n \
-    \   assert(get(0) != 0);\n    if (d < 0)\n      d = sz();\n    if (cnt_nz() <=\
-    \ 200)\n      return F{1}.div_sparse(*this, d);\n    F f, g2, g{front().inv()};\n\
+    \  {\n    assert(g.get(0) != 0);\n    if (d < 0)\n      d = max(sz(), g.sz());\n\
+    \    mint iv = g.front().inv();\n    auto gnz = g.nz();\n    resize(d);\n    repi(i,\
+    \ d)\n    {\n      fec([j, b] : gnz)\n      {\n        if (j == 0)\n         \
+    \ continue;\n        if (j > i)\n          break;\n        (*this)[i] -= (*this)[i\
+    \ - j] * b;\n      }\n      (*this)[i] *= iv;\n    }\n    return pre(d);\n  }\n\
+    \  F div_sparse(const F &g, int d = -1) const { return F(*this).div_sparse_destructive(g,\
+    \ d); }\n\n  // \u5B9A\u6570\u9805\u304C\u975E\u96F6\n  F inv(int d = -1) const\n\
+    \  {\n    assert(get(0) != 0);\n    if (d < 0)\n      d = sz();\n    if (cnt_nz()\
+    \ <= 200)\n      return F{1}.div_sparse(*this, d);\n    F f, g2, g{front().inv()};\n\
     \    for (int m = 1; m < d; m *= 2)\n    {\n      if (ntt_ok<mint>(2 * m))\n \
     \     {\n        f = pre(2 * m), g2 = F(g);\n        f.resize(2 * m), ntt(f);\n\
     \        g2.resize(2 * m), ntt(g2);\n        repi(i, 2 * m) f[i] *= g2[i];\n \
@@ -1176,61 +1177,63 @@ data:
     \ m).inv();\n        iz *= -iz;\n        repi(i, m) f[i] *= iz;\n        g.insert(g.end(),\
     \ f.begin(), f.begin() + m);\n      }\n      else\n        g = (g * mint(2) -\
     \ g * g * pre(2 * m)).pre(2 * m);\n    }\n    return g.pre(d);\n  }\n  F &operator/=(const\
-    \ F &g)\n  {\n    if (cnt_nz() <= 200)\n    {\n      div_sparse_destructive(g);\n\
-    \      return *this;\n    }\n    *this *= g.inv();\n    return *this;\n  }\n \
-    \ F operator/(const F &g) const { return F(*this) /= g; }\n\n  F div_poly(const\
-    \ F &g) const\n  {\n    const int k = sz() - g.sz() + 1;\n    if (k <= 0)\n  \
-    \    return {};\n    return (rev().pre(k) * g.rev().inv(k)).pre(k).rev();\n  }\n\
-    \  pair<F, F> divmod(const F &g) const\n  {\n    F q = div_poly(g);\n    const\
-    \ int l = sz() - q.sz();\n    F r = pre(l) - (q.pre(l) * g.pre(l)).pre(l);\n \
-    \   r.shrink();\n    return {q, r};\n  }\n  F operator%(const F &g) const { return\
-    \ divmod(g).second; }\n  F &operator%=(const F &g) { return *this = *this % g;\
-    \ }\n\n  // mod (x^n - 1)\n  F circular_mod(int n) const\n  {\n    F res(n);\n\
-    \    repi(i, sz()) res[i % n] += (*this)[i];\n    return res;\n  }\n\n  F operator<<(int\
-    \ k) const\n  {\n    F res(sz() + k);\n    repi(i, sz()) res[i + k] = (*this)[i];\n\
-    \    return res;\n  }\n  F operator>>(int k) const\n  {\n    F res(max(0, sz()\
-    \ - k));\n    repi(i, sz() - k) res[i] = (*this)[i + k];\n    return res;\n  }\n\
-    \  F &operator<<=(int k) { return *this = *this << k; }\n  F &operator>>=(int\
-    \ k) { return *this = *this >> k; }\n\n  // \u5FAE\u5206 sum[i=1..n] i*a[i] x^{i-1}\n\
-    \  F diff() const\n  {\n    F res(max(0, sz() - 1));\n    repi(i, 1, size()) res[i\
-    \ - 1] = (*this)[i] * i;\n    return res;\n  }\n  // \u7A4D\u5206 sum[i=0..n]\
-    \ a[i]/(i+1) * x^{i+1}\n  F integ() const\n  {\n    F res(sz() + 1);\n    repi(i,\
-    \ size()) res[i + 1] = (*this)[i] * Binomial<mint>::inv(i + 1);\n    return res;\n\
-    \  }\n  // \u5B9A\u6570\u9805\u304C 1\n  F log(int d = -1) const\n  {\n    assert(get(0)\
-    \ == 1);\n    if (d < 0)\n      d = sz();\n    F f = pre(d);\n    return (f.diff()\
-    \ / f).pre(d - 1).integ();\n  }\n\n  // \u5FAE\u5206\u65B9\u7A0B\u5F0F a(x)f'(x)\
-    \ + b(x)f(x) = 0, [x^0]f(x) = 1 \u3092\u6E80\u305F\u3059 f \u3092 d \u9805\u307E\
-    \u3067\u6C42\u3081\u308B\n  // \u5236\u7D04: [x^0]a(x) = 1\n  // \u8A08\u7B97\u91CF\
-    : O( d * (a, b \u306E\u975E\u96F6\u306E\u500B\u6570) )\n  static F diff_eq(const\
-    \ F &a, const F &b, int d)\n  {\n    assert(a.get(0) == 1);\n    assert(d >= 0);\n\
-    \    if (d == 0)\n      return {};\n    F f(d);\n    f[0] = 1;\n    auto anz =\
-    \ a.nz(), bnz = b.nz();\n    repi(k, d - 1)\n    {\n      fec([i, ai] : anz)\n\
-    \      {\n        if (0 <= k - i + 1)\n          f[k + 1] -= ai * (k - i + 1)\
-    \ * f[k - i + 1];\n      }\n      fec([j, bj] : bnz)\n      {\n        if (0 <=\
-    \ k - j && k - j < k + 1)\n          f[k + 1] -= bj * f[k - j];\n      }\n   \
-    \   f[k + 1] *= Binomial<mint>::inv(k + 1);\n    }\n    return f;\n  }\n  F exp_sparse(int\
-    \ d = -1) const\n  {\n    assert(get(0) == 0);\n    if (d < 0)\n      d = sz();\n\
-    \    return diff_eq(F{1}, -diff(), d);\n  }\n  // k < 0 \u306E\u3068\u304D\u306F\
-    \u5B9A\u6570\u9805\u304C\u975E\u96F6\n  F pow_sparse(ll k, int d = -1) const\n\
-    \  {\n    if (d < 0)\n      d = sz();\n    auto [exi, d0, a0] = nz_front();\n\
-    \    if (!exi)\n    {\n      assert(k >= 0 && \"k < 0 but [x^0]f(x) == 0\");\n\
-    \      F res(d);\n      if (k == 0 && d > 0)\n        res[0] = 1;\n      return\
-    \ res;\n    }\n    mint ia0 = a0.inv();\n    F f = ((*this) >> d0) * ia0;\n  \
-    \  if (k >= 0)\n    {\n      F g = diff_eq(f, -k * f.diff(), d - mul_limited(d0,\
-    \ k, d));\n      F h = (g * a0.pow(k)) << mul_limited(d0, k, d);\n      return\
-    \ h.pre(d);\n    }\n    else\n    {\n      assert(d0 == 0 && \"k < 0 but [x^0]f(x)\
-    \ == 0\");\n      F g = diff_eq(f, -k * f.diff(), d);\n      F h = (g * ia0.pow(-k));\n\
-    \      return h.pre(d);\n    }\n  }\n  // (\u5B58\u5728\u3059\u308B\u304B, \u5E73\
-    \u65B9\u6839\u306E\u3072\u3068\u3064)\n  pair<bool, F> sqrt_sparse(int d = -1)\
-    \ const\n  {\n    if (d < 0)\n      d = sz();\n    auto [exi, d0, a0] = nz_front();\n\
-    \    if (!exi)\n      return {true, F(d)};\n    if (d0 % 2 != 0)\n      return\
-    \ {false, {}};\n    if (d0 >= d)\n      return {true, F(d)};\n    auto [ok, r]\
-    \ = sqrt_mod(a0);\n    if (!ok)\n      return {false, {}};\n    mint i2 = Binomial<mint>::inv(2);\n\
-    \    F f = ((*this) >> d0) / a0;\n    F g = diff_eq(f, -i2 * f.diff(), d - d0\
-    \ / 2);\n    return {true, ((g * r) << (d0 / 2)).pre(d)};\n  }\n\n  // \u5B9A\u6570\
-    \u9805\u304C 0\n  F exp(int d = -1) const\n  {\n    assert(get(0) == 0);\n   \
-    \ if (d < 0)\n      d = sz();\n    if (ntt_ok<mint>(2 * d))\n    {\n      if (cnt_nz()\
-    \ <= 320)\n        return exp_sparse(d);\n      // https://arxiv.org/pdf/1301.5804.pdf\n\
+    \ F &g)\n  {\n    if (g.cnt_nz() <= 200)\n    {\n      div_sparse_destructive(g);\n\
+    \      return *this;\n    }\n    const int d = max(sz(), g.sz());\n    *this =\
+    \ (*this * g.inv(d)).pre(d);\n    return *this;\n  }\n  F operator/(const F &g)\
+    \ const { return F(*this) /= g; }\n\n  F div_poly(const F &g) const\n  {\n   \
+    \ const int k = sz() - g.sz() + 1;\n    if (k <= 0)\n      return {};\n    return\
+    \ (rev().pre(k) * g.rev().inv(k)).pre(k).rev();\n  }\n  pair<F, F> divmod(const\
+    \ F &g) const\n  {\n    F q = div_poly(g);\n    const int l = sz() - q.sz();\n\
+    \    F r = pre(l) - (q.pre(l) * g.pre(l)).pre(l);\n    r.shrink();\n    return\
+    \ {q, r};\n  }\n  F operator%(const F &g) const { return divmod(g).second; }\n\
+    \  F &operator%=(const F &g) { return *this = *this % g; }\n\n  // mod (x^n -\
+    \ 1)\n  F circular_mod(int n) const\n  {\n    F res(n);\n    repi(i, sz()) res[i\
+    \ % n] += (*this)[i];\n    return res;\n  }\n\n  F operator<<(int k) const\n \
+    \ {\n    F res(sz() + k);\n    repi(i, sz()) res[i + k] = (*this)[i];\n    return\
+    \ res;\n  }\n  F operator>>(int k) const\n  {\n    F res(max(0, sz() - k));\n\
+    \    repi(i, sz() - k) res[i] = (*this)[i + k];\n    return res;\n  }\n  F &operator<<=(int\
+    \ k) { return *this = *this << k; }\n  F &operator>>=(int k) { return *this =\
+    \ *this >> k; }\n\n  // \u5FAE\u5206 sum[i=1..n] i*a[i] x^{i-1}\n  F diff() const\n\
+    \  {\n    F res(max(0, sz() - 1));\n    repi(i, 1, size()) res[i - 1] = (*this)[i]\
+    \ * i;\n    return res;\n  }\n  // \u7A4D\u5206 sum[i=0..n] a[i]/(i+1) * x^{i+1}\n\
+    \  F integ() const\n  {\n    F res(sz() + 1);\n    repi(i, size()) res[i + 1]\
+    \ = (*this)[i] * Binomial<mint>::inv(i + 1);\n    return res;\n  }\n  // \u5B9A\
+    \u6570\u9805\u304C 1\n  F log(int d = -1) const\n  {\n    assert(get(0) == 1);\n\
+    \    if (d < 0)\n      d = sz();\n    if (d == 0)\n      return {};\n    F f =\
+    \ pre(d);\n    return (f.diff() * f.inv(d - 1)).pre(d - 1).integ();\n  }\n\n \
+    \ // \u5FAE\u5206\u65B9\u7A0B\u5F0F a(x)f'(x) + b(x)f(x) = 0, [x^0]f(x) = 1 \u3092\
+    \u6E80\u305F\u3059 f \u3092 d \u9805\u307E\u3067\u6C42\u3081\u308B\n  // \u5236\
+    \u7D04: [x^0]a(x) = 1\n  // \u8A08\u7B97\u91CF: O( d * (a, b \u306E\u975E\u96F6\
+    \u306E\u500B\u6570) )\n  static F diff_eq(const F &a, const F &b, int d)\n  {\n\
+    \    assert(a.get(0) == 1);\n    assert(d >= 0);\n    if (d == 0)\n      return\
+    \ {};\n    F f(d);\n    f[0] = 1;\n    auto anz = a.nz(), bnz = b.nz();\n    repi(k,\
+    \ d - 1)\n    {\n      fec([i, ai] : anz)\n      {\n        if (0 <= k - i + 1)\n\
+    \          f[k + 1] -= ai * (k - i + 1) * f[k - i + 1];\n      }\n      fec([j,\
+    \ bj] : bnz)\n      {\n        if (0 <= k - j && k - j < k + 1)\n          f[k\
+    \ + 1] -= bj * f[k - j];\n      }\n      f[k + 1] *= Binomial<mint>::inv(k + 1);\n\
+    \    }\n    return f;\n  }\n  F exp_sparse(int d = -1) const\n  {\n    assert(get(0)\
+    \ == 0);\n    if (d < 0)\n      d = sz();\n    return diff_eq(F{1}, -diff(), d);\n\
+    \  }\n  // k < 0 \u306E\u3068\u304D\u306F\u5B9A\u6570\u9805\u304C\u975E\u96F6\n\
+    \  F pow_sparse(ll k, int d = -1) const\n  {\n    if (d < 0)\n      d = sz();\n\
+    \    auto [exi, d0, a0] = nz_front();\n    if (!exi)\n    {\n      assert(k >=\
+    \ 0 && \"k < 0 but [x^0]f(x) == 0\");\n      F res(d);\n      if (k == 0 && d\
+    \ > 0)\n        res[0] = 1;\n      return res;\n    }\n    mint ia0 = a0.inv();\n\
+    \    F f = ((*this) >> d0) * ia0;\n    if (k >= 0)\n    {\n      F g = diff_eq(f,\
+    \ -k * f.diff(), d - mul_limited(d0, k, d));\n      F h = (g * a0.pow(k)) << mul_limited(d0,\
+    \ k, d);\n      return h.pre(d);\n    }\n    else\n    {\n      assert(d0 == 0\
+    \ && \"k < 0 but [x^0]f(x) == 0\");\n      F g = diff_eq(f, -k * f.diff(), d);\n\
+    \      F h = (g * ia0.pow(-k));\n      return h.pre(d);\n    }\n  }\n  // (\u5B58\
+    \u5728\u3059\u308B\u304B, \u5E73\u65B9\u6839\u306E\u3072\u3068\u3064)\n  pair<bool,\
+    \ F> sqrt_sparse(int d = -1) const\n  {\n    if (d < 0)\n      d = sz();\n   \
+    \ auto [exi, d0, a0] = nz_front();\n    if (!exi)\n      return {true, F(d)};\n\
+    \    if (d0 % 2 != 0)\n      return {false, {}};\n    if (d0 >= d)\n      return\
+    \ {true, F(d)};\n    auto [ok, r] = sqrt_mod(a0);\n    if (!ok)\n      return\
+    \ {false, {}};\n    mint i2 = Binomial<mint>::inv(2);\n    F f = ((*this) >> d0)\
+    \ / a0;\n    F g = diff_eq(f, -i2 * f.diff(), d - d0 / 2);\n    return {true,\
+    \ ((g * r) << (d0 / 2)).pre(d)};\n  }\n\n  // \u5B9A\u6570\u9805\u304C 0\n  F\
+    \ exp(int d = -1) const\n  {\n    assert(get(0) == 0);\n    if (d < 0)\n     \
+    \ d = sz();\n    if (ntt_ok<mint>(2 * d))\n    {\n      if (cnt_nz() <= 320)\n\
+    \        return exp_sparse(d);\n      // https://arxiv.org/pdf/1301.5804.pdf\n\
     \      F f{1}, g{1};\n      F f2, g2, f3, q, s, h, u;\n      g2 = {0};\n     \
     \ for (int m = 1; m < d; m *= 2)\n      {\n        mint im = mint(m).inv(), i2m\
     \ = mint(2 * m).inv();\n        f2 = f, f2.resize(2 * m), ntt(f2);\n\n       \
@@ -1259,31 +1262,36 @@ data:
     \        return pow_sparse(k, d);\n    }\n    if (d < 0)\n      d = sz();\n  \
     \  if (k == 0)\n    {\n      F res(d);\n      res[0] = 1;\n      return res;\n\
     \    }\n    if (k < 0)\n    {\n      assert(get(0) != 0);\n      mint iv = get(0).inv();\n\
-    \      F res = ((*this * iv).log(d) * mint(k)).exp(d);\n      res = (res * iv.pow(-k)).pre(d);\n\
-    \      if (res.sz() < d)\n        res.resize(d);\n      return res;\n    }\n \
-    \   repi(i, sz())\n    {\n      if ((*this)[i] != 0)\n      {\n        mint iv\
-    \ = (*this)[i].inv();\n        F res = (((*this * iv) >> i).log(d) * mint(k)).exp(d);\n\
-    \        res *= (*this)[i].pow(k);\n        res = (res << (i * k)).pre(d);\n \
-    \       if (res.sz() < d)\n          res.resize(d);\n        return res;\n   \
-    \   }\n      if (mul_limited(i + 1, k, d) >= d)\n        return F(d);\n    }\n\
-    \    return F(d);\n  }\n  pair<bool, F> sqrt(int d = -1) const\n  {\n    if (cnt_nz()\
-    \ <= 200)\n      return sqrt_sparse(d);\n    if (d < 0)\n      d = sz();\n   \
-    \ auto [exi, d0, a0] = nz_front();\n    if (!exi)\n      return {true, F(d)};\n\
-    \    if (d0 % 2 != 0)\n      return {false, {}};\n    if (d0 >= d)\n      return\
-    \ {true, F(d)};\n    auto [ok, r] = sqrt_mod(a0);\n    if (!ok)\n      return\
-    \ {false, {}};\n    mint i2 = Binomial<mint>::inv(2);\n    F f = ((*this) >> d0)\
-    \ / a0, g{1};\n    for (int m = 1; m < d; m *= 2)\n      g = (g + f.pre(2 * m)\
-    \ * g.inv(2 * m)) * i2;\n    return {true, ((g * r) << (d0 / 2)).pre(d)};\n  }\n\
-    \n  F pow_mod(ll k, const F &g) const\n  {\n    assert(k >= 0);\n    if (k ==\
-    \ 0)\n      return (*this) % g;\n    if (k & 1)\n      return (*this) * pow_mod(k\
-    \ - 1, g) % g;\n    F h = pow_mod(k / 2, g);\n    return h * h % g;\n  }\n\n \
-    \ // \u5404\u4FC2\u6570 a_n \u3092 n! \u3067\u5272\u3063\u305F\u3082\u306E\n \
-    \ F egf() const\n  {\n    F res(*this);\n    repi(i, sz()) res[i] *= Binomial<mint>::finv(i);\n\
-    \    return res;\n  }\n  // \u5404\u4FC2\u6570 a_n \u306B n! \u3092\u304B\u3051\
-    \u305F\u3082\u306E\n  F ogf() const\n  {\n    F res(*this);\n    repi(i, sz())\
-    \ res[i] *= Binomial<mint>::fac(i);\n    return res;\n  }\n};\n#line 2 \"math/convolution/convolution_many.hpp\"\
-    \n\n#line 4 \"math/convolution/convolution_many.hpp\"\n\n#line 6 \"math/convolution/convolution_many.hpp\"\
-    \n\n/**\n * @brief \u591A\u9805\u5F0F\u306E\u7DCF\u7A4D\n * @docs docs/math/convolution/convolution_many.md\n\
+    \      F res = ((*this * iv).log(d) * mint(k)).exp(d);\n      return (res * iv.pow(-k)).pre(d);\n\
+    \    }\n    repi(i, sz())\n    {\n      if ((*this)[i] != 0)\n      {\n      \
+    \  F res = (((*this / (*this)[i]) >> i).log(d) * mint(k)).exp(d);\n        return\
+    \ (res * (*this)[i].pow(k) << (i * k)).pre(d);\n      }\n      if (mul_limited(i\
+    \ + 1, k, d) >= d)\n        return F(d);\n    }\n    return F(d);\n  }\n  pair<bool,\
+    \ F> sqrt(int d = -1) const\n  {\n    if (cnt_nz() <= 200)\n      return sqrt_sparse(d);\n\
+    \    if (d < 0)\n      d = sz();\n    auto [exi, d0, a0] = nz_front();\n    if\
+    \ (!exi)\n      return {true, F(d)};\n    if (d0 % 2 != 0)\n      return {false,\
+    \ {}};\n    if (d0 >= d)\n      return {true, F(d)};\n    auto [ok, r] = sqrt_mod(a0);\n\
+    \    if (!ok)\n      return {false, {}};\n    mint i2 = Binomial<mint>::inv(2);\n\
+    \    F f = ((*this) >> d0) / a0, g{1};\n    for (int m = 1; m < d; m *= 2)\n \
+    \     g = (g + f.pre(2 * m) * g.inv(2 * m)) * i2;\n    return {true, ((g * r)\
+    \ << (d0 / 2)).pre(d)};\n  }\n\n  F pow_mod(ll k, const F &g) const\n  {\n   \
+    \ assert(k >= 0);\n    if (k == 0)\n      return F{1} % g;\n    if (k & 1)\n \
+    \     return (*this) * pow_mod(k - 1, g) % g;\n    F h = pow_mod(k / 2, g);\n\
+    \    return h * h % g;\n  }\n\n  // \u5404\u4FC2\u6570 a_n \u3092 n! \u3067\u5272\
+    \u3063\u305F\u3082\u306E\n  F egf() const\n  {\n    F res(*this);\n    repi(i,\
+    \ sz()) res[i] *= Binomial<mint>::finv(i);\n    return res;\n  }\n  // \u5404\u4FC2\
+    \u6570 a_n \u306B n! \u3092\u304B\u3051\u305F\u3082\u306E\n  F ogf() const\n \
+    \ {\n    F res(*this);\n    repi(i, sz()) res[i] *= Binomial<mint>::fac(i);\n\
+    \    return res;\n  }\n\n  // (1 + cx^d) \u3092\u304B\u3051\u308B\n  F mul_bin_destructive(int\
+    \ d, mint c)\n  {\n    resize(sz() + d);\n    rep(i, sz() - 1 - d, -1, -1)(*this)[i\
+    \ + d] += (*this)[i] * c;\n    return *this;\n  }\n  // (1 + cx^d) \u3092\u304B\
+    \u3051\u305F\u3082\u306E\n  F mul_bin(int d, mint c) const { return F(*this).mul_bin_destructive(d,\
+    \ c); }\n  // (1 + cx^d) \u3067\u308F\u308B\n  F div_bin_destructive(int d, mint\
+    \ c)\n  {\n    resize(sz() + d);\n    rep(i, sz() - d)(*this)[i + d] -= (*this)[i]\
+    \ * c;\n    return *this;\n  }\n  F div_bin(int d, mint c) const { return F(*this).div_bin_destructive(d,\
+    \ c); }\n};\n#line 2 \"math/convolution/convolution_many.hpp\"\n\n#line 4 \"math/convolution/convolution_many.hpp\"\
+    \n\n#line 6 \"math/convolution/convolution_many.hpp\"\n\n/**\n * @brief \u591A\
+    \u9805\u5F0F\u306E\u7DCF\u7A4D\n * @docs docs/math/convolution/convolution_many.md\n\
     \ */\n\n// F \u306F vc<mint> \u307E\u305F\u306F fps\n// d \u306F\u8FD4\u3063\u3066\
     \u304F\u308B vector \u306E\u6700\u5927\u9577\u3055\n// \u8A08\u7B97\u91CF: \u6B21\
     \u6570\u306E\u7DCF\u548C\u3092 n \u3068\u3057\u3066 O(n log^2 n)\ntemplate <class\
@@ -1375,7 +1383,7 @@ data:
   - math/modint/sqrt_mod.hpp
   - math/modint/modint64.hpp
   - math/modint/modint64_internal.hpp
-  - math/prime/primality_test.hpp
+  - math/prime/large/primality_test.hpp
   - math/convolution/convolution_many.hpp
   - math/fps/multipoint_evaluation.hpp
   - math/fps/rational_sum.hpp
@@ -1383,8 +1391,8 @@ data:
   isVerificationFile: false
   path: math/fps/interpolation.hpp
   requiredBy: []
-  timestamp: '2025-08-20 23:10:57+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2026-01-04 17:26:22+09:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - verify/yosupo/poly_interpolation.test.cpp
 documentation_of: math/fps/interpolation.hpp

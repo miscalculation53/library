@@ -1,96 +1,102 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/group_index.hpp
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/query/point_set_range_frequency.hpp
     title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\u30D5\
       \u30E9\u30A4\u30F3\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/static_range/dc_range_prod.hpp
     title: "\u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\u30A8\
       \u30EA"
+  - icon: ':warning:'
+    path: graph/cliques.hpp
+    title: "\u30AF\u30EA\u30FC\u30AF\u5217\u6319"
   - icon: ':heavy_check_mark:'
     path: graph/connected_components.hpp
     title: "\u9023\u7D50\u6210\u5206\u3078\u306E\u5206\u89E3"
   - icon: ':warning:'
     path: graph/contraction.hpp
     title: "\u30B0\u30E9\u30D5\u306E\u7E2E\u7D04"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: graph/cycle_detection.hpp
     title: "\u30B5\u30A4\u30AF\u30EB\u691C\u51FA"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: graph/graph.hpp
     title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: graph/scc.hpp
     title: "\u5F37\u9023\u7D50\u6210\u5206\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: graph/sssp.hpp
     title: "\u5358\u4E00\u59CB\u70B9\u6700\u77ED\u8DEF\u554F\u984C"
   - icon: ':warning:'
     path: graph/subgraphs.hpp
     title: "\u90E8\u5206\u30B0\u30E9\u30D5\u3078\u306E\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: graph/tree/diameter.hpp
     title: "\u6728\u306E\u76F4\u5F84"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: graph/tree/rerooting.hpp
     title: "\u5168\u65B9\u4F4D\u6728 DP"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: graph/tree/rooted_tree.hpp
     title: "\u6839\u3064\u304D\u6728\u30AF\u30E9\u30B9"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: graph/triangles.hpp
     title: "\u4E09\u89D2\u5F62\u5217\u6319"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/linalg/matrix.hpp
     title: "\u884C\u5217"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/linalg/matrix_array.hpp
     title: "\u884C\u5217\uFF08array\uFF09"
+  - icon: ':warning:'
+    path: verify/yosupo/enumerate_cliques.cpp
+    title: verify/yosupo/enumerate_cliques.cpp
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/bellman_ford.test.cpp
@@ -116,96 +122,96 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/rmq.test.cpp
     title: verify/mytest/rmq.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/counting_eularian_circuits.test.cpp
     title: verify/yosupo/counting_eularian_circuits.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/counting_spanning_trees_directed.test.cpp
     title: verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
     title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/cycle_detection_directed.test.cpp
     title: verify/yosupo/cycle_detection_directed.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/cycle_detection_undirected.test.cpp
     title: verify/yosupo/cycle_detection_undirected.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/dc_range_prod.test.cpp
     title: verify/yosupo/dc_range_prod.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/dijkstra.test.cpp
     title: verify/yosupo/dijkstra.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/enumerate_triangles.test.cpp
     title: verify/yosupo/enumerate_triangles.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/majority_voting.test.cpp
     title: verify/yosupo/majority_voting.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_det.test.cpp
     title: verify/yosupo/matrix_det.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_det_array.test.cpp
     title: verify/yosupo/matrix_det_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_det_sparse.test.cpp
     title: verify/yosupo/matrix_det_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_inv.test.cpp
     title: verify/yosupo/matrix_inv.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_inv_array.test.cpp
     title: verify/yosupo/matrix_inv_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_pow.test.cpp
     title: verify/yosupo/matrix_pow.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_pow_array.test.cpp
     title: verify/yosupo/matrix_pow_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_product.test.cpp
     title: verify/yosupo/matrix_product.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_product_array.test.cpp
     title: verify/yosupo/matrix_product_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_rank.test.cpp
     title: verify/yosupo/matrix_rank.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_solve.test.cpp
     title: verify/yosupo/matrix_solve.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_solve_array.test.cpp
     title: verify/yosupo/matrix_solve_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/point_set_range_frequency.test.cpp
     title: verify/yosupo/point_set_range_frequency.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/retooting.test.cpp
     title: verify/yosupo/retooting.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/scc.test.cpp
     title: verify/yosupo/scc.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/tree_diameter.test.cpp
     title: verify/yosupo/tree_diameter.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/yuki2215_dc.test.cpp
     title: verify/yukicoder/yuki2215_dc.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/yuki310.test.cpp
     title: verify/yukicoder/yuki310.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/yuki430_aho_corasick.test.cpp
     title: verify/yukicoder/yuki430_aho_corasick.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/ds/csr.md
     document_title: CSR
@@ -334,9 +340,11 @@ data:
     \ &v : vs)\n    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class\
     \ T>\nvc<T> concat(const vc<T> &v) { return v; }\ntemplate <class T, class...\
     \ Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)),\
-    \ ...);\n  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v,\
-    \ I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i\
-    \ < 0)\n    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \ ...);\n  return v;\n}\n\ntemplate <class T>\nvc<T> merged(const vc<T> &a, const\
+    \ vc<T> &b)\n{\n  vc<T> res;\n  merge(ALL(a), ALL(b), back_inserter(res));\n \
+    \ return res;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
+    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
+    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
     \  return v[i];\n}\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define\
     \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 10 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
@@ -525,47 +533,46 @@ data:
     \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
     \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\n// (ok, ng)\ntemplate <class T = ll, class\
     \ Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge,\
-    \ const InitOk &init_ok, const InitNg &init_ng, bool check_ok = true, bool check_ng\
+    \ InitOk init_ok, InitNg init_ng, bool check_ok = true, bool check_ng = true)\n\
+    {\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n  if\
+    \ (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok != 1)\n\
+    \  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) =\
+    \ mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
+    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, InitOk init_ok,\
+    \ InitNg init_ng, int iteration_count = 100, bool check_ok = true, bool check_ng\
     \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
-    \  if (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok !=\
-    \ 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng)\
-    \ = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
-    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk &init_ok,\
-    \ const InitNg &init_ng, int iteration_count = 100, bool check_ok = true, bool\
-    \ check_ng = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
     \  if (check_ng)\n    assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n \
     \   T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n\
     }\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T, T>\
-    \ expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
-    {\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val\
-    \ + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng,\
-    \ ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng\
-    \ = init_val, ok = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok);\
-    \ i++)\n      ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n\
-    \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
-    \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line\
-    \ 2 \"template/template_bit.hpp\"\n\n#line 5 \"template/template_bit.hpp\"\n\n\
-    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\
-    \u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ntemplate <class T>\n\
-    inline constexpr ull pow2(T k) { return 1ULL << k; }\ntemplate <class T>\ninline\
-    \ constexpr ull MASK(T k) { return (1ULL << k) - 1ULL; }\n\n#if __cplusplus <\
-    \ 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\
-    \u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ull bit_width(ull x) { return x == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0,\
-    \ 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ull bit_floor(ull x) { return\
-    \ x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8,\
-    \ 16, ...\ninline constexpr ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL\
-    \ << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull x) { assert(x !=\
-    \ 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull x) { return\
-    \ __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull x) { return\
-    \ popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ll bit_width(ll x) { return std::bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4,\
-    \ 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return std::bit_floor((ull)x);\
-    \ }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ll bit_ceil(ll x)\
-    \ { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll x) { assert(x\
-    \ != 0); return std::countr_zero((ull)x); }\ninline constexpr ll popcount(ll x)\
-    \ { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll x)\
-    \ { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
+    \ expsearch(const Judge &judge, InitVal init_val, bool positive = true)\n{\n \
+    \ T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val + (positive\
+    \ ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng, ng = init_val\
+    \ + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng = init_val, ok\
+    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok); i++)\n  \
+    \    ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  while\
+    \ (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n\
+    \    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line 2 \"template/template_bit.hpp\"\
+    \n\n#line 5 \"template/template_bit.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n\
+    \ */\n\ntemplate <class T>\ninline constexpr ull pow2(T k) { return 1ULL << k;\
+    \ }\ntemplate <class T>\ninline constexpr ull MASK(T k) { return (1ULL << k) -\
+    \ 1ULL; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\
+    \u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3,\
+    \ 3, 3, 4, 4, ... \ninline constexpr ull bit_width(ull x) { return x == 0 ? 0\
+    \ : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr\
+    \ ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n\
+    // 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ull bit_ceil(ull x) {\
+    \ return x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull\
+    \ x) { assert(x != 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull\
+    \ x) { return __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull\
+    \ x) { return popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ...\
+    \ \ninline constexpr ll bit_width(ll x) { return std::bit_width((ull)x); }\n//\
+    \ 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return\
+    \ std::bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr\
+    \ ll bit_ceil(ll x) { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll\
+    \ x) { assert(x != 0); return std::countr_zero((ull)x); }\ninline constexpr ll\
+    \ popcount(ll x) { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll\
+    \ x) { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
     \ x) { assert(x != 0); return countr_zero(x); }\ninline constexpr ull msb_pos(ull\
     \ x) { assert(x != 0); return bit_width(x) - 1; }\ninline constexpr ull lsb_mask(ull\
     \ x) { assert(x != 0); return x & -x; }\ninline constexpr ull msb_mask(ull x)\
@@ -789,77 +796,96 @@ data:
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
     \ 4 \"ds/csr.hpp\"\n\n/**\n * @brief CSR\n * @docs docs/ds/csr.md\n */\n\ntemplate\
-    \ <class T>\nstruct CSR\n{\nprotected:\n  int n, m;\n  // i (0 <= i < n) \u884C\
-    \u76EE\u3092\u8868\u3059\u306E\u306F elist \u306E [start[i], start[i+1])\n  vc<int>\
-    \ start;\n  vc<T> elist;\n  vc<int> eid_to_elistid;\n\n  struct Row\n  {\n   \
-    \ using iterator = typename vc<T>::const_iterator;\n\n  private:\n    iterator\
-    \ begi, endi;\n\n  public:\n    Row(const iterator &begi, const iterator &endi)\
-    \ : begi(begi), endi(endi) {}\n    inline iterator begin() const { return begi;\
-    \ }\n    inline iterator end() const { return endi; }\n    template <class I =\
-    \ ll>\n    inline I size() const { return endi - begi; }\n    inline bool empty()\
-    \ const { return size() == 0; }\n\n    inline T operator[](int i) const { return\
-    \ *(begi + i); }\n    inline T at(int i) const\n    {\n      assert(0 <= i &&\
-    \ i < size());\n      return *(begi + i);\n    }\n\n    inline T front() const\n\
-    \    {\n      assert(!empty());\n      return *begi;\n    }\n    inline T back()\
-    \ const\n    {\n      assert(!empty());\n      return *prev(endi);\n    }\n\n\
-    \    vc<T> to_v() const { return vc<T>(ALL(*this)); }\n  };\n\npublic:\n  CSR()\
-    \ {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template <class\
-    \ I>\n  CSR(int n, const vc<pair<I, T>> &ies) : n(n), m(ies.size()), start(n,\
-    \ 0), elist(m), eid_to_elistid(m)\n  {\n    fec([ i, e ] : ies)\n    {\n     \
-    \ assert(0 <= i && i < n);\n      start[i]++;\n    }\n    start = cumlsum(start);\n\
-    \    auto cnt = start;\n    repi(j, m)\n    {\n      cauto &[i, e] = ies[j];\n\
-    \      int &k = cnt[i];\n      elist[k] = e;\n      eid_to_elistid[j] = k;\n \
-    \     k++;\n    }\n  }\n  // vv[i] \u306B elem \u305F\u3061\u304C\u683C\u7D0D\u3055\
-    \u308C\u305F vector\n  CSR(const vvc<T> &vv) : n(vv.size()), start(n + 1, 0)\n\
-    \  {\n    m = 0;\n    fec(row : vv) m += row.size();\n    elist.resize(m);\n \
-    \   eid_to_elistid.resize(m);\n    int k = 0;\n    for (int i = 0, j = 0; i <\
-    \ n; i++)\n    {\n      start[i] = k;\n      fec(e : vv[i])\n      {\n       \
-    \ elist[k] = e;\n        eid_to_elistid[j++] = k;\n        k++;\n      }\n   \
-    \ }\n    start.back() = m;\n  }\n\n  Row operator[](int i) const { return Row(elist.begin()\
-    \ + start[i], elist.begin() + start[i + 1]); }\n  Row at(int i) const\n  {\n \
-    \   if (!(0 <= i && i < n))\n      return Row(elist.begin(), elist.begin());\n\
-    \    return Row(elist.begin() + start[i], elist.begin() + start[i + 1]);\n  }\n\
-    \n  template <class I = ll>\n  I size() const { return n; }\n\n  const T &find_by_eid(int\
-    \ eid) const\n  {\n    assert(0 <= eid && eid < m);\n    return elist[eid_to_elistid[eid]];\n\
-    \  }\n\n  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i]\
-    \ = {elist.begin() + start[i], elist.begin() + start[i + 1]};\n    return res;\n\
-    \  }\n};\n"
-  code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
-    /**\n * @brief CSR\n * @docs docs/ds/csr.md\n */\n\ntemplate <class T>\nstruct\
-    \ CSR\n{\nprotected:\n  int n, m;\n  // i (0 <= i < n) \u884C\u76EE\u3092\u8868\
-    \u3059\u306E\u306F elist \u306E [start[i], start[i+1])\n  vc<int> start;\n  vc<T>\
-    \ elist;\n  vc<int> eid_to_elistid;\n\n  struct Row\n  {\n    using iterator =\
-    \ typename vc<T>::const_iterator;\n\n  private:\n    iterator begi, endi;\n\n\
-    \  public:\n    Row(const iterator &begi, const iterator &endi) : begi(begi),\
-    \ endi(endi) {}\n    inline iterator begin() const { return begi; }\n    inline\
-    \ iterator end() const { return endi; }\n    template <class I = ll>\n    inline\
-    \ I size() const { return endi - begi; }\n    inline bool empty() const { return\
-    \ size() == 0; }\n\n    inline T operator[](int i) const { return *(begi + i);\
-    \ }\n    inline T at(int i) const\n    {\n      assert(0 <= i && i < size());\n\
-    \      return *(begi + i);\n    }\n\n    inline T front() const\n    {\n     \
-    \ assert(!empty());\n      return *begi;\n    }\n    inline T back() const\n \
-    \   {\n      assert(!empty());\n      return *prev(endi);\n    }\n\n    vc<T>\
-    \ to_v() const { return vc<T>(ALL(*this)); }\n  };\n\npublic:\n  CSR() {}\n  //\
-    \ (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template <class I>\n\
-    \  CSR(int n, const vc<pair<I, T>> &ies) : n(n), m(ies.size()), start(n, 0), elist(m),\
-    \ eid_to_elistid(m)\n  {\n    fec([ i, e ] : ies)\n    {\n      assert(0 <= i\
-    \ && i < n);\n      start[i]++;\n    }\n    start = cumlsum(start);\n    auto\
-    \ cnt = start;\n    repi(j, m)\n    {\n      cauto &[i, e] = ies[j];\n      int\
-    \ &k = cnt[i];\n      elist[k] = e;\n      eid_to_elistid[j] = k;\n      k++;\n\
-    \    }\n  }\n  // vv[i] \u306B elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\
-    \u305F vector\n  CSR(const vvc<T> &vv) : n(vv.size()), start(n + 1, 0)\n  {\n\
-    \    m = 0;\n    fec(row : vv) m += row.size();\n    elist.resize(m);\n    eid_to_elistid.resize(m);\n\
+    \ <class T, bool is_erasable = false>\nstruct CSR\n{\nprotected:\n  int n, m;\n\
+    \  // i (0 <= i < n) \u884C\u76EE\u3092\u8868\u3059\u306E\u306F elist \u306E [start[i],\
+    \ start[i+1])\n  // pop_back \u3059\u308B\u5834\u5408\u306F [start[i], start[i]\
+    \ + len[i])\n  vc<int> start;\n  vc<T> elist;\n  vc<int> len;\n  inline int get_last(int\
+    \ i) const\n  {\n    if constexpr (is_erasable)\n      return start[i] + len[i];\n\
+    \    else\n      return start[i + 1];\n  }\n\n  struct Row\n  {\n    using iterator\
+    \ = typename vc<T>::iterator;\n\n  private:\n    iterator begi, endi;\n\n  public:\n\
+    \    Row(const iterator &begi, const iterator &endi) : begi(begi), endi(endi)\
+    \ {}\n    inline iterator begin() const { return begi; }\n    inline iterator\
+    \ end() const { return endi; }\n    template <class I = ll>\n    inline I size()\
+    \ const { return endi - begi; }\n    inline bool empty() const { return size()\
+    \ == 0; }\n\n    inline T &operator[](int i) const { return *(begi + i); }\n \
+    \   inline T &at(int i) const\n    {\n      assert(0 <= i && i < size());\n  \
+    \    return *(begi + i);\n    }\n\n    inline T &front() const\n    {\n      assert(!empty());\n\
+    \      return *begi;\n    }\n    inline T &back() const\n    {\n      assert(!empty());\n\
+    \      return *prev(endi);\n    }\n\n    vc<T> to_v() const { return vc<T>(ALL(*this));\
+    \ }\n  };\n\npublic:\n  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\
+    \u305F vector\n  template <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) :\
+    \ n(n), m(ies.size()), start(n, 0), elist(m)\n  {\n    if constexpr (is_erasable)\n\
+    \      len.resize(n);\n    fec([ i, e ] : ies)\n    {\n      assert(0 <= i &&\
+    \ i < n);\n      start[i]++;\n    }\n    start = cumlsum(start);\n    if constexpr\
+    \ (is_erasable)\n      repi(i, n) len[i] = start[i + 1] - start[i];\n    auto\
+    \ cnt = start;\n    repi(j, m)\n    {\n      cauto & [ i, e ] = ies[j];\n    \
+    \  int &k = cnt[i];\n      elist[k] = e;\n      k++;\n    }\n  }\n  // vv[i] \u306B\
+    \ elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  CSR(const vvc<T>\
+    \ &vv) : n(vv.size()), start(n + 1, 0)\n  {\n    m = 0;\n    fec(row : vv) m +=\
+    \ row.size();\n    elist.resize(m);\n    if constexpr (is_erasable)\n      len.resize(n);\n\
     \    int k = 0;\n    for (int i = 0, j = 0; i < n; i++)\n    {\n      start[i]\
-    \ = k;\n      fec(e : vv[i])\n      {\n        elist[k] = e;\n        eid_to_elistid[j++]\
-    \ = k;\n        k++;\n      }\n    }\n    start.back() = m;\n  }\n\n  Row operator[](int\
-    \ i) const { return Row(elist.begin() + start[i], elist.begin() + start[i + 1]);\
-    \ }\n  Row at(int i) const\n  {\n    if (!(0 <= i && i < n))\n      return Row(elist.begin(),\
-    \ elist.begin());\n    return Row(elist.begin() + start[i], elist.begin() + start[i\
-    \ + 1]);\n  }\n\n  template <class I = ll>\n  I size() const { return n; }\n\n\
-    \  const T &find_by_eid(int eid) const\n  {\n    assert(0 <= eid && eid < m);\n\
-    \    return elist[eid_to_elistid[eid]];\n  }\n\n  vvc<T> to_vv() const\n  {\n\
-    \    vvc<T> res(n);\n    repi(i, n) res[i] = {elist.begin() + start[i], elist.begin()\
-    \ + start[i + 1]};\n    return res;\n  }\n};\n"
+    \ = k;\n      if constexpr (is_erasable)\n        len[i] = vv[i].size();\n   \
+    \   fec(e : vv[i])\n      {\n        elist[k] = e;\n        k++;\n      }\n  \
+    \  }\n    start.back() = m;\n  }\n\n  Row operator[](int i) { return Row(elist.begin()\
+    \ + start[i], elist.begin() + get_last(i)); }\n  Row operator[](int i) const\n\
+    \  {\n    auto beg = const_cast<vc<T> &>(elist).begin();\n    return Row(beg +\
+    \ start[i], beg + get_last(i));\n  }\n  Row at(int i)\n  {\n    if (!(0 <= i &&\
+    \ i < n))\n      return Row(elist.begin(), elist.begin());\n    return Row(elist.begin()\
+    \ + start[i], elist.begin() + get_last(i));\n  }\n  Row at(int i) const\n  {\n\
+    \    auto beg = const_cast<vc<T> &>(elist).begin();\n    if (!(0 <= i && i < n))\n\
+    \      return Row(beg, beg);\n    return Row(beg + start[i], beg + get_last(i));\n\
+    \  }\n\n  void pop_back(int i)\n  {\n    static_assert(is_erasable);\n    assert(len[i]\
+    \ > 0);\n    len[i]--;\n  }\n\n  template <class I = ll>\n  I size() const { return\
+    \ n; }\n\n  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i]\
+    \ = {elist.begin() + start[i], elist.begin() + start[i + 1]};\n    return res;\n\
+    \  }\n\n  vc<T> &get_elist() { return elist; }\n  const vc<T> &get_elist() const\
+    \ { return elist; }\n};\n"
+  code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
+    /**\n * @brief CSR\n * @docs docs/ds/csr.md\n */\n\ntemplate <class T, bool is_erasable\
+    \ = false>\nstruct CSR\n{\nprotected:\n  int n, m;\n  // i (0 <= i < n) \u884C\
+    \u76EE\u3092\u8868\u3059\u306E\u306F elist \u306E [start[i], start[i+1])\n  //\
+    \ pop_back \u3059\u308B\u5834\u5408\u306F [start[i], start[i] + len[i])\n  vc<int>\
+    \ start;\n  vc<T> elist;\n  vc<int> len;\n  inline int get_last(int i) const\n\
+    \  {\n    if constexpr (is_erasable)\n      return start[i] + len[i];\n    else\n\
+    \      return start[i + 1];\n  }\n\n  struct Row\n  {\n    using iterator = typename\
+    \ vc<T>::iterator;\n\n  private:\n    iterator begi, endi;\n\n  public:\n    Row(const\
+    \ iterator &begi, const iterator &endi) : begi(begi), endi(endi) {}\n    inline\
+    \ iterator begin() const { return begi; }\n    inline iterator end() const { return\
+    \ endi; }\n    template <class I = ll>\n    inline I size() const { return endi\
+    \ - begi; }\n    inline bool empty() const { return size() == 0; }\n\n    inline\
+    \ T &operator[](int i) const { return *(begi + i); }\n    inline T &at(int i)\
+    \ const\n    {\n      assert(0 <= i && i < size());\n      return *(begi + i);\n\
+    \    }\n\n    inline T &front() const\n    {\n      assert(!empty());\n      return\
+    \ *begi;\n    }\n    inline T &back() const\n    {\n      assert(!empty());\n\
+    \      return *prev(endi);\n    }\n\n    vc<T> to_v() const { return vc<T>(ALL(*this));\
+    \ }\n  };\n\npublic:\n  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\
+    \u305F vector\n  template <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) :\
+    \ n(n), m(ies.size()), start(n, 0), elist(m)\n  {\n    if constexpr (is_erasable)\n\
+    \      len.resize(n);\n    fec([ i, e ] : ies)\n    {\n      assert(0 <= i &&\
+    \ i < n);\n      start[i]++;\n    }\n    start = cumlsum(start);\n    if constexpr\
+    \ (is_erasable)\n      repi(i, n) len[i] = start[i + 1] - start[i];\n    auto\
+    \ cnt = start;\n    repi(j, m)\n    {\n      cauto & [ i, e ] = ies[j];\n    \
+    \  int &k = cnt[i];\n      elist[k] = e;\n      k++;\n    }\n  }\n  // vv[i] \u306B\
+    \ elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  CSR(const vvc<T>\
+    \ &vv) : n(vv.size()), start(n + 1, 0)\n  {\n    m = 0;\n    fec(row : vv) m +=\
+    \ row.size();\n    elist.resize(m);\n    if constexpr (is_erasable)\n      len.resize(n);\n\
+    \    int k = 0;\n    for (int i = 0, j = 0; i < n; i++)\n    {\n      start[i]\
+    \ = k;\n      if constexpr (is_erasable)\n        len[i] = vv[i].size();\n   \
+    \   fec(e : vv[i])\n      {\n        elist[k] = e;\n        k++;\n      }\n  \
+    \  }\n    start.back() = m;\n  }\n\n  Row operator[](int i) { return Row(elist.begin()\
+    \ + start[i], elist.begin() + get_last(i)); }\n  Row operator[](int i) const\n\
+    \  {\n    auto beg = const_cast<vc<T> &>(elist).begin();\n    return Row(beg +\
+    \ start[i], beg + get_last(i));\n  }\n  Row at(int i)\n  {\n    if (!(0 <= i &&\
+    \ i < n))\n      return Row(elist.begin(), elist.begin());\n    return Row(elist.begin()\
+    \ + start[i], elist.begin() + get_last(i));\n  }\n  Row at(int i) const\n  {\n\
+    \    auto beg = const_cast<vc<T> &>(elist).begin();\n    if (!(0 <= i && i < n))\n\
+    \      return Row(beg, beg);\n    return Row(beg + start[i], beg + get_last(i));\n\
+    \  }\n\n  void pop_back(int i)\n  {\n    static_assert(is_erasable);\n    assert(len[i]\
+    \ > 0);\n    len[i]--;\n  }\n\n  template <class I = ll>\n  I size() const { return\
+    \ n; }\n\n  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i]\
+    \ = {elist.begin() + start[i], elist.begin() + start[i + 1]};\n    return res;\n\
+    \  }\n\n  vc<T> &get_elist() { return elist; }\n  const vc<T> &get_elist() const\
+    \ { return elist; }\n};\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -875,63 +901,65 @@ data:
   isVerificationFile: false
   path: ds/csr.hpp
   requiredBy:
-  - ds/static_range/dc_range_prod.hpp
   - ds/query/point_set_range_frequency.hpp
   - ds/group_index.hpp
+  - ds/static_range/dc_range_prod.hpp
   - math/linalg/matrix_array.hpp
   - math/linalg/matrix.hpp
+  - graph/cliques.hpp
   - graph/subgraphs.hpp
-  - graph/triangles.hpp
-  - graph/tree/diameter.hpp
-  - graph/tree/rerooting.hpp
-  - graph/tree/rooted_tree.hpp
-  - graph/contraction.hpp
-  - graph/cycle_detection.hpp
-  - graph/connected_components.hpp
-  - graph/graph.hpp
   - graph/sssp.hpp
   - graph/matrix_tree.hpp
+  - graph/connected_components.hpp
+  - graph/contraction.hpp
+  - graph/triangles.hpp
   - graph/scc.hpp
-  timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  - graph/cycle_detection.hpp
+  - graph/graph.hpp
+  - graph/tree/rerooting.hpp
+  - graph/tree/diameter.hpp
+  - graph/tree/rooted_tree.hpp
+  - verify/yosupo/enumerate_cliques.cpp
+  timestamp: '2026-01-04 17:26:22+09:00'
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
-  - verify/mytest/rmq.test.cpp
-  - verify/yosupo/matrix_det_sparse.test.cpp
-  - verify/yosupo/matrix_rank.test.cpp
-  - verify/yosupo/matrix_pow.test.cpp
-  - verify/yosupo/enumerate_triangles.test.cpp
-  - verify/yosupo/matrix_inv.test.cpp
-  - verify/yosupo/retooting.test.cpp
-  - verify/yosupo/dc_range_prod.test.cpp
-  - verify/yosupo/scc.test.cpp
-  - verify/yosupo/matrix_solve.test.cpp
-  - verify/yosupo/counting_eularian_circuits.test.cpp
-  - verify/yosupo/matrix_det_array.test.cpp
-  - verify/yosupo/point_set_range_frequency.test.cpp
-  - verify/yosupo/dijkstra.test.cpp
-  - verify/yosupo/cycle_detection_undirected.test.cpp
-  - verify/yosupo/cycle_detection_directed.test.cpp
-  - verify/yosupo/majority_voting.test.cpp
-  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - verify/yosupo/matrix_product.test.cpp
-  - verify/yosupo/matrix_pow_array.test.cpp
-  - verify/yosupo/matrix_solve_array.test.cpp
-  - verify/yosupo/matrix_det.test.cpp
-  - verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - verify/yosupo/matrix_inv_array.test.cpp
-  - verify/yosupo/static_range_frequency.test.cpp
-  - verify/yosupo/tree_diameter.test.cpp
-  - verify/yosupo/matrix_product_array.test.cpp
-  - verify/yukicoder/yuki430_aho_corasick.test.cpp
-  - verify/yukicoder/yuki2215_dc.test.cpp
-  - verify/yukicoder/yuki310.test.cpp
-  - verify/aoj/rooted_tree_from_parent.test.cpp
-  - verify/aoj/bfs01.test.cpp
-  - verify/aoj/connected_components.test.cpp
+  - verify/aoj/bfs.test.cpp
   - verify/aoj/bellman_ford.test.cpp
   - verify/aoj/csr.test.cpp
-  - verify/aoj/bfs.test.cpp
+  - verify/aoj/bfs01.test.cpp
+  - verify/aoj/connected_components.test.cpp
+  - verify/aoj/rooted_tree_from_parent.test.cpp
   - verify/aoj/rooted_tree_from_edges.test.cpp
+  - verify/mytest/rmq.test.cpp
+  - verify/yukicoder/yuki310.test.cpp
+  - verify/yukicoder/yuki2215_dc.test.cpp
+  - verify/yukicoder/yuki430_aho_corasick.test.cpp
+  - verify/yosupo/retooting.test.cpp
+  - verify/yosupo/matrix_det_sparse.test.cpp
+  - verify/yosupo/static_range_frequency.test.cpp
+  - verify/yosupo/point_set_range_frequency.test.cpp
+  - verify/yosupo/matrix_pow.test.cpp
+  - verify/yosupo/dijkstra.test.cpp
+  - verify/yosupo/cycle_detection_undirected.test.cpp
+  - verify/yosupo/matrix_solve.test.cpp
+  - verify/yosupo/matrix_rank.test.cpp
+  - verify/yosupo/matrix_det.test.cpp
+  - verify/yosupo/counting_spanning_trees_directed.test.cpp
+  - verify/yosupo/scc.test.cpp
+  - verify/yosupo/cycle_detection_directed.test.cpp
+  - verify/yosupo/tree_diameter.test.cpp
+  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
+  - verify/yosupo/matrix_product.test.cpp
+  - verify/yosupo/dc_range_prod.test.cpp
+  - verify/yosupo/enumerate_triangles.test.cpp
+  - verify/yosupo/matrix_product_array.test.cpp
+  - verify/yosupo/matrix_inv_array.test.cpp
+  - verify/yosupo/majority_voting.test.cpp
+  - verify/yosupo/matrix_pow_array.test.cpp
+  - verify/yosupo/matrix_solve_array.test.cpp
+  - verify/yosupo/matrix_det_array.test.cpp
+  - verify/yosupo/counting_eularian_circuits.test.cpp
+  - verify/yosupo/matrix_inv.test.cpp
 documentation_of: ds/csr.hpp
 layout: document
 redirect_from:

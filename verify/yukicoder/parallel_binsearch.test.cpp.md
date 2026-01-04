@@ -1,56 +1,56 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: algo/parallel_binsearch.hpp
     title: "\u4E26\u5217\u4E8C\u5206\u63A2\u7D22"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/uf/uf.hpp
     title: UnionFind
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://yukicoder.me/problems/no/2786
@@ -184,9 +184,11 @@ data:
     \ &v : vs)\n    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class\
     \ T>\nvc<T> concat(const vc<T> &v) { return v; }\ntemplate <class T, class...\
     \ Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)),\
-    \ ...);\n  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v,\
-    \ I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i\
-    \ < 0)\n    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \ ...);\n  return v;\n}\n\ntemplate <class T>\nvc<T> merged(const vc<T> &a, const\
+    \ vc<T> &b)\n{\n  vc<T> res;\n  merge(ALL(a), ALL(b), back_inserter(res));\n \
+    \ return res;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
+    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
+    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
     \  return v[i];\n}\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define\
     \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 10 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
@@ -375,47 +377,46 @@ data:
     \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
     \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\n// (ok, ng)\ntemplate <class T = ll, class\
     \ Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge,\
-    \ const InitOk &init_ok, const InitNg &init_ng, bool check_ok = true, bool check_ng\
+    \ InitOk init_ok, InitNg init_ng, bool check_ok = true, bool check_ng = true)\n\
+    {\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n  if\
+    \ (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok != 1)\n\
+    \  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) =\
+    \ mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
+    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, InitOk init_ok,\
+    \ InitNg init_ng, int iteration_count = 100, bool check_ok = true, bool check_ng\
     \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
-    \  if (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok !=\
-    \ 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng)\
-    \ = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
-    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk &init_ok,\
-    \ const InitNg &init_ng, int iteration_count = 100, bool check_ok = true, bool\
-    \ check_ng = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
     \  if (check_ng)\n    assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n \
     \   T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n\
     }\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T, T>\
-    \ expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
-    {\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val\
-    \ + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng,\
-    \ ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng\
-    \ = init_val, ok = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok);\
-    \ i++)\n      ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n\
-    \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
-    \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line\
-    \ 2 \"template/template_bit.hpp\"\n\n#line 5 \"template/template_bit.hpp\"\n\n\
-    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\
-    \u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ntemplate <class T>\n\
-    inline constexpr ull pow2(T k) { return 1ULL << k; }\ntemplate <class T>\ninline\
-    \ constexpr ull MASK(T k) { return (1ULL << k) - 1ULL; }\n\n#if __cplusplus <\
-    \ 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\
-    \u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ull bit_width(ull x) { return x == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0,\
-    \ 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ull bit_floor(ull x) { return\
-    \ x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8,\
-    \ 16, ...\ninline constexpr ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL\
-    \ << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull x) { assert(x !=\
-    \ 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull x) { return\
-    \ __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull x) { return\
-    \ popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ll bit_width(ll x) { return std::bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4,\
-    \ 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return std::bit_floor((ull)x);\
-    \ }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ll bit_ceil(ll x)\
-    \ { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll x) { assert(x\
-    \ != 0); return std::countr_zero((ull)x); }\ninline constexpr ll popcount(ll x)\
-    \ { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll x)\
-    \ { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
+    \ expsearch(const Judge &judge, InitVal init_val, bool positive = true)\n{\n \
+    \ T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val + (positive\
+    \ ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng, ng = init_val\
+    \ + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng = init_val, ok\
+    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok); i++)\n  \
+    \    ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  while\
+    \ (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n\
+    \    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line 2 \"template/template_bit.hpp\"\
+    \n\n#line 5 \"template/template_bit.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n\
+    \ */\n\ntemplate <class T>\ninline constexpr ull pow2(T k) { return 1ULL << k;\
+    \ }\ntemplate <class T>\ninline constexpr ull MASK(T k) { return (1ULL << k) -\
+    \ 1ULL; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\
+    \u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3,\
+    \ 3, 3, 4, 4, ... \ninline constexpr ull bit_width(ull x) { return x == 0 ? 0\
+    \ : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr\
+    \ ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n\
+    // 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ull bit_ceil(ull x) {\
+    \ return x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull\
+    \ x) { assert(x != 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull\
+    \ x) { return __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull\
+    \ x) { return popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ...\
+    \ \ninline constexpr ll bit_width(ll x) { return std::bit_width((ull)x); }\n//\
+    \ 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return\
+    \ std::bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr\
+    \ ll bit_ceil(ll x) { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll\
+    \ x) { assert(x != 0); return std::countr_zero((ull)x); }\ninline constexpr ll\
+    \ popcount(ll x) { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll\
+    \ x) { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
     \ x) { assert(x != 0); return countr_zero(x); }\ninline constexpr ull msb_pos(ull\
     \ x) { assert(x != 0); return bit_width(x) - 1; }\ninline constexpr ull lsb_mask(ull\
     \ x) { assert(x != 0); return x & -x; }\ninline constexpr ull msb_mask(ull x)\
@@ -690,33 +691,40 @@ data:
     \  }\n};\n#line 2 \"algo/parallel_binsearch.hpp\"\n\n#line 4 \"algo/parallel_binsearch.hpp\"\
     \n\n/**\n * @brief \u4E26\u5217\u4E8C\u5206\u63A2\u7D22\n * @docs docs/algo/parallel_binsearch.md\n\
     \ */\n\n// vc<bool> judge(vc<ll>): q \u500B\u306E\u8CEA\u554F\u306B\u307E\u3068\
-    \u3081\u3066\u7B54\u3048\u308B\n// (oks, ngs)\ntemplate <class T = ll, class Judge,\
-    \ class InitOk, class InitNg>\npair<vc<T>, vc<T>> parallel_binsearch(int q, const\
-    \ Judge &judge, const InitOk &init_ok, const InitNg &init_ng)\n{\n  vc<T> oks(q,\
-    \ init_ok), ngs(q, init_ng);\n  while (true)\n  {\n    vc<T> mids(q);\n    bool\
-    \ end = true;\n    repi(i, q)\n    {\n      if (oks[i] - ngs[i] != 1 && ngs[i]\
-    \ - oks[i] != 1)\n        end = false;\n      mids[i] = (oks[i] & ngs[i]) + ((oks[i]\
-    \ ^ ngs[i]) >> 1);\n    }\n    if (end)\n      break;\n    auto res = judge(mids);\n\
-    \    repi(i, q) (res[i] ? oks[i] : ngs[i]) = mids[i];\n  }\n  return {oks, ngs};\n\
-    }\n// vc<bool> judge(vc<ld>): q \u500B\u306E\u8CEA\u554F\u306B\u307E\u3068\u3081\
-    \u3066\u7B54\u3048\u308B\ntemplate <class T = ld, class Judge, class InitOk, class\
-    \ InitNg>\nvc<T> parallel_binsearch_real(int q, const Judge &judge, const InitOk\
-    \ &init_ok, const InitNg &init_ng, int iteration_count = 100)\n{\n  vc<T> oks(q,\
-    \ init_ok), ngs(q, init_ng);\n  repi(_, iteration_count)\n  {\n    vc<T> mids(q);\n\
-    \    repi(i, q) mids[i] = (oks[i] + ngs[i]) / 2;\n    auto res = judge(mids);\n\
-    \    repi(i, q) (res[i] ? oks[i] : ngs[i]) = mids[i];\n  }\n  return oks;\n}\n\
-    #line 20 \"verify/yukicoder/parallel_binsearch.test.cpp\"\n\nvoid init() {}\n\n\
-    void main2()\n{\n  LL(H, W);\n  VEC2(ll, H, W, A);\n  vc<tlll> UVW;\n  rep(i,\
-    \ H) rep(j, W)\n  {\n    ll u = i * W + j;\n    if (i != H - 1)\n    {\n     \
-    \ ll v = (i + 1) * W + j;\n      ll w = max(A.at(i).at(j), A.at(i + 1).at(j));\n\
-    \      UVW.eb(u, v, w);\n    }\n    if (j != W - 1)\n    {\n      ll v = i * W\
-    \ + (j + 1);\n      ll w = max(A.at(i).at(j), A.at(i).at(j + 1));\n      UVW.eb(u,\
-    \ v, w);\n    }\n  }\n  LL(Q);\n  vl S(Q), T(Q);\n  rep(q, Q)\n  {\n    LL(si,\
-    \ sj, ti, tj);\n    si--, sj--, ti--, tj--;\n    S.at(q) = si * W + sj;\n    T.at(q)\
-    \ = ti * W + tj;\n  }\n\n  vc<bool> res(Q);\n  UnionFind<UFDataEmpty<>> uf(H *\
-    \ W);\n  vvc<pll> ev_merge(H * W + 1);\n  vvc<ll> ev_same(H * W + 1);\n  auto\
-    \ judge = [&](const vl &C)\n  {\n    // w 1 u v: \u6642\u523B w+0.1 \u306B\u8FBA\
-    \ u, v \u3092\u8FFD\u52A0\n    // c 2 q -1: \u6642\u523B c+0.2 \u306B S[q], T[q]\
+    \u3081\u3066\u7B54\u3048\u308B\n// (oks, ngs) \u3092\u8FD4\u3059\ntemplate <class\
+    \ T = ll, class Judge, class InitOk, class InitNg>\npair<vc<T>, vc<T>> parallel_binsearch(int\
+    \ q, const Judge &judge, InitOk init_ok, InitNg init_ng, bool check_ok = true,\
+    \ bool check_ng = true)\n{\n  if (check_ok)\n  {\n    auto res = judge(vc<T>(q,\
+    \ init_ok));\n    assert(all_of(ALL(res), LMD(x, x)));\n  }\n  if (check_ng)\n\
+    \  {\n    auto res = judge(vc<T>(q, init_ng));\n    assert(all_of(ALL(res), LMD(x,\
+    \ !x)));\n  }\n  vc<T> oks(q, init_ok), ngs(q, init_ng);\n  while (true)\n  {\n\
+    \    vc<T> mids(q);\n    bool end = true;\n    repi(i, q)\n    {\n      if (oks[i]\
+    \ - ngs[i] != 1 && ngs[i] - oks[i] != 1)\n        end = false;\n      mids[i]\
+    \ = (oks[i] & ngs[i]) + ((oks[i] ^ ngs[i]) >> 1);\n    }\n    if (end)\n     \
+    \ break;\n    auto res = judge(mids);\n    repi(i, q) (res[i] ? oks[i] : ngs[i])\
+    \ = mids[i];\n  }\n  return {oks, ngs};\n}\n// vc<bool> judge(vc<ld>): q \u500B\
+    \u306E\u8CEA\u554F\u306B\u307E\u3068\u3081\u3066\u7B54\u3048\u308B\ntemplate <class\
+    \ T = ld, class Judge, class InitOk, class InitNg>\nvc<T> parallel_binsearch_real(int\
+    \ q, const Judge &judge, InitOk init_ok, InitNg init_ng, int iteration_count =\
+    \ 100, bool check_ok = true, bool check_ng = true)\n{\n  if (check_ok)\n  {\n\
+    \    auto res = judge(vc<T>(q, init_ok));\n    assert(all_of(ALL(res), LMD(x,\
+    \ x)));\n  }\n  if (check_ng)\n  {\n    auto res = judge(vc<T>(q, init_ng));\n\
+    \    assert(all_of(ALL(res), LMD(x, !x)));\n  }\n  vc<T> oks(q, init_ok), ngs(q,\
+    \ init_ng);\n  repi(_, iteration_count)\n  {\n    vc<T> mids(q);\n    repi(i,\
+    \ q) mids[i] = (oks[i] + ngs[i]) / 2;\n    auto res = judge(mids);\n    repi(i,\
+    \ q) (res[i] ? oks[i] : ngs[i]) = mids[i];\n  }\n  return oks;\n}\n#line 20 \"\
+    verify/yukicoder/parallel_binsearch.test.cpp\"\n\nvoid init() {}\n\nvoid main2()\n\
+    {\n  LL(H, W);\n  VEC2(ll, H, W, A);\n  vc<tlll> UVW;\n  rep(i, H) rep(j, W)\n\
+    \  {\n    ll u = i * W + j;\n    if (i != H - 1)\n    {\n      ll v = (i + 1)\
+    \ * W + j;\n      ll w = max(A.at(i).at(j), A.at(i + 1).at(j));\n      UVW.eb(u,\
+    \ v, w);\n    }\n    if (j != W - 1)\n    {\n      ll v = i * W + (j + 1);\n \
+    \     ll w = max(A.at(i).at(j), A.at(i).at(j + 1));\n      UVW.eb(u, v, w);\n\
+    \    }\n  }\n  LL(Q);\n  vl S(Q), T(Q);\n  rep(q, Q)\n  {\n    LL(si, sj, ti,\
+    \ tj);\n    si--, sj--, ti--, tj--;\n    S.at(q) = si * W + sj;\n    T.at(q) =\
+    \ ti * W + tj;\n  }\n\n  vc<bool> res(Q);\n  UnionFind<UFDataEmpty<>> uf(H * W);\n\
+    \  vvc<pll> ev_merge(H * W + 1);\n  vvc<ll> ev_same(H * W + 1);\n  auto judge\
+    \ = [&](const vl &C)\n  {\n    // w 1 u v: \u6642\u523B w+0.1 \u306B\u8FBA u,\
+    \ v \u3092\u8FFD\u52A0\n    // c 2 q -1: \u6642\u523B c+0.2 \u306B S[q], T[q]\
     \ \u304C\u9023\u7D50\u304B\u7B54\u3048\u308B\n    uf = decltype(uf)(H * W);\n\
     \    rep(time, H * W + 1)\n    {\n      ev_merge.at(time).clear();\n      ev_same.at(time).clear();\n\
     \    }\n    fec([ u, v, w ] : UVW) ev_merge.at(w).eb(u, v);\n    rep(q, Q) ev_same.at(C.at(q)).eb(q);\n\
@@ -785,8 +793,8 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/parallel_binsearch.test.cpp
   requiredBy: []
-  timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2026-01-04 17:26:22+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yukicoder/parallel_binsearch.test.cpp
 layout: document

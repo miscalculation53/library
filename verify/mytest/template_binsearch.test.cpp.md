@@ -1,22 +1,22 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -156,9 +156,11 @@ data:
     \ &v : vs)\n    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class\
     \ T>\nvc<T> concat(const vc<T> &v) { return v; }\ntemplate <class T, class...\
     \ Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)),\
-    \ ...);\n  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v,\
-    \ I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i\
-    \ < 0)\n    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \ ...);\n  return v;\n}\n\ntemplate <class T>\nvc<T> merged(const vc<T> &a, const\
+    \ vc<T> &b)\n{\n  vc<T> res;\n  merge(ALL(a), ALL(b), back_inserter(res));\n \
+    \ return res;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
+    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
+    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
     \  return v[i];\n}\n#line 6 \"template/template_binsearch.hpp\"\n\n/**\n * @brief\
     \ \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09\n *\
     \ @docs docs/template/template_binsearch.md\n */\n\ntemplate <class T>\nstruct\
@@ -249,82 +251,81 @@ data:
     \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
     \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\n// (ok, ng)\ntemplate <class T = ll, class\
     \ Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge,\
-    \ const InitOk &init_ok, const InitNg &init_ng, bool check_ok = true, bool check_ng\
+    \ InitOk init_ok, InitNg init_ng, bool check_ok = true, bool check_ng = true)\n\
+    {\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n  if\
+    \ (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok != 1)\n\
+    \  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) =\
+    \ mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
+    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, InitOk init_ok,\
+    \ InitNg init_ng, int iteration_count = 100, bool check_ok = true, bool check_ng\
     \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
-    \  if (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok !=\
-    \ 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng)\
-    \ = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
-    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk &init_ok,\
-    \ const InitNg &init_ng, int iteration_count = 100, bool check_ok = true, bool\
-    \ check_ng = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
     \  if (check_ng)\n    assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n \
     \   T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n\
     }\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T, T>\
-    \ expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
-    {\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val\
-    \ + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng,\
-    \ ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng\
-    \ = init_val, ok = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok);\
-    \ i++)\n      ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n\
-    \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
-    \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line\
-    \ 2 \"template/template_dump.hpp\"\n\n#line 4 \"template/template_dump.hpp\"\n\
-    \n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs\
-    \ docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp>\
-    \ // https://github.com/philip82148/cpp-dump\nnamespace cpp_dump::_detail\n{\n\
-    \  inline string export_var(\n      const i128 &x, const string &indent, size_t\
-    \ last_line_length,\n      size_t current_depth, bool fail_on_newline, const export_command\
-    \ &command\n  ) {\n    return export_var(i128tos(x), indent, last_line_length,\
-    \ current_depth, fail_on_newline, command);\n  }\n} // namespace cpp_dump::_detail\n\
-    #define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
-    \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n\
-    #define local(...) __VA_ARGS__\n#define oj(...)\n#define local_oj(a, b) (a)\n\
-    #else\n#define dump(...)\n#define local(...)\n#define oj(...) __VA_ARGS__\n#define\
-    \ local_oj(a, b) (b)\n#endif\n\ntemplate <class T, class Sequence>\nvc<T> content(queue<T,\
-    \ Sequence> que)\n{\n  vc<T> res;\n  while (!que.empty())\n  {\n    res.eb(que.front());\n\
-    \    que.pop();\n  }\n  return res;\n}\ntemplate <class T, class Sequence, class\
-    \ Compare>\nvc<T> content(priority_queue<T, Sequence, Compare> pque)\n{\n  vc<T>\
-    \ res;\n  while (!pque.empty())\n  {\n    res.eb(pque.top());\n    pque.pop();\n\
-    \  }\n  return res;\n}\n#line 5 \"verify/mytest/template_binsearch.test.cpp\"\n\
-    \nmt19937 mt;\nvoid test1()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i,\
-    \ n) a[i] = 1 + mt() % 10;\n  sort(ALL(a));\n  ll k = -1 + mt() % 12;\n\n  ll\
-    \ i1, i2, i3;\n\n  i1 = LB(a, k);\n  i2 = binsearch([&](ll i)\n              \
-    \    { return k <= vecget(a, i); }, SZ<int>(a), -1)\n            .first;\n  i3\
-    \ = expsearch([&](ll i)\n                  { return k <= vecget(a, i); }, 0, true)\n\
-    \            .first;\n  assert(i1 == i2 && i2 == i3);\n\n  i1 = UB(a, k);\n  i2\
-    \ = binsearch([&](ll i)\n                  { return k < vecget(a, i); }, SZ<int>(a),\
-    \ -1)\n            .first;\n  i3 = expsearch([&](ll i)\n                  { return\
-    \ k < vecget(a, i); }, 0, true)\n            .first;\n  assert(i1 == i2 && i2\
-    \ == i3);\n}\n\nvoid test2()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i,\
-    \ n) a[i] = 1 + mt() % 10;\n  sort(ALL(a));\n  ll k = -1 + mt() % 12;\n\n  ll\
-    \ i1, i2;\n  i1 = lt_max(a, k);\n  i2 = expsearch([&](ll i)\n                \
-    \ { return vecget(a, i) < k; }, 0, true)\n           .first;\n  assert(i1 == i2);\n\
-    \  i1 = leq_max(a, k);\n  i2 = expsearch([&](ll i)\n                 { return\
-    \ vecget(a, i) <= k; }, 0, true)\n           .first;\n  assert(i1 == i2);\n  i1\
-    \ = gt_min(a, k);\n  i2 = expsearch([&](ll i)\n                 { return k < vecget(a,\
-    \ i); }, 0, true)\n           .first;\n  assert(i1 == i2);\n  i1 = geq_min(a,\
-    \ k);\n  i2 = expsearch([&](ll i)\n                 { return k <= vecget(a, i);\
-    \ }, 0, true)\n           .first;\n  assert(i1 == i2);\n\n  i1 = lt_cnt(a, k);\n\
-    \  i2 = count_if(ALL(a), [&](ll ai)\n                { return ai < k; });\n  assert(i1\
-    \ == i2);\n  i1 = leq_cnt(a, k);\n  i2 = count_if(ALL(a), [&](ll ai)\n       \
-    \         { return ai <= k; });\n  assert(i1 == i2);\n  i1 = gt_cnt(a, k);\n \
-    \ i2 = count_if(ALL(a), [&](ll ai)\n                { return k < ai; });\n  assert(i1\
-    \ == i2);\n  i1 = geq_cnt(a, k);\n  i2 = count_if(ALL(a), [&](ll ai)\n       \
-    \         { return k <= ai; });\n  assert(i1 == i2);\n}\n\nvoid test3()\n{\n \
-    \ vc<int> v = {1, 3, 5, 7, 9};\n  int i = leq_max(v, 6);\n  assert(v[i] == 5);\n\
-    \  set<int> s = {1, 3, 5, 7, 9};\n  auto it = leq_max(s, 6);\n  assert(*it ==\
-    \ 5);\n}\n\n// https://atcoder.jp/contests/kupc2013/tasks/kupc2013_a\nvoid test4()\n\
-    {\n  using P = pair<int, string>;\n  auto solve = [](int q, vc<P> v) -> string\n\
-    \  {\n    v.insert(v.begin(), {1, \"kogakubu10gokan\"});\n    int i = leq_max(v,\
-    \ q, {}, [](const P &p)\n                    { return p.first; });\n    return\
-    \ v[i].second;\n  };\n\n  assert(solve(12, {\n    {5, \"sogo5gokan\"},\n    {10,\
-    \ \"sogo10gokan\"},\n    {15, \"sogo15gokan\"}\n  }) == \"sogo10gokan\");\n  assert(solve(10,\
+    \ expsearch(const Judge &judge, InitVal init_val, bool positive = true)\n{\n \
+    \ T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val + (positive\
+    \ ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng, ng = init_val\
+    \ + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng = init_val, ok\
+    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok); i++)\n  \
+    \    ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  while\
+    \ (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n\
+    \    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line 2 \"template/template_dump.hpp\"\
+    \n\n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
+    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
+    \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
+    \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
+    \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
+    \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
+    \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n#define local(...) __VA_ARGS__\n\
+    #define oj(...)\n#define local_oj(a, b) (a)\n#else\n#define dump(...)\n#define\
+    \ local(...)\n#define oj(...) __VA_ARGS__\n#define local_oj(a, b) (b)\n#endif\n\
+    \ntemplate <class T, class Sequence>\nvc<T> content(queue<T, Sequence> que)\n\
+    {\n  vc<T> res;\n  while (!que.empty())\n  {\n    res.eb(que.front());\n    que.pop();\n\
+    \  }\n  return res;\n}\ntemplate <class T, class Sequence, class Compare>\nvc<T>\
+    \ content(priority_queue<T, Sequence, Compare> pque)\n{\n  vc<T> res;\n  while\
+    \ (!pque.empty())\n  {\n    res.eb(pque.top());\n    pque.pop();\n  }\n  return\
+    \ res;\n}\n#line 5 \"verify/mytest/template_binsearch.test.cpp\"\n\nmt19937 mt;\n\
+    void test1()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i, n) a[i] = 1 + mt()\
+    \ % 10;\n  sort(ALL(a));\n  ll k = -1 + mt() % 12;\n\n  ll i1, i2, i3;\n\n  i1\
+    \ = LB(a, k);\n  i2 = binsearch([&](ll i)\n                  { return k <= vecget(a,\
+    \ i); }, SZ<int>(a), -1)\n            .first;\n  i3 = expsearch([&](ll i)\n  \
+    \                { return k <= vecget(a, i); }, 0, true)\n            .first;\n\
+    \  assert(i1 == i2 && i2 == i3);\n\n  i1 = UB(a, k);\n  i2 = binsearch([&](ll\
+    \ i)\n                  { return k < vecget(a, i); }, SZ<int>(a), -1)\n      \
+    \      .first;\n  i3 = expsearch([&](ll i)\n                  { return k < vecget(a,\
+    \ i); }, 0, true)\n            .first;\n  assert(i1 == i2 && i2 == i3);\n}\n\n\
+    void test2()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i, n) a[i] = 1 + mt()\
+    \ % 10;\n  sort(ALL(a));\n  ll k = -1 + mt() % 12;\n\n  ll i1, i2;\n  i1 = lt_max(a,\
+    \ k);\n  i2 = expsearch([&](ll i)\n                 { return vecget(a, i) < k;\
+    \ }, 0, true)\n           .first;\n  assert(i1 == i2);\n  i1 = leq_max(a, k);\n\
+    \  i2 = expsearch([&](ll i)\n                 { return vecget(a, i) <= k; }, 0,\
+    \ true)\n           .first;\n  assert(i1 == i2);\n  i1 = gt_min(a, k);\n  i2 =\
+    \ expsearch([&](ll i)\n                 { return k < vecget(a, i); }, 0, true)\n\
+    \           .first;\n  assert(i1 == i2);\n  i1 = geq_min(a, k);\n  i2 = expsearch([&](ll\
+    \ i)\n                 { return k <= vecget(a, i); }, 0, true)\n           .first;\n\
+    \  assert(i1 == i2);\n\n  i1 = lt_cnt(a, k);\n  i2 = count_if(ALL(a), [&](ll ai)\n\
+    \                { return ai < k; });\n  assert(i1 == i2);\n  i1 = leq_cnt(a,\
+    \ k);\n  i2 = count_if(ALL(a), [&](ll ai)\n                { return ai <= k; });\n\
+    \  assert(i1 == i2);\n  i1 = gt_cnt(a, k);\n  i2 = count_if(ALL(a), [&](ll ai)\n\
+    \                { return k < ai; });\n  assert(i1 == i2);\n  i1 = geq_cnt(a,\
+    \ k);\n  i2 = count_if(ALL(a), [&](ll ai)\n                { return k <= ai; });\n\
+    \  assert(i1 == i2);\n}\n\nvoid test3()\n{\n  vc<int> v = {1, 3, 5, 7, 9};\n \
+    \ int i = leq_max(v, 6);\n  assert(v[i] == 5);\n  set<int> s = {1, 3, 5, 7, 9};\n\
+    \  auto it = leq_max(s, 6);\n  assert(*it == 5);\n}\n\n// https://atcoder.jp/contests/kupc2013/tasks/kupc2013_a\n\
+    void test4()\n{\n  using P = pair<int, string>;\n  auto solve = [](int q, vc<P>\
+    \ v) -> string\n  {\n    v.insert(v.begin(), {1, \"kogakubu10gokan\"});\n    int\
+    \ i = leq_max(v, q, {}, [](const P &p)\n                    { return p.first;\
+    \ });\n    return v[i].second;\n  };\n\n  assert(solve(12, {\n    {5, \"sogo5gokan\"\
+    },\n    {10, \"sogo10gokan\"},\n    {15, \"sogo15gokan\"}\n  }) == \"sogo10gokan\"\
+    );\n  assert(solve(10, {\n    {5, \"kogakubu11gokan\"},\n    {10, \"sogo10gokan\"\
+    },\n    {15, \"KyotoUniversityResearchPark\"}\n  }) == \"sogo10gokan\");\n  assert(solve(3,\
     \ {\n    {5, \"kogakubu11gokan\"},\n    {10, \"sogo10gokan\"},\n    {15, \"KyotoUniversityResearchPark\"\
-    }\n  }) == \"sogo10gokan\");\n  assert(solve(3, {\n    {5, \"kogakubu11gokan\"\
-    },\n    {10, \"sogo10gokan\"},\n    {15, \"KyotoUniversityResearchPark\"}\n  })\
-    \ == \"kogakubu10gokan\");\n}\n\nint main()\n{\n  rep(_, 10000) test1();\n  rep(_,\
-    \ 10000) test2();\n  test3();\n  test4();\n\n  cout << \"Hello World\" << endl;\n\
-    }\n"
+    }\n  }) == \"kogakubu10gokan\");\n}\n\nint main()\n{\n  rep(_, 10000) test1();\n\
+    \  rep(_, 10000) test2();\n  test3();\n  test4();\n\n  cout << \"Hello World\"\
+    \ << endl;\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#include \"template/template_binsearch.hpp\"\n#include \"template/template_dump.hpp\"\
     \n\nmt19937 mt;\nvoid test1()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i,\
@@ -376,7 +377,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_binsearch.test.cpp
   requiredBy: []
-  timestamp: '2025-08-12 21:38:21+09:00'
+  timestamp: '2026-01-04 17:26:22+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_binsearch.test.cpp

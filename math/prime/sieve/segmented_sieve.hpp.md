@@ -1,80 +1,61 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
+    path: math/prime/sieve/linear_sieve.hpp
+    title: "\u7DDA\u5F62\u7BE9"
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: math/prime/lcm_gcd_convolution.hpp
-    title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/segmented_sieve.hpp
-    title: "\u533A\u9593\u7BE9"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/zeta_mobius_divisor_multiple.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
+  _extendedRequiredBy: []
   _extendedVerifiedWith:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/segmented_sieve.test.cpp
     title: verify/aoj/segmented_sieve.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/linear_sieve.test.cpp
-    title: verify/mytest/linear_sieve.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/gcd_convolution.test.cpp
-    title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/lcm_convolution.test.cpp
-    title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/perm_cycle.test.cpp
-    title: verify/yukicoder/perm_cycle.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/math/prime/linear_sieve.md
-    document_title: "\u7DDA\u5F62\u7BE9"
+    _deprecated_at_docs: docs/math/prime/sieve/segmented_sieve.md
+    document_title: "\u533A\u9593\u7BE9"
     links: []
-  bundledCode: "#line 2 \"math/prime/linear_sieve.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
+  bundledCode: "#line 2 \"math/prime/sieve/segmented_sieve.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -198,9 +179,11 @@ data:
     \ &v : vs)\n    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class\
     \ T>\nvc<T> concat(const vc<T> &v) { return v; }\ntemplate <class T, class...\
     \ Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)),\
-    \ ...);\n  return v;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v,\
-    \ I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i\
-    \ < 0)\n    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \ ...);\n  return v;\n}\n\ntemplate <class T>\nvc<T> merged(const vc<T> &a, const\
+    \ vc<T> &b)\n{\n  vc<T> res;\n  merge(ALL(a), ALL(b), back_inserter(res));\n \
+    \ return res;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
+    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
+    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
     \  return v[i];\n}\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define\
     \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 10 \"template/template_algo.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
@@ -389,47 +372,46 @@ data:
     \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
     \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\n// (ok, ng)\ntemplate <class T = ll, class\
     \ Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge,\
-    \ const InitOk &init_ok, const InitNg &init_ng, bool check_ok = true, bool check_ng\
+    \ InitOk init_ok, InitNg init_ng, bool check_ok = true, bool check_ng = true)\n\
+    {\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n  if\
+    \ (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok != 1)\n\
+    \  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) =\
+    \ mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
+    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, InitOk init_ok,\
+    \ InitNg init_ng, int iteration_count = 100, bool check_ok = true, bool check_ng\
     \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
-    \  if (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok !=\
-    \ 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng)\
-    \ = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
-    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, const InitOk &init_ok,\
-    \ const InitNg &init_ng, int iteration_count = 100, bool check_ok = true, bool\
-    \ check_ng = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
     \  if (check_ng)\n    assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n \
     \   T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n\
     }\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T, T>\
-    \ expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)\n\
-    {\n  T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val\
-    \ + (positive ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng,\
-    \ ng = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng\
-    \ = init_val, ok = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok);\
-    \ i++)\n      ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n\
-    \  while (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng)\
-    \ >> 1);\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line\
-    \ 2 \"template/template_bit.hpp\"\n\n#line 5 \"template/template_bit.hpp\"\n\n\
-    /**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\
-    \u7B97\uFF09\n * @docs docs/template/template_bit.md\n */\n\ntemplate <class T>\n\
-    inline constexpr ull pow2(T k) { return 1ULL << k; }\ntemplate <class T>\ninline\
-    \ constexpr ull MASK(T k) { return (1ULL << k) - 1ULL; }\n\n#if __cplusplus <\
-    \ 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\u3046\u3067\u306A\u3051\u308C\
-    \u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ull bit_width(ull x) { return x == 0 ? 0 : 64 - __builtin_clzll(x); }\n// 0,\
-    \ 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ull bit_floor(ull x) { return\
-    \ x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8,\
-    \ 16, ...\ninline constexpr ull bit_ceil(ull x) { return x == 0 ? 1ULL : 1ULL\
-    \ << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull x) { assert(x !=\
-    \ 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull x) { return\
-    \ __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull x) { return\
-    \ popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ... \ninline constexpr\
-    \ ll bit_width(ll x) { return std::bit_width((ull)x); }\n// 0, 1, 2, 2, 4, 4,\
-    \ 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return std::bit_floor((ull)x);\
-    \ }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ll bit_ceil(ll x)\
-    \ { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll x) { assert(x\
-    \ != 0); return std::countr_zero((ull)x); }\ninline constexpr ll popcount(ll x)\
-    \ { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll x)\
-    \ { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
+    \ expsearch(const Judge &judge, InitVal init_val, bool positive = true)\n{\n \
+    \ T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val + (positive\
+    \ ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng, ng = init_val\
+    \ + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng = init_val, ok\
+    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok); i++)\n  \
+    \    ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  while\
+    \ (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n\
+    \    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line 2 \"template/template_bit.hpp\"\
+    \n\n#line 5 \"template/template_bit.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n\
+    \ */\n\ntemplate <class T>\ninline constexpr ull pow2(T k) { return 1ULL << k;\
+    \ }\ntemplate <class T>\ninline constexpr ull MASK(T k) { return (1ULL << k) -\
+    \ 1ULL; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\
+    \u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3,\
+    \ 3, 3, 4, 4, ... \ninline constexpr ull bit_width(ull x) { return x == 0 ? 0\
+    \ : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr\
+    \ ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n\
+    // 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ull bit_ceil(ull x) {\
+    \ return x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull\
+    \ x) { assert(x != 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull\
+    \ x) { return __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull\
+    \ x) { return popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ...\
+    \ \ninline constexpr ll bit_width(ll x) { return std::bit_width((ull)x); }\n//\
+    \ 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return\
+    \ std::bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr\
+    \ ll bit_ceil(ll x) { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll\
+    \ x) { assert(x != 0); return std::countr_zero((ull)x); }\ninline constexpr ll\
+    \ popcount(ll x) { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll\
+    \ x) { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
     \ x) { assert(x != 0); return countr_zero(x); }\ninline constexpr ull msb_pos(ull\
     \ x) { assert(x != 0); return bit_width(x) - 1; }\ninline constexpr ull lsb_mask(ull\
     \ x) { assert(x != 0); return x & -x; }\ninline constexpr ull msb_mask(ull x)\
@@ -652,21 +634,22 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 2 \"math/prime/prime_power.hpp\"\n\n#line 4 \"math/prime/prime_power.hpp\"\n\
-    \n/**\n * @brief \u7D20\u3079\u304D\u69CB\u9020\u4F53\n * @docs docs/math/prime/prime_power.md\n\
-    \ */\n\ntemplate <class P>\nstruct PrimePower\n{\n  P p;\n  int e;\n  P pe;\n\n\
-    \  PrimePower() : p(-1), e(-1), pe(-1) {}\n  PrimePower(P p, int e = 1) : p(p),\
-    \ e(e), pe(ipow(p, e)) {}\n  PrimePower(P p, int e, P pe) : p(p), e(e), pe(pe)\
-    \ {}\n  template <class P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p),\
-    \ e(pp.e), pe(pp.pe) {}\n\n  template <class P2>\n  bool operator==(const PrimePower<P2>\
-    \ &rhs) const\n  { return p == rhs.p && e == rhs.e && pe == rhs.pe; }\n  template\
-    \ <class P2>\n  bool operator!=(const PrimePower<P2> &rhs) const { return *this\
-    \ != rhs; }\n\n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void div_p()\
-    \ { e--, pe /= p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>,\
-    \ p, e, pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\
-    \n// n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\u6570 e \u306B\u3064\
-    \u3044\u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll n, ll m)\n\
-    {\n  assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n    return\
+    \ 2 \"math/prime/sieve/linear_sieve.hpp\"\n\n#line 2 \"math/prime/prime_power.hpp\"\
+    \n\n#line 4 \"math/prime/prime_power.hpp\"\n\n/**\n * @brief \u7D20\u3079\u304D\
+    \u69CB\u9020\u4F53\n * @docs docs/math/prime/prime_power.md\n */\n\ntemplate <class\
+    \ P>\nstruct PrimePower\n{\n  P p;\n  int e;\n  P pe;\n\n  PrimePower() : p(-1),\
+    \ e(-1), pe(-1) {}\n  PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e))\
+    \ {}\n  PrimePower(P p, int e, P pe) : p(p), e(e), pe(pe) {}\n  template <class\
+    \ P2>\n  PrimePower(const PrimePower<P2> &pp) : p(pp.p), e(pp.e), pe(pp.pe) {}\n\
+    \n  template <class P2>\n  bool operator==(const PrimePower<P2> &rhs) const\n\
+    \  { return p == rhs.p && e == rhs.e && pe == rhs.pe; }\n  template <class P2>\n\
+    \  bool operator!=(const PrimePower<P2> &rhs) const { return *this != rhs; }\n\
+    \n  void mul_p() { e++, pe = ull(pe) * ull(p); }\n  void div_p() { e--, pe /=\
+    \ p; }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e,\
+    \ pe);\nCPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);\n#endif\n\n//\
+    \ n \u304C m \u3067\u5272\u308A\u5207\u308C\u308B\u56DE\u6570 e \u306B\u3064\u3044\
+    \u3066\u3001(e, m^e, n/m^e)\ntuple<int, ll, ll> ord_pow_div(ll n, ll m)\n{\n \
+    \ assert(m >= 2);\n  if (m == 2)\n  {\n    int e = countr_zero(n);\n    return\
     \ {e, 1LL << e, n >> e};\n  }\n  if (n % m != 0)\n    return {0, 1, n};\n  n /=\
     \ m;\n  if (n % m != 0)\n    return {1, m, n};\n  n /= m;\n  ll m2 = m * m;\n\
     \  auto [f, m2f, nn] = ord_pow_div(n, m2);\n  int e = 2 + 2 * f;\n  ll me = m2f\
@@ -688,44 +671,42 @@ data:
     \      fac.emplace_back(fac1[i].p, fac1[i].e + fac2[j].e, ull(fac1[i].pe) * ull(fac2[j].pe));\n\
     \      i++, j++;\n    }\n  }\n  fac.insert(fac.end(), fac1.begin() + i, fac1.end());\n\
     \  fac.insert(fac.end(), fac2.begin() + j, fac2.end());\n  return fac;\n}\n#line\
-    \ 5 \"math/prime/linear_sieve.hpp\"\n\n/**\n * @brief \u7DDA\u5F62\u7BE9\n * @docs\
-    \ docs/math/prime/linear_sieve.md\n */\n\nstruct LinearSieve\n{\npublic:\n  static\
-    \ int n;\n  static vc<PrimePower<int>> lpf_;\n  static vc<int> primes;\n\n  static\
-    \ void reserve(int n_)\n  {\n    if (n_ <= n)\n      return;\n    n = max(n_,\
-    \ 2 * n);\n    lpf_.resize(n + 1);\n    for (int d = 2; d <= n; d++)\n    {\n\
-    \      if (lpf_[d].p == -1)\n      {\n        lpf_[d] = PrimePower<int>(d, 1,\
-    \ d);\n        primes.eb(d);\n      }\n      fec(p : primes)\n      {\n      \
-    \  if (p > n / d || p > lpf_[d].p)\n          break;\n        if (lpf_[d].p ==\
-    \ p)\n          lpf_[p * d] = PrimePower<int>(p, lpf_[d].e + 1, lpf_[d].pe * p);\n\
-    \        else\n          lpf_[p * d] = PrimePower<int>(p, 1, p);\n      }\n  \
-    \  }\n  }\n\n  template <class P = int>\n  static PrimePower<P> lpf(int n)\n \
-    \ {\n    assert(n >= 1);\n    reserve(n);\n    return lpf_[n];\n  }\n\n  static\
-    \ bool is_prime(int n)\n  {\n    if (n <= 1)\n      return false;\n    return\
-    \ lpf(n).p == n;\n  }\n\n  // \u8A08\u7B97\u91CF: O(n \u306E\u7D20\u56E0\u6570\
-    \u306E\u7A2E\u985E\u6570) = O(log n / loglog n)\n  template <class P = int>\n\
-    \  static vc<PrimePower<P>> factorize(int n)\n  {\n    assert(n >= 1);\n    reserve(n);\n\
-    \    vc<PrimePower<P>> res;\n    while (n > 1)\n    {\n      res.eb(lpf_[n]);\n\
-    \      n /= lpf_[n].pe;\n    }\n    return res;\n  }\n};\nvc<PrimePower<int>>\
-    \ LinearSieve::lpf_{};\nint LinearSieve::n{};\nvc<int> LinearSieve::primes{};\n"
-  code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
-    #include \"prime_power.hpp\"\n\n/**\n * @brief \u7DDA\u5F62\u7BE9\n * @docs docs/math/prime/linear_sieve.md\n\
-    \ */\n\nstruct LinearSieve\n{\npublic:\n  static int n;\n  static vc<PrimePower<int>>\
-    \ lpf_;\n  static vc<int> primes;\n\n  static void reserve(int n_)\n  {\n    if\
-    \ (n_ <= n)\n      return;\n    n = max(n_, 2 * n);\n    lpf_.resize(n + 1);\n\
-    \    for (int d = 2; d <= n; d++)\n    {\n      if (lpf_[d].p == -1)\n      {\n\
-    \        lpf_[d] = PrimePower<int>(d, 1, d);\n        primes.eb(d);\n      }\n\
-    \      fec(p : primes)\n      {\n        if (p > n / d || p > lpf_[d].p)\n   \
-    \       break;\n        if (lpf_[d].p == p)\n          lpf_[p * d] = PrimePower<int>(p,\
-    \ lpf_[d].e + 1, lpf_[d].pe * p);\n        else\n          lpf_[p * d] = PrimePower<int>(p,\
-    \ 1, p);\n      }\n    }\n  }\n\n  template <class P = int>\n  static PrimePower<P>\
-    \ lpf(int n)\n  {\n    assert(n >= 1);\n    reserve(n);\n    return lpf_[n];\n\
-    \  }\n\n  static bool is_prime(int n)\n  {\n    if (n <= 1)\n      return false;\n\
-    \    return lpf(n).p == n;\n  }\n\n  // \u8A08\u7B97\u91CF: O(n \u306E\u7D20\u56E0\
+    \ 5 \"math/prime/sieve/linear_sieve.hpp\"\n\n/**\n * @brief \u7DDA\u5F62\u7BE9\
+    \n * @docs docs/math/prime/sieve/linear_sieve.md\n */\n\nstruct LinearSieve\n\
+    {\npublic:\n  static int n;\n  static vc<PrimePower<int>> lpf_;\n  static vc<int>\
+    \ primes;\n\n  static void reserve(int n_)\n  {\n    if (n_ <= n)\n      return;\n\
+    \    n = max(n_, 2 * n);\n    lpf_.resize(n + 1);\n    for (int d = 2; d <= n;\
+    \ d++)\n    {\n      if (lpf_[d].p == -1)\n      {\n        lpf_[d] = PrimePower<int>(d,\
+    \ 1, d);\n        primes.eb(d);\n      }\n      fec(p : primes)\n      {\n   \
+    \     if (p > n / d || p > lpf_[d].p)\n          break;\n        if (lpf_[d].p\
+    \ == p)\n          lpf_[p * d] = PrimePower<int>(p, lpf_[d].e + 1, lpf_[d].pe\
+    \ * p);\n        else\n          lpf_[p * d] = PrimePower<int>(p, 1, p);\n   \
+    \   }\n    }\n  }\n\n  template <class P = int>\n  static PrimePower<P> lpf(int\
+    \ n)\n  {\n    assert(n >= 1);\n    reserve(n);\n    return lpf_[n];\n  }\n\n\
+    \  static bool is_prime(int n)\n  {\n    if (n <= 1)\n      return false;\n  \
+    \  return lpf(n).p == n;\n  }\n\n  // \u8A08\u7B97\u91CF: O(n \u306E\u7D20\u56E0\
     \u6570\u306E\u7A2E\u985E\u6570) = O(log n / loglog n)\n  template <class P = int>\n\
     \  static vc<PrimePower<P>> factorize(int n)\n  {\n    assert(n >= 1);\n    reserve(n);\n\
     \    vc<PrimePower<P>> res;\n    while (n > 1)\n    {\n      res.eb(lpf_[n]);\n\
     \      n /= lpf_[n].pe;\n    }\n    return res;\n  }\n};\nvc<PrimePower<int>>\
-    \ LinearSieve::lpf_{};\nint LinearSieve::n{};\nvc<int> LinearSieve::primes{};"
+    \ LinearSieve::lpf_{};\nint LinearSieve::n{};\nvc<int> LinearSieve::primes{};\n\
+    #line 5 \"math/prime/sieve/segmented_sieve.hpp\"\n\n/**\n * @brief \u533A\u9593\
+    \u7BE9\n * @docs docs/math/prime/sieve/segmented_sieve.md\n */\n\n// l <= x <=\
+    \ r, p | x, p != x \u3092\u6E80\u305F\u3059\u7D20\u6570 p \u3068\u6574\u6570 x\
+    \ \u306E\u7D44\u3059\u3079\u3066\u306B\u5BFE\u3057\u3066 f(p, x) \u3092\u5B9F\u884C\
+    \n// m = max(r - l, \u221Ar) \u3068\u3057\u3066 O(m loglog m)\ntemplate <class\
+    \ F>\nvoid segmented_sieve(ll l, ll r, const F &f)\n{\n  LinearSieve::reserve(sqrtl(r)\
+    \ + 1);\n  for(ll p : LinearSieve::primes) rep(x, max(2 * p, divceil(l, p) * p),\
+    \ r + 1, p) f(p, x);\n}\n"
+  code: "#pragma once\n\n#include \"template/template_all_but_modint.hpp\"\n#include\
+    \ \"math/prime/sieve/linear_sieve.hpp\"\n\n/**\n * @brief \u533A\u9593\u7BE9\n\
+    \ * @docs docs/math/prime/sieve/segmented_sieve.md\n */\n\n// l <= x <= r, p |\
+    \ x, p != x \u3092\u6E80\u305F\u3059\u7D20\u6570 p \u3068\u6574\u6570 x \u306E\
+    \u7D44\u3059\u3079\u3066\u306B\u5BFE\u3057\u3066 f(p, x) \u3092\u5B9F\u884C\n\
+    // m = max(r - l, \u221Ar) \u3068\u3057\u3066 O(m loglog m)\ntemplate <class F>\n\
+    void segmented_sieve(ll l, ll r, const F &f)\n{\n  LinearSieve::reserve(sqrtl(r)\
+    \ + 1);\n  for(ll p : LinearSieve::primes) rep(x, max(2 * p, divceil(l, p) * p),\
+    \ r + 1, p) f(p, x);\n}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -738,117 +719,19 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   - template/template_random.hpp
+  - math/prime/sieve/linear_sieve.hpp
   - math/prime/prime_power.hpp
   isVerificationFile: false
-  path: math/prime/linear_sieve.hpp
-  requiredBy:
-  - math/prime/zeta_mobius_divisor_multiple.hpp
-  - math/prime/segmented_sieve.hpp
-  - math/prime/lcm_gcd_convolution.hpp
-  timestamp: '2025-08-12 21:38:21+09:00'
+  path: math/prime/sieve/segmented_sieve.hpp
+  requiredBy: []
+  timestamp: '2026-01-04 17:26:22+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
-  - verify/mytest/linear_sieve.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yukicoder/perm_cycle.test.cpp
   - verify/aoj/segmented_sieve.test.cpp
-documentation_of: math/prime/linear_sieve.hpp
+documentation_of: math/prime/sieve/segmented_sieve.hpp
 layout: document
 redirect_from:
-- /library/math/prime/linear_sieve.hpp
-- /library/math/prime/linear_sieve.hpp.html
-title: "\u7DDA\u5F62\u7BE9"
+- /library/math/prime/sieve/segmented_sieve.hpp
+- /library/math/prime/sieve/segmented_sieve.hpp.html
+title: "\u533A\u9593\u7BE9"
 ---
-## 線形篩
-
-最小素因数を持つようにした篩。
-
-static で実装しているので、
-
-```cpp
-LinearSieve::factorize(n)
-```
-
-といった感じで使う。
-
-
-### メンバ変数
-
-- `int n`：現在 `lpf_` が計算されている最大値。
-- `vc<PrimePower<int>> lpf_`：最小素因数 $p$ と、$p$ で割り切れる回数 $e$ について $(p, e, p^e)$ を格納したテーブル（コンテスト中に使うときは、これにアクセスするのではなく `lpf()` 関数を用いた方が安全）。
-- `vc<int> primes`：現在計算されている素数を小さい順に格納したもの。 
-
-
-### メンバ関数
-
-
-#### reserve
-
-```cpp
-void reserve(int n)
-```
-
-テーブルを（少なくとも）$n$ のところまで計算する（実際には、$\max(n, 現在のサイズの\ 2\ 倍)$ まで計算される）。
-
-この関数は呼ばなくても自動でテーブルを計算してくれる。しかし、事前に呼んでおくことで定数倍高速化が期待できる。
-
-##### 計算量
-
-$T$ 回呼んだとき、
-
-- $O(T + \max(n))$
-
-#### lpf
-
-```cpp
-PrimePower<P=int> lpf(int n)
-```
-
-$n$ の最小素因数 $p$ と $n$ が $p$ で割り切れる回数 $e$ について $(p, e, p^e)$ を返す。
-
-##### 制約
-
-- $n \geq 1$
-
-##### 計算量
-
-$T$ 回呼んだとき、
-
-- $O(T + \max(n))$
-
-
-#### is_prime
-
-```cpp
-bool is_prime(int n)
-```
-
-$n$ が素数かどうかを返す。（最小素因数が自身に一致するかどうか）
-
-##### 計算量
-
-$T$ 回呼んだとき、
-
-- $O(T + \max(n))$
-
-
-#### factorize
-
-```cpp
-vc<PrimePower<P=int>> factorize(n)
-```
-
-$n$ の素因数分解を返す。
-
-##### 制約
-
-- $n \geq 1$
-
-##### 計算量
-
-$T$ 個の値 $n_1, \dots, n_T$ について呼んだとき、
-
-- $\displaystyle O\left(\sum_{i=1}^T \frac{\log n_i}{\log\log n_i} + \max(n) \right)$
-
-計算量解析は、$n$ の異なる素因数の個数 $\omega(n)$ が $\omega(n) = O\left(\dfrac{\log n}{\log\log n}\right)$ であることから。
