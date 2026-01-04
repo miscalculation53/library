@@ -39,16 +39,16 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_det_mod2.test.cpp
     title: verify/yosupo/matrix_det_mod2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_inv_mod2.test.cpp
     title: verify/yosupo/matrix_inv_mod2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_product_mod2.test.cpp
     title: verify/yosupo/matrix_product_mod2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_rank_mod2.test.cpp
     title: verify/yosupo/matrix_rank_mod2.test.cpp
   - icon: ':x:'
@@ -56,7 +56,7 @@ data:
     title: verify/yosupo/matrix_solve_mod2.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/math/linalg/matrix_mod2.md
     document_title: "\u884C\u5217\uFF08$\\mathbb{F}_2$\uFF09"
@@ -797,7 +797,7 @@ data:
   path: math/linalg/matrix_mod2.hpp
   requiredBy: []
   timestamp: '2026-01-04 17:26:22+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yosupo/matrix_rank_mod2.test.cpp
   - verify/yosupo/matrix_product_mod2.test.cpp
