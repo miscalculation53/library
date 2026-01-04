@@ -18,7 +18,7 @@
 #include "math/modint/modint.hpp"
 using mint = modint998244353;
 
-#include "math/prime/lcm_gcd_convolution.hpp"
+#include "math/prime/sieve/lcm_gcd_convolution.hpp"
 
 void init() {}
 

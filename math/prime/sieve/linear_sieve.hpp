@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../template/template_all_but_modint.hpp"
-#include "prime_power.hpp"
+#include "template/template_all_but_modint.hpp"
+#include "math/prime/prime_power.hpp"
 
 /**
  * @brief 線形篩
- * @docs docs/math/prime/linear_sieve.md
+ * @docs docs/math/prime/sieve/linear_sieve.md
  */
 
 struct LinearSieve

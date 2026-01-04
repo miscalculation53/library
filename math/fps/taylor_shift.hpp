@@ -10,8 +10,8 @@
  */
 
 // f(x + c) を返す
-template <class mint>
-FormalPowerSeries<mint> taylor_shift(const FormalPowerSeries<mint> &f, const mint &c)
+template <class mint, class mint2>
+FormalPowerSeries<mint> taylor_shift(const FormalPowerSeries<mint> &f, mint2 c)
 {
   const int n = f.size();
   FormalPowerSeries<mint> g(n);

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../template/template_all_but_modint.hpp"
-#include "linear_sieve.hpp"
+#include "template/template_all_but_modint.hpp"
+#include "math/prime/sieve/linear_sieve.hpp"
 
 /**
  * @brief 区間篩
- * @docs docs/math/prime/segmented_sieve.md
+ * @docs docs/math/prime/sieve/segmented_sieve.md
  */
 
 // l <= x <= r, p | x, p != x を満たす素数 p と整数 x の組すべてに対して f(p, x) を実行

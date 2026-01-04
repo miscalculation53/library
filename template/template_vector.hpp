@@ -84,6 +84,14 @@ vc<T> concat(vc<T> v, const vc<Ts> &...vs)
   return v;
 }
 
+template <class T>
+vc<T> merged(const vc<T> &a, const vc<T> &b)
+{
+  vc<T> res;
+  merge(ALL(a), ALL(b), back_inserter(res));
+  return res;
+}
+
 template <class T, class I>
 T vecget(const vc<T> &v, I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)
 {

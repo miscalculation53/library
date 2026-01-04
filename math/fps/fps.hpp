@@ -109,7 +109,7 @@ struct FormalPowerSeries : vc<mint>
   {
     assert(g.get(0) != 0);
     if (d < 0)
-      d = sz();
+      d = max(sz(), g.sz());
     mint iv = g.front().inv();
     auto gnz = g.nz();
     resize(d);
@@ -163,12 +163,13 @@ struct FormalPowerSeries : vc<mint>
   }
   F &operator/=(const F &g)
   {
-    if (cnt_nz() <= 200)
+    if (g.cnt_nz() <= 200)
     {
       div_sparse_destructive(g);
       return *this;
     }
-    *this *= g.inv();
+    const int d = max(sz(), g.sz());
+    *this = (*this * g.inv(d)).pre(d);
     return *this;
   }
   F operator/(const F &g) const { return F(*this) /= g; }
@@ -234,8 +235,10 @@ struct FormalPowerSeries : vc<mint>
     assert(get(0) == 1);
     if (d < 0)
       d = sz();
+    if (d == 0)
+      return {};
     F f = pre(d);
-    return (f.diff() / f).pre(d - 1).integ();
+    return (f.diff() * f.inv(d - 1)).pre(d - 1).integ();
   }
 
   // 微分方程式 a(x)f'(x) + b(x)f(x) = 0, [x^0]f(x) = 1 を満たす f を d 項まで求める
@@ -424,22 +427,14 @@ struct FormalPowerSeries : vc<mint>
       assert(get(0) != 0);
       mint iv = get(0).inv();
       F res = ((*this * iv).log(d) * mint(k)).exp(d);
-      res = (res * iv.pow(-k)).pre(d);
-      if (res.sz() < d)
-        res.resize(d);
-      return res;
+      return (res * iv.pow(-k)).pre(d);
     }
     repi(i, sz())
     {
       if ((*this)[i] != 0)
       {
-        mint iv = (*this)[i].inv();
-        F res = (((*this * iv) >> i).log(d) * mint(k)).exp(d);
-        res *= (*this)[i].pow(k);
-        res = (res << (i * k)).pre(d);
-        if (res.sz() < d)
-          res.resize(d);
-        return res;
+        F res = (((*this / (*this)[i]) >> i).log(d) * mint(k)).exp(d);
+        return (res * (*this)[i].pow(k) << (i * k)).pre(d);
       }
       if (mul_limited(i + 1, k, d) >= d)
         return F(d);
@@ -473,7 +468,7 @@ struct FormalPowerSeries : vc<mint>
   {
     assert(k >= 0);
     if (k == 0)
-      return (*this) % g;
+      return F{1} % g;
     if (k & 1)
       return (*this) * pow_mod(k - 1, g) % g;
     F h = pow_mod(k / 2, g);
@@ -494,4 +489,22 @@ struct FormalPowerSeries : vc<mint>
     repi(i, sz()) res[i] *= Binomial<mint>::fac(i);
     return res;
   }
+
+  // (1 + cx^d) をかける
+  F mul_bin_destructive(int d, mint c)
+  {
+    resize(sz() + d);
+    rep(i, sz() - 1 - d, -1, -1)(*this)[i + d] += (*this)[i] * c;
+    return *this;
+  }
+  // (1 + cx^d) をかけたもの
+  F mul_bin(int d, mint c) const { return F(*this).mul_bin_destructive(d, c); }
+  // (1 + cx^d) でわる
+  F div_bin_destructive(int d, mint c)
+  {
+    resize(sz() + d);
+    rep(i, sz() - d)(*this)[i + d] -= (*this)[i] * c;
+    return *this;
+  }
+  F div_bin(int d, mint c) const { return F(*this).div_bin_destructive(d, c); }
 };

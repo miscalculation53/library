@@ -43,8 +43,8 @@ template <class I>
 vc<int> mo_order(int n, const vc<pair<I, I>> &lrs)
 {
   const int q = lrs.size();
-  const int b1 = max(1, int(n / sqrt(q)));
-  const int b2 = max(1, int(sqrt(3) * n / sqrt(2 * q)));
+  const int b1 = max(1, int(n / sqrt(q + 1)));
+  const int b2 = max(1, int(sqrt(3) * n / sqrt(2 * q + 1)));
   array<vc<int>, 4> ords = {
     mo_order_params(lrs, b1, 0),
     mo_order_params(lrs, b1, 1),

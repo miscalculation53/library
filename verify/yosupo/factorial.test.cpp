@@ -1,4 +1,4 @@
-#define PROBLEM "https://yukicoder.me/problems/no/1255"
+#define PROBLEM "https://judge.yosupo.jp/problem/many_factorials"
 
 // #define SINGLE_TESTCASE
 #define MULTI_TESTCASE
@@ -15,18 +15,17 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "math/prime/large/order_primitive_root.hpp"
+#include "math/fps/factorial.hpp"
+using mint = modint998244353;
+
+Factorial<mint> fac;
 
 void init() {}
 
 void main2()
 {
   LL(N);
-  if (N == 1)
-    PRINT(1);
-  else
-    PRINT(order_mod(2, 2 * N - 1, factorize(carmichael(factorize(2 * N - 1)))));
-
+  PRINT(fac.factorial(N));
 }
 
 void test() {}

@@ -42,6 +42,6 @@ void triangles(const GraphUndirected<Cost> &g, const F &f)
           f(u, v, w);
       }
     }
-    fec(v : g.out_edges(u)) exists[v] = false;
+    fec(v : h.out_edges(u)) exists[v] = false;
   }
 }

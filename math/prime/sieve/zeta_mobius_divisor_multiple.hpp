@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../../template/template_all_but_modint.hpp"
-#include "linear_sieve.hpp"
-#include "../algebra/algebra_basic_ops.hpp"
+#include "template/template_all_but_modint.hpp"
+#include "math/prime/sieve/linear_sieve.hpp"
+#include "math/algebra/algebra_basic_ops.hpp"
 
 /**
  * @brief 約数・倍数 ゼータ・メビウス変換（$1$ 以上 $n$ 以下）
- * @docs docs/math/prime/zeta_mobius_divisor_multiple.md
+ * @docs docs/math/prime/sieve/zeta_mobius_divisor_multiple.md
  */
 
 // ζa(n) = Σ[d | n] a(d)

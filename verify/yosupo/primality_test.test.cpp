@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "math/prime/primality_test.hpp"
+#include "math/prime/large/primality_test.hpp"
 
 void init() {}
 

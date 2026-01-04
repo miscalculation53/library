@@ -1,4 +1,4 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/counting_eulerian_circuits"
+#define PROBLEM "https://judge.yosupo.jp/problem/enumerate_cliques"
 
 #define SINGLE_TESTCASE
 // #define MULTI_TESTCASE
@@ -16,17 +16,28 @@
 #include "template/template_all_but_modint.hpp"
 #include "math/modint/modint.hpp"
 using mint = modint998244353;
-#include "graph/matrix_tree.hpp"
 
-void init() {}
+#include "graph/cliques.hpp"
+
+void init()
+{
+  oj(mt.seed(random_device()()));
+}
 
 void main2()
 {
   LL(N, M);
+  VEC(mint, N, X);
   VEC(pll, M, UV);
-  GraphDirected<bool> G(N, UV);
-  dump(G.edges(), G.adj_matrix_ecnt());
-  PRINT(count_eularian_circuits<mint>(G.adj_matrix_ecnt()));
+  GraphUndirected<ll> G(N, UV);
+  mint ans = 0;
+  cliques(G, [&](const vl &vs)
+          {
+            mint prod = 1; 
+            fec(v : vs) prod *= X[v];
+            ans += prod;
+          });
+  PRINT(ans);
 }
 
 void test() {}

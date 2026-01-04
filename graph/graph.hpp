@@ -22,6 +22,7 @@ struct Edge
   Edge rev() const { return Edge(to, from, cost, index); }
 };
 #ifdef LOCAL
+CPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<bool>, from, to, cost)
 CPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<int>, from, to, cost)
 CPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<ll>, from, to, cost)
 #endif
@@ -36,74 +37,71 @@ vc<Edge<Cost>> rev_path(const vc<Edge<Cost>> &path)
 }
 
 // コンストラクタ: n, es
-template <bool is_directed, class Cost>
+template <bool is_directed, class Cost, bool is_erasable = false>
 struct Graph
 {
   using E = Edge<Cost>;
 
 protected:
-  int n, m;
-  CSR<E> g;
+  int n, m, era;
+  CSR<E, is_erasable> g;
+  vc<int> eid_to_elist_id;
+
+  template <class F>
+  void build(F get_edge)
+  {
+    if constexpr (is_directed)
+    {
+      vc<pair<int, E>> edges(m);
+      repi(i, m)
+      {
+        auto [u, v, w] = get_edge(i);
+        edges[i] = {u, E(u, v, w, i)};
+      }
+      g = CSR<E, is_erasable>(n, edges);
+      if constexpr (is_erasable)
+      {
+        eid_to_elist_id.resize(m, -1);
+        int k = 0;
+        repi(v, n) fec(e : g[v]) eid_to_elist_id[e.index] = k++;
+      }
+    }
+    else
+    {
+      vc<pair<int, E>> edges;
+      edges.reserve(2 * m);
+      repi(i, m)
+      {
+        auto [u, v, w] = get_edge(i);
+        edges.eb(u, E(u, v, w, i));
+        if (u != v)
+          edges.eb(v, E(v, u, w, i));
+      }
+      g = CSR<E, is_erasable>(n, edges);
+      if constexpr (is_erasable)
+      {
+        eid_to_elist_id.resize(2 * m, -1);
+        int k = 0;
+        repi(v, n) fec(e : g[v]) eid_to_elist_id[2 * e.index + (e.from <= e.to)] = k++;
+      }
+    }
+  }
 
 public:
   Graph() {}
   template <class I>
-  Graph(int n, const vc<pair<I, I>> &es, const Cost &dflt_cost = 1) : n(n), m(es.size())
+  Graph(int n, const vc<pair<I, I>> &es, const Cost &dflt_cost = 1) : n(n), m(es.size()), era(0)
   {
-    if constexpr (is_directed)
-    {
-      vc<pair<int, E>> edges(m);
-      repi(i, m)
-      {
-        auto [u, v] = es[i];
-        assert(0 <= u && u < n);
-        assert(0 <= v && v < n);
-        edges[i] = {u, E(u, v, dflt_cost, i)};
-      }
-      g = CSR<E>(n, edges);
-    }
-    else
-    {
-      vc<pair<int, E>> edges(2 * m);
-      repi(i, m)
-      {
-        auto [u, v] = es[i];
-        assert(0 <= u && u < n);
-        assert(0 <= v && v < n);
-        edges[2 * i] = {u, E(u, v, dflt_cost, i)};
-        edges[2 * i + 1] = {v, E(v, u, dflt_cost, i)};
-      }
-      g = CSR<E>(n, edges);
-    }
+    build(LMD(i, (tuple{es[i].first, es[i].second, dflt_cost})));
   }
   template <class I>
-  Graph(int n, const vc<tuple<I, I, Cost>> &es) : n(n), m(es.size())
+  Graph(int n, const vc<tuple<I, I, Cost>> &es) : n(n), m(es.size()), era(0)
   {
-    if constexpr (is_directed)
-    {
-      vc<pair<int, E>> edges(m);
-      repi(i, m)
-      {
-        auto [u, v, w] = es[i];
-        assert(0 <= u && u < n);
-        assert(0 <= v && v < n);
-        edges[i] = {u, E(u, v, w, i)};
-      }
-      g = CSR<E>(n, edges);
-    }
-    else
-    {
-      vc<pair<int, E>> edges(2 * m);
-      repi(i, m)
-      {
-        auto [u, v, w] = es[i];
-        assert(0 <= u && u < n);
-        assert(0 <= v && v < n);
-        edges[2 * i] = {u, E(u, v, w, i)};
-        edges[2 * i + 1] = {v, E(v, u, w, i)};
-      }
-      g = CSR<E>(n, edges);
-    }
+    build(LMD(i, es[i]));
+  }
+  Graph(int n, const vc<E> &es) : n(n), m(es.size()), era(0)
+  {
+    build(LMD(i, (tuple{es[i].from, es[i].to, es[i].cost})));
   }
 
   // 頂点数
@@ -111,7 +109,7 @@ public:
   I size() const { return n; }
   // 辺数
   template <class I = ll>
-  I num_of_edges() const { return m; }
+  I num_of_edges() const { return m - era; }
 
   // v から出る辺の集合
   auto out_edges(int v) const { return g[v]; }
@@ -125,25 +123,26 @@ public:
     return res;
   }
 
-  // 辺番号から辺を取得する
-  // 無向グラフの場合 from <= to を満たすように返す
-  E get_edge(int eid) const
-  {
-    if constexpr (is_directed)
-      return g.find_by_eid(eid);
-    else
-    {
-      E e = g.find_by_eid(eid * 2);
-      return e.from > e.to ? e.rev() : e;
-    }
-  }
-
-  // すべての辺を返す (辺番号順)
+  // すべての辺を返す。辺番号順とは限らない
   // 無向グラフの場合、各辺は from <= to を満たす
   vc<E> edges() const
   {
-    vc<E> res(m);
-    repi(i, m) res[i] = get_edge(i);
+    vc<E> res;
+    res.reserve(m);
+    if constexpr (is_directed)
+    {
+      repi(v, n) fec(e : g[v])
+      {
+        res.eb(e);
+      }
+    }
+    else
+    {
+      repi(v, n) fec(e : g[v])
+      {
+        if (e.from <= e.to) res.eb(e);
+      }
+    }
     return res;
   }
   // 隣接リスト
@@ -156,8 +155,9 @@ public:
     fec(e : edges())
     {
       res[e.from][e.to]++;
-      if (!is_directed && e.from != e.to)
-        res[e.to][e.from]++;
+      if constexpr (!is_directed)
+        if (e.from != e.to)
+          res[e.to][e.from]++;
     }
     return res;
   }
@@ -170,8 +170,9 @@ public:
     fec(e : edges())
     {
       res[e.to]++;
-      if (!is_directed && e.from != e.to)
-        res[e.from]++;
+      if constexpr (!is_directed)
+        if (e.from != e.to)
+          res[e.from]++;
     }
     return res;
   }
@@ -180,20 +181,62 @@ public:
   vc<I> outdegs() const
   {
     vc<I> res(n);
-    fec(e : edges()) 
-    {
-      res[e.from]++;
-      if (!is_directed && e.from != e.to)
-        res[e.to]++;
-    }
+    repi(v, n) res[v] = g[v].size();
     return res;
+  }
+
+  void erase_edge(int eid)
+  {
+    static_assert(is_erasable);
+    assert(0 <= eid && eid < m);
+    if constexpr (is_directed)
+    {
+      internal_erase(eid_to_elist_id[eid]);
+      eid_to_elist_id[eid] = -1;
+    }
+    else
+    {
+      repi(j, 2)
+      {
+        internal_erase(eid_to_elist_id[2 * eid + j]);
+        eid_to_elist_id[2 * eid + j] = -1;
+      }
+    }
+    era++;
+  }
+
+private:
+  void internal_erase(int elist_id)
+  {
+    if (elist_id < 0)
+      return;
+    auto &elist = g.get_elist();
+    auto &target = elist[elist_id];
+    const int u = target.from;
+    auto &last = g[u].back();
+    const int last_elist_id = &last - &elist[0];
+    if (elist_id != last_elist_id)
+    {
+      swap(target, last);
+      int eid = target.index;
+      if constexpr (is_directed)
+        eid_to_elist_id[eid] = elist_id;
+      else
+      {
+        if (eid_to_elist_id[2 * eid] == last_elist_id)
+          eid_to_elist_id[2 * eid] = elist_id;
+        else
+          eid_to_elist_id[2 * eid + 1] = elist_id;
+      }
+    }
+    g.pop_back(u);
   }
 };
 
-template <class Cost>
-using GraphDirected = Graph<true, Cost>;
-template <class Cost>
-using GraphUndirected = Graph<false, Cost>;
+template <class Cost, bool is_erasable = false>
+using GraphDirected = Graph<true, Cost, is_erasable>;
+template <class Cost, bool is_erasable = false>
+using GraphUndirected = Graph<false, Cost, is_erasable>;
 
 template <class Cost>
 GraphDirected<Cost> rev_graph(const GraphDirected<Cost> &g)

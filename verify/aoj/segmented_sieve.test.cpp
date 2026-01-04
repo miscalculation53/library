@@ -14,7 +14,7 @@
 #define EPS 1e-11
 
 #include "template/template_all_but_modint.hpp"
-#include "math/prime/segmented_sieve.hpp"
+#include "math/prime/sieve/segmented_sieve.hpp"
 
 void init() {}
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../template/template_all_but_modint.hpp"
+#include "template/template_all_but_modint.hpp"
 
 /**
  * @brief 素べき構造体

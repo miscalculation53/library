@@ -16,7 +16,9 @@ mint linear_recurrence(const vc<mint> &a, const vc<mint> &c, ll k)
 {
   using F = FormalPowerSeries<mint>;
   const int d = SZ(c) - 1;
-  assert(d >= 1);
+  assert(d >= 0);
+  if (d == 0)
+    return 0;
   assert(SZ(a) >= d);
   F q = -F(c);
   q[0] = 1;
@@ -30,6 +32,6 @@ mint bmbm(const vc<mint> &a, ll k, bool show_coefs = true)
 {
   auto c = berlekamp_massey<FieldAddSubMulDiv<mint>>(a);
   if (show_coefs)
-    dump(c);
+    dump(c | cp::index());
   return linear_recurrence(a, c, k);
 }

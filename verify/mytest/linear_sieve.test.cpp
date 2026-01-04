@@ -1,7 +1,7 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-#include "math/prime/linear_sieve.hpp"
-#include "math/prime/factorize.hpp"
+#include "math/prime/sieve/linear_sieve.hpp"
+#include "math/prime/large/factorize.hpp"
 
 void test1()
 {

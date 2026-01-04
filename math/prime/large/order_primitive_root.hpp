@@ -1,16 +1,16 @@
 #pragma once
 
-#include "../../template/template_all_but_modint.hpp"
-#include "../modint/modint.hpp"
-#include "../modint/modint64.hpp"
-#include "prime_power.hpp"
-#include "primality_test.hpp"
-#include "factorize.hpp"
-#include "euler_phi_carmichael.hpp"
+#include "template/template_all_but_modint.hpp"
+#include "math/modint/modint.hpp"
+#include "math/modint/modint64.hpp"
+#include "math/prime/prime_power.hpp"
+#include "math/prime/large/primality_test.hpp"
+#include "math/prime/large/factorize.hpp"
+#include "math/prime/large/euler_phi_carmichael.hpp"
 
 /**
  * @brief 元の位数と原始根
- * @docs docs/math/prime/order_primitive_root.md
+ * @docs docs/math/prime/large/order_primitive_root.md
  */
 
 // https://37zigen.com/primitive-root/#i-4

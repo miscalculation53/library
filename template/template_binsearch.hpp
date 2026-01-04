@@ -158,7 +158,7 @@ inline auto geq_min(const V &v, const Value &val)
 
 // (ok, ng)
 template <class T = ll, class Judge, class InitOk, class InitNg>
-pair<T, T> binsearch(const Judge &judge, const InitOk &init_ok, const InitNg &init_ng, bool check_ok = true, bool check_ng = true)
+pair<T, T> binsearch(const Judge &judge, InitOk init_ok, InitNg init_ng, bool check_ok = true, bool check_ng = true)
 {
   T ok(init_ok), ng(init_ng);
   if (check_ok)
@@ -173,7 +173,7 @@ pair<T, T> binsearch(const Judge &judge, const InitOk &init_ok, const InitNg &in
   return {ok, ng};
 }
 template <class T = ld, class Judge, class InitOk, class InitNg>
-T binsearch_real(const Judge &judge, const InitOk &init_ok, const InitNg &init_ng, int iteration_count = 100, bool check_ok = true, bool check_ng = true)
+T binsearch_real(const Judge &judge, InitOk init_ok, InitNg init_ng, int iteration_count = 100, bool check_ok = true, bool check_ng = true)
 {
   T ok(init_ok), ng(init_ng);
   if (check_ok)
@@ -189,7 +189,7 @@ T binsearch_real(const Judge &judge, const InitOk &init_ok, const InitNg &init_n
 }
 // (ok, ng)
 template <class T = ll, class Judge, class InitVal>
-pair<T, T> expsearch(const Judge &judge, const InitVal &init_val, bool positive = true)
+pair<T, T> expsearch(const Judge &judge, InitVal init_val, bool positive = true)
 {
   T ok, ng;
   if (judge(init_val))

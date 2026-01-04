@@ -22,25 +22,50 @@ struct RootedTree
 protected:
   int n, root_;
 
-  vc<E> par;  // par[v] は v から親に向かう辺
+  vc<E> par; // par[v] は v から親に向かう辺
   CSR<E> chi;
 
-  // bfs_ordered_eid: 辺番号を BFS 順に並べた順列
-  vc<int> bfs_ordered_eid;
+  vc<int> bfs_ordered_elist_id;
 
   vc<int> dep;
   vc<Cost> dis;
   vc<int> siz;
 
+  void calc_bfs_dep_dis()
+  {
+    bfs_ordered_elist_id.reserve(n - 1);
+    dep.assign(n, 0);
+    if constexpr (need_dist)
+      dis.assign(n, 0);
+    MyQueue<int> que;
+    que.push(root_);
+    while (!que.empty())
+    {
+      int v = que.front();
+      que.pop();
+      for (auto &e : chi[v])
+      {
+        int elist_id = &e - &(chi.get_elist().front());
+        bfs_ordered_elist_id.eb(elist_id);
+        dep[e.to] = dep[e.from] + 1;
+        if constexpr (need_dist)
+          dis[e.to] = dis[e.from] + e.cost;
+        que.push(e.to);
+      }
+    }
+  }
   void calc_siz()
   {
     siz.assign(n, 1);
     repi(j, n - 2, -1, -1)
     {
-      const E &e = get_edge(bfs_ordered_eid[j]);
+      const E &e = get_edge_by_bfs_order(j);
       siz[e.from] += siz[e.to];
     }
   }
+
+  inline E &get_edge_by_bfs_order(int j) { return chi.get_elist()[bfs_ordered_elist_id[j]]; }
+  inline const E &get_edge_by_bfs_order(int j) const { return chi.get_elist()[bfs_ordered_elist_id[j]]; }
 
 public:
   RootedTree() {}
@@ -70,45 +95,20 @@ public:
       }
     }
     chi = CSR<E>(n, edges);
-
-    // bfs_ordered_eid, dep(, dist) を計算する
-    bfs_ordered_eid.reserve(n - 1);
-    MyQueue<int> que;
-    que.push(root_);
-    dep.assign(n, 0);
-    if constexpr (need_dist)
-      dis.assign(n, 0);
-    while (!que.empty())
-    {
-      int v = que.front();
-      que.pop();
-      fec(e : chi[v])
-      {
-        bfs_ordered_eid.eb(e.index);
-        dep[e.to] = dep[e.from] + 1;
-        if constexpr (need_dist)
-          dis[e.to] = dis[e.from] + e.cost;
-        que.push(e.to);
-      }
-    }
-
-    // siz を計算する
+    calc_bfs_dep_dis();
     calc_siz();
   }
   // g は木であることを想定、もとの g の index はそのまま保持される
   template <bool is_directed>
   RootedTree(const Graph<is_directed, Cost> &g, int root)
-  : n(g.size()), root_(root)
+      : n(g.size()), root_(root)
   {
-    // par, chi, bfs_ordered_eid, dep(, dist) を計算する
+    // par, chi を計算する
     par.resize(n);
     par[root] = E(root, -1, {}, -1);
     vc<pair<int, E>> edges(n - 1);
     MyQueue<int> que;
     que.push(root);
-    dep.assign(n, 0);
-    if constexpr (need_dist)
-      dis.assign(n, 0);
     while (!que.empty())
     {
       int v = que.front();
@@ -119,25 +119,20 @@ public:
           continue;
         par[e.to] = e.rev();
         edges[e.index] = {e.from, e};
-        bfs_ordered_eid.eb(e.index);
-        dep[e.to] = dep[e.from] + 1;
-        if constexpr (need_dist)
-          dis[e.to] = dis[e.from] + e.cost;
         que.push(e.to);
       }
     }
     chi = CSR<E>(n, edges);
-
-    // siz を計算する
+    calc_bfs_dep_dis();
     calc_siz();
   }
 
   template <class I>
   RootedTree(int n, const vc<pair<I, I>> &es, int root)
-  : RootedTree(GraphUndirected<Cost>(n, es), root) {}
+      : RootedTree(GraphUndirected<Cost>(n, es), root) {}
   template <class I>
   RootedTree(int n, const vc<tuple<I, I, Cost>> &es, int root)
-  : RootedTree(GraphUndirected<Cost>(n, es), root) {}
+      : RootedTree(GraphUndirected<Cost>(n, es), root) {}
 
   // 頂点数を返す
   template <class I = ll>
@@ -193,16 +188,12 @@ public:
       return {siz[u], n - siz[u]};
   }
 
-  // 辺番号から辺を取得する
-  // 辺は親から子
-  const E &get_edge(int eid) const { return chi.find_by_eid(eid); }
-
   // すべての辺を返す
   // 辺は親から子
   vc<E> edges() const
   {
     vc<E> res(n - 1);
-    repi(i, n - 1) res[i] = get_edge(i);
+    repi(i, n - 1) res[i] = get_edge_by_bfs_order(i);
     return res;
   }
 
@@ -250,7 +241,7 @@ public:
   {
     vc<I> res(n);
     res[0] = root_;
-    repi(i, n - 1) res[i + 1] = get_edge(bfs_ordered_eid[i]).to;
+    repi(i, n - 1) res[i + 1] = get_edge_by_bfs_order(i).to;
     return res;
   }
 
@@ -259,7 +250,7 @@ public:
   vc<E> bfs_ordered_edges() const
   {
     vc<E> res(n - 1);
-    repi(i, n - 1) res[i] = get_edge(bfs_ordered_eid[i]);
+    repi(i, n - 1) res[i] = get_edge_by_bfs_order(i);
     return res;
   }
 
@@ -268,9 +259,9 @@ public:
   {
     vc<E> res(2 * (n - 1));
     vc<int> dp(n, 0);
-    fec(eid : bfs_ordered_eid)
+    repi(i, n - 1)
     {
-      const E &e = get_edge(eid);
+      const E &e = get_edge_by_bfs_order(i);
       dp[e.to] = dp[e.from] + 1;
       res[dp[e.to] - 1] = e;
       dp[e.from] += 2 * siz[e.to];
@@ -286,7 +277,7 @@ public:
     vc<tuple<I, I, Cost>> es(n - 1);
     repi(i, n - 1)
     {
-      const E &e = get_edge(i);
+      const E &e = get_edge_by_bfs_order(i);
       es[i] = {e.from, e.to, e.cost};
     }
     return es;

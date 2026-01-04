@@ -21,7 +21,7 @@ struct GroupAddSub
 {
   using S = T;
   static constexpr S op(S a, S b) { return a + b; }
-  static constexpr S e() { return S(0); }
+  static constexpr S e() { return S{}; }
   static constexpr S inv(S a) { return -a; }
 };
 template <class T>

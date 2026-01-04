@@ -3,7 +3,7 @@
 #include "../../template/template_all_but_modint.hpp"
 #include "modint.hpp"
 #include "modint64.hpp"
-#include "../prime/primality_test.hpp"
+#include "../prime/large/primality_test.hpp"
 
 /**
  * @brief mod 素数 の平方根

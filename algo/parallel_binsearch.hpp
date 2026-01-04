@@ -8,10 +8,20 @@
  */
 
 // vc<bool> judge(vc<ll>): q 個の質問にまとめて答える
-// (oks, ngs)
+// (oks, ngs) を返す
 template <class T = ll, class Judge, class InitOk, class InitNg>
-pair<vc<T>, vc<T>> parallel_binsearch(int q, const Judge &judge, const InitOk &init_ok, const InitNg &init_ng)
+pair<vc<T>, vc<T>> parallel_binsearch(int q, const Judge &judge, InitOk init_ok, InitNg init_ng, bool check_ok = true, bool check_ng = true)
 {
+  if (check_ok)
+  {
+    auto res = judge(vc<T>(q, init_ok));
+    assert(all_of(ALL(res), LMD(x, x)));
+  }
+  if (check_ng)
+  {
+    auto res = judge(vc<T>(q, init_ng));
+    assert(all_of(ALL(res), LMD(x, !x)));
+  }
   vc<T> oks(q, init_ok), ngs(q, init_ng);
   while (true)
   {
@@ -32,8 +42,18 @@ pair<vc<T>, vc<T>> parallel_binsearch(int q, const Judge &judge, const InitOk &i
 }
 // vc<bool> judge(vc<ld>): q 個の質問にまとめて答える
 template <class T = ld, class Judge, class InitOk, class InitNg>
-vc<T> parallel_binsearch_real(int q, const Judge &judge, const InitOk &init_ok, const InitNg &init_ng, int iteration_count = 100)
+vc<T> parallel_binsearch_real(int q, const Judge &judge, InitOk init_ok, InitNg init_ng, int iteration_count = 100, bool check_ok = true, bool check_ng = true)
 {
+  if (check_ok)
+  {
+    auto res = judge(vc<T>(q, init_ok));
+    assert(all_of(ALL(res), LMD(x, x)));
+  }
+  if (check_ng)
+  {
+    auto res = judge(vc<T>(q, init_ng));
+    assert(all_of(ALL(res), LMD(x, !x)));
+  }
   vc<T> oks(q, init_ok), ngs(q, init_ng);
   repi(_, iteration_count)
   {

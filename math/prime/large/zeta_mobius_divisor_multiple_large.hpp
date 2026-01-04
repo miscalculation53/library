@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../../template/template_all_but_modint.hpp"
-#include "factorize.hpp"
-#include "../algebra/algebra_basic_ops.hpp"
+#include "template/template_all_but_modint.hpp"
+#include "math/prime/large/factorize.hpp"
+#include "math/algebra/algebra_basic_ops.hpp"
 
 /**
  * @brief 約数・倍数 ゼータ・メビウス変換（大きい $m$ の約数）
- * @docs docs/math/prime/zeta_mobius_divisor_multiple_large.md
+ * @docs docs/math/prime/large/zeta_mobius_divisor_multiple_large.md
  */
 
 struct ZetaMobiusDivisorMultipleLarge

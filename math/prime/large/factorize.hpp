@@ -1,14 +1,14 @@
 #pragma once
 
-#include "../../template/template_all_but_modint.hpp"
-#include "../modint/modint.hpp"
-#include "../modint/modint64.hpp"
-#include "prime_power.hpp"
-#include "primality_test.hpp"
+#include "template/template_all_but_modint.hpp"
+#include "math/modint/modint.hpp"
+#include "math/modint/modint64.hpp"
+#include "math/prime/prime_power.hpp"
+#include "math/prime/large/primality_test.hpp"
 
 /**
  * @brief 素因数分解
- * @docs docs/math/prime/factorize.md
+ * @docs docs/math/prime/large/factorize.md
  */
 
 namespace internal

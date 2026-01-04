@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "math/prime/order_primitive_root.hpp"
+#include "math/prime/large/order_primitive_root.hpp"
 
 void init() {}
 

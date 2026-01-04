@@ -7,19 +7,27 @@
  * @docs docs/ds/csr.md
  */
 
-template <class T>
+template <class T, bool is_erasable = false>
 struct CSR
 {
 protected:
   int n, m;
   // i (0 <= i < n) 行目を表すのは elist の [start[i], start[i+1])
+  // pop_back する場合は [start[i], start[i] + len[i])
   vc<int> start;
   vc<T> elist;
-  vc<int> eid_to_elistid;
+  vc<int> len;
+  inline int get_last(int i) const
+  {
+    if constexpr (is_erasable)
+      return start[i] + len[i];
+    else
+      return start[i + 1];
+  }
 
   struct Row
   {
-    using iterator = typename vc<T>::const_iterator;
+    using iterator = typename vc<T>::iterator;
 
   private:
     iterator begi, endi;
@@ -32,19 +40,19 @@ protected:
     inline I size() const { return endi - begi; }
     inline bool empty() const { return size() == 0; }
 
-    inline T operator[](int i) const { return *(begi + i); }
-    inline T at(int i) const
+    inline T &operator[](int i) const { return *(begi + i); }
+    inline T &at(int i) const
     {
       assert(0 <= i && i < size());
       return *(begi + i);
     }
 
-    inline T front() const
+    inline T &front() const
     {
       assert(!empty());
       return *begi;
     }
-    inline T back() const
+    inline T &back() const
     {
       assert(!empty());
       return *prev(endi);
@@ -57,21 +65,24 @@ public:
   CSR() {}
   // (i, elem) が格納された vector
   template <class I>
-  CSR(int n, const vc<pair<I, T>> &ies) : n(n), m(ies.size()), start(n, 0), elist(m), eid_to_elistid(m)
+  CSR(int n, const vc<pair<I, T>> &ies) : n(n), m(ies.size()), start(n, 0), elist(m)
   {
+    if constexpr (is_erasable)
+      len.resize(n);
     fec([ i, e ] : ies)
     {
       assert(0 <= i && i < n);
       start[i]++;
     }
     start = cumlsum(start);
+    if constexpr (is_erasable)
+      repi(i, n) len[i] = start[i + 1] - start[i];
     auto cnt = start;
     repi(j, m)
     {
-      cauto &[i, e] = ies[j];
+      cauto & [ i, e ] = ies[j];
       int &k = cnt[i];
       elist[k] = e;
-      eid_to_elistid[j] = k;
       k++;
     }
   }
@@ -81,37 +92,52 @@ public:
     m = 0;
     fec(row : vv) m += row.size();
     elist.resize(m);
-    eid_to_elistid.resize(m);
+    if constexpr (is_erasable)
+      len.resize(n);
     int k = 0;
     for (int i = 0, j = 0; i < n; i++)
     {
       start[i] = k;
+      if constexpr (is_erasable)
+        len[i] = vv[i].size();
       fec(e : vv[i])
       {
         elist[k] = e;
-        eid_to_elistid[j++] = k;
         k++;
       }
     }
     start.back() = m;
   }
 
-  Row operator[](int i) const { return Row(elist.begin() + start[i], elist.begin() + start[i + 1]); }
-  Row at(int i) const
+  Row operator[](int i) { return Row(elist.begin() + start[i], elist.begin() + get_last(i)); }
+  Row operator[](int i) const
+  {
+    auto beg = const_cast<vc<T> &>(elist).begin();
+    return Row(beg + start[i], beg + get_last(i));
+  }
+  Row at(int i)
   {
     if (!(0 <= i && i < n))
       return Row(elist.begin(), elist.begin());
-    return Row(elist.begin() + start[i], elist.begin() + start[i + 1]);
+    return Row(elist.begin() + start[i], elist.begin() + get_last(i));
+  }
+  Row at(int i) const
+  {
+    auto beg = const_cast<vc<T> &>(elist).begin();
+    if (!(0 <= i && i < n))
+      return Row(beg, beg);
+    return Row(beg + start[i], beg + get_last(i));
+  }
+
+  void pop_back(int i)
+  {
+    static_assert(is_erasable);
+    assert(len[i] > 0);
+    len[i]--;
   }
 
   template <class I = ll>
   I size() const { return n; }
-
-  const T &find_by_eid(int eid) const
-  {
-    assert(0 <= eid && eid < m);
-    return elist[eid_to_elistid[eid]];
-  }
 
   vvc<T> to_vv() const
   {
@@ -119,4 +145,7 @@ public:
     repi(i, n) res[i] = {elist.begin() + start[i], elist.begin() + start[i + 1]};
     return res;
   }
+
+  vc<T> &get_elist() { return elist; }
+  const vc<T> &get_elist() const { return elist; }
 };

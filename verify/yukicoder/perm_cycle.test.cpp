@@ -18,7 +18,7 @@
 using mint = modint998244353;
 
 #include "algo/perm_cycle.hpp"
-#include "math/prime/linear_sieve.hpp"
+#include "math/prime/sieve/linear_sieve.hpp"
 
 void init() {}
 

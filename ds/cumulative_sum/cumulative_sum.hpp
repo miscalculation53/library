@@ -26,14 +26,14 @@ public:
     repi(i, n) s[i + 1] = G::op(s[i], a[i]);
   }
   // [0, r)
-  S sum(int r)
+  S sum(int r) const
   {
     const int n = SZ<int>(s) - 1;
     assert(0 <= r && r <= n);
     return s[r];
   }
   // [l, r)
-  S sum(int l, int r)
+  S sum(int l, int r) const
   {
     const int n = SZ<int>(s) - 1;
     assert(0 <= l && l <= r && r <= n);

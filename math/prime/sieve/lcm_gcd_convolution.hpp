@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../../template/template_all_but_modint.hpp"
-#include "zeta_mobius_divisor_multiple.hpp"
+#include "template/template_all_but_modint.hpp"
+#include "math/prime/sieve/zeta_mobius_divisor_multiple.hpp"
 
 /**
  * @brief LCM/GCD 畳み込み
- * @docs docs/math/prime/lcm_gcd_convolution.md
+ * @docs docs/math/prime/sieve/lcm_gcd_convolution.md
  */
 
 // |a| = |b| を仮定

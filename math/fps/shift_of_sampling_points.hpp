@@ -11,8 +11,8 @@
 
 // f(i) = ys[i] (0 <= i < n) で定まる n 次未満の f(x) について f(c) を求める
 // O(n)
-template <class mint>
-mint shift_of_sampling_points_one(const vc<mint> &ys, const mint &c)
+template <class mint, class mint2>
+mint shift_of_sampling_points_one(const vc<mint> &ys, const mint2 &c)
 {
   const int n = ys.size();
   assert(n > 0);
@@ -30,9 +30,15 @@ mint shift_of_sampling_points_one(const vc<mint> &ys, const mint &c)
 
 // f(i) = ys[i] (0 <= i < n) で定まる n 次未満の f(x) について f(c), ..., f(c + m - 1) を求める
 // O((n+m) log (n+m))
-template <class mint>
-vc<mint> shift_of_sampling_points_many(const vc<mint> &ys, const mint &c, int m)
+template <class mint, class mint2>
+vc<mint> shift_of_sampling_points_many(const vc<mint> &ys, const mint2 &c, int m)
 {
+  if (m <= 16)
+  {
+    vc<mint> res(m);
+    rep(i, m) res[i] = shift_of_sampling_points_one(ys, c + i);
+    return res;
+  }
   using F = FormalPowerSeries<mint>;
   const int n = ys.size();
   assert(n > 0);

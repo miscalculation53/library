@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "math/prime/factorize.hpp"
+#include "math/prime/large/factorize.hpp"
 
 void init() {}
 
