@@ -8,6 +8,7 @@
  */
 
 // [l, r] は閉区間
+// 返り値は (x, f(x))
 template <
   class F,
   class T = decltype(declval<F>()(declval<ll>())),
