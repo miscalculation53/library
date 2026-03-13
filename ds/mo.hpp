@@ -11,9 +11,9 @@ namespace internal
 {
 
 template <class I>
-int mo_order_cost(const vc<pair<I, I>> &lrs, const vc<int> &ord)
+I mo_order_cost(const vc<pair<I, I>> &lrs, const vc<int> &ord)
 {
-  int res = 0;
+  I res = 0;
   repi(i, SZ(lrs) - 1)
   {
     res += abs(lrs[ord[i + 1]].first - lrs[ord[i]].first);
@@ -40,20 +40,25 @@ vc<int> mo_order_params(const vc<pair<I, I>> &lrs, int b, int t)
 }
 
 template <class I>
-vc<int> mo_order(int n, const vc<pair<I, I>> &lrs)
+vc<int> mo_order(const vc<pair<I, I>> &lrs)
 {
+  cauto &[ls, rs] = top(lrs);
+  const int n = max(MAX(ls), MAX(rs));
   const int q = lrs.size();
   const int b1 = max(1, int(n / sqrt(q + 1)));
   const int b2 = max(1, int(sqrt(3) * n / sqrt(2 * q + 1)));
-  array<vc<int>, 4> ords = {
+  const int b3 = max(1, int(sqrt(2) * n / sqrt(q + 1)));
+  array<vc<int>, 6> ords = {
     mo_order_params(lrs, b1, 0),
     mo_order_params(lrs, b1, 1),
     mo_order_params(lrs, b2, 0),
-    mo_order_params(lrs, b2, 1)
+    mo_order_params(lrs, b2, 1),
+    mo_order_params(lrs, b3, 0),
+    mo_order_params(lrs, b3, 1),
   };
-  array<int, 4> costs;
-  repi(i, 4) costs[i] = mo_order_cost(lrs, ords[i]);
-  int j = ARGMAX(costs);
+  array<I, 6> costs;
+  repi(i, 6) costs[i] = mo_order_cost(lrs, ords[i]);
+  int j = ARGMIN(costs);
   return ords[j];
 }
 
@@ -68,7 +73,7 @@ template <class I, class ADD_L, class ADD_R, class DEL_L, class DEL_R, class REM
 void mo(int n, const vc<pair<I, I>> &lrs, ADD_L add_l, ADD_R add_r, DEL_L del_l, DEL_R del_r, REM rem)
 {
   fec([ l, r ] : lrs) { assert(0 <= l && l <= n && 0 <= r && r <= n); }
-  vc<int> ord = internal::mo_order(n, lrs);
+  vc<int> ord = internal::mo_order(lrs);
   cauto & [ ls, rs ] = top(lrs);
   int l = 0, r = 0;
   fe(i : ord)
@@ -105,7 +110,7 @@ template <class I, class Slider, class REM>
 void mo(int n, const vc<pair<I, I>> &lrs, Slider &slider, REM rem)
 {
   fec([ l, r ] : lrs) { assert(0 <= l && r <= n); }
-  vc<int> ord = internal::mo_order(n, lrs);
+  vc<int> ord = internal::mo_order(lrs);
   fe(i : ord)
   {
     slider.set(lrs[i].first, lrs[i].second);

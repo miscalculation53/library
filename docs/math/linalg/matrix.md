@@ -121,17 +121,17 @@ pair<bool, Matrix<F, BS>> inv()
 tuple<bool, vc<F::S>, vvc<F::S>> solve(vc<F::S> b)
 ```
 
-$A\bm{x} = \bm{b}$ の解を求め、
+$A\boldsymbol{x} = \boldsymbol{b}$ の解を求め、
 
 - 解が存在するかどうか
-- 解が存在する場合の解のひとつ $\bm{x}_0$
-- 解空間の基底 $\{\bm{c}_i\}_i$
+- 解が存在する場合の解のひとつ $\boldsymbol{x}_0$
+- 解空間の基底 $\{\boldsymbol{c}_i\}_i$
 
-を返す。すなわち、解は $\bm{x} = \bm{x}_0 + \sum_i \lambda_i \bm{c}_i$ の形で表されるベクトル全体。
+を返す。すなわち、解は $\boldsymbol{x} = \boldsymbol{x}_0 + \sum_i \lambda_i \boldsymbol{c}_i$ の形で表されるベクトル全体。
 
 ##### 制約
 
-- $\bm{b}$ は $n$ 次元ベクトル
+- $\boldsymbol{b}$ は $n$ 次元ベクトル
 
 ##### 計算量
 

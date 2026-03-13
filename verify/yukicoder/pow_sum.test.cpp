@@ -1,4 +1,4 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/kth_term_of_linearly_recurrent_sequence"
+#define PROBLEM "https://yukicoder.me/problems/no/1145"
 
 #define SINGLE_TESTCASE
 // #define MULTI_TESTCASE
@@ -14,20 +14,21 @@
 #define EPS 1e-11
 
 #include "template/template_all_but_modint.hpp"
-#include "math/fps/bmbm.hpp"
+#include "math/fps/fps.hpp"
 using mint = modint998244353;
+using bi = Binomial<mint>;
 using fps = FormalPowerSeries<mint>;
+#include "math/fps/pow_sum.hpp"
 
 void init() {}
 
 void main2()
 {
-  LL(d, k);
-  VEC(mint, d, a);
-  VEC(mint, d, c);
-  c.insert(c.begin(), 0);
-  auto [p, q] = linear_recurrence_gf(a, c);
-  PRINT(bostan_mori(p, q, k));
+  LL(N, M);
+  VEC(mint, N, A);
+  auto ans = pow_sum(A, M + 1);
+  ans.erase(ans.begin());
+  PRINT(ans);
 }
 
 void test()

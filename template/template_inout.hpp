@@ -228,7 +228,7 @@ void write() {}
 template <class Head, class... Tail>
 void write(Head &&head, Tail &&... tail) {
   wt1(head);
-  write(forward<Tail>(tail)...);
+  write(std::forward<Tail>(tail)...);
 }
 
 void print() { wt1('\n'); }
@@ -236,7 +236,7 @@ template <class Head, class... Tail>
 void print(Head &&head, Tail &&... tail) {
   wt1(head);
   if (sizeof...(Tail)) wt1(' ');
-  print(forward<Tail>(tail)...);
+  print(std::forward<Tail>(tail)...);
 }
 
 } // namespace fastio

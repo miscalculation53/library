@@ -20,17 +20,17 @@ Black Box Linear Algebra とは、線形代数のアルゴリズムのうち、�
 
 #### 最小多項式
 
-正方行列 $A$ の最小多項式 $m_A$ とは、$m(A) = O$ を満たす多項式 $m(x) = \sum_{j=0}^d m_j x^j$ のうち次数 $d$ が最小のもの。ランダムベクトル $\bm{u}, \bm{v}$ をとって $a_i = \bm{u}^\top A^i \bm{v}$ で定まる列 $a$ に対し、$a$ の最小多項式、つまり $\sum_{j=0}^d m_j a_{i+j} = 0 \ (i \geq 0)$ を満たすような最小次数の $m$ をとる（これは Berlekamp–Massey でできる。$d \leq n$ なので $a$ は $a_{2n}$ までとればよい）。すると、この $m$ は高確率で $m$ の最小多項式になっている（らしい）。
+正方行列 $A$ の最小多項式 $m_A$ とは、$m(A) = O$ を満たす多項式 $m(x) = \sum_{j=0}^d m_j x^j$ のうち次数 $d$ が最小のもの。ランダムベクトル $\boldsymbol{u}, \boldsymbol{v}$ をとって $a_i = \boldsymbol{u}^\top A^i \boldsymbol{v}$ で定まる列 $a$ に対し、$a$ の最小多項式、つまり $\sum_{j=0}^d m_j a_{i+j} = 0 \ (i \geq 0)$ を満たすような最小次数の $m$ をとる（これは Berlekamp–Massey でできる。$d \leq n$ なので $a$ は $a_{2n}$ までとればよい）。すると、この $m$ は高確率で $m$ の最小多項式になっている（らしい）。
 
 #### 線型方程式
 
-最小多項式が求まれば、（少なくとも $A$ が正則な正方行列の場合）線型方程式 $A\bm{x} = \bm{b}$ が解ける。
+最小多項式が求まれば、（少なくとも $A$ が正則な正方行列の場合）線型方程式 $A\boldsymbol{x} = \boldsymbol{b}$ が解ける。
 
 $m_0 I + m_1 A + m_2 A^2 + \cdots + m_d A^d = 0$
 
 より
 
-$\displaystyle A^{-1} \bm{b} = -\frac{1}{m_0}\left(m_1 \bm{b} + m_2 A \bm{b} + \cdots + m_d A^{d-1} \bm{b} \right)$
+$\displaystyle A^{-1} \boldsymbol{b} = -\frac{1}{m_0}\left(m_1 \boldsymbol{b} + m_2 A \boldsymbol{b} + \cdots + m_d A^{d-1} \boldsymbol{b} \right)$
 
 であるため。
 

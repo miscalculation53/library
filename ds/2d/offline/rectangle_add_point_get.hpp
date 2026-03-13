@@ -23,6 +23,7 @@ public:
   // [lx, rx) × [ly, ry) に重み w の長方形を追加
   void rectangle_add(I lx, I rx, I ly, I ry, const S &w)
   {
+    assert(lx <= rx && ly <= ry);
     S iw = G::inv(w);
     rs.point_add(lx, ly, w), rs.point_add(rx, ry, w);
     rs.point_add(lx, ry, iw), rs.point_add(rx, ly, iw);

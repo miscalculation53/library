@@ -3,9 +3,9 @@
 普通に平面走査をして区間加算・一点更新にしてもよいが、左下に無限に広がる矩形領域の和に帰着することもできる（本ライブラリでは一旦こちらの実装を採用）。時間計算量は $O((N + Q) \log (N + Q))$。
 
 $\begin{aligned}
-\displaystyle \mathrm{ans}(x, y) &= \sum_{(\mathrm{lx}, \mathrm{rx}, \mathrm{ly}, \mathrm{ry}, w) \in Q} \bm{1}[\mathrm{lx} \leq x < \mathrm{rx}]\bm{1}[\mathrm{ly} \leq y < \mathrm{ry}] w \\\\  
-&= \sum_{(\mathrm{lx}, \mathrm{rx}, \mathrm{ly}, \mathrm{ry}, w) \in Q} (\bm{1}[\mathrm{lx} \leq x] - \bm{1}[\mathrm{rx} \leq x])(\bm{1}[\mathrm{ly} \leq y] - \bm{1}[\mathrm{ry} \leq y]) w \\\\  
-&= \sum_{(\mathrm{lx}, \mathrm{ly}, w) \in Q_1} \bm{1}[\mathrm{lx} \leq x] \bm{1}[\mathrm{ly} \leq y] w + (略)
+\displaystyle \mathrm{ans}(x, y) &= \sum_{(\mathrm{lx}, \mathrm{rx}, \mathrm{ly}, \mathrm{ry}, w) \in Q} \boldsymbol{1}[\mathrm{lx} \leq x < \mathrm{rx}]\boldsymbol{1}[\mathrm{ly} \leq y < \mathrm{ry}] w \\\\  
+&= \sum_{(\mathrm{lx}, \mathrm{rx}, \mathrm{ly}, \mathrm{ry}, w) \in Q} (\boldsymbol{1}[\mathrm{lx} \leq x] - \boldsymbol{1}[\mathrm{rx} \leq x])(\boldsymbol{1}[\mathrm{ly} \leq y] - \boldsymbol{1}[\mathrm{ry} \leq y]) w \\\\  
+&= \sum_{(\mathrm{lx}, \mathrm{ly}, w) \in Q_1} \boldsymbol{1}[\mathrm{lx} \leq x] \boldsymbol{1}[\mathrm{ly} \leq y] w + (略)
 \end{aligned}$
 
 という感じになっているため。たとえば第 $1$ 項は点と長方形を入れ替えて考えて、点 $(\mathrm{lx}, \mathrm{rx})$ が長方形領域 $(-\infty, x] \times (-\infty, y]$ に含まれるという条件だと思えばよい。

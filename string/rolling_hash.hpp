@@ -84,10 +84,11 @@ public:
 
   template <class I = ll>
   I size() const { return sm.size(); }
-  mint hash(int l, int r) const
+  RollingHash<mint, id> hash(int l, int r) const
   {
     assert(0 <= l && l <= r && r <= size());
-    return sm[r] - sm[l] * pow(r - l);
+    mint val = sm[r] - sm[l] * pow(r - l);
+    return {val, r - l};
   }
 
   // 列を追加する
@@ -132,3 +133,7 @@ int compare_substr_rh(
   else
     return s[i] < t[j] ? -1 : s[i] > t[j] ? 1 : 0;
 }
+
+#ifdef LOCAL
+CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(size(), hash());
+#endif

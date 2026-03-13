@@ -94,16 +94,15 @@ public:
     elist.resize(m);
     if constexpr (is_erasable)
       len.resize(n);
-    int k = 0;
     for (int i = 0, j = 0; i < n; i++)
     {
-      start[i] = k;
+      start[i] = j;
       if constexpr (is_erasable)
         len[i] = vv[i].size();
       fec(e : vv[i])
       {
-        elist[k] = e;
-        k++;
+        elist[j] = e;
+        j++;
       }
     }
     start.back() = m;
