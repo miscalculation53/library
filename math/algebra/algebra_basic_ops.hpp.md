@@ -1,315 +1,318 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/2d/offline/point_add_rectangle_sum.hpp
     title: "\u70B9\u52A0\u7B97\u30FB\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\
       \u30F3\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/2d/offline/rectangle_add_point_get.hpp
     title: "\u77E9\u5F62\u52A0\u7B97\u30FB\u70B9\u53D6\u5F97\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/2d/offline/rectangle_sum.hpp
     title: "\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\u30F3\uFF09"
-  - icon: ':warning:'
+  - icon: ':x:'
     path: ds/2d/offline/static_rectangle_add_point_get.hpp
     title: "\u77E9\u5F62\u52A0\u7B97 \u2192 \u70B9\u53D6\u5F97\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/2d/offline/static_rectangle_add_rectangle_sum.hpp
     title: "\u77E9\u5F62\u52A0\u7B97 \u2192 \u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/2d/sparse/fenwick_tree.hpp
     title: "$2$ \u6B21\u5143 Fenwick Tree\uFF08\u758E\u3001\u30AF\u30A8\u30EA\u70B9\
       \u5148\u8AAD\u307F\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/cumulative_sum/cumulative_sum.hpp
     title: "$1$ \u6B21\u5143\u7D2F\u7A4D\u548C"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/cumulative_sum/cumulative_sum_2d.hpp
     title: "$2$ \u6B21\u5143\u7D2F\u7A4D\u548C"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/cumulative_sum/imos.hpp
     title: "$1$ \u6B21\u5143 imos \u6CD5"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/cumulative_sum/imos_2d.hpp
     title: "$2$ \u6B21\u5143 imos \u6CD5"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/fenwick_tree/fenwick_tree.hpp
     title: Fenwick Tree
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/fenwick_tree/fenwick_tree_01.hpp
     title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/fenwick_tree/inversion.hpp
     title: "\u8EE2\u5012\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/fenwick_tree/range_add_point_get.hpp
     title: "\u533A\u9593\u52A0\u7B97\u4E00\u70B9\u53D6\u5F97"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/query/point_set_range_frequency.hpp
     title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\u30D5\
       \u30E9\u30A4\u30F3\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/sqrt_decomposition_range_sum.hpp
     title: "\u5E73\u65B9\u5206\u5272\u306B\u3088\u308B\u4E00\u70B9\u52A0\u7B97\u30FB\
       \u533A\u9593\u548C\u30AF\u30A8\u30EA $\\langle O(1), O(\\sqrt{N}) \\rangle$"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/berlekamp_massey.hpp
     title: "Berlekamp\u2013Massey"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/bmbm.hpp
     title: BMBM
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/linalg/bbla.hpp
     title: Black Box Linear Algebra
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/linalg/matrix.hpp
     title: "\u884C\u5217"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/linalg/matrix_array.hpp
     title: "\u884C\u5217\uFF08array\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/large/zeta_mobius_divisor_multiple_large.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/sieve/lcm_gcd_convolution.hpp
     title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/sieve/zeta_mobius_divisor_multiple.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08$1$ \u4EE5\u4E0A $n$ \u4EE5\u4E0B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/set/and_or_convolution.hpp
     title: "and/or \u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/set/kronecker_power.hpp
     title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/set/subset_convolution.hpp
     title: subset convolution
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/set/xor_convolution.hpp
     title: "\u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\u30FBxor \u7573\u307F\u8FBC\
       \u307F"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/set/zeta_mobius.hpp
     title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/aoj/cumulative_sum_2d.test.cpp
     title: verify/aoj/cumulative_sum_2d.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/aoj/inversion.test.cpp
     title: verify/aoj/inversion.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/aoj/range_add_point_get.test.cpp
     title: verify/aoj/range_add_point_get.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/aoj/zeta_general.test.cpp
     title: verify/aoj/zeta_general.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/mytest/fenwick_tree_set.test.cpp
     title: verify/mytest/fenwick_tree_set.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/2d_fenwick_tree.test.cpp
     title: verify/yosupo/2d_fenwick_tree.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/and_or_convolution.test.cpp
     title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/counting_eularian_circuits.test.cpp
     title: verify/yosupo/counting_eularian_circuits.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/counting_spanning_trees_directed.test.cpp
     title: verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
     title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/find_linear_recurrence.test.cpp
     title: verify/yosupo/find_linear_recurrence.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/kronecker_power_hadamard.test.cpp
     title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
     title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
     title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/lower_left_sum.test.cpp
     title: verify/yosupo/lower_left_sum.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/majority_voting.test.cpp
     title: verify/yosupo/majority_voting.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_det.test.cpp
     title: verify/yosupo/matrix_det.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_det_array.test.cpp
     title: verify/yosupo/matrix_det_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_det_sparse.test.cpp
     title: verify/yosupo/matrix_det_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_inv.test.cpp
     title: verify/yosupo/matrix_inv.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_inv_array.test.cpp
     title: verify/yosupo/matrix_inv_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_pow.test.cpp
     title: verify/yosupo/matrix_pow.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_pow_array.test.cpp
     title: verify/yosupo/matrix_pow_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_product.test.cpp
     title: verify/yosupo/matrix_product.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_product_array.test.cpp
     title: verify/yosupo/matrix_product_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_rank.test.cpp
     title: verify/yosupo/matrix_rank.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_solve.test.cpp
     title: verify/yosupo/matrix_solve.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_solve_array.test.cpp
     title: verify/yosupo/matrix_solve_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/ordered_set_fenwick_tree.test.cpp
     title: verify/yosupo/ordered_set_fenwick_tree.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/point_add_range_sum.test.cpp
     title: verify/yosupo/point_add_range_sum.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/point_add_range_sum_sqrt.test.cpp
     title: verify/yosupo/point_add_range_sum_sqrt.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/point_add_rectangle_sum.test.cpp
     title: verify/yosupo/point_add_rectangle_sum.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/point_set_range_frequency.test.cpp
     title: verify/yosupo/point_set_range_frequency.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
     title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/rectangle_add_point_get.test.cpp
     title: verify/yosupo/rectangle_add_point_get.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/rectangle_sum.test.cpp
     title: verify/yosupo/rectangle_sum.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/static_range_inversions_query.test.cpp
     title: verify/yosupo/static_range_inversions_query.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/static_range_sum.test.cpp
     title: verify/yosupo/static_range_sum.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
     title: verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
     title: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/unionfind_potential.test.cpp
     title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/xor_convolution.test.cpp
     title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/bmbm.test.cpp
     title: verify/yukicoder/bmbm.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
     title: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/imos.test.cpp
     title: verify/yukicoder/imos.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/imos_2d.test.cpp
     title: verify/yukicoder/imos_2d.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
     title: verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: verify/yukicoder/static_rectangle_add_point_get.test.cpp
+    title: verify/yukicoder/static_rectangle_add_point_get.test.cpp
+  - icon: ':x:'
     path: verify/yukicoder/yuki310.test.cpp
     title: verify/yukicoder/yuki310.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
     title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     _deprecated_at_docs: docs/math/algebra/algebra_basic_ops.md
     document_title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068\
@@ -764,35 +767,36 @@ data:
     \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
     \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
     \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
-    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
-    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
-    \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
-    }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
-    struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
-    \n// ---- \u5165\u529B ----\n#if defined LOCAL or not defined FAST_IO\ntemplate\
-    \ <class T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  is\
-    \ >> p.first >> p.second;\n  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream\
-    \ &is, tuple<Ts...> &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a);\
-    \ }, t);\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
-    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
-    \  return is;\n}\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n\
-    {\n  const size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
-    \  return is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not\
-    \ defined FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >>\
-    \ a); }\n#endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class...\
-    \ Ts>\nvoid READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class...\
-    \ Ts>\nvoid READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\n\
-    void READVECnodump(int n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\n\
-    template <class T, class... Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n\
-    { READVECnodump(n, v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid\
-    \ READVEC2nodump(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n\
-    }\ntemplate <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v,\
-    \ vvc<Ts> &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\
-    \ntemplate <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n\
-    \  repi(i, n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n\
-    \  }\n}\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v,\
-    \ vvc<Ts> &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; //\
-    \ namespace internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
+    \ &&... tail) {\n  wt1(head);\n  write(std::forward<Tail>(tail)...);\n}\n\nvoid\
+    \ print() { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head\
+    \ &&head, Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n\
+    \  print(std::forward<Tail>(tail)...);\n}\n\n} // namespace fastio\n\n#endif\n\
+    \n#if defined FAST_IO and not defined LOCAL\nstruct Dummy {\n  Dummy() { atexit(fastio::flush);\
+    \ }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\n// ---- \u5165\u529B\
+    \ ----\n#if defined LOCAL or not defined FAST_IO\ntemplate <class T, class U>\n\
+    istream &operator>>(istream &is, pair<T, U> &p)\n{\n  is >> p.first >> p.second;\n\
+    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
+    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
+    \ is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream &is, array<T,\
+    \ n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n  return is;\n\
+    }\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n{\n  const\
+    \ size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n  return\
+    \ is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not defined\
+    \ FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\
+    #endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class... Ts>\n\
+    void READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class... Ts>\n\
+    void READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\nvoid READVECnodump(int\
+    \ n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\ntemplate <class T, class...\
+    \ Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n{ READVECnodump(n,\
+    \ v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid READVEC2nodump(int\
+    \ n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n}\ntemplate\
+    \ <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\ntemplate\
+    \ <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n  repi(i,\
+    \ n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n  }\n\
+    }\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; // namespace\
+    \ internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
     \n#define IN(T, ...) T __VA_ARGS__; READ(__VA_ARGS__)\n\n#define CHAR(...) IN(char,\
     \ __VA_ARGS__)\n#define INT(...) IN(int, __VA_ARGS__)\n#define LL(...) IN(ll,\
     \ __VA_ARGS__)\n#define STR(...) IN(string, __VA_ARGS__)\n#define ARR(T, n, ...)\
@@ -990,94 +994,95 @@ data:
   isVerificationFile: false
   path: math/algebra/algebra_basic_ops.hpp
   requiredBy:
-  - ds/query/point_set_range_frequency.hpp
-  - ds/cumulative_sum/imos.hpp
-  - ds/cumulative_sum/cumulative_sum_2d.hpp
-  - ds/cumulative_sum/cumulative_sum.hpp
-  - ds/cumulative_sum/imos_2d.hpp
-  - ds/2d/offline/static_rectangle_add_rectangle_sum.hpp
-  - ds/2d/offline/rectangle_sum.hpp
-  - ds/2d/offline/point_add_rectangle_sum.hpp
-  - ds/2d/offline/static_rectangle_add_point_get.hpp
-  - ds/2d/offline/rectangle_add_point_get.hpp
-  - ds/2d/sparse/fenwick_tree.hpp
-  - ds/fenwick_tree/inversion.hpp
-  - ds/fenwick_tree/range_add_point_get.hpp
-  - ds/fenwick_tree/fenwick_tree.hpp
-  - ds/fenwick_tree/fenwick_tree_01.hpp
-  - ds/uf/uf_potential.hpp
-  - ds/sqrt_decomposition_range_sum.hpp
-  - math/linalg/matrix_array.hpp
-  - math/linalg/matrix.hpp
-  - math/linalg/bbla.hpp
-  - math/fps/bmbm.hpp
-  - math/fps/berlekamp_massey.hpp
-  - math/set/zeta_mobius.hpp
-  - math/set/kronecker_power.hpp
-  - math/set/subset_convolution.hpp
-  - math/set/and_or_convolution.hpp
-  - math/set/xor_convolution.hpp
+  - graph/matrix_tree.hpp
   - math/prime/sieve/lcm_gcd_convolution.hpp
   - math/prime/sieve/zeta_mobius_divisor_multiple.hpp
   - math/prime/large/zeta_mobius_divisor_multiple_large.hpp
-  - graph/matrix_tree.hpp
-  timestamp: '2026-01-04 17:26:22+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  - math/fps/bmbm.hpp
+  - math/fps/berlekamp_massey.hpp
+  - math/linalg/matrix.hpp
+  - math/linalg/bbla.hpp
+  - math/linalg/matrix_array.hpp
+  - math/set/kronecker_power.hpp
+  - math/set/xor_convolution.hpp
+  - math/set/and_or_convolution.hpp
+  - math/set/subset_convolution.hpp
+  - math/set/zeta_mobius.hpp
+  - ds/query/point_set_range_frequency.hpp
+  - ds/cumulative_sum/cumulative_sum_2d.hpp
+  - ds/cumulative_sum/imos.hpp
+  - ds/cumulative_sum/cumulative_sum.hpp
+  - ds/cumulative_sum/imos_2d.hpp
+  - ds/fenwick_tree/fenwick_tree.hpp
+  - ds/fenwick_tree/range_add_point_get.hpp
+  - ds/fenwick_tree/fenwick_tree_01.hpp
+  - ds/fenwick_tree/inversion.hpp
+  - ds/uf/uf_potential.hpp
+  - ds/sqrt_decomposition_range_sum.hpp
+  - ds/2d/sparse/fenwick_tree.hpp
+  - ds/2d/offline/rectangle_sum.hpp
+  - ds/2d/offline/static_rectangle_add_rectangle_sum.hpp
+  - ds/2d/offline/point_add_rectangle_sum.hpp
+  - ds/2d/offline/rectangle_add_point_get.hpp
+  - ds/2d/offline/static_rectangle_add_point_get.hpp
+  timestamp: '2026-03-14 04:11:27+09:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
-  - verify/aoj/inversion.test.cpp
-  - verify/aoj/zeta_general.test.cpp
-  - verify/aoj/range_add_point_get.test.cpp
-  - verify/aoj/cumulative_sum_2d.test.cpp
-  - verify/mytest/fenwick_tree_set.test.cpp
+  - verify/yukicoder/static_rectangle_add_point_get.test.cpp
+  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/yukicoder/imos_2d.test.cpp
   - verify/yukicoder/imos.test.cpp
+  - verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   - verify/yukicoder/yuki310.test.cpp
   - verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  - verify/yukicoder/imos_2d.test.cpp
   - verify/yukicoder/bmbm.test.cpp
-  - verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
-  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - verify/yosupo/matrix_det_sparse.test.cpp
-  - verify/yosupo/ordered_set_fenwick_tree.test.cpp
-  - verify/yosupo/point_set_range_frequency.test.cpp
-  - verify/yosupo/matrix_pow.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - verify/yosupo/matrix_solve.test.cpp
-  - verify/yosupo/matrix_rank.test.cpp
-  - verify/yosupo/xor_convolution.test.cpp
+  - verify/mytest/fenwick_tree_set.test.cpp
+  - verify/aoj/range_add_point_get.test.cpp
+  - verify/aoj/inversion.test.cpp
+  - verify/aoj/zeta_general.test.cpp
+  - verify/aoj/cumulative_sum_2d.test.cpp
+  - verify/yosupo/2d_fenwick_tree.test.cpp
+  - verify/yosupo/matrix_pow_array.test.cpp
+  - verify/yosupo/matrix_inv.test.cpp
+  - verify/yosupo/majority_voting.test.cpp
   - verify/yosupo/static_range_sum.test.cpp
-  - verify/yosupo/matrix_det.test.cpp
+  - verify/yosupo/xor_convolution.test.cpp
+  - verify/yosupo/kronecker_power_hadamard.test.cpp
+  - verify/yosupo/static_range_inversions_query.test.cpp
+  - verify/yosupo/subset_convolution.test.cpp
+  - verify/yosupo/unionfind_potential.test.cpp
+  - verify/yosupo/matrix_det_sparse.test.cpp
+  - verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
   - verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - verify/yosupo/point_add_range_sum.test.cpp
-  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - verify/yosupo/point_set_range_frequency.test.cpp
+  - verify/yosupo/matrix_det.test.cpp
+  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
   - verify/yosupo/lower_left_sum.test.cpp
   - verify/yosupo/rectangle_sum.test.cpp
-  - verify/yosupo/rectangle_add_point_get.test.cpp
-  - verify/yosupo/find_linear_recurrence.test.cpp
-  - verify/yosupo/point_add_rectangle_sum.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
   - verify/yosupo/matrix_product.test.cpp
-  - verify/yosupo/point_add_range_sum_sqrt.test.cpp
-  - verify/yosupo/kronecker_power_hadamard.test.cpp
-  - verify/yosupo/2d_fenwick_tree.test.cpp
-  - verify/yosupo/matrix_product_array.test.cpp
-  - verify/yosupo/matrix_inv_array.test.cpp
-  - verify/yosupo/majority_voting.test.cpp
-  - verify/yosupo/matrix_pow_array.test.cpp
-  - verify/yosupo/subset_convolution.test.cpp
-  - verify/yosupo/matrix_solve_array.test.cpp
-  - verify/yosupo/static_range_inversions_query.test.cpp
-  - verify/yosupo/unionfind_potential.test.cpp
-  - verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
-  - verify/yosupo/matrix_det_array.test.cpp
+  - verify/yosupo/matrix_pow.test.cpp
+  - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
+  - verify/yosupo/matrix_solve_array.test.cpp
+  - verify/yosupo/point_add_rectangle_sum.test.cpp
+  - verify/yosupo/ordered_set_fenwick_tree.test.cpp
+  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+  - verify/yosupo/matrix_solve.test.cpp
+  - verify/yosupo/matrix_det_array.test.cpp
+  - verify/yosupo/matrix_rank.test.cpp
+  - verify/yosupo/rectangle_add_point_get.test.cpp
+  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
+  - verify/yosupo/find_linear_recurrence.test.cpp
+  - verify/yosupo/and_or_convolution.test.cpp
+  - verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
+  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
   - verify/yosupo/counting_eularian_circuits.test.cpp
-  - verify/yosupo/matrix_inv.test.cpp
+  - verify/yosupo/point_add_range_sum.test.cpp
+  - verify/yosupo/point_add_range_sum_sqrt.test.cpp
+  - verify/yosupo/matrix_inv_array.test.cpp
+  - verify/yosupo/matrix_product_array.test.cpp
+  - verify/yosupo/gcd_convolution.test.cpp
 documentation_of: math/algebra/algebra_basic_ops.hpp
 layout: document
 redirect_from:

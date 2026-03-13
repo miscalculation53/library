@@ -1,76 +1,76 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: bit/kth_bit.hpp
     title: "\u4E0B\u304B\u3089 $k$ \u756A\u76EE\u306E\u30D3\u30C3\u30C8\u3092\u53D6\
       \u5F97"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/coordinate_compression.hpp
     title: "\u5EA7\u6A19\u5727\u7E2E"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/fenwick_tree/fenwick_tree.hpp
     title: Fenwick Tree
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/fenwick_tree/fenwick_tree_01.hpp
     title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/fenwick_tree/inversion.hpp
     title: "\u8EE2\u5012\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: ds/mo.hpp
     title: Mo's algorithm
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/static_range_inversions_query
@@ -529,35 +529,36 @@ data:
     \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
     \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
     \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
-    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
-    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
-    \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
-    }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
-    struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
-    \n// ---- \u5165\u529B ----\n#if defined LOCAL or not defined FAST_IO\ntemplate\
-    \ <class T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  is\
-    \ >> p.first >> p.second;\n  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream\
-    \ &is, tuple<Ts...> &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a);\
-    \ }, t);\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
-    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
-    \  return is;\n}\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n\
-    {\n  const size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
-    \  return is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not\
-    \ defined FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >>\
-    \ a); }\n#endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class...\
-    \ Ts>\nvoid READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class...\
-    \ Ts>\nvoid READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\n\
-    void READVECnodump(int n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\n\
-    template <class T, class... Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n\
-    { READVECnodump(n, v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid\
-    \ READVEC2nodump(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n\
-    }\ntemplate <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v,\
-    \ vvc<Ts> &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\
-    \ntemplate <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n\
-    \  repi(i, n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n\
-    \  }\n}\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v,\
-    \ vvc<Ts> &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; //\
-    \ namespace internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
+    \ &&... tail) {\n  wt1(head);\n  write(std::forward<Tail>(tail)...);\n}\n\nvoid\
+    \ print() { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head\
+    \ &&head, Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n\
+    \  print(std::forward<Tail>(tail)...);\n}\n\n} // namespace fastio\n\n#endif\n\
+    \n#if defined FAST_IO and not defined LOCAL\nstruct Dummy {\n  Dummy() { atexit(fastio::flush);\
+    \ }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\n// ---- \u5165\u529B\
+    \ ----\n#if defined LOCAL or not defined FAST_IO\ntemplate <class T, class U>\n\
+    istream &operator>>(istream &is, pair<T, U> &p)\n{\n  is >> p.first >> p.second;\n\
+    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
+    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
+    \ is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream &is, array<T,\
+    \ n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n  return is;\n\
+    }\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n{\n  const\
+    \ size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n  return\
+    \ is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not defined\
+    \ FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\
+    #endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class... Ts>\n\
+    void READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class... Ts>\n\
+    void READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\nvoid READVECnodump(int\
+    \ n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\ntemplate <class T, class...\
+    \ Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n{ READVECnodump(n,\
+    \ v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid READVEC2nodump(int\
+    \ n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n}\ntemplate\
+    \ <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\ntemplate\
+    \ <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n  repi(i,\
+    \ n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n  }\n\
+    }\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; // namespace\
+    \ internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
     \n#define IN(T, ...) T __VA_ARGS__; READ(__VA_ARGS__)\n\n#define CHAR(...) IN(char,\
     \ __VA_ARGS__)\n#define INT(...) IN(int, __VA_ARGS__)\n#define LL(...) IN(ll,\
     \ __VA_ARGS__)\n#define STR(...) IN(string, __VA_ARGS__)\n#define ARR(T, n, ...)\
@@ -682,60 +683,63 @@ data:
     \ vec.size())\n  {\n    int &tmp = id[cv[i]];\n    if (tmp == -1)\n      tmp =\
     \ j++;\n    res[i] = tmp;\n  }\n  return res;\n}\n#line 2 \"ds/mo.hpp\"\n\n#line\
     \ 4 \"ds/mo.hpp\"\n\n/**\n * @brief Mo's algorithm\n * @docs docs/ds/mo.md\n */\n\
-    \nnamespace internal\n{\n\ntemplate <class I>\nint mo_order_cost(const vc<pair<I,\
-    \ I>> &lrs, const vc<int> &ord)\n{\n  int res = 0;\n  repi(i, SZ(lrs) - 1)\n \
-    \ {\n    res += abs(lrs[ord[i + 1]].first - lrs[ord[i]].first);\n    res += abs(lrs[ord[i\
+    \nnamespace internal\n{\n\ntemplate <class I>\nI mo_order_cost(const vc<pair<I,\
+    \ I>> &lrs, const vc<int> &ord)\n{\n  I res = 0;\n  repi(i, SZ(lrs) - 1)\n  {\n\
+    \    res += abs(lrs[ord[i + 1]].first - lrs[ord[i]].first);\n    res += abs(lrs[ord[i\
     \ + 1]].second - lrs[ord[i]].second);\n  }\n  return res;\n}\n\ntemplate <class\
     \ I>\nvc<int> mo_order_params(const vc<pair<I, I>> &lrs, int b, int t)\n{\n  const\
     \ int q = lrs.size();\n  cauto &[ls, rs] = top(lrs);\n  auto comp = [&](int i,\
     \ int j)\n  {\n    int segi = (ls[i] + t * b / 2) / b, segj = (ls[j] + t * b /\
     \ 2) / b;\n    if (segi != segj)\n      return segi < segj;\n    return (segi\
     \ & 1) ? (rs[i] > rs[j]) : (rs[i] < rs[j]);\n  };\n  vc<int> ord = permid<int>(q);\n\
-    \  sort(ALL(ord), comp);\n  return ord;\n}\n\ntemplate <class I>\nvc<int> mo_order(int\
-    \ n, const vc<pair<I, I>> &lrs)\n{\n  const int q = lrs.size();\n  const int b1\
-    \ = max(1, int(n / sqrt(q + 1)));\n  const int b2 = max(1, int(sqrt(3) * n / sqrt(2\
-    \ * q + 1)));\n  array<vc<int>, 4> ords = {\n    mo_order_params(lrs, b1, 0),\n\
-    \    mo_order_params(lrs, b1, 1),\n    mo_order_params(lrs, b2, 0),\n    mo_order_params(lrs,\
-    \ b2, 1)\n  };\n  array<int, 4> costs;\n  repi(i, 4) costs[i] = mo_order_cost(lrs,\
-    \ ords[i]);\n  int j = ARGMAX(costs);\n  return ords[j];\n}\n\n};\n\n// add_l(l,\
-    \ r): \u4ECA\u306E\u533A\u9593\u304C [l+1, r) \u3067\u3042\u308B\u3068\u304D\u3001\
-    l \u3092\u8FFD\u52A0\u3057\u3066 [l, r) \u306B\u3059\u308B\n// add_r(l, r): \u4ECA\
-    \u306E\u533A\u9593\u304C [l, r) \u3067\u3042\u308B\u3068\u304D\u3001r \u3092\u8FFD\
-    \u52A0\u3057\u3066 [l, r+1) \u306B\u3059\u308B\n// del_l(l, r): \u4ECA\u306E\u533A\
-    \u9593\u304C [l, r) \u3067\u3042\u308B\u3068\u304D\u3001l \u3092\u524A\u9664\u3057\
-    \u3066 [l+1, r) \u306B\u3059\u308B\n// del_r(l, r): \u4ECA\u306E\u533A\u9593\u304C\
-    \ [l, r+1) \u3067\u3042\u308B\u3068\u304D\u3001r \u3092\u524A\u9664\u3057\u3066\
-    \ [l, r) \u306B\u3059\u308B\n// rem(qid): \u4ECA\u304C qid \u756A\u76EE\u306E\u533A\
-    \u9593\u3060\u3068\u3057\u3066\u305D\u306E\u90E8\u5206\u306E\u7B54\u3048\u3092\
-    \u78BA\u5B9A\u3055\u305B\u308B\ntemplate <class I, class ADD_L, class ADD_R, class\
-    \ DEL_L, class DEL_R, class REM>\nvoid mo(int n, const vc<pair<I, I>> &lrs, ADD_L\
-    \ add_l, ADD_R add_r, DEL_L del_l, DEL_R del_r, REM rem)\n{\n  fec([ l, r ] :\
-    \ lrs) { assert(0 <= l && l <= n && 0 <= r && r <= n); }\n  vc<int> ord = internal::mo_order(n,\
-    \ lrs);\n  cauto & [ ls, rs ] = top(lrs);\n  int l = 0, r = 0;\n  fe(i : ord)\n\
-    \  {\n    while (ls[i] < l)\n      add_l(--l, r);\n    while (r < rs[i])\n   \
-    \   add_r(l, r++);\n    while (l < ls[i])\n      del_l(l++, r);\n    while (rs[i]\
-    \ < r)\n      del_r(l, --r);\n    rem(i);\n  }\n}\n\n// add(i, isleft): \u4ECA\
-    \u306E\u533A\u9593\u306B i \u3092\u8FFD\u52A0\u3059\u308B (isleft \u306F\u5DE6\
-    \u306B\u8FFD\u52A0\u3059\u308B\u304B\u3069\u3046\u304B)\n// del(i, isleft): \u4ECA\
-    \u306E\u533A\u9593\u304B\u3089 i \u3092\u524A\u9664\u3059\u308B (isleft \u306F\
-    \u5DE6\u304B\u3089\u524A\u9664\u3059\u308B\u304B\u3069\u3046\u304B)\n// rem(qid):\
-    \ \u4ECA\u304C qid \u756A\u76EE\u306E\u533A\u9593\u3060\u3068\u3057\u3066\u305D\
-    \u306E\u90E8\u5206\u306E\u7B54\u3048\u3092\u78BA\u5B9A\u3055\u305B\u308B\ntemplate\
-    \ <class I, class ADD, class DEL, class REM>\nvoid mo(int n, const vc<pair<I,\
-    \ I>> &lrs, ADD add, DEL del, REM rem)\n{\n  auto add_l = [&](int l, int) { add(l,\
-    \ true); };\n  auto add_r = [&](int, int r) { add(r, false); };\n  auto del_l\
-    \ = [&](int l, int) { del(l, true); };\n  auto del_r = [&](int, int r) { del(r,\
-    \ false); };\n  mo(n, lrs, add_l, add_r, del_l, del_r, rem);\n}\n\n// slider \u306F\
-    \u69CB\u9020\u4F53\u5185\u90E8\u306B l, r \u3092\u6301\u3061\u3001\n//   lpp(),\
-    \ rpp(), lmm(), rmm() \u3068\u3001\u305D\u308C\u3092\u7528\u3044\u305F set(nl,\
-    \ nr) \u3092\u5B9F\u88C5\u3059\u308B\n// rem(qid): \u4ECA\u304C qid \u756A\u76EE\
-    \u306E\u533A\u9593\u3060\u3068\u3057\u3066\u305D\u306E\u90E8\u5206\u306E\u7B54\
-    \u3048\u3092\u78BA\u5B9A\u3055\u305B\u308B\ntemplate <class I, class Slider, class\
-    \ REM>\nvoid mo(int n, const vc<pair<I, I>> &lrs, Slider &slider, REM rem)\n{\n\
-    \  fec([ l, r ] : lrs) { assert(0 <= l && r <= n); }\n  vc<int> ord = internal::mo_order(n,\
-    \ lrs);\n  fe(i : ord)\n  {\n    slider.set(lrs[i].first, lrs[i].second);\n  \
-    \  rem(i);\n  }\n}\n#line 2 \"ds/fenwick_tree/inversion.hpp\"\n\n#line 4 \"ds/fenwick_tree/inversion.hpp\"\
-    \n\n#line 2 \"ds/fenwick_tree/fenwick_tree_01.hpp\"\n\n#line 4 \"ds/fenwick_tree/fenwick_tree_01.hpp\"\
+    \  sort(ALL(ord), comp);\n  return ord;\n}\n\ntemplate <class I>\nvc<int> mo_order(const\
+    \ vc<pair<I, I>> &lrs)\n{\n  cauto &[ls, rs] = top(lrs);\n  const int n = max(MAX(ls),\
+    \ MAX(rs));\n  const int q = lrs.size();\n  const int b1 = max(1, int(n / sqrt(q\
+    \ + 1)));\n  const int b2 = max(1, int(sqrt(3) * n / sqrt(2 * q + 1)));\n  const\
+    \ int b3 = max(1, int(sqrt(2) * n / sqrt(q + 1)));\n  array<vc<int>, 6> ords =\
+    \ {\n    mo_order_params(lrs, b1, 0),\n    mo_order_params(lrs, b1, 1),\n    mo_order_params(lrs,\
+    \ b2, 0),\n    mo_order_params(lrs, b2, 1),\n    mo_order_params(lrs, b3, 0),\n\
+    \    mo_order_params(lrs, b3, 1),\n  };\n  array<I, 6> costs;\n  repi(i, 6) costs[i]\
+    \ = mo_order_cost(lrs, ords[i]);\n  int j = ARGMIN(costs);\n  return ords[j];\n\
+    }\n\n};\n\n// add_l(l, r): \u4ECA\u306E\u533A\u9593\u304C [l+1, r) \u3067\u3042\
+    \u308B\u3068\u304D\u3001l \u3092\u8FFD\u52A0\u3057\u3066 [l, r) \u306B\u3059\u308B\
+    \n// add_r(l, r): \u4ECA\u306E\u533A\u9593\u304C [l, r) \u3067\u3042\u308B\u3068\
+    \u304D\u3001r \u3092\u8FFD\u52A0\u3057\u3066 [l, r+1) \u306B\u3059\u308B\n// del_l(l,\
+    \ r): \u4ECA\u306E\u533A\u9593\u304C [l, r) \u3067\u3042\u308B\u3068\u304D\u3001\
+    l \u3092\u524A\u9664\u3057\u3066 [l+1, r) \u306B\u3059\u308B\n// del_r(l, r):\
+    \ \u4ECA\u306E\u533A\u9593\u304C [l, r+1) \u3067\u3042\u308B\u3068\u304D\u3001\
+    r \u3092\u524A\u9664\u3057\u3066 [l, r) \u306B\u3059\u308B\n// rem(qid): \u4ECA\
+    \u304C qid \u756A\u76EE\u306E\u533A\u9593\u3060\u3068\u3057\u3066\u305D\u306E\u90E8\
+    \u5206\u306E\u7B54\u3048\u3092\u78BA\u5B9A\u3055\u305B\u308B\ntemplate <class\
+    \ I, class ADD_L, class ADD_R, class DEL_L, class DEL_R, class REM>\nvoid mo(int\
+    \ n, const vc<pair<I, I>> &lrs, ADD_L add_l, ADD_R add_r, DEL_L del_l, DEL_R del_r,\
+    \ REM rem)\n{\n  fec([ l, r ] : lrs) { assert(0 <= l && l <= n && 0 <= r && r\
+    \ <= n); }\n  vc<int> ord = internal::mo_order(lrs);\n  cauto & [ ls, rs ] = top(lrs);\n\
+    \  int l = 0, r = 0;\n  fe(i : ord)\n  {\n    while (ls[i] < l)\n      add_l(--l,\
+    \ r);\n    while (r < rs[i])\n      add_r(l, r++);\n    while (l < ls[i])\n  \
+    \    del_l(l++, r);\n    while (rs[i] < r)\n      del_r(l, --r);\n    rem(i);\n\
+    \  }\n}\n\n// add(i, isleft): \u4ECA\u306E\u533A\u9593\u306B i \u3092\u8FFD\u52A0\
+    \u3059\u308B (isleft \u306F\u5DE6\u306B\u8FFD\u52A0\u3059\u308B\u304B\u3069\u3046\
+    \u304B)\n// del(i, isleft): \u4ECA\u306E\u533A\u9593\u304B\u3089 i \u3092\u524A\
+    \u9664\u3059\u308B (isleft \u306F\u5DE6\u304B\u3089\u524A\u9664\u3059\u308B\u304B\
+    \u3069\u3046\u304B)\n// rem(qid): \u4ECA\u304C qid \u756A\u76EE\u306E\u533A\u9593\
+    \u3060\u3068\u3057\u3066\u305D\u306E\u90E8\u5206\u306E\u7B54\u3048\u3092\u78BA\
+    \u5B9A\u3055\u305B\u308B\ntemplate <class I, class ADD, class DEL, class REM>\n\
+    void mo(int n, const vc<pair<I, I>> &lrs, ADD add, DEL del, REM rem)\n{\n  auto\
+    \ add_l = [&](int l, int) { add(l, true); };\n  auto add_r = [&](int, int r) {\
+    \ add(r, false); };\n  auto del_l = [&](int l, int) { del(l, true); };\n  auto\
+    \ del_r = [&](int, int r) { del(r, false); };\n  mo(n, lrs, add_l, add_r, del_l,\
+    \ del_r, rem);\n}\n\n// slider \u306F\u69CB\u9020\u4F53\u5185\u90E8\u306B l, r\
+    \ \u3092\u6301\u3061\u3001\n//   lpp(), rpp(), lmm(), rmm() \u3068\u3001\u305D\
+    \u308C\u3092\u7528\u3044\u305F set(nl, nr) \u3092\u5B9F\u88C5\u3059\u308B\n//\
+    \ rem(qid): \u4ECA\u304C qid \u756A\u76EE\u306E\u533A\u9593\u3060\u3068\u3057\u3066\
+    \u305D\u306E\u90E8\u5206\u306E\u7B54\u3048\u3092\u78BA\u5B9A\u3055\u305B\u308B\
+    \ntemplate <class I, class Slider, class REM>\nvoid mo(int n, const vc<pair<I,\
+    \ I>> &lrs, Slider &slider, REM rem)\n{\n  fec([ l, r ] : lrs) { assert(0 <= l\
+    \ && r <= n); }\n  vc<int> ord = internal::mo_order(lrs);\n  fe(i : ord)\n  {\n\
+    \    slider.set(lrs[i].first, lrs[i].second);\n    rem(i);\n  }\n}\n#line 2 \"\
+    ds/fenwick_tree/inversion.hpp\"\n\n#line 4 \"ds/fenwick_tree/inversion.hpp\"\n\
+    \n#line 2 \"ds/fenwick_tree/fenwick_tree_01.hpp\"\n\n#line 4 \"ds/fenwick_tree/fenwick_tree_01.hpp\"\
     \n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n#line 2 \"math/algebra/algebra_base.hpp\"\
     \n\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
     \u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
@@ -1022,8 +1026,8 @@ data:
   isVerificationFile: true
   path: verify/yosupo/static_range_inversions_query.test.cpp
   requiredBy: []
-  timestamp: '2026-01-04 17:26:22+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2026-03-14 04:11:27+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yosupo/static_range_inversions_query.test.cpp
 layout: document

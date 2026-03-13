@@ -1,72 +1,72 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint64_internal.hpp
     title: math/modint/modint64_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/power_table.hpp
     title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: string/lcp_compare.hpp
     title: "\u90E8\u5206\u6587\u5B57\u5217\u306E\u4E00\u81F4\u5224\u5B9A \u2192 LCP\u3001\
       LCP \u2192 \u90E8\u5206\u6587\u5B57\u5217\u306E\u8F9E\u66F8\u9806\u6BD4\u8F03"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/mytest/rolling_hash.test.cpp
     title: verify/mytest/rolling_hash.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     _deprecated_at_docs: docs/string/rolling_hash.md
     document_title: Rolling Hash
@@ -520,35 +520,36 @@ data:
     \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
     \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
     \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
-    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
-    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
-    \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
-    }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
-    struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
-    \n// ---- \u5165\u529B ----\n#if defined LOCAL or not defined FAST_IO\ntemplate\
-    \ <class T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  is\
-    \ >> p.first >> p.second;\n  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream\
-    \ &is, tuple<Ts...> &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a);\
-    \ }, t);\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
-    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
-    \  return is;\n}\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n\
-    {\n  const size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
-    \  return is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not\
-    \ defined FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >>\
-    \ a); }\n#endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class...\
-    \ Ts>\nvoid READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class...\
-    \ Ts>\nvoid READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\n\
-    void READVECnodump(int n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\n\
-    template <class T, class... Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n\
-    { READVECnodump(n, v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid\
-    \ READVEC2nodump(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n\
-    }\ntemplate <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v,\
-    \ vvc<Ts> &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\
-    \ntemplate <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n\
-    \  repi(i, n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n\
-    \  }\n}\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v,\
-    \ vvc<Ts> &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; //\
-    \ namespace internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
+    \ &&... tail) {\n  wt1(head);\n  write(std::forward<Tail>(tail)...);\n}\n\nvoid\
+    \ print() { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head\
+    \ &&head, Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n\
+    \  print(std::forward<Tail>(tail)...);\n}\n\n} // namespace fastio\n\n#endif\n\
+    \n#if defined FAST_IO and not defined LOCAL\nstruct Dummy {\n  Dummy() { atexit(fastio::flush);\
+    \ }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\n// ---- \u5165\u529B\
+    \ ----\n#if defined LOCAL or not defined FAST_IO\ntemplate <class T, class U>\n\
+    istream &operator>>(istream &is, pair<T, U> &p)\n{\n  is >> p.first >> p.second;\n\
+    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
+    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
+    \ is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream &is, array<T,\
+    \ n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n  return is;\n\
+    }\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n{\n  const\
+    \ size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n  return\
+    \ is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not defined\
+    \ FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\
+    #endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class... Ts>\n\
+    void READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class... Ts>\n\
+    void READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\nvoid READVECnodump(int\
+    \ n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\ntemplate <class T, class...\
+    \ Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n{ READVECnodump(n,\
+    \ v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid READVEC2nodump(int\
+    \ n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n}\ntemplate\
+    \ <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\ntemplate\
+    \ <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n  repi(i,\
+    \ n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n  }\n\
+    }\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; // namespace\
+    \ internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
     \n#define IN(T, ...) T __VA_ARGS__; READ(__VA_ARGS__)\n\n#define CHAR(...) IN(char,\
     \ __VA_ARGS__)\n#define INT(...) IN(int, __VA_ARGS__)\n#define LL(...) IN(ll,\
     \ __VA_ARGS__)\n#define STR(...) IN(string, __VA_ARGS__)\n#define ARR(T, n, ...)\
@@ -852,26 +853,28 @@ data:
     \ }\n\n  RollingHashSubstring() : sm(1) {}\n  template <class V>\n  RollingHashSubstring(const\
     \ V &s)\n  {\n    const int n = s.size();\n    sm.resize(n + 1);\n    repi(i,\
     \ n) sm[i + 1] = sm[i] * base() + s[i];\n  }\n\n  template <class I = ll>\n  I\
-    \ size() const { return sm.size(); }\n  mint hash(int l, int r) const\n  {\n \
-    \   assert(0 <= l && l <= r && r <= size());\n    return sm[r] - sm[l] * pow(r\
-    \ - l);\n  }\n\n  // \u5217\u3092\u8FFD\u52A0\u3059\u308B\n  template <class V>\n\
-    \  void push_back(const V &s) { fec(c : s) sm.eb(sm.back() * base() + c); }\n\n\
-    \  void pop_back() { sm.pop_back(); }\n};\n\n// s[i, ...) \u3068 t[j, ...) \u306E\
-    \ LCP \u306E\u9577\u3055\ntemplate <class I = ll, class mint, int id>\nI calc_lcp_rh(const\
-    \ RollingHashSubstring<mint, id> &rh_s, int i, const RollingHashSubstring<mint,\
-    \ id> &rh_t, int j)\n{\n  assert(0 <= i && i <= rh_s.size());\n  assert(0 <= j\
-    \ && j <= rh_t.size());\n  auto judge = [&](int l1, int r1, int l2, int r2)\n\
-    \  {\n    if (r1 > rh_s.size() || r2 > rh_t.size())\n      return false;\n   \
-    \ return rh_s.hash(l1, r1) == rh_t.hash(l2, r2);\n  };\n  return calc_lcp(i, j,\
-    \ judge);\n}\n\n// s[l1, r1) \u3068 t[l2, r2) \u306E\u8F9E\u66F8\u9806\u6BD4\u8F03\
-    \n// < \u306A\u3089 -1, == \u306A\u3089 0, > \u306A\u3089 1\ntemplate <class V,\
-    \ class mint, int id>\nint compare_substr_rh(\n  const V &s, const RollingHashSubstring<mint,\
-    \ id> &rh_s, int l1, int r1,\n  const V &t, const RollingHashSubstring<mint, id>\
-    \ &rh_t, int l2, int r2\n)\n{\n  assert(0 <= l1 && l1 <= r1 && r1 <= SZ(s));\n\
-    \  assert(0 <= l2 && l2 <= r2 && r2 <= SZ(t));\n  auto [i, j] = compare_substr(l1,\
-    \ r1, l2, r2, calc_lcp_rh(rh_s, l1, rh_t, l2));\n  if (i >= SZ(s) && j >= SZ(t))\n\
-    \    return 0;\n  else if (i >= SZ(s))\n    return -1;\n  else if (j >= SZ(t))\n\
-    \    return 1;\n  else\n    return s[i] < t[j] ? -1 : s[i] > t[j] ? 1 : 0;\n}\n"
+    \ size() const { return sm.size(); }\n  RollingHash<mint, id> hash(int l, int\
+    \ r) const\n  {\n    assert(0 <= l && l <= r && r <= size());\n    mint val =\
+    \ sm[r] - sm[l] * pow(r - l);\n    return {val, r - l};\n  }\n\n  // \u5217\u3092\
+    \u8FFD\u52A0\u3059\u308B\n  template <class V>\n  void push_back(const V &s) {\
+    \ fec(c : s) sm.eb(sm.back() * base() + c); }\n\n  void pop_back() { sm.pop_back();\
+    \ }\n};\n\n// s[i, ...) \u3068 t[j, ...) \u306E LCP \u306E\u9577\u3055\ntemplate\
+    \ <class I = ll, class mint, int id>\nI calc_lcp_rh(const RollingHashSubstring<mint,\
+    \ id> &rh_s, int i, const RollingHashSubstring<mint, id> &rh_t, int j)\n{\n  assert(0\
+    \ <= i && i <= rh_s.size());\n  assert(0 <= j && j <= rh_t.size());\n  auto judge\
+    \ = [&](int l1, int r1, int l2, int r2)\n  {\n    if (r1 > rh_s.size() || r2 >\
+    \ rh_t.size())\n      return false;\n    return rh_s.hash(l1, r1) == rh_t.hash(l2,\
+    \ r2);\n  };\n  return calc_lcp(i, j, judge);\n}\n\n// s[l1, r1) \u3068 t[l2,\
+    \ r2) \u306E\u8F9E\u66F8\u9806\u6BD4\u8F03\n// < \u306A\u3089 -1, == \u306A\u3089\
+    \ 0, > \u306A\u3089 1\ntemplate <class V, class mint, int id>\nint compare_substr_rh(\n\
+    \  const V &s, const RollingHashSubstring<mint, id> &rh_s, int l1, int r1,\n \
+    \ const V &t, const RollingHashSubstring<mint, id> &rh_t, int l2, int r2\n)\n\
+    {\n  assert(0 <= l1 && l1 <= r1 && r1 <= SZ(s));\n  assert(0 <= l2 && l2 <= r2\
+    \ && r2 <= SZ(t));\n  auto [i, j] = compare_substr(l1, r1, l2, r2, calc_lcp_rh(rh_s,\
+    \ l1, rh_t, l2));\n  if (i >= SZ(s) && j >= SZ(t))\n    return 0;\n  else if (i\
+    \ >= SZ(s))\n    return -1;\n  else if (j >= SZ(t))\n    return 1;\n  else\n \
+    \   return s[i] < t[j] ? -1 : s[i] > t[j] ? 1 : 0;\n}\n\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(size(),\
+    \ hash());\n#endif\n"
   code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
     #include \"../math/modint/modint64.hpp\"\n#include \"../math/modint/power_table.hpp\"\
     \n\n#include \"lcp_compare.hpp\"\n\n/**\n * @brief Rolling Hash\n * @docs docs/string/rolling_hash.md\n\
@@ -899,26 +902,28 @@ data:
     \ sm(1) {}\n  template <class V>\n  RollingHashSubstring(const V &s)\n  {\n  \
     \  const int n = s.size();\n    sm.resize(n + 1);\n    repi(i, n) sm[i + 1] =\
     \ sm[i] * base() + s[i];\n  }\n\n  template <class I = ll>\n  I size() const {\
-    \ return sm.size(); }\n  mint hash(int l, int r) const\n  {\n    assert(0 <= l\
-    \ && l <= r && r <= size());\n    return sm[r] - sm[l] * pow(r - l);\n  }\n\n\
-    \  // \u5217\u3092\u8FFD\u52A0\u3059\u308B\n  template <class V>\n  void push_back(const\
-    \ V &s) { fec(c : s) sm.eb(sm.back() * base() + c); }\n\n  void pop_back() { sm.pop_back();\
-    \ }\n};\n\n// s[i, ...) \u3068 t[j, ...) \u306E LCP \u306E\u9577\u3055\ntemplate\
-    \ <class I = ll, class mint, int id>\nI calc_lcp_rh(const RollingHashSubstring<mint,\
-    \ id> &rh_s, int i, const RollingHashSubstring<mint, id> &rh_t, int j)\n{\n  assert(0\
-    \ <= i && i <= rh_s.size());\n  assert(0 <= j && j <= rh_t.size());\n  auto judge\
-    \ = [&](int l1, int r1, int l2, int r2)\n  {\n    if (r1 > rh_s.size() || r2 >\
-    \ rh_t.size())\n      return false;\n    return rh_s.hash(l1, r1) == rh_t.hash(l2,\
-    \ r2);\n  };\n  return calc_lcp(i, j, judge);\n}\n\n// s[l1, r1) \u3068 t[l2,\
-    \ r2) \u306E\u8F9E\u66F8\u9806\u6BD4\u8F03\n// < \u306A\u3089 -1, == \u306A\u3089\
-    \ 0, > \u306A\u3089 1\ntemplate <class V, class mint, int id>\nint compare_substr_rh(\n\
-    \  const V &s, const RollingHashSubstring<mint, id> &rh_s, int l1, int r1,\n \
-    \ const V &t, const RollingHashSubstring<mint, id> &rh_t, int l2, int r2\n)\n\
-    {\n  assert(0 <= l1 && l1 <= r1 && r1 <= SZ(s));\n  assert(0 <= l2 && l2 <= r2\
-    \ && r2 <= SZ(t));\n  auto [i, j] = compare_substr(l1, r1, l2, r2, calc_lcp_rh(rh_s,\
-    \ l1, rh_t, l2));\n  if (i >= SZ(s) && j >= SZ(t))\n    return 0;\n  else if (i\
-    \ >= SZ(s))\n    return -1;\n  else if (j >= SZ(t))\n    return 1;\n  else\n \
-    \   return s[i] < t[j] ? -1 : s[i] > t[j] ? 1 : 0;\n}\n"
+    \ return sm.size(); }\n  RollingHash<mint, id> hash(int l, int r) const\n  {\n\
+    \    assert(0 <= l && l <= r && r <= size());\n    mint val = sm[r] - sm[l] *\
+    \ pow(r - l);\n    return {val, r - l};\n  }\n\n  // \u5217\u3092\u8FFD\u52A0\u3059\
+    \u308B\n  template <class V>\n  void push_back(const V &s) { fec(c : s) sm.eb(sm.back()\
+    \ * base() + c); }\n\n  void pop_back() { sm.pop_back(); }\n};\n\n// s[i, ...)\
+    \ \u3068 t[j, ...) \u306E LCP \u306E\u9577\u3055\ntemplate <class I = ll, class\
+    \ mint, int id>\nI calc_lcp_rh(const RollingHashSubstring<mint, id> &rh_s, int\
+    \ i, const RollingHashSubstring<mint, id> &rh_t, int j)\n{\n  assert(0 <= i &&\
+    \ i <= rh_s.size());\n  assert(0 <= j && j <= rh_t.size());\n  auto judge = [&](int\
+    \ l1, int r1, int l2, int r2)\n  {\n    if (r1 > rh_s.size() || r2 > rh_t.size())\n\
+    \      return false;\n    return rh_s.hash(l1, r1) == rh_t.hash(l2, r2);\n  };\n\
+    \  return calc_lcp(i, j, judge);\n}\n\n// s[l1, r1) \u3068 t[l2, r2) \u306E\u8F9E\
+    \u66F8\u9806\u6BD4\u8F03\n// < \u306A\u3089 -1, == \u306A\u3089 0, > \u306A\u3089\
+    \ 1\ntemplate <class V, class mint, int id>\nint compare_substr_rh(\n  const V\
+    \ &s, const RollingHashSubstring<mint, id> &rh_s, int l1, int r1,\n  const V &t,\
+    \ const RollingHashSubstring<mint, id> &rh_t, int l2, int r2\n)\n{\n  assert(0\
+    \ <= l1 && l1 <= r1 && r1 <= SZ(s));\n  assert(0 <= l2 && l2 <= r2 && r2 <= SZ(t));\n\
+    \  auto [i, j] = compare_substr(l1, r1, l2, r2, calc_lcp_rh(rh_s, l1, rh_t, l2));\n\
+    \  if (i >= SZ(s) && j >= SZ(t))\n    return 0;\n  else if (i >= SZ(s))\n    return\
+    \ -1;\n  else if (j >= SZ(t))\n    return 1;\n  else\n    return s[i] < t[j] ?\
+    \ -1 : s[i] > t[j] ? 1 : 0;\n}\n\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(size(),\
+    \ hash());\n#endif\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -941,8 +946,8 @@ data:
   isVerificationFile: false
   path: string/rolling_hash.hpp
   requiredBy: []
-  timestamp: '2026-01-04 17:26:22+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2026-03-14 04:11:27+09:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - verify/mytest/rolling_hash.test.cpp
 documentation_of: string/rolling_hash.hpp

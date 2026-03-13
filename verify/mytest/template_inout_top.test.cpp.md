@@ -1,23 +1,23 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
@@ -143,11 +143,11 @@ data:
     \  wt1(val[i]);\n  }\n}\ntemplate <class T>\nvoid wt1(const vector<T> &val) {\n\
     \  auto n = val.size();\n  for (size_t i = 0; i < n; i++) {\n    if (i) wt1('\
     \ ');\n    wt1(val[i]);\n  }\n}\n\nvoid write() {}\ntemplate <class Head, class...\
-    \ Tail>\nvoid write(Head &&head, Tail &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n\
+    \ Tail>\nvoid write(Head &&head, Tail &&... tail) {\n  wt1(head);\n  write(std::forward<Tail>(tail)...);\n\
     }\n\nvoid print() { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid\
     \ print(Head &&head, Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail))\
-    \ wt1(' ');\n  print(forward<Tail>(tail)...);\n}\n\n} // namespace fastio\n\n\
-    #endif\n\n#if defined FAST_IO and not defined LOCAL\nstruct Dummy {\n  Dummy()\
+    \ wt1(' ');\n  print(std::forward<Tail>(tail)...);\n}\n\n} // namespace fastio\n\
+    \n#endif\n\n#if defined FAST_IO and not defined LOCAL\nstruct Dummy {\n  Dummy()\
     \ { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
     \n// ---- \u5165\u529B ----\n#if defined LOCAL or not defined FAST_IO\ntemplate\
     \ <class T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  is\
@@ -299,8 +299,8 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_inout_top.test.cpp
   requiredBy: []
-  timestamp: '2025-08-12 21:38:21+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2026-03-14 04:11:27+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/mytest/template_inout_top.test.cpp
 layout: document

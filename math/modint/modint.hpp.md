@@ -1,134 +1,137 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/convolution/convolution.hpp
     title: "\u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/convolution/convolution64.hpp
     title: "\u7573\u307F\u8FBC\u307F\uFF08$\\bmod \\ 2^{64}$\uFF09"
   - icon: ':warning:'
     path: math/convolution/convolution_ll.hpp
     title: "\u7573\u307F\u8FBC\u307F\uFF08long long\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/convolution/convolution_many.hpp
     title: "\u591A\u9805\u5F0F\u306E\u7DCF\u7A4D"
-  - icon: ':warning:'
-    path: math/convolution/ntt_doubling.hpp
-    title: "$2$ \u500D\u306E\u9577\u3055\u306E NTT"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/bmbm.hpp
     title: BMBM
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: math/fps/compositional_inverse.hpp
+    title: "\u9006\u95A2\u6570"
+  - icon: ':x:'
     path: math/fps/factorial.hpp
     title: "\u968E\u4E57"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/fps.hpp
     title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/interpolation.hpp
     title: "\u591A\u9805\u5F0F\u88DC\u9593"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/interpolation_geo.hpp
     title: "\u591A\u9805\u5F0F\u88DC\u9593\uFF08\u8A55\u4FA1\u70B9\u304C\u7B49\u6BD4\
       \u6570\u5217\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/multipoint_evaluation.hpp
     title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/multipoint_evaluation_geo.hpp
     title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1\uFF08\u8A55\u4FA1\u70B9\
       \u304C\u7B49\u6BD4\u6570\u5217\uFF09"
-  - icon: ':warning:'
+  - icon: ':x:'
     path: math/fps/pow_sum.hpp
     title: "$\\sum_{i} A_i^k$ \u306E $k$ \u306B\u95A2\u3059\u308B\u5217\u6319"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: math/fps/power_projection.hpp
+    title: Power Projection
+  - icon: ':x:'
     path: math/fps/rational_sum.hpp
     title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/shift_of_sampling_points.hpp
     title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/taylor_shift.hpp
     title: Taylor Shift
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/linalg/matrix.hpp
     title: "\u884C\u5217"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/linalg/matrix_array.hpp
     title: "\u884C\u5217\uFF08array\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/sqrt_mod.hpp
     title: "mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839"
   - icon: ':warning:'
     path: math/modint/template_modint.hpp
     title: math/modint/template_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/large/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/large/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/large/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/large/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/large/zeta_mobius_divisor_multiple_large.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
@@ -138,277 +141,283 @@ data:
   - icon: ':warning:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':warning:'
-    path: verify/yosupo/enumerate_cliques.cpp
-    title: verify/yosupo/enumerate_cliques.cpp
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/aoj/modpow.test.cpp
     title: verify/aoj/modpow.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/mytest/linear_sieve.test.cpp
     title: verify/mytest/linear_sieve.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/mytest/modint.test.cpp
     title: verify/mytest/modint.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/mytest/modint_set_map.test.cpp
     title: verify/mytest/modint_set_map.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/mytest/power_table.test.cpp
     title: verify/mytest/power_table.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/mytest/rational_plus.test.cpp
     title: verify/mytest/rational_plus.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/and_or_convolution.test.cpp
     title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/binomial.test.cpp
     title: verify/yosupo/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/convolution.test.cpp
     title: verify/yosupo/convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/convolution64.test.cpp
     title: verify/yosupo/convolution64.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
     title: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/convolution_arbitrary_static.test.cpp
     title: verify/yosupo/convolution_arbitrary_static.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/convolution_many.test.cpp
     title: verify/yosupo/convolution_many.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/counting_eularian_circuits.test.cpp
     title: verify/yosupo/counting_eularian_circuits.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/counting_spanning_trees_directed.test.cpp
     title: verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
     title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/deque_operate_all_composite.test.cpp
     title: verify/yosupo/deque_operate_all_composite.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: verify/yosupo/enumerate_cliques.test.cpp
+    title: verify/yosupo/enumerate_cliques.test.cpp
+  - icon: ':x:'
     path: verify/yosupo/enumerate_triangles.test.cpp
     title: verify/yosupo/enumerate_triangles.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/factorial.test.cpp
     title: verify/yosupo/factorial.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/factorize.test.cpp
     title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/find_linear_recurrence.test.cpp
     title: verify/yosupo/find_linear_recurrence.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: verify/yosupo/fps_compositional_inverse.test.cpp
+    title: verify/yosupo/fps_compositional_inverse.test.cpp
+  - icon: ':x:'
     path: verify/yosupo/fps_exp.test.cpp
     title: verify/yosupo/fps_exp.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_exp_sparse.test.cpp
     title: verify/yosupo/fps_exp_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_inv.test.cpp
     title: verify/yosupo/fps_inv.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_inv_sparse.test.cpp
     title: verify/yosupo/fps_inv_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_log.test.cpp
     title: verify/yosupo/fps_log.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_log_sparse.test.cpp
     title: verify/yosupo/fps_log_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_pow.test.cpp
     title: verify/yosupo/fps_pow.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_pow_sparse.test.cpp
     title: verify/yosupo/fps_pow_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_sqrt.test.cpp
     title: verify/yosupo/fps_sqrt.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/fps_sqrt_sparse.test.cpp
     title: verify/yosupo/fps_sqrt_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/gcd_convolution.test.cpp
     title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/kronecker_power_hadamard.test.cpp
     title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
     title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
     title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_det.test.cpp
     title: verify/yosupo/matrix_det.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_det_array.test.cpp
     title: verify/yosupo/matrix_det_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_det_sparse.test.cpp
     title: verify/yosupo/matrix_det_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_inv.test.cpp
     title: verify/yosupo/matrix_inv.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_inv_array.test.cpp
     title: verify/yosupo/matrix_inv_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_pow.test.cpp
     title: verify/yosupo/matrix_pow.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_pow_array.test.cpp
     title: verify/yosupo/matrix_pow_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_product.test.cpp
     title: verify/yosupo/matrix_product.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_product_array.test.cpp
     title: verify/yosupo/matrix_product_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_rank.test.cpp
     title: verify/yosupo/matrix_rank.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_solve.test.cpp
     title: verify/yosupo/matrix_solve.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/matrix_solve_array.test.cpp
     title: verify/yosupo/matrix_solve_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/point_set_range_composite.test.cpp
     title: verify/yosupo/point_set_range_composite.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/point_set_range_composite_large_array.test.cpp
     title: verify/yosupo/point_set_range_composite_large_array.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_div.test.cpp
     title: verify/yosupo/poly_div.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_interpolation.test.cpp
     title: verify/yosupo/poly_interpolation.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_interpolation_geo.test.cpp
     title: verify/yosupo/poly_interpolation_geo.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_multipoint_evaluation.test.cpp
     title: verify/yosupo/poly_multipoint_evaluation.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
     title: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_shift_of_sampling_points.test.cpp
     title: verify/yosupo/poly_shift_of_sampling_points.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/poly_taylor_shift.test.cpp
     title: verify/yosupo/poly_taylor_shift.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/polynomial_taylor_shift.test.cpp
     title: verify/yosupo/polynomial_taylor_shift.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/primitive_root.test.cpp
     title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/primitive_root_min.test.cpp
     title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/queue_operate_all_composite.test.cpp
     title: verify/yosupo/queue_operate_all_composite.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/range_affine_range.sum.test.cpp
     title: verify/yosupo/range_affine_range.sum.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/retooting.test.cpp
     title: verify/yosupo/retooting.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/sqrt_mod.test.cpp
     title: verify/yosupo/sqrt_mod.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
     title: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/subset_convolution.test.cpp
     title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/unionfind_potential.test.cpp
     title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
     title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/xor_convolution.test.cpp
     title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/binomial.test.cpp
     title: verify/yukicoder/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/binomial_table.test.cpp
     title: verify/yukicoder/binomial_table.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/bmbm.test.cpp
     title: verify/yukicoder/bmbm.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/crt_mod.test.cpp
     title: verify/yukicoder/crt_mod.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
     title: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/divisors.test.cpp
     title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/dynamic_modint.test.cpp
     title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/factorial.test.cpp
     title: verify/yukicoder/factorial.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/order_mod_carmichael.test.cpp
     title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/order_mod_euler_phi.test.cpp
     title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/perm_cycle.test.cpp
     title: verify/yukicoder/perm_cycle.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/poly_rational_sum.test.cpp
     title: verify/yukicoder/poly_rational_sum.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: verify/yukicoder/pow_sum.test.cpp
+    title: verify/yukicoder/pow_sum.test.cpp
+  - icon: ':x:'
     path: verify/yukicoder/static_modint.test.cpp
     title: verify/yukicoder/static_modint.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/yuki2215_dc.test.cpp
     title: verify/yukicoder/yuki2215_dc.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/yuki2215_swag.test.cpp
     title: verify/yukicoder/yuki2215_swag.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/yuki310.test.cpp
     title: verify/yukicoder/yuki310.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
     title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
     title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     _deprecated_at_docs: docs/math/modint/modint.md
     document_title: modint (32 bit)
@@ -862,35 +871,36 @@ data:
     \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
     \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
     \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
-    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
-    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
-    \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
-    }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
-    struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
-    \n// ---- \u5165\u529B ----\n#if defined LOCAL or not defined FAST_IO\ntemplate\
-    \ <class T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  is\
-    \ >> p.first >> p.second;\n  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream\
-    \ &is, tuple<Ts...> &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a);\
-    \ }, t);\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
-    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
-    \  return is;\n}\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n\
-    {\n  const size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
-    \  return is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not\
-    \ defined FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >>\
-    \ a); }\n#endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class...\
-    \ Ts>\nvoid READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class...\
-    \ Ts>\nvoid READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\n\
-    void READVECnodump(int n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\n\
-    template <class T, class... Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n\
-    { READVECnodump(n, v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid\
-    \ READVEC2nodump(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n\
-    }\ntemplate <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v,\
-    \ vvc<Ts> &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\
-    \ntemplate <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n\
-    \  repi(i, n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n\
-    \  }\n}\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v,\
-    \ vvc<Ts> &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; //\
-    \ namespace internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
+    \ &&... tail) {\n  wt1(head);\n  write(std::forward<Tail>(tail)...);\n}\n\nvoid\
+    \ print() { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head\
+    \ &&head, Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n\
+    \  print(std::forward<Tail>(tail)...);\n}\n\n} // namespace fastio\n\n#endif\n\
+    \n#if defined FAST_IO and not defined LOCAL\nstruct Dummy {\n  Dummy() { atexit(fastio::flush);\
+    \ }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\n// ---- \u5165\u529B\
+    \ ----\n#if defined LOCAL or not defined FAST_IO\ntemplate <class T, class U>\n\
+    istream &operator>>(istream &is, pair<T, U> &p)\n{\n  is >> p.first >> p.second;\n\
+    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
+    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
+    \ is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream &is, array<T,\
+    \ n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n  return is;\n\
+    }\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n{\n  const\
+    \ size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n  return\
+    \ is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not defined\
+    \ FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\
+    #endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class... Ts>\n\
+    void READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class... Ts>\n\
+    void READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\nvoid READVECnodump(int\
+    \ n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\ntemplate <class T, class...\
+    \ Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n{ READVECnodump(n,\
+    \ v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid READVEC2nodump(int\
+    \ n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n}\ntemplate\
+    \ <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\ntemplate\
+    \ <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n  repi(i,\
+    \ n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n  }\n\
+    }\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; // namespace\
+    \ internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
     \n#define IN(T, ...) T __VA_ARGS__; READ(__VA_ARGS__)\n\n#define CHAR(...) IN(char,\
     \ __VA_ARGS__)\n#define INT(...) IN(int, __VA_ARGS__)\n#define LL(...) IN(ll,\
     \ __VA_ARGS__)\n#define STR(...) IN(string, __VA_ARGS__)\n#define ARR(T, n, ...)\
@@ -1167,127 +1177,130 @@ data:
   isVerificationFile: false
   path: math/modint/modint.hpp
   requiredBy:
-  - template/template_all.hpp
+  - graph/matrix_tree.hpp
   - template/template.cpp
-  - math/modint/template_modint.hpp
-  - math/modint/sqrt_mod.hpp
-  - math/linalg/matrix_array.hpp
-  - math/linalg/matrix.hpp
-  - math/fps/pow_sum.hpp
+  - template/template_all.hpp
+  - math/prime/large/zeta_mobius_divisor_multiple_large.hpp
+  - math/prime/large/euler_phi_carmichael.hpp
+  - math/prime/large/factorize.hpp
+  - math/prime/large/primality_test.hpp
+  - math/prime/large/order_primitive_root.hpp
   - math/fps/bmbm.hpp
+  - math/fps/rational_sum.hpp
+  - math/fps/shift_of_sampling_points.hpp
+  - math/fps/power_projection.hpp
+  - math/fps/compositional_inverse.hpp
+  - math/fps/factorial.hpp
+  - math/fps/interpolation.hpp
+  - math/fps/multipoint_evaluation_geo.hpp
+  - math/fps/interpolation_geo.hpp
+  - math/fps/multipoint_evaluation.hpp
+  - math/fps/taylor_shift.hpp
+  - math/fps/pow_sum.hpp
   - math/fps/bostan_mori.hpp
   - math/fps/fps.hpp
-  - math/fps/rational_sum.hpp
-  - math/fps/factorial.hpp
-  - math/fps/shift_of_sampling_points.hpp
-  - math/fps/taylor_shift.hpp
-  - math/fps/interpolation.hpp
-  - math/fps/interpolation_geo.hpp
-  - math/fps/multipoint_evaluation_geo.hpp
-  - math/fps/multipoint_evaluation.hpp
-  - math/convolution/convolution_many.hpp
+  - math/linalg/matrix.hpp
+  - math/linalg/matrix_array.hpp
+  - math/modint/sqrt_mod.hpp
+  - math/modint/template_modint.hpp
   - math/convolution/convolution.hpp
-  - math/convolution/convolution_ll.hpp
-  - math/convolution/ntt_doubling.hpp
   - math/convolution/convolution64.hpp
-  - math/prime/large/euler_phi_carmichael.hpp
-  - math/prime/large/primality_test.hpp
-  - math/prime/large/factorize.hpp
-  - math/prime/large/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/large/order_primitive_root.hpp
-  - graph/matrix_tree.hpp
-  - verify/yosupo/enumerate_cliques.cpp
-  timestamp: '2026-01-04 17:26:22+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  - math/convolution/convolution_many.hpp
+  - math/convolution/convolution_ll.hpp
+  timestamp: '2026-03-14 04:11:27+09:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
-  - verify/aoj/modpow.test.cpp
-  - verify/mytest/linear_sieve.test.cpp
-  - verify/mytest/power_table.test.cpp
-  - verify/mytest/rational_plus.test.cpp
-  - verify/mytest/modint.test.cpp
-  - verify/mytest/modint_set_map.test.cpp
+  - verify/yukicoder/order_mod_carmichael.test.cpp
+  - verify/yukicoder/perm_cycle.test.cpp
+  - verify/yukicoder/yuki2215_dc.test.cpp
+  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/yukicoder/factorial.test.cpp
   - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/poly_rational_sum.test.cpp
+  - verify/yukicoder/dynamic_modint.test.cpp
+  - verify/yukicoder/binomial_table.test.cpp
   - verify/yukicoder/yuki310.test.cpp
   - verify/yukicoder/static_modint.test.cpp
-  - verify/yukicoder/yuki2215_dc.test.cpp
-  - verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  - verify/yukicoder/perm_cycle.test.cpp
-  - verify/yukicoder/crt_mod.test.cpp
-  - verify/yukicoder/binomial.test.cpp
-  - verify/yukicoder/bmbm.test.cpp
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/binomial_table.test.cpp
-  - verify/yukicoder/factorial.test.cpp
-  - verify/yukicoder/dynamic_modint.test.cpp
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/yuki2215_swag.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/yukicoder/order_mod_euler_phi.test.cpp
   - verify/yukicoder/divisors.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/retooting.test.cpp
-  - verify/yosupo/poly_taylor_shift.test.cpp
-  - verify/yosupo/poly_interpolation_geo.test.cpp
-  - verify/yosupo/point_set_range_composite.test.cpp
-  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - verify/yosupo/matrix_det_sparse.test.cpp
-  - verify/yosupo/binomial.test.cpp
-  - verify/yosupo/convolution64.test.cpp
-  - verify/yosupo/fps_pow.test.cpp
-  - verify/yosupo/deque_operate_all_composite.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-  - verify/yosupo/convolution.test.cpp
-  - verify/yosupo/matrix_pow.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/fps_log_sparse.test.cpp
-  - verify/yosupo/sqrt_mod.test.cpp
-  - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - verify/yosupo/factorial.test.cpp
-  - verify/yosupo/matrix_solve.test.cpp
-  - verify/yosupo/matrix_rank.test.cpp
-  - verify/yosupo/xor_convolution.test.cpp
-  - verify/yosupo/fps_exp_sparse.test.cpp
-  - verify/yosupo/queue_operate_all_composite.test.cpp
-  - verify/yosupo/matrix_det.test.cpp
-  - verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - verify/yosupo/fps_exp.test.cpp
-  - verify/yosupo/fps_inv_sparse.test.cpp
-  - verify/yosupo/point_set_range_composite_large_array.test.cpp
-  - verify/yosupo/fps_sqrt.test.cpp
-  - verify/yosupo/find_linear_recurrence.test.cpp
-  - verify/yosupo/poly_div.test.cpp
-  - verify/yosupo/fps_sqrt_sparse.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yosupo/fps_log.test.cpp
-  - verify/yosupo/range_affine_range.sum.test.cpp
-  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - verify/yosupo/poly_interpolation.test.cpp
-  - verify/yosupo/matrix_product.test.cpp
-  - verify/yosupo/enumerate_triangles.test.cpp
-  - verify/yosupo/convolution_arbitrary_static.test.cpp
-  - verify/yosupo/poly_shift_of_sampling_points.test.cpp
-  - verify/yosupo/kronecker_power_hadamard.test.cpp
-  - verify/yosupo/fps_inv.test.cpp
-  - verify/yosupo/matrix_product_array.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/matrix_inv_array.test.cpp
+  - verify/yukicoder/poly_rational_sum.test.cpp
+  - verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
+  - verify/yukicoder/binomial.test.cpp
+  - verify/yukicoder/pow_sum.test.cpp
+  - verify/yukicoder/crt_mod.test.cpp
+  - verify/yukicoder/bmbm.test.cpp
+  - verify/mytest/rational_plus.test.cpp
+  - verify/mytest/linear_sieve.test.cpp
+  - verify/mytest/modint_set_map.test.cpp
+  - verify/mytest/modint.test.cpp
+  - verify/mytest/power_table.test.cpp
+  - verify/aoj/modpow.test.cpp
   - verify/yosupo/matrix_pow_array.test.cpp
-  - verify/yosupo/subset_convolution.test.cpp
-  - verify/yosupo/matrix_solve_array.test.cpp
-  - verify/yosupo/poly_multipoint_evaluation.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/yosupo/convolution_many.test.cpp
-  - verify/yosupo/unionfind_potential.test.cpp
-  - verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
-  - verify/yosupo/fps_pow_sparse.test.cpp
-  - verify/yosupo/matrix_det_array.test.cpp
-  - verify/yosupo/polynomial_taylor_shift.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
-  - verify/yosupo/counting_eularian_circuits.test.cpp
+  - verify/yosupo/range_affine_range.sum.test.cpp
   - verify/yosupo/matrix_inv.test.cpp
+  - verify/yosupo/sqrt_mod.test.cpp
+  - verify/yosupo/fps_log_sparse.test.cpp
+  - verify/yosupo/enumerate_triangles.test.cpp
+  - verify/yosupo/poly_taylor_shift.test.cpp
+  - verify/yosupo/point_set_range_composite_large_array.test.cpp
+  - verify/yosupo/convolution.test.cpp
+  - verify/yosupo/xor_convolution.test.cpp
+  - verify/yosupo/kronecker_power_hadamard.test.cpp
+  - verify/yosupo/enumerate_cliques.test.cpp
+  - verify/yosupo/primality_test.test.cpp
+  - verify/yosupo/poly_multipoint_evaluation.test.cpp
+  - verify/yosupo/subset_convolution.test.cpp
+  - verify/yosupo/unionfind_potential.test.cpp
+  - verify/yosupo/poly_interpolation_geo.test.cpp
+  - verify/yosupo/matrix_det_sparse.test.cpp
+  - verify/yosupo/poly_div.test.cpp
+  - verify/yosupo/fps_exp_sparse.test.cpp
+  - verify/yosupo/counting_spanning_trees_directed.test.cpp
+  - verify/yosupo/fps_sqrt_sparse.test.cpp
+  - verify/yosupo/convolution64.test.cpp
+  - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
+  - verify/yosupo/polynomial_taylor_shift.test.cpp
+  - verify/yosupo/matrix_det.test.cpp
+  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
+  - verify/yosupo/matrix_product.test.cpp
+  - verify/yosupo/matrix_pow.test.cpp
+  - verify/yosupo/lcm_convolution.test.cpp
+  - verify/yosupo/matrix_solve_array.test.cpp
+  - verify/yosupo/deque_operate_all_composite.test.cpp
+  - verify/yosupo/factorial.test.cpp
+  - verify/yosupo/fps_pow.test.cpp
+  - verify/yosupo/retooting.test.cpp
+  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
+  - verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
+  - verify/yosupo/fps_pow_sparse.test.cpp
+  - verify/yosupo/fps_inv.test.cpp
+  - verify/yosupo/poly_interpolation.test.cpp
+  - verify/yosupo/matrix_solve.test.cpp
+  - verify/yosupo/matrix_det_array.test.cpp
+  - verify/yosupo/queue_operate_all_composite.test.cpp
+  - verify/yosupo/matrix_rank.test.cpp
+  - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/factorize.test.cpp
+  - verify/yosupo/convolution_arbitrary_static.test.cpp
+  - verify/yosupo/point_set_range_composite.test.cpp
+  - verify/yosupo/convolution_many.test.cpp
+  - verify/yosupo/fps_inv_sparse.test.cpp
+  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
+  - verify/yosupo/find_linear_recurrence.test.cpp
+  - verify/yosupo/and_or_convolution.test.cpp
+  - verify/yosupo/fps_log.test.cpp
+  - verify/yosupo/primitive_root_min.test.cpp
+  - verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
+  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - verify/yosupo/counting_eularian_circuits.test.cpp
+  - verify/yosupo/poly_shift_of_sampling_points.test.cpp
+  - verify/yosupo/fps_sqrt.test.cpp
+  - verify/yosupo/fps_exp.test.cpp
+  - verify/yosupo/matrix_inv_array.test.cpp
+  - verify/yosupo/fps_compositional_inverse.test.cpp
+  - verify/yosupo/binomial.test.cpp
+  - verify/yosupo/matrix_product_array.test.cpp
+  - verify/yosupo/gcd_convolution.test.cpp
 documentation_of: math/modint/modint.hpp
 layout: document
 redirect_from:

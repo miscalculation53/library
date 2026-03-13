@@ -3,8 +3,8 @@
 まず、「$(a, b)$ の右上（端含む）に $c$ を加算」クエリと「$(x, y)$ の左下（端含まない）の和」クエリに分解しておく。すると
 
 $\begin{aligned}
-\displaystyle \mathrm{ans}(x, y) &= \sum_{(a, b, c) \in Q} \bm{1}[a < x] \bm{1}[b < y] c(x - a)(y - b) \\\\  
-&= \sum_{(a, b, c) \in Q} \bm{1}[a < x] \bm{1}[b < y] (c \cdot xy - ca \cdot x - cb \cdot y + cab)
+\displaystyle \mathrm{ans}(x, y) &= \sum_{(a, b, c) \in Q} \boldsymbol{1}[a < x] \boldsymbol{1}[b < y] c(x - a)(y - b) \\\\  
+&= \sum_{(a, b, c) \in Q} \boldsymbol{1}[a < x] \boldsymbol{1}[b < y] (c \cdot xy - ca \cdot x - cb \cdot y + cab)
 \end{aligned}$
 
 となるので、「$c$ を $(a, b)$ に加算」「$-ca$ を $(a, b)$ に加算」「$-cb$ を $(a, b)$ に加算」「$cab$ を $(a, b)$ に加算」の $4$ つの矩形和クエリに帰着される。いわゆる「変数分離」。

@@ -1,76 +1,80 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: ds/2d/offline/rectangle_sum.hpp
+    title: "\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\u30F3\uFF09"
+  - icon: ':x:'
+    path: ds/2d/offline/static_rectangle_add_point_get.hpp
+    title: "\u77E9\u5F62\u52A0\u7B97 \u2192 \u70B9\u53D6\u5F97\uFF08\u30AA\u30D5\u30E9\
+      \u30A4\u30F3\uFF09"
+  - icon: ':x:'
     path: ds/csr.hpp
     title: CSR
-  - icon: ':warning:'
-    path: graph/cliques.hpp
-    title: "\u30AF\u30EA\u30FC\u30AF\u5217\u6319"
-  - icon: ':heavy_check_mark:'
-    path: graph/graph.hpp
-    title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
-  - icon: ':heavy_check_mark:'
-    path: math/extgcd.hpp
-    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint32_internal.hpp
-    title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint_base.hpp
-    title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: ds/fenwick_tree/fenwick_tree.hpp
+    title: Fenwick Tree
+  - icon: ':x:'
+    path: ds/group_index.hpp
+    title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
+  - icon: ':x:'
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+  - icon: ':x:'
+    path: math/algebra/algebra_basic_ops.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+      \ max\uFF09"
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':x:'
   attributes:
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://yukicoder.me/problems/no/2338
     links:
-    - https://judge.yosupo.jp/problem/enumerate_cliques
-  bundledCode: "#line 1 \"verify/yosupo/enumerate_cliques.cpp\"\n#define PROBLEM \"\
-    https://judge.yosupo.jp/problem/enumerate_cliques\"\n\n#define SINGLE_TESTCASE\n\
+    - https://yukicoder.me/problems/no/2338
+  bundledCode: "#line 1 \"verify/yukicoder/static_rectangle_add_point_get.test.cpp\"\
+    \n#define PROBLEM \"https://yukicoder.me/problems/no/2338\"\n\n#define SINGLE_TESTCASE\n\
     // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef LOCAL\n#define FAST_IO\n\
     // #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\n#define INF 4'000'000'000'000'000'037LL\n\
     #define EPS 1e-11\n\n#line 2 \"template/template_all_but_modint.hpp\"\n\n#line\
@@ -522,35 +526,36 @@ data:
     \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
     \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
     \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
-    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
-    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
-    \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
-    }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
-    struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
-    \n// ---- \u5165\u529B ----\n#if defined LOCAL or not defined FAST_IO\ntemplate\
-    \ <class T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  is\
-    \ >> p.first >> p.second;\n  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream\
-    \ &is, tuple<Ts...> &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a);\
-    \ }, t);\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
-    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
-    \  return is;\n}\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n\
-    {\n  const size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
-    \  return is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not\
-    \ defined FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >>\
-    \ a); }\n#endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class...\
-    \ Ts>\nvoid READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class...\
-    \ Ts>\nvoid READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\n\
-    void READVECnodump(int n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\n\
-    template <class T, class... Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n\
-    { READVECnodump(n, v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid\
-    \ READVEC2nodump(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n\
-    }\ntemplate <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v,\
-    \ vvc<Ts> &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\
-    \ntemplate <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n\
-    \  repi(i, n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n\
-    \  }\n}\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v,\
-    \ vvc<Ts> &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; //\
-    \ namespace internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
+    \ &&... tail) {\n  wt1(head);\n  write(std::forward<Tail>(tail)...);\n}\n\nvoid\
+    \ print() { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head\
+    \ &&head, Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n\
+    \  print(std::forward<Tail>(tail)...);\n}\n\n} // namespace fastio\n\n#endif\n\
+    \n#if defined FAST_IO and not defined LOCAL\nstruct Dummy {\n  Dummy() { atexit(fastio::flush);\
+    \ }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\n// ---- \u5165\u529B\
+    \ ----\n#if defined LOCAL or not defined FAST_IO\ntemplate <class T, class U>\n\
+    istream &operator>>(istream &is, pair<T, U> &p)\n{\n  is >> p.first >> p.second;\n\
+    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
+    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
+    \ is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream &is, array<T,\
+    \ n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n  return is;\n\
+    }\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n{\n  const\
+    \ size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n  return\
+    \ is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not defined\
+    \ FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\
+    #endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class... Ts>\n\
+    void READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class... Ts>\n\
+    void READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\nvoid READVECnodump(int\
+    \ n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\ntemplate <class T, class...\
+    \ Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n{ READVECnodump(n,\
+    \ v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid READVEC2nodump(int\
+    \ n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n}\ntemplate\
+    \ <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\ntemplate\
+    \ <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n  repi(i,\
+    \ n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n  }\n\
+    }\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; // namespace\
+    \ internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
     \n#define IN(T, ...) T __VA_ARGS__; READ(__VA_ARGS__)\n\n#define CHAR(...) IN(char,\
     \ __VA_ARGS__)\n#define INT(...) IN(int, __VA_ARGS__)\n#define LL(...) IN(ll,\
     \ __VA_ARGS__)\n#define STR(...) IN(string, __VA_ARGS__)\n#define ARR(T, n, ...)\
@@ -652,302 +657,338 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 2 \"math/modint/modint.hpp\"\n\n#line 2 \"math/modint/modint32_internal.hpp\"\
-    \n\n#line 4 \"math/modint/modint32_internal.hpp\"\n\nnamespace internal\n{\n\n\
-    constexpr ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n    return\
-    \ 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while (n)\n\
-    \  {\n    if (n & 1)\n      r = (r * y) % _m;\n    y = (y * y) % _m;\n    n >>=\
-    \ 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int n)\n{\n  if\
-    \ (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n    return\
-    \ true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2\
-    \ == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll a : bases)\n\
-    \  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n      t <<= 1;\n\
-    \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
-    \ true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
-    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}\n#line 2 \"math/modint/modint_base.hpp\"\n\n#line 4 \"math/modint/modint_base.hpp\"\
-    \n\nnamespace internal\n{\n\n#define REF static_cast<mint &>(*this)\n#define CREF\
-    \ static_cast<const mint &>(*this)\n#define VAL *static_cast<const mint *>(this)\n\
-    \ntemplate <class mint>\nstruct modint_base\n{\n  mint &operator+=(const mint\
-    \ &rhs)\n  {\n    mint &self = REF;\n    self._v += rhs._v;\n    if (self._v >=\
-    \ self.umod())\n      self._v -= self.umod();\n    return self;\n  }\n  mint &operator-=(const\
-    \ mint &rhs)\n  {\n    mint &self = REF;\n    self._v -= rhs._v;\n    if (self._v\
-    \ >= self.umod())\n      self._v += self.umod();\n    return self;\n  }\n  mint\
-    \ &operator/=(const mint &rhs)\n  {\n    mint &self = REF;\n    return self =\
-    \ self * rhs.inv();\n  }\n\n  mint &operator++()\n  {\n    mint &self = REF;\n\
-    \    self._v++;\n    if (self._v == self.umod())\n      self._v = 0;\n    return\
-    \ self;\n  }\n  mint &operator--()\n  {\n    mint &self = REF;\n    if (self._v\
-    \ == 0)\n      self._v = self.umod();\n    self._v--;\n    return self;\n  }\n\
-    \  mint operator++(int)\n  {\n    mint res = VAL;\n    ++REF;\n    return res;\n\
-    \  }\n  mint operator--(int)\n  {\n    mint res = VAL;\n    --REF;\n    return\
-    \ res;\n  }\n\n  mint operator+() const { return VAL; }\n  mint operator-() const\
-    \ { return mint() - VAL; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n\
-    \    mint x = VAL, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r *=\
-    \ x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n\n  friend mint\
-    \ operator+(const mint &lhs, const mint &rhs)\n  { return mint(lhs) += rhs; }\n\
-    \  friend mint operator-(const mint &lhs, const mint &rhs)\n  { return mint(lhs)\
-    \ -= rhs; }\n  friend mint operator*(const mint &lhs, const mint &rhs)\n  { return\
-    \ mint(lhs) *= rhs; }\n  friend mint operator/(const mint &lhs, const mint &rhs)\n\
-    \  { return mint(lhs) /= rhs; }\n  friend bool operator==(const mint &lhs, const\
-    \ mint &rhs)\n  { return mint(lhs).eq(rhs); }\n  friend bool operator!=(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs).neq(rhs); }\nprivate:\n  bool\
-    \ eq(const mint &rhs) { return REF._v == rhs._v; }\n  bool neq(const mint &rhs)\
-    \ { return REF._v != rhs._v; }\n};\n\n}\n\n#if defined LOCAL or not defined FAST_IO\n\
-    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nistream &operator>>(istream &is, T &x)\n{\n  ll a;\n  is >> a;\n\
-    \  x = a;\n  return is;\n}\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nostream &operator<<(ostream &os, const T &x)\n{\n  os << x.val();\n\
-    \  return os;\n}\n#else\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nvoid rd1(T &x)\n{\n  ll a;\n  fastio::rd1(a);\n  x = a;\n}\n\
-    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nvoid wt1(const T &x) { fastio::wt1(x.val()); }\n#endif\n#line\
-    \ 2 \"math/extgcd.hpp\"\n\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\
-    \u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs\
-    \ docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\
-    \u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T =\
-    \ ll>\nconstexpr tuple<T, T, T> extgcd(T a, T b)\n{\n  if (a == 0 && b == 0)\n\
-    \    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  // a*x2 + b*y2 ==\
-    \ z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1, z2 = b;\n  while\
-    \ (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n    T q = z1 /\
-    \ z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1, y2) = make_pair(y2,\
-    \ y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q * z2);\n  }\n  if (z1\
-    \ < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1, y1};\n}\n#line 7\
-    \ \"math/modint/modint.hpp\"\n\n/**\n * @brief modint (32 bit)\n * @docs docs/math/modint/modint.md\n\
-    \ */\n\ntemplate <int m>\nstruct static_modint : internal::modint_base<static_modint<m>>\n\
-    {\n  using mint = static_modint;\nprivate:\n  friend struct internal::modint_base<static_modint<m>>;\n\
-    \  uint _v;\n  static constexpr uint umod() { return m; }\n  static constexpr\
-    \ bool prime = internal::isprime32<m>;\n\npublic:\n  static constexpr int mod()\
-    \ { return m; }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n \
-    \   return x;\n  }\n\n  static_modint() : _v(0) {}\n  template <class T, typename\
-    \ = enable_if_t<is_integral<T>::value>>\n  static_modint(T v)\n  {\n    if constexpr\
-    \ (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x <\
-    \ 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\n    {\n    \
-    \  _v = (uint)(v % umod());\n    }\n  }\n\n  int val() const { return (int)_v;\
-    \ }\n\n  mint& operator*=(const mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n\
-    \    _v = (uint)(z % umod());\n    return *this;\n  }\n\n  mint inv() const\n\
-    \  {\n    if (prime)\n    {\n      assert(_v != 0);\n      return CREF.pow(umod()\
-    \ - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<int>(_v, m);\n\
-    \      assert(g == 1);\n      return x;\n    }\n  }\n};\n\ntemplate <int id>\n\
-    struct dynamic_modint : internal::modint_base<dynamic_modint<id>>\n{\n  using\
-    \ mint = dynamic_modint;\nprivate:\n  friend struct internal::modint_base<dynamic_modint<id>>;\n\
-    \  uint _v;\n  static internal::barrett32 bt;\n  static uint umod() { return bt.umod();\
-    \ }\n\npublic:\n  static int mod() { return (int)(bt.umod()); }\n  static void\
-    \ set_mod(int m)\n  {\n    assert(m >= 1);\n    bt = internal::barrett32(m);\n\
-    \  }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  dynamic_modint() : _v(0) {}\n  template <class T, typename = enable_if_t<is_integral<T>::value>>\n\
-    \  dynamic_modint(T v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll\
-    \ x = (ll)(v % (ll)(umod()));\n      if (x < 0)\n        x += umod();\n      _v\
-    \ = (uint)x;\n    }\n    else\n    {\n      _v = (uint)(v % umod());\n    }\n\
-    \  }\n\n  int val() const { return (int)_v; }\n\n  mint& operator*=(const mint\
-    \ &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n    return *this;\n  }\n\n  mint inv()\
-    \ const\n  {\n    auto [g, x, y] = extgcd<int>(_v, mod());\n    assert(g == 1);\n\
-    \    return x;\n  }\n};\ntemplate <int id>\ninternal::barrett32 dynamic_modint<id>::bt(998244353);\n\
-    \nusing modint998244353 = static_modint<998244353>;\nusing modint1000000007 =\
-    \ static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\ntemplate <class\
-    \ T>\nstruct is_static_modint : false_type {};\ntemplate <int m>\nstruct is_static_modint<static_modint<m>>\
-    \ : true_type {};\ntemplate <class T>\ninline constexpr bool is_static_modint_v\
-    \ = is_static_modint<T>::value;\n\ntemplate <class T>\nstruct is_dynamic_modint\
-    \ : false_type {};\ntemplate <int id>\nstruct is_dynamic_modint<dynamic_modint<id>>\
-    \ : true_type {};\ntemplate <class T>\ninline constexpr bool is_dynamic_modint_v\
-    \ = is_dynamic_modint<T>::value;\n\ntemplate <class T>\ninline constexpr bool\
-    \ is_modint_v = is_static_modint_v<T> || is_dynamic_modint_v<T>;\n\ntemplate <typename,\
-    \ typename = void>\nstruct has_mod : false_type {};\ntemplate <typename T>\nstruct\
-    \ has_mod<T, void_t<decltype(declval<T>().mod)>> : true_type {};\n\ntemplate <class\
-    \ mint>\nstruct modint_less\n{\n  bool operator()(const mint &a, const mint &b)\
-    \ const\n  {\n    if constexpr (has_mod<mint>())\n      return a.val() < b.val();\n\
-    \    else\n      return a < b;\n  }\n};\n\ntemplate <class mint>\nstruct modint_hash\n\
-    {\n  auto operator()(const mint &x) const\n  {\n    if constexpr (has_mod<mint>())\n\
-    \      return hash(x.val());\n    else\n      return hash(x);\n  }\n};\n#line\
-    \ 18 \"verify/yosupo/enumerate_cliques.cpp\"\nusing mint = modint998244353;\n\n\
-    #line 2 \"graph/cliques.hpp\"\n\n#line 4 \"graph/cliques.hpp\"\n\n#line 2 \"graph/graph.hpp\"\
-    \n\n#line 2 \"ds/csr.hpp\"\n\n#line 4 \"ds/csr.hpp\"\n\n/**\n * @brief CSR\n *\
-    \ @docs docs/ds/csr.md\n */\n\ntemplate <class T, bool is_erasable = false>\n\
-    struct CSR\n{\nprotected:\n  int n, m;\n  // i (0 <= i < n) \u884C\u76EE\u3092\
-    \u8868\u3059\u306E\u306F elist \u306E [start[i], start[i+1])\n  // pop_back \u3059\
-    \u308B\u5834\u5408\u306F [start[i], start[i] + len[i])\n  vc<int> start;\n  vc<T>\
-    \ elist;\n  vc<int> len;\n  inline int get_last(int i) const\n  {\n    if constexpr\
-    \ (is_erasable)\n      return start[i] + len[i];\n    else\n      return start[i\
-    \ + 1];\n  }\n\n  struct Row\n  {\n    using iterator = typename vc<T>::iterator;\n\
-    \n  private:\n    iterator begi, endi;\n\n  public:\n    Row(const iterator &begi,\
-    \ const iterator &endi) : begi(begi), endi(endi) {}\n    inline iterator begin()\
-    \ const { return begi; }\n    inline iterator end() const { return endi; }\n \
-    \   template <class I = ll>\n    inline I size() const { return endi - begi; }\n\
-    \    inline bool empty() const { return size() == 0; }\n\n    inline T &operator[](int\
-    \ i) const { return *(begi + i); }\n    inline T &at(int i) const\n    {\n   \
-    \   assert(0 <= i && i < size());\n      return *(begi + i);\n    }\n\n    inline\
-    \ T &front() const\n    {\n      assert(!empty());\n      return *begi;\n    }\n\
-    \    inline T &back() const\n    {\n      assert(!empty());\n      return *prev(endi);\n\
-    \    }\n\n    vc<T> to_v() const { return vc<T>(ALL(*this)); }\n  };\n\npublic:\n\
-    \  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template\
-    \ <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) : n(n), m(ies.size()), start(n,\
-    \ 0), elist(m)\n  {\n    if constexpr (is_erasable)\n      len.resize(n);\n  \
-    \  fec([ i, e ] : ies)\n    {\n      assert(0 <= i && i < n);\n      start[i]++;\n\
-    \    }\n    start = cumlsum(start);\n    if constexpr (is_erasable)\n      repi(i,\
-    \ n) len[i] = start[i + 1] - start[i];\n    auto cnt = start;\n    repi(j, m)\n\
-    \    {\n      cauto & [ i, e ] = ies[j];\n      int &k = cnt[i];\n      elist[k]\
-    \ = e;\n      k++;\n    }\n  }\n  // vv[i] \u306B elem \u305F\u3061\u304C\u683C\
-    \u7D0D\u3055\u308C\u305F vector\n  CSR(const vvc<T> &vv) : n(vv.size()), start(n\
-    \ + 1, 0)\n  {\n    m = 0;\n    fec(row : vv) m += row.size();\n    elist.resize(m);\n\
-    \    if constexpr (is_erasable)\n      len.resize(n);\n    int k = 0;\n    for\
-    \ (int i = 0, j = 0; i < n; i++)\n    {\n      start[i] = k;\n      if constexpr\
-    \ (is_erasable)\n        len[i] = vv[i].size();\n      fec(e : vv[i])\n      {\n\
-    \        elist[k] = e;\n        k++;\n      }\n    }\n    start.back() = m;\n\
-    \  }\n\n  Row operator[](int i) { return Row(elist.begin() + start[i], elist.begin()\
-    \ + get_last(i)); }\n  Row operator[](int i) const\n  {\n    auto beg = const_cast<vc<T>\
-    \ &>(elist).begin();\n    return Row(beg + start[i], beg + get_last(i));\n  }\n\
-    \  Row at(int i)\n  {\n    if (!(0 <= i && i < n))\n      return Row(elist.begin(),\
-    \ elist.begin());\n    return Row(elist.begin() + start[i], elist.begin() + get_last(i));\n\
-    \  }\n  Row at(int i) const\n  {\n    auto beg = const_cast<vc<T> &>(elist).begin();\n\
-    \    if (!(0 <= i && i < n))\n      return Row(beg, beg);\n    return Row(beg\
-    \ + start[i], beg + get_last(i));\n  }\n\n  void pop_back(int i)\n  {\n    static_assert(is_erasable);\n\
-    \    assert(len[i] > 0);\n    len[i]--;\n  }\n\n  template <class I = ll>\n  I\
-    \ size() const { return n; }\n\n  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n\
-    \    repi(i, n) res[i] = {elist.begin() + start[i], elist.begin() + start[i +\
-    \ 1]};\n    return res;\n  }\n\n  vc<T> &get_elist() { return elist; }\n  const\
-    \ vc<T> &get_elist() const { return elist; }\n};\n#line 5 \"graph/graph.hpp\"\n\
-    \n/**\n * @brief \u30B0\u30E9\u30D5\u30AF\u30E9\u30B9\n * @docs docs/graph/graph.md\n\
-    \ */\n\ntemplate <class Cost>\nstruct Edge\n{\n  int from, to;\n  Cost cost;\n\
-    \  int index;\n  Edge() : from(-1), to(-1), index(-1) {}\n  Edge(int s, int t,\
-    \ Cost c, int i = -1) : from(s), to(t), cost(c), index(i) {}\n  operator int()\
-    \ const { return to; }\n  bool operator<(const Edge &rhs) const { return cost\
-    \ < rhs.cost; }\n  // \u9006\u8FBA\u3092\u8FD4\u3059 (\u3082\u3068\u306E\u8FBA\
-    \u306F\u5909\u66F4\u3057\u306A\u3044)\n  Edge rev() const { return Edge(to, from,\
-    \ cost, index); }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<bool>,\
-    \ from, to, cost)\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<int>, from, to, cost)\n\
-    CPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<ll>, from, to, cost)\n#endif\n\ntemplate <class\
-    \ Cost>\nvc<Edge<Cost>> rev_path(const vc<Edge<Cost>> &path)\n{\n  const int len\
-    \ = path.size();\n  vc<Edge<Cost>> res(len);\n  repi(i, len) res[i] = path[len\
-    \ - 1 - i].rev();\n  return res;\n}\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\
-    \u30BF: n, es\ntemplate <bool is_directed, class Cost, bool is_erasable = false>\n\
-    struct Graph\n{\n  using E = Edge<Cost>;\n\nprotected:\n  int n, m, era;\n  CSR<E,\
-    \ is_erasable> g;\n  vc<int> eid_to_elist_id;\n\n  template <class F>\n  void\
-    \ build(F get_edge)\n  {\n    if constexpr (is_directed)\n    {\n      vc<pair<int,\
-    \ E>> edges(m);\n      repi(i, m)\n      {\n        auto [u, v, w] = get_edge(i);\n\
-    \        edges[i] = {u, E(u, v, w, i)};\n      }\n      g = CSR<E, is_erasable>(n,\
-    \ edges);\n      if constexpr (is_erasable)\n      {\n        eid_to_elist_id.resize(m,\
-    \ -1);\n        int k = 0;\n        repi(v, n) fec(e : g[v]) eid_to_elist_id[e.index]\
-    \ = k++;\n      }\n    }\n    else\n    {\n      vc<pair<int, E>> edges;\n   \
-    \   edges.reserve(2 * m);\n      repi(i, m)\n      {\n        auto [u, v, w] =\
-    \ get_edge(i);\n        edges.eb(u, E(u, v, w, i));\n        if (u != v)\n   \
-    \       edges.eb(v, E(v, u, w, i));\n      }\n      g = CSR<E, is_erasable>(n,\
-    \ edges);\n      if constexpr (is_erasable)\n      {\n        eid_to_elist_id.resize(2\
-    \ * m, -1);\n        int k = 0;\n        repi(v, n) fec(e : g[v]) eid_to_elist_id[2\
-    \ * e.index + (e.from <= e.to)] = k++;\n      }\n    }\n  }\n\npublic:\n  Graph()\
-    \ {}\n  template <class I>\n  Graph(int n, const vc<pair<I, I>> &es, const Cost\
-    \ &dflt_cost = 1) : n(n), m(es.size()), era(0)\n  {\n    build(LMD(i, (tuple{es[i].first,\
-    \ es[i].second, dflt_cost})));\n  }\n  template <class I>\n  Graph(int n, const\
-    \ vc<tuple<I, I, Cost>> &es) : n(n), m(es.size()), era(0)\n  {\n    build(LMD(i,\
-    \ es[i]));\n  }\n  Graph(int n, const vc<E> &es) : n(n), m(es.size()), era(0)\n\
-    \  {\n    build(LMD(i, (tuple{es[i].from, es[i].to, es[i].cost})));\n  }\n\n \
-    \ // \u9802\u70B9\u6570\n  template <class I = ll>\n  I size() const { return\
-    \ n; }\n  // \u8FBA\u6570\n  template <class I = ll>\n  I num_of_edges() const\
-    \ { return m - era; }\n\n  // v \u304B\u3089\u51FA\u308B\u8FBA\u306E\u96C6\u5408\
-    \n  auto out_edges(int v) const { return g[v]; }\n  // v \u304B\u3089\u51FA\u308B\
-    \u9802\u70B9\u306E\u96C6\u5408\n  template <class I = ll>\n  vc<I> out_vertices(int\
-    \ v) const\n  {\n    vc<I> res;\n    res.reserve(g[v].size());\n    fec(e : g[v])\
-    \ res.eb(e.to);\n    return res;\n  }\n\n  // \u3059\u3079\u3066\u306E\u8FBA\u3092\
-    \u8FD4\u3059\u3002\u8FBA\u756A\u53F7\u9806\u3068\u306F\u9650\u3089\u306A\u3044\
-    \n  // \u7121\u5411\u30B0\u30E9\u30D5\u306E\u5834\u5408\u3001\u5404\u8FBA\u306F\
-    \ from <= to \u3092\u6E80\u305F\u3059\n  vc<E> edges() const\n  {\n    vc<E> res;\n\
-    \    res.reserve(m);\n    if constexpr (is_directed)\n    {\n      repi(v, n)\
-    \ fec(e : g[v])\n      {\n        res.eb(e);\n      }\n    }\n    else\n    {\n\
-    \      repi(v, n) fec(e : g[v])\n      {\n        if (e.from <= e.to) res.eb(e);\n\
-    \      }\n    }\n    return res;\n  }\n  // \u96A3\u63A5\u30EA\u30B9\u30C8\n \
-    \ vvc<E> adj_list() const { return g.to_vv(); }\n  // \u96A3\u63A5\u884C\u5217\
-    \ (\u8FBA\u306E\u672C\u6570\u3092\u683C\u7D0D)\n  template <class I = ll>\n  vvc<I>\
-    \ adj_matrix_ecnt() const\n  {\n    vvc<I> res(n, vc<I>(n, 0));\n    fec(e : edges())\n\
-    \    {\n      res[e.from][e.to]++;\n      if constexpr (!is_directed)\n      \
-    \  if (e.from != e.to)\n          res[e.to][e.from]++;\n    }\n    return res;\n\
-    \  }\n\n  // \u5165\u6B21\u6570\u306E\u5217\n  template <class I = ll>\n  vc<I>\
-    \ indegs() const\n  {\n    vc<I> res(n);\n    fec(e : edges())\n    {\n      res[e.to]++;\n\
-    \      if constexpr (!is_directed)\n        if (e.from != e.to)\n          res[e.from]++;\n\
-    \    }\n    return res;\n  }\n  // \u51FA\u6B21\u6570\u306E\u5217\n  template\
-    \ <class I = ll>\n  vc<I> outdegs() const\n  {\n    vc<I> res(n);\n    repi(v,\
-    \ n) res[v] = g[v].size();\n    return res;\n  }\n\n  void erase_edge(int eid)\n\
-    \  {\n    static_assert(is_erasable);\n    assert(0 <= eid && eid < m);\n    if\
-    \ constexpr (is_directed)\n    {\n      internal_erase(eid_to_elist_id[eid]);\n\
-    \      eid_to_elist_id[eid] = -1;\n    }\n    else\n    {\n      repi(j, 2)\n\
-    \      {\n        internal_erase(eid_to_elist_id[2 * eid + j]);\n        eid_to_elist_id[2\
-    \ * eid + j] = -1;\n      }\n    }\n    era++;\n  }\n\nprivate:\n  void internal_erase(int\
-    \ elist_id)\n  {\n    if (elist_id < 0)\n      return;\n    auto &elist = g.get_elist();\n\
-    \    auto &target = elist[elist_id];\n    const int u = target.from;\n    auto\
-    \ &last = g[u].back();\n    const int last_elist_id = &last - &elist[0];\n   \
-    \ if (elist_id != last_elist_id)\n    {\n      swap(target, last);\n      int\
-    \ eid = target.index;\n      if constexpr (is_directed)\n        eid_to_elist_id[eid]\
-    \ = elist_id;\n      else\n      {\n        if (eid_to_elist_id[2 * eid] == last_elist_id)\n\
-    \          eid_to_elist_id[2 * eid] = elist_id;\n        else\n          eid_to_elist_id[2\
-    \ * eid + 1] = elist_id;\n      }\n    }\n    g.pop_back(u);\n  }\n};\n\ntemplate\
-    \ <class Cost, bool is_erasable = false>\nusing GraphDirected = Graph<true, Cost,\
-    \ is_erasable>;\ntemplate <class Cost, bool is_erasable = false>\nusing GraphUndirected\
-    \ = Graph<false, Cost, is_erasable>;\n\ntemplate <class Cost>\nGraphDirected<Cost>\
-    \ rev_graph(const GraphDirected<Cost> &g)\n{\n  const int n = g.size(), m = g.num_of_edges();\n\
-    \  vc<tuple<int, int, Cost>> uvw;\n  uvw.reserve(m);\n  fec(e : g.edges()) uvw.eb(e.to,\
-    \ e.from, e.cost);\n  return GraphDirected<Cost>(n, uvw);\n}\n#line 6 \"graph/cliques.hpp\"\
-    \n\n/**\n * @brief \u30AF\u30EA\u30FC\u30AF\u5217\u6319\n * @docs docs/graph/triangles.md\n\
-    \ */\n\n// \u3059\u3079\u3066\u306E (\u7A7A\u3067\u306A\u3044) \u30AF\u30EA\u30FC\
-    \u30AF vc<I> C \u306B\u5BFE\u3057\u3066 f(C) \u3092\u5B9F\u884C\n// \u30AF\u30EA\
-    \u30FC\u30AF\u306E\u500B\u6570\u306F\u305F\u304B\u3060\u304B 2^{sqrt(2m)} \u500B\
-    \n// \u8A08\u7B97\u91CF\u306F O(2^{sqrt(2m)}*n)\ntemplate <class I = ll, class\
-    \ Cost, bool is_erasable, class F>\nvoid cliques(const GraphUndirected<Cost, is_erasable>\
-    \ &g, const F &f)\n{\n  const int n = g.size(), m = g.num_of_edges();\n  const\
-    \ int b = sqrt(2 * m);\n  vc<int> id(n, -1);\n  // 2^vs \u3092\u3059\u3079\u3066\
-    \u8ABF\u3079\u308B (v \u306F\u5FC5\u305A\u542B\u3080\u9802\u70B9)\n  auto check\
-    \ = [&](const vc<int> &vs, int v)\n  {\n    const int k = vs.size();\n    int\
-    \ j = -1;\n    repi(i, k)\n    {\n      id[vs[i]] = i;\n      if (vs[i] == v)\n\
-    \        j = i;\n    }\n    vc<int> sub(k);\n    repi(i, k)\n    {\n      bset(sub[i],\
-    \ i);\n      fec(e : g.out_edges(vs[i])) if (id[e.to] >= 0) bset(sub[i], id[e.to]);\n\
-    \    }\n    repi(bit, 1 << k)\n    {\n      if (j >= 0 && !btest(bit, j))\n  \
-    \      continue;\n      int tmp = bit;\n      repi(i, k) if (btest(bit, i)) tmp\
-    \ &= sub[i];\n      if (tmp == bit)\n      {\n        vc<I> clq;\n        clq.reserve(popcount(bit));\n\
-    \        repi(i, k) if (btest(bit, i)) clq.eb(vs[i]);\n        if (!clq.empty())\n\
-    \          f(clq);\n      }\n    }\n    fec(v : vs) id[v] = -1;\n  };\n  while\
-    \ (true)\n  {\n    repi(v, n + 1)\n    {\n      if (v == n)\n      {\n       \
-    \ vc<int> vs;\n        repi(v, n) if (id[v] != -2) vs.eb(v);\n        check(vs,\
-    \ -1);\n        return;\n      }\n      if (id[v] == -2)\n        continue;\n\
-    \      vc<int> vs = {v};\n      vs.reserve(g.out_edges(v).size() + 1);\n     \
-    \ fec(e : g.out_edges(v)) if (id[e.to] != -2) vs.eb(e.to);\n      sortunique(vs);\n\
-    \      const int k = vs.size();\n      if (k < b)\n      {\n        check(vs,\
-    \ v);\n        id[v] = -2;\n        break;\n      }\n    }\n  }\n}\n#line 21 \"\
-    verify/yosupo/enumerate_cliques.cpp\"\n\nvoid init()\n{\n  oj(mt.seed(random_device()()));\n\
-    }\n\nvoid main2()\n{\n  LL(N, M);\n  VEC(mint, N, X);\n  VEC(pll, M, UV);\n  GraphUndirected<ll>\
-    \ G(N, UV);\n  mint ans = 0;\n  cliques(G, [&](const vl &vs)\n          {\n  \
-    \          mint prod = 1; \n            fec(v : vs) prod *= X[v];\n          \
-    \  ans += prod;\n          });\n  PRINT(ans);\n}\n\nvoid test() {}\n\n#line 2\
-    \ \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\n\n\
-    template <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n \
-    \   cauto CERR = [](string val, string color)\n    {\n      string s = \"\\033[\"\
-    \ + color + \"m\" + val + \"\\033[m\";\n      #ifdef LOCAL\n      cerr << s;\n\
-    \      #endif\n      /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\
-    \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\
-    \u3059\n      cerr << val;\n      //*/\n    };\n  \n    #if defined FAST_IO and\
-    \ not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n    #endif\n \
-    \   #if defined FAST_CIO and not defined LOCAL\n    CERR(\"\\n[FAST_CIO]\\n\\\
-    n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n    #endif\n\
-    \    cout << fixed << setprecision(20);\n  \n    init();\n    #ifdef LOCAL\n \
-    \   test();\n    #endif\n  \n    #if defined AOJ_TESTCASE or (defined LOCAL and\
-    \ defined SINGLE_TESTCASE)\n    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n \
-    \   while (true)\n    {\n      dump(\"new testcase\");\n      main2();\n    }\n\
-    \    #elif defined SINGLE_TESTCASE\n    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"\
-    36\");\n    main2();\n    #elif defined MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\\
+    \ 17 \"verify/yukicoder/static_rectangle_add_point_get.test.cpp\"\n\nvoid init()\n\
+    {\n  oj(mt.seed(random_device()()));\n}\n\n#line 2 \"ds/group_index.hpp\"\n\n\
+    #line 4 \"ds/group_index.hpp\"\n\n#line 2 \"ds/csr.hpp\"\n\n#line 4 \"ds/csr.hpp\"\
+    \n\n/**\n * @brief CSR\n * @docs docs/ds/csr.md\n */\n\ntemplate <class T, bool\
+    \ is_erasable = false>\nstruct CSR\n{\nprotected:\n  int n, m;\n  // i (0 <= i\
+    \ < n) \u884C\u76EE\u3092\u8868\u3059\u306E\u306F elist \u306E [start[i], start[i+1])\n\
+    \  // pop_back \u3059\u308B\u5834\u5408\u306F [start[i], start[i] + len[i])\n\
+    \  vc<int> start;\n  vc<T> elist;\n  vc<int> len;\n  inline int get_last(int i)\
+    \ const\n  {\n    if constexpr (is_erasable)\n      return start[i] + len[i];\n\
+    \    else\n      return start[i + 1];\n  }\n\n  struct Row\n  {\n    using iterator\
+    \ = typename vc<T>::iterator;\n\n  private:\n    iterator begi, endi;\n\n  public:\n\
+    \    Row(const iterator &begi, const iterator &endi) : begi(begi), endi(endi)\
+    \ {}\n    inline iterator begin() const { return begi; }\n    inline iterator\
+    \ end() const { return endi; }\n    template <class I = ll>\n    inline I size()\
+    \ const { return endi - begi; }\n    inline bool empty() const { return size()\
+    \ == 0; }\n\n    inline T &operator[](int i) const { return *(begi + i); }\n \
+    \   inline T &at(int i) const\n    {\n      assert(0 <= i && i < size());\n  \
+    \    return *(begi + i);\n    }\n\n    inline T &front() const\n    {\n      assert(!empty());\n\
+    \      return *begi;\n    }\n    inline T &back() const\n    {\n      assert(!empty());\n\
+    \      return *prev(endi);\n    }\n\n    vc<T> to_v() const { return vc<T>(ALL(*this));\
+    \ }\n  };\n\npublic:\n  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\
+    \u305F vector\n  template <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) :\
+    \ n(n), m(ies.size()), start(n, 0), elist(m)\n  {\n    if constexpr (is_erasable)\n\
+    \      len.resize(n);\n    fec([ i, e ] : ies)\n    {\n      assert(0 <= i &&\
+    \ i < n);\n      start[i]++;\n    }\n    start = cumlsum(start);\n    if constexpr\
+    \ (is_erasable)\n      repi(i, n) len[i] = start[i + 1] - start[i];\n    auto\
+    \ cnt = start;\n    repi(j, m)\n    {\n      cauto & [ i, e ] = ies[j];\n    \
+    \  int &k = cnt[i];\n      elist[k] = e;\n      k++;\n    }\n  }\n  // vv[i] \u306B\
+    \ elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  CSR(const vvc<T>\
+    \ &vv) : n(vv.size()), start(n + 1, 0)\n  {\n    m = 0;\n    fec(row : vv) m +=\
+    \ row.size();\n    elist.resize(m);\n    if constexpr (is_erasable)\n      len.resize(n);\n\
+    \    for (int i = 0, j = 0; i < n; i++)\n    {\n      start[i] = j;\n      if\
+    \ constexpr (is_erasable)\n        len[i] = vv[i].size();\n      fec(e : vv[i])\n\
+    \      {\n        elist[j] = e;\n        j++;\n      }\n    }\n    start.back()\
+    \ = m;\n  }\n\n  Row operator[](int i) { return Row(elist.begin() + start[i],\
+    \ elist.begin() + get_last(i)); }\n  Row operator[](int i) const\n  {\n    auto\
+    \ beg = const_cast<vc<T> &>(elist).begin();\n    return Row(beg + start[i], beg\
+    \ + get_last(i));\n  }\n  Row at(int i)\n  {\n    if (!(0 <= i && i < n))\n  \
+    \    return Row(elist.begin(), elist.begin());\n    return Row(elist.begin() +\
+    \ start[i], elist.begin() + get_last(i));\n  }\n  Row at(int i) const\n  {\n \
+    \   auto beg = const_cast<vc<T> &>(elist).begin();\n    if (!(0 <= i && i < n))\n\
+    \      return Row(beg, beg);\n    return Row(beg + start[i], beg + get_last(i));\n\
+    \  }\n\n  void pop_back(int i)\n  {\n    static_assert(is_erasable);\n    assert(len[i]\
+    \ > 0);\n    len[i]--;\n  }\n\n  template <class I = ll>\n  I size() const { return\
+    \ n; }\n\n  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i]\
+    \ = {elist.begin() + start[i], elist.begin() + start[i + 1]};\n    return res;\n\
+    \  }\n\n  vc<T> &get_elist() { return elist; }\n  const vc<T> &get_elist() const\
+    \ { return elist; }\n};\n#line 6 \"ds/group_index.hpp\"\n\n/**\n * @brief \u6DFB\
+    \u5B57\u3092\u5024\u3067\u5206\u985E\n * @docs docs/ds/group_index.md\n */\n\n\
+    template <class I = ll>\nstruct GroupIndex\n{\nprivate:\n  int n, m;\n  CSR<I>\
+    \ csr;\n\npublic:\n  GroupIndex() {}\n  template <class T>\n  GroupIndex(const\
+    \ vc<T> &a) : n(a.size()), m(a.empty() ? 0 : MAX(a) + 1)\n  {\n    vc<pair<int,\
+    \ I>> ies(n);\n    repi(i, n)\n    {\n      assert(0 <= a[i]);\n      ies[i] =\
+    \ {a[i], i};\n    }\n    csr = CSR(m, ies);\n  }\n\n  // \u5024\u304C val \u306B\
+    \u306A\u308B\u6DFB\u5B57\u305F\u3061\n  auto idxs(int val) const { return csr.at(val);\
+    \ }\n\n  // \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061\
+    \ i \u672A\u6E80\u3067\u6700\u5927\u306E\u3082\u306E (\u306A\u3051\u308C\u3070\
+    \ -1)\n  I lt_max(int val, int i) const\n  {\n    auto is = idxs(val);\n    ll\
+    \ j = ::lt_max(is, i);\n    return j == -1 ? -1 : is[j];\n  }\n  // \u5024\u304C\
+    \ val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061 i \u4EE5\u4E0B\u3067\u6700\
+    \u5927\u306E\u3082\u306E (\u306A\u3051\u308C\u3070 -1)\n  I leq_max(int val, int\
+    \ i) const\n  {\n    auto is = idxs(val);\n    ll j = ::leq_max(is, i);\n    return\
+    \ j == -1 ? -1 : is[j];\n  }\n  // \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\
+    \u306E\u3046\u3061 i \u8D85\u904E\u3067\u6700\u5C0F\u306E\u3082\u306E (\u306A\u3051\
+    \u308C\u3070 n)\n  I gt_min(int val, int i) const\n  {\n    auto is = idxs(val);\n\
+    \    ll j = ::gt_min(is, i);\n    return j == is.size() ? n : is[j];\n  }\n  //\
+    \ \u5024\u304C val \u306B\u306A\u308B\u6DFB\u5B57\u306E\u3046\u3061 i \u4EE5\u4E0A\
+    \u3067\u6700\u5C0F\u306E\u3082\u306E (\u306A\u3051\u308C\u3070 n)\n  I geq_min(int\
+    \ val, int i) const\n  {\n    auto is = idxs(val);\n    ll j = ::geq_min(is, i);\n\
+    \    return j == is.size() ? n : is[j];\n  }\n  // \u5024\u304C val \u306B\u306A\
+    \u308B i \u672A\u6E80\u306E\u6DFB\u5B57\u306E\u500B\u6570\n  // i \u756A\u76EE\
+    \u304C val \u306E\u3068\u304D\u3001\u300C\u3053\u308C\u306F\u4F55\u756A\u76EE\u306E\
+    \ val \u304B\uFF1F\u300D\u306B\u4E00\u81F4\n  I lt_cnt(int val, int i) const {\
+    \ return ::lt_cnt(idxs(val), i); }\n  // \u5024\u304C val \u306B\u306A\u308B i\
+    \ \u4EE5\u4E0B\u306E\u6DFB\u5B57\u306E\u500B\u6570\n  I leq_cnt(int val, int i)\
+    \ const { return ::leq_cnt(idxs(val), i); }\n  // \u5024\u304C val \u306B\u306A\
+    \u308B i \u8D85\u904E\u306E\u6DFB\u5B57\u306E\u500B\u6570\n  I gt_cnt(int val,\
+    \ int i) const { return ::gt_cnt(idxs(val), i); }\n  // \u5024\u304C val \u306B\
+    \u306A\u308B i \u4EE5\u4E0A\u306E\u6DFB\u5B57\u306E\u500B\u6570\n  I geq_cnt(int\
+    \ val, int i) const { return ::geq_cnt(idxs(val), i); }\n  // \u5024\u304C val\
+    \ \u306B\u306A\u308B [l, r) \u306E\u6DFB\u5B57\u306E\u500B\u6570\n  I in_cnt(int\
+    \ val, int l, int r) const { return ::in_cnt(idxs(val), l, r); }\n\n  // \u5024\
+    \u306E\u7A2E\u985E\u6570\n  I num_of_distinct_values() const { return m; }\n\n\
+    \  auto &to_csr() const { return csr; }\n  vvc<I> to_vv() const\n  {\n    auto\
+    \ res = csr.to_vv();\n    vvc<I> res2(res.size());\n    rep(i, res.size()) res2[i]\
+    \ = vc<I>(ALL(res[i]));\n    return res2;\n  }\n};\n#line 2 \"ds/2d/offline/static_rectangle_add_point_get.hpp\"\
+    \n\n#line 4 \"ds/2d/offline/static_rectangle_add_point_get.hpp\"\n\n#line 2 \"\
+    ds/2d/offline/rectangle_sum.hpp\"\n\n#line 4 \"ds/2d/offline/rectangle_sum.hpp\"\
+    \n\n#line 2 \"ds/fenwick_tree/fenwick_tree.hpp\"\n\n#line 4 \"ds/fenwick_tree/fenwick_tree.hpp\"\
+    \n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\n\n#line 2 \"math/algebra/algebra_base.hpp\"\
+    \n\n#line 4 \"math/algebra/algebra_base.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\
+    \u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09\n * @docs docs/math/algebra/algebra_base.md\n\
+    \ */\n\ntemplate <class S_, auto op_, auto e_>\nstruct Monoid\n{\n  using S =\
+    \ S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n};\n\
+    \ntemplate <class S_, auto op_, auto e_, auto inv_>\nstruct Group\n{\n  using\
+    \ S = S_;\n  static constexpr auto op = op_;\n  static constexpr auto e = e_;\n\
+    \  static constexpr auto inv = inv_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto mul_, auto e1_>\nstruct SemiRing\n{\n  using S = S_;\n  static constexpr\
+    \ auto add = add_;\n  static constexpr auto e0 = e0_;\n  static constexpr auto\
+    \ mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto\
+    \ add_, auto e0_, auto minus_, auto mul_, auto e1_>\nstruct Ring\n{\n  using S\
+    \ = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n};\n\ntemplate <class S_, auto add_, auto\
+    \ e0_, auto minus_, auto mul_, auto e1_, auto inv_>\nstruct Field\n{\n  using\
+    \ S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto e0 = e0_;\n\
+    \  static constexpr auto minus = minus_;\n  static constexpr auto mul = mul_;\n\
+    \  static constexpr auto e1 = e1_;\n  static constexpr auto inv = inv_;\n};\n\n\
+    template <class M>\nstruct OppositeMonoid\n{\n  using S = typename M::S;\n  static\
+    \ constexpr S op(const S &a, const S &b) { return M::op(b, a); }\n  static constexpr\
+    \ auto e = M::e;\n};\ntemplate <class G>\nstruct OppositeGroup\n{\n  using S =\
+    \ typename G::S;\n  static constexpr S op(const S &a, const S &b) { return G::op(b,\
+    \ a); }\n  static constexpr auto e = G::e;\n  static constexpr auto inv = G::inv;\n\
+    };\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S,\
+    \ SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename\
+    \ SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
+    \ R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul =\
+    \ Group<typename K::S, K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\n\
+    template <class Madd, class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
+    \ Madd::S, typename Mmul::S>, \"Madd::S and Mmul::S must be identical\");\n  using\
+    \ S = typename Madd::S;\n  static constexpr auto add = Madd::op;\n  static constexpr\
+    \ auto e0 = Madd::e;\n  static constexpr auto mul = Mmul::op;\n  static constexpr\
+    \ auto e1 = Mmul::e;\n};\n\n// Gadd \u306F\u53EF\u63DB\ntemplate <class Gadd,\
+    \ class Mmul>\nstruct RingFromGroupMonoid\n{\n  static_assert(is_same_v<typename\
+    \ Gadd::S, typename Mmul::S>, \"Gadd::S and Mmul::S must be identical\");\n  using\
+    \ S = typename Gadd::S;\n  static constexpr auto add = Gadd::op;\n  static constexpr\
+    \ auto e0 = Gadd::e;\n  static constexpr auto minus = Gadd::inv;\n  static constexpr\
+    \ auto mul = Mmul::op;\n  static constexpr auto e1 = Mmul::e;\n};\n\n// Gadd,\
+    \ Gmul \u306F\u53EF\u63DB\ntemplate <class Gadd, class Gmul>\nstruct FieldFromGroupGroup\n\
+    {\n  static_assert(is_same_v<typename Gadd::S, typename Gmul::S>, \"Gadd::S and\
+    \ Gmul::S must be identical\");\n  using S = typename Gadd::S;\n  static constexpr\
+    \ auto add = Gadd::op;\n  static constexpr auto e0 = Gadd::e;\n  static constexpr\
+    \ auto minus = Gadd::inv;\n  static constexpr auto mul = Gmul::op;\n  static constexpr\
+    \ auto e1 = Gmul::e;\n  static constexpr auto inv = Gmul::inv;\n};\n#line 5 \"\
+    math/algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\
+    \u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n\
+    \ */\n\ntemplate <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
+    \ntemplate <class T>\nstruct GroupAddSub\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return S{}; }\n\
+    \  static constexpr S inv(S a) { return -a; }\n};\ntemplate <class T>\nstruct\
+    \ GroupMulDiv\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
+    \ * b; }\n  static constexpr S e() { return S(1); }\n  static constexpr S inv(S\
+    \ a) { return S(1) / a; }\n};\n\ntemplate <class T, const T infty = INF>\nusing\
+    \ SemiRingMinPlus = SemiRingFromMonoidMonoid<MonoidMin<T>, MonoidAdd<T>>;\ntemplate\
+    \ <class T, const T infty = INF>\nusing SemiRingMaxPlus = SemiRingFromMonoidMonoid<MonoidMax<T>,\
+    \ MonoidAdd<T>>;\ntemplate <class T>\nusing RingAddSubMul = RingFromGroupMonoid<GroupAddSub<T>,\
+    \ MonoidMul<T>>;\ntemplate <class T>\nusing FieldAddSubMulDiv = FieldFromGroupGroup<GroupAddSub<T>,\
+    \ GroupMulDiv<T>>;\n\ntemplate <class M>\ntypename M::S pow_monoid(typename M::S\
+    \ a, ll k)\n{\n  typename M::S c = M::e();\n  for (; k; k >>= 1)\n  {\n    if\
+    \ (k & 1)\n      c = M::op(c, a);\n    a = M::op(a, a);\n  }\n  return c;\n}\n\
+    #line 6 \"ds/fenwick_tree/fenwick_tree.hpp\"\n\n/**\n * @brief Fenwick Tree\n\
+    \ * @docs docs/ds/fenwick_tree/fenwick_tree.md\n */\n\n// G \u306F\u53EF\u63DB\
+    \u7FA4 (prefix \u3060\u3051\u306A\u3069\u3067\u3042\u308C\u3070\u53EF\u63DB\u30E2\
+    \u30CE\u30A4\u30C9\u3067\u3082 OK)\ntemplate <class G>\nstruct FenwickTree\n{\n\
+    \  using S = typename G::S;\n\nprivate:\n  int n;\n  vc<S> dat;\n\npublic:\n \
+    \ FenwickTree() {}\n  FenwickTree(int n) : n(n), dat(n + 1, G::e()) {}\n  FenwickTree(const\
+    \ vc<S> &v) : FenwickTree(v.size())\n  {\n    repi(i, n) add(i, v[i]);\n  }\n\n\
+    \  template <class I = ll>\n  I size() const { return n; }\n\n  // [0, r)\n  //\
+    \ \u9006\u5143\u306F\u5FC5\u8981\u306A\u3044\n  S sum(int r) const\n  {\n    assert(0\
+    \ <= r && r <= n);\n    S s = G::e();\n    while (r > 0)\n    {\n      s = G::op(s,\
+    \ dat[r]);\n      r -= r & -r;\n    }\n    return s;\n  }\n  // [l, r)\n  // \u9006\
+    \u5143\u304C\u5FC5\u8981\n  S sum(int l, int r) const\n  {\n    assert(0 <= l\
+    \ && l <= r && r <= n);\n    return G::op(G::inv(sum(l)), sum(r));\n  }\n  //\
+    \ \u9006\u5143\u304C\u5FC5\u8981\n  S get(int i) const\n  {\n    assert(0 <= i\
+    \ && i < n);\n    return sum(i, i + 1);\n  }\n\n  // \u9006\u5143\u306F\u5FC5\u8981\
+    \u306A\u3044\n  void add(int i, S x)\n  {\n    assert(0 <= i && i < n);\n    i++;\n\
+    \    while (i <= n)\n    {\n      dat[i] = G::op(dat[i], x);\n      i += i & -i;\n\
+    \    }\n  }\n  // \u9006\u5143\u304C\u5FC5\u8981\n  void set(int i, S x) { add(i,\
+    \ G::op(G::inv(get(i)), x)); }\n\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
+    \u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  //\
+    \ sum[0, r) < w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
+    \ -1)\n  // \u3068\u3001\u305D\u306E r \u306B\u5BFE\u3059\u308B sum[0, r) \u306E\
+    \u30DA\u30A2\n  template <class I = ll>\n  pair<I, S> lt_max_id_sum(S w) const\n\
+    \  {\n    if (w <= G::e())\n      return {-1, G::e()};\n    int k = bit_floor(n);\n\
+    \    int x = 0;\n    S v = G::e();\n    while (k > 0)\n    {\n      if (x + k\
+    \ <= n)\n      {\n        S nv = G::op(v, dat[x + k]);\n        if (nv < w)\n\
+    \          v = nv, x += k;\n      }\n      k >>= 1;\n    }\n    return {x, v};\n\
+    \  }\n\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\
+    \u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) < w \u3068\u306A\
+    \u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070 -1)\n  template <class I\
+    \ = ll>\n  I lt_max(S w) const { return lt_max_id_sum<I>(w).first; }\n  // \u6574\
+    \u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\
+    \u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) >= w \u3068\u306A\u308B\u6700\u5927\
+    \u306E r (\u306A\u3051\u308C\u3070 n+1)\n  template <class I = ll>\n  inline I\
+    \ geq_min(S w) const { return lt_max<I>(w) + 1; }\n  // \u6574\u6570\u306E\u666E\
+    \u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\
+    \u3068\u304D\n  // sum[0, r) <= w \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\
+    \u3051\u308C\u3070 -1)\n  template <class I = ll>\n  inline I leq_max(S w) const\
+    \ { return lt_max<I>(w + 1); }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\
+    \u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  //\
+    \ sum[0, r) > w \u3068\u306A\u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070\
+    \ n+1)\n  template <class I = ll>\n  inline I gt_min(S w) const { return geq_min<I>(w\
+    \ + 1); }\n\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\
+    \u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001\
+    \u591A\u91CD\u96C6\u5408\u306E\u30B5\u30A4\u30BA\u3092\u8FD4\u3059\n  inline S\
+    \ size_of_multiset() const { return sum(n); }\n\n  // \u8981\u7D20\u304C [0, size())\
+    \ \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\
+    \u3063\u305F\u3068\u304D\u3001\u5024 x \u306F\u4F55\u756A\u76EE\u304B\u3089\u4F55\
+    \u756A\u76EE\u304B [l, r)\n  inline pair<S, S> order_in_multiset(int x) const\
+    \ { return {sum(x), sum(x + 1)}; }\n  // \u8981\u7D20\u304C [0, size()) \u306E\
+    \u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\
+    \u305F\u3068\u304D\u3001k \u756A\u76EE\u306E\u5024\n  // \u305F\u3060\u3057\u3001\
+    k < 0 \u306A\u3089 -1, k >= size_of_multiset() \u306A\u3089 size()\n  template\
+    \ <class I = ll>\n  inline I kth_in_multiset(S k) const\n  {\n    if (k < 0)\n\
+    \      return -1;\n    return leq_max<I>(k);\n  }\n  // \u8981\u7D20\u304C [0,\
+    \ size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\
+    \u4F7F\u3063\u305F\u3068\u304D\u3001x \u672A\u6E80\u3067\u6700\u5927\u306E\u8981\
+    \u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template\
+    \ <class T, class I = ll>\n  inline I lt_max_in_multiset(T x) const\n  {\n   \
+    \ return sum(clamp(x, T(0), T(n))) - 1;\n  }\n  // \u8981\u7D20\u304C [0, size())\
+    \ \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\
+    \u3063\u305F\u3068\u304D\u3001x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u8981\u7D20\
+    \u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template <class\
+    \ T, class I = ll>\n  inline I leq_max_in_multiset(T x) const { return lt_max_in_multiset<I>(x\
+    \ + 1); }\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\
+    \u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u4EE5\
+    \u4E0A\u3067\u6700\u5C0F\u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\
+    \u3051\u308C\u3070 size())\n  template <class T, class I = ll>\n  inline I geq_min_in_multiset(T\
+    \ x) const\n  {\n    return sum(clamp(x, T(0), T(n)));\n  }\n  // \u8981\u7D20\
+    \u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\
+    \u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u8D85\u904E\u3067\u6700\u5C0F\
+    \u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070\
+    \ size())\n  template <class T, class I = ll>\n  inline I gt_min_in_multiset(T\
+    \ x) const { return geq_min_in_multiset<I>(x + 1); }\n\n  vc<S> content() const\n\
+    \  {\n    vc<S> res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n  }\n\
+    };\n#line 6 \"ds/2d/offline/rectangle_sum.hpp\"\n\n/**\n * @brief \u77E9\u5F62\
+    \u548C\uFF08\u30AA\u30D5\u30E9\u30A4\u30F3\uFF09\n * @docs docs/ds/2d/offline/rectangle_sum.md\n\
+    \ */\n\n// \u5168\u90E8\u306E point add \u3092\u3057\u305F\u5F8C\u306B rectangle\
+    \ sum\n// \u9577\u65B9\u5F62\u9818\u57DF\u304C (-\u221E, x) \xD7 (-\u221E, y)\
+    \ \u306E\u5F62\u306E\u5834\u5408 (\u9006\u5143\u3044\u3089\u306A\u3044)\n// M:\
+    \ \u53EF\u63DB\u30E2\u30CE\u30A4\u30C9\n// I: \u5EA7\u6A19\u306E\u578B\ntemplate\
+    \ <class M, class I>\nstruct LowerLeftSum\n{\n  using S = typename M::S;\n\nprivate:\n\
+    \  struct P\n  {\n    I x, y;\n    S w;\n    P(I x, I y, const S &w) : x(x), y(y),\
+    \ w(w) {}\n    bool operator<(const P &rhs) const { return x < rhs.x; }\n  };\n\
+    \  struct Q\n  {\n    I x, y;\n    int qi;\n    Q(I x, I y, int qi) : x(x), y(y),\
+    \ qi(qi) {}\n    bool operator<(const Q &rhs) const { return x < rhs.x; }\n  };\n\
+    \  vc<P> ps;\n  vc<Q> qs;\n  vc<I> ys;\n\npublic:\n  // (x, y) \u306B\u91CD\u307F\
+    \ w \u3092\u52A0\u3048\u308B\u30AF\u30A8\u30EA\u3092\u8FFD\u52A0\n  void point_add(I\
+    \ x, I y, const S &w)\n  {\n    ps.eb(x, y, w);\n    ys.eb(y);\n  }\n  // (-\u221E\
+    , rx) \xD7 (-\u221E, ry) \u306E\u91CD\u307F\u548C\u3092\u7B54\u3048\u308B\u30AF\
+    \u30A8\u30EA\u3092\u8FFD\u52A0\n  void rectangle_sum(I rx, I ry) { qs.eb(rx, ry,\
+    \ qs.size()); }\n  // \u30AF\u30A8\u30EA\u306B\u307E\u3068\u3081\u3066\u7B54\u3048\
+    \u308B\n  vc<S> run()\n  {\n    const int n = ps.size(), q = qs.size();\n    sort(ALL(ps)),\
+    \ sort(ALL(qs));\n    sortunique(ys);\n    FenwickTree<M> fw(ys.size());\n   \
+    \ vc<S> res(q, M::e());\n    for (int i = 0, j = 0; j < q; j++)\n    {\n     \
+    \ while (i < n && ps[i].x < qs[j].x)\n      {\n        fw.add(LB(ys, ps[i].y),\
+    \ ps[i].w);\n        i++;\n      }\n      const int qi = qs[j].qi;\n      res[qi]\
+    \ = fw.sum(LB(ys, qs[j].y));\n    }\n    return res;\n  }\n\n  void clear() {\
+    \ ps.clear(), qs.clear(), ys.clear(); }\n};\n\n// \u5168\u90E8\u306E point add\
+    \ \u3092\u3057\u305F\u5F8C\u306B rectangle sum\n// G: \u53EF\u63DB\u7FA4\n// I:\
+    \ \u5EA7\u6A19\u306E\u578B\ntemplate <class G, class I>\nstruct RectangleSum\n\
+    {\n  using S = typename G::S;\n\nprivate:\n  struct P\n  {\n    I x, y;\n    S\
+    \ w;\n    P(I x, I y, const S &w) : x(x), y(y), w(w) {}\n    bool operator<(const\
+    \ P &rhs) const { return x < rhs.x; }\n  };\n  struct Q\n  {\n    I x, ly, ry;\n\
+    \    int qi;\n    Q(I x, I ly, I ry, int qi) : x(x), ly(ly), ry(ry), qi(qi) {}\n\
+    \    bool operator<(const Q &rhs) const { return x < rhs.x; }\n  };\n  vc<P> ps;\n\
+    \  vc<Q> qs;\n  vc<I> ys;\n\npublic:\n  // (x, y) \u306B\u91CD\u307F w \u3092\u52A0\
+    \u3048\u308B\u30AF\u30A8\u30EA\u3092\u8FFD\u52A0\n  void point_add(I x, I y, const\
+    \ S &w)\n  {\n    ps.eb(x, y, w);\n    ys.eb(y);\n  }\n  // [lx, rx) \xD7 [ly,\
+    \ ry) \u306E\u91CD\u307F\u548C\u3092\u7B54\u3048\u308B\u30AF\u30A8\u30EA\u3092\
+    \u8FFD\u52A0\n  void rectangle_sum(I lx, I rx, I ly, I ry)\n  {\n    qs.eb(lx,\
+    \ ly, ry, qs.size());\n    qs.eb(rx, ly, ry, qs.size());\n  }\n  // \u30AF\u30A8\
+    \u30EA\u306B\u307E\u3068\u3081\u3066\u7B54\u3048\u308B\n  vc<S> run()\n  {\n \
+    \   const int n = ps.size(), q = qs.size();\n    sort(ALL(ps)), sort(ALL(qs));\n\
+    \    sortunique(ys);\n    FenwickTree<G> fw(ys.size());\n    vc<S> res(q / 2,\
+    \ G::e());\n    for (int i = 0, j = 0; j < q; j++)\n    {\n      while (i < n\
+    \ && ps[i].x < qs[j].x)\n      {\n        fw.add(LB(ys, ps[i].y), ps[i].w);\n\
+    \        i++;\n      }\n      const int qi = qs[j].qi;\n      const S s = fw.sum(LB(ys,\
+    \ qs[j].ly), LB(ys, qs[j].ry));\n      if (qi & 1)\n        res[qi >> 1] = G::op(res[qi\
+    \ >> 1], s);\n      else\n        res[qi >> 1] = G::op(res[qi >> 1], G::inv(s));\n\
+    \    }\n    return res;\n  }\n\n  void clear() { ps.clear(), qs.clear(), ys.clear();\
+    \ }\n};\n#line 6 \"ds/2d/offline/static_rectangle_add_point_get.hpp\"\n\n/**\n\
+    \ * @brief \u77E9\u5F62\u52A0\u7B97 \u2192 \u70B9\u53D6\u5F97\uFF08\u30AA\u30D5\
+    \u30E9\u30A4\u30F3\uFF09\n * @docs docs/ds/2d/offline/static_rectangle_add_point_get.md\n\
+    \ */\n\n// G: \u53EF\u63DB\u7FA4\n// I: \u5EA7\u6A19\u306E\u578B\ntemplate <class\
+    \ G, class I>\nstruct StaticRectangleAddPointGet\n{\n  using S = typename G::S;\n\
+    \nprivate:\n  LowerLeftSum<G, I> rs;\n\npublic:\n  // [lx, rx) \xD7 [ly, ry) \u306B\
+    \u91CD\u307F w \u306E\u9577\u65B9\u5F62\u3092\u8FFD\u52A0\n  void rectangle_add(I\
+    \ lx, I rx, I ly, I ry, const S &w)\n  {\n    assert(lx <= rx && ly <= ry);\n\
+    \    S iw = G::inv(w);\n    rs.point_add(lx, ly, w), rs.point_add(rx, ry, w);\n\
+    \    rs.point_add(lx, ry, iw), rs.point_add(rx, ly, iw);\n  }\n  // (x, y) \u3092\
+    \u542B\u3080\u9577\u65B9\u5F62\u306E\u91CD\u307F\u548C\u3092\u7B54\u3048\u308B\
+    \u30AF\u30A8\u30EA\u3092\u8FFD\u52A0\n  void point_get(I x, I y) { rs.rectangle_sum(x\
+    \ + 1, y + 1); }\n  // \u3059\u3079\u3066\u306E\u30AF\u30A8\u30EA\u306B\u307E\u3068\
+    \u3081\u3066\u7B54\u3048\u308B\n  vc<S> run() { return rs.run(); }\n};\n#line\
+    \ 25 \"verify/yukicoder/static_rectangle_add_point_get.test.cpp\"\n\nvoid main2()\n\
+    {\n  LL(N, M, Q);\n  using ps = pair<ll, string>;\n  VEC(ps, N, PS);\n  auto [P,\
+    \ S] = top(PS);\n  VEC(pll, Q, LR);\n  offset(LR, pll{-1, 0});\n\n  vl X(N);\n\
+    \  rep(i, N) X[i] = 2 * P[i] + (S[i] == \"AC\");\n  GroupIndex grp(X);\n  StaticRectangleAddPointGet<GroupAddSub<ll>,\
+    \ ll> AC, WA;\n  rep(i, N)\n  {\n    ll prvAC = grp.lt_max(2 * P[i] + 1, i);\n\
+    \    ll nxtAC = grp.gt_min(2 * P[i] + 1, i);\n    dump(i, prvAC, nxtAC);\n   \
+    \ if (S[i] == \"AC\")\n      AC.rectangle_add(prvAC + 1, i + 1, i + 1, N + 1,\
+    \ 1);\n    if (S[i] == \"WA\")\n      WA.rectangle_add(prvAC + 1, i + 1, nxtAC\
+    \ + 1, N + 1, 1);\n  }\n\n  fec([ l, r ] : LR) AC.point_get(l, r),\n  WA.point_get(l,\
+    \ r);\n  auto ansAC = AC.run(), ansWA = WA.run();\n  rep(q, Q) PRINT(ansAC[q],\
+    \ ansWA[q]);\n}\n\nvoid test()\n{\n\n}\n\n#line 2 \"template/template_main.hpp\"\
+    \n\n#line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2,\
+    \ auto test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
+    \ color)\n    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\"\
+    ;\n      #ifdef LOCAL\n      cerr << s;\n      #endif\n      /* \u30B3\u30FC\u30C9\
+    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
+    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n      cerr << val;\n      //*/\n \
+    \   };\n  \n    #if defined FAST_IO and not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\\
+    n\\n\", \"32\");\n    #endif\n    #if defined FAST_CIO and not defined LOCAL\n\
+    \    CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
+    \    #endif\n    cout << fixed << setprecision(20);\n  \n    init();\n    #ifdef\
+    \ LOCAL\n    test();\n    #endif\n  \n    #if defined AOJ_TESTCASE or (defined\
+    \ LOCAL and defined SINGLE_TESTCASE)\n    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"\
+    35\");\n    while (true)\n    {\n      dump(\"new testcase\");\n      main2();\n\
+    \    }\n    #elif defined SINGLE_TESTCASE\n    CERR(\"\\n[SINGLE_TESTCASE]\\n\\\
+    n\", \"36\");\n    main2();\n    #elif defined MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\\
     n\\n\", \"33\");\n    local(while (true))\n    {\n      dump(\"T\");\n      IN(uint,\
     \ T);\n      while (T--)\n      {\n        dump(\"new testcase\");\n        main2();\n\
-    \      }\n    }\n    #endif\n  }\n};\n#line 46 \"verify/yosupo/enumerate_cliques.cpp\"\
+    \      }\n    }\n    #endif\n  }\n};\n#line 62 \"verify/yukicoder/static_rectangle_add_point_get.test.cpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
-  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/enumerate_cliques\"\n\n\
-    #define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n\
-    #ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
-    #endif\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include\
-    \ \"template/template_all_but_modint.hpp\"\n#include \"math/modint/modint.hpp\"\
-    \nusing mint = modint998244353;\n\n#include \"graph/cliques.hpp\"\n\nvoid init()\n\
-    {\n  oj(mt.seed(random_device()()));\n}\n\nvoid main2()\n{\n  LL(N, M);\n  VEC(mint,\
-    \ N, X);\n  VEC(pll, M, UV);\n  GraphUndirected<ll> G(N, UV);\n  mint ans = 0;\n\
-    \  cliques(G, [&](const vl &vs)\n          {\n            mint prod = 1; \n  \
-    \          fec(v : vs) prod *= X[v];\n            ans += prod;\n          });\n\
-    \  PRINT(ans);\n}\n\nvoid test() {}\n\n#include \"template/template_main.hpp\"\
+  code: "#define PROBLEM \"https://yukicoder.me/problems/no/2338\"\n\n#define SINGLE_TESTCASE\n\
+    // #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef LOCAL\n#define FAST_IO\n\
+    // #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\n#define INF 4'000'000'000'000'000'037LL\n\
+    #define EPS 1e-11\n\n#include \"template/template_all_but_modint.hpp\"\n\nvoid\
+    \ init()\n{\n  oj(mt.seed(random_device()()));\n}\n\n#include \"ds/group_index.hpp\"\
+    \n#include \"ds/2d/offline/static_rectangle_add_point_get.hpp\"\n\nvoid main2()\n\
+    {\n  LL(N, M, Q);\n  using ps = pair<ll, string>;\n  VEC(ps, N, PS);\n  auto [P,\
+    \ S] = top(PS);\n  VEC(pll, Q, LR);\n  offset(LR, pll{-1, 0});\n\n  vl X(N);\n\
+    \  rep(i, N) X[i] = 2 * P[i] + (S[i] == \"AC\");\n  GroupIndex grp(X);\n  StaticRectangleAddPointGet<GroupAddSub<ll>,\
+    \ ll> AC, WA;\n  rep(i, N)\n  {\n    ll prvAC = grp.lt_max(2 * P[i] + 1, i);\n\
+    \    ll nxtAC = grp.gt_min(2 * P[i] + 1, i);\n    dump(i, prvAC, nxtAC);\n   \
+    \ if (S[i] == \"AC\")\n      AC.rectangle_add(prvAC + 1, i + 1, i + 1, N + 1,\
+    \ 1);\n    if (S[i] == \"WA\")\n      WA.rectangle_add(prvAC + 1, i + 1, nxtAC\
+    \ + 1, N + 1, 1);\n  }\n\n  fec([ l, r ] : LR) AC.point_get(l, r),\n  WA.point_get(l,\
+    \ r);\n  auto ansAC = AC.run(), ansWA = WA.run();\n  rep(q, Q) PRINT(ansAC[q],\
+    \ ansWA[q]);\n}\n\nvoid test()\n{\n\n}\n\n#include \"template/template_main.hpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
   dependsOn:
   - template/template_all_but_modint.hpp
@@ -961,24 +1002,24 @@ data:
   - template/template_inout.hpp
   - template/template_dump.hpp
   - template/template_random.hpp
-  - math/modint/modint.hpp
-  - math/modint/modint32_internal.hpp
-  - math/modint/modint_base.hpp
-  - math/extgcd.hpp
-  - graph/cliques.hpp
-  - graph/graph.hpp
+  - ds/group_index.hpp
   - ds/csr.hpp
+  - ds/2d/offline/static_rectangle_add_point_get.hpp
+  - ds/2d/offline/rectangle_sum.hpp
+  - ds/fenwick_tree/fenwick_tree.hpp
+  - math/algebra/algebra_basic_ops.hpp
+  - math/algebra/algebra_base.hpp
   - template/template_main.hpp
-  isVerificationFile: false
-  path: verify/yosupo/enumerate_cliques.cpp
+  isVerificationFile: true
+  path: verify/yukicoder/static_rectangle_add_point_get.test.cpp
   requiredBy: []
-  timestamp: '2026-01-04 17:26:22+09:00'
-  verificationStatus: LIBRARY_NO_TESTS
+  timestamp: '2026-03-14 04:11:27+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
-documentation_of: verify/yosupo/enumerate_cliques.cpp
+documentation_of: verify/yukicoder/static_rectangle_add_point_get.test.cpp
 layout: document
 redirect_from:
-- /library/verify/yosupo/enumerate_cliques.cpp
-- /library/verify/yosupo/enumerate_cliques.cpp.html
-title: verify/yosupo/enumerate_cliques.cpp
+- /verify/verify/yukicoder/static_rectangle_add_point_get.test.cpp
+- /verify/verify/yukicoder/static_rectangle_add_point_get.test.cpp.html
+title: verify/yukicoder/static_rectangle_add_point_get.test.cpp
 ---

@@ -1,105 +1,108 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
+    path: bit/bit_reverse.hpp
+    title: "\u30D3\u30C3\u30C8\u30EA\u30D0\u30FC\u30B9"
+  - icon: ':x:'
     path: ds/cumulative_sum/imos.hpp
     title: "$1$ \u6B21\u5143 imos \u6CD5"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/convolution/convolution.hpp
     title: "\u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/crt.hpp
     title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/berlekamp_massey.hpp
     title: "Berlekamp\u2013Massey"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/bmbm.hpp
     title: BMBM
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/fps/fps.hpp
     title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/binomial.hpp
     title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint64_internal.hpp
     title: math/modint/modint64_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/sqrt_mod.hpp
     title: "mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/large/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://yukicoder.me/problems/no/215
@@ -557,35 +560,36 @@ data:
     \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
     \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
     \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
-    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
-    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
-    \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
-    }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
-    struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
-    \n// ---- \u5165\u529B ----\n#if defined LOCAL or not defined FAST_IO\ntemplate\
-    \ <class T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  is\
-    \ >> p.first >> p.second;\n  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream\
-    \ &is, tuple<Ts...> &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a);\
-    \ }, t);\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
-    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
-    \  return is;\n}\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n\
-    {\n  const size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
-    \  return is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not\
-    \ defined FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >>\
-    \ a); }\n#endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class...\
-    \ Ts>\nvoid READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class...\
-    \ Ts>\nvoid READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\n\
-    void READVECnodump(int n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\n\
-    template <class T, class... Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n\
-    { READVECnodump(n, v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid\
-    \ READVEC2nodump(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n\
-    }\ntemplate <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v,\
-    \ vvc<Ts> &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\
-    \ntemplate <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n\
-    \  repi(i, n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n\
-    \  }\n}\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v,\
-    \ vvc<Ts> &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; //\
-    \ namespace internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
+    \ &&... tail) {\n  wt1(head);\n  write(std::forward<Tail>(tail)...);\n}\n\nvoid\
+    \ print() { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head\
+    \ &&head, Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n\
+    \  print(std::forward<Tail>(tail)...);\n}\n\n} // namespace fastio\n\n#endif\n\
+    \n#if defined FAST_IO and not defined LOCAL\nstruct Dummy {\n  Dummy() { atexit(fastio::flush);\
+    \ }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\n// ---- \u5165\u529B\
+    \ ----\n#if defined LOCAL or not defined FAST_IO\ntemplate <class T, class U>\n\
+    istream &operator>>(istream &is, pair<T, U> &p)\n{\n  is >> p.first >> p.second;\n\
+    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
+    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
+    \ is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream &is, array<T,\
+    \ n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n  return is;\n\
+    }\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n{\n  const\
+    \ size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n  return\
+    \ is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not defined\
+    \ FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\
+    #endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class... Ts>\n\
+    void READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class... Ts>\n\
+    void READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\nvoid READVECnodump(int\
+    \ n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\ntemplate <class T, class...\
+    \ Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n{ READVECnodump(n,\
+    \ v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid READVEC2nodump(int\
+    \ n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n}\ntemplate\
+    \ <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\ntemplate\
+    \ <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n  repi(i,\
+    \ n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n  }\n\
+    }\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; // namespace\
+    \ internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
     \n#define IN(T, ...) T __VA_ARGS__; READ(__VA_ARGS__)\n\n#define CHAR(...) IN(char,\
     \ __VA_ARGS__)\n#define INT(...) IN(int, __VA_ARGS__)\n#define LL(...) IN(ll,\
     \ __VA_ARGS__)\n#define STR(...) IN(string, __VA_ARGS__)\n#define ARR(T, n, ...)\
@@ -769,7 +773,15 @@ data:
     \ c[i - pos + j] = F::add(c[i - pos + j], F::minus(F::mul(z, b[j])));\n    if\
     \ (d2 >= d)\n      pos = i, x = y, swap(tmp, b);\n  }\n  c.insert(c.begin(), F::minus(F::e1()));\n\
     \  return c;\n}\n#line 2 \"math/fps/bostan_mori.hpp\"\n\n#line 4 \"math/fps/bostan_mori.hpp\"\
-    \n\n#line 2 \"math/fps/fps.hpp\"\n\n#line 4 \"math/fps/fps.hpp\"\n\n#line 2 \"\
+    \n\n#line 2 \"bit/bit_reverse.hpp\"\n\n#line 4 \"bit/bit_reverse.hpp\"\n\n/**\n\
+    \ * @brief \u30D3\u30C3\u30C8\u30EA\u30D0\u30FC\u30B9\n * @docs docs/bit/bit_reverse.md\n\
+    \ */\n\nuint32_t bit_reverse32(uint32_t x)\n{\n  x = ((x & 0x55555555) << 1) |\
+    \ ((x & 0xAAAAAAAA) >> 1);\n  x = ((x & 0x33333333) << 2) | ((x & 0xCCCCCCCC)\
+    \ >> 2);\n  x = ((x & 0x0F0F0F0F) << 4) | ((x & 0xF0F0F0F0) >> 4);\n  x = ((x\
+    \ & 0x00FF00FF) << 8) | ((x & 0xFF00FF00) >> 8);\n  return (x << 16) | (x >> 16);\n\
+    }\n// [0, pw2) \u306E\u7BC4\u56F2\u306E i \u3092\u30D3\u30C3\u30C8\u30EA\u30D0\
+    \u30FC\u30B9\nint bitrev(int pw2, int i) { return bit_reverse32(i) >> (32 - countr_zero(pw2));\
+    \ }\n#line 2 \"math/fps/fps.hpp\"\n\n#line 4 \"math/fps/fps.hpp\"\n\n#line 2 \"\
     math/modint/binomial.hpp\"\n\n#line 4 \"math/modint/binomial.hpp\"\n\n/**\n *\
     \ @brief \u4E8C\u9805\u4FC2\u6570\n * @docs docs/math/modint/binomial.md\n */\n\
     \ntemplate <class T>\nstruct Binomial\n{\nprivate:\n  static decltype(T::mod())\
@@ -1382,46 +1394,62 @@ data:
     \ c); }\n  // (1 + cx^d) \u3067\u308F\u308B\n  F div_bin_destructive(int d, mint\
     \ c)\n  {\n    resize(sz() + d);\n    rep(i, sz() - d)(*this)[i + d] -= (*this)[i]\
     \ * c;\n    return *this;\n  }\n  F div_bin(int d, mint c) const { return F(*this).div_bin_destructive(d,\
-    \ c); }\n};\n#line 6 \"math/fps/bostan_mori.hpp\"\n\n/**\n * @brief Bostan\u2013\
+    \ c); }\n};\n#line 7 \"math/fps/bostan_mori.hpp\"\n\n/**\n * @brief Bostan\u2013\
     Mori\n * @docs docs/math/fps/bostan_mori.md\n */\n\n// [x^k] p(x)/q(x) \u3092\u6C42\
     \u3081\u308B\n// \u5236\u7D04: [x^0] q(x) != 0\n// \u8A08\u7B97\u91CF: q(x) \u306E\
     \u6B21\u6570\u3092 d \u3068\u3057\u3066 O(d log d log k) \u6642\u9593\ntemplate\
     \ <class mint>\nmint bostan_mori(const FormalPowerSeries<mint> &p, const FormalPowerSeries<mint>\
-    \ &q, ll k)\n{\n  using F = FormalPowerSeries<mint>;\n  auto [r, u] = p.divmod(q);\n\
-    \  mint res = r.get(k);\n  const int d = SZ(q) - 1;\n  if (ntt_ok<mint>(2 * d\
-    \ + 1))\n  {\n    const int z = bit_ceil(2 * d + 1);\n    mint iz = mint(z).inv();\n\
-    \    F v = q;\n    u.resize(z), v.resize(z);\n    while (k > 0)\n    {\n     \
-    \ ntt(u), ntt(v);\n      repi(i, 0, z, 2)\n      {\n        mint x = v[i + 1],\
-    \ y = v[i];\n        u[i] *= x, v[i] *= x;\n        u[i + 1] *= y, v[i + 1] *=\
-    \ y;\n      }\n      intt(u), intt(v);\n      repi(i, z / 2)\n      {\n      \
-    \  u[i] = u[2 * i + (k & 1)] * iz;\n        v[i] = v[2 * i] * iz;\n      }\n \
-    \     repi(i, z / 2, z) u[i] = 0, v[i] = 0;\n      k >>= 1;\n    }\n    return\
-    \ res + u[0] / v[0];\n  }\n  else\n  {\n    F v = q;\n    u.resize(d + 1), v.resize(d\
-    \ + 1);\n    while (k > 0)\n    {\n      F w = v;\n      repi(i, 1, d + 1, 2)\
-    \ w[i] = -w[i];\n      F u2 = u * w, v2 = v * w;\n      repi(i, d + 1)\n     \
-    \ {\n        if (2 * i + (k & 1) < SZ(u2))\n          u[i] = u2[2 * i + (k & 1)];\n\
+    \ &q, ll k)\n{\n  using F = FormalPowerSeries<mint>;\n  static const internal::fft_info<mint>\
+    \ info;\n  auto [r, u] = p.divmod(q);\n  mint res = r.get(k);\n  const int d =\
+    \ SZ(q) - 1;\n  if (ntt_ok<mint>(2 * d + 1))\n  {\n    const int z = bit_ceil(2\
+    \ * d + 1);\n    const mint i2 = mint(2).inv();\n    const mint iz = mint(z /\
+    \ 2).inv();\n    const mint root = info.root[bit_width(z / 2)];\n    const mint\
+    \ iroot = info.iroot[bit_width(z / 2)];\n    vc<mint> ipw(z / 2);\n    {\n   \
+    \   mint itmp = 1;\n      repi(i, z / 2)\n      {\n        ipw[bitrev(z / 2, i)]\
+    \ = itmp;\n        itmp *= iroot;\n      }\n    }\n    F v = q;\n    u.resize(z\
+    \ / 2), v.resize(z / 2);\n    F u2 = u, v2 = v;\n    ntt(u), ntt(v);\n    while\
+    \ (k > 0)\n    {\n      {\n        mint tmp = 1;\n        repi(i, z / 2)\n   \
+    \     {\n          u2[i] = u2[i] * tmp;\n          v2[i] = v2[i] * tmp;\n    \
+    \      tmp *= root;\n        }\n      }\n      ntt(u2), ntt(v2);\n      if (k\
+    \ & 1)\n      {\n        repi(i, z / 4)\n        {\n          const mint x = v[2\
+    \ * i], y = v[2 * i + 1];\n          u[i] = (u[2 * i] * y - u[2 * i + 1] * x)\
+    \ * ipw[i] * i2;\n          v[i] = x * y;\n        }\n        repi(i, z / 4)\n\
+    \        {\n          const mint x = v2[2 * i], y = v2[2 * i + 1];\n         \
+    \ u[i + z / 4] = (u2[2 * i] * y - u2[2 * i + 1] * x) * ipw[i + z / 4] * i2;\n\
+    \          v[i + z / 4] = x * y;\n        }\n      }\n      else\n      {\n  \
+    \      repi(i, z / 4)\n        {\n          const mint x = v[2 * i], y = v[2 *\
+    \ i + 1];\n          u[i] = (u[2 * i] * y + u[2 * i + 1] * x) * i2;\n        \
+    \  v[i] = x * y;\n        }\n        repi(i, z / 4)\n        {\n          const\
+    \ mint x = v2[2 * i], y = v2[2 * i + 1];\n          u[i + z / 4] = (u2[2 * i]\
+    \ * y + u2[2 * i + 1] * x) * i2;\n          v[i + z / 4] = x * y;\n        }\n\
+    \      }\n      u2 = u, v2 = v;\n      intt(u2), intt(v2);\n      repi(i, z /\
+    \ 2) u2[i] *= iz, v2[i] *= iz;\n      k >>= 1;\n    }\n    return res + u2[0]\
+    \ / v2[0];\n  }\n  else\n  {\n    F v = q;\n    u.resize(d + 1), v.resize(d +\
+    \ 1);\n    while (k > 0)\n    {\n      F w = v;\n      repi(i, 1, d + 1, 2) w[i]\
+    \ = -w[i];\n      F u2 = u * w, v2 = v * w;\n      repi(i, d + 1)\n      {\n \
+    \       if (2 * i + (k & 1) < SZ(u2))\n          u[i] = u2[2 * i + (k & 1)];\n\
     \        if (2 * i < SZ(v2))\n          v[i] = v2[2 * i];\n      }\n      k >>=\
     \ 1;\n    }\n    return res + u[0] / v[0];\n  }\n}\n#line 6 \"math/fps/bmbm.hpp\"\
     \n\n/**\n * @brief BMBM\n * @docs docs/math/fps/bmbm.md\n */\n\n// \u5165\u529B\
     : a[0], ..., a[d-1] \u3068 c[1], ..., c[d] (c[0] \u306F\u9069\u5F53\u306A\u5024\
-    )\n// \u51FA\u529B: a[i] = sum[j=1..d] c[j]a[i-j] (i >= d) \u3067\u5B9A\u307E\u308B\
-    \ a \u306E\u7B2C k \u9805\ntemplate <class mint>\nmint linear_recurrence(const\
-    \ vc<mint> &a, const vc<mint> &c, ll k)\n{\n  using F = FormalPowerSeries<mint>;\n\
-    \  const int d = SZ(c) - 1;\n  assert(d >= 0);\n  if (d == 0)\n    return 0;\n\
-    \  assert(SZ(a) >= d);\n  F q = -F(c);\n  q[0] = 1;\n  F p = (F(a) * q).pre(d);\n\
-    \  return bostan_mori(p, q, k);\n}\n\n// \u7DDA\u578B\u6F38\u5316\u7684\u6570\u5217\
-    \ a[0], a[1], ... \u306E\u7B2C k \u9805\u3092\u63A8\u6E2C\u3059\u308B\ntemplate\
-    \ <class mint>\nmint bmbm(const vc<mint> &a, ll k, bool show_coefs = true)\n{\n\
-    \  auto c = berlekamp_massey<FieldAddSubMulDiv<mint>>(a);\n  if (show_coefs)\n\
-    \    dump(c | cp::index());\n  return linear_recurrence(a, c, k);\n}\n#line 2\
-    \ \"ds/cumulative_sum/imos.hpp\"\n\n#line 4 \"ds/cumulative_sum/imos.hpp\"\n\n\
-    #line 6 \"ds/cumulative_sum/imos.hpp\"\n\n/**\n * @brief $1$ \u6B21\u5143 imos\
-    \ \u6CD5\n * @docs docs/ds/cumulative_sum/imos.md\n */\n\n// G \u306F\u53EF\u63DB\
-    \ntemplate <class G = GroupAddSub<ll>>\nstruct Imos\n{\n  using S = typename G::S;\n\
-    \nprivate:\n  vc<S> d;\n\npublic:\n  Imos() {}\n  Imos(int n) : d(n, G::e()) {}\n\
-    \  Imos(const vc<S> &a)\n  {\n    const int n = a.size();\n    d.assign(n, G::e());\n\
-    \    repi(i, n) add(i, i + 1, a[i]);\n  }\n\n  // [l, r) \u306B v \u3092\u8DB3\
-    \u3059\n  void add(int l, int r, const S &v)\n  {\n    const int n = d.size();\n\
+    )\n// \u51FA\u529B: \u6BCD\u95A2\u6570 p/q\ntemplate <class mint>\npair<FormalPowerSeries<mint>,\
+    \ FormalPowerSeries<mint>> linear_recurrence_gf(const vc<mint> &a, const vc<mint>\
+    \ &c)\n{\n  using F = FormalPowerSeries<mint>;\n  const int d = SZ(c) - 1;\n \
+    \ assert(d >= 0);\n  assert(SZ(a) >= d);\n  F q = -F(c);\n  q[0] = 1;\n  F p =\
+    \ (F(a) * q).pre(d);\n  return {p, q};\n}\n\n// \u7DDA\u578B\u6F38\u5316\u7684\
+    \u6570\u5217 a[0], a[1], ... \u306E\u7B2C k \u9805\u3092\u63A8\u6E2C\u3059\u308B\
+    \ntemplate <class mint>\nmint bmbm(const vc<mint> &a, ll k, bool show_coefs =\
+    \ true)\n{\n  auto c = berlekamp_massey<FieldAddSubMulDiv<mint>>(a);\n  if (show_coefs)\n\
+    \    dump(c | cp::index());\n  auto [p, q] = linear_recurrence_gf(a, c);\n  if\
+    \ (show_coefs)\n    dump(p | cp::index(), q | cp::index());\n  return bostan_mori(p,\
+    \ q, k);\n}\n#line 2 \"ds/cumulative_sum/imos.hpp\"\n\n#line 4 \"ds/cumulative_sum/imos.hpp\"\
+    \n\n#line 6 \"ds/cumulative_sum/imos.hpp\"\n\n/**\n * @brief $1$ \u6B21\u5143\
+    \ imos \u6CD5\n * @docs docs/ds/cumulative_sum/imos.md\n */\n\n// G \u306F\u53EF\
+    \u63DB\ntemplate <class G = GroupAddSub<ll>>\nstruct Imos\n{\n  using S = typename\
+    \ G::S;\n\nprivate:\n  vc<S> d;\n\npublic:\n  Imos() {}\n  Imos(int n) : d(n,\
+    \ G::e()) {}\n  Imos(const vc<S> &a)\n  {\n    const int n = a.size();\n    d.assign(n,\
+    \ G::e());\n    repi(i, n) add(i, i + 1, a[i]);\n  }\n\n  // [l, r) \u306B v \u3092\
+    \u8DB3\u3059\n  void add(int l, int r, const S &v)\n  {\n    const int n = d.size();\n\
     \    assert(0 <= l && l <= r && r <= n);\n    d[l] = G::op(d[l], v);\n    if (r\
     \ != n)\n      d[r] = G::op(d[r], G::inv(v));\n  }\n\n  // \u73FE\u72B6\u306E\
     \ vector \u3092\u8FD4\u3059\n  vc<S> content() { return cuml<G>(d, 1); }\n};\n\
@@ -1506,6 +1534,7 @@ data:
   - math/algebra/algebra_basic_ops.hpp
   - math/algebra/algebra_base.hpp
   - math/fps/bostan_mori.hpp
+  - bit/bit_reverse.hpp
   - math/fps/fps.hpp
   - math/modint/binomial.hpp
   - math/convolution/convolution.hpp
@@ -1523,8 +1552,8 @@ data:
   isVerificationFile: true
   path: verify/yukicoder/bmbm.test.cpp
   requiredBy: []
-  timestamp: '2026-01-04 17:26:22+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2026-03-14 04:11:27+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yukicoder/bmbm.test.cpp
 layout: document

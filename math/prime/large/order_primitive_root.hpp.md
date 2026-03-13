@@ -1,90 +1,90 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint64_internal.hpp
     title: math/modint/modint64_internal.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/large/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/large/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/large/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/primitive_root.test.cpp
     title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/primitive_root_min.test.cpp
     title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/order_mod_carmichael.test.cpp
     title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yukicoder/order_mod_euler_phi.test.cpp
     title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     _deprecated_at_docs: docs/math/prime/large/order_primitive_root.md
     document_title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
@@ -540,35 +540,36 @@ data:
     \ T>\nvoid wt1(const vector<T> &val) {\n  auto n = val.size();\n  for (size_t\
     \ i = 0; i < n; i++) {\n    if (i) wt1(' ');\n    wt1(val[i]);\n  }\n}\n\nvoid\
     \ write() {}\ntemplate <class Head, class... Tail>\nvoid write(Head &&head, Tail\
-    \ &&... tail) {\n  wt1(head);\n  write(forward<Tail>(tail)...);\n}\n\nvoid print()\
-    \ { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head &&head,\
-    \ Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n  print(forward<Tail>(tail)...);\n\
-    }\n\n} // namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
-    struct Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
-    \n// ---- \u5165\u529B ----\n#if defined LOCAL or not defined FAST_IO\ntemplate\
-    \ <class T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  is\
-    \ >> p.first >> p.second;\n  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream\
-    \ &is, tuple<Ts...> &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a);\
-    \ }, t);\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
-    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
-    \  return is;\n}\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n\
-    {\n  const size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
-    \  return is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not\
-    \ defined FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >>\
-    \ a); }\n#endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class...\
-    \ Ts>\nvoid READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class...\
-    \ Ts>\nvoid READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\n\
-    void READVECnodump(int n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\n\
-    template <class T, class... Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n\
-    { READVECnodump(n, v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid\
-    \ READVEC2nodump(int n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n\
-    }\ntemplate <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v,\
-    \ vvc<Ts> &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\
-    \ntemplate <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n\
-    \  repi(i, n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n\
-    \  }\n}\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v,\
-    \ vvc<Ts> &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; //\
-    \ namespace internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
+    \ &&... tail) {\n  wt1(head);\n  write(std::forward<Tail>(tail)...);\n}\n\nvoid\
+    \ print() { wt1('\\n'); }\ntemplate <class Head, class... Tail>\nvoid print(Head\
+    \ &&head, Tail &&... tail) {\n  wt1(head);\n  if (sizeof...(Tail)) wt1(' ');\n\
+    \  print(std::forward<Tail>(tail)...);\n}\n\n} // namespace fastio\n\n#endif\n\
+    \n#if defined FAST_IO and not defined LOCAL\nstruct Dummy {\n  Dummy() { atexit(fastio::flush);\
+    \ }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\n// ---- \u5165\u529B\
+    \ ----\n#if defined LOCAL or not defined FAST_IO\ntemplate <class T, class U>\n\
+    istream &operator>>(istream &is, pair<T, U> &p)\n{\n  is >> p.first >> p.second;\n\
+    \  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream &is, tuple<Ts...>\
+    \ &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a); }, t);\n  return\
+    \ is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream &is, array<T,\
+    \ n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n  return is;\n\
+    }\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n{\n  const\
+    \ size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n  return\
+    \ is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not defined\
+    \ FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >> a); }\n\
+    #endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class... Ts>\n\
+    void READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class... Ts>\n\
+    void READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class T>\nvoid READVECnodump(int\
+    \ n, vc<T> &v)\n{\n  v.resize(n);\n  READnodump(v);\n}\ntemplate <class T, class...\
+    \ Ts>\nvoid READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)\n{ READVECnodump(n,\
+    \ v), READVECnodump(n, vs...); }\n\ntemplate <class T>\nvoid READVEC2nodump(int\
+    \ n, int m, vvc<T> &v)\n{\n  v.assign(n, vc<T>(m));\n  READnodump(v);\n}\ntemplate\
+    \ <class T, class... Ts>\nvoid READVEC2nodump(int n, int m, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }\n\ntemplate\
+    \ <class T>\nvoid READJAGnodump(int n, vvc<T> &v)\n{\n  v.resize(n);\n  repi(i,\
+    \ n)\n  {\n    int k;\n    READnodump(k);\n    READVECnodump(k, v[i]);\n  }\n\
+    }\ntemplate <class T, class... Ts>\nvoid READJAGnodump(int n, vvc<T> &v, vvc<Ts>\
+    \ &...vs)\n{ READJAGnodump(n, v), READJAGnodump(n, vs...); }\n\n}; // namespace\
+    \ internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)\n\
     \n#define IN(T, ...) T __VA_ARGS__; READ(__VA_ARGS__)\n\n#define CHAR(...) IN(char,\
     \ __VA_ARGS__)\n#define INT(...) IN(int, __VA_ARGS__)\n#define LL(...) IN(ll,\
     \ __VA_ARGS__)\n#define STR(...) IN(string, __VA_ARGS__)\n#define ARR(T, n, ...)\
@@ -1066,8 +1067,8 @@ data:
   isVerificationFile: false
   path: math/prime/large/order_primitive_root.hpp
   requiredBy: []
-  timestamp: '2026-01-04 17:26:22+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2026-03-14 04:11:27+09:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
   - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/order_mod_euler_phi.test.cpp
@@ -1080,3 +1081,140 @@ redirect_from:
 - /library/math/prime/large/order_primitive_root.hpp.html
 title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
 ---
+## 元の位数と原始根
+
+素数 $p$ に対し、乗法群 $(\mathbb{Z}/p\mathbb{Z})^\times$ の元の位数や原始根を求めるライブラリ。
+
+約数ゼータ・メビウス変換が絡んでくることもしばしばある。
+
+### 概要
+
+#### 定義
+
+- 元 $1 \leq x < p$ の**位数**とは、$x^n \equiv 1 \pmod p$ を満たす最小の $n \geq 1$ のこと
+- $p$ の**原始根**とは、位数が $p-1$ であるような元のこと
+
+#### 性質
+
+- $a^m \equiv 1 \pmod p$ を満たす $m$ は位数の倍数
+  - 特に、位数は $p - 1$ の約数（フェルマーの小定理より $p-1$ は必ず満たす）
+- $g^a \equiv g^b \pmod p \iff a \equiv b \pmod{p-1}$
+  - 巡回群だから
+- $g^a$ の位数は $\dfrac{p-1}{\gcd(p-1, a)}$
+  - $d = \gcd(p-1, a)$ とおくと、$g^a$ の累乗として現れるのは $g^0, g^d, g^{2d}, \dots, g^{\left(\frac{p-1}{d}-1\right)d}$
+- 位数がちょうど $d$ の元の個数は $\phi(d)$（これは一般に巡回群についてもいえる）
+  - 約数ゼータ変換を考えると、位数が $d$ の約数であるような元の個数は $d$
+
+### ライブラリの使い方
+
+元の位数や原始根は、$p-1$ の素因数分解 $O(p^{1/4})$ 時間を除くと $O(\mathrm{polylog}\ p)$ 時間で求まる。特に、（原始根を底とする）**指数は**（離散対数 $O(\sqrt{p})$ 時間等でないと）**求まらないが、位数は求まる**。
+
+`ll` までとれる関数だが、`int` の範囲で計算できるならそうしてくれる（modint パートが int と ll で割と重さが変わる）。
+
+#### order_mod
+
+```cpp
+ll order_mod(ll x, ll p, vc<Primepower<ll>> fac)
+```
+
+$(\mathbb{Z}/p\mathbb{Z})^\times$ の元 $x$ の位数を求める。`fac` には $p-1$ の素因数分解形が入る。
+
+##### 制約
+
+- $p$ は素数
+- $x \not\equiv 0 \pmod p$
+
+##### 計算量
+
+- $O(\log p \log\log p)$
+
+ただし、`fac` の前計算に $O(p^{1/4})$ かかることに注意。
+
+
+#### primitive_root
+
+```cpp
+(1) ll primitive_root(ll p, vc<PrimePower<ll>> fac)
+(2) ll primitive_root_min(ll p, vc<PrimePower<ll>> fac)
+```
+
+(1) では $p$ の原始根を $1$ つ求める。(2) では $p$ の最小の原始根を求める。`fac` には $p-1$ の素因数分解形が入る。
+
+##### 制約
+
+- $p$ は素数
+
+
+##### 計算量
+
+- (1) は期待 $O((\log p) (\log\log p)^2)$
+- (2) は、原始根の分布に極端な偏りがないと仮定すれば期待 $O((\log p) (\log\log p)^2)$
+  - 実際は最小の原始根が大きめな $p$ があるので、何か $1$ つ欲しいだけなら (1) のほうが高速
+
+ただし、`fac` の前計算に $O(p^{1/4})$ かかることに注意。
+
+### 中身
+
+#### ラグランジュ補間風のアルゴリズム
+
+https://twitter.com/noshi91/status/1317025404700405760
+
+```
+|       a       |
+|5,6,7,8|1,2,3,4| 伝播
+|   b   |   c   |
+|3,4|1,2|7,8|5,6| 伝播
+| d | e | f | g |
+|2|1|4|3|6|5|8|7| 伝播
+|h|i|j|k|l|m|n|o|
+```
+
+これで各 $i$ について $x^{a_1 \cdots a_{i-1} a_{i+1} \cdots a_k}$ が求まる。計算量は、$\log k$ 個ある段それぞれで $a_1, \dots, a_k$ 乗の計算をするので、$O((\log k) \sum_i \log a_i) = O(\log k \log \prod_i a_i)$ 時間。
+
+とりあえず再帰で書いたけど非再帰とどっちが速いかは計測してない（よくわからない）
+
+#### 元の位数
+
+https://atcoder.jp/contests/abc335/editorial/9017
+https://atcoder.jp/contests/abc335/editorial/9045
+
+$p-1 = q_1^{e_1} \cdots q_k^{e_k}$ とする。位数 $n$ は $n = q_1^{f_1} \cdots q_k^{f_k} \: (0 \leq f_i \leq e_i)$ と書ける。性質「$x^m \equiv 1 \pmod p$ を満たす $m$ は位数の倍数」より、各 $f_i$ ごとに最小化すればよい。つまり、$i$ ごとに $\left(x^{q_1^{e_1} \cdots q_{i-1}^{e_{i-1}} q_{i+1}^{e_{i+1}} \cdots q_k^{e_k}}\right)^{q_i^{f_i}} \equiv 1 \pmod p$ を満たす $f_i$ の最小値を求めればよい。これは、上述のラグランジュ補間風のアルゴリズムで $x^{q_1^{e_1} \cdots q_{i-1}^{e_{i-1}} q_{i+1}^{e_{i+1}} \cdots q_k^{e_k}}$ を求めた後、それを $q_i$ 乗する回数 $f_i$ を愚直に $1$ ずつ増やしていけばよい。計算量は、$x^{q_1^{e_1} \cdots q_{i-1}^{e_{i-1}} q_{i+1}^{e_{i+1}} \cdots q_k^{e_k}}$ を求めるパートが $O(\log k \log p) = O(\log p \log\log p)$ 時間、$f_i$ を増やしていくパートが $O(\sum_i e_i \log q_i) = O(\log \prod_i q_i^{e_i}) = O(\log p)$ 時間で、全体 $O(\log p\log\log p)$ 時間。
+
+#### 原始根
+
+https://37zigen.com/primitive-root/#i-4
+https://37zigen.com/prime-complexity/#i-4
+
+ある元が原始根かどうかの判定は、位数が $p-1$ かどうかなので $O(\log p\log\log p)$ 時間で求まる。より強く $f_i = e_i - 1$（つまり $\dfrac{p-1}{q_i}$）のみを調べればよいこともすぐにわかる。
+
+原始根は $\phi(p-1)$ 個あるので、乱択すれば試行回数の期待値は $\dfrac{p-1}{\phi(p-1)}$ である。https://37zigen.com/prime-complexity/#i-4 より $\dfrac{n}{\phi(n)} = O(\log\log n)$ であるから、全体の期待計算量は $O((\log p) (\log\log p)^2)$ 時間。
+
+---
+
+実装が簡単な（ラグランジュ補間風のアルゴリズムを実装しない）代わりに計算量が劣る方法：
+
+元の位数は、$m = p-1$ から始めて、各 $i$ について $m$ を $q_i$ で割っていくと $O(\log^2 p)$ 時間（https://atcoder.jp/contests/abc335/editorial/9017 ）。各 $i$ について、まず $m$ を $q_i^{e_i}$ で割ってから $m$ を $q_i$ 倍していけば $O(k (\log p + \sum_i e_i \log q_i)) = O(k \log p)$ 時間で、$k = O\left(\dfrac{\log p}{\log\log p}\right)$（https://37zigen.com/prime-complexity/#i-3 ）なので $O\left(\dfrac{\log^2 p}{\log\log p}\right)$ 時間（https://atcoder.jp/contests/abc335/editorial/9042 ）。
+
+原始根判定は、単純に $x^{\frac{p-1}{q_i}}$ を計算することで $O(k \log p) = O\left(\dfrac{\log^2 p}{\log\log p}\right)$ 時間。よって原始根を求めるのは $O(\log^2 p)$ 時間。
+
+### 素数でない場合
+
+#### 元の位数
+
+$n \geq 2$ に対し、乗法群 $(\mathbb{Z}/n\mathbb{Z})^\times$ の元 $x$（つまり $\gcd(x, n) = 1$ を満たす $x$）の位数は、オイラーの定理 $x^{\phi(n)} \equiv 1 \pmod n$ から $\phi(n)$ の約数（「位数の倍数」の性質は巡回群でなくても成り立つ）。`fac` に $\phi(n)$ の素因数分解を渡すことでまったく同様のアルゴリズムで求まる。カーマイケル関数 $\lambda(n)$ を使う改善が考えられるが、最悪ケースでは同じ。
+
+#### 原始根
+
+$n \geq 2$ の原始根が存在する条件は、$n$ が $2, 4, p^e, 2p^e$（$p$ は奇素数、$e \geq 1$）のどれかであることらしい。
+
+また、$(\mathbb{Z}/n\mathbb{Z})^\times$ の元の位数となりうる最大の値は $\lambda(n)$ である。
+
+具体的な元の求め方：
+- $p^e$ の場合は、$p$ の原始根を $g$ として $g$ と $g + p$ を試す
+- $2p^e$ の場合は、$p^e$ の原始根を $h$ として $h$ と $h + p^k$ を試す
+
+まだちゃんと読んでない：
+
+- https://integers.hatenablog.com/entry/2016/07/24/163831
+- https://en.wikipedia.org/wiki/Primitive_root_modulo_n
+- https://ocw.mit.edu/courses/18-781-theory-of-numbers-spring-2012/resources/mit18_781s12_lec8/
