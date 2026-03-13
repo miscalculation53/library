@@ -65,7 +65,7 @@ data:
     title: "\u77E9\u5F62\u52A0\u7B97 \u2192 \u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lower_left_sum.test.cpp
     title: verify/yosupo/lower_left_sum.test.cpp
   - icon: ':x:'
@@ -85,7 +85,7 @@ data:
     title: verify/yukicoder/static_rectangle_add_point_get.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/ds/2d/offline/rectangle_sum.md
     document_title: "\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\u30F3\uFF09"
@@ -927,7 +927,7 @@ data:
   - ds/2d/offline/rectangle_add_point_get.hpp
   - ds/2d/offline/static_rectangle_add_point_get.hpp
   timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yukicoder/static_rectangle_add_point_get.test.cpp
   - verify/yosupo/lower_left_sum.test.cpp
