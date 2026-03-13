@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/pbds_set.hpp
     title: "pb_ds \u306E set/multiset"
   - icon: ':question:'

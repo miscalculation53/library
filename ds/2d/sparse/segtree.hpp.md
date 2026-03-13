@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/segtree/segtree.hpp
     title: "\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
   - icon: ':question:'
@@ -45,12 +45,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/2d_segtree.test.cpp
     title: verify/yosupo/2d_segtree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
     title: verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/2d/sparse/segtree.md
     document_title: "$2$ \u6B21\u5143\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\uFF08\u758E\
@@ -824,7 +824,7 @@ data:
   path: ds/2d/sparse/segtree.hpp
   requiredBy: []
   timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
   - verify/yosupo/2d_segtree.test.cpp

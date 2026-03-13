@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/cumulative_sum/cumulative_sum_2d.hpp
     title: "$2$ \u6B21\u5143\u7D2F\u7A4D\u548C"
   - icon: ':question:'
@@ -23,7 +23,7 @@ data:
   - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/modint_div.hpp
     title: "\u96F6\u306E\u91CD\u8907\u5EA6\u3064\u304D modint"
   - icon: ':question:'
@@ -67,9 +67,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://yukicoder.me/problems/no/1141
@@ -940,7 +940,7 @@ data:
   path: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
   requiredBy: []
   timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
 layout: document

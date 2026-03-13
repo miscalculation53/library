@@ -55,7 +55,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/scc.test.cpp
     title: verify/yosupo/scc.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
   - icon: ':x:'

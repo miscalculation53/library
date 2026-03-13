@@ -74,7 +74,7 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/factorial.hpp
     title: "\u968E\u4E57"
   _extendedVerifiedWith:
@@ -84,12 +84,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_shift_of_sampling_points.test.cpp
     title: verify/yosupo/poly_shift_of_sampling_points.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/factorial.test.cpp
     title: verify/yukicoder/factorial.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/fps/shift_of_sampling_points.md
     document_title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
@@ -1357,7 +1357,7 @@ data:
   requiredBy:
   - math/fps/factorial.hpp
   timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/factorial.test.cpp
   - verify/yosupo/factorial.test.cpp

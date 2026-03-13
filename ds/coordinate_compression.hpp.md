@@ -59,18 +59,18 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/ordered_set_fenwick_tree.test.cpp
     title: verify/yosupo/ordered_set_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_frequency.test.cpp
     title: verify/yosupo/static_range_frequency.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_inversions_query.test.cpp
     title: verify/yosupo/static_range_inversions_query.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
     title: verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/coordinate_compression.md
     document_title: "\u5EA7\u6A19\u5727\u7E2E"
@@ -715,7 +715,7 @@ data:
   - ds/flat_map.hpp
   - ds/offline_dynamic_connectivity.hpp
   timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
   - verify/yosupo/static_range_inversions_query.test.cpp

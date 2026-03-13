@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: bit/bit_reverse.hpp
     title: "\u30D3\u30C3\u30C8\u30EA\u30D0\u30FC\u30B9"
   - icon: ':question:'
@@ -23,10 +23,10 @@ data:
   - icon: ':question:'
     path: math/fps/berlekamp_massey.hpp
     title: "Berlekamp\u2013Massey"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/bmbm.hpp
     title: BMBM
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
   - icon: ':question:'

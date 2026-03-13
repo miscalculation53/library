@@ -60,7 +60,7 @@ data:
     path: ds/2d/offline/static_rectangle_add_point_get.hpp
     title: "\u77E9\u5F62\u52A0\u7B97 \u2192 \u70B9\u53D6\u5F97\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/offline/static_rectangle_add_rectangle_sum.hpp
     title: "\u77E9\u5F62\u52A0\u7B97 \u2192 \u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
@@ -68,10 +68,10 @@ data:
     path: ds/2d/sparse/fenwick_tree.hpp
     title: "$2$ \u6B21\u5143 Fenwick Tree\uFF08\u758E\u3001\u30AF\u30A8\u30EA\u70B9\
       \u5148\u8AAD\u307F\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/fenwick_tree/fenwick_tree_01.hpp
     title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/fenwick_tree/inversion.hpp
     title: "\u8EE2\u5012\u6570"
   - icon: ':heavy_check_mark:'
@@ -121,13 +121,13 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/rectangle_sum.test.cpp
     title: verify/yosupo/rectangle_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_inversions_query.test.cpp
     title: verify/yosupo/static_range_inversions_query.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
     title: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
     title: verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
   - icon: ':x:'

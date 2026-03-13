@@ -38,7 +38,7 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/sparse/segtree.hpp
     title: "$2$ \u6B21\u5143\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\uFF08\u758E\u3001\
       \u30AF\u30A8\u30EA\u70B9\u5148\u8AAD\u307F\uFF09"
@@ -52,12 +52,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_set_range_composite.test.cpp
     title: verify/yosupo/point_set_range_composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
     title: verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/segtree/segtree.md
     document_title: "\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
@@ -735,7 +735,7 @@ data:
   requiredBy:
   - ds/2d/sparse/segtree.hpp
   timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/majority_voting.test.cpp
   - verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
