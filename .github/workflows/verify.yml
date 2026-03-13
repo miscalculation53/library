@@ -19,10 +19,10 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.12.0
+        python-version: '3.x'
 
     - name: Install dependencies
-      run: pip3 install -U online-judge-verify-helper
+      run: pip3 install -r requirements.txt
 
     - name: Set up Rust (1.70.0)
       run: |
