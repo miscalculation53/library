@@ -3,7 +3,7 @@
 #include "../../template/template_all_but_modint.hpp"
 
 #include "fps.hpp"
-#include "rational_sum.hpp"
+#include "../convolution/convolution_many.hpp"
 
 /**
  * @brief $\sum_{i} A_i^k$ の $k$ に関する列挙
@@ -16,8 +16,10 @@ FormalPowerSeries<mint> pow_sum(const vc<mint> &as, int m)
 {
   using F = FormalPowerSeries<mint>;
   const int n = as.size();
-  vc<pair<F, F>> fs(n);
-  rep(i, n) fs[i] = {{1}, {1, -as[i]}};
-  auto [p, q] = rational_sum(fs);
-  return (p.pre(m) * q.inv(m)).pre(m);
+  vc<F> fs(n);
+  repi(i, n) fs[i] = {1, -as[i]};
+  F f = convolution_many(fs);
+  f = -(f.log(m).diff());
+  f.insert(f.begin(), n);
+  return f;
 }
