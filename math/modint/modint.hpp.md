@@ -1,20 +1,20 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
   - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':x:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
   - icon: ':question:'
@@ -27,13 +27,13 @@ data:
   - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':x:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
   - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':x:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
@@ -50,7 +50,7 @@ data:
   - icon: ':x:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/convolution/convolution.hpp
     title: "\u7573\u307F\u8FBC\u307F"
   - icon: ':x:'
@@ -74,7 +74,7 @@ data:
   - icon: ':x:'
     path: math/fps/factorial.hpp
     title: "\u968E\u4E57"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/fps.hpp
     title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
   - icon: ':x:'
@@ -97,7 +97,7 @@ data:
   - icon: ':x:'
     path: math/fps/power_projection.hpp
     title: Power Projection
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/rational_sum.hpp
     title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
   - icon: ':x:'
@@ -112,7 +112,7 @@ data:
   - icon: ':x:'
     path: math/linalg/matrix_array.hpp
     title: "\u884C\u5217\uFF08array\uFF09"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/modint/sqrt_mod.hpp
     title: "mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839"
   - icon: ':warning:'
@@ -122,13 +122,13 @@ data:
     path: math/prime/large/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/prime/large/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
   - icon: ':x:'
     path: math/prime/large/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/prime/large/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
   - icon: ':x:'
@@ -142,25 +142,25 @@ data:
     path: template/template_all.hpp
     title: template/template_all.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/modpow.test.cpp
     title: verify/aoj/modpow.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/linear_sieve.test.cpp
     title: verify/mytest/linear_sieve.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/modint.test.cpp
     title: verify/mytest/modint.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/modint_set_map.test.cpp
     title: verify/mytest/modint_set_map.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/power_table.test.cpp
     title: verify/mytest/power_table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/rational_plus.test.cpp
     title: verify/mytest/rational_plus.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/and_or_convolution.test.cpp
     title: verify/yosupo/and_or_convolution.test.cpp
   - icon: ':x:'
@@ -417,7 +417,7 @@ data:
     title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/math/modint/modint.md
     document_title: modint (32 bit)
@@ -1208,7 +1208,7 @@ data:
   - math/convolution/convolution_many.hpp
   - math/convolution/convolution_ll.hpp
   timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/perm_cycle.test.cpp

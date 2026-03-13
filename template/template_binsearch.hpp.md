@@ -35,7 +35,7 @@ data:
   - icon: ':x:'
     path: bit/bit_reverse.hpp
     title: "\u30D3\u30C3\u30C8\u30EA\u30D0\u30FC\u30B9"
-  - icon: ':x:'
+  - icon: ':question:'
     path: bit/kth_bit.hpp
     title: "\u4E0B\u304B\u3089 $k$ \u756A\u76EE\u306E\u30D3\u30C3\u30C8\u3092\u53D6\
       \u5F97"
@@ -58,24 +58,24 @@ data:
     path: ds/2d/offline/static_rectangle_add_rectangle_sum.hpp
     title: "\u77E9\u5F62\u52A0\u7B97 \u2192 \u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/sparse/fenwick_tree.hpp
     title: "$2$ \u6B21\u5143 Fenwick Tree\uFF08\u758E\u3001\u30AF\u30A8\u30EA\u70B9\
       \u5148\u8AAD\u307F\uFF09"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/2d/sparse/segtree.hpp
     title: "$2$ \u6B21\u5143\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\uFF08\u758E\u3001\
       \u30AF\u30A8\u30EA\u70B9\u5148\u8AAD\u307F\uFF09"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/coordinate_compression.hpp
     title: "\u5EA7\u6A19\u5727\u7E2E"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/csr.hpp
     title: CSR
   - icon: ':x:'
     path: ds/cumulative_sum/cumulative_sum.hpp
     title: "$1$ \u6B21\u5143\u7D2F\u7A4D\u548C"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/cumulative_sum/cumulative_sum_2d.hpp
     title: "$2$ \u6B21\u5143\u7D2F\u7A4D\u548C"
   - icon: ':x:'
@@ -84,52 +84,52 @@ data:
   - icon: ':x:'
     path: ds/cumulative_sum/imos_2d.hpp
     title: "$2$ \u6B21\u5143 imos \u6CD5"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/default_map.hpp
     title: "\u30C7\u30D5\u30A9\u30EB\u30C8\u5024\u3064\u304D map"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/fenwick_tree/fenwick_tree.hpp
     title: Fenwick Tree
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/fenwick_tree/fenwick_tree_01.hpp
     title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/fenwick_tree/inversion.hpp
     title: "\u8EE2\u5012\u6570"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/fenwick_tree/range_add_point_get.hpp
     title: "\u533A\u9593\u52A0\u7B97\u4E00\u70B9\u53D6\u5F97"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/flat_map.hpp
     title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
       \u5408\u306E map"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/group_index.hpp
     title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
   - icon: ':x:'
     path: ds/mo.hpp
     title: Mo's algorithm
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/my_queue.hpp
     title: "\u81EA\u4F5C queue"
   - icon: ':x:'
     path: ds/offline_dynamic_connectivity.hpp
     title: "\u30AA\u30D5\u30E9\u30A4\u30F3\u30C0\u30A4\u30B3\u30CD\u306E\u30C6\u30AF\
       \u30CB\u30C3\u30AF"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/pbds_set.hpp
     title: "pb_ds \u306E set/multiset"
   - icon: ':x:'
     path: ds/query/point_set_range_frequency.hpp
     title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\u30D5\
       \u30E9\u30A4\u30F3\uFF09"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/safe_unordered_map.hpp
     title: "unordered_map \u306E\u5B89\u5168\u306A\u30CF\u30C3\u30B7\u30E5\u95A2\u6570"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/segtree/lazy_segtree.hpp
     title: "\u9045\u5EF6\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/segtree/segtree.hpp
     title: "\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
   - icon: ':warning:'
@@ -143,20 +143,20 @@ data:
     path: ds/sqrt_decomposition_range_sum.hpp
     title: "\u5E73\u65B9\u5206\u5272\u306B\u3088\u308B\u4E00\u70B9\u52A0\u7B97\u30FB\
       \u533A\u9593\u548C\u30AF\u30A8\u30EA $\\langle O(1), O(\\sqrt{N}) \\rangle$"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/static_range/block_sparse_table.hpp
     title: "\u30D6\u30ED\u30C3\u30AF\u5206\u5272 + (disjoint) sparse table"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/static_range/dc_range_prod.hpp
     title: "\u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\u30A8\
       \u30EA"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/static_range/disjoint_sparse_table.hpp
     title: Disjoint Sparse Table
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/static_range/linear_rmq.hpp
     title: "\u7DDA\u5F62 RMQ"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/static_range/sparse_table.hpp
     title: Sparse Table
   - icon: ':x:'
@@ -177,7 +177,7 @@ data:
   - icon: ':x:'
     path: graph/cliques.hpp
     title: "\u30AF\u30EA\u30FC\u30AF\u5217\u6319"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/connected_components.hpp
     title: "\u9023\u7D50\u6210\u5206\u3078\u306E\u5206\u89E3"
   - icon: ':warning:'
@@ -186,7 +186,7 @@ data:
   - icon: ':x:'
     path: graph/cycle_detection.hpp
     title: "\u30B5\u30A4\u30AF\u30EB\u691C\u51FA"
-  - icon: ':x:'
+  - icon: ':question:'
     path: graph/graph.hpp
     title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
   - icon: ':x:'
@@ -195,7 +195,7 @@ data:
   - icon: ':x:'
     path: graph/scc.hpp
     title: "\u5F37\u9023\u7D50\u6210\u5206\u5206\u89E3"
-  - icon: ':x:'
+  - icon: ':question:'
     path: graph/sssp.hpp
     title: "\u5358\u4E00\u59CB\u70B9\u6700\u77ED\u8DEF\u554F\u984C"
   - icon: ':warning:'
@@ -207,26 +207,26 @@ data:
   - icon: ':x:'
     path: graph/tree/rerooting.hpp
     title: "\u5168\u65B9\u4F4D\u6728 DP"
-  - icon: ':x:'
+  - icon: ':question:'
     path: graph/tree/rooted_tree.hpp
     title: "\u6839\u3064\u304D\u6728\u30AF\u30E9\u30B9"
   - icon: ':x:'
     path: graph/triangles.hpp
     title: "\u4E09\u89D2\u5F62\u5217\u6319"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: itertools/bit.hpp
     title: "\u90E8\u5206\u96C6\u5408\u30FB\u4E0A\u4F4D\u96C6\u5408\u5168\u63A2\u7D22"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: itertools/direct_product.hpp
     title: "\u76F4\u7A4D\u5168\u63A2\u7D22"
   - icon: ':warning:'
     path: itertools/partition.hpp
     title: "\u6574\u6570\u306E\u5206\u5272\u3092\u5168\u63A2\u7D22"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/acted_monoid/add_min.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u52A0\u7B97\u30FB\
       \u6700\u5C0F\u5024\u53D6\u5F97"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/acted_monoid/add_sum.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u52A0\u7B97\u30FB\
       \u548C\u53D6\u5F97"
@@ -234,21 +234,21 @@ data:
     path: math/algebra/acted_monoid/affine_sum.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u4E00\u6B21\u95A2\
       \u6570\u4F5C\u7528\u30FB\u548C\u53D6\u5F97"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/acted_monoid/upd_min.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u66F4\u65B0\u30FB\
       \u6700\u5C0F\u5024\u53D6\u5F97"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/acted_monoid/upd_sum.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u66F4\u65B0\u30FB\
       \u548C\u53D6\u5F97"
   - icon: ':x:'
     path: math/algebra/affine_function.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/algebra/algebra_basic_ops.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
       \ max\uFF09"
@@ -269,7 +269,7 @@ data:
   - icon: ':warning:'
     path: math/algebra/polynomial_ring.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u591A\u9805\u5F0F\u74B0\uFF09"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/convolution/convolution.hpp
     title: "\u7573\u307F\u8FBC\u307F"
   - icon: ':x:'
@@ -281,10 +281,10 @@ data:
   - icon: ':x:'
     path: math/convolution/convolution_many.hpp
     title: "\u591A\u9805\u5F0F\u306E\u7DCF\u7A4D"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/crt.hpp
     title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/extgcd.hpp
     title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
   - icon: ':x:'
@@ -302,7 +302,7 @@ data:
   - icon: ':x:'
     path: math/fps/factorial.hpp
     title: "\u968E\u4E57"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/fps.hpp
     title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
   - icon: ':x:'
@@ -325,7 +325,7 @@ data:
   - icon: ':x:'
     path: math/fps/power_projection.hpp
     title: Power Projection
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/rational_sum.hpp
     title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
   - icon: ':x:'
@@ -346,7 +346,7 @@ data:
   - icon: ':x:'
     path: math/linalg/matrix_mod2.hpp
     title: "\u884C\u5217\uFF08$\\mathbb{F}_2$\uFF09"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/modint/binomial.hpp
     title: "\u4E8C\u9805\u4FC2\u6570"
   - icon: ':x:'
@@ -355,28 +355,28 @@ data:
   - icon: ':x:'
     path: math/modint/inv_many.hpp
     title: "\u9006\u5143\u3092\u307E\u3068\u3081\u3066\u6C42\u3081\u308B"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/modint/modint.hpp
     title: modint (32 bit)
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/modint/modint32_internal.hpp
     title: math/modint/modint32_internal.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/modint/modint64.hpp
     title: modint (64 bit)
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/modint/modint64_internal.hpp
     title: math/modint/modint64_internal.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
   - icon: ':x:'
     path: math/modint/modint_div.hpp
     title: "\u96F6\u306E\u91CD\u8907\u5EA6\u3064\u304D modint"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/power_table.hpp
     title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/modint/sqrt_mod.hpp
     title: "mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839"
   - icon: ':warning:'
@@ -389,29 +389,29 @@ data:
     path: math/prime/large/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/prime/large/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
   - icon: ':x:'
     path: math/prime/large/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/prime/large/primality_test.hpp
     title: "\u7D20\u6570\u5224\u5B9A"
   - icon: ':x:'
     path: math/prime/large/zeta_mobius_divisor_multiple_large.hpp
     title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
       \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/prime/prime_power.hpp
     title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
   - icon: ':x:'
     path: math/prime/sieve/lcm_gcd_convolution.hpp
     title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/prime/sieve/linear_sieve.hpp
     title: "\u7DDA\u5F62\u7BE9"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/sieve/segmented_sieve.hpp
     title: "\u533A\u9593\u7BE9"
   - icon: ':x:'
@@ -427,10 +427,10 @@ data:
   - icon: ':x:'
     path: math/sbt.hpp
     title: Stern Brocot Tree
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/set/and_or_convolution.hpp
     title: "and/or \u7573\u307F\u8FBC\u307F"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/set/kronecker_power.hpp
     title: "\u30AF\u30ED\u30CD\u30C3\u30AB\u30FC\u51AA\u306E\u4F5C\u7528"
   - icon: ':x:'
@@ -440,24 +440,24 @@ data:
     path: math/set/xor_convolution.hpp
     title: "\u30A2\u30C0\u30DE\u30FC\u30EB\u5909\u63DB\u30FBxor \u7573\u307F\u8FBC\
       \u307F"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/set/zeta_mobius.hpp
     title: "\u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\u30B9\u5909\u63DB"
   - icon: ':warning:'
     path: random/bracket_sequence.hpp
     title: "\u6B63\u3057\u3044\u62EC\u5F27\u5217\u306E\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210"
-  - icon: ':x:'
+  - icon: ':question:'
     path: string/aho_corasick.hpp
     title: Aho Corasick
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: string/lcp_compare.hpp
     title: "\u90E8\u5206\u6587\u5B57\u5217\u306E\u4E00\u81F4\u5224\u5B9A \u2192 LCP\u3001\
       LCP \u2192 \u90E8\u5206\u6587\u5B57\u5217\u306E\u8F9E\u66F8\u9806\u6BD4\u8F03"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: string/rolling_hash.hpp
     title: Rolling Hash
-  - icon: ':x:'
+  - icon: ':question:'
     path: string/trie.hpp
     title: trie
   - icon: ':warning:'
@@ -466,128 +466,128 @@ data:
   - icon: ':warning:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: template/template_main.hpp
     title: template/template_main.hpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/bellman_ford.test.cpp
     title: verify/aoj/bellman_ford.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/bfs.test.cpp
     title: verify/aoj/bfs.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/bfs01.test.cpp
     title: verify/aoj/bfs01.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/connected_components.test.cpp
     title: verify/aoj/connected_components.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/csr.test.cpp
     title: verify/aoj/csr.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/cumulative_sum_2d.test.cpp
     title: verify/aoj/cumulative_sum_2d.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/extgcd.test.cpp
     title: verify/aoj/extgcd.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/inversion.test.cpp
     title: verify/aoj/inversion.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/modpow.test.cpp
     title: verify/aoj/modpow.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/my_queue.test.cpp
     title: verify/aoj/my_queue.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/range_add_point_get.test.cpp
     title: verify/aoj/range_add_point_get.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/range_add_range_min.test.cpp
     title: verify/aoj/range_add_range_min.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/range_add_range_sum.test.cpp
     title: verify/aoj/range_add_range_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/range_upd_range_min.test.cpp
     title: verify/aoj/range_upd_range_min.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/range_upd_range_sum.test.cpp
     title: verify/aoj/range_upd_range_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/rooted_tree_from_edges.test.cpp
     title: verify/aoj/rooted_tree_from_edges.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/rooted_tree_from_parent.test.cpp
     title: verify/aoj/rooted_tree_from_parent.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/segmented_sieve.test.cpp
     title: verify/aoj/segmented_sieve.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/zeta_general.test.cpp
     title: verify/aoj/zeta_general.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/default_map.test.cpp
     title: verify/mytest/default_map.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/fenwick_tree_set.test.cpp
     title: verify/mytest/fenwick_tree_set.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/itertools_bit.test.cpp
     title: verify/mytest/itertools_bit.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/itertools_direct_product.test.cpp
     title: verify/mytest/itertools_direct_product.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/linear_sieve.test.cpp
     title: verify/mytest/linear_sieve.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/modint.test.cpp
     title: verify/mytest/modint.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/modint64.test.cpp
     title: verify/mytest/modint64.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/modint_set_map.test.cpp
     title: verify/mytest/modint_set_map.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/pbds_set.test.cpp
     title: verify/mytest/pbds_set.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/power_table.test.cpp
     title: verify/mytest/power_table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/rational_plus.test.cpp
     title: verify/mytest/rational_plus.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/rmq.test.cpp
     title: verify/mytest/rmq.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/mytest/rolling_hash.test.cpp
     title: verify/mytest/rolling_hash.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/mytest/template_binsearch.test.cpp
     title: verify/mytest/template_binsearch.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/2d_fenwick_tree.test.cpp
     title: verify/yosupo/2d_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/2d_segtree.test.cpp
     title: verify/yosupo/2d_segtree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/aho_corasick.test.cpp
     title: verify/yosupo/aho_corasick.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/and_or_convolution.test.cpp
     title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/aplusb.test.cpp
     title: verify/yosupo/aplusb.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/associative_array_flat_map.test.cpp
     title: verify/yosupo/associative_array_flat_map.test.cpp
   - icon: ':x:'
