@@ -50,7 +50,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/associative_array_flat_map.test.cpp
     title: verify/yosupo/associative_array_flat_map.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/associative_array_lower_bound.test.cpp
     title: verify/yosupo/associative_array_lower_bound.test.cpp
   - icon: ':x:'
