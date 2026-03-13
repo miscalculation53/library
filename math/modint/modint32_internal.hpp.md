@@ -71,17 +71,17 @@ data:
   - icon: ':question:'
     path: math/fps/fps.hpp
     title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/interpolation.hpp
     title: "\u591A\u9805\u5F0F\u88DC\u9593"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/interpolation_geo.hpp
     title: "\u591A\u9805\u5F0F\u88DC\u9593\uFF08\u8A55\u4FA1\u70B9\u304C\u7B49\u6BD4\
       \u6570\u5217\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/multipoint_evaluation.hpp
     title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/multipoint_evaluation_geo.hpp
     title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1\uFF08\u8A55\u4FA1\u70B9\
       \u304C\u7B49\u6BD4\u6570\u5217\uFF09"
@@ -97,7 +97,7 @@ data:
   - icon: ':question:'
     path: math/fps/shift_of_sampling_points.hpp
     title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/taylor_shift.hpp
     title: Taylor Shift
   - icon: ':question:'
@@ -121,14 +121,14 @@ data:
   - icon: ':warning:'
     path: math/modint/template_modint.hpp
     title: math/modint/template_modint.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/prime/large/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
   - icon: ':question:'
     path: math/prime/large/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/prime/large/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
   - icon: ':question:'
@@ -310,46 +310,46 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_set_range_composite_large_array.test.cpp
     title: verify/yosupo/point_set_range_composite_large_array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_div.test.cpp
     title: verify/yosupo/poly_div.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_interpolation.test.cpp
     title: verify/yosupo/poly_interpolation.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_interpolation_geo.test.cpp
     title: verify/yosupo/poly_interpolation_geo.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_multipoint_evaluation.test.cpp
     title: verify/yosupo/poly_multipoint_evaluation.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
     title: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_shift_of_sampling_points.test.cpp
     title: verify/yosupo/poly_shift_of_sampling_points.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_taylor_shift.test.cpp
     title: verify/yosupo/poly_taylor_shift.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/polynomial_taylor_shift.test.cpp
     title: verify/yosupo/polynomial_taylor_shift.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root.test.cpp
     title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root_min.test.cpp
     title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/queue_operate_all_composite.test.cpp
     title: verify/yosupo/queue_operate_all_composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/range_affine_range.sum.test.cpp
     title: verify/yosupo/range_affine_range.sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/retooting.test.cpp
     title: verify/yosupo/retooting.test.cpp
   - icon: ':x:'

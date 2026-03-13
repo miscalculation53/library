@@ -19,7 +19,7 @@ data:
   - icon: ':question:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/prime/large/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
@@ -70,10 +70,10 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root.test.cpp
     title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root_min.test.cpp
     title: verify/yosupo/primitive_root_min.test.cpp
   - icon: ':x:'
@@ -84,7 +84,7 @@ data:
     title: verify/yukicoder/order_mod_euler_phi.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/math/prime/large/order_primitive_root.md
     document_title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
@@ -1068,7 +1068,7 @@ data:
   path: math/prime/large/order_primitive_root.hpp
   requiredBy: []
   timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yukicoder/order_mod_carmichael.test.cpp
   - verify/yukicoder/order_mod_euler_phi.test.cpp

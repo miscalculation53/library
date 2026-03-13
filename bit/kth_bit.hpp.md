@@ -64,7 +64,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_set_range_frequency.test.cpp
     title: verify/yosupo/point_set_range_frequency.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
     title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
   - icon: ':x:'

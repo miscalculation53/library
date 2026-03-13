@@ -1,11 +1,11 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/offline/point_add_rectangle_sum.hpp
     title: "\u70B9\u52A0\u7B97\u30FB\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\
       \u30F3\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/offline/rectangle_add_point_get.hpp
     title: "\u77E9\u5F62\u52A0\u7B97\u30FB\u70B9\u53D6\u5F97\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
@@ -63,9 +63,9 @@ data:
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/rectangle_add_point_get
@@ -979,7 +979,7 @@ data:
   path: verify/yosupo/rectangle_add_point_get.test.cpp
   requiredBy: []
   timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/rectangle_add_point_get.test.cpp
 layout: document

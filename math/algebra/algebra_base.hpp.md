@@ -38,11 +38,11 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/offline/point_add_rectangle_sum.hpp
     title: "\u70B9\u52A0\u7B97\u30FB\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\
       \u30F3\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/offline/rectangle_add_point_get.hpp
     title: "\u77E9\u5F62\u52A0\u7B97\u30FB\u70B9\u53D6\u5F97\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
@@ -102,7 +102,7 @@ data:
   - icon: ':question:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/affine_function.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
   - icon: ':question:'
@@ -283,16 +283,16 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_set_range_frequency.test.cpp
     title: verify/yosupo/point_set_range_frequency.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
     title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/queue_operate_all_composite.test.cpp
     title: verify/yosupo/queue_operate_all_composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/rectangle_add_point_get.test.cpp
     title: verify/yosupo/rectangle_add_point_get.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/rectangle_sum.test.cpp
     title: verify/yosupo/rectangle_sum.test.cpp
   - icon: ':x:'

@@ -53,7 +53,7 @@ data:
   - icon: ':x:'
     path: graph/tree/diameter.hpp
     title: "\u6728\u306E\u76F4\u5F84"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/rerooting.hpp
     title: "\u5168\u65B9\u4F4D\u6728 DP"
   - icon: ':question:'
@@ -99,7 +99,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/dijkstra.test.cpp
     title: verify/yosupo/dijkstra.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/retooting.test.cpp
     title: verify/yosupo/retooting.test.cpp
   - icon: ':x:'

@@ -56,7 +56,7 @@ data:
   - icon: ':question:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/scc.hpp
     title: "\u5F37\u9023\u7D50\u6210\u5206\u5206\u89E3"
   - icon: ':heavy_check_mark:'
@@ -68,7 +68,7 @@ data:
   - icon: ':x:'
     path: graph/tree/diameter.hpp
     title: "\u6728\u306E\u76F4\u5F84"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/rerooting.hpp
     title: "\u5168\u65B9\u4F4D\u6728 DP"
   - icon: ':question:'
@@ -120,10 +120,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/enumerate_triangles.test.cpp
     title: verify/yosupo/enumerate_triangles.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/retooting.test.cpp
     title: verify/yosupo/retooting.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/scc.test.cpp
     title: verify/yosupo/scc.test.cpp
   - icon: ':x:'

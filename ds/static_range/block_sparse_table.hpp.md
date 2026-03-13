@@ -4,7 +4,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: ds/static_range/disjoint_sparse_table.hpp
     title: Disjoint Sparse Table
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/static_range/sparse_table.hpp
     title: Sparse Table
   - icon: ':question:'

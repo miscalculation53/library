@@ -39,11 +39,11 @@ data:
     path: bit/kth_bit.hpp
     title: "\u4E0B\u304B\u3089 $k$ \u756A\u76EE\u306E\u30D3\u30C3\u30C8\u3092\u53D6\
       \u5F97"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/offline/point_add_rectangle_sum.hpp
     title: "\u70B9\u52A0\u7B97\u30FB\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\
       \u30F3\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/offline/rectangle_add_point_get.hpp
     title: "\u77E9\u5F62\u52A0\u7B97\u30FB\u70B9\u53D6\u5F97\uFF08\u30AA\u30D5\u30E9\
       \u30A4\u30F3\uFF09"
@@ -126,7 +126,7 @@ data:
   - icon: ':question:'
     path: ds/safe_unordered_map.hpp
     title: "unordered_map \u306E\u5B89\u5168\u306A\u30CF\u30C3\u30B7\u30E5\u95A2\u6570"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/segtree/lazy_segtree.hpp
     title: "\u9045\u5EF6\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
   - icon: ':question:'
@@ -156,7 +156,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: ds/static_range/linear_rmq.hpp
     title: "\u7DDA\u5F62 RMQ"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/static_range/sparse_table.hpp
     title: Sparse Table
   - icon: ':question:'
@@ -192,7 +192,7 @@ data:
   - icon: ':question:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/scc.hpp
     title: "\u5F37\u9023\u7D50\u6210\u5206\u5206\u89E3"
   - icon: ':heavy_check_mark:'
@@ -204,7 +204,7 @@ data:
   - icon: ':x:'
     path: graph/tree/diameter.hpp
     title: "\u6728\u306E\u76F4\u5F84"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/rerooting.hpp
     title: "\u5168\u65B9\u4F4D\u6728 DP"
   - icon: ':question:'
@@ -230,7 +230,7 @@ data:
     path: math/algebra/acted_monoid/add_sum.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u52A0\u7B97\u30FB\
       \u548C\u53D6\u5F97"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/acted_monoid/affine_sum.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u4E00\u6B21\u95A2\
       \u6570\u4F5C\u7528\u30FB\u548C\u53D6\u5F97"
@@ -242,7 +242,7 @@ data:
     path: math/algebra/acted_monoid/upd_sum.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u66F4\u65B0\u30FB\
       \u548C\u53D6\u5F97"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/algebra/affine_function.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
   - icon: ':question:'
@@ -305,17 +305,17 @@ data:
   - icon: ':question:'
     path: math/fps/fps.hpp
     title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/interpolation.hpp
     title: "\u591A\u9805\u5F0F\u88DC\u9593"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/interpolation_geo.hpp
     title: "\u591A\u9805\u5F0F\u88DC\u9593\uFF08\u8A55\u4FA1\u70B9\u304C\u7B49\u6BD4\
       \u6570\u5217\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/multipoint_evaluation.hpp
     title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/multipoint_evaluation_geo.hpp
     title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1\uFF08\u8A55\u4FA1\u70B9\
       \u304C\u7B49\u6BD4\u6570\u5217\uFF09"
@@ -331,7 +331,7 @@ data:
   - icon: ':question:'
     path: math/fps/shift_of_sampling_points.hpp
     title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/taylor_shift.hpp
     title: Taylor Shift
   - icon: ':question:'
@@ -352,7 +352,7 @@ data:
   - icon: ':x:'
     path: math/modint/binomial_table.hpp
     title: "\u4E8C\u9805\u4FC2\u6570\u30C6\u30FC\u30D6\u30EB"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/inv_many.hpp
     title: "\u9006\u5143\u3092\u307E\u3068\u3081\u3066\u6C42\u3081\u308B"
   - icon: ':question:'
@@ -385,14 +385,14 @@ data:
   - icon: ':warning:'
     path: math/modint/template_modint.hpp
     title: math/modint/template_modint.hpp
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/prime/large/euler_phi_carmichael.hpp
     title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
       \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
   - icon: ':question:'
     path: math/prime/large/factorize.hpp
     title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/prime/large/order_primitive_root.hpp
     title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
   - icon: ':question:'
@@ -421,10 +421,10 @@ data:
   - icon: ':x:'
     path: math/quadratic_equation_integer.hpp
     title: "\u4E8C\u6B21\u65B9\u7A0B\u5F0F\u306E\u6574\u6570\u89E3"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/quotients.hpp
     title: "\u5546\u5217\u6319"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/sbt.hpp
     title: Stern Brocot Tree
   - icon: ':heavy_check_mark:'
@@ -806,70 +806,70 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_set_range_frequency.test.cpp
     title: verify/yosupo/point_set_range_frequency.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_div.test.cpp
     title: verify/yosupo/poly_div.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_interpolation.test.cpp
     title: verify/yosupo/poly_interpolation.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_interpolation_geo.test.cpp
     title: verify/yosupo/poly_interpolation_geo.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_multipoint_evaluation.test.cpp
     title: verify/yosupo/poly_multipoint_evaluation.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
     title: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_shift_of_sampling_points.test.cpp
     title: verify/yosupo/poly_shift_of_sampling_points.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_taylor_shift.test.cpp
     title: verify/yosupo/poly_taylor_shift.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/polynomial_taylor_shift.test.cpp
     title: verify/yosupo/polynomial_taylor_shift.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
     title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/predecessor_problem_std_set.test.cpp
     title: verify/yosupo/predecessor_problem_std_set.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primality_test.test.cpp
     title: verify/yosupo/primality_test.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root.test.cpp
     title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/primitive_root_min.test.cpp
     title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/queue_operate_all_composite.test.cpp
     title: verify/yosupo/queue_operate_all_composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/quotients.test.cpp
     title: verify/yosupo/quotients.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/range_affine_range.sum.test.cpp
     title: verify/yosupo/range_affine_range.sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/rational_approximation.test.cpp
     title: verify/yosupo/rational_approximation.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/rectangle_add_point_get.test.cpp
     title: verify/yosupo/rectangle_add_point_get.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/rectangle_sum.test.cpp
     title: verify/yosupo/rectangle_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/retooting.test.cpp
     title: verify/yosupo/retooting.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/scc.test.cpp
     title: verify/yosupo/scc.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/sparse_table.test.cpp
     title: verify/yosupo/sparse_table.test.cpp
   - icon: ':x:'

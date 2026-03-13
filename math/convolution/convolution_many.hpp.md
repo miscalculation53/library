@@ -56,7 +56,7 @@ data:
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/interpolation.hpp
     title: "\u591A\u9805\u5F0F\u88DC\u9593"
   - icon: ':x:'
@@ -66,7 +66,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution_many.test.cpp
     title: verify/yosupo/convolution_many.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_interpolation.test.cpp
     title: verify/yosupo/poly_interpolation.test.cpp
   - icon: ':x:'
