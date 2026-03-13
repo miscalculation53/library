@@ -76,15 +76,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_pow_array.test.cpp
     title: verify/yosupo/matrix_pow_array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_product_array.test.cpp
     title: verify/yosupo/matrix_product_array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_solve_array.test.cpp
     title: verify/yosupo/matrix_solve_array.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/linalg/matrix_array.md
     document_title: "\u884C\u5217\uFF08array\uFF09"
@@ -1114,7 +1114,7 @@ data:
   path: math/linalg/matrix_array.hpp
   requiredBy: []
   timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/matrix_pow_array.test.cpp
   - verify/yosupo/matrix_solve_array.test.cpp

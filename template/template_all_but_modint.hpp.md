@@ -60,7 +60,7 @@ data:
     path: bit/kth_bit.hpp
     title: "\u4E0B\u304B\u3089 $k$ \u756A\u76EE\u306E\u30D3\u30C3\u30C8\u3092\u53D6\
       \u5F97"
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/2d/offline/point_add_rectangle_sum.hpp
     title: "\u70B9\u52A0\u7B97\u30FB\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\
       \u30F3\uFF09"
@@ -120,7 +120,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: ds/fenwick_tree/range_add_point_get.hpp
     title: "\u533A\u9593\u52A0\u7B97\u4E00\u70B9\u53D6\u5F97"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/flat_map.hpp
     title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
       \u5408\u306E map"
@@ -133,14 +133,14 @@ data:
   - icon: ':question:'
     path: ds/my_queue.hpp
     title: "\u81EA\u4F5C queue"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/offline_dynamic_connectivity.hpp
     title: "\u30AA\u30D5\u30E9\u30A4\u30F3\u30C0\u30A4\u30B3\u30CD\u306E\u30C6\u30AF\
       \u30CB\u30C3\u30AF"
   - icon: ':question:'
     path: ds/pbds_set.hpp
     title: "pb_ds \u306E set/multiset"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/query/point_set_range_frequency.hpp
     title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\u30D5\
       \u30E9\u30A4\u30F3\uFF09"
@@ -156,11 +156,11 @@ data:
   - icon: ':warning:'
     path: ds/segtree/segtree_segment.hpp
     title: "\u30BB\u30B0\u6728\u306E\u533A\u9593\u306B\u95A2\u308F\u308B\u7B97\u6570"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/segtree/sparse_segtree.hpp
     title: "\u5FC5\u8981\u306A\u3068\u3053\u308D\u3060\u3051\u4F5C\u308B\u30BB\u30B0\
       \u30E1\u30F3\u30C8\u6728"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/sqrt_decomposition_range_sum.hpp
     title: "\u5E73\u65B9\u5206\u5272\u306B\u3088\u308B\u4E00\u70B9\u52A0\u7B97\u30FB\
       \u533A\u9593\u548C\u30AF\u30A8\u30EA $\\langle O(1), O(\\sqrt{N}) \\rangle$"
@@ -183,7 +183,7 @@ data:
   - icon: ':question:'
     path: ds/swag.hpp
     title: SWAG
-  - icon: ':x:'
+  - icon: ':question:'
     path: ds/uf/uf.hpp
     title: UnionFind
   - icon: ':x:'
@@ -192,7 +192,7 @@ data:
   - icon: ':x:'
     path: ds/uf/uf_potential.hpp
     title: "\u30DD\u30C6\u30F3\u30B7\u30E3\u30EB\u3064\u304D UnionFind"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/uf/uf_undo.hpp
     title: "undo \u53EF\u80FD UnionFind"
   - icon: ':heavy_check_mark:'
@@ -361,10 +361,10 @@ data:
   - icon: ':question:'
     path: math/linalg/matrix.hpp
     title: "\u884C\u5217"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/linalg/matrix_array.hpp
     title: "\u884C\u5217\uFF08array\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/linalg/matrix_mod2.hpp
     title: "\u884C\u5217\uFF08$\\mathbb{F}_2$\uFF09"
   - icon: ':question:'
@@ -770,55 +770,55 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_pow_array.test.cpp
     title: verify/yosupo/matrix_pow_array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_product.test.cpp
     title: verify/yosupo/matrix_product.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_product_array.test.cpp
     title: verify/yosupo/matrix_product_array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_product_mod2.test.cpp
     title: verify/yosupo/matrix_product_mod2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_rank.test.cpp
     title: verify/yosupo/matrix_rank.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_rank_mod2.test.cpp
     title: verify/yosupo/matrix_rank_mod2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_solve.test.cpp
     title: verify/yosupo/matrix_solve.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_solve_array.test.cpp
     title: verify/yosupo/matrix_solve_array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/matrix_solve_mod2.test.cpp
     title: verify/yosupo/matrix_solve_mod2.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/offline_dynamic_connectivity.test.cpp
     title: verify/yosupo/offline_dynamic_connectivity.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/ordered_set.test.cpp
     title: verify/yosupo/ordered_set.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/ordered_set_fenwick_tree.test.cpp
     title: verify/yosupo/ordered_set_fenwick_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_add_range_sum.test.cpp
     title: verify/yosupo/point_add_range_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_add_range_sum_sqrt.test.cpp
     title: verify/yosupo/point_add_range_sum_sqrt.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_add_rectangle_sum.test.cpp
     title: verify/yosupo/point_add_rectangle_sum.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_set_range_composite.test.cpp
     title: verify/yosupo/point_set_range_composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_set_range_composite_large_array.test.cpp
     title: verify/yosupo/point_set_range_composite_large_array.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_set_range_frequency.test.cpp
     title: verify/yosupo/point_set_range_frequency.test.cpp
   - icon: ':x:'
