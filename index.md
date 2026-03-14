@@ -32,7 +32,7 @@ data:
         \u5F97"
   - name: ds/2d/offline
     pages:
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: ds/2d/offline/area_of_union_of_rectangles.hpp
       title: "\u9577\u65B9\u5F62\u306E\u548C\u96C6\u5408\u306E\u9762\u7A4D"
     - icon: ':heavy_check_mark:'
@@ -142,7 +142,7 @@ data:
         \u30E9\u30A4\u30F3\uFF09"
   - name: ds/segtree
     pages:
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: ds/segtree/lazy_segtree.hpp
       title: "\u9045\u5EF6\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
     - icon: ':heavy_check_mark:'
@@ -247,7 +247,7 @@ data:
       path: math/algebra/acted_monoid/add_min.hpp
       title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u52A0\u7B97\u30FB\
         \u6700\u5C0F\u5024\u53D6\u5F97"
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: math/algebra/acted_monoid/add_min_count.hpp
       title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u52A0\u7B97\u30FB\
         \u6700\u5C0F\u5024\u30FB\u6700\u5C0F\u5024\u306E\u500B\u6570\u53D6\u5F97"
@@ -515,46 +515,46 @@ data:
     - icon: ':warning:'
       path: template/template.cpp
       title: template/template.cpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: template/template_algo.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
         \u30E0\uFF09"
     - icon: ':warning:'
       path: template/template_all.hpp
       title: template/template_all.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: template/template_all_but_modint.hpp
       title: template/template_all_but_modint.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: template/template_binsearch.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: template/template_bit.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
         \uFF09"
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: template/template_dump.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: template/template_inout.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: template/template_main.hpp
       title: template/template_main.hpp
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: template/template_math.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: template/template_random.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
         \u6210\uFF09"
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: template/template_rep.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: template/template_types.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: template/template_vector.hpp
       title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   verificationCategories:
@@ -699,7 +699,7 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/aplusb.test.cpp
       title: verify/yosupo/aplusb.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/area_of_union_of_rectangles.test.cpp
       title: verify/yosupo/area_of_union_of_rectangles.test.cpp
     - icon: ':heavy_check_mark:'

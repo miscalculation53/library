@@ -1,53 +1,53 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/2d/offline/area_of_union_of_rectangles.hpp
     title: "\u9577\u65B9\u5F62\u306E\u548C\u96C6\u5408\u306E\u9762\u7A4D"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/area_of_union_of_rectangles.test.cpp
     title: verify/yosupo/area_of_union_of_rectangles.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/algebra/acted_monoid/add_min_count.md
     document_title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u52A0\u7B97\
@@ -693,7 +693,7 @@ data:
   requiredBy:
   - ds/2d/offline/area_of_union_of_rectangles.hpp
   timestamp: '2026-03-15 00:27:43+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/area_of_union_of_rectangles.test.cpp
 documentation_of: math/algebra/acted_monoid/add_min_count.hpp
