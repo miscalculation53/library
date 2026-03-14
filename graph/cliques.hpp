@@ -6,7 +6,7 @@
 
 /**
  * @brief クリーク列挙
- * @docs docs/graph/triangles.md
+ * @docs docs/graph/cliques.md
  */
 
 // すべての (空でない) クリーク vc<I> C に対して f(C) を実行
