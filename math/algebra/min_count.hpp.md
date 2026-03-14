@@ -4,40 +4,40 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/algebra/algebra_base.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -677,31 +677,31 @@ data:
     \ auto e1 = Gmul::e;\n  static constexpr auto inv = Gmul::inv;\n};\n#line 5 \"\
     math/algebra/min_count.hpp\"\n\n/**\n * @brief \u6700\u5C0F\u5024\u306E\u500B\u6570\
     \u3082\u6301\u3064\u30E2\u30CE\u30A4\u30C9\n * @docs docs/math/algebra/algebra_basic_ops.md\n\
-    \ */\n\ntemplate <class T, T infty = INF>\nstruct MonoidMinCount\n{\n  struct\
-    \ S\n  {\n    T mn;\n    int cnt;\n    S() {}\n    S(T mn, int cnt = 1) : mn(mn),\
-    \ cnt(cnt) {}\n  };\n  static constexpr S op(const S &a, const S &b)\n  {\n  \
-    \  if (a.mn < b.mn)\n      return a;\n    else if (a.mn > b.mn)\n      return\
-    \ b;\n    else\n      return {a.mn, a.cnt + b.cnt};\n  }\n  static constexpr S\
-    \ e() { return {infty, 0}; }\n};\ntemplate <class T, T infty = INF>\nstruct MonoidMaxCount\n\
-    {\n  struct S\n  {\n    T mx;\n    int cnt;\n    S() {}\n    S(T mx, int cnt =\
-    \ 1) : mx(mx), cnt(cnt) {}\n  };\n  static constexpr S op(const S &a, const S\
-    \ &b)\n  {\n    if (a.mn > b.mn)\n      return a;\n    else if (a.mn < b.mn)\n\
-    \      return b;\n    else\n      return {a.mn, a.cnt + b.cnt};\n  }\n  static\
-    \ constexpr S e() { return {-infty, 0}; }\n};\n"
+    \ */\n\ntemplate <class T, class U = ll, T infty = INF>\nstruct MonoidMinCount\n\
+    {\n  struct S\n  {\n    T mn;\n    U cnt;\n    S() {}\n    S(T mn, U cnt = 1)\
+    \ : mn(mn), cnt(cnt) {}\n  };\n  static constexpr S op(const S &a, const S &b)\n\
+    \  {\n    if (a.mn < b.mn)\n      return a;\n    else if (a.mn > b.mn)\n     \
+    \ return b;\n    else\n      return {a.mn, a.cnt + b.cnt};\n  }\n  static constexpr\
+    \ S e() { return {infty, 0}; }\n};\ntemplate <class T, class U = ll, T infty =\
+    \ INF>\nstruct MonoidMaxCount\n{\n  struct S\n  {\n    T mx;\n    U cnt;\n   \
+    \ S() {}\n    S(T mx, U cnt = 1) : mx(mx), cnt(cnt) {}\n  };\n  static constexpr\
+    \ S op(const S &a, const S &b)\n  {\n    if (a.mn > b.mn)\n      return a;\n \
+    \   else if (a.mn < b.mn)\n      return b;\n    else\n      return {a.mn, a.cnt\
+    \ + b.cnt};\n  }\n  static constexpr S e() { return {-infty, 0}; }\n};\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
     #include \"algebra_base.hpp\"\n\n/**\n * @brief \u6700\u5C0F\u5024\u306E\u500B\
     \u6570\u3082\u6301\u3064\u30E2\u30CE\u30A4\u30C9\n * @docs docs/math/algebra/algebra_basic_ops.md\n\
-    \ */\n\ntemplate <class T, T infty = INF>\nstruct MonoidMinCount\n{\n  struct\
-    \ S\n  {\n    T mn;\n    int cnt;\n    S() {}\n    S(T mn, int cnt = 1) : mn(mn),\
-    \ cnt(cnt) {}\n  };\n  static constexpr S op(const S &a, const S &b)\n  {\n  \
-    \  if (a.mn < b.mn)\n      return a;\n    else if (a.mn > b.mn)\n      return\
-    \ b;\n    else\n      return {a.mn, a.cnt + b.cnt};\n  }\n  static constexpr S\
-    \ e() { return {infty, 0}; }\n};\ntemplate <class T, T infty = INF>\nstruct MonoidMaxCount\n\
-    {\n  struct S\n  {\n    T mx;\n    int cnt;\n    S() {}\n    S(T mx, int cnt =\
-    \ 1) : mx(mx), cnt(cnt) {}\n  };\n  static constexpr S op(const S &a, const S\
-    \ &b)\n  {\n    if (a.mn > b.mn)\n      return a;\n    else if (a.mn < b.mn)\n\
-    \      return b;\n    else\n      return {a.mn, a.cnt + b.cnt};\n  }\n  static\
-    \ constexpr S e() { return {-infty, 0}; }\n};\n"
+    \ */\n\ntemplate <class T, class U = ll, T infty = INF>\nstruct MonoidMinCount\n\
+    {\n  struct S\n  {\n    T mn;\n    U cnt;\n    S() {}\n    S(T mn, U cnt = 1)\
+    \ : mn(mn), cnt(cnt) {}\n  };\n  static constexpr S op(const S &a, const S &b)\n\
+    \  {\n    if (a.mn < b.mn)\n      return a;\n    else if (a.mn > b.mn)\n     \
+    \ return b;\n    else\n      return {a.mn, a.cnt + b.cnt};\n  }\n  static constexpr\
+    \ S e() { return {infty, 0}; }\n};\ntemplate <class T, class U = ll, T infty =\
+    \ INF>\nstruct MonoidMaxCount\n{\n  struct S\n  {\n    T mx;\n    U cnt;\n   \
+    \ S() {}\n    S(T mx, U cnt = 1) : mx(mx), cnt(cnt) {}\n  };\n  static constexpr\
+    \ S op(const S &a, const S &b)\n  {\n    if (a.mn > b.mn)\n      return a;\n \
+    \   else if (a.mn < b.mn)\n      return b;\n    else\n      return {a.mn, a.cnt\
+    \ + b.cnt};\n  }\n  static constexpr S e() { return {-infty, 0}; }\n};\n"
   dependsOn:
   - template/template_all_but_modint.hpp
   - template/template_types.hpp
@@ -718,7 +718,7 @@ data:
   isVerificationFile: false
   path: math/algebra/min_count.hpp
   requiredBy: []
-  timestamp: '2026-03-14 04:11:27+09:00'
+  timestamp: '2026-03-15 00:27:43+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: math/algebra/min_count.hpp

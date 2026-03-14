@@ -22,43 +22,43 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/modint/modint_base.hpp
     title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_main.hpp
     title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -891,7 +891,7 @@ data:
     \ GraphDirected<Cost> &g)\n{\n  const int n = g.size(), m = g.num_of_edges();\n\
     \  vc<tuple<int, int, Cost>> uvw;\n  uvw.reserve(m);\n  fec(e : g.edges()) uvw.eb(e.to,\
     \ e.from, e.cost);\n  return GraphDirected<Cost>(n, uvw);\n}\n#line 6 \"graph/cliques.hpp\"\
-    \n\n/**\n * @brief \u30AF\u30EA\u30FC\u30AF\u5217\u6319\n * @docs docs/graph/triangles.md\n\
+    \n\n/**\n * @brief \u30AF\u30EA\u30FC\u30AF\u5217\u6319\n * @docs docs/graph/cliques.md\n\
     \ */\n\n// \u3059\u3079\u3066\u306E (\u7A7A\u3067\u306A\u3044) \u30AF\u30EA\u30FC\
     \u30AF vc<I> C \u306B\u5BFE\u3057\u3066 f(C) \u3092\u5B9F\u884C\n// \u30AF\u30EA\
     \u30FC\u30AF\u306E\u500B\u6570\u306F\u305F\u304B\u3060\u304B 2^{sqrt(2m)} \u500B\
@@ -976,7 +976,7 @@ data:
   isVerificationFile: true
   path: verify/yosupo/enumerate_cliques.test.cpp
   requiredBy: []
-  timestamp: '2026-03-14 04:11:27+09:00'
+  timestamp: '2026-03-14 23:47:49+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/enumerate_cliques.test.cpp

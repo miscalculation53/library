@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy:
@@ -36,6 +36,9 @@ data:
     path: bit/kth_bit.hpp
     title: "\u4E0B\u304B\u3089 $k$ \u756A\u76EE\u306E\u30D3\u30C3\u30C8\u3092\u53D6\
       \u5F97"
+  - icon: ':x:'
+    path: ds/2d/offline/area_of_union_of_rectangles.hpp
+    title: "\u9577\u65B9\u5F62\u306E\u548C\u96C6\u5408\u306E\u9762\u7A4D"
   - icon: ':heavy_check_mark:'
     path: ds/2d/offline/point_add_rectangle_sum.hpp
     title: "\u70B9\u52A0\u7B97\u30FB\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\
@@ -123,7 +126,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: ds/safe_unordered_map.hpp
     title: "unordered_map \u306E\u5B89\u5168\u306A\u30CF\u30C3\u30B7\u30E5\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: ds/segtree/lazy_segtree.hpp
     title: "\u9045\u5EF6\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
   - icon: ':heavy_check_mark:'
@@ -223,6 +226,10 @@ data:
     path: math/algebra/acted_monoid/add_min.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u52A0\u7B97\u30FB\
       \u6700\u5C0F\u5024\u53D6\u5F97"
+  - icon: ':x:'
+    path: math/algebra/acted_monoid/add_min_count.hpp
+    title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u52A0\u7B97\u30FB\
+      \u6700\u5C0F\u5024\u30FB\u6700\u5C0F\u5024\u306E\u500B\u6570\u53D6\u5F97"
   - icon: ':heavy_check_mark:'
     path: math/algebra/acted_monoid/add_sum.hpp
     title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u52A0\u7B97\u30FB\
@@ -463,10 +470,10 @@ data:
   - icon: ':warning:'
     path: template/template_all.hpp
     title: template/template_all.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_main.hpp
     title: template/template_main.hpp
   _extendedVerifiedWith:
@@ -584,6 +591,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/aplusb.test.cpp
     title: verify/yosupo/aplusb.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/area_of_union_of_rectangles.test.cpp
+    title: verify/yosupo/area_of_union_of_rectangles.test.cpp
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/associative_array_flat_map.test.cpp
     title: verify/yosupo/associative_array_flat_map.test.cpp
@@ -1007,9 +1017,9 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
     title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/template/template_inout.md
     document_title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
@@ -1507,6 +1517,7 @@ data:
   - math/algebra/acted_monoid/upd_min.hpp
   - math/algebra/acted_monoid/upd_sum.hpp
   - math/algebra/acted_monoid/add_min.hpp
+  - math/algebra/acted_monoid/add_min_count.hpp
   - math/algebra/min_count.hpp
   - math/algebra/matmul22.hpp
   - math/algebra/algebra_base.hpp
@@ -1569,6 +1580,7 @@ data:
   - ds/sqrt_decomposition_range_sum.hpp
   - ds/2d/sparse/segtree.hpp
   - ds/2d/sparse/fenwick_tree.hpp
+  - ds/2d/offline/area_of_union_of_rectangles.hpp
   - ds/2d/offline/rectangle_sum.hpp
   - ds/2d/offline/static_rectangle_add_rectangle_sum.hpp
   - ds/2d/offline/point_add_rectangle_sum.hpp
@@ -1576,7 +1588,7 @@ data:
   - ds/2d/offline/static_rectangle_add_point_get.hpp
   - ds/coordinate_compression.hpp
   timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yukicoder/static_rectangle_add_point_get.test.cpp
   - verify/yukicoder/order_mod_carmichael.test.cpp
@@ -1697,6 +1709,7 @@ data:
   - verify/yosupo/matrix_product.test.cpp
   - verify/yosupo/matrix_det_mod2.test.cpp
   - verify/yosupo/matrix_pow.test.cpp
+  - verify/yosupo/area_of_union_of_rectangles.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
   - verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
   - verify/yosupo/matrix_solve_array.test.cpp

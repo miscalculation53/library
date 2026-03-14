@@ -7,40 +7,40 @@ data:
   - icon: ':heavy_check_mark:'
     path: graph/graph.hpp
     title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_all_but_modint.hpp
     title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_bit.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
       \uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_inout.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_random.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
       \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
   _extendedRequiredBy: []
@@ -52,7 +52,7 @@ data:
   _pathExtension: hpp
   _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
-    _deprecated_at_docs: docs/graph/triangles.md
+    _deprecated_at_docs: docs/graph/cliques.md
     document_title: "\u30AF\u30EA\u30FC\u30AF\u5217\u6319"
     links: []
   bundledCode: "#line 2 \"graph/cliques.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
@@ -759,7 +759,7 @@ data:
     \ rev_graph(const GraphDirected<Cost> &g)\n{\n  const int n = g.size(), m = g.num_of_edges();\n\
     \  vc<tuple<int, int, Cost>> uvw;\n  uvw.reserve(m);\n  fec(e : g.edges()) uvw.eb(e.to,\
     \ e.from, e.cost);\n  return GraphDirected<Cost>(n, uvw);\n}\n#line 6 \"graph/cliques.hpp\"\
-    \n\n/**\n * @brief \u30AF\u30EA\u30FC\u30AF\u5217\u6319\n * @docs docs/graph/triangles.md\n\
+    \n\n/**\n * @brief \u30AF\u30EA\u30FC\u30AF\u5217\u6319\n * @docs docs/graph/cliques.md\n\
     \ */\n\n// \u3059\u3079\u3066\u306E (\u7A7A\u3067\u306A\u3044) \u30AF\u30EA\u30FC\
     \u30AF vc<I> C \u306B\u5BFE\u3057\u3066 f(C) \u3092\u5B9F\u884C\n// \u30AF\u30EA\
     \u30FC\u30AF\u306E\u500B\u6570\u306F\u305F\u304B\u3060\u304B 2^{sqrt(2m)} \u500B\
@@ -786,7 +786,7 @@ data:
     \ v);\n        id[v] = -2;\n        break;\n      }\n    }\n  }\n}\n"
   code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
     #include \"graph.hpp\"\n\n/**\n * @brief \u30AF\u30EA\u30FC\u30AF\u5217\u6319\n\
-    \ * @docs docs/graph/triangles.md\n */\n\n// \u3059\u3079\u3066\u306E (\u7A7A\u3067\
+    \ * @docs docs/graph/cliques.md\n */\n\n// \u3059\u3079\u3066\u306E (\u7A7A\u3067\
     \u306A\u3044) \u30AF\u30EA\u30FC\u30AF vc<I> C \u306B\u5BFE\u3057\u3066 f(C) \u3092\
     \u5B9F\u884C\n// \u30AF\u30EA\u30FC\u30AF\u306E\u500B\u6570\u306F\u305F\u304B\u3060\
     \u304B 2^{sqrt(2m)} \u500B\n// \u8A08\u7B97\u91CF\u306F O(2^{sqrt(2m)}*n)\ntemplate\
@@ -828,7 +828,7 @@ data:
   isVerificationFile: false
   path: graph/cliques.hpp
   requiredBy: []
-  timestamp: '2026-03-14 04:11:27+09:00'
+  timestamp: '2026-03-14 23:47:49+09:00'
   verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/enumerate_cliques.test.cpp
@@ -839,30 +839,29 @@ redirect_from:
 - /library/graph/cliques.hpp.html
 title: "\u30AF\u30EA\u30FC\u30AF\u5217\u6319"
 ---
-## 三角形列挙
+## クリーク列挙
 
-単純無向グラフにおいて、相異なる $3$ 頂点 $u, v, w$ の組であって辺 $\{u, v\}, \{u, w\}, \{v, w\}$ がすべて存在するものを列挙する。このような辺の組は、（順番を入れ替えただけのものを同一視すると）たかだか $m\sqrt{2m}$ 個である。
+疎グラフの場合向け（密グラフの場合、補グラフを考えて独立集合の話にするくらいしかない？）。
 
-関連する典型：長さ $n$ 総和 $m$ の非負整数列から相異なるペアを $q$ 個とったとき、その min の和は $O(m\sqrt{q})$ である。証明：
+次のアルゴリズムを考える。
 
-- $B$ 以上の要素の個数は $\dfrac{m}{B}$ 個以下なので、両方 $B$ 以上のペアの個数は $\dfrac{m^2}{2B^2}$ 個以下で、その総和への寄与は $\dfrac{m^2}{2B}$ 以下。
-- 一方が $B$ 以下のペアは、総和への寄与が $qB$ 以下。
-- $\dfrac{m^2}{2B} = qB$ つまり $B = \dfrac{m}{\sqrt{2q}}$ ととると、総和 $m\sqrt{\dfrac{q}{2}}$ 以下。
+- 次数が $B$ 未満の頂点 $v$ があれば、$v$ を含むクリークはたかだか $2^B$ 個。これをすべて調べたのち、$v$ を削除して再帰的に同じことをする。
+- すべての頂点が次数 $B$ 以上ならば、$nB \leq 2m$ である。$2^n \leq 2^{\frac{2m}{B}}$ 個をすべて調べる。
 
-この事実を無向グラフの次数列（総和 $2m$）に対して適用することで $\displaystyle \sum_{\{u,v\} \in E} \min(\mathrm{deg}(u), \mathrm{deg}(v)) \leq m\sqrt{2m}$ がわかる。
+$B = \dfrac{2m}{B}$ つまり $B = \sqrt{2m}$ ととると、計算量は $O(2^{\sqrt{2m}} n)$ である。
 
-各辺に対して次数の小さいほう（$v$ とする）の頂点の隣接頂点 $w$ をすべて調べ、辺 $\{u, w\}$ が存在するかを判定することで解ける。判定に (unordered) set あるいはソートして lower_bound を用いる方法もあるが、$u$ が固まるような順で辺を見て、配列 $\mathrm{exists}_u[w]$ を持って更新するとそれが不要になる。各辺が次数の大小に従って向きづけされていると考えてちゃんと実装すると、実装が簡潔になる上に定数倍が数分の $1$ になる。
+またクリークの個数はたかだか $2^{\sqrt{2m}}$ 個らしい（なんでだっけ）。
 
-#### triangles
+#### cliques
 
 ```cpp
-void triangles(GraphUndirected<Cost> g, auto f)
+void cliques<I=ll>(GraphUndirected<Cost> g, auto f)
 ```
 
-条件を満たす $u,v,w$ の組すべてに対して関数 $f(u,v,w)$ を呼ぶ。ただし、$u,v,w$ の順序を入れ替えただけのものは同じ組とみなす。また、$u,v,w$ の順序は不定。
+$g$ の（空でない）クリーク $C$（頂点番号の vector `vc<I>` で表される）すべてに対して $f(C)$ を実行する。
 
 ##### 計算量
 
-`g` が単純グラフであるとして、
+$f(C)$ の計算量を $T$ として
 
-  - たかだか $m\sqrt{2m}$ 回の `f` 呼び出し
+- $O(2^{\sqrt{2m}} (n + T))$
