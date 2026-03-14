@@ -1,4 +1,4 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/associative_array"
+#define PROBLEM "https://judge.yosupo.jp/problem/area_of_union_of_rectangles"
 
 #define SINGLE_TESTCASE
 // #define MULTI_TESTCASE
