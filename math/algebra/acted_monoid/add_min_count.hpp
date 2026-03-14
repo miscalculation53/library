@@ -1,15 +1,16 @@
 #pragma once
 
-#include "../../template/template_all_but_modint.hpp"
-#include "algebra_base.hpp"
+#include "../../../template/template_all_but_modint.hpp"
 
 /**
- * @brief 最小値の個数も持つモノイド
- * @docs docs/math/algebra/algebra_basic_ops.md
+ * @brief 作用つきモノイド：加算・最小値・最小値の個数取得
+ * @docs docs/math/algebra/acted_monoid/add_min_count.md
  */
 
+// T: 値 (mn) の型
+// U: 個数 (cnt) の型
 template <class T, class U = ll, T infty = INF>
-struct MonoidMinCount
+struct ActedMonoidAddMinCount
 {
   struct S
   {
@@ -28,9 +29,16 @@ struct MonoidMinCount
       return {a.mn, a.cnt + b.cnt};
   }
   static constexpr S e() { return {infty, 0}; }
+  using F = T;
+  static constexpr S mapping(F f, S x) { return {f + x.mn, x.cnt}; }
+  static constexpr F composition(F f, F g) { return f + g; }
+  static constexpr F id() { return {}; }
 };
+
+// T: 値 (mn) の型
+// U: 個数 (cnt) の型
 template <class T, class U = ll, T infty = INF>
-struct MonoidMaxCount
+struct ActedMonoidAddMaxCount
 {
   struct S
   {
@@ -49,4 +57,8 @@ struct MonoidMaxCount
       return {a.mn, a.cnt + b.cnt};
   }
   static constexpr S e() { return {-infty, 0}; }
+  using F = T;
+  static constexpr S mapping(F f, S x) { return {f + x.mx, x.cnt}; }
+  static constexpr F composition(F f, F g) { return f + g; }
+  static constexpr F id() { return {}; }
 };
