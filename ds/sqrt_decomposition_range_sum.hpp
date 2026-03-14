@@ -28,7 +28,11 @@ public:
     repi(bid, block.size())
     {
       const int l = bid * B, r = min(n, (bid + 1) * B);
-      repi(i, l, r) block[bid] = G::op(block[bid], dat[i]);
+      repi(i, l, r)
+      {
+        auto &b = block[bid];
+        b = G::op(b, dat[i]);
+      }
     }
   }
 
@@ -38,22 +42,32 @@ public:
   void add(int p, const S &x)
   {
     const int bid = p / B;
-    block[bid] = G::op(block[bid], x);
-    dat[p] = G::op(dat[p], x);
+    auto &b = block[bid], &d = dat[p];
+    b = G::op(b, x);
+    d = G::op(d, x);
   }
   // 群であることが必要
-  void set(int p, const S &x) { add(p, G::op(G::inv(get(p))), x); }
+  void set(int p, const S &x)
+  {
+    const int bid = p / B;
+    auto &b = block[bid], &d = dat[p];
+    b = G::op(b, G::op(G::inv(d), x));
+    d = x;
+  }
   // モノイドでよい
   S sum(int l, int r) const
   {
+    assert(0 <= l && l <= r && r <= n);
     S sm = G::e();
-    int i = l;
-    for (; i < r && i % B != 0; i++)
-      sm = G::op(sm, dat[i]);
-    for (int j = i / B; i + B <= r; j++, i += B)
-      sm = G::op(sm, block[j]);
-    for (; i < r; i++)
-      sm = G::op(sm, dat[i]);
+    int bl = divceil(l, B), br = divfloor(r, B);
+    if (bl >= br)
+      repi(i, l, r) sm = G::op(sm, dat[i]);
+    else
+    {
+      repi(i, l, bl * B) sm = G::op(sm, dat[i]);
+      repi(j, bl, br) sm = G::op(sm, block[j]);
+      repi(i, br * B, r) sm = G::op(sm, dat[i]);
+    }
     return sm;
   }
 };
