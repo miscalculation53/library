@@ -44,6 +44,7 @@
 "verify/yosupo/aho_corasick.test.cpp": "2026-03-14 04:11:27 +0900",
 "verify/yosupo/and_or_convolution.test.cpp": "2026-03-14 04:11:27 +0900",
 "verify/yosupo/aplusb.test.cpp": "2026-03-14 04:11:27 +0900",
+"verify/yosupo/area_of_union_of_rectangles.test.cpp": "2026-03-15 00:39:35 +0900",
 "verify/yosupo/associative_array_flat_map.test.cpp": "2026-03-14 04:11:27 +0900",
 "verify/yosupo/associative_array_lower_bound.test.cpp": "2026-03-14 04:11:27 +0900",
 "verify/yosupo/binomial.test.cpp": "2026-03-14 04:11:27 +0900",
