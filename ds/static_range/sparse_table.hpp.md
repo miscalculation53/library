@@ -72,7 +72,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/lca_euler_tour.test.cpp
     title: verify/yosupo/lca_euler_tour.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/linear_rmq.test.cpp
     title: verify/yosupo/linear_rmq.test.cpp
   - icon: ':x:'
