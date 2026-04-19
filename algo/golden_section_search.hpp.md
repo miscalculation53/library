@@ -1,42 +1,6 @@
 ---
 data:
-  _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: template/template_algo.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
-      \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_all_but_modint.hpp
-    title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_binsearch.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_bit.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
-      \uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_dump.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_inout.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_math.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_random.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
-      \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_rep.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_types.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_vector.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: false
@@ -84,27 +48,37 @@ data:
     \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
     #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\
     \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
-    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
-    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
-    \ docs/template/template_math.md\n */\n\ntemplate <class T, class U>\ninline bool\
-    \ chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate <class T,\
-    \ class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true : false;\
-    \ }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T divfloor(U\
-    \ a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divceil(U a, V b) { return\
-    \ T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll,\
-    \ class U, class V>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
-    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V>\ninline\
-    \ constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
-    template <class T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b\
-    \ >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
-    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
-    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
-    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
-    \ T = ll, class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a\
-    \ >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m)\
-    \ / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\n\
-    T mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
+    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n#line\
+    \ 2 \"utils/is_integral_ext.hpp\"\n\n#line 4 \"utils/is_integral_ext.hpp\"\n\n\
+    /**\n * @brief $128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\
+    \u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n */\n\ntemplate <class\
+    \ T>\nconstexpr bool is_integral_ext = is_integral_v<T> || is_same_v<T, i128>\
+    \ || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr bool is_signed_ext =\
+    \ is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class T>\nconstexpr bool\
+    \ is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;\n#line 14 \"template/template_math.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
+    \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
+    inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
+    \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divfloor(U a, V b) { return T(a)\
+    \ / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class\
+    \ U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\n\
+    inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V, typename\
+    \ = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\ninline constexpr T\
+    \ safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
+    \ T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a\
+    \ < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while\
+    \ (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n\
+    \      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll,\
+    \ class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0\
+    \ && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) /\
+    \ T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT\
+    \ mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
     \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
     \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
     \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
@@ -579,18 +553,18 @@ data:
     \ &add) { for (auto &vi : v) vi += add; }\ntemplate <class T, class Add>\nvoid\
     \ offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto &vij : vi)\
     \ vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E -----\ntemplate <class\
-    \ T, const size_t m>\narray<vc<T>, m> top(const vc<array<T, m>> &vt)\n{\n  const\
+    \ T, const size_t m>\narray<vc<T>, m> unzip(const vc<array<T, m>> &vt)\n{\n  const\
     \ size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t\
     \ i = 0; i < n; i++)\n    for (size_t j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n\
-    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> top(const\
+    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> zip(const\
     \ array<vc<T>, m> &tv)\n{\n  if (tv.empty()) return {};\n  const size_t n = tv[0].size();\n\
     \  vc<array<T, m>> vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size()\
     \ == n);\n    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n\
-    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const\
+    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> unzip(const\
     \ vc<pair<T, U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>>\
     \ tv;\n  tv.first.resize(n), tv.second.resize(n);\n  for (size_t i = 0; i < n;\
     \ i++)\n    tie(tv.first[i], tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate\
-    \ <class T, class U>\nvc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
+    \ <class T, class U>\nvc<pair<T, U>> zip(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
     \ size_t n = tv.first.size();\n  assert(n == tv.second.size());\n  vc<pair<T,\
     \ U>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i],\
     \ tv.second[i]);\n  return vt;\n}\n\nnamespace internal\n{\n\ntemplate <size_t...\
@@ -598,17 +572,18 @@ data:
     \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\n\ntemplate <size_t...\
     \ I, class Tp>\nauto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t\
     \ index)\n{ return make_tuple(get<I>(tv)[index]...); }\n\n};\n\ntemplate <class...\
-    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
+    \ Ts>\nauto unzip(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
     \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
     \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    internal::vt_to_tv_impl(tv, vt[i],\
     \ make_index_sequence<tuple_size_v<decltype(tv)>>{}, i);\n  return tv;\n}\n\n\
-    template <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
+    template <class... Ts>\nauto zip(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 2 \"template/template_random.hpp\"\n\n#line 5 \"\
-    template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
+    \ vt;\n}\n\n#define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)\n#define ZIP(vt,\
+    \ ...) auto vt = zip(tuple{__VA_ARGS__})\n// ----------\n#line 2 \"template/template_random.hpp\"\
+    \n\n#line 5 \"template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
     \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
     \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
     \  return T(l) + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\
@@ -646,22 +621,11 @@ data:
     \ fy;\n  while (a + b != 2 * x)\n  {\n    ll y = a + b - x;\n    if (r < y or\
     \ (fy = f(y), comp(fx, fy)))\n      b = a, a = y;\n    else\n      a = x, x =\
     \ y, fx = fy;\n  }\n  return {x, fx};\n}\n"
-  dependsOn:
-  - template/template_all_but_modint.hpp
-  - template/template_types.hpp
-  - template/template_rep.hpp
-  - template/template_math.hpp
-  - template/template_vector.hpp
-  - template/template_algo.hpp
-  - template/template_binsearch.hpp
-  - template/template_bit.hpp
-  - template/template_inout.hpp
-  - template/template_dump.hpp
-  - template/template_random.hpp
+  dependsOn: []
   isVerificationFile: false
   path: algo/golden_section_search.hpp
   requiredBy: []
-  timestamp: '2026-03-14 04:11:27+09:00'
+  timestamp: '1970-01-01 00:00:00+00:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: algo/golden_section_search.hpp

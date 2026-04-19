@@ -1,31 +1,15 @@
 ---
 data:
-  _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: template/template_dump.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_inout.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_rep.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_types.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
-  attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
-    links:
-    - https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
-  bundledCode: "#line 1 \"verify/mytest/template_inout_top.test.cpp\"\n#define PROBLEM\
-    \ \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\n\n#line\
-    \ 2 \"template/template_inout.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+  _verificationStatusIcon: ':x:'
+  attributes: {}
+  bundledCode: "#line 1 \"verify/mytest/template_inout_unzip_zip.test.cpp\"\n#define\
+    \ PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
+    \n\n#line 2 \"template/template_inout.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
     \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
     \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
@@ -227,18 +211,18 @@ data:
     \ &add) { for (auto &vi : v) vi += add; }\ntemplate <class T, class Add>\nvoid\
     \ offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto &vij : vi)\
     \ vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E -----\ntemplate <class\
-    \ T, const size_t m>\narray<vc<T>, m> top(const vc<array<T, m>> &vt)\n{\n  const\
+    \ T, const size_t m>\narray<vc<T>, m> unzip(const vc<array<T, m>> &vt)\n{\n  const\
     \ size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t\
     \ i = 0; i < n; i++)\n    for (size_t j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n\
-    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> top(const\
+    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> zip(const\
     \ array<vc<T>, m> &tv)\n{\n  if (tv.empty()) return {};\n  const size_t n = tv[0].size();\n\
     \  vc<array<T, m>> vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size()\
     \ == n);\n    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n\
-    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const\
+    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> unzip(const\
     \ vc<pair<T, U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>>\
     \ tv;\n  tv.first.resize(n), tv.second.resize(n);\n  for (size_t i = 0; i < n;\
     \ i++)\n    tie(tv.first[i], tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate\
-    \ <class T, class U>\nvc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
+    \ <class T, class U>\nvc<pair<T, U>> zip(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
     \ size_t n = tv.first.size();\n  assert(n == tv.second.size());\n  vc<pair<T,\
     \ U>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i],\
     \ tv.second[i]);\n  return vt;\n}\n\nnamespace internal\n{\n\ntemplate <size_t...\
@@ -246,66 +230,63 @@ data:
     \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\n\ntemplate <size_t...\
     \ I, class Tp>\nauto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t\
     \ index)\n{ return make_tuple(get<I>(tv)[index]...); }\n\n};\n\ntemplate <class...\
-    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
+    \ Ts>\nauto unzip(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
     \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
     \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    internal::vt_to_tv_impl(tv, vt[i],\
     \ make_index_sequence<tuple_size_v<decltype(tv)>>{}, i);\n  return tv;\n}\n\n\
-    template <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
+    template <class... Ts>\nauto zip(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 5 \"verify/mytest/template_inout_top.test.cpp\"\
+    \ vt;\n}\n\n#define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)\n#define ZIP(vt,\
+    \ ...) auto vt = zip(tuple{__VA_ARGS__})\n// ----------\n#line 5 \"verify/mytest/template_inout_unzip_zip.test.cpp\"\
     \n\nvoid test1()\n{\n  vc<pair<int, string>> vt_god = {\n    {1, \"a\"},\n   \
     \ {2, \"bcd\"},\n    {3, \"ef\"}\n  };\n  pair<vc<int>, vc<string>> tv_god = {\n\
-    \    {1, 2, 3},\n    {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = top(vt_god);\n\
-    \  auto vt_ans = top(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
+    \    {1, 2, 3},\n    {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = unzip(vt_god);\n\
+    \  auto vt_ans = zip(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
     \  assert(vt_ans == vt_god);\n}\n\nvoid test2()\n{\n  vc<array<int, 5>> vt_god\
     \ = {\n    {1, 2, 3, 4, 5},\n    {6, 7, 8, 9, 10},\n    {11, 12, 13, 14, 15}\n\
     \  };\n  array<vc<int>, 5> tv_god = {{\n    {1, 6, 11},\n    {2, 7, 12},\n   \
-    \ {3, 8, 13},\n    {4, 9, 14},\n    {5, 10, 15}\n  }};\n\n  auto tv_ans = top(vt_god);\n\
-    \  auto vt_ans = top(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
+    \ {3, 8, 13},\n    {4, 9, 14},\n    {5, 10, 15}\n  }};\n\n  auto tv_ans = unzip(vt_god);\n\
+    \  auto vt_ans = zip(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
     \  assert(vt_ans == vt_god);\n}\n\nvoid test3()\n{\n  vc<tuple<int, int, int,\
     \ int, string>> vt_god = {\n    {1, 2, 3, 4, \"a\"},\n    {5, 6, 7, 8, \"bcd\"\
     },\n    {9, 10, 11, 12, \"ef\"}\n  };\n  tuple<vc<int>, vc<int>, vc<int>, vc<int>,\
     \ vc<string>> tv_god = {\n    {1, 5, 9},\n    {2, 6, 10},\n    {3, 7, 11},\n \
-    \   {4, 8, 12},\n    {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = top(vt_god);\n\
-    \  auto vt_ans = top(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
+    \   {4, 8, 12},\n    {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = unzip(vt_god);\n\
+    \  auto vt_ans = zip(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
     \  assert(vt_ans == vt_god);\n}\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n\
     \n  PRINT(\"Hello World\");\n}\n"
   code: "#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#include \"template/template_inout.hpp\"\n#include \"template/template_dump.hpp\"\
     \n\nvoid test1()\n{\n  vc<pair<int, string>> vt_god = {\n    {1, \"a\"},\n   \
     \ {2, \"bcd\"},\n    {3, \"ef\"}\n  };\n  pair<vc<int>, vc<string>> tv_god = {\n\
-    \    {1, 2, 3},\n    {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = top(vt_god);\n\
-    \  auto vt_ans = top(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
+    \    {1, 2, 3},\n    {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = unzip(vt_god);\n\
+    \  auto vt_ans = zip(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
     \  assert(vt_ans == vt_god);\n}\n\nvoid test2()\n{\n  vc<array<int, 5>> vt_god\
     \ = {\n    {1, 2, 3, 4, 5},\n    {6, 7, 8, 9, 10},\n    {11, 12, 13, 14, 15}\n\
     \  };\n  array<vc<int>, 5> tv_god = {{\n    {1, 6, 11},\n    {2, 7, 12},\n   \
-    \ {3, 8, 13},\n    {4, 9, 14},\n    {5, 10, 15}\n  }};\n\n  auto tv_ans = top(vt_god);\n\
-    \  auto vt_ans = top(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
+    \ {3, 8, 13},\n    {4, 9, 14},\n    {5, 10, 15}\n  }};\n\n  auto tv_ans = unzip(vt_god);\n\
+    \  auto vt_ans = zip(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
     \  assert(vt_ans == vt_god);\n}\n\nvoid test3()\n{\n  vc<tuple<int, int, int,\
     \ int, string>> vt_god = {\n    {1, 2, 3, 4, \"a\"},\n    {5, 6, 7, 8, \"bcd\"\
     },\n    {9, 10, 11, 12, \"ef\"}\n  };\n  tuple<vc<int>, vc<int>, vc<int>, vc<int>,\
     \ vc<string>> tv_god = {\n    {1, 5, 9},\n    {2, 6, 10},\n    {3, 7, 11},\n \
-    \   {4, 8, 12},\n    {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = top(vt_god);\n\
-    \  auto vt_ans = top(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
+    \   {4, 8, 12},\n    {\"a\", \"bcd\", \"ef\"}\n  };\n\n  auto tv_ans = unzip(vt_god);\n\
+    \  auto vt_ans = zip(tv_god);\n  dump(tv_ans, vt_ans);\n  assert(tv_ans == tv_god);\n\
     \  assert(vt_ans == vt_god);\n}\n\nint main()\n{\n  test1();\n  test2();\n  test3();\n\
-    \n  PRINT(\"Hello World\");\n}"
-  dependsOn:
-  - template/template_inout.hpp
-  - template/template_types.hpp
-  - template/template_rep.hpp
-  - template/template_dump.hpp
+    \n  PRINT(\"Hello World\");\n}\n"
+  dependsOn: []
   isVerificationFile: true
-  path: verify/mytest/template_inout_top.test.cpp
+  path: verify/mytest/template_inout_unzip_zip.test.cpp
   requiredBy: []
-  timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '1970-01-01 00:00:00+00:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
-documentation_of: verify/mytest/template_inout_top.test.cpp
+documentation_of: verify/mytest/template_inout_unzip_zip.test.cpp
 layout: document
 redirect_from:
-- /verify/verify/mytest/template_inout_top.test.cpp
-- /verify/verify/mytest/template_inout_top.test.cpp.html
-title: verify/mytest/template_inout_top.test.cpp
+- /verify/verify/mytest/template_inout_unzip_zip.test.cpp
+- /verify/verify/mytest/template_inout_unzip_zip.test.cpp.html
+title: verify/mytest/template_inout_unzip_zip.test.cpp
 ---

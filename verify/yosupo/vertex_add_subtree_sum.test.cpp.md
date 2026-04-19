@@ -1,251 +1,17 @@
 ---
 data:
-  _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: math/extgcd.hpp
-    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint32_internal.hpp
-    title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64_internal.hpp
-    title: math/modint/modint64_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint_base.hpp
-    title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_algo.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
-      \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_all_but_modint.hpp
-    title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_binsearch.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_bit.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
-      \uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_dump.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_inout.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_math.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_random.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
-      \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_rep.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_types.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_vector.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: math/fps/bmbm.hpp
-    title: BMBM
-  - icon: ':heavy_check_mark:'
-    path: math/fps/bostan_mori.hpp
-    title: "Bostan\u2013Mori"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/compositional_inverse.hpp
-    title: "\u9006\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/factorial.hpp
-    title: "\u968E\u4E57"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/fps.hpp
-    title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/interpolation.hpp
-    title: "\u591A\u9805\u5F0F\u88DC\u9593"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/interpolation_geo.hpp
-    title: "\u591A\u9805\u5F0F\u88DC\u9593\uFF08\u8A55\u4FA1\u70B9\u304C\u7B49\u6BD4\
-      \u6570\u5217\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/multipoint_evaluation.hpp
-    title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/multipoint_evaluation_geo.hpp
-    title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1\uFF08\u8A55\u4FA1\u70B9\
-      \u304C\u7B49\u6BD4\u6570\u5217\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/pow_sum.hpp
-    title: "$\\sum_{i} A_i^k$ \u306E $k$ \u306B\u95A2\u3059\u308B\u5217\u6319"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/power_projection.hpp
-    title: Power Projection
-  - icon: ':heavy_check_mark:'
-    path: math/fps/rational_sum.hpp
-    title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/shift_of_sampling_points.hpp
-    title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/taylor_shift.hpp
-    title: Taylor Shift
-  - icon: ':heavy_check_mark:'
-    path: math/modint/sqrt_mod.hpp
-    title: "mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/euler_phi_carmichael.hpp
-    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
-      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/order_primitive_root.hpp
-    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/primality_test.hpp
-    title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/zeta_mobius_divisor_multiple_large.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: string/rolling_hash.hpp
-    title: Rolling Hash
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/linear_sieve.test.cpp
-    title: verify/mytest/linear_sieve.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint64.test.cpp
-    title: verify/mytest/modint64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/rational_plus.test.cpp
-    title: verify/mytest/rational_plus.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/rolling_hash.test.cpp
-    title: verify/mytest/rolling_hash.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution_many.test.cpp
-    title: verify/yosupo/convolution_many.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorial.test.cpp
-    title: verify/yosupo/factorial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_compositional_inverse.test.cpp
-    title: verify/yosupo/fps_compositional_inverse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_exp.test.cpp
-    title: verify/yosupo/fps_exp.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_exp_sparse.test.cpp
-    title: verify/yosupo/fps_exp_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_inv.test.cpp
-    title: verify/yosupo/fps_inv.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_inv_sparse.test.cpp
-    title: verify/yosupo/fps_inv_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_log.test.cpp
-    title: verify/yosupo/fps_log.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_log_sparse.test.cpp
-    title: verify/yosupo/fps_log_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_pow.test.cpp
-    title: verify/yosupo/fps_pow.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_pow_sparse.test.cpp
-    title: verify/yosupo/fps_pow_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_sqrt.test.cpp
-    title: verify/yosupo/fps_sqrt.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_sqrt_sparse.test.cpp
-    title: verify/yosupo/fps_sqrt_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-    title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_div.test.cpp
-    title: verify/yosupo/poly_div.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_interpolation.test.cpp
-    title: verify/yosupo/poly_interpolation.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_interpolation_geo.test.cpp
-    title: verify/yosupo/poly_interpolation_geo.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_multipoint_evaluation.test.cpp
-    title: verify/yosupo/poly_multipoint_evaluation.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-    title: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_shift_of_sampling_points.test.cpp
-    title: verify/yosupo/poly_shift_of_sampling_points.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_taylor_shift.test.cpp
-    title: verify/yosupo/poly_taylor_shift.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/polynomial_taylor_shift.test.cpp
-    title: verify/yosupo/polynomial_taylor_shift.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root.test.cpp
-    title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root_min.test.cpp
-    title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/sqrt_mod.test.cpp
-    title: verify/yosupo/sqrt_mod.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/bmbm.test.cpp
-    title: verify/yukicoder/bmbm.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/factorial.test.cpp
-    title: verify/yukicoder/factorial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_carmichael.test.cpp
-    title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_euler_phi.test.cpp
-    title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/poly_rational_sum.test.cpp
-    title: verify/yukicoder/poly_rational_sum.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/pow_sum.test.cpp
-    title: verify/yukicoder/pow_sum.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  _isVerificationFailed: false
-  _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
-  attributes:
-    _deprecated_at_docs: docs/math/modint/modint64.md
-    document_title: modint (64 bit)
-    links: []
-  bundledCode: "#line 2 \"math/modint/modint64.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
+  _extendedDependsOn: []
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
+  _isVerificationFailed: true
+  _pathExtension: cpp
+  _verificationStatusIcon: ':x:'
+  attributes: {}
+  bundledCode: "#line 1 \"verify/yosupo/vertex_add_subtree_sum.test.cpp\"\n#define\
+    \ PROBLEM \"https://judge.yosupo.jp/problem/vertex_add_subtree_sum\"\n\n#define\
+    \ SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef\
+    \ LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n#endif\n\
+    \n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -283,27 +49,37 @@ data:
     \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
     #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\
     \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
-    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
-    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
-    \ docs/template/template_math.md\n */\n\ntemplate <class T, class U>\ninline bool\
-    \ chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate <class T,\
-    \ class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true : false;\
-    \ }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T divfloor(U\
-    \ a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divceil(U a, V b) { return\
-    \ T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll,\
-    \ class U, class V>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
-    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V>\ninline\
-    \ constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
-    template <class T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b\
-    \ >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
-    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
-    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
-    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
-    \ T = ll, class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a\
-    \ >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m)\
-    \ / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\n\
-    T mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
+    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n#line\
+    \ 2 \"utils/is_integral_ext.hpp\"\n\n#line 4 \"utils/is_integral_ext.hpp\"\n\n\
+    /**\n * @brief $128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\
+    \u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n */\n\ntemplate <class\
+    \ T>\nconstexpr bool is_integral_ext = is_integral_v<T> || is_same_v<T, i128>\
+    \ || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr bool is_signed_ext =\
+    \ is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class T>\nconstexpr bool\
+    \ is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;\n#line 14 \"template/template_math.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
+    \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
+    inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
+    \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divfloor(U a, V b) { return T(a)\
+    \ / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class\
+    \ U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\n\
+    inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V, typename\
+    \ = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\ninline constexpr T\
+    \ safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
+    \ T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a\
+    \ < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while\
+    \ (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n\
+    \      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll,\
+    \ class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0\
+    \ && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) /\
+    \ T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT\
+    \ mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
     \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
     \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
     \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
@@ -778,18 +554,18 @@ data:
     \ &add) { for (auto &vi : v) vi += add; }\ntemplate <class T, class Add>\nvoid\
     \ offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto &vij : vi)\
     \ vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E -----\ntemplate <class\
-    \ T, const size_t m>\narray<vc<T>, m> top(const vc<array<T, m>> &vt)\n{\n  const\
+    \ T, const size_t m>\narray<vc<T>, m> unzip(const vc<array<T, m>> &vt)\n{\n  const\
     \ size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t\
     \ i = 0; i < n; i++)\n    for (size_t j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n\
-    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> top(const\
+    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> zip(const\
     \ array<vc<T>, m> &tv)\n{\n  if (tv.empty()) return {};\n  const size_t n = tv[0].size();\n\
     \  vc<array<T, m>> vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size()\
     \ == n);\n    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n\
-    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const\
+    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> unzip(const\
     \ vc<pair<T, U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>>\
     \ tv;\n  tv.first.resize(n), tv.second.resize(n);\n  for (size_t i = 0; i < n;\
     \ i++)\n    tie(tv.first[i], tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate\
-    \ <class T, class U>\nvc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
+    \ <class T, class U>\nvc<pair<T, U>> zip(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
     \ size_t n = tv.first.size();\n  assert(n == tv.second.size());\n  vc<pair<T,\
     \ U>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i],\
     \ tv.second[i]);\n  return vt;\n}\n\nnamespace internal\n{\n\ntemplate <size_t...\
@@ -797,17 +573,18 @@ data:
     \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\n\ntemplate <size_t...\
     \ I, class Tp>\nauto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t\
     \ index)\n{ return make_tuple(get<I>(tv)[index]...); }\n\n};\n\ntemplate <class...\
-    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
+    \ Ts>\nauto unzip(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
     \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
     \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    internal::vt_to_tv_impl(tv, vt[i],\
     \ make_index_sequence<tuple_size_v<decltype(tv)>>{}, i);\n  return tv;\n}\n\n\
-    template <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
+    template <class... Ts>\nauto zip(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 2 \"template/template_random.hpp\"\n\n#line 5 \"\
-    template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
+    \ vt;\n}\n\n#define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)\n#define ZIP(vt,\
+    \ ...) auto vt = zip(tuple{__VA_ARGS__})\n// ----------\n#line 2 \"template/template_random.hpp\"\
+    \n\n#line 5 \"template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
     \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
     \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
     \  return T(l) + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\
@@ -825,308 +602,400 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 2 \"math/modint/modint64_internal.hpp\"\n\n#line 2 \"math/modint/modint32_internal.hpp\"\
-    \n\n#line 4 \"math/modint/modint32_internal.hpp\"\n\nnamespace internal\n{\n\n\
-    constexpr ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n    return\
-    \ 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while (n)\n\
-    \  {\n    if (n & 1)\n      r = (r * y) % _m;\n    y = (y * y) % _m;\n    n >>=\
-    \ 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int n)\n{\n  if\
-    \ (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n    return\
-    \ true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2\
-    \ == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll a : bases)\n\
-    \  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n      t <<= 1;\n\
-    \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
-    \ true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
-    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}\n#line 5 \"math/modint/modint64_internal.hpp\"\n\nnamespace internal\n\
-    {\n\nconstexpr ll powmod64_constexpr(ll x, ll n, ll m)\n{\n  if (m == 1)\n   \
-    \ return 0;\n  ull _m = (ull)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while\
-    \ (n)\n  {\n    u128 y128(y);\n    if (n & 1)\n      r = (y128 * r) % _m;\n  \
-    \  y = (y128 * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime64_constexpr(ll\
-    \ n)\n{\n  if (n <= INT_MAX)\n    return isprime32_constexpr(n);\n  if (n % 2\
-    \ == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2 == 0)\n    d /= 2;\n\
-    \  constexpr ll bases[7] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};\n\
-    \  for (ll a : bases)\n  {\n    ll t = d;\n    ll y = powmod64_constexpr(a, t,\
-    \ n);\n    while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = (u128(y)\
-    \ * y) % n;\n      t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return\
-    \ false;\n  }\n  return true;\n}\ntemplate <ll n>\nconstexpr bool isprime64 =\
-    \ isprime64_constexpr(n);\n\ninline constexpr ull inv64(ull a)\n{\n  ull x = a;\n\
-    \  while (a * x != 1) x *= 2 - a * x;\n  return x;\n}\n\nstruct montgomery64odd\n\
-    {\n  ull m, im, sq;\n  // sq = (2^64)^2 % m = (2^128 - m) % m = (-m % 2^128) %\
-    \ m\n  explicit montgomery64odd(ull m) : m(m), im(inv64(m)), sq(-u128(m) % m)\
-    \ {}\n  ull umod() const { return m; }\n  ull reduce(u128 x) const\n  {\n    auto\
-    \ t = (x + u128(m) * (-im * ull(x))) >> 64;\n    if (t >= m)\n      t -= m;\n\
-    \    return (ull)t;\n  }\n  ull inv_reduce(i128 v) const\n  { return reduce(u128(v\
-    \ % m + m) * sq); }\n};\n\n// https://www.mathenachia.blog/even-mod-montgomery-impl/\n\
-    struct montgomery64\n{\n  ull m, mx, imx, d, q;\n  uint b;\n\n  explicit montgomery64(ull\
-    \ m) : m(m)\n  {\n    b = countr_zero(m), mx = m >> b;  // m == 2^b * mx, mx is\
-    \ odd\n    imx = inv64(mx);\n    d = powmod64_constexpr((mx + 1) / 2, b, mx);\
-    \  // 2^{-b} mod mx\n    u128 sq = -u128(mx) % mx;  // 2^128 mod mx\n    q = (1\
-    \ + (((sq - 1) * d) << b)) % m;\n  }\n  ull umod() const { return m; }\n  ull\
-    \ reduce(u128 x) const\n  {\n    ull p = x & MASK(b);  // x mod 2^b\n    x = (x\
-    \ >> b) + p * d;\n    ull y = p << (64 - b);\n    auto t = (x + u128(mx) * (imx\
-    \ * (y - ull(x)))) >> (64 - b);\n    if (t >= m)\n    {\n      t -= m;\n     \
-    \ if (t >= m)\n        t -= m;\n    }\n    return (ull)t;\n  }\n  ull inv_reduce(i128\
-    \ v) const\n  { return reduce(u128(v % m + m) * q); }\n};\n\n}\n#line 2 \"math/modint/modint_base.hpp\"\
-    \n\n#line 4 \"math/modint/modint_base.hpp\"\n\nnamespace internal\n{\n\n#define\
-    \ REF static_cast<mint &>(*this)\n#define CREF static_cast<const mint &>(*this)\n\
-    #define VAL *static_cast<const mint *>(this)\n\ntemplate <class mint>\nstruct\
-    \ modint_base\n{\n  mint &operator+=(const mint &rhs)\n  {\n    mint &self = REF;\n\
-    \    self._v += rhs._v;\n    if (self._v >= self.umod())\n      self._v -= self.umod();\n\
-    \    return self;\n  }\n  mint &operator-=(const mint &rhs)\n  {\n    mint &self\
-    \ = REF;\n    self._v -= rhs._v;\n    if (self._v >= self.umod())\n      self._v\
-    \ += self.umod();\n    return self;\n  }\n  mint &operator/=(const mint &rhs)\n\
-    \  {\n    mint &self = REF;\n    return self = self * rhs.inv();\n  }\n\n  mint\
-    \ &operator++()\n  {\n    mint &self = REF;\n    self._v++;\n    if (self._v ==\
-    \ self.umod())\n      self._v = 0;\n    return self;\n  }\n  mint &operator--()\n\
-    \  {\n    mint &self = REF;\n    if (self._v == 0)\n      self._v = self.umod();\n\
-    \    self._v--;\n    return self;\n  }\n  mint operator++(int)\n  {\n    mint\
-    \ res = VAL;\n    ++REF;\n    return res;\n  }\n  mint operator--(int)\n  {\n\
-    \    mint res = VAL;\n    --REF;\n    return res;\n  }\n\n  mint operator+() const\
-    \ { return VAL; }\n  mint operator-() const { return mint() - VAL; }\n\n  mint\
-    \ pow(ll n) const\n  {\n    assert(n >= 0);\n    mint x = VAL, r = 1;\n    while\
-    \ (n)\n    {\n      if (n & 1)\n        r *= x;\n      x *= x;\n      n >>= 1;\n\
-    \    }\n    return r;\n  }\n\n  friend mint operator+(const mint &lhs, const mint\
-    \ &rhs)\n  { return mint(lhs) += rhs; }\n  friend mint operator-(const mint &lhs,\
-    \ const mint &rhs)\n  { return mint(lhs) -= rhs; }\n  friend mint operator*(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) *= rhs; }\n  friend mint operator/(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs) /= rhs; }\n  friend bool operator==(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs).eq(rhs); }\n  friend bool\
-    \ operator!=(const mint &lhs, const mint &rhs)\n  { return mint(lhs).neq(rhs);\
-    \ }\nprivate:\n  bool eq(const mint &rhs) { return REF._v == rhs._v; }\n  bool\
-    \ neq(const mint &rhs) { return REF._v != rhs._v; }\n};\n\n}\n\n#if defined LOCAL\
-    \ or not defined FAST_IO\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nistream &operator>>(istream &is, T &x)\n{\n  ll a;\n  is >> a;\n\
-    \  x = a;\n  return is;\n}\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nostream &operator<<(ostream &os, const T &x)\n{\n  os << x.val();\n\
-    \  return os;\n}\n#else\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nvoid rd1(T &x)\n{\n  ll a;\n  fastio::rd1(a);\n  x = a;\n}\n\
-    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nvoid wt1(const T &x) { fastio::wt1(x.val()); }\n#endif\n#line\
-    \ 2 \"math/extgcd.hpp\"\n\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\
-    \u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs\
-    \ docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\
-    \u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T =\
-    \ ll>\nconstexpr tuple<T, T, T> extgcd(T a, T b)\n{\n  if (a == 0 && b == 0)\n\
-    \    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  // a*x2 + b*y2 ==\
-    \ z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1, z2 = b;\n  while\
-    \ (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n    T q = z1 /\
-    \ z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1, y2) = make_pair(y2,\
-    \ y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q * z2);\n  }\n  if (z1\
-    \ < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1, y1};\n}\n#line 7\
-    \ \"math/modint/modint64.hpp\"\n\n/**\n * @brief modint (64 bit)\n * @docs docs/math/modint/modint64.md\n\
-    \ */\n\ntemplate <ll m>\nstruct static_modint64 : internal::modint_base<static_modint64<m>>\n\
-    {\n  using mint = static_modint64;\nprivate:\n  friend struct internal::modint_base<static_modint64<m>>;\n\
-    \  ull _v;\n  static constexpr ull umod() { return m; }\n  static constexpr bool\
-    \ prime = internal::isprime64<m>;\n\npublic:\n  static constexpr ll mod() { return\
-    \ m; }\n  static mint raw(ll v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  static_modint64() : _v(0) {}\n  template <class T>\n  static_modint64(T\
-    \ v)\n  {\n    if constexpr (is_unsigned_v<T>)\n    {\n      _v = (ull)(v % umod());\n\
-    \    }\n    else\n    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x < 0)\n\
-    \        x += umod();\n      _v = (ull)x;\n    }\n  }\n\n  ll val() const { return\
-    \ (ll)_v; }\n\n  mint& operator*=(const mint &rhs)\n  {\n    u128 z = _v;\n  \
-    \  z *= rhs._v;\n    _v = (ull)(z % umod());\n    return *this;\n  }\n\n  mint\
-    \ inv() const\n  {\n    if (prime)\n    {\n      assert(_v != 0);\n      return\
-    \ CREF.pow(umod() - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<ll>(_v,\
-    \ m);\n      assert(g == 1);\n      return x;\n    }\n  }\n};\n\ntemplate <int\
-    \ id>\nstruct dynamic_modint64_odd : internal::modint_base<dynamic_modint64_odd<id>>\n\
-    {\n  using mint = dynamic_modint64_odd;\nprivate:\n  friend struct internal::modint_base<dynamic_modint64_odd<id>>;\n\
-    \  ull _v; // montgomery expression\n  static internal::montgomery64odd mg;\n\
-    \  static ull umod() { return mg.umod(); }\n\npublic:\n  static ll mod() { return\
-    \ (ll)(mg.umod()); }\n  static void set_mod(ll m)\n  {\n    assert(m >= 1 && m\
-    \ % 2 == 1);\n    mg = internal::montgomery64odd(m);\n  }\n\n  dynamic_modint64_odd()\
-    \ : _v(0) {}\n  dynamic_modint64_odd(i128 v)\n  { _v = mg.inv_reduce(v); }\n\n\
-    \  ll val() const { return (ll)mg.reduce(_v); }\n\n  mint& operator*=(const mint\
-    \ &rhs)\n  {\n    _v = mg.reduce(u128(_v) * rhs._v);\n    return *this;\n  }\n\
-    \n  mint inv() const\n  {\n    auto [g, x, y] = extgcd<ll>(val(), mod());\n  \
-    \  assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::montgomery64odd\
-    \ dynamic_modint64_odd<id>::mg((1LL << 61) - 1);\n\ntemplate <int id>\nstruct\
-    \ dynamic_modint64 : internal::modint_base<dynamic_modint64<id>>\n{\n  using mint\
-    \ = dynamic_modint64;\nprivate:\n  friend struct internal::modint_base<dynamic_modint64<id>>;\n\
-    \  ull _v; // montgomery expression\n  static internal::montgomery64 mg;\n  static\
-    \ ull umod() { return mg.umod(); }\n\npublic:\n  static ll mod() { return (ll)(mg.umod());\
-    \ }\n  static void set_mod(ll m)\n  {\n    assert(m >= 1);\n    mg = internal::montgomery64(m);\n\
-    \  }\n\n  dynamic_modint64() : _v(0) {}\n  dynamic_modint64(i128 v)\n  { _v =\
-    \ mg.inv_reduce(v); }\n\n  ll val() const { return (ll)mg.reduce(_v); }\n\n  mint&\
-    \ operator*=(const mint &rhs)\n  {\n    _v = mg.reduce(u128(_v) * rhs._v);\n \
-    \   return *this;\n  }\n\n  mint inv() const\n  {\n    auto [g, x, y] = extgcd<ll>(val(),\
-    \ mod());\n    assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::montgomery64\
-    \ dynamic_modint64<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
-    \ << 61) - 1>;\nusing modint64_odd = dynamic_modint64_odd<-1>;\nusing modint64\
-    \ = dynamic_modint64<-1>;\n\ntemplate <class T>\nstruct is_static_modint64 : false_type\
-    \ {};\ntemplate <int m>\nstruct is_static_modint64<static_modint64<m>> : true_type\
-    \ {};\ntemplate <class T>\ninline constexpr bool is_static_modint64_v = is_static_modint64<T>::value;\n\
-    \ntemplate <class T>\nstruct is_dynamic_modint64 : false_type {};\ntemplate <int\
-    \ id>\nstruct is_dynamic_modint64<dynamic_modint64<id>> : true_type {};\ntemplate\
-    \ <class T>\ninline constexpr bool is_dynamic_modint64_v = is_dynamic_modint64<T>::value;\n\
-    \ntemplate <class T>\ninline constexpr bool is_modint64_v = is_static_modint64_v<T>\
-    \ || is_dynamic_modint64_v<T>;\n"
-  code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
-    #include \"modint64_internal.hpp\"\n#include \"modint_base.hpp\"\n#include \"\
-    ../extgcd.hpp\"\n\n/**\n * @brief modint (64 bit)\n * @docs docs/math/modint/modint64.md\n\
-    \ */\n\ntemplate <ll m>\nstruct static_modint64 : internal::modint_base<static_modint64<m>>\n\
-    {\n  using mint = static_modint64;\nprivate:\n  friend struct internal::modint_base<static_modint64<m>>;\n\
-    \  ull _v;\n  static constexpr ull umod() { return m; }\n  static constexpr bool\
-    \ prime = internal::isprime64<m>;\n\npublic:\n  static constexpr ll mod() { return\
-    \ m; }\n  static mint raw(ll v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  static_modint64() : _v(0) {}\n  template <class T>\n  static_modint64(T\
-    \ v)\n  {\n    if constexpr (is_unsigned_v<T>)\n    {\n      _v = (ull)(v % umod());\n\
-    \    }\n    else\n    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x < 0)\n\
-    \        x += umod();\n      _v = (ull)x;\n    }\n  }\n\n  ll val() const { return\
-    \ (ll)_v; }\n\n  mint& operator*=(const mint &rhs)\n  {\n    u128 z = _v;\n  \
-    \  z *= rhs._v;\n    _v = (ull)(z % umod());\n    return *this;\n  }\n\n  mint\
-    \ inv() const\n  {\n    if (prime)\n    {\n      assert(_v != 0);\n      return\
-    \ CREF.pow(umod() - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<ll>(_v,\
-    \ m);\n      assert(g == 1);\n      return x;\n    }\n  }\n};\n\ntemplate <int\
-    \ id>\nstruct dynamic_modint64_odd : internal::modint_base<dynamic_modint64_odd<id>>\n\
-    {\n  using mint = dynamic_modint64_odd;\nprivate:\n  friend struct internal::modint_base<dynamic_modint64_odd<id>>;\n\
-    \  ull _v; // montgomery expression\n  static internal::montgomery64odd mg;\n\
-    \  static ull umod() { return mg.umod(); }\n\npublic:\n  static ll mod() { return\
-    \ (ll)(mg.umod()); }\n  static void set_mod(ll m)\n  {\n    assert(m >= 1 && m\
-    \ % 2 == 1);\n    mg = internal::montgomery64odd(m);\n  }\n\n  dynamic_modint64_odd()\
-    \ : _v(0) {}\n  dynamic_modint64_odd(i128 v)\n  { _v = mg.inv_reduce(v); }\n\n\
-    \  ll val() const { return (ll)mg.reduce(_v); }\n\n  mint& operator*=(const mint\
-    \ &rhs)\n  {\n    _v = mg.reduce(u128(_v) * rhs._v);\n    return *this;\n  }\n\
-    \n  mint inv() const\n  {\n    auto [g, x, y] = extgcd<ll>(val(), mod());\n  \
-    \  assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::montgomery64odd\
-    \ dynamic_modint64_odd<id>::mg((1LL << 61) - 1);\n\ntemplate <int id>\nstruct\
-    \ dynamic_modint64 : internal::modint_base<dynamic_modint64<id>>\n{\n  using mint\
-    \ = dynamic_modint64;\nprivate:\n  friend struct internal::modint_base<dynamic_modint64<id>>;\n\
-    \  ull _v; // montgomery expression\n  static internal::montgomery64 mg;\n  static\
-    \ ull umod() { return mg.umod(); }\n\npublic:\n  static ll mod() { return (ll)(mg.umod());\
-    \ }\n  static void set_mod(ll m)\n  {\n    assert(m >= 1);\n    mg = internal::montgomery64(m);\n\
-    \  }\n\n  dynamic_modint64() : _v(0) {}\n  dynamic_modint64(i128 v)\n  { _v =\
-    \ mg.inv_reduce(v); }\n\n  ll val() const { return (ll)mg.reduce(_v); }\n\n  mint&\
-    \ operator*=(const mint &rhs)\n  {\n    _v = mg.reduce(u128(_v) * rhs._v);\n \
-    \   return *this;\n  }\n\n  mint inv() const\n  {\n    auto [g, x, y] = extgcd<ll>(val(),\
-    \ mod());\n    assert(g == 1);\n    return x;\n  }\n};\ntemplate <int id>\ninternal::montgomery64\
-    \ dynamic_modint64<id>::mg((1LL << 61) - 1);\n\nusing modint61 = static_modint64<(1LL\
-    \ << 61) - 1>;\nusing modint64_odd = dynamic_modint64_odd<-1>;\nusing modint64\
-    \ = dynamic_modint64<-1>;\n\ntemplate <class T>\nstruct is_static_modint64 : false_type\
-    \ {};\ntemplate <int m>\nstruct is_static_modint64<static_modint64<m>> : true_type\
-    \ {};\ntemplate <class T>\ninline constexpr bool is_static_modint64_v = is_static_modint64<T>::value;\n\
-    \ntemplate <class T>\nstruct is_dynamic_modint64 : false_type {};\ntemplate <int\
-    \ id>\nstruct is_dynamic_modint64<dynamic_modint64<id>> : true_type {};\ntemplate\
-    \ <class T>\ninline constexpr bool is_dynamic_modint64_v = is_dynamic_modint64<T>::value;\n\
-    \ntemplate <class T>\ninline constexpr bool is_modint64_v = is_static_modint64_v<T>\
-    \ || is_dynamic_modint64_v<T>;\n"
-  dependsOn:
-  - template/template_all_but_modint.hpp
-  - template/template_types.hpp
-  - template/template_rep.hpp
-  - template/template_math.hpp
-  - template/template_vector.hpp
-  - template/template_algo.hpp
-  - template/template_binsearch.hpp
-  - template/template_bit.hpp
-  - template/template_inout.hpp
-  - template/template_dump.hpp
-  - template/template_random.hpp
-  - math/modint/modint64_internal.hpp
-  - math/modint/modint32_internal.hpp
-  - math/modint/modint_base.hpp
-  - math/extgcd.hpp
-  isVerificationFile: false
-  path: math/modint/modint64.hpp
-  requiredBy:
-  - string/rolling_hash.hpp
-  - math/prime/large/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/large/euler_phi_carmichael.hpp
-  - math/prime/large/factorize.hpp
-  - math/prime/large/primality_test.hpp
-  - math/prime/large/order_primitive_root.hpp
-  - math/fps/bmbm.hpp
-  - math/fps/rational_sum.hpp
-  - math/fps/shift_of_sampling_points.hpp
-  - math/fps/power_projection.hpp
-  - math/fps/compositional_inverse.hpp
-  - math/fps/factorial.hpp
-  - math/fps/interpolation.hpp
-  - math/fps/multipoint_evaluation_geo.hpp
-  - math/fps/interpolation_geo.hpp
-  - math/fps/multipoint_evaluation.hpp
-  - math/fps/taylor_shift.hpp
-  - math/fps/pow_sum.hpp
-  - math/fps/bostan_mori.hpp
-  - math/fps/fps.hpp
-  - math/modint/sqrt_mod.hpp
-  timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/factorial.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yukicoder/poly_rational_sum.test.cpp
-  - verify/yukicoder/pow_sum.test.cpp
-  - verify/yukicoder/bmbm.test.cpp
-  - verify/mytest/modint64.test.cpp
-  - verify/mytest/rolling_hash.test.cpp
-  - verify/mytest/rational_plus.test.cpp
-  - verify/mytest/linear_sieve.test.cpp
-  - verify/yosupo/sqrt_mod.test.cpp
-  - verify/yosupo/fps_log_sparse.test.cpp
-  - verify/yosupo/poly_taylor_shift.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/poly_multipoint_evaluation.test.cpp
-  - verify/yosupo/poly_interpolation_geo.test.cpp
-  - verify/yosupo/poly_div.test.cpp
-  - verify/yosupo/fps_exp_sparse.test.cpp
-  - verify/yosupo/fps_sqrt_sparse.test.cpp
-  - verify/yosupo/polynomial_taylor_shift.test.cpp
-  - verify/yosupo/factorial.test.cpp
-  - verify/yosupo/fps_pow.test.cpp
-  - verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-  - verify/yosupo/fps_pow_sparse.test.cpp
-  - verify/yosupo/fps_inv.test.cpp
-  - verify/yosupo/poly_interpolation.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/convolution_many.test.cpp
-  - verify/yosupo/fps_inv_sparse.test.cpp
-  - verify/yosupo/fps_log.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - verify/yosupo/poly_shift_of_sampling_points.test.cpp
-  - verify/yosupo/fps_sqrt.test.cpp
-  - verify/yosupo/fps_exp.test.cpp
-  - verify/yosupo/fps_compositional_inverse.test.cpp
-documentation_of: math/modint/modint64.hpp
+    \ 17 \"verify/yosupo/vertex_add_subtree_sum.test.cpp\"\n\n#line 2 \"graph/tree/rooted_tree.hpp\"\
+    \n\n#line 4 \"graph/tree/rooted_tree.hpp\"\n\n/**\n * @brief \u6839\u3064\u304D\
+    \u6728\u30AF\u30E9\u30B9\uFF08HLD \u3082\u3059\u308B\uFF09\n * @docs docs/graph/tree/rooted_tree.md\n\
+    \ */\n\n// \u53C2\u8003: https://judge.yosupo.jp/submission/349844\n\n// \u30B3\
+    \u30F3\u30B9\u30C8\u30E9\u30AF\u30BF\u306F\n// - n, es, root (**es \u306B\u30B3\
+    \u30B9\u30C8\u306E\u60C5\u5831\u306F\u5165\u308C\u306A\u3044**)\n// - n, p\n//\
+    \ \u306E\u3044\u305A\u308C\u304B\nstruct RootedTree\n{\nprotected:\n  static const\
+    \ int MSK = 1 << 30;\n  int n;\n  vc<int> p_head, dep, pre, post, preinv;\n  //\
+    \ \u69CB\u7BC9\u5F8C\u306E p_head[v] \u306E\u5024:\n  // - MSK \u304C\u7ACB\u3063\
+    \u3066\u3044\u308B\u5834\u5408\u3001v \u306F heavy path \u306E\u5148\u982D\u3067\
+    \u3001MSK \u3092\u53D6\u3063\u305F\u3082\u306E\u304C\u89AA\n  // - MSK \u304C\u7ACB\
+    \u3063\u3066\u3044\u306A\u3044\u5834\u5408\u3001v \u304C\u5C5E\u3059\u308B heavy\
+    \ path \u306E\u5148\u982D\n\n  // v \u304C\u5C5E\u3059\u308B heavy path \u306E\
+    \u5148\u982D\n  inline int internal_head(int v) const { return (p_head[v] & MSK)\
+    \ ? v : p_head[v]; }\n  // hv \u304C heavy path \u306E\u5148\u982D\u3067\u3042\
+    \u308B\u3068\u3057\u3066\u3001hv \u306E\u89AA\u3002hv \u304C\u6839\u306E\u3068\
+    \u304D\u306F\u6839\u3092\u8FD4\u3059\n  inline int parent_of_head(int hv) const\
+    \ { return p_head[hv] & ~MSK; }\n\n  // p_head \u306B\u89AA\u914D\u5217\u304C\u683C\
+    \u7D0D\u3055\u308C\u3066\u3044\u308B\u72B6\u614B\u304B\u3089\u30B9\u30BF\u30FC\
+    \u30C8\n  void build(int rt, const vc<int> &siz, vc<int> &max_chi_siz)\n  {\n\
+    \    // \u90E8\u5206\u6728\u30B5\u30A4\u30BA\u9806\u306B\u4E26\u3079\u308B\n \
+    \   vc<int> ord(n);\n    {\n      vc<int> cnt(n + 1);\n      repi(i, n) cnt[siz[i]]++;\n\
+    \      cnt = cumlsum(cnt);\n      repi(i, n) ord[n - 1 - (cnt[siz[i]]++)] = i;\n\
+    \    }\n    // \u5FC5\u8981\u306A\u914D\u5217\u306E\u8A08\u7B97\n    {\n     \
+    \ p_head[rt] = rt | MSK, post[rt] = n;\n      vc<int> add(n, 1);\n      repi(i,\
+    \ 1, n)\n      {\n        int v = ord[i];\n        int p = p_head[v];\n      \
+    \  dep[v] = dep[p] + 1;\n        pre[v] = pre[p] + add[p];\n        add[p] +=\
+    \ siz[v];\n        post[v] = pre[v] + siz[v];\n        if (max_chi_siz[p] == siz[v])\n\
+    \        {\n          max_chi_siz[p] = 0;\n          p_head[v] = internal_head(p_head[v]);\n\
+    \        }\n        else\n          p_head[v] |= MSK;\n      }\n      preinv =\
+    \ perminv(pre);\n    }\n  }\n\npublic:\n  RootedTree() {}\n  template <class I>\n\
+    \  RootedTree(int n, const vc<I> &par)\n  : n(n), p_head(n), dep(n), pre(n), post(n),\
+    \ preinv(n)\n  {\n    assert(n >= 1);\n    assert(SZ(par) == n);\n    int rt =\
+    \ -1;\n    vc<int> deg(n), siz(n, 1), max_chi_siz(n);\n    repi(i, n)\n    {\n\
+    \      if (par[i] < 0 || par[i] == i)\n      {\n        assert(rt == -1 && \"\
+    There are more than two roots\");\n        rt = i;\n      }\n      else\n    \
+    \  {\n        p_head[i] = par[i];\n        deg[par[i]]++;\n      }\n    }\n  \
+    \  assert(rt != -1 && \"There is no root\");\n    repi(i, n)\n    {\n      int\
+    \ v = i;\n      while (v != rt && deg[v] == 0)\n      {\n        int p = p_head[v];\n\
+    \        deg[p]--, deg[v]--;\n        siz[p] += siz[v];\n        chmax(max_chi_siz[p],\
+    \ siz[v]);\n        v = p;\n      }\n    }\n    build(rt, siz, max_chi_siz);\n\
+    \  }\n  template <class P>\n  RootedTree(int n, const vc<P> &es, int rt)\n  :\
+    \ n(n), p_head(n), dep(n), pre(n), post(n), preinv(n)\n  {\n    assert(n >= 1);\n\
+    \    assert(SZ(es) == n - 1);\n    assert(0 <= rt && rt < n);\n\n    vc<int> deg(n),\
+    \ siz(n, 1), max_chi_siz(n);\n    fec([ u, v ] : es)\n    {\n      deg[u]++, deg[v]++;\n\
+    \      p_head[u] ^= v, p_head[v] ^= u;\n    }\n    deg[rt] = 0;\n    repi(i, n)\n\
+    \    {\n      int v = i;\n      while (deg[v] == 1)\n      {\n        int p =\
+    \ p_head[v];\n        deg[p]--, deg[v]--, p_head[p] ^= v;\n        siz[p] += siz[v];\n\
+    \        chmax(max_chi_siz[p], siz[v]);\n        v = p;\n      }\n    }\n    build(rt,\
+    \ siz, max_chi_siz);\n  }\n\n  // \u9802\u70B9\u6570\u3092\u8FD4\u3059\n  template\
+    \ <class I = ll>\n  I size() const { return n; }\n  // \u6839\u3092\u8FD4\u3059\
+    \n  int root() const { return preinv[0]; }\n\n  // v \u306E\u6DF1\u3055\n  template\
+    \ <class I = ll>\n  I depth(int v) const\n  {\n    assert(0 <= v && v < n);\n\
+    \    return dep[v];\n  }\n\n  // v \u3092\u6839\u3068\u3059\u308B\u90E8\u5206\u6728\
+    \u306E\u30B5\u30A4\u30BA (v \u3082\u542B\u3080)\n  template <class I = ll>\n \
+    \ I subtree_size(int v) const\n  {\n    assert(0 <= v && v < n);\n    return post[v]\
+    \ - pre[v];\n  }\n  // \u8FBA (u, v) \u304C\u5B58\u5728\u3059\u308B\u3068\u3057\
+    \u3066\u3001\u3053\u308C\u3092\u5207\u3063\u305F\u3068\u304D\u306E\n  // u \u5074\
+    \u3001v \u5074\u305D\u308C\u305E\u308C\u306E\u9023\u7D50\u6210\u5206\u30B5\u30A4\
+    \u30BA\n  template <class I = ll>\n  pair<I, I> cut_and_subtree_size(int u, int\
+    \ v) const\n  {\n    assert(0 <= u && u < n);\n    assert(0 <= v && v < n);\n\
+    \    if (dep[u] < dep[v])\n      return {n - subtree_size(v), subtree_size(v)};\n\
+    \    else\n      return {subtree_size(u), n - subtree_size(u)};\n  }\n\n  // v\
+    \ \u306E\u89AA\u3092\u8FD4\u3059\u3002v \u306F\u6839\u3067\u3042\u3063\u3066\u306F\
+    \u3044\u3051\u306A\u3044\n  int parent(int v) const\n  {\n    assert(0 <= v &&\
+    \ v < n);\n    assert(v != root());\n    int ph = p_head[v];\n    if (ph & MSK)\n\
+    \      return ph & ~MSK;\n    else\n      return preinv[pre[v] - 1];\n  }\n\n\
+    \  // v \u304C\u5C5E\u3059\u308B heavy path \u306E\u5148\u982D\u3092\u8FD4\u3059\
+    \n  int head(int v) const\n  {\n    assert(0 <= v && v < n);\n    return internal_head(v);\n\
+    \  }\n\n  // v \u306E preorder\n  int preorder(int v) const\n  {\n    assert(0\
+    \ <= v && v < n);\n    return pre[v];\n  }\n  // v \u306E postorder\n  int postorder(int\
+    \ v) const\n  {\n    assert(0 <= v && v < n);\n    return post[v];\n  }\n  //\
+    \ preorder \u304C i \u306E\u9802\u70B9\n  int preorder_select(int i) const\n \
+    \ {\n    assert(0 <= i && i < n);\n    return preinv[i];\n  }\n\n  // v \u304B\
+    \u3089\u6839\u307E\u3067\u306E\u30D1\u30B9\u3067\u901A\u308B\u9802\u70B9\u306E\
+    \u5217\n  vc<int> path_to_root(int v) const\n  {\n    assert(0 <= v && v < n);\n\
+    \    vc<int> res = {v};\n    res.reserve(dep[v] + 1);\n    int rt = root();\n\
+    \    while (v != rt)\n    {\n      int p = parent(v);\n      res.eb(p);\n    \
+    \  v = p;\n    }\n    return res;\n  }\n  // u \u304B\u3089 v \u307E\u3067\u306E\
+    \u30D1\u30B9\u3067\u901A\u308B\u9802\u70B9\u306E\u5217\n  vc<int> path(int u,\
+    \ int v) const\n  {\n    assert(0 <= u && u < n);\n    assert(0 <= v && v < n);\n\
+    \    vc<int> pu = {u}, pv = {v};\n    while (u != v)\n    {\n      if (dep[u]\
+    \ > dep[v])\n      {\n        int p = parent(u);\n        pu.eb(p);\n        u\
+    \ = p;\n      }\n      else\n      {\n        int p = parent(v);\n        pv.eb(p);\n\
+    \        v = p;\n      }\n    }\n    pv.pop_back();\n    return concat(pu, reversed(pv));\n\
+    \  }\n\n  // \u6839\u306B\u8FD1\u3044\u9802\u70B9\u307B\u3069\u5148\u306B\u6765\
+    \u308B\u9806\u5E8F\u3067\u4E26\u3079\u305F\u9802\u70B9\u306E\u5217\u3092\u3072\
+    \u3068\u3064\u8FD4\u3059\n  const vc<int> &top_down_vertices() const { return\
+    \ preinv; }\n  // \u6DF1\u3044\u9802\u70B9\u307B\u3069\u5148\u306B\u6765\u308B\
+    \u9806\u5E8F\u3067\u4E26\u3079\u305F\u9802\u70B9\u306E\u5217\u3092\u8FD4\u3059\
+    \n  vc<int> bottom_up_vertices() const { return reversed(top_down_vertices());\
+    \ }\n\n  // bp: \u9577\u3055 2(n-1) \u306E\u62EC\u5F27\u5217\n  // vs: \u9577\u3055\
+    \ 2(n-1)+1 \u306E\u9802\u70B9\u5217\n  // 0 <= i < 2(n-1) \u306B\u5BFE\u3057\u3001\
+    i \u56DE\u76EE\u306E\u79FB\u52D5\u306F bp[i] \u306E\u5411\u304D\u3067 vs[i] \u304B\
+    \u3089 vs[i+1] \u3078\n  pair<string, vc<int>> dfs_ordered_vertices() const\n\
+    \  {\n    string bp(2 * (n - 1), '?');\n    vc<int> vs(2 * (n - 1) + 1);\n   \
+    \ int rt = root();\n    vs[0] = rt;\n    repi(v, n)\n    {\n      if (v == rt)\n\
+    \        continue;\n      int p = parent(v);\n      int in_idx = 2 * pre[v] -\
+    \ dep[v] - 1;\n      int out_idx = 2 * post[v] - dep[v] - 2;\n      bp[in_idx]\
+    \ = '(', vs[in_idx + 1] = v;\n      bp[out_idx] = ')', vs[out_idx + 1] = p;\n\
+    \    }\n    return {bp, vs};\n  }\n\n  class ChildIterator;\n  class ChildRange;\n\
+    \n  class ChildIterator\n  {\n  private:\n    const RootedTree* t;\n    int cur;\n\
+    \    friend class RootedTree;\n    friend class ChildRange;\n    ChildIterator(const\
+    \ RootedTree* t, int cur) : t(t), cur(cur) {}\n\n  public:\n    using iterator_category\
+    \ = std::input_iterator_tag;\n    using value_type        = int;\n    using difference_type\
+    \   = std::ptrdiff_t;\n    using pointer           = int*;\n    using reference\
+    \         = int;\n    int operator*() const { return t->preinv[cur]; }\n    void\
+    \ operator++() { cur = t->post[t->preinv[cur]]; }\n    bool operator!=(const ChildIterator&\
+    \ r) const { return cur != r.cur; }\n    bool operator==(const ChildIterator&\
+    \ r) const { return cur == r.cur; }\n  };\n\n  class ChildRange\n  {\n  private:\n\
+    \    const RootedTree* t;\n    int cur, end_pos;\n    friend class RootedTree;\n\
+    \    ChildRange(const RootedTree* t, int cur, int end_pos) : t(t), cur(cur), end_pos(end_pos)\
+    \ {}\n\n  public:\n    ChildIterator begin() const { return ChildIterator(t, cur);\
+    \ }\n    ChildIterator end() const { return ChildIterator(t, end_pos); }\n   \
+    \ bool empty() const { return cur == end_pos; }\n    vc<int> to_v() const { return\
+    \ vc<int>(begin(), end()); }\n  };\n\n  // v \u306E heavy child (\u306A\u3051\u308C\
+    \u3070 -1)\n  int heavy_child(int v) const\n  {\n    assert(0 <= v && v < n);\n\
+    \    if (post[v] - pre[v] == 1)\n      return -1;\n    return preinv[pre[v] +\
+    \ 1];\n  }\n  ChildRange children(int v) const\n  {\n    assert(0 <= v && v <\
+    \ n);\n    return {this, pre[v] + 1, post[v]};\n  }\n  ChildRange light_children(int\
+    \ v) const\n  {\n    assert(0 <= v && v < n);\n    int cur = pre[v] + 1;\n   \
+    \ if (cur < post[v])\n    {\n      cur = post[preinv[cur]];\n    }\n    return\
+    \ {this, cur, post[v]};\n  }\n\n  // \u8FBA (u, v) \u304C\u5B58\u5728\u3059\u308B\
+    \u3068\u3057\u3066\u3001(\u89AA\u5074, \u5B50\u5074)\n  pair<int, int> parent_child(int\
+    \ u, int v) const\n  {\n    assert(0 <= u && u < n);\n    assert(0 <= v && v <\
+    \ n);\n    return dep[u] < dep[v] ? pair{u, v} : pair{v, u};\n  }\n  // \u9577\
+    \u3055 n \u306E\u914D\u5217\u3002v \u756A\u76EE\u306B\u306F v \u304C\u5B50\u5074\
+    \u306B\u306A\u308B\u8FBA\u306E\u60C5\u5831\u304C\u683C\u7D0D\u3055\u308C\u308B\
+    \u3002\u6839\u306F\u672A\u5B9A\u7FA9\u3002\n  template <class P, class EdgeInfo>\n\
+    \  vc<EdgeInfo> reordered_edge_info(const vc<P> &es, const vc<EdgeInfo> &edge_info)\
+    \ const\n  {\n    assert(SZ(es) == n - 1 && SZ(edge_info) >= n - 1);\n    vc<EdgeInfo>\
+    \ res(n);\n    repi(i, n - 1)\n    {\n      auto [u, v] = es[i];\n      int eid\
+    \ = dep[u] < dep[v] ? v : u;\n      res[eid] = edge_info[i];\n    }\n    return\
+    \ res;\n  }\n\n  int lca(int u, int v) const\n  {\n    assert(0 <= u && u < n);\n\
+    \    assert(0 <= v && v < n);\n    while (true)\n    {\n      int hu = internal_head(u),\
+    \ hv = internal_head(v);\n      if (hu == hv)\n        break;\n      if (dep[hu]\
+    \ > dep[hv])\n        swap(u, v), swap(hu, hv);\n      v = parent_of_head(hv);\n\
+    \    }\n    return dep[u] < dep[v] ? u : v;\n  }\n\n  template <class I = ll>\n\
+    \  I dist(int u, int v) const\n  {\n    assert(0 <= u && u < n);\n    assert(0\
+    \ <= v && v < n);\n    return dep[u] + dep[v] - 2 * dep[lca(u, v)];\n  }\n\n \
+    \ // u \u304C v \u306E\u7956\u5148\u304B\n  bool is_ancestor(int u, int v) const\n\
+    \  {\n    assert(0 <= u && u < n);\n    assert(0 <= v && v < n);\n    return pre[u]\
+    \ <= pre[v] && pre[v] < post[u];\n  }\n\n  // v \u306E k \u500B\u4E0A\u3002\u306A\
+    \u3051\u308C\u3070 -1\n  int la(int v, int k) const\n  {\n    assert(0 <= v &&\
+    \ v < n);\n    assert(0 <= k);\n    if (k > dep[v])\n      return -1;\n    while\
+    \ (true)\n    {\n      int hv = internal_head(v);\n      if (k <= dep[v] - dep[hv])\n\
+    \        break;\n      k -= dep[v] - dep[hv] + 1;\n      v = parent_of_head(hv);\n\
+    \    }\n    return preinv[pre[v] - k];\n  }\n\n  // u \u304B\u3089 v \u306B k\
+    \ \u500B\u9032\u3080\u3002\u306A\u3051\u308C\u3070 -1\n  int jump(int u, int v,\
+    \ int k) const\n  {\n    assert(0 <= u && u < n);\n    assert(0 <= v && v < n);\n\
+    \    assert(0 <= k);\n    int l = lca(u, v);\n    int d_ul = dep[u] - dep[l];\n\
+    \    int d_vl = dep[v] - dep[l];\n    if (k > d_ul + d_vl)\n      return -1;\n\
+    \    if (k <= d_ul)\n      return la(u, k);\n    return la(v, d_ul + d_vl - k);\n\
+    \  }\n\n  // costs[v] := (parent(v), v) \u306E\u30B3\u30B9\u30C8 \u3068\u3057\u305F\
+    \u3068\u304D\u306E\u3001\u5404\u9802\u70B9\u306E\u6DF1\u3055\n  // costs[root()]\
+    \ \u306F\u53C2\u7167\u3055\u308C\u306A\u3044\n  // \u4F7F\u3046\u969B\u306F reordered_edge_info\
+    \ \u95A2\u6570\u3082\u9069\u5207\u306B\u6D3B\u7528\u3059\u308B\u3068\u3088\u3044\
+    \n  template <class T>\n  vc<T> weighted_depths(vc<T> costs) const\n  {\n    vc<T>\
+    \ res(n, 0);\n    auto vs = top_down_vertices();\n    costs[root()] = 0;\n   \
+    \ rep(i, 1, n)\n    {\n      int v = vs[i], p = parent(v);\n      costs[v] +=\
+    \ costs[p];\n    }\n    return costs;\n  }\n\n  // \u9802\u70B9\u30C7\u30FC\u30BF\
+    \u3092\u884C\u304D\u304C\u3051\u9806\u306B\u4E26\u3079\u66FF\u3048\u308B\n  template\
+    \ <class T>\n  vc<T> reordered_vertex_info(const vc<T> &vertex_info) const\n \
+    \ {\n    return permuted(vertex_info, preinv);\n  }\n  // v \u306E\u90E8\u5206\
+    \u6728\u304C\u884C\u304D\u304C\u3051\u9806 [l, r) \u306E\u9802\u70B9\u3067\u3042\
+    \u308B\u3088\u3046\u306A (l, r)\n  // edge \u306E\u3068\u304D\u306F\u8FBA\u5C5E\
+    \u6027 (v \u3092\u9664\u304F)\n  pair<int, int> subtree_interval(int v, bool edge\
+    \ = false) const\n  {\n    return {pre[v] + edge, post[v]};\n  }\n  // u \u304B\
+    \u3089 v \u3078\u306E\u30D1\u30B9\u304C\n  // \u884C\u304D\u304C\u3051\u9806 [l_1,\
+    \ r_1), ..., [l_k, r_k) \u306E\u9802\u70B9 (\u3053\u306E\u9806) \u3067\u3042\u308B\
+    \u3068\u304D\n  // f(l_1, r_1, isrev), ..., f(l_k, r_k, isrev) \u3092\u9806\u306B\
+    \u5B9F\u884C\u3059\u308B\n  // isrev \u306F\u9006\u5411\u304D\u306E\u3068\u304D\
+    \n  // edge \u306E\u3068\u304D\u306F\u8FBA\u5C5E\u6027 (lca(u, v) \u3092\u9664\
+    \u304F)\n  template <class F>\n  void path_query(int u, int v, F f, bool edge\
+    \ = false) const\n  {\n    assert(0 <= u && u < n);\n    assert(0 <= v && v <\
+    \ n);\n    static pair<int, int> down_path[30];\n    int down_cnt = 0;\n    while\
+    \ (true)\n    {\n      int hu = internal_head(u), hv = internal_head(v);\n   \
+    \   if (hu == hv)\n        break;\n      if (dep[hu] > dep[hv])\n      {\n   \
+    \     f(pre[hu], pre[u] + 1, true);\n        u = parent_of_head(hu);\n      }\n\
+    \      else\n      {\n        down_path[down_cnt++] = {pre[hv], pre[v] + 1};\n\
+    \        v = parent_of_head(hv);\n      }\n    }\n\n    if (dep[u] > dep[v])\n\
+    \    {\n      int l = pre[v] + edge;\n      int r = pre[u] + 1;\n      if (l <\
+    \ r)\n        f(l, r, true);\n    }\n    else\n    {\n      int l = pre[u] + edge;\n\
+    \      int r = pre[v] + 1;\n      if (l < r)\n        f(l, r, false);\n    }\n\
+    \n    repi(i, down_cnt - 1, -1, -1)\n    {\n      auto [l, r] = down_path[i];\n\
+    \      f(l, r, false);\n    }\n  }\n};\n#line 2 \"ds/fenwick_tree/fenwick_tree.hpp\"\
+    \n\n#line 4 \"ds/fenwick_tree/fenwick_tree.hpp\"\n\n#line 2 \"math/algebra/algebra_basic_ops.hpp\"\
+    \n\n#line 2 \"math/algebra/algebra_base.hpp\"\n\n#line 4 \"math/algebra/algebra_base.hpp\"\
+    \n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\
+    \uFF09\n * @docs docs/math/algebra/algebra_base.md\n */\n\ntemplate <class S_,\
+    \ auto op_, auto e_>\nstruct Monoid\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n};\n\ntemplate <class S_, auto op_,\
+    \ auto e_, auto inv_>\nstruct Group\n{\n  using S = S_;\n  static constexpr auto\
+    \ op = op_;\n  static constexpr auto e = e_;\n  static constexpr auto inv = inv_;\n\
+    };\n\ntemplate <class S_, auto add_, auto e0_, auto mul_, auto e1_>\nstruct SemiRing\n\
+    {\n  using S = S_;\n  static constexpr auto add = add_;\n  static constexpr auto\
+    \ e0 = e0_;\n  static constexpr auto mul = mul_;\n  static constexpr auto e1 =\
+    \ e1_;\n};\n\ntemplate <class S_, auto add_, auto e0_, auto minus_, auto mul_,\
+    \ auto e1_>\nstruct Ring\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n};\n\n\
+    template <class S_, auto add_, auto e0_, auto minus_, auto mul_, auto e1_, auto\
+    \ inv_>\nstruct Field\n{\n  using S = S_;\n  static constexpr auto add = add_;\n\
+    \  static constexpr auto e0 = e0_;\n  static constexpr auto minus = minus_;\n\
+    \  static constexpr auto mul = mul_;\n  static constexpr auto e1 = e1_;\n  static\
+    \ constexpr auto inv = inv_;\n};\n\ntemplate <class M>\nstruct OppositeMonoid\n\
+    {\n  using S = typename M::S;\n  static constexpr S op(const S &a, const S &b)\
+    \ { return M::op(b, a); }\n  static constexpr auto e = M::e;\n};\ntemplate <class\
+    \ G>\nstruct OppositeGroup\n{\n  using S = typename G::S;\n  static constexpr\
+    \ S op(const S &a, const S &b) { return G::op(b, a); }\n  static constexpr auto\
+    \ e = G::e;\n  static constexpr auto inv = G::inv;\n};\ntemplate <class M>\nstruct\
+    \ NormalAndOppositeMonoid\n{\n  struct S\n  {\n    typename M::S normal;\n   \
+    \ typename M::S opposite;\n    S() {}\n    template <class... Args,\n        \
+    \      std::enable_if_t<std::is_constructible_v<typename M::S, Args...>, std::nullptr_t>\
+    \ = nullptr>\n    S(Args &&...args)\n        : normal(std::forward<Args>(args)...),\
+    \ opposite(normal) {}\n    S rev() { return {opposite, normal}; }\n    S(const\
+    \ typename M::S &normal, const typename M::S &opposite) : normal(normal), opposite(opposite)\
+    \ {}\n  };\n  static constexpr S op(const S &a, const S &b) { return {M::op(a.normal,\
+    \ b.normal), M::op(b.opposite, a.opposite)}; }\n  static constexpr S e() { return\
+    \ {M::e(), M::e()}; }\n};\ntemplate <class G>\nstruct NormalAndOppositeGroup\n\
+    {\n  struct S\n  {\n    typename G::S normal;\n    typename G::S opposite;\n \
+    \   S() {}\n    template <class... Args,\n              std::enable_if_t<std::is_constructible_v<typename\
+    \ G::S, Args...>, std::nullptr_t> = nullptr>\n    S(Args &&...args)\n        :\
+    \ normal(std::forward<Args>(args)...), opposite(normal) {}\n    S rev() { return\
+    \ {opposite, normal}; }\n    S(const typename G::S &normal, const typename G::S\
+    \ &opposite) : normal(normal), opposite(opposite) {}\n  };\n  static constexpr\
+    \ S op(const S &a, const S &b) { return {G::op(a.normal, b.normal), G::op(b.opposite,\
+    \ a.opposite)}; }\n  static constexpr S e() { return {G::e(), G::e()}; }\n  static\
+    \ constexpr S inv() { return {G::inv(), G::inv()}; }\n};\n\ntemplate <class SR>\n\
+    using MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate\
+    \ <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S, SR::mul, SR::e1>;\n\
+    template <class R>\nusing GroupOfRingAdd = Group<typename R::S, R::add, R::e0,\
+    \ R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul = Group<typename K::S,\
+    \ K::mul, K::e1, K::inv>;\n\n// Madd \u306F\u53EF\u63DB\ntemplate <class Madd,\
+    \ class Mmul>\nstruct SemiRingFromMonoidMonoid\n{\n  static_assert(is_same_v<typename\
+    \ Madd::S, typename Mmul::S>, \"Madd::S and Mmul::S must be identical\");\n  using\
+    \ S = typename Madd::S;\n  static constexpr auto add = Madd::op;\n  static constexpr\
+    \ auto e0 = Madd::e;\n  static constexpr auto mul = Mmul::op;\n  static constexpr\
+    \ auto e1 = Mmul::e;\n};\n\n// Gadd \u306F\u53EF\u63DB\ntemplate <class Gadd,\
+    \ class Mmul>\nstruct RingFromGroupMonoid\n{\n  static_assert(is_same_v<typename\
+    \ Gadd::S, typename Mmul::S>, \"Gadd::S and Mmul::S must be identical\");\n  using\
+    \ S = typename Gadd::S;\n  static constexpr auto add = Gadd::op;\n  static constexpr\
+    \ auto e0 = Gadd::e;\n  static constexpr auto minus = Gadd::inv;\n  static constexpr\
+    \ auto mul = Mmul::op;\n  static constexpr auto e1 = Mmul::e;\n};\n\n// Gadd,\
+    \ Gmul \u306F\u53EF\u63DB\ntemplate <class Gadd, class Gmul>\nstruct FieldFromGroupGroup\n\
+    {\n  static_assert(is_same_v<typename Gadd::S, typename Gmul::S>, \"Gadd::S and\
+    \ Gmul::S must be identical\");\n  using S = typename Gadd::S;\n  static constexpr\
+    \ auto add = Gadd::op;\n  static constexpr auto e0 = Gadd::e;\n  static constexpr\
+    \ auto minus = Gadd::inv;\n  static constexpr auto mul = Gmul::op;\n  static constexpr\
+    \ auto e1 = Gmul::e;\n  static constexpr auto inv = Gmul::inv;\n};\n#line 5 \"\
+    math/algebra/algebra_basic_ops.hpp\"\n\n/**\n * @brief \u4EE3\u6570\u7684\u69CB\
+    \u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min, max\uFF09\n * @docs docs/math/algebra/algebra_basic_ops.md\n\
+    \ */\n\ntemplate <class T>\nstruct MonoidMul\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a * b; }\n  static constexpr S e() { return 1; }\n};\n\
+    \ntemplate <class T>\nstruct GroupAddSub\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a + b; }\n  static constexpr S e() { return S{}; }\n\
+    \  static constexpr S inv(S a) { return -a; }\n};\ntemplate <class T>\nstruct\
+    \ GroupMulDiv\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return a\
+    \ * b; }\n  static constexpr S e() { return S(1); }\n  static constexpr S inv(S\
+    \ a) { return S(1) / a; }\n};\n\ntemplate <class T, const T infty = INF>\nusing\
+    \ SemiRingMinPlus = SemiRingFromMonoidMonoid<MonoidMin<T>, MonoidAdd<T>>;\ntemplate\
+    \ <class T, const T infty = INF>\nusing SemiRingMaxPlus = SemiRingFromMonoidMonoid<MonoidMax<T>,\
+    \ MonoidAdd<T>>;\ntemplate <class T>\nusing RingAddSubMul = RingFromGroupMonoid<GroupAddSub<T>,\
+    \ MonoidMul<T>>;\ntemplate <class T>\nusing FieldAddSubMulDiv = FieldFromGroupGroup<GroupAddSub<T>,\
+    \ GroupMulDiv<T>>;\n\ntemplate <class M>\ntypename M::S pow_monoid(typename M::S\
+    \ a, ll k)\n{\n  typename M::S c = M::e();\n  for (; k; k >>= 1)\n  {\n    if\
+    \ (k & 1)\n      c = M::op(c, a);\n    a = M::op(a, a);\n  }\n  return c;\n}\n\
+    #line 6 \"ds/fenwick_tree/fenwick_tree.hpp\"\n\n/**\n * @brief Fenwick Tree\n\
+    \ * @docs docs/ds/fenwick_tree/fenwick_tree.md\n */\n\n// G \u306F\u53EF\u63DB\
+    \u7FA4 (prefix \u3060\u3051\u306A\u3069\u3067\u3042\u308C\u3070\u53EF\u63DB\u30E2\
+    \u30CE\u30A4\u30C9\u3067\u3082 OK)\ntemplate <class G>\nstruct FenwickTree\n{\n\
+    \  using S = typename G::S;\n\nprivate:\n  int n;\n  vc<S> dat;\n\npublic:\n \
+    \ FenwickTree() {}\n  FenwickTree(int n) : n(n), dat(n + 1, G::e()) {}\n  FenwickTree(const\
+    \ vc<S> &v) : FenwickTree(v.size())\n  {\n    repi(i, n) dat[i + 1] = v[i];\n\
+    \    repi(i, 1, n + 1)\n    {\n      int p = i + (i & -i);\n      if (p <= n)\n\
+    \        dat[p] += dat[i];\n    }\n  }\n\n  template <class I = ll>\n  I size()\
+    \ const { return n; }\n\n  // [0, r)\n  // \u9006\u5143\u306F\u5FC5\u8981\u306A\
+    \u3044\n  S sum(int r) const\n  {\n    assert(0 <= r && r <= n);\n    S s = G::e();\n\
+    \    while (r > 0)\n    {\n      s = G::op(s, dat[r]);\n      r -= r & -r;\n \
+    \   }\n    return s;\n  }\n  // [l, r)\n  // \u9006\u5143\u304C\u5FC5\u8981\n\
+    \  S sum(int l, int r) const\n  {\n    assert(0 <= l && l <= r && r <= n);\n \
+    \   return G::op(G::inv(sum(l)), sum(r));\n  }\n  // \u9006\u5143\u304C\u5FC5\u8981\
+    \n  S get(int i) const\n  {\n    assert(0 <= i && i < n);\n    return sum(i, i\
+    \ + 1);\n  }\n\n  // \u9006\u5143\u306F\u5FC5\u8981\u306A\u3044\n  void add(int\
+    \ i, S x)\n  {\n    assert(0 <= i && i < n);\n    i++;\n    while (i <= n)\n \
+    \   {\n      dat[i] = G::op(dat[i], x);\n      i += i & -i;\n    }\n  }\n  //\
+    \ \u9006\u5143\u304C\u5FC5\u8981\n  void set(int i, S x) { add(i, G::op(G::inv(get(i)),\
+    \ x)); }\n\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\
+    \u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) < w \u3068\u306A\
+    \u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070 -1)\n  // \u3068\u3001\u305D\
+    \u306E r \u306B\u5BFE\u3059\u308B sum[0, r) \u306E\u30DA\u30A2\n  template <class\
+    \ I = ll>\n  pair<I, S> lt_max_id_sum(S w) const\n  {\n    if (w <= G::e())\n\
+    \      return {-1, G::e()};\n    int k = bit_floor(n);\n    int x = 0;\n    S\
+    \ v = G::e();\n    while (k > 0)\n    {\n      if (x + k <= n)\n      {\n    \
+    \    S nv = G::op(v, dat[x + k]);\n        if (nv < w)\n          v = nv, x +=\
+    \ k;\n      }\n      k >>= 1;\n    }\n    return {x, v};\n  }\n\n  // \u6574\u6570\
+    \u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\
+    \u8CA0\u306E\u3068\u304D\n  // sum[0, r) < w \u3068\u306A\u308B\u6700\u5C0F\u306E\
+    \ r (\u306A\u3051\u308C\u3070 -1)\n  template <class I = ll>\n  I lt_max(S w)\
+    \ const { return lt_max_id_sum<I>(w).first; }\n  // \u6574\u6570\u306E\u666E\u901A\
+    \u306E\u8DB3\u3057\u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\
+    \u304D\n  // sum[0, r) >= w \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\u3051\
+    \u308C\u3070 n+1)\n  template <class I = ll>\n  inline I geq_min(S w) const {\
+    \ return lt_max<I>(w) + 1; }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\
+    \u7B97\u3067\u3001\u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  // sum[0,\
+    \ r) <= w \u3068\u306A\u308B\u6700\u5927\u306E r (\u306A\u3051\u308C\u3070 -1)\n\
+    \  template <class I = ll>\n  inline I leq_max(S w) const { return lt_max<I>(w\
+    \ + 1); }\n  // \u6574\u6570\u306E\u666E\u901A\u306E\u8DB3\u3057\u7B97\u3067\u3001\
+    \u8981\u7D20\u304C\u975E\u8CA0\u306E\u3068\u304D\n  // sum[0, r) > w \u3068\u306A\
+    \u308B\u6700\u5C0F\u306E r (\u306A\u3051\u308C\u3070 n+1)\n  template <class I\
+    \ = ll>\n  inline I gt_min(S w) const { return geq_min<I>(w + 1); }\n\n  // \u8981\
+    \u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\
+    \u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001\u591A\u91CD\u96C6\u5408\
+    \u306E\u30B5\u30A4\u30BA\u3092\u8FD4\u3059\n  inline S size_of_multiset() const\
+    \ { return sum(n); }\n\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\
+    \u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\
+    \u304D\u3001\u5024 x \u306F\u4F55\u756A\u76EE\u304B\u3089\u4F55\u756A\u76EE\u304B\
+    \ [l, r)\n  inline pair<S, S> order_in_multiset(int x) const { return {sum(x),\
+    \ sum(x + 1)}; }\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\
+    \u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\
+    \u3001k \u756A\u76EE\u306E\u5024\n  // \u305F\u3060\u3057\u3001k < 0 \u306A\u3089\
+    \ -1, k >= size_of_multiset() \u306A\u3089 size()\n  template <class I = ll>\n\
+    \  inline I kth_in_multiset(S k) const\n  {\n    if (k < 0)\n      return -1;\n\
+    \    return leq_max<I>(k);\n  }\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\
+    \u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\
+    \u3068\u304D\u3001x \u672A\u6E80\u3067\u6700\u5927\u306E\u8981\u7D20\u304C**\u4F55\
+    \u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template <class T, class\
+    \ I = ll>\n  inline I lt_max_in_multiset(T x) const\n  {\n    return sum(clamp(x,\
+    \ T(0), T(n))) - 1;\n  }\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\
+    \u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\
+    \u304D\u3001x \u4EE5\u4E0B\u3067\u6700\u5927\u306E\u8981\u7D20\u304C**\u4F55\u756A\
+    \u76EE\u304B** (\u306A\u3051\u308C\u3070 -1)\n  template <class T, class I = ll>\n\
+    \  inline I leq_max_in_multiset(T x) const { return lt_max_in_multiset<I>(x +\
+    \ 1); }\n  // \u8981\u7D20\u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\
+    \u7BA1\u7406\u3059\u308B\u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u4EE5\
+    \u4E0A\u3067\u6700\u5C0F\u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\
+    \u3051\u308C\u3070 size())\n  template <class T, class I = ll>\n  inline I geq_min_in_multiset(T\
+    \ x) const\n  {\n    return sum(clamp(x, T(0), T(n)));\n  }\n  // \u8981\u7D20\
+    \u304C [0, size()) \u306E\u591A\u91CD\u96C6\u5408\u3092\u7BA1\u7406\u3059\u308B\
+    \u306E\u306B\u4F7F\u3063\u305F\u3068\u304D\u3001x \u8D85\u904E\u3067\u6700\u5C0F\
+    \u306E\u8981\u7D20\u304C**\u4F55\u756A\u76EE\u304B** (\u306A\u3051\u308C\u3070\
+    \ size())\n  template <class T, class I = ll>\n  inline I gt_min_in_multiset(T\
+    \ x) const { return geq_min_in_multiset<I>(x + 1); }\n\n  vc<S> content() const\n\
+    \  {\n    vc<S> res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n  }\n\
+    };\n#line 20 \"verify/yosupo/vertex_add_subtree_sum.test.cpp\"\n\nvoid init()\
+    \ {}\n\nvoid main2()\n{\n  LL(N, Q);\n  VEC(ll, N, A);\n  VEC(ll, N - 1, P);\n\
+    \  P.insert(P.begin(), 0);\n  RootedTree G(N, P);\n  FenwickTree<GroupAddSub<ll>>\
+    \ fw(G.reordered_vertex_info(A));\n  rep(_, Q)\n  {\n    LL(t);\n    if (t ==\
+    \ 0)\n    {\n      LL(p, x);\n      fw.add(G.preorder(p), x);\n    }\n    else\
+    \ if (t == 1)\n    {\n      LL(v);\n      auto [l, r] = G.subtree_interval(v);\n\
+    \      PRINT(fw.sum(l, r));\n    }\n  }\n}\n\nvoid test() {}\n\n#line 2 \"template/template_main.hpp\"\
+    \n\n#line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2,\
+    \ auto test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
+    \ color)\n    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\"\
+    ;\n      #ifdef LOCAL\n      cerr << s;\n      #endif\n      /* \u30B3\u30FC\u30C9\
+    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
+    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n      cerr << val;\n      //*/\n \
+    \   };\n  \n    #if defined FAST_IO and not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\\
+    n\\n\", \"32\");\n    #endif\n    #if defined FAST_CIO and not defined LOCAL\n\
+    \    CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
+    \    #endif\n    cout << fixed << setprecision(20);\n  \n    init();\n    #ifdef\
+    \ LOCAL\n    test();\n    #endif\n  \n    #if defined AOJ_TESTCASE or (defined\
+    \ LOCAL and defined SINGLE_TESTCASE)\n    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"\
+    35\");\n    while (true)\n    {\n      dump(\"new testcase\");\n      main2();\n\
+    \    }\n    #elif defined SINGLE_TESTCASE\n    CERR(\"\\n[SINGLE_TESTCASE]\\n\\\
+    n\", \"36\");\n    main2();\n    #elif defined MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\\
+    n\\n\", \"33\");\n    local(while (true))\n    {\n      dump(\"T\");\n      IN(uint,\
+    \ T);\n      while (T--)\n      {\n        dump(\"new testcase\");\n        main2();\n\
+    \      }\n    }\n    #endif\n  }\n};\n#line 51 \"verify/yosupo/vertex_add_subtree_sum.test.cpp\"\
+    \nMain<init, main2, test> main_dummy;\nint main() {}\n"
+  code: "#define PROBLEM \"https://judge.yosupo.jp/problem/vertex_add_subtree_sum\"\
+    \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
+    \n#ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
+    #endif\n\n#define INF 4'000'000'000'000'000'037LL\n#define EPS 1e-11\n\n#include\
+    \ \"template/template_all_but_modint.hpp\"\n\n#include \"graph/tree/rooted_tree.hpp\"\
+    \n#include \"ds/fenwick_tree/fenwick_tree.hpp\"\n\nvoid init() {}\n\nvoid main2()\n\
+    {\n  LL(N, Q);\n  VEC(ll, N, A);\n  VEC(ll, N - 1, P);\n  P.insert(P.begin(),\
+    \ 0);\n  RootedTree G(N, P);\n  FenwickTree<GroupAddSub<ll>> fw(G.reordered_vertex_info(A));\n\
+    \  rep(_, Q)\n  {\n    LL(t);\n    if (t == 0)\n    {\n      LL(p, x);\n     \
+    \ fw.add(G.preorder(p), x);\n    }\n    else if (t == 1)\n    {\n      LL(v);\n\
+    \      auto [l, r] = G.subtree_interval(v);\n      PRINT(fw.sum(l, r));\n    }\n\
+    \  }\n}\n\nvoid test() {}\n\n#include \"template/template_main.hpp\"\nMain<init,\
+    \ main2, test> main_dummy;\nint main() {}\n"
+  dependsOn: []
+  isVerificationFile: true
+  path: verify/yosupo/vertex_add_subtree_sum.test.cpp
+  requiredBy: []
+  timestamp: '1970-01-01 00:00:00+00:00'
+  verificationStatus: TEST_WRONG_ANSWER
+  verifiedWith: []
+documentation_of: verify/yosupo/vertex_add_subtree_sum.test.cpp
 layout: document
 redirect_from:
-- /library/math/modint/modint64.hpp
-- /library/math/modint/modint64.hpp.html
-title: modint (64 bit)
+- /verify/verify/yosupo/vertex_add_subtree_sum.test.cpp
+- /verify/verify/yosupo/vertex_add_subtree_sum.test.cpp.html
+title: verify/yosupo/vertex_add_subtree_sum.test.cpp
 ---
-## modint (64 bit)
-
-- `static_modint64`
-- `dynamic_modint64_odd`（mod が奇数のみ）
-- `dynamic_modint64`（mod が偶数も OK）
-
-の $3$ つを用意。`modint61` は `static_modint64<(1LL << 61) - 1>` のエイリアス。
-
-ACL の modint にあるメソッドと入出力はだいたい揃っているが、dynamic には `raw` が存在しない。
-
----
-
-内部の手法としては、dynamic は montgomery reduction を利用（あんまり理解してない。真の値 $a \bmod m$ の代わりに $a \cdot 2^{64} \bmod m$ を保持しているということだけ理解した。誤差評価はやりたくないので放置して信じることに……）。
-
-参考リンク：
-- https://rsk0315.hatenablog.com/entry/2022/11/27/060616
-- https://nyaannyaan.github.io/library/modint/arbitrary-montgomery-modint.hpp
-- https://www.mathenachia.blog/even-mod-montgomery-impl/
-  - mod 偶数 ver はこれ
-  - 初期化は、$R = 2^{64}$ として $\mathrm{REDC}(x) \equiv xR^{-1} \pmod {M_x}, \mathrm{REDC}(x) \equiv x \pmod {2^b}$ の逆 $\mathrm{IREDC}$ を $\mathrm{REDC}$ で表せばよくて、$y \equiv R^2 \pmod {M_x}, y \equiv x \pmod {2^b}$ を解けばよい。
-
-##### 制約
-
-- `dynamic_modint64_odd<INT_MIN>` はライブラリの内部で使用するので使用しないこと
-- mod の上限は、`ll` に収まるなら OK なはず（証明したわけではない）
-  - $2^{63}-1 = 9.223372036854775807 \times 10^{18}$

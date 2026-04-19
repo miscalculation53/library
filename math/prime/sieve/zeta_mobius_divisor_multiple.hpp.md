@@ -1,69 +1,11 @@
 ---
 data:
-  _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: math/algebra/algebra_base.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/algebra/algebra_basic_ops.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
-      \ max\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/prime_power.hpp
-    title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/sieve/linear_sieve.hpp
-    title: "\u7DDA\u5F62\u7BE9"
-  - icon: ':heavy_check_mark:'
-    path: template/template_algo.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
-      \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_all_but_modint.hpp
-    title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_binsearch.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_bit.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
-      \uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_dump.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_inout.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_math.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_random.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
-      \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_rep.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_types.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_vector.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: math/prime/sieve/lcm_gcd_convolution.hpp
-    title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/gcd_convolution.test.cpp
-    title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/lcm_convolution.test.cpp
-    title: verify/yosupo/lcm_convolution.test.cpp
+  _extendedDependsOn: []
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':warning:'
   attributes:
     _deprecated_at_docs: docs/math/prime/sieve/zeta_mobius_divisor_multiple.md
     document_title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\
@@ -108,37 +50,47 @@ data:
     \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
     #line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
     #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
+    \n\n#line 2 \"utils/is_integral_ext.hpp\"\n\n#line 4 \"utils/is_integral_ext.hpp\"\
+    \n\n/**\n * @brief $128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\
+    \u6574\u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n */\n\ntemplate\
+    \ <class T>\nconstexpr bool is_integral_ext = is_integral_v<T> || is_same_v<T,\
+    \ i128> || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr bool is_signed_ext\
+    \ = is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class T>\nconstexpr bool\
+    \ is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;\n#line 14 \"template/template_math.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
     \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
     inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
     \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
-    \ : false; }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T\
-    \ divfloor(U a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0);\
-    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T divceil(U a,\
-    \ V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divround(U a, V b) { return\
-    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U,\
-    \ class V>\ninline constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a,\
-    \ b); }\n\ntemplate <class T = ll, class U, class V>\nconstexpr T ipow(U a, V\
-    \ b)\n{\n  assert(b >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a ==\
-    \ 1)\n    return a;\n  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n \
-    \ T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n\
-    \    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n\
-    }\ntemplate <class T = ll, class A, class B, class M>\nT mul_limited(A a, B b,\
-    \ M m)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n\
-    \  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll,\
-    \ class A, class B>\nT mul_limited(A a, B b) { return mul_limited<T>(a, b, INF);\
-    \ }\ntemplate <class T = ll, class A, class B, class M>\nT pow_limited(A a, B\
-    \ b, M m)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n\
-    \    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n\
-    \  {\n    if (b & 1)\n    {\n      if (res > T(m) / tmp)\n        return m;\n\
-    \      res *= tmp;\n    }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if\
-    \ (tmp > T(m) / tmp)\n      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\n\
-    template <class T = ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a,\
-    \ b, INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A\
-    \ a, K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return\
-    \ a;\n  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n\
-    \      if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divfloor(U a, V b) { return T(a)\
+    \ / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class\
+    \ U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\n\
+    inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V, typename\
+    \ = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\ninline constexpr T\
+    \ safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
+    \ T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a\
+    \ < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while\
+    \ (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n\
+    \      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll,\
+    \ class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0\
+    \ && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) /\
+    \ T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT\
+    \ mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
+    \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
+    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
+    \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
+    \    {\n      if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n  \
+    \  }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n\
+    \      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T =\
+    \ ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a, b,\
+    \ INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A a,\
+    \ K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n\
+    \  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n     \
+    \ if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
     \      return sqrtl(a);\n  }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x\
     \ == 0)\n      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n\
     \      if (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n\
@@ -602,18 +554,18 @@ data:
     \ &add) { for (auto &vi : v) vi += add; }\ntemplate <class T, class Add>\nvoid\
     \ offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto &vij : vi)\
     \ vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E -----\ntemplate <class\
-    \ T, const size_t m>\narray<vc<T>, m> top(const vc<array<T, m>> &vt)\n{\n  const\
+    \ T, const size_t m>\narray<vc<T>, m> unzip(const vc<array<T, m>> &vt)\n{\n  const\
     \ size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t\
     \ i = 0; i < n; i++)\n    for (size_t j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n\
-    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> top(const\
+    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> zip(const\
     \ array<vc<T>, m> &tv)\n{\n  if (tv.empty()) return {};\n  const size_t n = tv[0].size();\n\
     \  vc<array<T, m>> vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size()\
     \ == n);\n    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n\
-    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const\
+    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> unzip(const\
     \ vc<pair<T, U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>>\
     \ tv;\n  tv.first.resize(n), tv.second.resize(n);\n  for (size_t i = 0; i < n;\
     \ i++)\n    tie(tv.first[i], tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate\
-    \ <class T, class U>\nvc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
+    \ <class T, class U>\nvc<pair<T, U>> zip(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
     \ size_t n = tv.first.size();\n  assert(n == tv.second.size());\n  vc<pair<T,\
     \ U>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i],\
     \ tv.second[i]);\n  return vt;\n}\n\nnamespace internal\n{\n\ntemplate <size_t...\
@@ -621,17 +573,18 @@ data:
     \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\n\ntemplate <size_t...\
     \ I, class Tp>\nauto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t\
     \ index)\n{ return make_tuple(get<I>(tv)[index]...); }\n\n};\n\ntemplate <class...\
-    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
+    \ Ts>\nauto unzip(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
     \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
     \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    internal::vt_to_tv_impl(tv, vt[i],\
     \ make_index_sequence<tuple_size_v<decltype(tv)>>{}, i);\n  return tv;\n}\n\n\
-    template <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
+    template <class... Ts>\nauto zip(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 2 \"template/template_random.hpp\"\n\n#line 5 \"\
-    template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
+    \ vt;\n}\n\n#define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)\n#define ZIP(vt,\
+    \ ...) auto vt = zip(tuple{__VA_ARGS__})\n// ----------\n#line 2 \"template/template_random.hpp\"\
+    \n\n#line 5 \"template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
     \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
     \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
     \  return T(l) + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\
@@ -729,7 +682,25 @@ data:
     \ auto e = M::e;\n};\ntemplate <class G>\nstruct OppositeGroup\n{\n  using S =\
     \ typename G::S;\n  static constexpr S op(const S &a, const S &b) { return G::op(b,\
     \ a); }\n  static constexpr auto e = G::e;\n  static constexpr auto inv = G::inv;\n\
-    };\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S,\
+    };\ntemplate <class M>\nstruct NormalAndOppositeMonoid\n{\n  struct S\n  {\n \
+    \   typename M::S normal;\n    typename M::S opposite;\n    S() {}\n    template\
+    \ <class... Args,\n              std::enable_if_t<std::is_constructible_v<typename\
+    \ M::S, Args...>, std::nullptr_t> = nullptr>\n    S(Args &&...args)\n        :\
+    \ normal(std::forward<Args>(args)...), opposite(normal) {}\n    S rev() { return\
+    \ {opposite, normal}; }\n    S(const typename M::S &normal, const typename M::S\
+    \ &opposite) : normal(normal), opposite(opposite) {}\n  };\n  static constexpr\
+    \ S op(const S &a, const S &b) { return {M::op(a.normal, b.normal), M::op(b.opposite,\
+    \ a.opposite)}; }\n  static constexpr S e() { return {M::e(), M::e()}; }\n};\n\
+    template <class G>\nstruct NormalAndOppositeGroup\n{\n  struct S\n  {\n    typename\
+    \ G::S normal;\n    typename G::S opposite;\n    S() {}\n    template <class...\
+    \ Args,\n              std::enable_if_t<std::is_constructible_v<typename G::S,\
+    \ Args...>, std::nullptr_t> = nullptr>\n    S(Args &&...args)\n        : normal(std::forward<Args>(args)...),\
+    \ opposite(normal) {}\n    S rev() { return {opposite, normal}; }\n    S(const\
+    \ typename G::S &normal, const typename G::S &opposite) : normal(normal), opposite(opposite)\
+    \ {}\n  };\n  static constexpr S op(const S &a, const S &b) { return {G::op(a.normal,\
+    \ b.normal), G::op(b.opposite, a.opposite)}; }\n  static constexpr S e() { return\
+    \ {G::e(), G::e()}; }\n  static constexpr S inv() { return {G::inv(), G::inv()};\
+    \ }\n};\n\ntemplate <class SR>\nusing MonoidOfSemiRingAdd = Monoid<typename SR::S,\
     \ SR::add, SR::e0>;\ntemplate <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename\
     \ SR::S, SR::mul, SR::e1>;\ntemplate <class R>\nusing GroupOfRingAdd = Group<typename\
     \ R::S, R::add, R::e0, R::minus>;\ntemplate <class K>\nusing GroupOfFieldMul =\
@@ -830,31 +801,13 @@ data:
     \  fec(p : LinearSieve::primes)\n  {\n    if (p > n)\n      break;\n    for (int\
     \ i = 1; i * p <= n; i++)\n      b[i] = G::op(b[i], G::inv(b[i * p]));\n  }\n\
     \  return b;\n}\n"
-  dependsOn:
-  - template/template_all_but_modint.hpp
-  - template/template_types.hpp
-  - template/template_rep.hpp
-  - template/template_math.hpp
-  - template/template_vector.hpp
-  - template/template_algo.hpp
-  - template/template_binsearch.hpp
-  - template/template_bit.hpp
-  - template/template_inout.hpp
-  - template/template_dump.hpp
-  - template/template_random.hpp
-  - math/prime/sieve/linear_sieve.hpp
-  - math/prime/prime_power.hpp
-  - math/algebra/algebra_basic_ops.hpp
-  - math/algebra/algebra_base.hpp
+  dependsOn: []
   isVerificationFile: false
   path: math/prime/sieve/zeta_mobius_divisor_multiple.hpp
-  requiredBy:
-  - math/prime/sieve/lcm_gcd_convolution.hpp
-  timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
+  requiredBy: []
+  timestamp: '1970-01-01 00:00:00+00:00'
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
 documentation_of: math/prime/sieve/zeta_mobius_divisor_multiple.hpp
 layout: document
 redirect_from:

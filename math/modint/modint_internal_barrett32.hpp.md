@@ -1,302 +1,82 @@
 ---
 data:
-  _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint32_internal.hpp
-    title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_algo.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
-      \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_all_but_modint.hpp
-    title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_binsearch.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_bit.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
-      \uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_dump.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_inout.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_math.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_random.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
-      \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_rep.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_types.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_vector.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: math/fps/bmbm.hpp
-    title: BMBM
-  - icon: ':heavy_check_mark:'
-    path: math/fps/bostan_mori.hpp
-    title: "Bostan\u2013Mori"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/compositional_inverse.hpp
-    title: "\u9006\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/factorial.hpp
-    title: "\u968E\u4E57"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/fps.hpp
-    title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/interpolation.hpp
-    title: "\u591A\u9805\u5F0F\u88DC\u9593"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/interpolation_geo.hpp
-    title: "\u591A\u9805\u5F0F\u88DC\u9593\uFF08\u8A55\u4FA1\u70B9\u304C\u7B49\u6BD4\
-      \u6570\u5217\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/multipoint_evaluation.hpp
-    title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/multipoint_evaluation_geo.hpp
-    title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1\uFF08\u8A55\u4FA1\u70B9\
-      \u304C\u7B49\u6BD4\u6570\u5217\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/pow_sum.hpp
-    title: "$\\sum_{i} A_i^k$ \u306E $k$ \u306B\u95A2\u3059\u308B\u5217\u6319"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/power_projection.hpp
-    title: Power Projection
-  - icon: ':heavy_check_mark:'
-    path: math/fps/rational_sum.hpp
-    title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/shift_of_sampling_points.hpp
-    title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/taylor_shift.hpp
-    title: Taylor Shift
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64.hpp
-    title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/sqrt_mod.hpp
-    title: "mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/euler_phi_carmichael.hpp
-    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
-      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/order_primitive_root.hpp
-    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/primality_test.hpp
-    title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/zeta_mobius_divisor_multiple_large.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: string/rolling_hash.hpp
-    title: Rolling Hash
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/linear_sieve.test.cpp
-    title: verify/mytest/linear_sieve.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint64.test.cpp
-    title: verify/mytest/modint64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/rational_plus.test.cpp
-    title: verify/mytest/rational_plus.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/rolling_hash.test.cpp
-    title: verify/mytest/rolling_hash.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution_many.test.cpp
-    title: verify/yosupo/convolution_many.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorial.test.cpp
-    title: verify/yosupo/factorial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_compositional_inverse.test.cpp
-    title: verify/yosupo/fps_compositional_inverse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_exp.test.cpp
-    title: verify/yosupo/fps_exp.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_exp_sparse.test.cpp
-    title: verify/yosupo/fps_exp_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_inv.test.cpp
-    title: verify/yosupo/fps_inv.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_inv_sparse.test.cpp
-    title: verify/yosupo/fps_inv_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_log.test.cpp
-    title: verify/yosupo/fps_log.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_log_sparse.test.cpp
-    title: verify/yosupo/fps_log_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_pow.test.cpp
-    title: verify/yosupo/fps_pow.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_pow_sparse.test.cpp
-    title: verify/yosupo/fps_pow_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_sqrt.test.cpp
-    title: verify/yosupo/fps_sqrt.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_sqrt_sparse.test.cpp
-    title: verify/yosupo/fps_sqrt_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-    title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_div.test.cpp
-    title: verify/yosupo/poly_div.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_interpolation.test.cpp
-    title: verify/yosupo/poly_interpolation.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_interpolation_geo.test.cpp
-    title: verify/yosupo/poly_interpolation_geo.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_multipoint_evaluation.test.cpp
-    title: verify/yosupo/poly_multipoint_evaluation.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-    title: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_shift_of_sampling_points.test.cpp
-    title: verify/yosupo/poly_shift_of_sampling_points.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_taylor_shift.test.cpp
-    title: verify/yosupo/poly_taylor_shift.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/polynomial_taylor_shift.test.cpp
-    title: verify/yosupo/polynomial_taylor_shift.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root.test.cpp
-    title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root_min.test.cpp
-    title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/sqrt_mod.test.cpp
-    title: verify/yosupo/sqrt_mod.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/bmbm.test.cpp
-    title: verify/yukicoder/bmbm.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/factorial.test.cpp
-    title: verify/yukicoder/factorial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_carmichael.test.cpp
-    title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_euler_phi.test.cpp
-    title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/poly_rational_sum.test.cpp
-    title: verify/yukicoder/poly_rational_sum.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/pow_sum.test.cpp
-    title: verify/yukicoder/pow_sum.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  _extendedDependsOn: []
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':warning:'
   attributes:
-    links:
-    - https://www.mathenachia.blog/even-mod-montgomery-impl/
-  bundledCode: "#line 2 \"math/modint/modint64_internal.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
-    \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
-    \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
-    \ EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\nusing ll = long long;\nusing\
-    \ uint = unsigned int;\nusing ull = unsigned long long;\nusing pll = pair<ll,\
-    \ ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll = tuple<ll, ll, ll, ll>;\n\
-    \n#define vc vector\ntemplate <class T>\nusing vvc = vc<vc<T>>;\ntemplate <class\
-    \ T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb = vc<bool>;\nusing vl = vc<ll>;\n\
-    using vpll = vc<pll>;\nusing vtlll = vc<tlll>;\nusing vtllll = vc<tllll>;\nusing\
-    \ vstr = vc<string>;\nusing vvb = vvc<bool>;\nusing vvl = vvc<ll>;\n\ntemplate\
-    \ <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate <class\
-    \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing i128 =\
-    \ __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string &s)\n{\n \
-    \ i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size();\
-    \ i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n\
-    \    for (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n\
-    }\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\"\
-    , res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n\
-    \    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n\
-    \  return sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string\
-    \ s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream\
-    \ &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define\
-    \ cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
-    \ docs/template/template_rep.md\n */\n\n// https://trap.jp/post/1224/\n\n#define\
-    \ overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0,\
-    \ nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i = ll(l), rrrrr\
-    \ = ll(r); i < rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i = ll(l), rrrrr\
-    \ = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define\
-    \ rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n#define repi1(i,\
-    \ n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i, l, r) for\
-    \ (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i, l, r, d)\
-    \ for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i < rrrrr :\
-    \ i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\
-    \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
-    #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\
-    \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
-    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
-    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
-    \ docs/template/template_math.md\n */\n\ntemplate <class T, class U>\ninline bool\
-    \ chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate <class T,\
-    \ class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true : false;\
-    \ }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T divfloor(U\
-    \ a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divceil(U a, V b) { return\
-    \ T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll,\
-    \ class U, class V>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
-    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V>\ninline\
-    \ constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
-    template <class T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b\
-    \ >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
-    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
-    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
-    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
-    \ T = ll, class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a\
-    \ >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m)\
-    \ / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\n\
-    T mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
+    links: []
+  bundledCode: "#line 2 \"math/modint/modint_internal_barrett32.hpp\"\n\n#line 2 \"\
+    template/template_all_but_modint.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
+    \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
+    \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
+    \nusing ll = long long;\nusing uint = unsigned int;\nusing ull = unsigned long\
+    \ long;\nusing pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll\
+    \ = tuple<ll, ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc\
+    \ = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb =\
+    \ vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\n\
+    using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
+    using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
+    \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
+    using i128 = __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string\
+    \ &s)\n{\n  i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i\
+    \ < (int)s.size(); i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n\
+    \  }\n  else\n  {\n    for (auto &&c : s)\n      res = 10 * res + c - '0';\n \
+    \ }\n  return res;\n}\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n\
+    \  string sign = \"\", res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n\
+    \  while (x > 0)\n  {\n    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(),\
+    \ res.end());\n  return sign + res;\n}\nistream &operator>>(istream &is, i128\
+    \ &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream\
+    \ &operator<<(ostream &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n\
+    }\n#endif\n\n#define cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\
+    \n#line 4 \"template/template_rep.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n */\n\n//\
+    \ https://trap.jp/post/1224/\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n\
+    #define rep1(i, n) for (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i,\
+    \ l, r) for (ll i = ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define rep3(i, l,\
+    \ r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr\
+    \ : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n\
+    #define repi1(i, n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i,\
+    \ l, r) for (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i,\
+    \ l, r, d) for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i\
+    \ < rrrrr : i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3,\
+    \ repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n#define\
+    \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
+    #line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
+    #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
+    \n\n#line 2 \"utils/is_integral_ext.hpp\"\n\n#line 4 \"utils/is_integral_ext.hpp\"\
+    \n\n/**\n * @brief $128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\
+    \u6574\u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n */\n\ntemplate\
+    \ <class T>\nconstexpr bool is_integral_ext = is_integral_v<T> || is_same_v<T,\
+    \ i128> || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr bool is_signed_ext\
+    \ = is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class T>\nconstexpr bool\
+    \ is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;\n#line 14 \"template/template_math.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
+    \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
+    inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
+    \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divfloor(U a, V b) { return T(a)\
+    \ / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class\
+    \ U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\n\
+    inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V, typename\
+    \ = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\ninline constexpr T\
+    \ safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
+    \ T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a\
+    \ < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while\
+    \ (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n\
+    \      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll,\
+    \ class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0\
+    \ && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) /\
+    \ T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT\
+    \ mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
     \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
     \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
     \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
@@ -771,18 +551,18 @@ data:
     \ &add) { for (auto &vi : v) vi += add; }\ntemplate <class T, class Add>\nvoid\
     \ offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto &vij : vi)\
     \ vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E -----\ntemplate <class\
-    \ T, const size_t m>\narray<vc<T>, m> top(const vc<array<T, m>> &vt)\n{\n  const\
+    \ T, const size_t m>\narray<vc<T>, m> unzip(const vc<array<T, m>> &vt)\n{\n  const\
     \ size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t\
     \ i = 0; i < n; i++)\n    for (size_t j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n\
-    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> top(const\
+    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> zip(const\
     \ array<vc<T>, m> &tv)\n{\n  if (tv.empty()) return {};\n  const size_t n = tv[0].size();\n\
     \  vc<array<T, m>> vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size()\
     \ == n);\n    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n\
-    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const\
+    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> unzip(const\
     \ vc<pair<T, U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>>\
     \ tv;\n  tv.first.resize(n), tv.second.resize(n);\n  for (size_t i = 0; i < n;\
     \ i++)\n    tie(tv.first[i], tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate\
-    \ <class T, class U>\nvc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
+    \ <class T, class U>\nvc<pair<T, U>> zip(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
     \ size_t n = tv.first.size();\n  assert(n == tv.second.size());\n  vc<pair<T,\
     \ U>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i],\
     \ tv.second[i]);\n  return vt;\n}\n\nnamespace internal\n{\n\ntemplate <size_t...\
@@ -790,17 +570,18 @@ data:
     \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\n\ntemplate <size_t...\
     \ I, class Tp>\nauto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t\
     \ index)\n{ return make_tuple(get<I>(tv)[index]...); }\n\n};\n\ntemplate <class...\
-    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
+    \ Ts>\nauto unzip(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
     \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
     \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    internal::vt_to_tv_impl(tv, vt[i],\
     \ make_index_sequence<tuple_size_v<decltype(tv)>>{}, i);\n  return tv;\n}\n\n\
-    template <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
+    template <class... Ts>\nauto zip(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 2 \"template/template_random.hpp\"\n\n#line 5 \"\
-    template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
+    \ vt;\n}\n\n#define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)\n#define ZIP(vt,\
+    \ ...) auto vt = zip(tuple{__VA_ARGS__})\n// ----------\n#line 2 \"template/template_random.hpp\"\
+    \n\n#line 5 \"template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
     \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
     \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
     \  return T(l) + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\
@@ -818,167 +599,43 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 2 \"math/modint/modint32_internal.hpp\"\n\n#line 4 \"math/modint/modint32_internal.hpp\"\
-    \n\nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll x, ll n, int m)\n\
-    {\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y =\
-    \ safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n\
-    \    y = (y * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int\
-    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
-    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while\
-    \ (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll\
-    \ a : bases)\n  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n  \
-    \  while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n \
-    \     t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n\
-    \  }\n  return true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
-    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}\n#line 5 \"math/modint/modint64_internal.hpp\"\n\nnamespace internal\n\
-    {\n\nconstexpr ll powmod64_constexpr(ll x, ll n, ll m)\n{\n  if (m == 1)\n   \
-    \ return 0;\n  ull _m = (ull)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while\
-    \ (n)\n  {\n    u128 y128(y);\n    if (n & 1)\n      r = (y128 * r) % _m;\n  \
-    \  y = (y128 * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime64_constexpr(ll\
-    \ n)\n{\n  if (n <= INT_MAX)\n    return isprime32_constexpr(n);\n  if (n % 2\
-    \ == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2 == 0)\n    d /= 2;\n\
-    \  constexpr ll bases[7] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};\n\
-    \  for (ll a : bases)\n  {\n    ll t = d;\n    ll y = powmod64_constexpr(a, t,\
-    \ n);\n    while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = (u128(y)\
-    \ * y) % n;\n      t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return\
-    \ false;\n  }\n  return true;\n}\ntemplate <ll n>\nconstexpr bool isprime64 =\
-    \ isprime64_constexpr(n);\n\ninline constexpr ull inv64(ull a)\n{\n  ull x = a;\n\
-    \  while (a * x != 1) x *= 2 - a * x;\n  return x;\n}\n\nstruct montgomery64odd\n\
-    {\n  ull m, im, sq;\n  // sq = (2^64)^2 % m = (2^128 - m) % m = (-m % 2^128) %\
-    \ m\n  explicit montgomery64odd(ull m) : m(m), im(inv64(m)), sq(-u128(m) % m)\
-    \ {}\n  ull umod() const { return m; }\n  ull reduce(u128 x) const\n  {\n    auto\
-    \ t = (x + u128(m) * (-im * ull(x))) >> 64;\n    if (t >= m)\n      t -= m;\n\
-    \    return (ull)t;\n  }\n  ull inv_reduce(i128 v) const\n  { return reduce(u128(v\
-    \ % m + m) * sq); }\n};\n\n// https://www.mathenachia.blog/even-mod-montgomery-impl/\n\
-    struct montgomery64\n{\n  ull m, mx, imx, d, q;\n  uint b;\n\n  explicit montgomery64(ull\
-    \ m) : m(m)\n  {\n    b = countr_zero(m), mx = m >> b;  // m == 2^b * mx, mx is\
-    \ odd\n    imx = inv64(mx);\n    d = powmod64_constexpr((mx + 1) / 2, b, mx);\
-    \  // 2^{-b} mod mx\n    u128 sq = -u128(mx) % mx;  // 2^128 mod mx\n    q = (1\
-    \ + (((sq - 1) * d) << b)) % m;\n  }\n  ull umod() const { return m; }\n  ull\
-    \ reduce(u128 x) const\n  {\n    ull p = x & MASK(b);  // x mod 2^b\n    x = (x\
-    \ >> b) + p * d;\n    ull y = p << (64 - b);\n    auto t = (x + u128(mx) * (imx\
-    \ * (y - ull(x)))) >> (64 - b);\n    if (t >= m)\n    {\n      t -= m;\n     \
-    \ if (t >= m)\n        t -= m;\n    }\n    return (ull)t;\n  }\n  ull inv_reduce(i128\
-    \ v) const\n  { return reduce(u128(v % m + m) * q); }\n};\n\n}\n"
+    \ 4 \"math/modint/modint_internal_barrett32.hpp\"\n\nnamespace internal\n{\n\n\
+    struct barrett32\n{\n  uint m;\n  ull im;\n  explicit barrett32(uint m) : m(m),\
+    \ im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
+    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = ull((u128(z)\
+    \ * im) >> 64);\n    ull y = x * m;\n    return uint(z - y + (z < y ? m : 0));\n\
+    \  }\n};\n\ntemplate <int id>\nstruct policy_barrett32\n{\n  using value_type\
+    \ = uint;\n  using calc_type = ull;\n  using mod_type = int;\n  \n  static constexpr\
+    \ bool is_prime = false;\n  static inline barrett32 reducer{998244353};\n  static\
+    \ void set_mod(mod_type m) { reducer = barrett32(m); }\n  static mod_type mod()\
+    \ { return reducer.umod(); }\n  static value_type umod() { return reducer.umod();\
+    \ }\n  static value_type init(value_type v) { return v; }\n  static mod_type val(value_type\
+    \ v) { return v; }\n  static value_type mul(value_type a, value_type b) { return\
+    \ reducer.mul(a, b); }\n};\n\n};\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
-    #include \"modint32_internal.hpp\"\n\nnamespace internal\n{\n\nconstexpr ll powmod64_constexpr(ll\
-    \ x, ll n, ll m)\n{\n  if (m == 1)\n    return 0;\n  ull _m = (ull)m;\n  ull r\
-    \ = 1;\n  ull y = safemod(x, m);\n  while (n)\n  {\n    u128 y128(y);\n    if\
-    \ (n & 1)\n      r = (y128 * r) % _m;\n    y = (y128 * y) % _m;\n    n >>= 1;\n\
-    \  }\n  return r;\n}\n\nconstexpr bool isprime64_constexpr(ll n)\n{\n  if (n <=\
-    \ INT_MAX)\n    return isprime32_constexpr(n);\n  if (n % 2 == 0)\n    return\
-    \ false;\n  ll d = n - 1;\n  while (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[7]\
-    \ = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};\n  for (ll a : bases)\n\
-    \  {\n    ll t = d;\n    ll y = powmod64_constexpr(a, t, n);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y = (u128(y) * y) % n;\n      t\
-    \ <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n\
-    \  return true;\n}\ntemplate <ll n>\nconstexpr bool isprime64 = isprime64_constexpr(n);\n\
-    \ninline constexpr ull inv64(ull a)\n{\n  ull x = a;\n  while (a * x != 1) x *=\
-    \ 2 - a * x;\n  return x;\n}\n\nstruct montgomery64odd\n{\n  ull m, im, sq;\n\
-    \  // sq = (2^64)^2 % m = (2^128 - m) % m = (-m % 2^128) % m\n  explicit montgomery64odd(ull\
-    \ m) : m(m), im(inv64(m)), sq(-u128(m) % m) {}\n  ull umod() const { return m;\
-    \ }\n  ull reduce(u128 x) const\n  {\n    auto t = (x + u128(m) * (-im * ull(x)))\
-    \ >> 64;\n    if (t >= m)\n      t -= m;\n    return (ull)t;\n  }\n  ull inv_reduce(i128\
-    \ v) const\n  { return reduce(u128(v % m + m) * sq); }\n};\n\n// https://www.mathenachia.blog/even-mod-montgomery-impl/\n\
-    struct montgomery64\n{\n  ull m, mx, imx, d, q;\n  uint b;\n\n  explicit montgomery64(ull\
-    \ m) : m(m)\n  {\n    b = countr_zero(m), mx = m >> b;  // m == 2^b * mx, mx is\
-    \ odd\n    imx = inv64(mx);\n    d = powmod64_constexpr((mx + 1) / 2, b, mx);\
-    \  // 2^{-b} mod mx\n    u128 sq = -u128(mx) % mx;  // 2^128 mod mx\n    q = (1\
-    \ + (((sq - 1) * d) << b)) % m;\n  }\n  ull umod() const { return m; }\n  ull\
-    \ reduce(u128 x) const\n  {\n    ull p = x & MASK(b);  // x mod 2^b\n    x = (x\
-    \ >> b) + p * d;\n    ull y = p << (64 - b);\n    auto t = (x + u128(mx) * (imx\
-    \ * (y - ull(x)))) >> (64 - b);\n    if (t >= m)\n    {\n      t -= m;\n     \
-    \ if (t >= m)\n        t -= m;\n    }\n    return (ull)t;\n  }\n  ull inv_reduce(i128\
-    \ v) const\n  { return reduce(u128(v % m + m) * q); }\n};\n\n}"
-  dependsOn:
-  - template/template_all_but_modint.hpp
-  - template/template_types.hpp
-  - template/template_rep.hpp
-  - template/template_math.hpp
-  - template/template_vector.hpp
-  - template/template_algo.hpp
-  - template/template_binsearch.hpp
-  - template/template_bit.hpp
-  - template/template_inout.hpp
-  - template/template_dump.hpp
-  - template/template_random.hpp
-  - math/modint/modint32_internal.hpp
+    \nnamespace internal\n{\n\nstruct barrett32\n{\n  uint m;\n  ull im;\n  explicit\
+    \ barrett32(uint m) : m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return\
+    \ m; }\n  uint mul(uint a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n \
+    \   ull x = ull((u128(z) * im) >> 64);\n    ull y = x * m;\n    return uint(z\
+    \ - y + (z < y ? m : 0));\n  }\n};\n\ntemplate <int id>\nstruct policy_barrett32\n\
+    {\n  using value_type = uint;\n  using calc_type = ull;\n  using mod_type = int;\n\
+    \  \n  static constexpr bool is_prime = false;\n  static inline barrett32 reducer{998244353};\n\
+    \  static void set_mod(mod_type m) { reducer = barrett32(m); }\n  static mod_type\
+    \ mod() { return reducer.umod(); }\n  static value_type umod() { return reducer.umod();\
+    \ }\n  static value_type init(value_type v) { return v; }\n  static mod_type val(value_type\
+    \ v) { return v; }\n  static value_type mul(value_type a, value_type b) { return\
+    \ reducer.mul(a, b); }\n};\n\n};\n"
+  dependsOn: []
   isVerificationFile: false
-  path: math/modint/modint64_internal.hpp
-  requiredBy:
-  - string/rolling_hash.hpp
-  - math/prime/large/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/large/euler_phi_carmichael.hpp
-  - math/prime/large/factorize.hpp
-  - math/prime/large/primality_test.hpp
-  - math/prime/large/order_primitive_root.hpp
-  - math/fps/bmbm.hpp
-  - math/fps/rational_sum.hpp
-  - math/fps/shift_of_sampling_points.hpp
-  - math/fps/power_projection.hpp
-  - math/fps/compositional_inverse.hpp
-  - math/fps/factorial.hpp
-  - math/fps/interpolation.hpp
-  - math/fps/multipoint_evaluation_geo.hpp
-  - math/fps/interpolation_geo.hpp
-  - math/fps/multipoint_evaluation.hpp
-  - math/fps/taylor_shift.hpp
-  - math/fps/pow_sum.hpp
-  - math/fps/bostan_mori.hpp
-  - math/fps/fps.hpp
-  - math/modint/sqrt_mod.hpp
-  - math/modint/modint64.hpp
-  timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/factorial.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yukicoder/poly_rational_sum.test.cpp
-  - verify/yukicoder/pow_sum.test.cpp
-  - verify/yukicoder/bmbm.test.cpp
-  - verify/mytest/modint64.test.cpp
-  - verify/mytest/rolling_hash.test.cpp
-  - verify/mytest/rational_plus.test.cpp
-  - verify/mytest/linear_sieve.test.cpp
-  - verify/yosupo/sqrt_mod.test.cpp
-  - verify/yosupo/fps_log_sparse.test.cpp
-  - verify/yosupo/poly_taylor_shift.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/poly_multipoint_evaluation.test.cpp
-  - verify/yosupo/poly_interpolation_geo.test.cpp
-  - verify/yosupo/poly_div.test.cpp
-  - verify/yosupo/fps_exp_sparse.test.cpp
-  - verify/yosupo/fps_sqrt_sparse.test.cpp
-  - verify/yosupo/polynomial_taylor_shift.test.cpp
-  - verify/yosupo/factorial.test.cpp
-  - verify/yosupo/fps_pow.test.cpp
-  - verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-  - verify/yosupo/fps_pow_sparse.test.cpp
-  - verify/yosupo/fps_inv.test.cpp
-  - verify/yosupo/poly_interpolation.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/convolution_many.test.cpp
-  - verify/yosupo/fps_inv_sparse.test.cpp
-  - verify/yosupo/fps_log.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - verify/yosupo/poly_shift_of_sampling_points.test.cpp
-  - verify/yosupo/fps_sqrt.test.cpp
-  - verify/yosupo/fps_exp.test.cpp
-  - verify/yosupo/fps_compositional_inverse.test.cpp
-documentation_of: math/modint/modint64_internal.hpp
+  path: math/modint/modint_internal_barrett32.hpp
+  requiredBy: []
+  timestamp: '1970-01-01 00:00:00+00:00'
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
+documentation_of: math/modint/modint_internal_barrett32.hpp
 layout: document
 redirect_from:
-- /library/math/modint/modint64_internal.hpp
-- /library/math/modint/modint64_internal.hpp.html
-title: math/modint/modint64_internal.hpp
+- /library/math/modint/modint_internal_barrett32.hpp
+- /library/math/modint/modint_internal_barrett32.hpp.html
+title: math/modint/modint_internal_barrett32.hpp
 ---

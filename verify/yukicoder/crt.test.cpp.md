@@ -1,64 +1,12 @@
 ---
 data:
-  _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: math/crt.hpp
-    title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
-  - icon: ':heavy_check_mark:'
-    path: math/extgcd.hpp
-    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint32_internal.hpp
-    title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_algo.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
-      \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_all_but_modint.hpp
-    title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_binsearch.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_bit.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
-      \uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_dump.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_inout.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_main.hpp
-    title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_math.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_random.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
-      \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_rep.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_types.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_vector.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
-  attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://yukicoder.me/problems/447
-    links:
-    - https://yukicoder.me/problems/447
+  _verificationStatusIcon: ':x:'
+  attributes: {}
   bundledCode: "#line 1 \"verify/yukicoder/crt.test.cpp\"\n#define PROBLEM \"https://yukicoder.me/problems/447\"\
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
     \n#ifndef LOCAL\n#define FAST_IO\n// #define FAST_CIO\n// #define INTERACTIVE\n\
@@ -101,37 +49,47 @@ data:
     \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
     #line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
     #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
+    \n\n#line 2 \"utils/is_integral_ext.hpp\"\n\n#line 4 \"utils/is_integral_ext.hpp\"\
+    \n\n/**\n * @brief $128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\
+    \u6574\u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n */\n\ntemplate\
+    \ <class T>\nconstexpr bool is_integral_ext = is_integral_v<T> || is_same_v<T,\
+    \ i128> || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr bool is_signed_ext\
+    \ = is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class T>\nconstexpr bool\
+    \ is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;\n#line 14 \"template/template_math.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
     \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
     inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
     \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
-    \ : false; }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T\
-    \ divfloor(U a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0);\
-    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T divceil(U a,\
-    \ V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divround(U a, V b) { return\
-    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U,\
-    \ class V>\ninline constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a,\
-    \ b); }\n\ntemplate <class T = ll, class U, class V>\nconstexpr T ipow(U a, V\
-    \ b)\n{\n  assert(b >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a ==\
-    \ 1)\n    return a;\n  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n \
-    \ T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n\
-    \    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n\
-    }\ntemplate <class T = ll, class A, class B, class M>\nT mul_limited(A a, B b,\
-    \ M m)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n\
-    \  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll,\
-    \ class A, class B>\nT mul_limited(A a, B b) { return mul_limited<T>(a, b, INF);\
-    \ }\ntemplate <class T = ll, class A, class B, class M>\nT pow_limited(A a, B\
-    \ b, M m)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n\
-    \    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n\
-    \  {\n    if (b & 1)\n    {\n      if (res > T(m) / tmp)\n        return m;\n\
-    \      res *= tmp;\n    }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if\
-    \ (tmp > T(m) / tmp)\n      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\n\
-    template <class T = ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a,\
-    \ b, INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A\
-    \ a, K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return\
-    \ a;\n  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n\
-    \      if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divfloor(U a, V b) { return T(a)\
+    \ / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class\
+    \ U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\n\
+    inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V, typename\
+    \ = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\ninline constexpr T\
+    \ safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
+    \ T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a\
+    \ < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while\
+    \ (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n\
+    \      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll,\
+    \ class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0\
+    \ && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) /\
+    \ T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT\
+    \ mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
+    \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
+    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
+    \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
+    \    {\n      if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n  \
+    \  }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n\
+    \      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T =\
+    \ ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a, b,\
+    \ INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A a,\
+    \ K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n\
+    \  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n     \
+    \ if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
     \      return sqrtl(a);\n  }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x\
     \ == 0)\n      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n\
     \      if (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n\
@@ -595,18 +553,18 @@ data:
     \ &add) { for (auto &vi : v) vi += add; }\ntemplate <class T, class Add>\nvoid\
     \ offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto &vij : vi)\
     \ vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E -----\ntemplate <class\
-    \ T, const size_t m>\narray<vc<T>, m> top(const vc<array<T, m>> &vt)\n{\n  const\
+    \ T, const size_t m>\narray<vc<T>, m> unzip(const vc<array<T, m>> &vt)\n{\n  const\
     \ size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t\
     \ i = 0; i < n; i++)\n    for (size_t j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n\
-    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> top(const\
+    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> zip(const\
     \ array<vc<T>, m> &tv)\n{\n  if (tv.empty()) return {};\n  const size_t n = tv[0].size();\n\
     \  vc<array<T, m>> vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size()\
     \ == n);\n    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n\
-    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const\
+    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> unzip(const\
     \ vc<pair<T, U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>>\
     \ tv;\n  tv.first.resize(n), tv.second.resize(n);\n  for (size_t i = 0; i < n;\
     \ i++)\n    tie(tv.first[i], tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate\
-    \ <class T, class U>\nvc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
+    \ <class T, class U>\nvc<pair<T, U>> zip(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
     \ size_t n = tv.first.size();\n  assert(n == tv.second.size());\n  vc<pair<T,\
     \ U>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i],\
     \ tv.second[i]);\n  return vt;\n}\n\nnamespace internal\n{\n\ntemplate <size_t...\
@@ -614,17 +572,18 @@ data:
     \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\n\ntemplate <size_t...\
     \ I, class Tp>\nauto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t\
     \ index)\n{ return make_tuple(get<I>(tv)[index]...); }\n\n};\n\ntemplate <class...\
-    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
+    \ Ts>\nauto unzip(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
     \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
     \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    internal::vt_to_tv_impl(tv, vt[i],\
     \ make_index_sequence<tuple_size_v<decltype(tv)>>{}, i);\n  return tv;\n}\n\n\
-    template <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
+    template <class... Ts>\nauto zip(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 2 \"template/template_random.hpp\"\n\n#line 5 \"\
-    template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
+    \ vt;\n}\n\n#define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)\n#define ZIP(vt,\
+    \ ...) auto vt = zip(tuple{__VA_ARGS__})\n// ----------\n#line 2 \"template/template_random.hpp\"\
+    \n\n#line 5 \"template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
     \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
     \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
     \  return T(l) + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\
@@ -654,104 +613,106 @@ data:
     \    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1,\
     \ y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q *\
     \ z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1,\
-    \ y1};\n}\n#line 2 \"math/modint/modint32_internal.hpp\"\n\n#line 4 \"math/modint/modint32_internal.hpp\"\
-    \n\nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll x, ll n, int m)\n\
-    {\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y =\
-    \ safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n\
-    \    y = (y * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int\
-    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
-    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while\
-    \ (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll\
-    \ a : bases)\n  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n  \
-    \  while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n \
-    \     t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n\
-    \  }\n  return true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
+    \ y1};\n}\n#line 2 \"utils/larger_int.hpp\"\n\n#line 4 \"utils/larger_int.hpp\"\
+    \n\n/**\n * @brief $2$ \u500D\u306E\u30D3\u30C3\u30C8\u6570\u306E\u6574\u6570\u578B\
+    \n * @docs docs/utils/larger_int.md\n */\n\ntemplate <class T>\nstruct larger_int;\n\
+    \n#define LARGER_INT(T, U) \\\n  template <>            \\\n  struct larger_int<T>\
+    \   \\\n  {                      \\\n    using type = U;      \\\n  };\n\nLARGER_INT(signed\
+    \ char, short)\nLARGER_INT(short, int)\nLARGER_INT(int, long long)\nLARGER_INT(long,\
+    \ __int128_t)\nLARGER_INT(long long, __int128_t)\n\nLARGER_INT(unsigned char,\
+    \ unsigned short)\nLARGER_INT(unsigned short, unsigned int)\nLARGER_INT(unsigned\
+    \ int, unsigned long long)\nLARGER_INT(unsigned long, __uint128_t)\nLARGER_INT(unsigned\
+    \ long long, __uint128_t)\n\n#undef LARGER_INT\n\ntemplate <class T>\nusing larger_int_t\
+    \ = typename larger_int<T>::type;\n#line 2 \"math/modint/modint_internal_barrett32.hpp\"\
+    \n\n#line 4 \"math/modint/modint_internal_barrett32.hpp\"\n\nnamespace internal\n\
+    {\n\nstruct barrett32\n{\n  uint m;\n  ull im;\n  explicit barrett32(uint m) :\
     \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}\n#line 7 \"math/crt.hpp\"\n\n/**\n * @brief \u4E2D\u56FD\u5270\u4F59\
-    \u5B9A\u7406 (CRT)\n * @docs docs/math/crt.md\n */\n\n// (\u89E3\u304C\u5B58\u5728\
-    \u3059\u308B\u304B, r, m)\ntemplate <class T = ll, class R0, class R1, class M0,\
-    \ class M1>\nconstexpr tuple<bool, T, T> crt2(R0 r0_, R1 r1_, M0 m0_, M1 m1_)\n\
-    {\n  T m0 = m0_, m1 = m1_;\n  assert(m0 >= 1 && m1 >= 1);\n  T r0 = safemod(r0_,\
-    \ m0), r1 = safemod(r1_, m1);\n  if (m0 < m1)\n    swap(r0, r1), swap(m0, m1);\n\
-    \  if (m0 % m1 == 0)\n  {\n    if (r0 % m1 != r1)\n      return {false, 0, 0};\n\
-    \    return {true, r0, m0};\n  }\n  auto [g, im, _] = extgcd<T>(m0, m1);\n  T\
-    \ u1 = m1 / g;\n  if ((r1 - r0) % g)\n    return {false, 0, 0};\n  T x = (r1 -\
-    \ r0) / g % u1 * im % u1;\n  r0 += x * m0;\n  m0 *= u1;\n  if (r0 < 0)\n    r0\
-    \ += m0;\n  return {true, r0, m0};\n}\n\n// (\u89E3\u304C\u5B58\u5728\u3059\u308B\
-    \u304B, r, m)\ntemplate <class T = ll, class V1, class V2>\nconstexpr tuple<bool,\
-    \ T, T> crt(const V1 &rs, const V2 &ms)\n{\n  assert(rs.size() == ms.size());\n\
-    \  const int n = rs.size();\n  T r = 0, m = 1;\n  repi(i, n)\n  {\n    auto [ok,\
-    \ nr, nm] = crt2<T>(r, rs[i], m, ms[i]);\n    if (!ok)\n      return {false, 0,\
-    \ 0};\n    r = nr, m = nm;\n  }\n  return {true, r, m};\n}\n\n// (r, m)\n// ms[i]\
-    \ \u305F\u3061\u306F pairwise coprime\n// T \u306F ms[i] \u306E\u578B\u306E 2\
-    \ \u4E57\u304C\u53CE\u307E\u308B (\u7B26\u53F7\u3064\u304D)\ntemplate <class mint,\
-    \ class T = ll, class V1, class V2>\npair<mint, mint> crt_mod(const V1 &rs, const\
-    \ V2 &ms)\n{\n  assert(rs.size() == ms.size());\n  const int n = rs.size();\n\
-    \  mint r = 0, m = 1;\n  vc<T> rr(n, 0), mm(n, 1);\n  repi(i, n)\n  {\n    //\
-    \ r = t[0] + t[1]m[0] + ... + t[i-1]m[0]...m[i-2] mod mint::mod\n    // m = m[0]...m[i-1]\
-    \ mod mint::mod\n    // rr[i] = t[0] + t[1]m[0] + ... + t[i-1]m[0]...m[i-2] mod\
-    \ m[i]\n    // mm[i] = m[0]...m[i-1] mod m[i]\n    assert(ms[i] >= 1);\n    auto\
-    \ [g, im, _] = extgcd<T>(mm[i], ms[i]);\n    assert(g == 1);\n    T t = safemod((rs[i]\
-    \ % ms[i] - rr[i]) * im, ms[i]);\n    r += t * m, m *= ms[i];\n    repi(j, i +\
-    \ 1, n)\n    {\n      rr[j] += t * mm[j] % ms[j];\n      if (rr[j] >= ms[j])\n\
+    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = ull((u128(z)\
+    \ * im) >> 64);\n    ull y = x * m;\n    return uint(z - y + (z < y ? m : 0));\n\
+    \  }\n};\n\ntemplate <int id>\nstruct policy_barrett32\n{\n  using value_type\
+    \ = uint;\n  using calc_type = ull;\n  using mod_type = int;\n  \n  static constexpr\
+    \ bool is_prime = false;\n  static inline barrett32 reducer{998244353};\n  static\
+    \ void set_mod(mod_type m) { reducer = barrett32(m); }\n  static mod_type mod()\
+    \ { return reducer.umod(); }\n  static value_type umod() { return reducer.umod();\
+    \ }\n  static value_type init(value_type v) { return v; }\n  static mod_type val(value_type\
+    \ v) { return v; }\n  static value_type mul(value_type a, value_type b) { return\
+    \ reducer.mul(a, b); }\n};\n\n};\n#line 8 \"math/crt.hpp\"\n\n/**\n * @brief \u4E2D\
+    \u56FD\u5270\u4F59\u5B9A\u7406 (CRT)\n * @docs docs/math/crt.md\n */\n\n// (\u89E3\
+    \u304C\u5B58\u5728\u3059\u308B\u304B, r, m)\ntemplate <class T = ll, class R0,\
+    \ class R1, class M0, class M1>\nconstexpr tuple<bool, T, T> crt2(R0 r0_, R1 r1_,\
+    \ M0 m0_, M1 m1_)\n{\n  T m0 = m0_, m1 = m1_;\n  assert(m0 >= 1 && m1 >= 1);\n\
+    \  T r0 = safemod(r0_, m0), r1 = safemod(r1_, m1);\n  if (m0 < m1)\n    swap(r0,\
+    \ r1), swap(m0, m1);\n  if (m0 % m1 == 0)\n  {\n    if (r0 % m1 != r1)\n     \
+    \ return {false, 0, 0};\n    return {true, r0, m0};\n  }\n  auto [g, im, _] =\
+    \ extgcd<T>(m0, m1);\n  T u1 = m1 / g;\n  if ((r1 - r0) % g)\n    return {false,\
+    \ 0, 0};\n  T x = (r1 - r0) / g % u1 * im % u1;\n  r0 += x * m0;\n  m0 *= u1;\n\
+    \  if (r0 < 0)\n    r0 += m0;\n  return {true, r0, m0};\n}\n\n// (\u89E3\u304C\
+    \u5B58\u5728\u3059\u308B\u304B, r, m)\ntemplate <class T = ll, class V1, class\
+    \ V2>\nconstexpr tuple<bool, T, T> crt(const V1 &rs, const V2 &ms)\n{\n  assert(rs.size()\
+    \ == ms.size());\n  const int n = rs.size();\n  T r = 0, m = 1;\n  repi(i, n)\n\
+    \  {\n    auto [ok, nr, nm] = crt2<T>(r, rs[i], m, ms[i]);\n    if (!ok)\n   \
+    \   return {false, 0, 0};\n    r = nr, m = nm;\n  }\n  return {true, r, m};\n\
+    }\n\n// (r, m)\n// ms[i] \u305F\u3061\u306F pairwise coprime\ntemplate <class\
+    \ mint, class V1, class V2>\npair<mint, mint> crt_mod(const V1 &rs, const V2 &ms)\n\
+    {\n  using T = decay_t<decltype(ms[0])>;\n  assert(rs.size() == ms.size());\n\
+    \  const int n = rs.size();\n  mint r = 0, m = 1;\n\n  if constexpr (sizeof(T)\
+    \ <= 4)\n  {\n    vc<internal::barrett32> ba;\n    ba.reserve(n);\n    repi(i,\
+    \ n) ba.eb(ms[i]);\n    vc<uint> rr(n, 0), mm(n, 1);\n    repi(i, n)\n    {\n\
+    \      assert(ms[i] >= 1);\n      auto [g, im, _] = extgcd<ll>(mm[i], ms[i]);\n\
+    \      assert(g == 1);\n      if (im < 0)\n        im += ms[i];\n      ll diff\
+    \ = safemod(ll(rs[i]) - rr[i], ms[i]);\n      uint t = ba[i].mul(diff, im);\n\
+    \      r += t * m, m *= ms[i];\n      repi(j, i + 1, n)\n      {\n        rr[j]\
+    \ += ba[j].mul(t, mm[j]);\n        if (rr[j] >= (uint)ms[j])\n          rr[j]\
+    \ -= ms[j];\n        mm[j] = ba[j].mul(mm[j], ms[i]);\n      }\n    }\n  }\n \
+    \ else\n  {\n    vc<ull> rr(n, 0), mm(n, 1);\n    repi(i, n)\n    {\n      assert(ms[i]\
+    \ >= 1);\n      auto [g, im, _] = extgcd<ll>(mm[i], ms[i]);\n      assert(g ==\
+    \ 1);\n      if (im < 0)\n        im += ms[i];\n      i128 diff = safemod((i128)rs[i]\
+    \ - rr[i], ms[i]);\n      ull t = (ull)((u128)diff * im % ms[i]);\n      r +=\
+    \ t * m, m *= ms[i];\n      repi(j, i + 1, n)\n      {\n        rr[j] += (ull)((u128)t\
+    \ * mm[j] % ms[j]);\n        if (rr[j] >= (ull)ms[j]) rr[j] -= ms[j];\n      \
+    \  mm[j] = (ull)((u128)mm[j] * ms[i] % ms[j]);\n      }\n    }\n  }\n  return\
+    \ {r, m};\n}\n\n// (r, m)\n// \u5F15\u6570\u306F array\n// ms[i] \u305F\u3061\u304C\
+    \u30B3\u30F3\u30D1\u30A4\u30EB\u6642\u5B9A\u6570\u3067\u3042\u308B\u3053\u3068\
+    \u3092\u4EEE\u5B9A\n// ms[i] \u305F\u3061\u306F pairwise coprime\n// 0 <= rs[i]\
+    \ < ms[i]\ntemplate <class mint, class U1, class U2, size_t n>\nconstexpr pair<mint,\
+    \ mint> crt_mod_constexpr(const array<U1, n> &rs, const array<U2, n> &ms)\n{\n\
+    \  using T = larger_int_t<U2>;\n  assert(rs.size() == ms.size());\n  mint r =\
+    \ 0, m = 1;\n  array<T, n> rr{}, mm;\n  fill(ALL(mm), 1);\n  repi(i, n)\n  {\n\
+    \    assert(ms[i] >= U2(1));\n    assert(U1(0) <= rs[i] && U2(rs[i]) < ms[i]);\n\
+    \    auto [g, im, _] = extgcd<T>(mm[i], ms[i]);\n    assert(g == 1);\n    T t\
+    \ = safemod((rs[i] - rr[i]) * im, ms[i]);\n    r += t * m, m *= ms[i];\n    repi(j,\
+    \ i + 1, n)\n    {\n      rr[j] += t * mm[j] % ms[j];\n      if (rr[j] >= ms[j])\n\
     \        rr[j] -= ms[j];\n      mm[j] *= ms[i], mm[j] %= ms[j];\n    }\n  }\n\
-    \  return {r, m};\n}\n\n// (r, m)\n// \u5F15\u6570\u306F array\n// ms[i] \u305F\
-    \u3061\u304C\u30B3\u30F3\u30D1\u30A4\u30EB\u6642\u5B9A\u6570\u3067\u3042\u308B\
-    \u3053\u3068\u3092\u4EEE\u5B9A\n// ms[i] \u305F\u3061\u306F pairwise coprime\n\
-    // 0 <= rs[i] < ms[i]\n// T \u306F ms[i] \u306E\u578B\u306E 2 \u4E57\u304C\u53CE\
-    \u307E\u308B (\u7B26\u53F7\u3064\u304D)\ntemplate <class mint, class T = ll, class\
-    \ U1, class U2, size_t n>\nconstexpr pair<mint, mint> crt_mod_constexpr(const\
-    \ array<U1, n> &rs, const array<U2, n> &ms)\n{\n  assert(rs.size() == ms.size());\n\
-    \  mint r = 0, m = 1;\n  array<T, n> rr{}, mm;\n  fill(ALL(mm), 1);\n  repi(i,\
-    \ n)\n  {\n    assert(ms[i] >= U2(1));\n    assert(U1(0) <= rs[i] && U2(rs[i])\
-    \ < ms[i]);\n    auto [g, im, _] = extgcd<T>(mm[i], ms[i]);\n    assert(g == 1);\n\
-    \    T t = safemod((rs[i] - rr[i]) * im, ms[i]);\n    r += t * m, m *= ms[i];\n\
-    \    repi(j, i + 1, n)\n    {\n      rr[j] += t * mm[j] % ms[j];\n      if (rr[j]\
-    \ >= ms[j])\n        rr[j] -= ms[j];\n      mm[j] *= ms[i], mm[j] %= ms[j];\n\
-    \    }\n  }\n  return {r, m};\n}\n\n// (r, m)\n// ms[i] \u305F\u3061\u306F pairwise\
-    \ coprime\n// ms[i] \u305F\u3061\u304C dynamic 32 bit \u306E\u5834\u5408\u306B\
-    \u9AD8\u901F\u5316\u3057\u305F\u3082\u306E\ntemplate <class mint, class V1, class\
-    \ V2>\npair<mint, mint> crt_mod_dynamic_32(const V1 &rs, const V2 &ms)\n{\n  assert(rs.size()\
-    \ == ms.size());\n  const int n = rs.size();\n  mint r = 0, m = 1;\n  vc<internal::barrett32>\
-    \ ba;\n  ba.reserve(n);\n  repi(i, n) ba.eb(ms[i]);\n  vc<ll> rr(n, 0), mm(n,\
-    \ 1);\n  repi(i, n)\n  {\n    assert(ms[i] >= 1);\n    auto [g, im, _] = extgcd<ll>(mm[i],\
-    \ ms[i]);\n    assert(g == 1);\n    if (im < 0)\n      im += ms[i];\n    ll t\
-    \ = ba[i].mul(safemod(rs[i] - rr[i], ms[i]), im);\n    r += t * m, m *= ms[i];\n\
-    \    repi(j, i + 1, n)\n    {\n      rr[j] += ba[j].mul(t, mm[j]);\n      if (rr[j]\
-    \ >= ms[j])\n        rr[j] -= ms[j];\n      mm[j] = ba[j].mul(mm[j], ms[i]);\n\
-    \    }\n  }\n  return {r, m};\n}\n\n// \u7834\u58CA\u7684\u306B\u5909\u66F4\u3059\
-    \u308B\n// \u89E3\u304C\u5B58\u5728\u3057\u306A\u3044\u306A\u3089 false \u3092\
-    \u8FD4\u3059\n// \u89E3\u304C\u5B58\u5728\u3059\u308B\u306A\u3089 true \u3092\u8FD4\
-    \u3057\u3001ms[i] \u305F\u3061\u304C pairwise coprime \u3067\u3042\u308B\u3088\
-    \u3046\u306A\u7B49\u4FA1\u306A\u65B9\u7A0B\u5F0F\u306B\u5909\u63DB\u3059\u308B\
-    \ntemplate <class V1, class V2>\nbool pre_crt(const V1 &rs, V2 &ms)\n{\n  using\
-    \ T = typename V2::value_type;\n  assert(rs.size() == ms.size());\n  const int\
-    \ n = rs.size();\n  repi(i, n) repi(j, i + 1, n)\n  {\n    T g = gcd(ms[i], ms[j]);\n\
-    \    if ((rs[i] - rs[j]) % g)\n      return false;\n    ms[i] /= g, ms[j] /= g;\n\
-    \    T gi = gcd(ms[i], g), gj = g / gi;\n    do\n    {\n      g = gcd(gi, gj);\n\
-    \      gi *= g, gj /= g;\n    } while (g > 1);\n    ms[i] *= gi, ms[j] *= gj;\n\
-    \  }\n  return true;\n}\n#line 19 \"verify/yukicoder/crt.test.cpp\"\n\nvoid init()\
-    \ {}\n\nvoid main2()\n{\n  LL(x1, y1, x2, y2, x3, y3);\n  auto [ok, r, m] = crt(array{x1,\
-    \ x2, x3}, array{y1, y2, y3});\n  if (!ok)\n    PRINTRETURN(-1);\n  if (r == 0)\n\
-    \    r += m;\n  PRINT(r);\n}\n\nvoid test() {}\n\n#line 2 \"template/template_main.hpp\"\
-    \n\n#line 4 \"template/template_main.hpp\"\n\ntemplate <auto init, auto main2,\
-    \ auto test>\nstruct Main\n{\n  Main()\n  {\n    cauto CERR = [](string val, string\
-    \ color)\n    {\n      string s = \"\\033[\" + color + \"m\" + val + \"\\033[m\"\
-    ;\n      #ifdef LOCAL\n      cerr << s;\n      #endif\n      /* \u30B3\u30FC\u30C9\
-    \u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\
-    \u30C8\u30A2\u30A6\u30C8\u3092\u5916\u3059\n      cerr << val;\n      //*/\n \
-    \   };\n  \n    #if defined FAST_IO and not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\\
-    n\\n\", \"32\");\n    #endif\n    #if defined FAST_CIO and not defined LOCAL\n\
-    \    CERR(\"\\n[FAST_CIO]\\n\\n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n\
-    \    #endif\n    cout << fixed << setprecision(20);\n  \n    init();\n    #ifdef\
-    \ LOCAL\n    test();\n    #endif\n  \n    #if defined AOJ_TESTCASE or (defined\
-    \ LOCAL and defined SINGLE_TESTCASE)\n    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"\
-    35\");\n    while (true)\n    {\n      dump(\"new testcase\");\n      main2();\n\
-    \    }\n    #elif defined SINGLE_TESTCASE\n    CERR(\"\\n[SINGLE_TESTCASE]\\n\\\
-    n\", \"36\");\n    main2();\n    #elif defined MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\\
+    \  return {r, m};\n}\n\n// \u7834\u58CA\u7684\u306B\u5909\u66F4\u3059\u308B\n\
+    // \u89E3\u304C\u5B58\u5728\u3057\u306A\u3044\u306A\u3089 false \u3092\u8FD4\u3059\
+    \n// \u89E3\u304C\u5B58\u5728\u3059\u308B\u306A\u3089 true \u3092\u8FD4\u3057\u3001\
+    ms[i] \u305F\u3061\u304C pairwise coprime \u3067\u3042\u308B\u3088\u3046\u306A\
+    \u7B49\u4FA1\u306A\u65B9\u7A0B\u5F0F\u306B\u5909\u63DB\u3059\u308B\ntemplate <class\
+    \ V1, class V2>\nbool pre_crt(const V1 &rs, V2 &ms)\n{\n  using T = typename V2::value_type;\n\
+    \  assert(rs.size() == ms.size());\n  const int n = rs.size();\n  repi(i, n) repi(j,\
+    \ i + 1, n)\n  {\n    T g = gcd(ms[i], ms[j]);\n    if ((rs[i] - rs[j]) % g)\n\
+    \      return false;\n    ms[i] /= g, ms[j] /= g;\n    T gi = gcd(ms[i], g), gj\
+    \ = g / gi;\n    do\n    {\n      g = gcd(gi, gj);\n      gi *= g, gj /= g;\n\
+    \    } while (g > 1);\n    ms[i] *= gi, ms[j] *= gj;\n  }\n  return true;\n}\n\
+    #line 19 \"verify/yukicoder/crt.test.cpp\"\n\nvoid init() {}\n\nvoid main2()\n\
+    {\n  LL(x1, y1, x2, y2, x3, y3);\n  auto [ok, r, m] = crt(array{x1, x2, x3}, array{y1,\
+    \ y2, y3});\n  if (!ok)\n    PRINTRETURN(-1);\n  if (r == 0)\n    r += m;\n  PRINT(r);\n\
+    }\n\nvoid test() {}\n\n#line 2 \"template/template_main.hpp\"\n\n#line 4 \"template/template_main.hpp\"\
+    \n\ntemplate <auto init, auto main2, auto test>\nstruct Main\n{\n  Main()\n  {\n\
+    \    cauto CERR = [](string val, string color)\n    {\n      string s = \"\\033[\"\
+    \ + color + \"m\" + val + \"\\033[m\";\n      #ifdef LOCAL\n      cerr << s;\n\
+    \      #endif\n      /* \u30B3\u30FC\u30C9\u30C6\u30B9\u30C8\u3067\u78BA\u8A8D\
+    \u3059\u308B\u969B\u306B\u30B3\u30E1\u30F3\u30C8\u30A2\u30A6\u30C8\u3092\u5916\
+    \u3059\n      cerr << val;\n      //*/\n    };\n  \n    #if defined FAST_IO and\
+    \ not defined LOCAL\n    CERR(\"\\n[FAST_IO]\\n\\n\", \"32\");\n    #endif\n \
+    \   #if defined FAST_CIO and not defined LOCAL\n    CERR(\"\\n[FAST_CIO]\\n\\\
+    n\", \"32\");\n    cin.tie(0);\n    ios::sync_with_stdio(false);\n    #endif\n\
+    \    cout << fixed << setprecision(20);\n  \n    init();\n    #ifdef LOCAL\n \
+    \   test();\n    #endif\n  \n    #if defined AOJ_TESTCASE or (defined LOCAL and\
+    \ defined SINGLE_TESTCASE)\n    CERR(\"\\n[AOJ_TESTCASE]\\n\\n\", \"35\");\n \
+    \   while (true)\n    {\n      dump(\"new testcase\");\n      main2();\n    }\n\
+    \    #elif defined SINGLE_TESTCASE\n    CERR(\"\\n[SINGLE_TESTCASE]\\n\\n\", \"\
+    36\");\n    main2();\n    #elif defined MULTI_TESTCASE\n    CERR(\"\\n[MULTI_TESTCASE]\\\
     n\\n\", \"33\");\n    local(while (true))\n    {\n      dump(\"T\");\n      IN(uint,\
     \ T);\n      while (T--)\n      {\n        dump(\"new testcase\");\n        main2();\n\
     \      }\n    }\n    #endif\n  }\n};\n#line 36 \"verify/yukicoder/crt.test.cpp\"\
@@ -765,27 +726,12 @@ data:
     \ if (!ok)\n    PRINTRETURN(-1);\n  if (r == 0)\n    r += m;\n  PRINT(r);\n}\n\
     \nvoid test() {}\n\n#include \"template/template_main.hpp\"\nMain<init, main2,\
     \ test> main_dummy;\nint main() {}\n"
-  dependsOn:
-  - template/template_all_but_modint.hpp
-  - template/template_types.hpp
-  - template/template_rep.hpp
-  - template/template_math.hpp
-  - template/template_vector.hpp
-  - template/template_algo.hpp
-  - template/template_binsearch.hpp
-  - template/template_bit.hpp
-  - template/template_inout.hpp
-  - template/template_dump.hpp
-  - template/template_random.hpp
-  - math/crt.hpp
-  - math/extgcd.hpp
-  - math/modint/modint32_internal.hpp
-  - template/template_main.hpp
+  dependsOn: []
   isVerificationFile: true
   path: verify/yukicoder/crt.test.cpp
   requiredBy: []
-  timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '1970-01-01 00:00:00+00:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yukicoder/crt.test.cpp
 layout: document

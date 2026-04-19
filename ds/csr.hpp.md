@@ -1,220 +1,11 @@
 ---
 data:
-  _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: template/template_algo.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
-      \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_all_but_modint.hpp
-    title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_binsearch.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_bit.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
-      \uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_dump.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_inout.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_math.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_random.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
-      \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_rep.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_types.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_vector.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: ds/group_index.hpp
-    title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
-  - icon: ':heavy_check_mark:'
-    path: ds/query/point_set_range_frequency.hpp
-    title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\u30D5\
-      \u30E9\u30A4\u30F3\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: ds/static_range/dc_range_prod.hpp
-    title: "\u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\u30A8\
-      \u30EA"
-  - icon: ':heavy_check_mark:'
-    path: graph/cliques.hpp
-    title: "\u30AF\u30EA\u30FC\u30AF\u5217\u6319"
-  - icon: ':heavy_check_mark:'
-    path: graph/connected_components.hpp
-    title: "\u9023\u7D50\u6210\u5206\u3078\u306E\u5206\u89E3"
-  - icon: ':warning:'
-    path: graph/contraction.hpp
-    title: "\u30B0\u30E9\u30D5\u306E\u7E2E\u7D04"
-  - icon: ':heavy_check_mark:'
-    path: graph/cycle_detection.hpp
-    title: "\u30B5\u30A4\u30AF\u30EB\u691C\u51FA"
-  - icon: ':heavy_check_mark:'
-    path: graph/graph.hpp
-    title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
-  - icon: ':heavy_check_mark:'
-    path: graph/matrix_tree.hpp
-    title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':heavy_check_mark:'
-    path: graph/scc.hpp
-    title: "\u5F37\u9023\u7D50\u6210\u5206\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: graph/sssp.hpp
-    title: "\u5358\u4E00\u59CB\u70B9\u6700\u77ED\u8DEF\u554F\u984C"
-  - icon: ':warning:'
-    path: graph/subgraphs.hpp
-    title: "\u90E8\u5206\u30B0\u30E9\u30D5\u3078\u306E\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: graph/tree/diameter.hpp
-    title: "\u6728\u306E\u76F4\u5F84"
-  - icon: ':heavy_check_mark:'
-    path: graph/tree/rerooting.hpp
-    title: "\u5168\u65B9\u4F4D\u6728 DP"
-  - icon: ':heavy_check_mark:'
-    path: graph/tree/rooted_tree.hpp
-    title: "\u6839\u3064\u304D\u6728\u30AF\u30E9\u30B9"
-  - icon: ':heavy_check_mark:'
-    path: graph/triangles.hpp
-    title: "\u4E09\u89D2\u5F62\u5217\u6319"
-  - icon: ':heavy_check_mark:'
-    path: math/linalg/matrix.hpp
-    title: "\u884C\u5217"
-  - icon: ':heavy_check_mark:'
-    path: math/linalg/matrix_array.hpp
-    title: "\u884C\u5217\uFF08array\uFF09"
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/bellman_ford.test.cpp
-    title: verify/aoj/bellman_ford.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/bfs.test.cpp
-    title: verify/aoj/bfs.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/bfs01.test.cpp
-    title: verify/aoj/bfs01.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/connected_components.test.cpp
-    title: verify/aoj/connected_components.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/csr.test.cpp
-    title: verify/aoj/csr.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/rooted_tree_from_edges.test.cpp
-    title: verify/aoj/rooted_tree_from_edges.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/rooted_tree_from_parent.test.cpp
-    title: verify/aoj/rooted_tree_from_parent.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/rmq.test.cpp
-    title: verify/mytest/rmq.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/counting_eularian_circuits.test.cpp
-    title: verify/yosupo/counting_eularian_circuits.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/counting_spanning_trees_directed.test.cpp
-    title: verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-    title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/cycle_detection_directed.test.cpp
-    title: verify/yosupo/cycle_detection_directed.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/cycle_detection_undirected.test.cpp
-    title: verify/yosupo/cycle_detection_undirected.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/dc_range_prod.test.cpp
-    title: verify/yosupo/dc_range_prod.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/dijkstra.test.cpp
-    title: verify/yosupo/dijkstra.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/enumerate_cliques.test.cpp
-    title: verify/yosupo/enumerate_cliques.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/enumerate_triangles.test.cpp
-    title: verify/yosupo/enumerate_triangles.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/majority_voting.test.cpp
-    title: verify/yosupo/majority_voting.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_det.test.cpp
-    title: verify/yosupo/matrix_det.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_det_array.test.cpp
-    title: verify/yosupo/matrix_det_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_det_sparse.test.cpp
-    title: verify/yosupo/matrix_det_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_inv.test.cpp
-    title: verify/yosupo/matrix_inv.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_inv_array.test.cpp
-    title: verify/yosupo/matrix_inv_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_pow.test.cpp
-    title: verify/yosupo/matrix_pow.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_pow_array.test.cpp
-    title: verify/yosupo/matrix_pow_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_product.test.cpp
-    title: verify/yosupo/matrix_product.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_product_array.test.cpp
-    title: verify/yosupo/matrix_product_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_rank.test.cpp
-    title: verify/yosupo/matrix_rank.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_solve.test.cpp
-    title: verify/yosupo/matrix_solve.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_solve_array.test.cpp
-    title: verify/yosupo/matrix_solve_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/point_set_range_frequency.test.cpp
-    title: verify/yosupo/point_set_range_frequency.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/retooting.test.cpp
-    title: verify/yosupo/retooting.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/scc.test.cpp
-    title: verify/yosupo/scc.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/static_range_frequency.test.cpp
-    title: verify/yosupo/static_range_frequency.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/tree_diameter.test.cpp
-    title: verify/yosupo/tree_diameter.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/static_rectangle_add_point_get.test.cpp
-    title: verify/yukicoder/static_rectangle_add_point_get.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki2215_dc.test.cpp
-    title: verify/yukicoder/yuki2215_dc.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki310.test.cpp
-    title: verify/yukicoder/yuki310.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki430_aho_corasick.test.cpp
-    title: verify/yukicoder/yuki430_aho_corasick.test.cpp
+  _extendedDependsOn: []
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':warning:'
   attributes:
     _deprecated_at_docs: docs/ds/csr.md
     document_title: CSR
@@ -257,27 +48,37 @@ data:
     \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
     #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\
     \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
-    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
-    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
-    \ docs/template/template_math.md\n */\n\ntemplate <class T, class U>\ninline bool\
-    \ chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate <class T,\
-    \ class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true : false;\
-    \ }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T divfloor(U\
-    \ a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divceil(U a, V b) { return\
-    \ T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll,\
-    \ class U, class V>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
-    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V>\ninline\
-    \ constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
-    template <class T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b\
-    \ >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
-    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
-    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
-    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
-    \ T = ll, class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a\
-    \ >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m)\
-    \ / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\n\
-    T mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
+    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n#line\
+    \ 2 \"utils/is_integral_ext.hpp\"\n\n#line 4 \"utils/is_integral_ext.hpp\"\n\n\
+    /**\n * @brief $128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\
+    \u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n */\n\ntemplate <class\
+    \ T>\nconstexpr bool is_integral_ext = is_integral_v<T> || is_same_v<T, i128>\
+    \ || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr bool is_signed_ext =\
+    \ is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class T>\nconstexpr bool\
+    \ is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;\n#line 14 \"template/template_math.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
+    \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
+    inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
+    \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divfloor(U a, V b) { return T(a)\
+    \ / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class\
+    \ U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\n\
+    inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V, typename\
+    \ = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\ninline constexpr T\
+    \ safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
+    \ T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a\
+    \ < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while\
+    \ (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n\
+    \      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll,\
+    \ class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0\
+    \ && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) /\
+    \ T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT\
+    \ mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
     \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
     \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
     \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
@@ -752,18 +553,18 @@ data:
     \ &add) { for (auto &vi : v) vi += add; }\ntemplate <class T, class Add>\nvoid\
     \ offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto &vij : vi)\
     \ vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E -----\ntemplate <class\
-    \ T, const size_t m>\narray<vc<T>, m> top(const vc<array<T, m>> &vt)\n{\n  const\
+    \ T, const size_t m>\narray<vc<T>, m> unzip(const vc<array<T, m>> &vt)\n{\n  const\
     \ size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t\
     \ i = 0; i < n; i++)\n    for (size_t j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n\
-    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> top(const\
+    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> zip(const\
     \ array<vc<T>, m> &tv)\n{\n  if (tv.empty()) return {};\n  const size_t n = tv[0].size();\n\
     \  vc<array<T, m>> vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size()\
     \ == n);\n    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n\
-    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const\
+    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> unzip(const\
     \ vc<pair<T, U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>>\
     \ tv;\n  tv.first.resize(n), tv.second.resize(n);\n  for (size_t i = 0; i < n;\
     \ i++)\n    tie(tv.first[i], tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate\
-    \ <class T, class U>\nvc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
+    \ <class T, class U>\nvc<pair<T, U>> zip(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
     \ size_t n = tv.first.size();\n  assert(n == tv.second.size());\n  vc<pair<T,\
     \ U>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i],\
     \ tv.second[i]);\n  return vt;\n}\n\nnamespace internal\n{\n\ntemplate <size_t...\
@@ -771,17 +572,18 @@ data:
     \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\n\ntemplate <size_t...\
     \ I, class Tp>\nauto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t\
     \ index)\n{ return make_tuple(get<I>(tv)[index]...); }\n\n};\n\ntemplate <class...\
-    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
+    \ Ts>\nauto unzip(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
     \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
     \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    internal::vt_to_tv_impl(tv, vt[i],\
     \ make_index_sequence<tuple_size_v<decltype(tv)>>{}, i);\n  return tv;\n}\n\n\
-    template <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
+    template <class... Ts>\nauto zip(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 2 \"template/template_random.hpp\"\n\n#line 5 \"\
-    template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
+    \ vt;\n}\n\n#define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)\n#define ZIP(vt,\
+    \ ...) auto vt = zip(tuple{__VA_ARGS__})\n// ----------\n#line 2 \"template/template_random.hpp\"\
+    \n\n#line 5 \"template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
     \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
     \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
     \  return T(l) + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\
@@ -841,7 +643,7 @@ data:
     \  }\n\n  void pop_back(int i)\n  {\n    static_assert(is_erasable);\n    assert(len[i]\
     \ > 0);\n    len[i]--;\n  }\n\n  template <class I = ll>\n  I size() const { return\
     \ n; }\n\n  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i]\
-    \ = {elist.begin() + start[i], elist.begin() + start[i + 1]};\n    return res;\n\
+    \ = {elist.begin() + start[i], elist.begin() + get_last(i)};\n    return res;\n\
     \  }\n\n  vc<T> &get_elist() { return elist; }\n  const vc<T> &get_elist() const\
     \ { return elist; }\n};\n"
   code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
@@ -887,84 +689,16 @@ data:
     \  }\n\n  void pop_back(int i)\n  {\n    static_assert(is_erasable);\n    assert(len[i]\
     \ > 0);\n    len[i]--;\n  }\n\n  template <class I = ll>\n  I size() const { return\
     \ n; }\n\n  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i]\
-    \ = {elist.begin() + start[i], elist.begin() + start[i + 1]};\n    return res;\n\
+    \ = {elist.begin() + start[i], elist.begin() + get_last(i)};\n    return res;\n\
     \  }\n\n  vc<T> &get_elist() { return elist; }\n  const vc<T> &get_elist() const\
     \ { return elist; }\n};\n"
-  dependsOn:
-  - template/template_all_but_modint.hpp
-  - template/template_types.hpp
-  - template/template_rep.hpp
-  - template/template_math.hpp
-  - template/template_vector.hpp
-  - template/template_algo.hpp
-  - template/template_binsearch.hpp
-  - template/template_bit.hpp
-  - template/template_inout.hpp
-  - template/template_dump.hpp
-  - template/template_random.hpp
+  dependsOn: []
   isVerificationFile: false
   path: ds/csr.hpp
-  requiredBy:
-  - graph/contraction.hpp
-  - graph/graph.hpp
-  - graph/scc.hpp
-  - graph/subgraphs.hpp
-  - graph/connected_components.hpp
-  - graph/triangles.hpp
-  - graph/tree/diameter.hpp
-  - graph/tree/rerooting.hpp
-  - graph/tree/rooted_tree.hpp
-  - graph/cliques.hpp
-  - graph/matrix_tree.hpp
-  - graph/cycle_detection.hpp
-  - graph/sssp.hpp
-  - math/linalg/matrix.hpp
-  - math/linalg/matrix_array.hpp
-  - ds/query/point_set_range_frequency.hpp
-  - ds/static_range/dc_range_prod.hpp
-  - ds/group_index.hpp
-  timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/yukicoder/static_rectangle_add_point_get.test.cpp
-  - verify/yukicoder/yuki2215_dc.test.cpp
-  - verify/yukicoder/yuki430_aho_corasick.test.cpp
-  - verify/yukicoder/yuki310.test.cpp
-  - verify/mytest/rmq.test.cpp
-  - verify/aoj/csr.test.cpp
-  - verify/aoj/rooted_tree_from_parent.test.cpp
-  - verify/aoj/rooted_tree_from_edges.test.cpp
-  - verify/aoj/bellman_ford.test.cpp
-  - verify/aoj/bfs01.test.cpp
-  - verify/aoj/connected_components.test.cpp
-  - verify/aoj/bfs.test.cpp
-  - verify/yosupo/matrix_pow_array.test.cpp
-  - verify/yosupo/matrix_inv.test.cpp
-  - verify/yosupo/tree_diameter.test.cpp
-  - verify/yosupo/majority_voting.test.cpp
-  - verify/yosupo/enumerate_triangles.test.cpp
-  - verify/yosupo/enumerate_cliques.test.cpp
-  - verify/yosupo/dc_range_prod.test.cpp
-  - verify/yosupo/static_range_frequency.test.cpp
-  - verify/yosupo/matrix_det_sparse.test.cpp
-  - verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - verify/yosupo/scc.test.cpp
-  - verify/yosupo/point_set_range_frequency.test.cpp
-  - verify/yosupo/matrix_det.test.cpp
-  - verify/yosupo/matrix_product.test.cpp
-  - verify/yosupo/matrix_pow.test.cpp
-  - verify/yosupo/matrix_solve_array.test.cpp
-  - verify/yosupo/cycle_detection_directed.test.cpp
-  - verify/yosupo/retooting.test.cpp
-  - verify/yosupo/cycle_detection_undirected.test.cpp
-  - verify/yosupo/matrix_solve.test.cpp
-  - verify/yosupo/matrix_det_array.test.cpp
-  - verify/yosupo/matrix_rank.test.cpp
-  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - verify/yosupo/counting_eularian_circuits.test.cpp
-  - verify/yosupo/matrix_inv_array.test.cpp
-  - verify/yosupo/dijkstra.test.cpp
-  - verify/yosupo/matrix_product_array.test.cpp
+  requiredBy: []
+  timestamp: '1970-01-01 00:00:00+00:00'
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
 documentation_of: ds/csr.hpp
 layout: document
 redirect_from:

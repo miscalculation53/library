@@ -1,98 +1,12 @@
 ---
 data:
-  _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: ds/csr.hpp
-    title: CSR
-  - icon: ':heavy_check_mark:'
-    path: ds/my_queue.hpp
-    title: "\u81EA\u4F5C queue"
-  - icon: ':heavy_check_mark:'
-    path: graph/graph.hpp
-    title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
-  - icon: ':heavy_check_mark:'
-    path: graph/matrix_tree.hpp
-    title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':heavy_check_mark:'
-    path: math/algebra/algebra_base.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/algebra/algebra_basic_ops.hpp
-    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
-      \ max\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/extgcd.hpp
-    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/berlekamp_massey.hpp
-    title: "Berlekamp\u2013Massey"
-  - icon: ':heavy_check_mark:'
-    path: math/linalg/bbla.hpp
-    title: Black Box Linear Algebra
-  - icon: ':heavy_check_mark:'
-    path: math/linalg/matrix.hpp
-    title: "\u884C\u5217"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/binomial.hpp
-    title: "\u4E8C\u9805\u4FC2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint32_internal.hpp
-    title: math/modint/modint32_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint_base.hpp
-    title: math/modint/modint_base.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_algo.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
-      \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_all_but_modint.hpp
-    title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_binsearch.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_bit.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
-      \uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_dump.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_inout.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_main.hpp
-    title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_math.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_random.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
-      \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_rep.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_types.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_vector.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
-  attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://yukicoder.me/problems/no/310
-    links:
-    - https://yukicoder.me/problems/no/310
+  _verificationStatusIcon: ':x:'
+  attributes: {}
   bundledCode: "#line 1 \"verify/yukicoder/yuki310.test.cpp\"\n#define PROBLEM \"\
     https://yukicoder.me/problems/no/310\"\n\n#define SINGLE_TESTCASE\n// #define\
     \ MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef LOCAL\n#define FAST_IO\n\
@@ -135,48 +49,58 @@ data:
     \ for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n#define fem(...)\
     \ for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n\
     #define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n#define EPS 1e-11\n\
-    #endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
-    \u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs docs/template/template_math.md\n\
+    #endif\n\n#line 12 \"template/template_math.hpp\"\n\n#line 2 \"utils/is_integral_ext.hpp\"\
+    \n\n#line 4 \"utils/is_integral_ext.hpp\"\n\n/**\n * @brief $128$ \u30D3\u30C3\
+    \u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n\
+    \ */\n\ntemplate <class T>\nconstexpr bool is_integral_ext = is_integral_v<T>\
+    \ || is_same_v<T, i128> || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr\
+    \ bool is_signed_ext = is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class\
+    \ T>\nconstexpr bool is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;\n\
+    #line 14 \"template/template_math.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs docs/template/template_math.md\n\
     \ */\n\ntemplate <class T, class U>\ninline bool chmin(T &a, U b) { return a >\
     \ b ? a = b, true : false; }\ntemplate <class T, class U>\ninline bool chmax(T\
     \ &a, U b) { return a < b ? a = b, true : false; }\n\ntemplate <class T = ll,\
-    \ class U, class V>\ninline constexpr T divfloor(U a, V b) { return T(a) / T(b)\
-    \ - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class U, class\
-    \ V>\ninline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b)\
-    \ && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V>\ninline\
-    \ constexpr T divround(U a, V b) { return divfloor<T>(2 * T(a) + T(b), 2 * T(b));\
-    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T safemod(U a,\
-    \ V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class T = ll,\
-    \ class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n  if (b\
-    \ == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a < 0 &&\
-    \ a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (true)\n\
-    \  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n     \
-    \ break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll, class\
-    \ A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0 && b\
-    \ >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) / T(b)\
-    \ ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT mul_limited(A\
-    \ a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class T = ll, class\
-    \ A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a >= 0 && b\
-    \ >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a, b), T(m));\n\
-    \  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n    {\n     \
-    \ if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n    }\n    b >>=\
-    \ 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n      return m;\n\
-    \    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll, class A, class\
-    \ B>\nT pow_limited(A a, B b) { return pow_limited<T>(a, b, INF); }\n\ntemplate\
-    \ <class T = ll, class A, class K>\nconstexpr T iroot(A a, K k)\n{\n  assert(a\
-    \ >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n  if (k == 2)\n  {\n\
-    \    if constexpr (sizeof(T) > sizeof(ull))\n    {\n      if ((u128)a < ((u128)1\
-    \ << 120))\n        return sqrtl(a);\n    }\n    else\n      return sqrtl(a);\n\
-    \  }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x == 0)\n      return true;\n\
-    \    T res = 1, k2 = k;\n    while (true)\n    {\n      if (k2 & 1)\n      {\n\
-    \        if (res > T(a) / x)\n          return false;\n        res *= x;\n   \
-    \   }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n      if (x > T(a)\
-    \ / x)\n        return false;\n      x *= x;\n    }\n    return res <= T(a);\n\
-    \  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n   \
-    \ up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max() &&\
-    \ isok(x + 1))\n      x++;\n  }\n  return x;\n}\ntemplate <class T = ll, class\
-    \ A, class K>\nconstexpr T iroot_ceil(A a, K k)\n{\n  T x = iroot<T>(a, k);\n\
-    \  return ipow<T>(x, k) == a ? x : x + 1;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    \ class U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\n\
+    inline constexpr T divfloor(U a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) < 0); }\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divceil(U a, V b) { return T(a)\
+    \ / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll, class\
+    \ U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\n\
+    inline constexpr T divround(U a, V b) { return divfloor<T>(2 * T(a) + T(b), 2\
+    \ * T(b)); }\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T safemod(U a, V b) { return T(a)\
+    \ - T(b) * divfloor<T>(a, b); }\n\ntemplate <class T = ll, class U, class V>\n\
+    constexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n  if (b == 0)\n    return 1;\n\
+    \  if (a == 0 || a == 1)\n    return a;\n  if (a < 0 && a == -1)\n    return b\
+    \ & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
+    \      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n\
+    \  }\n  return res;\n}\ntemplate <class T = ll, class A, class B, class M>\nT\
+    \ mul_limited(A a, B b, M m)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b\
+    \ == 0)\n    return 0;\n  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\n\
+    template <class T = ll, class A, class B>\nT mul_limited(A a, B b) { return mul_limited<T>(a,\
+    \ b, INF); }\ntemplate <class T = ll, class A, class B, class M>\nT pow_limited(A\
+    \ a, B b, M m)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b ==\
+    \ 0)\n    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1, tmp = a;\n  while\
+    \ (true)\n  {\n    if (b & 1)\n    {\n      if (res > T(m) / tmp)\n        return\
+    \ m;\n      res *= tmp;\n    }\n    b >>= 1;\n    if (b == 0)\n      break;\n\
+    \    if (tmp > T(m) / tmp)\n      return m;\n    tmp *= tmp;\n  }\n  return res;\n\
+    }\ntemplate <class T = ll, class A, class B>\nT pow_limited(A a, B b) { return\
+    \ pow_limited<T>(a, b, INF); }\n\ntemplate <class T = ll, class A, class K>\n\
+    constexpr T iroot(A a, K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k\
+    \ == 1)\n    return a;\n  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n\
+    \    {\n      if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n\
+    \    else\n      return sqrtl(a);\n  }\n\n  auto isok = [&](T x) -> bool\n  {\n\
+    \    if (x == 0)\n      return true;\n    T res = 1, k2 = k;\n    while (true)\n\
+    \    {\n      if (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return\
+    \ false;\n        res *= x;\n      }\n      k2 >>= 1;\n      if (k2 == 0)\n  \
+    \      break;\n      if (x > T(a) / x)\n        return false;\n      x *= x;\n\
+    \    }\n    return res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up =\
+    \ true;\n  while (!isok(x))\n    up = false, x--;\n  if (up)\n  {\n    while (x\
+    \ < numeric_limits<T>::max() && isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\
+    template <class T = ll, class A, class K>\nconstexpr T iroot_ceil(A a, K k)\n\
+    {\n  T x = iroot<T>(a, k);\n  return ipow<T>(x, k) == a ? x : x + 1;\n}\n\n//\
+    \ https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS), class A>\nint SGN(A a, D eps = EPS) { return\
     \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
     \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\n// 0\
@@ -630,18 +554,18 @@ data:
     \ &add) { for (auto &vi : v) vi += add; }\ntemplate <class T, class Add>\nvoid\
     \ offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto &vij : vi)\
     \ vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E -----\ntemplate <class\
-    \ T, const size_t m>\narray<vc<T>, m> top(const vc<array<T, m>> &vt)\n{\n  const\
+    \ T, const size_t m>\narray<vc<T>, m> unzip(const vc<array<T, m>> &vt)\n{\n  const\
     \ size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t\
     \ i = 0; i < n; i++)\n    for (size_t j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n\
-    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> top(const\
+    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> zip(const\
     \ array<vc<T>, m> &tv)\n{\n  if (tv.empty()) return {};\n  const size_t n = tv[0].size();\n\
     \  vc<array<T, m>> vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size()\
     \ == n);\n    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n\
-    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const\
+    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> unzip(const\
     \ vc<pair<T, U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>>\
     \ tv;\n  tv.first.resize(n), tv.second.resize(n);\n  for (size_t i = 0; i < n;\
     \ i++)\n    tie(tv.first[i], tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate\
-    \ <class T, class U>\nvc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
+    \ <class T, class U>\nvc<pair<T, U>> zip(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
     \ size_t n = tv.first.size();\n  assert(n == tv.second.size());\n  vc<pair<T,\
     \ U>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i],\
     \ tv.second[i]);\n  return vt;\n}\n\nnamespace internal\n{\n\ntemplate <size_t...\
@@ -649,17 +573,18 @@ data:
     \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\n\ntemplate <size_t...\
     \ I, class Tp>\nauto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t\
     \ index)\n{ return make_tuple(get<I>(tv)[index]...); }\n\n};\n\ntemplate <class...\
-    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
+    \ Ts>\nauto unzip(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
     \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
     \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    internal::vt_to_tv_impl(tv, vt[i],\
     \ make_index_sequence<tuple_size_v<decltype(tv)>>{}, i);\n  return tv;\n}\n\n\
-    template <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
+    template <class... Ts>\nauto zip(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 2 \"template/template_random.hpp\"\n\n#line 5 \"\
-    template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
+    \ vt;\n}\n\n#define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)\n#define ZIP(vt,\
+    \ ...) auto vt = zip(tuple{__VA_ARGS__})\n// ----------\n#line 2 \"template/template_random.hpp\"\
+    \n\n#line 5 \"template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
     \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
     \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
     \  return T(l) + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\
@@ -677,240 +602,299 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 2 \"math/modint/modint.hpp\"\n\n#line 2 \"math/modint/modint32_internal.hpp\"\
-    \n\n#line 4 \"math/modint/modint32_internal.hpp\"\n\nnamespace internal\n{\n\n\
-    constexpr ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n    return\
-    \ 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while (n)\n\
-    \  {\n    if (n & 1)\n      r = (r * y) % _m;\n    y = (y * y) % _m;\n    n >>=\
-    \ 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int n)\n{\n  if\
-    \ (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n    return\
-    \ true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2\
-    \ == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll a : bases)\n\
-    \  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n      t <<= 1;\n\
-    \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
-    \ true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
+    \ 2 \"math/modint/modint.hpp\"\n\n#line 4 \"math/modint/modint.hpp\"\n\n#line\
+    \ 2 \"math/modint/modint_internal_static.hpp\"\n\n#line 4 \"math/modint/modint_internal_static.hpp\"\
+    \n\n#line 2 \"utils/larger_int.hpp\"\n\n#line 4 \"utils/larger_int.hpp\"\n\n/**\n\
+    \ * @brief $2$ \u500D\u306E\u30D3\u30C3\u30C8\u6570\u306E\u6574\u6570\u578B\n\
+    \ * @docs docs/utils/larger_int.md\n */\n\ntemplate <class T>\nstruct larger_int;\n\
+    \n#define LARGER_INT(T, U) \\\n  template <>            \\\n  struct larger_int<T>\
+    \   \\\n  {                      \\\n    using type = U;      \\\n  };\n\nLARGER_INT(signed\
+    \ char, short)\nLARGER_INT(short, int)\nLARGER_INT(int, long long)\nLARGER_INT(long,\
+    \ __int128_t)\nLARGER_INT(long long, __int128_t)\n\nLARGER_INT(unsigned char,\
+    \ unsigned short)\nLARGER_INT(unsigned short, unsigned int)\nLARGER_INT(unsigned\
+    \ int, unsigned long long)\nLARGER_INT(unsigned long, __uint128_t)\nLARGER_INT(unsigned\
+    \ long long, __uint128_t)\n\n#undef LARGER_INT\n\ntemplate <class T>\nusing larger_int_t\
+    \ = typename larger_int<T>::type;\n#line 2 \"math/modint/modint_internal_isprime.hpp\"\
+    \n\n#line 4 \"math/modint/modint_internal_isprime.hpp\"\n\n#line 6 \"math/modint/modint_internal_isprime.hpp\"\
+    \n\nnamespace internal\n{\n\ntemplate <class T>\nconstexpr ll powmod_constexpr(ll\
+    \ x, ll n, T m)\n{\n  if (m == 1)\n    return 0;\n  using U = make_unsigned_t<T>;\n\
+    \  using L = larger_int_t<U>;\n\n  U r = 1, y = safemod(x, m);\n  while (n)\n\
+    \  {\n    if (n & 1)\n      r = L(r) * y % m;\n    y = L(y) * y % m;\n    n >>=\
+    \ 1;\n  }\n  return r;\n}\n\ntemplate <class T>\nconstexpr bool isprime_constexpr(T\
+    \ n)\n{\n  if constexpr (sizeof(T) > 4)\n  {\n    if (n <= INT_MAX)\n      return\
+    \ isprime_constexpr<int>(n);\n  }\n\n  if (n <= 1)\n    return false;\n  if (n\
+    \ == 2 || n == 7 || n == 61)\n    return true;\n  if (n % 2 == 0)\n    return\
+    \ false;\n\n  ll d = n - 1;\n  while (d % 2 == 0)\n    d /= 2;\n\n  using U =\
+    \ make_unsigned_t<T>;\n  using L = larger_int_t<U>;\n\n  auto miller_rabin = [&](const\
+    \ auto &bases) constexpr\n  {\n    for (ll a : bases)\n    {\n      ll t = d,\
+    \ y = powmod_constexpr(a, t, n);\n      while (t != n - 1 && y != 1 && y != n\
+    \ - 1)\n      {\n        y = L(y) * y % n;\n        t <<= 1;\n      }\n      if\
+    \ (y != n - 1 && t % 2 == 0)\n        return false;\n    }\n    return true;\n\
+    \  };\n\n  if constexpr(sizeof(T) <= 4)\n  {\n    constexpr ll bases[3] = {2,\
+    \ 7, 61};\n    return miller_rabin(bases);\n  }\n  else\n  {\n    constexpr ll\
+    \ bases[7] = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};\n    return miller_rabin(bases);\n\
+    \  }\n}\n\ntemplate <auto n>\nconstexpr bool isprime = isprime_constexpr(n);\n\
+    \n};\n#line 7 \"math/modint/modint_internal_static.hpp\"\n\nnamespace internal\n\
+    {\n\ntemplate <auto M>\nstruct policy_static\n{\n  using mod_type = decltype(M);\n\
+    \  using value_type = make_unsigned_t<mod_type>;\n  using calc_type = larger_int_t<value_type>;\n\
+    \n  static constexpr bool is_prime = isprime_constexpr(M);\n\n  static constexpr\
+    \ mod_type mod() { return M; }\n  static constexpr value_type umod() { return\
+    \ M; }\n\n  static constexpr value_type init(value_type v) { return v; }\n  static\
+    \ constexpr mod_type val(value_type v) { return v; }\n  static constexpr value_type\
+    \ mul(value_type a, value_type b)\n  {\n    return (value_type)((calc_type(a)\
+    \ * b) % M);\n  }\n};\n\n};\n#line 2 \"math/modint/modint_internal_barrett32.hpp\"\
+    \n\n#line 4 \"math/modint/modint_internal_barrett32.hpp\"\n\nnamespace internal\n\
+    {\n\nstruct barrett32\n{\n  uint m;\n  ull im;\n  explicit barrett32(uint m) :\
     \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}\n#line 2 \"math/modint/modint_base.hpp\"\n\n#line 4 \"math/modint/modint_base.hpp\"\
-    \n\nnamespace internal\n{\n\n#define REF static_cast<mint &>(*this)\n#define CREF\
-    \ static_cast<const mint &>(*this)\n#define VAL *static_cast<const mint *>(this)\n\
-    \ntemplate <class mint>\nstruct modint_base\n{\n  mint &operator+=(const mint\
-    \ &rhs)\n  {\n    mint &self = REF;\n    self._v += rhs._v;\n    if (self._v >=\
-    \ self.umod())\n      self._v -= self.umod();\n    return self;\n  }\n  mint &operator-=(const\
-    \ mint &rhs)\n  {\n    mint &self = REF;\n    self._v -= rhs._v;\n    if (self._v\
-    \ >= self.umod())\n      self._v += self.umod();\n    return self;\n  }\n  mint\
-    \ &operator/=(const mint &rhs)\n  {\n    mint &self = REF;\n    return self =\
-    \ self * rhs.inv();\n  }\n\n  mint &operator++()\n  {\n    mint &self = REF;\n\
-    \    self._v++;\n    if (self._v == self.umod())\n      self._v = 0;\n    return\
-    \ self;\n  }\n  mint &operator--()\n  {\n    mint &self = REF;\n    if (self._v\
-    \ == 0)\n      self._v = self.umod();\n    self._v--;\n    return self;\n  }\n\
-    \  mint operator++(int)\n  {\n    mint res = VAL;\n    ++REF;\n    return res;\n\
-    \  }\n  mint operator--(int)\n  {\n    mint res = VAL;\n    --REF;\n    return\
-    \ res;\n  }\n\n  mint operator+() const { return VAL; }\n  mint operator-() const\
-    \ { return mint() - VAL; }\n\n  mint pow(ll n) const\n  {\n    assert(n >= 0);\n\
-    \    mint x = VAL, r = 1;\n    while (n)\n    {\n      if (n & 1)\n        r *=\
-    \ x;\n      x *= x;\n      n >>= 1;\n    }\n    return r;\n  }\n\n  friend mint\
-    \ operator+(const mint &lhs, const mint &rhs)\n  { return mint(lhs) += rhs; }\n\
-    \  friend mint operator-(const mint &lhs, const mint &rhs)\n  { return mint(lhs)\
-    \ -= rhs; }\n  friend mint operator*(const mint &lhs, const mint &rhs)\n  { return\
-    \ mint(lhs) *= rhs; }\n  friend mint operator/(const mint &lhs, const mint &rhs)\n\
-    \  { return mint(lhs) /= rhs; }\n  friend bool operator==(const mint &lhs, const\
-    \ mint &rhs)\n  { return mint(lhs).eq(rhs); }\n  friend bool operator!=(const\
-    \ mint &lhs, const mint &rhs)\n  { return mint(lhs).neq(rhs); }\nprivate:\n  bool\
-    \ eq(const mint &rhs) { return REF._v == rhs._v; }\n  bool neq(const mint &rhs)\
-    \ { return REF._v != rhs._v; }\n};\n\n}\n\n#if defined LOCAL or not defined FAST_IO\n\
-    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nistream &operator>>(istream &is, T &x)\n{\n  ll a;\n  is >> a;\n\
-    \  x = a;\n  return is;\n}\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nostream &operator<<(ostream &os, const T &x)\n{\n  os << x.val();\n\
-    \  return os;\n}\n#else\ntemplate <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nvoid rd1(T &x)\n{\n  ll a;\n  fastio::rd1(a);\n  x = a;\n}\n\
-    template <typename T, std::enable_if_t<std::is_base_of_v<internal::modint_base<T>,\
-    \ T>, int> = 0>\nvoid wt1(const T &x) { fastio::wt1(x.val()); }\n#endif\n#line\
-    \ 2 \"math/extgcd.hpp\"\n\n#line 4 \"math/extgcd.hpp\"\n\n/**\n * @brief \u62E1\
-    \u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)\n * @docs\
-    \ docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax + by == g \u3092\u6E80\
-    \u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\ntemplate <class T =\
-    \ ll>\nconstexpr tuple<T, T, T> extgcd(T a, T b)\n{\n  if (a == 0 && b == 0)\n\
-    \    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n  // a*x2 + b*y2 ==\
-    \ z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 = 1, z2 = b;\n  while\
-    \ (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n    T q = z1 /\
-    \ z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1, y2) = make_pair(y2,\
-    \ y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q * z2);\n  }\n  if (z1\
-    \ < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1, y1};\n}\n#line 7\
-    \ \"math/modint/modint.hpp\"\n\n/**\n * @brief modint (32 bit)\n * @docs docs/math/modint/modint.md\n\
-    \ */\n\ntemplate <int m>\nstruct static_modint : internal::modint_base<static_modint<m>>\n\
-    {\n  using mint = static_modint;\nprivate:\n  friend struct internal::modint_base<static_modint<m>>;\n\
-    \  uint _v;\n  static constexpr uint umod() { return m; }\n  static constexpr\
-    \ bool prime = internal::isprime32<m>;\n\npublic:\n  static constexpr int mod()\
-    \ { return m; }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n \
-    \   return x;\n  }\n\n  static_modint() : _v(0) {}\n  template <class T, typename\
-    \ = enable_if_t<is_integral<T>::value>>\n  static_modint(T v)\n  {\n    if constexpr\
-    \ (is_signed_v<T>)\n    {\n      ll x = (ll)(v % (ll)(umod()));\n      if (x <\
-    \ 0)\n        x += umod();\n      _v = (uint)x;\n    }\n    else\n    {\n    \
-    \  _v = (uint)(v % umod());\n    }\n  }\n\n  int val() const { return (int)_v;\
-    \ }\n\n  mint& operator*=(const mint &rhs)\n  {\n    ull z = _v;\n    z *= rhs._v;\n\
-    \    _v = (uint)(z % umod());\n    return *this;\n  }\n\n  mint inv() const\n\
-    \  {\n    if (prime)\n    {\n      assert(_v != 0);\n      return CREF.pow(umod()\
-    \ - 2);\n    }\n    else\n    {\n      auto [g, x, y] = extgcd<int>(_v, m);\n\
-    \      assert(g == 1);\n      return x;\n    }\n  }\n};\n\ntemplate <int id>\n\
-    struct dynamic_modint : internal::modint_base<dynamic_modint<id>>\n{\n  using\
-    \ mint = dynamic_modint;\nprivate:\n  friend struct internal::modint_base<dynamic_modint<id>>;\n\
-    \  uint _v;\n  static internal::barrett32 bt;\n  static uint umod() { return bt.umod();\
-    \ }\n\npublic:\n  static int mod() { return (int)(bt.umod()); }\n  static void\
-    \ set_mod(int m)\n  {\n    assert(m >= 1);\n    bt = internal::barrett32(m);\n\
-    \  }\n  static mint raw(int v)\n  {\n    mint x;\n    x._v = v;\n    return x;\n\
-    \  }\n\n  dynamic_modint() : _v(0) {}\n  template <class T, typename = enable_if_t<is_integral<T>::value>>\n\
-    \  dynamic_modint(T v)\n  {\n    if constexpr (is_signed_v<T>)\n    {\n      ll\
-    \ x = (ll)(v % (ll)(umod()));\n      if (x < 0)\n        x += umod();\n      _v\
-    \ = (uint)x;\n    }\n    else\n    {\n      _v = (uint)(v % umod());\n    }\n\
-    \  }\n\n  int val() const { return (int)_v; }\n\n  mint& operator*=(const mint\
-    \ &rhs)\n  {\n    _v = bt.mul(_v, rhs._v);\n    return *this;\n  }\n\n  mint inv()\
-    \ const\n  {\n    auto [g, x, y] = extgcd<int>(_v, mod());\n    assert(g == 1);\n\
-    \    return x;\n  }\n};\ntemplate <int id>\ninternal::barrett32 dynamic_modint<id>::bt(998244353);\n\
-    \nusing modint998244353 = static_modint<998244353>;\nusing modint1000000007 =\
-    \ static_modint<1000000007>;\nusing modint = dynamic_modint<-1>;\n\ntemplate <class\
-    \ T>\nstruct is_static_modint : false_type {};\ntemplate <int m>\nstruct is_static_modint<static_modint<m>>\
-    \ : true_type {};\ntemplate <class T>\ninline constexpr bool is_static_modint_v\
-    \ = is_static_modint<T>::value;\n\ntemplate <class T>\nstruct is_dynamic_modint\
-    \ : false_type {};\ntemplate <int id>\nstruct is_dynamic_modint<dynamic_modint<id>>\
-    \ : true_type {};\ntemplate <class T>\ninline constexpr bool is_dynamic_modint_v\
-    \ = is_dynamic_modint<T>::value;\n\ntemplate <class T>\ninline constexpr bool\
-    \ is_modint_v = is_static_modint_v<T> || is_dynamic_modint_v<T>;\n\ntemplate <typename,\
-    \ typename = void>\nstruct has_mod : false_type {};\ntemplate <typename T>\nstruct\
-    \ has_mod<T, void_t<decltype(declval<T>().mod)>> : true_type {};\n\ntemplate <class\
-    \ mint>\nstruct modint_less\n{\n  bool operator()(const mint &a, const mint &b)\
-    \ const\n  {\n    if constexpr (has_mod<mint>())\n      return a.val() < b.val();\n\
-    \    else\n      return a < b;\n  }\n};\n\ntemplate <class mint>\nstruct modint_hash\n\
-    {\n  auto operator()(const mint &x) const\n  {\n    if constexpr (has_mod<mint>())\n\
-    \      return hash(x.val());\n    else\n      return hash(x);\n  }\n};\n#line\
-    \ 18 \"verify/yukicoder/yuki310.test.cpp\"\nusing mint = modint1000000007;\n#line\
-    \ 2 \"graph/matrix_tree.hpp\"\n\n#line 4 \"graph/matrix_tree.hpp\"\n\n#line 2\
-    \ \"graph/graph.hpp\"\n\n#line 2 \"ds/csr.hpp\"\n\n#line 4 \"ds/csr.hpp\"\n\n\
-    /**\n * @brief CSR\n * @docs docs/ds/csr.md\n */\n\ntemplate <class T, bool is_erasable\
-    \ = false>\nstruct CSR\n{\nprotected:\n  int n, m;\n  // i (0 <= i < n) \u884C\
-    \u76EE\u3092\u8868\u3059\u306E\u306F elist \u306E [start[i], start[i+1])\n  //\
-    \ pop_back \u3059\u308B\u5834\u5408\u306F [start[i], start[i] + len[i])\n  vc<int>\
-    \ start;\n  vc<T> elist;\n  vc<int> len;\n  inline int get_last(int i) const\n\
-    \  {\n    if constexpr (is_erasable)\n      return start[i] + len[i];\n    else\n\
-    \      return start[i + 1];\n  }\n\n  struct Row\n  {\n    using iterator = typename\
-    \ vc<T>::iterator;\n\n  private:\n    iterator begi, endi;\n\n  public:\n    Row(const\
-    \ iterator &begi, const iterator &endi) : begi(begi), endi(endi) {}\n    inline\
-    \ iterator begin() const { return begi; }\n    inline iterator end() const { return\
-    \ endi; }\n    template <class I = ll>\n    inline I size() const { return endi\
-    \ - begi; }\n    inline bool empty() const { return size() == 0; }\n\n    inline\
-    \ T &operator[](int i) const { return *(begi + i); }\n    inline T &at(int i)\
-    \ const\n    {\n      assert(0 <= i && i < size());\n      return *(begi + i);\n\
-    \    }\n\n    inline T &front() const\n    {\n      assert(!empty());\n      return\
-    \ *begi;\n    }\n    inline T &back() const\n    {\n      assert(!empty());\n\
-    \      return *prev(endi);\n    }\n\n    vc<T> to_v() const { return vc<T>(ALL(*this));\
-    \ }\n  };\n\npublic:\n  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\
-    \u305F vector\n  template <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) :\
-    \ n(n), m(ies.size()), start(n, 0), elist(m)\n  {\n    if constexpr (is_erasable)\n\
-    \      len.resize(n);\n    fec([ i, e ] : ies)\n    {\n      assert(0 <= i &&\
-    \ i < n);\n      start[i]++;\n    }\n    start = cumlsum(start);\n    if constexpr\
-    \ (is_erasable)\n      repi(i, n) len[i] = start[i + 1] - start[i];\n    auto\
-    \ cnt = start;\n    repi(j, m)\n    {\n      cauto & [ i, e ] = ies[j];\n    \
-    \  int &k = cnt[i];\n      elist[k] = e;\n      k++;\n    }\n  }\n  // vv[i] \u306B\
-    \ elem \u305F\u3061\u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  CSR(const vvc<T>\
-    \ &vv) : n(vv.size()), start(n + 1, 0)\n  {\n    m = 0;\n    fec(row : vv) m +=\
-    \ row.size();\n    elist.resize(m);\n    if constexpr (is_erasable)\n      len.resize(n);\n\
-    \    for (int i = 0, j = 0; i < n; i++)\n    {\n      start[i] = j;\n      if\
-    \ constexpr (is_erasable)\n        len[i] = vv[i].size();\n      fec(e : vv[i])\n\
-    \      {\n        elist[j] = e;\n        j++;\n      }\n    }\n    start.back()\
-    \ = m;\n  }\n\n  Row operator[](int i) { return Row(elist.begin() + start[i],\
-    \ elist.begin() + get_last(i)); }\n  Row operator[](int i) const\n  {\n    auto\
-    \ beg = const_cast<vc<T> &>(elist).begin();\n    return Row(beg + start[i], beg\
-    \ + get_last(i));\n  }\n  Row at(int i)\n  {\n    if (!(0 <= i && i < n))\n  \
-    \    return Row(elist.begin(), elist.begin());\n    return Row(elist.begin() +\
-    \ start[i], elist.begin() + get_last(i));\n  }\n  Row at(int i) const\n  {\n \
-    \   auto beg = const_cast<vc<T> &>(elist).begin();\n    if (!(0 <= i && i < n))\n\
-    \      return Row(beg, beg);\n    return Row(beg + start[i], beg + get_last(i));\n\
-    \  }\n\n  void pop_back(int i)\n  {\n    static_assert(is_erasable);\n    assert(len[i]\
-    \ > 0);\n    len[i]--;\n  }\n\n  template <class I = ll>\n  I size() const { return\
-    \ n; }\n\n  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n    repi(i, n) res[i]\
-    \ = {elist.begin() + start[i], elist.begin() + start[i + 1]};\n    return res;\n\
-    \  }\n\n  vc<T> &get_elist() { return elist; }\n  const vc<T> &get_elist() const\
-    \ { return elist; }\n};\n#line 5 \"graph/graph.hpp\"\n\n/**\n * @brief \u30B0\u30E9\
-    \u30D5\u30AF\u30E9\u30B9\n * @docs docs/graph/graph.md\n */\n\ntemplate <class\
-    \ Cost>\nstruct Edge\n{\n  int from, to;\n  Cost cost;\n  int index;\n  Edge()\
-    \ : from(-1), to(-1), index(-1) {}\n  Edge(int s, int t, Cost c, int i = -1) :\
-    \ from(s), to(t), cost(c), index(i) {}\n  operator int() const { return to; }\n\
-    \  bool operator<(const Edge &rhs) const { return cost < rhs.cost; }\n  // \u9006\
-    \u8FBA\u3092\u8FD4\u3059 (\u3082\u3068\u306E\u8FBA\u306F\u5909\u66F4\u3057\u306A\
-    \u3044)\n  Edge rev() const { return Edge(to, from, cost, index); }\n};\n#ifdef\
-    \ LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<bool>, from, to, cost)\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<int>,\
-    \ from, to, cost)\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<ll>, from, to, cost)\n#endif\n\
-    \ntemplate <class Cost>\nvc<Edge<Cost>> rev_path(const vc<Edge<Cost>> &path)\n\
-    {\n  const int len = path.size();\n  vc<Edge<Cost>> res(len);\n  repi(i, len)\
-    \ res[i] = path[len - 1 - i].rev();\n  return res;\n}\n\n// \u30B3\u30F3\u30B9\
-    \u30C8\u30E9\u30AF\u30BF: n, es\ntemplate <bool is_directed, class Cost, bool\
-    \ is_erasable = false>\nstruct Graph\n{\n  using E = Edge<Cost>;\n\nprotected:\n\
-    \  int n, m, era;\n  CSR<E, is_erasable> g;\n  vc<int> eid_to_elist_id;\n\n  template\
-    \ <class F>\n  void build(F get_edge)\n  {\n    if constexpr (is_directed)\n \
-    \   {\n      vc<pair<int, E>> edges(m);\n      repi(i, m)\n      {\n        auto\
-    \ [u, v, w] = get_edge(i);\n        edges[i] = {u, E(u, v, w, i)};\n      }\n\
-    \      g = CSR<E, is_erasable>(n, edges);\n      if constexpr (is_erasable)\n\
-    \      {\n        eid_to_elist_id.resize(m, -1);\n        int k = 0;\n       \
-    \ repi(v, n) fec(e : g[v]) eid_to_elist_id[e.index] = k++;\n      }\n    }\n \
-    \   else\n    {\n      vc<pair<int, E>> edges;\n      edges.reserve(2 * m);\n\
-    \      repi(i, m)\n      {\n        auto [u, v, w] = get_edge(i);\n        edges.eb(u,\
-    \ E(u, v, w, i));\n        if (u != v)\n          edges.eb(v, E(v, u, w, i));\n\
-    \      }\n      g = CSR<E, is_erasable>(n, edges);\n      if constexpr (is_erasable)\n\
-    \      {\n        eid_to_elist_id.resize(2 * m, -1);\n        int k = 0;\n   \
-    \     repi(v, n) fec(e : g[v]) eid_to_elist_id[2 * e.index + (e.from <= e.to)]\
-    \ = k++;\n      }\n    }\n  }\n\npublic:\n  Graph() {}\n  template <class I>\n\
-    \  Graph(int n, const vc<pair<I, I>> &es, const Cost &dflt_cost = 1) : n(n), m(es.size()),\
-    \ era(0)\n  {\n    build(LMD(i, (tuple{es[i].first, es[i].second, dflt_cost})));\n\
-    \  }\n  template <class I>\n  Graph(int n, const vc<tuple<I, I, Cost>> &es) :\
-    \ n(n), m(es.size()), era(0)\n  {\n    build(LMD(i, es[i]));\n  }\n  Graph(int\
-    \ n, const vc<E> &es) : n(n), m(es.size()), era(0)\n  {\n    build(LMD(i, (tuple{es[i].from,\
-    \ es[i].to, es[i].cost})));\n  }\n\n  // \u9802\u70B9\u6570\n  template <class\
-    \ I = ll>\n  I size() const { return n; }\n  // \u8FBA\u6570\n  template <class\
-    \ I = ll>\n  I num_of_edges() const { return m - era; }\n\n  // v \u304B\u3089\
-    \u51FA\u308B\u8FBA\u306E\u96C6\u5408\n  auto out_edges(int v) const { return g[v];\
-    \ }\n  // v \u304B\u3089\u51FA\u308B\u9802\u70B9\u306E\u96C6\u5408\n  template\
-    \ <class I = ll>\n  vc<I> out_vertices(int v) const\n  {\n    vc<I> res;\n   \
-    \ res.reserve(g[v].size());\n    fec(e : g[v]) res.eb(e.to);\n    return res;\n\
-    \  }\n\n  // \u3059\u3079\u3066\u306E\u8FBA\u3092\u8FD4\u3059\u3002\u8FBA\u756A\
-    \u53F7\u9806\u3068\u306F\u9650\u3089\u306A\u3044\n  // \u7121\u5411\u30B0\u30E9\
-    \u30D5\u306E\u5834\u5408\u3001\u5404\u8FBA\u306F from <= to \u3092\u6E80\u305F\
-    \u3059\n  vc<E> edges() const\n  {\n    vc<E> res;\n    res.reserve(m);\n    if\
-    \ constexpr (is_directed)\n    {\n      repi(v, n) fec(e : g[v])\n      {\n  \
-    \      res.eb(e);\n      }\n    }\n    else\n    {\n      repi(v, n) fec(e : g[v])\n\
-    \      {\n        if (e.from <= e.to) res.eb(e);\n      }\n    }\n    return res;\n\
-    \  }\n  // \u96A3\u63A5\u30EA\u30B9\u30C8\n  vvc<E> adj_list() const { return\
-    \ g.to_vv(); }\n  // \u96A3\u63A5\u884C\u5217 (\u8FBA\u306E\u672C\u6570\u3092\u683C\
-    \u7D0D)\n  template <class I = ll>\n  vvc<I> adj_matrix_ecnt() const\n  {\n  \
-    \  vvc<I> res(n, vc<I>(n, 0));\n    fec(e : edges())\n    {\n      res[e.from][e.to]++;\n\
-    \      if constexpr (!is_directed)\n        if (e.from != e.to)\n          res[e.to][e.from]++;\n\
-    \    }\n    return res;\n  }\n\n  // \u5165\u6B21\u6570\u306E\u5217\n  template\
-    \ <class I = ll>\n  vc<I> indegs() const\n  {\n    vc<I> res(n);\n    fec(e :\
-    \ edges())\n    {\n      res[e.to]++;\n      if constexpr (!is_directed)\n   \
-    \     if (e.from != e.to)\n          res[e.from]++;\n    }\n    return res;\n\
-    \  }\n  // \u51FA\u6B21\u6570\u306E\u5217\n  template <class I = ll>\n  vc<I>\
-    \ outdegs() const\n  {\n    vc<I> res(n);\n    repi(v, n) res[v] = g[v].size();\n\
-    \    return res;\n  }\n\n  void erase_edge(int eid)\n  {\n    static_assert(is_erasable);\n\
-    \    assert(0 <= eid && eid < m);\n    if constexpr (is_directed)\n    {\n   \
-    \   internal_erase(eid_to_elist_id[eid]);\n      eid_to_elist_id[eid] = -1;\n\
-    \    }\n    else\n    {\n      repi(j, 2)\n      {\n        internal_erase(eid_to_elist_id[2\
-    \ * eid + j]);\n        eid_to_elist_id[2 * eid + j] = -1;\n      }\n    }\n \
-    \   era++;\n  }\n\nprivate:\n  void internal_erase(int elist_id)\n  {\n    if\
-    \ (elist_id < 0)\n      return;\n    auto &elist = g.get_elist();\n    auto &target\
-    \ = elist[elist_id];\n    const int u = target.from;\n    auto &last = g[u].back();\n\
-    \    const int last_elist_id = &last - &elist[0];\n    if (elist_id != last_elist_id)\n\
-    \    {\n      swap(target, last);\n      int eid = target.index;\n      if constexpr\
-    \ (is_directed)\n        eid_to_elist_id[eid] = elist_id;\n      else\n      {\n\
-    \        if (eid_to_elist_id[2 * eid] == last_elist_id)\n          eid_to_elist_id[2\
-    \ * eid] = elist_id;\n        else\n          eid_to_elist_id[2 * eid + 1] = elist_id;\n\
-    \      }\n    }\n    g.pop_back(u);\n  }\n};\n\ntemplate <class Cost, bool is_erasable\
-    \ = false>\nusing GraphDirected = Graph<true, Cost, is_erasable>;\ntemplate <class\
-    \ Cost, bool is_erasable = false>\nusing GraphUndirected = Graph<false, Cost,\
-    \ is_erasable>;\n\ntemplate <class Cost>\nGraphDirected<Cost> rev_graph(const\
-    \ GraphDirected<Cost> &g)\n{\n  const int n = g.size(), m = g.num_of_edges();\n\
+    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = ull((u128(z)\
+    \ * im) >> 64);\n    ull y = x * m;\n    return uint(z - y + (z < y ? m : 0));\n\
+    \  }\n};\n\ntemplate <int id>\nstruct policy_barrett32\n{\n  using value_type\
+    \ = uint;\n  using calc_type = ull;\n  using mod_type = int;\n  \n  static constexpr\
+    \ bool is_prime = false;\n  static inline barrett32 reducer{998244353};\n  static\
+    \ void set_mod(mod_type m) { reducer = barrett32(m); }\n  static mod_type mod()\
+    \ { return reducer.umod(); }\n  static value_type umod() { return reducer.umod();\
+    \ }\n  static value_type init(value_type v) { return v; }\n  static mod_type val(value_type\
+    \ v) { return v; }\n  static value_type mul(value_type a, value_type b) { return\
+    \ reducer.mul(a, b); }\n};\n\n};\n#line 2 \"math/modint/modint_internal_montgomery64.hpp\"\
+    \n\n#line 4 \"math/modint/modint_internal_montgomery64.hpp\"\n\n#line 6 \"math/modint/modint_internal_montgomery64.hpp\"\
+    \n\nnamespace internal\n{\n\ninline constexpr ull inv64(ull a)\n{\n  ull x = a;\n\
+    \  while (a * x != 1) x *= 2 - a * x;\n  return x;\n}\n\nstruct montgomery64odd\n\
+    {\n  ull m, im, sq;\n  explicit montgomery64odd(ull m) : m(m), im(inv64(m)), sq(-u128(m)\
+    \ % m) {}\n  ull umod() const { return m; }\n  ull reduce(u128 x) const\n  {\n\
+    \    auto t = (x + u128(m) * (-im * ull(x))) >> 64;\n    if (t >= m) t -= m;\n\
+    \    return (ull)t;\n  }\n  ull inv_reduce(i128 v) const { return reduce(u128(v\
+    \ % m + m) * sq); }\n};\n\n// https://www.mathenachia.blog/even-mod-montgomery-impl/\n\
+    struct montgomery64\n{\n  ull m, mx, imx, d, q;\n  uint b;\n  explicit montgomery64(ull\
+    \ m) : m(m)\n  {\n    b = countr_zero(m), mx = m >> b; \n    imx = inv64(mx);\n\
+    \    d = powmod_constexpr((mx + 1) / 2, b, mx); \n    u128 sq = -u128(mx) % mx;\
+    \ \n    q = (1 + (((sq - 1) * d) << b)) % m;\n  }\n  ull umod() const { return\
+    \ m; }\n  ull reduce(u128 x) const\n  {\n    ull p = x & MASK(b); \n    x = (x\
+    \ >> b) + p * d;\n    ull y = p << (64 - b);\n    auto t = (x + u128(mx) * (imx\
+    \ * (y - ull(x)))) >> (64 - b);\n    if (t >= m) { t -= m; if (t >= m) t -= m;\
+    \ }\n    return (ull)t;\n  }\n  ull inv_reduce(i128 v) const { return reduce(u128(v\
+    \ % m + m) * q); }\n};\n\ntemplate <int id>\nstruct policy_montgomery64_odd\n\
+    {\n  using value_type = ull;\n  using calc_type = u128;\n  using mod_type = ll;\n\
+    \n  static constexpr bool is_prime = false;\n  static inline montgomery64odd reducer{(1LL\
+    \ << 61) - 1};\n  static void set_mod(mod_type m) { reducer = montgomery64odd(m);\
+    \ }\n  static mod_type mod() { return reducer.umod(); }\n  static value_type umod()\
+    \ { return reducer.umod(); }\n  static value_type init(value_type v) { return\
+    \ reducer.inv_reduce(v); }\n  static mod_type val(value_type v) { return reducer.reduce(v);\
+    \ }\n  static value_type mul(value_type a, value_type b) { return reducer.reduce((calc_type)a\
+    \ * b); }\n};\n\ntemplate <int id>\nstruct policy_montgomery64\n{\n  using value_type\
+    \ = ull;\n  using calc_type = u128;\n  using mod_type = ll;\n\n  static constexpr\
+    \ bool is_prime = false;\n  static inline montgomery64 reducer{(1LL << 61) - 1};\n\
+    \  static void set_mod(mod_type m) { reducer = montgomery64(m); }\n  static mod_type\
+    \ mod() { return reducer.umod(); }\n  static value_type umod() { return reducer.umod();\
+    \ }\n  static value_type init(value_type v) { return reducer.inv_reduce(v); }\n\
+    \  static mod_type val(value_type v) { return reducer.reduce(v); }\n  static value_type\
+    \ mul(value_type a, value_type b) { return reducer.reduce((calc_type)a * b); }\n\
+    };\n\n};\n#line 2 \"math/extgcd.hpp\"\n\n#line 4 \"math/extgcd.hpp\"\n\n/**\n\
+    \ * @brief \u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5\
+    \ (extgcd)\n * @docs docs/math/extgcd.md\n */\n\n// g == gcd(x, y) >= 0, ax +\
+    \ by == g \u3092\u6E80\u305F\u3059 (g, x, y)\n// max(|x|, |y|) <= max(|a|, |b|)\n\
+    template <class T = ll>\nconstexpr tuple<T, T, T> extgcd(T a, T b)\n{\n  if (a\
+    \ == 0 && b == 0)\n    return {0, 0, 0};\n  \n  // a*x1 + b*y1 == z1  ...(1)\n\
+    \  // a*x2 + b*y2 == z2  ...(2)\n  T x1 = 1, y1 = 0, z1 = a;\n  T x2 = 0, y2 =\
+    \ 1, z2 = b;\n  while (z2 != 0)\n  {\n    // (1)' = (2)\n    // (2)' = (1) - q*(2)\n\
+    \    T q = z1 / z2;\n    tie(x1, x2) = make_pair(x2, x1 - q * x2);\n    tie(y1,\
+    \ y2) = make_pair(y2, y1 - q * y2);\n    tie(z1, z2) = make_pair(z2, z1 - q *\
+    \ z2);\n  }\n  if (z1 < 0)\n    x1 = -x1, y1 = -y1, z1 = -z1;\n  return {z1, x1,\
+    \ y1};\n}\n#line 10 \"math/modint/modint.hpp\"\n\nnamespace internal\n{\n\n  template\
+    \ <class Policy>\n  struct modint_impl\n  {\n    using V = typename Policy::value_type;\n\
+    \    using M = typename Policy::mod_type;\n    using mint = modint_impl;\n\n \
+    \ private:\n    V _v;\n\n  public:\n    static constexpr M mod() { return Policy::mod();\
+    \ }\n\n    template <class T = Policy>\n    static auto set_mod(M m) -> decltype(T::set_mod(m))\
+    \ { return T::set_mod(m); }\n\n    static mint raw(V v)\n    {\n      mint x;\n\
+    \      x._v = v;\n      return x;\n    }\n\n    modint_impl() : _v(0) {}\n\n \
+    \   template <class T, typename = enable_if_t<is_integral_ext<T>>>\n    modint_impl(T\
+    \ v)\n    {\n      V rem;\n      if constexpr (is_signed_ext<T>)\n      {\n  \
+    \      using S = make_signed_t<V>;\n        S x = v % S(Policy::umod());\n   \
+    \     if (x < 0)\n          x += Policy::umod();\n        rem = x;\n      }\n\
+    \      else\n        rem = V(v % Policy::umod());\n      _v = Policy::init(rem);\n\
+    \    };\n\n    M val() const { return Policy::val(_v); }\n\n    mint &operator+=(const\
+    \ mint &rhs)\n    {\n      _v += rhs._v;\n      if (_v >= Policy::umod())\n  \
+    \      _v -= Policy::umod();\n      return *this;\n    }\n    mint &operator-=(const\
+    \ mint &rhs)\n    {\n      _v -= rhs._v;\n      if (_v >= Policy::umod())\n  \
+    \      _v += Policy::umod();\n      return *this;\n    }\n    mint &operator*=(const\
+    \ mint &rhs)\n    {\n      _v = Policy::mul(_v, rhs._v);\n      return *this;\n\
+    \    }\n    mint &operator/=(const mint &rhs)\n    {\n      return *this *= rhs.inv();\n\
+    \    }\n\n    mint &operator++()\n    {\n      _v++;\n      if (_v == Policy::umod())\n\
+    \        _v = 0;\n      return *this;\n    }\n    mint &operator--()\n    {\n\
+    \      if (_v == 0)\n        _v = Policy::umod();\n      _v--;\n      return *this;\n\
+    \    }\n    mint operator++(int)\n    {\n      mint res = *this;\n      ++(*this);\n\
+    \      return res;\n    }\n    mint operator--(int)\n    {\n      mint res = *this;\n\
+    \      --(*this);\n      return res;\n    }\n    mint operator+() const { return\
+    \ *this; }\n    mint operator-() const { return mint() - *this; }\n\n    template\
+    \ <class T>\n    mint pow(T n) const\n    {\n      assert(n >= 0);\n      mint\
+    \ x = *this, r = 1;\n      while (n)\n      {\n        if (n & 1)\n          r\
+    \ *= x;\n        x *= x;\n        n >>= 1;\n      }\n      return r;\n    }\n\
+    \    mint inv() const\n    {\n      if constexpr (Policy::is_prime)\n      {\n\
+    \        return pow(mod() - 2);\n      }\n      else\n      {\n        auto [g,\
+    \ x, y] = extgcd<M>(val(), mod());\n        assert(g == 1);\n        return mint(x);\n\
+    \      }\n    }\n\n    friend mint operator+(const mint &lhs, const mint &rhs)\
+    \ { return mint(lhs) += rhs; }\n    friend mint operator-(const mint &lhs, const\
+    \ mint &rhs) { return mint(lhs) -= rhs; }\n    friend mint operator*(const mint\
+    \ &lhs, const mint &rhs) { return mint(lhs) *= rhs; }\n    friend mint operator/(const\
+    \ mint &lhs, const mint &rhs) { return mint(lhs) /= rhs; }\n    friend bool operator==(const\
+    \ mint &lhs, const mint &rhs) { return lhs._v == rhs._v; }\n    friend bool operator!=(const\
+    \ mint &lhs, const mint &rhs) { return lhs._v != rhs._v; }\n  \n#if defined LOCAL\
+    \ or not defined FAST_IO\n    friend std::istream &operator>>(std::istream &is,\
+    \ mint &x)\n    {\n      long long a;\n      is >> a;\n      x = a;\n      return\
+    \ is;\n    }\n    friend std::ostream &operator<<(std::ostream &os, const mint\
+    \ &x)\n    {\n      os << x.val();\n      return os;\n    }\n#else\n    friend\
+    \ void rd1(mint &x)\n    {\n      long long a;\n      fastio::rd1(a);\n      x\
+    \ = a;\n    }\n    friend void wt1(const mint &x)\n    {\n      fastio::wt1(x.val());\n\
+    \    }\n#endif\n  };\n\n};\n\ntemplate <int mod>\nusing static_modint32 = internal::modint_impl<internal::policy_static<mod>>;\n\
+    template <int id>\nusing dynamic_modint32 = internal::modint_impl<internal::policy_barrett32<id>>;\n\
+    template <ll mod>\nusing static_modint64 = internal::modint_impl<internal::policy_static<mod>>;\n\
+    template <int id>\nusing dynamic_modint64_odd = internal::modint_impl<internal::policy_montgomery64_odd<id>>;\n\
+    template <int id>\nusing dynamic_modint64 = internal::modint_impl<internal::policy_montgomery64<id>>;\n\
+    \nusing modint998244353 = static_modint32<998244353>;\nusing modint1000000007\
+    \ = static_modint32<1000000007>;\nusing modint = dynamic_modint32<-1>;\nusing\
+    \ modint61 = static_modint64<(1LL << 61) - 1>;\nusing modint64 = dynamic_modint64<-1>;\n\
+    \ntemplate <class T>\nstruct is_modint : std::false_type\n{\n};\ntemplate <class\
+    \ Policy>\nstruct is_modint<internal::modint_impl<Policy>> : std::true_type\n\
+    {\n};\ntemplate <class T>\ninline constexpr bool is_modint_v = is_modint<T>::value;\n\
+    \ntemplate <class T>\nstruct is_static_modint : false_type {};\ntemplate <int\
+    \ m>\nstruct is_static_modint<static_modint32<m>> : true_type {};\ntemplate <ll\
+    \ m>\nstruct is_static_modint<static_modint64<m>> : true_type {};\ntemplate <class\
+    \ T>\ninline constexpr bool is_static_modint_v = is_static_modint<T>::value;\n\
+    \ntemplate <class T>\nstruct is_dynamic_modint : false_type {};\ntemplate <int\
+    \ id>\nstruct is_dynamic_modint<dynamic_modint32<id>> : true_type {};\ntemplate\
+    \ <int id>\nstruct is_dynamic_modint<dynamic_modint64_odd<id>> : true_type {};\n\
+    template <int id>\nstruct is_dynamic_modint<dynamic_modint64<id>> : true_type\
+    \ {};\ntemplate <class T>\ninline constexpr bool is_dynamic_modint_v = is_dynamic_modint<T>::value;\n\
+    \ntemplate <typename, typename = void>\nstruct has_mod : std::false_type\n{\n\
+    };\ntemplate <typename T>\nstruct has_mod<T, std::void_t<decltype(T::mod())>>\
+    \ : std::true_type\n{\n};\n\ntemplate <class mint>\nstruct modint_less\n{\n  bool\
+    \ operator()(const mint &a, const mint &b) const\n  {\n    if constexpr (is_modint_v<mint>)\n\
+    \      return a.val() < b.val();\n    else\n      return a < b;\n  }\n};\n\ntemplate\
+    \ <class mint>\nstruct modint_hash\n{\n  auto operator()(const mint &x) const\n\
+    \  {\n    if constexpr (is_modint_v<mint>)\n      return std::hash<decltype(x.val())>{}(x.val());\n\
+    \    else\n      return std::hash<mint>{}(x);\n  }\n};\n#line 18 \"verify/yukicoder/yuki310.test.cpp\"\
+    \nusing mint = modint1000000007;\n#line 2 \"graph/matrix_tree.hpp\"\n\n#line 4\
+    \ \"graph/matrix_tree.hpp\"\n\n#line 2 \"graph/graph.hpp\"\n\n#line 2 \"ds/csr.hpp\"\
+    \n\n#line 4 \"ds/csr.hpp\"\n\n/**\n * @brief CSR\n * @docs docs/ds/csr.md\n */\n\
+    \ntemplate <class T, bool is_erasable = false>\nstruct CSR\n{\nprotected:\n  int\
+    \ n, m;\n  // i (0 <= i < n) \u884C\u76EE\u3092\u8868\u3059\u306E\u306F elist\
+    \ \u306E [start[i], start[i+1])\n  // pop_back \u3059\u308B\u5834\u5408\u306F\
+    \ [start[i], start[i] + len[i])\n  vc<int> start;\n  vc<T> elist;\n  vc<int> len;\n\
+    \  inline int get_last(int i) const\n  {\n    if constexpr (is_erasable)\n   \
+    \   return start[i] + len[i];\n    else\n      return start[i + 1];\n  }\n\n \
+    \ struct Row\n  {\n    using iterator = typename vc<T>::iterator;\n\n  private:\n\
+    \    iterator begi, endi;\n\n  public:\n    Row(const iterator &begi, const iterator\
+    \ &endi) : begi(begi), endi(endi) {}\n    inline iterator begin() const { return\
+    \ begi; }\n    inline iterator end() const { return endi; }\n    template <class\
+    \ I = ll>\n    inline I size() const { return endi - begi; }\n    inline bool\
+    \ empty() const { return size() == 0; }\n\n    inline T &operator[](int i) const\
+    \ { return *(begi + i); }\n    inline T &at(int i) const\n    {\n      assert(0\
+    \ <= i && i < size());\n      return *(begi + i);\n    }\n\n    inline T &front()\
+    \ const\n    {\n      assert(!empty());\n      return *begi;\n    }\n    inline\
+    \ T &back() const\n    {\n      assert(!empty());\n      return *prev(endi);\n\
+    \    }\n\n    vc<T> to_v() const { return vc<T>(ALL(*this)); }\n  };\n\npublic:\n\
+    \  CSR() {}\n  // (i, elem) \u304C\u683C\u7D0D\u3055\u308C\u305F vector\n  template\
+    \ <class I>\n  CSR(int n, const vc<pair<I, T>> &ies) : n(n), m(ies.size()), start(n,\
+    \ 0), elist(m)\n  {\n    if constexpr (is_erasable)\n      len.resize(n);\n  \
+    \  fec([ i, e ] : ies)\n    {\n      assert(0 <= i && i < n);\n      start[i]++;\n\
+    \    }\n    start = cumlsum(start);\n    if constexpr (is_erasable)\n      repi(i,\
+    \ n) len[i] = start[i + 1] - start[i];\n    auto cnt = start;\n    repi(j, m)\n\
+    \    {\n      cauto & [ i, e ] = ies[j];\n      int &k = cnt[i];\n      elist[k]\
+    \ = e;\n      k++;\n    }\n  }\n  // vv[i] \u306B elem \u305F\u3061\u304C\u683C\
+    \u7D0D\u3055\u308C\u305F vector\n  CSR(const vvc<T> &vv) : n(vv.size()), start(n\
+    \ + 1, 0)\n  {\n    m = 0;\n    fec(row : vv) m += row.size();\n    elist.resize(m);\n\
+    \    if constexpr (is_erasable)\n      len.resize(n);\n    for (int i = 0, j =\
+    \ 0; i < n; i++)\n    {\n      start[i] = j;\n      if constexpr (is_erasable)\n\
+    \        len[i] = vv[i].size();\n      fec(e : vv[i])\n      {\n        elist[j]\
+    \ = e;\n        j++;\n      }\n    }\n    start.back() = m;\n  }\n\n  Row operator[](int\
+    \ i) { return Row(elist.begin() + start[i], elist.begin() + get_last(i)); }\n\
+    \  Row operator[](int i) const\n  {\n    auto beg = const_cast<vc<T> &>(elist).begin();\n\
+    \    return Row(beg + start[i], beg + get_last(i));\n  }\n  Row at(int i)\n  {\n\
+    \    if (!(0 <= i && i < n))\n      return Row(elist.begin(), elist.begin());\n\
+    \    return Row(elist.begin() + start[i], elist.begin() + get_last(i));\n  }\n\
+    \  Row at(int i) const\n  {\n    auto beg = const_cast<vc<T> &>(elist).begin();\n\
+    \    if (!(0 <= i && i < n))\n      return Row(beg, beg);\n    return Row(beg\
+    \ + start[i], beg + get_last(i));\n  }\n\n  void pop_back(int i)\n  {\n    static_assert(is_erasable);\n\
+    \    assert(len[i] > 0);\n    len[i]--;\n  }\n\n  template <class I = ll>\n  I\
+    \ size() const { return n; }\n\n  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n\
+    \    repi(i, n) res[i] = {elist.begin() + start[i], elist.begin() + get_last(i)};\n\
+    \    return res;\n  }\n\n  vc<T> &get_elist() { return elist; }\n  const vc<T>\
+    \ &get_elist() const { return elist; }\n};\n#line 5 \"graph/graph.hpp\"\n\n/**\n\
+    \ * @brief \u30B0\u30E9\u30D5\u30AF\u30E9\u30B9\n * @docs docs/graph/graph.md\n\
+    \ */\n\ntemplate <class Cost>\nstruct Edge\n{\n  int from, to;\n  Cost cost;\n\
+    \  int index;\n  Edge() : from(-1), to(-1), index(-1) {}\n  Edge(int s, int t,\
+    \ Cost c, int i = -1) : from(s), to(t), cost(c), index(i) {}\n  operator int()\
+    \ const { return to; }\n  bool operator<(const Edge &rhs) const { return cost\
+    \ < rhs.cost; }\n  // \u9006\u8FBA\u3092\u8FD4\u3059 (\u3082\u3068\u306E\u8FBA\
+    \u306F\u5909\u66F4\u3057\u306A\u3044)\n  Edge rev() const { return Edge(to, from,\
+    \ cost, index); }\n};\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<bool>,\
+    \ from, to, cost)\nCPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<int>, from, to, cost)\n\
+    CPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<ll>, from, to, cost)\n#endif\n\ntemplate <class\
+    \ Cost>\nvc<Edge<Cost>> rev_path(const vc<Edge<Cost>> &path)\n{\n  const int len\
+    \ = path.size();\n  vc<Edge<Cost>> res(len);\n  repi(i, len) res[i] = path[len\
+    \ - 1 - i].rev();\n  return res;\n}\n\n// \u30B3\u30F3\u30B9\u30C8\u30E9\u30AF\
+    \u30BF: n, es\ntemplate <bool is_directed, class Cost, bool is_erasable = false>\n\
+    struct Graph\n{\n  using E = Edge<Cost>;\n\nprotected:\n  int n, m, era;\n  CSR<E,\
+    \ is_erasable> g;\n  vc<int> eid_to_elist_id;\n\n  template <class F>\n  void\
+    \ build(F get_edge)\n  {\n    if constexpr (is_directed)\n    {\n      vc<pair<int,\
+    \ E>> edges(m);\n      repi(i, m)\n      {\n        auto [u, v, w] = get_edge(i);\n\
+    \        edges[i] = {u, E(u, v, w, i)};\n      }\n      g = CSR<E, is_erasable>(n,\
+    \ edges);\n      if constexpr (is_erasable)\n      {\n        eid_to_elist_id.resize(m,\
+    \ -1);\n        int k = 0;\n        repi(v, n) fec(e : g[v]) eid_to_elist_id[e.index]\
+    \ = k++;\n      }\n    }\n    else\n    {\n      vc<pair<int, E>> edges;\n   \
+    \   edges.reserve(2 * m);\n      repi(i, m)\n      {\n        auto [u, v, w] =\
+    \ get_edge(i);\n        edges.eb(u, E(u, v, w, i));\n        if (u != v)\n   \
+    \       edges.eb(v, E(v, u, w, i));\n      }\n      g = CSR<E, is_erasable>(n,\
+    \ edges);\n      if constexpr (is_erasable)\n      {\n        eid_to_elist_id.resize(2\
+    \ * m, -1);\n        int k = 0;\n        repi(v, n) fec(e : g[v]) eid_to_elist_id[2\
+    \ * e.index + (e.from <= e.to)] = k++;\n      }\n    }\n  }\n\npublic:\n  Graph()\
+    \ {}\n  template <class I>\n  Graph(int n, const vc<pair<I, I>> &es, const Cost\
+    \ &dflt_cost = 1) : n(n), m(es.size()), era(0)\n  {\n    build(LMD(i, (tuple{es[i].first,\
+    \ es[i].second, dflt_cost})));\n  }\n  template <class I>\n  Graph(int n, const\
+    \ vc<tuple<I, I, Cost>> &es) : n(n), m(es.size()), era(0)\n  {\n    build(LMD(i,\
+    \ es[i]));\n  }\n  Graph(int n, const vc<E> &es) : n(n), m(es.size()), era(0)\n\
+    \  {\n    build(LMD(i, (tuple{es[i].from, es[i].to, es[i].cost})));\n  }\n\n \
+    \ // \u9802\u70B9\u6570\n  template <class I = ll>\n  I size() const { return\
+    \ n; }\n  // \u8FBA\u6570\n  template <class I = ll>\n  I num_of_edges() const\
+    \ { return m - era; }\n\n  // v \u304B\u3089\u51FA\u308B\u8FBA\u306E\u96C6\u5408\
+    \n  auto out_edges(int v) const { return g[v]; }\n  // v \u304B\u3089\u51FA\u308B\
+    \u9802\u70B9\u306E\u96C6\u5408\n  template <class I = ll>\n  vc<I> out_vertices(int\
+    \ v) const\n  {\n    vc<I> res;\n    res.reserve(g[v].size());\n    fec(e : g[v])\
+    \ res.eb(e.to);\n    return res;\n  }\n\n  // \u3059\u3079\u3066\u306E\u8FBA\u3092\
+    \u8FD4\u3059\u3002\u8FBA\u756A\u53F7\u9806\u3068\u306F\u9650\u3089\u306A\u3044\
+    \n  // \u7121\u5411\u30B0\u30E9\u30D5\u306E\u5834\u5408\u3001\u5404\u8FBA\u306F\
+    \ from <= to \u3092\u6E80\u305F\u3059\n  vc<E> edges() const\n  {\n    vc<E> res;\n\
+    \    res.reserve(m);\n    if constexpr (is_directed)\n    {\n      repi(v, n)\
+    \ fec(e : g[v])\n      {\n        res.eb(e);\n      }\n    }\n    else\n    {\n\
+    \      repi(v, n) fec(e : g[v])\n      {\n        if (e.from <= e.to) res.eb(e);\n\
+    \      }\n    }\n    return res;\n  }\n  // \u96A3\u63A5\u30EA\u30B9\u30C8\n \
+    \ vvc<E> adj_list() const { return g.to_vv(); }\n  // \u96A3\u63A5\u884C\u5217\
+    \ (\u8FBA\u306E\u672C\u6570\u3092\u683C\u7D0D)\n  template <class I = ll>\n  vvc<I>\
+    \ adj_matrix_ecnt() const\n  {\n    vvc<I> res(n, vc<I>(n, 0));\n    fec(e : edges())\n\
+    \    {\n      res[e.from][e.to]++;\n      if constexpr (!is_directed)\n      \
+    \  if (e.from != e.to)\n          res[e.to][e.from]++;\n    }\n    return res;\n\
+    \  }\n\n  // \u5165\u6B21\u6570\u306E\u5217\n  template <class I = ll>\n  vc<I>\
+    \ indegs() const\n  {\n    vc<I> res(n);\n    fec(e : edges())\n    {\n      res[e.to]++;\n\
+    \      if constexpr (!is_directed)\n        if (e.from != e.to)\n          res[e.from]++;\n\
+    \    }\n    return res;\n  }\n  // \u51FA\u6B21\u6570\u306E\u5217\n  template\
+    \ <class I = ll>\n  vc<I> outdegs() const\n  {\n    vc<I> res(n);\n    repi(v,\
+    \ n) res[v] = g[v].size();\n    return res;\n  }\n\n  void erase_edge(int eid)\n\
+    \  {\n    static_assert(is_erasable);\n    assert(0 <= eid && eid < m);\n    if\
+    \ constexpr (is_directed)\n    {\n      internal_erase(eid_to_elist_id[eid]);\n\
+    \      eid_to_elist_id[eid] = -1;\n    }\n    else\n    {\n      repi(j, 2)\n\
+    \      {\n        internal_erase(eid_to_elist_id[2 * eid + j]);\n        eid_to_elist_id[2\
+    \ * eid + j] = -1;\n      }\n    }\n    era++;\n  }\n\nprivate:\n  void internal_erase(int\
+    \ elist_id)\n  {\n    if (elist_id < 0)\n      return;\n    auto &elist = g.get_elist();\n\
+    \    auto &target = elist[elist_id];\n    const int u = target.from;\n    auto\
+    \ &last = g[u].back();\n    const int last_elist_id = &last - &elist[0];\n   \
+    \ if (elist_id != last_elist_id)\n    {\n      swap(target, last);\n      int\
+    \ eid = target.index;\n      if constexpr (is_directed)\n        eid_to_elist_id[eid]\
+    \ = elist_id;\n      else\n      {\n        if (eid_to_elist_id[2 * eid] == last_elist_id)\n\
+    \          eid_to_elist_id[2 * eid] = elist_id;\n        else\n          eid_to_elist_id[2\
+    \ * eid + 1] = elist_id;\n      }\n    }\n    g.pop_back(u);\n  }\n};\n\ntemplate\
+    \ <class Cost, bool is_erasable = false>\nusing GraphDirected = Graph<true, Cost,\
+    \ is_erasable>;\ntemplate <class Cost, bool is_erasable = false>\nusing GraphUndirected\
+    \ = Graph<false, Cost, is_erasable>;\n\ntemplate <class Cost>\nGraphDirected<Cost>\
+    \ rev_graph(const GraphDirected<Cost> &g)\n{\n  const int n = g.size(), m = g.num_of_edges();\n\
     \  vc<tuple<int, int, Cost>> uvw;\n  uvw.reserve(m);\n  fec(e : g.edges()) uvw.eb(e.to,\
     \ e.from, e.cost);\n  return GraphDirected<Cost>(n, uvw);\n}\n#line 2 \"ds/my_queue.hpp\"\
     \n\n#line 4 \"ds/my_queue.hpp\"\n\n/**\n * @brief \u81EA\u4F5C queue\n * @docs\
@@ -948,7 +932,25 @@ data:
     \ { return M::op(b, a); }\n  static constexpr auto e = M::e;\n};\ntemplate <class\
     \ G>\nstruct OppositeGroup\n{\n  using S = typename G::S;\n  static constexpr\
     \ S op(const S &a, const S &b) { return G::op(b, a); }\n  static constexpr auto\
-    \ e = G::e;\n  static constexpr auto inv = G::inv;\n};\n\ntemplate <class SR>\n\
+    \ e = G::e;\n  static constexpr auto inv = G::inv;\n};\ntemplate <class M>\nstruct\
+    \ NormalAndOppositeMonoid\n{\n  struct S\n  {\n    typename M::S normal;\n   \
+    \ typename M::S opposite;\n    S() {}\n    template <class... Args,\n        \
+    \      std::enable_if_t<std::is_constructible_v<typename M::S, Args...>, std::nullptr_t>\
+    \ = nullptr>\n    S(Args &&...args)\n        : normal(std::forward<Args>(args)...),\
+    \ opposite(normal) {}\n    S rev() { return {opposite, normal}; }\n    S(const\
+    \ typename M::S &normal, const typename M::S &opposite) : normal(normal), opposite(opposite)\
+    \ {}\n  };\n  static constexpr S op(const S &a, const S &b) { return {M::op(a.normal,\
+    \ b.normal), M::op(b.opposite, a.opposite)}; }\n  static constexpr S e() { return\
+    \ {M::e(), M::e()}; }\n};\ntemplate <class G>\nstruct NormalAndOppositeGroup\n\
+    {\n  struct S\n  {\n    typename G::S normal;\n    typename G::S opposite;\n \
+    \   S() {}\n    template <class... Args,\n              std::enable_if_t<std::is_constructible_v<typename\
+    \ G::S, Args...>, std::nullptr_t> = nullptr>\n    S(Args &&...args)\n        :\
+    \ normal(std::forward<Args>(args)...), opposite(normal) {}\n    S rev() { return\
+    \ {opposite, normal}; }\n    S(const typename G::S &normal, const typename G::S\
+    \ &opposite) : normal(normal), opposite(opposite) {}\n  };\n  static constexpr\
+    \ S op(const S &a, const S &b) { return {G::op(a.normal, b.normal), G::op(b.opposite,\
+    \ a.opposite)}; }\n  static constexpr S e() { return {G::e(), G::e()}; }\n  static\
+    \ constexpr S inv() { return {G::inv(), G::inv()}; }\n};\n\ntemplate <class SR>\n\
     using MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add, SR::e0>;\ntemplate\
     \ <class SR>\nusing MonoidOfSemiRingMul = Monoid<typename SR::S, SR::mul, SR::e1>;\n\
     template <class R>\nusing GroupOfRingAdd = Group<typename R::S, R::add, R::e0,\
@@ -1033,19 +1035,19 @@ data:
     \ F::S;\n  const int n = y.size();\n  if (n == 0)\n    return {};\n  auto m =\
     \ minimal_polynomial<F>(n, linear_map, random_sample);\n  assert(m[0] != F::e0());\n\
     \  S minus_inv_m0 = F::minus(F::inv(m[0]));\n  vc<S> res(n, F::e0());\n  repi(i,\
-    \ 1, m.size())\n  {\n    S coef = F::mul(m[i], minus_inv_m0);\n    repi(j, n)\
-    \ res[j] = F::add(res[j], F::mul(coef, y[j]));\n    linear_map(y);\n  }\n  return\
-    \ res;\n}\n\n// \u7DDA\u578B\u5199\u50CF linear_map: S^n \u2192 S^n \u306E\u8868\
-    \u73FE\u884C\u5217\u306E\u884C\u5217\u5F0F\u3092\u6C42\u3081\u308B\n// linear_map\
-    \ \u306F void(vc<S>) \u3068\u3057\u3066\u6E21\u3059 (\u7834\u58CA\u7684\u306B\u5909\
-    \u66F4\u3059\u308B\u95A2\u6570)\n// \u6642\u9593\u8A08\u7B97\u91CF: O(n^2 + nt),\
-    \ t \u306F linear_map \u306E\u8A08\u7B97\u91CF\ntemplate <class F, class LinearMap,\
-    \ class RandomSample = decltype(random_sample_mint<typename F::S>)>\ntypename\
-    \ F::S det(int n, const LinearMap &linear_map, const RandomSample &random_sample\
-    \ = random_sample_mint)\n{\n  using S = typename F::S;\n  if (n == 0)\n    return\
-    \ 1;\n  while (true)\n  {\n    vc<S> d(n);\n    repi(i, n) d[i] = random_sample();\n\
-    \    auto linear_map_ad = [&](vc<S> &v)\n    {\n      repi(i, n) v[i] = F::mul(v[i],\
-    \ d[i]);\n      linear_map(v);\n    };\n    auto m = minimal_polynomial<F>(n,\
+    \ 1, m.size())\n  {\n    S coef = F::mul(m[i], minus_inv_m0);\n    repi(j, n)\n\
+    \    {\n      auto &resj = res[j];\n      resj = F::add(resj, F::mul(coef, y[j]));\n\
+    \    }\n    linear_map(y);\n  }\n  return res;\n}\n\n// \u7DDA\u578B\u5199\u50CF\
+    \ linear_map: S^n \u2192 S^n \u306E\u8868\u73FE\u884C\u5217\u306E\u884C\u5217\u5F0F\
+    \u3092\u6C42\u3081\u308B\n// linear_map \u306F void(vc<S>) \u3068\u3057\u3066\u6E21\
+    \u3059 (\u7834\u58CA\u7684\u306B\u5909\u66F4\u3059\u308B\u95A2\u6570)\n// \u6642\
+    \u9593\u8A08\u7B97\u91CF: O(n^2 + nt), t \u306F linear_map \u306E\u8A08\u7B97\u91CF\
+    \ntemplate <class F, class LinearMap, class RandomSample = decltype(random_sample_mint<typename\
+    \ F::S>)>\ntypename F::S det(int n, const LinearMap &linear_map, const RandomSample\
+    \ &random_sample = random_sample_mint)\n{\n  using S = typename F::S;\n  if (n\
+    \ == 0)\n    return 1;\n  while (true)\n  {\n    vc<S> d(n);\n    repi(i, n) d[i]\
+    \ = random_sample();\n    auto linear_map_ad = [&](vc<S> &v)\n    {\n      repi(i,\
+    \ n) v[i] = F::mul(v[i], d[i]);\n      linear_map(v);\n    };\n    auto m = minimal_polynomial<F>(n,\
     \ linear_map_ad, random_sample);\n    if (m[0] == F::e0())\n      return F::e0();\n\
     \    if (SZ(m) != n + 1)\n      continue;\n    S detd = F::e1();\n    fec(di :\
     \ d) detd = F::mul(detd, di);\n    S res = F::mul(m[0], F::inv(detd));\n    return\
@@ -1143,38 +1145,38 @@ data:
     \ != -1)\n        continue;\n      V ba(m);\n      ba[j] = F::e1();\n      repi(k,\
     \ j) if (piv[k] != -1) ba[k] = F::minus(a[piv[k]][j]);\n      basis.eb(ba);\n\
     \    }\n    return {true, sol, basis};\n  }\n};\n#line 2 \"math/modint/binomial.hpp\"\
-    \n\n#line 4 \"math/modint/binomial.hpp\"\n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\
-    \n * @docs docs/math/modint/binomial.md\n */\n\ntemplate <class T>\nstruct Binomial\n\
-    {\nprivate:\n  static decltype(T::mod()) mod;\n  static vc<T> fac_, finv_, inv_;\n\
-    \npublic:\n  static void reserve(int n)\n  {\n    if (mod != T::mod())\n    {\n\
-    \      mod = T::mod();\n      fac_ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};\n\
-    \    }\n    int i = fac_.size();\n    chmin(n, T::mod() - 1);\n    if (n < i)\n\
-    \      return;\n    fac_.resize(n + 1), finv_.resize(n + 1), inv_.resize(n + 1);\n\
-    \    for (; i <= n; i++)\n    {\n      fac_[i] = fac_[i - 1] * T::raw(i);\n  \
-    \    inv_[i] = -inv_[T::mod() % i] * T::raw(T::mod() / i);\n      finv_[i] = finv_[i\
-    \ - 1] * inv_[i];\n    }\n  }\n  static T fac(int n)\n  {\n    assert(n >= 0);\n\
-    \    if (n >= T::mod())\n      return 0;\n    reserve(n);\n    return fac_[n];\n\
-    \  }\n  static T finv(int n)\n  {\n    assert(n < T::mod());\n    if (n < 0)\n\
-    \      return 0;\n    reserve(n);\n    return finv_[n];\n  }\n  static T inv(T\
-    \ n)\n  {\n    assert(n != 0);\n    reserve(n.val());\n    return inv_[n.val()];\n\
-    \  }\n\n  static T P(int n, int k)\n  {\n    if (n < k)\n      return 0;\n   \
-    \ if (n < 0 || k < 0)\n      return 0;\n    reserve(n);\n    return fac_[n] *\
-    \ finv_[n - k];\n  }\n  static T C(int n, int k)\n  {\n    if (n < k)\n      return\
-    \ 0;\n    if (n < 0 || k < 0)\n      return 0;\n    reserve(n);\n    return fac_[n]\
-    \ * finv_[k] * finv_[n - k];\n  }\n  static T H(int n, int k)\n  {\n    if (n\
-    \ == 0 && k == 0)\n      return 1;\n    return C(n + k - 1, k);\n  }\n};\ntemplate\
-    \ <class T> decltype(T::mod()) Binomial<T>::mod{};\ntemplate <class T> vc<T> Binomial<T>::fac_{};\n\
-    template <class T> vc<T> Binomial<T>::finv_{};\ntemplate <class T> vc<T> Binomial<T>::inv_{};\n\
-    #line 9 \"graph/matrix_tree.hpp\"\n\n/**\n * @brief \u884C\u5217\u6728\u5B9A\u7406\
-    \u306A\u3069\n * @docs docs/graph/matrix_tree.md\n */\n\n// \u7121\u5411\u30B0\
-    \u30E9\u30D5\u306E\u5168\u57DF\u6728\u306E\u500B\u6570\n// g \u306B\u306F\u96A3\
-    \u63A5\u884C\u5217 (\u8FBA\u306E\u672C\u6570) \u3092\u6E21\u3059\n// \u884C\u5217\
-    \u5F0F\u306E\u8A08\u7B97\u3001O(n^3) \u306A\u3069\ntemplate <class mint, class\
-    \ I>\nmint count_spanning_trees_undirected(const vvc<I> &g)\n{\n  const int n\
-    \ = g.size();\n  if (n == 0)\n    return 1;\n  repi(i, n) assert(SZ(g[i]) == n);\n\
-    \  Matrix<FieldAddSubMulDiv<mint>> mat(n - 1, n - 1);\n  repi(i, n) repi(j, i\
-    \ + 1, n)\n  {\n    assert(g[i][j] == g[j][i]);\n    if (i < n - 1 && j < n -\
-    \ 1)\n      mat[i][j] = mat[j][i] = -g[i][j];\n    if (i < n - 1)\n      mat[i][i]\
+    \n\n#line 4 \"math/modint/binomial.hpp\"\n\n#line 6 \"math/modint/binomial.hpp\"\
+    \n\n/**\n * @brief \u4E8C\u9805\u4FC2\u6570\n * @docs docs/math/modint/binomial.md\n\
+    \ */\n\ntemplate <class T>\nstruct Binomial\n{\nprivate:\n  inline static decltype(T::mod())\
+    \ mod;\n  \npublic:\n  inline static vc<T> fac_, finv_, inv_;\n  static void reserve(int\
+    \ n)\n  {\n    if constexpr (is_dynamic_modint_v<T>)\n    {\n      if (mod !=\
+    \ T::mod())\n      {\n        mod = T::mod();\n        fac_ = {1, 1}, finv_ =\
+    \ {1, 1}, inv_ = {0, 1};\n      }\n    }\n    else\n    {\n      if (fac_.empty())\n\
+    \        fac_ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};\n    }\n    if (n < SZ(fac_))\n\
+    \      return;\n    chmin(n, T::mod() - 1);\n    int si = fac_.size();\n    fac_.resize(n\
+    \ + 1), finv_.resize(n + 1), inv_.resize(n + 1);\n    repi(i, si, n + 1)\n   \
+    \ {\n      fac_[i] = fac_[i - 1] * T::raw(i);\n      inv_[i] = -inv_[T::mod()\
+    \ % i] * T::raw(T::mod() / i);\n      finv_[i] = finv_[i - 1] * inv_[i];\n   \
+    \ }\n  }\n  static T fac(int n)\n  {\n    assert(n >= 0);\n    if (n >= T::mod())\n\
+    \      return 0;\n    reserve(n);\n    return fac_[n];\n  }\n  static T finv(int\
+    \ n)\n  {\n    assert(n < T::mod());\n    if (n < 0)\n      return 0;\n    reserve(n);\n\
+    \    return finv_[n];\n  }\n  static T inv(int n)\n  {\n    assert(n != 0);\n\
+    \    reserve(n);\n    return inv_[n];\n  }\n\n  static T P(int n, int k)\n  {\n\
+    \    if (n < k)\n      return 0;\n    if (n < 0 || k < 0)\n      return 0;\n \
+    \   reserve(n);\n    return fac_[n] * finv_[n - k];\n  }\n  static T C(int n,\
+    \ int k)\n  {\n    if (n < k)\n      return 0;\n    if (n < 0 || k < 0)\n    \
+    \  return 0;\n    reserve(n);\n    return fac_[n] * finv_[k] * finv_[n - k];\n\
+    \  }\n  static T H(int n, int k)\n  {\n    if (n == 0 && k == 0)\n      return\
+    \ 1;\n    return C(n + k - 1, k);\n  }\n};\n#line 9 \"graph/matrix_tree.hpp\"\n\
+    \n/**\n * @brief \u884C\u5217\u6728\u5B9A\u7406\u306A\u3069\n * @docs docs/graph/matrix_tree.md\n\
+    \ */\n\n// \u7121\u5411\u30B0\u30E9\u30D5\u306E\u5168\u57DF\u6728\u306E\u500B\u6570\
+    \n// g \u306B\u306F\u96A3\u63A5\u884C\u5217 (\u8FBA\u306E\u672C\u6570) \u3092\u6E21\
+    \u3059\n// \u884C\u5217\u5F0F\u306E\u8A08\u7B97\u3001O(n^3) \u306A\u3069\ntemplate\
+    \ <class mint, class I>\nmint count_spanning_trees_undirected(const vvc<I> &g)\n\
+    {\n  const int n = g.size();\n  if (n == 0)\n    return 1;\n  repi(i, n) assert(SZ(g[i])\
+    \ == n);\n  Matrix<FieldAddSubMulDiv<mint>> mat(n - 1, n - 1);\n  repi(i, n) repi(j,\
+    \ i + 1, n)\n  {\n    assert(g[i][j] == g[j][i]);\n    if (i < n - 1 && j < n\
+    \ - 1)\n      mat[i][j] = mat[j][i] = -g[i][j];\n    if (i < n - 1)\n      mat[i][i]\
     \ += g[i][j];\n    if (j < n - 1)\n      mat[j][j] += g[i][j];\n  }\n  return\
     \ mat.det();\n}\n\n// \u6709\u5411\u30B0\u30E9\u30D5\u306E r \u3092\u6839\u3068\
     \u3059\u308B\uFF08\u6839\u304B\u3089\u51FA\u308B\uFF09\u5168\u57DF\u6709\u5411\
@@ -1259,38 +1261,12 @@ data:
     \ 1));\n  fec([ a, b ] : AB) G.at(a).at(b) = 0;\n  PRINT(count_eularian_trails<mint>(G));\n\
     }\n\nvoid test()\n{\n  \n}\n\n#include \"template/template_main.hpp\"\nMain<init,\
     \ main2, test> main_dummy;\nint main() {}\n"
-  dependsOn:
-  - template/template_all_but_modint.hpp
-  - template/template_types.hpp
-  - template/template_rep.hpp
-  - template/template_math.hpp
-  - template/template_vector.hpp
-  - template/template_algo.hpp
-  - template/template_binsearch.hpp
-  - template/template_bit.hpp
-  - template/template_inout.hpp
-  - template/template_dump.hpp
-  - template/template_random.hpp
-  - math/modint/modint.hpp
-  - math/modint/modint32_internal.hpp
-  - math/modint/modint_base.hpp
-  - math/extgcd.hpp
-  - graph/matrix_tree.hpp
-  - graph/graph.hpp
-  - ds/csr.hpp
-  - ds/my_queue.hpp
-  - math/linalg/matrix.hpp
-  - math/algebra/algebra_basic_ops.hpp
-  - math/algebra/algebra_base.hpp
-  - math/linalg/bbla.hpp
-  - math/fps/berlekamp_massey.hpp
-  - math/modint/binomial.hpp
-  - template/template_main.hpp
+  dependsOn: []
   isVerificationFile: true
   path: verify/yukicoder/yuki310.test.cpp
   requiredBy: []
-  timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '1970-01-01 00:00:00+00:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yukicoder/yuki310.test.cpp
 layout: document

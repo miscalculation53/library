@@ -1,74 +1,12 @@
 ---
 data:
-  _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: ds/csr.hpp
-    title: CSR
-  - icon: ':heavy_check_mark:'
-    path: ds/group_index.hpp
-    title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
-  - icon: ':heavy_check_mark:'
-    path: ds/static_range/block_sparse_table.hpp
-    title: "\u30D6\u30ED\u30C3\u30AF\u5206\u5272 + (disjoint) sparse table"
-  - icon: ':heavy_check_mark:'
-    path: ds/static_range/dc_range_prod.hpp
-    title: "\u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\u30A8\
-      \u30EA"
-  - icon: ':heavy_check_mark:'
-    path: ds/static_range/disjoint_sparse_table.hpp
-    title: Disjoint Sparse Table
-  - icon: ':heavy_check_mark:'
-    path: ds/static_range/linear_rmq.hpp
-    title: "\u7DDA\u5F62 RMQ"
-  - icon: ':heavy_check_mark:'
-    path: ds/static_range/sparse_table.hpp
-    title: Sparse Table
-  - icon: ':heavy_check_mark:'
-    path: template/template_algo.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
-      \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_all_but_modint.hpp
-    title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_binsearch.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_bit.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
-      \uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_dump.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_inout.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_math.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_random.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
-      \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_rep.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_types.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_vector.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
-  attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
-    links:
-    - https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
+  _verificationStatusIcon: ':x:'
+  attributes: {}
   bundledCode: "#line 1 \"verify/mytest/rmq.test.cpp\"\n#define PROBLEM \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\
     \n\n#line 2 \"ds/static_range/sparse_table.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
@@ -108,27 +46,37 @@ data:
     \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
     #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\
     \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
-    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
-    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
-    \ docs/template/template_math.md\n */\n\ntemplate <class T, class U>\ninline bool\
-    \ chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate <class T,\
-    \ class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true : false;\
-    \ }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T divfloor(U\
-    \ a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divceil(U a, V b) { return\
-    \ T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll,\
-    \ class U, class V>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
-    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V>\ninline\
-    \ constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
-    template <class T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b\
-    \ >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
-    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
-    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
-    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
-    \ T = ll, class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a\
-    \ >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m)\
-    \ / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\n\
-    T mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
+    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n#line\
+    \ 2 \"utils/is_integral_ext.hpp\"\n\n#line 4 \"utils/is_integral_ext.hpp\"\n\n\
+    /**\n * @brief $128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\
+    \u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n */\n\ntemplate <class\
+    \ T>\nconstexpr bool is_integral_ext = is_integral_v<T> || is_same_v<T, i128>\
+    \ || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr bool is_signed_ext =\
+    \ is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class T>\nconstexpr bool\
+    \ is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;\n#line 14 \"template/template_math.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
+    \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
+    inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
+    \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divfloor(U a, V b) { return T(a)\
+    \ / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class\
+    \ U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\n\
+    inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V, typename\
+    \ = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\ninline constexpr T\
+    \ safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
+    \ T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a\
+    \ < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while\
+    \ (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n\
+    \      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll,\
+    \ class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0\
+    \ && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) /\
+    \ T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT\
+    \ mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
     \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
     \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
     \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
@@ -603,18 +551,18 @@ data:
     \ &add) { for (auto &vi : v) vi += add; }\ntemplate <class T, class Add>\nvoid\
     \ offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto &vij : vi)\
     \ vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E -----\ntemplate <class\
-    \ T, const size_t m>\narray<vc<T>, m> top(const vc<array<T, m>> &vt)\n{\n  const\
+    \ T, const size_t m>\narray<vc<T>, m> unzip(const vc<array<T, m>> &vt)\n{\n  const\
     \ size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t\
     \ i = 0; i < n; i++)\n    for (size_t j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n\
-    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> top(const\
+    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> zip(const\
     \ array<vc<T>, m> &tv)\n{\n  if (tv.empty()) return {};\n  const size_t n = tv[0].size();\n\
     \  vc<array<T, m>> vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size()\
     \ == n);\n    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n\
-    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const\
+    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> unzip(const\
     \ vc<pair<T, U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>>\
     \ tv;\n  tv.first.resize(n), tv.second.resize(n);\n  for (size_t i = 0; i < n;\
     \ i++)\n    tie(tv.first[i], tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate\
-    \ <class T, class U>\nvc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
+    \ <class T, class U>\nvc<pair<T, U>> zip(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
     \ size_t n = tv.first.size();\n  assert(n == tv.second.size());\n  vc<pair<T,\
     \ U>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i],\
     \ tv.second[i]);\n  return vt;\n}\n\nnamespace internal\n{\n\ntemplate <size_t...\
@@ -622,17 +570,18 @@ data:
     \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\n\ntemplate <size_t...\
     \ I, class Tp>\nauto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t\
     \ index)\n{ return make_tuple(get<I>(tv)[index]...); }\n\n};\n\ntemplate <class...\
-    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
+    \ Ts>\nauto unzip(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
     \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
     \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    internal::vt_to_tv_impl(tv, vt[i],\
     \ make_index_sequence<tuple_size_v<decltype(tv)>>{}, i);\n  return tv;\n}\n\n\
-    template <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
+    template <class... Ts>\nauto zip(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 2 \"template/template_random.hpp\"\n\n#line 5 \"\
-    template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
+    \ vt;\n}\n\n#define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)\n#define ZIP(vt,\
+    \ ...) auto vt = zip(tuple{__VA_ARGS__})\n// ----------\n#line 2 \"template/template_random.hpp\"\
+    \n\n#line 5 \"template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
     \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
     \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
     \  return T(l) + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\
@@ -659,10 +608,10 @@ data:
     \ 0)\n      return;\n    dat.resize(lg);\n    dat[0] = v;\n    repi(j, 1, lg)\n\
     \    {\n      dat[j].resize(n - (1 << j) + 1);\n      repi(i, n - (1 << j) + 1)\
     \ dat[j][i] = M::op(dat[j - 1][i], dat[j - 1][i + (1 << (j - 1))]);\n    }\n \
-    \ }\n\n  S get(int p)\n  {\n    assert(0 <= p && p < n);\n    return dat[0][p];\n\
-    \  }\n  S prod(int l, int r)\n  {\n    assert(0 <= l && l <= r && r <= n);\n \
-    \   if (l == r)\n      return M::e();\n    int j = bit_width(r - l) - 1;\n   \
-    \ return M::op(dat[j][l], dat[j][r - (1 << j)]);\n  }\n};\n#line 2 \"ds/static_range/disjoint_sparse_table.hpp\"\
+    \ }\n\n  S get(int p) const\n  {\n    assert(0 <= p && p < n);\n    return dat[0][p];\n\
+    \  }\n  S prod(int l, int r) const\n  {\n    assert(0 <= l && l <= r && r <= n);\n\
+    \    if (l == r)\n      return M::e();\n    int j = bit_width(r - l) - 1;\n  \
+    \  return M::op(dat[j][l], dat[j][r - (1 << j)]);\n  }\n};\n#line 2 \"ds/static_range/disjoint_sparse_table.hpp\"\
     \n\n#line 4 \"ds/static_range/disjoint_sparse_table.hpp\"\n\n/**\n * @brief Disjoint\
     \ Sparse Table\n * @docs docs/ds/static_range/disjoint_sparse_table.md\n */\n\n\
     template <class M>\nstruct DisjointSparseTable\n{\n  using S = typename M::S;\n\
@@ -674,23 +623,23 @@ data:
     \ len);\n        dat[j][m - 1] = v[m - 1];\n        repi(i, m - 2, l - 1, -1)\
     \ dat[j][i] = M::op(v[i], dat[j][i + 1]);\n        if (m < n)\n        {\n   \
     \       dat[j][m] = v[m];\n          repi(i, m + 1, r) dat[j][i] = M::op(dat[j][i\
-    \ - 1], v[i]);\n        }\n      }\n    }\n  }\n\n  S get(int p)\n  {\n    assert(0\
-    \ <= p && p < n);\n    return dat[0][p];\n  }\n  S prod(int l, int r)\n  {\n \
-    \   auto [wl, wr] = prod_left_right(l, r);\n    return M::op(wl, wr);\n  }\n \
-    \ // prod[l, r) = wl \u2022 wr \u3068\u306A\u308B\u3088\u3046\u306A (wl, wr) \u3092\
-    \u8FD4\u3059\n  // \u4F7F\u7528\u5834\u9762\uFF1A\u6700\u7D42\u7684\u306A\u7B54\
-    \u3048\u3068\u3057\u3066\u306F\u4E00\u822C\u306E\u5143\u306E\u7A4D\u304C\u3044\
-    \u3089\u306A\u3044\u5834\u5408\n  pair<S, S> prod_left_right(int l, int r)\n \
-    \ {\n    assert(0 <= l && l <= r && r <= n);\n    if (l == r)\n      return {M::e(),\
-    \ M::e()};\n    if (l + 1 == r)\n      return {dat[0][l], M::e()};\n    const\
-    \ int j = msb_pos(l ^ (r - 1));\n    return {dat[j][l], dat[j][r - 1]};\n  }\n\
-    };\n#line 2 \"ds/static_range/dc_range_prod.hpp\"\n\n#line 4 \"ds/static_range/dc_range_prod.hpp\"\
-    \n\n/**\n * @brief \u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\
-    \u30AF\u30A8\u30EA\n * @docs docs/ds/static_range/dc_range_prod.md\n */\n\n#line\
-    \ 2 \"ds/group_index.hpp\"\n\n#line 4 \"ds/group_index.hpp\"\n\n#line 2 \"ds/csr.hpp\"\
-    \n\n#line 4 \"ds/csr.hpp\"\n\n/**\n * @brief CSR\n * @docs docs/ds/csr.md\n */\n\
-    \ntemplate <class T, bool is_erasable = false>\nstruct CSR\n{\nprotected:\n  int\
-    \ n, m;\n  // i (0 <= i < n) \u884C\u76EE\u3092\u8868\u3059\u306E\u306F elist\
+    \ - 1], v[i]);\n        }\n      }\n    }\n  }\n\n  S get(int p) const\n  {\n\
+    \    assert(0 <= p && p < n);\n    return dat[0][p];\n  }\n  S prod(int l, int\
+    \ r) const\n  {\n    auto [wl, wr] = prod_left_right(l, r);\n    return M::op(wl,\
+    \ wr);\n  }\n  // prod[l, r) = wl \u2022 wr \u3068\u306A\u308B\u3088\u3046\u306A\
+    \ (wl, wr) \u3092\u8FD4\u3059\n  // \u4F7F\u7528\u5834\u9762\uFF1A\u6700\u7D42\
+    \u7684\u306A\u7B54\u3048\u3068\u3057\u3066\u306F\u4E00\u822C\u306E\u5143\u306E\
+    \u7A4D\u304C\u3044\u3089\u306A\u3044\u5834\u5408\n  pair<S, S> prod_left_right(int\
+    \ l, int r) const\n  {\n    assert(0 <= l && l <= r && r <= n);\n    if (l ==\
+    \ r)\n      return {M::e(), M::e()};\n    if (l + 1 == r)\n      return {dat[0][l],\
+    \ M::e()};\n    const int j = msb_pos(l ^ (r - 1));\n    return {dat[j][l], dat[j][r\
+    \ - 1]};\n  }\n};\n#line 2 \"ds/static_range/dc_range_prod.hpp\"\n\n#line 4 \"\
+    ds/static_range/dc_range_prod.hpp\"\n\n/**\n * @brief \u5206\u5272\u7D71\u6CBB\
+    \u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\u30A8\u30EA\n * @docs docs/ds/static_range/dc_range_prod.md\n\
+    \ */\n\n#line 2 \"ds/group_index.hpp\"\n\n#line 4 \"ds/group_index.hpp\"\n\n#line\
+    \ 2 \"ds/csr.hpp\"\n\n#line 4 \"ds/csr.hpp\"\n\n/**\n * @brief CSR\n * @docs docs/ds/csr.md\n\
+    \ */\n\ntemplate <class T, bool is_erasable = false>\nstruct CSR\n{\nprotected:\n\
+    \  int n, m;\n  // i (0 <= i < n) \u884C\u76EE\u3092\u8868\u3059\u306E\u306F elist\
     \ \u306E [start[i], start[i+1])\n  // pop_back \u3059\u308B\u5834\u5408\u306F\
     \ [start[i], start[i] + len[i])\n  vc<int> start;\n  vc<T> elist;\n  vc<int> len;\n\
     \  inline int get_last(int i) const\n  {\n    if constexpr (is_erasable)\n   \
@@ -730,10 +679,10 @@ data:
     \ + start[i], beg + get_last(i));\n  }\n\n  void pop_back(int i)\n  {\n    static_assert(is_erasable);\n\
     \    assert(len[i] > 0);\n    len[i]--;\n  }\n\n  template <class I = ll>\n  I\
     \ size() const { return n; }\n\n  vvc<T> to_vv() const\n  {\n    vvc<T> res(n);\n\
-    \    repi(i, n) res[i] = {elist.begin() + start[i], elist.begin() + start[i +\
-    \ 1]};\n    return res;\n  }\n\n  vc<T> &get_elist() { return elist; }\n  const\
-    \ vc<T> &get_elist() const { return elist; }\n};\n#line 6 \"ds/group_index.hpp\"\
-    \n\n/**\n * @brief \u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E\n * @docs docs/ds/group_index.md\n\
+    \    repi(i, n) res[i] = {elist.begin() + start[i], elist.begin() + get_last(i)};\n\
+    \    return res;\n  }\n\n  vc<T> &get_elist() { return elist; }\n  const vc<T>\
+    \ &get_elist() const { return elist; }\n};\n#line 6 \"ds/group_index.hpp\"\n\n\
+    /**\n * @brief \u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E\n * @docs docs/ds/group_index.md\n\
     \ */\n\ntemplate <class I = ll>\nstruct GroupIndex\n{\nprivate:\n  int n, m;\n\
     \  CSR<I> csr;\n\npublic:\n  GroupIndex() {}\n  template <class T>\n  GroupIndex(const\
     \ vc<T> &a) : n(a.size()), m(a.empty() ? 0 : MAX(a) + 1)\n  {\n    vc<pair<int,\
@@ -812,10 +761,10 @@ data:
     \ r = min(n, (i + 1) * B);\n      repi(j, l + 1, r) cl[j] = M::op(cl[j - 1], v[j\
     \ - 1]);\n      repi(j, r - 1, l - 1, -1) cr[j] = M::op(v[j], cr[j + 1]);\n  \
     \    repi(j, r - l) stdat[i] = M::op(stdat[i], v[l + j]);\n    }\n    st = ST(stdat);\n\
-    \  }\n\n  S get(int p)\n  {\n    assert(0 <= p && p < n);\n    return v[p];\n\
-    \  }\n  S prod(int l, int r)\n  {\n    assert(0 <= l && l <= r && r <= n);\n \
-    \   if (l == r)\n      return M::e();\n    const int i = l / B, j = r == n ? (n\
-    \ - 1) / B + 1 : r / B;\n    if (i < j)\n      return M::op(M::op(cr[l], st.prod(i\
+    \  }\n\n  S get(int p) const\n  {\n    assert(0 <= p && p < n);\n    return v[p];\n\
+    \  }\n  S prod(int l, int r) const\n  {\n    assert(0 <= l && l <= r && r <= n);\n\
+    \    if (l == r)\n      return M::e();\n    const int i = l / B, j = r == n ?\
+    \ (n - 1) / B + 1 : r / B;\n    if (i < j)\n      return M::op(M::op(cr[l], st.prod(i\
     \ + 1, j)), cl[r]);\n    else\n    {\n      S res = M::e();\n      repi(k, l,\
     \ r) res = M::op(res, v[k]);\n      return res;\n    }\n  }\n};\n\n// M \u306F\
     \u51AA\u7B49 (max, min, and, or, gcd, lcm \u306A\u3069)\n// \u524D\u8A08\u7B97\
@@ -841,9 +790,10 @@ data:
     \        if (M::op(v[j], v[i]) == v[i])\n        {\n          sta.pop_back();\n\
     \          bset(cur, j % B, 0);\n        }\n        else\n          break;\n \
     \     }\n      sta.eb(i);\n      bset(cur, i % B, 1);\n      bit[i] = cur;\n \
-    \   }\n  }\n\n  S prod(int l, int r)\n  {\n    assert(0 <= l && l <= r && r <=\
-    \ n);\n    if (l == r)\n      return M::e();\n    const int i = l / B, j = r ==\
-    \ n ? (n - 1) / B + 1 : r / B;\n    if (i < j)\n      return M::op(M::op(cr[l],\
+    \   }\n  }\n\n  S get(int p) const\n  {\n    assert(0 <= p && p < n);\n    return\
+    \ v[p];\n  }\n  S prod(int l, int r) const\n  {\n    assert(0 <= l && l <= r &&\
+    \ r <= n);\n    if (l == r)\n      return M::e();\n    const int i = l / B, j\
+    \ = r == n ? (n - 1) / B + 1 : r / B;\n    if (i < j)\n      return M::op(M::op(cr[l],\
     \ st.prod(i + 1, j)), cl[r]);\n    else\n      return v[i * B + lsb_pos(bit[r\
     \ - 1] & ~((Word(1) << (l % B)) - 1))];\n  }\n};\n#line 8 \"verify/mytest/rmq.test.cpp\"\
     \n\nll naive(vl A, ll l, ll r)\n{\n  ll ans = INF;\n  rep(i, l, r) chmin(ans,\
@@ -894,30 +844,12 @@ data:
     \    assert(god == ans2);\n    assert(god == ans3);\n    assert(god == ans4);\n\
     \    assert(god == ans5);\n    assert(god == ans6);\n  }\n\n  PRINT(\"Hello World\"\
     );\n}"
-  dependsOn:
-  - ds/static_range/sparse_table.hpp
-  - template/template_all_but_modint.hpp
-  - template/template_types.hpp
-  - template/template_rep.hpp
-  - template/template_math.hpp
-  - template/template_vector.hpp
-  - template/template_algo.hpp
-  - template/template_binsearch.hpp
-  - template/template_bit.hpp
-  - template/template_inout.hpp
-  - template/template_dump.hpp
-  - template/template_random.hpp
-  - ds/static_range/disjoint_sparse_table.hpp
-  - ds/static_range/dc_range_prod.hpp
-  - ds/group_index.hpp
-  - ds/csr.hpp
-  - ds/static_range/block_sparse_table.hpp
-  - ds/static_range/linear_rmq.hpp
+  dependsOn: []
   isVerificationFile: true
   path: verify/mytest/rmq.test.cpp
   requiredBy: []
-  timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '1970-01-01 00:00:00+00:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/mytest/rmq.test.cpp
 layout: document

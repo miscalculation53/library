@@ -1,441 +1,16 @@
 ---
 data:
-  _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: template/template_algo.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
-      \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_all_but_modint.hpp
-    title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_binsearch.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_bit.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
-      \uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_dump.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_inout.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_math.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_random.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
-      \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_rep.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_types.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_vector.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
-    path: graph/matrix_tree.hpp
-    title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':heavy_check_mark:'
-    path: math/convolution/convolution.hpp
-    title: "\u7573\u307F\u8FBC\u307F"
-  - icon: ':heavy_check_mark:'
-    path: math/convolution/convolution64.hpp
-    title: "\u7573\u307F\u8FBC\u307F\uFF08$\\bmod \\ 2^{64}$\uFF09"
-  - icon: ':warning:'
-    path: math/convolution/convolution_ll.hpp
-    title: "\u7573\u307F\u8FBC\u307F\uFF08long long\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/convolution/convolution_many.hpp
-    title: "\u591A\u9805\u5F0F\u306E\u7DCF\u7A4D"
-  - icon: ':heavy_check_mark:'
-    path: math/crt.hpp
-    title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/bmbm.hpp
-    title: BMBM
-  - icon: ':heavy_check_mark:'
-    path: math/fps/bostan_mori.hpp
-    title: "Bostan\u2013Mori"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/compositional_inverse.hpp
-    title: "\u9006\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/factorial.hpp
-    title: "\u968E\u4E57"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/fps.hpp
-    title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/interpolation.hpp
-    title: "\u591A\u9805\u5F0F\u88DC\u9593"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/interpolation_geo.hpp
-    title: "\u591A\u9805\u5F0F\u88DC\u9593\uFF08\u8A55\u4FA1\u70B9\u304C\u7B49\u6BD4\
-      \u6570\u5217\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/multipoint_evaluation.hpp
-    title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/multipoint_evaluation_geo.hpp
-    title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1\uFF08\u8A55\u4FA1\u70B9\
-      \u304C\u7B49\u6BD4\u6570\u5217\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/pow_sum.hpp
-    title: "$\\sum_{i} A_i^k$ \u306E $k$ \u306B\u95A2\u3059\u308B\u5217\u6319"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/power_projection.hpp
-    title: Power Projection
-  - icon: ':heavy_check_mark:'
-    path: math/fps/rational_sum.hpp
-    title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/shift_of_sampling_points.hpp
-    title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
-  - icon: ':heavy_check_mark:'
-    path: math/fps/taylor_shift.hpp
-    title: Taylor Shift
-  - icon: ':heavy_check_mark:'
-    path: math/linalg/matrix.hpp
-    title: "\u884C\u5217"
-  - icon: ':heavy_check_mark:'
-    path: math/linalg/matrix_array.hpp
-    title: "\u884C\u5217\uFF08array\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint.hpp
-    title: modint (32 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64.hpp
-    title: modint (64 bit)
-  - icon: ':heavy_check_mark:'
-    path: math/modint/modint64_internal.hpp
-    title: math/modint/modint64_internal.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/modint/sqrt_mod.hpp
-    title: "mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839"
-  - icon: ':warning:'
-    path: math/modint/template_modint.hpp
-    title: math/modint/template_modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/euler_phi_carmichael.hpp
-    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
-      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/factorize.hpp
-    title: "\u7D20\u56E0\u6570\u5206\u89E3"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/order_primitive_root.hpp
-    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/primality_test.hpp
-    title: "\u7D20\u6570\u5224\u5B9A"
-  - icon: ':heavy_check_mark:'
-    path: math/prime/large/zeta_mobius_divisor_multiple_large.hpp
-    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
-      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: string/rolling_hash.hpp
-    title: Rolling Hash
-  - icon: ':warning:'
-    path: template/template.cpp
-    title: template/template.cpp
-  - icon: ':warning:'
-    path: template/template_all.hpp
-    title: template/template_all.hpp
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/aoj/modpow.test.cpp
-    title: verify/aoj/modpow.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/linear_sieve.test.cpp
-    title: verify/mytest/linear_sieve.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint.test.cpp
-    title: verify/mytest/modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint64.test.cpp
-    title: verify/mytest/modint64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/modint_set_map.test.cpp
-    title: verify/mytest/modint_set_map.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/power_table.test.cpp
-    title: verify/mytest/power_table.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/rational_plus.test.cpp
-    title: verify/mytest/rational_plus.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/mytest/rolling_hash.test.cpp
-    title: verify/mytest/rolling_hash.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/and_or_convolution.test.cpp
-    title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/binomial.test.cpp
-    title: verify/yosupo/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution.test.cpp
-    title: verify/yosupo/convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution64.test.cpp
-    title: verify/yosupo/convolution64.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-    title: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution_arbitrary_static.test.cpp
-    title: verify/yosupo/convolution_arbitrary_static.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/convolution_many.test.cpp
-    title: verify/yosupo/convolution_many.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/counting_eularian_circuits.test.cpp
-    title: verify/yosupo/counting_eularian_circuits.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/counting_spanning_trees_directed.test.cpp
-    title: verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-    title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/deque_operate_all_composite.test.cpp
-    title: verify/yosupo/deque_operate_all_composite.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/enumerate_cliques.test.cpp
-    title: verify/yosupo/enumerate_cliques.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/enumerate_triangles.test.cpp
-    title: verify/yosupo/enumerate_triangles.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorial.test.cpp
-    title: verify/yosupo/factorial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/factorize.test.cpp
-    title: verify/yosupo/factorize.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/find_linear_recurrence.test.cpp
-    title: verify/yosupo/find_linear_recurrence.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_compositional_inverse.test.cpp
-    title: verify/yosupo/fps_compositional_inverse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_exp.test.cpp
-    title: verify/yosupo/fps_exp.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_exp_sparse.test.cpp
-    title: verify/yosupo/fps_exp_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_inv.test.cpp
-    title: verify/yosupo/fps_inv.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_inv_sparse.test.cpp
-    title: verify/yosupo/fps_inv_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_log.test.cpp
-    title: verify/yosupo/fps_log.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_log_sparse.test.cpp
-    title: verify/yosupo/fps_log_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_pow.test.cpp
-    title: verify/yosupo/fps_pow.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_pow_sparse.test.cpp
-    title: verify/yosupo/fps_pow_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_sqrt.test.cpp
-    title: verify/yosupo/fps_sqrt.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/fps_sqrt_sparse.test.cpp
-    title: verify/yosupo/fps_sqrt_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/gcd_convolution.test.cpp
-    title: verify/yosupo/gcd_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_hadamard.test.cpp
-    title: verify/yosupo/kronecker_power_hadamard.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-    title: verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-    title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/lcm_convolution.test.cpp
-    title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_det.test.cpp
-    title: verify/yosupo/matrix_det.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_det_array.test.cpp
-    title: verify/yosupo/matrix_det_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_det_sparse.test.cpp
-    title: verify/yosupo/matrix_det_sparse.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_inv.test.cpp
-    title: verify/yosupo/matrix_inv.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_inv_array.test.cpp
-    title: verify/yosupo/matrix_inv_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_pow.test.cpp
-    title: verify/yosupo/matrix_pow.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_pow_array.test.cpp
-    title: verify/yosupo/matrix_pow_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_product.test.cpp
-    title: verify/yosupo/matrix_product.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_product_array.test.cpp
-    title: verify/yosupo/matrix_product_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_rank.test.cpp
-    title: verify/yosupo/matrix_rank.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_solve.test.cpp
-    title: verify/yosupo/matrix_solve.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/matrix_solve_array.test.cpp
-    title: verify/yosupo/matrix_solve_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/point_set_range_composite.test.cpp
-    title: verify/yosupo/point_set_range_composite.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/point_set_range_composite_large_array.test.cpp
-    title: verify/yosupo/point_set_range_composite_large_array.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_div.test.cpp
-    title: verify/yosupo/poly_div.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_interpolation.test.cpp
-    title: verify/yosupo/poly_interpolation.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_interpolation_geo.test.cpp
-    title: verify/yosupo/poly_interpolation_geo.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_multipoint_evaluation.test.cpp
-    title: verify/yosupo/poly_multipoint_evaluation.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-    title: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_shift_of_sampling_points.test.cpp
-    title: verify/yosupo/poly_shift_of_sampling_points.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/poly_taylor_shift.test.cpp
-    title: verify/yosupo/poly_taylor_shift.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/polynomial_taylor_shift.test.cpp
-    title: verify/yosupo/polynomial_taylor_shift.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primality_test.test.cpp
-    title: verify/yosupo/primality_test.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root.test.cpp
-    title: verify/yosupo/primitive_root.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/primitive_root_min.test.cpp
-    title: verify/yosupo/primitive_root_min.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/queue_operate_all_composite.test.cpp
-    title: verify/yosupo/queue_operate_all_composite.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/range_affine_range.sum.test.cpp
-    title: verify/yosupo/range_affine_range.sum.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/retooting.test.cpp
-    title: verify/yosupo/retooting.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/sqrt_mod.test.cpp
-    title: verify/yosupo/sqrt_mod.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
-    title: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/subset_convolution.test.cpp
-    title: verify/yosupo/subset_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind_potential.test.cpp
-    title: verify/yosupo/unionfind_potential.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-    title: verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/xor_convolution.test.cpp
-    title: verify/yosupo/xor_convolution.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/binomial.test.cpp
-    title: verify/yukicoder/binomial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/binomial_table.test.cpp
-    title: verify/yukicoder/binomial_table.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/bmbm.test.cpp
-    title: verify/yukicoder/bmbm.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/crt.test.cpp
-    title: verify/yukicoder/crt.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/crt_mod.test.cpp
-    title: verify/yukicoder/crt_mod.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-    title: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/divisors.test.cpp
-    title: verify/yukicoder/divisors.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/dynamic_modint.test.cpp
-    title: verify/yukicoder/dynamic_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/factorial.test.cpp
-    title: verify/yukicoder/factorial.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_carmichael.test.cpp
-    title: verify/yukicoder/order_mod_carmichael.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/order_mod_euler_phi.test.cpp
-    title: verify/yukicoder/order_mod_euler_phi.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/perm_cycle.test.cpp
-    title: verify/yukicoder/perm_cycle.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/poly_rational_sum.test.cpp
-    title: verify/yukicoder/poly_rational_sum.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/pow_sum.test.cpp
-    title: verify/yukicoder/pow_sum.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/static_modint.test.cpp
-    title: verify/yukicoder/static_modint.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki2215_dc.test.cpp
-    title: verify/yukicoder/yuki2215_dc.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki2215_swag.test.cpp
-    title: verify/yukicoder/yuki2215_swag.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/yuki310.test.cpp
-    title: verify/yukicoder/yuki310.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  _extendedDependsOn: []
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':warning:'
   attributes:
+    _deprecated_at_docs: docs/ds/mo.md
+    document_title: Mo's algorithm
     links: []
-  bundledCode: "#line 2 \"math/modint/modint32_internal.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
+  bundledCode: "#line 2 \"ds/mo/mo.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
     \n\n#line 2 \"template/template_types.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
     \u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n * @docs docs/template/template_types.md\n\
     \ */\n\n#include <bits/stdc++.h>\nusing namespace std;\n\n#ifndef EPS\n#define\
@@ -473,27 +48,37 @@ data:
     \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
     #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\
     \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
-    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
-    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
-    \ docs/template/template_math.md\n */\n\ntemplate <class T, class U>\ninline bool\
-    \ chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate <class T,\
-    \ class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true : false;\
-    \ }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T divfloor(U\
-    \ a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divceil(U a, V b) { return\
-    \ T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll,\
-    \ class U, class V>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
-    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V>\ninline\
-    \ constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
-    template <class T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b\
-    \ >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
-    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
-    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
-    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
-    \ T = ll, class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a\
-    \ >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m)\
-    \ / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\n\
-    T mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
+    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n#line\
+    \ 2 \"utils/is_integral_ext.hpp\"\n\n#line 4 \"utils/is_integral_ext.hpp\"\n\n\
+    /**\n * @brief $128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\
+    \u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n */\n\ntemplate <class\
+    \ T>\nconstexpr bool is_integral_ext = is_integral_v<T> || is_same_v<T, i128>\
+    \ || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr bool is_signed_ext =\
+    \ is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class T>\nconstexpr bool\
+    \ is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;\n#line 14 \"template/template_math.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
+    \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
+    inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
+    \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divfloor(U a, V b) { return T(a)\
+    \ / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class\
+    \ U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\n\
+    inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V, typename\
+    \ = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\ninline constexpr T\
+    \ safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
+    \ T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a\
+    \ < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while\
+    \ (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n\
+    \      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll,\
+    \ class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0\
+    \ && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) /\
+    \ T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT\
+    \ mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
     \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
     \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
     \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
@@ -968,18 +553,18 @@ data:
     \ &add) { for (auto &vi : v) vi += add; }\ntemplate <class T, class Add>\nvoid\
     \ offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto &vij : vi)\
     \ vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E -----\ntemplate <class\
-    \ T, const size_t m>\narray<vc<T>, m> top(const vc<array<T, m>> &vt)\n{\n  const\
+    \ T, const size_t m>\narray<vc<T>, m> unzip(const vc<array<T, m>> &vt)\n{\n  const\
     \ size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t\
     \ i = 0; i < n; i++)\n    for (size_t j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n\
-    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> top(const\
+    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> zip(const\
     \ array<vc<T>, m> &tv)\n{\n  if (tv.empty()) return {};\n  const size_t n = tv[0].size();\n\
     \  vc<array<T, m>> vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size()\
     \ == n);\n    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n\
-    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const\
+    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> unzip(const\
     \ vc<pair<T, U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>>\
     \ tv;\n  tv.first.resize(n), tv.second.resize(n);\n  for (size_t i = 0; i < n;\
     \ i++)\n    tie(tv.first[i], tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate\
-    \ <class T, class U>\nvc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
+    \ <class T, class U>\nvc<pair<T, U>> zip(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
     \ size_t n = tv.first.size();\n  assert(n == tv.second.size());\n  vc<pair<T,\
     \ U>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i],\
     \ tv.second[i]);\n  return vt;\n}\n\nnamespace internal\n{\n\ntemplate <size_t...\
@@ -987,17 +572,18 @@ data:
     \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\n\ntemplate <size_t...\
     \ I, class Tp>\nauto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t\
     \ index)\n{ return make_tuple(get<I>(tv)[index]...); }\n\n};\n\ntemplate <class...\
-    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
+    \ Ts>\nauto unzip(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
     \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
     \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    internal::vt_to_tv_impl(tv, vt[i],\
     \ make_index_sequence<tuple_size_v<decltype(tv)>>{}, i);\n  return tv;\n}\n\n\
-    template <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
+    template <class... Ts>\nauto zip(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 2 \"template/template_random.hpp\"\n\n#line 5 \"\
-    template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
+    \ vt;\n}\n\n#define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)\n#define ZIP(vt,\
+    \ ...) auto vt = zip(tuple{__VA_ARGS__})\n// ----------\n#line 2 \"template/template_random.hpp\"\
+    \n\n#line 5 \"template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
     \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
     \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
     \  return T(l) + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\
@@ -1015,191 +601,179 @@ data:
     \ r, int k)\n{\n  assert(T(r) - T(l) >= T(k));\n  vc<T> res(k);\n  repi(i, k)\
     \ res[i] = randint<T>(T(l), T(r) - T(k));\n  sort(ALL(res));\n  repi(i, k) res[i]\
     \ += i;\n  if (!does_sort)\n    shuffle(ALL(res), mt);\n  return res;\n}\n#line\
-    \ 4 \"math/modint/modint32_internal.hpp\"\n\nnamespace internal\n{\n\nconstexpr\
-    \ ll powmod32_constexpr(ll x, ll n, int m)\n{\n  if (m == 1)\n    return 0;\n\
-    \  uint _m = (uint)m;\n  ull r = 1;\n  ull y = safemod(x, m);\n  while (n)\n \
-    \ {\n    if (n & 1)\n      r = (r * y) % _m;\n    y = (y * y) % _m;\n    n >>=\
-    \ 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int n)\n{\n  if\
-    \ (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n    return\
-    \ true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while (d % 2\
-    \ == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll a : bases)\n\
-    \  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n    while (t !=\
-    \ n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n      t <<= 1;\n\
-    \    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n  }\n  return\
-    \ true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
-    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}\n"
+    \ 4 \"ds/mo/mo.hpp\"\n\n/**\n * @brief Mo's algorithm\n * @docs docs/ds/mo.md\n\
+    \ */\n\nnamespace internal\n{\n\ntemplate <class I>\nI mo_order_cost(const vc<pair<I,\
+    \ I>> &lrs, const vc<int> &ord)\n{\n  I res = 0;\n  repi(i, SZ(lrs) - 1)\n  {\n\
+    \    res += abs(lrs[ord[i + 1]].first - lrs[ord[i]].first);\n    res += abs(lrs[ord[i\
+    \ + 1]].second - lrs[ord[i]].second);\n  }\n  return res;\n}\n\ntemplate <class\
+    \ I>\nvc<int> mo_order_params(const vc<pair<I, I>> &lrs, int b, int t)\n{\n  const\
+    \ int q = lrs.size();\n  cauto &[ls, rs] = unzip(lrs);\n  auto comp = [&](int\
+    \ i, int j)\n  {\n    int segi = (ls[i] + t * b / 2) / b, segj = (ls[j] + t *\
+    \ b / 2) / b;\n    if (segi != segj)\n      return segi < segj;\n    return (segi\
+    \ & 1) ? (rs[i] > rs[j]) : (rs[i] < rs[j]);\n  };\n  vc<int> ord = permid<int>(q);\n\
+    \  sort(ALL(ord), comp);\n  return ord;\n}\n\ntemplate <class I>\nvc<int> mo_order(const\
+    \ vc<pair<I, I>> &lrs)\n{\n  cauto &[ls, rs] = unzip(lrs);\n  const int n = max(MAX(ls),\
+    \ MAX(rs));\n  const int q = lrs.size();\n  const int b1 = max(1, int(n / sqrt(q\
+    \ + 1)));\n  const int b2 = max(1, int(sqrt(3) * n / sqrt(2 * q + 1)));\n  const\
+    \ int b3 = max(1, int(sqrt(2) * n / sqrt(q + 1)));\n  array<vc<int>, 6> ords =\
+    \ {\n    mo_order_params(lrs, b1, 0),\n    mo_order_params(lrs, b1, 1),\n    mo_order_params(lrs,\
+    \ b2, 0),\n    mo_order_params(lrs, b2, 1),\n    mo_order_params(lrs, b3, 0),\n\
+    \    mo_order_params(lrs, b3, 1),\n  };\n  array<I, 6> costs;\n  repi(i, 6) costs[i]\
+    \ = mo_order_cost(lrs, ords[i]);\n  int j = ARGMIN(costs);\n  return ords[j];\n\
+    }\n\n};\n\n// add_l(l, r): \u4ECA\u306E\u533A\u9593\u304C [l+1, r) \u3067\u3042\
+    \u308B\u3068\u304D\u3001l \u3092\u8FFD\u52A0\u3057\u3066 [l, r) \u306B\u3059\u308B\
+    \n// add_r(l, r): \u4ECA\u306E\u533A\u9593\u304C [l, r) \u3067\u3042\u308B\u3068\
+    \u304D\u3001r \u3092\u8FFD\u52A0\u3057\u3066 [l, r+1) \u306B\u3059\u308B\n// del_l(l,\
+    \ r): \u4ECA\u306E\u533A\u9593\u304C [l, r) \u3067\u3042\u308B\u3068\u304D\u3001\
+    l \u3092\u524A\u9664\u3057\u3066 [l+1, r) \u306B\u3059\u308B\n// del_r(l, r):\
+    \ \u4ECA\u306E\u533A\u9593\u304C [l, r+1) \u3067\u3042\u308B\u3068\u304D\u3001\
+    r \u3092\u524A\u9664\u3057\u3066 [l, r) \u306B\u3059\u308B\n// rem(qid): \u4ECA\
+    \u304C qid \u756A\u76EE\u306E\u533A\u9593\u3060\u3068\u3057\u3066\u305D\u306E\u90E8\
+    \u5206\u306E\u7B54\u3048\u3092\u78BA\u5B9A\u3055\u305B\u308B\ntemplate <class\
+    \ I, class AddL, class AddR, class DelL, class DelR, class Rem>\nvoid mo(int n,\
+    \ const vc<pair<I, I>> &lrs, const AddL &add_l, const AddR &add_r, const DelL\
+    \ &del_l, const DelR &del_r, const Rem &rem)\n{\n  fec([ l, r ] : lrs) { assert(0\
+    \ <= l && l <= n && 0 <= r && r <= n); }\n  vc<int> ord = internal::mo_order(lrs);\n\
+    \  cauto & [ ls, rs ] = unzip(lrs);\n  int l = 0, r = 0;\n  fe(i : ord)\n  {\n\
+    \    const int li = ls[i], ri = rs[i];\n    while (li < l)\n      add_l(--l, r);\n\
+    \    while (r < ri)\n      add_r(l, r++);\n    while (l < li)\n      del_l(l++,\
+    \ r);\n    while (ri < r)\n      del_r(l, --r);\n    rem(i);\n  }\n}\n\n// add(i,\
+    \ isleft): \u4ECA\u306E\u533A\u9593\u306B i \u3092\u8FFD\u52A0\u3059\u308B (isleft\
+    \ \u306F\u5DE6\u306B\u8FFD\u52A0\u3059\u308B\u304B\u3069\u3046\u304B)\n// del(i,\
+    \ isleft): \u4ECA\u306E\u533A\u9593\u304B\u3089 i \u3092\u524A\u9664\u3059\u308B\
+    \ (isleft \u306F\u5DE6\u304B\u3089\u524A\u9664\u3059\u308B\u304B\u3069\u3046\u304B\
+    )\n// rem(qid): \u4ECA\u304C qid \u756A\u76EE\u306E\u533A\u9593\u3060\u3068\u3057\
+    \u3066\u305D\u306E\u90E8\u5206\u306E\u7B54\u3048\u3092\u78BA\u5B9A\u3055\u305B\
+    \u308B\ntemplate <class I, class ADD, class DEL, class REM>\nvoid mo(int n, const\
+    \ vc<pair<I, I>> &lrs, ADD add, DEL del, REM rem)\n{\n  auto add_l = [&](int l,\
+    \ int) { add(l, true); };\n  auto add_r = [&](int, int r) { add(r, false); };\n\
+    \  auto del_l = [&](int l, int) { del(l, true); };\n  auto del_r = [&](int, int\
+    \ r) { del(r, false); };\n  mo(n, lrs, add_l, add_r, del_l, del_r, rem);\n}\n\n\
+    // slider \u306F\u69CB\u9020\u4F53\u5185\u90E8\u306B l, r \u3092\u6301\u3061\u3001\
+    \n//   lpp(), rpp(), lmm(), rmm() \u3068\u3001\u305D\u308C\u3092\u7528\u3044\u305F\
+    \ set(nl, nr) \u3092\u5B9F\u88C5\u3059\u308B\n// rem(qid): \u4ECA\u304C qid \u756A\
+    \u76EE\u306E\u533A\u9593\u3060\u3068\u3057\u3066\u305D\u306E\u90E8\u5206\u306E\
+    \u7B54\u3048\u3092\u78BA\u5B9A\u3055\u305B\u308B\ntemplate <class I, class Slider,\
+    \ class REM>\nvoid mo(int n, const vc<pair<I, I>> &lrs, Slider &slider, REM rem)\n\
+    {\n  fec([ l, r ] : lrs) { assert(0 <= l && r <= n); }\n  vc<int> ord = internal::mo_order(lrs);\n\
+    \  fe(i : ord)\n  {\n    slider.set(lrs[i].first, lrs[i].second);\n    rem(i);\n\
+    \  }\n}\n"
   code: "#pragma once\n\n#include \"../../template/template_all_but_modint.hpp\"\n\
-    \nnamespace internal\n{\n\nconstexpr ll powmod32_constexpr(ll x, ll n, int m)\n\
-    {\n  if (m == 1)\n    return 0;\n  uint _m = (uint)m;\n  ull r = 1;\n  ull y =\
-    \ safemod(x, m);\n  while (n)\n  {\n    if (n & 1)\n      r = (r * y) % _m;\n\
-    \    y = (y * y) % _m;\n    n >>= 1;\n  }\n  return r;\n}\n\nconstexpr bool isprime32_constexpr(int\
-    \ n)\n{\n  if (n <= 1)\n    return false;\n  if (n == 2 || n == 7 || n == 61)\n\
-    \    return true;\n  if (n % 2 == 0)\n    return false;\n  ll d = n - 1;\n  while\
-    \ (d % 2 == 0)\n    d /= 2;\n  constexpr ll bases[3] = {2, 7, 61};\n  for (ll\
-    \ a : bases)\n  {\n    ll t = d;\n    ll y = powmod32_constexpr(a, t, n);\n  \
-    \  while (t != n - 1 && y != 1 && y != n - 1)\n    {\n      y = y * y % n;\n \
-    \     t <<= 1;\n    }\n    if (y != n - 1 && t % 2 == 0)\n      return false;\n\
-    \  }\n  return true;\n}\ntemplate <int n>\nconstexpr bool isprime32 = isprime32_constexpr(n);\n\
-    \nstruct barrett32\n{\n  uint m;\n  ull im;\n\n  explicit barrett32(uint m) :\
-    \ m(m), im((ull)(-1) / m + 1) {}\n  uint umod() const { return m; }\n  uint mul(uint\
-    \ a, uint b) const\n  {\n    ull z = a;\n    z *= b;\n    ull x = (ull)((u128(z)*im)\
-    \ >> 64);\n    ull y = x * m;\n    return (uint)(z - y + (z < y ? m : 0));\n \
-    \ }\n};\n\n}"
-  dependsOn:
-  - template/template_all_but_modint.hpp
-  - template/template_types.hpp
-  - template/template_rep.hpp
-  - template/template_math.hpp
-  - template/template_vector.hpp
-  - template/template_algo.hpp
-  - template/template_binsearch.hpp
-  - template/template_bit.hpp
-  - template/template_inout.hpp
-  - template/template_dump.hpp
-  - template/template_random.hpp
+    \n/**\n * @brief Mo's algorithm\n * @docs docs/ds/mo.md\n */\n\nnamespace internal\n\
+    {\n\ntemplate <class I>\nI mo_order_cost(const vc<pair<I, I>> &lrs, const vc<int>\
+    \ &ord)\n{\n  I res = 0;\n  repi(i, SZ(lrs) - 1)\n  {\n    res += abs(lrs[ord[i\
+    \ + 1]].first - lrs[ord[i]].first);\n    res += abs(lrs[ord[i + 1]].second - lrs[ord[i]].second);\n\
+    \  }\n  return res;\n}\n\ntemplate <class I>\nvc<int> mo_order_params(const vc<pair<I,\
+    \ I>> &lrs, int b, int t)\n{\n  const int q = lrs.size();\n  cauto &[ls, rs] =\
+    \ unzip(lrs);\n  auto comp = [&](int i, int j)\n  {\n    int segi = (ls[i] + t\
+    \ * b / 2) / b, segj = (ls[j] + t * b / 2) / b;\n    if (segi != segj)\n     \
+    \ return segi < segj;\n    return (segi & 1) ? (rs[i] > rs[j]) : (rs[i] < rs[j]);\n\
+    \  };\n  vc<int> ord = permid<int>(q);\n  sort(ALL(ord), comp);\n  return ord;\n\
+    }\n\ntemplate <class I>\nvc<int> mo_order(const vc<pair<I, I>> &lrs)\n{\n  cauto\
+    \ &[ls, rs] = unzip(lrs);\n  const int n = max(MAX(ls), MAX(rs));\n  const int\
+    \ q = lrs.size();\n  const int b1 = max(1, int(n / sqrt(q + 1)));\n  const int\
+    \ b2 = max(1, int(sqrt(3) * n / sqrt(2 * q + 1)));\n  const int b3 = max(1, int(sqrt(2)\
+    \ * n / sqrt(q + 1)));\n  array<vc<int>, 6> ords = {\n    mo_order_params(lrs,\
+    \ b1, 0),\n    mo_order_params(lrs, b1, 1),\n    mo_order_params(lrs, b2, 0),\n\
+    \    mo_order_params(lrs, b2, 1),\n    mo_order_params(lrs, b3, 0),\n    mo_order_params(lrs,\
+    \ b3, 1),\n  };\n  array<I, 6> costs;\n  repi(i, 6) costs[i] = mo_order_cost(lrs,\
+    \ ords[i]);\n  int j = ARGMIN(costs);\n  return ords[j];\n}\n\n};\n\n// add_l(l,\
+    \ r): \u4ECA\u306E\u533A\u9593\u304C [l+1, r) \u3067\u3042\u308B\u3068\u304D\u3001\
+    l \u3092\u8FFD\u52A0\u3057\u3066 [l, r) \u306B\u3059\u308B\n// add_r(l, r): \u4ECA\
+    \u306E\u533A\u9593\u304C [l, r) \u3067\u3042\u308B\u3068\u304D\u3001r \u3092\u8FFD\
+    \u52A0\u3057\u3066 [l, r+1) \u306B\u3059\u308B\n// del_l(l, r): \u4ECA\u306E\u533A\
+    \u9593\u304C [l, r) \u3067\u3042\u308B\u3068\u304D\u3001l \u3092\u524A\u9664\u3057\
+    \u3066 [l+1, r) \u306B\u3059\u308B\n// del_r(l, r): \u4ECA\u306E\u533A\u9593\u304C\
+    \ [l, r+1) \u3067\u3042\u308B\u3068\u304D\u3001r \u3092\u524A\u9664\u3057\u3066\
+    \ [l, r) \u306B\u3059\u308B\n// rem(qid): \u4ECA\u304C qid \u756A\u76EE\u306E\u533A\
+    \u9593\u3060\u3068\u3057\u3066\u305D\u306E\u90E8\u5206\u306E\u7B54\u3048\u3092\
+    \u78BA\u5B9A\u3055\u305B\u308B\ntemplate <class I, class AddL, class AddR, class\
+    \ DelL, class DelR, class Rem>\nvoid mo(int n, const vc<pair<I, I>> &lrs, const\
+    \ AddL &add_l, const AddR &add_r, const DelL &del_l, const DelR &del_r, const\
+    \ Rem &rem)\n{\n  fec([ l, r ] : lrs) { assert(0 <= l && l <= n && 0 <= r && r\
+    \ <= n); }\n  vc<int> ord = internal::mo_order(lrs);\n  cauto & [ ls, rs ] = unzip(lrs);\n\
+    \  int l = 0, r = 0;\n  fe(i : ord)\n  {\n    const int li = ls[i], ri = rs[i];\n\
+    \    while (li < l)\n      add_l(--l, r);\n    while (r < ri)\n      add_r(l,\
+    \ r++);\n    while (l < li)\n      del_l(l++, r);\n    while (ri < r)\n      del_r(l,\
+    \ --r);\n    rem(i);\n  }\n}\n\n// add(i, isleft): \u4ECA\u306E\u533A\u9593\u306B\
+    \ i \u3092\u8FFD\u52A0\u3059\u308B (isleft \u306F\u5DE6\u306B\u8FFD\u52A0\u3059\
+    \u308B\u304B\u3069\u3046\u304B)\n// del(i, isleft): \u4ECA\u306E\u533A\u9593\u304B\
+    \u3089 i \u3092\u524A\u9664\u3059\u308B (isleft \u306F\u5DE6\u304B\u3089\u524A\
+    \u9664\u3059\u308B\u304B\u3069\u3046\u304B)\n// rem(qid): \u4ECA\u304C qid \u756A\
+    \u76EE\u306E\u533A\u9593\u3060\u3068\u3057\u3066\u305D\u306E\u90E8\u5206\u306E\
+    \u7B54\u3048\u3092\u78BA\u5B9A\u3055\u305B\u308B\ntemplate <class I, class ADD,\
+    \ class DEL, class REM>\nvoid mo(int n, const vc<pair<I, I>> &lrs, ADD add, DEL\
+    \ del, REM rem)\n{\n  auto add_l = [&](int l, int) { add(l, true); };\n  auto\
+    \ add_r = [&](int, int r) { add(r, false); };\n  auto del_l = [&](int l, int)\
+    \ { del(l, true); };\n  auto del_r = [&](int, int r) { del(r, false); };\n  mo(n,\
+    \ lrs, add_l, add_r, del_l, del_r, rem);\n}\n\n// slider \u306F\u69CB\u9020\u4F53\
+    \u5185\u90E8\u306B l, r \u3092\u6301\u3061\u3001\n//   lpp(), rpp(), lmm(), rmm()\
+    \ \u3068\u3001\u305D\u308C\u3092\u7528\u3044\u305F set(nl, nr) \u3092\u5B9F\u88C5\
+    \u3059\u308B\n// rem(qid): \u4ECA\u304C qid \u756A\u76EE\u306E\u533A\u9593\u3060\
+    \u3068\u3057\u3066\u305D\u306E\u90E8\u5206\u306E\u7B54\u3048\u3092\u78BA\u5B9A\
+    \u3055\u305B\u308B\ntemplate <class I, class Slider, class REM>\nvoid mo(int n,\
+    \ const vc<pair<I, I>> &lrs, Slider &slider, REM rem)\n{\n  fec([ l, r ] : lrs)\
+    \ { assert(0 <= l && r <= n); }\n  vc<int> ord = internal::mo_order(lrs);\n  fe(i\
+    \ : ord)\n  {\n    slider.set(lrs[i].first, lrs[i].second);\n    rem(i);\n  }\n\
+    }\n"
+  dependsOn: []
   isVerificationFile: false
-  path: math/modint/modint32_internal.hpp
-  requiredBy:
-  - graph/matrix_tree.hpp
-  - string/rolling_hash.hpp
-  - template/template.cpp
-  - template/template_all.hpp
-  - math/prime/large/zeta_mobius_divisor_multiple_large.hpp
-  - math/prime/large/euler_phi_carmichael.hpp
-  - math/prime/large/factorize.hpp
-  - math/prime/large/primality_test.hpp
-  - math/prime/large/order_primitive_root.hpp
-  - math/crt.hpp
-  - math/fps/bmbm.hpp
-  - math/fps/rational_sum.hpp
-  - math/fps/shift_of_sampling_points.hpp
-  - math/fps/power_projection.hpp
-  - math/fps/compositional_inverse.hpp
-  - math/fps/factorial.hpp
-  - math/fps/interpolation.hpp
-  - math/fps/multipoint_evaluation_geo.hpp
-  - math/fps/interpolation_geo.hpp
-  - math/fps/multipoint_evaluation.hpp
-  - math/fps/taylor_shift.hpp
-  - math/fps/pow_sum.hpp
-  - math/fps/bostan_mori.hpp
-  - math/fps/fps.hpp
-  - math/linalg/matrix.hpp
-  - math/linalg/matrix_array.hpp
-  - math/modint/sqrt_mod.hpp
-  - math/modint/modint64.hpp
-  - math/modint/modint.hpp
-  - math/modint/modint64_internal.hpp
-  - math/modint/template_modint.hpp
-  - math/convolution/convolution.hpp
-  - math/convolution/convolution64.hpp
-  - math/convolution/convolution_many.hpp
-  - math/convolution/convolution_ll.hpp
-  timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/yukicoder/order_mod_carmichael.test.cpp
-  - verify/yukicoder/perm_cycle.test.cpp
-  - verify/yukicoder/yuki2215_dc.test.cpp
-  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
-  - verify/yukicoder/factorial.test.cpp
-  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
-  - verify/yukicoder/dynamic_modint.test.cpp
-  - verify/yukicoder/binomial_table.test.cpp
-  - verify/yukicoder/yuki310.test.cpp
-  - verify/yukicoder/static_modint.test.cpp
-  - verify/yukicoder/yuki2215_swag.test.cpp
-  - verify/yukicoder/crt.test.cpp
-  - verify/yukicoder/order_mod_euler_phi.test.cpp
-  - verify/yukicoder/divisors.test.cpp
-  - verify/yukicoder/poly_rational_sum.test.cpp
-  - verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  - verify/yukicoder/binomial.test.cpp
-  - verify/yukicoder/pow_sum.test.cpp
-  - verify/yukicoder/crt_mod.test.cpp
-  - verify/yukicoder/bmbm.test.cpp
-  - verify/mytest/modint64.test.cpp
-  - verify/mytest/rolling_hash.test.cpp
-  - verify/mytest/rational_plus.test.cpp
-  - verify/mytest/linear_sieve.test.cpp
-  - verify/mytest/modint_set_map.test.cpp
-  - verify/mytest/modint.test.cpp
-  - verify/mytest/power_table.test.cpp
-  - verify/aoj/modpow.test.cpp
-  - verify/yosupo/matrix_pow_array.test.cpp
-  - verify/yosupo/range_affine_range.sum.test.cpp
-  - verify/yosupo/matrix_inv.test.cpp
-  - verify/yosupo/sqrt_mod.test.cpp
-  - verify/yosupo/fps_log_sparse.test.cpp
-  - verify/yosupo/enumerate_triangles.test.cpp
-  - verify/yosupo/poly_taylor_shift.test.cpp
-  - verify/yosupo/point_set_range_composite_large_array.test.cpp
-  - verify/yosupo/convolution.test.cpp
-  - verify/yosupo/xor_convolution.test.cpp
-  - verify/yosupo/kronecker_power_hadamard.test.cpp
-  - verify/yosupo/enumerate_cliques.test.cpp
-  - verify/yosupo/primality_test.test.cpp
-  - verify/yosupo/poly_multipoint_evaluation.test.cpp
-  - verify/yosupo/subset_convolution.test.cpp
-  - verify/yosupo/unionfind_potential.test.cpp
-  - verify/yosupo/poly_interpolation_geo.test.cpp
-  - verify/yosupo/matrix_det_sparse.test.cpp
-  - verify/yosupo/poly_div.test.cpp
-  - verify/yosupo/fps_exp_sparse.test.cpp
-  - verify/yosupo/counting_spanning_trees_directed.test.cpp
-  - verify/yosupo/fps_sqrt_sparse.test.cpp
-  - verify/yosupo/convolution64.test.cpp
-  - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-  - verify/yosupo/polynomial_taylor_shift.test.cpp
-  - verify/yosupo/matrix_det.test.cpp
-  - verify/yosupo/unionfind_potential_non_commutative.test.cpp
-  - verify/yosupo/matrix_product.test.cpp
-  - verify/yosupo/matrix_pow.test.cpp
-  - verify/yosupo/lcm_convolution.test.cpp
-  - verify/yosupo/matrix_solve_array.test.cpp
-  - verify/yosupo/deque_operate_all_composite.test.cpp
-  - verify/yosupo/factorial.test.cpp
-  - verify/yosupo/fps_pow.test.cpp
-  - verify/yosupo/retooting.test.cpp
-  - verify/yosupo/kronecker_power_zeta_mobius.test.cpp
-  - verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
-  - verify/yosupo/fps_pow_sparse.test.cpp
-  - verify/yosupo/fps_inv.test.cpp
-  - verify/yosupo/poly_interpolation.test.cpp
-  - verify/yosupo/matrix_solve.test.cpp
-  - verify/yosupo/matrix_det_array.test.cpp
-  - verify/yosupo/queue_operate_all_composite.test.cpp
-  - verify/yosupo/matrix_rank.test.cpp
-  - verify/yosupo/primitive_root.test.cpp
-  - verify/yosupo/factorize.test.cpp
-  - verify/yosupo/convolution_arbitrary_static.test.cpp
-  - verify/yosupo/point_set_range_composite.test.cpp
-  - verify/yosupo/convolution_many.test.cpp
-  - verify/yosupo/fps_inv_sparse.test.cpp
-  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
-  - verify/yosupo/find_linear_recurrence.test.cpp
-  - verify/yosupo/and_or_convolution.test.cpp
-  - verify/yosupo/fps_log.test.cpp
-  - verify/yosupo/primitive_root_min.test.cpp
-  - verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
-  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
-  - verify/yosupo/counting_eularian_circuits.test.cpp
-  - verify/yosupo/poly_shift_of_sampling_points.test.cpp
-  - verify/yosupo/fps_sqrt.test.cpp
-  - verify/yosupo/fps_exp.test.cpp
-  - verify/yosupo/matrix_inv_array.test.cpp
-  - verify/yosupo/fps_compositional_inverse.test.cpp
-  - verify/yosupo/binomial.test.cpp
-  - verify/yosupo/matrix_product_array.test.cpp
-  - verify/yosupo/gcd_convolution.test.cpp
-documentation_of: math/modint/modint32_internal.hpp
+  path: ds/mo/mo.hpp
+  requiredBy: []
+  timestamp: '1970-01-01 00:00:00+00:00'
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
+documentation_of: ds/mo/mo.hpp
 layout: document
 redirect_from:
-- /library/math/modint/modint32_internal.hpp
-- /library/math/modint/modint32_internal.hpp.html
-title: math/modint/modint32_internal.hpp
+- /library/ds/mo/mo.hpp
+- /library/ds/mo/mo.hpp.html
+title: Mo's algorithm
 ---
+## Mo's Algorithm
+
+静的・オフラインな区間クエリについて、区間の端を追加・削除する処理を $O(N\sqrt{Q})$ 回、現在の区間の答えを計算する処理を $O(Q)$ 回行うことで処理するアルゴリズム。
+
+定数倍については https://noshi91.hatenablog.com/entry/2023/04/13/224811
+
+もしかして：
+
+- 削除が苦しいとき → Rollback Mo を検討
+- 平方分割を使って追加・削除を $O(1)$ 時間、答えの取得を $O(\sqrt{N})$ 時間にできれば、全体 $O(N\sqrt{Q} + Q\sqrt{N})$ 時間にできる
+
+#### mo
+
+```cpp
+(1) mo(int n, vc<pair<I, I>> lrs, auto add_l, auto add_r, auto del_l, auto del_r, auto rem)
+(2) mo(int n, vc<pair<I, I>> lrs, auto add, auto del, auto rem)
+(3) mo(int n, vc<pair<I, I>> lrs, Slider &slider, auto rem)
+```
+
+$[0, n)$ 内の区間 $[l, r)$ たちに関するクエリを処理する。
+
+`rem(q)` は、今の区間が $q$ 番目のクエリだとして、その結果を確定させる関数として渡す。
+
+- (1) だけで渡す関数：
+  - `add_l(l, r)`：今の区間が $[l+1, r)$ であるとき、$l$ を追加して $[l, r)$ にする関数
+  - `add_r(l, r)`：今の区間が $[l, r)$ であるとき、$r$ を追加して $[l, r+1)$ にする関数
+  - `del_l(l, r)`：今の区間が $[l, r)$ であるとき、$l$ を削除して $[l+1, r)$ にする関数
+  - `del_r(l, r)`：今の区間が $[l, r+1)$ であるとき、$r$ を削除して $[l, r)$ にする関数
+- (2) だけで渡す関数：
+  - `add(i, isleft)`：今の区間に $i$ を追加する関数。`isleft` が `true` のときは左端に、`false` のときは右端に追加する
+  - `del(i, isleft)`：今の区間から $i$ を削除する関数。`isleft` が `true` のときは左端から、`false` のときは右端から削除する
+- (3) では `slider` を渡す。`slider` の例としては `ds/fenwick_tree/inversion.hpp` に実装した `InversionSlider` がある。`slider` 内部に実装するものは：
+  - `l`, `r`：現在の区間 $[l, r)$
+  - `lpp()`, `lmm()`, `rpp()`, `rmm()`：現在の区間を更新する関数
+  - `set(nl, nr)`：`lpp()`, `lmm()`, `rpp()`, `rmm()` を用いて区間を $[\mathrm{nl}, \mathrm{nr})$ に更新する関数
+
+##### 制約
+
+- $0 \leq l, r \leq n$
+  - 実は区間に限らず平面上の点に対しても適用できる（$l \leq r$ でなくてもよい）
+
+##### 計算量
+
+$q = \lvert \mathrm{lrs} \rvert$ として
+
+- $O(n\sqrt{q})$ 回の `add`, `del` 呼び出し
+- $O(q)$ 回の `rem` 呼び出し

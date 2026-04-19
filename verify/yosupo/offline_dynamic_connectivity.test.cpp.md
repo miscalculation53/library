@@ -1,72 +1,12 @@
 ---
 data:
-  _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: ds/coordinate_compression.hpp
-    title: "\u5EA7\u6A19\u5727\u7E2E"
-  - icon: ':heavy_check_mark:'
-    path: ds/flat_map.hpp
-    title: "\u30AD\u30FC\u304C\u3059\u3079\u3066\u5148\u306B\u308F\u304B\u308B\u5834\
-      \u5408\u306E map"
-  - icon: ':heavy_check_mark:'
-    path: ds/offline_dynamic_connectivity.hpp
-    title: "\u30AA\u30D5\u30E9\u30A4\u30F3\u30C0\u30A4\u30B3\u30CD\u306E\u30C6\u30AF\
-      \u30CB\u30C3\u30AF"
-  - icon: ':heavy_check_mark:'
-    path: ds/uf/uf.hpp
-    title: UnionFind
-  - icon: ':heavy_check_mark:'
-    path: ds/uf/uf_undo.hpp
-    title: "undo \u53EF\u80FD UnionFind"
-  - icon: ':heavy_check_mark:'
-    path: template/template_algo.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
-      \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_all_but_modint.hpp
-    title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_binsearch.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_bit.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
-      \uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_dump.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_inout.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_main.hpp
-    title: template/template_main.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_math.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_random.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
-      \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_rep.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_types.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_vector.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
-  attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.yosupo.jp/problem/dynamic_graph_vertex_add_component_sum
-    links:
-    - https://judge.yosupo.jp/problem/dynamic_graph_vertex_add_component_sum
+  _verificationStatusIcon: ':x:'
+  attributes: {}
   bundledCode: "#line 1 \"verify/yosupo/offline_dynamic_connectivity.test.cpp\"\n\
     #define PROBLEM \"https://judge.yosupo.jp/problem/dynamic_graph_vertex_add_component_sum\"\
     \n\n#define SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\
@@ -110,37 +50,47 @@ data:
     \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
     #line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
     #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
+    \n\n#line 2 \"utils/is_integral_ext.hpp\"\n\n#line 4 \"utils/is_integral_ext.hpp\"\
+    \n\n/**\n * @brief $128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\
+    \u6574\u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n */\n\ntemplate\
+    \ <class T>\nconstexpr bool is_integral_ext = is_integral_v<T> || is_same_v<T,\
+    \ i128> || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr bool is_signed_ext\
+    \ = is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class T>\nconstexpr bool\
+    \ is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;\n#line 14 \"template/template_math.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
     \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
     inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
     \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
-    \ : false; }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T\
-    \ divfloor(U a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0);\
-    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T divceil(U a,\
-    \ V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divround(U a, V b) { return\
-    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U,\
-    \ class V>\ninline constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a,\
-    \ b); }\n\ntemplate <class T = ll, class U, class V>\nconstexpr T ipow(U a, V\
-    \ b)\n{\n  assert(b >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a ==\
-    \ 1)\n    return a;\n  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n \
-    \ T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n\
-    \    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n\
-    }\ntemplate <class T = ll, class A, class B, class M>\nT mul_limited(A a, B b,\
-    \ M m)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n\
-    \  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll,\
-    \ class A, class B>\nT mul_limited(A a, B b) { return mul_limited<T>(a, b, INF);\
-    \ }\ntemplate <class T = ll, class A, class B, class M>\nT pow_limited(A a, B\
-    \ b, M m)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n\
-    \    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n\
-    \  {\n    if (b & 1)\n    {\n      if (res > T(m) / tmp)\n        return m;\n\
-    \      res *= tmp;\n    }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if\
-    \ (tmp > T(m) / tmp)\n      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\n\
-    template <class T = ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a,\
-    \ b, INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A\
-    \ a, K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return\
-    \ a;\n  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n\
-    \      if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divfloor(U a, V b) { return T(a)\
+    \ / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class\
+    \ U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\n\
+    inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V, typename\
+    \ = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\ninline constexpr T\
+    \ safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
+    \ T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a\
+    \ < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while\
+    \ (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n\
+    \      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll,\
+    \ class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0\
+    \ && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) /\
+    \ T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT\
+    \ mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
+    \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
+    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
+    \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
+    \    {\n      if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n  \
+    \  }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n\
+    \      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T =\
+    \ ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a, b,\
+    \ INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A a,\
+    \ K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n\
+    \  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n     \
+    \ if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
     \      return sqrtl(a);\n  }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x\
     \ == 0)\n      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n\
     \      if (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n\
@@ -604,18 +554,18 @@ data:
     \ &add) { for (auto &vi : v) vi += add; }\ntemplate <class T, class Add>\nvoid\
     \ offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto &vij : vi)\
     \ vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E -----\ntemplate <class\
-    \ T, const size_t m>\narray<vc<T>, m> top(const vc<array<T, m>> &vt)\n{\n  const\
+    \ T, const size_t m>\narray<vc<T>, m> unzip(const vc<array<T, m>> &vt)\n{\n  const\
     \ size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t\
     \ i = 0; i < n; i++)\n    for (size_t j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n\
-    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> top(const\
+    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> zip(const\
     \ array<vc<T>, m> &tv)\n{\n  if (tv.empty()) return {};\n  const size_t n = tv[0].size();\n\
     \  vc<array<T, m>> vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size()\
     \ == n);\n    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n\
-    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const\
+    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> unzip(const\
     \ vc<pair<T, U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>>\
     \ tv;\n  tv.first.resize(n), tv.second.resize(n);\n  for (size_t i = 0; i < n;\
     \ i++)\n    tie(tv.first[i], tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate\
-    \ <class T, class U>\nvc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
+    \ <class T, class U>\nvc<pair<T, U>> zip(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
     \ size_t n = tv.first.size();\n  assert(n == tv.second.size());\n  vc<pair<T,\
     \ U>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i],\
     \ tv.second[i]);\n  return vt;\n}\n\nnamespace internal\n{\n\ntemplate <size_t...\
@@ -623,17 +573,18 @@ data:
     \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\n\ntemplate <size_t...\
     \ I, class Tp>\nauto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t\
     \ index)\n{ return make_tuple(get<I>(tv)[index]...); }\n\n};\n\ntemplate <class...\
-    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
+    \ Ts>\nauto unzip(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
     \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
     \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    internal::vt_to_tv_impl(tv, vt[i],\
     \ make_index_sequence<tuple_size_v<decltype(tv)>>{}, i);\n  return tv;\n}\n\n\
-    template <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
+    template <class... Ts>\nauto zip(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 2 \"template/template_random.hpp\"\n\n#line 5 \"\
-    template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
+    \ vt;\n}\n\n#define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)\n#define ZIP(vt,\
+    \ ...) auto vt = zip(tuple{__VA_ARGS__})\n// ----------\n#line 2 \"template/template_random.hpp\"\
+    \n\n#line 5 \"template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
     \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
     \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
     \  return T(l) + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\
@@ -695,41 +646,40 @@ data:
     \ 0, max_leader = n - 1;\n    }\n  };\n  using EWeight = EWeight_;\n  template\
     \ <class UF>\n  static void add_edge_diff(UF &uf, int x, int y, EWeight w)\n \
     \ {\n    VData &xd = uf.vdat[x], &yd = uf.vdat[y];\n    GData &gd = uf.gdat;\n\
-    \    xd.vsum += yd.vsum;\n    xd.esum += w;\n    if constexpr (need_vlist)\n \
-    \   {\n      xd.vlist.insert(xd.vlist.end(), ALL(yd.vlist));\n      yd.vlist.clear();\n\
+    \n    xd.vsum += yd.vsum;\n    xd.esum += yd.esum + w;\n    if constexpr (need_vlist)\n\
+    \    {\n      xd.vlist.insert(xd.vlist.end(), ALL(yd.vlist));\n      yd.vlist.clear();\n\
     \    }\n    gd.cmp_cnt--;\n    while (uf.leader(gd.min_leader) != gd.min_leader)\n\
     \      gd.min_leader++;\n    while (uf.leader(gd.max_leader) != gd.max_leader)\n\
     \      gd.max_leader--;\n  }\n  template <class UF>\n  static void add_edge_same(UF\
-    \ &uf, int x, EWeight w)\n  {\n    VData &xd = uf.vdat[x];\n    xd.esum += w;\n\
-    \  }\n};\n#line 6 \"ds/uf/uf_undo.hpp\"\n\n/**\n * @brief undo \u53EF\u80FD UnionFind\n\
-    \ * @docs docs/ds/uf/uf_undo.md\n */\n\ntemplate <class UFData>\nstruct UnionFindUndo\
-    \ : UnionFind<UFData, false>\n{\n  using UF = UnionFind<UFData, false>;\n  friend\
-    \ UFData;\n\nprotected:\n  using UF::par;\n  using UF::vdat;\n  vc<tuple<int,\
-    \ int, typename UFData::VData, typename UFData::GData, bool>> his;\n\npublic:\n\
-    \  UnionFindUndo() {}\n  UnionFindUndo(int n) : UF(n) {}\n  using UF::gdat;\n\
-    \  using UF::leader;\n  // \u8FD4\u308A\u5024: \u30DE\u30FC\u30B8\u3057\u305F\u5F8C\
-    \u306E\u65B0\u305F\u306A\u4EE3\u8868\u5143\n  template <class I = ll>\n  I merge(int\
-    \ x, int y, const typename UFData::EWeight &w = 1)\n  {\n    x = leader(x), y\
-    \ = leader(y);\n    his.eb(x, par[x], vdat[x], gdat, false);\n    his.eb(y, par[y],\
-    \ vdat[y], gdat, false);\n    if (x == y)\n    {\n      UFData::add_edge_same(*this,\
-    \ x, w);\n      return x;\n    }\n    if (-par[x] < -par[y])\n      swap(x, y);\n\
-    \    par[x] += par[y], par[y] = x;\n    UFData::add_edge_diff(*this, x, y, w);\n\
-    \    return x;\n  }\n  // times \u56DE\u306E\u8FBA\u8FFD\u52A0\u3092 undo \u3059\
-    \u308B\n  // \u5236\u7D04: \u3059\u3067\u306B times \u56DE\u306E\u8FBA\u8FFD\u52A0\
-    \u304C\u884C\u308F\u308C\u3066\u3044\u308B\n  void undo(int times = 1)\n  {\n\
-    \    repi(t, 2 * times)\n    {\n      assert(!his.empty());\n      cauto & [ i,\
-    \ p, vd, gd, _ ] = his.back();\n      par[i] = p, vdat[i] = vd, gdat = gd;\n \
-    \     his.pop_back();\n    }\n  }\n  // \u73FE\u5728\u306E\u72B6\u614B\u306E snapshot\
-    \ \u3092\u64AE\u308B\n  void snapshot()\n  {\n    if (!his.empty())\n      std::get<4>(his.back())\
-    \ = true;\n  }\n  // \u76F4\u524D\u306B snapshot \u3092\u64AE\u3063\u305F\u72B6\
-    \u614B (\u306A\u3051\u308C\u3070\u521D\u671F\u72B6\u614B) \u306B\u623B\u3059\n\
-    \  void rollback()\n  {\n    while (!his.empty())\n    {\n      auto &[i, p, vd,\
-    \ gd, snapshoot] = his.back();\n      if (snapshoot)\n      {\n        snapshoot\
-    \ = false;\n        break;\n      }\n      par[i] = p, vdat[i] = vd, gdat = gd;\n\
-    \      his.pop_back();\n    }\n  }\n};\n#line 2 \"ds/offline_dynamic_connectivity.hpp\"\
-    \n\n#line 4 \"ds/offline_dynamic_connectivity.hpp\"\n\n#line 2 \"ds/flat_map.hpp\"\
-    \n\n#line 4 \"ds/flat_map.hpp\"\n\n#line 2 \"ds/coordinate_compression.hpp\"\n\
-    \n#line 4 \"ds/coordinate_compression.hpp\"\n\n/**\n * @brief \u5EA7\u6A19\u5727\
+    \ &uf, int x, EWeight w)\n  {\n    VData &xd = uf.vdat[x];\n    GData &gd = uf.gdat;\n\
+    \n    xd.esum += w;\n  }\n};\n#line 6 \"ds/uf/uf_undo.hpp\"\n\n/**\n * @brief\
+    \ undo \u53EF\u80FD UnionFind\n * @docs docs/ds/uf/uf_undo.md\n */\n\ntemplate\
+    \ <class UFData>\nstruct UnionFindUndo : UnionFind<UFData, false>\n{\n  using\
+    \ UF = UnionFind<UFData, false>;\n  friend UFData;\n\nprotected:\n  using UF::par;\n\
+    \  using UF::vdat;\n  vc<tuple<int, int, typename UFData::VData, typename UFData::GData>>\
+    \ his;\n  int snap_time;\n\npublic:\n  UnionFindUndo() : snap_time(0) {}\n  UnionFindUndo(int\
+    \ n) : UF(n), snap_time(0) {}\n  using UF::gdat;\n  using UF::leader;\n  // \u8FD4\
+    \u308A\u5024: \u30DE\u30FC\u30B8\u3057\u305F\u5F8C\u306E\u65B0\u305F\u306A\u4EE3\
+    \u8868\u5143\n  template <class I = ll>\n  I merge(int x, int y, const typename\
+    \ UFData::EWeight &w = 1)\n  {\n    x = leader(x), y = leader(y);\n    his.eb(x,\
+    \ par[x], vdat[x], gdat);\n    his.eb(y, par[y], vdat[y], gdat);\n    if (x ==\
+    \ y)\n    {\n      UFData::add_edge_same(*this, x, w);\n      return x;\n    }\n\
+    \    if (-par[x] < -par[y])\n      swap(x, y);\n    par[x] += par[y], par[y] =\
+    \ x;\n    UFData::add_edge_diff(*this, x, y, w);\n    return x;\n  }\n  // times\
+    \ \u56DE\u306E\u8FBA\u8FFD\u52A0\u3092 undo \u3059\u308B\n  // \u5236\u7D04: \u3059\
+    \u3067\u306B times \u56DE\u306E\u8FBA\u8FFD\u52A0\u304C\u884C\u308F\u308C\u3066\
+    \u3044\u308B\n  void undo(int times = 1)\n  {\n    repi(_, 2 * times)\n    {\n\
+    \      assert(!his.empty());\n      cauto & [ i, p, vd, gd ] = his.back();\n \
+    \     par[i] = p, vdat[i] = vd, gdat = gd;\n      his.pop_back();\n    }\n  }\n\
+    \  // \u521D\u671F\u72B6\u614B\u306B\u623B\u3059\n  void reset() { undo(SZ(his)\
+    \ / 2); }\n  // \u73FE\u5728\u306E\u72B6\u614B\u306E snapshot \u3092\u64AE\u308B\
+    \ (\u4FDD\u6301\u3067\u304D\u308B snapshot \u306F 1 \u500B\u307E\u3067)\n  void\
+    \ snapshot() { snap_time = his.size(); }\n  // snapshot \u3092\u64AE\u3063\u305F\
+    \u72B6\u614B\u306B\u623B\u3059 (\u4FDD\u6301\u3067\u304D\u308B snapshot \u306F\
+    \ 1 \u500B\u307E\u3067)\n  void rollback() { undo((SZ(his) - snap_time) / 2);\
+    \ }\n};\n#line 2 \"ds/offline_dynamic_connectivity.hpp\"\n\n#line 4 \"ds/offline_dynamic_connectivity.hpp\"\
+    \n\n#line 2 \"ds/flat_map.hpp\"\n\n#line 4 \"ds/flat_map.hpp\"\n\n#line 2 \"ds/coordinate_compression.hpp\"\
+    \n\n#line 4 \"ds/coordinate_compression.hpp\"\n\n/**\n * @brief \u5EA7\u6A19\u5727\
     \u7E2E\n * @docs docs/ds/coordinate_compression.md\n */\n\ntemplate <class T>\n\
     struct CoordinateCompression\n{\n  vc<T> vals;\n  CoordinateCompression() {}\n\
     \  CoordinateCompression(const vc<T> &vec) : vals(sortuniqued(vec)) {}\n\n  //\
@@ -802,11 +752,11 @@ data:
     \u307F\u306A\u3055\u308C\u308B\u3088\u3046\u306B\u3059\u308B\u3053\u3068!! ((u,\
     \ v) \u3068 (v, u) \u306A\u3069)\ntemplate <class I = ll, class Time, class Obj>\n\
     vc<tuple<I, I, Obj>> add_del_to_span(int tmax, const vc<pair<Time, Obj>> &time_obj)\n\
-    {\n  FlatMap<Obj, vc<Time>> mp(top(time_obj).second);\n  fec([ time, obj ] : sorted(time_obj))\
-    \ mp[obj].eb(time);\n  vc<tuple<I, I, Obj>> res;\n  fec([obj, times] : mp)\n \
-    \ {\n    repi(i, 0, times.size(), 2)\n    {\n      int l = times[i];\n      int\
-    \ r = i + 1 < SZ<int>(times) ? times[i + 1] : tmax;\n      res.eb(l, r, obj);\n\
-    \    }\n  }\n  return res;\n}\n#line 20 \"verify/yosupo/offline_dynamic_connectivity.test.cpp\"\
+    {\n  FlatMap<Obj, vc<Time>> mp(unzip(time_obj).second);\n  fec([ time, obj ] :\
+    \ sorted(time_obj)) mp[obj].eb(time);\n  vc<tuple<I, I, Obj>> res;\n  fec([obj,\
+    \ times] : mp)\n  {\n    repi(i, 0, times.size(), 2)\n    {\n      int l = times[i];\n\
+    \      int r = i + 1 < SZ<int>(times) ? times[i + 1] : tmax;\n      res.eb(l,\
+    \ r, obj);\n    }\n  }\n  return res;\n}\n#line 20 \"verify/yosupo/offline_dynamic_connectivity.test.cpp\"\
     \n\nvl A;\nstruct UFData\n{\n  struct VData\n  {\n    VData() {}\n    ll vsum;\n\
     \    VData(int i) { vsum = A.at(i); }\n  };\n  struct GData\n  {\n    GData()\
     \ {}\n    GData(int) {}\n  };\n  using EWeight = int;\n  template <class UF>\n\
@@ -877,29 +827,12 @@ data:
     \    if (t == 3)\n      PRINT(uf.get_vdata(v).vsum);\n  };\n  offline_dynamic_connectivity(Q,\
     \ span_obj, add, undo, run);\n}\n\nvoid test()\n{\n  \n}\n\n#include \"template/template_main.hpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
-  dependsOn:
-  - template/template_all_but_modint.hpp
-  - template/template_types.hpp
-  - template/template_rep.hpp
-  - template/template_math.hpp
-  - template/template_vector.hpp
-  - template/template_algo.hpp
-  - template/template_binsearch.hpp
-  - template/template_bit.hpp
-  - template/template_inout.hpp
-  - template/template_dump.hpp
-  - template/template_random.hpp
-  - ds/uf/uf_undo.hpp
-  - ds/uf/uf.hpp
-  - ds/offline_dynamic_connectivity.hpp
-  - ds/flat_map.hpp
-  - ds/coordinate_compression.hpp
-  - template/template_main.hpp
+  dependsOn: []
   isVerificationFile: true
   path: verify/yosupo/offline_dynamic_connectivity.test.cpp
   requiredBy: []
-  timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '1970-01-01 00:00:00+00:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yosupo/offline_dynamic_connectivity.test.cpp
 layout: document

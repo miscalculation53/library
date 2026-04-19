@@ -1,35 +1,12 @@
 ---
 data:
-  _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: template/template_algo.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
-      \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_dump.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_math.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_rep.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_types.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_vector.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  _extendedDependsOn: []
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
-  attributes:
-    '*NOT_SPECIAL_COMMENTS*': ''
-    PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
-    links:
-    - https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
+  _verificationStatusIcon: ':x:'
+  attributes: {}
   bundledCode: "#line 1 \"verify/mytest/template_algo.test.cpp\"\n#define PROBLEM\
     \ \"https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\n\n#line\
     \ 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
@@ -71,37 +48,47 @@ data:
     #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_vector.hpp\"\
     \n\n#line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
     #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
+    \n\n#line 2 \"utils/is_integral_ext.hpp\"\n\n#line 4 \"utils/is_integral_ext.hpp\"\
+    \n\n/**\n * @brief $128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\
+    \u6574\u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n */\n\ntemplate\
+    \ <class T>\nconstexpr bool is_integral_ext = is_integral_v<T> || is_same_v<T,\
+    \ i128> || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr bool is_signed_ext\
+    \ = is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class T>\nconstexpr bool\
+    \ is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;\n#line 14 \"template/template_math.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
     \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
     inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
     \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
-    \ : false; }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T\
-    \ divfloor(U a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0);\
-    \ }\ntemplate <class T = ll, class U, class V>\ninline constexpr T divceil(U a,\
-    \ V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divround(U a, V b) { return\
-    \ divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U,\
-    \ class V>\ninline constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a,\
-    \ b); }\n\ntemplate <class T = ll, class U, class V>\nconstexpr T ipow(U a, V\
-    \ b)\n{\n  assert(b >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a ==\
-    \ 1)\n    return a;\n  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n \
-    \ T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n\
-    \    b >>= 1;\n    if (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n\
-    }\ntemplate <class T = ll, class A, class B, class M>\nT mul_limited(A a, B b,\
-    \ M m)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n\
-    \  return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll,\
-    \ class A, class B>\nT mul_limited(A a, B b) { return mul_limited<T>(a, b, INF);\
-    \ }\ntemplate <class T = ll, class A, class B, class M>\nT pow_limited(A a, B\
-    \ b, M m)\n{\n  assert(a >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n\
-    \    return min(ipow<T>(a, b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n\
-    \  {\n    if (b & 1)\n    {\n      if (res > T(m) / tmp)\n        return m;\n\
-    \      res *= tmp;\n    }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if\
-    \ (tmp > T(m) / tmp)\n      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\n\
-    template <class T = ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a,\
-    \ b, INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A\
-    \ a, K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return\
-    \ a;\n  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n\
-    \      if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divfloor(U a, V b) { return T(a)\
+    \ / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class\
+    \ U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\n\
+    inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V, typename\
+    \ = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\ninline constexpr T\
+    \ safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
+    \ T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a\
+    \ < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while\
+    \ (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n\
+    \      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll,\
+    \ class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0\
+    \ && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) /\
+    \ T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT\
+    \ mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
+    \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
+    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
+    \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
+    \    {\n      if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n  \
+    \  }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n\
+    \      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T =\
+    \ ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a, b,\
+    \ INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A a,\
+    \ K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n\
+    \  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n     \
+    \ if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
     \      return sqrtl(a);\n  }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x\
     \ == 0)\n      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n\
     \      if (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n\
@@ -386,18 +373,12 @@ data:
     \ 1, 1, 1, INF}));\n  assert(adjd(a) == vl({3, -2, 3, -3, -1}));\n}\n\nint main()\n\
     {\n  test1();\n  test2();\n  test3();\n  test4();\n  test5();\n\n  cout << \"\
     Hello World\" << endl;\n}"
-  dependsOn:
-  - template/template_algo.hpp
-  - template/template_types.hpp
-  - template/template_rep.hpp
-  - template/template_vector.hpp
-  - template/template_math.hpp
-  - template/template_dump.hpp
+  dependsOn: []
   isVerificationFile: true
   path: verify/mytest/template_algo.test.cpp
   requiredBy: []
-  timestamp: '2026-01-04 17:26:22+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '1970-01-01 00:00:00+00:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/mytest/template_algo.test.cpp
 layout: document

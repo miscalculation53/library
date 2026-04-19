@@ -70,9 +70,9 @@ pair<T, T> crt<T = ll>(V rs, V ms)
 #### crt_mod
 
 ```cpp
-(1) pair<mint, mint> crt_mod<mint, T = ll>(V rs, V ms)
-(2) pair<mint, mint> crt_mod_constexpr<mint, T = ll>(V rs, V ms)
-(3) pair<mint, mint> crt_mod_dynamic_32<mint>(V rs, V ms)
+(1) pair<mint, mint> crt_mod<mint>(V rs, V ms)
+(2) pair<mint, mint> crt_mod_constexpr<mint>(V rs, V ms)
+(3) pair<mint, mint> crt_mod<mint>(V rs, V ms)
 ```
 
 **$m_i, m_j \ (i \neq j)$ が互いに素であることを前提としている。互いに素でない場合、pre_crt を先に呼ぶこと。**
@@ -89,7 +89,6 @@ pair<T, T> crt<T = ll>(V rs, V ms)
 - `mint` は modint（ull などを $\bmod\ 2^{64}$ の modint として使っても可）
 - $m_i \geq 1$
 - **$m_i, m_j \ (i \neq j)$ は互いに素**
-- (1), (2)：`T` は $m_i$ の $2$ 乗が収まる符号つき整数型
 - (2)：
   - `V` は array
   - $0 \leq r_i \lt m_i$

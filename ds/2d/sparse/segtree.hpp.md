@@ -1,56 +1,11 @@
 ---
 data:
-  _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
-    path: ds/segtree/segtree.hpp
-    title: "\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
-  - icon: ':heavy_check_mark:'
-    path: template/template_algo.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
-      \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_all_but_modint.hpp
-    title: template/template_all_but_modint.hpp
-  - icon: ':heavy_check_mark:'
-    path: template/template_binsearch.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_bit.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
-      \uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_dump.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_inout.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_math.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_random.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
-      \u6210\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_rep.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_types.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
-    path: template/template_vector.hpp
-    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  _extendedDependsOn: []
   _extendedRequiredBy: []
-  _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/2d_segtree.test.cpp
-    title: verify/yosupo/2d_segtree.test.cpp
-  - icon: ':heavy_check_mark:'
-    path: verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
-    title: verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
+  _extendedVerifiedWith: []
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':warning:'
   attributes:
     _deprecated_at_docs: docs/ds/2d/sparse/segtree.md
     document_title: "$2$ \u6B21\u5143\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\uFF08\u758E\
@@ -94,27 +49,37 @@ data:
     \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
     #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_math.hpp\"\
     \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
-    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n/**\n\
-    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\n * @docs\
-    \ docs/template/template_math.md\n */\n\ntemplate <class T, class U>\ninline bool\
-    \ chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate <class T,\
-    \ class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true : false;\
-    \ }\n\ntemplate <class T = ll, class U, class V>\ninline constexpr T divfloor(U\
-    \ a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate\
-    \ <class T = ll, class U, class V>\ninline constexpr T divceil(U a, V b) { return\
-    \ T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }\ntemplate <class T = ll,\
-    \ class U, class V>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
-    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V>\ninline\
-    \ constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\n\
-    template <class T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b\
-    \ >= 0);\n  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n\
-    \  if (a < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n\
-    \  while (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if\
-    \ (b == 0)\n      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class\
-    \ T = ll, class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a\
-    \ >= 0 && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m)\
-    \ / T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\n\
-    T mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
+    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n#line\
+    \ 2 \"utils/is_integral_ext.hpp\"\n\n#line 4 \"utils/is_integral_ext.hpp\"\n\n\
+    /**\n * @brief $128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\
+    \u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n */\n\ntemplate <class\
+    \ T>\nconstexpr bool is_integral_ext = is_integral_v<T> || is_same_v<T, i128>\
+    \ || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr bool is_signed_ext =\
+    \ is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class T>\nconstexpr bool\
+    \ is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;\n#line 14 \"template/template_math.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
+    \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
+    inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
+    \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divfloor(U a, V b) { return T(a)\
+    \ / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class\
+    \ U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\n\
+    inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V, typename\
+    \ = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\ninline constexpr T\
+    \ safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
+    \ T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a\
+    \ < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while\
+    \ (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n\
+    \      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll,\
+    \ class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0\
+    \ && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) /\
+    \ T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT\
+    \ mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
     \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
     \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
     \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
@@ -589,18 +554,18 @@ data:
     \ &add) { for (auto &vi : v) vi += add; }\ntemplate <class T, class Add>\nvoid\
     \ offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto &vij : vi)\
     \ vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E -----\ntemplate <class\
-    \ T, const size_t m>\narray<vc<T>, m> top(const vc<array<T, m>> &vt)\n{\n  const\
+    \ T, const size_t m>\narray<vc<T>, m> unzip(const vc<array<T, m>> &vt)\n{\n  const\
     \ size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n  for (size_t\
     \ i = 0; i < n; i++)\n    for (size_t j = 0; j < m; j++)\n      tv[j][i] = vt[i][j];\n\
-    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> top(const\
+    \  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T, m>> zip(const\
     \ array<vc<T>, m> &tv)\n{\n  if (tv.empty()) return {};\n  const size_t n = tv[0].size();\n\
     \  vc<array<T, m>> vt(n);\n  for (size_t j = 0; j < m; j++)\n  {\n    assert(tv[j].size()\
     \ == n);\n    for (size_t i = 0; i < n; i++)\n      vt[i][j] = tv[j][i];\n  }\n\
-    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> top(const\
+    \  return vt;\n}\n\ntemplate <class T, class U>\npair<vc<T>, vc<U>> unzip(const\
     \ vc<pair<T, U>> &vt)\n{\n  const size_t n = vt.size();\n  pair<vc<T>, vc<U>>\
     \ tv;\n  tv.first.resize(n), tv.second.resize(n);\n  for (size_t i = 0; i < n;\
     \ i++)\n    tie(tv.first[i], tv.second[i]) = vt[i];\n  return tv;\n}\ntemplate\
-    \ <class T, class U>\nvc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
+    \ <class T, class U>\nvc<pair<T, U>> zip(const pair<vc<T>, vc<U>> &tv)\n{\n  const\
     \ size_t n = tv.first.size();\n  assert(n == tv.second.size());\n  vc<pair<T,\
     \ U>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i],\
     \ tv.second[i]);\n  return vt;\n}\n\nnamespace internal\n{\n\ntemplate <size_t...\
@@ -608,17 +573,18 @@ data:
     \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\n\ntemplate <size_t...\
     \ I, class Tp>\nauto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t\
     \ index)\n{ return make_tuple(get<I>(tv)[index]...); }\n\n};\n\ntemplate <class...\
-    \ Ts>\nauto top(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
+    \ Ts>\nauto unzip(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
     \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
     \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    internal::vt_to_tv_impl(tv, vt[i],\
     \ make_index_sequence<tuple_size_v<decltype(tv)>>{}, i);\n  return tv;\n}\n\n\
-    template <class... Ts>\nauto top(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
+    template <class... Ts>\nauto zip(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
     \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((assert(v.size() ==\
     \ n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n; i++)\n\
     \    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n  return\
-    \ vt;\n}\n// ----------\n#line 2 \"template/template_random.hpp\"\n\n#line 5 \"\
-    template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\
-    \u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
+    \ vt;\n}\n\n#define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)\n#define ZIP(vt,\
+    \ ...) auto vt = zip(tuple{__VA_ARGS__})\n// ----------\n#line 2 \"template/template_random.hpp\"\
+    \n\n#line 5 \"template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
     \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
     \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
     \  return T(l) + mt() % (T(r) - T(l) + 1);\n}\n// [l, r) \u304B\u3089\u7B49\u78BA\
@@ -643,103 +609,104 @@ data:
     \ dat;\n  void update(int i) { dat[i] = M::op(dat[2 * i], dat[2 * i + 1]); }\n\
     \npublic:\n  SegmentTree() {}\n  SegmentTree(int n) : SegmentTree(vc<S>(n, M::e()))\
     \ {}\n  template <class Iter>\n  SegmentTree(const Iter &bg, const Iter &ed) :\
-    \ SegmentTree(vc<S>(bg, ed)) {}\n  SegmentTree(const vc<S> &vec) : n(vec.size()),\
-    \ siz(bit_ceil(vec.size())), dat(2 * siz, M::e())\n  {\n    repi(i, vec.size())\
-    \ dat[siz + i] = vec[i];\n    repi(i, siz - 1, 0, -1) update(i);\n  }\n\n  void\
-    \ set(int p, const S &x)\n  {\n    assert(0 <= p && p < n);\n    p += siz;\n \
-    \   dat[p] = x;\n    while (p)\n      p >>= 1, update(p);\n  }\n\n  S get(int\
-    \ p) const\n  {\n    assert(0 <= p && p < n);\n    return dat[siz + p];\n  }\n\
-    \  S prod(int l, int r) const\n  {\n    assert(0 <= l && l <= r && r <= n);\n\
-    \    l += siz, r += siz;\n    S sml = M::e(), smr = M::e();\n    while (l < r)\n\
-    \    {\n      if (l & 1)\n        sml = M::op(sml, dat[l++]);\n      if (r & 1)\n\
-    \        smr = M::op(dat[--r], smr);\n      l >>= 1, r >>= 1;\n    }\n    return\
-    \ M::op(sml, smr);\n  }\n  S all_prod() const { return dat[1]; }\n\n  // g \u304C\
-    \u5358\u8ABF\u306E\u3068\u304D g( prod[l, r) ) == true \u3068\u306A\u308B\u6700\
-    \u5927\u306E r\n  // \u5236\u7D04: g( e() ) == true\n  template <class I = ll,\
-    \ class G>\n  I max_right(int l, const G &g)\n  {\n    assert(0 <= l && l <= n);\n\
-    \    assert(g(M::e()));\n    if (l == n)\n      return n;\n    l += siz;\n   \
-    \ S sm = M::e();\n    do\n    {\n      while (l % 2 == 0)\n        l >>= 1;\n\
-    \      if (!g(M::op(sm, dat[l])))\n      {\n        while (l < siz)\n        {\n\
-    \          l *= 2;\n          if (g(M::op(sm, dat[l])))\n          {\n       \
-    \     sm = M::op(sm, dat[l]);\n            l++;\n          }\n        }\n    \
-    \    return l - siz;\n      }\n    } while ((l & -l) != l);\n    return n;\n \
+    \ SegmentTree(vc<S>(bg, ed)) {}\n  template <class T>\n  SegmentTree(const vc<T>\
+    \ &vec) : n(vec.size()), siz(bit_ceil(vec.size())), dat(2 * siz, M::e())\n  {\n\
+    \    repi(i, vec.size()) dat[siz + i] = vec[i];\n    repi(i, siz - 1, 0, -1) update(i);\n\
+    \  }\n\n  void set(int p, const S &x)\n  {\n    assert(0 <= p && p < n);\n   \
+    \ p += siz;\n    dat[p] = x;\n    while (p)\n      p >>= 1, update(p);\n  }\n\n\
+    \  S get(int p) const\n  {\n    assert(0 <= p && p < n);\n    return dat[siz +\
+    \ p];\n  }\n  S prod(int l, int r) const\n  {\n    assert(0 <= l && l <= r &&\
+    \ r <= n);\n    l += siz, r += siz;\n    S sml = M::e(), smr = M::e();\n    while\
+    \ (l < r)\n    {\n      if (l & 1)\n        sml = M::op(sml, dat[l++]);\n    \
+    \  if (r & 1)\n        smr = M::op(dat[--r], smr);\n      l >>= 1, r >>= 1;\n\
+    \    }\n    return M::op(sml, smr);\n  }\n  S all_prod() const { return dat[1];\
     \ }\n\n  // g \u304C\u5358\u8ABF\u306E\u3068\u304D g( prod[l, r) ) == true \u3068\
-    \u306A\u308B\u6700\u5C0F\u306E l\n  // \u5236\u7D04: g( e() ) == true\n  template\
-    \ <class I = ll, class G>\n  I min_left(int r, const G &g)\n  {\n    assert(0\
-    \ <= r && r <= n);\n    assert(g(M::e()));\n    if (r == 0)\n      return 0;\n\
-    \    r += siz;\n    S sm = M::e();\n    do\n    {\n      r--;\n      while (r\
-    \ > 1 && (r % 2))\n        r >>= 1;\n      if (!g(M::op(dat[r], sm)))\n      {\n\
-    \        while (r < siz)\n        {\n          r = 2 * r + 1;\n          if (g(M::op(dat[r],\
-    \ sm)))\n          {\n            sm = M::op(dat[r], sm);\n            r--;\n\
-    \          }\n        }\n        return r + 1 - siz;\n      }\n      sm = M::op(dat[r],\
-    \ sm);\n    } while ((r & -r) != r);\n    return 0;\n  }\n\n  vc<S> content()\
-    \ const\n  {\n    vc<S> res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n\
-    \  }\n};\n#line 6 \"ds/2d/sparse/segtree.hpp\"\n\n/**\n * @brief $2$ \u6B21\u5143\
-    \u30BB\u30B0\u30E1\u30F3\u30C8\u6728\uFF08\u758E\u3001\u30AF\u30A8\u30EA\u70B9\
-    \u5148\u8AAD\u307F\uFF09\n * @docs docs/ds/2d/sparse/segtree.md\n */\n\n// \u521D\
-    \u671F\u5316\u306E\u969B\u3001add \u30AF\u30A8\u30EA\u306E\u70B9\u3068\u91CD\u307F\
-    \u3092\u4E0E\u3048\u308B\n// **\u3053\u306E\u3068\u304D x \u65B9\u5411\u306E\u5EA7\
-    \u5727\u306F\u81EA\u52D5\u3067\u306F\u3084\u3089\u306A\u3044**\n// .\n// \u30BB\
-    \u30B0\u30E1\u30F3\u30C8\u6728\u306B\u30C7\u30FC\u30BF\u69CB\u9020 DS \u3092\u8F09\
-    \u305B\u308B\n// DS \u306F\u5178\u578B\u7684\u306B\u306F SegmentTree<M> \u3092\
-    \u8F09\u305B\u308B (M \u306F 2 \u56DE\u66F8\u304F\u3053\u3068\u306B\u306A\u308B\
-    )\n// \u66F4\u65B0\u304C\u306A\u3044\u306A\u3089 (disjoint) sparse table \u3068\
-    \u304B\u3082\n// DS \u306B set, get, prod \u304C\u3042\u308B\u306A\u3089 set,\
-    \ get, prod \u304C\u4F7F\u3048\u308B\n// I: \u5EA7\u6A19\u306E\u578B\ntemplate\
-    \ <class DS, class M, class I>\nstruct SegmentTree2DSparse\n{\n  using S = typename\
-    \ M::S;\n\nprivate:\n  int n, siz;\n  struct Y\n  {\n    I y;\n    int i, j;\n\
-    \    S w;\n    Y() {}\n    Y(I y, int i = -1, int j = -1, S w = M::e()) : y(y),\
-    \ i(i), j(j), w(w) {}\n    bool operator<(const Y &rhs) const { return y < rhs.y;\
-    \ }\n  };\n  vvc<Y> ys;\n  vc<DS> dss;\n  #define lb(vec, val) (lower_bound(ALL(vec),\
-    \ (val)) - vec.begin())\n\npublic:\n  SegmentTree2DSparse() {}\n  SegmentTree2DSparse(const\
-    \ vc<tuple<I, I, S>> &xyws)\n  {\n    n = 0;\n    fec([ x, y, w ] : xyws) { chmax(n,\
-    \ x + 1); }\n    siz = bit_ceil(n);\n    ys.resize(2 * siz);\n    fec([ x, y,\
-    \ w ] : xyws) { ys[siz + x].eb(y, -1, -1, w); }\n    vc<Y> nys;\n    repi(x, siz)\n\
-    \    {\n      sort(ALL(ys[siz + x]));\n      nys.clear();\n      fec(yy : ys[siz\
-    \ + x])\n      {\n        if (nys.empty() || nys.back().y != yy.y)\n         \
-    \ nys.eb(yy);\n        else\n          nys.back().w = M::op(nys.back().w, yy.w);\n\
-    \      }\n      swap(nys, ys[siz + x]);\n      ys[siz + x].eb(numeric_limits<I>::max());\n\
-    \    }\n    repi(x, siz - 1, 0, -1)\n    {\n      cauto &a = ys[2 * x];\n    \
-    \  cauto &b = ys[2 * x + 1];\n      int i = 0, j = 0;\n      while (i < SZ(a)\
-    \ && j < SZ(b))\n      {\n        I ai = a[i].y, bj = b[j].y;\n        if (ai\
-    \ == bj)\n        {\n          ys[x].eb(ai, i, j, M::op(a[i].w, b[j].w));\n  \
-    \        i++, j++;\n        }\n        else if (ai < bj)\n        {\n        \
-    \  ys[x].eb(ai, i, j, a[i].w);\n          i++;\n        }\n        else if (ai\
-    \ > bj)\n        {\n          ys[x].eb(bj, i, j, b[j].w);\n          j++;\n  \
-    \      }\n      }\n    }\n    dss.resize(2 * siz);\n    repi(x, 1, 2 * siz)\n\
-    \    {\n      vc<S> vec(SZ(ys[x]) - 1);\n      repi(k, SZ(ys[x]) - 1) vec[k] =\
-    \ ys[x][k].w;\n      dss[x] = DS(vec);\n    }\n  }\n\n  // (x, y) \u306E\u5024\
-    \u3092 val \u306B\u5909\u66F4\u3059\u308B\n  // (x, y) \u304C\u69CB\u7BC9\u6642\
-    \u306B\u4E0E\u3048\u3089\u308C\u3066\u3044\u308B\u3053\u3068\u304C\u5FC5\u8981\
-    \n  void set(I x, I y, const S &val)\n  {\n    assert(0 <= x && x < n);\n    auto\
-    \ dfs = [&](auto dfs, int p, int k, int a, int b) -> void\n    {\n      if (b\
-    \ - a == 1)\n      {\n        dss[p].set(k, val);\n        return;\n      }\n\
-    \      const int c = (a + b) / 2;\n      const int i = ys[p][k].i, j = ys[p][k].j;\n\
-    \      if (x < c)\n        dfs(dfs, 2 * p, i, a, c);\n      else\n        dfs(dfs,\
-    \ 2 * p + 1, j, c, b);\n      S nval = M::e();\n      if (ys[2 * p][i].y == y)\n\
-    \        nval = M::op(nval, dss[2 * p].get(i));\n      if (ys[2 * p + 1][j].y\
-    \ == y)\n        nval = M::op(nval, dss[2 * p + 1].get(j));\n      dss[p].set(k,\
-    \ nval);\n    };\n    dfs(dfs, 1, lb(ys[1], y), 0, siz);\n  }\n\n  // (x, y) \u306E\
-    \u5024\u3092\u53D6\u5F97\u3059\u308B\n  S get(I x, I y) const\n  {\n    if (!(0\
-    \ <= x && x < n))\n      return M::e();\n    x += siz;\n    int k = lb(ys[x],\
-    \ y);\n    if (ys[x][k].y != y)\n      return M::e();\n    return dss[x].get(k);\n\
-    \  }\n\n  // x \xD7 [ly, ry) \u306E\u7A4D\u3092\u53D6\u5F97\u3059\u308B\n  S prod(I\
-    \ x, I ly, I ry) const\n  {\n    if (!(0 <= x && x < n))\n      return M::e();\n\
-    \    assert(ly <= ry);\n    x += siz;\n    return dss[x].prod(lb(ys[x], ly), lb(ys[x],\
-    \ ry));\n  }\n\n  // [lx, rx) \xD7 [ly, ry) \u306E\u7A4D\u3092\u53D6\u5F97\u3059\
-    \u308B\n  S prod(I lx, I rx, I ly, I ry) const\n  {\n    assert(lx <= rx);\n \
-    \   assert(ly <= ry);\n    S res = M::e();\n    auto dfs = [&](auto dfs, int p,\
-    \ int lk, int rk, int a, int b) -> void\n    {\n      if (b <= lx || rx <= a)\n\
-    \        return;\n      if (lx <= a && b <= rx)\n      {\n        res = M::op(res,\
-    \ dss[p].prod(lk, rk));\n        return;\n      }\n      const int c = (a + b)\
-    \ / 2;\n      dfs(dfs, 2 * p    , ys[p][lk].i, ys[p][rk].i, a, c);\n      dfs(dfs,\
-    \ 2 * p + 1, ys[p][lk].j, ys[p][rk].j, c, b);\n    };\n    dfs(dfs, 1, lb(ys[1],\
-    \ ly), lb(ys[1], ry), 0, siz);\n    return res;\n  }\n  S all_prod() const { return\
-    \ dss[1].all_prod(); }\n\n  vc<tuple<I, I, S>> content() const\n  {\n    vc<tuple<I,\
-    \ I, S>> res;\n    repi(x, n)\n    {\n      fec([y, i, j, w] : ys[siz + x])\n\
-    \      {\n        if (y == numeric_limits<I>::max())\n          continue;\n  \
-    \      S s = get(x, y);\n        if (s != M::e())\n          res.eb(x, y, s);\n\
-    \      }\n    }\n    return res;\n  }\n\n  #undef lb\n};\n"
+    \u306A\u308B\u6700\u5927\u306E r\n  // \u5236\u7D04: g( e() ) == true\n  template\
+    \ <class I = ll, class G>\n  I max_right(int l, const G &g)\n  {\n    assert(0\
+    \ <= l && l <= n);\n    assert(g(M::e()));\n    if (l == n)\n      return n;\n\
+    \    l += siz;\n    S sm = M::e();\n    do\n    {\n      while (l % 2 == 0)\n\
+    \        l >>= 1;\n      if (!g(M::op(sm, dat[l])))\n      {\n        while (l\
+    \ < siz)\n        {\n          l *= 2;\n          if (g(M::op(sm, dat[l])))\n\
+    \          {\n            sm = M::op(sm, dat[l]);\n            l++;\n        \
+    \  }\n        }\n        return l - siz;\n      }\n    } while ((l & -l) != l);\n\
+    \    return n;\n  }\n\n  // g \u304C\u5358\u8ABF\u306E\u3068\u304D g( prod[l,\
+    \ r) ) == true \u3068\u306A\u308B\u6700\u5C0F\u306E l\n  // \u5236\u7D04: g( e()\
+    \ ) == true\n  template <class I = ll, class G>\n  I min_left(int r, const G &g)\n\
+    \  {\n    assert(0 <= r && r <= n);\n    assert(g(M::e()));\n    if (r == 0)\n\
+    \      return 0;\n    r += siz;\n    S sm = M::e();\n    do\n    {\n      r--;\n\
+    \      while (r > 1 && (r % 2))\n        r >>= 1;\n      if (!g(M::op(dat[r],\
+    \ sm)))\n      {\n        while (r < siz)\n        {\n          r = 2 * r + 1;\n\
+    \          if (g(M::op(dat[r], sm)))\n          {\n            sm = M::op(dat[r],\
+    \ sm);\n            r--;\n          }\n        }\n        return r + 1 - siz;\n\
+    \      }\n      sm = M::op(dat[r], sm);\n    } while ((r & -r) != r);\n    return\
+    \ 0;\n  }\n\n  vc<S> content() const\n  {\n    vc<S> res(n);\n    repi(i, n) res[i]\
+    \ = get(i);\n    return res;\n  }\n};\n#line 6 \"ds/2d/sparse/segtree.hpp\"\n\n\
+    /**\n * @brief $2$ \u6B21\u5143\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\uFF08\u758E\
+    \u3001\u30AF\u30A8\u30EA\u70B9\u5148\u8AAD\u307F\uFF09\n * @docs docs/ds/2d/sparse/segtree.md\n\
+    \ */\n\n// \u521D\u671F\u5316\u306E\u969B\u3001add \u30AF\u30A8\u30EA\u306E\u70B9\
+    \u3068\u91CD\u307F\u3092\u4E0E\u3048\u308B\n// **\u3053\u306E\u3068\u304D x \u65B9\
+    \u5411\u306E\u5EA7\u5727\u306F\u81EA\u52D5\u3067\u306F\u3084\u3089\u306A\u3044\
+    **\n// .\n// \u30BB\u30B0\u30E1\u30F3\u30C8\u6728\u306B\u30C7\u30FC\u30BF\u69CB\
+    \u9020 DS \u3092\u8F09\u305B\u308B\n// DS \u306F\u5178\u578B\u7684\u306B\u306F\
+    \ SegmentTree<M> \u3092\u8F09\u305B\u308B (M \u306F 2 \u56DE\u66F8\u304F\u3053\
+    \u3068\u306B\u306A\u308B)\n// \u66F4\u65B0\u304C\u306A\u3044\u306A\u3089 (disjoint)\
+    \ sparse table \u3068\u304B\u3082\n// DS \u306B set, get, prod \u304C\u3042\u308B\
+    \u306A\u3089 set, get, prod \u304C\u4F7F\u3048\u308B\n// I: \u5EA7\u6A19\u306E\
+    \u578B\ntemplate <class DS, class M, class I>\nstruct SegmentTree2DSparse\n{\n\
+    \  using S = typename M::S;\n\nprivate:\n  int n, siz;\n  struct Y\n  {\n    I\
+    \ y;\n    int i, j;\n    S w;\n    Y() {}\n    Y(I y, int i = -1, int j = -1,\
+    \ S w = M::e()) : y(y), i(i), j(j), w(w) {}\n    bool operator<(const Y &rhs)\
+    \ const { return y < rhs.y; }\n  };\n  vvc<Y> ys;\n  vc<DS> dss;\n  #define lb(vec,\
+    \ val) (lower_bound(ALL(vec), (val)) - vec.begin())\n\npublic:\n  SegmentTree2DSparse()\
+    \ {}\n  SegmentTree2DSparse(const vc<tuple<I, I, S>> &xyws)\n  {\n    n = 0;\n\
+    \    fec([ x, y, w ] : xyws) { chmax(n, x + 1); }\n    siz = bit_ceil(n);\n  \
+    \  ys.resize(2 * siz);\n    fec([ x, y, w ] : xyws) { ys[siz + x].eb(y, -1, -1,\
+    \ w); }\n    vc<Y> nys;\n    repi(x, siz)\n    {\n      sort(ALL(ys[siz + x]));\n\
+    \      nys.clear();\n      fec(yy : ys[siz + x])\n      {\n        if (nys.empty()\
+    \ || nys.back().y != yy.y)\n          nys.eb(yy);\n        else\n          nys.back().w\
+    \ = M::op(nys.back().w, yy.w);\n      }\n      swap(nys, ys[siz + x]);\n     \
+    \ ys[siz + x].eb(numeric_limits<I>::max());\n    }\n    repi(x, siz - 1, 0, -1)\n\
+    \    {\n      cauto &a = ys[2 * x];\n      cauto &b = ys[2 * x + 1];\n      int\
+    \ i = 0, j = 0;\n      while (i < SZ(a) && j < SZ(b))\n      {\n        I ai =\
+    \ a[i].y, bj = b[j].y;\n        if (ai == bj)\n        {\n          ys[x].eb(ai,\
+    \ i, j, M::op(a[i].w, b[j].w));\n          i++, j++;\n        }\n        else\
+    \ if (ai < bj)\n        {\n          ys[x].eb(ai, i, j, a[i].w);\n          i++;\n\
+    \        }\n        else if (ai > bj)\n        {\n          ys[x].eb(bj, i, j,\
+    \ b[j].w);\n          j++;\n        }\n      }\n    }\n    dss.resize(2 * siz);\n\
+    \    repi(x, 1, 2 * siz)\n    {\n      vc<S> vec(SZ(ys[x]) - 1);\n      repi(k,\
+    \ SZ(ys[x]) - 1) vec[k] = ys[x][k].w;\n      dss[x] = DS(vec);\n    }\n  }\n\n\
+    \  // (x, y) \u306E\u5024\u3092 val \u306B\u5909\u66F4\u3059\u308B\n  // (x, y)\
+    \ \u304C\u69CB\u7BC9\u6642\u306B\u4E0E\u3048\u3089\u308C\u3066\u3044\u308B\u3053\
+    \u3068\u304C\u5FC5\u8981\n  void set(I x, I y, const S &val)\n  {\n    assert(0\
+    \ <= x && x < n);\n    auto dfs = [&](auto dfs, int p, int k, int a, int b) ->\
+    \ void\n    {\n      if (b - a == 1)\n      {\n        dss[p].set(k, val);\n \
+    \       return;\n      }\n      const int c = (a + b) / 2;\n      const int i\
+    \ = ys[p][k].i, j = ys[p][k].j;\n      if (x < c)\n        dfs(dfs, 2 * p, i,\
+    \ a, c);\n      else\n        dfs(dfs, 2 * p + 1, j, c, b);\n      S nval = M::e();\n\
+    \      if (ys[2 * p][i].y == y)\n        nval = M::op(nval, dss[2 * p].get(i));\n\
+    \      if (ys[2 * p + 1][j].y == y)\n        nval = M::op(nval, dss[2 * p + 1].get(j));\n\
+    \      dss[p].set(k, nval);\n    };\n    dfs(dfs, 1, lb(ys[1], y), 0, siz);\n\
+    \  }\n\n  // (x, y) \u306E\u5024\u3092\u53D6\u5F97\u3059\u308B\n  S get(I x, I\
+    \ y) const\n  {\n    if (!(0 <= x && x < n))\n      return M::e();\n    x += siz;\n\
+    \    int k = lb(ys[x], y);\n    if (ys[x][k].y != y)\n      return M::e();\n \
+    \   return dss[x].get(k);\n  }\n\n  // x \xD7 [ly, ry) \u306E\u7A4D\u3092\u53D6\
+    \u5F97\u3059\u308B\n  S prod(I x, I ly, I ry) const\n  {\n    if (!(0 <= x &&\
+    \ x < n))\n      return M::e();\n    assert(ly <= ry);\n    x += siz;\n    return\
+    \ dss[x].prod(lb(ys[x], ly), lb(ys[x], ry));\n  }\n\n  // [lx, rx) \xD7 [ly, ry)\
+    \ \u306E\u7A4D\u3092\u53D6\u5F97\u3059\u308B\n  S prod(I lx, I rx, I ly, I ry)\
+    \ const\n  {\n    assert(lx <= rx);\n    assert(ly <= ry);\n    S res = M::e();\n\
+    \    auto dfs = [&](auto dfs, int p, int lk, int rk, int a, int b) -> void\n \
+    \   {\n      if (b <= lx || rx <= a)\n        return;\n      if (lx <= a && b\
+    \ <= rx)\n      {\n        res = M::op(res, dss[p].prod(lk, rk));\n        return;\n\
+    \      }\n      const int c = (a + b) / 2;\n      dfs(dfs, 2 * p    , ys[p][lk].i,\
+    \ ys[p][rk].i, a, c);\n      dfs(dfs, 2 * p + 1, ys[p][lk].j, ys[p][rk].j, c,\
+    \ b);\n    };\n    dfs(dfs, 1, lb(ys[1], ly), lb(ys[1], ry), 0, siz);\n    return\
+    \ res;\n  }\n  S all_prod() const { return dss[1].all_prod(); }\n\n  vc<tuple<I,\
+    \ I, S>> content() const\n  {\n    vc<tuple<I, I, S>> res;\n    repi(x, n)\n \
+    \   {\n      fec([y, i, j, w] : ys[siz + x])\n      {\n        if (y == numeric_limits<I>::max())\n\
+    \          continue;\n        S s = get(x, y);\n        if (s != M::e())\n   \
+    \       res.eb(x, y, s);\n      }\n    }\n    return res;\n  }\n\n  #undef lb\n\
+    };\n"
   code: "#pragma once\n\n#include \"../../../template/template_all_but_modint.hpp\"\
     \n\n#include \"ds/segtree/segtree.hpp\"\n\n/**\n * @brief $2$ \u6B21\u5143\u30BB\
     \u30B0\u30E1\u30F3\u30C8\u6728\uFF08\u758E\u3001\u30AF\u30A8\u30EA\u70B9\u5148\
@@ -807,27 +774,13 @@ data:
     \      {\n        if (y == numeric_limits<I>::max())\n          continue;\n  \
     \      S s = get(x, y);\n        if (s != M::e())\n          res.eb(x, y, s);\n\
     \      }\n    }\n    return res;\n  }\n\n  #undef lb\n};\n"
-  dependsOn:
-  - template/template_all_but_modint.hpp
-  - template/template_types.hpp
-  - template/template_rep.hpp
-  - template/template_math.hpp
-  - template/template_vector.hpp
-  - template/template_algo.hpp
-  - template/template_binsearch.hpp
-  - template/template_bit.hpp
-  - template/template_inout.hpp
-  - template/template_dump.hpp
-  - template/template_random.hpp
-  - ds/segtree/segtree.hpp
+  dependsOn: []
   isVerificationFile: false
   path: ds/2d/sparse/segtree.hpp
   requiredBy: []
-  timestamp: '2026-03-14 04:11:27+09:00'
-  verificationStatus: LIBRARY_ALL_AC
-  verifiedWith:
-  - verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
-  - verify/yosupo/2d_segtree.test.cpp
+  timestamp: '1970-01-01 00:00:00+00:00'
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
 documentation_of: ds/2d/sparse/segtree.hpp
 layout: document
 redirect_from:
