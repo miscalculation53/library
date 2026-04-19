@@ -42,20 +42,20 @@ data:
     title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
       \u5224\u5B9A"
   _extendedRequiredBy:
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/static_range/block_sparse_table.hpp
     title: "\u30D6\u30ED\u30C3\u30AF\u5206\u5272 + (disjoint) sparse table"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: ds/static_range/linear_rmq.hpp
     title: "\u7DDA\u5F62 RMQ"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/euler_tour.hpp
     title: "\u6728\u306E\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/euler_tour_path_prod.hpp
     title: "\u6728\u306E\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC\u3067\u30D1\u30B9\
       \u306E\u7DCF\u7A4D\u30AF\u30A8\u30EA\u3092\u51E6\u7406"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/euler_tour_path_sum.hpp
     title: "\u6728\u306E\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC\u3067\u30D1\u30B9\
       \u306E\u7DCF\u548C\u30AF\u30A8\u30EA\u3092\u51E6\u7406"
@@ -78,15 +78,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/sparse_table.test.cpp
     title: verify/yosupo/sparse_table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/vertex_add_path_sum_euler_tour.test.cpp
     title: verify/yosupo/vertex_add_path_sum_euler_tour.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/vertex_set_path_composite_euler_tour.test.cpp
     title: verify/yosupo/vertex_set_path_composite_euler_tour.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/static_range/sparse_table.md
     document_title: Sparse Table
@@ -731,7 +731,7 @@ data:
   - ds/static_range/linear_rmq.hpp
   - ds/static_range/block_sparse_table.hpp
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/rmq.test.cpp
   - verify/yosupo/linear_rmq.test.cpp

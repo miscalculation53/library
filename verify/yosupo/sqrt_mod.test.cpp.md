@@ -19,7 +19,7 @@ data:
   - icon: ':question:'
     path: math/modint/modint_internal_static.hpp
     title: math/modint/modint_internal_static.hpp
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/modint/sqrt_mod.hpp
     title: "mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839"
   - icon: ':question:'

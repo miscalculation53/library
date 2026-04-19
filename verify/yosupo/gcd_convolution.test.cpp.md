@@ -32,7 +32,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: math/prime/sieve/lcm_gcd_convolution.hpp
     title: "LCM/GCD \u7573\u307F\u8FBC\u307F"
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/sieve/linear_sieve.hpp
     title: "\u7DDA\u5F62\u7BE9"
   - icon: ':heavy_check_mark:'

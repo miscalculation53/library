@@ -46,7 +46,7 @@ data:
     path: ds/2d/sparse/segtree.hpp
     title: "$2$ \u6B21\u5143\u30BB\u30B0\u30E1\u30F3\u30C8\u6728\uFF08\u758E\u3001\
       \u30AF\u30A8\u30EA\u70B9\u5148\u8AAD\u307F\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/euler_tour_path_prod.hpp
     title: "\u6728\u306E\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC\u3067\u30D1\u30B9\
       \u306E\u7DCF\u7A4D\u30AF\u30A8\u30EA\u3092\u51E6\u7406"
@@ -63,15 +63,15 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
     title: verify/yosupo/static_range_sum_with_upper_bound_2d_seg.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/vertex_set_path_composite.test.cpp
     title: verify/yosupo/vertex_set_path_composite.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/vertex_set_path_composite_euler_tour.test.cpp
     title: verify/yosupo/vertex_set_path_composite_euler_tour.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/segtree/segtree.md
     document_title: "\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
@@ -762,7 +762,7 @@ data:
   - graph/tree/euler_tour_path_prod.hpp
   - ds/2d/sparse/segtree.hpp
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/vertex_set_path_composite_euler_tour.test.cpp
   - verify/yosupo/point_set_range_composite.test.cpp

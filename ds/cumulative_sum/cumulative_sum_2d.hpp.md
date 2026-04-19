@@ -53,12 +53,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/cumulative_sum_2d.test.cpp
     title: verify/aoj/cumulative_sum_2d.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
     title: verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/cumulative_sum/cumulative_sum_2d.md
     document_title: "$2$ \u6B21\u5143\u7D2F\u7A4D\u548C"
@@ -793,7 +793,7 @@ data:
   path: ds/cumulative_sum/cumulative_sum_2d.hpp
   requiredBy: []
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/aoj/cumulative_sum_2d.test.cpp
   - verify/yukicoder/cumulative_sum_2d_modint_div.test.cpp

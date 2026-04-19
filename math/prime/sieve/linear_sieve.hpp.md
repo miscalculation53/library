@@ -68,12 +68,12 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/lcm_convolution.test.cpp
     title: verify/yosupo/lcm_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yukicoder/perm_cycle.test.cpp
     title: verify/yukicoder/perm_cycle.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':question:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/prime/sieve/linear_sieve.md
     document_title: "\u7DDA\u5F62\u7BE9"
@@ -765,7 +765,7 @@ data:
   - math/prime/sieve/zeta_mobius_divisor_multiple.hpp
   - math/prime/sieve/lcm_gcd_convolution.hpp
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_SOME_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/mytest/linear_sieve.test.cpp
   - verify/yosupo/lcm_convolution.test.cpp
