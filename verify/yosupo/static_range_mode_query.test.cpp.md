@@ -7,10 +7,10 @@ data:
   - icon: ':question:'
     path: ds/csr.hpp
     title: CSR
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/mo/mo_rollback.hpp
     title: "rollback \u53EF\u80FD\u306A Mo's algorithm"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/undo.hpp
     title: "undo \u53EF\u80FD\u306A vector \u306A\u3069"
   - icon: ':question:'
@@ -58,9 +58,9 @@ data:
       \u5224\u5B9A"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/static_range_mode_query
@@ -864,7 +864,7 @@ data:
   path: verify/yosupo/static_range_mode_query.test.cpp
   requiredBy: []
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/static_range_mode_query.test.cpp
 layout: document

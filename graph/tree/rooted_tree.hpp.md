@@ -48,7 +48,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: graph/tree/dsu_on_tree.hpp
     title: DSU on Tree
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: graph/tree/rerooting.hpp
     title: "\u5168\u65B9\u4F4D\u6728 DP"
   _extendedVerifiedWith:
@@ -67,7 +67,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/lca.test.cpp
     title: verify/yosupo/lca.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/retooting.test.cpp
     title: verify/yosupo/retooting.test.cpp
   - icon: ':x:'

@@ -88,7 +88,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorial.test.cpp
     title: verify/yosupo/factorial.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_shift_of_sampling_points.test.cpp
     title: verify/yosupo/poly_shift_of_sampling_points.test.cpp
   - icon: ':x:'
