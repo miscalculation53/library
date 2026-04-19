@@ -1,11 +1,72 @@
 ---
 data:
-  _extendedDependsOn: []
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedDependsOn:
+  - icon: ':question:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':question:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':question:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_math.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
+  - icon: ':question:'
+    path: template/template_rep.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  - icon: ':question:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':question:'
+    path: utils/is_integral_ext.hpp
+    title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
+      \u5224\u5B9A"
+  _extendedRequiredBy:
+  - icon: ':x:'
+    path: math/fps/bmbm.hpp
+    title: BMBM
+  - icon: ':x:'
+    path: math/fps/bostan_mori.hpp
+    title: "Bostan\u2013Mori"
+  - icon: ':x:'
+    path: math/fps/compositional_inverse.hpp
+    title: "\u9006\u95A2\u6570"
+  - icon: ':x:'
+    path: math/fps/power_projection.hpp
+    title: Power Projection
+  _extendedVerifiedWith:
+  - icon: ':x:'
+    path: verify/yosupo/fps_compositional_inverse.test.cpp
+    title: verify/yosupo/fps_compositional_inverse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+    title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/bmbm.test.cpp
+    title: verify/yukicoder/bmbm.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':x:'
   attributes:
     _deprecated_at_docs: docs/bit/bit_reverse.md
     document_title: "\u30D3\u30C3\u30C8\u30EA\u30D0\u30FC\u30B9"
@@ -618,13 +679,32 @@ data:
     }\n// [0, pw2) \u306E\u7BC4\u56F2\u306E i \u3092\u30D3\u30C3\u30C8\u30EA\u30D0\
     \u30FC\u30B9\nint bitrev(int pw2, int i) { return bit_reverse32(i) >> (32 - countr_zero(pw2));\
     \ }\n"
-  dependsOn: []
+  dependsOn:
+  - template/template_all_but_modint.hpp
+  - template/template_types.hpp
+  - template/template_rep.hpp
+  - template/template_math.hpp
+  - utils/is_integral_ext.hpp
+  - template/template_vector.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - template/template_random.hpp
   isVerificationFile: false
   path: bit/bit_reverse.hpp
-  requiredBy: []
-  timestamp: '1970-01-01 00:00:00+00:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  requiredBy:
+  - math/fps/bostan_mori.hpp
+  - math/fps/power_projection.hpp
+  - math/fps/bmbm.hpp
+  - math/fps/compositional_inverse.hpp
+  timestamp: '2026-04-20 06:20:24+09:00'
+  verificationStatus: LIBRARY_ALL_WA
+  verifiedWith:
+  - verify/yosupo/fps_compositional_inverse.test.cpp
+  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - verify/yukicoder/bmbm.test.cpp
 documentation_of: bit/bit_reverse.hpp
 layout: document
 redirect_from:

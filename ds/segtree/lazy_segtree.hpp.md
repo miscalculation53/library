@@ -1,11 +1,84 @@
 ---
 data:
-  _extendedDependsOn: []
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedDependsOn:
+  - icon: ':question:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':question:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':question:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_math.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
+  - icon: ':question:'
+    path: template/template_rep.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  - icon: ':question:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':question:'
+    path: utils/is_integral_ext.hpp
+    title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
+      \u5224\u5B9A"
+  _extendedRequiredBy:
+  - icon: ':x:'
+    path: ds/2d/offline/area_of_union_of_rectangles.hpp
+    title: "\u9577\u65B9\u5F62\u306E\u548C\u96C6\u5408\u306E\u9762\u7A4D"
+  - icon: ':heavy_check_mark:'
+    path: math/algebra/acted_monoid/add_sum.hpp
+    title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u52A0\u7B97\u30FB\
+      \u548C\u53D6\u5F97"
+  - icon: ':x:'
+    path: math/algebra/acted_monoid/affine_sum.hpp
+    title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u4E00\u6B21\u95A2\
+      \u6570\u4F5C\u7528\u30FB\u548C\u53D6\u5F97"
+  - icon: ':heavy_check_mark:'
+    path: math/algebra/acted_monoid/upd_sum.hpp
+    title: "\u4F5C\u7528\u3064\u304D\u30E2\u30CE\u30A4\u30C9\uFF1A\u66F4\u65B0\u30FB\
+      \u548C\u53D6\u5F97"
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/range_add_range_min.test.cpp
+    title: verify/aoj/range_add_range_min.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/range_add_range_sum.test.cpp
+    title: verify/aoj/range_add_range_sum.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/range_upd_range_min.test.cpp
+    title: verify/aoj/range_upd_range_min.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/range_upd_range_sum.test.cpp
+    title: verify/aoj/range_upd_range_sum.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/area_of_union_of_rectangles.test.cpp
+    title: verify/yosupo/area_of_union_of_rectangles.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/range_affine_range.sum.test.cpp
+    title: verify/yosupo/range_affine_range.sum.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/ds/segtree/lazy_segtree.md
     document_title: "\u9045\u5EF6\u30BB\u30B0\u30E1\u30F3\u30C8\u6728"
@@ -719,13 +792,35 @@ data:
     \          {\n            sm = AM::op(dat[r], sm);\n            r--;\n       \
     \   }\n        }\n        return r + 1 - siz;\n      }\n      sm = AM::op(dat[r],\
     \ sm);\n    } while ((r & -r) != r);\n    return 0;\n  }\n};\n"
-  dependsOn: []
+  dependsOn:
+  - template/template_all_but_modint.hpp
+  - template/template_types.hpp
+  - template/template_rep.hpp
+  - template/template_math.hpp
+  - utils/is_integral_ext.hpp
+  - template/template_vector.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - template/template_random.hpp
   isVerificationFile: false
   path: ds/segtree/lazy_segtree.hpp
-  requiredBy: []
-  timestamp: '1970-01-01 00:00:00+00:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  requiredBy:
+  - math/algebra/acted_monoid/add_sum.hpp
+  - math/algebra/acted_monoid/affine_sum.hpp
+  - math/algebra/acted_monoid/upd_sum.hpp
+  - ds/2d/offline/area_of_union_of_rectangles.hpp
+  timestamp: '2026-04-20 06:20:24+09:00'
+  verificationStatus: LIBRARY_SOME_WA
+  verifiedWith:
+  - verify/yosupo/area_of_union_of_rectangles.test.cpp
+  - verify/yosupo/range_affine_range.sum.test.cpp
+  - verify/aoj/range_add_range_sum.test.cpp
+  - verify/aoj/range_upd_range_sum.test.cpp
+  - verify/aoj/range_upd_range_min.test.cpp
+  - verify/aoj/range_add_range_min.test.cpp
 documentation_of: ds/segtree/lazy_segtree.hpp
 layout: document
 redirect_from:

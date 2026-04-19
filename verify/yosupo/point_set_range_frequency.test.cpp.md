@@ -1,12 +1,83 @@
 ---
 data:
-  _extendedDependsOn: []
+  _extendedDependsOn:
+  - icon: ':question:'
+    path: bit/kth_bit.hpp
+    title: "\u4E0B\u304B\u3089 $k$ \u756A\u76EE\u306E\u30D3\u30C3\u30C8\u3092\u53D6\
+      \u5F97"
+  - icon: ':question:'
+    path: ds/csr.hpp
+    title: CSR
+  - icon: ':question:'
+    path: ds/fenwick_tree/fenwick_tree.hpp
+    title: Fenwick Tree
+  - icon: ':question:'
+    path: ds/fenwick_tree/fenwick_tree_01.hpp
+    title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
+  - icon: ':x:'
+    path: ds/query/point_set_range_frequency.hpp
+    title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\u30D5\
+      \u30E9\u30A4\u30F3\uFF09"
+  - icon: ':question:'
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+  - icon: ':question:'
+    path: math/algebra/algebra_basic_ops.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+      \ max\uFF09"
+  - icon: ':question:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':question:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':question:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_main.hpp
+    title: template/template_main.hpp
+  - icon: ':question:'
+    path: template/template_math.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
+  - icon: ':question:'
+    path: template/template_rep.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  - icon: ':question:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':question:'
+    path: utils/is_integral_ext.hpp
+    title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
+      \u5224\u5B9A"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: true
   _pathExtension: cpp
   _verificationStatusIcon: ':x:'
-  attributes: {}
+  attributes:
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.yosupo.jp/problem/point_set_range_frequency
+    links:
+    - https://judge.yosupo.jp/problem/point_set_range_frequency
   bundledCode: "#line 1 \"verify/yosupo/point_set_range_frequency.test.cpp\"\n#define\
     \ PROBLEM \"https://judge.yosupo.jp/problem/point_set_range_frequency\"\n\n#define\
     \ SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef\
@@ -939,11 +1010,31 @@ data:
     \ x);\n      rf.range_frequency(l, r, x);\n    }\n  }\n  PRINTV(rf.run());\n}\n\
     \nvoid test()\n{\n  \n}\n\n#include \"template/template_main.hpp\"\nMain<init,\
     \ main2, test> main_dummy;\nint main() {}\n"
-  dependsOn: []
+  dependsOn:
+  - template/template_all_but_modint.hpp
+  - template/template_types.hpp
+  - template/template_rep.hpp
+  - template/template_math.hpp
+  - utils/is_integral_ext.hpp
+  - template/template_vector.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - template/template_random.hpp
+  - ds/query/point_set_range_frequency.hpp
+  - ds/fenwick_tree/fenwick_tree_01.hpp
+  - math/algebra/algebra_basic_ops.hpp
+  - math/algebra/algebra_base.hpp
+  - ds/fenwick_tree/fenwick_tree.hpp
+  - bit/kth_bit.hpp
+  - ds/csr.hpp
+  - template/template_main.hpp
   isVerificationFile: true
   path: verify/yosupo/point_set_range_frequency.test.cpp
   requiredBy: []
-  timestamp: '1970-01-01 00:00:00+00:00'
+  timestamp: '2026-04-20 06:20:24+09:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yosupo/point_set_range_frequency.test.cpp

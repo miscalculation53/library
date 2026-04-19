@@ -1,11 +1,123 @@
 ---
 data:
-  _extendedDependsOn: []
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedDependsOn:
+  - icon: ':question:'
+    path: ds/csr.hpp
+    title: CSR
+  - icon: ':question:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':question:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':question:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_math.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
+  - icon: ':question:'
+    path: template/template_rep.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  - icon: ':question:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':question:'
+    path: utils/is_integral_ext.hpp
+    title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
+      \u5224\u5B9A"
+  _extendedRequiredBy:
+  - icon: ':x:'
+    path: graph/cliques.hpp
+    title: "\u30AF\u30EA\u30FC\u30AF\u5217\u6319"
+  - icon: ':heavy_check_mark:'
+    path: graph/connected_components.hpp
+    title: "\u9023\u7D50\u6210\u5206\u3078\u306E\u5206\u89E3"
+  - icon: ':warning:'
+    path: graph/contraction.hpp
+    title: "\u30B0\u30E9\u30D5\u306E\u7E2E\u7D04"
+  - icon: ':x:'
+    path: graph/cycle_detection.hpp
+    title: "\u30B5\u30A4\u30AF\u30EB\u691C\u51FA"
+  - icon: ':x:'
+    path: graph/matrix_tree.hpp
+    title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
+  - icon: ':x:'
+    path: graph/scc.hpp
+    title: "\u5F37\u9023\u7D50\u6210\u5206\u5206\u89E3"
+  - icon: ':question:'
+    path: graph/sssp.hpp
+    title: "\u5358\u4E00\u59CB\u70B9\u6700\u77ED\u8DEF\u554F\u984C"
+  - icon: ':warning:'
+    path: graph/subgraphs.hpp
+    title: "\u90E8\u5206\u30B0\u30E9\u30D5\u3078\u306E\u5206\u89E3"
+  - icon: ':x:'
+    path: graph/triangles.hpp
+    title: "\u4E09\u89D2\u5F62\u5217\u6319"
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/bellman_ford.test.cpp
+    title: verify/aoj/bellman_ford.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/bfs.test.cpp
+    title: verify/aoj/bfs.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/bfs01.test.cpp
+    title: verify/aoj/bfs01.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/connected_components.test.cpp
+    title: verify/aoj/connected_components.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/counting_eularian_circuits.test.cpp
+    title: verify/yosupo/counting_eularian_circuits.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/counting_spanning_trees_directed.test.cpp
+    title: verify/yosupo/counting_spanning_trees_directed.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
+    title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/cycle_detection_directed.test.cpp
+    title: verify/yosupo/cycle_detection_directed.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/cycle_detection_undirected.test.cpp
+    title: verify/yosupo/cycle_detection_undirected.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/dijkstra.test.cpp
+    title: verify/yosupo/dijkstra.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/enumerate_cliques.test.cpp
+    title: verify/yosupo/enumerate_cliques.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/enumerate_triangles.test.cpp
+    title: verify/yosupo/enumerate_triangles.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/scc.test.cpp
+    title: verify/yosupo/scc.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/yuki310.test.cpp
+    title: verify/yukicoder/yuki310.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/graph/graph.md
     document_title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
@@ -803,13 +915,49 @@ data:
     \ rev_graph(const GraphDirected<Cost> &g)\n{\n  const int n = g.size(), m = g.num_of_edges();\n\
     \  vc<tuple<int, int, Cost>> uvw;\n  uvw.reserve(m);\n  fec(e : g.edges()) uvw.eb(e.to,\
     \ e.from, e.cost);\n  return GraphDirected<Cost>(n, uvw);\n}\n"
-  dependsOn: []
+  dependsOn:
+  - template/template_all_but_modint.hpp
+  - template/template_types.hpp
+  - template/template_rep.hpp
+  - template/template_math.hpp
+  - utils/is_integral_ext.hpp
+  - template/template_vector.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - template/template_random.hpp
+  - ds/csr.hpp
   isVerificationFile: false
   path: graph/graph.hpp
-  requiredBy: []
-  timestamp: '1970-01-01 00:00:00+00:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  requiredBy:
+  - graph/cliques.hpp
+  - graph/cycle_detection.hpp
+  - graph/subgraphs.hpp
+  - graph/connected_components.hpp
+  - graph/triangles.hpp
+  - graph/scc.hpp
+  - graph/contraction.hpp
+  - graph/sssp.hpp
+  - graph/matrix_tree.hpp
+  timestamp: '2026-04-20 06:20:24+09:00'
+  verificationStatus: LIBRARY_SOME_WA
+  verifiedWith:
+  - verify/yosupo/enumerate_triangles.test.cpp
+  - verify/yosupo/counting_spanning_trees_directed.test.cpp
+  - verify/yosupo/cycle_detection_undirected.test.cpp
+  - verify/yosupo/scc.test.cpp
+  - verify/yosupo/dijkstra.test.cpp
+  - verify/yosupo/enumerate_cliques.test.cpp
+  - verify/yosupo/cycle_detection_directed.test.cpp
+  - verify/yosupo/counting_eularian_circuits.test.cpp
+  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
+  - verify/aoj/bfs.test.cpp
+  - verify/aoj/connected_components.test.cpp
+  - verify/aoj/bfs01.test.cpp
+  - verify/aoj/bellman_ford.test.cpp
+  - verify/yukicoder/yuki310.test.cpp
 documentation_of: graph/graph.hpp
 layout: document
 redirect_from:

@@ -1,12 +1,87 @@
 ---
 data:
-  _extendedDependsOn: []
+  _extendedDependsOn:
+  - icon: ':question:'
+    path: math/extgcd.hpp
+    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
+  - icon: ':question:'
+    path: math/modint/modint.hpp
+    title: math/modint/modint.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_barrett32.hpp
+    title: math/modint/modint_internal_barrett32.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_isprime.hpp
+    title: math/modint/modint_internal_isprime.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_montgomery64.hpp
+    title: math/modint/modint_internal_montgomery64.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_static.hpp
+    title: math/modint/modint_internal_static.hpp
+  - icon: ':heavy_check_mark:'
+    path: math/modint/power_table.hpp
+    title: "\u7D2F\u4E57\u30C6\u30FC\u30D6\u30EB"
+  - icon: ':heavy_check_mark:'
+    path: string/lcp_compare.hpp
+    title: "\u90E8\u5206\u6587\u5B57\u5217\u306E\u4E00\u81F4\u5224\u5B9A \u2192 LCP\u3001\
+      LCP \u2192 \u90E8\u5206\u6587\u5B57\u5217\u306E\u8F9E\u66F8\u9806\u6BD4\u8F03"
+  - icon: ':heavy_check_mark:'
+    path: string/rolling_hash.hpp
+    title: Rolling Hash
+  - icon: ':question:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':question:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':question:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_math.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
+  - icon: ':question:'
+    path: template/template_rep.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  - icon: ':question:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':question:'
+    path: utils/is_integral_ext.hpp
+    title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
+      \u5224\u5B9A"
+  - icon: ':question:'
+    path: utils/larger_int.hpp
+    title: "$2$ \u500D\u306E\u30D3\u30C3\u30C8\u6570\u306E\u6574\u6570\u578B"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
-  attributes: {}
+  _verificationStatusIcon: ':heavy_check_mark:'
+  attributes:
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
+    links:
+    - https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
   bundledCode: "#line 1 \"verify/mytest/rolling_hash.test.cpp\"\n#define PROBLEM \"\
     https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A\"\n\n#line\
     \ 2 \"string/rolling_hash.hpp\"\n\n#line 2 \"template/template_all_but_modint.hpp\"\
@@ -916,12 +991,34 @@ data:
     \ main()\n{\n  rep(t, 100)\n  {\n    dump(t);\n    test1();\n  }\n  rep(t, 100)\n\
     \  {\n    dump(t);\n    test2();\n  }\n  rep(t, 10)\n  {\n    dump(t);\n    test3();\n\
     \  }\n  PRINT(\"Hello World\");\n}\n"
-  dependsOn: []
+  dependsOn:
+  - string/rolling_hash.hpp
+  - template/template_all_but_modint.hpp
+  - template/template_types.hpp
+  - template/template_rep.hpp
+  - template/template_math.hpp
+  - utils/is_integral_ext.hpp
+  - template/template_vector.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - template/template_random.hpp
+  - math/modint/modint.hpp
+  - math/modint/modint_internal_static.hpp
+  - utils/larger_int.hpp
+  - math/modint/modint_internal_isprime.hpp
+  - math/modint/modint_internal_barrett32.hpp
+  - math/modint/modint_internal_montgomery64.hpp
+  - math/extgcd.hpp
+  - math/modint/power_table.hpp
+  - string/lcp_compare.hpp
   isVerificationFile: true
   path: verify/mytest/rolling_hash.test.cpp
   requiredBy: []
-  timestamp: '1970-01-01 00:00:00+00:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  timestamp: '2026-04-20 06:20:24+09:00'
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/rolling_hash.test.cpp
 layout: document

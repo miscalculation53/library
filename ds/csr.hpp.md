@@ -1,11 +1,206 @@
 ---
 data:
-  _extendedDependsOn: []
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedDependsOn:
+  - icon: ':question:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':question:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':question:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_math.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
+  - icon: ':question:'
+    path: template/template_rep.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  - icon: ':question:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':question:'
+    path: utils/is_integral_ext.hpp
+    title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
+      \u5224\u5B9A"
+  _extendedRequiredBy:
+  - icon: ':question:'
+    path: ds/group_index.hpp
+    title: "\u6DFB\u5B57\u3092\u5024\u3067\u5206\u985E"
+  - icon: ':x:'
+    path: ds/mo/mo_rollback.hpp
+    title: "rollback \u53EF\u80FD\u306A Mo's algorithm"
+  - icon: ':x:'
+    path: ds/query/point_set_range_frequency.hpp
+    title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\u30D5\
+      \u30E9\u30A4\u30F3\uFF09"
+  - icon: ':question:'
+    path: ds/static_range/dc_range_prod.hpp
+    title: "\u5206\u5272\u7D71\u6CBB\u306B\u3088\u308B\u533A\u9593\u7A4D\u30AF\u30A8\
+      \u30EA"
+  - icon: ':x:'
+    path: graph/cliques.hpp
+    title: "\u30AF\u30EA\u30FC\u30AF\u5217\u6319"
+  - icon: ':heavy_check_mark:'
+    path: graph/connected_components.hpp
+    title: "\u9023\u7D50\u6210\u5206\u3078\u306E\u5206\u89E3"
+  - icon: ':warning:'
+    path: graph/contraction.hpp
+    title: "\u30B0\u30E9\u30D5\u306E\u7E2E\u7D04"
+  - icon: ':x:'
+    path: graph/cycle_detection.hpp
+    title: "\u30B5\u30A4\u30AF\u30EB\u691C\u51FA"
+  - icon: ':question:'
+    path: graph/graph.hpp
+    title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
+  - icon: ':x:'
+    path: graph/matrix_tree.hpp
+    title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
+  - icon: ':x:'
+    path: graph/scc.hpp
+    title: "\u5F37\u9023\u7D50\u6210\u5206\u5206\u89E3"
+  - icon: ':question:'
+    path: graph/sssp.hpp
+    title: "\u5358\u4E00\u59CB\u70B9\u6700\u77ED\u8DEF\u554F\u984C"
+  - icon: ':warning:'
+    path: graph/subgraphs.hpp
+    title: "\u90E8\u5206\u30B0\u30E9\u30D5\u3078\u306E\u5206\u89E3"
+  - icon: ':x:'
+    path: graph/triangles.hpp
+    title: "\u4E09\u89D2\u5F62\u5217\u6319"
+  - icon: ':x:'
+    path: math/linalg/matrix.hpp
+    title: "\u884C\u5217"
+  - icon: ':x:'
+    path: math/linalg/matrix_array.hpp
+    title: "\u884C\u5217\uFF08array\uFF09"
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/bellman_ford.test.cpp
+    title: verify/aoj/bellman_ford.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/bfs.test.cpp
+    title: verify/aoj/bfs.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/bfs01.test.cpp
+    title: verify/aoj/bfs01.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/connected_components.test.cpp
+    title: verify/aoj/connected_components.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/csr.test.cpp
+    title: verify/aoj/csr.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/rmq.test.cpp
+    title: verify/mytest/rmq.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/counting_eularian_circuits.test.cpp
+    title: verify/yosupo/counting_eularian_circuits.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/counting_spanning_trees_directed.test.cpp
+    title: verify/yosupo/counting_spanning_trees_directed.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
+    title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/cycle_detection_directed.test.cpp
+    title: verify/yosupo/cycle_detection_directed.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/cycle_detection_undirected.test.cpp
+    title: verify/yosupo/cycle_detection_undirected.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/dc_range_prod.test.cpp
+    title: verify/yosupo/dc_range_prod.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/dijkstra.test.cpp
+    title: verify/yosupo/dijkstra.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/enumerate_cliques.test.cpp
+    title: verify/yosupo/enumerate_cliques.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/enumerate_triangles.test.cpp
+    title: verify/yosupo/enumerate_triangles.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/majority_voting.test.cpp
+    title: verify/yosupo/majority_voting.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/matrix_det.test.cpp
+    title: verify/yosupo/matrix_det.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/matrix_det_array.test.cpp
+    title: verify/yosupo/matrix_det_array.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/matrix_det_sparse.test.cpp
+    title: verify/yosupo/matrix_det_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/matrix_inv.test.cpp
+    title: verify/yosupo/matrix_inv.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/matrix_inv_array.test.cpp
+    title: verify/yosupo/matrix_inv_array.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/matrix_pow.test.cpp
+    title: verify/yosupo/matrix_pow.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/matrix_pow_array.test.cpp
+    title: verify/yosupo/matrix_pow_array.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/matrix_product.test.cpp
+    title: verify/yosupo/matrix_product.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/matrix_product_array.test.cpp
+    title: verify/yosupo/matrix_product_array.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/matrix_rank.test.cpp
+    title: verify/yosupo/matrix_rank.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/matrix_solve.test.cpp
+    title: verify/yosupo/matrix_solve.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/matrix_solve_array.test.cpp
+    title: verify/yosupo/matrix_solve_array.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/point_set_range_frequency.test.cpp
+    title: verify/yosupo/point_set_range_frequency.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/scc.test.cpp
+    title: verify/yosupo/scc.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/static_range_frequency.test.cpp
+    title: verify/yosupo/static_range_frequency.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/static_range_mode_query.test.cpp
+    title: verify/yosupo/static_range_mode_query.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/static_rectangle_add_point_get.test.cpp
+    title: verify/yukicoder/static_rectangle_add_point_get.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/yuki2215_dc.test.cpp
+    title: verify/yukicoder/yuki2215_dc.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/yuki310.test.cpp
+    title: verify/yukicoder/yuki310.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/ds/csr.md
     document_title: CSR
@@ -692,13 +887,76 @@ data:
     \ = {elist.begin() + start[i], elist.begin() + get_last(i)};\n    return res;\n\
     \  }\n\n  vc<T> &get_elist() { return elist; }\n  const vc<T> &get_elist() const\
     \ { return elist; }\n};\n"
-  dependsOn: []
+  dependsOn:
+  - template/template_all_but_modint.hpp
+  - template/template_types.hpp
+  - template/template_rep.hpp
+  - template/template_math.hpp
+  - utils/is_integral_ext.hpp
+  - template/template_vector.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - template/template_random.hpp
   isVerificationFile: false
   path: ds/csr.hpp
-  requiredBy: []
-  timestamp: '1970-01-01 00:00:00+00:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  requiredBy:
+  - math/linalg/matrix_array.hpp
+  - math/linalg/matrix.hpp
+  - graph/cliques.hpp
+  - graph/cycle_detection.hpp
+  - graph/subgraphs.hpp
+  - graph/connected_components.hpp
+  - graph/triangles.hpp
+  - graph/graph.hpp
+  - graph/scc.hpp
+  - graph/contraction.hpp
+  - graph/sssp.hpp
+  - graph/matrix_tree.hpp
+  - ds/group_index.hpp
+  - ds/static_range/dc_range_prod.hpp
+  - ds/query/point_set_range_frequency.hpp
+  - ds/mo/mo_rollback.hpp
+  timestamp: '2026-04-20 06:20:24+09:00'
+  verificationStatus: LIBRARY_SOME_WA
+  verifiedWith:
+  - verify/mytest/rmq.test.cpp
+  - verify/yosupo/enumerate_triangles.test.cpp
+  - verify/yosupo/matrix_pow.test.cpp
+  - verify/yosupo/matrix_rank.test.cpp
+  - verify/yosupo/dc_range_prod.test.cpp
+  - verify/yosupo/counting_spanning_trees_directed.test.cpp
+  - verify/yosupo/matrix_inv_array.test.cpp
+  - verify/yosupo/matrix_det_sparse.test.cpp
+  - verify/yosupo/matrix_det.test.cpp
+  - verify/yosupo/matrix_inv.test.cpp
+  - verify/yosupo/cycle_detection_undirected.test.cpp
+  - verify/yosupo/scc.test.cpp
+  - verify/yosupo/static_range_frequency.test.cpp
+  - verify/yosupo/matrix_solve.test.cpp
+  - verify/yosupo/matrix_det_array.test.cpp
+  - verify/yosupo/dijkstra.test.cpp
+  - verify/yosupo/matrix_solve_array.test.cpp
+  - verify/yosupo/matrix_pow_array.test.cpp
+  - verify/yosupo/enumerate_cliques.test.cpp
+  - verify/yosupo/point_set_range_frequency.test.cpp
+  - verify/yosupo/cycle_detection_directed.test.cpp
+  - verify/yosupo/counting_eularian_circuits.test.cpp
+  - verify/yosupo/majority_voting.test.cpp
+  - verify/yosupo/matrix_product.test.cpp
+  - verify/yosupo/static_range_mode_query.test.cpp
+  - verify/yosupo/counting_spanning_trees_undirected.test.cpp
+  - verify/yosupo/matrix_product_array.test.cpp
+  - verify/aoj/bfs.test.cpp
+  - verify/aoj/csr.test.cpp
+  - verify/aoj/connected_components.test.cpp
+  - verify/aoj/bfs01.test.cpp
+  - verify/aoj/bellman_ford.test.cpp
+  - verify/yukicoder/static_rectangle_add_point_get.test.cpp
+  - verify/yukicoder/yuki2215_dc.test.cpp
+  - verify/yukicoder/yuki310.test.cpp
 documentation_of: ds/csr.hpp
 layout: document
 redirect_from:

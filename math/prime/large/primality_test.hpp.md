@@ -1,11 +1,253 @@
 ---
 data:
-  _extendedDependsOn: []
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedDependsOn:
+  - icon: ':question:'
+    path: math/extgcd.hpp
+    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
+  - icon: ':question:'
+    path: math/modint/modint.hpp
+    title: math/modint/modint.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_barrett32.hpp
+    title: math/modint/modint_internal_barrett32.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_isprime.hpp
+    title: math/modint/modint_internal_isprime.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_montgomery64.hpp
+    title: math/modint/modint_internal_montgomery64.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_static.hpp
+    title: math/modint/modint_internal_static.hpp
+  - icon: ':question:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':question:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':question:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_math.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
+  - icon: ':question:'
+    path: template/template_rep.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  - icon: ':question:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':question:'
+    path: utils/is_integral_ext.hpp
+    title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
+      \u5224\u5B9A"
+  - icon: ':question:'
+    path: utils/larger_int.hpp
+    title: "$2$ \u500D\u306E\u30D3\u30C3\u30C8\u6570\u306E\u6574\u6570\u578B"
+  _extendedRequiredBy:
+  - icon: ':x:'
+    path: math/fps/bmbm.hpp
+    title: BMBM
+  - icon: ':x:'
+    path: math/fps/bostan_mori.hpp
+    title: "Bostan\u2013Mori"
+  - icon: ':x:'
+    path: math/fps/compositional_inverse.hpp
+    title: "\u9006\u95A2\u6570"
+  - icon: ':x:'
+    path: math/fps/factorial.hpp
+    title: "\u968E\u4E57"
+  - icon: ':question:'
+    path: math/fps/fps.hpp
+    title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
+  - icon: ':x:'
+    path: math/fps/interpolation.hpp
+    title: "\u591A\u9805\u5F0F\u88DC\u9593"
+  - icon: ':x:'
+    path: math/fps/interpolation_geo.hpp
+    title: "\u591A\u9805\u5F0F\u88DC\u9593\uFF08\u8A55\u4FA1\u70B9\u304C\u7B49\u6BD4\
+      \u6570\u5217\uFF09"
+  - icon: ':x:'
+    path: math/fps/multipoint_evaluation.hpp
+    title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1"
+  - icon: ':x:'
+    path: math/fps/multipoint_evaluation_geo.hpp
+    title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1\uFF08\u8A55\u4FA1\u70B9\
+      \u304C\u7B49\u6BD4\u6570\u5217\uFF09"
+  - icon: ':x:'
+    path: math/fps/pow_sum.hpp
+    title: "$\\sum_{i} A_i^k$ \u306E $k$ \u306B\u95A2\u3059\u308B\u5217\u6319"
+  - icon: ':x:'
+    path: math/fps/power_projection.hpp
+    title: Power Projection
+  - icon: ':question:'
+    path: math/fps/rational_sum.hpp
+    title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
+  - icon: ':x:'
+    path: math/fps/shift_of_sampling_points.hpp
+    title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
+  - icon: ':x:'
+    path: math/fps/taylor_shift.hpp
+    title: Taylor Shift
+  - icon: ':question:'
+    path: math/modint/sqrt_mod.hpp
+    title: "mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839"
+  - icon: ':x:'
+    path: math/prime/large/euler_phi_carmichael.hpp
+    title: "\u30AA\u30A4\u30E9\u30FC\u306E\u30D5\u30A1\u30A4\u95A2\u6570\u30FB\u30AB\
+      \u30FC\u30DE\u30A4\u30B1\u30EB\u95A2\u6570"
+  - icon: ':question:'
+    path: math/prime/large/factorize.hpp
+    title: "\u7D20\u56E0\u6570\u5206\u89E3"
+  - icon: ':x:'
+    path: math/prime/large/order_primitive_root.hpp
+    title: "\u5143\u306E\u4F4D\u6570\u3068\u539F\u59CB\u6839"
+  - icon: ':x:'
+    path: math/prime/large/zeta_mobius_divisor_multiple_large.hpp
+    title: "\u7D04\u6570\u30FB\u500D\u6570 \u30BC\u30FC\u30BF\u30FB\u30E1\u30D3\u30A6\
+      \u30B9\u5909\u63DB\uFF08\u5927\u304D\u3044 $m$ \u306E\u7D04\u6570\uFF09"
+  - icon: ':warning:'
+    path: math/two_square_sum.hpp
+    title: math/two_square_sum.hpp
+  - icon: ':warning:'
+    path: verify/yosupo/represent_a_number_as_two_square_sum.cpp
+    title: verify/yosupo/represent_a_number_as_two_square_sum.cpp
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/linear_sieve.test.cpp
+    title: verify/mytest/linear_sieve.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/rational_plus.test.cpp
+    title: verify/mytest/rational_plus.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/convolution_many.test.cpp
+    title: verify/yosupo/convolution_many.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/factorial.test.cpp
+    title: verify/yosupo/factorial.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/factorize.test.cpp
+    title: verify/yosupo/factorize.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_compositional_inverse.test.cpp
+    title: verify/yosupo/fps_compositional_inverse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_exp.test.cpp
+    title: verify/yosupo/fps_exp.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_exp_sparse.test.cpp
+    title: verify/yosupo/fps_exp_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_inv.test.cpp
+    title: verify/yosupo/fps_inv.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_inv_sparse.test.cpp
+    title: verify/yosupo/fps_inv_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_log.test.cpp
+    title: verify/yosupo/fps_log.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_log_sparse.test.cpp
+    title: verify/yosupo/fps_log_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_pow.test.cpp
+    title: verify/yosupo/fps_pow.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_pow_sparse.test.cpp
+    title: verify/yosupo/fps_pow_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_sqrt.test.cpp
+    title: verify/yosupo/fps_sqrt.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_sqrt_sparse.test.cpp
+    title: verify/yosupo/fps_sqrt_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+    title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_div.test.cpp
+    title: verify/yosupo/poly_div.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_interpolation.test.cpp
+    title: verify/yosupo/poly_interpolation.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_interpolation_geo.test.cpp
+    title: verify/yosupo/poly_interpolation_geo.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_multipoint_evaluation.test.cpp
+    title: verify/yosupo/poly_multipoint_evaluation.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
+    title: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_shift_of_sampling_points.test.cpp
+    title: verify/yosupo/poly_shift_of_sampling_points.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_taylor_shift.test.cpp
+    title: verify/yosupo/poly_taylor_shift.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/polynomial_taylor_shift.test.cpp
+    title: verify/yosupo/polynomial_taylor_shift.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/primality_test.test.cpp
+    title: verify/yosupo/primality_test.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/primitive_root.test.cpp
+    title: verify/yosupo/primitive_root.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/primitive_root_min.test.cpp
+    title: verify/yosupo/primitive_root_min.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/sqrt_mod.test.cpp
+    title: verify/yosupo/sqrt_mod.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/bmbm.test.cpp
+    title: verify/yukicoder/bmbm.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/divisors.test.cpp
+    title: verify/yukicoder/divisors.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/factorial.test.cpp
+    title: verify/yukicoder/factorial.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/order_mod_carmichael.test.cpp
+    title: verify/yukicoder/order_mod_carmichael.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/order_mod_euler_phi.test.cpp
+    title: verify/yukicoder/order_mod_euler_phi.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/poly_rational_sum.test.cpp
+    title: verify/yukicoder/poly_rational_sum.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/pow_sum.test.cpp
+    title: verify/yukicoder/pow_sum.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+    title: verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+    title: verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/math/prime/large/primality_test.md
     document_title: "\u7D20\u6570\u5224\u5B9A"
@@ -801,13 +1043,91 @@ data:
     \    return internal::is_prime_impl<mint>(n, bases32);\n  }\n  else\n  {\n   \
     \ using mint = dynamic_modint64_odd<INT_MIN>;\n    return internal::is_prime_impl<mint>(n,\
     \ bases64);\n  }\n}\n"
-  dependsOn: []
+  dependsOn:
+  - template/template_all_but_modint.hpp
+  - template/template_types.hpp
+  - template/template_rep.hpp
+  - template/template_math.hpp
+  - utils/is_integral_ext.hpp
+  - template/template_vector.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - template/template_random.hpp
+  - math/modint/modint.hpp
+  - math/modint/modint_internal_static.hpp
+  - utils/larger_int.hpp
+  - math/modint/modint_internal_isprime.hpp
+  - math/modint/modint_internal_barrett32.hpp
+  - math/modint/modint_internal_montgomery64.hpp
+  - math/extgcd.hpp
   isVerificationFile: false
   path: math/prime/large/primality_test.hpp
-  requiredBy: []
-  timestamp: '1970-01-01 00:00:00+00:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  requiredBy:
+  - math/two_square_sum.hpp
+  - math/modint/sqrt_mod.hpp
+  - math/prime/large/factorize.hpp
+  - math/prime/large/euler_phi_carmichael.hpp
+  - math/prime/large/order_primitive_root.hpp
+  - math/prime/large/zeta_mobius_divisor_multiple_large.hpp
+  - math/fps/pow_sum.hpp
+  - math/fps/taylor_shift.hpp
+  - math/fps/rational_sum.hpp
+  - math/fps/interpolation.hpp
+  - math/fps/factorial.hpp
+  - math/fps/bostan_mori.hpp
+  - math/fps/multipoint_evaluation.hpp
+  - math/fps/multipoint_evaluation_geo.hpp
+  - math/fps/power_projection.hpp
+  - math/fps/bmbm.hpp
+  - math/fps/shift_of_sampling_points.hpp
+  - math/fps/fps.hpp
+  - math/fps/compositional_inverse.hpp
+  - math/fps/interpolation_geo.hpp
+  - verify/yosupo/represent_a_number_as_two_square_sum.cpp
+  timestamp: '2026-04-20 06:20:24+09:00'
+  verificationStatus: LIBRARY_SOME_WA
+  verifiedWith:
+  - verify/mytest/linear_sieve.test.cpp
+  - verify/mytest/rational_plus.test.cpp
+  - verify/yosupo/fps_pow.test.cpp
+  - verify/yosupo/poly_taylor_shift.test.cpp
+  - verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
+  - verify/yosupo/poly_div.test.cpp
+  - verify/yosupo/factorial.test.cpp
+  - verify/yosupo/polynomial_taylor_shift.test.cpp
+  - verify/yosupo/primitive_root.test.cpp
+  - verify/yosupo/fps_compositional_inverse.test.cpp
+  - verify/yosupo/poly_shift_of_sampling_points.test.cpp
+  - verify/yosupo/fps_exp.test.cpp
+  - verify/yosupo/primality_test.test.cpp
+  - verify/yosupo/factorize.test.cpp
+  - verify/yosupo/poly_interpolation_geo.test.cpp
+  - verify/yosupo/primitive_root_min.test.cpp
+  - verify/yosupo/fps_sqrt.test.cpp
+  - verify/yosupo/fps_log_sparse.test.cpp
+  - verify/yosupo/fps_exp_sparse.test.cpp
+  - verify/yosupo/fps_inv_sparse.test.cpp
+  - verify/yosupo/fps_log.test.cpp
+  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - verify/yosupo/fps_inv.test.cpp
+  - verify/yosupo/poly_multipoint_evaluation.test.cpp
+  - verify/yosupo/fps_pow_sparse.test.cpp
+  - verify/yosupo/convolution_many.test.cpp
+  - verify/yosupo/sqrt_mod.test.cpp
+  - verify/yosupo/fps_sqrt_sparse.test.cpp
+  - verify/yosupo/poly_interpolation.test.cpp
+  - verify/yukicoder/bmbm.test.cpp
+  - verify/yukicoder/order_mod_euler_phi.test.cpp
+  - verify/yukicoder/divisors.test.cpp
+  - verify/yukicoder/factorial.test.cpp
+  - verify/yukicoder/pow_sum.test.cpp
+  - verify/yukicoder/zeta_mobius_multiple_large.test.cpp
+  - verify/yukicoder/zeta_mobius_divisor_large.test.cpp
+  - verify/yukicoder/order_mod_carmichael.test.cpp
+  - verify/yukicoder/poly_rational_sum.test.cpp
 documentation_of: math/prime/large/primality_test.hpp
 layout: document
 redirect_from:

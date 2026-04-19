@@ -1,11 +1,75 @@
 ---
 data:
-  _extendedDependsOn: []
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
+  _extendedDependsOn:
+  - icon: ':question:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':question:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':question:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_math.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
+  - icon: ':question:'
+    path: template/template_rep.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  - icon: ':question:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':question:'
+    path: utils/is_integral_ext.hpp
+    title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
+      \u5224\u5B9A"
+  - icon: ':question:'
+    path: utils/larger_int.hpp
+    title: "$2$ \u500D\u306E\u30D3\u30C3\u30C8\u6570\u306E\u6574\u6570\u578B"
+  _extendedRequiredBy:
+  - icon: ':warning:'
+    path: math/modint/template_modint.hpp
+    title: math/modint/template_modint.hpp
+  - icon: ':heavy_check_mark:'
+    path: math/modint/to_rational.hpp
+    title: "modint \u3092\u6709\u7406\u6570\u306B"
+  - icon: ':warning:'
+    path: math/two_square_sum.hpp
+    title: math/two_square_sum.hpp
+  - icon: ':warning:'
+    path: template/template.cpp
+    title: template/template.cpp
+  - icon: ':warning:'
+    path: template/template_all.hpp
+    title: template/template_all.hpp
+  - icon: ':warning:'
+    path: verify/yosupo/represent_a_number_as_two_square_sum.cpp
+    title: verify/yosupo/represent_a_number_as_two_square_sum.cpp
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/to_rational.test.cpp
+    title: verify/mytest/to_rational.test.cpp
   _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/math/svp2d.md
     document_title: "\u6700\u77ED\u30D9\u30AF\u30C8\u30EB\u554F\u984C\uFF08$2$ \u6B21\
@@ -647,13 +711,33 @@ data:
     \ b2)\n  {\n    swap(a1, b1), swap(a2, b2);\n    T k = divround<U>((U)a1 * b1\
     \ + (U)a2 * b2, (U)a1 * a1 + (U)a2 * a2);\n    b1 -= k * a1, b2 -= k * a2;\n \
     \ }\n  return {a1, a2};\n}\n"
-  dependsOn: []
+  dependsOn:
+  - template/template_all_but_modint.hpp
+  - template/template_types.hpp
+  - template/template_rep.hpp
+  - template/template_math.hpp
+  - utils/is_integral_ext.hpp
+  - template/template_vector.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - template/template_random.hpp
+  - utils/larger_int.hpp
   isVerificationFile: false
   path: math/svp2d.hpp
-  requiredBy: []
-  timestamp: '1970-01-01 00:00:00+00:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  requiredBy:
+  - template/template.cpp
+  - template/template_all.hpp
+  - math/two_square_sum.hpp
+  - math/modint/template_modint.hpp
+  - math/modint/to_rational.hpp
+  - verify/yosupo/represent_a_number_as_two_square_sum.cpp
+  timestamp: '2026-04-20 06:20:24+09:00'
+  verificationStatus: LIBRARY_ALL_AC
+  verifiedWith:
+  - verify/mytest/to_rational.test.cpp
 documentation_of: math/svp2d.hpp
 layout: document
 redirect_from:

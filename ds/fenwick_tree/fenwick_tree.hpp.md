@@ -1,11 +1,158 @@
 ---
 data:
-  _extendedDependsOn: []
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedDependsOn:
+  - icon: ':question:'
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+  - icon: ':question:'
+    path: math/algebra/algebra_basic_ops.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+      \ max\uFF09"
+  - icon: ':question:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':question:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':question:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_math.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
+  - icon: ':question:'
+    path: template/template_rep.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  - icon: ':question:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':question:'
+    path: utils/is_integral_ext.hpp
+    title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
+      \u5224\u5B9A"
+  _extendedRequiredBy:
+  - icon: ':x:'
+    path: ds/2d/offline/point_add_rectangle_sum.hpp
+    title: "\u70B9\u52A0\u7B97\u30FB\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\
+      \u30F3\uFF09"
+  - icon: ':x:'
+    path: ds/2d/offline/rectangle_add_point_get.hpp
+    title: "\u77E9\u5F62\u52A0\u7B97\u30FB\u70B9\u53D6\u5F97\uFF08\u30AA\u30D5\u30E9\
+      \u30A4\u30F3\uFF09"
+  - icon: ':x:'
+    path: ds/2d/offline/rectangle_sum.hpp
+    title: "\u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\u30A4\u30F3\uFF09"
+  - icon: ':x:'
+    path: ds/2d/offline/static_rectangle_add_point_get.hpp
+    title: "\u77E9\u5F62\u52A0\u7B97 \u2192 \u70B9\u53D6\u5F97\uFF08\u30AA\u30D5\u30E9\
+      \u30A4\u30F3\uFF09"
+  - icon: ':x:'
+    path: ds/2d/offline/static_rectangle_add_rectangle_sum.hpp
+    title: "\u77E9\u5F62\u52A0\u7B97 \u2192 \u77E9\u5F62\u548C\uFF08\u30AA\u30D5\u30E9\
+      \u30A4\u30F3\uFF09"
+  - icon: ':heavy_check_mark:'
+    path: ds/2d/sparse/fenwick_tree.hpp
+    title: "$2$ \u6B21\u5143 Fenwick Tree\uFF08\u758E\u3001\u30AF\u30A8\u30EA\u70B9\
+      \u5148\u8AAD\u307F\uFF09"
+  - icon: ':question:'
+    path: ds/fenwick_tree/fenwick_tree_01.hpp
+    title: "01 \u5217\u306B\u5BFE\u3059\u308B Fenwick Tree"
+  - icon: ':question:'
+    path: ds/fenwick_tree/inversion.hpp
+    title: "\u8EE2\u5012\u6570"
+  - icon: ':heavy_check_mark:'
+    path: ds/fenwick_tree/range_add_point_get.hpp
+    title: "\u533A\u9593\u52A0\u7B97\u4E00\u70B9\u53D6\u5F97"
+  - icon: ':x:'
+    path: ds/query/point_set_range_frequency.hpp
+    title: "\u4E00\u70B9\u66F4\u65B0\u30FB\u533A\u9593\u983B\u5EA6\uFF08\u30AA\u30D5\
+      \u30E9\u30A4\u30F3\uFF09"
+  - icon: ':x:'
+    path: graph/tree/euler_tour_path_sum.hpp
+    title: "\u6728\u306E\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC\u3067\u30D1\u30B9\
+      \u306E\u7DCF\u548C\u30AF\u30A8\u30EA\u3092\u51E6\u7406"
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/inversion.test.cpp
+    title: verify/aoj/inversion.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/aoj/range_add_point_get.test.cpp
+    title: verify/aoj/range_add_point_get.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/fenwick_tree_set.test.cpp
+    title: verify/mytest/fenwick_tree_set.test.cpp
+  - icon: ':heavy_check_mark:'
+    path: verify/yosupo/2d_fenwick_tree.test.cpp
+    title: verify/yosupo/2d_fenwick_tree.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/lower_left_sum.test.cpp
+    title: verify/yosupo/lower_left_sum.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/majority_voting.test.cpp
+    title: verify/yosupo/majority_voting.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/ordered_set_fenwick_tree.test.cpp
+    title: verify/yosupo/ordered_set_fenwick_tree.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/point_add_range_sum.test.cpp
+    title: verify/yosupo/point_add_range_sum.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/point_add_rectangle_sum.test.cpp
+    title: verify/yosupo/point_add_rectangle_sum.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/point_set_range_frequency.test.cpp
+    title: verify/yosupo/point_set_range_frequency.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
+    title: verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/rectangle_add_point_get.test.cpp
+    title: verify/yosupo/rectangle_add_point_get.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/rectangle_sum.test.cpp
+    title: verify/yosupo/rectangle_sum.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/static_range_inversions_query.test.cpp
+    title: verify/yosupo/static_range_inversions_query.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
+    title: verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/vertex_add_path_sum.test.cpp
+    title: verify/yosupo/vertex_add_path_sum.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/vertex_add_path_sum_euler_tour.test.cpp
+    title: verify/yosupo/vertex_add_path_sum_euler_tour.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/vertex_add_subtree_sum.test.cpp
+    title: verify/yosupo/vertex_add_subtree_sum.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
+    title: verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/static_rectangle_add_point_get.test.cpp
+    title: verify/yukicoder/static_rectangle_add_point_get.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/ds/fenwick_tree/fenwick_tree.md
     document_title: Fenwick Tree
@@ -839,13 +986,58 @@ data:
     \ x) const { return geq_min_in_multiset<I>(x + 1); }\n\n  vc<S> content() const\n\
     \  {\n    vc<S> res(n);\n    repi(i, n) res[i] = get(i);\n    return res;\n  }\n\
     };\n"
-  dependsOn: []
+  dependsOn:
+  - template/template_all_but_modint.hpp
+  - template/template_types.hpp
+  - template/template_rep.hpp
+  - template/template_math.hpp
+  - utils/is_integral_ext.hpp
+  - template/template_vector.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - template/template_random.hpp
+  - math/algebra/algebra_basic_ops.hpp
+  - math/algebra/algebra_base.hpp
   isVerificationFile: false
   path: ds/fenwick_tree/fenwick_tree.hpp
-  requiredBy: []
-  timestamp: '1970-01-01 00:00:00+00:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  requiredBy:
+  - graph/tree/euler_tour_path_sum.hpp
+  - ds/fenwick_tree/inversion.hpp
+  - ds/fenwick_tree/fenwick_tree_01.hpp
+  - ds/fenwick_tree/range_add_point_get.hpp
+  - ds/query/point_set_range_frequency.hpp
+  - ds/2d/offline/rectangle_sum.hpp
+  - ds/2d/offline/point_add_rectangle_sum.hpp
+  - ds/2d/offline/static_rectangle_add_rectangle_sum.hpp
+  - ds/2d/offline/static_rectangle_add_point_get.hpp
+  - ds/2d/offline/rectangle_add_point_get.hpp
+  - ds/2d/sparse/fenwick_tree.hpp
+  timestamp: '2026-04-20 06:20:24+09:00'
+  verificationStatus: LIBRARY_SOME_WA
+  verifiedWith:
+  - verify/mytest/fenwick_tree_set.test.cpp
+  - verify/yosupo/ordered_set_fenwick_tree.test.cpp
+  - verify/yosupo/vertex_add_path_sum.test.cpp
+  - verify/yosupo/rectangle_add_point_get.test.cpp
+  - verify/yosupo/point_add_rectangle_sum.test.cpp
+  - verify/yosupo/point_add_range_sum.test.cpp
+  - verify/yosupo/vertex_add_path_sum_euler_tour.test.cpp
+  - verify/yosupo/static_range_inversions_query.test.cpp
+  - verify/yosupo/2d_fenwick_tree.test.cpp
+  - verify/yosupo/point_set_range_frequency.test.cpp
+  - verify/yosupo/predecessor_problem_fenwick_tree.test.cpp
+  - verify/yosupo/static_rectangle_add_rectangle_sum.test.cpp
+  - verify/yosupo/majority_voting.test.cpp
+  - verify/yosupo/vertex_add_subtree_sum.test.cpp
+  - verify/yosupo/lower_left_sum.test.cpp
+  - verify/yosupo/rectangle_sum.test.cpp
+  - verify/aoj/inversion.test.cpp
+  - verify/aoj/range_add_point_get.test.cpp
+  - verify/yukicoder/static_rectangle_add_point_get.test.cpp
+  - verify/yukicoder/ordered_multiset_fenwick_tree.test.cpp
 documentation_of: ds/fenwick_tree/fenwick_tree.hpp
 layout: document
 redirect_from:

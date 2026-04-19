@@ -1,11 +1,35 @@
 ---
 data:
-  _extendedDependsOn: []
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedDependsOn:
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  _extendedRequiredBy:
+  - icon: ':x:'
+    path: math/bigint.hpp
+    title: "\u591A\u500D\u9577\u6574\u6570"
+  _extendedVerifiedWith:
+  - icon: ':x:'
+    path: verify/yosupo/big_integer_addition.test.cpp
+    title: verify/yosupo/big_integer_addition.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/big_integer_addition_hex.test.cpp
+    title: verify/yosupo/big_integer_addition_hex.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/big_integer_division.test.cpp
+    title: verify/yosupo/big_integer_division.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/big_integer_division_hex.test.cpp
+    title: verify/yosupo/big_integer_division_hex.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/big_integer_multiplication.test.cpp
+    title: verify/yosupo/big_integer_multiplication.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/big_integer_multiplication_hex.test.cpp
+    title: verify/yosupo/big_integer_multiplication_hex.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':x:'
   attributes:
     _deprecated_at_docs: docs/utils/make_unsigned_ext.md
     document_title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u306B\u5BFE\u5FDC\u3057\u305F\
@@ -51,13 +75,21 @@ data:
     \ntemplate <class T>\nstruct make_signed_ext\n{\n  using type = make_signed_t<T>;\n\
     };\ntemplate <>\nstruct make_signed_ext<u128>\n{\n  using type = i128;\n};\ntemplate\
     \ <class T>\nusing make_signed_ext_t = typename make_signed_ext<T>::type;\n"
-  dependsOn: []
+  dependsOn:
+  - template/template_types.hpp
   isVerificationFile: false
   path: utils/make_unsigned_ext.hpp
-  requiredBy: []
-  timestamp: '1970-01-01 00:00:00+00:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  requiredBy:
+  - math/bigint.hpp
+  timestamp: '2026-04-20 06:20:24+09:00'
+  verificationStatus: LIBRARY_ALL_WA
+  verifiedWith:
+  - verify/yosupo/big_integer_multiplication_hex.test.cpp
+  - verify/yosupo/big_integer_addition_hex.test.cpp
+  - verify/yosupo/big_integer_division.test.cpp
+  - verify/yosupo/big_integer_division_hex.test.cpp
+  - verify/yosupo/big_integer_multiplication.test.cpp
+  - verify/yosupo/big_integer_addition.test.cpp
 documentation_of: utils/make_unsigned_ext.hpp
 layout: document
 redirect_from:

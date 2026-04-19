@@ -1,12 +1,88 @@
 ---
 data:
-  _extendedDependsOn: []
+  _extendedDependsOn:
+  - icon: ':question:'
+    path: ds/fenwick_tree/fenwick_tree.hpp
+    title: Fenwick Tree
+  - icon: ':question:'
+    path: ds/static_range/block_sparse_table.hpp
+    title: "\u30D6\u30ED\u30C3\u30AF\u5206\u5272 + (disjoint) sparse table"
+  - icon: ':question:'
+    path: ds/static_range/disjoint_sparse_table.hpp
+    title: Disjoint Sparse Table
+  - icon: ':question:'
+    path: ds/static_range/linear_rmq.hpp
+    title: "\u7DDA\u5F62 RMQ"
+  - icon: ':question:'
+    path: ds/static_range/sparse_table.hpp
+    title: Sparse Table
+  - icon: ':x:'
+    path: graph/tree/euler_tour.hpp
+    title: "\u6728\u306E\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC"
+  - icon: ':x:'
+    path: graph/tree/euler_tour_path_sum.hpp
+    title: "\u6728\u306E\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC\u3067\u30D1\u30B9\
+      \u306E\u7DCF\u548C\u30AF\u30A8\u30EA\u3092\u51E6\u7406"
+  - icon: ':question:'
+    path: math/algebra/algebra_base.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\u306E struct\uFF08\u57FA\u672C\uFF09"
+  - icon: ':question:'
+    path: math/algebra/algebra_basic_ops.hpp
+    title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u56DB\u5247\u6F14\u7B97\u3068 min,\
+      \ max\uFF09"
+  - icon: ':question:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':question:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':question:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_main.hpp
+    title: template/template_main.hpp
+  - icon: ':question:'
+    path: template/template_math.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
+  - icon: ':question:'
+    path: template/template_rep.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  - icon: ':question:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':question:'
+    path: utils/is_integral_ext.hpp
+    title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
+      \u5224\u5B9A"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: true
   _pathExtension: cpp
   _verificationStatusIcon: ':x:'
-  attributes: {}
+  attributes:
+    '*NOT_SPECIAL_COMMENTS*': ''
+    PROBLEM: https://judge.yosupo.jp/problem/vertex_add_path_sum
+    links:
+    - https://judge.yosupo.jp/problem/vertex_add_path_sum
   bundledCode: "#line 1 \"verify/yosupo/vertex_add_path_sum_euler_tour.test.cpp\"\n\
     #define PROBLEM \"https://judge.yosupo.jp/problem/vertex_add_path_sum\"\n\n#define\
     \ SINGLE_TESTCASE\n// #define MULTI_TESTCASE\n// #define AOJ_TESTCASE\n\n#ifndef\
@@ -1016,11 +1092,33 @@ data:
     \ x);\n    }\n    else if (t == 1)\n    {\n      LL(u, v);\n      PRINT(G.sum(u,\
     \ v));\n    }\n  }\n}\n\nvoid test() {}\n\n#include \"template/template_main.hpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
-  dependsOn: []
+  dependsOn:
+  - template/template_all_but_modint.hpp
+  - template/template_types.hpp
+  - template/template_rep.hpp
+  - template/template_math.hpp
+  - utils/is_integral_ext.hpp
+  - template/template_vector.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - template/template_random.hpp
+  - graph/tree/euler_tour_path_sum.hpp
+  - graph/tree/euler_tour.hpp
+  - ds/static_range/linear_rmq.hpp
+  - ds/static_range/block_sparse_table.hpp
+  - ds/static_range/sparse_table.hpp
+  - ds/static_range/disjoint_sparse_table.hpp
+  - ds/fenwick_tree/fenwick_tree.hpp
+  - math/algebra/algebra_basic_ops.hpp
+  - math/algebra/algebra_base.hpp
+  - template/template_main.hpp
   isVerificationFile: true
   path: verify/yosupo/vertex_add_path_sum_euler_tour.test.cpp
   requiredBy: []
-  timestamp: '1970-01-01 00:00:00+00:00'
+  timestamp: '2026-04-20 06:20:24+09:00'
   verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/yosupo/vertex_add_path_sum_euler_tour.test.cpp

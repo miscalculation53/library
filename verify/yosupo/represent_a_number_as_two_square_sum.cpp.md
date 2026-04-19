@@ -1,6 +1,86 @@
 ---
 data:
-  _extendedDependsOn: []
+  _extendedDependsOn:
+  - icon: ':question:'
+    path: math/extgcd.hpp
+    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
+  - icon: ':question:'
+    path: math/modint/modint.hpp
+    title: math/modint/modint.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_barrett32.hpp
+    title: math/modint/modint_internal_barrett32.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_isprime.hpp
+    title: math/modint/modint_internal_isprime.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_montgomery64.hpp
+    title: math/modint/modint_internal_montgomery64.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_static.hpp
+    title: math/modint/modint_internal_static.hpp
+  - icon: ':question:'
+    path: math/prime/large/factorize.hpp
+    title: "\u7D20\u56E0\u6570\u5206\u89E3"
+  - icon: ':question:'
+    path: math/prime/large/primality_test.hpp
+    title: "\u7D20\u6570\u5224\u5B9A"
+  - icon: ':question:'
+    path: math/prime/prime_power.hpp
+    title: "\u7D20\u3079\u304D\u69CB\u9020\u4F53"
+  - icon: ':heavy_check_mark:'
+    path: math/svp2d.hpp
+    title: "\u6700\u77ED\u30D9\u30AF\u30C8\u30EB\u554F\u984C\uFF08$2$ \u6B21\u5143\
+      \uFF09"
+  - icon: ':warning:'
+    path: math/two_square_sum.hpp
+    title: math/two_square_sum.hpp
+  - icon: ':question:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':question:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':question:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_main.hpp
+    title: template/template_main.hpp
+  - icon: ':question:'
+    path: template/template_math.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
+  - icon: ':question:'
+    path: template/template_rep.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  - icon: ':question:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':question:'
+    path: utils/is_integral_ext.hpp
+    title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
+      \u5224\u5B9A"
+  - icon: ':question:'
+    path: utils/larger_int.hpp
+    title: "$2$ \u500D\u306E\u30D3\u30C3\u30C8\u6570\u306E\u6574\u6570\u578B"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
   _isVerificationFailed: false
@@ -920,11 +1000,36 @@ data:
     \  rep(i, SZ(AB)) AB.eb(AB[i].second, AB[i].first);\n  sortunique(AB);\n  PRINT(AB.size());\n\
     \  PRINTV(AB);\n}\n\nvoid test()\n{\n  \n}\n\n#include \"template/template_main.hpp\"\
     \nMain<init, main2, test> main_dummy;\nint main() {}\n"
-  dependsOn: []
+  dependsOn:
+  - template/template_all_but_modint.hpp
+  - template/template_types.hpp
+  - template/template_rep.hpp
+  - template/template_math.hpp
+  - utils/is_integral_ext.hpp
+  - template/template_vector.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - template/template_random.hpp
+  - math/two_square_sum.hpp
+  - math/modint/modint.hpp
+  - math/modint/modint_internal_static.hpp
+  - utils/larger_int.hpp
+  - math/modint/modint_internal_isprime.hpp
+  - math/modint/modint_internal_barrett32.hpp
+  - math/modint/modint_internal_montgomery64.hpp
+  - math/extgcd.hpp
+  - math/prime/large/factorize.hpp
+  - math/prime/prime_power.hpp
+  - math/prime/large/primality_test.hpp
+  - math/svp2d.hpp
+  - template/template_main.hpp
   isVerificationFile: false
   path: verify/yosupo/represent_a_number_as_two_square_sum.cpp
   requiredBy: []
-  timestamp: '1970-01-01 00:00:00+00:00'
+  timestamp: '2026-04-20 06:20:24+09:00'
   verificationStatus: LIBRARY_NO_TESTS
   verifiedWith: []
 documentation_of: verify/yosupo/represent_a_number_as_two_square_sum.cpp

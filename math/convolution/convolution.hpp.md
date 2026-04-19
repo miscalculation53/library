@@ -1,11 +1,248 @@
 ---
 data:
-  _extendedDependsOn: []
-  _extendedRequiredBy: []
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedDependsOn:
+  - icon: ':question:'
+    path: math/crt.hpp
+    title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
+  - icon: ':question:'
+    path: math/extgcd.hpp
+    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
+  - icon: ':question:'
+    path: math/modint/modint.hpp
+    title: math/modint/modint.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_barrett32.hpp
+    title: math/modint/modint_internal_barrett32.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_isprime.hpp
+    title: math/modint/modint_internal_isprime.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_montgomery64.hpp
+    title: math/modint/modint_internal_montgomery64.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_static.hpp
+    title: math/modint/modint_internal_static.hpp
+  - icon: ':question:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':question:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':question:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_math.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
+  - icon: ':question:'
+    path: template/template_rep.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  - icon: ':question:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':question:'
+    path: utils/is_integral_ext.hpp
+    title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
+      \u5224\u5B9A"
+  - icon: ':question:'
+    path: utils/larger_int.hpp
+    title: "$2$ \u500D\u306E\u30D3\u30C3\u30C8\u6570\u306E\u6574\u6570\u578B"
+  _extendedRequiredBy:
+  - icon: ':x:'
+    path: math/bigint.hpp
+    title: "\u591A\u500D\u9577\u6574\u6570"
+  - icon: ':x:'
+    path: math/convolution/convolution64.hpp
+    title: "\u7573\u307F\u8FBC\u307F\uFF08$\\bmod \\ 2^{64}$\uFF09"
+  - icon: ':x:'
+    path: math/convolution/convolution_ll.hpp
+    title: "\u7573\u307F\u8FBC\u307F\uFF08long long\uFF09"
+  - icon: ':x:'
+    path: math/convolution/convolution_many.hpp
+    title: "\u591A\u9805\u5F0F\u306E\u7DCF\u7A4D"
+  - icon: ':x:'
+    path: math/fps/bmbm.hpp
+    title: BMBM
+  - icon: ':x:'
+    path: math/fps/bostan_mori.hpp
+    title: "Bostan\u2013Mori"
+  - icon: ':x:'
+    path: math/fps/compositional_inverse.hpp
+    title: "\u9006\u95A2\u6570"
+  - icon: ':x:'
+    path: math/fps/factorial.hpp
+    title: "\u968E\u4E57"
+  - icon: ':question:'
+    path: math/fps/fps.hpp
+    title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
+  - icon: ':x:'
+    path: math/fps/interpolation.hpp
+    title: "\u591A\u9805\u5F0F\u88DC\u9593"
+  - icon: ':x:'
+    path: math/fps/interpolation_geo.hpp
+    title: "\u591A\u9805\u5F0F\u88DC\u9593\uFF08\u8A55\u4FA1\u70B9\u304C\u7B49\u6BD4\
+      \u6570\u5217\uFF09"
+  - icon: ':x:'
+    path: math/fps/multipoint_evaluation.hpp
+    title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1"
+  - icon: ':x:'
+    path: math/fps/multipoint_evaluation_geo.hpp
+    title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1\uFF08\u8A55\u4FA1\u70B9\
+      \u304C\u7B49\u6BD4\u6570\u5217\uFF09"
+  - icon: ':x:'
+    path: math/fps/pow_sum.hpp
+    title: "$\\sum_{i} A_i^k$ \u306E $k$ \u306B\u95A2\u3059\u308B\u5217\u6319"
+  - icon: ':x:'
+    path: math/fps/power_projection.hpp
+    title: Power Projection
+  - icon: ':question:'
+    path: math/fps/rational_sum.hpp
+    title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
+  - icon: ':x:'
+    path: math/fps/shift_of_sampling_points.hpp
+    title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
+  - icon: ':x:'
+    path: math/fps/taylor_shift.hpp
+    title: Taylor Shift
+  _extendedVerifiedWith:
+  - icon: ':heavy_check_mark:'
+    path: verify/mytest/rational_plus.test.cpp
+    title: verify/mytest/rational_plus.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/big_integer_addition.test.cpp
+    title: verify/yosupo/big_integer_addition.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/big_integer_addition_hex.test.cpp
+    title: verify/yosupo/big_integer_addition_hex.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/big_integer_division.test.cpp
+    title: verify/yosupo/big_integer_division.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/big_integer_division_hex.test.cpp
+    title: verify/yosupo/big_integer_division_hex.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/big_integer_multiplication.test.cpp
+    title: verify/yosupo/big_integer_multiplication.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/big_integer_multiplication_hex.test.cpp
+    title: verify/yosupo/big_integer_multiplication_hex.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/convolution.test.cpp
+    title: verify/yosupo/convolution.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/convolution64.test.cpp
+    title: verify/yosupo/convolution64.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
+    title: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/convolution_arbitrary_static.test.cpp
+    title: verify/yosupo/convolution_arbitrary_static.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/convolution_many.test.cpp
+    title: verify/yosupo/convolution_many.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/factorial.test.cpp
+    title: verify/yosupo/factorial.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_compositional_inverse.test.cpp
+    title: verify/yosupo/fps_compositional_inverse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_exp.test.cpp
+    title: verify/yosupo/fps_exp.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_exp_sparse.test.cpp
+    title: verify/yosupo/fps_exp_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_inv.test.cpp
+    title: verify/yosupo/fps_inv.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_inv_sparse.test.cpp
+    title: verify/yosupo/fps_inv_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_log.test.cpp
+    title: verify/yosupo/fps_log.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_log_sparse.test.cpp
+    title: verify/yosupo/fps_log_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_pow.test.cpp
+    title: verify/yosupo/fps_pow.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_pow_sparse.test.cpp
+    title: verify/yosupo/fps_pow_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_sqrt.test.cpp
+    title: verify/yosupo/fps_sqrt.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/fps_sqrt_sparse.test.cpp
+    title: verify/yosupo/fps_sqrt_sparse.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+    title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_div.test.cpp
+    title: verify/yosupo/poly_div.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_interpolation.test.cpp
+    title: verify/yosupo/poly_interpolation.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_interpolation_geo.test.cpp
+    title: verify/yosupo/poly_interpolation_geo.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_multipoint_evaluation.test.cpp
+    title: verify/yosupo/poly_multipoint_evaluation.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
+    title: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_shift_of_sampling_points.test.cpp
+    title: verify/yosupo/poly_shift_of_sampling_points.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/poly_taylor_shift.test.cpp
+    title: verify/yosupo/poly_taylor_shift.test.cpp
+  - icon: ':x:'
+    path: verify/yosupo/polynomial_taylor_shift.test.cpp
+    title: verify/yosupo/polynomial_taylor_shift.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/bmbm.test.cpp
+    title: verify/yukicoder/bmbm.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/factorial.test.cpp
+    title: verify/yukicoder/factorial.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/poly_rational_sum.test.cpp
+    title: verify/yukicoder/poly_rational_sum.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/pow_sum.test.cpp
+    title: verify/yukicoder/pow_sum.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/yuki2215_dc.test.cpp
+    title: verify/yukicoder/yuki2215_dc.test.cpp
+  - icon: ':x:'
+    path: verify/yukicoder/yuki2215_swag.test.cpp
+    title: verify/yukicoder/yuki2215_swag.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/math/convolution/convolution.md
     document_title: "\u7573\u307F\u8FBC\u307F"
@@ -1122,13 +1359,90 @@ data:
     \ vc<T> &a, const vc<T> &b)\n{\n  using mint = static_modint32<mod>;\n  auto c\
     \ = convolution(vc<mint>(ALL(a)), vc<mint>(ALL(b)));\n  vc<T> c_(c.size());\n\
     \  repi(i, c.size()) c_[i] = c[i].val();\n  return c_;\n}\n"
-  dependsOn: []
+  dependsOn:
+  - template/template_all_but_modint.hpp
+  - template/template_types.hpp
+  - template/template_rep.hpp
+  - template/template_math.hpp
+  - utils/is_integral_ext.hpp
+  - template/template_vector.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - template/template_random.hpp
+  - math/modint/modint.hpp
+  - math/modint/modint_internal_static.hpp
+  - utils/larger_int.hpp
+  - math/modint/modint_internal_isprime.hpp
+  - math/modint/modint_internal_barrett32.hpp
+  - math/modint/modint_internal_montgomery64.hpp
+  - math/extgcd.hpp
+  - math/crt.hpp
   isVerificationFile: false
   path: math/convolution/convolution.hpp
-  requiredBy: []
-  timestamp: '1970-01-01 00:00:00+00:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  requiredBy:
+  - math/bigint.hpp
+  - math/convolution/convolution_many.hpp
+  - math/convolution/convolution_ll.hpp
+  - math/convolution/convolution64.hpp
+  - math/fps/pow_sum.hpp
+  - math/fps/taylor_shift.hpp
+  - math/fps/rational_sum.hpp
+  - math/fps/interpolation.hpp
+  - math/fps/factorial.hpp
+  - math/fps/bostan_mori.hpp
+  - math/fps/multipoint_evaluation.hpp
+  - math/fps/multipoint_evaluation_geo.hpp
+  - math/fps/power_projection.hpp
+  - math/fps/bmbm.hpp
+  - math/fps/shift_of_sampling_points.hpp
+  - math/fps/fps.hpp
+  - math/fps/compositional_inverse.hpp
+  - math/fps/interpolation_geo.hpp
+  timestamp: '2026-04-20 06:20:24+09:00'
+  verificationStatus: LIBRARY_SOME_WA
+  verifiedWith:
+  - verify/mytest/rational_plus.test.cpp
+  - verify/yosupo/fps_pow.test.cpp
+  - verify/yosupo/poly_taylor_shift.test.cpp
+  - verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
+  - verify/yosupo/convolution64.test.cpp
+  - verify/yosupo/convolution.test.cpp
+  - verify/yosupo/big_integer_multiplication_hex.test.cpp
+  - verify/yosupo/poly_div.test.cpp
+  - verify/yosupo/convolution_arbitrary_static.test.cpp
+  - verify/yosupo/factorial.test.cpp
+  - verify/yosupo/big_integer_addition_hex.test.cpp
+  - verify/yosupo/polynomial_taylor_shift.test.cpp
+  - verify/yosupo/fps_compositional_inverse.test.cpp
+  - verify/yosupo/poly_shift_of_sampling_points.test.cpp
+  - verify/yosupo/fps_exp.test.cpp
+  - verify/yosupo/poly_interpolation_geo.test.cpp
+  - verify/yosupo/big_integer_division.test.cpp
+  - verify/yosupo/fps_sqrt.test.cpp
+  - verify/yosupo/fps_log_sparse.test.cpp
+  - verify/yosupo/big_integer_division_hex.test.cpp
+  - verify/yosupo/fps_exp_sparse.test.cpp
+  - verify/yosupo/big_integer_multiplication.test.cpp
+  - verify/yosupo/convolution_arbitrary_dynamic.test.cpp
+  - verify/yosupo/fps_inv_sparse.test.cpp
+  - verify/yosupo/fps_log.test.cpp
+  - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
+  - verify/yosupo/fps_inv.test.cpp
+  - verify/yosupo/poly_multipoint_evaluation.test.cpp
+  - verify/yosupo/fps_pow_sparse.test.cpp
+  - verify/yosupo/convolution_many.test.cpp
+  - verify/yosupo/fps_sqrt_sparse.test.cpp
+  - verify/yosupo/poly_interpolation.test.cpp
+  - verify/yosupo/big_integer_addition.test.cpp
+  - verify/yukicoder/bmbm.test.cpp
+  - verify/yukicoder/factorial.test.cpp
+  - verify/yukicoder/pow_sum.test.cpp
+  - verify/yukicoder/yuki2215_dc.test.cpp
+  - verify/yukicoder/yuki2215_swag.test.cpp
+  - verify/yukicoder/poly_rational_sum.test.cpp
 documentation_of: math/convolution/convolution.hpp
 layout: document
 redirect_from:

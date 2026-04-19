@@ -1,11 +1,99 @@
 ---
 data:
-  _extendedDependsOn: []
+  _extendedDependsOn:
+  - icon: ':x:'
+    path: bit/bit_reverse.hpp
+    title: "\u30D3\u30C3\u30C8\u30EA\u30D0\u30FC\u30B9"
+  - icon: ':question:'
+    path: math/convolution/convolution.hpp
+    title: "\u7573\u307F\u8FBC\u307F"
+  - icon: ':question:'
+    path: math/crt.hpp
+    title: "\u4E2D\u56FD\u5270\u4F59\u5B9A\u7406 (CRT)"
+  - icon: ':question:'
+    path: math/extgcd.hpp
+    title: "\u62E1\u5F35\u30E6\u30FC\u30AF\u30EA\u30C3\u30C9\u4E92\u9664\u6CD5 (extgcd)"
+  - icon: ':question:'
+    path: math/fps/fps.hpp
+    title: "\u5F62\u5F0F\u7684\u51AA\u7D1A\u6570"
+  - icon: ':x:'
+    path: math/fps/power_projection.hpp
+    title: Power Projection
+  - icon: ':question:'
+    path: math/modint/binomial.hpp
+    title: "\u4E8C\u9805\u4FC2\u6570"
+  - icon: ':question:'
+    path: math/modint/modint.hpp
+    title: math/modint/modint.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_barrett32.hpp
+    title: math/modint/modint_internal_barrett32.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_isprime.hpp
+    title: math/modint/modint_internal_isprime.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_montgomery64.hpp
+    title: math/modint/modint_internal_montgomery64.hpp
+  - icon: ':question:'
+    path: math/modint/modint_internal_static.hpp
+    title: math/modint/modint_internal_static.hpp
+  - icon: ':question:'
+    path: math/modint/sqrt_mod.hpp
+    title: "mod \u7D20\u6570 \u306E\u5E73\u65B9\u6839"
+  - icon: ':question:'
+    path: math/prime/large/primality_test.hpp
+    title: "\u7D20\u6570\u5224\u5B9A"
+  - icon: ':question:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':question:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':question:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_math.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
+  - icon: ':question:'
+    path: template/template_rep.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  - icon: ':question:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':question:'
+    path: utils/is_integral_ext.hpp
+    title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
+      \u5224\u5B9A"
+  - icon: ':question:'
+    path: utils/larger_int.hpp
+    title: "$2$ \u500D\u306E\u30D3\u30C3\u30C8\u6570\u306E\u6574\u6570\u578B"
   _extendedRequiredBy: []
-  _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _extendedVerifiedWith:
+  - icon: ':x:'
+    path: verify/yosupo/fps_compositional_inverse.test.cpp
+    title: verify/yosupo/fps_compositional_inverse.test.cpp
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':warning:'
+  _verificationStatusIcon: ':x:'
   attributes:
     _deprecated_at_docs: docs/math/fps/compositional_inverse.md
     document_title: "\u9006\u95A2\u6570"
@@ -1260,13 +1348,41 @@ data:
     \ h.pop_back();\n  dump(h);\n  assert(h.get(0) == 1);\n  F g = h.pow(-mint(n -\
     \ 1).inv().val());\n  g.insert(g.begin(), 0);\n  mint pw = 1;\n  repi(i, 1, n)\
     \ pw = pw * ic, g[i] *= pw;\n  return g;\n}\n"
-  dependsOn: []
+  dependsOn:
+  - template/template_all_but_modint.hpp
+  - template/template_types.hpp
+  - template/template_rep.hpp
+  - template/template_math.hpp
+  - utils/is_integral_ext.hpp
+  - template/template_vector.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - template/template_random.hpp
+  - math/fps/fps.hpp
+  - math/modint/binomial.hpp
+  - math/modint/modint.hpp
+  - math/modint/modint_internal_static.hpp
+  - utils/larger_int.hpp
+  - math/modint/modint_internal_isprime.hpp
+  - math/modint/modint_internal_barrett32.hpp
+  - math/modint/modint_internal_montgomery64.hpp
+  - math/extgcd.hpp
+  - math/convolution/convolution.hpp
+  - math/crt.hpp
+  - math/modint/sqrt_mod.hpp
+  - math/prime/large/primality_test.hpp
+  - math/fps/power_projection.hpp
+  - bit/bit_reverse.hpp
   isVerificationFile: false
   path: math/fps/compositional_inverse.hpp
   requiredBy: []
-  timestamp: '1970-01-01 00:00:00+00:00'
-  verificationStatus: LIBRARY_NO_TESTS
-  verifiedWith: []
+  timestamp: '2026-04-20 06:20:24+09:00'
+  verificationStatus: LIBRARY_ALL_WA
+  verifiedWith:
+  - verify/yosupo/fps_compositional_inverse.test.cpp
 documentation_of: math/fps/compositional_inverse.hpp
 layout: document
 redirect_from:
