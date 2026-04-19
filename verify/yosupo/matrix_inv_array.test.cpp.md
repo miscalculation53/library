@@ -20,7 +20,7 @@ data:
   - icon: ':question:'
     path: math/linalg/bbla.hpp
     title: Black Box Linear Algebra
-  - icon: ':question:'
+  - icon: ':heavy_check_mark:'
     path: math/linalg/matrix_array.hpp
     title: "\u884C\u5217\uFF08array\uFF09"
   - icon: ':question:'

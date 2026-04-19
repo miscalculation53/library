@@ -81,12 +81,12 @@ data:
     path: utils/larger_int.hpp
     title: "$2$ \u500D\u306E\u30D3\u30C3\u30C8\u6570\u306E\u6574\u6570\u578B"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/interpolation_geo.hpp
     title: "\u591A\u9805\u5F0F\u88DC\u9593\uFF08\u8A55\u4FA1\u70B9\u304C\u7B49\u6BD4\
       \u6570\u5217\uFF09"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/poly_interpolation_geo.test.cpp
     title: verify/yosupo/poly_interpolation_geo.test.cpp
   - icon: ':x:'
@@ -94,7 +94,7 @@ data:
     title: verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/math/fps/multipoint_evaluation_geo.md
     document_title: "\u591A\u9805\u5F0F\u306E\u591A\u70B9\u8A55\u4FA1\uFF08\u8A55\u4FA1\
@@ -1343,7 +1343,7 @@ data:
   requiredBy:
   - math/fps/interpolation_geo.hpp
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yosupo/poly_multipoint_evaluation_geo.test.cpp
   - verify/yosupo/poly_interpolation_geo.test.cpp

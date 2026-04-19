@@ -46,7 +46,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/pbds_set.test.cpp
     title: verify/mytest/pbds_set.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/ordered_set.test.cpp
     title: verify/yosupo/ordered_set.test.cpp
   - icon: ':x:'

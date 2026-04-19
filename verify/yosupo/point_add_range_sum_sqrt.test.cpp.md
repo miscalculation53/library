@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/sqrt_decomposition_range_sum.hpp
     title: "\u5E73\u65B9\u5206\u5272\u306B\u3088\u308B\u4E00\u70B9\u52A0\u7B97\u30FB\
       \u533A\u9593\u548C\u30AF\u30A8\u30EA $\\langle O(1), O(\\sqrt{N}) \\rangle$"
@@ -57,9 +57,9 @@ data:
       \u5224\u5B9A"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/point_add_range_sum
@@ -821,7 +821,7 @@ data:
   path: verify/yosupo/point_add_range_sum_sqrt.test.cpp
   requiredBy: []
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/point_add_range_sum_sqrt.test.cpp
 layout: document

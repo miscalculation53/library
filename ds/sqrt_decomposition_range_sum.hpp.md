@@ -50,12 +50,12 @@ data:
       \u5224\u5B9A"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/point_add_range_sum_sqrt.test.cpp
     title: verify/yosupo/point_add_range_sum_sqrt.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/sqrt_decomposition_range_sum.md
     document_title: "\u5E73\u65B9\u5206\u5272\u306B\u3088\u308B\u4E00\u70B9\u52A0\u7B97\
@@ -801,7 +801,7 @@ data:
   path: ds/sqrt_decomposition_range_sum.hpp
   requiredBy: []
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/point_add_range_sum_sqrt.test.cpp
 documentation_of: ds/sqrt_decomposition_range_sum.hpp
