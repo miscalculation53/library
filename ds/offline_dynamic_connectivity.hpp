@@ -59,7 +59,7 @@ void offline_dynamic_connectivity(int tmax, const vc<tuple<I, I, Obj>> &span_obj
 template <class I = ll, class Time, class Obj>
 vc<tuple<I, I, Obj>> add_del_to_span(int tmax, const vc<pair<Time, Obj>> &time_obj)
 {
-  FlatMap<Obj, vc<Time>> mp(top(time_obj).second);
+  FlatMap<Obj, vc<Time>> mp(unzip(time_obj).second);
   fec([ time, obj ] : sorted(time_obj)) mp[obj].eb(time);
   vc<tuple<I, I, Obj>> res;
   fec([obj, times] : mp)

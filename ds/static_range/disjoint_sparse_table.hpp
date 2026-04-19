@@ -40,19 +40,19 @@ public:
     }
   }
 
-  S get(int p)
+  S get(int p) const
   {
     assert(0 <= p && p < n);
     return dat[0][p];
   }
-  S prod(int l, int r)
+  S prod(int l, int r) const
   {
     auto [wl, wr] = prod_left_right(l, r);
     return M::op(wl, wr);
   }
   // prod[l, r) = wl • wr となるような (wl, wr) を返す
   // 使用場面：最終的な答えとしては一般の元の積がいらない場合
-  pair<S, S> prod_left_right(int l, int r)
+  pair<S, S> prod_left_right(int l, int r) const
   {
     assert(0 <= l && l <= r && r <= n);
     if (l == r)

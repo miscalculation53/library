@@ -3,7 +3,8 @@
 #include "../template/template_all_but_modint.hpp"
 
 #include "extgcd.hpp"
-#include "modint/modint32_internal.hpp"
+#include "../utils/larger_int.hpp"
+#include "modint/modint_internal_barrett32.hpp"
 
 /**
  * @brief 中国剰余定理 (CRT)
@@ -56,31 +57,58 @@ constexpr tuple<bool, T, T> crt(const V1 &rs, const V2 &ms)
 
 // (r, m)
 // ms[i] たちは pairwise coprime
-// T は ms[i] の型の 2 乗が収まる (符号つき)
-template <class mint, class T = ll, class V1, class V2>
+template <class mint, class V1, class V2>
 pair<mint, mint> crt_mod(const V1 &rs, const V2 &ms)
 {
+  using T = decay_t<decltype(ms[0])>;
   assert(rs.size() == ms.size());
   const int n = rs.size();
   mint r = 0, m = 1;
-  vc<T> rr(n, 0), mm(n, 1);
-  repi(i, n)
+
+  if constexpr (sizeof(T) <= 4)
   {
-    // r = t[0] + t[1]m[0] + ... + t[i-1]m[0]...m[i-2] mod mint::mod
-    // m = m[0]...m[i-1] mod mint::mod
-    // rr[i] = t[0] + t[1]m[0] + ... + t[i-1]m[0]...m[i-2] mod m[i]
-    // mm[i] = m[0]...m[i-1] mod m[i]
-    assert(ms[i] >= 1);
-    auto [g, im, _] = extgcd<T>(mm[i], ms[i]);
-    assert(g == 1);
-    T t = safemod((rs[i] % ms[i] - rr[i]) * im, ms[i]);
-    r += t * m, m *= ms[i];
-    repi(j, i + 1, n)
+    vc<internal::barrett32> ba;
+    ba.reserve(n);
+    repi(i, n) ba.eb(ms[i]);
+    vc<uint> rr(n, 0), mm(n, 1);
+    repi(i, n)
     {
-      rr[j] += t * mm[j] % ms[j];
-      if (rr[j] >= ms[j])
-        rr[j] -= ms[j];
-      mm[j] *= ms[i], mm[j] %= ms[j];
+      assert(ms[i] >= 1);
+      auto [g, im, _] = extgcd<ll>(mm[i], ms[i]);
+      assert(g == 1);
+      if (im < 0)
+        im += ms[i];
+      ll diff = safemod(ll(rs[i]) - rr[i], ms[i]);
+      uint t = ba[i].mul(diff, im);
+      r += t * m, m *= ms[i];
+      repi(j, i + 1, n)
+      {
+        rr[j] += ba[j].mul(t, mm[j]);
+        if (rr[j] >= (uint)ms[j])
+          rr[j] -= ms[j];
+        mm[j] = ba[j].mul(mm[j], ms[i]);
+      }
+    }
+  }
+  else
+  {
+    vc<ull> rr(n, 0), mm(n, 1);
+    repi(i, n)
+    {
+      assert(ms[i] >= 1);
+      auto [g, im, _] = extgcd<ll>(mm[i], ms[i]);
+      assert(g == 1);
+      if (im < 0)
+        im += ms[i];
+      i128 diff = safemod((i128)rs[i] - rr[i], ms[i]);
+      ull t = (ull)((u128)diff * im % ms[i]);
+      r += t * m, m *= ms[i];
+      repi(j, i + 1, n)
+      {
+        rr[j] += (ull)((u128)t * mm[j] % ms[j]);
+        if (rr[j] >= (ull)ms[j]) rr[j] -= ms[j];
+        mm[j] = (ull)((u128)mm[j] * ms[i] % ms[j]);
+      }
     }
   }
   return {r, m};
@@ -91,10 +119,10 @@ pair<mint, mint> crt_mod(const V1 &rs, const V2 &ms)
 // ms[i] たちがコンパイル時定数であることを仮定
 // ms[i] たちは pairwise coprime
 // 0 <= rs[i] < ms[i]
-// T は ms[i] の型の 2 乗が収まる (符号つき)
-template <class mint, class T = ll, class U1, class U2, size_t n>
+template <class mint, class U1, class U2, size_t n>
 constexpr pair<mint, mint> crt_mod_constexpr(const array<U1, n> &rs, const array<U2, n> &ms)
 {
+  using T = larger_int_t<U2>;
   assert(rs.size() == ms.size());
   mint r = 0, m = 1;
   array<T, n> rr{}, mm;
@@ -113,39 +141,6 @@ constexpr pair<mint, mint> crt_mod_constexpr(const array<U1, n> &rs, const array
       if (rr[j] >= ms[j])
         rr[j] -= ms[j];
       mm[j] *= ms[i], mm[j] %= ms[j];
-    }
-  }
-  return {r, m};
-}
-
-// (r, m)
-// ms[i] たちは pairwise coprime
-// ms[i] たちが dynamic 32 bit の場合に高速化したもの
-template <class mint, class V1, class V2>
-pair<mint, mint> crt_mod_dynamic_32(const V1 &rs, const V2 &ms)
-{
-  assert(rs.size() == ms.size());
-  const int n = rs.size();
-  mint r = 0, m = 1;
-  vc<internal::barrett32> ba;
-  ba.reserve(n);
-  repi(i, n) ba.eb(ms[i]);
-  vc<ll> rr(n, 0), mm(n, 1);
-  repi(i, n)
-  {
-    assert(ms[i] >= 1);
-    auto [g, im, _] = extgcd<ll>(mm[i], ms[i]);
-    assert(g == 1);
-    if (im < 0)
-      im += ms[i];
-    ll t = ba[i].mul(safemod(rs[i] - rr[i], ms[i]), im);
-    r += t * m, m *= ms[i];
-    repi(j, i + 1, n)
-    {
-      rr[j] += ba[j].mul(t, mm[j]);
-      if (rr[j] >= ms[j])
-        rr[j] -= ms[j];
-      mm[j] = ba[j].mul(mm[j], ms[i]);
     }
   }
   return {r, m};

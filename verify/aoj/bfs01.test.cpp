@@ -31,7 +31,7 @@ void main2()
   A--, B--, C--, D--;
   VEC(pll, N + 1, XY);
   offset(XY, pll{-1, -1});
-  auto [X, Y] = top(XY);
+  UNZIP(XY, X, Y);
 
   ll M = max({A, B, C, D, MAX(X), MAX(Y)}) + 1;
   vtlll UVW;

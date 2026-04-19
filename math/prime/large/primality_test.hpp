@@ -2,7 +2,6 @@
 
 #include "template/template_all_but_modint.hpp"
 #include "math/modint/modint.hpp"
-#include "math/modint/modint64.hpp"
 
 /**
  * @brief 素数判定
@@ -46,7 +45,7 @@ bool is_prime(ll n)
   static constexpr array<ll, 7> bases64 = {2, 325, 9375, 28178, 450775, 9780504, 1795265022};
   if (n <= INT_MAX)
   {
-    using mint = dynamic_modint<INT_MIN>;
+    using mint = dynamic_modint32<INT_MIN>;
     return internal::is_prime_impl<mint>(n, bases32);
   }
   else

@@ -22,7 +22,8 @@ public:
   SegmentTree(int n) : SegmentTree(vc<S>(n, M::e())) {}
   template <class Iter>
   SegmentTree(const Iter &bg, const Iter &ed) : SegmentTree(vc<S>(bg, ed)) {}
-  SegmentTree(const vc<S> &vec) : n(vec.size()), siz(bit_ceil(vec.size())), dat(2 * siz, M::e())
+  template <class T>
+  SegmentTree(const vc<T> &vec) : n(vec.size()), siz(bit_ceil(vec.size())), dat(2 * siz, M::e())
   {
     repi(i, vec.size()) dat[siz + i] = vec[i];
     repi(i, siz - 1, 0, -1) update(i);

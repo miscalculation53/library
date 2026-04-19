@@ -504,7 +504,7 @@ void offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto &vij : vi)
 
 // ----- 転置 -----
 template <class T, const size_t m>
-array<vc<T>, m> top(const vc<array<T, m>> &vt)
+array<vc<T>, m> unzip(const vc<array<T, m>> &vt)
 {
   const size_t n = vt.size();
   array<vc<T>, m> tv;
@@ -515,7 +515,7 @@ array<vc<T>, m> top(const vc<array<T, m>> &vt)
   return tv;
 }
 template <class T, const size_t m>
-vc<array<T, m>> top(const array<vc<T>, m> &tv)
+vc<array<T, m>> zip(const array<vc<T>, m> &tv)
 {
   if (tv.empty()) return {};
   const size_t n = tv[0].size();
@@ -530,7 +530,7 @@ vc<array<T, m>> top(const array<vc<T>, m> &tv)
 }
 
 template <class T, class U>
-pair<vc<T>, vc<U>> top(const vc<pair<T, U>> &vt)
+pair<vc<T>, vc<U>> unzip(const vc<pair<T, U>> &vt)
 {
   const size_t n = vt.size();
   pair<vc<T>, vc<U>> tv;
@@ -540,7 +540,7 @@ pair<vc<T>, vc<U>> top(const vc<pair<T, U>> &vt)
   return tv;
 }
 template <class T, class U>
-vc<pair<T, U>> top(const pair<vc<T>, vc<U>> &tv)
+vc<pair<T, U>> zip(const pair<vc<T>, vc<U>> &tv)
 {
   const size_t n = tv.first.size();
   assert(n == tv.second.size());
@@ -564,7 +564,7 @@ auto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t index)
 };
 
 template <class... Ts>
-auto top(const vc<tuple<Ts...>> &vt)
+auto unzip(const vc<tuple<Ts...>> &vt)
 {
   const size_t n = vt.size();
   tuple<vc<Ts>...> tv;
@@ -576,7 +576,7 @@ auto top(const vc<tuple<Ts...>> &vt)
 }
 
 template <class... Ts>
-auto top(const tuple<vc<Ts>...> &tv)
+auto zip(const tuple<vc<Ts>...> &tv)
 {
   size_t n = get<0>(tv).size();
   apply([&](auto &...v)
@@ -586,4 +586,7 @@ auto top(const tuple<vc<Ts>...> &tv)
     vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);
   return vt;
 }
+
+#define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)
+#define ZIP(vt, ...) auto vt = zip(tuple{__VA_ARGS__})
 // ----------

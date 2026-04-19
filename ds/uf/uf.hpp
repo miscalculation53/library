@@ -136,8 +136,9 @@ struct UFDataEverything
   {
     VData &xd = uf.vdat[x], &yd = uf.vdat[y];
     GData &gd = uf.gdat;
+
     xd.vsum += yd.vsum;
-    xd.esum += w;
+    xd.esum += yd.esum + w;
     if constexpr (need_vlist)
     {
       xd.vlist.insert(xd.vlist.end(), ALL(yd.vlist));
@@ -153,6 +154,8 @@ struct UFDataEverything
   static void add_edge_same(UF &uf, int x, EWeight w)
   {
     VData &xd = uf.vdat[x];
+    GData &gd = uf.gdat;
+
     xd.esum += w;
   }
 };

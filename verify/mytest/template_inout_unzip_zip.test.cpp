@@ -15,8 +15,8 @@ void test1()
     {"a", "bcd", "ef"}
   };
 
-  auto tv_ans = top(vt_god);
-  auto vt_ans = top(tv_god);
+  auto tv_ans = unzip(vt_god);
+  auto vt_ans = zip(tv_god);
   dump(tv_ans, vt_ans);
   assert(tv_ans == tv_god);
   assert(vt_ans == vt_god);
@@ -37,8 +37,8 @@ void test2()
     {5, 10, 15}
   }};
 
-  auto tv_ans = top(vt_god);
-  auto vt_ans = top(tv_god);
+  auto tv_ans = unzip(vt_god);
+  auto vt_ans = zip(tv_god);
   dump(tv_ans, vt_ans);
   assert(tv_ans == tv_god);
   assert(vt_ans == vt_god);
@@ -59,8 +59,8 @@ void test3()
     {"a", "bcd", "ef"}
   };
 
-  auto tv_ans = top(vt_god);
-  auto vt_ans = top(tv_god);
+  auto tv_ans = unzip(vt_god);
+  auto vt_ans = zip(tv_god);
   dump(tv_ans, vt_ans);
   assert(tv_ans == tv_god);
   assert(vt_ans == vt_god);

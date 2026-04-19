@@ -10,6 +10,8 @@
 #include "template_types.hpp"
 #include "template_rep.hpp"
 
+#include "../utils/is_integral_ext.hpp"
+
 /**
  * @brief テンプレート（演算）
  * @docs docs/template/template_math.md
@@ -20,13 +22,13 @@ inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }
 template <class T, class U>
 inline bool chmax(T &a, U b) { return a < b ? a = b, true : false; }
 
-template <class T = ll, class U, class V>
+template <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>
 inline constexpr T divfloor(U a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }
-template <class T = ll, class U, class V>
+template <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>
 inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }
-template <class T = ll, class U, class V>
+template <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>
 inline constexpr T divround(U a, V b) { return divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }
-template <class T = ll, class U, class V>
+template <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>
 inline constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }
 
 template <class T = ll, class U, class V>

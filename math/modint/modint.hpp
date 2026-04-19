@@ -1,168 +1,240 @@
 #pragma once
 
 #include "../../template/template_all_but_modint.hpp"
-#include "modint32_internal.hpp"
-#include "modint_base.hpp"
+
+#include "../../utils/is_integral_ext.hpp"
+#include "modint_internal_static.hpp"
+#include "modint_internal_barrett32.hpp"
+#include "modint_internal_montgomery64.hpp"
 #include "../extgcd.hpp"
 
-/**
- * @brief modint (32 bit)
- * @docs docs/math/modint/modint.md
- */
-
-template <int m>
-struct static_modint : internal::modint_base<static_modint<m>>
+namespace internal
 {
-  using mint = static_modint;
-private:
-  friend struct internal::modint_base<static_modint<m>>;
-  uint _v;
-  static constexpr uint umod() { return m; }
-  static constexpr bool prime = internal::isprime32<m>;
 
-public:
-  static constexpr int mod() { return m; }
-  static mint raw(int v)
+  template <class Policy>
+  struct modint_impl
   {
-    mint x;
-    x._v = v;
-    return x;
-  }
+    using V = typename Policy::value_type;
+    using M = typename Policy::mod_type;
+    using mint = modint_impl;
 
-  static_modint() : _v(0) {}
-  template <class T, typename = enable_if_t<is_integral<T>::value>>
-  static_modint(T v)
-  {
-    if constexpr (is_signed_v<T>)
-    {
-      ll x = (ll)(v % (ll)(umod()));
-      if (x < 0)
-        x += umod();
-      _v = (uint)x;
-    }
-    else
-    {
-      _v = (uint)(v % umod());
-    }
-  }
+  private:
+    V _v;
 
-  int val() const { return (int)_v; }
+  public:
+    static constexpr M mod() { return Policy::mod(); }
 
-  mint& operator*=(const mint &rhs)
-  {
-    ull z = _v;
-    z *= rhs._v;
-    _v = (uint)(z % umod());
-    return *this;
-  }
+    template <class T = Policy>
+    static auto set_mod(M m) -> decltype(T::set_mod(m)) { return T::set_mod(m); }
 
-  mint inv() const
-  {
-    if (prime)
+    static mint raw(V v)
     {
-      assert(_v != 0);
-      return CREF.pow(umod() - 2);
-    }
-    else
-    {
-      auto [g, x, y] = extgcd<int>(_v, m);
-      assert(g == 1);
+      mint x;
+      x._v = v;
       return x;
     }
-  }
+
+    modint_impl() : _v(0) {}
+
+    template <class T, typename = enable_if_t<is_integral_ext<T>>>
+    modint_impl(T v)
+    {
+      V rem;
+      if constexpr (is_signed_ext<T>)
+      {
+        using S = make_signed_t<V>;
+        S x = v % S(Policy::umod());
+        if (x < 0)
+          x += Policy::umod();
+        rem = x;
+      }
+      else
+        rem = V(v % Policy::umod());
+      _v = Policy::init(rem);
+    };
+
+    M val() const { return Policy::val(_v); }
+
+    mint &operator+=(const mint &rhs)
+    {
+      _v += rhs._v;
+      if (_v >= Policy::umod())
+        _v -= Policy::umod();
+      return *this;
+    }
+    mint &operator-=(const mint &rhs)
+    {
+      _v -= rhs._v;
+      if (_v >= Policy::umod())
+        _v += Policy::umod();
+      return *this;
+    }
+    mint &operator*=(const mint &rhs)
+    {
+      _v = Policy::mul(_v, rhs._v);
+      return *this;
+    }
+    mint &operator/=(const mint &rhs)
+    {
+      return *this *= rhs.inv();
+    }
+
+    mint &operator++()
+    {
+      _v++;
+      if (_v == Policy::umod())
+        _v = 0;
+      return *this;
+    }
+    mint &operator--()
+    {
+      if (_v == 0)
+        _v = Policy::umod();
+      _v--;
+      return *this;
+    }
+    mint operator++(int)
+    {
+      mint res = *this;
+      ++(*this);
+      return res;
+    }
+    mint operator--(int)
+    {
+      mint res = *this;
+      --(*this);
+      return res;
+    }
+    mint operator+() const { return *this; }
+    mint operator-() const { return mint() - *this; }
+
+    template <class T>
+    mint pow(T n) const
+    {
+      assert(n >= 0);
+      mint x = *this, r = 1;
+      while (n)
+      {
+        if (n & 1)
+          r *= x;
+        x *= x;
+        n >>= 1;
+      }
+      return r;
+    }
+    mint inv() const
+    {
+      if constexpr (Policy::is_prime)
+      {
+        return pow(mod() - 2);
+      }
+      else
+      {
+        auto [g, x, y] = extgcd<M>(val(), mod());
+        assert(g == 1);
+        return mint(x);
+      }
+    }
+
+    friend mint operator+(const mint &lhs, const mint &rhs) { return mint(lhs) += rhs; }
+    friend mint operator-(const mint &lhs, const mint &rhs) { return mint(lhs) -= rhs; }
+    friend mint operator*(const mint &lhs, const mint &rhs) { return mint(lhs) *= rhs; }
+    friend mint operator/(const mint &lhs, const mint &rhs) { return mint(lhs) /= rhs; }
+    friend bool operator==(const mint &lhs, const mint &rhs) { return lhs._v == rhs._v; }
+    friend bool operator!=(const mint &lhs, const mint &rhs) { return lhs._v != rhs._v; }
+  
+#if defined LOCAL or not defined FAST_IO
+    friend std::istream &operator>>(std::istream &is, mint &x)
+    {
+      long long a;
+      is >> a;
+      x = a;
+      return is;
+    }
+    friend std::ostream &operator<<(std::ostream &os, const mint &x)
+    {
+      os << x.val();
+      return os;
+    }
+#else
+    friend void rd1(mint &x)
+    {
+      long long a;
+      fastio::rd1(a);
+      x = a;
+    }
+    friend void wt1(const mint &x)
+    {
+      fastio::wt1(x.val());
+    }
+#endif
+  };
+
 };
 
+template <int mod>
+using static_modint32 = internal::modint_impl<internal::policy_static<mod>>;
 template <int id>
-struct dynamic_modint : internal::modint_base<dynamic_modint<id>>
+using dynamic_modint32 = internal::modint_impl<internal::policy_barrett32<id>>;
+template <ll mod>
+using static_modint64 = internal::modint_impl<internal::policy_static<mod>>;
+template <int id>
+using dynamic_modint64_odd = internal::modint_impl<internal::policy_montgomery64_odd<id>>;
+template <int id>
+using dynamic_modint64 = internal::modint_impl<internal::policy_montgomery64<id>>;
+
+using modint998244353 = static_modint32<998244353>;
+using modint1000000007 = static_modint32<1000000007>;
+using modint = dynamic_modint32<-1>;
+using modint61 = static_modint64<(1LL << 61) - 1>;
+using modint64 = dynamic_modint64<-1>;
+
+template <class T>
+struct is_modint : std::false_type
 {
-  using mint = dynamic_modint;
-private:
-  friend struct internal::modint_base<dynamic_modint<id>>;
-  uint _v;
-  static internal::barrett32 bt;
-  static uint umod() { return bt.umod(); }
-
-public:
-  static int mod() { return (int)(bt.umod()); }
-  static void set_mod(int m)
-  {
-    assert(m >= 1);
-    bt = internal::barrett32(m);
-  }
-  static mint raw(int v)
-  {
-    mint x;
-    x._v = v;
-    return x;
-  }
-
-  dynamic_modint() : _v(0) {}
-  template <class T, typename = enable_if_t<is_integral<T>::value>>
-  dynamic_modint(T v)
-  {
-    if constexpr (is_signed_v<T>)
-    {
-      ll x = (ll)(v % (ll)(umod()));
-      if (x < 0)
-        x += umod();
-      _v = (uint)x;
-    }
-    else
-    {
-      _v = (uint)(v % umod());
-    }
-  }
-
-  int val() const { return (int)_v; }
-
-  mint& operator*=(const mint &rhs)
-  {
-    _v = bt.mul(_v, rhs._v);
-    return *this;
-  }
-
-  mint inv() const
-  {
-    auto [g, x, y] = extgcd<int>(_v, mod());
-    assert(g == 1);
-    return x;
-  }
 };
-template <int id>
-internal::barrett32 dynamic_modint<id>::bt(998244353);
-
-using modint998244353 = static_modint<998244353>;
-using modint1000000007 = static_modint<1000000007>;
-using modint = dynamic_modint<-1>;
+template <class Policy>
+struct is_modint<internal::modint_impl<Policy>> : std::true_type
+{
+};
+template <class T>
+inline constexpr bool is_modint_v = is_modint<T>::value;
 
 template <class T>
 struct is_static_modint : false_type {};
 template <int m>
-struct is_static_modint<static_modint<m>> : true_type {};
+struct is_static_modint<static_modint32<m>> : true_type {};
+template <ll m>
+struct is_static_modint<static_modint64<m>> : true_type {};
 template <class T>
 inline constexpr bool is_static_modint_v = is_static_modint<T>::value;
 
 template <class T>
 struct is_dynamic_modint : false_type {};
 template <int id>
-struct is_dynamic_modint<dynamic_modint<id>> : true_type {};
+struct is_dynamic_modint<dynamic_modint32<id>> : true_type {};
+template <int id>
+struct is_dynamic_modint<dynamic_modint64_odd<id>> : true_type {};
+template <int id>
+struct is_dynamic_modint<dynamic_modint64<id>> : true_type {};
 template <class T>
 inline constexpr bool is_dynamic_modint_v = is_dynamic_modint<T>::value;
 
-template <class T>
-inline constexpr bool is_modint_v = is_static_modint_v<T> || is_dynamic_modint_v<T>;
-
 template <typename, typename = void>
-struct has_mod : false_type {};
+struct has_mod : std::false_type
+{
+};
 template <typename T>
-struct has_mod<T, void_t<decltype(declval<T>().mod)>> : true_type {};
+struct has_mod<T, std::void_t<decltype(T::mod())>> : std::true_type
+{
+};
 
 template <class mint>
 struct modint_less
 {
   bool operator()(const mint &a, const mint &b) const
   {
-    if constexpr (has_mod<mint>())
+    if constexpr (is_modint_v<mint>)
       return a.val() < b.val();
     else
       return a < b;
@@ -174,9 +246,9 @@ struct modint_hash
 {
   auto operator()(const mint &x) const
   {
-    if constexpr (has_mod<mint>())
-      return hash(x.val());
+    if constexpr (is_modint_v<mint>)
+      return std::hash<decltype(x.val())>{}(x.val());
     else
-      return hash(x);
+      return std::hash<mint>{}(x);
   }
 };

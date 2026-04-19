@@ -16,7 +16,7 @@
 #include "template/template_all_but_modint.hpp"
 
 #include "ds/coordinate_compression.hpp"
-#include "ds/mo.hpp"
+#include "ds/mo/mo.hpp"
 #include "ds/fenwick_tree/inversion.hpp"
 
 void init() {}

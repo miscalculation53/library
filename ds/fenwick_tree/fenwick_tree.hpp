@@ -24,7 +24,13 @@ public:
   FenwickTree(int n) : n(n), dat(n + 1, G::e()) {}
   FenwickTree(const vc<S> &v) : FenwickTree(v.size())
   {
-    repi(i, n) add(i, v[i]);
+    repi(i, n) dat[i + 1] = v[i];
+    repi(i, 1, n + 1)
+    {
+      int p = i + (i & -i);
+      if (p <= n)
+        dat[p] += dat[i];
+    }
   }
 
   template <class I = ll>

@@ -55,7 +55,12 @@ public:
     }
   }
 
-  S prod(int l, int r)
+  S get(int p) const
+  {
+    assert(0 <= p && p < n);
+    return v[p];
+  }
+  S prod(int l, int r) const
   {
     assert(0 <= l && l <= r && r <= n);
     if (l == r)

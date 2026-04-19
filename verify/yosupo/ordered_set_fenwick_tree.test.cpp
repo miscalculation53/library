@@ -24,8 +24,8 @@ void main2()
   LL(N, Q);
   VEC(ll, N, A);
   VEC(pll, Q, TX);
-  auto [T, X] = top(TX);
-
+  UNZIP(TX, T, X);
+  
   CoordinateCompression cc(concat(A, X));
 
   FenwickTree01 fw(cc.size());

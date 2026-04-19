@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 #include "math/modint/modint.hpp"
-using mint = dynamic_modint<-1>;
+using mint = dynamic_modint32<-1>;
 
 #include "math/convolution/convolution.hpp"
 

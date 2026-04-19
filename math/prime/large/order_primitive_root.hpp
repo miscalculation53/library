@@ -2,7 +2,6 @@
 
 #include "template/template_all_but_modint.hpp"
 #include "math/modint/modint.hpp"
-#include "math/modint/modint64.hpp"
 #include "math/prime/prime_power.hpp"
 #include "math/prime/large/primality_test.hpp"
 #include "math/prime/large/factorize.hpp"
@@ -35,11 +34,11 @@ vc<mint> lagrange_basis(const vc<I> &a, mint x)
       return;
     }
     int m = (l + r) / 2;
-    mint vl = v, vr = v;
-    repi(i, l, m) vr = vr.pow(a[i]);
-    repi(i, m, r) vl = vl.pow(a[i]);
-    dfs(dfs, vl, l, m);
-    dfs(dfs, vr, m, r);
+    mint v_l = v, v_r = v;
+    repi(i, l, m) v_r = v_r.pow(a[i]);
+    repi(i, m, r) v_l = v_l.pow(a[i]);
+    dfs(dfs, v_l, l, m);
+    dfs(dfs, v_r, m, r);
   };
   dfs(dfs, x, 0, n);
   return res;
@@ -122,7 +121,7 @@ ll order_mod(ll x, ll m, const vc<PrimePower<P>> &fac)
   assert(gcd(x, m) == 1);
   if (m <= INT_MAX)
   {
-    using mint = dynamic_modint<INT_MIN>;
+    using mint = dynamic_modint32<INT_MIN>;
     return internal::internal_order_mod<mint>(x, m, fac);
   }
   else if (m % 2 == 1)
@@ -145,7 +144,7 @@ ll primitive_root(ll p, const vc<PrimePower<P>> &fac)
 {
   if (p <= INT_MAX)
   {
-    using mint = dynamic_modint<INT_MIN>;
+    using mint = dynamic_modint32<INT_MIN>;
     return internal::internal_primitive_root<mint>(p, fac);
   }
   else
@@ -163,7 +162,7 @@ ll primitive_root_min(ll p, const vc<PrimePower<P>> &fac)
 {
   if (p <= INT_MAX)
   {
-    using mint = dynamic_modint<INT_MIN>;
+    using mint = dynamic_modint32<INT_MIN>;
     return internal::internal_primitive_root_min<mint>(p, fac);
   }
   else

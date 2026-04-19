@@ -70,7 +70,7 @@ constexpr int primitive_root_constexpr(int m)
     bool ok = true;
     for (int i = 0; i < cnt; i++)
     {
-      if (powmod32_constexpr(g, (m - 1) / divs[i], m) == 1)
+      if (powmod_constexpr(g, (m - 1) / divs[i], m) == 1)
       {
         ok = false;
         break;
@@ -137,7 +137,7 @@ bool ntt_ok(int n)
 {
   if constexpr (is_static_modint_v<mint>)
   {
-    if constexpr (!internal::isprime32<mint::mod()>)
+    if constexpr (!internal::isprime<mint::mod()>)
       return false;
     static constexpr int rank2 = countr_zero(mint::mod() - 1);
     return n <= (1 << rank2);
@@ -147,15 +147,15 @@ bool ntt_ok(int n)
 }
 
 template <int id>
-void ntt(vc<dynamic_modint<id>> &) { assert(false); }
+void ntt(vc<dynamic_modint32<id>> &) { assert(false); }
 template <int id>
-void intt(vc<dynamic_modint<id>> &) { assert(false); }
+void intt(vc<dynamic_modint32<id>> &) { assert(false); }
 
 // 破壊的に変更する
 template <int mod>
-void ntt(vc<static_modint<mod>> &a)
+void ntt(vc<static_modint32<mod>> &a)
 {
-  using mint = static_modint<mod>;
+  using mint = static_modint32<mod>;
   int n = int(a.size());
   int h = countr_zero((unsigned int)n);
   assert(n == (1 << h));
@@ -219,9 +219,9 @@ void ntt(vc<static_modint<mod>> &a)
 
 // 破壊的に変更する
 template <int mod>
-void intt(vc<static_modint<mod>> &a)
+void intt(vc<static_modint32<mod>> &a)
 {
-  using mint = static_modint<mod>;
+  using mint = static_modint32<mod>;
   int n = int(a.size());
   int h = countr_zero((unsigned int)n);
   assert(n == (1 << h));
@@ -350,7 +350,7 @@ vc<mint> convolution_ntt(vc<mint> a, vc<mint> b)
 template <size_t j, int mod, class T, size_t k>
 void convolution_crt_helper(const vc<T> &a, const vc<T> &b, vc<array<T, k>> &cs)
 {
-  using mint = static_modint<mod>;
+  using mint = static_modint32<mod>;
   const int n = a.size(), m = b.size();
   auto c = convolution_ntt(vc<mint>(ALL(a)), vc<mint>(ALL(b)));
   repi(i, n + m - 1) cs[i][j] = c[i].val();
@@ -415,7 +415,7 @@ vc<mint> convolution(const vc<mint> &a, const vc<mint> &b)
   {
     if (min(cnta, cntb) <= 300)
       return internal::convolution_naive(a, b);
-    assert(ntt_ok<static_modint<469762049>>(n + m - 1) && "|a| + |b| - 1 <= 2^26");
+    assert(ntt_ok<static_modint32<469762049>>(n + m - 1) && "|a| + |b| - 1 <= 2^26");
     vc<ll> a_(n), b_(m);
     repi(i, n) a_[i] = a[i].val();
     repi(j, m) b_[j] = b[j].val();
@@ -426,7 +426,7 @@ vc<mint> convolution(const vc<mint> &a, const vc<mint> &b)
 template <int mod = 998244353, class T, typename = enable_if_t<is_integral<T>::value>>
 vc<T> convolution(const vc<T> &a, const vc<T> &b)
 {
-  using mint = static_modint<mod>;
+  using mint = static_modint32<mod>;
   auto c = convolution(vc<mint>(ALL(a)), vc<mint>(ALL(b)));
   vc<T> c_(c.size());
   repi(i, c.size()) c_[i] = c[i].val();

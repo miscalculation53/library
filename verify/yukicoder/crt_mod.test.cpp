@@ -25,7 +25,7 @@ void main2()
 {
   LL(N);
   VEC(pll, N, XY);
-  auto [X, Y] = top(XY);
+  UNZIP(XY, X, Y);
   vc<int> X_(ALL(X)), Y_(ALL(Y));
   bool ok = pre_crt(X, Y);
   bool ok2 = pre_crt(X_, Y_);
@@ -34,8 +34,6 @@ void main2()
     PRINTRETURN(-1);
   auto res = crt_mod<mint>(X, Y);
   auto [r, m] = res;
-  auto res2 = crt_mod_dynamic_32<mint>(X, Y);
-  assert(res == res2);
   if (MAX(X) == 0)
     PRINT(m);
   else
@@ -44,14 +42,10 @@ void main2()
   {
     X.at(i) += randint(-ipow(10, 9), ipow(10, 9)) * Y.at(i);
   }
-  auto res3 = crt_mod<mint>(X, Y);
-  auto res4 = crt_mod_dynamic_32<mint>(X, Y);
-  auto res5 = crt_mod<mint>(X_, Y_);
-  auto res6 = crt_mod_dynamic_32<mint>(X_, Y_);
+  auto res2 = crt_mod<mint>(X, Y);
+  auto res3 = crt_mod<mint>(X_, Y_);
+  assert(res == res2);
   assert(res == res3);
-  assert(res == res4);
-  assert(res == res5);
-  assert(res == res6);
 }
 
 void test() {}

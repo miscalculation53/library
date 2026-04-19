@@ -2,7 +2,7 @@
 
 #include "../template/template_all_but_modint.hpp"
 
-#include "../math/modint/modint64.hpp"
+#include "../math/modint/modint.hpp"
 #include "../math/modint/power_table.hpp"
 
 #include "lcp_compare.hpp"

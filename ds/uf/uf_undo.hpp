@@ -18,11 +18,12 @@ struct UnionFindUndo : UnionFind<UFData, false>
 protected:
   using UF::par;
   using UF::vdat;
-  vc<tuple<int, int, typename UFData::VData, typename UFData::GData, bool>> his;
+  vc<tuple<int, int, typename UFData::VData, typename UFData::GData>> his;
+  int snap_time;
 
 public:
-  UnionFindUndo() {}
-  UnionFindUndo(int n) : UF(n) {}
+  UnionFindUndo() : snap_time(0) {}
+  UnionFindUndo(int n) : UF(n), snap_time(0) {}
   using UF::gdat;
   using UF::leader;
   // 返り値: マージした後の新たな代表元
@@ -30,8 +31,8 @@ public:
   I merge(int x, int y, const typename UFData::EWeight &w = 1)
   {
     x = leader(x), y = leader(y);
-    his.eb(x, par[x], vdat[x], gdat, false);
-    his.eb(y, par[y], vdat[y], gdat, false);
+    his.eb(x, par[x], vdat[x], gdat);
+    his.eb(y, par[y], vdat[y], gdat);
     if (x == y)
     {
       UFData::add_edge_same(*this, x, w);
@@ -47,33 +48,18 @@ public:
   // 制約: すでに times 回の辺追加が行われている
   void undo(int times = 1)
   {
-    repi(t, 2 * times)
+    repi(_, 2 * times)
     {
       assert(!his.empty());
-      cauto & [ i, p, vd, gd, _ ] = his.back();
+      cauto & [ i, p, vd, gd ] = his.back();
       par[i] = p, vdat[i] = vd, gdat = gd;
       his.pop_back();
     }
   }
-  // 現在の状態の snapshot を撮る
-  void snapshot()
-  {
-    if (!his.empty())
-      std::get<4>(his.back()) = true;
-  }
-  // 直前に snapshot を撮った状態 (なければ初期状態) に戻す
-  void rollback()
-  {
-    while (!his.empty())
-    {
-      auto &[i, p, vd, gd, snapshoot] = his.back();
-      if (snapshoot)
-      {
-        snapshoot = false;
-        break;
-      }
-      par[i] = p, vdat[i] = vd, gdat = gd;
-      his.pop_back();
-    }
-  }
+  // 初期状態に戻す
+  void reset() { undo(SZ(his) / 2); }
+  // 現在の状態の snapshot を撮る (保持できる snapshot は 1 個まで)
+  void snapshot() { snap_time = his.size(); }
+  // snapshot を撮った状態に戻す (保持できる snapshot は 1 個まで)
+  void rollback() { undo((SZ(his) - snap_time) / 2); }
 };

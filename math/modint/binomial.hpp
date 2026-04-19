@@ -2,6 +2,8 @@
 
 #include "../../template/template_all_but_modint.hpp"
 
+#include "modint.hpp"
+
 /**
  * @brief 二項係数
  * @docs docs/math/modint/binomial.md
@@ -11,23 +13,31 @@ template <class T>
 struct Binomial
 {
 private:
-  static decltype(T::mod()) mod;
-  static vc<T> fac_, finv_, inv_;
-
+  inline static decltype(T::mod()) mod;
+  
 public:
+  inline static vc<T> fac_, finv_, inv_;
   static void reserve(int n)
   {
-    if (mod != T::mod())
+    if constexpr (is_dynamic_modint_v<T>)
     {
-      mod = T::mod();
-      fac_ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};
+      if (mod != T::mod())
+      {
+        mod = T::mod();
+        fac_ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};
+      }
     }
-    int i = fac_.size();
-    chmin(n, T::mod() - 1);
-    if (n < i)
+    else
+    {
+      if (fac_.empty())
+        fac_ = {1, 1}, finv_ = {1, 1}, inv_ = {0, 1};
+    }
+    if (n < SZ(fac_))
       return;
+    chmin(n, T::mod() - 1);
+    int si = fac_.size();
     fac_.resize(n + 1), finv_.resize(n + 1), inv_.resize(n + 1);
-    for (; i <= n; i++)
+    repi(i, si, n + 1)
     {
       fac_[i] = fac_[i - 1] * T::raw(i);
       inv_[i] = -inv_[T::mod() % i] * T::raw(T::mod() / i);
@@ -50,11 +60,11 @@ public:
     reserve(n);
     return finv_[n];
   }
-  static T inv(T n)
+  static T inv(int n)
   {
     assert(n != 0);
-    reserve(n.val());
-    return inv_[n.val()];
+    reserve(n);
+    return inv_[n];
   }
 
   static T P(int n, int k)
@@ -82,7 +92,3 @@ public:
     return C(n + k - 1, k);
   }
 };
-template <class T> decltype(T::mod()) Binomial<T>::mod{};
-template <class T> vc<T> Binomial<T>::fac_{};
-template <class T> vc<T> Binomial<T>::finv_{};
-template <class T> vc<T> Binomial<T>::inv_{};

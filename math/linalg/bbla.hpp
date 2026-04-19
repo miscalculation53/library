@@ -56,7 +56,11 @@ vc<typename F::S> solve(const LinearMap &linear_map, vc<typename F::S> y, const 
   repi(i, 1, m.size())
   {
     S coef = F::mul(m[i], minus_inv_m0);
-    repi(j, n) res[j] = F::add(res[j], F::mul(coef, y[j]));
+    repi(j, n)
+    {
+      auto &resj = res[j];
+      resj = F::add(resj, F::mul(coef, y[j]));
+    }
     linear_map(y);
   }
   return res;

@@ -115,9 +115,9 @@
 
 副産物として、tuple-like な型どうしが `+` で足し算できる。
 
-#### 転置
+#### zip, unzip
 
-`vc<tuple-like<T1, T2, ...>>` と `tuple-like<vc<T1>, vc<T2>, ...>` を相互変換するには `top()` を用いる。名前の由来は $\LaTeX$ の転置記号 $\top$ を出力するコマンド `\top`。
+`vc<tuple-like<T1, T2, ...>>` (vt) と `tuple-like<vc<T1>, vc<T2>, ...>` (tv) を相互変換する。vt → tv が `unzip` で、tv → vt が `zip`。
 
 思想としては
 
@@ -201,7 +201,8 @@ A_N B_N
 ```cpp
 LL(N);
 VEC(pll, N, AB);
-auto [A, B] = top(AB);
+auto [A, B] = unzip(AB);
+// 上記はマクロを使って UNZIP(AB, A, B) と書ける
 ```
   
 これで `AB` は `vc<pll>` に、`A`, `B` はそれぞれ `vc<ll>` になる。
@@ -218,9 +219,10 @@ B_1 ... B_N
 ```cpp
 LL(N);
 VEC(ll, N, A, B);
-auto AB = top(pair{A, B});
+auto AB = zip(pair{A, B});
+// 上記はマクロを使って ZIP(AB, A, B) と書ける (ただしこのマクロではすべて tuple になる)
 ranges::sort(AB);
-tie(A, B) = top(AB);
+tie(A, B) = unzip(AB);
 ```
   
 このように、vector 2 つで与えられたものを、pair の vector にして、ソートして、vector 2 つに戻す、ということもできる。

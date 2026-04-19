@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../template/template_all_but_modint.hpp"
+#include "../../template/template_all_but_modint.hpp"
 
 /**
  * @brief Mo's algorithm
@@ -26,7 +26,7 @@ template <class I>
 vc<int> mo_order_params(const vc<pair<I, I>> &lrs, int b, int t)
 {
   const int q = lrs.size();
-  cauto &[ls, rs] = top(lrs);
+  cauto &[ls, rs] = unzip(lrs);
   auto comp = [&](int i, int j)
   {
     int segi = (ls[i] + t * b / 2) / b, segj = (ls[j] + t * b / 2) / b;
@@ -42,7 +42,7 @@ vc<int> mo_order_params(const vc<pair<I, I>> &lrs, int b, int t)
 template <class I>
 vc<int> mo_order(const vc<pair<I, I>> &lrs)
 {
-  cauto &[ls, rs] = top(lrs);
+  cauto &[ls, rs] = unzip(lrs);
   const int n = max(MAX(ls), MAX(rs));
   const int q = lrs.size();
   const int b1 = max(1, int(n / sqrt(q + 1)));
@@ -69,22 +69,23 @@ vc<int> mo_order(const vc<pair<I, I>> &lrs)
 // del_l(l, r): 今の区間が [l, r) であるとき、l を削除して [l+1, r) にする
 // del_r(l, r): 今の区間が [l, r+1) であるとき、r を削除して [l, r) にする
 // rem(qid): 今が qid 番目の区間だとしてその部分の答えを確定させる
-template <class I, class ADD_L, class ADD_R, class DEL_L, class DEL_R, class REM>
-void mo(int n, const vc<pair<I, I>> &lrs, ADD_L add_l, ADD_R add_r, DEL_L del_l, DEL_R del_r, REM rem)
+template <class I, class AddL, class AddR, class DelL, class DelR, class Rem>
+void mo(int n, const vc<pair<I, I>> &lrs, const AddL &add_l, const AddR &add_r, const DelL &del_l, const DelR &del_r, const Rem &rem)
 {
   fec([ l, r ] : lrs) { assert(0 <= l && l <= n && 0 <= r && r <= n); }
   vc<int> ord = internal::mo_order(lrs);
-  cauto & [ ls, rs ] = top(lrs);
+  cauto & [ ls, rs ] = unzip(lrs);
   int l = 0, r = 0;
   fe(i : ord)
   {
-    while (ls[i] < l)
+    const int li = ls[i], ri = rs[i];
+    while (li < l)
       add_l(--l, r);
-    while (r < rs[i])
+    while (r < ri)
       add_r(l, r++);
-    while (l < ls[i])
+    while (l < li)
       del_l(l++, r);
-    while (rs[i] < r)
+    while (ri < r)
       del_r(l, --r);
     rem(i);
   }

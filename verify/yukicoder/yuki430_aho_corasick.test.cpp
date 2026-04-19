@@ -45,10 +45,13 @@ void main2()
   }
   dump(cnt | cp::index());
 
-  RootedTree<bool, false> G(GEN_VEC(N, i, aho.failure(i)));
-  fec(e : reversed(G.bfs_ordered_edges()))
+  RootedTree G(N, GEN_VEC(N, i, aho.failure(i)));
+  fec(v : G.bottom_up_vertices())
   {
-    cnt.at(e.from) += cnt.at(e.to);
+    if (v == G.root())
+      continue;
+    ll p = G.parent(v);
+    cnt.at(p) += cnt.at(v);
   }
 
   ll ans = 0;

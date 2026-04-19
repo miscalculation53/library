@@ -17,7 +17,8 @@ struct GroupAffineFunction
     mint a, b;
     S() {}
     S(mint a, mint b) : a(a), b(b) {}
-    S(const pair<mint, mint> &ab) : a(ab.first), b(ab.second) {}
+    template <class T, class U>
+    S(const pair<T, U> &ab) : a(ab.first), b(ab.second) {}
   };
   static constexpr S op(const S &f, const S &g)
   {

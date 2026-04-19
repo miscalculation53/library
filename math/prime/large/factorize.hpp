@@ -2,7 +2,6 @@
 
 #include "template/template_all_but_modint.hpp"
 #include "math/modint/modint.hpp"
-#include "math/modint/modint64.hpp"
 #include "math/prime/prime_power.hpp"
 #include "math/prime/large/primality_test.hpp"
 
@@ -49,7 +48,7 @@ ll get_prime_factor(ll n)
 {
   if (n <= INT_MAX)
   {
-    using mint = dynamic_modint<INT_MIN>;
+    using mint = dynamic_modint32<INT_MIN>;
     return get_prime_factor_impl<mint>(n);
   }
   else

@@ -8,26 +8,29 @@
  * @docs docs/graph/tree/diameter.md
  */
 
-// 深さに基づいた直径を求める
 // (a, b, ga)
 // a, b: 端点、ga: a を根とする根つき木
-template <class I = ll, class Cost, bool need_dist>
-tuple<I, I, RootedTree<Cost, need_dist>> tree_diameter_by_depth(const RootedTree<Cost, need_dist> &g)
+template <class Pair>
+tuple<int, int, RootedTree> tree_diameter(int n, const vc<Pair> &es)
 {
-  I a = ARGMAX(GEN_VEC(g.size(), i, g.depth(i)));
-  auto ga = g.rerooted_tree(a);
-  I b = ARGMAX(GEN_VEC(g.size(), i, ga.depth(i)));
+  RootedTree g(n, es, 0);
+  int a = ARGMAX(GEN_VEC(n, i, g.depth(i)));
+  RootedTree ga(n, es, a);
+  int b = ARGMAX(GEN_VEC(n, i, ga.depth(i)));
   return {a, b, ga};
 }
 
-// コストに基づいた直径を求める (コストは非負)
-// (a, b, ga)
-// a, b: 端点、ga: a を根とする根つき木
-template <class I = ll, class Cost>
-tuple<I, I, RootedTree<Cost, true>> tree_diameter_by_cost(const RootedTree<Cost, true> &g)
+// (a, b, ga, wdsa)
+// a, b: 端点、ga: a を根とする根つき木、wdsa: a を根としたときの各頂点の重みつき深さ
+template <class Pair, class Cost>
+tuple<int, int, RootedTree, vc<Cost>> tree_diameter_weighted(int n, const vc<Pair> &es, const vc<Cost> &costs)
 {
-  I a = ARGMAX(GEN_VEC(g.size(), i, g.dist(i)));
-  auto ga = g.rerooted_tree(a);
-  I b = ARGMAX(GEN_VEC(g.size(), i, ga.dist(i)));
-  return {a, b, ga};
+  assert(MIN(costs) >= 0);
+  RootedTree g(n, es, 0);
+  vc<Cost> wds0 = g.weighted_depths(g.reordered_edge_info(es, costs));
+  int a = ARGMAX(GEN_VEC(n, i, wds0[i]));
+  RootedTree ga(n, es, a);
+  vc<Cost> wdsa = ga.weighted_depths(ga.reordered_edge_info(es, costs));
+  int b = ARGMAX(GEN_VEC(n, i, wdsa[i]));
+  return {a, b, ga, wdsa};
 }

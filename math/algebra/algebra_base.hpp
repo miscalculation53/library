@@ -72,6 +72,43 @@ struct OppositeGroup
   static constexpr auto e = G::e;
   static constexpr auto inv = G::inv;
 };
+template <class M>
+struct NormalAndOppositeMonoid
+{
+  struct S
+  {
+    typename M::S normal;
+    typename M::S opposite;
+    S() {}
+    template <class... Args,
+              std::enable_if_t<std::is_constructible_v<typename M::S, Args...>, std::nullptr_t> = nullptr>
+    S(Args &&...args)
+        : normal(std::forward<Args>(args)...), opposite(normal) {}
+    S rev() { return {opposite, normal}; }
+    S(const typename M::S &normal, const typename M::S &opposite) : normal(normal), opposite(opposite) {}
+  };
+  static constexpr S op(const S &a, const S &b) { return {M::op(a.normal, b.normal), M::op(b.opposite, a.opposite)}; }
+  static constexpr S e() { return {M::e(), M::e()}; }
+};
+template <class G>
+struct NormalAndOppositeGroup
+{
+  struct S
+  {
+    typename G::S normal;
+    typename G::S opposite;
+    S() {}
+    template <class... Args,
+              std::enable_if_t<std::is_constructible_v<typename G::S, Args...>, std::nullptr_t> = nullptr>
+    S(Args &&...args)
+        : normal(std::forward<Args>(args)...), opposite(normal) {}
+    S rev() { return {opposite, normal}; }
+    S(const typename G::S &normal, const typename G::S &opposite) : normal(normal), opposite(opposite) {}
+  };
+  static constexpr S op(const S &a, const S &b) { return {G::op(a.normal, b.normal), G::op(b.opposite, a.opposite)}; }
+  static constexpr S e() { return {G::e(), G::e()}; }
+  static constexpr S inv() { return {G::inv(), G::inv()}; }
+};
 
 template <class SR>
 using MonoidOfSemiRingAdd = Monoid<typename SR::S, SR::add, SR::e0>;

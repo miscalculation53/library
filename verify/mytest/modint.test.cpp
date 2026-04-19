@@ -6,7 +6,7 @@
 template <const int MOD>
 void test1()
 {
-  using mint = static_modint<MOD>;
+  using mint = static_modint32<MOD>;
   repi(t, 1000)
   {
     ll a = -10LL * MOD + mt() % (21LL * MOD);

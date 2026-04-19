@@ -141,7 +141,7 @@ public:
   vvc<T> to_vv() const
   {
     vvc<T> res(n);
-    repi(i, n) res[i] = {elist.begin() + start[i], elist.begin() + start[i + 1]};
+    repi(i, n) res[i] = {elist.begin() + start[i], elist.begin() + get_last(i)};
     return res;
   }
 

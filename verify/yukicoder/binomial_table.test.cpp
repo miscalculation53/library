@@ -16,7 +16,7 @@
 #include "math/modint/modint.hpp"
 // using mint = modint998244353;
 // using mint = modint1000000007;
-using mint = static_modint<1000000000>;
+using mint = static_modint32<1000000000>;
 // using mint = modint;
 #include "math/modint/binomial_table.hpp"
 using bi = BinomialTable<mint>;

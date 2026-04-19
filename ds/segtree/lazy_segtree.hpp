@@ -36,7 +36,8 @@ public:
   LazySegmentTree(int n) : LazySegmentTree(vc<S>(n, AM::e())) {}
   template <class Iter>
   LazySegmentTree(const Iter &bg, const Iter &ed) : LazySegmentTree(vc<S>(bg, ed)) {}
-  LazySegmentTree(const vc<S> &vec)
+  template <class T>
+  LazySegmentTree(const vc<T> &vec)
       : n(vec.size()), siz(bit_ceil(vec.size())), lg(countr_zero(siz))
   {
     dat.resize(2 * siz, AM::e()), lazy.resize(siz, AM::id());

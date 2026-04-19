@@ -28,7 +28,7 @@ void main2()
   LL(N, M, Q);
   using ps = pair<ll, string>;
   VEC(ps, N, PS);
-  auto [P, S] = top(PS);
+  UNZIP(PS, P, S);
   VEC(pll, Q, LR);
   offset(LR, pll{-1, 0});
 

@@ -26,19 +26,24 @@ void main2()
 {
   LL(N);
   vl P(N, -1);
-  vvl C(N);
+  vvc<int> C(N);
   rep(_, N)
   {
     LL(v, k);
-    VEC(ll, k, cs);
+    VEC(int, k, cs);
     C.at(v) = cs;
     fe(c : cs) P.at(c) = v;
   }
-  RootedTree<ll> G(P);
+  dump("a");
+  RootedTree G(N, P);
+  dump(G.root());
   rep(v, N)
   {
-    WRITE("node ", v, ": parent = ", G.parent(v), ", depth = ", G.depth(v), ", ");
-    if (G.parent(v) == -1)
+    dump(G.depth(v));
+    if (v != G.root())
+      dump(G.parent(v));
+    WRITE("node ", v, ": parent = ", v == G.root() ? -1 : G.parent(v), ", depth = ", G.depth(v), ", ");
+    if (v == G.root())
       WRITE("root");
     else if (G.children(v).empty())
       WRITE("leaf");
@@ -46,9 +51,8 @@ void main2()
       WRITE("internal node");
     WRITE(", [");
     auto chi = G.children(v);
-    vl chivec(ALL(chi));
-    assert(sorted(C.at(v)) == sorted(chivec));
-    rep(i, chi.size())
+    assert(sorted(C.at(v)) == sorted(chi.to_v()));
+    rep(i, C.at(v).size())
     {
       if (i)
         WRITE(", ");

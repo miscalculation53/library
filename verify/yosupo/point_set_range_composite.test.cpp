@@ -25,7 +25,7 @@ void main2()
 {
   LL(N, Q);
   VEC(pll, N, AB);
-  auto [A, B] = top(AB);
+  UNZIP(AB, A, B);
 
   SegmentTree<OppositeMonoid<GroupAffineFunction<mint>>> seg(gen_vec(N, [&](ll i)
                                                                      { return GroupAffineFunction<mint>::S{A.at(i), B.at(i)}; }));

@@ -28,17 +28,19 @@ void main2()
   vpll UV;
   ll root = 0;
   rep(i, N) root ^= i;
-  rep(_, N)
+  vc<vc<int>> C(N);
+  rep(i, N)
   {
     LL(v, k);
-    VEC(ll, k, cs);
+    VEC(int, k, cs);
+    C[v] = cs;
     fe(c : cs) root ^= c, UV.eb(v, c);
   }
-  RootedTree<ll> G(N, UV, root);
+  RootedTree G(N, UV, root);
   rep(v, N)
   {
-    WRITE("node ", v, ": parent = ", G.parent(v), ", depth = ", G.depth(v), ", ");
-    if (G.parent(v) == -1)
+    WRITE("node ", v, ": parent = ", v == G.root() ? -1 : G.parent(v), ", depth = ", G.depth(v), ", ");
+    if (v == G.root())
       WRITE("root");
     else if (G.children(v).empty())
       WRITE("leaf");
@@ -46,11 +48,12 @@ void main2()
       WRITE("internal node");
     WRITE(", [");
     auto chi = G.children(v);
-    rep(i, chi.size())
+    assert(sorted(chi.to_v()) == sorted(C[v]));
+    rep(i, C[v].size())
     {
       if (i)
         WRITE(", ");
-      WRITE(chi.at(i));
+      WRITE(C[v][i]);
     }
     WRITE("]\n");
   }

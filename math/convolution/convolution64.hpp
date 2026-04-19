@@ -18,6 +18,6 @@ vc<ull> convolution64(const vc<ull> &a, const vc<ull> &b)
   const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);
   if (min(cnta, cntb) <= 400)
     return internal::convolution_naive(a, b);
-  assert(ntt_ok<static_modint<754974721>>(n + m - 1) && "|a| + |b| - 1 <= 2^25");
+  assert(ntt_ok<static_modint32<754974721>>(n + m - 1) && "|a| + |b| - 1 <= 2^25");
   return internal::convolution_crt_mod<ull, 167772161, 469762049, 1107296257, 1711276033, 1811939329>(a, b);
 }

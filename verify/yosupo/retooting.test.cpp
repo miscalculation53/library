@@ -46,8 +46,8 @@ void main2()
   LL(N);
   VEC(mint, N, A);
   VEC(tllll, N - 1, UVBC);
-  auto [U, V, B, C] = top(UVBC);
-  auto UV = top(pair{U, V});
+  UNZIP(UVBC, U, V, B, C);
+  ZIP(UV, U, V);
 
   using S = typename M::S;
   auto pute = [&](S x, int e) -> S

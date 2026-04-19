@@ -2,7 +2,6 @@
 
 #include "template/template_all_but_modint.hpp"
 #include "math/modint/modint.hpp"
-#include "math/modint/modint64.hpp"
 #include "math/prime/prime_power.hpp"
 #include "math/prime/large/primality_test.hpp"
 #include "math/prime/large/factorize.hpp"

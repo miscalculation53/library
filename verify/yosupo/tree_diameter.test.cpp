@@ -23,16 +23,17 @@ void main2()
 {
   LL(N);
   VEC(tlll, N - 1, ABC);
-  RootedTree<ll> G(N, ABC, 0);
-  
-  auto [a, b, ga] = tree_diameter_by_cost(G);
+  UNZIP(ABC, A, B, C);
+  ZIP(AB, A, B);
+  RootedTree G(N, AB, 0);
+
+  auto [a, b, Ga, Da] = tree_diameter_weighted(N, AB, C);
   auto path = G.path(b, a);
-  auto path2 = ga.path_to_root(b);
+  auto path2 = Ga.path_to_root(b);
   dump(path, path2);
   assert(path == path2);
-  vl ans = concat(vl{b}, vl(ALL(path)));
-  PRINT(ga.dist(b), SZ(ans));
-  PRINT(ans);
+  PRINT(Da[b], SZ(path));
+  PRINT(path);
 }
 
 void test() {}
