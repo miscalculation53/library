@@ -1,13 +1,13 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/bigint.hpp
     title: "\u591A\u500D\u9577\u6574\u6570"
   - icon: ':question:'
     path: math/convolution/convolution.hpp
     title: "\u7573\u307F\u8FBC\u307F"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/convolution/convolution_ll.hpp
     title: "\u7573\u307F\u8FBC\u307F\uFF08long long\uFF09"
   - icon: ':question:'
@@ -77,15 +77,15 @@ data:
   - icon: ':question:'
     path: utils/larger_int.hpp
     title: "$2$ \u500D\u306E\u30D3\u30C3\u30C8\u6570\u306E\u6574\u6570\u578B"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: utils/make_unsigned_ext.hpp
     title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u306B\u5BFE\u5FDC\u3057\u305F make_singed\
       \ \u3068 make_unsigned"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/multiplication_of_big_integers
@@ -1359,7 +1359,7 @@ data:
   path: verify/yosupo/big_integer_multiplication.test.cpp
   requiredBy: []
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/big_integer_multiplication.test.cpp
 layout: document

@@ -62,7 +62,7 @@ data:
   - icon: ':question:'
     path: math/prime/sieve/linear_sieve.hpp
     title: "\u7DDA\u5F62\u7BE9"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/prime/sieve/segmented_sieve.hpp
     title: "\u533A\u9593\u7BE9"
   - icon: ':x:'
@@ -76,7 +76,7 @@ data:
     path: verify/yosupo/represent_a_number_as_two_square_sum.cpp
     title: verify/yosupo/represent_a_number_as_two_square_sum.cpp
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/aoj/segmented_sieve.test.cpp
     title: verify/aoj/segmented_sieve.test.cpp
   - icon: ':heavy_check_mark:'

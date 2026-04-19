@@ -48,7 +48,7 @@ data:
   - icon: ':x:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/bigint.hpp
     title: "\u591A\u500D\u9577\u6574\u6570"
   - icon: ':question:'
@@ -57,7 +57,7 @@ data:
   - icon: ':x:'
     path: math/convolution/convolution64.hpp
     title: "\u7573\u307F\u8FBC\u307F\uFF08$\\bmod \\ 2^{64}$\uFF09"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/convolution/convolution_ll.hpp
     title: "\u7573\u307F\u8FBC\u307F\uFF08long long\uFF09"
   - icon: ':x:'
@@ -191,31 +191,31 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/to_rational.test.cpp
     title: verify/mytest/to_rational.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/and_or_convolution.test.cpp
     title: verify/yosupo/and_or_convolution.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/big_integer_addition.test.cpp
     title: verify/yosupo/big_integer_addition.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/big_integer_addition_hex.test.cpp
     title: verify/yosupo/big_integer_addition_hex.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/big_integer_division.test.cpp
     title: verify/yosupo/big_integer_division.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/big_integer_division_hex.test.cpp
     title: verify/yosupo/big_integer_division_hex.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/big_integer_multiplication.test.cpp
     title: verify/yosupo/big_integer_multiplication.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/big_integer_multiplication_hex.test.cpp
     title: verify/yosupo/big_integer_multiplication_hex.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/binomial.test.cpp
     title: verify/yosupo/binomial.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution.test.cpp
     title: verify/yosupo/convolution.test.cpp
   - icon: ':x:'

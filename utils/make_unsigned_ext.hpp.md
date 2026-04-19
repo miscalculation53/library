@@ -5,31 +5,31 @@ data:
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/bigint.hpp
     title: "\u591A\u500D\u9577\u6574\u6570"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/big_integer_addition.test.cpp
     title: verify/yosupo/big_integer_addition.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/big_integer_addition_hex.test.cpp
     title: verify/yosupo/big_integer_addition_hex.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/big_integer_division.test.cpp
     title: verify/yosupo/big_integer_division.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/big_integer_division_hex.test.cpp
     title: verify/yosupo/big_integer_division_hex.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/big_integer_multiplication.test.cpp
     title: verify/yosupo/big_integer_multiplication.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/big_integer_multiplication_hex.test.cpp
     title: verify/yosupo/big_integer_multiplication_hex.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/utils/make_unsigned_ext.md
     document_title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u306B\u5BFE\u5FDC\u3057\u305F\
@@ -82,7 +82,7 @@ data:
   requiredBy:
   - math/bigint.hpp
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/big_integer_multiplication_hex.test.cpp
   - verify/yosupo/big_integer_addition_hex.test.cpp
