@@ -49,12 +49,12 @@ data:
       \u5224\u5B9A"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/enumerate_triangles.test.cpp
     title: verify/yosupo/enumerate_triangles.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/graph/triangles.md
     document_title: "\u4E09\u89D2\u5F62\u5217\u6319"
@@ -828,7 +828,7 @@ data:
   path: graph/triangles.hpp
   requiredBy: []
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/enumerate_triangles.test.cpp
 documentation_of: graph/triangles.hpp

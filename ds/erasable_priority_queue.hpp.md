@@ -42,16 +42,16 @@ data:
     title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
       \u5224\u5B9A"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/double_ended_priority_queue.hpp
     title: double ended priority queue
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/double_ended_priority_queue.test.cpp
     title: verify/yosupo/double_ended_priority_queue.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/erasable_priority_queue.md
     document_title: "\u6D88\u305B\u308B priority queue"
@@ -704,7 +704,7 @@ data:
   requiredBy:
   - ds/double_ended_priority_queue.hpp
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/double_ended_priority_queue.test.cpp
 documentation_of: ds/erasable_priority_queue.hpp

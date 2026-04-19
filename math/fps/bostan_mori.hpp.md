@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':question:'
     path: bit/bit_reverse.hpp
     title: "\u30D3\u30C3\u30C8\u30EA\u30D0\u30FC\u30B9"
   - icon: ':question:'

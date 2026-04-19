@@ -81,11 +81,11 @@ data:
     path: utils/larger_int.hpp
     title: "$2$ \u500D\u306E\u30D3\u30C3\u30C8\u6570\u306E\u6574\u6570\u578B"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/factorial.hpp
     title: "\u968E\u4E57"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorial.test.cpp
     title: verify/yosupo/factorial.test.cpp
   - icon: ':x:'
@@ -96,7 +96,7 @@ data:
     title: verify/yukicoder/factorial.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/math/fps/shift_of_sampling_points.md
     document_title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
@@ -1353,7 +1353,7 @@ data:
   requiredBy:
   - math/fps/factorial.hpp
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yosupo/factorial.test.cpp
   - verify/yosupo/poly_shift_of_sampling_points.test.cpp

@@ -49,15 +49,15 @@ data:
       \u5224\u5B9A"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/cycle_detection_directed.test.cpp
     title: verify/yosupo/cycle_detection_directed.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/cycle_detection_undirected.test.cpp
     title: verify/yosupo/cycle_detection_undirected.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/graph/cycle_detection.md
     document_title: "\u30B5\u30A4\u30AF\u30EB\u691C\u51FA"
@@ -834,7 +834,7 @@ data:
   path: graph/cycle_detection.hpp
   requiredBy: []
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/cycle_detection_undirected.test.cpp
   - verify/yosupo/cycle_detection_directed.test.cpp

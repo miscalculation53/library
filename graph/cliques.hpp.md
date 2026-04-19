@@ -49,12 +49,12 @@ data:
       \u5224\u5B9A"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/enumerate_cliques.test.cpp
     title: verify/yosupo/enumerate_cliques.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/graph/cliques.md
     document_title: "\u30AF\u30EA\u30FC\u30AF\u5217\u6319"
@@ -845,7 +845,7 @@ data:
   path: graph/cliques.hpp
   requiredBy: []
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/enumerate_cliques.test.cpp
 documentation_of: graph/cliques.hpp

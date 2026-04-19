@@ -1,7 +1,7 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: ds/erasable_priority_queue.hpp
     title: "\u6D88\u305B\u308B priority queue"
   - icon: ':question:'
@@ -46,12 +46,12 @@ data:
       \u5224\u5B9A"
   _extendedRequiredBy: []
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/double_ended_priority_queue.test.cpp
     title: verify/yosupo/double_ended_priority_queue.test.cpp
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     _deprecated_at_docs: docs/ds/double_ended_priority_queue.md
     document_title: double ended priority queue
@@ -708,7 +708,7 @@ data:
   path: ds/double_ended_priority_queue.hpp
   requiredBy: []
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_ALL_AC
   verifiedWith:
   - verify/yosupo/double_ended_priority_queue.test.cpp
 documentation_of: ds/double_ended_priority_queue.hpp

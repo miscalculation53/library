@@ -72,10 +72,10 @@ data:
   - icon: ':x:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/compositional_inverse.hpp
     title: "\u9006\u95A2\u6570"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/factorial.hpp
     title: "\u968E\u4E57"
   - icon: ':question:'
@@ -98,13 +98,13 @@ data:
   - icon: ':x:'
     path: math/fps/pow_sum.hpp
     title: "$\\sum_{i} A_i^k$ \u306E $k$ \u306B\u95A2\u3059\u308B\u5217\u6319"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/power_projection.hpp
     title: Power Projection
   - icon: ':question:'
     path: math/fps/rational_sum.hpp
     title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/shift_of_sampling_points.hpp
     title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
   - icon: ':x:'
@@ -114,13 +114,13 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/rational_plus.test.cpp
     title: verify/mytest/rational_plus.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/convolution_many.test.cpp
     title: verify/yosupo/convolution_many.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/factorial.test.cpp
     title: verify/yosupo/factorial.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_compositional_inverse.test.cpp
     title: verify/yosupo/fps_compositional_inverse.test.cpp
   - icon: ':x:'

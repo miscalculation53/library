@@ -23,7 +23,7 @@ data:
     path: graph/tree/euler_tour_path_prod.hpp
     title: "\u6728\u306E\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC\u3067\u30D1\u30B9\
       \u306E\u7DCF\u7A4D\u30AF\u30A8\u30EA\u3092\u51E6\u7406"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/algebra/affine_function.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
   - icon: ':question:'

@@ -48,14 +48,14 @@ data:
   - icon: ':x:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/compositional_inverse.hpp
     title: "\u9006\u95A2\u6570"
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: math/fps/power_projection.hpp
     title: Power Projection
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_compositional_inverse.test.cpp
     title: verify/yosupo/fps_compositional_inverse.test.cpp
   - icon: ':x:'
@@ -66,7 +66,7 @@ data:
     title: verify/yukicoder/bmbm.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/bit/bit_reverse.md
     document_title: "\u30D3\u30C3\u30C8\u30EA\u30D0\u30FC\u30B9"
@@ -700,7 +700,7 @@ data:
   - math/fps/bmbm.hpp
   - math/fps/compositional_inverse.hpp
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yosupo/fps_compositional_inverse.test.cpp
   - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp

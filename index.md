@@ -26,7 +26,7 @@ data:
       title: "\u5C3A\u53D6\u308A\u6CD5"
   - name: bit
     pages:
-    - icon: ':x:'
+    - icon: ':question:'
       path: bit/bit_reverse.hpp
       title: "\u30D3\u30C3\u30C8\u30EA\u30D0\u30FC\u30B9"
     - icon: ':question:'
@@ -78,10 +78,10 @@ data:
     - icon: ':heavy_check_mark:'
       path: ds/default_map.hpp
       title: "\u30C7\u30D5\u30A9\u30EB\u30C8\u5024\u3064\u304D map"
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: ds/double_ended_priority_queue.hpp
       title: double ended priority queue
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: ds/erasable_priority_queue.hpp
       title: "\u6D88\u305B\u308B priority queue"
     - icon: ':question:'
@@ -109,7 +109,7 @@ data:
       path: ds/sqrt_decomposition_range_sum.hpp
       title: "\u5E73\u65B9\u5206\u5272\u306B\u3088\u308B\u4E00\u70B9\u52A0\u7B97\u30FB\
         \u533A\u9593\u548C\u30AF\u30A8\u30EA $\\langle O(1), O(\\sqrt{N}) \\rangle$"
-    - icon: ':x:'
+    - icon: ':question:'
       path: ds/swag.hpp
       title: SWAG
     - icon: ':x:'
@@ -206,7 +206,7 @@ data:
       title: "undo \u53EF\u80FD UnionFind"
   - name: graph
     pages:
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: graph/cliques.hpp
       title: "\u30AF\u30EA\u30FC\u30AF\u5217\u6319"
     - icon: ':heavy_check_mark:'
@@ -215,25 +215,25 @@ data:
     - icon: ':warning:'
       path: graph/contraction.hpp
       title: "\u30B0\u30E9\u30D5\u306E\u7E2E\u7D04"
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: graph/cycle_detection.hpp
       title: "\u30B5\u30A4\u30AF\u30EB\u691C\u51FA"
     - icon: ':question:'
       path: graph/graph.hpp
       title: "\u30B0\u30E9\u30D5\u30AF\u30E9\u30B9"
-    - icon: ':x:'
+    - icon: ':question:'
       path: graph/matrix_tree.hpp
       title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
     - icon: ':x:'
       path: graph/scc.hpp
       title: "\u5F37\u9023\u7D50\u6210\u5206\u5206\u89E3"
-    - icon: ':question:'
+    - icon: ':heavy_check_mark:'
       path: graph/sssp.hpp
       title: "\u5358\u4E00\u59CB\u70B9\u6700\u77ED\u8DEF\u554F\u984C"
     - icon: ':warning:'
       path: graph/subgraphs.hpp
       title: "\u90E8\u5206\u30B0\u30E9\u30D5\u3078\u306E\u5206\u89E3"
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: graph/triangles.hpp
       title: "\u4E09\u89D2\u5F62\u5217\u6319"
   - name: graph/tree
@@ -301,7 +301,7 @@ data:
         \u548C\u53D6\u5F97"
   - name: math/algebra
     pages:
-    - icon: ':x:'
+    - icon: ':question:'
       path: math/algebra/affine_function.hpp
       title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
     - icon: ':question:'
@@ -360,18 +360,18 @@ data:
     - icon: ':question:'
       path: math/convolution/convolution.hpp
       title: "\u7573\u307F\u8FBC\u307F"
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: math/convolution/convolution64.hpp
       title: "\u7573\u307F\u8FBC\u307F\uFF08$\\bmod \\ 2^{64}$\uFF09"
     - icon: ':heavy_check_mark:'
       path: math/convolution/convolution_ll.hpp
       title: "\u7573\u307F\u8FBC\u307F\uFF08long long\uFF09"
-    - icon: ':x:'
+    - icon: ':question:'
       path: math/convolution/convolution_many.hpp
       title: "\u591A\u9805\u5F0F\u306E\u7DCF\u7A4D"
   - name: math/fps
     pages:
-    - icon: ':x:'
+    - icon: ':question:'
       path: math/fps/berlekamp_massey.hpp
       title: "Berlekamp\u2013Massey"
     - icon: ':x:'
@@ -380,10 +380,10 @@ data:
     - icon: ':x:'
       path: math/fps/bostan_mori.hpp
       title: "Bostan\u2013Mori"
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: math/fps/compositional_inverse.hpp
       title: "\u9006\u95A2\u6570"
-    - icon: ':x:'
+    - icon: ':question:'
       path: math/fps/factorial.hpp
       title: "\u968E\u4E57"
     - icon: ':question:'
@@ -406,13 +406,13 @@ data:
     - icon: ':x:'
       path: math/fps/pow_sum.hpp
       title: "$\\sum_{i} A_i^k$ \u306E $k$ \u306B\u95A2\u3059\u308B\u5217\u6319"
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: math/fps/power_projection.hpp
       title: Power Projection
     - icon: ':question:'
       path: math/fps/rational_sum.hpp
       title: "\u6709\u7406\u5F0F\u306E\u7DCF\u548C"
-    - icon: ':x:'
+    - icon: ':question:'
       path: math/fps/shift_of_sampling_points.hpp
       title: "\u591A\u9805\u5F0F\u306E\u8A55\u4FA1\u70B9\u30B7\u30D5\u30C8"
     - icon: ':x:'
@@ -420,10 +420,10 @@ data:
       title: Taylor Shift
   - name: math/linalg
     pages:
-    - icon: ':x:'
+    - icon: ':question:'
       path: math/linalg/bbla.hpp
       title: Black Box Linear Algebra
-    - icon: ':x:'
+    - icon: ':question:'
       path: math/linalg/matrix.hpp
       title: "\u884C\u5217"
     - icon: ':x:'
@@ -810,64 +810,64 @@ data:
     - icon: ':heavy_check_mark:'
       path: verify/yosupo/convolution.test.cpp
       title: verify/yosupo/convolution.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/convolution64.test.cpp
       title: verify/yosupo/convolution64.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
       title: verify/yosupo/convolution_arbitrary_dynamic.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/convolution_arbitrary_static.test.cpp
       title: verify/yosupo/convolution_arbitrary_static.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/convolution_many.test.cpp
       title: verify/yosupo/convolution_many.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/counting_eularian_circuits.test.cpp
       title: verify/yosupo/counting_eularian_circuits.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/counting_spanning_trees_directed.test.cpp
       title: verify/yosupo/counting_spanning_trees_directed.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/counting_spanning_trees_undirected.test.cpp
       title: verify/yosupo/counting_spanning_trees_undirected.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/cycle_detection_directed.test.cpp
       title: verify/yosupo/cycle_detection_directed.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/cycle_detection_undirected.test.cpp
       title: verify/yosupo/cycle_detection_undirected.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/dc_range_prod.test.cpp
       title: verify/yosupo/dc_range_prod.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/deque_operate_all_composite.test.cpp
       title: verify/yosupo/deque_operate_all_composite.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/dijkstra.test.cpp
       title: verify/yosupo/dijkstra.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/disjoint_sparse_table.test.cpp
       title: verify/yosupo/disjoint_sparse_table.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/double_ended_priority_queue.test.cpp
       title: verify/yosupo/double_ended_priority_queue.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/enumerate_cliques.test.cpp
       title: verify/yosupo/enumerate_cliques.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/enumerate_triangles.test.cpp
       title: verify/yosupo/enumerate_triangles.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/factorial.test.cpp
       title: verify/yosupo/factorial.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/factorize.test.cpp
       title: verify/yosupo/factorize.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/find_linear_recurrence.test.cpp
       title: verify/yosupo/find_linear_recurrence.test.cpp
-    - icon: ':x:'
+    - icon: ':heavy_check_mark:'
       path: verify/yosupo/fps_compositional_inverse.test.cpp
       title: verify/yosupo/fps_compositional_inverse.test.cpp
     - icon: ':x:'

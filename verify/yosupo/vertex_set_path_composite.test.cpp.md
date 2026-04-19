@@ -8,7 +8,7 @@ data:
     path: graph/tree/rooted_tree.hpp
     title: "\u6839\u3064\u304D\u6728\u30AF\u30E9\u30B9\uFF08HLD \u3082\u3059\u308B\
       \uFF09"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/algebra/affine_function.hpp
     title: "\u4EE3\u6570\u7684\u69CB\u9020\uFF08\u4E00\u6B21\u95A2\u6570\uFF09"
   - icon: ':question:'

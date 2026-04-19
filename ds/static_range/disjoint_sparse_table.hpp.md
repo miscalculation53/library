@@ -69,7 +69,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/block_sparse_table.test.cpp
     title: verify/yosupo/block_sparse_table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/disjoint_sparse_table.test.cpp
     title: verify/yosupo/disjoint_sparse_table.test.cpp
   - icon: ':x:'
