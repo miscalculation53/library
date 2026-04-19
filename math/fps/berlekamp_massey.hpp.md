@@ -52,7 +52,7 @@ data:
   - icon: ':question:'
     path: graph/matrix_tree.hpp
     title: "\u884C\u5217\u6728\u5B9A\u7406\u306A\u3069"
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/bmbm.hpp
     title: BMBM
   - icon: ':question:'
@@ -77,7 +77,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/find_linear_recurrence.test.cpp
     title: verify/yosupo/find_linear_recurrence.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
     title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
   - icon: ':x:'

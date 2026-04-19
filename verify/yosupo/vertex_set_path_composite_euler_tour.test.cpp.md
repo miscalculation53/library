@@ -16,7 +16,7 @@ data:
   - icon: ':question:'
     path: ds/static_range/sparse_table.hpp
     title: Sparse Table
-  - icon: ':x:'
+  - icon: ':question:'
     path: graph/tree/euler_tour.hpp
     title: "\u6728\u306E\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC"
   - icon: ':x:'

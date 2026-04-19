@@ -42,10 +42,10 @@ data:
     title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
       \u5224\u5B9A"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/bmbm.hpp
     title: BMBM
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/bostan_mori.hpp
     title: "Bostan\u2013Mori"
   - icon: ':heavy_check_mark:'
@@ -58,7 +58,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/fps_compositional_inverse.test.cpp
     title: verify/yosupo/fps_compositional_inverse.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
     title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
   - icon: ':x:'

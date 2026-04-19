@@ -63,7 +63,7 @@ data:
     title: "\u6728\u306E\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC\u3067\u30D1\u30B9\
       \u306E\u7DCF\u548C\u30AF\u30A8\u30EA\u3092\u51E6\u7406"
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lca_euler_tour.test.cpp
     title: verify/yosupo/lca_euler_tour.test.cpp
   - icon: ':x:'
@@ -74,7 +74,7 @@ data:
     title: verify/yosupo/vertex_set_path_composite_euler_tour.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/graph/tree/euler_tour.md
     document_title: "\u6728\u306E\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC"
@@ -988,7 +988,7 @@ data:
   - graph/tree/euler_tour_path_sum.hpp
   - graph/tree/euler_tour_path_prod.hpp
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yosupo/vertex_set_path_composite_euler_tour.test.cpp
   - verify/yosupo/vertex_add_path_sum_euler_tour.test.cpp

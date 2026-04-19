@@ -13,7 +13,7 @@ data:
   - icon: ':question:'
     path: ds/static_range/sparse_table.hpp
     title: Sparse Table
-  - icon: ':x:'
+  - icon: ':question:'
     path: graph/tree/euler_tour.hpp
     title: "\u6728\u306E\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC"
   - icon: ':question:'
@@ -61,9 +61,9 @@ data:
       \u5224\u5B9A"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: true
+  _isVerificationFailed: false
   _pathExtension: cpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':heavy_check_mark:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.yosupo.jp/problem/lca
@@ -909,7 +909,7 @@ data:
   path: verify/yosupo/lca_euler_tour.test.cpp
   requiredBy: []
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: TEST_WRONG_ANSWER
+  verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/yosupo/lca_euler_tour.test.cpp
 layout: document

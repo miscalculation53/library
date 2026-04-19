@@ -48,7 +48,7 @@ data:
   - icon: ':question:'
     path: ds/static_range/linear_rmq.hpp
     title: "\u7DDA\u5F62 RMQ"
-  - icon: ':x:'
+  - icon: ':question:'
     path: graph/tree/euler_tour.hpp
     title: "\u6728\u306E\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC"
   - icon: ':x:'
@@ -69,7 +69,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/yosupo/block_sparse_table.test.cpp
     title: verify/yosupo/block_sparse_table.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lca_euler_tour.test.cpp
     title: verify/yosupo/lca_euler_tour.test.cpp
   - icon: ':x:'

@@ -61,10 +61,10 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/aoj/rooted_tree_from_parent.test.cpp
     title: verify/aoj/rooted_tree_from_parent.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/jump_on_tree.test.cpp
     title: verify/yosupo/jump_on_tree.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lca.test.cpp
     title: verify/yosupo/lca.test.cpp
   - icon: ':x:'

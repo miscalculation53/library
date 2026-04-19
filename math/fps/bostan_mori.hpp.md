@@ -84,11 +84,11 @@ data:
     path: utils/larger_int.hpp
     title: "$2$ \u500D\u306E\u30D3\u30C3\u30C8\u6570\u306E\u6574\u6570\u578B"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':question:'
     path: math/fps/bmbm.hpp
     title: BMBM
   _extendedVerifiedWith:
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
     title: verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
   - icon: ':x:'
@@ -96,7 +96,7 @@ data:
     title: verify/yukicoder/bmbm.test.cpp
   _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':x:'
+  _verificationStatusIcon: ':question:'
   attributes:
     _deprecated_at_docs: docs/math/fps/bostan_mori.md
     document_title: "Bostan\u2013Mori"
@@ -1394,7 +1394,7 @@ data:
   requiredBy:
   - math/fps/bmbm.hpp
   timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_ALL_WA
+  verificationStatus: LIBRARY_SOME_WA
   verifiedWith:
   - verify/yosupo/kth_term_of_linearly_recurrent_sequence.test.cpp
   - verify/yukicoder/bmbm.test.cpp

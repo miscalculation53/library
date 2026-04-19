@@ -51,7 +51,7 @@ data:
     title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
       \u5224\u5B9A"
   _extendedRequiredBy:
-  - icon: ':x:'
+  - icon: ':question:'
     path: graph/tree/euler_tour.hpp
     title: "\u6728\u306E\u30AA\u30A4\u30E9\u30FC\u30C4\u30A2\u30FC"
   - icon: ':x:'
@@ -66,7 +66,7 @@ data:
   - icon: ':heavy_check_mark:'
     path: verify/mytest/rmq.test.cpp
     title: verify/mytest/rmq.test.cpp
-  - icon: ':x:'
+  - icon: ':heavy_check_mark:'
     path: verify/yosupo/lca_euler_tour.test.cpp
     title: verify/yosupo/lca_euler_tour.test.cpp
   - icon: ':x:'
