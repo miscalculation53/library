@@ -3,12 +3,15 @@
 #include "../template/template_types.hpp"
 
 /**
- * @brief $2$ 倍のビット数の整数型
+ * @brief 積の計算に使う拡張型
  * @docs docs/utils/larger_int.md
  */
 
 template <class T>
-struct larger_int;
+struct larger_int
+{
+  using type = T;
+};
 
 #define LARGER_INT(T, U) \
   template <>            \

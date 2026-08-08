@@ -15,7 +15,7 @@ template <class I = ll, class IS_EQUAL>
 I calc_lcp(int i, int j, const IS_EQUAL &is_equal)
 {
   auto judge = [&](int len) -> bool
-  { return is_equal(i, i + len, j, j + len); };
+  { return len < 0 || is_equal(i, i + len, j, j + len); };
   return expsearch(judge, 0, true).first;
 }
 

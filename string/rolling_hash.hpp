@@ -83,7 +83,7 @@ public:
   }
 
   template <class I = ll>
-  I size() const { return sm.size(); }
+  I size() const { return sm.size() - 1; }
   RollingHash<mint, id> hash(int l, int r) const
   {
     assert(0 <= l && l <= r && r <= size());
@@ -95,7 +95,11 @@ public:
   template <class V>
   void push_back(const V &s) { fec(c : s) sm.eb(sm.back() * base() + c); }
 
-  void pop_back() { sm.pop_back(); }
+  void pop_back()
+  {
+    assert(size() > 0);
+    sm.pop_back();
+  }
 };
 
 // s[i, ...) と t[j, ...) の LCP の長さ

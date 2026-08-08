@@ -15,11 +15,10 @@ string random_bracket_sequence(int n)
   rep(_, 2 * n)
   {
     double p = double(y - x) * (y + 1) / (double(y - x + 1) * (x + y));
-    double r = randrange(0, 1024) / 1024.0;
-    if (r >= p)
-      x--, s += "(";
-    else
+    if (randbool(p))
       y--, s += ")";
+    else
+      x--, s += "(";
   }
   return s;
 }
