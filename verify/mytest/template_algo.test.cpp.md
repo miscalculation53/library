@@ -1,34 +1,34 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_algo.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
       \u30E0\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: utils/is_integral_ext.hpp
     title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
       \u5224\u5B9A"
   _extendedRequiredBy: []
   _extendedVerifiedWith: []
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: cpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     '*NOT_SPECIAL_COMMENTS*': ''
     PROBLEM: https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
@@ -50,37 +50,38 @@ data:
     \ <class T>\nusing pql = priority_queue<T, vc<T>, greater<T>>;\ntemplate <class\
     \ T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\nusing i128 =\
     \ __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string &s)\n{\n \
-    \ i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i < (int)s.size();\
-    \ i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n  }\n  else\n  {\n\
-    \    for (auto &&c : s)\n      res = 10 * res + c - '0';\n  }\n  return res;\n\
-    }\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n  string sign = \"\"\
-    , res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n  while (x > 0)\n  {\n\
-    \    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(), res.end());\n\
-    \  return sign + res;\n}\nistream &operator>>(istream &is, i128 &a)\n{\n  string\
-    \ s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream &operator<<(ostream\
-    \ &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n}\n#endif\n\n#define\
-    \ cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\n#line 4 \"template/template_rep.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09\n * @docs\
-    \ docs/template/template_rep.md\n */\n\n// https://trap.jp/post/1224/\n\n#define\
-    \ overload4(_1, _2, _3, _4, name, ...) name\n#define rep1(i, n) for (ll i = 0,\
-    \ nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i, l, r) for (ll i = ll(l), rrrrr\
-    \ = ll(r); i < rrrrr; i++)\n#define rep3(i, l, r, d) for (ll i = ll(l), rrrrr\
-    \ = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr : i > rrrrr; i += d)\n#define\
-    \ rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n#define repi1(i,\
-    \ n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i, l, r) for\
-    \ (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i, l, r, d)\
-    \ for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i < rrrrr :\
-    \ i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3, repi2, repi1)(__VA_ARGS__)\n\
-    \n#define fe(...) for (auto __VA_ARGS__)\n#define fec(...) for (cauto &__VA_ARGS__)\n\
-    #define fem(...) for (auto &__VA_ARGS__)\n#line 2 \"template/template_vector.hpp\"\
-    \n\n#line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
-    #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
-    \n\n#line 2 \"utils/is_integral_ext.hpp\"\n\n#line 4 \"utils/is_integral_ext.hpp\"\
-    \n\n/**\n * @brief $128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\
-    \u6574\u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n */\n\ntemplate\
-    \ <class T>\nconstexpr bool is_integral_ext = is_integral_v<T> || is_same_v<T,\
-    \ i128> || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr bool is_signed_ext\
-    \ = is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class T>\nconstexpr bool\
+    \ const bool neg = s.front() == '-';\n  u128 res = 0;\n  for (int i = neg; i <\
+    \ (int)s.size(); i++)\n    res = 10 * res + s[i] - '0';\n  if (neg)\n    return\
+    \ -i128(res - 1) - 1;\n  return i128(res);\n}\nstring i128tos(i128 x)\n{\n  if\
+    \ (x == 0) return \"0\";\n  string sign = \"\", res = \"\";\n  u128 ux;\n  if\
+    \ (x < 0)\n    ux = u128(-(x + 1)) + 1, sign = \"-\";\n  else\n    ux = x;\n \
+    \ while (ux > 0)\n  {\n    res += '0' + ux % 10;\n    ux /= 10;\n  }\n  reverse(res.begin(),\
+    \ res.end());\n  return sign + res;\n}\nistream &operator>>(istream &is, i128\
+    \ &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream\
+    \ &operator<<(ostream &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n\
+    }\n#endif\n\n#define cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\
+    \n#line 4 \"template/template_rep.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n */\n\n//\
+    \ https://trap.jp/post/1224/\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n\
+    #define rep1(i, n) for (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i,\
+    \ l, r) for (ll i = ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define rep3(i, l,\
+    \ r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr\
+    \ : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n\
+    #define repi1(i, n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i,\
+    \ l, r) for (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i,\
+    \ l, r, d) for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i\
+    \ < rrrrr : i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3,\
+    \ repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n#define\
+    \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
+    #line 2 \"template/template_vector.hpp\"\n\n#line 2 \"template/template_math.hpp\"\
+    \n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n#endif\n#ifndef EPS\n\
+    #define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\n\n#line\
+    \ 2 \"utils/is_integral_ext.hpp\"\n\n#line 4 \"utils/is_integral_ext.hpp\"\n\n\
+    /**\n * @brief $128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\
+    \u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n */\n\ntemplate <class\
+    \ T>\nconstexpr bool is_integral_ext = is_integral_v<T> || is_same_v<T, i128>\
+    \ || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr bool is_signed_ext =\
+    \ is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class T>\nconstexpr bool\
     \ is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;\n#line 14 \"template/template_math.hpp\"\
     \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
     \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
@@ -114,18 +115,20 @@ data:
     \ ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a, b,\
     \ INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A a,\
     \ K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n\
-    \  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n     \
-    \ if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
-    \      return sqrtl(a);\n  }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x\
-    \ == 0)\n      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n\
-    \      if (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n\
-    \        res *= x;\n      }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n\
-    \      if (x > T(a) / x)\n        return false;\n      x *= x;\n    }\n    return\
-    \ res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n\
-    \    up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max()\
-    \ && isok(x + 1))\n      x++;\n  }\n  return x;\n}\ntemplate <class T = ll, class\
-    \ A, class K>\nconstexpr T iroot_ceil(A a, K k)\n{\n  T x = iroot<T>(a, k);\n\
-    \  return ipow<T>(x, k) == a ? x : x + 1;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    \  if (k == 2)\n  {\n    const T aa = T(a);\n    T x = T(sqrtl((long double)a));\n\
+    \    while (x > aa / x)\n      x--;\n    while (x < numeric_limits<T>::max())\n\
+    \    {\n      const T y = x + 1;\n      if (y > aa / y)\n        break;\n    \
+    \  x = y;\n    }\n    return x;\n  }\n\n  auto isok = [&](T x) -> bool\n  {\n\
+    \    if (x == 0)\n      return true;\n    T res = 1, k2 = k;\n    while (true)\n\
+    \    {\n      if (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return\
+    \ false;\n        res *= x;\n      }\n      k2 >>= 1;\n      if (k2 == 0)\n  \
+    \      break;\n      if (x > T(a) / x)\n        return false;\n      x *= x;\n\
+    \    }\n    return res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up =\
+    \ true;\n  while (!isok(x))\n    up = false, x--;\n  if (up)\n  {\n    while (x\
+    \ < numeric_limits<T>::max() && isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\
+    template <class T = ll, class A, class K>\nconstexpr T iroot_ceil(A a, K k)\n\
+    {\n  T x = iroot<T>(a, k);\n  return ipow<T>(x, k) == a ? x : x + 1;\n}\n\n//\
+    \ https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS), class A>\nint SGN(A a, D eps = EPS) { return\
     \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
     \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\n// 0\
@@ -175,7 +178,7 @@ data:
     \ return res;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
     \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
     \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
-    \  return v[i];\n}\n#line 10 \"template/template_algo.hpp\"\n\n/**\n * @brief\
+    \  return v[i];\n}\n#line 11 \"template/template_algo.hpp\"\n\n/**\n * @brief\
     \ \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\u30E0\
     \uFF09\n * @docs docs/template/template_algo.md\n */\n\ntemplate <class V>\nauto\
     \ SUM(const V &v)\n{\n  typename V::value_type s{};\n  fec(vi : v) s += vi;\n\
@@ -210,46 +213,47 @@ data:
     \ <class V>\nvoid unique(V &v) { v.erase(std::unique(ALL(v)), v.end()); }\ntemplate\
     \ <class V>\nV uniqued(V v) { unique(v); return v; }\n\ntemplate <class V>\nvoid\
     \ sortunique(V &v)\n{\n  sort(ALL(v));\n  unique(v);\n}\ntemplate <class V>\n\
-    V sortuniqued(V v) { sortunique(v); return v; }\n\n// \u5F15\u6570: vc<pair<T,\
-    \ U>>\n// \u8FD4\u308A\u5024: vc<pair<T, vc<U>>\n// T \u3054\u3068\u306B U \u3092\
-    \u307E\u3068\u3081\u305F\u3082\u306E\n// T \u306F\u6BD4\u8F03\u53EF\u80FD\u3067\
-    \u3042\u308B\u5FC5\u8981\u304C\u3042\u308B\ntemplate <class T, class U>\nvc<pair<T,\
-    \ vc<U>>> sortuniqued_group(vc<pair<T, U>> v)\n{\n  stable_sort(ALL(v), [&](cauto\
-    \ &p1, cauto &p2)\n              { return p1.first < p2.first; });\n  vc<pair<T,\
-    \ vc<U>>> res;\n  fec([x, y] : v)\n  {\n    if (res.empty() || res.back().first\
-    \ != x)\n      res.eb(x, vc{y});\n    else\n      res.back().second.eb(y);\n \
-    \ }\n  return res;\n}\n\n// 01234 -> 12340\ntemplate <class V, class U>\nvoid\
-    \ rotate(V &v, U k)\n{ \n  const U n = v.size();\n  k = (k % n + n) % n;\n  std::rotate(v.begin(),\
-    \ v.begin() + k, v.end());\n}\n// 01234 -> 12340\ntemplate <class V, class U>\n\
-    V rotated(V v, U k) { rotate(v, k); return v; }\n\ntemplate <class T>\nvvc<T>\
-    \ top(const vvc<T> &a)\n{\n  if (a.empty())\n    return {};\n  const int n = a.size(),\
-    \ m = a[0].size();\n  vvc<T> b(m, vc<T>(n));\n  repi(i, n)\n  {\n    assert(SZ<int>(a[i])\
+    V sortuniqued(V v) { sortunique(v); return v; }\n\n// 01234 -> 12340\ntemplate\
+    \ <class V, class U>\nvoid rotate(V &v, U k)\n{ \n  const U n = v.size();\n  if\
+    \ (n == 0)\n    return;\n  k = (k % n + n) % n;\n  std::rotate(v.begin(), v.begin()\
+    \ + k, v.end());\n}\n// 01234 -> 12340\ntemplate <class V, class U>\nV rotated(V\
+    \ v, U k) { rotate(v, k); return v; }\n\ntemplate <class T>\nvvc<T> top(const\
+    \ vvc<T> &a)\n{\n  if (a.empty())\n    return {};\n  const int n = a.size(), m\
+    \ = a[0].size();\n  vvc<T> b(m, vc<T>(n));\n  repi(i, n)\n  {\n    assert(SZ<int>(a[i])\
     \ == m);\n    repi(j, m) b[j][i] = a[i][j];\n  }\n  return b;\n}\nvstr top(const\
     \ vstr &a)\n{\n  vvc<char> a_(a.size());\n  repi(i, SZ<int>(a)) a_[i] = {ALL(a[i])};\n\
     \  vvc<char> b_ = top(a_);\n  vstr b(b_.size());\n  repi(i, SZ<int>(b)) b[i] =\
-    \ {ALL(b_[i])};\n  return b;\n}\n\n// 12\n// 34 -> 246\n// 56    135\n// (\u53CD\
-    \u6642\u8A08\u56DE\u308A)\ntemplate <class VV, class U = ll>\nVV rot90(const VV\
-    \ &a, U k = 1)\n{\n  if (a.empty())\n    return {};\n  const int n = a.size(),\
-    \ m = a[0].size();\n  k = (k % 4 + 4) % 4;\n  if (k == 0)\n    return a;\n  else\
-    \ if (k == 1)\n  {\n    VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i,\
-    \ n)\n    {\n      assert(SZ<int>(a[i]) == m);\n      repi(j, m) b[m - 1 - j][i]\
-    \ = a[i][j];\n    }\n    return b;\n  }\n  else if (k == 2)\n  {\n    VV b(n);\n\
-    \    repi(i, n) b[i].resize(m);\n    repi(i, n)\n    {\n      assert(SZ<int>(a[i])\
-    \ == m);\n      repi(j, m) b[n - 1 - i][m - 1 - j] = a[i][j];\n    }\n    return\
-    \ b;\n  }\n  else\n  {\n    VV b(m);\n    repi(j, m) b[j].resize(n);\n    repi(i,\
-    \ n)\n    {\n      assert(SZ<int>(a[i]) == m);\n      repi(j, m) b[j][n - 1 -\
-    \ i] = a[i][j];\n    }\n    return b;\n  }\n}\n\ntemplate <class T>\nstruct MonoidAdd\n\
-    {\n  using S = T;\n  static constexpr S op(S a, S b) { return a + b; }\n  static\
-    \ constexpr S e() { return 0; }\n};\ntemplate <class T, const T infty = INF>\n\
-    struct MonoidMin\n{\n  using S = T;\n  static constexpr S op(S a, S b) { return\
-    \ min(a, b); }\n  static constexpr S e() { return infty; }\n};\ntemplate <class\
-    \ T, const T infty = INF>\nstruct MonoidMax\n{\n  using S = T;\n  static constexpr\
-    \ S op(S a, S b) { return max(a, b); }\n  static constexpr S e() { return -infty;\
-    \ }\n};\n\n// left_index \u304C 0 \u306A\u3089\u3001\u9577\u3055 n+1 \u3067 a.front()\
-    \ \u304C e()\n// left_index \u304C 1 \u306A\u3089\u3001\u9577\u3055 n \u3067 e()\
-    \ \u304C\u306A\u3044\ntemplate <class M>\nvc<typename M::S> cuml(const vc<typename\
-    \ M::S> &v, int left_index = 0)\n{\n  const int n = v.size();\n  vc<typename M::S>\
-    \ res(n + 1);\n  res[0] = M::e();\n  repi(i, n) res[i + 1] = M::op(res[i], v[i]);\n\
+    \ {ALL(b_[i])};\n  return b;\n}\n\ntemplate <class T, class = void>\nstruct has_e0\
+    \ : false_type {};\ntemplate <class T>\nstruct has_e0<T, void_t<decltype(T::e0())>>\
+    \ : true_type {};\ntemplate <class T>\ninline constexpr bool has_e0_v = has_e0<T>::value;\n\
+    \ntemplate <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a + b; }\n  static constexpr S e()\n  {\n    if constexpr\
+    \ (has_e0_v<S>)\n      return S::e0();\n    else\n      return {};\n  }\n  template\
+    \ <class I, class = decltype(declval<S>() * declval<I>())>\n  static constexpr\
+    \ S pow(const S &a, I k) { return a * k; }\n};\ntemplate <class T, const T infty\
+    \ = INF>\nstruct MonoidMin\n{\n  using S = T;\n  static constexpr S op(S a, S\
+    \ b) { return min(a, b); }\n  static constexpr S e() { return infty; }\n  template\
+    \ <class I>\n  static constexpr S pow(const S &a, I k) { return k == 0 ? e() :\
+    \ a; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n{\n  using\
+    \ S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n  static constexpr\
+    \ S e() { return -infty; }\n  template <class I>\n  static constexpr S pow(const\
+    \ S &a, I k) { return k == 0 ? e() : a; }\n};\n\nnamespace internal\n{\n  template\
+    \ <class M, class I, class = void>\n  struct HasMonoidPow : false_type\n  {\n\
+    \  };\n  template <class M, class I>\n  struct HasMonoidPow<M, I, void_t<decltype(M::pow(declval<const\
+    \ typename M::S &>(), declval<I>()))>> : true_type\n  {\n  };\n}\n\ntemplate <class\
+    \ M, class I>\ntypename M::S pow_monoid(typename M::S a, I k)\n{\n  if constexpr\
+    \ (is_signed_ext<I>)\n    assert(k >= 0);\n  if constexpr (internal::HasMonoidPow<M,\
+    \ I>::value)\n    return M::pow(a, k);\n  else\n  {\n    typename M::S c = M::e();\n\
+    \    for (; k; k >>= 1)\n    {\n      if (k & 1)\n        c = M::op(c, a);\n \
+    \     a = M::op(a, a);\n    }\n    return c;\n  }\n}\n\ntemplate <class G, class\
+    \ I>\ntypename G::S pow_group(typename G::S a, I k)\n{\n  if constexpr (is_signed_ext<I>)\n\
+    \  {\n    if (k < 0)\n    {\n      a = G::inv(a);\n      return G::op(pow_monoid<G>(a,\
+    \ -(k + 1)), a);\n    }\n  }\n  return pow_monoid<G>(a, k);\n}\n\n// left_index\
+    \ \u304C 0 \u306A\u3089\u3001\u9577\u3055 n+1 \u3067 a.front() \u304C e()\n//\
+    \ left_index \u304C 1 \u306A\u3089\u3001\u9577\u3055 n \u3067 e() \u304C\u306A\
+    \u3044\ntemplate <class M>\nvc<typename M::S> cuml(const vc<typename M::S> &v,\
+    \ int left_index = 0)\n{\n  const int n = v.size();\n  vc<typename M::S> res(n\
+    \ + 1);\n  res[0] = M::e();\n  repi(i, n) res[i + 1] = M::op(res[i], v[i]);\n\
     \  res.erase(res.begin(), res.begin() + left_index);\n  return res;\n}\n// right_index\
     \ \u304C 0 \u306A\u3089\u3001\u9577\u3055 n+1 \u3067 a.back() \u304C e()\n// right_index\
     \ \u304C 1 \u306A\u3089\u3001\u9577\u3055 n \u3067 e() \u304C\u306A\u3044\ntemplate\
@@ -267,53 +271,58 @@ data:
     \u30EB\u30C8\u3067\u306F\u9577\u3055 n+1\n// left_index, right_index \u3092\u305D\
     \u308C\u305E\u308C 1 \u306B\u3059\u308B\u3068\u3001\u5DE6\u53F3\u304C\u524A\u9664\
     \u3055\u308C\u308B\ntemplate <class T>\nvc<T> adjd(const vc<T> &v, int left_index\
-    \ = 0, int right_index = 0)\n{\n  int n = v.size();\n  vc<T> res(n + 1);\n  res[0]\
-    \ = v[0];\n  repi(i, 1, n) res[i] = v[i] - v[i - 1];\n  res[n] = -v[n - 1];\n\
-    \  res.erase(res.end() - right_index, res.end());\n  res.erase(res.begin(), res.begin()\
-    \ + left_index);\n  return res;\n}\n\nconst vpll DRULgrid = {{1, 0}, {0, 1}, {-1,\
-    \ 0}, {0, -1}};\nconst vpll DRULplane = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};\n\
-    #line 2 \"template/template_dump.hpp\"\n\n#line 4 \"template/template_dump.hpp\"\
-    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs\
-    \ docs/template/template_dump.md\n */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp>\
-    \ // https://github.com/philip82148/cpp-dump\nnamespace cpp_dump::_detail\n{\n\
-    \  inline string export_var(\n      const i128 &x, const string &indent, size_t\
-    \ last_line_length,\n      size_t current_depth, bool fail_on_newline, const export_command\
-    \ &command\n  ) {\n    return export_var(i128tos(x), indent, last_line_length,\
-    \ current_depth, fail_on_newline, command);\n  }\n} // namespace cpp_dump::_detail\n\
-    #define dump(...) cpp_dump(__VA_ARGS__)\nnamespace cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func,\
-    \ cp::log_label::line());\nCPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n\
-    #define local(...) __VA_ARGS__\n#define oj(...)\n#define local_oj(a, b) (a)\n\
+    \ = 0, int right_index = 0)\n{\n  int n = v.size();\n  assert(0 <= left_index\
+    \ && 0 <= right_index && left_index + right_index <= n + 1);\n  vc<T> res(n +\
+    \ 1);\n  if (n == 0)\n  {\n    res[0] = T{};\n    res.erase(res.end() - right_index,\
+    \ res.end());\n    res.erase(res.begin(), res.begin() + left_index);\n    return\
+    \ res;\n  }\n  res[0] = v[0];\n  repi(i, 1, n) res[i] = v[i] - v[i - 1];\n  res[n]\
+    \ = -v[n - 1];\n  res.erase(res.end() - right_index, res.end());\n  res.erase(res.begin(),\
+    \ res.begin() + left_index);\n  return res;\n}\n\nconstexpr array<pll, 4> DRULgrid\
+    \ = {{{1, 0}, {0, 1}, {-1, 0}, {0, -1}}};\nconstexpr array<pll, 4> DRULplane =\
+    \ {{{0, -1}, {1, 0}, {0, 1}, {-1, 0}}};\n#line 2 \"template/template_dump.hpp\"\
+    \n\n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
+    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
+    \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
+    \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
+    \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
+    \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
+    \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 100);\n#define local(...) __VA_ARGS__\n\
+    #define oj(...)\n#define local_oj(a, b) (a)\nCPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(content());\n\
     #else\n#define dump(...)\n#define local(...)\n#define oj(...) __VA_ARGS__\n#define\
     \ local_oj(a, b) (b)\n#endif\n\ntemplate <class T, class Sequence>\nvc<T> content(queue<T,\
     \ Sequence> que)\n{\n  vc<T> res;\n  while (!que.empty())\n  {\n    res.eb(que.front());\n\
     \    que.pop();\n  }\n  return res;\n}\ntemplate <class T, class Sequence, class\
     \ Compare>\nvc<T> content(priority_queue<T, Sequence, Compare> pque)\n{\n  vc<T>\
     \ res;\n  while (!pque.empty())\n  {\n    res.eb(pque.top());\n    pque.pop();\n\
-    \  }\n  return res;\n}\n#line 5 \"verify/mytest/template_algo.test.cpp\"\n\n//\
-    \ \u96C6\u7D04\nvoid test1()\n{\n  vl a = {2, 7, 1, 8, 2, 8, 1};\n  assert(SUM(a)\
-    \ == 29);\n  assert(MAX(a) == 8);\n  assert(MIN(a) == 1);\n  assert(ARGMAX(a)\
-    \ == 3);\n  assert(ARGMIN(a) == 2);\n  assert(mex(a) == 0);\n\n  vl b = {4, 0,\
-    \ 1, 0, 1, 100};\n  assert(mex(b) == 2);\n}\n\n// \u9806\u5217\nvoid test2()\n\
-    {\n  {\n    assert(permid(5) == vl({0, 1, 2, 3, 4}));\n    assert(permid(5, 1)\
-    \ == vl({1, 2, 3, 4, 5}));\n  }\n\n  {\n    vl p = {1, 2, 0, 4, 3};\n    vl q\
-    \ = perminv(p);\n    repi(i, 5) assert(q[p[i]] == i);\n    assert(perminv(q) ==\
-    \ p);\n  }\n\n  {\n    vl p = {1, 4, 2, 0, 3};\n    vl q = {3, 1, 4, 0, 2};\n\
-    \    vl r = permuted(p, q);\n    repi(i, 5) assert(r[i] == p[q[i]]);\n  }\n\n\
-    \  mt19937 mt;\n  repi(_, 100)\n  {\n    ll n = 1 + rand() % 10;\n    vl p = permid(n),\
-    \ q = permid(n), r = permid(n), s = permid(n);\n    shuffle(ALL(p), mt), shuffle(ALL(q),\
-    \ mt), shuffle(ALL(r), mt), shuffle(ALL(s), mt);\n    auto t = permuted(p, q,\
-    \ r, s);\n    repi(i, n) assert(t[i] == p[q[r[s[i]]]]);\n  }\n}\n\n// string \u3084\
-    \ vector \u306E\u64CD\u4F5C\nvoid test3()\n{\n  {\n    string s = \"abcde\";\n\
-    \    vl v = {0, 1, 2, 3, 4};\n    assert(reversed(s) == \"edcba\");\n    assert(s\
-    \ == \"abcde\");\n    assert(reversed(v) == vl({4, 3, 2, 1, 0}));\n    assert(v\
-    \ == vl({0, 1, 2, 3, 4}));\n  }\n\n  {\n    string s = \"bdcae\";\n    vl v =\
-    \ {4, 2, 1, 0, 3};\n    assert(sorted(s) == \"abcde\");\n    assert(sorted(s,\
-    \ greater{}) == \"edcba\");\n    assert(s == \"bdcae\");\n    assert(sorted(v)\
-    \ == vl({0, 1, 2, 3, 4}));\n    assert(sorted(v, greater{}) == vl({4, 3, 2, 1,\
-    \ 0}));\n    assert(v == vl({4, 2, 1, 0, 3}));\n  }\n\n  {\n    string s = \"\
-    bbabbccc\";\n    vl v = {1, 1, 0, 1, 1, 2, 2, 2};\n    assert(uniqued(s) == \"\
-    babc\");\n    assert(uniqued(v) == vl({1, 0, 1, 2}));\n    assert(s == \"bbabbccc\"\
-    );\n    assert(v == vl({1, 1, 0, 1, 1, 2, 2, 2}));\n    unique(s);\n    unique(v);\n\
+    \  }\n  return res;\n}\ntemplate <class T>\nauto content(const T &obj) { return\
+    \ obj.content(); }\n#line 5 \"verify/mytest/template_algo.test.cpp\"\n\n// \u96C6\
+    \u7D04\nvoid test1()\n{\n  vl a = {2, 7, 1, 8, 2, 8, 1};\n  assert(SUM(a) == 29);\n\
+    \  assert(MAX(a) == 8);\n  assert(MIN(a) == 1);\n  assert(ARGMAX(a) == 3);\n \
+    \ assert(ARGMIN(a) == 2);\n  assert(mex(a) == 0);\n\n  vl b = {4, 0, 1, 0, 1,\
+    \ 100};\n  assert(mex(b) == 2);\n}\n\n// \u9806\u5217\nvoid test2()\n{\n  {\n\
+    \    assert(permid(5) == vl({0, 1, 2, 3, 4}));\n    assert(permid(5, 1) == vl({1,\
+    \ 2, 3, 4, 5}));\n  }\n\n  {\n    vl p = {1, 2, 0, 4, 3};\n    vl q = perminv(p);\n\
+    \    repi(i, 5) assert(q[p[i]] == i);\n    assert(perminv(q) == p);\n  }\n\n \
+    \ {\n    vl p = {1, 4, 2, 0, 3};\n    vl q = {3, 1, 4, 0, 2};\n    vl r = permuted(p,\
+    \ q);\n    repi(i, 5) assert(r[i] == p[q[i]]);\n  }\n\n  mt19937 mt;\n  repi(_,\
+    \ 100)\n  {\n    ll n = 1 + rand() % 10;\n    vl p = permid(n), q = permid(n),\
+    \ r = permid(n), s = permid(n);\n    shuffle(ALL(p), mt), shuffle(ALL(q), mt),\
+    \ shuffle(ALL(r), mt), shuffle(ALL(s), mt);\n    auto t = permuted(p, q, r, s);\n\
+    \    repi(i, n) assert(t[i] == p[q[r[s[i]]]]);\n  }\n}\n\n// string \u3084 vector\
+    \ \u306E\u64CD\u4F5C\nvoid test3()\n{\n  {\n    string s = \"abcde\";\n    vl\
+    \ v = {0, 1, 2, 3, 4};\n    assert(reversed(s) == \"edcba\");\n    assert(s ==\
+    \ \"abcde\");\n    assert(reversed(v) == vl({4, 3, 2, 1, 0}));\n    assert(v ==\
+    \ vl({0, 1, 2, 3, 4}));\n  }\n\n  {\n    string s = \"bdcae\";\n    vl v = {4,\
+    \ 2, 1, 0, 3};\n    assert(sorted(s) == \"abcde\");\n    assert(sorted(s, greater{})\
+    \ == \"edcba\");\n    assert(s == \"bdcae\");\n    assert(sorted(v) == vl({0,\
+    \ 1, 2, 3, 4}));\n    assert(sorted(v, greater{}) == vl({4, 3, 2, 1, 0}));\n \
+    \   assert(v == vl({4, 2, 1, 0, 3}));\n  }\n\n  {\n    string s = \"bbabbccc\"\
+    ;\n    vl v = {1, 1, 0, 1, 1, 2, 2, 2};\n    assert(uniqued(s) == \"babc\");\n\
+    \    assert(uniqued(v) == vl({1, 0, 1, 2}));\n    assert(s == \"bbabbccc\");\n\
+    \    assert(v == vl({1, 1, 0, 1, 1, 2, 2, 2}));\n    unique(s);\n    unique(v);\n\
     \    assert(s == \"babc\");\n    assert(v == vl({1, 0, 1, 2}));\n\n    assert(sortuniqued(s)\
     \ == \"abc\");\n    assert(sortuniqued(v) == vl({0, 1, 2}));\n    assert(s ==\
     \ \"babc\");\n    assert(v == vl({1, 0, 1, 2}));\n    sortunique(s);\n    sortunique(v);\n\
@@ -411,8 +420,8 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_algo.test.cpp
   requiredBy: []
-  timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: TEST_ACCEPTED
+  timestamp: '2026-08-08 20:51:19+09:00'
+  verificationStatus: TEST_WRONG_ANSWER
   verifiedWith: []
 documentation_of: verify/mytest/template_algo.test.cpp
 layout: document

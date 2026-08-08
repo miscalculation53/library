@@ -1,0 +1,1190 @@
+---
+data:
+  _extendedDependsOn:
+  - icon: ':warning:'
+    path: convex/convex_hull_trick.hpp
+    title: Convex Hull Trick
+  - icon: ':warning:'
+    path: math/rational.hpp
+    title: "\u7D04\u5206\u3057\u306A\u3044\u6709\u7406\u6570"
+  - icon: ':question:'
+    path: template/template_algo.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\u30EA\u30BA\
+      \u30E0\uFF09"
+  - icon: ':question:'
+    path: template/template_all_but_modint.hpp
+    title: template/template_all_but_modint.hpp
+  - icon: ':question:'
+    path: template/template_binsearch.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
+  - icon: ':question:'
+    path: template/template_bit.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\
+      \uFF09"
+  - icon: ':question:'
+    path: template/template_dump.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
+  - icon: ':question:'
+    path: template/template_inout.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09"
+  - icon: ':question:'
+    path: template/template_math.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
+  - icon: ':question:'
+    path: template/template_random.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\
+      \u6210\uFF09"
+  - icon: ':question:'
+    path: template/template_rep.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
+  - icon: ':question:'
+    path: template/template_types.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
+  - icon: ':question:'
+    path: template/template_vector.hpp
+    title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
+  - icon: ':question:'
+    path: utils/is_integral_ext.hpp
+    title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
+      \u5224\u5B9A"
+  - icon: ':question:'
+    path: utils/larger_int.hpp
+    title: "\u7A4D\u306E\u8A08\u7B97\u306B\u4F7F\u3046\u62E1\u5F35\u578B"
+  _extendedRequiredBy: []
+  _extendedVerifiedWith: []
+  _isVerificationFailed: false
+  _pathExtension: hpp
+  _verificationStatusIcon: ':warning:'
+  attributes:
+    _deprecated_at_docs: docs/convex/convex_hull_trick_dot_product.md
+    document_title: Dot Product Convex Hull Trick
+    links: []
+  bundledCode: "#line 2 \"convex/convex_hull_trick_dot_product.hpp\"\n\n#line 2 \"\
+    template/template_all_but_modint.hpp\"\n\n#line 2 \"template/template_types.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09\n *\
+    \ @docs docs/template/template_types.md\n */\n\n#include <bits/stdc++.h>\nusing\
+    \ namespace std;\n\n#ifndef EPS\n#define EPS 1e-11\n#endif\nusing ld = decltype(EPS);\n\
+    \nusing ll = long long;\nusing uint = unsigned int;\nusing ull = unsigned long\
+    \ long;\nusing pll = pair<ll, ll>;\nusing tlll = tuple<ll, ll, ll>;\nusing tllll\
+    \ = tuple<ll, ll, ll, ll>;\n\n#define vc vector\ntemplate <class T>\nusing vvc\
+    \ = vc<vc<T>>;\ntemplate <class T>\nusing vvvc = vc<vc<vc<T>>>;\n\nusing vb =\
+    \ vc<bool>;\nusing vl = vc<ll>;\nusing vpll = vc<pll>;\nusing vtlll = vc<tlll>;\n\
+    using vtllll = vc<tllll>;\nusing vstr = vc<string>;\nusing vvb = vvc<bool>;\n\
+    using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
+    \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
+    using i128 = __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string\
+    \ &s)\n{\n  const bool neg = s.front() == '-';\n  u128 res = 0;\n  for (int i\
+    \ = neg; i < (int)s.size(); i++)\n    res = 10 * res + s[i] - '0';\n  if (neg)\n\
+    \    return -i128(res - 1) - 1;\n  return i128(res);\n}\nstring i128tos(i128 x)\n\
+    {\n  if (x == 0) return \"0\";\n  string sign = \"\", res = \"\";\n  u128 ux;\n\
+    \  if (x < 0)\n    ux = u128(-(x + 1)) + 1, sign = \"-\";\n  else\n    ux = x;\n\
+    \  while (ux > 0)\n  {\n    res += '0' + ux % 10;\n    ux /= 10;\n  }\n  reverse(res.begin(),\
+    \ res.end());\n  return sign + res;\n}\nistream &operator>>(istream &is, i128\
+    \ &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream\
+    \ &operator<<(ostream &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n\
+    }\n#endif\n\n#define cauto const auto\n#line 2 \"template/template_rep.hpp\"\n\
+    \n#line 4 \"template/template_rep.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08rep\uFF09\n * @docs docs/template/template_rep.md\n */\n\n//\
+    \ https://trap.jp/post/1224/\n\n#define overload4(_1, _2, _3, _4, name, ...) name\n\
+    #define rep1(i, n) for (ll i = 0, nnnnn = ll(n); i < nnnnn; i++)\n#define rep2(i,\
+    \ l, r) for (ll i = ll(l), rrrrr = ll(r); i < rrrrr; i++)\n#define rep3(i, l,\
+    \ r, d) for (ll i = ll(l), rrrrr = ll(r), ddddd = ll(d); ddddd > 0 ? i < rrrrr\
+    \ : i > rrrrr; i += d)\n#define rep(...) overload4(__VA_ARGS__, rep3, rep2, rep1)(__VA_ARGS__)\n\
+    #define repi1(i, n) for (int i = 0, nnnnn = int(n); i < nnnnn; i++)\n#define repi2(i,\
+    \ l, r) for (int i = int(l), rrrrr = int(r); i < rrrrr; i++)\n#define repi3(i,\
+    \ l, r, d) for (int i = int(l), rrrrr = int(r), ddddd = int(d); ddddd > 0 ? i\
+    \ < rrrrr : i > rrrrr; i += d)\n#define repi(...) overload4(__VA_ARGS__, repi3,\
+    \ repi2, repi1)(__VA_ARGS__)\n\n#define fe(...) for (auto __VA_ARGS__)\n#define\
+    \ fec(...) for (cauto &__VA_ARGS__)\n#define fem(...) for (auto &__VA_ARGS__)\n\
+    #line 2 \"template/template_math.hpp\"\n\n#ifndef INF\n#define INF 4'000'000'000'000'000'037LL\n\
+    #endif\n#ifndef EPS\n#define EPS 1e-11\n#endif\n\n#line 12 \"template/template_math.hpp\"\
+    \n\n#line 2 \"utils/is_integral_ext.hpp\"\n\n#line 4 \"utils/is_integral_ext.hpp\"\
+    \n\n/**\n * @brief $128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\
+    \u6574\u6570\u5224\u5B9A\n * @docs docs/utils/is_integral_ext.md\n */\n\ntemplate\
+    \ <class T>\nconstexpr bool is_integral_ext = is_integral_v<T> || is_same_v<T,\
+    \ i128> || is_same_v<T, u128>;\n\ntemplate <class T>\nconstexpr bool is_signed_ext\
+    \ = is_signed_v<T> || is_same_v<T, i128>;\n\ntemplate <class T>\nconstexpr bool\
+    \ is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;\n#line 14 \"template/template_math.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09\
+    \n * @docs docs/template/template_math.md\n */\n\ntemplate <class T, class U>\n\
+    inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }\ntemplate\
+    \ <class T, class U>\ninline bool chmax(T &a, U b) { return a < b ? a = b, true\
+    \ : false; }\n\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divfloor(U a, V b) { return T(a)\
+    \ / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }\ntemplate <class T = ll, class\
+    \ U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\n\
+    inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a)\
+    \ ^ T(b)) >= 0); }\ntemplate <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U>\
+    \ && is_integral_ext<V>>>\ninline constexpr T divround(U a, V b) { return divfloor<T>(2\
+    \ * T(a) + T(b), 2 * T(b)); }\ntemplate <class T = ll, class U, class V, typename\
+    \ = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>\ninline constexpr T\
+    \ safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }\n\ntemplate <class\
+    \ T = ll, class U, class V>\nconstexpr T ipow(U a, V b)\n{\n  assert(b >= 0);\n\
+    \  if (b == 0)\n    return 1;\n  if (a == 0 || a == 1)\n    return a;\n  if (a\
+    \ < 0 && a == -1)\n    return b & 1 ? -1 : 1;\n\n  T res = 1, tmp = a;\n  while\
+    \ (true)\n  {\n    if (b & 1)\n      res *= tmp;\n    b >>= 1;\n    if (b == 0)\n\
+    \      break;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T = ll,\
+    \ class A, class B, class M>\nT mul_limited(A a, B b, M m)\n{\n  assert(a >= 0\
+    \ && b >= 0 && m >= 0);\n  if (b == 0)\n    return 0;\n  return T(a) > T(m) /\
+    \ T(b) ? T(m) : T(a) * T(b);\n}\ntemplate <class T = ll, class A, class B>\nT\
+    \ mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }\ntemplate <class\
+    \ T = ll, class A, class B, class M>\nT pow_limited(A a, B b, M m)\n{\n  assert(a\
+    \ >= 0 && b >= 0 && m >= 0);\n  if (a <= 1 || b == 0)\n    return min(ipow<T>(a,\
+    \ b), T(m));\n  \n  T res = 1, tmp = a;\n  while (true)\n  {\n    if (b & 1)\n\
+    \    {\n      if (res > T(m) / tmp)\n        return m;\n      res *= tmp;\n  \
+    \  }\n    b >>= 1;\n    if (b == 0)\n      break;\n    if (tmp > T(m) / tmp)\n\
+    \      return m;\n    tmp *= tmp;\n  }\n  return res;\n}\ntemplate <class T =\
+    \ ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a, b,\
+    \ INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A a,\
+    \ K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n\
+    \  if (k == 2)\n  {\n    const T aa = T(a);\n    T x = T(sqrtl((long double)a));\n\
+    \    while (x > aa / x)\n      x--;\n    while (x < numeric_limits<T>::max())\n\
+    \    {\n      const T y = x + 1;\n      if (y > aa / y)\n        break;\n    \
+    \  x = y;\n    }\n    return x;\n  }\n\n  auto isok = [&](T x) -> bool\n  {\n\
+    \    if (x == 0)\n      return true;\n    T res = 1, k2 = k;\n    while (true)\n\
+    \    {\n      if (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return\
+    \ false;\n        res *= x;\n      }\n      k2 >>= 1;\n      if (k2 == 0)\n  \
+    \      break;\n      if (x > T(a) / x)\n        return false;\n      x *= x;\n\
+    \    }\n    return res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up =\
+    \ true;\n  while (!isok(x))\n    up = false, x--;\n  if (up)\n  {\n    while (x\
+    \ < numeric_limits<T>::max() && isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\
+    template <class T = ll, class A, class K>\nconstexpr T iroot_ceil(A a, K k)\n\
+    {\n  T x = iroot<T>(a, k);\n  return ipow<T>(x, k) == a ? x : x + 1;\n}\n\n//\
+    \ https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    template <class D = decltype(EPS), class A>\nint SGN(A a, D eps = EPS) { return\
+    \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
+    \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\n// 0\
+    \ \u306B\u5BFE\u3057\u3066\u306F {0} \u304C\u8FD4\u308B\ntemplate <class T = ll,\
+    \ class U, class V>\nvc<T> base_repr(U val, V base)\n{\n  assert(val >= 0);\n\
+    \  assert(base >= 2);\n  if (val == 0)\n    return {0};\n  vc<T> a;\n  while (val\
+    \ > 0)\n  {\n    a.emplace_back(val % base);\n    val /= base;\n  }\n  reverse(a.begin(),\
+    \ a.end());\n  return a;\n}\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\u540C\
+    \u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\ntemplate <class\
+    \ T = ll, class U, class V>\nvc<T> base_repr(U val, V base, int n)\n{\n  assert(val\
+    \ >= 0);\n  assert(base >= 2);\n  assert(n >= 0);\n  vc<T> a(n);\n  repi(i, n)\n\
+    \  {\n    a[i] = val % base;\n    val /= base;\n  }\n  reverse(a.begin(), a.end());\n\
+    \  return a;\n}\ntemplate <const bool use_upper = true, class U>\nstring base_repr_str(U\
+    \ val, int base)\n{\n  assert(val >= 0);\n  assert(2 <= base && base <= 36);\n\
+    \  auto a = base_repr(val, base);\n  string s = \"\";\n  for (cauto &ai : a)\n\
+    \    s += (ai < 10 ? '0' + ai : (use_upper ? 'A' : 'a') + (ai - 10));\n  return\
+    \ s;\n}\ntemplate <const bool use_upper = true, class U>\nstring base_repr_str(U\
+    \ val, int base, int n)\n{\n  assert(val >= 0);\n  assert(2 <= base && base <=\
+    \ 36);\n  assert(n >= 0);\n  auto a = base_repr(val, base, n);\n  string s = \"\
+    \";\n  for (cauto &ai : a)\n    s += (ai < 10 ? '0' + ai : (use_upper ? 'A' :\
+    \ 'a') + (ai - 10));\n  return s;\n}\n#line 2 \"template/template_vector.hpp\"\
+    \n\n#line 6 \"template/template_vector.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08vector\uFF09\n * @docs docs/template/template_vector.md\n\
+    \ */\n\n#define ALL(a) (a).begin(), (a).end()\ntemplate <class T = ll, class V>\n\
+    inline T SZ(const V &x) { return x.size(); }\n#define eb emplace_back\n\n#define\
+    \ LMD(x, fx) ([&](auto x) { return fx; })\ntemplate <class F>\nauto gen_vec(int\
+    \ n, const F &f)\n{\n  vc<decltype(f(0))> res(n);\n  repi(i, n) res[i] = f(i);\n\
+    \  return res;\n}\n#define GEN_VEC(n, i, fi) (gen_vec(n, LMD(i, fi)))\n\n// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0\n\
+    template <class T, size_t d, size_t i = 0, class V>\nauto dvec(const V (&sz)[d],\
+    \ const T &init)\n{\n  if constexpr (i < d)\n    return vc(sz[i], dvec<T, d, i\
+    \ + 1>(sz, init));\n  else\n    return init;\n}\n\ntemplate <class T = ll>\nT\
+    \ ctol(const char &c, const string &s)\n{\n  repi(i, SZ<int>(s)) if (s[i] == c)\
+    \ return i;\n  return -1;\n}\ntemplate <class T = ll>\nvc<T> stov(const string\
+    \ &s, char first)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n         \
+    \        { return s[i] - first; });\n}\ntemplate <class T = ll>\nvc<T> stov(const\
+    \ string &s, const string &t)\n{\n  return gen_vec(SZ<int>(s), [&](int i) -> T\n\
+    \                 { return ctol(s[i], t); });\n}\ntemplate <class T>\nstring vtos(const\
+    \ vc<T> &v, char first)\n{\n  string res = \"\";\n  fe(vi : v) res += vi + first;\n\
+    \  return res;\n}\ntemplate <class T>\nstring vtos(const vc<T> &v, const string\
+    \ &t)\n{\n  string res = \"\";\n  fe(vi : v) res += t[vi];\n  return res;\n}\n\
+    \ntemplate <class T>\nvc<T> concat(const vvc<T> &vs)\n{\n  vc<T> res;\n  for (cauto\
+    \ &v : vs)\n    res.insert(res.end(), ALL(v));\n  return res;\n}\ntemplate <class\
+    \ T>\nvc<T> concat(const vc<T> &v) { return v; }\ntemplate <class T, class...\
+    \ Ts>\nvc<T> concat(vc<T> v, const vc<Ts> &...vs)\n{\n  (v.insert(v.end(), ALL(vs)),\
+    \ ...);\n  return v;\n}\n\ntemplate <class T>\nvc<T> merged(const vc<T> &a, const\
+    \ vc<T> &b)\n{\n  vc<T> res;\n  merge(ALL(a), ALL(b), back_inserter(res));\n \
+    \ return res;\n}\n\ntemplate <class T, class I>\nT vecget(const vc<T> &v, I i,\
+    \ const T &dflt_negative = -INF, const T &dflt_positive = INF)\n{\n  if (i < 0)\n\
+    \    return dflt_negative;\n  if (i >= SZ<int>(v))\n    return dflt_positive;\n\
+    \  return v[i];\n}\n#line 2 \"template/template_algo.hpp\"\n\n#ifndef INF\n#define\
+    \ INF 4'000'000'000'000'000'037LL\n#endif\n\n#line 11 \"template/template_algo.hpp\"\
+    \n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u30A2\u30EB\u30B4\
+    \u30EA\u30BA\u30E0\uFF09\n * @docs docs/template/template_algo.md\n */\n\ntemplate\
+    \ <class V>\nauto SUM(const V &v)\n{\n  typename V::value_type s{};\n  fec(vi\
+    \ : v) s += vi;\n  return s;\n}\ntemplate <class T, class V>\nT SUM(const V &v)\n\
+    {\n  T s{};\n  fec(vi : v) s += vi;\n  return s;\n}\ntemplate <class V>\nauto\
+    \ MAX(const V &v) { return *max_element(ALL(v)); }\ntemplate <class V>\nauto MIN(const\
+    \ V &v) { return *min_element(ALL(v)); }\ntemplate <class I = ll, class V>\nI\
+    \ ARGMAX(const V &v) { return max_element(ALL(v)) - v.begin(); }\ntemplate <class\
+    \ I = ll, class V>\nI ARGMIN(const V &v) { return min_element(ALL(v)) - v.begin();\
+    \ }\n\ntemplate<class T = ll, class V>\nT mex(const V &a)\n{\n  int n = a.size();\n\
+    \  vector<bool> exists(n, false);\n  repi(i, n) if (0 <= a[i] && a[i] < n) exists[a[i]]\
+    \ = true;\n  repi(x, n) if (!exists[x]) return x;\n  return n;\n}\n\n// (0, 1.\
+    \ ..., n-1) \u306E\u9806\u5217\u304B\u5224\u5B9A\ntemplate <class I>\nbool is_permutation(const\
+    \ vc<I> &p)\n{\n  const int n = p.size();\n  vc<bool> b(n, false);\n  repi(i,\
+    \ n)\n  {\n    if (!(0 <= p[i] && p[i] < n))\n      return false;\n    b[p[i]]\
+    \ = true;\n  }\n  return all_of(ALL(b), [](bool bi)\n                { return\
+    \ bi; });\n}\n\ntemplate <class T = ll>\nvc<T> permid(const int &n, const int\
+    \ &base_index = 0)\n{\n  vc<T> p(n);\n  repi(i, n) p[i] = i + base_index;\n  return\
+    \ p;\n}\ntemplate <class T>\nvc<T> perminv(const vc<T> &p)\n{\n  if (p.empty())\n\
+    \    return {};\n  const int n = p.size();\n  vc<T> q(MAX(p) + 1);\n  repi(i,\
+    \ n) if (p[i] >= 0) q[p[i]] = i;\n  return q;\n}\n// a[p[i]] for all i\ntemplate\
+    \ <class T, class U>\nvc<T> permuted(const vc<T> &a, const vc<U> &p)\n{\n  const\
+    \ int n = p.size();\n  vc<T> res(n);\n  repi(i, n)\n  {\n    assert(0 <= p[i]\
+    \ && p[i] < U(a.size()));\n    res[i] = a[p[i]];\n  }\n  return res;\n}\n// p[q[r[i]]]\
+    \ for all i \u306A\u3069\ntemplate <class T, class U, class... Ts>\nvc<T> permuted(const\
+    \ vc<T> &p, const vc<U> &q, const vc<Ts> &...rs)\n{\n  return permuted(permuted(p,\
+    \ q), rs...);\n}\n\ntemplate <class V>\nV reversed(const V &v) { return V(v.rbegin(),\
+    \ v.rend()); }\n\n#if __cplusplus < 202002L\ntemplate <class V, class... Args>\n\
+    V sorted(V v, Args&&... args)\n{\n  sort(ALL(v), forward<Args>(args)...);\n  return\
+    \ v;\n}\n#else\ntemplate <class V, class... Args>\nV sorted(V v, Args&&... args)\n\
+    {\n  ranges::sort(v, forward<Args>(args)...);\n  return v;\n}\n#endif\n\ntemplate\
+    \ <class V>\nvoid unique(V &v) { v.erase(std::unique(ALL(v)), v.end()); }\ntemplate\
+    \ <class V>\nV uniqued(V v) { unique(v); return v; }\n\ntemplate <class V>\nvoid\
+    \ sortunique(V &v)\n{\n  sort(ALL(v));\n  unique(v);\n}\ntemplate <class V>\n\
+    V sortuniqued(V v) { sortunique(v); return v; }\n\n// 01234 -> 12340\ntemplate\
+    \ <class V, class U>\nvoid rotate(V &v, U k)\n{ \n  const U n = v.size();\n  if\
+    \ (n == 0)\n    return;\n  k = (k % n + n) % n;\n  std::rotate(v.begin(), v.begin()\
+    \ + k, v.end());\n}\n// 01234 -> 12340\ntemplate <class V, class U>\nV rotated(V\
+    \ v, U k) { rotate(v, k); return v; }\n\ntemplate <class T>\nvvc<T> top(const\
+    \ vvc<T> &a)\n{\n  if (a.empty())\n    return {};\n  const int n = a.size(), m\
+    \ = a[0].size();\n  vvc<T> b(m, vc<T>(n));\n  repi(i, n)\n  {\n    assert(SZ<int>(a[i])\
+    \ == m);\n    repi(j, m) b[j][i] = a[i][j];\n  }\n  return b;\n}\nvstr top(const\
+    \ vstr &a)\n{\n  vvc<char> a_(a.size());\n  repi(i, SZ<int>(a)) a_[i] = {ALL(a[i])};\n\
+    \  vvc<char> b_ = top(a_);\n  vstr b(b_.size());\n  repi(i, SZ<int>(b)) b[i] =\
+    \ {ALL(b_[i])};\n  return b;\n}\n\ntemplate <class T, class = void>\nstruct has_e0\
+    \ : false_type {};\ntemplate <class T>\nstruct has_e0<T, void_t<decltype(T::e0())>>\
+    \ : true_type {};\ntemplate <class T>\ninline constexpr bool has_e0_v = has_e0<T>::value;\n\
+    \ntemplate <class T>\nstruct MonoidAdd\n{\n  using S = T;\n  static constexpr\
+    \ S op(S a, S b) { return a + b; }\n  static constexpr S e()\n  {\n    if constexpr\
+    \ (has_e0_v<S>)\n      return S::e0();\n    else\n      return {};\n  }\n  template\
+    \ <class I, class = decltype(declval<S>() * declval<I>())>\n  static constexpr\
+    \ S pow(const S &a, I k) { return a * k; }\n};\ntemplate <class T, const T infty\
+    \ = INF>\nstruct MonoidMin\n{\n  using S = T;\n  static constexpr S op(S a, S\
+    \ b) { return min(a, b); }\n  static constexpr S e() { return infty; }\n  template\
+    \ <class I>\n  static constexpr S pow(const S &a, I k) { return k == 0 ? e() :\
+    \ a; }\n};\ntemplate <class T, const T infty = INF>\nstruct MonoidMax\n{\n  using\
+    \ S = T;\n  static constexpr S op(S a, S b) { return max(a, b); }\n  static constexpr\
+    \ S e() { return -infty; }\n  template <class I>\n  static constexpr S pow(const\
+    \ S &a, I k) { return k == 0 ? e() : a; }\n};\n\nnamespace internal\n{\n  template\
+    \ <class M, class I, class = void>\n  struct HasMonoidPow : false_type\n  {\n\
+    \  };\n  template <class M, class I>\n  struct HasMonoidPow<M, I, void_t<decltype(M::pow(declval<const\
+    \ typename M::S &>(), declval<I>()))>> : true_type\n  {\n  };\n}\n\ntemplate <class\
+    \ M, class I>\ntypename M::S pow_monoid(typename M::S a, I k)\n{\n  if constexpr\
+    \ (is_signed_ext<I>)\n    assert(k >= 0);\n  if constexpr (internal::HasMonoidPow<M,\
+    \ I>::value)\n    return M::pow(a, k);\n  else\n  {\n    typename M::S c = M::e();\n\
+    \    for (; k; k >>= 1)\n    {\n      if (k & 1)\n        c = M::op(c, a);\n \
+    \     a = M::op(a, a);\n    }\n    return c;\n  }\n}\n\ntemplate <class G, class\
+    \ I>\ntypename G::S pow_group(typename G::S a, I k)\n{\n  if constexpr (is_signed_ext<I>)\n\
+    \  {\n    if (k < 0)\n    {\n      a = G::inv(a);\n      return G::op(pow_monoid<G>(a,\
+    \ -(k + 1)), a);\n    }\n  }\n  return pow_monoid<G>(a, k);\n}\n\n// left_index\
+    \ \u304C 0 \u306A\u3089\u3001\u9577\u3055 n+1 \u3067 a.front() \u304C e()\n//\
+    \ left_index \u304C 1 \u306A\u3089\u3001\u9577\u3055 n \u3067 e() \u304C\u306A\
+    \u3044\ntemplate <class M>\nvc<typename M::S> cuml(const vc<typename M::S> &v,\
+    \ int left_index = 0)\n{\n  const int n = v.size();\n  vc<typename M::S> res(n\
+    \ + 1);\n  res[0] = M::e();\n  repi(i, n) res[i + 1] = M::op(res[i], v[i]);\n\
+    \  res.erase(res.begin(), res.begin() + left_index);\n  return res;\n}\n// right_index\
+    \ \u304C 0 \u306A\u3089\u3001\u9577\u3055 n+1 \u3067 a.back() \u304C e()\n// right_index\
+    \ \u304C 1 \u306A\u3089\u3001\u9577\u3055 n \u3067 e() \u304C\u306A\u3044\ntemplate\
+    \ <class M>\nvc<typename M::S> cumr(const vc<typename M::S> &v, int right_index\
+    \ = 0)\n{ return reversed(cuml<M>(reversed(v), right_index)); }\ntemplate <class\
+    \ T>\nvc<T> cumlsum(const vc<T> &v, int left_index = 0)\n{ return cuml<MonoidAdd<T>>(v,\
+    \ left_index); }\ntemplate <class T>\nvc<T> cumrsum(const vc<T> &v, int right_index\
+    \ = 0)\n{ return cumr<MonoidAdd<T>>(v, right_index); }\ntemplate <class T>\nvc<T>\
+    \ cumlmin(const vc<T> &v, int left_index = 0)\n{ return cuml<MonoidMin<T>>(v,\
+    \ left_index); }\ntemplate <class T>\nvc<T> cumrmin(const vc<T> &v, int right_index\
+    \ = 0)\n{ return cumr<MonoidMin<T>>(v, right_index); }\ntemplate <class T>\nvc<T>\
+    \ cumlmax(const vc<T> &v, int left_index = 0)\n{ return cuml<MonoidMax<T>>(v,\
+    \ left_index); }\ntemplate <class T>\nvc<T> cumrmax(const vc<T> &v, int right_index\
+    \ = 0)\n{ return cumr<MonoidMax<T>>(v, right_index); }\n\n// \u30C7\u30D5\u30A9\
+    \u30EB\u30C8\u3067\u306F\u9577\u3055 n+1\n// left_index, right_index \u3092\u305D\
+    \u308C\u305E\u308C 1 \u306B\u3059\u308B\u3068\u3001\u5DE6\u53F3\u304C\u524A\u9664\
+    \u3055\u308C\u308B\ntemplate <class T>\nvc<T> adjd(const vc<T> &v, int left_index\
+    \ = 0, int right_index = 0)\n{\n  int n = v.size();\n  assert(0 <= left_index\
+    \ && 0 <= right_index && left_index + right_index <= n + 1);\n  vc<T> res(n +\
+    \ 1);\n  if (n == 0)\n  {\n    res[0] = T{};\n    res.erase(res.end() - right_index,\
+    \ res.end());\n    res.erase(res.begin(), res.begin() + left_index);\n    return\
+    \ res;\n  }\n  res[0] = v[0];\n  repi(i, 1, n) res[i] = v[i] - v[i - 1];\n  res[n]\
+    \ = -v[n - 1];\n  res.erase(res.end() - right_index, res.end());\n  res.erase(res.begin(),\
+    \ res.begin() + left_index);\n  return res;\n}\n\nconstexpr array<pll, 4> DRULgrid\
+    \ = {{{1, 0}, {0, 1}, {-1, 0}, {0, -1}}};\nconstexpr array<pll, 4> DRULplane =\
+    \ {{{0, -1}, {1, 0}, {0, 1}, {-1, 0}}};\n#line 2 \"template/template_binsearch.hpp\"\
+    \n\n#line 6 \"template/template_binsearch.hpp\"\n\n/**\n * @brief \u30C6\u30F3\
+    \u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09\n * @docs docs/template/template_binsearch.md\n\
+    \ */\n\ntemplate <class T>\nstruct is_random_access_iterator\n{\n  static constexpr\
+    \ bool value = is_same_v<\n    typename iterator_traits<T>::iterator_category,\n\
+    \    random_access_iterator_tag\n  >;\n};\ntemplate <class T>\nconstexpr bool\
+    \ is_random_access_iterator_v = is_random_access_iterator<T>::value;\n\n// ---\
+    \ LB, UB ---\n\n#if __cplusplus < 202002L\nstruct identity\n{\n  template <class\
+    \ T>\n  constexpr T &&operator()(T &&t) const noexcept\n  { return forward<T>(t);\
+    \ }\n};\nnamespace internal\n{\n  template <class T = ll, class V, class Judge>\n\
+    \  inline T bound_helper(const V &v, Judge judge)\n  {\n    int l = -1, r = v.size();\n\
+    \    while (r - l > 1)\n    {\n      int m = (l + r) / 2;\n      if (judge(m))\n\
+    \        l = m;\n      else\n        r = m;\n    }\n    return r;\n  }\n};\n//\
+    \ val <= v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\
+    \u306E\u500B\u6570)\ntemplate <class T = ll, class V, class Value, class Comp\
+    \ = less<>, class Proj = identity>\ninline T LB(const V &v, const Value &val,\
+    \ Comp comp = {}, Proj proj = {})\n{\n  return internal::bound_helper(v, [&](int\
+    \ i) -> bool\n                                { return comp(proj(*(v.begin() +\
+    \ i)), val); });\n}\n// val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val\
+    \ \u4EE5\u4E0B\u306E\u5024\u306E\u500B\u6570)\ntemplate <class T = ll, class V,\
+    \ class Value, class Comp = less<>, class Proj = identity>\ninline T UB(const\
+    \ V &v, const Value &val, Comp comp = {}, Proj proj = {})\n{\n  return internal::bound_helper(v,\
+    \ [&](int i) -> bool\n                                { return !comp(val, proj(*(v.begin()\
+    \ + i))); });\n}\n#define DEFAULT_COMP less<>\n#else\n// val <= v[i] \u3068\u306A\
+    \u308B\u6700\u5C0F\u306E i (val \u672A\u6E80\u306E\u5024\u306E\u500B\u6570)\n\
+    template <class T = ll, class V, class Value, class Comp = ranges::less, class\
+    \ Proj = identity>\ninline T LB(const V &v, const Value &val, Comp comp = {},\
+    \ Proj proj = {})\n{ return ranges::lower_bound(v, val, comp, proj) - v.begin();\
+    \ }\n// val < v[i] \u3068\u306A\u308B\u6700\u5C0F\u306E i (val \u4EE5\u4E0B\u306E\
+    \u5024\u306E\u500B\u6570)\ntemplate <class T = ll, class V, class Value, class\
+    \ Comp = ranges::less, class Proj = identity>\ninline T UB(const V &v, const Value\
+    \ &val, Comp comp = {}, Proj proj = {})\n{ return ranges::upper_bound(v, val,\
+    \ comp, proj) - v.begin(); }\n#define DEFAULT_COMP ranges::less\n#endif\n\n//\
+    \ --- vector \u7B49\u306E lt, leq, gt, geq ---\n\n// v[i] < val \u3068\u306A\u308B\
+    \u6700\u5927\u306E i (\u306A\u3051\u308C\u3070 -1)\ntemplate <class T = ll, class\
+    \ V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto\
+    \ lt_max(const V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return LB<T>(v, val, comp, proj) - 1; }\n// v[i] <= val\
+    \ \u3068\u306A\u308B\u6700\u5927\u306E i (\u306A\u3051\u308C\u3070 -1)\ntemplate\
+    \ <class T = ll, class V, class Value, class Comp = DEFAULT_COMP, class Proj =\
+    \ identity>\ninline auto leq_max(const V &v, const Value &val, Comp comp = {},\
+    \ Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename V::iterator>,\
+    \ T>\n{ return UB<T>(v, val, comp, proj) - 1; }\n// val < v[i] \u3068\u306A\u308B\
+    \u6700\u5C0F\u306E i (\u306A\u3051\u308C\u3070 n)\ntemplate <class T = ll, class\
+    \ V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto\
+    \ gt_min(const V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return UB<T>(v, val, comp, proj); }\n// val <= v[i] \u3068\
+    \u306A\u308B\u6700\u5C0F\u306E i (\u306A\u3051\u308C\u3070 n)\ntemplate <class\
+    \ T = ll, class V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>\n\
+    inline auto geq_min(const V &v, const Value &val, Comp comp = {}, Proj proj =\
+    \ {})\n-> enable_if_t<is_random_access_iterator_v<typename V::iterator>, T>\n\
+    { return LB<T>(v, val, comp, proj); }\n// v[i] < val \u3068\u306A\u308B i \u306E\
+    \u500B\u6570\ntemplate <class T = ll, class V, class Value, class Comp = DEFAULT_COMP,\
+    \ class Proj = identity>\ninline auto lt_cnt(const V &v, const Value &val, Comp\
+    \ comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return LB<T>(v, val, comp, proj); }\n// v[i] <= val \u3068\
+    \u306A\u308B i \u306E\u500B\u6570\ntemplate <class T = ll, class V, class Value,\
+    \ class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto leq_cnt(const\
+    \ V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return UB<T>(v, val, comp, proj); }\n// val < v[i] \u3068\
+    \u306A\u308B i \u306E\u500B\u6570\ntemplate <class T = ll, class V, class Value,\
+    \ class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto gt_cnt(const\
+    \ V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return SZ<T>(v) - UB<T>(v, val, comp, proj); }\n// val <=\
+    \ v[i] \u3068\u306A\u308B i \u306E\u500B\u6570\ntemplate <class T = ll, class\
+    \ V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>\ninline auto\
+    \ geq_cnt(const V &v, const Value &val, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{ return SZ<T>(v) - LB<T>(v, val, comp, proj); }\n// l <=\
+    \ v[i] < r \u3068\u306A\u308B i \u306E\u500B\u6570\ntemplate <class T = ll, class\
+    \ V, class L, class R, class Comp = DEFAULT_COMP, class Proj = identity>\ninline\
+    \ auto in_cnt(const V &v, L l, R r, Comp comp = {}, Proj proj = {})\n-> enable_if_t<is_random_access_iterator_v<typename\
+    \ V::iterator>, T>\n{\n  if (l > r)\n    return 0;\n  return lt_cnt<T>(v, r, comp,\
+    \ proj) - lt_cnt<T>(v, l, comp, proj);\n}\n\n// --- set \u7B49\u306E lt, leq,\
+    \ gt, geq ---\n\n// *it < val \u3068\u306A\u308B\u6700\u5927\u306E it (\u306A\u3051\
+    \u308C\u3070 end())\ntemplate <class V, class Value>\ninline auto lt_max(const\
+    \ V &v, const Value &val)\n-> enable_if_t<!is_random_access_iterator_v<typename\
+    \ V::iterator>, typename V::const_iterator>\n{\n  auto it = v.lower_bound(val);\n\
+    \  return it == v.begin() ? v.end() : prev(it);\n}\n// *it <= val \u3068\u306A\
+    \u308B\u6700\u5927\u306E it (\u306A\u3051\u308C\u3070 end())\ntemplate <class\
+    \ V, class Value>\ninline auto leq_max(const V &v, const Value &val)\n-> enable_if_t<!is_random_access_iterator_v<typename\
+    \ V::iterator>, typename V::const_iterator>\n{\n  auto it = v.upper_bound(val);\n\
+    \  return it == v.begin() ? v.end() : prev(it);\n}\n// val < *it \u3068\u306A\u308B\
+    \u6700\u5C0F\u306E it (\u306A\u3051\u308C\u3070 end())\ntemplate <class V, class\
+    \ Value>\ninline auto gt_min(const V &v, const Value &val)\n-> enable_if_t<!is_random_access_iterator_v<typename\
+    \ V::iterator>, typename V::const_iterator>\n{ return v.upper_bound(val); }\n\
+    // val <= *it \u3068\u306A\u308B\u6700\u5C0F\u306E it (\u306A\u3051\u308C\u3070\
+    \ end())\ntemplate <class V, class Value>\ninline auto geq_min(const V &v, const\
+    \ Value &val)\n-> enable_if_t<!is_random_access_iterator_v<typename V::iterator>,\
+    \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
+    \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\nnamespace internal\n{\ntemplate <class T>\n\
+    bool binsearch_adjacent(T a, T b)\n{\n  if (a < b)\n    return a + 1 == b;\n \
+    \ if (b < a)\n    return b + 1 == a;\n  return false;\n}\n};\n\n// (ok, ng)\n\
+    template <class T = ll, class Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const\
+    \ Judge &judge, InitOk init_ok, InitNg init_ng, bool check_ok = true, bool check_ng\
+    \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
+    \  if (check_ng)\n    assert(!judge(ng));\n  while (!internal::binsearch_adjacent(ok,\
+    \ ng))\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok :\
+    \ ng) = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge,\
+    \ class InitOk, class InitNg>\nT binsearch_real(const Judge &judge, InitOk init_ok,\
+    \ InitNg init_ng, int iteration_count = 100, bool check_ok = true, bool check_ng\
+    \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
+    \  if (check_ng)\n    assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n \
+    \   T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n\
+    }\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T, T>\
+    \ expsearch(const Judge &judge, InitVal init_val, bool positive = true)\n{\n \
+    \ T cur(init_val), step = 1;\n  const bool cur_ok = judge(cur);\n  auto advance\
+    \ = [&](T x, T d, bool pos) -> T\n  {\n    if (pos)\n      return x > numeric_limits<T>::max()\
+    \ - d ? numeric_limits<T>::max() : x + d;\n    else\n      return x < numeric_limits<T>::lowest()\
+    \ + d ? numeric_limits<T>::lowest() : x - d;\n  };\n  T prv = advance(cur, 1,\
+    \ !positive);\n  if (prv != cur && judge(prv) != cur_ok)\n  {\n    if (cur_ok)\n\
+    \      return {cur, prv};\n    else\n      return {prv, cur};\n  }\n  while (true)\n\
+    \  {\n    T nxt = advance(cur, step, positive);\n    assert(nxt != cur && \"the\
+    \ boundary must exist in the searched direction\");\n    if (nxt == cur || judge(nxt)\
+    \ != cur_ok)\n    {\n      T ok = cur_ok ? cur : nxt;\n      T ng = cur_ok ? nxt\
+    \ : cur;\n      return binsearch<T>(judge, ok, ng, false, false);\n    }\n   \
+    \ cur = nxt;\n    if (step > numeric_limits<T>::max() / 2)\n      step = numeric_limits<T>::max();\n\
+    \    else\n      step *= 2;\n  }\n}\n#line 2 \"template/template_bit.hpp\"\n\n\
+    #line 5 \"template/template_bit.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08\u30D3\u30C3\u30C8\u6F14\u7B97\uFF09\n * @docs docs/template/template_bit.md\n\
+    \ */\n\ntemplate <class T>\ninline constexpr ull pow2(T k) { return 1ULL << k;\
+    \ }\ntemplate <class T>\ninline constexpr ull MASK(T k) { return (1ULL << k) -\
+    \ 1ULL; }\n\n#if __cplusplus < 202002L\n// x == 0 \u306A\u3089\u3070 0\u3001\u305D\
+    \u3046\u3067\u306A\u3051\u308C\u3070 1 + floor(log2(x))\n// 0, 1, 2, 2, 3, 3,\
+    \ 3, 3, 4, 4, ... \ninline constexpr ull bit_width(ull x) { return x == 0 ? 0\
+    \ : 64 - __builtin_clzll(x); }\n// 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr\
+    \ ull bit_floor(ull x) { return x == 0 ? 0ULL : 1ULL << (bit_width(x) - 1); }\n\
+    // 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr ull bit_ceil(ull x) {\
+    \ return x == 0 ? 1ULL : 1ULL << bit_width(x - 1); }\ninline constexpr ull countr_zero(ull\
+    \ x) { assert(x != 0); return __builtin_ctzll(x); }\ninline constexpr ull popcount(ull\
+    \ x) { return __builtin_popcountll(x); }\ninline constexpr bool has_single_bit(ull\
+    \ x) { return popcount(x) == 1; }\n#else\n// 0, 1, 2, 2, 3, 3, 3, 3, 4, 4, ...\
+    \ \ninline constexpr ll bit_width(ll x) { return std::bit_width((ull)x); }\n//\
+    \ 0, 1, 2, 2, 4, 4, 4, 4, 8, 8, ...\ninline constexpr ll bit_floor(ll x) { return\
+    \ std::bit_floor((ull)x); }\n// 1, 1, 2, 4, 4, 8, 8, 8, 8, 16, ...\ninline constexpr\
+    \ ll bit_ceil(ll x) { return std::bit_ceil((ull)x); }\ninline constexpr ll countr_zero(ll\
+    \ x) { assert(x != 0); return std::countr_zero((ull)x); }\ninline constexpr ll\
+    \ popcount(ll x) { return std::popcount((ull)x); }\ninline constexpr bool has_single_bit(ll\
+    \ x) { return std::has_single_bit((ull)x); }\n#endif\n\ninline constexpr ull lsb_pos(ull\
+    \ x) { assert(x != 0); return countr_zero(x); }\ninline constexpr ull msb_pos(ull\
+    \ x) { assert(x != 0); return bit_width(x) - 1; }\ninline constexpr ull lsb_mask(ull\
+    \ x) { assert(x != 0); return x & -x; }\ninline constexpr ull msb_mask(ull x)\
+    \ { assert(x != 0); return bit_floor(x); }\n\ninline constexpr bool btest(ull\
+    \ x, uint k) { return (x >> k) & 1; }\ntemplate <class T>\ninline void bset(T\
+    \ &x, uint k, bool b = 1) { b ? x |= (1ULL << k) : x &= ~(1ULL << k); }\ntemplate\
+    \ <class T>\ninline void bflip(T &x, uint k) { x ^= (1ULL << k); }\ninline constexpr\
+    \ bool bsubset(ull x, ull y) { return (x & y) == x; }\ninline constexpr bool bsupset(ull\
+    \ x, ull y) { return (x & y) == y; }\ninline constexpr ull bsetminus(ull x, ull\
+    \ y) { return x & ~y; }\n#line 2 \"template/template_inout.hpp\"\n\n#line 2 \"\
+    template/template_dump.hpp\"\n\n#line 4 \"template/template_dump.hpp\"\n\n/**\n\
+    \ * @brief \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
+    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
+    \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
+    \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
+    \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
+    \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
+    \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 100);\n#define local(...) __VA_ARGS__\n\
+    #define oj(...)\n#define local_oj(a, b) (a)\nCPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(content());\n\
+    #else\n#define dump(...)\n#define local(...)\n#define oj(...) __VA_ARGS__\n#define\
+    \ local_oj(a, b) (b)\n#endif\n\ntemplate <class T, class Sequence>\nvc<T> content(queue<T,\
+    \ Sequence> que)\n{\n  vc<T> res;\n  while (!que.empty())\n  {\n    res.eb(que.front());\n\
+    \    que.pop();\n  }\n  return res;\n}\ntemplate <class T, class Sequence, class\
+    \ Compare>\nvc<T> content(priority_queue<T, Sequence, Compare> pque)\n{\n  vc<T>\
+    \ res;\n  while (!pque.empty())\n  {\n    res.eb(pque.top());\n    pque.pop();\n\
+    \  }\n  return res;\n}\ntemplate <class T>\nauto content(const T &obj) { return\
+    \ obj.content(); }\n#line 6 \"template/template_inout.hpp\"\n\n/**\n * @brief\
+    \ \u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u5165\u51FA\u529B\uFF09\n * @docs\
+    \ docs/template/template_inout.md\n */\n\n// https://judge.yosupo.jp/submission/170706\
+    \ (maspy \u3055\u3093)\n// https://judge.yosupo.jp/submission/21623  (Nyaan \u3055\
+    \u3093)\n#if defined FAST_IO and not defined LOCAL\nnamespace fastio {\ntemplate\
+    \ <class T>\nstruct unsigned_integer\n{\n  using type = make_unsigned_t<T>;\n\
+    };\ntemplate <>\nstruct unsigned_integer<i128>\n{\n  using type = u128;\n};\n\
+    template <>\nstruct unsigned_integer<u128>\n{\n  using type = u128;\n};\ntemplate\
+    \ <class T>\nusing unsigned_integer_t = typename unsigned_integer<T>::type;\n\n\
+    static constexpr uint32_t SIZ = 1 << 17;\nchar ibuf[SIZ];\nchar obuf[SIZ];\nchar\
+    \ out[100];\n// pointer of ibuf, obuf\nuint32_t pil = 0, pir = 0, por = 0;\n\n\
+    struct Pre {\n  char num[10000][4];\n  constexpr Pre() : num() {\n    for (int\
+    \ i = 0; i < 10000; i++) {\n      int n = i;\n      for (int j = 3; j >= 0; j--)\
+    \ {\n        num[i][j] = n % 10 | '0';\n        n /= 10;\n      }\n    }\n  }\n\
+    } constexpr pre;\n\ninline void load() {\n  memcpy(ibuf, ibuf + pil, pir - pil);\n\
+    \  pir = pir - pil + fread(ibuf + pir - pil, 1, SIZ - pir + pil, stdin);\n  pil\
+    \ = 0;\n  if (pir < SIZ) ibuf[pir++] = '\\n';\n}\n\ninline void flush() {\n  fwrite(obuf,\
+    \ 1, por, stdout);\n  por = 0;\n}\n\nvoid rd1(char &c) {\n  do {\n    if (pil\
+    \ + 1 > pir) load();\n    c = ibuf[pil++];\n  } while (isspace(c));\n}\n\nvoid\
+    \ rd1(string &x) {\n  x.clear();\n  char c;\n  do {\n    if (pil + 1 > pir) load();\n\
+    \    c = ibuf[pil++];\n  } while (isspace(c));\n  do {\n    x += c;\n    if (pil\
+    \ == pir) load();\n    c = ibuf[pil++];\n  } while (!isspace(c));\n}\n\ntemplate\
+    \ <typename T>\nvoid rd1_real(T &x) {\n  string s;\n  rd1(s);\n  if constexpr\
+    \ (is_same_v<T, long double>)\n    x = stold(s);\n  else\n    x = stod(s);\n}\n\
+    \ntemplate <typename T>\nvoid rd1_integer(T &x) {\n  if (pil + 100 > pir) load();\n\
+    \  char c;\n  do\n    c = ibuf[pil++];\n  while (c < '-');\n  bool minus = 0;\n\
+    \  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {\n    if (c == '-')\
+    \ { minus = 1, c = ibuf[pil++]; }\n  }\n  using U = unsigned_integer_t<T>;\n \
+    \ U val = 0;\n  while ('0' <= c) { val = val * 10 + (c & 15), c = ibuf[pil++];\
+    \ }\n  pil--;\n  if constexpr (is_signed<T>::value || is_same_v<T, i128>)\n  {\n\
+    \    if (minus)\n    {\n      const U min_abs = U(numeric_limits<T>::max()) +\
+    \ 1;\n      assert(val <= min_abs);\n      x = val == min_abs ? numeric_limits<T>::lowest()\
+    \ : -T(val);\n    }\n    else\n    {\n      assert(val <= U(numeric_limits<T>::max()));\n\
+    \      x = T(val);\n    }\n  }\n  else\n    x = T(val);\n}\n\nvoid rd1(int &x)\
+    \ { rd1_integer(x); }\nvoid rd1(ll &x) { rd1_integer(x); }\nvoid rd1(i128 &x)\
+    \ { rd1_integer(x); }\nvoid rd1(uint &x) { rd1_integer(x); }\nvoid rd1(ull &x)\
+    \ { rd1_integer(x); }\nvoid rd1(u128 &x) { rd1_integer(x); }\nvoid rd1(double\
+    \ &x) { rd1_real(x); }\nvoid rd1(long double &x) { rd1_real(x); }\n// void rd1(f128\
+    \ &x) { rd1_real(x); }\n\ntemplate <class T, class U>\nvoid rd1(pair<T, U> &p)\
+    \ {\n  return rd1(p.first), rd1(p.second);\n}\ntemplate <class... T>\nvoid rd1(tuple<T...>\
+    \ &tpl) {\n  apply([](auto &...x) { (rd1(x), ...); }, tpl);\n}\n\ntemplate <size_t\
+    \ N = 0, typename T>\nvoid rd1(array<T, N> &x) {\n  for (auto &d: x) rd1(d);\n\
+    }\ntemplate <class T>\nvoid rd1(vc<T> &x) {\n  for (auto &d: x) rd1(d);\n}\n\n\
+    template <class... T>\nvoid read(T &...x) {\n  (rd1(x), ...);\n}\n\nvoid wt1(const\
+    \ char c) {\n  if (por == SIZ) flush();\n  obuf[por++] = c;\n}\nvoid wt1(const\
+    \ string s) {\n  for (char c: s) wt1(c);\n}\nvoid wt1(const char *s) {\n  size_t\
+    \ len = strlen(s);\n  for (size_t i = 0; i < len; i++) wt1(s[i]);\n}\n\ntemplate\
+    \ <typename T>\nvoid wt1_integer(T x) {\n  if (por > SIZ - 100) flush();\n  using\
+    \ U = unsigned_integer_t<T>;\n  U ux;\n  if constexpr (is_signed<T>::value ||\
+    \ is_same_v<T, i128>)\n  {\n    if (x < 0)\n      obuf[por++] = '-', ux = U(0)\
+    \ - U(x);\n    else\n      ux = U(x);\n  }\n  else\n    ux = x;\n  int outi;\n\
+    \  for (outi = 96; ux >= 10000; outi -= 4) {\n    memcpy(out + outi, pre.num[ux\
+    \ % 10000], 4);\n    ux /= 10000;\n  }\n  if (ux >= 1000) {\n    memcpy(obuf +\
+    \ por, pre.num[ux], 4);\n    por += 4;\n  } else if (ux >= 100) {\n    memcpy(obuf\
+    \ + por, pre.num[ux] + 1, 3);\n    por += 3;\n  } else if (ux >= 10) {\n    int\
+    \ q = (ux * 103) >> 10;\n    obuf[por] = q | '0';\n    obuf[por + 1] = (ux - q\
+    \ * 10) | '0';\n    por += 2;\n  } else\n    obuf[por++] = ux | '0';\n  memcpy(obuf\
+    \ + por, out + outi + 4, 96 - outi);\n  por += 96 - outi;\n}\n\ntemplate <typename\
+    \ T>\nvoid wt1_real(T x) {\n  ostringstream oss;\n  oss << fixed << setprecision(15)\
+    \ << x;\n  string s = oss.str();\n  wt1(s);\n}\n\nvoid wt1(int x) { wt1_integer(x);\
+    \ }\ntemplate <class T, enable_if_t<is_integral_v<T>, int> = 0>\nvoid wt1(T x)\
+    \ { wt1_integer(x); }\nvoid wt1(i128 x) { wt1_integer(x); }\nvoid wt1(u128 x)\
+    \ { wt1_integer(x); }\nvoid wt1(double x) { wt1_real(x); }\nvoid wt1(long double\
+    \ x) { wt1_real(x); }\n// void wt1(f128 x) { wt1_real(x); }\n\ntemplate <class\
+    \ T, class U>\nvoid wt1(const pair<T, U> &val) {\n  wt1(val.first);\n  wt1(' ');\n\
+    \  wt1(val.second);\n}\ntemplate <class... T>\nvoid wt1(const tuple<T...> &tpl)\
+    \ {\n  if constexpr (sizeof...(T))\n  {\n    int i = 0;\n    apply([&](const auto\
+    \ &...x)\n          { ((i++ ? wt1(' ') : void(), wt1(x)), ...); }, tpl);\n  }\n\
+    }\ntemplate <class T, size_t S>\nvoid wt1(const array<T, S> &val) {\n  auto n\
+    \ = val.size();\n  for (size_t i = 0; i < n; i++) {\n    if (i) wt1(' ');\n  \
+    \  wt1(val[i]);\n  }\n}\ntemplate <class T>\nvoid wt1(const vector<T> &val) {\n\
+    \  auto n = val.size();\n  for (size_t i = 0; i < n; i++) {\n    if (i) wt1('\
+    \ ');\n    wt1(val[i]);\n  }\n}\n\ntemplate <class... T>\nvoid write(T &&...x)\
+    \ {\n  (wt1(std::forward<T>(x)), ...);\n}\n\ntemplate <class... T>\nvoid print(T\
+    \ &&...x) {\n  if constexpr (sizeof...(T))\n  {\n    int i = 0;\n    ((i++ ? wt1('\
+    \ ') : void(), wt1(std::forward<T>(x))), ...);\n  }\n  wt1('\\n');\n}\n\n} //\
+    \ namespace fastio\n\n#endif\n\n#if defined FAST_IO and not defined LOCAL\nstruct\
+    \ Dummy {\n  Dummy() { atexit(fastio::flush); }\n} dummy;\n#endif\n\n// https://trap.jp/post/1224/\n\
+    \n// ---- \u5165\u529B ----\n#if defined LOCAL or not defined FAST_IO\ntemplate\
+    \ <class T, class U>\nistream &operator>>(istream &is, pair<T, U> &p)\n{\n  is\
+    \ >> p.first >> p.second;\n  return is;\n}\ntemplate <class... Ts>\nistream &operator>>(istream\
+    \ &is, tuple<Ts...> &t)\n{\n  apply([&](auto &...a)\n        { (is >> ... >> a);\
+    \ }, t);\n  return is;\n}\ntemplate <class T, size_t n>\nistream &operator>>(istream\
+    \ &is, array<T, n> &a)\n{\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
+    \  return is;\n}\ntemplate <class T>\nistream &operator>>(istream &is, vc<T> &a)\n\
+    {\n  const size_t n = a.size();\n  for (size_t i = 0; i < n; i++)\n    is >> a[i];\n\
+    \  return is;\n}\n#endif\n\nnamespace internal\n{\n\n#if defined LOCAL or not\
+    \ defined FAST_IO\ntemplate <class... Ts>\nvoid CIN(Ts &...a) { (cin >> ... >>\
+    \ a); }\n#endif\n\n#if defined FAST_IO and not defined LOCAL\ntemplate <class...\
+    \ Ts>\nvoid READnodump(Ts &...a) { fastio::read(a...); }\n#else\ntemplate <class...\
+    \ Ts>\nvoid READnodump(Ts &...a) { CIN(a...); }\n#endif\n\ntemplate <class...\
+    \ T>\nvoid READVECnodump(int n, vc<T> &...v)\n{\n  (v.resize(n), ...);\n  READnodump(v...);\n\
+    }\n\ntemplate <class... T>\nvoid READVEC2nodump(int n, int m, vvc<T> &...v)\n\
+    {\n  (v.assign(n, vc<T>(m)), ...);\n  READnodump(v...);\n}\n\ntemplate <class...\
+    \ T>\nvoid READJAGnodump(int n, vvc<T> &...vs)\n{\n  auto read_one = [&](auto\
+    \ &v)\n  {\n    v.resize(n);\n    for (auto &row : v)\n    {\n      int k;\n \
+    \     READnodump(k);\n      row.resize(k);\n      READnodump(row);\n    }\n  };\n\
+    \  (read_one(vs), ...);\n}\n\n}; // namespace internal\n\n#define READ(...) internal::READnodump(__VA_ARGS__);\
+    \ dump(__VA_ARGS__)\n\n#define IN(T, ...) T __VA_ARGS__; READ(__VA_ARGS__)\n\n\
+    #define CHAR(...) IN(char, __VA_ARGS__)\n#define INT(...) IN(int, __VA_ARGS__)\n\
+    #define LL(...) IN(ll, __VA_ARGS__)\n#define STR(...) IN(string, __VA_ARGS__)\n\
+    #define ARR(T, n, ...) array<T, n> __VA_ARGS__; READ(__VA_ARGS__)\n\n#define READVEC(...)\
+    \ internal::READVECnodump(__VA_ARGS__); dump(__VA_ARGS__)\n#define READVEC2(...)\
+    \ internal::READVEC2nodump(__VA_ARGS__); dump(__VA_ARGS__)\n\n#define VEC(T, n,\
+    \ ...) vc<T> __VA_ARGS__; READVEC(n, __VA_ARGS__)\n#define VEC2(T, n, m, ...)\
+    \ vvc<T> __VA_ARGS__; READVEC2(n, m, __VA_ARGS__)\n\n#define READJAG(...) internal::READJAGnodump(__VA_ARGS__);\
+    \ dump(__VA_ARGS__)\n\n#define JAG(T, n, ...) vvc<T> __VA_ARGS__; READJAG(n, __VA_ARGS__)\n\
+    \n// ----------\n\n// ----- \u51FA\u529B -----\n#ifdef INTERACTIVE\n#define ENDL\
+    \ endl\n#else\n#define ENDL '\\n'\n#endif\n\n#if defined LOCAL or not defined\
+    \ FAST_IO\ntemplate <class T, class U>\nostream &operator<<(ostream &os, const\
+    \ pair<T, U> &p)\n{\n  os << p.first << ' ' << p.second;\n  return os;\n}\n\n\
+    template <class... Ts>\nostream &operator<<(ostream &os, const tuple<Ts...> &t)\n\
+    {\n  if constexpr (sizeof...(Ts))\n  {\n    apply([&](const auto &...x)\n    \
+    \      {\n            int i = 0;\n            ((os << (i++ ? \" \" : \"\") <<\
+    \ x), ...);\n          }, t);\n  }\n  return os;\n}\ntemplate <class T, size_t\
+    \ n>\nostream &operator<<(ostream &os, const array<T, n> &a)\n{\n  for (size_t\
+    \ i = 0; i < n; i++)\n  {\n    if (i)\n      os << ' ';\n    os << a[i];\n  }\n\
+    \  return os;\n}\ntemplate <class T>\nostream &operator<<(ostream &os, const vc<T>\
+    \ &v)\n{\n  const size_t n = v.size();\n  for (size_t i = 0; i < n; i++)\n  {\n\
+    \    if (i)\n      os << ' ';\n    os << v[i];\n  }\n  return os;\n}\n\nnamespace\
+    \ internal\n{\n\ntemplate <class... Ts>\nvoid COUTW(const Ts &...a)\n{\n  if constexpr\
+    \ (sizeof...(Ts))\n    (cout << ... << a);\n}\n\ntemplate <class... Ts>\nvoid\
+    \ COUTP(const Ts &...a)\n{\n  if constexpr (sizeof...(Ts))\n  {\n    int i = 0;\n\
+    \    ((cout << (i++ ? \" \" : \"\") << a), ...);\n  }\n  cout << ENDL;\n}\n\n\
+    }; // namespace internal\n#endif\n\n#if defined FAST_IO and not defined LOCAL\n\
+    #define WRITE fastio::write\n#define PRINT fastio::print\n#else\n#define WRITE\
+    \ internal::COUTW\n#define PRINT internal::COUTP\n#endif\n#define PRINTEXIT(...)\
+    \ do { PRINT(__VA_ARGS__); exit(0); } while (false)\n#define PRINTRETURN(...)\
+    \ do { PRINT(__VA_ARGS__); return; } while (false)\n\ntemplate <class T>\nvoid\
+    \ PRINTV(const vc<T> &v) { for (auto &vi : v) PRINT(vi); }\n#define PRINTVEXIT(...)\
+    \ do { PRINTV(__VA_ARGS__); exit(0); } while (false)\n#define PRINTVRETURN(...)\
+    \ do { PRINTV(__VA_ARGS__); return; } while (false)\n// ----------\n\n// -----\
+    \ \u57FA\u6E96\u305A\u3089\u3057 -----\ntemplate <class T, class U, class P>\n\
+    pair<T, U> &operator+=(pair<T, U> &a, const P &b)\n{\n  a.first += b.first;\n\
+    \  a.second += b.second;\n  return a;\n}\ntemplate <class T, class U, class P>\n\
+    pair<T, U> operator+(pair<T, U> a, const P &b) { return a += b; }\n\ntemplate\
+    \ <class T, size_t n, class A>\narray<T, n> &operator+=(array<T, n> &a, const\
+    \ A &b)\n{\n  for (size_t i = 0; i < n; i++)\n    a[i] += b[i];\n  return a;\n\
+    }\ntemplate <class T, size_t n, class A>\narray<T, n> operator+(array<T, n> a,\
+    \ const A &b) { return a += b; }\n\nnamespace internal\n{\n\ntemplate <size_t...\
+    \ I, class A, class B>\nauto &tuple_add_impl(A &a, const B &b, const index_sequence<I...>)\n\
+    {\n  ((get<I>(a) += get<I>(b)), ...);\n  return a;\n}\n\n}; // namespace internal\n\
+    \ntemplate <class... Ts, class Tp>\ntuple<Ts...> &operator+=(tuple<Ts...> &a,\
+    \ const Tp &b)\n{ return internal::tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{});\
+    \ }\ntemplate <class... Ts, class Tp>\ntuple<Ts...> operator+(tuple<Ts...> a,\
+    \ const Tp &b) { return a += b; }\n\ntemplate <class T, class Add>\nvoid offset(vc<T>\
+    \ &v, const Add &add) { for (auto &vi : v) vi += add; }\ntemplate <class T, class\
+    \ Add>\nvoid offset(vvc<T> &v, const Add &add) { for (auto &vi : v) for (auto\
+    \ &vij : vi) vij += add; }\n// ----------\n\n// ----- \u8EE2\u7F6E -----\ntemplate\
+    \ <class T, const size_t m>\narray<vc<T>, m> unzip(const vc<array<T, m>> &vt)\n\
+    {\n  const size_t n = vt.size();\n  array<vc<T>, m> tv;\n  tv.fill(vc<T>(n));\n\
+    \  for (size_t i = 0; i < n; i++)\n    for (size_t j = 0; j < m; j++)\n      tv[j][i]\
+    \ = vt[i][j];\n  return tv;\n}\ntemplate <class T, const size_t m>\nvc<array<T,\
+    \ m>> zip(const array<vc<T>, m> &tv)\n{\n  if (tv.empty()) return {};\n  const\
+    \ size_t n = tv[0].size();\n  vc<array<T, m>> vt(n);\n  for (size_t j = 0; j <\
+    \ m; j++)\n  {\n    assert(tv[j].size() == n);\n    for (size_t i = 0; i < n;\
+    \ i++)\n      vt[i][j] = tv[j][i];\n  }\n  return vt;\n}\n\ntemplate <class T,\
+    \ class U>\npair<vc<T>, vc<U>> unzip(const vc<pair<T, U>> &vt)\n{\n  const size_t\
+    \ n = vt.size();\n  pair<vc<T>, vc<U>> tv;\n  tv.first.resize(n), tv.second.resize(n);\n\
+    \  for (size_t i = 0; i < n; i++)\n    tie(tv.first[i], tv.second[i]) = vt[i];\n\
+    \  return tv;\n}\ntemplate <class T, class U>\nvc<pair<T, U>> zip(const pair<vc<T>,\
+    \ vc<U>> &tv)\n{\n  const size_t n = tv.first.size();\n  assert(n == tv.second.size());\n\
+    \  vc<pair<T, U>> vt(n);\n  for (size_t i = 0; i < n; i++)\n    vt[i] = make_pair(tv.first[i],\
+    \ tv.second[i]);\n  return vt;\n}\n\nnamespace internal\n{\n\ntemplate <size_t...\
+    \ I, class V, class Tp>\nauto vt_to_tv_impl(V &tv, const Tp &t, index_sequence<I...>,\
+    \ size_t index)\n{ ((get<I>(tv)[index] = get<I>(t)), ...); }\n\ntemplate <size_t...\
+    \ I, class Tp>\nauto tv_to_vt_impl(const Tp &tv, index_sequence<I...>, size_t\
+    \ index)\n{ return make_tuple(get<I>(tv)[index]...); }\n\n};\n\ntemplate <class...\
+    \ Ts>\nauto unzip(const vc<tuple<Ts...>> &vt)\n{\n  const size_t n = vt.size();\n\
+    \  tuple<vc<Ts>...> tv;\n  apply([&](auto &...v)\n        { ((v.resize(n)), ...);\
+    \ }, tv);\n  for (size_t i = 0; i < n; i++)\n    internal::vt_to_tv_impl(tv, vt[i],\
+    \ make_index_sequence<tuple_size_v<decltype(tv)>>{}, i);\n  return tv;\n}\n\n\
+    template <class... Ts>\nauto zip(const tuple<vc<Ts>...> &tv)\n{\n  size_t n =\
+    \ get<0>(tv).size();\n  apply([&](auto &...v)\n        { ((void(v), assert(v.size()\
+    \ == n)), ...); }, tv);\n  vc<tuple<Ts...>> vt(n);\n  for (size_t i = 0; i < n;\
+    \ i++)\n    vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);\n\
+    \  return vt;\n}\n\n#define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)\n#define\
+    \ ZIP(vt, ...) auto vt = zip(tuple{__VA_ARGS__})\n// ----------\n#line 2 \"template/template_random.hpp\"\
+    \n\n#line 5 \"template/template_random.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
+    \u30EC\u30FC\u30C8\uFF08\u30E9\u30F3\u30C0\u30E0\u751F\u6210\uFF09\n * @docs docs/template/template_random.md\n\
+    \ */\n\nmt19937_64 mt;\n\n// [l, r] \u304B\u3089\u7B49\u78BA\u7387\ntemplate <class\
+    \ T = ll, class U1, class U2>\nT randint(U1 l, U2 r)\n{\n  assert(T(l) <= T(r));\n\
+    \  return uniform_int_distribution<T>(T(l), T(r))(mt);\n}\n// [l, r) \u304B\u3089\
+    \u7B49\u78BA\u7387\ntemplate <class T = ll, class U1, class U2>\nT randrange(U1\
+    \ l, U2 r)\n{\n  assert(T(l) < T(r));\n  return uniform_int_distribution<T>(T(l),\
+    \ T(r) - 1)(mt);\n}\n\n// [l, r) \u304B\u3089\u4E00\u69D8\u30E9\u30F3\u30C0\u30E0\
+    \u306A\u5B9F\u6570\u3092\u8FD4\u3059\ntemplate <class T = double, class U1, class\
+    \ U2>\nT randreal(U1 l, U2 r)\n{\n  assert(T(l) < T(r));\n  return uniform_real_distribution<T>(T(l),\
+    \ T(r))(mt);\n}\n\n// \u78BA\u7387 p \u3067 true \u3092\u8FD4\u3059\nbool randbool(double\
+    \ p)\n{\n  assert(0 <= p && p <= 1);\n  return bernoulli_distribution(p)(mt);\n\
+    }\n\nnamespace internal\n{\ntemplate <bool does_sort, class V, class T>\nvoid\
+    \ random_sample_range(V &res, T l, T r)\n{\n  int k = res.size();\n  T n = r -\
+    \ l;\n  if (k <= 256)\n  {\n    repi(i, k)\n    {\n      T j = n - T(k) + T(i),\
+    \ x = randint<T>(0, j);\n      if (find(res.begin(), res.begin() + i, x) != res.begin()\
+    \ + i)\n        x = j;\n      res[i] = x;\n    }\n  }\n  else\n  {\n    unordered_set<T>\
+    \ used;\n    used.reserve(2 * size_t(k));\n    repi(i, k)\n    {\n      T j =\
+    \ n - T(k) + T(i), x = randint<T>(0, j);\n      if (!used.insert(x).second)\n\
+    \        x = j, used.insert(x);\n      res[i] = x;\n    }\n  }\n  for (T &x :\
+    \ res) x += l;\n  if constexpr (does_sort)\n    sort(res.begin(), res.end());\n\
+    \  else\n    shuffle(res.begin(), res.end(), mt);\n}\n}; // namespace internal\n\
+    \n// [l, r) \u304B\u3089\u76F8\u7570\u306A\u308B k \u500B\u3092\u9078\u3076\n\
+    // does_sort: \u30BD\u30FC\u30C8\u3059\u308B\u304B\u3069\u3046\u304B\ntemplate\
+    \ <int k, bool does_sort, class T = ll, class U1, class U2>\narray<T, k> random_sample_range_array(U1\
+    \ l, U2 r)\n{\n  assert(T(r) - T(l) >= T(k));\n  array<T, k> res;\n  internal::random_sample_range<does_sort>(res,\
+    \ T(l), T(r));\n  return res;\n}\n// [l, r) \u304B\u3089\u76F8\u7570\u306A\u308B\
+    \ k \u500B\u3092\u9078\u3076\n// does_sort: \u30BD\u30FC\u30C8\u3059\u308B\u304B\
+    \u3069\u3046\u304B\ntemplate <bool does_sort, class T = ll, class U1, class U2>\n\
+    vc<T> random_sample_range_vector(U1 l, U2 r, int k)\n{\n  assert(k >= 0);\n  assert(T(r)\
+    \ - T(l) >= T(k));\n  vc<T> res(k);\n  internal::random_sample_range<does_sort>(res,\
+    \ T(l), T(r));\n  return res;\n}\n#line 4 \"convex/convex_hull_trick_dot_product.hpp\"\
+    \n\n#line 2 \"convex/convex_hull_trick.hpp\"\n\n#line 4 \"convex/convex_hull_trick.hpp\"\
+    \n\n#line 6 \"convex/convex_hull_trick.hpp\"\n\n/**\n * @brief Convex Hull Trick\n\
+    \ * @docs docs/convex/convex_hull_trick.md\n */\n\ntemplate <class T>\nstruct\
+    \ ConvexHullTrickLine\n{\n  T a, b;\n  int id = -1;\n\n  friend bool operator==(const\
+    \ ConvexHullTrickLine &x, const ConvexHullTrickLine &y)\n  {\n    return x.a ==\
+    \ y.a && x.b == y.b && x.id == y.id;\n  }\n};\n\ntemplate <class T, class X =\
+    \ T>\nstruct ConvexHullTrickSegment\n{\n  ConvexHullTrickLine<T> line;\n  X left,\
+    \ right;\n};\n\n// \u50BE\u304D\u3092\u4EFB\u610F\u9806\u306B\u8FFD\u52A0\u3067\
+    \u304D\u308B Convex Hull Trick\ntemplate <class T = ll, class Compare = less<>,\
+    \ auto infty = INF, class X = T>\nstruct ConvexHullTrick\n{\n  static_assert(!is_integral_ext<T>\
+    \ || is_signed_ext<T>);\n  static_assert(is_same_v<Compare, less<>> || is_same_v<Compare,\
+    \ less<T>> ||\n                is_same_v<Compare, greater<>> || is_same_v<Compare,\
+    \ greater<T>>);\n\n  using Line = ConvexHullTrickLine<T>;\n  using Segment = ConvexHullTrickSegment<T,\
+    \ X>;\n  using Value = decltype(declval<T>() * declval<X>() + declval<T>());\n\
+    \nprivate:\n  static constexpr int sgn = is_same_v<Compare, less<>> || is_same_v<Compare,\
+    \ less<T>> ? -1 : 1;\n\n  struct Node\n  {\n    T a, b;\n    mutable X r;\n  \
+    \  int id;\n\n    bool operator<(const Node &o) const { return a < o.a; }\n  \
+    \  bool operator<(const X &x) const { return r < x; }\n    friend bool operator<(const\
+    \ X &x, const Node &p) { return x < p.r; }\n  };\n\n  using It = typename multiset<Node,\
+    \ less<>>::iterator;\n\n  multiset<Node, less<>> st;\n  optional<It> qit;\n  optional<X>\
+    \ last_x;\n  int add_cnt = 0, qdir = 0;\n\n  static Line line(const Node &p) {\
+    \ return {sgn * p.a, sgn * p.b, p.id}; }\n  static Value eval(const Node &p, const\
+    \ X &x) { return sgn * (p.a * x + p.b); }\n\n  static X border(const Node &x,\
+    \ const Node &y)\n  {\n    assert(x.a < y.a);\n    if constexpr (is_integral_ext<T>\
+    \ && is_same_v<T, X>)\n      return divfloor<T>(x.b - y.b, y.a - x.a);\n    else\n\
+    \      return (X(x.b) - X(y.b)) / (X(y.a) - X(x.a));\n  }\n\n  bool set_r(It x,\
+    \ It y)\n  {\n    if (y == st.end())\n    {\n      x->r = numeric_limits<X>::max();\n\
+    \      return false;\n    }\n    if (x->a == y->a)\n      x->r = x->b > y->b ?\
+    \ numeric_limits<X>::max() : numeric_limits<X>::lowest();\n    else\n      x->r\
+    \ = border(*x, *y);\n    return x->r >= y->r;\n  }\n\n  const Node &best(const\
+    \ X &x) const\n  {\n    assert(!st.empty());\n    return *st.lower_bound(x);\n\
+    \  }\n\n  const Node &best_monotone(const X &x)\n  {\n    assert(!st.empty());\n\
+    \    if (!qit)\n      qit = st.lower_bound(x);\n    else if (*last_x < x)\n  \
+    \  {\n      assert(qdir != -1 && \"query order is not monotone\");\n      qdir\
+    \ = 1;\n      while (next(*qit) != st.end() && (*qit)->r < x) ++*qit;\n    }\n\
+    \    else if (x < *last_x)\n    {\n      assert(qdir != 1 && \"query order is\
+    \ not monotone\");\n      qdir = -1;\n      while (*qit != st.begin() && !(prev(*qit)->r\
+    \ < x)) --*qit;\n    }\n    last_x = x;\n    return **qit;\n  }\n\npublic:\n \
+    \ // y = ax + b \u3092\u8FFD\u52A0\u3059\u308B\u3002id \u306F 0 \u59CB\u307E\u308A\
+    \u306E\u8FFD\u52A0\u9806\u306B\u306A\u308B\n  void add_line(T a, T b) { add_line(a,\
+    \ b, add_cnt); }\n\n  // y = ax + b \u3092\u6307\u5B9A\u3057\u305F id \u3067\u8FFD\
+    \u52A0\u3059\u308B\n  void add_line(T a, T b, int id)\n  {\n    add_cnt++;\n \
+    \   reset_monotone_query();\n    Node p{sgn * a, sgn * b, numeric_limits<X>::max(),\
+    \ id};\n    auto same = st.lower_bound(p);\n    if (same != st.end() && same->a\
+    \ == p.a)\n    {\n      if (same->b >= p.b) return;\n      auto prv = same ==\
+    \ st.begin() ? st.end() : prev(same);\n      auto nxt = next(same);\n      st.erase(same);\n\
+    \      if (prv != st.end()) set_r(prv, nxt);\n    }\n\n    auto z = st.insert(p),\
+    \ y = z++, x = y;\n    while (set_r(y, z)) z = st.erase(z);\n    if (x != st.begin()\
+    \ && set_r(--x, y)) set_r(x, y = st.erase(y));\n    while ((y = x) != st.begin()\
+    \ && (--x)->r >= y->r) set_r(x, st.erase(y));\n  }\n\n  // x \u306B\u304A\u3051\
+    \u308B\u6700\u9069\u306A\u76F4\u7DDA\u3092\u8FD4\u3059\u3002\u7A7A\u306A\u3089\
+    \u30C0\u30DF\u30FC\u76F4\u7DDA\u3092\u8FD4\u3059\n  Line query_line(const X &x)\
+    \ const\n  {\n    return st.empty() ? Line{T(0), T(-sgn * infty), -1} : line(best(x));\n\
+    \  }\n\n  // x \u306B\u304A\u3051\u308B\u6700\u9069\u5024\u3068\u3001\u305D\u308C\
+    \u3092\u9054\u6210\u3059\u308B\u76F4\u7DDA\u3092\u8FD4\u3059\u3002\u7A7A\u306A\
+    \u3089 infty \u304B -infty \u3068\u30C0\u30DF\u30FC\u76F4\u7DDA\u3092\u8FD4\u3059\
+    \n  pair<Value, Line> query_with_line(const X &x) const\n  {\n    if (st.empty())\
+    \ return {Value(-sgn * infty), {T(0), T(-sgn * infty), -1}};\n    const Node &p\
+    \ = best(x);\n    return {eval(p, x), line(p)};\n  }\n\n  // x \u306B\u304A\u3051\
+    \u308B\u6700\u9069\u5024\u3092\u8FD4\u3059\u3002\u7A7A\u306A\u3089\u6700\u5C0F\
+    \u5316\u3067 infty\u3001\u6700\u5927\u5316\u3067 -infty \u3092\u8FD4\u3059\n \
+    \ Value query(const X &x) const { return st.empty() ? Value(-sgn * infty) : eval(best(x),\
+    \ x); }\n\n  // \u5358\u8ABF\u306A x \u306B\u304A\u3051\u308B\u6700\u9069\u306A\
+    \u76F4\u7DDA\u3092\u8FD4\u3059\u3002\u5897\u6E1B\u65B9\u5411\u306F\u81EA\u52D5\
+    \u3067\u5224\u5B9A\u3059\u308B\n  Line query_monotone_line(const X &x)\n  {\n\
+    \    return st.empty() ? Line{T(0), T(-sgn * infty), -1} : line(best_monotone(x));\n\
+    \  }\n\n  // \u5358\u8ABF\u306A x \u306B\u304A\u3051\u308B\u6700\u9069\u5024\u3068\
+    \u76F4\u7DDA\u3092\u8FD4\u3059\u3002\u5897\u6E1B\u65B9\u5411\u306F\u81EA\u52D5\
+    \u3067\u5224\u5B9A\u3059\u308B\n  pair<Value, Line> query_monotone_with_line(const\
+    \ X &x)\n  {\n    if (st.empty()) return {Value(-sgn * infty), {T(0), T(-sgn *\
+    \ infty), -1}};\n    const Node &p = best_monotone(x);\n    return {eval(p, x),\
+    \ line(p)};\n  }\n\n  // \u5358\u8ABF\u306A x \u306B\u304A\u3051\u308B\u6700\u9069\
+    \u5024\u3092\u8FD4\u3059\u3002\u5897\u6E1B\u65B9\u5411\u306F\u81EA\u52D5\u3067\
+    \u5224\u5B9A\u3059\u308B\n  Value query_monotone(const X &x)\n  {\n    return\
+    \ st.empty() ? Value(-sgn * infty) : eval(best_monotone(x), x);\n  }\n\n  // \u5358\
+    \u8ABF\u30AF\u30A8\u30EA\u306E\u73FE\u5728\u4F4D\u7F6E\u3068\u65B9\u5411\u3092\
+    \u6D88\u53BB\u3059\u308B\n  void reset_monotone_query()\n  {\n    qit.reset();\n\
+    \    last_x.reset();\n    qdir = 0;\n  }\n\n  // \u5404\u76F4\u7DDA\u3068\u3001\
+    \u305D\u306E\u76F4\u7DDA\u304C\u6700\u9069\u306B\u306A\u308B\u5883\u754C\u533A\
+    \u9593 (left, right] \u3092\u8FD4\u3059\n  vc<Segment> segments() const\n  {\n\
+    \    vc<Segment> res;\n    res.reserve(st.size());\n    X l = X(-infty);\n   \
+    \ for (auto it = st.begin(); it != st.end(); ++it)\n    {\n      auto nxt = next(it);\n\
+    \      X r = nxt == st.end() ? X(infty) : it->r;\n      res.eb(Segment{line(*it),\
+    \ l, r});\n      l = r;\n    }\n    return res;\n  }\n\n  void clear()\n  {\n\
+    \    st.clear();\n    add_cnt = 0;\n    reset_monotone_query();\n  }\n};\n\n//\
+    \ \u50BE\u304D\u3092\u5358\u8ABF\u306B\u8FFD\u52A0\u3059\u308B Convex Hull Trick\u3002\
+    \u5897\u52A0\u30FB\u6E1B\u5C11\u306F\u81EA\u52D5\u3067\u5224\u5B9A\u3059\u308B\
+    \ntemplate <class T = ll, class Compare = less<>, auto infty = INF, class X =\
+    \ T>\nstruct ConvexHullTrickMonotoneSlope\n{\n  static_assert(!is_integral_ext<T>\
+    \ || is_signed_ext<T>);\n  static_assert(is_same_v<Compare, less<>> || is_same_v<Compare,\
+    \ less<T>> ||\n                is_same_v<Compare, greater<>> || is_same_v<Compare,\
+    \ greater<T>>);\n\n  using Line = ConvexHullTrickLine<T>;\n  using Segment = ConvexHullTrickSegment<T,\
+    \ X>;\n  using Value = decltype(declval<T>() * declval<X>() + declval<T>());\n\
+    \nprivate:\n  static constexpr int sgn = is_same_v<Compare, less<>> || is_same_v<Compare,\
+    \ less<T>> ? -1 : 1;\n\n  struct Node\n  {\n    T a, b;\n    X r;\n    int id;\n\
+    \  };\n\n  deque<Node> dq;\n  optional<T> last_a;\n  optional<X> last_x;\n  int\
+    \ add_cnt = 0, adir = 0, qpos = -1, qdir = 0;\n\n  static Line line(const Node\
+    \ &p) { return {sgn * p.a, sgn * p.b, p.id}; }\n  static Value eval(const Node\
+    \ &p, const X &x) { return sgn * (p.a * x + p.b); }\n\n  static X border(const\
+    \ Node &x, const Node &y)\n  {\n    assert(x.a < y.a);\n    if constexpr (is_integral_ext<T>\
+    \ && is_same_v<T, X>)\n      return divfloor<T>(x.b - y.b, y.a - x.a);\n    else\n\
+    \      return (X(x.b) - X(y.b)) / (X(y.a) - X(x.a));\n  }\n\n  void push_back(Node\
+    \ p)\n  {\n    if (!dq.empty() && dq.back().a == p.a)\n    {\n      if (dq.back().b\
+    \ >= p.b) return;\n      dq.pop_back();\n    }\n    while (dq.size() >= 2)\n \
+    \   {\n      X r = border(dq.back(), p);\n      if (dq[dq.size() - 2].r < r) break;\n\
+    \      dq.pop_back();\n    }\n    if (!dq.empty()) dq.back().r = border(dq.back(),\
+    \ p);\n    p.r = numeric_limits<X>::max();\n    dq.eb(p);\n  }\n\n  void push_front(Node\
+    \ p)\n  {\n    if (!dq.empty() && dq.front().a == p.a)\n    {\n      if (dq.front().b\
+    \ >= p.b) return;\n      dq.pop_front();\n    }\n    while (dq.size() >= 2)\n\
+    \    {\n      X r = border(p, dq.front());\n      if (r < dq.front().r) break;\n\
+    \      dq.pop_front();\n    }\n    p.r = dq.empty() ? numeric_limits<X>::max()\
+    \ : border(p, dq.front());\n    dq.emplace_front(p);\n  }\n\n  const Node &best(const\
+    \ X &x) const\n  {\n    assert(!dq.empty());\n    return *lower_bound(dq.begin(),\
+    \ dq.end(), x,\n                        [](const Node &p, const X &x) { return\
+    \ p.r < x; });\n  }\n\n  const Node &best_monotone(const X &x)\n  {\n    assert(!dq.empty());\n\
+    \    if (qpos == -1)\n      qpos = lower_bound(dq.begin(), dq.end(), x,\n    \
+    \                     [](const Node &p, const X &x) { return p.r < x; }) - dq.begin();\n\
+    \    else if (*last_x < x)\n    {\n      assert(qdir != -1 && \"query order is\
+    \ not monotone\");\n      qdir = 1;\n      while (qpos + 1 < SZ(dq) && dq[qpos].r\
+    \ < x) qpos++;\n    }\n    else if (x < *last_x)\n    {\n      assert(qdir !=\
+    \ 1 && \"query order is not monotone\");\n      qdir = -1;\n      while (qpos\
+    \ > 0 && !(dq[qpos - 1].r < x)) qpos--;\n    }\n    last_x = x;\n    return dq[qpos];\n\
+    \  }\n\npublic:\n  // y = ax + b \u3092\u8FFD\u52A0\u3059\u308B\u3002id \u306F\
+    \ 0 \u59CB\u307E\u308A\u306E\u8FFD\u52A0\u9806\u306B\u306A\u308B\n  void add_line(T\
+    \ a, T b) { add_line(a, b, add_cnt); }\n\n  // y = ax + b \u3092\u6307\u5B9A\u3057\
+    \u305F id \u3067\u8FFD\u52A0\u3059\u308B\u3002a \u306E\u5897\u6E1B\u65B9\u5411\
+    \u306F\u81EA\u52D5\u3067\u5224\u5B9A\u3059\u308B\n  void add_line(T a, T b, int\
+    \ id)\n  {\n    add_cnt++;\n    reset_monotone_query();\n    Node p{sgn * a, sgn\
+    \ * b, numeric_limits<X>::max(), id};\n    if (last_a)\n    {\n      int d = (*last_a\
+    \ < p.a) - (p.a < *last_a);\n      if (d)\n      {\n        assert((!adir || d\
+    \ == adir) && \"slope order is not monotone\");\n        adir = d;\n      }\n\
+    \    }\n    last_a = p.a;\n    if (adir < 0)\n      push_front(p);\n    else\n\
+    \      push_back(p);\n  }\n\n  // x \u306B\u304A\u3051\u308B\u6700\u9069\u306A\
+    \u76F4\u7DDA\u3092\u8FD4\u3059\u3002\u7A7A\u306A\u3089\u30C0\u30DF\u30FC\u76F4\
+    \u7DDA\u3092\u8FD4\u3059\n  Line query_line(const X &x) const\n  {\n    return\
+    \ dq.empty() ? Line{T(0), T(-sgn * infty), -1} : line(best(x));\n  }\n\n  // x\
+    \ \u306B\u304A\u3051\u308B\u6700\u9069\u5024\u3068\u3001\u305D\u308C\u3092\u9054\
+    \u6210\u3059\u308B\u76F4\u7DDA\u3092\u8FD4\u3059\u3002\u7A7A\u306A\u3089 infty\
+    \ \u304B -infty \u3068\u30C0\u30DF\u30FC\u76F4\u7DDA\u3092\u8FD4\u3059\n  pair<Value,\
+    \ Line> query_with_line(const X &x) const\n  {\n    if (dq.empty()) return {Value(-sgn\
+    \ * infty), {T(0), T(-sgn * infty), -1}};\n    const Node &p = best(x);\n    return\
+    \ {eval(p, x), line(p)};\n  }\n\n  // x \u306B\u304A\u3051\u308B\u6700\u9069\u5024\
+    \u3092\u8FD4\u3059\u3002\u7A7A\u306A\u3089\u6700\u5C0F\u5316\u3067 infty\u3001\
+    \u6700\u5927\u5316\u3067 -infty \u3092\u8FD4\u3059\n  Value query(const X &x)\
+    \ const { return dq.empty() ? Value(-sgn * infty) : eval(best(x), x); }\n\n  //\
+    \ \u5358\u8ABF\u306A x \u306B\u304A\u3051\u308B\u6700\u9069\u306A\u76F4\u7DDA\u3092\
+    \u8FD4\u3059\u3002\u5897\u6E1B\u65B9\u5411\u306F\u81EA\u52D5\u3067\u5224\u5B9A\
+    \u3059\u308B\n  Line query_monotone_line(const X &x)\n  {\n    return dq.empty()\
+    \ ? Line{T(0), T(-sgn * infty), -1} : line(best_monotone(x));\n  }\n\n  // \u5358\
+    \u8ABF\u306A x \u306B\u304A\u3051\u308B\u6700\u9069\u5024\u3068\u76F4\u7DDA\u3092\
+    \u8FD4\u3059\u3002\u5897\u6E1B\u65B9\u5411\u306F\u81EA\u52D5\u3067\u5224\u5B9A\
+    \u3059\u308B\n  pair<Value, Line> query_monotone_with_line(const X &x)\n  {\n\
+    \    if (dq.empty()) return {Value(-sgn * infty), {T(0), T(-sgn * infty), -1}};\n\
+    \    const Node &p = best_monotone(x);\n    return {eval(p, x), line(p)};\n  }\n\
+    \n  // \u5358\u8ABF\u306A x \u306B\u304A\u3051\u308B\u6700\u9069\u5024\u3092\u8FD4\
+    \u3059\u3002\u5897\u6E1B\u65B9\u5411\u306F\u81EA\u52D5\u3067\u5224\u5B9A\u3059\
+    \u308B\n  Value query_monotone(const X &x)\n  {\n    return dq.empty() ? Value(-sgn\
+    \ * infty) : eval(best_monotone(x), x);\n  }\n\n  // \u5358\u8ABF\u30AF\u30A8\u30EA\
+    \u306E\u73FE\u5728\u4F4D\u7F6E\u3068\u65B9\u5411\u3092\u6D88\u53BB\u3059\u308B\
+    \n  void reset_monotone_query()\n  {\n    qpos = -1;\n    last_x.reset();\n  \
+    \  qdir = 0;\n  }\n\n  // \u5404\u76F4\u7DDA\u3068\u3001\u305D\u306E\u76F4\u7DDA\
+    \u304C\u6700\u9069\u306B\u306A\u308B\u5883\u754C\u533A\u9593 (left, right] \u3092\
+    \u8FD4\u3059\n  vc<Segment> segments() const\n  {\n    vc<Segment> res;\n    res.reserve(dq.size());\n\
+    \    X l = X(-infty);\n    repi(i, dq.size())\n    {\n      X r = i + 1 == SZ(dq)\
+    \ ? X(infty) : dq[i].r;\n      res.eb(Segment{line(dq[i]), l, r});\n      l =\
+    \ r;\n    }\n    return res;\n  }\n\n  void clear()\n  {\n    dq.clear();\n  \
+    \  add_cnt = 0;\n    last_a.reset();\n    adir = 0;\n    reset_monotone_query();\n\
+    \  }\n};\n#line 2 \"math/rational.hpp\"\n\n#line 4 \"math/rational.hpp\"\n\n#line\
+    \ 2 \"utils/larger_int.hpp\"\n\n#line 4 \"utils/larger_int.hpp\"\n\n/**\n * @brief\
+    \ \u7A4D\u306E\u8A08\u7B97\u306B\u4F7F\u3046\u62E1\u5F35\u578B\n * @docs docs/utils/larger_int.md\n\
+    \ */\n\ntemplate <class T>\nstruct larger_int\n{\n  using type = T;\n};\n\n#define\
+    \ LARGER_INT(T, U) \\\n  template <>            \\\n  struct larger_int<T>   \\\
+    \n  {                      \\\n    using type = U;      \\\n  };\n\nLARGER_INT(signed\
+    \ char, short)\nLARGER_INT(short, int)\nLARGER_INT(int, long long)\nLARGER_INT(long,\
+    \ __int128_t)\nLARGER_INT(long long, __int128_t)\n\nLARGER_INT(unsigned char,\
+    \ unsigned short)\nLARGER_INT(unsigned short, unsigned int)\nLARGER_INT(unsigned\
+    \ int, unsigned long long)\nLARGER_INT(unsigned long, __uint128_t)\nLARGER_INT(unsigned\
+    \ long long, __uint128_t)\n\n#undef LARGER_INT\n\ntemplate <class T>\nusing larger_int_t\
+    \ = typename larger_int<T>::type;\n#line 7 \"math/rational.hpp\"\n\n/**\n * @brief\
+    \ \u7D04\u5206\u3057\u306A\u3044\u6709\u7406\u6570\n * @docs docs/math/rational.md\n\
+    \ */\n\ntemplate <class T>\ninline constexpr bool is_rational_ordered_v = is_integral_ext<T>\
+    \ || is_floating_point_v<T>;\n\ntemplate <class T>\nstruct Rational\n{\n  using\
+    \ value_type = T;\n\n  T num, den;\n\nprivate:\n  void normalize_sign()\n  {\n\
+    \    if constexpr (is_signed_ext<T> || is_floating_point_v<T>)\n      if (den\
+    \ < T(0))\n        num = -num, den = -den;\n  }\n\n  static T gcd_abs(T a, T b)\n\
+    \  {\n    if constexpr (is_signed_ext<T>)\n    {\n      if (a < 0) a = -a;\n \
+    \     if (b < 0) b = -b;\n    }\n    while (b != T(0))\n    {\n      T r = a %\
+    \ b;\n      a = b, b = r;\n    }\n    return a;\n  }\n\npublic:\n  Rational()\
+    \ : num(0), den(1) {}\n\n  Rational(const T &num) : num(num), den(1) {}\n\n  Rational(const\
+    \ T &num, const T &den) : num(num), den(den)\n  {\n    assert(den != T(0));\n\
+    \    normalize_sign();\n  }\n\n  pair<T, T> reduced() const\n  {\n    if constexpr\
+    \ (is_integral_ext<T>)\n    {\n      T g = gcd_abs(num, den);\n      return g\
+    \ == T(0) ? pair<T, T>{num, den} : pair<T, T>{num / g, den / g};\n    }\n    else\n\
+    \      return {num, den};\n  }\n\n  Rational operator-() const { return {-num,\
+    \ den}; }\n\n  Rational operator+() const { return *this; }\n\n  Rational &operator+=(const\
+    \ Rational &rhs)\n  {\n    T rhs_num = rhs.num, rhs_den = rhs.den;\n    num =\
+    \ num * rhs_den + rhs_num * den;\n    den *= rhs_den;\n    normalize_sign();\n\
+    \    return *this;\n  }\n\n  Rational &operator-=(const Rational &rhs)\n  {\n\
+    \    T rhs_num = rhs.num, rhs_den = rhs.den;\n    num = num * rhs_den - rhs_num\
+    \ * den;\n    den *= rhs_den;\n    normalize_sign();\n    return *this;\n  }\n\
+    \n  Rational &operator*=(const Rational &rhs)\n  {\n    T rhs_num = rhs.num, rhs_den\
+    \ = rhs.den;\n    num *= rhs_num;\n    den *= rhs_den;\n    normalize_sign();\n\
+    \    return *this;\n  }\n\n  Rational &operator/=(const Rational &rhs)\n  {\n\
+    \    assert(rhs.num != T(0));\n    T rhs_num = rhs.num, rhs_den = rhs.den;\n \
+    \   num *= rhs_den;\n    den *= rhs_num;\n    normalize_sign();\n    return *this;\n\
+    \  }\n\n  friend Rational operator+(Rational lhs, const Rational &rhs) { return\
+    \ lhs += rhs; }\n\n  friend Rational operator-(Rational lhs, const Rational &rhs)\
+    \ { return lhs -= rhs; }\n\n  friend Rational operator*(Rational lhs, const Rational\
+    \ &rhs) { return lhs *= rhs; }\n\n  friend Rational operator/(Rational lhs, const\
+    \ Rational &rhs) { return lhs /= rhs; }\n\n  friend bool operator==(const Rational\
+    \ &lhs, const Rational &rhs)\n  {\n    using C = larger_int_t<T>;\n    return\
+    \ C(lhs.num) * C(rhs.den) == C(rhs.num) * C(lhs.den);\n  }\n\n  friend bool operator!=(const\
+    \ Rational &lhs, const Rational &rhs) { return !(lhs == rhs); }\n\n  template\
+    \ <class U = T, enable_if_t<is_rational_ordered_v<U>, int> = 0>\n  friend bool\
+    \ operator<(const Rational &lhs, const Rational &rhs)\n  {\n    using C = larger_int_t<T>;\n\
+    \    return C(lhs.num) * C(rhs.den) < C(rhs.num) * C(lhs.den);\n  }\n\n  template\
+    \ <class U = T, enable_if_t<is_rational_ordered_v<U>, int> = 0>\n  friend bool\
+    \ operator>(const Rational &lhs, const Rational &rhs) { return rhs < lhs; }\n\n\
+    \  template <class U = T, enable_if_t<is_rational_ordered_v<U>, int> = 0>\n  friend\
+    \ bool operator<=(const Rational &lhs, const Rational &rhs) { return !(rhs < lhs);\
+    \ }\n\n  template <class U = T, enable_if_t<is_rational_ordered_v<U>, int> = 0>\n\
+    \  friend bool operator>=(const Rational &lhs, const Rational &rhs) { return !(lhs\
+    \ < rhs); }\n\n  friend ostream &operator<<(ostream &os, const Rational &x)\n\
+    \  {\n    auto [num, den] = x.reduced();\n    return os << num << '/' << den;\n\
+    \  }\n\n#if defined FAST_IO && !defined LOCAL\n  friend void wt1(const Rational\
+    \ &x)\n  {\n    auto [num, den] = x.reduced();\n    using fastio::wt1;\n    wt1(num),\
+    \ wt1('/'), wt1(den);\n  }\n#endif\n};\n\ntemplate <class T>\nstruct is_rational\
+    \ : false_type\n{};\n\ntemplate <class T>\nstruct is_rational<Rational<T>> : true_type\n\
+    {};\n\ntemplate <class T>\ninline constexpr bool is_rational_v = is_rational<T>::value;\n\
+    \nnamespace std\n{\ntemplate <class T>\nstruct numeric_limits<::Rational<T>> :\
+    \ numeric_limits<T>\n{\n  static constexpr bool is_specialized = numeric_limits<T>::is_specialized;\n\
+    \  static ::Rational<T> min() noexcept { return ::Rational<T>(numeric_limits<T>::min());\
+    \ }\n  static ::Rational<T> lowest() noexcept { return ::Rational<T>(numeric_limits<T>::lowest());\
+    \ }\n  static ::Rational<T> max() noexcept { return ::Rational<T>(numeric_limits<T>::max());\
+    \ }\n  static constexpr bool is_signed = numeric_limits<T>::is_signed;\n  static\
+    \ constexpr bool is_integer = false;\n  static constexpr bool is_exact = numeric_limits<T>::is_exact;\n\
+    };\n} // namespace std\n\n#ifdef LOCAL\nCPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(reduced());\n\
+    #endif\n#line 9 \"convex/convex_hull_trick_dot_product.hpp\"\n\n/**\n * @brief\
+    \ Dot Product Convex Hull Trick\n * @docs docs/convex/convex_hull_trick_dot_product.md\n\
+    \ */\n\ntemplate <class T, class Calc, Calc infty, bool monotone_coefficient>\n\
+    struct ConvexHullTrickDotProductBase\n{\n  static_assert(is_integral_ext<T> ||\
+    \ is_floating_point_v<T>);\n  static_assert(is_signed_ext<T> || is_floating_point_v<T>);\n\
+    \n  struct LinearForm\n  {\n    T a, b;\n    int id = -1;\n\n    friend bool operator==(const\
+    \ LinearForm &x, const LinearForm &y)\n    {\n      return x.a == y.a && x.b ==\
+    \ y.b && x.id == y.id;\n    }\n  };\n\nprivate:\n  using R = Rational<T>;\n  using\
+    \ RationalLine = ConvexHullTrickLine<R>;\n\n  template <class Objective>\n  using\
+    \ Hull = conditional_t<monotone_coefficient,\n                             ConvexHullTrickMonotoneSlope<R,\
+    \ Objective>,\n                             ConvexHullTrick<R, Objective>>;\n\n\
+    \  Hull<less<>> lo;\n  Hull<greater<>> hi;\n  optional<LinearForm> fst, mna, mxa;\n\
+    \  mutable vc<LinearForm> ch;\n  mutable bool built = false;\n  int add_cnt =\
+    \ 0;\n  array<int, 2> qpos{-1, -1}, qdir{0, 0};\n  array<optional<pair<T, T>>,\
+    \ 2> last_q;\n\n  static LinearForm form(const RationalLine &f)\n  {\n    return\
+    \ {f.a.num, f.b.num, f.id};\n  }\n\n  static Calc dot(const LinearForm &f, T x,\
+    \ T y)\n  {\n    return Calc(f.a) * Calc(x) + Calc(f.b) * Calc(y);\n  }\n\n  static\
+    \ Calc cross(const LinearForm &o, const LinearForm &a, const LinearForm &b)\n\
+    \  {\n    return (Calc(a.a) - Calc(o.a)) * (Calc(b.b) - Calc(o.b)) -\n       \
+    \    (Calc(a.b) - Calc(o.b)) * (Calc(b.a) - Calc(o.a));\n  }\n\n  template <bool\
+    \ minimize>\n  static bool better(Calc x, Calc y)\n  {\n    if constexpr (minimize)\n\
+    \      return x < y;\n    else\n      return y < x;\n  }\n\n  static int half(T\
+    \ x, T y) { return y > 0 || (y == 0 && x >= 0) ? 0 : 1; }\n\n  static bool arg_less(T\
+    \ ax, T ay, T bx, T by)\n  {\n    int ah = half(ax, ay), bh = half(bx, by);\n\
+    \    if (ah != bh) return ah < bh;\n    return Calc(ax) * Calc(by) - Calc(ay)\
+    \ * Calc(bx) > 0;\n  }\n\n  template <class H>\n  static void append_forms(const\
+    \ H &h, vc<LinearForm> &forms)\n  {\n    for (const auto &seg : h.segments())\
+    \ forms.eb(form(seg.line));\n  }\n\n  void build() const\n  {\n    if (built)\
+    \ return;\n    vc<LinearForm> pts;\n    append_forms(lo, pts);\n    append_forms(hi,\
+    \ pts);\n    sort(pts.begin(), pts.end(), [](const LinearForm &x, const LinearForm\
+    \ &y)\n         { return tie(x.a, x.b, x.id) < tie(y.a, y.b, y.id); });\n    pts.erase(unique(pts.begin(),\
+    \ pts.end()), pts.end());\n    if (pts.size() <= 1)\n      ch = pts;\n    else\n\
+    \    {\n      vc<LinearForm> low, high;\n      for (const LinearForm &p : pts)\n\
+    \      {\n        while (low.size() >= 2 && cross(low[low.size() - 2], low.back(),\
+    \ p) <= 0)\n          low.pop_back();\n        low.eb(p);\n      }\n      for\
+    \ (auto it = pts.rbegin(); it != pts.rend(); ++it)\n      {\n        while (high.size()\
+    \ >= 2 && cross(high[high.size() - 2], high.back(), *it) <= 0)\n          high.pop_back();\n\
+    \        high.eb(*it);\n      }\n      low.pop_back();\n      high.pop_back();\n\
+    \      ch = std::move(low);\n      ch.insert(ch.end(), high.begin(), high.end());\n\
+    \    }\n    built = true;\n  }\n\n  template <bool minimize>\n  LinearForm best(T\
+    \ x, T y) const\n  {\n    if (x == 0 && y == 0) return *fst;\n    if (y == 0)\n\
+    \    {\n      if constexpr (minimize)\n        return x > 0 ? *mna : *mxa;\n \
+    \     else\n        return x > 0 ? *mxa : *mna;\n    }\n    R q(x, y);\n    if\
+    \ constexpr (minimize)\n      return form(y > 0 ? lo.query_line(q) : hi.query_line(q));\n\
+    \    else\n      return form(y > 0 ? hi.query_line(q) : lo.query_line(q));\n \
+    \ }\n\n  template <bool minimize>\n  LinearForm best_monotone(T x, T y)\n  {\n\
+    \    assert(x != 0 || y != 0);\n    build();\n    constexpr int k = minimize ?\
+    \ 0 : 1;\n    int &pos = qpos[k], &dir = qdir[k];\n    auto &last = last_q[k];\n\
+    \    if (pos == -1)\n    {\n      pos = 0;\n      repi(i, 1, ch.size()) if (better<minimize>(dot(ch[i],\
+    \ x, y), dot(ch[pos], x, y))) pos = i;\n    }\n    else\n    {\n      auto [lx,\
+    \ ly] = *last;\n      int d = arg_less(lx, ly, x, y) - arg_less(x, y, lx, ly);\n\
+    \      if (d)\n      {\n        assert((!dir || d == dir) && \"query angle is\
+    \ not monotone\");\n        dir = d;\n      }\n      int step = dir < 0 ? -1 :\
+    \ 1, n = SZ(ch);\n      repi(_, ch.size() - 1)\n      {\n        int nxt = (pos\
+    \ + step + n) % n;\n        if (!better<minimize>(dot(ch[nxt], x, y), dot(ch[pos],\
+    \ x, y))) break;\n        pos = nxt;\n      }\n    }\n    last = pair{x, y};\n\
+    \    return ch[pos];\n  }\n\n  template <bool minimize>\n  pair<Calc, LinearForm>\
+    \ query_with_form_impl(T x, T y) const\n  {\n    if (!fst) return {minimize ?\
+    \ infty : -infty, {0, 0, -1}};\n    LinearForm f = best<minimize>(x, y);\n   \
+    \ return {dot(f, x, y), f};\n  }\n\n  template <bool minimize>\n  Calc query_impl(T\
+    \ x, T y) const\n  {\n    if (!fst) return minimize ? infty : -infty;\n    return\
+    \ dot(best<minimize>(x, y), x, y);\n  }\n\n  template <bool minimize>\n  pair<Calc,\
+    \ LinearForm> query_monotone_with_form_impl(T x, T y)\n  {\n    if (!fst) return\
+    \ {minimize ? infty : -infty, {0, 0, -1}};\n    LinearForm f = best_monotone<minimize>(x,\
+    \ y);\n    return {dot(f, x, y), f};\n  }\n\n  template <bool minimize>\n  Calc\
+    \ query_monotone_impl(T x, T y)\n  {\n    if (!fst) return minimize ? infty :\
+    \ -infty;\n    return dot(best_monotone<minimize>(x, y), x, y);\n  }\n\npublic:\n\
+    \  // ax + by \u3092\u8FFD\u52A0\u3059\u308B\u3002id \u306F 0 \u59CB\u307E\u308A\
+    \u306E\u8FFD\u52A0\u9806\u306B\u306A\u308B\u3002\n  void add(T a, T b) { add(a,\
+    \ b, add_cnt); }\n\n  // ax + by \u3092\u6307\u5B9A\u3057\u305F id \u3067\u8FFD\
+    \u52A0\u3059\u308B\u3002\u5358\u8ABF\u4FC2\u6570\u7248\u3067\u306F a \u306E\u5897\
+    \u6E1B\u65B9\u5411\u3092\u81EA\u52D5\u3067\u5224\u5B9A\u3059\u308B\u3002\n  void\
+    \ add(T a, T b, int id)\n  {\n    add_cnt++;\n    reset_monotone_query();\n  \
+    \  LinearForm f{a, b, id};\n    lo.add_line(R(a), R(b), id);\n    hi.add_line(R(a),\
+    \ R(b), id);\n    if (!fst) fst = f;\n    if (!mna || a < mna->a) mna = f;\n \
+    \   if (!mxa || mxa->a < a) mxa = f;\n    built = false;\n    ch.clear();\n  }\n\
+    \n  // (x, y) \u306B\u304A\u3051\u308B\u6700\u5C0F\u5024\u3092\u8FD4\u3059\u3002\
+    \u7A7A\u306A\u3089 infty \u3092\u8FD4\u3059\u3002\n  Calc min_query(T x, T y)\
+    \ const { return query_impl<true>(x, y); }\n\n  // (x, y) \u306B\u304A\u3051\u308B\
+    \u6700\u5927\u5024\u3092\u8FD4\u3059\u3002\u7A7A\u306A\u3089 -infty \u3092\u8FD4\
+    \u3059\u3002\n  Calc max_query(T x, T y) const { return query_impl<false>(x, y);\
+    \ }\n\n  // (x, y) \u306B\u304A\u3051\u308B\u6700\u5C0F\u5024\u3068\u4E00\u6B21\
+    \u5F0F\u3092\u8FD4\u3059\u3002\u7A7A\u306A\u3089 infty \u3068\u30C0\u30DF\u30FC\
+    \u4E00\u6B21\u5F0F\u3092\u8FD4\u3059\u3002\n  pair<Calc, LinearForm> min_query_with_form(T\
+    \ x, T y) const\n  {\n    return query_with_form_impl<true>(x, y);\n  }\n\n  //\
+    \ (x, y) \u306B\u304A\u3051\u308B\u6700\u5927\u5024\u3068\u4E00\u6B21\u5F0F\u3092\
+    \u8FD4\u3059\u3002\u7A7A\u306A\u3089 -infty \u3068\u30C0\u30DF\u30FC\u4E00\u6B21\
+    \u5F0F\u3092\u8FD4\u3059\u3002\n  pair<Calc, LinearForm> max_query_with_form(T\
+    \ x, T y) const\n  {\n    return query_with_form_impl<false>(x, y);\n  }\n\n \
+    \ // \u504F\u89D2\u304C\u5358\u8ABF\u306A (x, y) \u306B\u304A\u3051\u308B\u6700\
+    \u5C0F\u5024\u3092\u8FD4\u3059\u3002\u65B9\u5411\u306F\u81EA\u52D5\u3067\u5224\
+    \u5B9A\u3059\u308B\u3002\n  Calc min_query_monotone(T x, T y) { return query_monotone_impl<true>(x,\
+    \ y); }\n\n  // \u504F\u89D2\u304C\u5358\u8ABF\u306A (x, y) \u306B\u304A\u3051\
+    \u308B\u6700\u5927\u5024\u3092\u8FD4\u3059\u3002\u65B9\u5411\u306F\u81EA\u52D5\
+    \u3067\u5224\u5B9A\u3059\u308B\u3002\n  Calc max_query_monotone(T x, T y) { return\
+    \ query_monotone_impl<false>(x, y); }\n\n  // \u504F\u89D2\u304C\u5358\u8ABF\u306A\
+    \ (x, y) \u306B\u304A\u3051\u308B\u6700\u5C0F\u5024\u3068\u4E00\u6B21\u5F0F\u3092\
+    \u8FD4\u3059\u3002\u65B9\u5411\u306F\u81EA\u52D5\u3067\u5224\u5B9A\u3059\u308B\
+    \u3002\n  pair<Calc, LinearForm> min_query_monotone_with_form(T x, T y)\n  {\n\
+    \    return query_monotone_with_form_impl<true>(x, y);\n  }\n\n  // \u504F\u89D2\
+    \u304C\u5358\u8ABF\u306A (x, y) \u306B\u304A\u3051\u308B\u6700\u5927\u5024\u3068\
+    \u4E00\u6B21\u5F0F\u3092\u8FD4\u3059\u3002\u65B9\u5411\u306F\u81EA\u52D5\u3067\
+    \u5224\u5B9A\u3059\u308B\u3002\n  pair<Calc, LinearForm> max_query_monotone_with_form(T\
+    \ x, T y)\n  {\n    return query_monotone_with_form_impl<false>(x, y);\n  }\n\n\
+    \  // \u5358\u8ABF\u30AF\u30A8\u30EA\u306E\u73FE\u5728\u4F4D\u7F6E\u3068\u65B9\
+    \u5411\u3092\u6D88\u53BB\u3059\u308B\u3002\n  void reset_monotone_query()\n  {\n\
+    \    qpos = {-1, -1};\n    qdir = {0, 0};\n    last_q = {};\n  }\n\n  // \u4FC2\
+    \u6570\u70B9\u306E\u51F8\u5305\u9802\u70B9\u3092\u53CD\u6642\u8A08\u56DE\u308A\
+    \u306B\u8FD4\u3059\u3002\n  vc<LinearForm> convex_hull() const\n  {\n    build();\n\
+    \    return ch;\n  }\n\n  // \u3059\u3079\u3066\u306E\u4E00\u6B21\u5F0F\u3001\u5358\
+    \u8ABF\u6027\u306E\u72B6\u614B\u3001\u81EA\u52D5\u63A1\u756A\u3092\u6D88\u53BB\
+    \u3059\u308B\u3002\n  void clear()\n  {\n    lo.clear();\n    hi.clear();\n  \
+    \  fst.reset();\n    mna.reset();\n    mxa.reset();\n    add_cnt = 0;\n    ch.clear();\n\
+    \    built = false;\n    reset_monotone_query();\n  }\n};\n\n// \u4FC2\u6570\u3092\
+    \u4EFB\u610F\u9806\u306B\u8FFD\u52A0\u3067\u304D\u308B Dot Product Convex Hull\
+    \ Trick\ntemplate <class T = ll, class Calc = larger_int_t<T>, Calc infty = Calc(INF)>\n\
+    struct ConvexHullTrickDotProduct\n    : ConvexHullTrickDotProductBase<T, Calc,\
+    \ infty, false>\n{};\n\n// \u4FC2\u6570 a \u3092\u5358\u8ABF\u306B\u8FFD\u52A0\
+    \u3059\u308B Dot Product Convex Hull Trick\ntemplate <class T = ll, class Calc\
+    \ = larger_int_t<T>, Calc infty = Calc(INF)>\nstruct ConvexHullTrickDotProductMonotoneCoefficient\n\
+    \    : ConvexHullTrickDotProductBase<T, Calc, infty, true>\n{};\n"
+  code: "#pragma once\n\n#include \"../template/template_all_but_modint.hpp\"\n\n\
+    #include \"convex_hull_trick.hpp\"\n#include \"../math/rational.hpp\"\n#include\
+    \ \"../utils/is_integral_ext.hpp\"\n#include \"../utils/larger_int.hpp\"\n\n/**\n\
+    \ * @brief Dot Product Convex Hull Trick\n * @docs docs/convex/convex_hull_trick_dot_product.md\n\
+    \ */\n\ntemplate <class T, class Calc, Calc infty, bool monotone_coefficient>\n\
+    struct ConvexHullTrickDotProductBase\n{\n  static_assert(is_integral_ext<T> ||\
+    \ is_floating_point_v<T>);\n  static_assert(is_signed_ext<T> || is_floating_point_v<T>);\n\
+    \n  struct LinearForm\n  {\n    T a, b;\n    int id = -1;\n\n    friend bool operator==(const\
+    \ LinearForm &x, const LinearForm &y)\n    {\n      return x.a == y.a && x.b ==\
+    \ y.b && x.id == y.id;\n    }\n  };\n\nprivate:\n  using R = Rational<T>;\n  using\
+    \ RationalLine = ConvexHullTrickLine<R>;\n\n  template <class Objective>\n  using\
+    \ Hull = conditional_t<monotone_coefficient,\n                             ConvexHullTrickMonotoneSlope<R,\
+    \ Objective>,\n                             ConvexHullTrick<R, Objective>>;\n\n\
+    \  Hull<less<>> lo;\n  Hull<greater<>> hi;\n  optional<LinearForm> fst, mna, mxa;\n\
+    \  mutable vc<LinearForm> ch;\n  mutable bool built = false;\n  int add_cnt =\
+    \ 0;\n  array<int, 2> qpos{-1, -1}, qdir{0, 0};\n  array<optional<pair<T, T>>,\
+    \ 2> last_q;\n\n  static LinearForm form(const RationalLine &f)\n  {\n    return\
+    \ {f.a.num, f.b.num, f.id};\n  }\n\n  static Calc dot(const LinearForm &f, T x,\
+    \ T y)\n  {\n    return Calc(f.a) * Calc(x) + Calc(f.b) * Calc(y);\n  }\n\n  static\
+    \ Calc cross(const LinearForm &o, const LinearForm &a, const LinearForm &b)\n\
+    \  {\n    return (Calc(a.a) - Calc(o.a)) * (Calc(b.b) - Calc(o.b)) -\n       \
+    \    (Calc(a.b) - Calc(o.b)) * (Calc(b.a) - Calc(o.a));\n  }\n\n  template <bool\
+    \ minimize>\n  static bool better(Calc x, Calc y)\n  {\n    if constexpr (minimize)\n\
+    \      return x < y;\n    else\n      return y < x;\n  }\n\n  static int half(T\
+    \ x, T y) { return y > 0 || (y == 0 && x >= 0) ? 0 : 1; }\n\n  static bool arg_less(T\
+    \ ax, T ay, T bx, T by)\n  {\n    int ah = half(ax, ay), bh = half(bx, by);\n\
+    \    if (ah != bh) return ah < bh;\n    return Calc(ax) * Calc(by) - Calc(ay)\
+    \ * Calc(bx) > 0;\n  }\n\n  template <class H>\n  static void append_forms(const\
+    \ H &h, vc<LinearForm> &forms)\n  {\n    for (const auto &seg : h.segments())\
+    \ forms.eb(form(seg.line));\n  }\n\n  void build() const\n  {\n    if (built)\
+    \ return;\n    vc<LinearForm> pts;\n    append_forms(lo, pts);\n    append_forms(hi,\
+    \ pts);\n    sort(pts.begin(), pts.end(), [](const LinearForm &x, const LinearForm\
+    \ &y)\n         { return tie(x.a, x.b, x.id) < tie(y.a, y.b, y.id); });\n    pts.erase(unique(pts.begin(),\
+    \ pts.end()), pts.end());\n    if (pts.size() <= 1)\n      ch = pts;\n    else\n\
+    \    {\n      vc<LinearForm> low, high;\n      for (const LinearForm &p : pts)\n\
+    \      {\n        while (low.size() >= 2 && cross(low[low.size() - 2], low.back(),\
+    \ p) <= 0)\n          low.pop_back();\n        low.eb(p);\n      }\n      for\
+    \ (auto it = pts.rbegin(); it != pts.rend(); ++it)\n      {\n        while (high.size()\
+    \ >= 2 && cross(high[high.size() - 2], high.back(), *it) <= 0)\n          high.pop_back();\n\
+    \        high.eb(*it);\n      }\n      low.pop_back();\n      high.pop_back();\n\
+    \      ch = std::move(low);\n      ch.insert(ch.end(), high.begin(), high.end());\n\
+    \    }\n    built = true;\n  }\n\n  template <bool minimize>\n  LinearForm best(T\
+    \ x, T y) const\n  {\n    if (x == 0 && y == 0) return *fst;\n    if (y == 0)\n\
+    \    {\n      if constexpr (minimize)\n        return x > 0 ? *mna : *mxa;\n \
+    \     else\n        return x > 0 ? *mxa : *mna;\n    }\n    R q(x, y);\n    if\
+    \ constexpr (minimize)\n      return form(y > 0 ? lo.query_line(q) : hi.query_line(q));\n\
+    \    else\n      return form(y > 0 ? hi.query_line(q) : lo.query_line(q));\n \
+    \ }\n\n  template <bool minimize>\n  LinearForm best_monotone(T x, T y)\n  {\n\
+    \    assert(x != 0 || y != 0);\n    build();\n    constexpr int k = minimize ?\
+    \ 0 : 1;\n    int &pos = qpos[k], &dir = qdir[k];\n    auto &last = last_q[k];\n\
+    \    if (pos == -1)\n    {\n      pos = 0;\n      repi(i, 1, ch.size()) if (better<minimize>(dot(ch[i],\
+    \ x, y), dot(ch[pos], x, y))) pos = i;\n    }\n    else\n    {\n      auto [lx,\
+    \ ly] = *last;\n      int d = arg_less(lx, ly, x, y) - arg_less(x, y, lx, ly);\n\
+    \      if (d)\n      {\n        assert((!dir || d == dir) && \"query angle is\
+    \ not monotone\");\n        dir = d;\n      }\n      int step = dir < 0 ? -1 :\
+    \ 1, n = SZ(ch);\n      repi(_, ch.size() - 1)\n      {\n        int nxt = (pos\
+    \ + step + n) % n;\n        if (!better<minimize>(dot(ch[nxt], x, y), dot(ch[pos],\
+    \ x, y))) break;\n        pos = nxt;\n      }\n    }\n    last = pair{x, y};\n\
+    \    return ch[pos];\n  }\n\n  template <bool minimize>\n  pair<Calc, LinearForm>\
+    \ query_with_form_impl(T x, T y) const\n  {\n    if (!fst) return {minimize ?\
+    \ infty : -infty, {0, 0, -1}};\n    LinearForm f = best<minimize>(x, y);\n   \
+    \ return {dot(f, x, y), f};\n  }\n\n  template <bool minimize>\n  Calc query_impl(T\
+    \ x, T y) const\n  {\n    if (!fst) return minimize ? infty : -infty;\n    return\
+    \ dot(best<minimize>(x, y), x, y);\n  }\n\n  template <bool minimize>\n  pair<Calc,\
+    \ LinearForm> query_monotone_with_form_impl(T x, T y)\n  {\n    if (!fst) return\
+    \ {minimize ? infty : -infty, {0, 0, -1}};\n    LinearForm f = best_monotone<minimize>(x,\
+    \ y);\n    return {dot(f, x, y), f};\n  }\n\n  template <bool minimize>\n  Calc\
+    \ query_monotone_impl(T x, T y)\n  {\n    if (!fst) return minimize ? infty :\
+    \ -infty;\n    return dot(best_monotone<minimize>(x, y), x, y);\n  }\n\npublic:\n\
+    \  // ax + by \u3092\u8FFD\u52A0\u3059\u308B\u3002id \u306F 0 \u59CB\u307E\u308A\
+    \u306E\u8FFD\u52A0\u9806\u306B\u306A\u308B\u3002\n  void add(T a, T b) { add(a,\
+    \ b, add_cnt); }\n\n  // ax + by \u3092\u6307\u5B9A\u3057\u305F id \u3067\u8FFD\
+    \u52A0\u3059\u308B\u3002\u5358\u8ABF\u4FC2\u6570\u7248\u3067\u306F a \u306E\u5897\
+    \u6E1B\u65B9\u5411\u3092\u81EA\u52D5\u3067\u5224\u5B9A\u3059\u308B\u3002\n  void\
+    \ add(T a, T b, int id)\n  {\n    add_cnt++;\n    reset_monotone_query();\n  \
+    \  LinearForm f{a, b, id};\n    lo.add_line(R(a), R(b), id);\n    hi.add_line(R(a),\
+    \ R(b), id);\n    if (!fst) fst = f;\n    if (!mna || a < mna->a) mna = f;\n \
+    \   if (!mxa || mxa->a < a) mxa = f;\n    built = false;\n    ch.clear();\n  }\n\
+    \n  // (x, y) \u306B\u304A\u3051\u308B\u6700\u5C0F\u5024\u3092\u8FD4\u3059\u3002\
+    \u7A7A\u306A\u3089 infty \u3092\u8FD4\u3059\u3002\n  Calc min_query(T x, T y)\
+    \ const { return query_impl<true>(x, y); }\n\n  // (x, y) \u306B\u304A\u3051\u308B\
+    \u6700\u5927\u5024\u3092\u8FD4\u3059\u3002\u7A7A\u306A\u3089 -infty \u3092\u8FD4\
+    \u3059\u3002\n  Calc max_query(T x, T y) const { return query_impl<false>(x, y);\
+    \ }\n\n  // (x, y) \u306B\u304A\u3051\u308B\u6700\u5C0F\u5024\u3068\u4E00\u6B21\
+    \u5F0F\u3092\u8FD4\u3059\u3002\u7A7A\u306A\u3089 infty \u3068\u30C0\u30DF\u30FC\
+    \u4E00\u6B21\u5F0F\u3092\u8FD4\u3059\u3002\n  pair<Calc, LinearForm> min_query_with_form(T\
+    \ x, T y) const\n  {\n    return query_with_form_impl<true>(x, y);\n  }\n\n  //\
+    \ (x, y) \u306B\u304A\u3051\u308B\u6700\u5927\u5024\u3068\u4E00\u6B21\u5F0F\u3092\
+    \u8FD4\u3059\u3002\u7A7A\u306A\u3089 -infty \u3068\u30C0\u30DF\u30FC\u4E00\u6B21\
+    \u5F0F\u3092\u8FD4\u3059\u3002\n  pair<Calc, LinearForm> max_query_with_form(T\
+    \ x, T y) const\n  {\n    return query_with_form_impl<false>(x, y);\n  }\n\n \
+    \ // \u504F\u89D2\u304C\u5358\u8ABF\u306A (x, y) \u306B\u304A\u3051\u308B\u6700\
+    \u5C0F\u5024\u3092\u8FD4\u3059\u3002\u65B9\u5411\u306F\u81EA\u52D5\u3067\u5224\
+    \u5B9A\u3059\u308B\u3002\n  Calc min_query_monotone(T x, T y) { return query_monotone_impl<true>(x,\
+    \ y); }\n\n  // \u504F\u89D2\u304C\u5358\u8ABF\u306A (x, y) \u306B\u304A\u3051\
+    \u308B\u6700\u5927\u5024\u3092\u8FD4\u3059\u3002\u65B9\u5411\u306F\u81EA\u52D5\
+    \u3067\u5224\u5B9A\u3059\u308B\u3002\n  Calc max_query_monotone(T x, T y) { return\
+    \ query_monotone_impl<false>(x, y); }\n\n  // \u504F\u89D2\u304C\u5358\u8ABF\u306A\
+    \ (x, y) \u306B\u304A\u3051\u308B\u6700\u5C0F\u5024\u3068\u4E00\u6B21\u5F0F\u3092\
+    \u8FD4\u3059\u3002\u65B9\u5411\u306F\u81EA\u52D5\u3067\u5224\u5B9A\u3059\u308B\
+    \u3002\n  pair<Calc, LinearForm> min_query_monotone_with_form(T x, T y)\n  {\n\
+    \    return query_monotone_with_form_impl<true>(x, y);\n  }\n\n  // \u504F\u89D2\
+    \u304C\u5358\u8ABF\u306A (x, y) \u306B\u304A\u3051\u308B\u6700\u5927\u5024\u3068\
+    \u4E00\u6B21\u5F0F\u3092\u8FD4\u3059\u3002\u65B9\u5411\u306F\u81EA\u52D5\u3067\
+    \u5224\u5B9A\u3059\u308B\u3002\n  pair<Calc, LinearForm> max_query_monotone_with_form(T\
+    \ x, T y)\n  {\n    return query_monotone_with_form_impl<false>(x, y);\n  }\n\n\
+    \  // \u5358\u8ABF\u30AF\u30A8\u30EA\u306E\u73FE\u5728\u4F4D\u7F6E\u3068\u65B9\
+    \u5411\u3092\u6D88\u53BB\u3059\u308B\u3002\n  void reset_monotone_query()\n  {\n\
+    \    qpos = {-1, -1};\n    qdir = {0, 0};\n    last_q = {};\n  }\n\n  // \u4FC2\
+    \u6570\u70B9\u306E\u51F8\u5305\u9802\u70B9\u3092\u53CD\u6642\u8A08\u56DE\u308A\
+    \u306B\u8FD4\u3059\u3002\n  vc<LinearForm> convex_hull() const\n  {\n    build();\n\
+    \    return ch;\n  }\n\n  // \u3059\u3079\u3066\u306E\u4E00\u6B21\u5F0F\u3001\u5358\
+    \u8ABF\u6027\u306E\u72B6\u614B\u3001\u81EA\u52D5\u63A1\u756A\u3092\u6D88\u53BB\
+    \u3059\u308B\u3002\n  void clear()\n  {\n    lo.clear();\n    hi.clear();\n  \
+    \  fst.reset();\n    mna.reset();\n    mxa.reset();\n    add_cnt = 0;\n    ch.clear();\n\
+    \    built = false;\n    reset_monotone_query();\n  }\n};\n\n// \u4FC2\u6570\u3092\
+    \u4EFB\u610F\u9806\u306B\u8FFD\u52A0\u3067\u304D\u308B Dot Product Convex Hull\
+    \ Trick\ntemplate <class T = ll, class Calc = larger_int_t<T>, Calc infty = Calc(INF)>\n\
+    struct ConvexHullTrickDotProduct\n    : ConvexHullTrickDotProductBase<T, Calc,\
+    \ infty, false>\n{};\n\n// \u4FC2\u6570 a \u3092\u5358\u8ABF\u306B\u8FFD\u52A0\
+    \u3059\u308B Dot Product Convex Hull Trick\ntemplate <class T = ll, class Calc\
+    \ = larger_int_t<T>, Calc infty = Calc(INF)>\nstruct ConvexHullTrickDotProductMonotoneCoefficient\n\
+    \    : ConvexHullTrickDotProductBase<T, Calc, infty, true>\n{};\n"
+  dependsOn:
+  - template/template_all_but_modint.hpp
+  - template/template_types.hpp
+  - template/template_rep.hpp
+  - template/template_math.hpp
+  - utils/is_integral_ext.hpp
+  - template/template_vector.hpp
+  - template/template_algo.hpp
+  - template/template_binsearch.hpp
+  - template/template_bit.hpp
+  - template/template_inout.hpp
+  - template/template_dump.hpp
+  - template/template_random.hpp
+  - convex/convex_hull_trick.hpp
+  - math/rational.hpp
+  - utils/larger_int.hpp
+  isVerificationFile: false
+  path: convex/convex_hull_trick_dot_product.hpp
+  requiredBy: []
+  timestamp: '2026-08-08 20:51:19+09:00'
+  verificationStatus: LIBRARY_NO_TESTS
+  verifiedWith: []
+documentation_of: convex/convex_hull_trick_dot_product.hpp
+layout: document
+redirect_from:
+- /library/convex/convex_hull_trick_dot_product.hpp
+- /library/convex/convex_hull_trick_dot_product.hpp.html
+title: Dot Product Convex Hull Trick
+---

@@ -1,35 +1,35 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
   _extendedRequiredBy:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: math/bigint.hpp
     title: "\u591A\u500D\u9577\u6574\u6570"
   _extendedVerifiedWith:
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/big_integer_addition.test.cpp
     title: verify/yosupo/big_integer_addition.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/big_integer_addition_hex.test.cpp
     title: verify/yosupo/big_integer_addition_hex.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/big_integer_division.test.cpp
     title: verify/yosupo/big_integer_division.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/big_integer_division_hex.test.cpp
     title: verify/yosupo/big_integer_division_hex.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/big_integer_multiplication.test.cpp
     title: verify/yosupo/big_integer_multiplication.test.cpp
-  - icon: ':heavy_check_mark:'
+  - icon: ':x:'
     path: verify/yosupo/big_integer_multiplication_hex.test.cpp
     title: verify/yosupo/big_integer_multiplication_hex.test.cpp
-  _isVerificationFailed: false
+  _isVerificationFailed: true
   _pathExtension: hpp
-  _verificationStatusIcon: ':heavy_check_mark:'
+  _verificationStatusIcon: ':x:'
   attributes:
     _deprecated_at_docs: docs/utils/make_unsigned_ext.md
     document_title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u306B\u5BFE\u5FDC\u3057\u305F\
@@ -48,12 +48,12 @@ data:
     using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
     \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
     using i128 = __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string\
-    \ &s)\n{\n  i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i\
-    \ < (int)s.size(); i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n\
-    \  }\n  else\n  {\n    for (auto &&c : s)\n      res = 10 * res + c - '0';\n \
-    \ }\n  return res;\n}\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n\
-    \  string sign = \"\", res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n\
-    \  while (x > 0)\n  {\n    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(),\
+    \ &s)\n{\n  const bool neg = s.front() == '-';\n  u128 res = 0;\n  for (int i\
+    \ = neg; i < (int)s.size(); i++)\n    res = 10 * res + s[i] - '0';\n  if (neg)\n\
+    \    return -i128(res - 1) - 1;\n  return i128(res);\n}\nstring i128tos(i128 x)\n\
+    {\n  if (x == 0) return \"0\";\n  string sign = \"\", res = \"\";\n  u128 ux;\n\
+    \  if (x < 0)\n    ux = u128(-(x + 1)) + 1, sign = \"-\";\n  else\n    ux = x;\n\
+    \  while (ux > 0)\n  {\n    res += '0' + ux % 10;\n    ux /= 10;\n  }\n  reverse(res.begin(),\
     \ res.end());\n  return sign + res;\n}\nistream &operator>>(istream &is, i128\
     \ &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream\
     \ &operator<<(ostream &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n\
@@ -81,14 +81,14 @@ data:
   path: utils/make_unsigned_ext.hpp
   requiredBy:
   - math/bigint.hpp
-  timestamp: '2026-04-20 06:20:24+09:00'
-  verificationStatus: LIBRARY_ALL_AC
+  timestamp: '2026-08-08 20:51:19+09:00'
+  verificationStatus: LIBRARY_ALL_WA
   verifiedWith:
-  - verify/yosupo/big_integer_multiplication_hex.test.cpp
+  - verify/yosupo/big_integer_division_hex.test.cpp
   - verify/yosupo/big_integer_addition_hex.test.cpp
   - verify/yosupo/big_integer_division.test.cpp
-  - verify/yosupo/big_integer_division_hex.test.cpp
   - verify/yosupo/big_integer_multiplication.test.cpp
+  - verify/yosupo/big_integer_multiplication_hex.test.cpp
   - verify/yosupo/big_integer_addition.test.cpp
 documentation_of: utils/make_unsigned_ext.hpp
 layout: document

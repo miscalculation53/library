@@ -1,25 +1,25 @@
 ---
 data:
   _extendedDependsOn:
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_binsearch.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u4E8C\u5206\u63A2\u7D22\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_dump.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08dump\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_math.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u6F14\u7B97\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_rep.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08rep\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_types.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08\u578B\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: template/template_vector.hpp
     title: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\uFF08vector\uFF09"
-  - icon: ':heavy_check_mark:'
+  - icon: ':question:'
     path: utils/is_integral_ext.hpp
     title: "$128$ \u30D3\u30C3\u30C8\u6574\u6570\u3092\u542B\u3081\u305F\u6574\u6570\
       \u5224\u5B9A"
@@ -49,12 +49,12 @@ data:
     using vvl = vvc<ll>;\n\ntemplate <class T>\nusing pql = priority_queue<T, vc<T>,\
     \ greater<T>>;\ntemplate <class T>\nusing pqg = priority_queue<T>;\n\n#ifdef __SIZEOF_INT128__\n\
     using i128 = __int128_t;\nusing u128 = __uint128_t;\ni128 stoi128(const string\
-    \ &s)\n{\n  i128 res = 0;\n  if (s.front() == '-')\n  {\n    for (int i = 1; i\
-    \ < (int)s.size(); i++)\n      res = 10 * res + s[i] - '0';\n    res = -res;\n\
-    \  }\n  else\n  {\n    for (auto &&c : s)\n      res = 10 * res + c - '0';\n \
-    \ }\n  return res;\n}\nstring i128tos(i128 x)\n{\n  if (x == 0) return \"0\";\n\
-    \  string sign = \"\", res = \"\";\n  if (x < 0)\n    x = -x, sign = \"-\";\n\
-    \  while (x > 0)\n  {\n    res += '0' + x % 10;\n    x /= 10;\n  }\n  reverse(res.begin(),\
+    \ &s)\n{\n  const bool neg = s.front() == '-';\n  u128 res = 0;\n  for (int i\
+    \ = neg; i < (int)s.size(); i++)\n    res = 10 * res + s[i] - '0';\n  if (neg)\n\
+    \    return -i128(res - 1) - 1;\n  return i128(res);\n}\nstring i128tos(i128 x)\n\
+    {\n  if (x == 0) return \"0\";\n  string sign = \"\", res = \"\";\n  u128 ux;\n\
+    \  if (x < 0)\n    ux = u128(-(x + 1)) + 1, sign = \"-\";\n  else\n    ux = x;\n\
+    \  while (ux > 0)\n  {\n    res += '0' + ux % 10;\n    ux /= 10;\n  }\n  reverse(res.begin(),\
     \ res.end());\n  return sign + res;\n}\nistream &operator>>(istream &is, i128\
     \ &a)\n{\n  string s;\n  is >> s;\n  a = stoi128(s);\n  return is;\n}\nostream\
     \ &operator<<(ostream &os, const i128 &a)\n{\n  os << i128tos(a);\n  return os;\n\
@@ -114,18 +114,20 @@ data:
     \ ll, class A, class B>\nT pow_limited(A a, B b) { return pow_limited<T>(a, b,\
     \ INF); }\n\ntemplate <class T = ll, class A, class K>\nconstexpr T iroot(A a,\
     \ K k)\n{\n  assert(a >= 0 && k >= 1);\n  if (a <= 1 || k == 1)\n    return a;\n\
-    \  if (k == 2)\n  {\n    if constexpr (sizeof(T) > sizeof(ull))\n    {\n     \
-    \ if ((u128)a < ((u128)1 << 120))\n        return sqrtl(a);\n    }\n    else\n\
-    \      return sqrtl(a);\n  }\n\n  auto isok = [&](T x) -> bool\n  {\n    if (x\
-    \ == 0)\n      return true;\n    T res = 1, k2 = k;\n    while (true)\n    {\n\
-    \      if (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return false;\n\
-    \        res *= x;\n      }\n      k2 >>= 1;\n      if (k2 == 0)\n        break;\n\
-    \      if (x > T(a) / x)\n        return false;\n      x *= x;\n    }\n    return\
-    \ res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up = true;\n  while (!isok(x))\n\
-    \    up = false, x--;\n  if (up)\n  {\n    while (x < numeric_limits<T>::max()\
-    \ && isok(x + 1))\n      x++;\n  }\n  return x;\n}\ntemplate <class T = ll, class\
-    \ A, class K>\nconstexpr T iroot_ceil(A a, K k)\n{\n  T x = iroot<T>(a, k);\n\
-    \  return ipow<T>(x, k) == a ? x : x + 1;\n}\n\n// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
+    \  if (k == 2)\n  {\n    const T aa = T(a);\n    T x = T(sqrtl((long double)a));\n\
+    \    while (x > aa / x)\n      x--;\n    while (x < numeric_limits<T>::max())\n\
+    \    {\n      const T y = x + 1;\n      if (y > aa / y)\n        break;\n    \
+    \  x = y;\n    }\n    return x;\n  }\n\n  auto isok = [&](T x) -> bool\n  {\n\
+    \    if (x == 0)\n      return true;\n    T res = 1, k2 = k;\n    while (true)\n\
+    \    {\n      if (k2 & 1)\n      {\n        if (res > T(a) / x)\n          return\
+    \ false;\n        res *= x;\n      }\n      k2 >>= 1;\n      if (k2 == 0)\n  \
+    \      break;\n      if (x > T(a) / x)\n        return false;\n      x *= x;\n\
+    \    }\n    return res <= T(a);\n  };\n\n  T x = pow(a, 1.0 / k);\n  bool up =\
+    \ true;\n  while (!isok(x))\n    up = false, x--;\n  if (up)\n  {\n    while (x\
+    \ < numeric_limits<T>::max() && isok(x + 1))\n      x++;\n  }\n  return x;\n}\n\
+    template <class T = ll, class A, class K>\nconstexpr T iroot_ceil(A a, K k)\n\
+    {\n  T x = iroot<T>(a, k);\n  return ipow<T>(x, k) == a ? x : x + 1;\n}\n\n//\
+    \ https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html\n\
     template <class D = decltype(EPS), class A>\nint SGN(A a, D eps = EPS) { return\
     \ int(a > eps) - int(a < -eps); }\n\n// \u4F4D\u53D6\u308A\u8A18\u6570\u6CD5\u3068\
     \u540C\u3058\u9806\u756A\uFF08\u4E0B\u4F4D\u6841\u304C\u5F8C\u308D\uFF09\n// 0\
@@ -263,50 +265,58 @@ data:
     \ end())\ntemplate <class V, class Value>\ninline auto geq_min(const V &v, const\
     \ Value &val)\n-> enable_if_t<!is_random_access_iterator_v<typename V::iterator>,\
     \ typename V::const_iterator>\n{ return v.lower_bound(val); }\n\n// --- \u81EA\
-    \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\n// (ok, ng)\ntemplate <class T = ll, class\
-    \ Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const Judge &judge,\
-    \ InitOk init_ok, InitNg init_ng, bool check_ok = true, bool check_ng = true)\n\
-    {\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n  if\
-    \ (check_ng)\n    assert(!judge(ng));\n  while (ok - ng != 1 && ng - ok != 1)\n\
-    \  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok : ng) =\
-    \ mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge, class\
-    \ InitOk, class InitNg>\nT binsearch_real(const Judge &judge, InitOk init_ok,\
+    \u4F5C\u4E8C\u5206\u63A2\u7D22 ---\n\nnamespace internal\n{\ntemplate <class T>\n\
+    bool binsearch_adjacent(T a, T b)\n{\n  if (a < b)\n    return a + 1 == b;\n \
+    \ if (b < a)\n    return b + 1 == a;\n  return false;\n}\n};\n\n// (ok, ng)\n\
+    template <class T = ll, class Judge, class InitOk, class InitNg>\npair<T, T> binsearch(const\
+    \ Judge &judge, InitOk init_ok, InitNg init_ng, bool check_ok = true, bool check_ng\
+    \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
+    \  if (check_ng)\n    assert(!judge(ng));\n  while (!internal::binsearch_adjacent(ok,\
+    \ ng))\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n    (judge(mid) ? ok :\
+    \ ng) = mid;\n  }\n  return {ok, ng};\n}\ntemplate <class T = ld, class Judge,\
+    \ class InitOk, class InitNg>\nT binsearch_real(const Judge &judge, InitOk init_ok,\
     \ InitNg init_ng, int iteration_count = 100, bool check_ok = true, bool check_ng\
     \ = true)\n{\n  T ok(init_ok), ng(init_ng);\n  if (check_ok)\n    assert(judge(ok));\n\
     \  if (check_ng)\n    assert(!judge(ng));\n  repi(_, iteration_count)\n  {\n \
     \   T mid = (ok + ng) / 2;\n    (judge(mid) ? ok : ng) = mid;\n  }\n  return ok;\n\
     }\n// (ok, ng)\ntemplate <class T = ll, class Judge, class InitVal>\npair<T, T>\
     \ expsearch(const Judge &judge, InitVal init_val, bool positive = true)\n{\n \
-    \ T ok, ng;\n  if (judge(init_val))\n  {\n    ok = init_val, ng = init_val + (positive\
-    \ ? 1 : -1);\n    for (int i = 1; judge(ng); i++)\n      ok = ng, ng = init_val\
-    \ + (positive ? 1 : -1) * (T(1) << i);\n  }\n  else\n  {\n    ng = init_val, ok\
-    \ = init_val + (positive ? 1 : -1);\n    for (int i = 1; !judge(ok); i++)\n  \
-    \    ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);\n  }\n  while\
-    \ (ok - ng != 1 && ng - ok != 1)\n  {\n    T mid = (ok & ng) + ((ok ^ ng) >> 1);\n\
-    \    (judge(mid) ? ok : ng) = mid;\n  }\n  return {ok, ng};\n}\n#line 2 \"template/template_dump.hpp\"\
-    \n\n#line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\
-    \u30EC\u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n\
-    \ */\n\n#ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
+    \ T cur(init_val), step = 1;\n  const bool cur_ok = judge(cur);\n  auto advance\
+    \ = [&](T x, T d, bool pos) -> T\n  {\n    if (pos)\n      return x > numeric_limits<T>::max()\
+    \ - d ? numeric_limits<T>::max() : x + d;\n    else\n      return x < numeric_limits<T>::lowest()\
+    \ + d ? numeric_limits<T>::lowest() : x - d;\n  };\n  T prv = advance(cur, 1,\
+    \ !positive);\n  if (prv != cur && judge(prv) != cur_ok)\n  {\n    if (cur_ok)\n\
+    \      return {cur, prv};\n    else\n      return {prv, cur};\n  }\n  while (true)\n\
+    \  {\n    T nxt = advance(cur, step, positive);\n    assert(nxt != cur && \"the\
+    \ boundary must exist in the searched direction\");\n    if (nxt == cur || judge(nxt)\
+    \ != cur_ok)\n    {\n      T ok = cur_ok ? cur : nxt;\n      T ng = cur_ok ? nxt\
+    \ : cur;\n      return binsearch<T>(judge, ok, ng, false, false);\n    }\n   \
+    \ cur = nxt;\n    if (step > numeric_limits<T>::max() / 2)\n      step = numeric_limits<T>::max();\n\
+    \    else\n      step *= 2;\n  }\n}\n#line 2 \"template/template_dump.hpp\"\n\n\
+    #line 4 \"template/template_dump.hpp\"\n\n/**\n * @brief \u30C6\u30F3\u30D7\u30EC\
+    \u30FC\u30C8\uFF08dump\uFF09\n * @docs docs/template/template_dump.md\n */\n\n\
+    #ifdef LOCAL\n#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump\n\
     namespace cpp_dump::_detail\n{\n  inline string export_var(\n      const i128\
     \ &x, const string &indent, size_t last_line_length,\n      size_t current_depth,\
     \ bool fail_on_newline, const export_command &command\n  ) {\n    return export_var(i128tos(x),\
     \ indent, last_line_length, current_depth, fail_on_newline, command);\n  }\n}\
     \ // namespace cpp_dump::_detail\n#define dump(...) cpp_dump(__VA_ARGS__)\nnamespace\
     \ cp = cpp_dump;\nCPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());\n\
-    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 1000);\n#define local(...) __VA_ARGS__\n\
-    #define oj(...)\n#define local_oj(a, b) (a)\n#else\n#define dump(...)\n#define\
-    \ local(...)\n#define oj(...) __VA_ARGS__\n#define local_oj(a, b) (b)\n#endif\n\
-    \ntemplate <class T, class Sequence>\nvc<T> content(queue<T, Sequence> que)\n\
-    {\n  vc<T> res;\n  while (!que.empty())\n  {\n    res.eb(que.front());\n    que.pop();\n\
-    \  }\n  return res;\n}\ntemplate <class T, class Sequence, class Compare>\nvc<T>\
-    \ content(priority_queue<T, Sequence, Compare> pque)\n{\n  vc<T> res;\n  while\
-    \ (!pque.empty())\n  {\n    res.eb(pque.top());\n    pque.pop();\n  }\n  return\
-    \ res;\n}\n#line 5 \"verify/mytest/template_binsearch.test.cpp\"\n\nmt19937 mt;\n\
-    void test1()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i, n) a[i] = 1 + mt()\
-    \ % 10;\n  sort(ALL(a));\n  ll k = -1 + mt() % 12;\n\n  ll i1, i2, i3;\n\n  i1\
-    \ = LB(a, k);\n  i2 = binsearch([&](ll i)\n                  { return k <= vecget(a,\
-    \ i); }, SZ<int>(a), -1)\n            .first;\n  i3 = expsearch([&](ll i)\n  \
-    \                { return k <= vecget(a, i); }, 0, true)\n            .first;\n\
+    CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 100);\n#define local(...) __VA_ARGS__\n\
+    #define oj(...)\n#define local_oj(a, b) (a)\nCPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(content());\n\
+    #else\n#define dump(...)\n#define local(...)\n#define oj(...) __VA_ARGS__\n#define\
+    \ local_oj(a, b) (b)\n#endif\n\ntemplate <class T, class Sequence>\nvc<T> content(queue<T,\
+    \ Sequence> que)\n{\n  vc<T> res;\n  while (!que.empty())\n  {\n    res.eb(que.front());\n\
+    \    que.pop();\n  }\n  return res;\n}\ntemplate <class T, class Sequence, class\
+    \ Compare>\nvc<T> content(priority_queue<T, Sequence, Compare> pque)\n{\n  vc<T>\
+    \ res;\n  while (!pque.empty())\n  {\n    res.eb(pque.top());\n    pque.pop();\n\
+    \  }\n  return res;\n}\ntemplate <class T>\nauto content(const T &obj) { return\
+    \ obj.content(); }\n#line 5 \"verify/mytest/template_binsearch.test.cpp\"\n\n\
+    mt19937 mt;\nvoid test1()\n{\n  ll n = 1 + mt() % 10;\n  vl a(n);\n  rep(i, n)\
+    \ a[i] = 1 + mt() % 10;\n  sort(ALL(a));\n  ll k = -1 + mt() % 12;\n\n  ll i1,\
+    \ i2, i3;\n\n  i1 = LB(a, k);\n  i2 = binsearch([&](ll i)\n                  {\
+    \ return k <= vecget(a, i); }, SZ<int>(a), -1)\n            .first;\n  i3 = expsearch([&](ll\
+    \ i)\n                  { return k <= vecget(a, i); }, 0, true)\n            .first;\n\
     \  assert(i1 == i2 && i2 == i3);\n\n  i1 = UB(a, k);\n  i2 = binsearch([&](ll\
     \ i)\n                  { return k < vecget(a, i); }, SZ<int>(a), -1)\n      \
     \      .first;\n  i3 = expsearch([&](ll i)\n                  { return k < vecget(a,\
@@ -392,7 +402,7 @@ data:
   isVerificationFile: true
   path: verify/mytest/template_binsearch.test.cpp
   requiredBy: []
-  timestamp: '2026-04-20 06:20:24+09:00'
+  timestamp: '2026-08-08 20:51:19+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: verify/mytest/template_binsearch.test.cpp
