@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools==83.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ojverify-pkg-resources-compat"
+version = "0.1.0"
+description = "Minimal pkg_resources compatibility for online-judge-verify-helper"
+requires-python = ">=3.9"
+
+[tool.setuptools]
+py-modules = ["pkg_resources"]
