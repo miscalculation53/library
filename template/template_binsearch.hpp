@@ -156,6 +156,19 @@ inline auto geq_min(const V &v, const Value &val)
 
 // --- 自作二分探索 ---
 
+namespace internal
+{
+template <class T>
+bool binsearch_adjacent(T a, T b)
+{
+  if (a < b)
+    return a + 1 == b;
+  if (b < a)
+    return b + 1 == a;
+  return false;
+}
+};
+
 // (ok, ng)
 template <class T = ll, class Judge, class InitOk, class InitNg>
 pair<T, T> binsearch(const Judge &judge, InitOk init_ok, InitNg init_ng, bool check_ok = true, bool check_ng = true)
@@ -165,7 +178,7 @@ pair<T, T> binsearch(const Judge &judge, InitOk init_ok, InitNg init_ng, bool ch
     assert(judge(ok));
   if (check_ng)
     assert(!judge(ng));
-  while (ok - ng != 1 && ng - ok != 1)
+  while (!internal::binsearch_adjacent(ok, ng))
   {
     T mid = (ok & ng) + ((ok ^ ng) >> 1);
     (judge(mid) ? ok : ng) = mid;
@@ -191,23 +204,37 @@ T binsearch_real(const Judge &judge, InitOk init_ok, InitNg init_ng, int iterati
 template <class T = ll, class Judge, class InitVal>
 pair<T, T> expsearch(const Judge &judge, InitVal init_val, bool positive = true)
 {
-  T ok, ng;
-  if (judge(init_val))
+  T cur(init_val), step = 1;
+  const bool cur_ok = judge(cur);
+  auto advance = [&](T x, T d, bool pos) -> T
   {
-    ok = init_val, ng = init_val + (positive ? 1 : -1);
-    for (int i = 1; judge(ng); i++)
-      ok = ng, ng = init_val + (positive ? 1 : -1) * (T(1) << i);
-  }
-  else
+    if (pos)
+      return x > numeric_limits<T>::max() - d ? numeric_limits<T>::max() : x + d;
+    else
+      return x < numeric_limits<T>::lowest() + d ? numeric_limits<T>::lowest() : x - d;
+  };
+  T prv = advance(cur, 1, !positive);
+  if (prv != cur && judge(prv) != cur_ok)
   {
-    ng = init_val, ok = init_val + (positive ? 1 : -1);
-    for (int i = 1; !judge(ok); i++)
-      ng = ok, ok = init_val + (positive ? 1 : -1) * (T(1) << i);
+    if (cur_ok)
+      return {cur, prv};
+    else
+      return {prv, cur};
   }
-  while (ok - ng != 1 && ng - ok != 1)
+  while (true)
   {
-    T mid = (ok & ng) + ((ok ^ ng) >> 1);
-    (judge(mid) ? ok : ng) = mid;
+    T nxt = advance(cur, step, positive);
+    assert(nxt != cur && "the boundary must exist in the searched direction");
+    if (nxt == cur || judge(nxt) != cur_ok)
+    {
+      T ok = cur_ok ? cur : nxt;
+      T ng = cur_ok ? nxt : cur;
+      return binsearch<T>(judge, ok, ng, false, false);
+    }
+    cur = nxt;
+    if (step > numeric_limits<T>::max() / 2)
+      step = numeric_limits<T>::max();
+    else
+      step *= 2;
   }
-  return {ok, ng};
 }

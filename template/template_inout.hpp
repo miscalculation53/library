@@ -13,6 +13,24 @@
 // https://judge.yosupo.jp/submission/21623  (Nyaan さん)
 #if defined FAST_IO and not defined LOCAL
 namespace fastio {
+template <class T>
+struct unsigned_integer
+{
+  using type = make_unsigned_t<T>;
+};
+template <>
+struct unsigned_integer<i128>
+{
+  using type = u128;
+};
+template <>
+struct unsigned_integer<u128>
+{
+  using type = u128;
+};
+template <class T>
+using unsigned_integer_t = typename unsigned_integer<T>::type;
+
 static constexpr uint32_t SIZ = 1 << 17;
 char ibuf[SIZ];
 char obuf[SIZ];
@@ -70,7 +88,10 @@ template <typename T>
 void rd1_real(T &x) {
   string s;
   rd1(s);
-  x = stod(s);
+  if constexpr (is_same_v<T, long double>)
+    x = stold(s);
+  else
+    x = stod(s);
 }
 
 template <typename T>
@@ -84,11 +105,26 @@ void rd1_integer(T &x) {
   if constexpr (is_signed<T>::value || is_same_v<T, i128>) {
     if (c == '-') { minus = 1, c = ibuf[pil++]; }
   }
-  x = 0;
-  while ('0' <= c) { x = x * 10 + (c & 15), c = ibuf[pil++]; }
-  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {
-    if (minus) x = -x;
+  using U = unsigned_integer_t<T>;
+  U val = 0;
+  while ('0' <= c) { val = val * 10 + (c & 15), c = ibuf[pil++]; }
+  pil--;
+  if constexpr (is_signed<T>::value || is_same_v<T, i128>)
+  {
+    if (minus)
+    {
+      const U min_abs = U(numeric_limits<T>::max()) + 1;
+      assert(val <= min_abs);
+      x = val == min_abs ? numeric_limits<T>::lowest() : -T(val);
+    }
+    else
+    {
+      assert(val <= U(numeric_limits<T>::max()));
+      x = T(val);
+    }
   }
+  else
+    x = T(val);
 }
 
 void rd1(int &x) { rd1_integer(x); }
@@ -105,17 +141,9 @@ template <class T, class U>
 void rd1(pair<T, U> &p) {
   return rd1(p.first), rd1(p.second);
 }
-template <size_t N = 0, typename T>
-void rd1_tuple(T &t) {
-  if constexpr (N < std::tuple_size<T>::value) {
-    auto &x = std::get<N>(t);
-    rd1(x);
-    rd1_tuple<N + 1>(t);
-  }
-}
 template <class... T>
 void rd1(tuple<T...> &tpl) {
-  rd1_tuple(tpl);
+  apply([](auto &...x) { (rd1(x), ...); }, tpl);
 }
 
 template <size_t N = 0, typename T>
@@ -127,10 +155,9 @@ void rd1(vc<T> &x) {
   for (auto &d: x) rd1(d);
 }
 
-void read() {}
-template <class H, class... T>
-void read(H &h, T &... t) {
-  rd1(h), read(t...);
+template <class... T>
+void read(T &...x) {
+  (rd1(x), ...);
 }
 
 void wt1(const char c) {
@@ -148,25 +175,35 @@ void wt1(const char *s) {
 template <typename T>
 void wt1_integer(T x) {
   if (por > SIZ - 100) flush();
-  if (x < 0) { obuf[por++] = '-', x = -x; }
-  int outi;
-  for (outi = 96; x >= 10000; outi -= 4) {
-    memcpy(out + outi, pre.num[x % 10000], 4);
-    x /= 10000;
+  using U = unsigned_integer_t<T>;
+  U ux;
+  if constexpr (is_signed<T>::value || is_same_v<T, i128>)
+  {
+    if (x < 0)
+      obuf[por++] = '-', ux = U(0) - U(x);
+    else
+      ux = U(x);
   }
-  if (x >= 1000) {
-    memcpy(obuf + por, pre.num[x], 4);
+  else
+    ux = x;
+  int outi;
+  for (outi = 96; ux >= 10000; outi -= 4) {
+    memcpy(out + outi, pre.num[ux % 10000], 4);
+    ux /= 10000;
+  }
+  if (ux >= 1000) {
+    memcpy(obuf + por, pre.num[ux], 4);
     por += 4;
-  } else if (x >= 100) {
-    memcpy(obuf + por, pre.num[x] + 1, 3);
+  } else if (ux >= 100) {
+    memcpy(obuf + por, pre.num[ux] + 1, 3);
     por += 3;
-  } else if (x >= 10) {
-    int q = (x * 103) >> 10;
+  } else if (ux >= 10) {
+    int q = (ux * 103) >> 10;
     obuf[por] = q | '0';
-    obuf[por + 1] = (x - q * 10) | '0';
+    obuf[por + 1] = (ux - q * 10) | '0';
     por += 2;
   } else
-    obuf[por++] = x | '0';
+    obuf[por++] = ux | '0';
   memcpy(obuf + por, out + outi + 4, 96 - outi);
   por += 96 - outi;
 }
@@ -174,7 +211,7 @@ void wt1_integer(T x) {
 template <typename T>
 void wt1_real(T x) {
   ostringstream oss;
-  oss << fixed << setprecision(15) << double(x);
+  oss << fixed << setprecision(15) << x;
   string s = oss.str();
   wt1(s);
 }
@@ -194,18 +231,14 @@ void wt1(const pair<T, U> &val) {
   wt1(' ');
   wt1(val.second);
 }
-template <size_t N = 0, typename T>
-void wt1_tuple(const T &t) {
-  if constexpr (N < std::tuple_size<T>::value) {
-    if constexpr (N > 0) { wt1(' '); }
-    const auto x = std::get<N>(t);
-    wt1(x);
-    wt1_tuple<N + 1>(t);
-  }
-}
 template <class... T>
 void wt1(const tuple<T...> &tpl) {
-  wt1_tuple(tpl);
+  if constexpr (sizeof...(T))
+  {
+    int i = 0;
+    apply([&](const auto &...x)
+          { ((i++ ? wt1(' ') : void(), wt1(x)), ...); }, tpl);
+  }
 }
 template <class T, size_t S>
 void wt1(const array<T, S> &val) {
@@ -224,19 +257,19 @@ void wt1(const vector<T> &val) {
   }
 }
 
-void write() {}
-template <class Head, class... Tail>
-void write(Head &&head, Tail &&... tail) {
-  wt1(head);
-  write(std::forward<Tail>(tail)...);
+template <class... T>
+void write(T &&...x) {
+  (wt1(std::forward<T>(x)), ...);
 }
 
-void print() { wt1('\n'); }
-template <class Head, class... Tail>
-void print(Head &&head, Tail &&... tail) {
-  wt1(head);
-  if (sizeof...(Tail)) wt1(' ');
-  print(std::forward<Tail>(tail)...);
+template <class... T>
+void print(T &&...x) {
+  if constexpr (sizeof...(T))
+  {
+    int i = 0;
+    ((i++ ? wt1(' ') : void(), wt1(std::forward<T>(x))), ...);
+  }
+  wt1('\n');
 }
 
 } // namespace fastio
@@ -299,40 +332,36 @@ template <class... Ts>
 void READnodump(Ts &...a) { CIN(a...); }
 #endif
 
-template <class T>
-void READVECnodump(int n, vc<T> &v)
+template <class... T>
+void READVECnodump(int n, vc<T> &...v)
 {
-  v.resize(n);
-  READnodump(v);
+  (v.resize(n), ...);
+  READnodump(v...);
 }
-template <class T, class... Ts>
-void READVECnodump(int n, vc<T> &v, vc<Ts> &...vs)
-{ READVECnodump(n, v), READVECnodump(n, vs...); }
 
-template <class T>
-void READVEC2nodump(int n, int m, vvc<T> &v)
+template <class... T>
+void READVEC2nodump(int n, int m, vvc<T> &...v)
 {
-  v.assign(n, vc<T>(m));
-  READnodump(v);
+  (v.assign(n, vc<T>(m)), ...);
+  READnodump(v...);
 }
-template <class T, class... Ts>
-void READVEC2nodump(int n, int m, vvc<T> &v, vvc<Ts> &...vs)
-{ READVEC2nodump(n, m, v), READVEC2nodump(n, m, vs...); }
 
-template <class T>
-void READJAGnodump(int n, vvc<T> &v)
+template <class... T>
+void READJAGnodump(int n, vvc<T> &...vs)
 {
-  v.resize(n);
-  repi(i, n)
+  auto read_one = [&](auto &v)
   {
-    int k;
-    READnodump(k);
-    READVECnodump(k, v[i]);
-  }
+    v.resize(n);
+    for (auto &row : v)
+    {
+      int k;
+      READnodump(k);
+      row.resize(k);
+      READnodump(row);
+    }
+  };
+  (read_one(vs), ...);
 }
-template <class T, class... Ts>
-void READJAGnodump(int n, vvc<T> &v, vvc<Ts> &...vs)
-{ READJAGnodump(n, v), READJAGnodump(n, vs...); }
 
 }; // namespace internal
 
@@ -373,25 +402,17 @@ ostream &operator<<(ostream &os, const pair<T, U> &p)
   return os;
 }
 
-namespace internal
-{
-
-template <size_t N = 0, typename T>
-void cout_tuple(ostream &os, const T &t) {
-  if constexpr (N < std::tuple_size<T>::value) {
-    if constexpr (N > 0) { os << ' '; }
-    const auto x = std::get<N>(t);
-    os << x;
-    cout_tuple<N + 1>(os, t);
-  }
-}
-
-}; // namespace internal
-
 template <class... Ts>
 ostream &operator<<(ostream &os, const tuple<Ts...> &t)
 {
-  internal::cout_tuple(os, t);
+  if constexpr (sizeof...(Ts))
+  {
+    apply([&](const auto &...x)
+          {
+            int i = 0;
+            ((os << (i++ ? " " : "") << x), ...);
+          }, t);
+  }
   return os;
 }
 template <class T, size_t n>
@@ -421,20 +442,21 @@ ostream &operator<<(ostream &os, const vc<T> &v)
 namespace internal
 {
 
-template <class T>
-void COUTW() {}
 template <class... Ts>
-void COUTW(const Ts &...a) { (cout << ... << a); }
-
-template <class T>
-void COUTP() { cout << ENDL; }
-template <class T>
-void COUTP(const T &a) { cout << a << ENDL; }
-template <class T, class... Ts>
-void COUTP(const T &a, const Ts &...b)
+void COUTW(const Ts &...a)
 {
-  cout << a;
-  (cout << ... << (cout << ' ', b));
+  if constexpr (sizeof...(Ts))
+    (cout << ... << a);
+}
+
+template <class... Ts>
+void COUTP(const Ts &...a)
+{
+  if constexpr (sizeof...(Ts))
+  {
+    int i = 0;
+    ((cout << (i++ ? " " : "") << a), ...);
+  }
   cout << ENDL;
 }
 
@@ -459,30 +481,30 @@ void PRINTV(const vc<T> &v) { for (auto &vi : v) PRINT(vi); }
 
 // ----- 基準ずらし -----
 template <class T, class U, class P>
-pair<T, U> operator+=(pair<T, U> &a, const P &b)
+pair<T, U> &operator+=(pair<T, U> &a, const P &b)
 {
   a.first += b.first;
   a.second += b.second;
   return a;
 }
 template <class T, class U, class P>
-pair<T, U> operator+(pair<T, U> &a, const P &b) { return a += b; }
+pair<T, U> operator+(pair<T, U> a, const P &b) { return a += b; }
 
 template <class T, size_t n, class A>
-array<T, n> operator+=(array<T, n> &a, const A &b)
+array<T, n> &operator+=(array<T, n> &a, const A &b)
 {
   for (size_t i = 0; i < n; i++)
     a[i] += b[i];
   return a;
 }
 template <class T, size_t n, class A>
-array<T, n> operator+(array<T, n> &a, const A &b) { return a += b; }
+array<T, n> operator+(array<T, n> a, const A &b) { return a += b; }
 
 namespace internal
 {
 
 template <size_t... I, class A, class B>
-auto tuple_add_impl(A &a, const B &b, const index_sequence<I...>)
+auto &tuple_add_impl(A &a, const B &b, const index_sequence<I...>)
 {
   ((get<I>(a) += get<I>(b)), ...);
   return a;
@@ -491,10 +513,10 @@ auto tuple_add_impl(A &a, const B &b, const index_sequence<I...>)
 }; // namespace internal
 
 template <class... Ts, class Tp>
-tuple<Ts...> operator+=(tuple<Ts...> &a, const Tp &b)
+tuple<Ts...> &operator+=(tuple<Ts...> &a, const Tp &b)
 { return internal::tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{}); }
 template <class... Ts, class Tp>
-tuple<Ts...> operator+(tuple<Ts...> &a, const Tp &b) { return a += b; }
+tuple<Ts...> operator+(tuple<Ts...> a, const Tp &b) { return a += b; }
 
 template <class T, class Add>
 void offset(vc<T> &v, const Add &add) { for (auto &vi : v) vi += add; }
@@ -580,7 +602,7 @@ auto zip(const tuple<vc<Ts>...> &tv)
 {
   size_t n = get<0>(tv).size();
   apply([&](auto &...v)
-        { ((assert(v.size() == n)), ...); }, tv);
+        { ((void(v), assert(v.size() == n)), ...); }, tv);
   vc<tuple<Ts...>> vt(n);
   for (size_t i = 0; i < n; i++)
     vt[i] = internal::tv_to_vt_impl(tv, index_sequence_for<Ts...>{}, i);

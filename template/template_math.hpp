@@ -100,13 +100,18 @@ constexpr T iroot(A a, K k)
     return a;
   if (k == 2)
   {
-    if constexpr (sizeof(T) > sizeof(ull))
+    const T aa = T(a);
+    T x = T(sqrtl((long double)a));
+    while (x > aa / x)
+      x--;
+    while (x < numeric_limits<T>::max())
     {
-      if ((u128)a < ((u128)1 << 120))
-        return sqrtl(a);
+      const T y = x + 1;
+      if (y > aa / y)
+        break;
+      x = y;
     }
-    else
-      return sqrtl(a);
+    return x;
   }
 
   auto isok = [&](T x) -> bool

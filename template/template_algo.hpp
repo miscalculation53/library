@@ -7,6 +7,7 @@
 #include "template_types.hpp"
 #include "template_rep.hpp"
 #include "template_vector.hpp"
+#include "../utils/is_integral_ext.hpp"
 
 /**
  * @brief テンプレート（アルゴリズム）
@@ -132,31 +133,13 @@ void sortunique(V &v)
 template <class V>
 V sortuniqued(V v) { sortunique(v); return v; }
 
-// 引数: vc<pair<T, U>>
-// 返り値: vc<pair<T, vc<U>>
-// T ごとに U をまとめたもの
-// T は比較可能である必要がある
-template <class T, class U>
-vc<pair<T, vc<U>>> sortuniqued_group(vc<pair<T, U>> v)
-{
-  stable_sort(ALL(v), [&](cauto &p1, cauto &p2)
-              { return p1.first < p2.first; });
-  vc<pair<T, vc<U>>> res;
-  fec([x, y] : v)
-  {
-    if (res.empty() || res.back().first != x)
-      res.eb(x, vc{y});
-    else
-      res.back().second.eb(y);
-  }
-  return res;
-}
-
 // 01234 -> 12340
 template <class V, class U>
 void rotate(V &v, U k)
 { 
   const U n = v.size();
+  if (n == 0)
+    return;
   k = (k % n + n) % n;
   std::rotate(v.begin(), v.begin() + k, v.end());
 }
@@ -188,60 +171,27 @@ vstr top(const vstr &a)
   return b;
 }
 
-// 12
-// 34 -> 246
-// 56    135
-// (反時計回り)
-template <class VV, class U = ll>
-VV rot90(const VV &a, U k = 1)
-{
-  if (a.empty())
-    return {};
-  const int n = a.size(), m = a[0].size();
-  k = (k % 4 + 4) % 4;
-  if (k == 0)
-    return a;
-  else if (k == 1)
-  {
-    VV b(m);
-    repi(j, m) b[j].resize(n);
-    repi(i, n)
-    {
-      assert(SZ<int>(a[i]) == m);
-      repi(j, m) b[m - 1 - j][i] = a[i][j];
-    }
-    return b;
-  }
-  else if (k == 2)
-  {
-    VV b(n);
-    repi(i, n) b[i].resize(m);
-    repi(i, n)
-    {
-      assert(SZ<int>(a[i]) == m);
-      repi(j, m) b[n - 1 - i][m - 1 - j] = a[i][j];
-    }
-    return b;
-  }
-  else
-  {
-    VV b(m);
-    repi(j, m) b[j].resize(n);
-    repi(i, n)
-    {
-      assert(SZ<int>(a[i]) == m);
-      repi(j, m) b[j][n - 1 - i] = a[i][j];
-    }
-    return b;
-  }
-}
+template <class T, class = void>
+struct has_e0 : false_type {};
+template <class T>
+struct has_e0<T, void_t<decltype(T::e0())>> : true_type {};
+template <class T>
+inline constexpr bool has_e0_v = has_e0<T>::value;
 
 template <class T>
 struct MonoidAdd
 {
   using S = T;
   static constexpr S op(S a, S b) { return a + b; }
-  static constexpr S e() { return 0; }
+  static constexpr S e()
+  {
+    if constexpr (has_e0_v<S>)
+      return S::e0();
+    else
+      return {};
+  }
+  template <class I, class = decltype(declval<S>() * declval<I>())>
+  static constexpr S pow(const S &a, I k) { return a * k; }
 };
 template <class T, const T infty = INF>
 struct MonoidMin
@@ -249,6 +199,8 @@ struct MonoidMin
   using S = T;
   static constexpr S op(S a, S b) { return min(a, b); }
   static constexpr S e() { return infty; }
+  template <class I>
+  static constexpr S pow(const S &a, I k) { return k == 0 ? e() : a; }
 };
 template <class T, const T infty = INF>
 struct MonoidMax
@@ -256,7 +208,55 @@ struct MonoidMax
   using S = T;
   static constexpr S op(S a, S b) { return max(a, b); }
   static constexpr S e() { return -infty; }
+  template <class I>
+  static constexpr S pow(const S &a, I k) { return k == 0 ? e() : a; }
 };
+
+namespace internal
+{
+  template <class M, class I, class = void>
+  struct HasMonoidPow : false_type
+  {
+  };
+  template <class M, class I>
+  struct HasMonoidPow<M, I, void_t<decltype(M::pow(declval<const typename M::S &>(), declval<I>()))>> : true_type
+  {
+  };
+}
+
+template <class M, class I>
+typename M::S pow_monoid(typename M::S a, I k)
+{
+  if constexpr (is_signed_ext<I>)
+    assert(k >= 0);
+  if constexpr (internal::HasMonoidPow<M, I>::value)
+    return M::pow(a, k);
+  else
+  {
+    typename M::S c = M::e();
+    for (; k; k >>= 1)
+    {
+      if (k & 1)
+        c = M::op(c, a);
+      a = M::op(a, a);
+    }
+    return c;
+  }
+}
+
+template <class G, class I>
+typename G::S pow_group(typename G::S a, I k)
+{
+  if constexpr (is_signed_ext<I>)
+  {
+    if (k < 0)
+    {
+      a = G::inv(a);
+      return G::op(pow_monoid<G>(a, -(k + 1)), a);
+    }
+  }
+  return pow_monoid<G>(a, k);
+}
 
 // left_index が 0 なら、長さ n+1 で a.front() が e()
 // left_index が 1 なら、長さ n で e() がない
@@ -300,7 +300,15 @@ template <class T>
 vc<T> adjd(const vc<T> &v, int left_index = 0, int right_index = 0)
 {
   int n = v.size();
+  assert(0 <= left_index && 0 <= right_index && left_index + right_index <= n + 1);
   vc<T> res(n + 1);
+  if (n == 0)
+  {
+    res[0] = T{};
+    res.erase(res.end() - right_index, res.end());
+    res.erase(res.begin(), res.begin() + left_index);
+    return res;
+  }
   res[0] = v[0];
   repi(i, 1, n) res[i] = v[i] - v[i - 1];
   res[n] = -v[n - 1];
@@ -309,5 +317,5 @@ vc<T> adjd(const vc<T> &v, int left_index = 0, int right_index = 0)
   return res;
 }
 
-const vpll DRULgrid = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
-const vpll DRULplane = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
+constexpr array<pll, 4> DRULgrid = {{{1, 0}, {0, 1}, {-1, 0}, {0, -1}}};
+constexpr array<pll, 4> DRULplane = {{{0, -1}, {1, 0}, {0, 1}, {-1, 0}}};

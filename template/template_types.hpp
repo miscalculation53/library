@@ -45,30 +45,27 @@ using i128 = __int128_t;
 using u128 = __uint128_t;
 i128 stoi128(const string &s)
 {
-  i128 res = 0;
-  if (s.front() == '-')
-  {
-    for (int i = 1; i < (int)s.size(); i++)
-      res = 10 * res + s[i] - '0';
-    res = -res;
-  }
-  else
-  {
-    for (auto &&c : s)
-      res = 10 * res + c - '0';
-  }
-  return res;
+  const bool neg = s.front() == '-';
+  u128 res = 0;
+  for (int i = neg; i < (int)s.size(); i++)
+    res = 10 * res + s[i] - '0';
+  if (neg)
+    return -i128(res - 1) - 1;
+  return i128(res);
 }
 string i128tos(i128 x)
 {
   if (x == 0) return "0";
   string sign = "", res = "";
+  u128 ux;
   if (x < 0)
-    x = -x, sign = "-";
-  while (x > 0)
+    ux = u128(-(x + 1)) + 1, sign = "-";
+  else
+    ux = x;
+  while (ux > 0)
   {
-    res += '0' + x % 10;
-    x /= 10;
+    res += '0' + ux % 10;
+    ux /= 10;
   }
   reverse(res.begin(), res.end());
   return sign + res;
