@@ -14,6 +14,8 @@
 // 列の長さは合計 2^25 程度
 vc<ull> convolution64(const vc<ull> &a, const vc<ull> &b)
 {
+  if (a.empty() || b.empty())
+    return {};
   const int n = a.size(), m = b.size();
   const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);
   if (min(cnta, cntb) <= 400)

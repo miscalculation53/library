@@ -24,7 +24,7 @@ struct PrimePower
   bool operator==(const PrimePower<P2> &rhs) const
   { return p == rhs.p && e == rhs.e && pe == rhs.pe; }
   template <class P2>
-  bool operator!=(const PrimePower<P2> &rhs) const { return *this != rhs; }
+  bool operator!=(const PrimePower<P2> &rhs) const { return !(*this == rhs); }
 
   void mul_p() { e++, pe = ull(pe) * ull(p); }
   void div_p() { e--, pe /= p; }

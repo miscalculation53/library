@@ -15,6 +15,9 @@ template <class mint>
 FormalPowerSeries<mint> pow_sum(const vc<mint> &as, int m)
 {
   using F = FormalPowerSeries<mint>;
+  assert(m >= 0);
+  if (m == 0)
+    return {};
   const int n = as.size();
   vc<F> fs(n);
   repi(i, n) fs[i] = {1, -as[i]};

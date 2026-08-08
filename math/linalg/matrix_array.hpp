@@ -24,7 +24,11 @@ struct MatrixArray : array<array<typename F::S, m>, n>
   {
     repi(i, n) repi(j, m)(*this)[i][j] = i == j ? diag : non_diag;
   }
-  MatrixArray(const array<array<S, m>, n> &a) { *this = a; }
+  MatrixArray(const array<array<S, m>, n> &a)
+  { repi(i, n) repi(j, m) (*this)[i][j] = a[i][j]; }
+
+  static constexpr MatrixArray e0() { return MatrixArray(F::e0(), F::e0()); }
+  static constexpr MatrixArray e1() { return MatrixArray(F::e1(), F::e0()); }
 
   M operator-() const
   {
@@ -37,7 +41,11 @@ struct MatrixArray : array<array<typename F::S, m>, n>
     repi(i, n) repi(j, m) (*this)[i][j] = F::add((*this)[i][j], b[i][j]);
     return *this;
   }
-  M &operator-=(const M &b) { return *this += F::minus(b); }
+  M &operator-=(const M &b)
+  {
+    repi(i, n) repi(j, m) (*this)[i][j] = F::add((*this)[i][j], F::minus(b[i][j]));
+    return *this;
+  }
   M &operator*=(const S &x)
   {
     repi(i, n) repi(j, m) (*this)[i][j] = F::mul((*this)[i][j], x);
@@ -59,7 +67,7 @@ struct MatrixArray : array<array<typename F::S, m>, n>
   template <int p>
   MatrixArray<F, n, p> operator*(const MatrixArray<F, m, p> &b) const
   {
-    M res;
+    MatrixArray<F, n, p> res;
     repi(i, n) repi(j, p) res[i][j] = F::e0();
     repi(ii, 0, n, BS) repi(kk, 0, m, BS) repi(jj, 0, p, BS)
     {

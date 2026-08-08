@@ -87,14 +87,14 @@ template <class mint, int g = internal::primitive_root_for_convolution<mint::mod
 struct fft_info
 {
   static constexpr int rank2 = countr_zero(mint::mod() - 1);
-  std::array<mint, rank2 + 1> root;  // root[i]^(2^i) == 1
-  std::array<mint, rank2 + 1> iroot; // root[i] * iroot[i] == 1
+  std::array<mint, std::max(3, rank2 + 1)> root;  // root[i]^(2^i) == 1 (i <= rank2)
+  std::array<mint, std::max(3, rank2 + 1)> iroot; // root[i] * iroot[i] == 1 (i <= rank2)
 
-  std::array<mint, std::max(0, rank2 - 2 + 1)> rate2;
-  std::array<mint, std::max(0, rank2 - 2 + 1)> irate2;
+  std::array<mint, std::max(1, rank2 - 2 + 1)> rate2;
+  std::array<mint, std::max(1, rank2 - 2 + 1)> irate2;
 
-  std::array<mint, std::max(0, rank2 - 3 + 1)> rate3;
-  std::array<mint, std::max(0, rank2 - 3 + 1)> irate3;
+  std::array<mint, std::max(1, rank2 - 3 + 1)> rate3;
+  std::array<mint, std::max(1, rank2 - 3 + 1)> irate3;
 
   fft_info()
   {
@@ -135,6 +135,8 @@ struct fft_info
 template <class mint>
 bool ntt_ok(int n)
 {
+  if (n <= 0)
+    return false;
   if constexpr (is_static_modint_v<mint>)
   {
     if constexpr (!internal::isprime<mint::mod()>)
@@ -152,13 +154,15 @@ template <int id>
 void intt(vc<dynamic_modint32<id>> &) { assert(false); }
 
 // 破壊的に変更する
-template <int mod>
-void ntt(vc<static_modint32<mod>> &a)
+template <auto mod>
+void ntt(vc<internal::modint_impl<internal::policy_static<mod>>> &a)
 {
-  using mint = static_modint32<mod>;
+  using mint = internal::modint_impl<internal::policy_static<mod>>;
   int n = int(a.size());
+  assert(n > 0);
   int h = countr_zero((unsigned int)n);
   assert(n == (1 << h));
+  assert(ntt_ok<mint>(n));
 
   static const internal::fft_info<mint> info;
 
@@ -218,13 +222,15 @@ void ntt(vc<static_modint32<mod>> &a)
 }
 
 // 破壊的に変更する
-template <int mod>
-void intt(vc<static_modint32<mod>> &a)
+template <auto mod>
+void intt(vc<internal::modint_impl<internal::policy_static<mod>>> &a)
 {
-  using mint = static_modint32<mod>;
+  using mint = internal::modint_impl<internal::policy_static<mod>>;
   int n = int(a.size());
+  assert(n > 0);
   int h = countr_zero((unsigned int)n);
   assert(n == (1 << h));
+  assert(ntt_ok<mint>(n));
 
   static const internal::fft_info<mint> info;
 
@@ -244,7 +250,7 @@ void intt(vc<static_modint32<mod>> &a)
           auto r = a[i + offset + p];
           a[i + offset] = l + r;
           a[i + offset + p] =
-              (unsigned long long)(mint::mod() + l.val() - (uint)r.val()) *
+              ((unsigned long long)mint::mod() + l.val() - (uint)r.val()) *
               irot.val();
           ;
         }

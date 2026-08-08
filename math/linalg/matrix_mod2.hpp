@@ -110,7 +110,7 @@ struct MatrixMod2 : vc<bitset<MAX_M>>
   {
     const int n = size();
     assert(n == m);
-    M res(1), tmp(*this);
+    M res(n, n, 1), tmp(*this);
     while (k > 0)
     {
       if (k & 1)

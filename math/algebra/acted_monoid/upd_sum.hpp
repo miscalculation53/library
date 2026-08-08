@@ -6,7 +6,7 @@
 
 /**
  * @brief 作用つきモノイド：更新・和取得
- * @docs docs/math/algebra/acted_monoid/add_sum.md
+ * @docs docs/math/algebra/acted_monoid/upd_sum.md
  */
 
 template <class T>

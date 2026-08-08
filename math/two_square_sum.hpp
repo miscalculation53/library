@@ -6,6 +6,11 @@
 #include "prime/large/factorize.hpp"
 #include "svp2d.hpp"
 
+/**
+ * @brief 二平方和
+ * @docs docs/math/two_square_sum.md
+ */
+
 // 素数 p に対し、p = a^2 + b^2 となる (a, b)
 // のうち 0 <= a <= b であるもの (1 通り) を求める
 // (存在するか, ペア)

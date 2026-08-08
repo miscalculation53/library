@@ -49,12 +49,12 @@ struct ActedMonoidAddMaxCount
   };
   static constexpr S op(const S &a, const S &b)
   {
-    if (a.mn > b.mn)
+    if (a.mx > b.mx)
       return a;
-    else if (a.mn < b.mn)
+    else if (a.mx < b.mx)
       return b;
     else
-      return {a.mn, a.cnt + b.cnt};
+      return {a.mx, a.cnt + b.cnt};
   }
   static constexpr S e() { return {-infty, 0}; }
   using F = T;

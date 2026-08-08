@@ -44,6 +44,12 @@ struct montgomery64
   ull umod() const { return m; }
   ull reduce(u128 x) const
   {
+    if (b == 0)
+    {
+      auto t = (x + u128(mx) * (-imx * ull(x))) >> 64;
+      if (t >= m) t -= m;
+      return (ull)t;
+    }
     ull p = x & MASK(b); 
     x = (x >> b) + p * d;
     ull y = p << (64 - b);

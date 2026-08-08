@@ -404,6 +404,8 @@ struct FormalPowerSeries : vc<mint>
   // k < 0 のときは定数項が非零
   F pow(ll k, int d = -1) const
   {
+    if (d < 0)
+      d = sz();
     if (ntt_ok<mint>(2 * d))
     {
       if (cnt_nz() <= 100)
@@ -414,12 +416,11 @@ struct FormalPowerSeries : vc<mint>
       if (cnt_nz() <= 1300)
         return pow_sparse(k, d);
     }
-    if (d < 0)
-      d = sz();
     if (k == 0)
     {
       F res(d);
-      res[0] = 1;
+      if (d > 0)
+        res[0] = 1;
       return res;
     }
     if (k < 0)

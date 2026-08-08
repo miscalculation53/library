@@ -107,7 +107,7 @@ struct NormalAndOppositeGroup
   };
   static constexpr S op(const S &a, const S &b) { return {G::op(a.normal, b.normal), G::op(b.opposite, a.opposite)}; }
   static constexpr S e() { return {G::e(), G::e()}; }
-  static constexpr S inv() { return {G::inv(), G::inv()}; }
+  static constexpr S inv(const S &a) { return {G::inv(a.normal), G::inv(a.opposite)}; }
 };
 
 template <class SR>

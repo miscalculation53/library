@@ -15,17 +15,21 @@
 template <class F>
 F convolution_many(const vc<F> &fs, int d = -1)
 {
+  auto pre = [&](F f) -> F
+  {
+    if (d >= 0 && d < (int)f.size())
+      f.resize(d);
+    return f;
+  };
   auto dc = [&](auto dc, int l, int r) -> F
   {
     if (r - l == 0)
-      return {1};
+      return pre(F{1});
     if (r - l == 1)
-      return fs[l];
+      return pre(fs[l]);
     const int m = (l + r) / 2;
     F f = convolution(dc(dc, l, m), dc(dc, m, r));
-    if (d < 0 || d >= (int)f.size())
-      return f;
-    return F(f.begin(), f.begin() + d);
+    return pre(move(f));
   };
   return dc(dc, 0, fs.size());
 }

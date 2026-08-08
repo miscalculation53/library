@@ -40,7 +40,7 @@ pair<bool, mint> sqrt_mod(mint n)
     int m2 = 1;
     for (mint tmp = t * t; tmp != 1; tmp *= tmp, m2++)
       ;
-    mint b = c.pow(1 << (m - m2 - 1));
+    mint b = c.pow(ull(1) << (m - m2 - 1));
     m = m2, c = b * b, t *= c, r *= b;
   }
   return {true, r};

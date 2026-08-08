@@ -17,6 +17,8 @@ vc<mint> multipoint_evaluation_geo(const FormalPowerSeries<mint> &f, int m, cons
   assert(m >= 0);
   if (m == 0)
     return {};
+  if (f.empty())
+    return vc<mint>(m, 0);
   if (r == 0)
   {
     vc<mint> res(m, f.eval(0));

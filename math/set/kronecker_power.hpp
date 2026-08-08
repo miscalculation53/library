@@ -16,6 +16,7 @@
 template <int k, class F, class T>
 void tensor_power_array_destructive(const F &linear_map, vc<T> &v)
 {
+  static_assert(k >= 2);
   const int len = v.size();
   if (len == 0)
     return;

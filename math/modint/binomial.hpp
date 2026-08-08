@@ -62,6 +62,9 @@ public:
   }
   static T inv(int n)
   {
+    n %= T::mod();
+    if (n < 0)
+      n += T::mod();
     assert(n != 0);
     reserve(n);
     return inv_[n];
@@ -73,6 +76,8 @@ public:
       return 0;
     if (n < 0 || k < 0)
       return 0;
+    if (n >= T::mod())
+      return 0;
     reserve(n);
     return fac_[n] * finv_[n - k];
   }
@@ -81,6 +86,8 @@ public:
     if (n < k)
       return 0;
     if (n < 0 || k < 0)
+      return 0;
+    if (n >= T::mod())
       return 0;
     reserve(n);
     return fac_[n] * finv_[k] * finv_[n - k];

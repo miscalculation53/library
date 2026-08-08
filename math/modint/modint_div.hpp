@@ -42,6 +42,10 @@ struct ModintDiv
   }
   ModintDiv operator*(const ModintDiv &rhs) const { return ModintDiv(*this) *= rhs; }
   ModintDiv operator/(const ModintDiv &rhs) const { return ModintDiv(*this) /= rhs; }
+  friend bool operator==(const ModintDiv &lhs, const ModintDiv &rhs)
+  { return lhs.b == rhs.b && lhs.c == rhs.c; }
+  friend bool operator!=(const ModintDiv &lhs, const ModintDiv &rhs)
+  { return !(lhs == rhs); }
   // (mod p で表現可能か, mod p での値)
   pair<bool, mint> to_modint() const
   {

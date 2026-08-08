@@ -14,6 +14,8 @@
 // 列の長さは合計 2^25 程度
 vc<ll> convolution_4e18(const vc<ll> &a, const vc<ll> &b)
 {
+  if (a.empty() || b.empty())
+    return {};
   const int n = a.size(), m = b.size();
   const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);
   if (min(cnta, cntb) <= 150)

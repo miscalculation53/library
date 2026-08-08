@@ -14,6 +14,8 @@ template <class mint, class mint2>
 FormalPowerSeries<mint> taylor_shift(const FormalPowerSeries<mint> &f, mint2 c)
 {
   const int n = f.size();
+  if (n == 0)
+    return {};
   FormalPowerSeries<mint> g(n);
   g[0] = 1;
   repi(i, 1, f.sz()) g[i] = c * g[i - 1];

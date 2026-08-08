@@ -49,7 +49,7 @@ pair<FormalPowerSeries<mint>, FormalPowerSeries<mint>> rational_sum
   auto dc = [&](auto dc, int l, int r) -> R
   {
     if (r - l == 0)
-      return {{1}, {1}};
+      return {{}, {1}};
     if (r - l == 1)
       return fs[l];
     const int m = (l + r) / 2;

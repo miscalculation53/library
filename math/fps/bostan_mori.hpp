@@ -17,10 +17,13 @@ template <class mint>
 mint bostan_mori(const FormalPowerSeries<mint> &p, const FormalPowerSeries<mint> &q, ll k)
 {
   using F = FormalPowerSeries<mint>;
+  assert(k >= 0);
   static const internal::fft_info<mint> info;
   auto [r, u] = p.divmod(q);
-  mint res = r.get(k);
+  mint res = k < r.sz() ? r[(int)k] : 0;
   const int d = SZ(q) - 1;
+  if (d == 0)
+    return res;
   if (ntt_ok<mint>(2 * d + 1))
   {
     const int z = bit_ceil(2 * d + 1);

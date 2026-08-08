@@ -13,7 +13,12 @@ template <class mint>
 vc<mint> multipoint_evaluation(const FormalPowerSeries<mint> &f, const vc<mint> &xs)
 {
   using F = FormalPowerSeries<mint>;
-  const int m0 = xs.size(), m = bit_ceil(m0), h = min(6, (int)bit_width(m0) - 1);
+  const int m0 = xs.size();
+  if (m0 == 0)
+    return {};
+  if (m0 == 1)
+    return {f.eval(xs[0])};
+  const int m = bit_ceil(m0), h = min(6, (int)bit_width(m0) - 1);
   vc<F> node(2 * m, {1});
   repi(i, m0) node[m + i] = {-xs[i], 1};
   repi(i, m - 1, 0, -1) node[i] = convolution(node[2 * i], node[2 * i + 1]);

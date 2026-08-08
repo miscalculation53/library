@@ -22,9 +22,9 @@ private:
 
 public:
   ZetaMobiusDivisorMultipleLarge() {}
-  ZetaMobiusDivisorMultipleLarge(ll m) : m(m)
+  template <class I>
+  ZetaMobiusDivisorMultipleLarge(ll m, const vc<PrimePower<I>> &fac) : m(m), fac(ALL(fac))
   {
-    fac = factorize(m);
     pnum = fac.size();
     dnum = 1;
     fec(pp : fac) dnum *= pp.e + 1;
@@ -134,9 +134,9 @@ public:
   template <class T>
   DivisorMap<T> divisor_map() const
   { return DivisorMap<T>(*this); }
-  template <class T, class F>
-  DivisorMap<T> divisor_map(const F &func) const
-  { return DivisorMap<T>(*this, func); }
+  template <class F>
+  auto divisor_map(const F &func) -> DivisorMap<decltype(func(0))> const
+  { return DivisorMap<decltype(func(0))>(*this, func); }
 
   // ζa(n) = Σ{d | n} a(d)
   // M は可換モノイド (Σ だと +)
@@ -191,11 +191,22 @@ public:
     repi(bit, 1 << pnum)
     {
       int i = si;
+      bool ok = true;
       for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)
       {
-        if (btest(bit, j) && i - k >= 0 && !btest(f01[i - k], j))
-          i -= k;
+        if (btest(bit, j))
+        {
+          if (i - k >= 0 && !btest(f01[i - k], j))
+            i -= k;
+          else
+          {
+            ok = false;
+            break;
+          }
+        }
       }
+      if (!ok)
+        continue;
       if (popcount(bit) % 2 == 0)
         res = G::op(res, a.v[i]);
       else
@@ -257,11 +268,22 @@ public:
     repi(bit, 1 << pnum)
     {
       int i = si;
+      bool ok = true;
       for (int j = pnum - 1, k = 1; j >= 0; k *= fac[j].e + 1, j--)
       {
-        if (btest(bit, j) && !btest(f01[i], j))
-          i += k;
+        if (btest(bit, j))
+        {
+          if (!btest(f01[i], j))
+            i += k;
+          else
+          {
+            ok = false;
+            break;
+          }
+        }
       }
+      if (!ok)
+        continue;
       if (popcount(bit) % 2 == 0)
         res = G::op(res, a.v[i]);
       else

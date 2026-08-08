@@ -72,6 +72,8 @@ struct PolynomialRingVector
   static constexpr S mul(const S &a, const S &b)
   {
     const int n = a.size(), m = b.size();
+    if (n == 0 || m == 0)
+      return {};
     S c(n + m - 1, R::e0());
     repi(i, n) repi(j, m) c[i + j] = R::add(c[i + j], R::mul(a[i], b[j]));
     return c;

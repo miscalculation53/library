@@ -52,7 +52,13 @@ struct Matrix : vvc<typename F::S>
     repi(i, n) repi(j, m) (*this)[i][j] = F::add((*this)[i][j], b[i][j]);
     return *this;
   }
-  M &operator-=(const M &b) { return *this += F::minus(b); }
+  M &operator-=(const M &b)
+  {
+    assert(shape<int>() == b.shape<int>());
+    auto [n, m] = shape<int>();
+    repi(i, n) repi(j, m) (*this)[i][j] = F::add((*this)[i][j], F::minus(b[i][j]));
+    return *this;
+  }
   M &operator*=(const S &x)
   {
     auto [n, m] = shape<int>();
@@ -176,24 +182,27 @@ struct Matrix : vvc<typename F::S>
     assert(n == m);
     if (n == 0)
       return 1;
-    if (has_mod<S>() && S::mod() >= ipow(10, 8))
+    if constexpr (has_mod<S>())
     {
-      S cand = (*this)[0][0];
-      int cnt = 0;
-      repi(i, n) repi(j, n)
+      if (S::mod() >= ipow(10, 8))
       {
-        S x = (*this)[i][j];
-        if (cnt == 0)
-          cand = x, cnt = 1;
-        else if (cand == x)
-          cnt++;
-        else
-          cnt--;
+        S cand = (*this)[0][0];
+        int cnt = 0;
+        repi(i, n) repi(j, n)
+        {
+          S x = (*this)[i][j];
+          if (cnt == 0)
+            cand = x, cnt = 1;
+          else if (cand == x)
+            cnt++;
+          else
+            cnt--;
+        }
+        int k = n * n;
+        repi(i, n) repi(j, n) if ((*this)[i][j] == cand) k--;
+        if (k < n * n / 8)
+          return det_sparse(cand);
       }
-      int k = n * n;
-      repi(i, n) repi(j, n) if ((*this)[i][j] == cand) k--;
-      if (k < n * n / 8)
-        return det_sparse(cand);
     }
     return get<2>(row_reduction());
   }

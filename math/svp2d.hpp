@@ -27,6 +27,8 @@ pair<T, T> svp2d(const pair<T, T> &a, const pair<T, T> &b)
     swap(a1, b1), swap(a2, b2);
     T k = divround<U>((U)a1 * b1 + (U)a2 * b2, (U)a1 * a1 + (U)a2 * a2);
     b1 -= k * a1, b2 -= k * a2;
+    if (b1 == 0 && b2 == 0)
+      return {a1, a2};
   }
   return {a1, a2};
 }

@@ -215,7 +215,8 @@ public:
   BigInteger operator-() const
   {
     BigInteger res(*this);
-    res.is_nega ^= 1;
+    if (!res.vec.empty())
+      res.is_nega ^= 1;
     return res;
   }
   BigInteger abs() const
