@@ -52,6 +52,7 @@ public:
   // 返り値: (invalid な情報は無視したとして、) この情報が valid かどうか
   bool merge(int x, int y, typename UFData::EWeight w)
   {
+    const auto edge_weight = w;
     int lx = leader(x), ly = leader(y);
     if (lx == ly)
     {
@@ -68,7 +69,7 @@ public:
     weight_[ly] = w;
     if (!valid_[ly])
       valid_[lx] = false;
-    UFData::add_edge_diff(*this, lx, ly, w);
+    UFData::add_edge_diff(*this, lx, ly, edge_weight);
     return true;
   }
 };

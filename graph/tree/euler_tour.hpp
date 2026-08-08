@@ -132,7 +132,7 @@ public:
     if constexpr (need_lca)
       return first(rmq.get(in[v]));
     else
-      return dep[in[v]];
+      return dep[v];
   }
 
   // v を根とする部分木のサイズ (v も含む)

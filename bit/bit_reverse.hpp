@@ -16,4 +16,11 @@ uint32_t bit_reverse32(uint32_t x)
   return (x << 16) | (x >> 16);
 }
 // [0, pw2) の範囲の i をビットリバース
-int bitrev(int pw2, int i) { return bit_reverse32(i) >> (32 - countr_zero(pw2)); }
+int bitrev(int pw2, int i)
+{
+  assert(pw2 > 0 && has_single_bit((uint)pw2));
+  assert(0 <= i && i < pw2);
+  if (pw2 == 1)
+    return 0;
+  return bit_reverse32(i) >> (32 - countr_zero((uint)pw2));
+}

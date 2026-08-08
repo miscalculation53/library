@@ -29,7 +29,7 @@ public:
     {
       int p = i + (i & -i);
       if (p <= n)
-        dat[p] += dat[i];
+        dat[p] = G::op(dat[p], dat[i]);
     }
   }
 
@@ -140,7 +140,7 @@ public:
   }
   // 要素が [0, size()) の多重集合を管理するのに使ったとき、x 以下で最大の要素が**何番目か** (なければ -1)
   template <class T, class I = ll>
-  inline I leq_max_in_multiset(T x) const { return lt_max_in_multiset<I>(x + 1); }
+  inline I leq_max_in_multiset(T x) const { return lt_max_in_multiset<T, I>(x + 1); }
   // 要素が [0, size()) の多重集合を管理するのに使ったとき、x 以上で最小の要素が**何番目か** (なければ size())
   template <class T, class I = ll>
   inline I geq_min_in_multiset(T x) const
@@ -149,7 +149,7 @@ public:
   }
   // 要素が [0, size()) の多重集合を管理するのに使ったとき、x 超過で最小の要素が**何番目か** (なければ size())
   template <class T, class I = ll>
-  inline I gt_min_in_multiset(T x) const { return geq_min_in_multiset<I>(x + 1); }
+  inline I gt_min_in_multiset(T x) const { return geq_min_in_multiset<T, I>(x + 1); }
 
   vc<S> content() const
   {

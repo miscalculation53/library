@@ -2,8 +2,6 @@
 
 #include "../../../template/template_all_but_modint.hpp"
 
-#include "rectangle_sum.hpp"
-
 /**
  * @brief 矩形加算 → 矩形和（オフライン）
  * @docs docs/ds/2d/offline/static_rectangle_add_rectangle_sum.md
@@ -16,30 +14,43 @@ template <class S, class I>
 struct StaticRectangleAddRectangleSum
 {
 private:
-  LowerLeftSum<GroupAddSub<S>, I> rs1, rs2, rs3, rs4;
-  vc<tuple<int, int, I, I>> qi_coef_rx_ry;
+  struct V
+  {
+    S a, b, c, d;
+  };
+  struct P
+  {
+    I x, y;
+    V v;
+    bool operator<(const P &rhs) const { return x < rhs.x; }
+  };
+  struct Q
+  {
+    I x, y;
+    int qi, coef;
+    bool operator<(const Q &rhs) const { return x < rhs.x; }
+  };
+  vc<P> ps;
+  vc<Q> qs;
+  vc<I> ys;
   int qn = 0;
+
   void lower_left_sum_internal(I rx, I ry, int qi, int coef)
   {
-    rs1.rectangle_sum(rx, ry);
-    rs2.rectangle_sum(rx, ry);
-    rs3.rectangle_sum(rx, ry);
-    rs4.rectangle_sum(rx, ry);
-    qi_coef_rx_ry.eb(qi, coef, rx, ry);
+    qs.push_back({rx, ry, qi, coef});
   }
 
 public:
   // [lx, ∞) × [ly, ∞) に重み w を加算
   void upper_right_add(I lx, I ly, const S &w)
   {
-    rs1.point_add(lx, ly, w);
-    rs2.point_add(lx, ly, w * ly);
-    rs3.point_add(lx, ly, w * lx);
-    rs4.point_add(lx, ly, w * lx * ly);
+    ps.push_back({lx, ly, {w, w * ly, w * lx, w * lx * ly}});
+    ys.push_back(ly);
   }
   // [lx, rx) × [ly, ry) に重み w を加算
   void rectangle_add(I lx, I rx, I ly, I ry, const S &w)
   {
+    assert(lx <= rx && ly <= ry);
     upper_right_add(lx, ly, w);
     upper_right_add(lx, ry, -w);
     upper_right_add(rx, ly, -w);
@@ -54,6 +65,7 @@ public:
   // [lx, rx) × [ly, ry) の重みの総和を答えるクエリを追加
   void rectangle_sum(I lx, I rx, I ly, I ry)
   {
+    assert(lx <= rx && ly <= ry);
     lower_left_sum_internal(lx, ly, qn, 1);
     lower_left_sum_internal(lx, ry, qn, -1);
     lower_left_sum_internal(rx, ly, qn, -1);
@@ -63,15 +75,37 @@ public:
   // すべてのクエリに答える
   vc<S> run()
   {
-    auto res1 = rs1.run(), res2 = rs2.run(), res3 = rs3.run(), res4 = rs4.run();
-    vc<S> res(qn, 0);
-    repi(i, res1.size())
+    sort(ALL(ps)), sort(ALL(qs)), sortunique(ys);
+    const V zero{S(0), S(0), S(0), S(0)};
+    vc<V> fw(ys.size() + 1, zero);
+    vc<S> res(qn, S(0));
+    int i = 0;
+    fec(q : qs)
     {
-      auto [qi, coef, rx, ry] = qi_coef_rx_ry[i];
-      res[qi] += res1[i] * rx * ry * coef;
-      res[qi] -= res2[i] * rx * coef;
-      res[qi] -= res3[i] * ry * coef;
-      res[qi] += res4[i] * coef;
+      while (i < SZ(ps) && ps[i].x < q.x)
+      {
+        int j = LB(ys, ps[i].y) + 1;
+        while (j < SZ(fw))
+        {
+          fw[j].a += ps[i].v.a;
+          fw[j].b += ps[i].v.b;
+          fw[j].c += ps[i].v.c;
+          fw[j].d += ps[i].v.d;
+          j += j & -j;
+        }
+        i++;
+      }
+      V s = zero;
+      int j = LB(ys, q.y);
+      while (j > 0)
+      {
+        s.a += fw[j].a;
+        s.b += fw[j].b;
+        s.c += fw[j].c;
+        s.d += fw[j].d;
+        j -= j & -j;
+      }
+      res[q.qi] += (s.a * q.x * q.y - s.b * q.x - s.c * q.y + s.d) * q.coef;
     }
     return res;
   }

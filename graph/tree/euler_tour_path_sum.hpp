@@ -18,7 +18,7 @@ template <
   class DS = FenwickTree<G>,
   class RMQ = BlockSparseTable<MonoidMin<ull>, 64>
 >
-struct PathSum : EulerTour<need_lca>
+struct PathSum : EulerTour<need_lca, RMQ>
 {
   using S = typename G::S;
 
@@ -46,13 +46,13 @@ public:
   PathSum() {}
   template <class I, class T>
   PathSum(int n, const vc<I> &par, const vc<T> &vec = {})
-    : EulerTour<true>(n, par)
+    : EulerTour<need_lca, RMQ>(n, par)
   {
     build(vec);
   }
   template <class P, class T>
   PathSum(int n, const vc<P> &es, int rt, const vc<T> &vec = {})
-    : EulerTour<true>(n, es, rt)
+    : EulerTour<need_lca, RMQ>(n, es, rt)
   {
     build(vec);
   }
@@ -78,7 +78,7 @@ public:
     int p = this->parent(v);
     return G::op(sum(v), G::inv(sum(p)));
   }
-  void set(int v, const S &x) const
+  void set(int v, const S &x)
   {
     assert(0 <= v && v < this->n);
     S cur = get(v);

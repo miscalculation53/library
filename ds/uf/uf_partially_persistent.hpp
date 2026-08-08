@@ -30,24 +30,36 @@ public:
   UnionFindPartiallyPersistent(int n)
   : par(n, -1), vdat(n), gdat(n),
   upd_time(n, (int)1e9), cur_time(0),
-  vhis(n, {{0, typename UFData::VData()}}), ghis{gdat}
-  { repi(i, n) vdat[i] = typename UFData::VData(i); }
+  vhis(n), ghis{gdat}
+  {
+    repi(i, n)
+    {
+      vdat[i] = typename UFData::VData(i);
+      vhis[i].eb(0, vdat[i]);
+    }
+  }
 
   int leader(int t, int x)
   {
     assert(0 <= x && x < SZ<int>(par));
+    t = clamp(t, 0, cur_time);
     if (upd_time[x] > t)
       return x;
     return leader(t, par[x]);
   }
-  typename UFData::VData &get_vdata(int t, int x)
+private:
+  int leader(int x) { return leader(cur_time, x); }
+public:
+  const typename UFData::VData &get_vdata(int t, int x)
   {
+    t = clamp(t, 0, cur_time);
     x = leader(t, x);
     int i = leq_max(vhis[x], t, {}, [&](cauto &p)
                     { return p.first; });
     return vhis[x][i].second;
   }
-  typename UFData::GData &get_gdata(int t) const { return ghis[t]; }
+  const typename UFData::GData &get_gdata(int t) const
+  { return ghis[clamp(t, 0, cur_time)]; }
   bool same(int t, int x, int y) { return leader(t, x) == leader(t, y); }
   // 返り値: (新たな代表元, 辺の追加が行われた時刻)
   // 時刻は初期状態が 0 で、辺が追加されるごとに 1, 2, 3, ...
@@ -82,7 +94,7 @@ public:
     vc<I> gid(n, -1);
     for (int v = 0, i = 0; v < n; v++)
     {
-      int l = leader(v);
+      int l = leader(cur_time, v);
       if (gid[l] == -1)
         gid[l] = i++;
       gid[v] = gid[l];

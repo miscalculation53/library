@@ -33,7 +33,7 @@ public:
     fw.add(r, G::inv(x));
   }
   void add(int p, S x) { add(p, p + 1, x); }
-  void set(int p, S x) { add(p, p + 1, x - get(p)); }
+  void set(int p, S x) { add(p, p + 1, G::op(G::inv(get(p)), x)); }
   S get(int p)
   {
     assert(0 <= p && p < n);

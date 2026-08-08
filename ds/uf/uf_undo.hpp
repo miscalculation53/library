@@ -57,7 +57,11 @@ public:
     }
   }
   // 初期状態に戻す
-  void reset() { undo(SZ(his) / 2); }
+  void reset()
+  {
+    undo(SZ(his) / 2);
+    snap_time = 0;
+  }
   // 現在の状態の snapshot を撮る (保持できる snapshot は 1 個まで)
   void snapshot() { snap_time = his.size(); }
   // snapshot を撮った状態に戻す (保持できる snapshot は 1 個まで)

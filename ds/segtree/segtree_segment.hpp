@@ -11,7 +11,7 @@
 // 頂点 i が表すノード [a, b) を返す
 // 計算量: O(1)
 template <class T = ll>
-T segtree_node_to_segment(int d, T i)
+pair<T, T> segtree_node_to_segment(int d, T i)
 {
   const T n = T(1) << d;
   assert(1 <= i && i < 2 * n);

@@ -4,7 +4,7 @@
 
 /**
  * @brief undo 可能な vector など
- * @docs docs/ds/uf/undo.md
+ * @docs docs/ds/undo.md
  */
 
 // 保持できる snapshot は 1 個まで
@@ -36,7 +36,11 @@ public:
   ValUndo(T x) : his(1, x), snap_time(1) {}
   inline T get() const { return his.back(); }
   inline void set(T x) { his.eb(x); }
-  inline void undo(int times = 1) { his.pop_back(); }
+  inline void undo(int times = 1)
+  {
+    assert(0 <= times && times < SZ(his));
+    his.resize(SZ(his) - times);
+  }
   inline void reset() { his.resize(1), snap_time = 1; }
   inline void snapshot() { snap_time = his.size(); }
   inline void rollback() { undo(SZ(his) - snap_time); }
@@ -79,7 +83,11 @@ public:
       his.pop_back();
     }
   }
-  void reset() { undo(SZ(his)); }
+  void reset()
+  {
+    undo(SZ(his));
+    snap_time = 0;
+  }
   void snapshot() { snap_time = his.size(); }
   void rollback() { undo(SZ(his) - snap_time); }
 

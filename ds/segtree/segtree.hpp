@@ -60,10 +60,9 @@ public:
   }
   S all_prod() const { return dat[1]; }
 
-  // g が単調のとき g( prod[l, r) ) == true となる最大の r
-  // 制約: g( e() ) == true
-  template <class I = ll, class G>
-  I max_right(int l, const G &g)
+  // g(prod(l, r)) が true となる最大の r を返す
+  template <class G>
+  int max_right_ok(int l, const G &g) const
   {
     assert(0 <= l && l <= n);
     assert(g(M::e()));
@@ -88,14 +87,15 @@ public:
         }
         return l - siz;
       }
+      sm = M::op(sm, dat[l]);
+      l++;
     } while ((l & -l) != l);
     return n;
   }
 
-  // g が単調のとき g( prod[l, r) ) == true となる最小の l
-  // 制約: g( e() ) == true
-  template <class I = ll, class G>
-  I min_left(int r, const G &g)
+  // g(prod(l, r)) が true となる最小の l を返す
+  template <class G>
+  int min_left_ok(int r, const G &g) const
   {
     assert(0 <= r && r <= n);
     assert(g(M::e()));

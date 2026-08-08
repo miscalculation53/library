@@ -29,12 +29,21 @@ struct ShortestPath : Graph<is_directed, Cost>
 private:
   vc<Cost> dists;
   vc<Edge<Cost>> prv;
+  int source = -1;
+  bool solved_all = false;
+
+  void init_solve(int s, int t)
+  {
+    source = s;
+    solved_all = (t == -1);
+  }
 
 public:
   vc<Cost> bfs(int s, int t = -1)
   {
     const int n = size();
     assert(0 <= s && s < n);
+    init_solve(s, t);
     dists.assign(n, infty);
     prv.assign(n, {});
     MyQueue<int> que;
@@ -62,6 +71,7 @@ public:
   {
     const int n = size();
     assert(0 <= s && s < n);
+    init_solve(s, t);
     dists.assign(n, infty);
     prv.assign(n, {});
     deque<int> deq;
@@ -92,6 +102,7 @@ public:
   {
     const int n = size();
     assert(0 <= s && s < n);
+    init_solve(s, t);
     dists.assign(n, infty);
     prv.assign(n, {});
     pql<pair<Cost, int>> pque;
@@ -122,6 +133,7 @@ public:
   {
     const int n = size();
     assert(0 <= s && s < n);
+    init_solve(s, t);
     dists.assign(n, infty);
     prv.assign(n, {});
     vc<bool> ok(n, false);
@@ -131,6 +143,8 @@ public:
       Cost mn = infty;
       int v = -1;
       repi(u, n) if (!ok[u] && chmin(mn, dists[u])) v = u;
+      if (v == -1)
+        break;
       if (v == t)
         break;
       ok[v] = true;
@@ -149,6 +163,7 @@ public:
   {
     const int n = size();
     assert(0 <= s && s < n);
+    init_solve(s, -1);
     dists.assign(n, infty);
     prv.assign(n, {});
     dists[s] = 0;
@@ -258,36 +273,45 @@ public:
   vc<mint> count_paths()
   {
     const int n = size();
-    assert(SZ(dists) == n && "solve(s, t) is not called");
+    assert(SZ(dists) == n && source != -1 && "solve(s) is not called");
+    assert(solved_all && "solve(s, t) must not stop at t");
+    assert(dists[source] != -infty && "the shortest-path graph must be finite");
     vc<mint> cnt(n, 0);
-    vc<bool> visited(n, false);
-    MyQueue<int> que;
-    repi(sv, n)
+    vc<int> indeg(n, 0);
+    int active = 0;
+    repi(v, n) if (dists[v] != infty && dists[v] != -infty) active++;
+    repi(v, n)
     {
-      if (dists[sv] == 0)
+      if (dists[v] == infty || dists[v] == -infty)
+        continue;
+      fec(e : out_edges(v))
       {
-        cnt[sv] = 1;
-        visited[sv] = true;
-        que.push(sv);
+        if (dists[e.to] != infty && dists[e.to] != -infty &&
+            dists[e.to] == dists[e.from] + e.cost)
+          indeg[e.to]++;
       }
     }
+    MyQueue<int> que;
+    repi(v, n) if (dists[v] != infty && dists[v] != -infty && indeg[v] == 0) que.push(v);
+    cnt[source] = 1;
+    int processed = 0;
     while (!que.empty())
     {
       auto v = que.front();
       que.pop();
+      processed++;
       fec(e : out_edges(v))
       {
-        if (dists[e.to] == dists[e.from] + e.cost)
+        if (dists[e.to] != infty && dists[e.to] != -infty &&
+            dists[e.to] == dists[e.from] + e.cost)
         {
           cnt[e.to] += cnt[e.from];
-          if (!visited[e.to])
-          {
-            visited[e.to] = true;
+          if (--indeg[e.to] == 0)
             que.push(e.to);
-          }
         }
       }
     }
+    assert(processed == active && "the shortest-path graph must be a DAG");
     return cnt;
   }
 };

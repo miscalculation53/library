@@ -23,11 +23,14 @@
 template <class Obj, class I, class Add, class Undo, class Run>
 void offline_dynamic_connectivity(int tmax, const vc<tuple<I, I, Obj>> &span_obj, Add add, Undo undo, Run run)
 {
+  assert(tmax >= 0);
+  fec([l, r, x] : span_obj) assert(0 <= l && l <= r && r <= tmax);
+  if (tmax == 0)
+    return;
   const int tmax_ceil = bit_ceil(tmax);
   vvc<Obj> nodes(tmax_ceil + tmax);
   fe([l, r, x] : span_obj)
   {
-    assert(0 <= l && l <= r && r <= tmax);
     l += tmax_ceil, r += tmax_ceil;
     while (l < r)
     {

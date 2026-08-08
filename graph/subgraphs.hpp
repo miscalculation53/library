@@ -21,18 +21,18 @@ pair<vc<Graph<is_directed, Cost>>, vc<I>> subgraphs(const Graph<is_directed, Cos
 {
   const int n = g.size();
   assert(SZ(ids) == n);
-  const int k = MAX(ids) + 1;
+  const int k = ids.empty() ? 0 : MAX(ids) + 1;
   vc<I> nvids(n), cnt(k);
   repi(u, n) nvids[u] = cnt[ids[u]]++;
   vc<Graph<is_directed, Cost>> graphs(k);
   {
-    vc<pair<int, int>> uvs(k);
+    vvc<tuple<int, int, Cost>> uvs(k);
     fec(e : g.edges())
     {
       if (ids[e.from] == ids[e.to])
-        uvs[ids[e.from]].eb(nvids[e.from], nvids[e.to]);
+        uvs[ids[e.from]].eb(nvids[e.from], nvids[e.to], e.cost);
     }
-    repi(l, k) graphs[l] = Graph<is_directed, cost>(cnt[l], uvs[l]);
+    repi(l, k) graphs[l] = Graph<is_directed, Cost>(cnt[l], uvs[l]);
   }
   return {graphs, nvids};
 }

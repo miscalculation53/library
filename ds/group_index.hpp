@@ -73,8 +73,8 @@ public:
   // 値が val になる [l, r) の添字の個数
   I in_cnt(int val, int l, int r) const { return ::in_cnt(idxs(val), l, r); }
 
-  // 値の種類数
-  I num_of_distinct_values() const { return m; }
+  // 値として使える範囲 [0, value_bound()) の上端
+  I value_bound() const { return m; }
 
   auto &to_csr() const { return csr; }
   vvc<I> to_vv() const

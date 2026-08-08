@@ -20,7 +20,7 @@ template <
   class DS2 = SegmentTree<OppositeGroup<G>>,
   class RMQ = BlockSparseTable<MonoidMin<ull>, 64>
 >
-struct PathProd : EulerTour<need_lca>
+struct PathProd : EulerTour<need_lca, RMQ>
 {
   using S = typename G::S;
 
@@ -49,13 +49,13 @@ public:
   PathProd() {}
   template <class I, class T>
   PathProd(int n, const vc<I> &par, const vc<T> &vec = {})
-    : EulerTour<true>(n, par)
+    : EulerTour<need_lca, RMQ>(n, par)
   {
     build(vec);
   }
   template <class P, class T>
   PathProd(int n, const vc<P> &es, int rt, const vc<T> &vec = {})
-    : EulerTour<true>(n, es, rt)
+    : EulerTour<need_lca, RMQ>(n, es, rt)
   {
     build(vec);
   }

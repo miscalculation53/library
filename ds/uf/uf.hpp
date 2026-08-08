@@ -104,14 +104,14 @@ struct UFDataEverything
     VData() {}
 
     ll vsum;
-    ll esum;
+    EWeight_ esum;
     vc<ll> vlist;
 
     // 頂点 i の初期化
     VData(int i)
     {
       vsum = 1;
-      esum = 0;
+      esum = EWeight_{};
       if constexpr (need_vlist)
         vlist = {i};
     }
@@ -154,7 +154,7 @@ struct UFDataEverything
   static void add_edge_same(UF &uf, int x, EWeight w)
   {
     VData &xd = uf.vdat[x];
-    GData &gd = uf.gdat;
+    // GData &gd = uf.gdat;
 
     xd.esum += w;
   }

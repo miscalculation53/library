@@ -17,7 +17,7 @@ Graph<is_directed, Cost> contracted_graph(const Graph<is_directed, Cost> &g, con
 {
   const int n = g.size();
   assert(SZ(ids) == n);
-  const int k = MAX(ids) + 1;
+  const int k = ids.empty() ? 0 : MAX(ids) + 1;
   vc<pair<int, int>> uv;
   fec(e : g.edges())
   {

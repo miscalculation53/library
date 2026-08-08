@@ -39,20 +39,25 @@ public:
     const int n = d.size(), m = d[0].size();
     assert(0 <= li && li <= ri && ri <= n);
     assert(0 <= lj && lj <= rj && rj <= m);
-    d[li][lj] = G::op(d[li][lj], v);
-    if (ri == n && rj == m)
+    if (li >= ri || lj >= rj)
       return;
+    d[li][lj] = G::op(d[li][lj], v);
     S iv = G::inv(v);
-    if (rj != m)
-      d[li][rj] = G::op(d[li][rj], iv);
-    if (ri != n)
-      d[ri][lj] = G::op(d[ri][lj], iv);
-    if (ri != n && rj != m)
-      d[ri][rj] = G::op(d[ri][rj], v);
+    if (ri >= n)
+    {
+      if (rj < m)
+        d[li][rj] = G::op(d[li][rj], iv);
+      return;
+    }
+    d[ri][lj] = G::op(d[ri][lj], iv);
+    if (rj >= m)
+      return;
+    d[li][rj] = G::op(d[li][rj], iv);
+    d[ri][rj] = G::op(d[ri][rj], v);
   }
 
   // 現状の vector を返す
-  vvc<S> content() 
+  vvc<S> content()
   {
     if (d.empty())
       return {};

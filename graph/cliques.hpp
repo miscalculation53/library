@@ -16,9 +16,11 @@ template <class I = ll, class Cost, bool is_erasable, class F>
 void cliques(const GraphUndirected<Cost, is_erasable> &g, const F &f)
 {
   const int n = g.size(), m = g.num_of_edges();
-  const int b = sqrt(2 * m);
+  int b = 1;
+  while (1LL * b * b < 2LL * m)
+    b++;
   vc<int> id(n, -1);
-  // 2^vs をすべて調べる (v は必ず含む頂点)
+  // vs のクリークをすべて調べる (v >= 0 なら v は必ず含む)
   auto check = [&](const vc<int> &vs, int v)
   {
     const int k = vs.size();
@@ -29,27 +31,31 @@ void cliques(const GraphUndirected<Cost, is_erasable> &g, const F &f)
       if (vs[i] == v)
         j = i;
     }
-    vc<int> sub(k);
+    vvc<char> adj(k, vc<char>(k, false));
     repi(i, k)
     {
-      bset(sub[i], i);
-      fec(e : g.out_edges(vs[i])) if (id[e.to] >= 0) bset(sub[i], id[e.to]);
+      adj[i][i] = true;
+      fec(e : g.out_edges(vs[i])) if (id[e.to] >= 0) adj[i][id[e.to]] = true;
     }
-    repi(bit, 1 << k)
+    vc<int> cur;
+    auto dfs = [&](auto dfs, int i) -> void
     {
-      if (j >= 0 && !btest(bit, j))
-        continue;
-      int tmp = bit;
-      repi(i, k) if (btest(bit, i)) tmp &= sub[i];
-      if (tmp == bit)
+      if (i == k)
       {
-        vc<I> clq;
-        clq.reserve(popcount(bit));
-        repi(i, k) if (btest(bit, i)) clq.eb(vs[i]);
-        if (!clq.empty())
-          f(clq);
+        if (!cur.empty())
+          f(GEN_VEC(cur.size(), h, I(vs[cur[h]])));
+        return;
       }
-    }
+      if (i != j)
+        dfs(dfs, i + 1);
+      if (all_of(ALL(cur), [&](int h) { return adj[i][h]; }))
+      {
+        cur.eb(i);
+        dfs(dfs, i + 1);
+        cur.pop_back();
+      }
+    };
+    dfs(dfs, 0);
     fec(v : vs) id[v] = -1;
   };
   while (true)
@@ -70,7 +76,7 @@ void cliques(const GraphUndirected<Cost, is_erasable> &g, const F &f)
       fec(e : g.out_edges(v)) if (id[e.to] != -2) vs.eb(e.to);
       sortunique(vs);
       const int k = vs.size();
-      if (k < b)
+      if (k <= b)
       {
         check(vs, v);
         id[v] = -2;

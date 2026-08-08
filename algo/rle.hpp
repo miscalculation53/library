@@ -21,7 +21,7 @@ CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(val, len, left, right);
 template <class T, class I = ll>
 vc<rle_info<T, I>> rle(const vc<T> &a)
 {
-  vc<rle_info<T>> res;
+  vc<rle_info<T, I>> res;
   repi(i, a.size())
   {
     if (res.empty() || res.back().val != a[i])

@@ -29,7 +29,7 @@ pair<vc<T>, vc<T>> parallel_binsearch(int q, const Judge &judge, InitOk init_ok,
     bool end = true;
     repi(i, q)
     {
-      if (oks[i] - ngs[i] != 1 && ngs[i] - oks[i] != 1)
+      if (!internal::binsearch_adjacent(oks[i], ngs[i]))
         end = false;
       mids[i] = (oks[i] & ngs[i]) + ((oks[i] ^ ngs[i]) >> 1);
     }

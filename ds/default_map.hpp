@@ -13,7 +13,7 @@
 template <class Key, class Value, auto default_value>
 struct DefaultMap : map<Key, Value>
 {
-  const Value &operator[](const Key &key) const
+  Value operator[](const Key &key) const
   {
     auto it = this->find(key);
     return (it != this->end()) ? it->second : default_value();
@@ -27,7 +27,7 @@ struct DefaultMap : map<Key, Value>
     return it->second;
   }
 
-  const Value &at(const Key &key) const { return operator[](key); }
+  Value at(const Key &key) const { return operator[](key); }
   Value &at(const Key &key) { return operator[](key); }
 };
 
@@ -35,7 +35,7 @@ struct DefaultMap : map<Key, Value>
 template <class Key, class Value, auto default_value>
 struct DefaultUnorderedMap : unordered_map<Key, Value, safe_hash>
 {
-  const Value &operator[](const Key &key) const
+  Value operator[](const Key &key) const
   {
     auto it = this->find(key);
     return (it != this->end()) ? it->second : default_value();
@@ -49,6 +49,6 @@ struct DefaultUnorderedMap : unordered_map<Key, Value, safe_hash>
     return it->second;
   }
 
-  const Value &at(const Key &key) const { return operator[](key); }
+  Value at(const Key &key) const { return operator[](key); }
   Value &at(const Key &key) { return operator[](key); }
 };

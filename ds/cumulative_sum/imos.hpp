@@ -33,6 +33,8 @@ public:
   {
     const int n = d.size();
     assert(0 <= l && l <= r && r <= n);
+    if (l == r)
+      return;
     d[l] = G::op(d[l], v);
     if (r != n)
       d[r] = G::op(d[r], G::inv(v));

@@ -25,7 +25,7 @@ tuple<int, int, RootedTree> tree_diameter(int n, const vc<Pair> &es)
 template <class Pair, class Cost>
 tuple<int, int, RootedTree, vc<Cost>> tree_diameter_weighted(int n, const vc<Pair> &es, const vc<Cost> &costs)
 {
-  assert(MIN(costs) >= 0);
+  assert(all_of(ALL(costs), [](const Cost &x) { return x >= 0; }));
   RootedTree g(n, es, 0);
   vc<Cost> wds0 = g.weighted_depths(g.reordered_edge_info(es, costs));
   int a = ARGMAX(GEN_VEC(n, i, wds0[i]));

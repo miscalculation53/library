@@ -18,11 +18,12 @@ struct PointAddLowerLeftSum
   using S = typename M::S;
 
 private:
-  using F = function<S(S)>;
+  using Fn = function<S(S)>;
   using P = tuple<I, I, S>;
-  using PF = tuple<I, I, int, F>;
+  using PF = tuple<I, I, int, int>;
   using Q = pair<I, I>;
   vc<variant<P, PF, Q>> qs;
+  vc<Fn> fs;
   LowerLeftSum<M, I> rs;
   int qn = 0;
 
@@ -34,7 +35,9 @@ public:
   template <class F>
   void point_add_fn(I x, I y, int qi, F f)
   {
-    qs.eb(PF(x, y, qi, f));
+    int fi = fs.size();
+    fs.eb(move(f));
+    qs.eb(PF(x, y, qi, fi));
   }
   // (-∞, rx) × (-∞, ry) の重み和を答えるクエリを追加
   void rectangle_sum(I rx, I ry)
@@ -48,7 +51,7 @@ public:
     vc<S> res(qn, M::e());
     auto dfs = [&](auto dfs, int l, int r, int li, int ri) -> void
     {
-      if (r - l == 1)
+      if (r - l <= 1)
         return;
       const int m = (l + r) / 2;
       int mi = li;
@@ -58,32 +61,44 @@ public:
           mi++;
       }
       dfs(dfs, l, m, li, mi);
-      rs.clear();
-      repi(i, l, m)
+      if (mi < ri)
       {
-        if (holds_alternative<P>(qs[i]))
+        rs.clear();
+        bool has_point = false;
+        repi(i, l, m)
         {
-          cauto & [ x, y, w ] = get<P>(qs[i]);
-          rs.point_add(x, y, w);
+          if (holds_alternative<P>(qs[i]))
+          {
+            cauto & [ x, y, w ] = get<P>(qs[i]);
+            rs.point_add(x, y, w);
+            has_point = true;
+          }
+        }
+        if (has_point)
+        {
+          repi(i, m, r)
+          {
+            if (holds_alternative<Q>(qs[i]))
+            {
+              cauto & [ x, y ] = get<Q>(qs[i]);
+              rs.rectangle_sum(x, y);
+            }
+          }
+          vc<S> tmp = rs.run();
+          repi(i, mi, ri) res[i] = M::op(res[i], tmp[i - mi]);
         }
       }
-      repi(i, m, r)
-      {
-        if (holds_alternative<Q>(qs[i]))
-        {
-          cauto & [ x, y ] = get<Q>(qs[i]);
-          rs.rectangle_sum(x, y);
-        }
-      }
-      vc<S> tmp = rs.run();
-      repi(i, mi, ri) res[i] = M::op(res[i], tmp[i - mi]);
       repi(i, m, r)
       {
         if (holds_alternative<PF>(qs[i]))
         {
-          cauto & [ x, y, qi, f ] = get<PF>(qs[i]);
+          auto [x, y, qi, fi] = get<PF>(qs[i]);
           if (li <= qi && qi < mi)
-            qs[i] = P(x, y, f(res[qi]));
+          {
+            S w = fs[fi](res[qi]);
+            fs[fi] = {};
+            qs[i] = P(x, y, w);
+          }
         }
       }
       dfs(dfs, m, r, mi, ri);
@@ -101,11 +116,12 @@ struct PointAddRectangleSum
   using S = typename G::S;
 
 private:
-  using F = function<S(S)>;
+  using Fn = function<S(S)>;
   using P = tuple<I, I, S>;
-  using PF = tuple<I, I, int, F>;
+  using PF = tuple<I, I, int, int>;
   using Q = tuple<I, I, I, I>;
   vc<variant<P, PF, Q>> qs;
+  vc<Fn> fs;
   RectangleSum<G, I> rs;
   int qn = 0;
 
@@ -117,7 +133,9 @@ public:
   template <class F>
   void point_add_fn(I x, I y, int qi, F f)
   {
-    qs.eb(PF(x, y, qi, f));
+    int fi = fs.size();
+    fs.eb(move(f));
+    qs.eb(PF(x, y, qi, fi));
   }
   // [lx, rx) × [ly, ry) の重み和を答えるクエリを追加
   void rectangle_sum(I lx, I rx, I ly, I ry)
@@ -131,7 +149,7 @@ public:
     vc<S> res(qn, G::e());
     auto dfs = [&](auto dfs, int l, int r, int li, int ri) -> void
     {
-      if (r - l == 1)
+      if (r - l <= 1)
         return;
       const int m = (l + r) / 2;
       int mi = li;
@@ -141,32 +159,44 @@ public:
           mi++;
       }
       dfs(dfs, l, m, li, mi);
-      rs.clear();
-      repi(i, l, m)
+      if (mi < ri)
       {
-        if (holds_alternative<P>(qs[i]))
+        rs.clear();
+        bool has_point = false;
+        repi(i, l, m)
         {
-          cauto & [ x, y, w ] = get<P>(qs[i]);
-          rs.point_add(x, y, w);
+          if (holds_alternative<P>(qs[i]))
+          {
+            cauto & [ x, y, w ] = get<P>(qs[i]);
+            rs.point_add(x, y, w);
+            has_point = true;
+          }
+        }
+        if (has_point)
+        {
+          repi(i, m, r)
+          {
+            if (holds_alternative<Q>(qs[i]))
+            {
+              cauto & [ lx, rx, ly, ry ] = get<Q>(qs[i]);
+              rs.rectangle_sum(lx, rx, ly, ry);
+            }
+          }
+          vc<S> tmp = rs.run();
+          repi(i, mi, ri) res[i] = G::op(res[i], tmp[i - mi]);
         }
       }
-      repi(i, m, r)
-      {
-        if (holds_alternative<Q>(qs[i]))
-        {
-          cauto & [ lx, rx, ly, ry ] = get<Q>(qs[i]);
-          rs.rectangle_sum(lx, rx, ly, ry);
-        }
-      }
-      vc<S> tmp = rs.run();
-      repi(i, mi, ri) res[i] = G::op(res[i], tmp[i - mi]);
       repi(i, m, r)
       {
         if (holds_alternative<PF>(qs[i]))
         {
-          cauto & [ x, y, qi, f ] = get<PF>(qs[i]);
+          auto [x, y, qi, fi] = get<PF>(qs[i]);
           if (li <= qi && qi < mi)
-            qs[i] = P(x, y, f(res[qi]));
+          {
+            S w = fs[fi](res[qi]);
+            fs[fi] = {};
+            qs[i] = P(x, y, w);
+          }
         }
       }
       dfs(dfs, m, r, mi, ri);

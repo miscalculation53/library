@@ -6,7 +6,7 @@
 
 /**
  * @brief rollback 可能な Mo's algorithm
- * @docs docs/ds/mo_rollback.md
+ * @docs docs/ds/mo/mo_rollback.md
  */
 
 // add_l(l, r): 今の区間が [l+1, r) であるとき、l を追加して [l, r) にする
@@ -18,7 +18,7 @@
 template <class I, class AddL, class AddR, class Snapshot, class Rollback, class Reset, class Rem>
 void mo_rollback(int n, const vc<pair<I, I>> &lrs, const AddL &add_l, const AddR &add_r, const Snapshot &snapshot, const Rollback &rollback, const Reset &reset, const Rem &rem)
 {
-  fec([ l, r ] : lrs) { assert(0 <= l && l <= n && 0 <= r && r <= n); }
+  fec([ l, r ] : lrs) { assert(0 <= l && l <= r && r <= n); }
   cauto & [ ls, rs ] = unzip(lrs);
   const int q = lrs.size();
   const int b = max<int>(1, n / sqrt(q + 1));

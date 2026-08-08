@@ -4,7 +4,7 @@
 
 /**
  * @brief Mo's algorithm
- * @docs docs/ds/mo.md
+ * @docs docs/ds/mo/mo.md
  */
 
 namespace internal
@@ -42,6 +42,8 @@ vc<int> mo_order_params(const vc<pair<I, I>> &lrs, int b, int t)
 template <class I>
 vc<int> mo_order(const vc<pair<I, I>> &lrs)
 {
+  if (lrs.empty())
+    return {};
   cauto &[ls, rs] = unzip(lrs);
   const int n = max(MAX(ls), MAX(rs));
   const int q = lrs.size();
