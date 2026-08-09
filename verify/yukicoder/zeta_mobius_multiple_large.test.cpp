@@ -26,7 +26,7 @@ void init() {}
 void main2()
 {
   LL(T, M);
-  ZetaMobiusDivisorMultipleLarge zm(M);
+  ZetaMobiusDivisorMultipleLarge zm(M, factorize(M));
   rep(_, T)
   {
     LL(N, B, C, D);
@@ -35,8 +35,7 @@ void main2()
     W.at(0) = B;
     rep(i, 1, N) W.at(i) = C * W.at(i - 1) + D;
 
-    auto h = zm.divisor_map<mint>([&](ll)
-                                  { return 1; });
+    auto h = zm.divisor_map(LMD(_, mint(1)));
     rep(i, N)
     {
       if (M % A.at(i) != 0)

@@ -22,17 +22,16 @@ void main2()
 {
   LL(N, Q);
   VEC(tlll, N, XYW);
-  vl X;
+  vtlll pts = XYW;
   vc<tuple<ll, ll, ll, ll, ll>> qs;
-  fec([ x, y, w ] : XYW) X.eb(x);
   rep(_, Q)
   {
     LL(t);
     if (t == 0)
     {
       LL(x, y, w);
+      pts.eb(x, y, 0);
       qs.eb(0, x, y, w, -1);
-      X.eb(x);
     }
     else if (t == 1)
     {
@@ -40,33 +39,22 @@ void main2()
       qs.eb(1, lx, rx, ly, ry);
     }
   }
-  sortunique(X);
-  vtlll IYW;
-  fec([ x, y, w ] : XYW) IYW.eb(LB(X, x), y, w);
-  fec(q : qs)
-  {
-    ll t = get<0>(q);
-    if (t == 0)
-    {
-      auto &[_, x, y, w, __] = q;
-      IYW.eb(LB(X, x), y, 0);
-    }
-  }
 
-  SegmentTree2DSparse<SegmentTree<MonoidAdd<ll>>, MonoidAdd<ll>, ll> seg(IYW);
-  fec(q : qs)
+  SegmentTree2DSparse<MonoidAdd<ll>, ll> seg(pts);
+  rep(qid, Q)
   {
+    cauto &q = qs[qid];
     ll t = get<0>(q);
     if (t == 0)
     {
       auto [_, x, y, w, __] = q;
-      int i = LB(X, x);
-      seg.set(i, y, seg.get(i, y) + w);
+      seg.modify(qid, [&](ll &val)
+                 { val += w; });
     }
     else if (t == 1)
     {
       auto [_, lx, rx, ly, ry] = q;
-      PRINT(seg.prod(LB(X, lx), LB(X, rx), ly, ry));
+      PRINT(seg.sum(lx, rx, ly, ry));
     }
     dump(seg.content());
   }

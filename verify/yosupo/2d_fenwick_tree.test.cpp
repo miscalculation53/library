@@ -22,12 +22,12 @@ void main2()
 {
   LL(N, Q);
   VEC(tlll, N, XYW);
-  vl X;
+  vpll pts;
   vc<tuple<ll, ll, ll, ll, ll>> qs;
   fec([ x, y, w ] : XYW)
   {
+    pts.eb(x, y);
     qs.eb(0, x, y, w, -1);
-    X.eb(x);
   }
   rep(_, Q)
   {
@@ -35,41 +35,32 @@ void main2()
     if (t == 0)
     {
       LL(x, y, w);
+      pts.eb(x, y);
       qs.eb(0, x, y, w, -1);
-      X.eb(x);
     }
     else if (t == 1)
     {
       LL(lx, ly, rx, ry);
+      pts.eb(0, 0);
       qs.eb(1, lx, rx, ly, ry);
     }
   }
-  sortunique(X);
-  vpll IY;
-  fem(q : qs)
-  {
-    ll t = get<0>(q);
-    if (t == 0)
-    {
-      auto &[_, x, y, w, __] = q;
-      IY.eb(LB(X, x), y);
-    }
-  }
 
-  FenwickTree2DSparse<GroupAddSub<ll>, ll> fw(IY);
-  fec(q : qs)
+  FenwickTree2DSparse<GroupAddSub<ll>, ll> fw(pts);
+  rep(qid, N + Q)
   {
     dump(fw.content());
+    cauto &q = qs[qid];
     ll t = get<0>(q);
     if (t == 0)
     {
       auto [_, x, y, w, __] = q;
-      fw.add(LB(X, x), y, w);
+      fw.add(qid, w);
     }
     else if (t == 1)
     {
       auto [_, lx, rx, ly, ry] = q;
-      PRINT(fw.sum(LB(X, lx), LB(X, rx), ly, ry));
+      PRINT(fw.sum(lx, rx, ly, ry));
     }
   }
 }

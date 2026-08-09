@@ -4,8 +4,8 @@
 #define MULTI_TESTCASE
 // #define AOJ_TESTCASE
 
-// #define FAST_IO
-#define FAST_CIO
+#define FAST_IO
+// #define FAST_CIO
 // #define INTERACTIVE
 
 #define INF 4'000'000'000'000'000'037LL
@@ -26,12 +26,11 @@ void init() {}
 void main2()
 {
   CHAR(t);
-  char _;
-  READ(_);
+  CHAR(_);
   LL(N);
-  READ(_);
+  CHAR(__);
   LL(K);
-  READ(_);
+  CHAR(___);
   if (t == 'P')
     PRINT(bi::P(N, K));
   else if (t == 'C')

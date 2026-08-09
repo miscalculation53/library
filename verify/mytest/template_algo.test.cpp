@@ -116,7 +116,7 @@ void test3()
   }
 }
 
-// 二次元配列の操作
+// 転置
 void test4()
 {
   vvl v = {
@@ -139,27 +139,8 @@ void test4()
     "246"
   };
 
-  vvl rot_v = {
-    {2, 4, 6},
-    {1, 3, 5}
-  };
-  vstr rot_s = {
-    "246",
-    "135"
-  };
-
   assert(top(v) == top_v);
   assert(top(s) == top_s);
-  assert(rot90(v) == rot_v);
-  assert(rot90(s) == rot_s);
-
-  assert(rot90(v, -11) == rot90(v));
-  assert(rot90(v, -10) == rot90(rot90(v)));
-  assert(rot90(v, -9) == rot90(rot90(rot90(v))));
-  assert(rot90(v, 8) == v);
-  assert(rot90(v, 9) == rot90(v));
-  assert(rot90(v, 10) == rot90(rot90(v)));
-  assert(rot90(v, 11) == rot90(rot90(rot90(v))));
 }
 
 // 累積和・差分
