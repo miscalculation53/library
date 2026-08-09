@@ -6,34 +6,257 @@ on:
     - main
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verify:
+    name: verify (${{ matrix.name }})
     runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        include:
+        - name: aoj
+          directory: verify/aoj
+          shard: 0
+          shard_count: 1
+        - name: mytest-1
+          directory: verify/mytest
+          shard: 0
+          shard_count: 2
+        - name: mytest-2
+          directory: verify/mytest
+          shard: 1
+          shard_count: 2
+        - name: yosupo-1
+          directory: verify/yosupo
+          shard: 0
+          shard_count: 5
+        - name: yosupo-2
+          directory: verify/yosupo
+          shard: 1
+          shard_count: 5
+        - name: yosupo-3
+          directory: verify/yosupo
+          shard: 2
+          shard_count: 5
+        - name: yosupo-4
+          directory: verify/yosupo
+          shard: 3
+          shard_count: 5
+        - name: yosupo-5
+          directory: verify/yosupo
+          shard: 4
+          shard_count: 5
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Check out repository
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       with:
         fetch-depth: 0
-
+        persist-credentials: false
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
       with:
         python-version: '3.11'
+        cache: pip
 
     - name: Install dependencies
-      run: pip3 install -r requirements.txt
+      run: python -m pip install --disable-pip-version-check -r requirements.txt
 
-    - name: Set up Rust (1.70.0)
+    - name: Select GNU C++ compiler
+      shell: bash
       run: |
-        rustup set profile minimal
-        rustup install 1.70.0
-        rustup override set nightly
+        if ! command -v g++-15 >/dev/null; then
+          mkdir -p "$RUNNER_TEMP/bin"
+          ln -s "$(command -v g++-14 || command -v g++)" "$RUNNER_TEMP/bin/g++-15"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+        fi
+
+    - name: Run tests
+      run: >-
+        python tools/parallel_verify.py run
+        --directory ${{ matrix.directory }}
+        --shard ${{ matrix.shard }}
+        --shard-count ${{ matrix.shard_count }}
+        --jobs 2
+        --timeout 2400
+        --artifact-dir verify-artifact
+
+    - name: Upload verification result
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      with:
+        name: verify-${{ matrix.name }}
+        path: verify-artifact/
+        if-no-files-found: error
+        retention-days: 1
+
+  verify-yukicoder:
+    name: verify (${{ matrix.name }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+        - name: yukicoder-1
+          shard: 0
+        - name: yukicoder-2
+          shard: 1
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      with:
+        fetch-depth: 0
+        persist-credentials: false
+
+    - name: Set up Python
+      uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+      with:
+        python-version: '3.11'
+        cache: pip
+
+    - name: Install dependencies
+      run: python -m pip install --disable-pip-version-check -r requirements.txt
+
+    - name: Select GNU C++ compiler
+      shell: bash
+      run: |
+        if ! command -v g++-15 >/dev/null; then
+          mkdir -p "$RUNNER_TEMP/bin"
+          ln -s "$(command -v g++-14 || command -v g++)" "$RUNNER_TEMP/bin/g++-15"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+        fi
 
     - name: Run tests
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         YUKICODER_TOKEN: ${{ secrets.YUKICODER_TOKEN }}
-        DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
+      run: >-
+        python tools/parallel_verify.py run
+        --directory verify/yukicoder
+        --shard ${{ matrix.shard }}
+        --shard-count 2
+        --jobs 2
+        --timeout 2400
+        --artifact-dir verify-artifact
+
+    - name: Upload verification result
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      with:
+        name: verify-yukicoder-${{ matrix.shard }}
+        path: verify-artifact/
+        if-no-files-found: error
+        retention-days: 1
+
+  publish:
+    name: publish verification result
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [verify, verify-yukicoder]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      with:
+        fetch-depth: 0
+        persist-credentials: false
+
+    - name: Set up Python
+      uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+      with:
+        python-version: '3.11'
+        cache: pip
+
+    - name: Install dependencies
+      run: python -m pip install --disable-pip-version-check -r requirements.txt
+
+    - name: Select GNU C++ compiler
+      shell: bash
+      run: |
+        if ! command -v g++-15 >/dev/null; then
+          mkdir -p "$RUNNER_TEMP/bin"
+          ln -s "$(command -v g++-14 || command -v g++)" "$RUNNER_TEMP/bin/g++-15"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+        fi
+
+    - name: Download verification results
+      uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+      with:
+        pattern: verify-*
+        path: .verify-helper/artifacts
+
+    - name: Merge verification results
+      run: >-
+        python tools/parallel_verify.py merge
+        --artifacts .verify-helper/artifacts
+        --output .verify-helper/timestamps.remote.json
+
+    - name: Publish verification timestamps
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: python tools/parallel_verify.py publish
+
+  docs:
+    name: publish documentation
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [verify, verify-yukicoder]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      with:
+        fetch-depth: 0
+        persist-credentials: false
+
+    - name: Set up Python
+      uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+      with:
+        python-version: '3.11'
+        cache: pip
+
+    - name: Install dependencies
+      run: python -m pip install --disable-pip-version-check -r requirements.txt
+
+    - name: Select GNU C++ compiler
+      shell: bash
+      run: |
+        if ! command -v g++-15 >/dev/null; then
+          mkdir -p "$RUNNER_TEMP/bin"
+          ln -s "$(command -v g++-14 || command -v g++)" "$RUNNER_TEMP/bin/g++-15"
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+        fi
+
+    - name: Download verification results
+      uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+      with:
+        pattern: verify-*
+        path: .verify-helper/artifacts
+
+    - name: Merge verification results
+      run: >-
+        python tools/parallel_verify.py merge
+        --artifacts .verify-helper/artifacts
+        --output .verify-helper/timestamps.remote.json
+
+    - name: Publish documentation
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_PAT: ${{ secrets.GH_PAT }}
-      run: oj-verify all
+      run: oj-verify docs -j 2

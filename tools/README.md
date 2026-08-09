@@ -1,4 +1,4 @@
-# 提出コード生成ツール
+# ツール
 
 ## `oj-verify` の互換モジュール
 
@@ -7,6 +7,30 @@
 `requirements.txt` は安全な最新版の `setuptools` を使いつつ `oj-verify` を保つため、
 同じ処理を `importlib.resources` で行う最小互換モジュールを
 `ojverify_pkg_resources_compat` からインストールします。
+
+## GitHub Actions の verify 並列化
+
+`.github/workflows/verify.yml` は、verify ファイルを10個の shard に分けて並列に
+実行します。通常の8 shard には secret を渡さず、yukicoder 用の2 shard にだけ
+`YUKICODER_TOKEN` を渡します。各 shard は担当したファイルがすべて検証済みで
+あることを確認してから、timestamp と担当ファイル一覧を artifact に保存します。
+
+`main` への push では、全 shard の artifact が全 verify ファイルを重複なく覆う
+ことを `parallel_verify.py` で確認してから timestamp を統合します。その後にだけ
+`GITHUB_TOKEN` で timestamp を main へ反映し、`GH_PAT` で従来の `gh-pages`
+ブランチへドキュメントを公開します。pull request ではどちらの書き込み用 token も
+使用しません。main を更新するジョブとドキュメントを公開するジョブも分け、前者に
+`GH_PAT` は渡さず、後者の `GITHUB_TOKEN` は読み取り権限だけにしています。
+`DROPBOX_TOKEN` は使用しません。
+
+`parallel_verify.py` は workflow 内部用です。shard の選択はディレクトリ内の
+verify ファイルを名前順に並べ、番号を shard 数で割った余りによって行います。
+`oj-verify` が全ファイルを処理する前に内部の制限時間へ達した場合も、担当分の
+timestamp が揃わないため、その shard は失敗します。
+
+GitHub の `ubuntu-latest` に `g++-15` がない場合は、標準搭載されている
+`g++-14` を CI 内だけ `g++-15` という名前でも参照できるようにします。これにより、
+手元の `.verify-helper/config.toml` を CI 用に書き換えずに利用できます。
 
 `submit_code.py` は、コンテスト中に使う `main.cpp` にはライブラリをすべて
 読み込める状態を保ち、提出用に生成する `bundle.cpp` だけを短くするツールです。

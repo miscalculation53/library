@@ -1,6 +1,0 @@
-pkg_resources.py
-pyproject.toml
-ojverify_pkg_resources_compat.egg-info/PKG-INFO
-ojverify_pkg_resources_compat.egg-info/SOURCES.txt
-ojverify_pkg_resources_compat.egg-info/dependency_links.txt
-ojverify_pkg_resources_compat.egg-info/top_level.txt
