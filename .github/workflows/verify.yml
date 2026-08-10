@@ -92,11 +92,12 @@ jobs:
         --artifact-dir verify-artifact
 
     - name: Upload verification result
+      if: ${{ always() }}
       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: verify-${{ matrix.name }}
         path: verify-artifact/
-        if-no-files-found: error
+        if-no-files-found: warn
         retention-days: 1
 
   verify-yukicoder:
@@ -151,11 +152,12 @@ jobs:
         --artifact-dir verify-artifact
 
     - name: Upload verification result
+      if: ${{ always() }}
       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
         name: verify-yukicoder-${{ matrix.shard }}
         path: verify-artifact/
-        if-no-files-found: error
+        if-no-files-found: warn
         retention-days: 1
 
   publish:
@@ -212,7 +214,7 @@ jobs:
 
   docs:
     name: publish documentation
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: ${{ always() && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs: [verify, verify-yukicoder]
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -245,6 +247,7 @@ jobs:
         fi
 
     - name: Download verification results
+      continue-on-error: true
       uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
       with:
         pattern: verify-*
@@ -256,9 +259,16 @@ jobs:
         --artifacts .verify-helper/artifacts
         --output .verify-helper/timestamps.remote.json
         --timeouts-output .verify-helper/timeouts.json
+        --failures-output .verify-helper/failures.json
+        --allow-failures
+        --allow-missing
 
     - name: Publish documentation
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_PAT: ${{ secrets.GH_PAT }}
-      run: python tools/parallel_verify.py docs --jobs 2
+      run: >-
+        python tools/parallel_verify.py docs
+        --jobs 2
+        --timeouts .verify-helper/timeouts.json
+        --failures .verify-helper/failures.json

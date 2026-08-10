@@ -12,25 +12,30 @@
 
 `.github/workflows/verify.yml` は、verify ファイルを10個の shard に分けて並列に
 実行します。通常の8 shard には secret を渡さず、yukicoder 用の2 shard にだけ
-`YUKICODER_TOKEN` を渡します。各 shard は担当したファイルがすべて検証済みで
-あることを確認してから、timestamp と担当ファイル一覧を artifact に保存します。
+`YUKICODER_TOKEN` を渡します。各 shard は timestamp、担当ファイル一覧、実際に
+失敗したファイル、最後まで処理できなかったファイルを artifact に保存します。
+テストが失敗した場合も artifact のアップロードを試みます。各ジョブの Summary には、
+担当した全ファイルを `Verified`、`Failed`、`Not completed` に分けて表示します。
 
-`main` への push では、全 shard の artifact が全 verify ファイルを重複なく覆う
-ことを `parallel_verify.py` で確認してから timestamp を統合します。その後にだけ
-`GITHUB_TOKEN` で timestamp を main へ反映し、`GH_PAT` で従来の `gh-pages`
-ブランチへドキュメントを公開します。pull request ではどちらの書き込み用 token も
-使用しません。main を更新するジョブとドキュメントを公開するジョブも分け、前者に
-`GH_PAT` は渡さず、後者の `GITHUB_TOKEN` は読み取り権限だけにしています。
-`DROPBOX_TOKEN` は使用しません。
+`main` への push では、実際の verify 失敗がない場合に限り、全 shard の artifact が
+全 verify ファイルを重複なく覆うことを `parallel_verify.py` で確認して timestamp を
+統合します。その後にだけ `GITHUB_TOKEN` で timestamp を main へ反映します。
+ドキュメント生成は verify の成否にかかわらず行い、実際に失敗したファイルを `❌`、
+タイムアウト、キャンセル、artifact の欠落によって完了しなかったファイルを `❓` と
+して、`GH_PAT` で従来の `gh-pages` ブランチへ公開します。pull request ではどちらの
+書き込み用 token も使用しません。main を更新するジョブとドキュメントを公開する
+ジョブも分け、前者に `GH_PAT` は渡さず、後者の `GITHUB_TOKEN` は読み取り権限だけに
+しています。`DROPBOX_TOKEN` は使用しません。
 
 `parallel_verify.py` は workflow 内部用です。shard の選択はディレクトリ内の
 verify ファイルを名前順に並べ、番号を shard 数で割った余りによって行います。
 `oj-verify` が35分で全ファイルを処理できなかった場合、その shard は失敗ではなく
 警告として終了し、未処理ファイルを Job Summary に表示します。GitHub Pages でも
-未処理の verify ファイルは `⚠️`、それだけに依存するライブラリは `❓` と表示し、
-実際に検証が失敗したものだけを `❌` として扱います。処理済みの timestamp と、
-未処理ファイルに以前の timestamp があればそれを保持します。ジョブ自体が60分以内に
-終了できない場合は GitHub Actions の強制タイムアウトとなるため、通常の失敗表示です。
+未処理の verify ファイルは `❓` と表示し、実際に検証が失敗したものだけを `❌` と
+して扱います。処理済みの timestamp と、未処理ファイルに以前の timestamp があれば
+それを保持します。ジョブ自体がキャンセルされた場合や60分以内に終了できなかった
+場合は、取得できた artifact を利用し、担当 artifact が存在しないファイルを `❓` と
+してドキュメントを生成します。
 
 GitHub の `ubuntu-latest` に `g++-15` がない場合は、標準搭載されている
 `g++-14` を CI 内だけ `g++-15` という名前でも参照できるようにします。これにより、

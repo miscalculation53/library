@@ -8,12 +8,14 @@ import os
 import pathlib
 import re
 import subprocess
+import sys
 from typing import Dict, Iterable, List
 
 
 TIMESTAMP_FORMAT = "%Y-%m-%d %H:%M:%S %z"
 REMOTE_MARKER = pathlib.Path(".verify-helper/timestamps.remote.json")
 TIMEOUTS_FILE = pathlib.Path(".verify-helper/timeouts.json")
+FAILURES_FILE = pathlib.Path(".verify-helper/failures.json")
 
 
 def load_object(path: pathlib.Path) -> Dict[str, str]:
@@ -91,7 +93,8 @@ def write_shard_artifact(
     paths: List[pathlib.Path],
     timestamps: Dict[str, str],
     status: str,
-    pending: List[pathlib.Path],
+    failed: List[pathlib.Path],
+    uncompleted: List[pathlib.Path],
 ) -> None:
     targets = list(map(str, paths))
     artifact_timestamps = {
@@ -103,7 +106,8 @@ def write_shard_artifact(
         artifact_dir / "result.json",
         {
             "status": status,
-            "pending": list(map(str, pending)),
+            "failed": list(map(str, failed)),
+            "uncompleted": list(map(str, uncompleted)),
         },
     )
 
@@ -116,14 +120,73 @@ def report_timeout(timeout: float, paths: List[pathlib.Path]) -> None:
     print(f"::warning title=Verification timed out::{message}")
     print(message)
 
+
+def run_verify(command: List[str]) -> tuple[subprocess.CompletedProcess, List[str]]:
+    failed = []
+    pattern = re.compile(r"^::error file=(.+)::failed to verify\s*$")
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        bufsize=1,
+    )
+    assert process.stdout is not None
+    try:
+        for line in process.stdout:
+            sys.stdout.write(line)
+            sys.stdout.flush()
+            match = pattern.match(line)
+            if match:
+                failed.append(match.group(1))
+    except BaseException:
+        if process.poll() is None:
+            process.terminate()
+        process.wait()
+        raise
+    finally:
+        process.stdout.close()
+    return subprocess.CompletedProcess(command, process.wait()), failed
+
+
+def write_shard_summary(
+    paths: List[pathlib.Path],
+    failed: List[pathlib.Path],
+    uncompleted: List[pathlib.Path],
+) -> None:
+    failed_set = set(failed)
+    uncompleted_set = set(uncompleted)
+    verified_count = len(paths) - len(failed_set) - len(uncompleted_set)
+    print(
+        "verification result: "
+        f"{verified_count} verified, {len(failed_set)} failed, "
+        f"{len(uncompleted_set)} not completed"
+    )
+
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
-    if summary_path:
-        with pathlib.Path(summary_path).open("a", encoding="utf-8") as summary:
-            summary.write("## Verification timed out\n\n")
-            summary.write(message + "\n\n")
-            summary.write("Any previous timestamps were preserved for these files:\n\n")
-            for path in paths:
-                summary.write(f"- `{path}`\n")
+    if not summary_path:
+        return
+    with pathlib.Path(summary_path).open("a", encoding="utf-8") as summary:
+        summary.write("## Verification shard result\n\n")
+        summary.write("| Result | Count |\n")
+        summary.write("| --- | ---: |\n")
+        summary.write(f"| Verified | {verified_count} |\n")
+        summary.write(f"| Failed | {len(failed_set)} |\n")
+        summary.write(f"| Not completed | {len(uncompleted_set)} |\n\n")
+        summary.write("<details><summary>All targets</summary>\n\n")
+        summary.write("| Result | Verification file |\n")
+        summary.write("| --- | --- |\n")
+        for path in paths:
+            if path in failed_set:
+                status = "Failed"
+            elif path in uncompleted_set:
+                status = "Not completed"
+            else:
+                status = "Verified"
+            summary.write(f"| {status} | `{path}` |\n")
+        summary.write("\n</details>\n")
 
 
 def run_shard(args: argparse.Namespace) -> None:
@@ -154,34 +217,70 @@ def run_shard(args: argparse.Namespace) -> None:
         str(args.timeout),
         *map(str, paths),
     ]
-    completed = subprocess.run(command, check=False)
+    try:
+        completed, reported_failed = run_verify(command)
+    except BaseException:
+        timestamps = load_object(REMOTE_MARKER)
+        pending = unverified_paths(paths, timestamps)
+        for path in pending:
+            key = str(path)
+            if key in selected:
+                timestamps.setdefault(key, selected[key])
+        write_shard_artifact(
+            args.artifact_dir, paths, timestamps, "interrupted", [], pending
+        )
+        write_shard_summary(paths, [], pending)
+        raise
 
     timestamps = load_object(REMOTE_MARKER)
     pending = unverified_paths(paths, timestamps)
-    for path in pending:
+    target_set = set(map(str, paths))
+    failed_set = {
+        pathlib.Path(path) for path in reported_failed if path in target_set
+    }
+    failed = sorted(failed_set)
+    uncompleted = sorted(set(pending) - failed_set)
+    for path in set(failed) | set(uncompleted):
         key = str(path)
         if key in selected:
             timestamps.setdefault(key, selected[key])
     if completed.returncode != 0:
-        write_shard_artifact(args.artifact_dir, paths, timestamps, "failed", pending)
+        status = "failed" if failed else "interrupted"
+        write_shard_artifact(
+            args.artifact_dir, paths, timestamps, status, failed, uncompleted
+        )
+        write_shard_summary(paths, failed, uncompleted)
         raise subprocess.CalledProcessError(completed.returncode, command)
 
-    if pending:
-        write_shard_artifact(args.artifact_dir, paths, timestamps, "timed_out", pending)
-        report_timeout(args.timeout, pending)
+    if uncompleted:
+        write_shard_artifact(
+            args.artifact_dir, paths, timestamps, "timed_out", [], uncompleted
+        )
+        report_timeout(args.timeout, uncompleted)
+        write_shard_summary(paths, [], uncompleted)
         return
 
-    write_shard_artifact(args.artifact_dir, paths, timestamps, "success", [])
+    write_shard_artifact(args.artifact_dir, paths, timestamps, "success", [], [])
+    write_shard_summary(paths, [], [])
     print(f"verified all {len(paths)} files")
 
 
 def merge_results(args: argparse.Namespace) -> None:
     expected = {str(path) for path in verification_files(pathlib.Path("verify"))}
+    allow_failures = getattr(args, "allow_failures", False)
+    allow_missing = getattr(args, "allow_missing", False)
     owners: Dict[str, pathlib.Path] = {}
     merged: Dict[str, str] = {}
-    timed_out = set()
+    if allow_missing and args.output.exists():
+        merged = {
+            path: timestamp
+            for path, timestamp in load_object(args.output).items()
+            if path in expected
+        }
+    failed = set()
+    uncompleted = set()
     manifests = sorted(args.artifacts.rglob("targets.json"))
-    if not manifests:
+    if not manifests and not allow_missing:
         raise RuntimeError(f"no verification artifacts found under {args.artifacts}")
 
     for manifest in manifests:
@@ -200,21 +299,40 @@ def merge_results(args: argparse.Namespace) -> None:
             result = json.load(file)
         if (
             not isinstance(result, dict)
-            or result.get("status") not in {"success", "timed_out"}
-            or not isinstance(result.get("pending"), list)
-            or not all(isinstance(path, str) for path in result["pending"])
+            or result.get("status")
+            not in {"success", "timed_out", "failed", "interrupted"}
+            or not isinstance(result.get("failed"), list)
+            or not all(isinstance(path, str) for path in result["failed"])
+            or not isinstance(result.get("uncompleted"), list)
+            or not all(isinstance(path, str) for path in result["uncompleted"])
         ):
             raise ValueError(f"invalid verification result in {result_path}")
-        pending = set(result["pending"])
-        if not pending <= set(targets):
-            raise RuntimeError(f"pending files contain non-targets in {manifest.parent}")
-        if result["status"] == "success":
-            if pending or set(timestamps) != set(targets):
+        shard_failed = set(result["failed"])
+        shard_uncompleted = set(result["uncompleted"])
+        if shard_failed & shard_uncompleted:
+            raise RuntimeError(f"failed and uncompleted overlap in {manifest.parent}")
+        if not (shard_failed | shard_uncompleted) <= set(targets):
+            raise RuntimeError(
+                f"result contains non-targets in {manifest.parent}"
+            )
+        status = result["status"]
+        if status == "success":
+            if shard_failed or shard_uncompleted or set(timestamps) != set(targets):
                 raise RuntimeError(f"successful shard is incomplete in {manifest.parent}")
-        else:
-            missing_timestamps = set(targets) - set(timestamps)
-            if not pending or not missing_timestamps <= pending:
+        elif status == "timed_out":
+            if shard_failed or not shard_uncompleted:
                 raise RuntimeError(f"timed-out shard is inconsistent in {manifest.parent}")
+        elif status == "failed":
+            if not shard_failed:
+                raise RuntimeError(f"failed shard has no failures in {manifest.parent}")
+        elif shard_failed:
+            raise RuntimeError(f"interrupted shard is inconsistent in {manifest.parent}")
+        if status != "success":
+            missing_timestamps = set(targets) - set(timestamps)
+            if not missing_timestamps <= shard_failed | shard_uncompleted:
+                raise RuntimeError(f"incomplete shard is inconsistent in {manifest.parent}")
+        if status in {"failed", "interrupted"} and not allow_failures:
+            raise RuntimeError(f"unsuccessful verification shard: {manifest.parent}")
 
         for target in targets:
             path = pathlib.PurePosixPath(target)
@@ -229,52 +347,95 @@ def merge_results(args: argparse.Namespace) -> None:
                 )
             owners[target] = manifest
 
-        if result["status"] == "timed_out":
-            timed_out.update(pending)
+        failed.update(shard_failed)
+        uncompleted.update(shard_uncompleted)
 
         for target, timestamp in timestamps.items():
             datetime.datetime.strptime(timestamp, TIMESTAMP_FORMAT)
             merged[target] = timestamps[target]
 
     missing = sorted(expected - set(owners))
-    if missing:
+    if missing and not allow_missing:
         raise RuntimeError("verification artifacts do not cover:\n" + "\n".join(missing))
+    uncompleted.update(missing)
 
     timeouts_output = getattr(args, "timeouts_output", None)
     if timeouts_output is None:
         timeouts_output = args.output.with_name("timeouts.json")
+    failures_output = getattr(args, "failures_output", None)
+    if failures_output is None:
+        failures_output = args.output.with_name("failures.json")
     write_json(args.output, merged)
-    write_json(timeouts_output, sorted(timed_out))
+    write_json(timeouts_output, sorted(uncompleted))
+    write_json(failures_output, sorted(failed))
     print(
         f"merged {len(manifests)} shards covering {len(owners)} files "
-        f"with {len(merged)} timestamps and {len(timed_out)} timeout(s)"
+        f"with {len(merged)} timestamps, {len(failed)} failure(s), and "
+        f"{len(uncompleted)} uncompleted file(s)"
     )
 
 
 def publish_docs(args: argparse.Namespace) -> None:
+    import onlinejudge_verify.documentation.build
+    import onlinejudge_verify.documentation.type
     import onlinejudge_verify.main
     import onlinejudge_verify.marker
 
-    timed_out = set(load_string_list(args.timeouts)) if args.timeouts.exists() else set()
+    uncompleted = (
+        set(load_string_list(args.timeouts)) if args.timeouts.exists() else set()
+    )
+    failed = set(load_string_list(args.failures)) if args.failures.exists() else set()
+    if failed & uncompleted:
+        raise RuntimeError("failed and uncompleted verification files overlap")
     cwd = pathlib.Path.cwd().resolve(strict=True)
     marker_class = onlinejudge_verify.marker.VerificationMarker
+    original_is_verified = marker_class.is_verified
     original_is_failed = marker_class.is_failed
+    original_status_icon = (
+        onlinejudge_verify.documentation.build._get_verification_status_icon
+    )
 
-    def is_failed(marker: object, path: pathlib.Path) -> bool:
+    def relative_key(path: pathlib.Path) -> str | None:
         try:
             absolute = path if path.is_absolute() else cwd / path
             relative = absolute.resolve(strict=True).relative_to(cwd)
         except (OSError, ValueError):
-            return original_is_failed(marker, path)
-        if relative.as_posix() in timed_out:
+            return None
+        return relative.as_posix()
+
+    def is_verified(marker: object, path: pathlib.Path) -> bool:
+        key = relative_key(path)
+        if key in failed or key in uncompleted:
+            return False
+        return original_is_verified(marker, path)
+
+    def is_failed(marker: object, path: pathlib.Path) -> bool:
+        key = relative_key(path)
+        if key in failed:
+            return True
+        if key in uncompleted:
             return False
         return original_is_failed(marker, path)
 
+    def status_icon(status: object) -> str:
+        if (
+            status
+            == onlinejudge_verify.documentation.type.VerificationStatus.TEST_WAITING_JUDGE
+        ):
+            return ":question:"
+        return original_status_icon(status)
+
+    marker_class.is_verified = is_verified
     marker_class.is_failed = is_failed
+    onlinejudge_verify.documentation.build._get_verification_status_icon = status_icon
     try:
         onlinejudge_verify.main.subcommand_docs(jobs=args.jobs)
     finally:
+        marker_class.is_verified = original_is_verified
         marker_class.is_failed = original_is_failed
+        onlinejudge_verify.documentation.build._get_verification_status_icon = (
+            original_status_icon
+        )
 
 
 def publish_result(args: argparse.Namespace) -> None:
@@ -353,11 +514,15 @@ def make_parser() -> argparse.ArgumentParser:
     merge.add_argument("--artifacts", type=pathlib.Path, required=True)
     merge.add_argument("--output", type=pathlib.Path, default=REMOTE_MARKER)
     merge.add_argument("--timeouts-output", type=pathlib.Path, default=TIMEOUTS_FILE)
+    merge.add_argument("--failures-output", type=pathlib.Path, default=FAILURES_FILE)
+    merge.add_argument("--allow-failures", action="store_true")
+    merge.add_argument("--allow-missing", action="store_true")
     merge.set_defaults(function=merge_results)
 
     docs = subparsers.add_parser("docs")
     docs.add_argument("--jobs", type=int, default=2)
     docs.add_argument("--timeouts", type=pathlib.Path, default=TIMEOUTS_FILE)
+    docs.add_argument("--failures", type=pathlib.Path, default=FAILURES_FILE)
     docs.set_defaults(function=publish_docs)
 
     publish = subparsers.add_parser("publish")
