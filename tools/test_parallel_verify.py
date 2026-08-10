@@ -485,6 +485,7 @@ class ParallelVerifyTest(unittest.TestCase):
             def inspect_status(*, jobs):
                 self.assertEqual(jobs, 3)
                 self.assertFalse(compat_build.parent.exists())
+                self.assertTrue((root / ".verify-helper/.gitignore").is_file())
                 self.assertFalse(marker_class.is_verified(object(), timed_out))
                 self.assertFalse(marker_class.is_failed(object(), timed_out))
                 self.assertFalse(marker_class.is_verified(object(), failed))

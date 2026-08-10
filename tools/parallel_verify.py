@@ -458,6 +458,9 @@ def publish_docs(args: argparse.Namespace) -> None:
     marker_class.is_verified = is_verified
     marker_class.is_failed = is_failed
     onlinejudge_verify.documentation.build._get_verification_status_icon = status_icon
+    helper_gitignore = pathlib.Path(".verify-helper/.gitignore")
+    helper_gitignore.parent.mkdir(parents=True, exist_ok=True)
+    helper_gitignore.touch(exist_ok=True)
     try:
         onlinejudge_verify.main.subcommand_docs(jobs=args.jobs)
     finally:
