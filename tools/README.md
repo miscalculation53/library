@@ -22,10 +22,14 @@
 統合します。その後にだけ `GITHUB_TOKEN` で timestamp を main へ反映します。
 ドキュメント生成は verify の成否にかかわらず行い、実際に失敗したファイルを `❌`、
 タイムアウト、キャンセル、artifact の欠落によって完了しなかったファイルを `❓` と
-して、`GH_PAT` で従来の `gh-pages` ブランチへ公開します。pull request ではどちらの
-書き込み用 token も使用しません。main を更新するジョブとドキュメントを公開する
-ジョブも分け、前者に `GH_PAT` は渡さず、後者の `GITHUB_TOKEN` は読み取り権限だけに
-しています。`DROPBOX_TOKEN` は使用しません。
+します。生成したJekyllサイトはGitHub公式のPages Actionsでビルドし、artifactとして
+公開するため、`GH_PAT` は使用しません。mainを更新するジョブとドキュメントを公開する
+ジョブは分かれており、前者だけに `contents: write`、Pagesのデプロイだけに
+`pages: write` と `id-token: write` を与えます。pull requestではどちらの書き込み処理も
+行いません。`DROPBOX_TOKEN` も使用しません。
+
+Pages Actionsを初めて使うときだけ、GitHubの `Settings > Pages` で
+`Build and deployment > Source` を `GitHub Actions` に変更する必要があります。
 
 `parallel_verify.py` は workflow 内部用です。shard の選択はディレクトリ内の
 verify ファイルを名前順に並べ、番号を shard 数で割った余りによって行います。

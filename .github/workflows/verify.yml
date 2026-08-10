@@ -213,13 +213,14 @@ jobs:
       run: python tools/parallel_verify.py publish
 
   docs:
-    name: publish documentation
+    name: build documentation
     if: ${{ always() && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs: [verify, verify-yukicoder]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
       contents: read
+      pages: read
 
     steps:
     - name: Check out repository
@@ -263,12 +264,42 @@ jobs:
         --allow-failures
         --allow-missing
 
-    - name: Publish documentation
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_PAT: ${{ secrets.GH_PAT }}
+    - name: Generate documentation
       run: >-
         python tools/parallel_verify.py docs
         --jobs 2
         --timeouts .verify-helper/timeouts.json
         --failures .verify-helper/failures.json
+
+    - name: Configure GitHub Pages
+      uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+    - name: Build documentation with Jekyll
+      uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
+      with:
+        source: ./.verify-helper/markdown
+        destination: ./.verify-helper/site
+
+    - name: Upload GitHub Pages artifact
+      uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+      with:
+        path: ./.verify-helper/site
+
+  deploy-docs:
+    name: deploy documentation
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: docs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - name: Deploy documentation to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
