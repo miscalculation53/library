@@ -7,6 +7,7 @@ import json
 import os
 import pathlib
 import re
+import shutil
 import subprocess
 import sys
 from typing import Dict, Iterable, List
@@ -380,6 +381,10 @@ def publish_docs(args: argparse.Namespace) -> None:
     import onlinejudge_verify.documentation.type
     import onlinejudge_verify.main
     import onlinejudge_verify.marker
+
+    compat_build = pathlib.Path("tools/ojverify_pkg_resources_compat/build")
+    if compat_build.exists():
+        shutil.rmtree(compat_build)
 
     uncompleted = (
         set(load_string_list(args.timeouts)) if args.timeouts.exists() else set()

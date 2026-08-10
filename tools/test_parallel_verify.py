@@ -434,6 +434,9 @@ class ParallelVerifyTest(unittest.TestCase):
             failed.touch()
             timeouts = root / "timeouts.json"
             failures = root / "failures.json"
+            compat_build = root / "tools/ojverify_pkg_resources_compat/build/lib"
+            compat_build.mkdir(parents=True)
+            (compat_build / "pkg_resources.py").touch()
             parallel_verify.write_json(timeouts, ["verify/timed-out.test.cpp"])
             parallel_verify.write_json(failures, ["verify/failed.test.cpp"])
             args = argparse.Namespace(jobs=3, timeouts=timeouts, failures=failures)
@@ -449,6 +452,7 @@ class ParallelVerifyTest(unittest.TestCase):
 
             def inspect_status(*, jobs):
                 self.assertEqual(jobs, 3)
+                self.assertFalse(compat_build.parent.exists())
                 self.assertFalse(marker_class.is_verified(object(), timed_out))
                 self.assertFalse(marker_class.is_failed(object(), timed_out))
                 self.assertFalse(marker_class.is_verified(object(), failed))
