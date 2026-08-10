@@ -1,6 +1,7 @@
 import argparse
 import base64
 import datetime
+import io
 import json
 import os
 from pathlib import Path
@@ -55,6 +56,37 @@ class ParallelVerifyTest(unittest.TestCase):
             ),
         ]
         completed, failed = parallel_verify.run_verify(command)
+        self.assertEqual(completed.returncode, 1)
+        self.assertEqual(failed, ["verify/a.test.cpp"])
+
+    def test_run_verify_omits_ci_failure_details_but_keeps_failures(self):
+        command = [
+            sys.executable,
+            "-c",
+            (
+                "print('before'); "
+                "print('[FAILURE] RE: return code 139'); "
+                "print('x' * 1000); "
+                "print('::error file=verify/a.test.cpp::failed to verify'); "
+                "print('INFO:onlinejudge_verify.verify:verify: verify/b.test.cpp'); "
+                "print('after'); "
+                "raise SystemExit(1)"
+            ),
+        ]
+        output = io.StringIO()
+        with mock.patch.dict(os.environ, {"GITHUB_ACTIONS": "true"}), mock.patch.object(
+            sys, "stdout", output
+        ):
+            completed, failed = parallel_verify.run_verify(command)
+
+        log = output.getvalue()
+        self.assertIn("before", log)
+        self.assertNotIn("x" * 1000, log)
+        self.assertIn("Verification failure details omitted", log)
+        self.assertIn("[FAILURE] RE: return code 139", log)
+        self.assertIn("::error file=verify/a.test.cpp::failed to verify", log)
+        self.assertIn("verify/b.test.cpp", log)
+        self.assertIn("after", log)
         self.assertEqual(completed.returncode, 1)
         self.assertEqual(failed, ["verify/a.test.cpp"])
 

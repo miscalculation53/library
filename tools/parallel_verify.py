@@ -125,6 +125,8 @@ def report_timeout(timeout: float, paths: List[pathlib.Path]) -> None:
 def run_verify(command: List[str]) -> tuple[subprocess.CompletedProcess, List[str]]:
     failed = []
     pattern = re.compile(r"^::error file=(.+)::failed to verify\s*$")
+    suppress_failure_details = False
+    suppression_reported = False
     process = subprocess.Popen(
         command,
         stdout=subprocess.PIPE,
@@ -137,11 +139,34 @@ def run_verify(command: List[str]) -> tuple[subprocess.CompletedProcess, List[st
     assert process.stdout is not None
     try:
         for line in process.stdout:
-            sys.stdout.write(line)
-            sys.stdout.flush()
+            if line.startswith("INFO:onlinejudge_verify.verify:verify:"):
+                suppress_failure_details = False
+                suppression_reported = False
             match = pattern.match(line)
             if match:
                 failed.append(match.group(1))
+            failure = line.startswith("[FAILURE]")
+            important = match is not None or failure or line.startswith(
+                (
+                    "ERROR:",
+                    "Traceback",
+                    "subprocess.CalledProcessError:",
+                    "::warning ",
+                )
+            )
+            if not suppress_failure_details or important:
+                sys.stdout.write(line)
+                sys.stdout.flush()
+            elif not suppression_reported:
+                print(
+                    "::warning title=Verification failure details omitted::"
+                    "Large input and output dumps after a failure are omitted from "
+                    "the GitHub Actions log. Failure annotations are still shown.",
+                    flush=True,
+                )
+                suppression_reported = True
+            if failure and os.environ.get("GITHUB_ACTIONS"):
+                suppress_failure_details = True
     except BaseException:
         if process.poll() is None:
             process.terminate()
