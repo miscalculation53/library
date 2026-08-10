@@ -211,6 +211,7 @@ public:
   bool operator>=(const BigInteger &b) const { return cmp(b) >= 0; }
   bool operator==(const BigInteger &b) const { return is_nega == b.is_nega && vec == b.vec; }
   bool operator!=(const BigInteger &b) const { return !(*this == b); }
+  friend auto safe_hash_key(const BigInteger &x) { return tie(x.is_nega, x.vec); }
 
   BigInteger operator-() const
   {
@@ -227,6 +228,8 @@ public:
   }
   BigInteger &operator+=(const BigInteger &b)
   {
+    if (b.vec.empty())
+      return *this;
     if (is_nega ^ b.is_nega)
       return *this -= -b;
     if (vec.size() < b.vec.size())
@@ -237,6 +240,8 @@ public:
   }
   BigInteger &operator-=(const BigInteger &b)
   {
+    if (b.vec.empty())
+      return *this;
     if (is_nega ^ b.is_nega)
       return *this += -b;
     if (vec.size() < b.vec.size())
