@@ -14,4 +14,4 @@ template <class T>
 constexpr bool is_signed_ext = is_signed_v<T> || is_same_v<T, i128>;
 
 template <class T>
-constexpr bool is_unsigned_ext = is_signed_v<T> || is_same_v<T, u128>;
+constexpr bool is_unsigned_ext = is_unsigned_v<T> || is_same_v<T, u128>;

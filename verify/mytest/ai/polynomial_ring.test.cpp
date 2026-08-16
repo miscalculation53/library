@@ -1,8 +1,8 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
 #include "template/template_all_but_modint.hpp"
-#include "math/algebra/algebra_basic_ops.hpp"
-#include "math/algebra/polynomial_ring.hpp"
+#include "algebra/algebra_basic_ops.hpp"
+#include "algebra/polynomial_ring.hpp"
 
 // Test focus: multiplying by the canonical empty polynomial returns canonical zero.
 void test()

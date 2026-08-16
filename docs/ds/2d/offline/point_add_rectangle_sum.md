@@ -1,4 +1,4 @@
-## 点加算・矩形和（オフライン）
+## 概要
 
 点加算クエリと矩形和クエリが混ざって与えられるとき、矩形和（オフライン）を用いてオフラインで処理する。
 
@@ -11,16 +11,15 @@ Library Checker にある定式化のほかに、後のほうの点加算クエ�
 
 `RectangleSum` に対する `LowerLeftSum` と同様、`PointAddRectangleSum` に対する `PointAddLowerLeftSum` もある。
 
-### コンストラクタ
+## 詳細なドキュメント
+
+#### コンストラクタ
 
 ```cpp
 PointAddRectangleSum<G, I>
 ```
 
 `G` は可換群、`I` は座標の型
-
-
-### メンバ関数
 
 #### point_add
 

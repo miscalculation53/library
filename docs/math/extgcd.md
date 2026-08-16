@@ -1,30 +1,8 @@
-## 拡張ユークリッドの互除法 (extgcd)
+## 概要
 
-```cpp
-tuple<T, T, T> extgcd(T a, T b)
-```
+拡張ユークリッド互除法により、最大公約数とベズー係数を求める。
 
-次の条件を満たす $(g, x, y)$ の組を $1$ 組返す。
-
-- $g = \gcd(a, b)$
-  - $g \geq 0$ となるように定める
-  - $\gcd(c, 0) = \gcd(0, c) = c \quad (c \geq 0)$
-  - $\gcd(0, 0) = 0$
-- $ax + by = g$
-- 上記を満たす中で $\lVert(x,y)\rVert_p \: (1 \leq p \leq \infty)$ が最小？
-- $\lVert(x,y)\rVert_p \leq \lVert(a,b)\rVert_p \: (1 \leq p \leq \infty)$ ？
-
-##### 制約
-
-- `T` は符号つき整数型
-
-
-##### 計算量
-
-- $O(1 + \log \min(\lvert a \rvert, \lvert b \rvert))$
-
-
-##### 関連事実
+### 関連事実
 
 - $(a, b) \neq (0, 0)$ とする。$(x, y)$ についての一次不定方程式 $ax + by = c$ が整数解を持つ必要十分条件は、$c$ が $\gcd(a, b)$ で割り切れることである。
 - $(a, b) \neq (0, 0)$ とし、$g = \gcd(a, b)$ とする。$(x, y)$ についての一次不定方程式 $ax + by = c$ が整数解を持つ、すなわち $\dfrac{c}{g}$ が整数であるとき、$ax + by = g$ の整数解の $1$ つを $(x_0', y_0')$ とすると、$ax + by = c$ の整数解の $1$ つ $(x_0, y_0)$ は、
@@ -47,3 +25,29 @@ tuple<T, T, T> extgcd(T a, T b)
     $\displaystyle x \equiv x_0 + k\frac{m}{g} \pmod m \quad (k = 0, \dots, g-1)$
     
     と書ける。
+
+## 詳細なドキュメント
+
+#### extgcd
+
+```cpp
+tuple<T, T, T> extgcd(T a, T b)
+```
+
+次の条件を満たす $(g, x, y)$ の組を $1$ 組返す。
+
+- $g = \gcd(a, b)$
+  - $g \geq 0$ となるように定める
+  - $\gcd(c, 0) = \gcd(0, c) = c \quad (c \geq 0)$
+  - $\gcd(0, 0) = 0$
+- $ax + by = g$
+- 上記を満たす中で $\lVert(x,y)\rVert_p \: (1 \leq p \leq \infty)$ が最小？
+- $\lVert(x,y)\rVert_p \leq \lVert(a,b)\rVert_p \: (1 \leq p \leq \infty)$ ？
+
+##### 制約
+
+- `T` は符号つき整数型
+
+##### 計算量
+
+- $O(1 + \log \min(\lvert a \rvert, \lvert b \rvert))$

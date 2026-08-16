@@ -9,7 +9,7 @@
 
 #include "euler_tour.hpp"
 #include "ds/segtree/segtree.hpp"
-#include "math/algebra/algebra_base.hpp"
+#include "algebra/algebra_base.hpp"
 
 // G は群
 // 根からのパスだけなら LCA いらない

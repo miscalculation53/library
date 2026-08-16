@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../../template/template_all_but_modint.hpp"
-#include "../../../math/algebra/algebra_basic_ops.hpp"
+#include "../../../algebra/algebra_basic_ops.hpp"
 #include "../../fenwick_tree/fenwick_tree.hpp"
 #include "../../csr.hpp"
 #include "common.hpp"

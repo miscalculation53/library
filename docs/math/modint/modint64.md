@@ -1,4 +1,4 @@
-## modint (64 bit)
+## 概要
 
 - `static_modint64`
 - `dynamic_modint64_odd`（mod が奇数のみ）
@@ -19,7 +19,7 @@ ACL の modint にあるメソッドと入出力はだいたい揃っている�
   - mod 偶数 ver はこれ
   - 初期化は、$R = 2^{64}$ として $\mathrm{REDC}(x) \equiv xR^{-1} \pmod {M_x}, \mathrm{REDC}(x) \equiv x \pmod {2^b}$ の逆 $\mathrm{IREDC}$ を $\mathrm{REDC}$ で表せばよくて、$y \equiv R^2 \pmod {M_x}, y \equiv x \pmod {2^b}$ を解けばよい。
 
-##### 制約
+制約：
 
 - `dynamic_modint64_odd<INT_MIN>` はライブラリの内部で使用するので使用しないこと
 - mod の上限は、`ll` に収まるなら OK なはず（証明したわけではない）

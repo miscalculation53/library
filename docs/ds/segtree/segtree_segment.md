@@ -1,6 +1,10 @@
-## セグ木の区間に関わる算数
+## 概要
+
+セグ木のノード番号と区間の対応を計算する。
 
 深さ $d + 1$ のセグ木は、$1$ から $2^{d+1} - 1$ までの $2^{d+1} - 1$ 個のノードで、$[0, 2^d)$ の区間を扱える。
+
+## 詳細なドキュメント
 
 #### segtree_node_to_segment
 
@@ -19,7 +23,6 @@ pair<T, T> segtree_node_to_segment(int d, T i)
 
 - $O(1)$
 
-
 #### segtree_segment_to_node
 
 ```cpp
@@ -35,7 +38,6 @@ T segtree_segment_to_node(int d, T a, T b)
 ##### 計算量
 
 - $O(1)$
-
 
 #### segtree_segments
 

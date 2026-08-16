@@ -1,4 +1,8 @@
-## テンプレート（vector）
+## 概要
+
+テンプレート（vector）
+
+## 詳細なドキュメント
 
 ### マクロ
 
@@ -20,7 +24,6 @@ T SZ<T=ll>(x)
 
 `LMD(x, f(x))`：`[&](auto x) { return f(x); }`
 
-
 ### vector の生成
 
 #### gen_vec
@@ -37,8 +40,6 @@ gen_vec(int n, F f)
 - vector を一時変数のように扱える
 
 マクロとして `GEN_VEC(n, i, f(i))` がある。これは `gen_vec(n, LMD(i, f(i)))`。
-
-
 
 ### 多次元 vector の生成
 

@@ -1,14 +1,13 @@
-## pb_ds の set/multiset
+## 概要
 
 `std::set` および `std::multiset` と比較して、$k$ 番目取得ができる。
 
-### コンストラクタ
+## 詳細なドキュメント
+
+#### コンストラクタ
 
 - `pbds_set<T>`
 - `pbds_multiset<T>`
-
-
-### メンバ関数
 
 `insert`, `erase`, `find` などはある。
 

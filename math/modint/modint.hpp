@@ -142,6 +142,7 @@ namespace internal
     friend mint operator/(const mint &lhs, const mint &rhs) { return mint(lhs) /= rhs; }
     friend bool operator==(const mint &lhs, const mint &rhs) { return lhs._v == rhs._v; }
     friend bool operator!=(const mint &lhs, const mint &rhs) { return lhs._v != rhs._v; }
+    friend M safe_hash_key(const mint &x) { return x.val(); }
   
 #if defined LOCAL or not defined FAST_IO
     friend std::istream &operator>>(std::istream &is, mint &x)

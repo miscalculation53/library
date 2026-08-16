@@ -18,7 +18,7 @@
 using mint = modint998244353;
 
 #include "ds/swag.hpp"
-#include "math/algebra/affine_function.hpp"
+#include "algebra/affine_function.hpp"
 
 void init()
 {

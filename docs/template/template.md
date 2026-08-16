@@ -1,4 +1,8 @@
-## テンプレート（全体）
+## 概要
+
+競技プログラミング用テンプレート。
+
+## 詳細なドキュメント
 
 ### LOCAL
 
@@ -24,7 +28,6 @@
 `FAST_IO` が define されているとき、例の `cin.tie(0); ios::sync_with_stdio(false);` をする。`FAST_IO` は `LOCAL` では外れる。
 
 普段は `PRINT` 系での改行で flush しない。`INTERACTIVE` が define されているとき、flush する。
-
 
 ### 定数
 

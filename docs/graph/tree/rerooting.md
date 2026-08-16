@@ -1,4 +1,4 @@
-## 全方位木 DP
+## 概要
 
 https://trap.jp/post/1702/
 
@@ -42,7 +42,7 @@ h[v] &= \mathrm{pute}_{(p,v)} \left( \mathrm{putv}_p \left( \left( \bigoplus_{\s
 
 $\displaystyle \bigoplus_{\substack{d \in \mathrm{children}(p) \\\\  d \neq v}} \mathrm{pute}_{(p,d)}(g[d])$ の部分は、左右からの累積和があれば計算できる。
 
-### ライブラリ
+## 詳細なドキュメント
 
 #### rerooting
 

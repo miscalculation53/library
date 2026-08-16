@@ -19,12 +19,14 @@ void triangles(const GraphUndirected<Cost> &g, const F &f)
   // 大 → 小 で向きづけされていると考えて u → v → w だけを考える
   vc<pair<int, int>> es;
   es.reserve(m);
-  fec(e : g.edges())
+  repi(u0, n) fec(e : g.out_arcs(u0))
   {
-    int u = e.from, v = e.to;
+    int u = u0, v = e.to;
+    if (u > v)
+      continue;
     if (u == v)
       continue;
-    if (g.out_edges(u).size() < g.out_edges(v).size())
+    if (g.out_arcs(u).size() < g.out_arcs(v).size())
       swap(u, v);
     es.eb(u, v);
   }
@@ -33,15 +35,15 @@ void triangles(const GraphUndirected<Cost> &g, const F &f)
   vb exists(n, false);
   repi(u, n)
   {
-    fec(v : h.out_edges(u)) exists[v] = true;
-    fec(v : h.out_edges(u))
+    fec(v : h.out_arcs(u)) exists[v] = true;
+    fec(v : h.out_arcs(u))
     {
-      fec(w : h.out_edges(v))
+      fec(w : h.out_arcs(v))
       {
         if (exists[w])
           f(u, v, w);
       }
     }
-    fec(v : h.out_edges(u)) exists[v] = false;
+    fec(v : h.out_arcs(u)) exists[v] = false;
   }
 }

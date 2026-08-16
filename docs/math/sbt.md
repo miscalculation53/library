@@ -1,4 +1,4 @@
-## Stern–Brocot Tree
+## 概要
 
 各頂点に正の有理数 $\dfrac{p+r}{q+s}$ が一対一対応する二分探索木。性質：
 
@@ -6,7 +6,9 @@
 - $\dfrac{p+r}{q+s}$ の子孫として現れる有理数の範囲は $\left(\dfrac{p}{q}, \dfrac{r}{s} \right)$
 - パスを RLE したものの長さは $O(\log 値)$
 
-### コンストラクタ
+## 詳細なドキュメント
+
+#### コンストラクタ
 
 ```cpp
 (1) SBTNode<T>(T num, T den)
@@ -18,13 +20,11 @@
 - (2)：$\dfrac{p+r}{q+s}$ の頂点を作る。
 - (3)：`path` のパスをたどって頂点を作る。`Path` は `vc<pair<char, T>>` で、方向（`L`, `R`）と進む個数の組の列。
 
-### メンバ変数
+#### メンバ変数
 
 ```cpp
 T p, q, r, s
 ```
-
-### メンバ関数
 
 #### num, den
 
@@ -109,8 +109,6 @@ SBTNode<T> lca(SBTNode<T> rhs)
 $v$ を現在の頂点と `rhs` の頂点の分子・分母の最大値として
 
 - $O(\log v)$
-
-### 外側の関数
 
 #### sbt_search
 

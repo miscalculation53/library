@@ -1,4 +1,8 @@
-## テンプレート（演算）
+## 概要
+
+テンプレート（演算）
+
+## 詳細なドキュメント
 
 ### 定数
 
@@ -224,7 +228,7 @@ $\mathrm{val}$ を $\mathrm{base}$ 進法で表現する。
 - (1), (3)：$O(\log_\mathrm{base} \mathrm{val})$
 - (2), (4)：$O(n + \log_\mathrm{base} \mathrm{val})$
 
-##### 余談
+余談：
 
 逆変換（$\mathrm{base}$ 進法で整数を表す string を整数型に変換する）は、標準ライブラリの `stoll` 等を用いれば十分である。
 

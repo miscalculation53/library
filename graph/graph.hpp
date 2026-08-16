@@ -21,10 +21,22 @@ struct Edge
   // 逆辺を返す (もとの辺は変更しない)
   Edge rev() const { return Edge(to, from, cost, index); }
 };
+
+template <class Cost>
+struct GraphArc
+{
+  int to, index;
+  Cost cost;
+  operator int() const { return to; }
+  bool operator<(const GraphArc &rhs) const { return cost < rhs.cost; }
+};
 #ifdef LOCAL
 CPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<bool>, from, to, cost)
 CPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<int>, from, to, cost)
 CPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<ll>, from, to, cost)
+CPP_DUMP_DEFINE_EXPORT_OBJECT(GraphArc<bool>, to, cost)
+CPP_DUMP_DEFINE_EXPORT_OBJECT(GraphArc<int>, to, cost)
+CPP_DUMP_DEFINE_EXPORT_OBJECT(GraphArc<ll>, to, cost)
 #endif
 
 template <class Cost>
@@ -41,48 +53,147 @@ template <bool is_directed, class Cost, bool is_erasable = false>
 struct Graph
 {
   using E = Edge<Cost>;
+  using A = GraphArc<Cost>;
 
 protected:
-  int n, m, era;
-  CSR<E, is_erasable> g;
+  using GE = conditional_t<is_erasable, E, A>;
+
+  int n = 0, m = 0, era = 0;
+  CSR<GE, is_erasable> g;
   vc<int> eid_to_elist_id;
 
-  template <class F>
-  void build(F get_edge)
+  struct OutEdgeIter
   {
-    if constexpr (is_directed)
+    using iterator_category = input_iterator_tag;
+    using value_type = E;
+    using difference_type = ptrdiff_t;
+    using pointer = const E *;
+    using reference = const E &;
+
+    int from;
+    typename vc<GE>::const_iterator it;
+    mutable E e;
+
+    reference operator*() const
     {
-      vc<pair<int, E>> edges(m);
-      repi(i, m)
-      {
-        auto [u, v, w] = get_edge(i);
-        edges[i] = {u, E(u, v, w, i)};
-      }
-      g = CSR<E, is_erasable>(n, edges);
       if constexpr (is_erasable)
+        return *it;
+      else
       {
-        eid_to_elist_id.resize(m, -1);
-        int k = 0;
-        repi(v, n) fec(e : g[v]) eid_to_elist_id[e.index] = k++;
+        e = E(from, it->to, it->cost, it->index);
+        return e;
       }
     }
+    pointer operator->() const { return &**this; }
+    OutEdgeIter &operator++()
+    {
+      ++it;
+      return *this;
+    }
+    OutEdgeIter operator++(int)
+    {
+      auto res = *this;
+      ++*this;
+      return res;
+    }
+    bool operator==(const OutEdgeIter &rhs) const { return it == rhs.it; }
+    bool operator!=(const OutEdgeIter &rhs) const { return !(*this == rhs); }
+  };
+
+  struct OutEdgeRow
+  {
+    const Graph *g;
+    int from, l, r;
+
+    OutEdgeRow(const Graph *g, int from)
+        : g(g), from(from), l(g->g.offset(from)), r(l + g->g[from].size()) {}
+    OutEdgeIter iter(int pos) const
+    {
+      return {from, g->g.get_elist().begin() + pos, {}};
+    }
+    OutEdgeIter begin() const { return iter(l); }
+    OutEdgeIter end() const { return iter(r); }
+    template <class I = ll>
+    I size() const { return r - l; }
+    bool empty() const { return l == r; }
+    E operator[](int i) const
+    {
+      assert(0 <= i && i < size());
+      return g->get_edge(from, l + i);
+    }
+    E at(int i) const
+    {
+      assert(0 <= i && i < size());
+      return (*this)[i];
+    }
+    E front() const
+    {
+      assert(!empty());
+      return (*this)[0];
+    }
+    E back() const
+    {
+      assert(!empty());
+      return (*this)[size() - 1];
+    }
+    vc<E> to_v() const { return vc<E>(ALL(*this)); }
+  };
+
+  E get_edge(int from, int pos) const
+  {
+    if constexpr (is_erasable)
+      return g.get_elist()[pos];
     else
     {
-      vc<pair<int, E>> edges;
-      edges.reserve(2 * m);
-      repi(i, m)
-      {
-        auto [u, v, w] = get_edge(i);
-        edges.eb(u, E(u, v, w, i));
-        if (u != v)
-          edges.eb(v, E(v, u, w, i));
-      }
-      g = CSR<E, is_erasable>(n, edges);
+      cauto &e = g.get_elist()[pos];
+      return E(from, e.to, e.cost, e.index);
+    }
+  }
+
+  template <class F>
+  void build(F input_edge)
+  {
+    vc<int> row_sizes(n);
+    repi(i, m)
+    {
+      auto [u, v, w] = input_edge(i);
+      assert(0 <= u && u < n && 0 <= v && v < n);
+      row_sizes[u]++;
+      if constexpr (!is_directed)
+        if (u != v) row_sizes[v]++;
+    }
+    g = CSR<GE, is_erasable>(row_sizes);
+    if constexpr (is_erasable)
+      eid_to_elist_id.assign((is_directed ? 1 : 2) * m, -1);
+
+    vc<int> cnt(n);
+    repi(i, m)
+    {
+      auto [u, v, w] = input_edge(i);
+      int j = cnt[u]++;
+      int k = g.offset(u) + j;
+      if constexpr (is_erasable)
+        g[u][j] = E(u, v, w, i);
+      else
+        g[u][j] = A{int(v), i, w};
       if constexpr (is_erasable)
       {
-        eid_to_elist_id.resize(2 * m, -1);
-        int k = 0;
-        repi(v, n) fec(e : g[v]) eid_to_elist_id[2 * e.index + (e.from <= e.to)] = k++;
+        int id = is_directed ? i : 2 * i + (u <= v);
+        eid_to_elist_id[id] = k;
+      }
+      if constexpr (!is_directed)
+      {
+        if (u != v)
+        {
+          j = cnt[v]++;
+          k = g.offset(v) + j;
+          if constexpr (is_erasable)
+            g[v][j] = E(v, u, w, i);
+          else
+            g[v][j] = A{int(u), i, w};
+          if constexpr (is_erasable)
+            eid_to_elist_id[2 * i + (v <= u)] = k;
+        }
       }
     }
   }
@@ -112,14 +223,19 @@ public:
   I num_of_edges() const { return m - era; }
 
   // v から出る辺の集合
-  auto out_edges(int v) const { return g[v]; }
+  auto out_edges(int v) const
+  {
+    return OutEdgeRow(this, v);
+  }
+  // v から出る辺を from を持たない軽量な形で返す
+  auto out_arcs(int v) const { return g[v]; }
   // v から出る頂点の集合
   template <class I = ll>
   vc<I> out_vertices(int v) const
   {
     vc<I> res;
     res.reserve(g[v].size());
-    fec(e : g[v]) res.eb(e.to);
+    fec(e : out_arcs(v)) res.eb(e.to);
     return res;
   }
 
@@ -128,17 +244,17 @@ public:
   vc<E> edges() const
   {
     vc<E> res;
-    res.reserve(m);
+    res.reserve(num_of_edges<int>());
     if constexpr (is_directed)
     {
-      repi(v, n) fec(e : g[v])
+      repi(v, n) fec(e : out_edges(v))
       {
         res.eb(e);
       }
     }
     else
     {
-      repi(v, n) fec(e : g[v])
+      repi(v, n) fec(e : out_edges(v))
       {
         if (e.from <= e.to) res.eb(e);
       }
@@ -146,19 +262,18 @@ public:
     return res;
   }
   // 隣接リスト
-  vvc<E> adj_list() const { return g.to_vv(); }
+  vvc<E> adj_list() const
+  {
+    vvc<E> res(n);
+    repi(v, n) res[v] = out_edges(v).to_v();
+    return res;
+  }
   // 隣接行列 (辺の本数を格納)
   template <class I = ll>
   vvc<I> adj_matrix_ecnt() const
   {
     vvc<I> res(n, vc<I>(n, 0));
-    fec(e : edges())
-    {
-      res[e.from][e.to]++;
-      if constexpr (!is_directed)
-        if (e.from != e.to)
-          res[e.to][e.from]++;
-    }
+    repi(v, n) fec(e : out_arcs(v)) res[v][e.to]++;
     return res;
   }
 
@@ -167,13 +282,12 @@ public:
   vc<I> indegs() const
   {
     vc<I> res(n);
-    fec(e : edges())
+    if constexpr (is_directed)
     {
-      res[e.to]++;
-      if constexpr (!is_directed)
-        if (e.from != e.to)
-          res[e.from]++;
+      repi(v, n) fec(e : out_arcs(v)) res[e.to]++;
     }
+    else
+      repi(v, n) res[v] = out_arcs(v).size();
     return res;
   }
   // 出次数の列
@@ -181,7 +295,7 @@ public:
   vc<I> outdegs() const
   {
     vc<I> res(n);
-    repi(v, n) res[v] = g[v].size();
+    repi(v, n) res[v] = out_arcs(v).size();
     return res;
   }
 
@@ -244,6 +358,6 @@ GraphDirected<Cost> rev_graph(const GraphDirected<Cost> &g)
   const int n = g.size(), m = g.num_of_edges();
   vc<tuple<int, int, Cost>> uvw;
   uvw.reserve(m);
-  fec(e : g.edges()) uvw.eb(e.to, e.from, e.cost);
+  repi(v, n) fec(e : g.out_arcs(v)) uvw.eb(e.to, v, e.cost);
   return GraphDirected<Cost>(n, uvw);
 }

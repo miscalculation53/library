@@ -1,7 +1,7 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
 #include "template/template_all_but_modint.hpp"
-#include "math/algebra/acted_monoid/add_min_count.hpp"
+#include "algebra/acted_monoid/add_min_count.hpp"
 
 // Test focus: ties merge their counts, while range addition preserves the count.
 void test()

@@ -2,7 +2,7 @@
 
 #include "template/template_all_but_modint.hpp"
 #include "math/prime/sieve/linear_sieve.hpp"
-#include "math/algebra/algebra_basic_ops.hpp"
+#include "algebra/algebra_basic_ops.hpp"
 
 /**
  * @brief 約数・倍数 ゼータ・メビウス変換（$1$ 以上 $n$ 以下）

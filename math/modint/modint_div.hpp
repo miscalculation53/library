@@ -46,6 +46,7 @@ struct ModintDiv
   { return lhs.b == rhs.b && lhs.c == rhs.c; }
   friend bool operator!=(const ModintDiv &lhs, const ModintDiv &rhs)
   { return !(lhs == rhs); }
+  friend auto safe_hash_key(const ModintDiv &x) { return pair{x.b, x.c}; }
   // (mod p で表現可能か, mod p での値)
   pair<bool, mint> to_modint() const
   {

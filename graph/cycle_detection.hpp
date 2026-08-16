@@ -24,7 +24,7 @@ pair<bool, vc<Edge<Cost>>> cycle_detection(const Graph<is_directed, Cost> &g)
     if (!res.empty())
       return;
     seen[v] = true;
-    fec(e : g.out_edges(v))
+    fec(e : g.out_arcs(v))
     {
       if (!res.empty())
         return;
@@ -34,10 +34,10 @@ pair<bool, vc<Edge<Cost>>> cycle_detection(const Graph<is_directed, Cost> &g)
         continue;
       if (seen[e.to])
       {
-        res.eb(e);
+        res.eb(v, e.to, e.cost, e.index);
         return;
       }
-      prv[e.to] = e;
+      prv[e.to] = Edge<Cost>(v, e.to, e.cost, e.index);
       dfs(dfs, e.to);
     }
     finished[v] = true;

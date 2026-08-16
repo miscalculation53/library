@@ -119,19 +119,20 @@ V sorted(V v, Args&&... args)
 }
 #endif
 
-template <class V>
-void unique(V &v) { v.erase(std::unique(ALL(v)), v.end()); }
-template <class V>
-V uniqued(V v) { unique(v); return v; }
+template <class V, class Equal = equal_to<>>
+void unique(V &v, Equal equal = {}) { v.erase(std::unique(ALL(v), equal), v.end()); }
+template <class V, class Equal = equal_to<>>
+V uniqued(V v, Equal equal = {}) { unique(v, equal); return v; }
 
-template <class V>
-void sortunique(V &v)
+template <class V, class Compare = less<>, class Equal = equal_to<>>
+void sortunique(V &v, Compare comp = {}, Equal equal = {})
 {
-  sort(ALL(v));
-  unique(v);
+  sort(ALL(v), comp);
+  unique(v, equal);
 }
-template <class V>
-V sortuniqued(V v) { sortunique(v); return v; }
+template <class V, class Compare = less<>, class Equal = equal_to<>>
+V sortuniqued(V v, Compare comp = {}, Equal equal = {})
+{ sortunique(v, comp, equal); return v; }
 
 // 01234 -> 12340
 template <class V, class U>

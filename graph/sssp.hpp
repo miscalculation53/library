@@ -4,6 +4,7 @@
 
 #include "graph.hpp"
 #include "../ds/my_queue.hpp"
+#include "../utils/is_integral_ext.hpp"
 
 /**
  * @brief 単一始点最短路問題
@@ -12,8 +13,6 @@
 
 // 参考: https://hitonanode.github.io/cplib-cpp/graph/shortest_path.hpp
 // todo:
-// - dial
-// - deque の定数倍高速化
 // - fibonacci heap を用いた dijkstra の高速化
 // - SPFA 等
 
@@ -24,6 +23,7 @@ struct ShortestPath : Graph<is_directed, Cost>
   using Graph<is_directed, Cost>::size;
   using Graph<is_directed, Cost>::num_of_edges;
   using Graph<is_directed, Cost>::out_edges;
+  using Graph<is_directed, Cost>::out_arcs;
   using Graph<is_directed, Cost>::edges;
 
 private:
@@ -55,11 +55,11 @@ public:
       que.pop();
       if (v == t)
         break;
-      fe(e : out_edges(v))
+      fe(e : out_arcs(v))
       {
-        if (chmin(dists[e.to], dists[e.from] + e.cost))
+        if (chmin(dists[e.to], dists[v] + e.cost))
         {
-          prv[e.to] = e;
+          prv[e.to] = Edge<Cost>(v, e.to, e.cost, e.index);
           que.push(e.to);
         }
       }
@@ -74,24 +74,94 @@ public:
     init_solve(s, t);
     dists.assign(n, infty);
     prv.assign(n, {});
-    deque<int> deq;
+    vc<int> cur{int(s)}, nxt;
+    vc<unsigned char> used(n, false);
     dists[s] = 0;
-    deq.push_back(s);
-    while (!deq.empty())
+    while (!cur.empty() || !nxt.empty())
     {
-      auto v = deq.front();
-      deq.pop_front();
+      if (cur.empty()) cur.swap(nxt);
+      int v = cur.back();
+      cur.pop_back();
+      if (used[v])
+        continue;
+      used[v] = true;
       if (v == t)
         break;
-      fe(e : out_edges(v))
+      fe(e : out_arcs(v))
       {
-        if (chmin(dists[e.to], dists[e.from] + e.cost))
+        if (chmin(dists[e.to], dists[v] + e.cost))
         {
-          prv[e.to] = e;
+          prv[e.to] = Edge<Cost>(v, e.to, e.cost, e.index);
           if (e.cost == 0)
-            deq.push_front(e.to);
+            cur.eb(e.to);
           else
-            deq.push_back(e.to);
+            nxt.eb(e.to);
+        }
+      }
+    }
+    return dists;
+  }
+
+  // 0 以上 max_cost 以下の整数重みについて Dial 法で最短路を求める
+  vc<Cost> dial(int s, int max_cost, int t = -1)
+  {
+    static_assert(is_integral_ext<Cost>);
+    const int n = size();
+    assert(0 <= s && s < n);
+    assert(0 <= max_cost && max_cost < INT_MAX);
+    init_solve(s, t);
+    dists.assign(n, infty);
+    prv.assign(n, {});
+
+    const int bcnt = max_cost + 1;
+    vc<int> head(bcnt, -1), nxt(n, -2), pre(n, -2);
+    int que_size = 0;
+    auto erase = [&](int v, int b)
+    {
+      const int p = pre[v], q = nxt[v];
+      if (p == -1)
+        head[b] = q;
+      else
+        nxt[p] = q;
+      if (q != -1)
+        pre[q] = p;
+      nxt[v] = pre[v] = -2;
+      que_size--;
+    };
+    auto push = [&](int v, int b)
+    {
+      nxt[v] = head[b], pre[v] = -1;
+      if (head[b] != -1)
+        pre[head[b]] = v;
+      head[b] = v, que_size++;
+    };
+
+    Cost cur = 0;
+    dists[s] = 0;
+    push(s, 0);
+    while (que_size)
+    {
+      int b = int(cur % bcnt);
+      while (head[b] == -1)
+      {
+        cur++;
+        if (++b == bcnt)
+          b = 0;
+      }
+      const int v = head[b];
+      erase(v, b);
+      assert(dists[v] == cur);
+      if (v == t)
+        break;
+      fec(e : out_arcs(v))
+      {
+        Cost nd = dists[v] + e.cost;
+        if (nd < dists[e.to])
+        {
+          if (pre[e.to] != -2)
+            erase(e.to, int(dists[e.to] % bcnt));
+          dists[e.to] = nd, prv[e.to] = Edge<Cost>(v, e.to, e.cost, e.index);
+          push(e.to, int(nd % bcnt));
         }
       }
     }
@@ -116,12 +186,12 @@ public:
         break;
       if (dists[v] != d)
         continue;
-      fec(e : out_edges(v))
+      fec(e : out_arcs(v))
       {
-        Cost nd = dists[e.from] + e.cost;
+        Cost nd = dists[v] + e.cost;
         if (chmin(dists[e.to], nd))
         {
-          prv[e.to] = e;
+          prv[e.to] = Edge<Cost>(v, e.to, e.cost, e.index);
           pque.push({nd, e.to});
         }
       }
@@ -148,10 +218,10 @@ public:
       if (v == t)
         break;
       ok[v] = true;
-      fec(e : out_edges(v))
+      fec(e : out_arcs(v))
       {
-        if (chmin(dists[e.to], dists[e.from] + e.cost))
-          prv[e.to] = e;
+        if (chmin(dists[e.to], dists[v] + e.cost))
+          prv[e.to] = Edge<Cost>(v, e.to, e.cost, e.index);
       }
     }
     return dists;
@@ -173,12 +243,12 @@ public:
       {
         if (dists[v] == infty)
           continue;
-        fec(e : out_edges(v))
+        fec(e : out_arcs(v))
         {
           Cost nd = dists[v] == -infty ? -infty : dists[v] + e.cost;
           if (dists[e.to] > nd)
           {
-            prv[e.to] = e;
+            prv[e.to] = Edge<Cost>(v, e.to, e.cost, e.index);
             if (t == n - 1)
               dists[e.to] = -infty;
             else
@@ -195,17 +265,18 @@ public:
     bool neg = false;
     int zcnt = 0;
     Cost wplus1 = -infty;
+    Cost max_cost = 0;
     bool wpluscnt_geq2 = false;
-    auto es = edges();
-    fec(e : es)
+    repi(v, size()) fec(e : out_arcs(v))
     {
       if (e.cost < 0)
       {
         neg = true;
         break;
       }
+      chmax(max_cost, e.cost);
     }
-    fec(e : es)
+    repi(v, size()) fec(e : out_arcs(v))
     {
       if (e.cost == 0)
         zcnt++;
@@ -228,7 +299,16 @@ public:
       if (n * n < (m << 4))
         return dijkstra_dense(s, t);
       else
+      {
+        if constexpr (is_integral_ext<Cost>)
+        {
+          const u128 c = u128(max_cost);
+          const ull lg = max<ull>(1, bit_width(ull(n)) - 1);
+          if (c < u128(INT_MAX) && u128(n) * c <= u128(m) * lg)
+            return dial(s, int(c), t);
+        }
         return dijkstra(s, t);
+      }
     }
     else
     {
@@ -284,10 +364,10 @@ public:
     {
       if (dists[v] == infty || dists[v] == -infty)
         continue;
-      fec(e : out_edges(v))
+      fec(e : out_arcs(v))
       {
         if (dists[e.to] != infty && dists[e.to] != -infty &&
-            dists[e.to] == dists[e.from] + e.cost)
+            dists[e.to] == dists[v] + e.cost)
           indeg[e.to]++;
       }
     }
@@ -300,12 +380,12 @@ public:
       auto v = que.front();
       que.pop();
       processed++;
-      fec(e : out_edges(v))
+      fec(e : out_arcs(v))
       {
         if (dists[e.to] != infty && dists[e.to] != -infty &&
-            dists[e.to] == dists[e.from] + e.cost)
+            dists[e.to] == dists[v] + e.cost)
         {
-          cnt[e.to] += cnt[e.from];
+          cnt[e.to] += cnt[v];
           if (--indeg[e.to] == 0)
             que.push(e.to);
         }

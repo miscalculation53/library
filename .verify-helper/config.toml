@@ -1,7 +1,7 @@
 [[languages.cpp.environments]]
-CXX = "g++"
+CXX = "g++-15"
 CXXFLAGS = ["-std=c++17", "-Wall", "-Wextra", "-O2"]
 
 [[languages.cpp.environments]]
-CXX = "g++"
+CXX = "g++-15"
 CXXFLAGS = ["-std=c++20", "-Wall", "-Wextra", "-O2"]

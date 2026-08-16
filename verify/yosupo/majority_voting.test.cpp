@@ -16,7 +16,7 @@
 #include "template/template_all_but_modint.hpp"
 
 #include "ds/segtree/segtree.hpp"
-#include "math/algebra/majority_vote.hpp"
+#include "algebra/majority_vote.hpp"
 #include "ds/query/point_set_range_frequency.hpp"
 
 void init() {}

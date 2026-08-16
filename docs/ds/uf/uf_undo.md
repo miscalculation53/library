@@ -1,10 +1,12 @@
-## undo 可能 Unionfind
+## 概要
 
 「直前の辺追加を undo する」ができる。また snapshot/rollback もできる。
 
 経路圧縮ができないので $\log$ がつくことに注意。
 
-### コンストラクタ
+## 詳細なドキュメント
+
+#### コンストラクタ
 
 ```cpp
 UnionFindPartiallyPersistent<class UFData>(int n)
@@ -14,13 +16,11 @@ UnionFindPartiallyPersistent<class UFData>(int n)
 
 ただし、**`GData` は (辺の追加回数) 倍のメモリを消費する**ことに注意。たとえば $O(n)$ のメモリを `GData` に持たせてはいけない。
 
-### メンバ変数
+#### メンバ変数
 
 public なのは
 
 - `UFData::GData gdat`
-
-### メンバ関数
 
 leader, size, same, get_vdata, merge, group_ids は Unionfind と同じ（経路圧縮できないので計算量 $O(\log n)$）
 
@@ -62,4 +62,4 @@ void rollback()
 
 ##### 計算量
 
-- $O(1)$
+- snapshot 以降の辺追加回数を $k$ として $O(k)$

@@ -1,108 +1,133 @@
-## $2$ 次元セグメント木（疎、クエリ点先読み）
+## 概要
 
-一点更新・矩形モノイド積ができる（ただし、一点更新が起こる点は（本ライブラリでは）先読みする必要がある）。log ふたつ。なお、$2$ 次元目にセグメント木以外のデータ構造も載せられるようになっており、たとえば更新がない場合は (Disjoint) Sparse Table や静的 RMQ なども載せることができて計算量の改善になる。
+一点更新・矩形和ができる（ただし、一点更新が起こる点は（本ライブラリでは）先読みする必要がある）。log ふたつ。なお、$2$ 次元目にセグメント木以外のデータ構造も載せられるようになっており、たとえば更新がない場合は Cumulative Sum や (Disjoint) Sparse Table なども載せられる。
+
+この構造では、内側のデータ構造が $y$ 順に値をまとめる一方、外側の木は $x$ 区間ごとの結果をまとめる。一般の非可換モノイドでは両者の順序を同時に保てないため、`M` は可換である必要がある。
 
 中身について：普通に点を二分探索で探そうとするとそのパートに log ふたつがついてしまうが、Fractional Cascading を使うと回避できる。これは各ノードに $y$ 座標の列に加え、子に潜ったときのその列でのインデックスも持っておくというアイデア。再帰セグ木でやる必要がある。
 
-### コンストラクタ
+構築時に与えた点の添字を `point_id` として一点更新に使う。$x$ 座標は内部で自動的に座標圧縮し、一点更新では座標の二分探索を行わない。矩形クエリには生の座標を渡す。
+
+各ノードの $y$ 座標列は CSR で管理し、子ノードでの添字も同じ平坦な添字に対応する連続配列へ格納する。初期値は内側のデータ構造へ移した後、座標管理側には重複して保持しない。
+
+## 詳細なドキュメント
+
+#### コンストラクタ
 
 ```cpp
-SegmentTree2DSparse<DS, M, I>(vc<tuple<I, I, M::S>> xyws)
+SegmentTree2DSparse<M, I, D>(vc<tuple<I, I, M::S>> xyws)
 ```
 
-- `DS` は $2$ 次元目に載せるデータ構造（典型的には `SegmentTree<M>`）
-- `M` はモノイド
+- `M` は可換モノイド
 - `I` は座標の型
-- `xyws` は `add` クエリが飛んでくる点たち（最初の重みも与える）
-
-**x 方向の座圧は自動でやらないので注意！**
+- `D<M>` は $2$ 次元目に載せるデータ構造。`D` のデフォルトは `SegmentTree`
+- `xyws` は更新されうる点と初期値
+- `xyws[i]` の点は `point_id = i` で指定する
+- 同じ座標が複数回含まれる場合、初期値は `M::op` でまとめられ、それらの `point_id` は同じ点を指す
+- `D<M>` は `vc<M::S>` から構築できる
 
 ##### 計算量
 
-$n = \max(x)$ として
+$p = \lvert\mathrm{xyws}\rvert$ として、`D<M>` の構築が要素数に対して線形なら
 
-- $O(n \log n)$
-
-### メンバ関数
+- $O(p \log^2 p)$
 
 #### set
 
 ```cpp
-void set(I x, I y, M::S val)
+void set(int point_id, M::S val)
 ```
 
-点 $(x, y)$ の値を $\mathrm{val}$ にする。
+`xyws[point_id]` の点の値を $\mathrm{val}$ にする。
 
 ##### 制約
 
-- $x, y$ は `xyws` のいずれかに含まれる
-- `DS` はメソッドに `set` を持つ
+- $0 \leq \mathrm{point\_id} < \lvert\mathrm{xyws}\rvert$
+- `D<M>` は `set` と `get` を持つ
 
 ##### 計算量
 
-$n = \max(x)$、$f(n)$ を `DS` の `set` メソッドの計算量として
+`D<M>::get`, `D<M>::set` の計算量をそれぞれ $f(p),g(p)$ として
 
-- $O(\log(n) \cdot f(n))$
+- $O(\log p \cdot (f(p)+g(p)))$
 
 #### get
 
 ```cpp
-M::S get(I x, I y)
+M::S get(int point_id)
 ```
 
-点 $(x, y)$ の値を取得する。最初に与えられていない点に関しては `M::e()` を返す。
+`xyws[point_id]` の点の値を取得する。
 
 ##### 制約
 
-- `DS` はメソッドに `get` を持つ
+- $0 \leq \mathrm{point\_id} < \lvert\mathrm{xyws}\rvert$
+- `D<M>` は `get` を持つ
 
 ##### 計算量
 
-$n = \max(x)$、$f(n)$ を `DS` の `get` メソッドの計算量として
+`D<M>::get` の計算量を $f(p)$ として
 
-- $O(\log(n) + f(n))$
+- $O(f(p))$
 
-#### prod
+#### modify
 
 ```cpp
-(1) M::S prod(I x, I ly, I ry)
-(2) M::S prod(I lx, I rx, I ly, I ry)
+void modify(int point_id, const F& f)
 ```
 
-- (1) 矩形領域 $(-\infty, \mathrm{x}) \times [\mathrm{ly}, \mathrm{ry})$ の点の重みの積を求める。
-- (2) 矩形領域 $[\mathrm{lx}, \mathrm{rx}) \times [\mathrm{ly}, \mathrm{ry})$ の点の重みの積を求める。
+`xyws[point_id]` の点の値への参照を `f` に渡して変更する。`get` と `set` を続けて呼ぶ場合と異なり、外側の木の走査は一度だけ行う。
 
 ##### 制約
 
-- `DS` はメソッドに `prod` を持つ
+- $0 \leq \mathrm{point\_id} < \lvert\mathrm{xyws}\rvert$
+- `D<M>` は `get` と `set` を持つ
+
+##### 計算量
+
+`D<M>::get`, `D<M>::set` の計算量をそれぞれ $f(p),g(p)$ として
+
+- $O(\log p \cdot (f(p)+g(p)))$
+
+#### sum
+
+```cpp
+(1) M::S sum(I x, I ly, I ry)
+(2) M::S sum(I lx, I rx, I ly, I ry)
+```
+
+- (1) 領域 $\{\mathrm{x}\} \times [\mathrm{ly}, \mathrm{ry})$ の点の重みの和を求める。
+- (2) 矩形領域 $[\mathrm{lx}, \mathrm{rx}) \times [\mathrm{ly}, \mathrm{ry})$ の点の重みの和を求める。
+
+##### 制約
+
+- `D<M>` は `sum(l, r)` または `prod(l, r)` を持つ
 - (1) では $\mathrm{ly} \leq \mathrm{ry}$、(2) ではそれに加え $\mathrm{lx} \leq \mathrm{rx}$
 
 ##### 計算量
 
-$n = \max(x)$、$f(n)$ を `DS` の `prod` メソッドの計算量として
+$f(p)$ を内側の区間クエリの計算量として
 
-- (1)：$O(\log(n) + f(n))$
-- (2)：$O(\log(n) \cdot f(n))$
+- (1)：$O(\log p + f(p))$
+- (2)：$O(\log p \cdot f(p))$
 
-
-#### all_prod
+#### all_sum
 
 ```cpp
-M::S all_prod()
+M::S all_sum()
 ```
 
-すべての点の重みの積を求める。
+すべての点の重みの和を求める。
 
 ##### 制約
 
-- `DS` はメソッドに `all_prod` を持つ
+- `D<M>` は `sum(l, r)` または `prod(l, r)` を持つ
 
 ##### 計算量
 
-$n = \max(x)$、$f(n)$ を `DS` の `all_prod` メソッドの計算量として
+$f(p)$ を内側の区間クエリの計算量として
 
-- $O(f(n))$
-
+- $O(f(p))$
 
 #### content
 
@@ -110,16 +135,14 @@ $n = \max(x)$、$f(n)$ を `DS` の `all_prod` メソッドの計算量として
 vc<tuple<I, I, M::S>> content()
 ```
 
-$(x\ 座標, y\ 座標, 重み)$ の組のうち、重みが `S::e()` でないものを格納した vector を返す。デバッグ用を想定。
+$(x\ 座標, y\ 座標, 重み)$ の組のうち、重みが `M::e()` でないものを格納した vector を返す。デバッグ用を想定。
 
 ##### 制約
 
-- `DS` はメソッドに `get` を持つ
+- `D<M>` は `get` を持つ
 
 ##### 計算量
 
-$n = \max(x)$、$f(n)$ を `DS` の `content` メソッドの計算量として
+$u$ を異なる登録点の個数、$f(p)$ を `D<M>::get` の計算量として
 
-- $O(n \log(n) \cdot f(n))$
-
-
+- $O(u \cdot f(p))$

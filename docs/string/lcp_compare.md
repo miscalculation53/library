@@ -1,8 +1,10 @@
-## 部分文字列の一致判定 → LCP、LCP → 部分文字列の辞書順比較
+## 概要
 
 前者は Rolling Hash で一致判定は簡単にできるときなどに使える。後者は Rolling Hash の他に、SA/LCP と一緒に使える。
 
 また、文字列を結合したものの一致判定などができるようなちょっと ad-hoc な場面でも使える。例題： https://atcoder.jp/contests/abc416/tasks/abc416_g
+
+## 詳細なドキュメント
 
 #### calc_lcp
 
@@ -19,7 +21,6 @@ I calc_lcp(int i, int j, auto is_equal)
 ##### 計算量
 
 - `is_equal` の呼び出しを $O(\log n)$ 回
-
 
 #### compare_substr
 

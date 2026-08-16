@@ -1,6 +1,10 @@
-## 黄金分割探索
+## 概要
+
+三分探索と使用可能場面はだいたい同じで、探索回数が少なくなる。
 
 https://nyaannyaan.github.io/library/dp/golden-section-search.hpp
+
+## 詳細なドキュメント
 
 #### golden_section_search
 

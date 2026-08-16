@@ -1,4 +1,4 @@
-## Taylor Shift
+## 概要
 
 多項式 $f(x)$ に対して $f(x + c)$ を求める。
 
@@ -11,6 +11,8 @@ f(x + c) &= \sum_{i = 0}^{n-1} a_i (x + c)^i \\\\
 \end{aligned}$
 
 となっているので、$A_i = a_i i!, C_i = \dfrac{c^i}{i!}$ とすると $\displaystyle b_j = \sum_{i = j}^{n - 1} A_i C_{i - j}$ である。ここで $A$ を反転した列 $\overline{A}$ を考えると（つまり $\overline{A}_i = A_{n - 1 - i}$）、$\displaystyle b_j = \sum_{i = j}^{n - 1} \overline{A}_{n - 1 - i} C_{i - j} = (\overline{A} * C)_{n-1-j}$ となるのでこの畳み込みを計算すればよい。
+
+## 詳細なドキュメント
 
 #### taylor_shift
 

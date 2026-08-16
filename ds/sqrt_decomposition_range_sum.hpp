@@ -2,7 +2,7 @@
 
 #include "../template/template_all_but_modint.hpp"
 
-#include "../math/algebra/algebra_basic_ops.hpp"
+#include "../algebra/algebra_basic_ops.hpp"
 
 /**
  * @brief 平方分割による一点加算・区間和クエリ $\langle O(1), O(\sqrt{N}) \rangle$

@@ -1,6 +1,10 @@
-## 行列
+## 概要
 
-### コンストラクタ
+行列
+
+## 詳細なドキュメント
+
+#### コンストラクタ
 
 ```cpp
 (1) Matrix<F, int BS = 32>(int n, int m, S diag = F::e0(), S non_diag = F::e0())
@@ -11,8 +15,6 @@
 
 - (1)：$n \times m$ の行列を作る。対角成分と非対角成分の初期値を指定できる。
 - (2)：$a$ の要素を成分とする行列を作る。
-
-### メンバ関数
 
 #### shape
 
@@ -68,7 +70,6 @@ tuple<Matrix<F, BS>, I, F::S> row_reduction(bool rref = false)
 
 - $O(nm\min(n,m))$
 
-
 #### rank
 
 ```cpp
@@ -80,7 +81,6 @@ I rank()
 ##### 計算量
 
 - $O(nm\min(n,m))$
-
 
 #### det
 

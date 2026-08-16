@@ -1,10 +1,12 @@
-## オフラインダイコネのテクニック
+## 概要
 
 オフラインダイコネ以外にも使える。
 
 使用場面（ざっくり）：「追加」「削除」は難しいが「追加」「undo」ならできるとき。
 
-### offline_dynamic_connectivity
+## 詳細なドキュメント
+
+#### offline_dynamic_connectivity
 
 ```cpp
 void offline_dynamic_connectivity(int tmax, vc<tuple<I, I, Obj>> span_obj, auto add, auto undo, auto run)
@@ -23,8 +25,7 @@ undo 可能 UF を使ったオフラインダイコネであれば、オブジ�
 
 - $O(t_{\max} + \lvert \mathrm{span\_obj} \rvert \log t_{\max})$
 
-
-### add_del_to_span
+#### add_del_to_span
 
 ```cpp
 vc<tuple<I, I, Obj>> add_del_to_span(int tmax, vc<pair<Time, Obj>> time_obj)

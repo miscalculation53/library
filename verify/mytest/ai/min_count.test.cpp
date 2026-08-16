@@ -1,7 +1,7 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
 #include "template/template_all_but_modint.hpp"
-#include "math/algebra/min_count.hpp"
+#include "algebra/min_count.hpp"
 
 // Test focus: equal extrema combine their multiplicities.
 void test()

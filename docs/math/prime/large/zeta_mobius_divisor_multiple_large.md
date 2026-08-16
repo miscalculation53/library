@@ -1,4 +1,4 @@
-## 約数・倍数 ゼータ・メビウス変換（大きい $m$ の約数）
+## 概要
 
 $m$ の約数の整除関係に関する約数・倍数 ゼータ・メビウス変換。
 
@@ -30,7 +30,6 @@ $\displaystyle \mu a(n) = \sum_{d\mid n} \mu\left(\frac{n}{d}\right) a(d)$
 
 $\displaystyle \zeta' a(n) = \sum_{n \mid m} a(m)$
 
-
 #### 倍数メビウス変換
 
 $\mu'$ は $\zeta'$ の逆変換、つまり $\displaystyle \mu'\zeta' a(n) = a(n)$
@@ -38,7 +37,6 @@ $\mu'$ は $\zeta'$ の逆変換、つまり $\displaystyle \mu'\zeta' a(n) = a(
 メビウス関数 $\mu(n)$ を用いて
 
 $\displaystyle \mu' a(n) = \sum_{n\mid m} \mu\left(\frac{m}{n}\right) a(m)$
-
 
 ### 帰着のさせ方
 
@@ -62,7 +60,6 @@ g(m) &:= \sum_{\mathrm{lcm}(a_{i_1}, \dots, a_{i_k}) \mid m} h(i_1, \dots, i_k) 
 \end{aligned}$
 
 となる。$g(m)$ が求まるとき、$f(m) = \mu g(m)$ と計算すればよい。
-
 
 ### 使う際の注意
 
@@ -96,7 +93,9 @@ g(m) &:= \sum_{\mathrm{lcm}(a_{i_1}, \dots, a_{i_k}) \mid m} h(i_1, \dots, i_k) 
 
 以下、本ライブラリの話。
 
-### メンバ変数
+## 詳細なドキュメント
+
+#### メンバ変数
 
 - `ll m`
 - `vc<PrimePower<ll>> fac`：$m$ の素因数分解
@@ -104,7 +103,7 @@ g(m) &:= \sum_{\mathrm{lcm}(a_{i_1}, \dots, a_{i_k}) \mid m} h(i_1, \dots, i_k) 
 - `ll dnum`：$m$ の約数の個数
 - `vc<ll> ds`：$m$ の約数を格納したもの。格納順は指数のベクトルの辞書順（$d$ の昇順ではない）。
 
-### コンストラクタ
+#### コンストラクタ
 
 ```cpp
 ZetaMobiusDivisorMultipleLarge(ll m)
@@ -113,9 +112,6 @@ ZetaMobiusDivisorMultipleLarge(ll m)
 ##### 計算量
 
 - $O(m^{1/4})$
-
-
-### メンバ関数
 
 #### divisor_map
 
@@ -154,7 +150,6 @@ DivisorMap<M::S> zeta_divisor(DivisorMap<M::S> a)
 
 - $O(\omega(m) \sigma_0(m))$
 
-
 #### mobius_divisor
 
 ```cpp
@@ -170,7 +165,6 @@ DivisorMap<G::S> mobius_divisor(DivisorMap<G::S> a)
 ##### 計算量
 
 - $O(\omega(m) \sigma_0(m))$
-
 
 #### mobius_divisor_point
 
@@ -188,7 +182,7 @@ G::S mobius_divisor_point(DivisorMap<G::S> a, ll n)
 
 - $O(\omega(m) 2^{\omega(m)})$
 
-##### 仕組み
+仕組み：
 
 約数メビウス変換の定義式を考えると、$n/d$ が重複する素因数を持たないような $2^{\omega(m)}$ 通りを見ればよいので。
 

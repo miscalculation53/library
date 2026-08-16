@@ -1,12 +1,14 @@
-## 添字を値で分類
+## 概要
 
-数列の添字を値で分類し、`vvc` のような構造（実際には CSR）を作る。
+数列の添字を値で分類し、`vvc` のような構造（実際には CSR）を作る。値が存在しない行も保持するため、行数は値の種類数ではなく、空列なら $0$、そうでなければ $\max(a)+1$ となる。
 
 用途：
 - 普通に値ごとに処理するとき（例：連結成分の番号から、頂点を連結成分ごとにまとめる）。
 - 二分探索などの操作を行うと、rank, select, pred, succ,（ある値の）range frequency などの操作ができる。
 
 もしかして：「ある範囲にある値の range frequency」→ wavelet matrix
+
+## 詳細なドキュメント
 
 #### コンストラクタ
 
@@ -57,8 +59,8 @@ $a_i = \mathrm{val}$ である添字 $i$ を小さい順に並べた CSR の行�
 
 それぞれ次の値を返す。
 
-- (1)：$\min \lbrace j \lt i \mid a_j = \mathrm{val} \rbrace$、存在しなければ $-1$
-- (2)：$\min \lbrace j \leq i \mid a_j = \mathrm{val} \rbrace$、存在しなければ $-1$
+- (1)：$\max \lbrace j \lt i \mid a_j = \mathrm{val} \rbrace$、存在しなければ $-1$
+- (2)：$\max \lbrace j \leq i \mid a_j = \mathrm{val} \rbrace$、存在しなければ $-1$
 - (3)：$\min \lbrace j \gt i \mid a_j = \mathrm{val} \rbrace$、存在しなければ $n$
 - (4)：$\min \lbrace j \geq i \mid a_j = \mathrm{val} \rbrace$、存在しなければ $n$
 - (5)：$ \\# \lbrace j \lt i \mid a_j = \mathrm{val} \rbrace $
@@ -73,10 +75,22 @@ $a_i = \mathrm{val}$ である添字 $i$ を小さい順に並べた CSR の行�
 
 - $O(\log n)$
 
+#### value_bound
+
+```cpp
+I value_bound()
+```
+
+値として使える半開区間 $[0, m)$ の上端 $m$ を返す。空列なら $0$、そうでなければ $\max(a)+1$ を返す。したがって、すべての値について処理するときは `rep(val, grp.value_bound())` と書ける。
+
+##### 計算量
+
+- $O(1)$
+
 #### to_vv
 
 ```cpp
-vvc<T> to_vv()
+vvc<I> to_vv()
 ```
 
 `vvc` での表現にして返す。

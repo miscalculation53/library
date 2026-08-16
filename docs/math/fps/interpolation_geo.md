@@ -1,10 +1,12 @@
-## 多項式補間（評価点が等比数列）
+## 概要
 
 https://noshi91.github.io/algorithm-encyclopedia/polynomial-interpolation-geometric#noredirect
 
 導出は ↑ を参照（結構手間）。
 
 実装上は $r^n \equiv 1$ となる場合にちょっと注意。
+
+## 詳細なドキュメント
 
 #### interpolation_geo
 

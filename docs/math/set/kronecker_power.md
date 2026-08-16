@@ -1,16 +1,14 @@
-## クロネッカー冪の作用
+## 概要
 
 a.k.a. ゼータ変換の一般化
 
 https://q.c.titech.ac.jp/docs/progs/kronecker.html
 
-### 概要
-
 クロネッカー積 $\otimes$ は
 
 $A \otimes B = \begin{bmatrix}
-a_{11}B & \dots & a_{1n}B \\\\  
-\vdots & \ddots & \vdots \\\\  
+a_{11}B & \dots & a_{1n}B \\\\
+\vdots & \ddots & \vdots \\\\
 a_{n1}B & \dots & a_{nm}B
 \end{bmatrix}$
 
@@ -41,83 +39,7 @@ $(A^{\otimes n})^{-1} = (A^{-1})^{\otimes n}$
 - （FFT はクロネッカー冪ではないので仕組みが異なるが、行列で書いて分割統治するという点では似ている）
   - クロネッカー冪ではないが行列で書いて分割統治で解ける例： https://codeforces.com/contest/1967/problem/C
 
-### ライブラリ
-
 使い方のコツ：渡す行列や線型写像は $n=1$ の場合の振る舞いを記述すると考えるとよい。
-
-#### kronecker_power
-
-一般には半環が載る。
-
-```cpp
-(1) vc<SR::S> kronecker_power_array_destructive(array<array<SR::S, k>, k> mat, vc<SR::S> v)
-(2) vc<SR::S> kronecker_power_array(array<array<SR::S, k>, k> mat, vc<SR::S> v)
-```
-
-- (1)：$v$ を $\mathrm{mat}^{\otimes k} v$ で置き換える。
-- (2)：$\mathrm{mat}^{\otimes k} v$ を返す。
-
-##### 制約
-
-- $\lvert v \rvert$ は $0$ か $k$ べき
-
-##### 計算量
-
-$\lvert v \rvert = k^n$ として
-
-- $O(n k^{n+1})$
-
-#### tensor_power
-
-行列を陽に渡すのではなく、線型写像として渡す。次のような場合に特に有効：
-
-- 行列が疎であるなどの理由で、行列の定義を使うよりも高速に計算できる場合
-- ゼータ変換・メビウス変換のように行列の要素が $1$ や $-1$ であり、本来加減算だけでよいのに、行列の定義を使うと乗算を書かされる場合（特に加算にあたる部分が通常の乗算であると、その上の乗算って何？ となって苦しい）
-
-```cpp
-(1) auto tensor_power_array_destructive<k>(auto linear_map, vc<T> v)
-(2) vc<T> tensor_power_array<k>(auto linear_map, vc<T> v)
-```
-
-`linear_map` は `array<T, k>` から `array<T, k>` への関数を渡す。この関数の内部では破壊的変更を行ってもよい。
-
-- (1)：$v$ を $\mathrm{linear\_map}^{\otimes k} v$ で置き換える。
-- (2)：$\mathrm{linear\_map}^{\otimes k} v$ を返す。
-
-##### 制約
-
-- $\lvert v \rvert$ は $0$ か $k$ べき
-
-##### 計算量
-
-$\lvert v \rvert = k^n$ として
-
-- $O(n k^{n-1})$ 回の `linear_map` 呼び出し
-
-
-#### zeta, mobius
-
-```cpp
-(1) vc<M::S> zeta_subset_general(vc<M::S> a)
-(2) vc<M::S> zeta_supset_general(vc<M::S> a)
-(3) vc<G::S> mobius_subset_general(vc<G::S> a)
-(4) vc<G::S> mobius_supset_general(vc<G::S> a)
-```
-
-$k$ 進法での各桁の大小によって半順序関係を定め、これに関するゼータ・メビウス変換を行った結果を返す。（省略しているが destructive 版もある。）
-
-##### 制約
-
-- $\lvert v \rvert$ は $0$ か $k$ べき
-- モノイドや群は**可換**
-
-##### 計算量
-
-$\lvert v \rvert = k^n$ として
-
-- $O(n k^n)$
-
----
 
 ### 中身
 
@@ -130,16 +52,16 @@ $(A \otimes I_{n-1})(I_1 \otimes A^{\otimes n-1}) = A \otimes A^{\otimes n-1}$
 となる。
 
 $I_1 \otimes A^{\otimes n-1} = \begin{bmatrix}
-A^{\otimes n-1} & & \\\\  
-& \ddots & \\\\  
+A^{\otimes n-1} & & \\\\
+& \ddots & \\\\
 & & A^{\otimes n-1}
 \end{bmatrix}$
 
 の作用は再帰でできる（分割統治）。
 
 $A \otimes I_{n-1} = \begin{bmatrix}
-a_{11}I_{n-1} & \dots & a_{1k}I_{n-1} \\\\  
-\vdots & \ddots & \vdots \\\\  
+a_{11}I_{n-1} & \dots & a_{1k}I_{n-1} \\\\
+\vdots & \ddots & \vdots \\\\
 a_{k1}I_{n-1} & \dots & a_{kk}I_{n-1}
 \end{bmatrix}$
 
@@ -177,3 +99,79 @@ c...d...  ....a.b.  ....ab..
 また、これは特にビット演算を使わずにできるので $k=2$ に限らず使える。
 
 参考：Nyaan さんの提出 https://atcoder.jp/contests/abc288/submissions/38620359
+
+## 詳細なドキュメント
+
+#### kronecker_power
+
+一般には半環が載る。
+
+```cpp
+(1) vc<SR::S> kronecker_power_array_destructive(array<array<SR::S, k>, k> mat, vc<SR::S> v)
+(2) vc<SR::S> kronecker_power_array(array<array<SR::S, k>, k> mat, vc<SR::S> v)
+```
+
+- (1)：$v$ を $\mathrm{mat}^{\otimes k} v$ で置き換える。
+- (2)：$\mathrm{mat}^{\otimes k} v$ を返す。
+
+##### 制約
+
+- $k \geq 2$
+- $\lvert v \rvert$ は $0$ か $k$ べき
+
+##### 計算量
+
+$\lvert v \rvert = k^n$ として
+
+- $O(n k^{n+1})$
+
+#### tensor_power
+
+行列を陽に渡すのではなく、線型写像として渡す。次のような場合に特に有効：
+
+- 行列が疎であるなどの理由で、行列の定義を使うよりも高速に計算できる場合
+- ゼータ変換・メビウス変換のように行列の要素が $1$ や $-1$ であり、本来加減算だけでよいのに、行列の定義を使うと乗算を書かされる場合（特に加算にあたる部分が通常の乗算であると、その上の乗算って何？ となって苦しい）
+
+```cpp
+(1) auto tensor_power_array_destructive<k>(auto linear_map, vc<T> v)
+(2) vc<T> tensor_power_array<k>(auto linear_map, vc<T> v)
+```
+
+`linear_map` は `array<T, k>` から `array<T, k>` への関数を渡す。この関数の内部では破壊的変更を行ってもよい。
+
+- (1)：$v$ を $\mathrm{linear\_map}^{\otimes k} v$ で置き換える。
+- (2)：$\mathrm{linear\_map}^{\otimes k} v$ を返す。
+
+##### 制約
+
+- $k \geq 2$
+- $\lvert v \rvert$ は $0$ か $k$ べき
+
+##### 計算量
+
+$\lvert v \rvert = k^n$ として
+
+- $O(n k^{n-1})$ 回の `linear_map` 呼び出し
+
+#### zeta, mobius
+
+```cpp
+(1) vc<M::S> zeta_subset_general(vc<M::S> a)
+(2) vc<M::S> zeta_supset_general(vc<M::S> a)
+(3) vc<G::S> mobius_subset_general(vc<G::S> a)
+(4) vc<G::S> mobius_supset_general(vc<G::S> a)
+```
+
+$k$ 進法での各桁の大小によって半順序関係を定め、これに関するゼータ・メビウス変換を行った結果を返す。（省略しているが destructive 版もある。）
+
+##### 制約
+
+- $k \geq 2$
+- $\lvert v \rvert$ は $0$ か $k$ べき
+- モノイドや群は**可換**
+
+##### 計算量
+
+$\lvert v \rvert = k^n$ として
+
+- $O(n k^n)$

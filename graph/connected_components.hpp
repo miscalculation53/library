@@ -29,7 +29,7 @@ vc<I> connected_component_ids(const GraphUndirected<Cost> &g)
     {
       int v = que.front();
       que.pop();
-      fe(nv : g.out_edges(v))
+      fe(nv : g.out_arcs(v))
       {
         if (res[nv] != -1)
           continue;

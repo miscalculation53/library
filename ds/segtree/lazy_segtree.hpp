@@ -7,7 +7,7 @@
  * @docs docs/ds/segtree/lazy_segtree.md
  */
 
-template <class AM>
+template <class AM, bool enable_beats = false>
 struct LazySegmentTree
 {
   using S = typename AM::S;
@@ -22,7 +22,12 @@ private:
   {
     dat[i] = AM::mapping(f, dat[i]);
     if (i < siz)
+    {
       lazy[i] = AM::composition(f, lazy[i]);
+      if constexpr (enable_beats)
+        if (dat[i].fail)
+          push(i), update(i);
+    }
   }
   void push(int i)
   {

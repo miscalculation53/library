@@ -2,7 +2,7 @@
 
 #include "template/template_all_but_modint.hpp"
 #include "graph/tree/euler_tour_path_sum.hpp"
-#include "math/algebra/algebra_basic_ops.hpp"
+#include "algebra/algebra_basic_ops.hpp"
 
 // Test focus: root-path sums and point updates work without constructing LCA support.
 void test_without_lca()

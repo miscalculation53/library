@@ -1,4 +1,4 @@
-## 二項係数
+## 概要
 
 一番よく使うやつ（素数 mod 二項係数 $\displaystyle \binom{n}{k}$ クエリを前計算 $O(\max(n))$ クエリ $O(1)$ で処理する）。
 
@@ -12,164 +12,11 @@ Binomial<mint>::C(n, k)
 
 任意 mod のときは、`fac` のみを使うなら正しく動く。
 
-##### 制約
+制約：
 
 - `mint` は modint 系
 
-
-### メンバ関数
-
 以下 mod を $p$ と書く。
-
-#### reserve
-
-```cpp
-void reserve(int n)
-```
-
-サイズ $n$ まで前計算する。
-
-この関数は呼ばなくても自動でテーブルを計算してくれる。しかし、事前に呼んでおくことで定数倍高速化が期待できる。
-
-##### 計算量
-
-$T$ 回呼んだとき、
-
-- $O(T + \max(n))$
-
-#### fac
-
-```cpp
-mint fac(int n)
-```
-
-$n! \bmod p$ を返す。$n \geq p$ なら $0$ となる。
-
-##### 制約
-
-- $n \geq 0$
-
-
-##### 計算量
-
-$T$ 回呼んだとき、
-
-- $O(T + \max(n))$
-
-
-#### finv
-
-```cpp
-mint finv(int n)
-```
-
-$(n!)^{-1}$ を返す。$n \lt 0$ なら $0$ を返す。
-
-##### 制約
-
-- $n \lt p$
-
-
-##### 計算量
-
-$T$ 回呼んだとき、
-
-- $O(T + \max(n))$
-
-
-#### inv
-
-```cpp
-mint inv(mint n)
-```
-
-$n^{-1}$ を返す。$n \lt 0$ なら $0$ を返す。
-
-##### 制約
-
-- $n \not\equiv 0 \bmod p$
-
-
-##### 計算量
-
-$T$ 回呼んだとき、
-
-- $O(T + \max(n \bmod p))$
-
-
-#### P
-
-```cpp
-mint P(int n, int k)
-```
-
-$n \geq k \geq 0$ のとき、$n(n-1)\cdots (n-(k-1)) = \dfrac{n!}{(n-k)!}$ を返す。
-
-$n \lt k, n \lt 0, k \lt 0$ のいずれかを満たす場合は $0$ を返す。
-
-
-##### 制約
-
-- $n - k \lt p$
-
-##### 計算量
-
-$T$ 回呼んだとき、
-
-- $O(T + \max(n \bmod p))$
-
-
-#### C
-
-```cpp
-mint C(int n, int k)
-```
-
-$n \geq k \geq 0$ のとき、$\displaystyle \binom{n}{k} = \dfrac{n!}{k!(n-k)!} = [x^k](1 + x)^n$ を返す。
-
-$n \lt k, n \lt 0, k \lt 0$ のいずれかを満たす場合は $0$ を返す。
-
-
-##### 制約
-
-- $k \lt p$
-- $n - k \lt p$
-
-##### 計算量
-
-$T$ 回呼んだとき、
-
-- $O(T + \max(n \bmod p))$
-
-
-#### H
-
-```cpp
-mint H(int n, int k)
-```
-
-$n \geq 0, k \geq 0$ のとき、$[x^k]\dfrac{1}{(1-x)^n} = \begin{cases}
-1 & (n = 0, k = 0) \\\\  
-\displaystyle \binom{n+k-1}{k} & (\textrm{otherwise})
-\end{cases}$ を返す。
-
-$n \lt 0, k \lt 0$ のいずれかを満たす場合は $0$ を返す。
-
-
-##### 制約
-
-- $k \lt p$
-- $n - k \lt p$
-
-##### 計算量
-
-$T$ 回呼んだとき、
-
-- $O(T + \max(n \bmod p))$
-
-
-
------
 
 ### 実装について
 
@@ -218,3 +65,140 @@ https://hos-lyric.hatenablog.com/entry/2021/06/10/004947
 本ライブラリは流儀 1 になっている
 
 （多分自分のレートが低いからだと思うが）まだ困ったことがない、困ったら仕様変更を考えるかも
+
+## 詳細なドキュメント
+
+#### reserve
+
+```cpp
+void reserve(int n)
+```
+
+サイズ $n$ まで前計算する。
+
+この関数は呼ばなくても自動でテーブルを計算してくれる。しかし、事前に呼んでおくことで定数倍高速化が期待できる。
+
+##### 計算量
+
+$T$ 回呼んだとき、
+
+- $O(T + \max(n))$
+
+#### fac
+
+```cpp
+mint fac(int n)
+```
+
+$n! \bmod p$ を返す。$n \geq p$ なら $0$ となる。
+
+##### 制約
+
+- $n \geq 0$
+
+##### 計算量
+
+$T$ 回呼んだとき、
+
+- $O(T + \max(n))$
+
+#### finv
+
+```cpp
+mint finv(int n)
+```
+
+$(n!)^{-1}$ を返す。$n \lt 0$ なら $0$ を返す。
+
+##### 制約
+
+- $n \lt p$
+
+##### 計算量
+
+$T$ 回呼んだとき、
+
+- $O(T + \max(n))$
+
+#### inv
+
+```cpp
+mint inv(mint n)
+```
+
+$n^{-1}$ を返す。$n \lt 0$ なら $0$ を返す。
+
+##### 制約
+
+- $n \not\equiv 0 \bmod p$
+
+##### 計算量
+
+$T$ 回呼んだとき、
+
+- $O(T + \max(n \bmod p))$
+
+#### P
+
+```cpp
+mint P(int n, int k)
+```
+
+$n \geq k \geq 0$ のとき、$n(n-1)\cdots (n-(k-1)) = \dfrac{n!}{(n-k)!}$ を返す。
+
+$n \lt k, n \lt 0, k \lt 0$ のいずれかを満たす場合は $0$ を返す。
+
+##### 制約
+
+- $n - k \lt p$
+
+##### 計算量
+
+$T$ 回呼んだとき、
+
+- $O(T + \max(n \bmod p))$
+
+#### C
+
+```cpp
+mint C(int n, int k)
+```
+
+$n \geq k \geq 0$ のとき、$\displaystyle \binom{n}{k} = \dfrac{n!}{k!(n-k)!} = [x^k](1 + x)^n$ を返す。
+
+$n \lt k, n \lt 0, k \lt 0$ のいずれかを満たす場合は $0$ を返す。
+
+##### 制約
+
+- $k \lt p$
+- $n - k \lt p$
+
+##### 計算量
+
+$T$ 回呼んだとき、
+
+- $O(T + \max(n \bmod p))$
+
+#### H
+
+```cpp
+mint H(int n, int k)
+```
+
+$n \geq 0, k \geq 0$ のとき、$[x^k]\dfrac{1}{(1-x)^n} = \begin{cases}
+1 & (n = 0, k = 0) \\\\  
+\displaystyle \binom{n+k-1}{k} & (\textrm{otherwise})
+\end{cases}$ を返す。
+
+$n \lt 0, k \lt 0$ のいずれかを満たす場合は $0$ を返す。
+
+##### 制約
+
+- $k \lt p$
+- $n - k \lt p$
+
+##### 計算量
+
+$T$ 回呼んだとき、
+
+- $O(T + \max(n \bmod p))$

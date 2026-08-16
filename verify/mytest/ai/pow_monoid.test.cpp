@@ -1,9 +1,9 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
 #include "template/template_algo.hpp"
-#include "math/algebra/algebra_basic_ops.hpp"
-#include "math/algebra/bit.hpp"
-#include "math/algebra/min_count.hpp"
+#include "algebra/algebra_basic_ops.hpp"
+#include "algebra/bit.hpp"
+#include "algebra/min_count.hpp"
 
 struct MonoidMulWithoutPow
 {

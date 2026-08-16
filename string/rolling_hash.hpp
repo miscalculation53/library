@@ -61,6 +61,7 @@ public:
   friend RH operator+(const RH &lhs, const RH &rhs) { return RH(lhs) += rhs; }
   friend bool operator==(const RH &lhs, const RH &rhs) { return lhs.len == rhs.len && lhs.val == rhs.val; }
   friend bool operator!=(const RH &lhs, const RH &rhs) { return lhs.len != rhs.len || lhs.val != rhs.val; }
+  friend auto safe_hash_key(const RH &x) { return pair{x.val, x.len}; }
 };
 
 template <class mint = modint61, int id = INT_MIN>

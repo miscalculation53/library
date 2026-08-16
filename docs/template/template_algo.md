@@ -1,4 +1,8 @@
-## テンプレート（アルゴリズム）
+## 概要
+
+テンプレート（アルゴリズム）
+
+## 詳細なドキュメント
 
 ### 集約
 
@@ -13,7 +17,6 @@
 - (2) $v$ の要素の総和を、型 `T` の値として返す。
 
 (1) の引数が `vc<int>` などのときはオーバーフローに注意する。(2) を使い `SUM<ll>(v)` などとする（か、そもそも `int` を使わない）こと。
-
 
 ##### 計算量
 
@@ -77,7 +80,6 @@ $p$ が $0, 1, \dots, \lvert p \rvert -1$ の順列かどうか判定する。
 
 - $O(\lvert p \rvert)$
 
-
 #### permid
 
 ```cpp
@@ -121,7 +123,6 @@ $p$ が $(0, 1, \dots, \lvert p \rvert-1)$ の順列でない場合は、$p_i \g
 ##### 計算量
 
 - $O(\lvert p \rvert)$
-
 
 ### string や vector の操作
 
@@ -171,27 +172,31 @@ C++17 以前ならば `std::sort`, C++20 以降ならば `std::ranges::sort` の
 `std::unique` をもとにしている。
 
 ```cpp
-(1) void unique(string &s)
-(2) void unique(vc<T> &v)
-(3) string uniqued(string s)
-(4) vc<T> uniqued(vc<T> v)
-(5) void sortunique(string &s)
-(6) void sortunique(vc<T> &v)
-(7) string sortunique(string s)
-(8) vc<T> sortunique(vc<T> v)
+(1) void unique(V& v, Equal equal = equal_to<>())
+(2) V uniqued(V v, Equal equal = equal_to<>())
+(3) void sortunique(V& v, Compare comp = less<>(), Equal equal = equal_to<>())
+(4) V sortuniqued(V v, Compare comp = less<>(), Equal equal = equal_to<>())
 ```
 
-- (1), (2)：重複する隣接要素を削除する。
-- (3), (4)：重複する隣接要素を削除した列を返す。
-- (5), (6)：ソートした後、重複する隣接要素を削除する。
-- (7), (8)：「ソートした後、重複する隣接要素を削除する」操作を行った結果の列を返す。
+- (1)：`equal` が `true` を返す重複する隣接要素を削除する。
+- (2)：同じ操作を行った列を返し、引数は変更しない。
+- (3)：`comp` でソートした後、`equal` が `true` を返す重複する隣接要素を削除する。
+- (4)：同じ操作を行った列を返し、引数は変更しない。
+
+`equal` のデフォルトは `equal_to<>` であり、`operator==` を使う。`sortunique` と `sortuniqued` では、`equal` が同じとみなす要素がソート後に隣接するよう `comp` を指定する必要がある。同値判定だけを指定する場合は `sortunique(v, less<>(), equal)` のように呼ぶ。
+
+##### 制約
+
+- `equal` は要素に対する同値関係を表す
+- `comp` は狭義弱順序を表す
+- `sortunique`, `sortuniqued` では、`equal` の各同値類が `comp` によるソート後に連続する
 
 ##### 計算量
 
 列の長さを $n$ として
 
-- (1), (2), (3), (4)：$O(n)$
-- (5), (6), (7), (8)：$O(n \log n)$
+- (1), (2)：`equal` の呼び出しを $O(n)$ 回
+- (3), (4)：`comp` の呼び出しを $O(n \log n)$ 回、`equal` の呼び出しを $O(n)$ 回
 
 #### sortuniqued_group
 
@@ -330,14 +335,13 @@ $\lvert v \rvert = n$ とする。
 
 - $O(n)$
 
-
 ### その他
 
 #### dij4
 
 ```cpp
-const vpll DRULgrid = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} };
-const vpll DRULplane = { {0, -1}, {1, 0}, {0, 1}, {-1, 0} };
+constexpr array<pll, 4> DRULgrid = {{{1, 0}, {0, 1}, {-1, 0}, {0, -1}}};
+constexpr array<pll, 4> DRULplane = {{{0, -1}, {1, 0}, {0, 1}, {-1, 0}}};
 ```
 
 グリッドの $4$ 方向の探索で使う。

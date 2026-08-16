@@ -122,6 +122,14 @@ public:
 
   friend bool operator!=(const Rational &lhs, const Rational &rhs) { return !(lhs == rhs); }
 
+  friend auto safe_hash_key(const Rational &x)
+  {
+    if constexpr (is_integral_ext<T>)
+      return x.reduced();
+    else
+      return x.num / x.den;
+  }
+
   template <class U = T, enable_if_t<is_rational_ordered_v<U>, int> = 0>
   friend bool operator<(const Rational &lhs, const Rational &rhs)
   {

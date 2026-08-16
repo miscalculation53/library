@@ -1,4 +1,4 @@
-## 多項式補間
+## 概要
 
 https://37zigen.com/lagrange-interpolation/
 
@@ -15,6 +15,8 @@ $\displaystyle f(x) = g(x) \sum_{i=0}^{n-1} \frac{y_i}{g'(x_i)} \cdot \frac{1}{x
 - $g(x)$ を多項式の総積で $O(n \log^2 n)$ 時間で計算する。
 - 各 $g'(x_i)$ を多点評価で $O(n \log^2 n)$ 時間で計算する。
 - $f(x)$ を有理式の総和で $O(n \log^2 n)$ 時間で計算する。分母は $g(x)$ であるから分子を答えとすればよい。
+
+## 詳細なドキュメント
 
 #### interpolation
 

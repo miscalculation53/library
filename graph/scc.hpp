@@ -25,7 +25,7 @@ vc<I> scc(const GraphDirected<Cost> &g)
     if (visited[v])
       return;
     visited[v] = true;
-    fec(nv : g.out_edges(v)) dfs1(dfs1, nv);
+    fec(nv : g.out_arcs(v)) dfs1(dfs1, nv);
     ord.eb(v);
   };
 
@@ -36,7 +36,7 @@ vc<I> scc(const GraphDirected<Cost> &g)
     if (ids[v] != -1)
       return;
     ids[v] = cnt;
-    fec(nv : rg.out_edges(v)) dfs2(dfs2, nv);
+    fec(nv : rg.out_arcs(v)) dfs2(dfs2, nv);
   };
 
   repi(v, n) dfs1(dfs1, v);

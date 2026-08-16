@@ -1,4 +1,8 @@
-## 座標圧縮
+## 概要
+
+座標圧縮
+
+## 詳細なドキュメント
 
 ### CoordinateCompression
 
@@ -66,8 +70,7 @@ I=ll size()
 
 - $O(1)$
 
-
-### compressed
+#### compressed
 
 ```cpp
 vc<I> compressed(vc<T> a)
@@ -85,8 +88,7 @@ vc<I> compressed(vc<T> a)
 
 - $O(\lvert a \rvert \log \lvert a \rvert)$
 
-
-### compressed_unordered
+#### compressed_unordered
 
 ```cpp
 vc<I> compressed_unordered(vc<T> a)

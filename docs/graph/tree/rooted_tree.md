@@ -1,4 +1,6 @@
-## 根つき木クラス
+## 概要
+
+HLD を含む根つき木クラス。
 
 ### 思想（抜粋）
 
@@ -15,7 +17,9 @@
   - 根からの距離（`Cost` ベース）
   - 部分木サイズ
 
-### 使用例
+## 使用例
+
+## 詳細なドキュメント
 
 #### 木 DP
 
@@ -32,7 +36,7 @@ fec(v : reversed(bfs_ordered_vertices()))
 
 ----
 
-### コンストラクタ
+#### コンストラクタ
 
 ```cpp
 (1) RootedTree<class Cost, bool need_dist = true>(vc<I> p, Cost dflt_cost = 1)
@@ -51,8 +55,6 @@ fec(v : reversed(bfs_ordered_vertices()))
 
 - $O(n)$
   - 定数倍はやや大きい
-
-### メンバ関数
 
 #### size
 
@@ -126,7 +128,6 @@ I depth<I = ll>(int v)
 
 - $O(1)$
 
-
 #### dist
 
 ```cpp
@@ -179,7 +180,6 @@ pair<I, I> cut_and_subtree_size<I = ll>(int u, int v)
 
 - $O(1)$
 
-
 #### get_edge
 
 ```cpp
@@ -195,7 +195,6 @@ Edge<Cost> get_edge(int eid)
 ##### 計算量
 
 - $O(1)$
-
 
 #### edges
 
@@ -225,7 +224,6 @@ vc<Edge<Cost>> path_to_root(int v)
 
 - $O(\mathrm{dep}(v))$
 
-
 #### path
 
 ```cpp
@@ -242,7 +240,6 @@ vc<Edge<Cost>> path(int u, int v)
 
 - $O(\mathrm{dep}(u) + \mathrm{dep}(v))$
 
-
 #### bfs_ordered_vertices
 
 ```cpp
@@ -254,7 +251,6 @@ BFS 順に頂点番号を格納した vector を返す（長さ $n$）。
 ##### 計算量
 
 - $O(n)$
-
 
 #### bfs_ordered_edges
 
@@ -268,7 +264,6 @@ BFS 順に辺を格納した vector を返す（長さ $n-1$）。辺は親か�
 
 - $O(n)$
 
-
 #### dfs_ordered_edges
 
 ```cpp
@@ -280,7 +275,6 @@ vc<Edge<Cost>> dfs_ordered_edges()
 ##### 計算量
 
 - $O(n)$
-
 
 #### edges_vt
 
@@ -295,7 +289,6 @@ vc<tuple<I, I, Cost>> edges_vt()
 ##### 計算量
 
 - $O(n)$
-
 
 #### rerooted_tree
 
@@ -312,7 +305,6 @@ RootedTree<Cost, need_dist> rerooted_tree(int new_root)
 ##### 計算量
 
 - $O(n)$
-
 
 #### to_graph
 

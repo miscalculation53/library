@@ -1,4 +1,6 @@
-## and/or 畳み込み
+## 概要
+
+and 畳み込みと or 畳み込みを計算する。
 
 ### 定義
 
@@ -38,7 +40,7 @@ $\begin{aligned}
 &= \zeta a(u) \zeta b(u)
 \end{aligned}$
 
-### ライブラリ
+## 詳細なドキュメント
 
 #### and_convolution
 

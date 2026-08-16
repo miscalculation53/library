@@ -1,4 +1,4 @@
-## 線形 RMQ
+## 概要
 
 https://qiita.com/okateim/items/e2f4a734db4e5f90e410
 
@@ -6,7 +6,9 @@ https://qiita.com/okateim/items/e2f4a734db4e5f90e410
 
 実用上どちらが速いかはちゃんと測定してない（$N, Q$ の大きさにもよるかも。$N = Q$ なら雑に LC に投げた感じ同じくらい？ LC の fastest はブロック分割までらしい）。
 
-### コンストラクタ
+## 詳細なドキュメント
+
+#### コンストラクタ
 
 ```cpp
 LinearRMQ<M, Word = uint64_t>(vc<M::S> v)
@@ -26,9 +28,6 @@ LinearRMQ<M, Word = uint64_t>(vc<M::S> v)
 
 - $O\left(\dfrac{n}{B}\log \dfrac{n}{B}\right)$
 
-
-### メンバ関数
-
 #### get
 
 ```cpp
@@ -44,7 +43,6 @@ $v_p$ の値を返す。
 ##### 計算量
 
 - $O(1)$
-
 
 #### prod
 

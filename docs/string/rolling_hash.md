@@ -1,4 +1,4 @@
-## Rolling Hash
+## 概要
 
 基数 $B$ を固定して、文字列 $s$ に対するハッシュを $s_0 B^{n-1} + s_1 B^{n-2} + \dots + s_{n-2} B + s_{n-1}$ で定義する（向きは流派があるが本ライブラリではこちら）。これには $2$ つの使い方がある：
 
@@ -14,7 +14,9 @@
 
 RollingHash
 
-### コンストラクタ
+## 詳細なドキュメント
+
+#### コンストラクタ
 
 ```cpp
 (1) RollingHash<mint=modint61, int id=INT_MIN>(mint val, int len)
@@ -25,8 +27,6 @@ RollingHash
 
 - (1)：ハッシュ値が $\mathrm{val}$ で長さが $\mathrm{len}$ の文字列を管理するインスタンスを作成する。
 - (2)：文字列あるいは数列 $s$ を管理するインスタンスを作成する。
-
-### メンバ関数
 
 #### base
 
@@ -64,7 +64,6 @@ I size()
 
 - $O(1)$
 
-
 #### 演算子
 
 - `+=`, `+`：文字列の結合。通常の文字列結合と同様、交換則が成り立たないので注意。
@@ -78,16 +77,13 @@ I size()
 
 RollingHashSubstring
 
-### コンストラクタ
+#### コンストラクタ
 
 ```cpp
 RollingHashSubstring<mint=modint61, int id=INT_MIN>(V s)
 ```
 
 `id` が同じなら基数は同じになる。`LOCAL` ではすべて基数は $1000$ になる。
-
-
-### メンバ関数
 
 #### size
 
@@ -142,8 +138,6 @@ void pop_back()
 - $O(1)$
 
 -----
-
-### 外部の関数
 
 #### calc_lcp_rh
 

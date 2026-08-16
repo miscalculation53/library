@@ -12,7 +12,7 @@
 using mint = modint998244353;
 
 #include "ds/segtree/sparse_lazy_segtree.hpp"
-#include "math/algebra/acted_monoid/affine_sum.hpp"
+#include "algebra/acted_monoid/affine_sum.hpp"
 
 void init()
 {

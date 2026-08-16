@@ -1,4 +1,4 @@
-## Bostan–Mori
+## 概要
 
 TODO：定数倍高速化（うまくやると NTT の回数がもう少し減らせるっぽい）
 
@@ -12,6 +12,8 @@ $\dfrac{P(x)}{Q(x)} = \dfrac{P(x) Q(-x)}{Q(x) Q(-x)} = \dfrac{U_\text{e}(x^2) + 
 - $k$ が奇数のとき、$[x^k] \dfrac{P(x)}{Q(x)} = [x^k] \dfrac{xU_\text{o}(x^2)}{V(x^2)} = [x^{(k-1)/2}]\dfrac{U_\text{o}(x)}{V(x)}$
 
 となるので、$O(d\log d)$ 時間のステップを $O(\log k)$ 回やればよい。
+
+## 詳細なドキュメント
 
 #### bostan_mori
 

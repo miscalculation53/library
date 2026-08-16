@@ -1,4 +1,4 @@
-## テンプレート（dump）
+## 概要
 
 - https://github.com/philip82148/cpp-dump
   - 解説記事 1： https://zenn.dev/sassan/articles/19db660e4da0a4

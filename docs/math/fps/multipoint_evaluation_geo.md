@@ -1,10 +1,12 @@
-## 多項式の多点評価（評価点が等比数列）
+## 概要
 
 https://noshi91.github.io/algorithm-encyclopedia/chirp-z-transform
 
 導出は ↑ を参照。
 
 TODO：middle product を使って高速化
+
+## 詳細なドキュメント
 
 #### multipoint_evaluation_geo
 

@@ -1,10 +1,12 @@
-## 一点更新・区間頻度（オフライン）
+## 概要
 
 中身：値ごとに添字集合を管理する。先読みした添字で座圧して Fenwick Tree を用いる（この Fenwick Tree は 01 にできる）。
 
 オンラインでの処理が必要な場合は、Fenwick Tree の代わりに平衡二分探索木などを用いる（特に本ライブラリで整備した `pbds_set` を使うと便利で、かなりすぐ実装できる）。いかにも遅そうだが Library Checker に提出してみた感じ意外と速かった（？）
 
-### コンストラクタ
+## 詳細なドキュメント
+
+#### コンストラクタ
 
 ```cpp
 PointSetRangeFrequency(vc<T> a)
@@ -19,9 +21,6 @@ PointSetRangeFrequency(vc<T> a)
 ##### 計算量
 
 - $O(\lvert a \rvert)$
-
-
-### メンバ関数
 
 #### point_set
 
@@ -38,7 +37,6 @@ void point_set(int p, T v)
 ##### 計算量
 
 - $O(1)$
-
 
 #### range_frequency
 

@@ -1,4 +1,4 @@
-## Black Box Linear Algebra
+## 概要
 
 Black Box Linear Algebra とは、線形代数のアルゴリズムのうち、行列を陽に入力することを必要とせず、線型写像だけを受け取って計算を行うアルゴリズム。線型写像の作用の時間に依存するので、特に疎行列に対して高速となる。基本的に作用させるベクトルを乱択することになり、決定的解法ではない。
 
@@ -44,9 +44,15 @@ $c_A$ を $A$ の特性多項式とすると、$\det(A) = (-1)^n c_A(0)$ であ�
 
 ---
 
-### ライブラリ
-
 定数倍が割と死んでます（実装が悪いかもしれない）
+
+## 使用例
+
+- https://judge.yosupo.jp/problem/sparse_matrix_det ： 疎行列の行列式そのもの。
+- https://yukicoder.me/problems/no/310 ： BEST 定理を疎グラフに対して用いることになるので、疎行列の行列式が登場する。
+- https://codeforces.com/contest/963/problem/E ： マルコフ連鎖（というかただの期待値 DP）で、立式すると線型方程式を解く問題になる（遷移が少ないので疎行列）。想定解は掃き出しを工夫する方針だが BBLA でも通る。
+
+## 詳細なドキュメント
 
 #### minimal_polynomial
 
@@ -56,7 +62,7 @@ bbla::minimal_polynomial<F>(int n, auto linear_map, auto random_sample)
 
 $S^n$ から $S^n$ への線型写像に対し、最小多項式を求める。
 
-##### 使い方
+使い方：
 
 - `linear_map` は `vc<F::S>` を参照で受け取って破壊的に変更する関数として定義する。
 - `random_sample` は `F::S` の要素をランダムに選ぶ関数（`F::S` が modint のときはデフォルトでよい）。
@@ -71,7 +77,6 @@ $S^n$ から $S^n$ への線型写像に対し、最小多項式を求める。
 
 - $t$ を `linear_map` の計算量として、$O(n^2 + nt)$
 
-
 #### solve
 
 ```cpp
@@ -80,8 +85,7 @@ bbla::solve<F>(vc<F::S> y, auto linear_map, auto random_sample)
 
 $S^n$ から $S^n$ への正則な線型写像 $\mathrm{linear\_map}$ に対し、線型方程式 $\mathrm{linear\_map}(x) = y$ の（唯一の）解を求める。
 
-
-##### 使い方
+使い方：
 
 - `linear_map` は `vc<F::S>` を参照で受け取って破壊的に変更する関数として定義する。
 - `random_sample` は `F::S` の要素をランダムに選ぶ関数（`F::S` が modint のときはデフォルトでよい）。
@@ -96,7 +100,6 @@ $S^n$ から $S^n$ への正則な線型写像 $\mathrm{linear\_map}$ に対し�
 
 - $t$ を `linear_map` の計算量として、$O(n^2 + nt)$
 
-
 #### det
 
 ```cpp
@@ -105,7 +108,7 @@ bbla::det<F>(int n, auto linear_map, auto random_sample)
 
 $S^n$ から $S^n$ への線型写像に対し、その表現行列の行列式を求める。
 
-##### 使い方
+使い方：
 
 - `linear_map` は `vc<F::S>` を参照で受け取って破壊的に変更する関数として定義する。
 - `random_sample` は `F::S` の要素をランダムに選ぶ関数（`F::S` が modint のときはデフォルトでよい）。
@@ -119,12 +122,3 @@ $S^n$ から $S^n$ への線型写像に対し、その表現行列の行列式�
 ##### 計算量
 
 - $t$ を `linear_map` の計算量として、$O(n^2 + nt)$
-
----
-
-### 例題
-
-- https://judge.yosupo.jp/problem/sparse_matrix_det ： 疎行列の行列式そのもの。
-- https://yukicoder.me/problems/no/310 ： BEST 定理を疎グラフに対して用いることになるので、疎行列の行列式が登場する。
-- https://codeforces.com/contest/963/problem/E ： マルコフ連鎖（というかただの期待値 DP）で、立式すると線型方程式を解く問題になる（遷移が少ないので疎行列）。想定解は掃き出しを工夫する方針だが BBLA でも通る。
-

@@ -1,13 +1,13 @@
-## 中国剰余定理 (CRT)
+## 概要
 
 https://qiita.com/drken/items/ae02240cd1f8edfc86fd
 
 連立合同方程式
 
 $\begin{cases}
-x \equiv r_1 \pmod {m_1} \\\\  
-\vdots \\\\  
-x \equiv r_n \pmod {m_n} \\\\  
+x \equiv r_1 \pmod {m_1} \\\\
+\vdots \\\\
+x \equiv r_n \pmod {m_n} \\\\
 \end{cases}$
 
 を考える。この解は次のいずれか：
@@ -25,7 +25,70 @@ x \equiv r_n \pmod {m_n} \\\\
   - 任意 mod 畳み込みとか
   - 前者より計算量が悪い
 
-### ライブラリの使い方
+### 中身
+
+冒頭の記事の内容を自分用に書き直した。
+
+#### crt2
+
+$g = \gcd(m_1, m_2), $ $k$ を $m_1k \equiv r_2 - r_1 \pmod {m_2}$ の解（解ならば $k \bmod \dfrac{m_1}{g}$ は一意）として
+
+$r = r_1 + m_1 \cdot \left(k \dfrac{r_2 - r_1}{g} \bmod \dfrac{m_1}{g} \right)$
+$m = m_1 \cdot \dfrac{m_2}{g}$
+
+なお、$\mathrm{lcm}(m_1, \dots, m_n)$ が `ll` に収まるならばオーバーフローしないことの証明は https://rsk0315.hatenablog.com/entry/2021/01/18/065720#crt にある。
+
+#### crt_mod
+
+$m_i, m_j \ (i \neq j)$ が互いに素であるとする。
+
+$\begin{aligned}
+r_1 &\equiv t_1 & \pmod {m_1} \\\\
+r_2 &\equiv t_1 + t_2m_1 &\pmod {m_2} \\\\
+r_3 &\equiv t_1 + t_2m_1 + t_3m_1m_2 &\pmod {m_3} \\\\
+\vdots
+\end{aligned}$
+
+を上から順に解いていく形になる（$0 \leq t_i \lt m_i$）。計算途中で、$t_i$ および $m_1\cdots m_i$ の $\bmod \ m_{i+1}, ..., m_n$ および modint の mod での値が必要。
+
+#### pre_crt
+
+各 $i$ について、$m_i$ がどの $m_j \ (j \gt i)$ とも互いに素になるように処理する。
+
+$x \equiv r \pmod m$ という条件は、$m$ の素因数分解を $m = p_1^{e_1} \cdots p_k^{e_k}$ とすると
+
+$\begin{cases}
+x \equiv r \pmod {p_1^{e_1}} \\\\
+\vdots \\\\
+x \equiv r \pmod {p_k^{e_k}} \\\\
+\end{cases}$
+
+と分けられる。
+
+$m_i$ と $m_j$ で共通の素因数については、（条件が矛盾しなければ）$e$ が大きいほうの条件となる。共通しない素因数については、そのまま条件となる。
+
+これは陽に素因数分解せずとも、最大公約数を利用して求められる。
+
+$\begin{aligned}
+m_i &= p^a q^b s^c, \\\\
+m_j &= p^d q^e u^f
+\end{aligned}$
+
+であり、$a \gt d, b \lt e$ であるとする（もっと素因数が多い場合も同様）。このとき（$r_i, r_j$ を変えずに）$m_i$ を $p^as^c$ に、$m_j$ を $q^eu^f$ にすればよい。
+
+$\begin{aligned}
+g := \gcd(m_i, m_j) &= p^d q^b, \\\\
+m_i/g &= p^{a-d}s^c, \\\\
+m_j/g &= q^{e-b}u^f, \\\\
+g_i := \gcd(m_i/g, g) &= p^{\min(d,a-d)}, \\\\
+g_j := g/g_i &= p^{\max(0,2d-a)} q^b
+\end{aligned}$
+
+となる。あとは $\gcd(g_i, g_j)$ を $g_j$ から $g_i$ に渡していくことを $\max\left(0, \left\lceil\dfrac{2d-a}{a-d}\right\rceil\right)$ 繰り返せば $g_i = p^d, g_j = q^b$ となるので、$(m_i/g) \cdot g_i = p^a s^c, (m_j/g) \cdot g_j = q^e u^f$ となる。
+
+これもうちょっと賢い方法がありそうな予感もするけどどうなんだろう（使う場面があるかもよくわからない）
+
+## 詳細なドキュメント
 
 #### crt2
 
@@ -66,7 +129,6 @@ pair<T, T> crt<T = ll>(V rs, V ms)
 
 - $O(n \log \mathrm{lcm}(m_1, \dots, m_n))$
 
-
 #### crt_mod
 
 ```cpp
@@ -97,7 +159,6 @@ pair<T, T> crt<T = ll>(V rs, V ms)
 
 - $O(n^2 + \sum_{i=1}^n \log m_i)$
 
-
 #### pre_crt
 
 ```cpp
@@ -115,73 +176,6 @@ bool pre_crt(V rs, V &ms)
 - `V` は整数を格納した array または vector
 - $m_i \geq 1$
 
-
 ##### 計算量
 
 - $O(n^2 \log^2 \max(m_1, \dots, m_n))$
-
----
-
-### 中身
-
-冒頭の記事の内容を自分用に書き直した。
-
-#### crt2
-
-$g = \gcd(m_1, m_2), $ $k$ を $m_1k \equiv r_2 - r_1 \pmod {m_2}$ の解（解ならば $k \bmod \dfrac{m_1}{g}$ は一意）として
-
-$r = r_1 + m_1 \cdot \left(k \dfrac{r_2 - r_1}{g} \bmod \dfrac{m_1}{g} \right)$
-$m = m_1 \cdot \dfrac{m_2}{g}$
-
-なお、$\mathrm{lcm}(m_1, \dots, m_n)$ が `ll` に収まるならばオーバーフローしないことの証明は https://rsk0315.hatenablog.com/entry/2021/01/18/065720#crt にある。
-
-#### crt_mod
-
-$m_i, m_j \ (i \neq j)$ が互いに素であるとする。
-
-$\begin{aligned}
-r_1 &\equiv t_1 & \pmod {m_1} \\\\  
-r_2 &\equiv t_1 + t_2m_1 &\pmod {m_2} \\\\  
-r_3 &\equiv t_1 + t_2m_1 + t_3m_1m_2 &\pmod {m_3} \\\\  
-\vdots
-\end{aligned}$
-
-を上から順に解いていく形になる（$0 \leq t_i \lt m_i$）。計算途中で、$t_i$ および $m_1\cdots m_i$ の $\bmod \ m_{i+1}, ..., m_n$ および modint の mod での値が必要。
-
-
-#### pre_crt
-
-各 $i$ について、$m_i$ がどの $m_j \ (j \gt i)$ とも互いに素になるように処理する。
-
-$x \equiv r \pmod m$ という条件は、$m$ の素因数分解を $m = p_1^{e_1} \cdots p_k^{e_k}$ とすると
-
-$\begin{cases}
-x \equiv r \pmod {p_1^{e_1}} \\\\  
-\vdots \\\\  
-x \equiv r \pmod {p_k^{e_k}} \\\\  
-\end{cases}$
-
-と分けられる。
-
-$m_i$ と $m_j$ で共通の素因数については、（条件が矛盾しなければ）$e$ が大きいほうの条件となる。共通しない素因数については、そのまま条件となる。
-
-これは陽に素因数分解せずとも、最大公約数を利用して求められる。
-
-$\begin{aligned}
-m_i &= p^a q^b s^c, \\\\  
-m_j &= p^d q^e u^f
-\end{aligned}$
-
-であり、$a \gt d, b \lt e$ であるとする（もっと素因数が多い場合も同様）。このとき（$r_i, r_j$ を変えずに）$m_i$ を $p^as^c$ に、$m_j$ を $q^eu^f$ にすればよい。
-
-$\begin{aligned}
-g := \gcd(m_i, m_j) &= p^d q^b, \\\\  
-m_i/g &= p^{a-d}s^c, \\\\  
-m_j/g &= q^{e-b}u^f, \\\\  
-g_i := \gcd(m_i/g, g) &= p^{\min(d,a-d)}, \\\\  
-g_j := g/g_i &= p^{\max(0,2d-a)} q^b
-\end{aligned}$
-
-となる。あとは $\gcd(g_i, g_j)$ を $g_j$ から $g_i$ に渡していくことを $\max\left(0, \left\lceil\dfrac{2d-a}{a-d}\right\rceil\right)$ 繰り返せば $g_i = p^d, g_j = q^b$ となるので、$(m_i/g) \cdot g_i = p^a s^c, (m_j/g) \cdot g_j = q^e u^f$ となる。
-
-これもうちょっと賢い方法がありそうな予感もするけどどうなんだろう（使う場面があるかもよくわからない）

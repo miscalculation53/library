@@ -1,4 +1,4 @@
-## 階乗
+## 概要
 
 https://suisen-kyopro.hatenablog.com/entry/2023/11/22/201600
 
@@ -8,7 +8,9 @@ $p$ を法（素数）とする。$n!$ を計算するクエリが $n < p$ の�
 
 手法としては、$B!, (2B)!, \dots$ を前計算しておき、クエリでは最も近いところから始めて $O(B)$ 回の乗算をするというもの。前計算パートは多項式の評価点シフトを使うといい感じにできる（略、上のリンクを参照）。
 
-### コンストラクタ
+## 詳細なドキュメント
+
+#### コンストラクタ
 
 ```cpp
 Factorial<mint> fact(int k = -1)
@@ -21,8 +23,6 @@ Factorial<mint> fact(int k = -1)
 $B = 2^k$ として
 
 - $O\left(B \log B + \dfrac{p \log p}{B}\right)$
-
-### メンバ関数
 
 #### factorial
 

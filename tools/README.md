@@ -33,6 +33,11 @@ Pages Actionsを初めて使うときだけ、GitHubの `Settings > Pages` で
 
 `parallel_verify.py` は workflow 内部用です。shard の選択はディレクトリ内の
 verify ファイルを名前順に並べ、番号を shard 数で割った余りによって行います。
+新しい verify ファイルも自動的にいずれかの shard へ入るため、通常はworkflowを
+書き換える必要はありません。追加位置より後ろのファイルは所属shardがずれることが
+ありますが、重複や漏れがないことはartifact統合時に検査します。
+ディレクトリごとのshard数を変える場合や、新しいverifyカテゴリを追加する場合だけ
+workflowの設定変更が必要です。
 `oj-verify` が35分で全ファイルを処理できなかった場合、その shard は失敗ではなく
 警告として終了し、未処理ファイルを Job Summary に表示します。GitHub Pages でも
 未処理の verify ファイルは `❓` と表示し、実際に検証が失敗したものだけを `❌` と

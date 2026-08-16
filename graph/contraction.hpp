@@ -19,10 +19,12 @@ Graph<is_directed, Cost> contracted_graph(const Graph<is_directed, Cost> &g, con
   assert(SZ(ids) == n);
   const int k = ids.empty() ? 0 : MAX(ids) + 1;
   vc<pair<int, int>> uv;
-  fec(e : g.edges())
+  repi(u, n) fec(e : g.out_arcs(u))
   {
-    if (ids[e.from] != ids[e.to])
-      uv.eb(ids[e.from], ids[e.to]);
+    if constexpr (!is_directed)
+      if (u > e.to) continue;
+    if (ids[u] != ids[e.to])
+      uv.eb(ids[u], ids[e.to]);
   }
   sortunique(uv);
   return Graph<is_directed, Cost>(k, uv);

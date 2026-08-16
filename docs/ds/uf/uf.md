@@ -1,6 +1,10 @@
-## Unionfind
+## 概要
 
-### コンストラクタ
+UnionFind
+
+## 詳細なドキュメント
+
+#### コンストラクタ
 
 ```cpp
 UnionFind<class UFData, bool compress = true>(int n)
@@ -50,13 +54,11 @@ UnionFind<class UFData, bool compress = true>(int n)
 - `static void add_edge_same(UF &uf, int x, EWeight w)`
   - $x$ が代表元の連結成分の内部で重み $w$ の辺を追加するのに伴って、`uf` の `vdat` および `gdat` を書き換える関数
 
-### メンバ変数
+#### メンバ変数
 
 public なのは
 
 - `UFData::GData gdat`
-
-### メンバ関数
 
 #### leader
 
@@ -103,16 +105,13 @@ bool same(int x, int y)
 
 - $0 \leq x,y \lt n$
 
-
 ##### 計算量
 
 - `leader` と同じ
 
-
 ##### 計算量
 
 - `leader` と同じ
-
 
 #### get_vdata
 
@@ -121,7 +120,6 @@ UFData::VData get_vdata(int x)
 ```
 
 頂点 $x$ が属する連結成分の `UFData::VData` を取得する。
-
 
 ##### 制約
 

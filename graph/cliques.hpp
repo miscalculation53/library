@@ -35,7 +35,7 @@ void cliques(const GraphUndirected<Cost, is_erasable> &g, const F &f)
     repi(i, k)
     {
       adj[i][i] = true;
-      fec(e : g.out_edges(vs[i])) if (id[e.to] >= 0) adj[i][id[e.to]] = true;
+      fec(e : g.out_arcs(vs[i])) if (id[e.to] >= 0) adj[i][id[e.to]] = true;
     }
     vc<int> cur;
     auto dfs = [&](auto dfs, int i) -> void
@@ -72,8 +72,8 @@ void cliques(const GraphUndirected<Cost, is_erasable> &g, const F &f)
       if (id[v] == -2)
         continue;
       vc<int> vs = {v};
-      vs.reserve(g.out_edges(v).size() + 1);
-      fec(e : g.out_edges(v)) if (id[e.to] != -2) vs.eb(e.to);
+      vs.reserve(g.out_arcs(v).size() + 1);
+      fec(e : g.out_arcs(v)) if (id[e.to] != -2) vs.eb(e.to);
       sortunique(vs);
       const int k = vs.size();
       if (k <= b)

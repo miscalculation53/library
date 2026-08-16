@@ -1,6 +1,10 @@
-## テンプレート（ビット演算）
+## 概要
 
-### pow2, MASK
+テンプレート（ビット演算）
+
+## 詳細なドキュメント
+
+#### pow2, MASK
 
 ```cpp
 pow2(k) == (1ULL << k)
@@ -77,7 +81,7 @@ bool has_single_bit(ull x)
 
 $x$ が $2$ べきかどうかを返す。
 
-### lsb, msb
+#### lsb, msb
 
 ```cpp
 (1) ull lsb_pos(ull x)

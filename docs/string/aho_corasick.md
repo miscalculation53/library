@@ -1,8 +1,10 @@
-## Aho Corasick
+## 概要
 
 trie に、failure link と呼ばれる逆辺を追加する。failure link の行き先 $\mathrm{fail}[s]$ は、$s$ の最長接頭辞（注：ノードと文字列を同一視する）。加えて、$\mathrm{nxt}[s][c]$ という配列も持っている。これは $s$ から始めて、$c$ 番目の子がない間は failure link をたどっていき、$c$ 番目の子がある頂点が見つかったらその子を返すものである。
 
 Wikipedia の図が参考になりそう https://ja.wikipedia.org/wiki/%E3%82%A8%E3%82%A4%E3%83%9B%E2%80%93%E3%82%B3%E3%83%A9%E3%82%B7%E3%83%83%E3%82%AF%E6%B3%95
+
+## 詳細なドキュメント
 
 #### 求め方
 
@@ -26,7 +28,7 @@ $T_1, \dots, T_Q$ で trie と failure link を構築しておく。$S$ に従�
 
 ---
 
-### コンストラクタ
+#### コンストラクタ
 
 ```cpp
 AhoCorasick<int CHAR_NUM>(const vvc<C> &strs)
@@ -44,11 +46,9 @@ AhoCorasick<int CHAR_NUM>(const vvc<C> &strs)
 
 - $O(n \sigma)$
 
-### メンバ変数
+#### メンバ変数
 
 `Trie<CHAR_NUM> trie` を持つ。
-
-### メンバ関数
 
 #### failure
 

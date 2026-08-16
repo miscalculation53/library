@@ -3,8 +3,8 @@
 #include "template/template_all_but_modint.hpp"
 #include "math/modint/modint.hpp"
 #include "ds/segtree/sparse_lazy_segtree.hpp"
-#include "math/algebra/acted_monoid/add_sum.hpp"
-#include "math/algebra/acted_monoid/affine_sum.hpp"
+#include "algebra/acted_monoid/add_sum.hpp"
+#include "algebra/acted_monoid/affine_sum.hpp"
 
 struct ActedMonoidStringAssign
 {

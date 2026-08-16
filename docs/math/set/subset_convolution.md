@@ -1,4 +1,6 @@
-## subset convolution
+## 概要
+
+subset convolution を計算する。
 
 ### 定義
 
@@ -18,7 +20,7 @@ $\displaystyle c(u) = \sum_{\substack{u = s \cup t \\\\  \lvert u \rvert = \lver
 
 $f(s) = a(s) x^{\lvert s \rvert}, g(t) = b(t) x^{\lvert t \rvert}$ として $f$ と $g$ の or 畳み込み $h$ を計算すると、$[x^{\lvert u \rvert}] h(u) = c(u)$ となっている。
 
-### ライブラリ
+## 詳細なドキュメント
 
 #### subset_convolution
 

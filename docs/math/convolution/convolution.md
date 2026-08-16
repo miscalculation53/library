@@ -1,6 +1,8 @@
-## 畳み込み
+## 概要
 
 ACL の畳み込みにだいたい準拠。
+
+## 詳細なドキュメント
 
 #### convolution_point_get
 
@@ -13,7 +15,6 @@ $a$ と $b$ を畳み込んだときの $p$ 番目の要素を返す。長さが
 ##### 計算量
 
 - $O(\lvert a \rvert + \lvert b \rvert)$
-
 
 #### ntt, intt
 
@@ -33,7 +34,6 @@ $a$ に対し NTT / INTT を行う（破壊的に変更する）。
 ##### 計算量
 
 - $O(\lvert a \rvert \log \lvert a \rvert)$
-
 
 #### convolution
 

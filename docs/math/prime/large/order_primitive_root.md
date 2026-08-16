@@ -1,74 +1,8 @@
-## 元の位数と原始根
+## 概要
 
 素数 $p$ に対し、乗法群 $(\mathbb{Z}/p\mathbb{Z})^\times$ の元の位数や原始根を求めるライブラリ。
 
 約数ゼータ・メビウス変換が絡んでくることもしばしばある。
-
-### 概要
-
-#### 定義
-
-- 元 $1 \leq x < p$ の**位数**とは、$x^n \equiv 1 \pmod p$ を満たす最小の $n \geq 1$ のこと
-- $p$ の**原始根**とは、位数が $p-1$ であるような元のこと
-
-#### 性質
-
-- $a^m \equiv 1 \pmod p$ を満たす $m$ は位数の倍数
-  - 特に、位数は $p - 1$ の約数（フェルマーの小定理より $p-1$ は必ず満たす）
-- $g^a \equiv g^b \pmod p \iff a \equiv b \pmod{p-1}$
-  - 巡回群だから
-- $g^a$ の位数は $\dfrac{p-1}{\gcd(p-1, a)}$
-  - $d = \gcd(p-1, a)$ とおくと、$g^a$ の累乗として現れるのは $g^0, g^d, g^{2d}, \dots, g^{\left(\frac{p-1}{d}-1\right)d}$
-- 位数がちょうど $d$ の元の個数は $\phi(d)$（これは一般に巡回群についてもいえる）
-  - 約数ゼータ変換を考えると、位数が $d$ の約数であるような元の個数は $d$
-
-### ライブラリの使い方
-
-元の位数や原始根は、$p-1$ の素因数分解 $O(p^{1/4})$ 時間を除くと $O(\mathrm{polylog}\ p)$ 時間で求まる。特に、（原始根を底とする）**指数は**（離散対数 $O(\sqrt{p})$ 時間等でないと）**求まらないが、位数は求まる**。
-
-`ll` までとれる関数だが、`int` の範囲で計算できるならそうしてくれる（modint パートが int と ll で割と重さが変わる）。
-
-#### order_mod
-
-```cpp
-ll order_mod(ll x, ll p, vc<Primepower<ll>> fac)
-```
-
-$(\mathbb{Z}/p\mathbb{Z})^\times$ の元 $x$ の位数を求める。`fac` には $p-1$ の素因数分解形が入る。
-
-##### 制約
-
-- $p$ は素数
-- $x \not\equiv 0 \pmod p$
-
-##### 計算量
-
-- $O(\log p \log\log p)$
-
-ただし、`fac` の前計算に $O(p^{1/4})$ かかることに注意。
-
-
-#### primitive_root
-
-```cpp
-(1) ll primitive_root(ll p, vc<PrimePower<ll>> fac)
-(2) ll primitive_root_min(ll p, vc<PrimePower<ll>> fac)
-```
-
-(1) では $p$ の原始根を $1$ つ求める。(2) では $p$ の最小の原始根を求める。`fac` には $p-1$ の素因数分解形が入る。
-
-##### 制約
-
-- $p$ は素数
-
-
-##### 計算量
-
-- (1) は期待 $O((\log p) (\log\log p)^2)$
-- (2) は、原始根の分布に極端な偏りがないと仮定すれば期待 $O((\log p) (\log\log p)^2)$
-  - 実際は最小の原始根が大きめな $p$ があるので、何か $1$ つ欲しいだけなら (1) のほうが高速
-
-ただし、`fac` の前計算に $O(p^{1/4})$ かかることに注意。
 
 ### 中身
 
@@ -135,3 +69,65 @@ $n \geq 2$ の原始根が存在する条件は、$n$ が $2, 4, p^e, 2p^e$（$p
 - https://integers.hatenablog.com/entry/2016/07/24/163831
 - https://en.wikipedia.org/wiki/Primitive_root_modulo_n
 - https://ocw.mit.edu/courses/18-781-theory-of-numbers-spring-2012/resources/mit18_781s12_lec8/
+
+## 詳細なドキュメント
+
+#### 定義
+
+- 元 $1 \leq x < p$ の**位数**とは、$x^n \equiv 1 \pmod p$ を満たす最小の $n \geq 1$ のこと
+- $p$ の**原始根**とは、位数が $p-1$ であるような元のこと
+
+#### 性質
+
+- $a^m \equiv 1 \pmod p$ を満たす $m$ は位数の倍数
+  - 特に、位数は $p - 1$ の約数（フェルマーの小定理より $p-1$ は必ず満たす）
+- $g^a \equiv g^b \pmod p \iff a \equiv b \pmod{p-1}$
+  - 巡回群だから
+- $g^a$ の位数は $\dfrac{p-1}{\gcd(p-1, a)}$
+  - $d = \gcd(p-1, a)$ とおくと、$g^a$ の累乗として現れるのは $g^0, g^d, g^{2d}, \dots, g^{\left(\frac{p-1}{d}-1\right)d}$
+- 位数がちょうど $d$ の元の個数は $\phi(d)$（これは一般に巡回群についてもいえる）
+  - 約数ゼータ変換を考えると、位数が $d$ の約数であるような元の個数は $d$
+
+元の位数や原始根は、$p-1$ の素因数分解 $O(p^{1/4})$ 時間を除くと $O(\mathrm{polylog}\ p)$ 時間で求まる。特に、（原始根を底とする）**指数は**（離散対数 $O(\sqrt{p})$ 時間等でないと）**求まらないが、位数は求まる**。
+
+`ll` までとれる関数だが、`int` の範囲で計算できるならそうしてくれる（modint パートが int と ll で割と重さが変わる）。
+
+#### order_mod
+
+```cpp
+ll order_mod(ll x, ll p, vc<Primepower<ll>> fac)
+```
+
+$(\mathbb{Z}/p\mathbb{Z})^\times$ の元 $x$ の位数を求める。`fac` には $p-1$ の素因数分解形が入る。
+
+##### 制約
+
+- $p$ は素数
+- $x \not\equiv 0 \pmod p$
+
+##### 計算量
+
+- $O(\log p \log\log p)$
+
+ただし、`fac` の前計算に $O(p^{1/4})$ かかることに注意。
+
+#### primitive_root
+
+```cpp
+(1) ll primitive_root(ll p, vc<PrimePower<ll>> fac)
+(2) ll primitive_root_min(ll p, vc<PrimePower<ll>> fac)
+```
+
+(1) では $p$ の原始根を $1$ つ求める。(2) では $p$ の最小の原始根を求める。`fac` には $p-1$ の素因数分解形が入る。
+
+##### 制約
+
+- $p$ は素数
+
+##### 計算量
+
+- (1) は期待 $O((\log p) (\log\log p)^2)$
+- (2) は、原始根の分布に極端な偏りがないと仮定すれば期待 $O((\log p) (\log\log p)^2)$
+  - 実際は最小の原始根が大きめな $p$ があるので、何か $1$ つ欲しいだけなら (1) のほうが高速
+
+ただし、`fac` の前計算に $O(p^{1/4})$ かかることに注意。

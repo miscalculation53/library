@@ -2,7 +2,7 @@
 
 #include "../template/template_all_but_modint.hpp"
 
-#include "../math/algebra/algebra_base.hpp"
+#include "../algebra/algebra_base.hpp"
 
 /**
  * @brief SWAG

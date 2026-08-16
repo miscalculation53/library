@@ -1,4 +1,4 @@
-## 線形マトロイド交叉（乱択）
+## 概要
 
 https://atcoder.jp/contests/abc399/editorial/12546?lang=ja
 

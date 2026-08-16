@@ -1,4 +1,4 @@
-## ゼータ・メビウス変換
+## 概要
 
 ゼータ変換には可換モノイドが、メビウス変換には可換群が載る。以下に述べる定義は、演算を $+$ とした場合のもの。
 
@@ -24,8 +24,7 @@ $\mu' \zeta' a (s) = a(s)$
 
 $\displaystyle \mu' a(s) = \sum_{s \subseteq t} (-1)^{\lvert t \setminus s \rvert} a(t)$
 
-
-### ライブラリ
+## 詳細なドキュメント
 
 #### zeta_subset
 
@@ -37,7 +36,6 @@ vc<M::S> zeta_subset(vc<M::S> a)
 
 - `M` は**可換**モノイド
 - $\lvert a \rvert$ は $0$ または $2$ べき
-
 
 ##### 計算量
 
@@ -55,7 +53,6 @@ vc<G::S> mobius_subset(vc<G::S> a)
 
 - `G` は**可換**群
 - $\lvert a \rvert$ は $0$ または $2$ べき
-
 
 ##### 計算量
 

@@ -2,7 +2,7 @@
 
 #include "../../template/template_all_but_modint.hpp"
 
-#include "../../math/algebra/algebra_basic_ops.hpp"
+#include "../../algebra/algebra_basic_ops.hpp"
 
 /**
  * @brief クロネッカー冪の作用

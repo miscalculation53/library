@@ -1,4 +1,4 @@
-## mod 素数の平方根
+## 概要
 
 Tonelli–Shanks で実装しており $O(\log^2 p)$。 https://37zigen.com/tonelli-shanks-algorithm/
 
@@ -11,6 +11,8 @@ TODO：
 
 - 平方根が存在するのは $[1, p-1]$ のうち半分の $(p-1)/2$ 個。
 - $n \neq 0$ の平方根が存在するとき、それは $\pm x$ の $2$ 個。
+
+## 詳細なドキュメント
 
 #### sqrt_mod
 
