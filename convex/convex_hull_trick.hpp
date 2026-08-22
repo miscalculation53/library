@@ -65,16 +65,6 @@ private:
   optional<T> last_x;
   int add_cnt = 0, qdir = 0;
 
-  static T inf() { return T(infty); }
-  static T ninf() { return -T(infty); }
-  static T empty_value()
-  {
-    if constexpr (sgn < 0)
-      return inf();
-    else
-      return ninf();
-  }
-
   static Line line(const Node &p) { return {sgn * p.a, sgn * p.b, p.id}; }
   static T eval(const Node &p, const T &x) { return sgn * (p.a * x + p.b); }
 
@@ -91,11 +81,11 @@ private:
   {
     if (y == st.end())
     {
-      x->r = inf();
+      x->r = T(infty);
       return false;
     }
     if (x->a == y->a)
-      x->r = x->b > y->b ? inf() : ninf();
+      x->r = x->b > y->b ? T(infty) : -T(infty);
     else
       x->r = border(*x, *y);
     return x->r >= y->r;
@@ -112,7 +102,7 @@ public:
   {
     add_cnt++;
     reset_monotone_query();
-    Node p{sgn * a, sgn * b, inf(), id};
+    Node p{sgn * a, sgn * b, T(infty), id};
     auto same = st.lower_bound(p);
     if (same != st.end() && same->a == p.a)
     {
@@ -132,7 +122,11 @@ public:
   // (値, 直線)
   pair<T, Line> query(const T &x) const
   {
-    if (st.empty()) return {empty_value(), {T(0), empty_value(), -1}};
+    if (st.empty())
+    {
+      const T e = sgn < 0 ? T(infty) : -T(infty);
+      return {e, {T(0), e, -1}};
+    }
     auto it = st.lower_bound(x);
     if (it == st.end()) --it;
     const Node &p = *it;
@@ -143,7 +137,11 @@ public:
   // x は単調 (増減方向は自動で判定される)
   pair<T, Line> query_monotone(const T &x)
   {
-    if (st.empty()) return {empty_value(), {T(0), empty_value(), -1}};
+    if (st.empty())
+    {
+      const T e = sgn < 0 ? T(infty) : -T(infty);
+      return {e, {T(0), e, -1}};
+    }
     if (!qit)
     {
       qit = st.lower_bound(x);
@@ -180,11 +178,11 @@ public:
   {
     vc<Segment> res;
     res.reserve(st.size());
-    T l = ninf();
+    T l = -T(infty);
     for (auto it = st.begin(); it != st.end(); ++it)
     {
       auto nxt = next(it);
-      T r = nxt == st.end() ? inf() : it->r;
+      T r = nxt == st.end() ? T(infty) : it->r;
       res.eb(Segment{line(*it), l, r});
       l = r;
     }
@@ -225,16 +223,6 @@ private:
   optional<T> last_x;
   int add_cnt = 0, adir = 0, qpos = -1, qdir = 0;
 
-  static T inf() { return T(infty); }
-  static T ninf() { return -T(infty); }
-  static T empty_value()
-  {
-    if constexpr (sgn < 0)
-      return inf();
-    else
-      return ninf();
-  }
-
   static Line line(const Node &p) { return {sgn * p.a, sgn * p.b, p.id}; }
   static T eval(const Node &p, const T &x) { return sgn * (p.a * x + p.b); }
 
@@ -261,7 +249,7 @@ private:
       dq.pop_back();
     }
     if (!dq.empty()) dq.back().r = border(dq.back(), p);
-    p.r = inf();
+    p.r = T(infty);
     dq.eb(p);
   }
 
@@ -278,7 +266,7 @@ private:
       if (r < dq.front().r) break;
       dq.pop_front();
     }
-    p.r = dq.empty() ? inf() : border(p, dq.front());
+    p.r = dq.empty() ? T(infty) : border(p, dq.front());
     dq.emplace_front(p);
   }
 
@@ -291,7 +279,7 @@ public:
   {
     add_cnt++;
     reset_monotone_query();
-    Node p{sgn * a, sgn * b, inf(), id};
+    Node p{sgn * a, sgn * b, T(infty), id};
     if (last_a)
     {
       int d = (*last_a < p.a) - (p.a < *last_a);
@@ -311,7 +299,11 @@ public:
   // x における最適値と、それを達成する直線を返す。空なら infty か -infty とダミー直線を返す
   pair<T, Line> query(const T &x) const
   {
-    if (dq.empty()) return {empty_value(), {T(0), empty_value(), -1}};
+    if (dq.empty())
+    {
+      const T e = sgn < 0 ? T(infty) : -T(infty);
+      return {e, {T(0), e, -1}};
+    }
     auto it = lower_bound(dq.begin(), dq.end(), x,
                           [](const Node &p, const T &x) { return p.r < x; });
     if (it == dq.end()) --it;
@@ -322,7 +314,11 @@ public:
   // 単調な x における最適値と直線を返す。増減方向は自動で判定する
   pair<T, Line> query_monotone(const T &x)
   {
-    if (dq.empty()) return {empty_value(), {T(0), empty_value(), -1}};
+    if (dq.empty())
+    {
+      const T e = sgn < 0 ? T(infty) : -T(infty);
+      return {e, {T(0), e, -1}};
+    }
     if (qpos == -1)
     {
       qpos = lower_bound(dq.begin(), dq.end(), x,
@@ -359,10 +355,10 @@ public:
   {
     vc<Segment> res;
     res.reserve(dq.size());
-    T l = ninf();
+    T l = -T(infty);
     repi(i, dq.size())
     {
-      T r = i + 1 == SZ(dq) ? inf() : dq[i].r;
+      T r = i + 1 == SZ(dq) ? T(infty) : dq[i].r;
       res.eb(Segment{line(dq[i]), l, r});
       l = r;
     }
