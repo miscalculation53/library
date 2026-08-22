@@ -102,16 +102,16 @@ int main() { return header - 1; }
                 [root], library_root=root
             ).bundle(source)
         self.assertIn(
-            "// https://miscalculation53.github.io/library/"
-            "ds/dep.hpp.html#unbundled\n",
+            "// https://github.com/miscalculation53/library/tree/wip/"
+            "ds/dep.hpp\n",
             bundled,
         )
         self.assertIn(
-            "// https://miscalculation53.github.io/library/"
-            "ds/header.hpp.html#unbundled\n",
+            "// https://github.com/miscalculation53/library/tree/wip/"
+            "ds/header.hpp\n",
             bundled,
         )
-        self.assertNotIn("main.cpp.html", bundled)
+        self.assertNotIn("tree/wip/main.cpp", bundled)
 
     def test_fast_bundler_expands_include_guard_headers(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -212,25 +212,25 @@ int main() { return header - 1; }
             library_root=root,
         )
         rendered = document.render(set(), keep_line=False)
-        self.assertEqual(rendered.count("#unbundled"), 1)
+        self.assertEqual(rendered.count("/tree/wip/"), 1)
         self.assertIn(
-            "// https://miscalculation53.github.io/library/"
-            "math/rational.hpp.html#unbundled\n",
+            "// https://github.com/miscalculation53/library/tree/wip/"
+            "math/rational.hpp\n",
             rendered,
         )
-        self.assertNotIn("dependency.hpp.html", rendered)
+        self.assertNotIn("tree/wip/dependency.hpp", rendered)
 
     def test_cleanup_comment_stripping_preserves_source_links(self) -> None:
         source = (
             "// ordinary comment\n"
-            "// https://miscalculation53.github.io/library/"
-            "ds/segtree.hpp.html#unbundled\n"
+            "// https://github.com/miscalculation53/library/tree/wip/"
+            "ds/segtree.hpp\n"
             "int value; // trailing comment\n"
         )
         cleaned = submit_code.strip_cleanup_comments(source)
         self.assertNotIn("ordinary comment", cleaned)
         self.assertNotIn("trailing comment", cleaned)
-        self.assertIn("ds/segtree.hpp.html#unbundled", cleaned)
+        self.assertIn("library/tree/wip/ds/segtree.hpp", cleaned)
 
     def test_preprocessor_uses_real_system_headers(self) -> None:
         cxx = shutil.which("g++-15") or shutil.which("g++-14")
@@ -238,7 +238,7 @@ int main() { return header - 1; }
             self.skipTest("GNU C++ compiler is unavailable")
         reporter = submit_code.Reporter()
         source = '''// removed comment
-// https://miscalculation53.github.io/library/ds/segtree.hpp.html#unbundled
+// https://github.com/miscalculation53/library/tree/wip/ds/segtree.hpp
 #include <bits/stdc++.h>
 #if __cplusplus >= 202302L
 int main() { return 0; }
@@ -260,7 +260,7 @@ int invalid = ;
         self.assertIn("int main()", cleaned)
         self.assertNotIn("invalid", cleaned)
         self.assertNotIn("removed comment", cleaned)
-        self.assertIn("ds/segtree.hpp.html#unbundled", cleaned)
+        self.assertIn("library/tree/wip/ds/segtree.hpp", cleaned)
         self.assertIn("#include <bits/stdc++.h>", cleaned)
 
     def test_compiler_unused_macro_warning_is_enabled(self) -> None:

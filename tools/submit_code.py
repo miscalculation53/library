@@ -39,9 +39,11 @@ INCLUDE_GUARD_OPEN_DIRECTIVE = re.compile(
 IDENTIFIER = re.compile(r"\b[_A-Za-z]\w*\b")
 DEFAULT_KEEP_FUNCTIONS = {"read", "write", "print", "init", "main2", "test"}
 DEFAULT_BYTE_LIMIT = 65536
-LIBRARY_SITE_BASE = "https://miscalculation53.github.io/library/"
+LIBRARY_SOURCE_BASE = "https://github.com/miscalculation53/library/tree/wip/"
+LEGACY_LIBRARY_SITE_BASE = "https://miscalculation53.github.io/library/"
 LIBRARY_SOURCE_LINK = re.compile(
-    rf"^\s*//\s*({re.escape(LIBRARY_SITE_BASE)}\S+\.html#unbundled)\s*$"
+    rf"^\s*//\s*((?:{re.escape(LIBRARY_SOURCE_BASE)}\S+\.hpp|"
+    rf"{re.escape(LEGACY_LIBRARY_SITE_BASE)}\S+\.html#unbundled))\s*$"
 )
 SOURCE_LINK_PRAGMA = re.compile(
     r"^\s*#\s*pragma\s+submit_code_source_link\s+(\d+)\s*$"
@@ -66,7 +68,7 @@ def library_source_url(path: Path, library_root: Path | None) -> str | None:
     if relative.suffix != ".hpp":
         return None
     encoded = quote(relative.as_posix(), safe="/._-")
-    return f"{LIBRARY_SITE_BASE}{encoded}.html#unbundled"
+    return f"{LIBRARY_SOURCE_BASE}{encoded}"
 
 
 def source_link_comment(url: str) -> str:
