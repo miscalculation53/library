@@ -13,7 +13,7 @@
 template <class T>
 struct ActedMonoidUpdSum
 {
-  using M = MonoidSumWithLength<T>;
+  using M = MonoidLenSum<T>;
   using MF = MonoidUpdFlag<T>;
   using S = typename M::S;
   using F = typename MF::S;

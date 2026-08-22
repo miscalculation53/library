@@ -2,6 +2,7 @@
 
 #include "../template/template_all_but_modint.hpp"
 
+#include "../math/rational.hpp"
 #include "../utils/is_integral_ext.hpp"
 #include "../utils/larger_int.hpp"
 
@@ -10,11 +11,13 @@
  * @docs docs/convex/halfplane_intersection.md
  */
 
-template <class T = ll, class Calc = larger_int_t<T>, class Real = long double>
+template <class T = ll, class Calc = larger_int_t<larger_int_t<T>>>
 struct HalfPlaneIntersection
 {
-  static_assert(is_integral_ext<T> || is_floating_point_v<T>);
-  static_assert(is_signed_ext<T> || is_floating_point_v<T>);
+  static_assert(is_integral_ext<T> && is_signed_ext<T>);
+  static_assert(is_integral_ext<Calc> && is_signed_ext<Calc>);
+
+  using Fraction = Rational<Calc>;
 
   struct HalfPlane
   {
@@ -24,7 +27,7 @@ struct HalfPlaneIntersection
 
   struct Point
   {
-    Real x, y;
+    Fraction x, y;
   };
 
   enum class Status
@@ -56,16 +59,7 @@ private:
 
   vc<HalfPlane> hps;
   T infty;
-  Real eps;
   int add_cnt = 0;
-
-  int sign(Calc x) const
-  {
-    if constexpr (is_integral_ext<T>)
-      return (x > 0) - (x < 0);
-    else
-      return (x > Calc(eps)) - (x < -Calc(eps));
-  }
 
   static Calc det(const Line &p, const Line &q)
   {
@@ -88,75 +82,60 @@ private:
     int ph = half(p), qh = half(q);
     if (ph != qh) return ph < qh;
     Calc cr = det(p, q);
-    if (cr != 0) return cr > 0;
-    return false;
+    return cr != 0 && cr > 0;
   }
 
-  bool parallel(const Line &p, const Line &q) const { return sign(det(p, q)) == 0; }
+  static bool parallel(const Line &p, const Line &q) { return det(p, q) == 0; }
 
-  bool same_direction(const Line &p, const Line &q) const
+  static bool same_direction(const Line &p, const Line &q)
   {
-    return parallel(p, q) && sign(dot_normal(p, q)) > 0;
+    return parallel(p, q) && dot_normal(p, q) > 0;
   }
 
-  bool stricter(const Line &p, const Line &q) const
+  static bool stricter(const Line &p, const Line &q)
   {
-    if constexpr (is_integral_ext<T>)
+    Calc z;
+    if (q.a != 0)
     {
-      Calc z;
-      if (q.a != 0)
-      {
-        z = Calc(p.c) * Calc(q.a) - Calc(p.a) * Calc(q.c);
-        if (q.a < 0) z = -z;
-      }
-      else
-      {
-        z = Calc(p.c) * Calc(q.b) - Calc(p.b) * Calc(q.c);
-        if (q.b < 0) z = -z;
-      }
-      return z > 0;
+      z = Calc(p.c) * Calc(q.a) - Calc(p.a) * Calc(q.c);
+      if (q.a < 0) z = -z;
     }
     else
     {
-      Real pn = hypot(Real(p.a), Real(p.b));
-      Real qn = hypot(Real(q.a), Real(q.b));
-      return Real(p.c) / pn > Real(q.c) / qn + eps;
+      z = Calc(p.c) * Calc(q.b) - Calc(p.b) * Calc(q.c);
+      if (q.b < 0) z = -z;
     }
+    return z > 0;
   }
 
   static FractionPoint intersection(const Line &p, const Line &q)
   {
-    Calc den = det(p, q);
     FractionPoint res{
         Calc(p.b) * Calc(q.c) - Calc(q.b) * Calc(p.c),
-        Calc(p.c) * Calc(q.a) - Calc(q.c) * Calc(p.a), den};
+        Calc(p.c) * Calc(q.a) - Calc(q.c) * Calc(p.a), det(p, q)};
     if (res.den < 0) res.x = -res.x, res.y = -res.y, res.den = -res.den;
     return res;
   }
 
-  bool outside(const Line &h, const FractionPoint &p) const
+  static Calc side(const Line &h, const FractionPoint &p)
   {
-    if constexpr (is_integral_ext<T>)
-      return Calc(h.a) * p.x + Calc(h.b) * p.y + Calc(h.c) * p.den > 0;
-    else
-      return (Real(h.a) * Real(p.x) + Real(h.b) * Real(p.y)) / Real(p.den) +
-                 Real(h.c) >
-             eps;
+    return Calc(h.a) * p.x + Calc(h.b) * p.y + Calc(h.c) * p.den;
   }
+
+  static bool outside(const Line &h, const FractionPoint &p) { return side(h, p) > 0; }
 
   static Point point(const FractionPoint &p)
   {
-    return {Real(p.x) / Real(p.den), Real(p.y) / Real(p.den)};
+    return {Fraction(p.x, p.den), Fraction(p.y, p.den)};
   }
 
   static HalfPlane halfplane(const Line &h) { return {h.a, h.b, h.c, h.id}; }
 
 public:
-  // 空の半平面集合を作る。infty は非有界判定用の内部の枠、eps は実数比較の誤差。
-  explicit HalfPlaneIntersection(T infty = T(INF) / T(2), Real eps = Real(EPS))
-      : infty(infty), eps(eps)
+  // 空の半平面集合を作る。infty は非有界判定用の内部の枠に使う。
+  explicit HalfPlaneIntersection(T infty = numeric_limits<T>::max() / T(2)) : infty(infty)
   {
-    assert(infty > 0 && eps >= 0);
+    assert(infty > 0);
   }
 
   // ax + by + c <= 0 を追加する。id は 0 始まりの追加順になる。
@@ -176,13 +155,12 @@ public:
     ls.reserve(hps.size() + 4);
     for (const HalfPlane &h : hps)
     {
-      Line p{h.a, h.b, h.c, h.id, false};
-      if (sign(Calc(p.a)) == 0 && sign(Calc(p.b)) == 0)
+      if (h.a == 0 && h.b == 0)
       {
-        if (sign(Calc(p.c)) > 0) return {Status::Empty, {}, {}};
+        if (h.c > 0) return {Status::Empty, {}, {}};
         continue;
       }
-      ls.eb(p);
+      ls.eb(Line{h.a, h.b, h.c, h.id, false});
     }
     ls.eb(Line{1, 0, -infty, -1, true});
     ls.eb(Line{-1, 0, -infty, -1, true});
@@ -243,21 +221,20 @@ public:
 
     int n = dq.size();
     vc<FractionPoint> ps(n);
-    vc<Point> clipped(n);
     repi(i, n)
     {
       const Line &p = dq[i], &q = dq[(i + 1) % n];
       if (parallel(p, q)) return {Status::Empty, {}, {}};
       ps[i] = intersection(p, q);
-      clipped[i] = point(ps[i]);
     }
-    Real area = 0;
-    repi(i, n)
+    bool has_interior = false;
+    optional<Line> edge;
+    repi(i, n) if (side(dq[(i + n - 1) % n], ps[i]) < 0)
     {
-      const Point &p = clipped[i], &q = clipped[(i + 1) % n];
-      area += p.x * q.y - p.y * q.x;
+      if (edge && !parallel(*edge, dq[i])) has_interior = true;
+      if (!edge) edge = dq[i];
     }
-    if (abs(area) <= eps) return {Status::Empty, {}, {}};
+    if (!has_interior) return {Status::Empty, {}, {}};
 
     bool unbounded = false;
     vc<HalfPlane> boundaries;
@@ -269,9 +246,9 @@ public:
 
     vc<Point> vertices;
     if (!unbounded)
-      vertices = std::move(clipped);
+      for (const FractionPoint &p : ps) vertices.eb(point(p));
     else
-      repi(i, n) if (!dq[i].box && !dq[(i + 1) % n].box) vertices.eb(clipped[i]);
+      repi(i, n) if (!dq[i].box && !dq[(i + 1) % n].box) vertices.eb(point(ps[i]));
     return {unbounded ? Status::Unbounded : Status::Bounded,
             std::move(boundaries), std::move(vertices)};
   }

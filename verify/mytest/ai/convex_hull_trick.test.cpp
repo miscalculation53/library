@@ -5,7 +5,7 @@
 #include "convex/convex_hull_trick.hpp"
 
 // Test focus: min/max objectives, both slope modes, IDs, segments, empty results,
-// monotone queries, and rational/floating-point coordinates.
+// monotone queries, and rational/floating-point types.
 mt19937_64 cht_rng(1234567);
 
 ll random_ll(ll l, ll r)
@@ -33,11 +33,9 @@ void verify_hull(CHT &cht, const vc<pair<ll, ll>> &lines)
 {
   rep3(x, -100, 101, 1)
   {
-    auto [value, line] = cht.query_with_line(x);
-    auto line_only = cht.query_line(x);
+    auto [value, line] = cht.query(x);
     assert(value == brute<minimize>(lines, x));
     assert(value == line.a * x + line.b);
-    assert(line_only.a * x + line_only.b == value);
     assert(0 <= line.id && line.id < SZ(lines));
     assert((lines[line.id] == pair{line.a, line.b}));
   }
@@ -77,12 +75,12 @@ void verify_hull(CHT &cht, const vc<pair<ll, ll>> &lines)
   vc<ll> queries;
   rep3(x, -100, 101, 1) queries.eb(x);
   cht.reset_monotone_query();
-  for (ll x : queries) assert(cht.query_monotone(x) == brute<minimize>(lines, x));
+  for (ll x : queries) assert(cht.query_monotone(x).first == brute<minimize>(lines, x));
   reverse(queries.begin(), queries.end());
   cht.reset_monotone_query();
   for (ll x : queries)
   {
-    auto [value, line] = cht.query_monotone_with_line(x);
+    auto [value, line] = cht.query_monotone(x);
     assert(value == brute<minimize>(lines, x));
     assert(value == line.a * x + line.b);
     assert(0 <= line.id && line.id < SZ(lines));
@@ -135,19 +133,17 @@ void test_monotone_slope()
 void test_empty_and_clear()
 {
   ConvexHullTrick<ll, less<>, 1234567> min_cht;
-  assert(min_cht.query(10) == 1234567);
-  assert((min_cht.query_line(10) == ConvexHullTrickLine<ll>{0, 1234567, -1}));
-  assert((min_cht.query_with_line(10).second == ConvexHullTrickLine<ll>{0, 1234567, -1}));
+  assert(min_cht.query(10).first == 1234567);
+  assert((min_cht.query(10).second == ConvexHullTrickLine<ll>{0, 1234567, -1}));
 
   ConvexHullTrickMonotoneSlope<ll, greater<>, 7654321> max_cht;
-  assert(max_cht.query(-10) == -7654321);
-  assert((max_cht.query_monotone_line(-10) == ConvexHullTrickLine<ll>{0, -7654321, -1}));
-  assert((max_cht.query_monotone_with_line(-10).second == ConvexHullTrickLine<ll>{0, -7654321, -1}));
+  assert(max_cht.query(-10).first == -7654321);
+  assert((max_cht.query_monotone(-10).second == ConvexHullTrickLine<ll>{0, -7654321, -1}));
 
   min_cht.add_line(3, 4, 42);
-  assert(min_cht.query_with_line(5).second.id == 42);
+  assert(min_cht.query(5).second.id == 42);
   min_cht.clear();
-  assert(min_cht.query(5) == 1234567);
+  assert(min_cht.query(5).first == 1234567);
 }
 
 void test_segment_boundaries()
@@ -163,8 +159,26 @@ void test_segment_boundaries()
   assert(segments[1].left == -1);
   assert(segments[1].right == ll(INF));
   assert(segments[1].line.id == 20);
-  assert(cht.query_with_line(-1).second.id == 10);
-  assert(cht.query_with_line(0).second.id == 20);
+  assert(cht.query(-1).second.id == 10);
+  assert(cht.query(0).second.id == 20);
+}
+
+template <class CHT>
+void verify_query_outside_infty()
+{
+  CHT cht;
+  cht.add_line(0, 0, 0);
+  cht.add_line(1, 0, 1);
+  assert(cht.query(-100).second.id == 1);
+  assert(cht.query(100).second.id == 0);
+  assert(cht.query_monotone(-100).second.id == 1);
+  assert(cht.query_monotone(100).second.id == 0);
+}
+
+void test_query_outside_infty()
+{
+  verify_query_outside_infty<ConvexHullTrick<ll, less<>, 10>>();
+  verify_query_outside_infty<ConvexHullTrickMonotoneSlope<ll, less<>, 10>>();
 }
 
 template <class CHT>
@@ -174,13 +188,13 @@ void verify_auto_id()
   cht.add_line(1, 0);
   cht.add_line(0, -5, 42);
   cht.add_line(-1, 0);
-  assert(cht.query_with_line(-10).second.id == 0);
-  assert(cht.query_with_line(0).second.id == 42);
-  assert(cht.query_with_line(10).second.id == 2);
+  assert(cht.query(-10).second.id == 0);
+  assert(cht.query(0).second.id == 42);
+  assert(cht.query(10).second.id == 2);
 
   cht.clear();
   cht.add_line(0, 1);
-  assert(cht.query_with_line(0).second.id == 0);
+  assert(cht.query(0).second.id == 0);
 }
 
 void test_auto_id()
@@ -206,7 +220,7 @@ void test_floating_point()
     long double x = random_ll(-1000, 1000) / 13.0L;
     long double ans = numeric_limits<long double>::max();
     for (auto [a, b] : lines) ans = min(ans, a * x + b);
-    assert(abs(cht.query(x) - ans) < 1e-15L);
+    assert(abs(cht.query(x).first - ans) < 1e-15L);
   }
 #endif
 }
@@ -219,12 +233,10 @@ void test_rational()
   vc<pair<ll, ll>> lines;
   repi(i, 50) lines.eb(random_ll(-100, 100), random_ll(-100, 100));
 
-  ConvexHullTrick<ll, Compare, INF, R> coordinate_cht;
   ConvexHullTrick<R, Compare> direct_cht;
   repi(i, lines.size())
   {
     auto [a, b] = lines[i];
-    coordinate_cht.add_line(a, b, i);
     direct_cht.add_line(R(a), R(b), i);
   }
 
@@ -239,17 +251,14 @@ void test_rational()
         expected = value;
     }
 
-    auto [value1, line1] = coordinate_cht.query_with_line(x);
-    auto [value2, line2] = direct_cht.query_with_line(x);
-    assert(value1 == *expected && value2 == *expected);
-    assert(value1 == R(line1.a) * x + line1.b);
-    assert(value2 == line2.a * x + line2.b);
+    auto [value, line] = direct_cht.query(x);
+    assert(value == *expected);
+    assert(value == line.a * x + line.b);
   }
 
   vc<R> queries;
   repi(_, 500) queries.eb(random_ll(-100, 100), random_ll(1, 100));
   sort(ALL(queries));
-  coordinate_cht.reset_monotone_query();
   direct_cht.reset_monotone_query();
   for (R x : queries)
   {
@@ -260,13 +269,12 @@ void test_rational()
       if (!expected || (minimize ? value < *expected : *expected < value))
         expected = value;
     }
-    assert(coordinate_cht.query_monotone(x) == *expected);
-    assert(direct_cht.query_monotone(x) == *expected);
+    assert(direct_cht.query_monotone(x).first == *expected);
   }
 
   sort(lines.begin(), lines.end());
-  ConvexHullTrickMonotoneSlope<ll, Compare, INF, R> monotone_cht;
-  repi(i, lines.size()) monotone_cht.add_line(lines[i].first, lines[i].second, i);
+  ConvexHullTrickMonotoneSlope<R, Compare> monotone_cht;
+  repi(i, lines.size()) monotone_cht.add_line(R(lines[i].first), R(lines[i].second), i);
   repi(_, 500)
   {
     R x(random_ll(-100, 100), random_ll(1, 100));
@@ -277,24 +285,24 @@ void test_rational()
       if (!expected || (minimize ? value < *expected : *expected < value))
         expected = value;
     }
-    assert(monotone_cht.query(x) == *expected);
+    assert(monotone_cht.query(x).first == *expected);
   }
 }
 
 void test_long_double_coordinate()
 {
-  ConvexHullTrick<ll, less<>, INF, long double> cht;
+  ConvexHullTrick<long double> cht;
   vc<pair<ll, ll>> lines;
   repi(i, 50)
   {
     ll a = random_ll(-1000, 1000), b = random_ll(-1000, 1000);
     lines.eb(a, b);
-    cht.add_line(a, b, i);
+    cht.add_line((long double)a, (long double)b, i);
   }
   repi(_, 500)
   {
     ll x = random_ll(-1000, 1000), y = random_ll(1, 1000);
-    auto [value, line] = cht.query_with_line((long double)x / y);
+    auto [value, line] = cht.query((long double)x / y);
     (void)value;
     i128 got = i128(line.a) * x + i128(line.b) * y;
     i128 expected = numeric_limits<i128>::max();
@@ -311,6 +319,7 @@ int main()
   test_monotone_slope<false>();
   test_empty_and_clear();
   test_segment_boundaries();
+  test_query_outside_infty();
   test_auto_id();
   test_floating_point();
   test_rational<true>();

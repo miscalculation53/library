@@ -17,6 +17,7 @@ import sys
 import tempfile
 import time
 from typing import Iterable, Sequence
+from urllib.parse import quote
 
 
 LINE_DIRECTIVE = re.compile(
@@ -38,6 +39,13 @@ INCLUDE_GUARD_OPEN_DIRECTIVE = re.compile(
 IDENTIFIER = re.compile(r"\b[_A-Za-z]\w*\b")
 DEFAULT_KEEP_FUNCTIONS = {"read", "write", "print", "init", "main2", "test"}
 DEFAULT_BYTE_LIMIT = 65536
+LIBRARY_SITE_BASE = "https://miscalculation53.github.io/library/"
+LIBRARY_SOURCE_LINK = re.compile(
+    rf"^\s*//\s*({re.escape(LIBRARY_SITE_BASE)}\S+\.html#unbundled)\s*$"
+)
+SOURCE_LINK_PRAGMA = re.compile(
+    r"^\s*#\s*pragma\s+submit_code_source_link\s+(\d+)\s*$"
+)
 
 
 class ToolError(RuntimeError):
@@ -46,6 +54,55 @@ class ToolError(RuntimeError):
 
 class FastBundleUnsupported(ToolError):
     pass
+
+
+def library_source_url(path: Path, library_root: Path | None) -> str | None:
+    if library_root is None:
+        return None
+    try:
+        relative = path.resolve().relative_to(library_root.resolve())
+    except ValueError:
+        return None
+    if relative.suffix != ".hpp":
+        return None
+    encoded = quote(relative.as_posix(), safe="/._-")
+    return f"{LIBRARY_SITE_BASE}{encoded}.html#unbundled"
+
+
+def source_link_comment(url: str) -> str:
+    return f"// {url}\n"
+
+
+def protect_source_links(text: str) -> tuple[str, list[str]]:
+    output: list[str] = []
+    links: list[str] = []
+    for line in text.splitlines(keepends=True):
+        match = LIBRARY_SOURCE_LINK.match(line.rstrip("\r\n"))
+        if match is None:
+            output.append(line)
+            continue
+        links.append(source_link_comment(match.group(1)))
+        output.append(f"#pragma submit_code_source_link {len(links) - 1}\n")
+    return "".join(output), links
+
+
+def restore_source_links(text: str, links: Sequence[str]) -> str:
+    output: list[str] = []
+    for line in text.splitlines(keepends=True):
+        match = SOURCE_LINK_PRAGMA.match(line.rstrip("\r\n"))
+        if match is None:
+            output.append(line)
+            continue
+        index = int(match.group(1))
+        if index >= len(links):
+            raise ToolError("invalid protected source-link marker")
+        output.append(links[index])
+    return "".join(output)
+
+
+def strip_cleanup_comments(text: str) -> str:
+    protected, links = protect_source_links(text)
+    return restore_source_links(strip_comments(protected), links)
 
 
 class Reporter:
@@ -365,10 +422,12 @@ class BundleDocument:
         lines: Sequence[BundledLine],
         origins: dict[str, Origin],
         protected: Iterable[str],
+        library_root: Path | None,
     ) -> None:
         self.lines = list(lines)
         self.origins = origins
         self.protected = set(protected)
+        self.library_root = library_root.resolve() if library_root is not None else None
 
     @classmethod
     def parse(
@@ -377,6 +436,7 @@ class BundleDocument:
         *,
         resolver: OriginResolver,
         protected: Iterable[str] = (),
+        library_root: Path | None = None,
     ) -> "BundleDocument":
         lines: list[BundledLine] = []
         origins: dict[str, Origin] = {}
@@ -407,7 +467,7 @@ class BundleDocument:
 
         protected_keys = set(protected)
         protected_keys.add(resolver.source_key)
-        return cls(lines, origins, protected_keys)
+        return cls(lines, origins, protected_keys, library_root)
 
     def origin_sizes(self) -> dict[str, int]:
         sizes: dict[str, int] = Counter()
@@ -427,10 +487,22 @@ class BundleDocument:
         output: list[str] = []
         previous_key: str | None = None
         expected_line: int | None = None
+        linked: set[str] = set()
 
         for line in self.lines:
             if line.origin_key in removed:
                 continue
+
+            if line.origin_key is not None and line.origin_key not in linked:
+                origin = self.origins[line.origin_key]
+                url = (
+                    library_source_url(origin.resolved, self.library_root)
+                    if origin.resolved is not None
+                    else None
+                )
+                if url is not None:
+                    output.append(source_link_comment(url))
+                linked.add(line.origin_key)
 
             if keep_line and line.origin_key is not None:
                 if line.origin_key != previous_key or line.source_line != expected_line:
@@ -1208,7 +1280,8 @@ def filter_preprocessor_output(
 
 
 def safe_cleanup_candidate(text: str, compiler: CompilerWorkspace) -> str:
-    uncommented = strip_comments(text)
+    protected, links = protect_source_links(text)
+    uncommented = strip_comments(protected)
     wrapped, includes = wrap_include_directives(uncommented)
     valid, output, stderr = compiler.preprocess_directives(wrapped)
     if not valid:
@@ -1218,7 +1291,7 @@ def safe_cleanup_candidate(text: str, compiler: CompilerWorkspace) -> str:
         source_path=compiler.source,
         includes=includes,
     )
-    return collapse_blank_lines(filtered)
+    return collapse_blank_lines(restore_source_links(filtered, links))
 
 
 def insert_anonymous_namespace(text: str) -> str:
@@ -1949,7 +2022,7 @@ def cleanup_text(
         )
 
     if target_bytes is not None:
-        quick_candidate = collapse_blank_lines(strip_comments(text))
+        quick_candidate = collapse_blank_lines(strip_cleanup_comments(text))
         if below_byte_limit(quick_candidate, target_bytes):
             started = time.monotonic()
             reporter.phase("cleanup", "validating a quick comment-only checkpoint")
@@ -2143,8 +2216,16 @@ def merge_include_paths(defaults: Sequence[Path], provided: Sequence[str]) -> li
 class FastBundler:
     """Expand ordinary local includes without invoking a compiler for every file."""
 
-    def __init__(self, include_paths: Sequence[Path]) -> None:
+    def __init__(
+        self,
+        include_paths: Sequence[Path],
+        *,
+        library_root: Path | None = None,
+    ) -> None:
         self.include_paths = [path.resolve() for path in include_paths]
+        self.library_root = (
+            library_root.resolve() if library_root is not None else None
+        )
         self.once: set[Path] = set()
         self.system_includes: set[str] = set()
         self.stack: list[Path] = []
@@ -2190,7 +2271,7 @@ class FastBundler:
             return set()
         return {first, define, last}
 
-    def _expand(self, path: Path) -> str:
+    def _expand(self, path: Path, *, add_source_link: bool = True) -> str:
         path = path.resolve()
         try:
             text = path.read_text(encoding="utf-8")
@@ -2222,6 +2303,10 @@ class FastBundler:
 
         self.stack.append(path)
         output: list[str] = []
+        if add_source_link:
+            url = library_source_url(path, self.library_root)
+            if url is not None:
+                output.append(source_link_comment(url))
         conditional_depth = 0
         try:
             for line_index, (line, uncommented_line) in enumerate(
@@ -2277,15 +2362,7 @@ class FastBundler:
             self.stack.pop()
 
     def bundle(self, source: Path) -> str:
-        return self._expand(source)
-
-
-def remove_line_directives(text: str) -> str:
-    return "".join(
-        line
-        for line in text.splitlines(keepends=True)
-        if LINE_DIRECTIVE.match(line.rstrip("\r\n")) is None
-    )
+        return self._expand(source, add_source_link=False)
 
 
 def run_oj_bundle(
@@ -2351,7 +2428,7 @@ def expand_command(args: argparse.Namespace, repo_root: Path) -> None:
     method = "fast"
     reporter.phase("bundle", "expanding local includes")
     try:
-        bundled = FastBundler(include_paths).bundle(source)
+        bundled = FastBundler(include_paths, library_root=repo_root).bundle(source)
     except FastBundleUnsupported as exc:
         if args.no_fallback:
             raise
@@ -2360,13 +2437,24 @@ def expand_command(args: argparse.Namespace, repo_root: Path) -> None:
         reporter.phase("bundle", "running oj-bundle compatibility fallback")
         cxx = resolve_executable(args.cxx, ("g++-15", "g++-14", "g++"))
         oj_bundle = discover_oj_bundle(repo_root, args.oj_bundle)
-        bundled = remove_line_directives(
-            run_oj_bundle(
-                executable=oj_bundle,
-                source=source,
-                include_paths=include_paths,
-                cxx=cxx,
-            )
+        raw_bundle = run_oj_bundle(
+            executable=oj_bundle,
+            source=source,
+            include_paths=include_paths,
+            cxx=cxx,
+        )
+        resolver = OriginResolver(
+            base_dir=source.parent,
+            source=source,
+            include_paths=include_paths,
+        )
+        bundled = BundleDocument.parse(
+            raw_bundle,
+            resolver=resolver,
+            library_root=repo_root,
+        ).render(
+            set(),
+            keep_line=False,
         )
 
     privacy_check_line_directives(bundled)
@@ -2420,6 +2508,7 @@ def bundle_command(args: argparse.Namespace, repo_root: Path) -> None:
             raw_bundle,
             resolver=resolver,
             protected=protected,
+            library_root=repo_root,
         )
         for line in document.lines:
             if line.origin_key is None:

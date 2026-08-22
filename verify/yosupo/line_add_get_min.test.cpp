@@ -38,7 +38,7 @@ void main2()
     else
     {
       LL(x);
-      PRINT(cht.query(x));
+      PRINT(cht.query(x).first);
     }
   }
 }

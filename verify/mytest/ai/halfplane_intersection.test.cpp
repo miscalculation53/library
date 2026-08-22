@@ -4,9 +4,14 @@
 #include "convex/halfplane_intersection.hpp"
 
 // Test focus: bounded, unbounded, and empty intersections; redundant boundaries and IDs;
-// exact rational vertices; randomized clipping; and integer/floating-point instantiations.
+// exact rational vertices, randomized clipping, and different integer coefficient types.
 using HPI = HalfPlaneIntersection<ll>;
 using Status = HPI::Status;
+
+long double real(const HPI::Fraction &x)
+{
+  return static_cast<long double>(x.num) / static_cast<long double>(x.den);
+}
 
 bool near(long double x, long double y, long double eps = 1e-9L)
 {
@@ -19,7 +24,7 @@ long double polygon_cross_sum(const vc<HPI::Point> &ps)
   repi(i, ps.size())
   {
     const auto &p = ps[i], &q = ps[(i + 1) % ps.size()];
-    res += p.x * q.y - p.y * q.x;
+    res += real(p.x) * real(q.y) - real(p.y) * real(q.x);
   }
   return res;
 }
@@ -45,8 +50,8 @@ void test_bounded_and_id()
   assert(ids == set<int>({0, 2, 3, 42}));
   for (auto p : res.vertices)
   {
-    assert(p.x <= 3 + 1e-9L && p.x >= -2 - 1e-9L);
-    assert(p.y <= 5 + 1e-9L && p.y >= -4 - 1e-9L);
+    assert(real(p.x) <= 3 + 1e-9L && real(p.x) >= -2 - 1e-9L);
+    assert(real(p.y) <= 5 + 1e-9L && real(p.y) >= -4 - 1e-9L);
   }
 
   hpi.clear();
@@ -78,7 +83,8 @@ void test_unbounded()
     assert(res.status == Status::Unbounded);
     assert(res.boundaries.size() == 2);
     assert(res.vertices.size() == 1);
-    assert(near(res.vertices[0].x, 0) && near(res.vertices[0].y, 0));
+    assert(res.vertices[0].x == HPI::Fraction(0));
+    assert(res.vertices[0].y == HPI::Fraction(0));
   }
   {
     HPI hpi;
@@ -115,6 +121,22 @@ void test_empty_and_redundant()
     assert(res.boundaries.size() == 1);
     assert(res.boundaries[0].id == 20);
   }
+  {
+    HPI hpi;
+    hpi.add(-1, 0, 0);
+    hpi.add(1, 0, -1);
+    hpi.add(0, -1, 0);
+    hpi.add(0, 1, 0);
+    assert(hpi.intersection().status == Status::Empty);
+  }
+  {
+    HPI hpi;
+    hpi.add(-1, 0, 0);
+    hpi.add(1, 0, 0);
+    hpi.add(0, -1, 0);
+    hpi.add(0, 1, 0);
+    assert(hpi.intersection().status == Status::Empty);
+  }
 }
 
 void test_rational_vertices()
@@ -126,6 +148,10 @@ void test_rational_vertices()
   auto res = hpi.intersection();
   assert(res.status == Status::Bounded);
   assert(res.vertices.size() == 3);
+  set<pair<HPI::Fraction, HPI::Fraction>> vertices;
+  for (const auto &p : res.vertices) vertices.emplace(p.x, p.y);
+  assert((vertices == set<pair<HPI::Fraction, HPI::Fraction>>{
+                          {{0}, {0}}, {{0}, {1, 2}}, {{1, 2}, {0}}}));
   assert(near(polygon_area(res.vertices), 0.125L));
 }
 
@@ -204,21 +230,8 @@ void test_random()
     }
     for (auto p : res.vertices)
       for (auto [a, b, c] : hs)
-        assert(a * p.x + b * p.y + c <= 1e-7L);
+        assert(a * real(p.x) + b * real(p.y) + c <= 1e-7L);
   }
-}
-
-void test_floating_point()
-{
-  using FloatHPI = HalfPlaneIntersection<long double, long double, long double>;
-  FloatHPI hpi(1000, 1e-12L);
-  hpi.add(1, 0, -1);
-  hpi.add(-1, 0, -1);
-  hpi.add(0, 1, -1);
-  hpi.add(0, -1, -1);
-  auto res = hpi.intersection();
-  assert(res.status == FloatHPI::Status::Bounded);
-  assert(res.vertices.size() == 4);
 }
 
 void test_int_explicit_infty()
@@ -234,7 +247,6 @@ int main()
   test_empty_and_redundant();
   test_rational_vertices();
   test_random();
-  test_floating_point();
   test_int_explicit_infty();
   cout << "Hello World" << endl;
 }

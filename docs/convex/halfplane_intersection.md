@@ -1,12 +1,12 @@
 ## 概要
 
-閉半平面 $a_i x+b_i y+c_i\leq 0$ を追加し、その共通部分を求める。境界が垂直な場合も同じ形式で扱える。
+整数係数の閉半平面 $a_i x+b_i y+c_i\leq 0$ を追加し、その共通部分を求める。境界が垂直な場合も同じ形式で扱える。
 
-内部では境界線に方向 $(-b_i,a_i)$ を与える。このとき残す半平面は境界線の左側になる。境界線を偏角順に並べ、新しい半平面の外側にある両端の交点を deque から取り除く。
+境界線に方向 $(-b_i,a_i)$ を与えると、残す半平面は境界線の左側になる。境界線を整数の外積で偏角順に並べ、新しい半平面の外側にある両端の交点を deque から取り除く。平行判定、同方向の制約の強弱、交点の内外判定、共通部分が内部を持つかの判定には浮動小数点数や `eps` を使わない。
 
 共通部分が空・非有界・有界のいずれかを返す。非有界性を判定するため、内部では $[-\mathrm{infty},\mathrm{infty}]^2$ との共通部分を計算する。結果に残った内部枠の辺は公開しない。
 
-整数型では交点の内外判定を分数のまま `Calc` で行い、頂点を返すときだけ `Real` に変換する。実数型では `eps` を許容誤差として使う。
+有限頂点 $(x,y)$ は、それぞれ `Rational<Calc>` として厳密に返す。途中で除算や約分は行わない。
 
 ## 使用例
 
@@ -27,27 +27,23 @@ if (res.status == decltype(hpi)::Status::Bounded)
 ### HalfPlaneIntersection
 
 ```cpp
-template <
-  class T = ll,
-  class Calc = larger_int_t<T>,
-  class Real = long double
->
+template <class T = ll, class Calc = larger_int_t<larger_int_t<T>>>
 struct HalfPlaneIntersection
 ```
 
 #### コンストラクタ
 
 ```cpp
-HalfPlaneIntersection(T infty = T(INF), Real eps = Real(EPS))
+HalfPlaneIntersection(T infty = numeric_limits<T>::max() / 2)
 ```
 
-空の半平面集合を構築する。`infty` は非有界判定用の内部の枠、`eps` は実数比較の許容誤差になる。
+空の Half-Plane Intersection を構築する。`infty` は非有界判定用の内部の枠に使う。
 
 ##### 制約
 
-- `T` は符号つき整数型または浮動小数点数型
+- `T`, `Calc` は符号つき整数型
+- 既定の `Calc` は、内外判定に3係数分の積が現れるため `larger_int_t` を2回適用した型
 - `infty > 0`
-- `eps >= 0`
 - `infty` は、共通部分を内部の正方形で切ったときに元の境界がすべて現れ、すべての有限頂点が枠の内部に入るほど十分大きい
 
 ##### 計算量
@@ -57,13 +53,15 @@ HalfPlaneIntersection(T infty = T(INF), Real eps = Real(EPS))
 #### HalfPlane・Point・Status・Result
 
 ```cpp
+using Fraction = Rational<Calc>;
+
 struct HalfPlane {
   T a, b, c;
   int id;
 };
 
 struct Point {
-  Real x, y;
+  Fraction x, y;
 };
 
 enum class Status {
@@ -110,9 +108,8 @@ Result intersection()
 
 ##### 制約
 
-- 共通部分は空、または内部を持つ。点・線分・直線だけからなる共通部分は対象外
+- 共通部分は空、または内部を持つ。点・線分・直線だけからなる共通部分は `Empty` として扱う
 - 行列式、交点の内外判定に現れる積と和が `Calc` の範囲に収まる
-- 整数型の場合、有限頂点を `Real` に変換できる
 
 ##### 計算量
 

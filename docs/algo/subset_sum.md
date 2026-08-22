@@ -2,20 +2,92 @@
 
 部分和問題を前計算し、判定と復元を行う。
 
-### アルゴリズムの説明
+- `SubsetSumFromFrequency`：非負整数 $v$ の個数を `freq[v]` として受け取る。復元結果は（値、使用個数）の列。
+- `SubsetSum`：負要素を含んでもよい元配列を受け取る。復元結果は元配列の各添字を使用するかを表す `vc<bool>`。
 
-長さ $n$ の非負整数列 $a$ が（頻度配列で）与えられる。$s$ 以下のそれぞれの値について、部分和として作れるかどうか判定し、実際にその和を作る方法を復元するための情報を前計算することが、時間計算量 $O\left(\min\left(n, s, \sqrt{\sum{a_i}}\right)\cdot s/w\right)$、空間計算量 $O(s)$ でできる。目標となる和 $x$ が与えられたときに復元するのは、(値, 個数) のペアの列の形式での出力を許せば $O\left(\min\left(n, s, \sqrt{\sum{a_i}}\right)\right)$ 時間でできる。
+`SubsetSumFromFrequency` は、同じ値を個数分並べた配列を内部で作らない。個数を二進分割した後、同じ重みの要素をまとめて `DynamicBitset` による DP を行う。
 
-まず $O(ns/w)$ 時間を説明する。判定は bitset DP をすればよい。復元のためにはいくつか方法が考えられる：
+`SubsetSum` は、負要素 $a_i$ を $-a_i$ に置き換え、目標値を
 
-- bitset の履歴を全部保持する。前計算が時間 $O(ns/w)$、空間 $O(ns/w)$ で、復元が $O(n)$ 時間。
-- bitset の履歴を $\sqrt{n}$ 個ごとに保持する。前計算が時間 $O(ns/w)$、空間 $O(\sqrt{n} s/w)$ で、復元が $O(ns/w)$ 時間。
-- $\mathrm{time}[j] \ (0 \leq j \leq s)$ に、$a[0, i)$ から $j$ が作れるような最小の $i$ を記録しておく。これは DP 配列を更新するたびに、新たに立ったビットを列挙すればよく、`_Find_first()` と `_Find_next()` でできる。前計算が時間 $O(ns/w)$、空間 $O(s)$ で、復元が $O(n)$ 時間。前計算の時間の定数倍がやや大きい。
+$$
+x-\sum_{a_i<0}a_i
+$$
 
-なおこれとは別に、分割統治による方法もある。この方法は前計算と復元が分かれていない。左と右でそれぞれ DP して target を決めて再帰。全体 $O(ns \log (n)/w)$ 時間。bitset を使い回すことにすると空間は $O(s/w)$ で済む。$s = \sum a_i$ のような状況では動的 bitset で実装すると $\log n$ が消える（深さ $d$ が $O\left(\frac{n \sum a_i}{2^d w}\right)$ 時間で処理できるから）。
+にずらして `SubsetSumFromFrequency` を利用する。復元時には、負要素を使用するかどうかを反転する。
 
-本ライブラリでは $\mathrm{time}$ を用いる方法を採用。
+## 使用例
 
-さらに、最初に要素数 $n$ を減らしておく高速化ができる。https://x.com/noshi91/status/1404719619097567236 をする。$j, j, j$ は $j, 2j$ に置き換えてよく、これを繰り返していくと同じ要素を $2$ つ以下にできる。こうしてできた配列の要素数はたかだか $\min\left(n, 2s, 2\sqrt{\sum a_i}\right)$ となる。別の方法として、$1, 2, 4, 8, 16, \dots$ 個への分割を各値について $1$ 回だけ行うとしても同じくたかだか $\min\left(n, 2s, 2\sqrt{\sum a_i}\right)$ と評価できる。（評価の概略：$2$ 冪部分と余り部分で別々に評価する。余り部分は異なる値の個数ぶんしか残らない。$2$ 冪部分は、$j$ があるとき $j, j/2, j/4, \dots$ にしか由来しない。$2$ で割り切れる回数の総和が出てくる。）後者の方法のほうが少しだけ復元が簡単？
+```cpp
+vc<int> freq = {0, 2, 1};
+SubsetSumFromFrequency ss1(freq, 4);
+auto [ok1, cnt] = ss1.answer(4);
 
-$a$ に負要素が含まれる場合も最初に非負整数列に変換しておくことができる。具体的には、$a_i < 0$ のところを $-a_i$ に置き換え、目標値 $x$ を $x - \sum_{a_i < 0} a_i$ に置き換えた問題を解けばよい。復元では $a_i < 0$ なる $i$ が使用されるかどうかが入れ替わる。計算量の $s$ が $s - \sum_{a_i < 0} a_i$ に、$\sum a_i$ が $\sum \lvert a_i \rvert$ に置き換わる。
+vc<int> a = {-3, 1, 2, 4};
+SubsetSum ss2(a, 5);
+auto [ok2, use] = ss2.answer(3);
+```
+
+## 詳細なドキュメント
+
+### SubsetSumFromFrequency
+
+#### コンストラクタ
+
+```cpp
+SubsetSumFromFrequency(vc<T> freq, int smax)
+```
+
+`freq[v]` を値 $v$ の個数として、$smax$ 以下の部分和を前計算する。値 $0$ の要素は復元結果に含めない。
+
+##### 制約
+
+- `T` は整数型
+- $smax\geq 0$
+- $freq[v]\geq 0$
+
+#### exists
+
+```cpp
+bool exists(int x)
+```
+
+和 $x$ を作れるか返す。
+
+#### answer
+
+```cpp
+pair<bool, vc<pair<int, int>>> answer(int x)
+```
+
+和 $x$ を作れない場合は `{false, {}}` を返す。作れる場合は、使用する（値、個数）の列とともに `true` を返す。個数が $0$ の値は含まれず、列の順序は未規定。
+
+### SubsetSum
+
+#### コンストラクタ
+
+```cpp
+SubsetSum(vc<T> a, int smax)
+```
+
+元配列 $a$ に対し、$smax$ 以下の部分和を前計算する。$a$ は負要素を含んでもよい。
+
+##### 制約
+
+- `T` は整数型
+- $smax-\sum_{a_i<0}a_i$ は `int` の範囲内
+
+#### exists
+
+```cpp
+bool exists(int x)
+```
+
+和 $x$ を作れるか返す。$x>smax$ の場合は `false` を返す。
+
+#### answer
+
+```cpp
+pair<bool, vc<bool>> answer(int x)
+```
+
+和 $x$ を作れない場合は `{false, {}}` を返す。作れる場合は、元配列の各要素を使用するかを表す長さ $|a|$ の `vc<bool>` とともに `true` を返す。

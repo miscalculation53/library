@@ -12,10 +12,10 @@ auto z = M::op(x, y);
 
 ## 詳細なドキュメント
 
-### MonoidSumWithLength
+### MonoidLenSum
 
 ```cpp
-MonoidSumWithLength<T>
+MonoidLenSum<T>
 ```
 
 要素型 `S` は区間長 `len` と総和 `val` を持つ。

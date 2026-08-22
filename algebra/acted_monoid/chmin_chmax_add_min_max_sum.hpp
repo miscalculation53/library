@@ -29,15 +29,23 @@ struct MonoidMinMaxSumBeats
 private:
   static constexpr T second_min(T a, T a2, T b, T b2)
   {
-    return a == b ? min(a2, b2) : a2 <= b ? a2
-                                      : b2 <= a   ? b2
-                                                  : max(a, b);
+    if (a == b)
+      return min(a2, b2);
+    if (a2 <= b)
+      return a2;
+    if (b2 <= a)
+      return b2;
+    return max(a, b);
   }
   static constexpr T second_max(T a, T a2, T b, T b2)
   {
-    return a == b ? max(a2, b2) : a2 >= b ? a2
-                                      : b2 >= a   ? b2
-                                                  : min(a, b);
+    if (a == b)
+      return max(a2, b2);
+    if (a2 >= b)
+      return a2;
+    if (b2 >= a)
+      return b2;
+    return min(a, b);
   }
 
 public:

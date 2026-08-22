@@ -2,6 +2,8 @@
 
 #include "../../../template/template_all_but_modint.hpp"
 
+#include "../../fenwick_tree/fenwick_tree.hpp"
+
 /**
  * @brief 矩形加算 → 矩形和（オフライン）
  * @docs docs/ds/2d/offline/static_rectangle_add_rectangle_sum.md
@@ -19,6 +21,20 @@ private:
   struct V
   {
     S a, b, c, d;
+  };
+  struct VMonoid
+  {
+    using S = V;
+    static S op(const S &x, const S &y)
+    {
+      return {G::op(x.a, y.a), G::op(x.b, y.b),
+              G::op(x.c, y.c), G::op(x.d, y.d)};
+    }
+    static S e()
+    {
+      const auto e = G::e();
+      return {e, e, e, e};
+    }
   };
   struct P
   {
@@ -81,35 +97,17 @@ public:
   vc<S> run()
   {
     sort(ALL(ps)), sort(ALL(qs)), sortunique(ys);
-    const V e{G::e(), G::e(), G::e(), G::e()};
-    vc<V> fw(ys.size() + 1, e);
+    FenwickTree<VMonoid> fw(ys.size());
     vc<S> res(qn, G::e());
     int i = 0;
     fec(q : qs)
     {
       while (i < SZ(ps) && ps[i].x < q.x)
       {
-        int j = LB(ys, ps[i].y) + 1;
-        while (j < SZ(fw))
-        {
-          fw[j].a = G::op(fw[j].a, ps[i].v.a);
-          fw[j].b = G::op(fw[j].b, ps[i].v.b);
-          fw[j].c = G::op(fw[j].c, ps[i].v.c);
-          fw[j].d = G::op(fw[j].d, ps[i].v.d);
-          j += j & -j;
-        }
+        fw.add(LB(ys, ps[i].y), ps[i].v);
         i++;
       }
-      V s = e;
-      int j = LB(ys, q.y);
-      while (j > 0)
-      {
-        s.a = G::op(s.a, fw[j].a);
-        s.b = G::op(s.b, fw[j].b);
-        s.c = G::op(s.c, fw[j].c);
-        s.d = G::op(s.d, fw[j].d);
-        j -= j & -j;
-      }
+      const V s = fw.sum(LB(ys, q.y));
       S v = pow_group<G>(pow_group<G>(s.a, q.x), q.y);
       v = G::op(v, G::inv(pow_group<G>(s.b, q.x)));
       v = G::op(v, G::inv(pow_group<G>(s.c, q.y)));

@@ -12,6 +12,7 @@
 template <class T>
 struct ConvexHullTrickLine
 {
+  // ax + b
   T a, b;
   int id = -1;
 
@@ -21,15 +22,14 @@ struct ConvexHullTrickLine
   }
 };
 
-template <class T, class X = T>
+template <class T>
 struct ConvexHullTrickSegment
 {
   ConvexHullTrickLine<T> line;
-  X left, right;
+  T left, right;
 };
 
-// 傾きを任意順に追加できる Convex Hull Trick
-template <class T = ll, class Compare = less<>, auto infty = INF, class X = T>
+template <class T = ll, class Compare = less<>, auto infty = INF>
 struct ConvexHullTrick
 {
   static_assert(!is_integral_ext<T> || is_signed_ext<T>);
@@ -37,8 +37,7 @@ struct ConvexHullTrick
                 is_same_v<Compare, greater<>> || is_same_v<Compare, greater<T>>);
 
   using Line = ConvexHullTrickLine<T>;
-  using Segment = ConvexHullTrickSegment<T, X>;
-  using Value = decltype(declval<T>() * declval<X>() + declval<T>());
+  using Segment = ConvexHullTrickSegment<T>;
 
 private:
   static constexpr int sgn = is_same_v<Compare, less<>> || is_same_v<Compare, less<T>> ? -1 : 1;
@@ -46,84 +45,69 @@ private:
   struct Node
   {
     T a, b;
-    mutable X r;
+    mutable T r;
     int id;
 
     bool operator<(const Node &o) const { return a < o.a; }
-    bool operator<(const X &x) const { return r < x; }
-    friend bool operator<(const X &x, const Node &p) { return x < p.r; }
+    bool operator<(const T &x) const { return r < x; }
+    friend bool operator<(const T &x, const Node &p) { return x < p.r; }
   };
 
   using It = typename multiset<Node, less<>>::iterator;
 
   multiset<Node, less<>> st;
   optional<It> qit;
-  optional<X> last_x;
+  optional<T> last_x;
   int add_cnt = 0, qdir = 0;
 
-  static Line line(const Node &p) { return {sgn * p.a, sgn * p.b, p.id}; }
-  static Value eval(const Node &p, const X &x) { return sgn * (p.a * x + p.b); }
+  static T inf() { return T(infty); }
+  static T ninf() { return -T(infty); }
+  static T empty_value()
+  {
+    if constexpr (sgn < 0)
+      return inf();
+    else
+      return ninf();
+  }
 
-  static X border(const Node &x, const Node &y)
+  static Line line(const Node &p) { return {sgn * p.a, sgn * p.b, p.id}; }
+  static T eval(const Node &p, const T &x) { return sgn * (p.a * x + p.b); }
+
+  static T border(const Node &x, const Node &y)
   {
     assert(x.a < y.a);
-    if constexpr (is_integral_ext<T> && is_same_v<T, X>)
+    if constexpr (is_integral_ext<T>)
       return divfloor<T>(x.b - y.b, y.a - x.a);
     else
-      return (X(x.b) - X(y.b)) / (X(y.a) - X(x.a));
+      return (x.b - y.b) / (y.a - x.a);
   }
 
   bool set_r(It x, It y)
   {
     if (y == st.end())
     {
-      x->r = numeric_limits<X>::max();
+      x->r = inf();
       return false;
     }
     if (x->a == y->a)
-      x->r = x->b > y->b ? numeric_limits<X>::max() : numeric_limits<X>::lowest();
+      x->r = x->b > y->b ? inf() : ninf();
     else
       x->r = border(*x, *y);
     return x->r >= y->r;
   }
 
-  const Node &best(const X &x) const
-  {
-    assert(!st.empty());
-    return *st.lower_bound(x);
-  }
-
-  const Node &best_monotone(const X &x)
-  {
-    assert(!st.empty());
-    if (!qit)
-      qit = st.lower_bound(x);
-    else if (*last_x < x)
-    {
-      assert(qdir != -1 && "query order is not monotone");
-      qdir = 1;
-      while (next(*qit) != st.end() && (*qit)->r < x) ++*qit;
-    }
-    else if (x < *last_x)
-    {
-      assert(qdir != 1 && "query order is not monotone");
-      qdir = -1;
-      while (*qit != st.begin() && !(prev(*qit)->r < x)) --*qit;
-    }
-    last_x = x;
-    return **qit;
-  }
-
 public:
-  // y = ax + b を追加する。id は 0 始まりの追加順になる
+  // y = ax + b を追加
+  // 直線の id は 0 始まりの追加順になる
   void add_line(T a, T b) { add_line(a, b, add_cnt); }
 
-  // y = ax + b を指定した id で追加する
+  // y = ax + b を追加
+  // 直線の id を指定
   void add_line(T a, T b, int id)
   {
     add_cnt++;
     reset_monotone_query();
-    Node p{sgn * a, sgn * b, numeric_limits<X>::max(), id};
+    Node p{sgn * a, sgn * b, inf(), id};
     auto same = st.lower_bound(p);
     if (same != st.end() && same->a == p.a)
     {
@@ -140,44 +124,43 @@ public:
     while ((y = x) != st.begin() && (--x)->r >= y->r) set_r(x, st.erase(y));
   }
 
-  // x における最適な直線を返す。空ならダミー直線を返す
-  Line query_line(const X &x) const
+  // x における最適値と、それを達成する直線を返す
+  pair<T, Line> query(const T &x) const
   {
-    return st.empty() ? Line{T(0), T(-sgn * infty), -1} : line(best(x));
-  }
-
-  // x における最適値と、それを達成する直線を返す。空なら infty か -infty とダミー直線を返す
-  pair<Value, Line> query_with_line(const X &x) const
-  {
-    if (st.empty()) return {Value(-sgn * infty), {T(0), T(-sgn * infty), -1}};
-    const Node &p = best(x);
+    if (st.empty()) return {empty_value(), {T(0), empty_value(), -1}};
+    auto it = st.lower_bound(x);
+    if (it == st.end()) --it;
+    const Node &p = *it;
     return {eval(p, x), line(p)};
-  }
-
-  // x における最適値を返す。空なら最小化で infty、最大化で -infty を返す
-  Value query(const X &x) const { return st.empty() ? Value(-sgn * infty) : eval(best(x), x); }
-
-  // 単調な x における最適な直線を返す。増減方向は自動で判定する
-  Line query_monotone_line(const X &x)
-  {
-    return st.empty() ? Line{T(0), T(-sgn * infty), -1} : line(best_monotone(x));
   }
 
   // 単調な x における最適値と直線を返す。増減方向は自動で判定する
-  pair<Value, Line> query_monotone_with_line(const X &x)
+  pair<T, Line> query_monotone(const T &x)
   {
-    if (st.empty()) return {Value(-sgn * infty), {T(0), T(-sgn * infty), -1}};
-    const Node &p = best_monotone(x);
+    if (st.empty()) return {empty_value(), {T(0), empty_value(), -1}};
+    if (!qit)
+    {
+      qit = st.lower_bound(x);
+      if (*qit == st.end()) --*qit;
+    }
+    else if (*last_x < x)
+    {
+      assert(qdir != -1 && "query order is not monotone");
+      qdir = 1;
+      while (next(*qit) != st.end() && (*qit)->r < x) ++*qit;
+    }
+    else if (x < *last_x)
+    {
+      assert(qdir != 1 && "query order is not monotone");
+      qdir = -1;
+      while (*qit != st.begin() && !(prev(*qit)->r < x)) --*qit;
+    }
+    last_x = x;
+    const Node &p = **qit;
     return {eval(p, x), line(p)};
   }
 
-  // 単調な x における最適値を返す。増減方向は自動で判定する
-  Value query_monotone(const X &x)
-  {
-    return st.empty() ? Value(-sgn * infty) : eval(best_monotone(x), x);
-  }
-
-  // 単調クエリの現在位置と方向を消去する
+  // 新しい単調クエリ列を始められるように、現在位置と増減方向を消去する
   void reset_monotone_query()
   {
     qit.reset();
@@ -185,16 +168,18 @@ public:
     qdir = 0;
   }
 
-  // 各直線と、その直線が最適になる境界区間 (left, right] を返す
+  // Segment: line, left, right
+  // 直線 line が最適になる x の範囲 (left, right]
+  // x の昇順に返す
   vc<Segment> segments() const
   {
     vc<Segment> res;
     res.reserve(st.size());
-    X l = X(-infty);
+    T l = ninf();
     for (auto it = st.begin(); it != st.end(); ++it)
     {
       auto nxt = next(it);
-      X r = nxt == st.end() ? X(infty) : it->r;
+      T r = nxt == st.end() ? inf() : it->r;
       res.eb(Segment{line(*it), l, r});
       l = r;
     }
@@ -209,8 +194,8 @@ public:
   }
 };
 
-// 傾きを単調に追加する Convex Hull Trick。増加・減少は自動で判定する
-template <class T = ll, class Compare = less<>, auto infty = INF, class X = T>
+// **追加する直線の傾き**が単調
+template <class T = ll, class Compare = less<>, auto infty = INF>
 struct ConvexHullTrickMonotoneSlope
 {
   static_assert(!is_integral_ext<T> || is_signed_ext<T>);
@@ -218,8 +203,7 @@ struct ConvexHullTrickMonotoneSlope
                 is_same_v<Compare, greater<>> || is_same_v<Compare, greater<T>>);
 
   using Line = ConvexHullTrickLine<T>;
-  using Segment = ConvexHullTrickSegment<T, X>;
-  using Value = decltype(declval<T>() * declval<X>() + declval<T>());
+  using Segment = ConvexHullTrickSegment<T>;
 
 private:
   static constexpr int sgn = is_same_v<Compare, less<>> || is_same_v<Compare, less<T>> ? -1 : 1;
@@ -227,25 +211,35 @@ private:
   struct Node
   {
     T a, b;
-    X r;
+    T r;
     int id;
   };
 
   deque<Node> dq;
   optional<T> last_a;
-  optional<X> last_x;
+  optional<T> last_x;
   int add_cnt = 0, adir = 0, qpos = -1, qdir = 0;
 
-  static Line line(const Node &p) { return {sgn * p.a, sgn * p.b, p.id}; }
-  static Value eval(const Node &p, const X &x) { return sgn * (p.a * x + p.b); }
+  static T inf() { return T(infty); }
+  static T ninf() { return -T(infty); }
+  static T empty_value()
+  {
+    if constexpr (sgn < 0)
+      return inf();
+    else
+      return ninf();
+  }
 
-  static X border(const Node &x, const Node &y)
+  static Line line(const Node &p) { return {sgn * p.a, sgn * p.b, p.id}; }
+  static T eval(const Node &p, const T &x) { return sgn * (p.a * x + p.b); }
+
+  static T border(const Node &x, const Node &y)
   {
     assert(x.a < y.a);
-    if constexpr (is_integral_ext<T> && is_same_v<T, X>)
+    if constexpr (is_integral_ext<T>)
       return divfloor<T>(x.b - y.b, y.a - x.a);
     else
-      return (X(x.b) - X(y.b)) / (X(y.a) - X(x.a));
+      return (x.b - y.b) / (y.a - x.a);
   }
 
   void push_back(Node p)
@@ -257,12 +251,12 @@ private:
     }
     while (dq.size() >= 2)
     {
-      X r = border(dq.back(), p);
+      T r = border(dq.back(), p);
       if (dq[dq.size() - 2].r < r) break;
       dq.pop_back();
     }
     if (!dq.empty()) dq.back().r = border(dq.back(), p);
-    p.r = numeric_limits<X>::max();
+    p.r = inf();
     dq.eb(p);
   }
 
@@ -275,41 +269,12 @@ private:
     }
     while (dq.size() >= 2)
     {
-      X r = border(p, dq.front());
+      T r = border(p, dq.front());
       if (r < dq.front().r) break;
       dq.pop_front();
     }
-    p.r = dq.empty() ? numeric_limits<X>::max() : border(p, dq.front());
+    p.r = dq.empty() ? inf() : border(p, dq.front());
     dq.emplace_front(p);
-  }
-
-  const Node &best(const X &x) const
-  {
-    assert(!dq.empty());
-    return *lower_bound(dq.begin(), dq.end(), x,
-                        [](const Node &p, const X &x) { return p.r < x; });
-  }
-
-  const Node &best_monotone(const X &x)
-  {
-    assert(!dq.empty());
-    if (qpos == -1)
-      qpos = lower_bound(dq.begin(), dq.end(), x,
-                         [](const Node &p, const X &x) { return p.r < x; }) - dq.begin();
-    else if (*last_x < x)
-    {
-      assert(qdir != -1 && "query order is not monotone");
-      qdir = 1;
-      while (qpos + 1 < SZ(dq) && dq[qpos].r < x) qpos++;
-    }
-    else if (x < *last_x)
-    {
-      assert(qdir != 1 && "query order is not monotone");
-      qdir = -1;
-      while (qpos > 0 && !(dq[qpos - 1].r < x)) qpos--;
-    }
-    last_x = x;
-    return dq[qpos];
   }
 
 public:
@@ -321,7 +286,7 @@ public:
   {
     add_cnt++;
     reset_monotone_query();
-    Node p{sgn * a, sgn * b, numeric_limits<X>::max(), id};
+    Node p{sgn * a, sgn * b, inf(), id};
     if (last_a)
     {
       int d = (*last_a < p.a) - (p.a < *last_a);
@@ -338,41 +303,42 @@ public:
       push_back(p);
   }
 
-  // x における最適な直線を返す。空ならダミー直線を返す
-  Line query_line(const X &x) const
-  {
-    return dq.empty() ? Line{T(0), T(-sgn * infty), -1} : line(best(x));
-  }
-
   // x における最適値と、それを達成する直線を返す。空なら infty か -infty とダミー直線を返す
-  pair<Value, Line> query_with_line(const X &x) const
+  pair<T, Line> query(const T &x) const
   {
-    if (dq.empty()) return {Value(-sgn * infty), {T(0), T(-sgn * infty), -1}};
-    const Node &p = best(x);
+    if (dq.empty()) return {empty_value(), {T(0), empty_value(), -1}};
+    auto it = lower_bound(dq.begin(), dq.end(), x,
+                          [](const Node &p, const T &x) { return p.r < x; });
+    if (it == dq.end()) --it;
+    const Node &p = *it;
     return {eval(p, x), line(p)};
-  }
-
-  // x における最適値を返す。空なら最小化で infty、最大化で -infty を返す
-  Value query(const X &x) const { return dq.empty() ? Value(-sgn * infty) : eval(best(x), x); }
-
-  // 単調な x における最適な直線を返す。増減方向は自動で判定する
-  Line query_monotone_line(const X &x)
-  {
-    return dq.empty() ? Line{T(0), T(-sgn * infty), -1} : line(best_monotone(x));
   }
 
   // 単調な x における最適値と直線を返す。増減方向は自動で判定する
-  pair<Value, Line> query_monotone_with_line(const X &x)
+  pair<T, Line> query_monotone(const T &x)
   {
-    if (dq.empty()) return {Value(-sgn * infty), {T(0), T(-sgn * infty), -1}};
-    const Node &p = best_monotone(x);
+    if (dq.empty()) return {empty_value(), {T(0), empty_value(), -1}};
+    if (qpos == -1)
+    {
+      qpos = lower_bound(dq.begin(), dq.end(), x,
+                         [](const Node &p, const T &x) { return p.r < x; }) - dq.begin();
+      if (qpos == SZ(dq)) qpos--;
+    }
+    else if (*last_x < x)
+    {
+      assert(qdir != -1 && "query order is not monotone");
+      qdir = 1;
+      while (qpos + 1 < SZ(dq) && dq[qpos].r < x) qpos++;
+    }
+    else if (x < *last_x)
+    {
+      assert(qdir != 1 && "query order is not monotone");
+      qdir = -1;
+      while (qpos > 0 && !(dq[qpos - 1].r < x)) qpos--;
+    }
+    last_x = x;
+    const Node &p = dq[qpos];
     return {eval(p, x), line(p)};
-  }
-
-  // 単調な x における最適値を返す。増減方向は自動で判定する
-  Value query_monotone(const X &x)
-  {
-    return dq.empty() ? Value(-sgn * infty) : eval(best_monotone(x), x);
   }
 
   // 単調クエリの現在位置と方向を消去する
@@ -388,10 +354,10 @@ public:
   {
     vc<Segment> res;
     res.reserve(dq.size());
-    X l = X(-infty);
+    T l = ninf();
     repi(i, dq.size())
     {
-      X r = i + 1 == SZ(dq) ? X(infty) : dq[i].r;
+      T r = i + 1 == SZ(dq) ? inf() : dq[i].r;
       res.eb(Segment{line(dq[i]), l, r});
       l = r;
     }

@@ -9,7 +9,7 @@
  */
 
 template <class T>
-struct MonoidSumWithLength
+struct MonoidLenSum
 {
   struct S
   {

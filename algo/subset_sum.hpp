@@ -1,111 +1,211 @@
 #pragma once
 
-#include "../template/template_all_but_modint.hpp"
+#include "../ds/dynamic_bitset.hpp"
 
 /**
  * @brief 部分和問題
  * @docs docs/algo/subset_sum.md
  */
 
-struct SubsetSum
+struct SubsetSumFromFrequency
 {
 private:
-  int n, s, negsum;
-  vc<bool> isneg;
-
-  vc<int> nid;  // i 番目の要素を使うかどうかは nid[i] を使うかどうかと一致
-  vvc<int> ids; // ids[j] := 値が j となる添字
-  vc<int> time; // time[j] := 初めて j が作れるようになった時刻
-
-  template <uint bslen>
-  void build(const vc<int> &apos)
+  struct Node
   {
-    if ((int)bslen <= s)
-    {
-      build<2 * bslen>(apos);
-      return;
-    }
+    int l, r, val, cnt;
+  };
 
-    nid = permid<int>(n);
-    ids.resize(s + 1);
-    repi(i, n) if (apos[i] <= s) ids[apos[i]].eb(i);
-    repi(j, s + 1)
+  struct Item
+  {
+    int w, node;
+  };
+
+  int s;
+  vc<Node> nodes;
+  vc<Item> items;
+  vc<int> time, used;
+
+  void build_dp()
+  {
+    time.assign(s + 1, SZ<int>(items) + 1);
+    time[0] = 0;
+    DynamicBitset dp(s + 1);
+    dp.set(0);
+    repi(t, SZ(items))
+      dp.or_shift_left(items[t].w, [&](int i) { time[i] = t + 1; });
+  }
+
+  template <class T>
+  void build(const vc<T> &freq)
+  {
+    static_assert(is_integral_ext<T>);
+    vvc<int> ids(s + 1);
+    int vmax = min(s, SZ<int>(freq) - 1);
+    repi(v, 1, vmax + 1)
     {
-      while (SZ(ids[j]) >= 3)
+      assert(freq[v] >= 0);
+      int c = freq[v] < T(s / v) ? int(freq[v]) : s / v;
+      for (ll k = 1; c > 0; k *= 2)
       {
-        int i1 = ids[j].back();
-        ids[j].pop_back();
-        int i2 = ids[j].back();
-        ids[j].pop_back();
-        if (2 * j <= s)
-        {
-          nid[i1] = nid[i2] = nid.size();
-          ids[2 * j].eb(nid.size());
-          nid.eb(nid.size());
-        }
+        int x = int(min<ll>(c, k));
+        c -= x;
+        ids[v * x].eb(nodes.size());
+        nodes.eb(Node{-1, -1, v, x});
       }
     }
 
-    time.assign(s + 1, 2 * s + 3);
-    time[0] = 0;
-    bitset<bslen> dp, diff;
-    dp[0] = 1;
-    repi(j, s + 1) repi(k, ids[j].size())
+    repi(w, 1, s + 1)
     {
-      int t = 2 * j + k + 1;
-      diff = (dp << j) & ~dp;
-      for (int l = diff._Find_first(); l <= s; l = diff._Find_next(l))
-        time[l] = t;
-      dp |= dp << j;
+      while (SZ(ids[w]) >= 3)
+      {
+        int l = ids[w].back();
+        ids[w].pop_back();
+        int r = ids[w].back();
+        ids[w].pop_back();
+        if (w <= s / 2)
+        {
+          ids[2 * w].eb(nodes.size());
+          nodes.eb(Node{l, r, 0, 0});
+        }
+      }
+      fec(node : ids[w]) items.eb(Item{w, node});
     }
+
+    build_dp();
+    used.assign(s + 1, 0);
   }
 
 public:
-  SubsetSum() {}
-  // smax はクエリで聞かれる target の値の最大値
-  // s := smax - (a の負要素の和) として O(n + min(n,s,√(sum |a_i|))*s/w)
+  SubsetSumFromFrequency() : s(0), time(1, 0), used(1, 0) {}
+
+  // freq[v] := 値 v の個数。smax 以下の部分和を前計算する。
   template <class T>
-  SubsetSum(const vc<T> &a, int smax) : n(a.size()), negsum(0)
+  SubsetSumFromFrequency(const vc<T> &freq, int smax) : s(smax)
   {
-    isneg.assign(n, false);
-    repi(i, n) if (a[i] < 0) isneg[i] = true, negsum += a[i];
-    s = max(0, smax - negsum);
-    vc<int> apos(n, s + 1);
-    repi(i, n)
-    {
-      if (a[i] < 0 && -a[i] <= s)
-        apos[i] = -a[i];
-      else if (a[i] >= 0 && a[i] <= s)
-        apos[i] = a[i];
-    }
-    build<1>(apos);
+    assert(s >= 0);
+    build(freq);
   }
 
-  // x を作れるか
-  bool exists(int x)
+  // x を作れるか返す。
+  bool exists(int x) const
   {
-    ll y = x - negsum;
-    if (!(0 <= y && y <= s))
-      return false;
-    return time[y] < 2 * s + 3;
+    return 0 <= x && x <= s && time[x] <= SZ(items);
   }
-  // t を作れるか判定し、作れるなら復元
+
+  // x を作れるなら、使用する (値, 個数) の列を返す。列の順序は未規定。
+  pair<bool, vc<pair<int, int>>> answer(int x)
+  {
+    if (!exists(x))
+      return {false, {}};
+
+    vc<int> selected;
+    int y = x;
+    repi(t, SZ(items) - 1, -1, -1)
+    {
+      int w = items[t].w;
+      if (y >= w && time[y - w] <= t)
+      {
+        y -= w;
+        selected.eb(items[t].node);
+      }
+    }
+
+    vc<int> touched;
+    while (!selected.empty())
+    {
+      int i = selected.back();
+      selected.pop_back();
+      if (nodes[i].l == -1)
+      {
+        if (used[nodes[i].val] == 0)
+          touched.eb(nodes[i].val);
+        used[nodes[i].val] += nodes[i].cnt;
+      }
+      else
+      {
+        selected.eb(nodes[i].l);
+        selected.eb(nodes[i].r);
+      }
+    }
+
+    vc<pair<int, int>> res;
+    fec(v : touched) res.eb(v, used[v]), used[v] = 0;
+    return {true, res};
+  }
+};
+
+struct SubsetSum
+{
+private:
+  int n, s, xmax;
+  i128 negsum;
+  vc<bool> isneg;
+  vvc<int> ids;
+  SubsetSumFromFrequency ss;
+
+public:
+  SubsetSum() : n(0), s(0), xmax(-1), negsum(0) {}
+
+  // smax はクエリで聞かれる target の値の最大値。a は負要素を持ってもよい。
+  template <class T>
+  SubsetSum(const vc<T> &a, int smax) : n(SZ<int>(a)), xmax(smax), negsum(0)
+  {
+    static_assert(is_integral_ext<T>);
+    isneg.assign(n, false);
+    repi(i, n) if (a[i] < 0)
+    {
+      isneg[i] = true;
+      negsum += i128(a[i]);
+    }
+    i128 shifted_s = i128(smax) - negsum;
+    assert(shifted_s <= numeric_limits<int>::max());
+    s = shifted_s < 0 ? 0 : int(shifted_s);
+
+    ids.resize(s + 1);
+    vc<int> freq(s + 1);
+    repi(i, n)
+    {
+      i128 x = i128(a[i]);
+      if (x < 0)
+      {
+        if (x < -i128(s))
+          continue;
+        x = -x;
+      }
+      if (x <= s)
+      {
+        int v = int(x);
+        ids[v].eb(i);
+        freq[v]++;
+      }
+    }
+    ss = SubsetSumFromFrequency(freq, s);
+  }
+
+  // x を作れるか返す。
+  bool exists(int x) const
+  {
+    i128 y = i128(x) - negsum;
+    return x <= xmax && 0 <= y && y <= s && ss.exists(int(y));
+  }
+
+  // x を作れるなら、元配列の各要素を使用するか返す。
   pair<bool, vc<bool>> answer(int x)
   {
-    ll y = x - negsum;
-    if (!(0 <= y && y <= s))
+    i128 y = i128(x) - negsum;
+    if (x > xmax || !(0 <= y && y <= s))
       return {false, {}};
-    if (time[y] == 2 * s + 3)
+    auto [ok, cnt] = ss.answer(int(y));
+    if (!ok)
       return {false, {}};
-    vc<bool> res(nid.size(), false);
-    repi(j, y, -1, -1) repi(k, SZ(ids[j]) - 1, -1, -1)
+
+    vc<bool> res(n, false);
+    for (auto [v, c] : cnt)
     {
-      int i = ids[j][k], t = 2 * j + k + 1;
-      if (y >= j && time[y - j] < t)
-        y -= j, res[i] = true;
+      assert(c <= SZ(ids[v]));
+      repi(k, c) res[ids[v][k]] = true;
     }
-    repi(i, SZ(res) - 1, -1, -1) res[i] = res[nid[i]];
     repi(i, n) if (isneg[i]) res[i] = !res[i];
-    return {true, {res.begin(), res.begin() + n}};
+    return {true, res};
   }
 };

@@ -12,22 +12,21 @@ template <bool monotone>
 struct Wrapper
 {
   using CHT = conditional_t<monotone,
-                            ConvexHullTrickDotProductMonotoneCoefficient<ll>,
+                            ConvexHullTrickDotProductMonotoneSlope<ll>,
                             ConvexHullTrickDotProduct<ll>>;
   CHT cht;
 
   void add(ll a, ll b, int id) { cht.add(a, b, id); }
-  int query_id(ll x, ll y) { return cht.min_query_with_form(x, y).second.id; }
+  int query_id(ll x, ll y) { return cht.min_query(x, y).second.id; }
 };
 
-template <class X, bool direct, bool monotone>
+template <class T, bool monotone>
 struct ViaCHT
 {
-  using T = conditional_t<direct, X, ll>;
   template <class Compare>
   using Hull = conditional_t<monotone,
-                             ConvexHullTrickMonotoneSlope<T, Compare, INF, X>,
-                             ConvexHullTrick<T, Compare, INF, X>>;
+                             ConvexHullTrickMonotoneSlope<T, Compare>,
+                             ConvexHullTrick<T, Compare>>;
 
   Hull<less<>> lo;
   Hull<greater<>> hi;
@@ -36,29 +35,26 @@ struct ViaCHT
 
   void add(ll a, ll b, int id)
   {
-    if constexpr (direct)
-      lo.add_line(X(a), X(b), id), hi.add_line(X(a), X(b), id);
-    else
-      lo.add_line(a, b, id), hi.add_line(a, b, id);
+    lo.add_line(T(a), T(b), id), hi.add_line(T(a), T(b), id);
     if (fst == -1) fst = mna = mxa = id, min_a = max_a = a;
     if (a < min_a) min_a = a, mna = id;
     if (max_a < a) max_a = a, mxa = id;
   }
 
-  static X ratio(ll x, ll y)
+  static T ratio(ll x, ll y)
   {
-    if constexpr (is_rational_v<X>)
-      return X(x, y);
+    if constexpr (is_rational_v<T>)
+      return T(x, y);
     else
-      return X(x) / X(y);
+      return T(x) / T(y);
   }
 
   int query_id(ll x, ll y)
   {
     if (x == 0 && y == 0) return fst;
     if (y == 0) return x > 0 ? mna : mxa;
-    X t = ratio(x, y);
-    return y > 0 ? lo.query_with_line(t).second.id : hi.query_with_line(t).second.id;
+    T t = ratio(x, y);
+    return y > 0 ? lo.query(t).second.id : hi.query(t).second.id;
   }
 };
 
@@ -91,12 +87,11 @@ Result run(const vc<pair<ll, ll>> &forms, const vc<Query> &queries)
 template <bool monotone>
 void benchmark(const vc<pair<ll, ll>> &forms, const vc<Query> &queries)
 {
-  using R = Rational<ll>;
+  using R = Rational<i128>;
   vc<pair<string, Result>> results;
   results.eb("wrapper", run<Wrapper<monotone>>(forms, queries));
-  results.eb("rational-all", run<ViaCHT<R, true, monotone>>(forms, queries));
-  results.eb("rational-x", run<ViaCHT<R, false, monotone>>(forms, queries));
-  results.eb("long-double-x", run<ViaCHT<long double, false, monotone>>(forms, queries));
+  results.eb("rational", run<ViaCHT<R, monotone>>(forms, queries));
+  results.eb("long-double", run<ViaCHT<long double, monotone>>(forms, queries));
   for (auto &[name, result] : results)
   {
     assert(result.checksum == results[0].second.checksum);

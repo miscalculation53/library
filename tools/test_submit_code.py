@@ -88,6 +88,31 @@ int main() { return header - 1; }
         self.assertEqual(bundled.count("int header = dep;"), 1)
         self.assertIn('#include "missing-raw.hpp"', bundled)
 
+    def test_fast_bundler_links_each_library_header(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "ds").mkdir()
+            (root / "ds/dep.hpp").write_text("#pragma once\nint dep;\n")
+            (root / "ds/header.hpp").write_text(
+                '#pragma once\n#include "dep.hpp"\nint header;\n'
+            )
+            source = root / "main.cpp"
+            source.write_text('#include "ds/header.hpp"\nint main() {}\n')
+            bundled = submit_code.FastBundler(
+                [root], library_root=root
+            ).bundle(source)
+        self.assertIn(
+            "// https://miscalculation53.github.io/library/"
+            "ds/dep.hpp.html#unbundled\n",
+            bundled,
+        )
+        self.assertIn(
+            "// https://miscalculation53.github.io/library/"
+            "ds/header.hpp.html#unbundled\n",
+            bundled,
+        )
+        self.assertNotIn("main.cpp.html", bundled)
+
     def test_fast_bundler_expands_include_guard_headers(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -166,12 +191,55 @@ int main() { return header - 1; }
         document = submit_code.BundleDocument.parse(text, resolver=resolver)
         self.assertEqual(document.render(set(), keep_line=True), text)
 
+    def test_bundle_document_links_only_repository_headers(self) -> None:
+        root = Path("/tmp/library")
+        source = Path("/tmp/contest/main.cpp")
+        header = root / "math/rational.hpp"
+        external = Path("/tmp/external/dependency.hpp")
+        resolver = submit_code.OriginResolver(
+            base_dir=source.parent,
+            source=source,
+            include_paths=[root, external.parent],
+        )
+        bundled = (
+            f'#line 1 {submit_code.json.dumps(str(header))}\nint rational;\n'
+            f'#line 1 {submit_code.json.dumps(str(external))}\nint dependency;\n'
+            f'#line 1 {submit_code.json.dumps(str(source))}\nint main() {{}}\n'
+        )
+        document = submit_code.BundleDocument.parse(
+            bundled,
+            resolver=resolver,
+            library_root=root,
+        )
+        rendered = document.render(set(), keep_line=False)
+        self.assertEqual(rendered.count("#unbundled"), 1)
+        self.assertIn(
+            "// https://miscalculation53.github.io/library/"
+            "math/rational.hpp.html#unbundled\n",
+            rendered,
+        )
+        self.assertNotIn("dependency.hpp.html", rendered)
+
+    def test_cleanup_comment_stripping_preserves_source_links(self) -> None:
+        source = (
+            "// ordinary comment\n"
+            "// https://miscalculation53.github.io/library/"
+            "ds/segtree.hpp.html#unbundled\n"
+            "int value; // trailing comment\n"
+        )
+        cleaned = submit_code.strip_cleanup_comments(source)
+        self.assertNotIn("ordinary comment", cleaned)
+        self.assertNotIn("trailing comment", cleaned)
+        self.assertIn("ds/segtree.hpp.html#unbundled", cleaned)
+
     def test_preprocessor_uses_real_system_headers(self) -> None:
         cxx = shutil.which("g++-15") or shutil.which("g++-14")
         if cxx is None:
             self.skipTest("GNU C++ compiler is unavailable")
         reporter = submit_code.Reporter()
-        source = '''#include <bits/stdc++.h>
+        source = '''// removed comment
+// https://miscalculation53.github.io/library/ds/segtree.hpp.html#unbundled
+#include <bits/stdc++.h>
 #if __cplusplus >= 202302L
 int main() { return 0; }
 #else
@@ -191,6 +259,8 @@ int invalid = ;
         self.assertTrue(valid, submit_code.first_error(stderr))
         self.assertIn("int main()", cleaned)
         self.assertNotIn("invalid", cleaned)
+        self.assertNotIn("removed comment", cleaned)
+        self.assertIn("ds/segtree.hpp.html#unbundled", cleaned)
         self.assertIn("#include <bits/stdc++.h>", cleaned)
 
     def test_compiler_unused_macro_warning_is_enabled(self) -> None:

@@ -7,7 +7,7 @@
 // Test focus: each aggregate monoid merges exactly the fields it stores and has an empty identity.
 void test()
 {
-  using ML = MonoidSumWithLength<ll>;
+  using ML = MonoidLenSum<ll>;
   auto l = ML::op(ML::S(2), ML::S(3, 12));
   assert(l.len == 4 && l.val == 14);
 
