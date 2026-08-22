@@ -16,9 +16,7 @@ struct MonoidAffineFunction
     T b, c;
     S() {}
     S(T b, T c) : b(b), c(c) {}
-#ifdef LOCAL
-    auto dump_data() const { return tie(b, c); }
-#endif
+    CPP_DUMP_DEFINE_DATA(b, c);
   };
   static constexpr S op(const S &f, const S &g)
   {
@@ -38,9 +36,7 @@ struct GroupAffineFunction
     S(mint a, mint b) : a(a), b(b) {}
     template <class T, class U>
     S(const pair<T, U> &ab) : a(ab.first), b(ab.second) {}
-#ifdef LOCAL
-    auto dump_data() const { return tie(a, b); }
-#endif
+    CPP_DUMP_DEFINE_DATA(a, b);
   };
   static constexpr S op(const S &f, const S &g)
   {

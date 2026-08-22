@@ -26,9 +26,7 @@ struct MonoidUpdFlag
     S() {}
     S(T val) : is_id(false), val(val) {}
     S(bool is_id, T val) : is_id(is_id), val(val) {}
-#ifdef LOCAL
-    auto dump_data() const { return tie(is_id, val); }
-#endif
+    CPP_DUMP_DEFINE_DATA(is_id, val);
   };
   static constexpr S op(const S &f, const S &g) { return f.is_id ? g : f; }
   static constexpr S e() { return {}; }

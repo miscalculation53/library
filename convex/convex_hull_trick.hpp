@@ -15,6 +15,7 @@ struct ConvexHullTrickLine
   // ax + b
   T a, b;
   int id = -1;
+  CPP_DUMP_DEFINE_DATA(a, b, id);
 
   friend bool operator==(const ConvexHullTrickLine &x, const ConvexHullTrickLine &y)
   {
@@ -27,12 +28,8 @@ struct ConvexHullTrickSegment
 {
   ConvexHullTrickLine<T> line;
   T left, right;
+  CPP_DUMP_DEFINE_DATA(line, left, right);
 };
-
-#ifdef LOCAL
-CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(a, b, id);
-CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(line, left, right);
-#endif
 
 template <class T = ll, class Compare = less<>, auto infty = INF>
 struct ConvexHullTrick

@@ -18,9 +18,7 @@ struct MonoidLenSum
     S() {}
     S(T val) : len(1), val(val) {}
     S(int len, T val) : len(len), val(val) {}
-#ifdef LOCAL
-    auto dump_data() const { return tie(len, val); }
-#endif
+    CPP_DUMP_DEFINE_DATA(len, val);
   };
   static constexpr S op(const S &a, const S &b) { return {a.len + b.len, a.val + b.val}; }
   static constexpr S e() { return {0, T{}}; }
@@ -35,9 +33,7 @@ struct MonoidMinMax
     S() {}
     S(T x) : mn(x), mx(x) {}
     S(T mn, T mx) : mn(mn), mx(mx) {}
-#ifdef LOCAL
-    auto dump_data() const { return tie(mn, mx); }
-#endif
+    CPP_DUMP_DEFINE_DATA(mn, mx);
   };
   static constexpr S op(const S &a, const S &b) { return {min(a.mn, b.mn), max(a.mx, b.mx)}; }
   static constexpr S e() { return {}; }
@@ -53,9 +49,7 @@ struct MonoidMinSum
     S() {}
     S(T x, int len = 1) : mn(x), sum(x * len), len(len) {}
     S(T mn, T sum, int len) : mn(mn), sum(sum), len(len) {}
-#ifdef LOCAL
-    auto dump_data() const { return tie(mn, sum, len); }
-#endif
+    CPP_DUMP_DEFINE_DATA(mn, sum, len);
   };
   static constexpr S op(const S &a, const S &b)
   {
@@ -74,9 +68,7 @@ struct MonoidMaxSum
     S() {}
     S(T x, int len = 1) : mx(x), sum(x * len), len(len) {}
     S(T mx, T sum, int len) : mx(mx), sum(sum), len(len) {}
-#ifdef LOCAL
-    auto dump_data() const { return tie(mx, sum, len); }
-#endif
+    CPP_DUMP_DEFINE_DATA(mx, sum, len);
   };
   static constexpr S op(const S &a, const S &b)
   {
@@ -95,9 +87,7 @@ struct MonoidMinMaxSum
     S() {}
     S(T x, int len = 1) : mn(x), mx(x), sum(x * len), len(len) {}
     S(T mn, T mx, T sum, int len) : mn(mn), mx(mx), sum(sum), len(len) {}
-#ifdef LOCAL
-    auto dump_data() const { return tie(mn, mx, sum, len); }
-#endif
+    CPP_DUMP_DEFINE_DATA(mn, mx, sum, len);
   };
   static constexpr S op(const S &a, const S &b)
   {

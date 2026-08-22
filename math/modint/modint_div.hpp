@@ -47,12 +47,10 @@ struct ModintDiv
   friend bool operator!=(const ModintDiv &lhs, const ModintDiv &rhs)
   { return !(lhs == rhs); }
   friend auto safe_hash_key(const ModintDiv &x) { return pair{x.b, x.c}; }
+  CPP_DUMP_DEFINE_DATA(b, c);
   // (mod p で表現可能か, mod p での値)
   pair<bool, mint> to_modint() const
   {
     return {c >= 0, c == 0 ? b : mint(0)};
   }
 };
-#ifdef LOCAL
-CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(b, c);
-#endif

@@ -17,7 +17,29 @@ namespace cpp_dump::_detail
   ) {
     return export_var(i128tos(x), indent, last_line_length, current_depth, fail_on_newline, command);
   }
+
+  template <class T>
+  inline auto export_object_generic(
+      const T &value, const string &indent, size_t last_line_length,
+      size_t current_depth, bool fail_on_newline, const export_command &command
+  ) -> decltype(value.dump_data(), string())
+  {
+    string class_name = es::class_name(get_typename<T>());
+    _p_CPP_DUMP_DEFINE_EXPORT_OBJECT_COMMON1;
+    apply(
+        [&](const auto &...member)
+        { (append_output(member.first, member.second.get()), ...); },
+        value.dump_data()
+    );
+    _p_CPP_DUMP_DEFINE_EXPORT_OBJECT_COMMON2;
+  }
 } // namespace cpp_dump::_detail
+#define _p_LIBRARY_CPP_DUMP_MEMBER(member) pair{string_view(#member), cref(member)}
+#define CPP_DUMP_DEFINE_DATA(...)                                                      \
+  auto dump_data() const                                                               \
+  {                                                                                    \
+    return make_tuple(_p_CPP_DUMP_EXPAND_VA(_p_LIBRARY_CPP_DUMP_MEMBER, __VA_ARGS__)); \
+  }
 #define dump(...) cpp_dump(__VA_ARGS__)
 namespace cp = cpp_dump;
 CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());
@@ -26,8 +48,8 @@ CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 100);
 #define oj(...)
 #define local_oj(a, b) (a)
 CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(content());
-CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(dump_data());
 #else
+#define CPP_DUMP_DEFINE_DATA(...)
 #define dump(...)
 #define local(...)
 #define oj(...) __VA_ARGS__

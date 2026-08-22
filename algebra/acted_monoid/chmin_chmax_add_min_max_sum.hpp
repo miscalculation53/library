@@ -21,9 +21,7 @@ struct MonoidMinMaxSumBeats
     S() {}
     S(T x, int len = 1)
         : mn(x), mx(x), sum(x * len), len(len), mn_cnt(len), mx_cnt(len) {}
-#ifdef LOCAL
-    auto dump_data() const { return tie(mn, mx, mn2, mx2, sum, len, mn_cnt, mx_cnt, fail); }
-#endif
+    CPP_DUMP_DEFINE_DATA(mn, mx, mn2, mx2, sum, len, mn_cnt, mx_cnt, fail);
   };
 
 private:
