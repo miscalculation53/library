@@ -38,6 +38,9 @@ struct GroupAffineFunction
     S(mint a, mint b) : a(a), b(b) {}
     template <class T, class U>
     S(const pair<T, U> &ab) : a(ab.first), b(ab.second) {}
+#ifdef LOCAL
+    auto dump_data() const { return tie(a, b); }
+#endif
   };
   static constexpr S op(const S &f, const S &g)
   {
@@ -52,6 +55,3 @@ struct GroupAffineFunction
     return {ainv, -f.b * ainv};
   }
 };
-#ifdef LOCAL
-CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(a, b);
-#endif

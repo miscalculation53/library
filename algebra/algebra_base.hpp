@@ -160,5 +160,4 @@ struct FieldFromGroupGroup
 
 #ifdef LOCAL
 CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(normal, opposite);
-CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(dump_data());
 #endif

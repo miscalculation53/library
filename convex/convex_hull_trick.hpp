@@ -29,6 +29,11 @@ struct ConvexHullTrickSegment
   T left, right;
 };
 
+#ifdef LOCAL
+CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(a, b, id);
+CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(line, left, right);
+#endif
+
 template <class T = ll, class Compare = less<>, auto infty = INF>
 struct ConvexHullTrick
 {
@@ -124,7 +129,7 @@ public:
     while ((y = x) != st.begin() && (--x)->r >= y->r) set_r(x, st.erase(y));
   }
 
-  // x における最適値と、それを達成する直線を返す
+  // (値, 直線)
   pair<T, Line> query(const T &x) const
   {
     if (st.empty()) return {empty_value(), {T(0), empty_value(), -1}};
@@ -134,7 +139,8 @@ public:
     return {eval(p, x), line(p)};
   }
 
-  // 単調な x における最適値と直線を返す。増減方向は自動で判定する
+  // (値, 直線)
+  // x は単調 (増減方向は自動で判定される)
   pair<T, Line> query_monotone(const T &x)
   {
     if (st.empty()) return {empty_value(), {T(0), empty_value(), -1}};
@@ -160,7 +166,6 @@ public:
     return {eval(p, x), line(p)};
   }
 
-  // 新しい単調クエリ列を始められるように、現在位置と増減方向を消去する
   void reset_monotone_query()
   {
     qit.reset();

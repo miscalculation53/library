@@ -5,7 +5,7 @@
 #include "convex/convex_hull_trick.hpp"
 
 // Test focus: min/max objectives, both slope modes, IDs, segments, empty results,
-// monotone queries, and rational/floating-point types.
+// monotone queries, rational/floating-point types, and LOCAL dump support.
 mt19937_64 cht_rng(1234567);
 
 ll random_ll(ll l, ll r)
@@ -161,6 +161,9 @@ void test_segment_boundaries()
   assert(segments[1].line.id == 20);
   assert(cht.query(-1).second.id == 10);
   assert(cht.query(0).second.id == 20);
+#ifdef LOCAL
+  dump(segments[0].line, segments[0]);
+#endif
 }
 
 template <class CHT>

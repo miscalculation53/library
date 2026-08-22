@@ -26,6 +26,7 @@ CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 100);
 #define oj(...)
 #define local_oj(a, b) (a)
 CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(content());
+CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(dump_data());
 #else
 #define dump(...)
 #define local(...)
