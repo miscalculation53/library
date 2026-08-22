@@ -3,7 +3,7 @@
 #include "../../../template/template_all_but_modint.hpp"
 
 #include "../../segtree/lazy_segtree.hpp"
-#include "../../../math/algebra/acted_monoid/add_min_count.hpp"
+#include "../../../algebra/acted_monoid/add_min_count.hpp"
 
 /**
  * @brief 長方形の和集合の面積
