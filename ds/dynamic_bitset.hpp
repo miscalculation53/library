@@ -31,6 +31,58 @@ private:
       dat.back() &= last_mask();
   }
 
+  Word get_word(int i) const
+  {
+    int w = i / word_bits, b = i % word_bits;
+    Word x = dat[w] >> b;
+    if (b && w + 1 < SZ(dat))
+      x |= dat[w + 1] << (word_bits - b);
+    return x;
+  }
+
+  template <int op, class F>
+  DynamicBitset &apply_slice(int l, int r, const DynamicBitset &b, int bl, const F &f)
+  {
+    assert(0 <= l && l <= r && r <= n);
+    assert(0 <= bl && bl + r - l <= b.n);
+    if (l == r)
+      return *this;
+
+    auto apply_word = [&](int w)
+    {
+      int lo = max(l, w * word_bits), hi = min(r, (w + 1) * word_bits);
+      int len = hi - lo, shift = lo % word_bits;
+      Word mask = low_mask(len) << shift;
+      Word x = (b.get_word(bl + lo - l) & low_mask(len)) << shift;
+      Word old = dat[w], y;
+      if constexpr (op == 0)
+        y = x;
+      else if constexpr (op == 1)
+        y = old & x;
+      else if constexpr (op == 2)
+        y = old | x;
+      else
+        y = old ^ x;
+      dat[w] = (old & ~mask) | (y & mask);
+      if constexpr (!is_same_v<F, nullptr_t>)
+      {
+        Word added = dat[w] & ~old & mask;
+        while (added)
+        {
+          f(w * word_bits + __builtin_ctzll(added));
+          added &= added - 1;
+        }
+      }
+    };
+
+    int lw = l / word_bits, rw = (r - 1) / word_bits;
+    if (this == &b && bl < l && l < bl + r - l)
+      repi(w, rw, lw - 1, -1) apply_word(w);
+    else
+      repi(w, lw, rw + 1) apply_word(w);
+    return *this;
+  }
+
 public:
   struct Reference
   {
@@ -367,94 +419,26 @@ public:
   DynamicBitset operator<<(int k) const { return DynamicBitset(*this) <<= k; }
   DynamicBitset operator>>(int k) const { return DynamicBitset(*this) >>= k; }
 
-  // 自身と、自身を k bit 左シフトしたものの OR を一時オブジェクトなしで計算する。
-  DynamicBitset &or_shift_left(int k)
+  DynamicBitset &assign_slice(int l, int r, const DynamicBitset &b, int bl)
   {
-    assert(k >= 0);
-    if (k == 0 || k >= n)
-      return *this;
-    int dw = k / word_bits, db = k % word_bits;
-    repi(i, SZ(dat) - 1, dw - 1, -1)
-    {
-      Word x = dat[i - dw] << db;
-      if (db && i > dw)
-        x |= dat[i - dw - 1] >> (word_bits - db);
-      dat[i] |= x;
-    }
-    trim();
-    return *this;
+    return apply_slice<0>(l, r, b, bl, nullptr);
   }
-
-  // 左shift-orを行い、0 から 1 に変わる各位置について f(i) を呼ぶ。
+  DynamicBitset &and_slice(int l, int r, const DynamicBitset &b, int bl)
+  {
+    return apply_slice<1>(l, r, b, bl, nullptr);
+  }
+  DynamicBitset &or_slice(int l, int r, const DynamicBitset &b, int bl)
+  {
+    return apply_slice<2>(l, r, b, bl, nullptr);
+  }
   template <class F>
-  DynamicBitset &or_shift_left(int k, const F &f)
+  DynamicBitset &or_slice(int l, int r, const DynamicBitset &b, int bl, const F &f)
   {
-    assert(k >= 0);
-    if (k == 0 || k >= n)
-      return *this;
-    int dw = k / word_bits, db = k % word_bits;
-    repi(i, SZ(dat) - 1, dw - 1, -1)
-    {
-      Word x = dat[i - dw] << db;
-      if (db && i > dw)
-        x |= dat[i - dw - 1] >> (word_bits - db);
-      Word diff = x & ~dat[i];
-      while (diff)
-      {
-        int j = i * word_bits + __builtin_ctzll(diff);
-        if (j < n)
-          f(j);
-        diff &= diff - 1;
-      }
-      dat[i] |= x;
-    }
-    trim();
-    return *this;
+    return apply_slice<2>(l, r, b, bl, f);
   }
-
-  // 自身と、自身を k bit 右シフトしたものの OR を一時オブジェクトなしで計算する。
-  DynamicBitset &or_shift_right(int k)
+  DynamicBitset &xor_slice(int l, int r, const DynamicBitset &b, int bl)
   {
-    assert(k >= 0);
-    if (k == 0 || k >= n)
-      return *this;
-    int dw = k / word_bits, db = k % word_bits, m = SZ(dat);
-    repi(i, m - dw)
-    {
-      Word x = dat[i + dw] >> db;
-      if (db && i + dw + 1 < m)
-        x |= dat[i + dw + 1] << (word_bits - db);
-      dat[i] |= x;
-    }
-    trim();
-    return *this;
-  }
-
-  // 右shift-orを行い、0 から 1 に変わる各位置について f(i) を呼ぶ。
-  template <class F>
-  DynamicBitset &or_shift_right(int k, const F &f)
-  {
-    assert(k >= 0);
-    if (k == 0 || k >= n)
-      return *this;
-    int dw = k / word_bits, db = k % word_bits, m = SZ(dat);
-    repi(i, m - dw)
-    {
-      Word x = dat[i + dw] >> db;
-      if (db && i + dw + 1 < m)
-        x |= dat[i + dw + 1] << (word_bits - db);
-      Word diff = x & ~dat[i];
-      while (diff)
-      {
-        int j = i * word_bits + __builtin_ctzll(diff);
-        if (j < n)
-          f(j);
-        diff &= diff - 1;
-      }
-      dat[i] |= x;
-    }
-    trim();
-    return *this;
+    return apply_slice<3>(l, r, b, bl, nullptr);
   }
 
   // 末尾に value を追加する。

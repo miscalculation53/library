@@ -7,7 +7,7 @@
 - `resize`, `reserve`, `push_back`, `pop_back`
 - 半開区間 $[l,r)$ の `set_range`, `reset_range`, `flip_range`, `count`, `any`, `none`, `all`
 - 前後にある `1` または `0` の検索
-- 一時オブジェクトを作らない shift-or
+- bitset の区間から区間への論理演算
 
 ## 使用例
 
@@ -17,7 +17,7 @@ a.set_range(10, 20);
 a.flip(15);
 int first = a.find_first();
 int next = a.find_next(first);
-a.or_shift_left(7);
+a.or_slice(7, a.size(), a, 0);
 
 DynamicBitset b("0010110");
 cout << b << '\n';
@@ -156,19 +156,27 @@ a & b; a | b; a ^ b; ~a; a << k; a >> k;
 
 - $O(n/w)$
 
-#### or_shift_left / or_shift_right
+#### assign_slice / and_slice / or_slice / xor_slice
 
 ```cpp
-DynamicBitset &or_shift_left(int k)
-DynamicBitset &or_shift_right(int k)
-template <class F> DynamicBitset &or_shift_left(int k, const F &f)
-template <class F> DynamicBitset &or_shift_right(int k, const F &f)
+DynamicBitset &assign_slice(int l, int r, const DynamicBitset &b, int bl)
+DynamicBitset &and_slice(int l, int r, const DynamicBitset &b, int bl)
+DynamicBitset &or_slice(int l, int r, const DynamicBitset &b, int bl)
+DynamicBitset &xor_slice(int l, int r, const DynamicBitset &b, int bl)
+template <class F>
+DynamicBitset &or_slice(int l, int r, const DynamicBitset &b, int bl, const F &f)
 ```
 
-自身を $a$ として、それぞれ $a\mathrel{|}=a\ll k$、$a\mathrel{|}=a\gg k$ を一時オブジェクトなしで行う。
+各 $0\leq i<r-l$ に対して、`a[l + i]` に `b[bl + i]` を代入、AND、OR、XORする。
 
-コールバックを渡す形式では、shift-or によって `0` から `1` に変わる各位置 $i$ について `f(i)` を1回呼ぶ。
+`a` と `b` が同一で区間が重なっていても、変更前の `b` の区間を使用する。コールバックを渡す形式では、ORによって `0` から `1` に変わる宛先の各位置 $i$ について `f(i)` を1回呼ぶ。
+
+##### 制約
+
+- $0\leq l\leq r\leq a.\operatorname{size}()$
+- $0\leq bl$、$bl+r-l\leq b.\operatorname{size}()$
 
 ##### 計算量
 
-- $O(n/w)$
+- コールバックなし：$O(1+(r-l)/w)$
+- コールバックあり：$O(1+(r-l)/w+z)$。$z$ は `f` の呼び出し回数

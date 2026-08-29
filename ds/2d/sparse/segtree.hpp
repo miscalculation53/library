@@ -16,7 +16,7 @@
 // セグメント木にデータ構造 D<M> を載せる
 // D のデフォルトは SegmentTree
 // 更新がないなら (disjoint) sparse table とかも
-// D<M> に set, get があるなら set, get, modify が使える
+// D<M> に set, get があるなら set, get が使える
 // M: 可換モノイド
 // I: 座標の型
 template <class M, class I, template <class...> class D = SegmentTree>

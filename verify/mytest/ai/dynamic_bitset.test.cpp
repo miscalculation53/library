@@ -3,8 +3,8 @@
 #include "template/template_all_but_modint.hpp"
 #include "ds/dynamic_bitset.hpp"
 
-// Test focus: string conversion, dynamic sizing, range operations, shifts,
-// bitwise operations, and 0/1 searches agree with simple implementations.
+// Test focus: string conversion, dynamic sizing, range and slice operations,
+// shifts, bitwise operations, and 0/1 searches agree with simple implementations.
 void verify(const DynamicBitset &bs, const vc<bool> &a)
 {
   int n = a.size(), cnt = 0;
@@ -89,6 +89,61 @@ void shift_right(vc<bool> &a, int k)
   repi(i, n) a[i] = i + k < n && a[i + k];
 }
 
+void test_slice(mt19937 &rng)
+{
+  repi(step, 5000)
+  {
+    int n = rng() % 258, m = rng() % 258;
+    bool self = rng() & 1;
+    DynamicBitset a(n), b(m);
+    vc<bool> av(n), bv(m);
+    repi(i, n) if (rng() & 1) a.set(i), av[i] = true;
+    repi(i, m) if (rng() & 1) b.set(i), bv[i] = true;
+
+    int sn = self ? n : m;
+    int len = rng() % (min(n, sn) + 1);
+    int l = rng() % (n - len + 1), bl = rng() % (sn - len + 1);
+    int op = rng() % 4;
+    vc<bool> old = av, src = self ? av : bv, called(n);
+
+    auto apply = [&](const DynamicBitset &s)
+    {
+      if (op == 0)
+        a.assign_slice(l, l + len, s, bl);
+      else if (op == 1)
+        a.and_slice(l, l + len, s, bl);
+      else if (op == 2)
+        a.or_slice(l, l + len, s, bl, [&](int i)
+                   {
+                     assert(!called[i]);
+                     called[i] = true;
+                   });
+      else
+        a.xor_slice(l, l + len, s, bl);
+    };
+    if (self)
+      apply(a);
+    else
+      apply(b);
+
+    repi(i, len)
+    {
+      bool x = old[l + i], y = src[bl + i];
+      if (op == 0)
+        av[l + i] = y;
+      else if (op == 1)
+        av[l + i] = x && y;
+      else if (op == 2)
+        av[l + i] = x || y;
+      else
+        av[l + i] = x != y;
+      assert(called[l + i] == (op == 2 && !x && y));
+    }
+    repi(i, n) if (i < l || l + len <= i) assert(!called[i]);
+    verify(a, av);
+  }
+}
+
 int main()
 {
   {
@@ -117,7 +172,7 @@ int main()
   vc<bool> a;
   repi(step, 3000)
   {
-    int op = rng() % 15, n = a.size();
+    int op = rng() % 13, n = a.size();
     if (op == 0)
     {
       int m = rng() % 257;
@@ -178,7 +233,7 @@ int main()
         repi(i, l, r) a[i] = !a[i];
       }
     }
-    else if (op <= 12)
+    else if (op <= 10)
     {
       int k = rng() % 300;
       if (op == 9)
@@ -191,47 +246,13 @@ int main()
         bs >>= k;
         shift_right(a, k);
       }
-      else if (op == 11)
-      {
-        vc<bool> old = a;
-        vc<bool> changed(n);
-        bs.or_shift_left(k, [&](int i)
-                         {
-                           assert(!changed[i]);
-                           changed[i] = true;
-                         });
-        repi(i, n)
-        {
-          bool expected = i >= k && !old[i] && old[i - k];
-          assert(changed[i] == expected);
-          if (i >= k)
-            a[i] = a[i] || old[i - k];
-        }
-      }
-      else
-      {
-        vc<bool> old = a;
-        vc<bool> changed(n);
-        bs.or_shift_right(k, [&](int i)
-                          {
-                            assert(!changed[i]);
-                            changed[i] = true;
-                          });
-        repi(i, n)
-        {
-          bool expected = i + k < n && !old[i] && old[i + k];
-          assert(changed[i] == expected);
-          if (i + k < n)
-            a[i] = a[i] || old[i + k];
-        }
-      }
     }
     else
     {
       DynamicBitset b(n);
       vc<bool> c(n);
       repi(i, n) if (rng() & 1) b.set(i), c[i] = true;
-      if (op == 13)
+      if (op == 11)
       {
         bs ^= b;
         repi(i, n) a[i] = a[i] != c[i];
@@ -244,5 +265,6 @@ int main()
     }
     verify(bs, a);
   }
+  test_slice(rng);
   cout << "Hello World" << endl;
 }

@@ -91,10 +91,12 @@ private:
 public:
   // y = ax + b を追加
   // 直線の id は 0 始まりの追加順になる
+  // O(log(直線の個数))
   void add_line(T a, T b) { add_line(a, b, add_cnt); }
 
   // y = ax + b を追加
   // 直線の id を指定
+  // O(log(直線の個数))
   void add_line(T a, T b, int id)
   {
     add_cnt++;
@@ -117,6 +119,7 @@ public:
   }
 
   // (値, 直線)
+  // O(log(直線の個数))
   pair<T, Line> query(const T &x) const
   {
     if (st.empty())
@@ -132,6 +135,7 @@ public:
 
   // (値, 直線)
   // x は単調 (増減方向は自動で判定される)
+  // おおむね償却 O(1)
   pair<T, Line> query_monotone(const T &x)
   {
     if (st.empty())
@@ -268,10 +272,14 @@ private:
   }
 
 public:
-  // y = ax + b を追加する。id は 0 始まりの追加順になる
+  // y = ax + b を追加
+  // 直線の id は 0 始まりの追加順になる
+  // O(1)
   void add_line(T a, T b) { add_line(a, b, add_cnt); }
 
-  // y = ax + b を指定した id で追加する。a の増減方向は自動で判定する
+  // y = ax + b を追加
+  // 直線の id を指定
+  // O(1)
   void add_line(T a, T b, int id)
   {
     add_cnt++;
@@ -293,7 +301,8 @@ public:
       push_back(p);
   }
 
-  // x における最適値と、それを達成する直線を返す。空なら infty か -infty とダミー直線を返す
+  // (値, 直線)
+  // O(log(直線の個数))
   pair<T, Line> query(const T &x) const
   {
     if (dq.empty())
@@ -308,7 +317,9 @@ public:
     return {eval(p, x), line(p)};
   }
 
-  // 単調な x における最適値と直線を返す。増減方向は自動で判定する
+  // (値, 直線)
+  // x は単調 (増減方向は自動で判定される)
+  // おおむね償却 O(1)
   pair<T, Line> query_monotone(const T &x)
   {
     if (dq.empty())
@@ -339,7 +350,6 @@ public:
     return {eval(p, x), line(p)};
   }
 
-  // 単調クエリの現在位置と方向を消去する
   void reset_monotone_query()
   {
     qpos = -1;
@@ -347,7 +357,9 @@ public:
     qdir = 0;
   }
 
-  // 各直線と、その直線が最適になる境界区間 (left, right] を返す
+  // Segment: line, left, right
+  // 直線 line が最適になる x の範囲 (left, right]
+  // x の昇順に返す
   vc<Segment> segments() const
   {
     vc<Segment> res;

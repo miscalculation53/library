@@ -45,7 +45,7 @@ ull dynamic_fused_shift(const vc<int> &shifts)
 {
   DynamicBitset dp(bit_n);
   dp.set(0);
-  fec(k : shifts) dp.or_shift_left(k);
+  fec(k : shifts) dp.or_slice(k, bit_n, dp, 0);
   return dp.count();
 }
 
@@ -105,7 +105,7 @@ ull dynamic_subset_sum(const vc<int> &shifts)
   DynamicBitset dp(bit_n);
   dp.set(0);
   ull checksum = 0;
-  fec(k : shifts) dp.or_shift_left(k, [&](int i) { checksum += i; });
+  fec(k : shifts) dp.or_slice(k, bit_n, dp, 0, [&](int i) { checksum += i; });
   return checksum ^ dp.count();
 }
 

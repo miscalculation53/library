@@ -10,7 +10,7 @@
  */
 
 // rectangle add をすべてやったあとに rectangle sum をやる
-// G: 可換群
+// G: 可換群 (pow が高速に計算できるとよい)
 // I: 座標の型
 template <class G, class I>
 struct StaticRectangleAddRectangleSum

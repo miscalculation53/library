@@ -10,36 +10,24 @@
 struct SubsetSumFromFrequency
 {
 private:
-  struct Node
-  {
-    int l, r, val, cnt;
-  };
-
-  struct Item
-  {
-    int w, node;
-  };
-
   int s;
-  vc<Node> nodes;
-  vc<Item> items;
-  vc<int> time, used;
+  vc<pair<int, int>> val_cnt;
+  vc<int> time;
 
-  void build_dp()
+public:
+  SubsetSumFromFrequency() : s(0), time(1, 0) {}
+
+  // freq[v] := 値 v の個数
+  // smax: 計算する部分和の範囲
+  template <class T>
+  SubsetSumFromFrequency(const vc<T> &freq, int smax) : s(smax)
   {
-    time.assign(s + 1, SZ<int>(items) + 1);
+    static_assert(is_integral_ext<T>);
+    assert(s >= 0);
+    time.assign(s + 1, -1);
     time[0] = 0;
     DynamicBitset dp(s + 1);
     dp.set(0);
-    repi(t, SZ(items))
-      dp.or_shift_left(items[t].w, [&](int i) { time[i] = t + 1; });
-  }
-
-  template <class T>
-  void build(const vc<T> &freq)
-  {
-    static_assert(is_integral_ext<T>);
-    vvc<int> ids(s + 1);
     int vmax = min(s, SZ<int>(freq) - 1);
     repi(v, 1, vmax + 1)
     {
@@ -49,87 +37,40 @@ private:
       {
         int x = int(min<ll>(c, k));
         c -= x;
-        ids[v * x].eb(nodes.size());
-        nodes.eb(Node{-1, -1, v, x});
+        int t = val_cnt.size();
+        val_cnt.eb(v, x);
+        int w = v * x;
+        dp.or_slice(w, s + 1, dp, 0, [&](int i) { time[i] = t + 1; });
       }
     }
-
-    repi(w, 1, s + 1)
-    {
-      while (SZ(ids[w]) >= 3)
-      {
-        int l = ids[w].back();
-        ids[w].pop_back();
-        int r = ids[w].back();
-        ids[w].pop_back();
-        if (w <= s / 2)
-        {
-          ids[2 * w].eb(nodes.size());
-          nodes.eb(Node{l, r, 0, 0});
-        }
-      }
-      fec(node : ids[w]) items.eb(Item{w, node});
-    }
-
-    build_dp();
-    used.assign(s + 1, 0);
   }
 
-public:
-  SubsetSumFromFrequency() : s(0), time(1, 0), used(1, 0) {}
-
-  // freq[v] := 値 v の個数。smax 以下の部分和を前計算する。
-  template <class T>
-  SubsetSumFromFrequency(const vc<T> &freq, int smax) : s(smax)
-  {
-    assert(s >= 0);
-    build(freq);
-  }
-
-  // x を作れるか返す。
+  // x を作れるか
   bool exists(int x) const
   {
-    return 0 <= x && x <= s && time[x] <= SZ(items);
+    return 0 <= x && x <= s && time[x] != -1;
   }
 
-  // x を作れるなら、使用する (値, 個数) の列を返す。列の順序は未規定。
-  pair<bool, vc<pair<int, int>>> answer(int x)
+  // x を作れる場合、second は (値, 個数) の列
+  pair<bool, vc<pair<int, int>>> answer(int x) const
   {
     if (!exists(x))
       return {false, {}};
 
-    vc<int> selected;
+    vc<pair<int, int>> res;
     int y = x;
-    repi(t, SZ(items) - 1, -1, -1)
+    repi(t, SZ(val_cnt) - 1, -1, -1)
     {
-      int w = items[t].w;
-      if (y >= w && time[y - w] <= t)
+      auto [v, c] = val_cnt[t];
+      int w = v * c;
+      if (y >= w && time[y - w] != -1 && time[y - w] <= t)
       {
         y -= w;
-        selected.eb(items[t].node);
+        if (res.empty() || res.back().first != v)
+          res.eb(v, 0);
+        res.back().second += c;
       }
     }
-
-    vc<int> touched;
-    while (!selected.empty())
-    {
-      int i = selected.back();
-      selected.pop_back();
-      if (nodes[i].l == -1)
-      {
-        if (used[nodes[i].val] == 0)
-          touched.eb(nodes[i].val);
-        used[nodes[i].val] += nodes[i].cnt;
-      }
-      else
-      {
-        selected.eb(nodes[i].l);
-        selected.eb(nodes[i].r);
-      }
-    }
-
-    vc<pair<int, int>> res;
-    fec(v : touched) res.eb(v, used[v]), used[v] = 0;
     return {true, res};
   }
 };
@@ -190,7 +131,7 @@ public:
   }
 
   // x を作れるなら、元配列の各要素を使用するか返す。
-  pair<bool, vc<bool>> answer(int x)
+  pair<bool, vc<bool>> answer(int x) const
   {
     i128 y = i128(x) - negsum;
     if (x > xmax || !(0 <= y && y <= s))
