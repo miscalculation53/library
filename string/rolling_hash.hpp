@@ -5,140 +5,425 @@
 #include "../math/modint/modint.hpp"
 #include "../math/modint/power_table.hpp"
 
-#include "lcp_compare.hpp"
-
 /**
  * @brief Rolling Hash
  * @docs docs/string/rolling_hash.md
  */
+
+template <class V, class mint, int id>
+struct RollingHash;
+template <class V, class mint, int id>
+struct RollingHashConcat;
+template <class Sequence>
+struct RollingHashRange;
+template <class L, class R>
+struct RollingHashConcatView;
+
+template <class T>
+inline constexpr bool is_rolling_hash_view = false;
+template <class Sequence>
+inline constexpr bool is_rolling_hash_view<RollingHashRange<Sequence>> = true;
+template <class L, class R>
+inline constexpr bool is_rolling_hash_view<RollingHashConcatView<L, R>> = true;
 
 template <class mint = modint61, int id = INT_MIN>
 struct RollingHashBase
 {
   static mint &base()
   {
-    static mint val = local_oj(1000, mt());
+    static mint val = []
+    {
+      mint x = local_oj(1000, mt());
+      return x == mint(0) ? mint(1) : x;
+    }();
+    return val;
+  }
+  static mint inv_base()
+  {
+    static mint val = base().inv();
     return val;
   }
   static mint pow(int n)
   {
-    static PowerTable<mint> pw = PowerTable<mint>(base());
+    static PowerTable<mint> pw(base());
+    return pw.pow(n);
+  }
+  static mint inv_pow(int n)
+  {
+    static PowerTable<mint> pw(inv_base());
     return pw.pow(n);
   }
 };
 
 template <class mint = modint61, int id = INT_MIN>
-struct RollingHash
+struct RollingHashValue
 {
 private:
-  mint val;
-  int len;
-  static mint pow(int i) { return RollingHashBase<mint, id>::pow(i); }
+  mint val, pw, ipw;
+  ll len;
+
+  RollingHashValue(mint val, mint pw, mint ipw, ll len) : val(val), pw(pw), ipw(ipw), len(len) {}
+
+  template <class V, class M, int i>
+  friend struct RollingHash;
 
 public:
-  static mint base() { return RollingHashBase<mint, id>::base(); }
-
-  RollingHash() : val(0), len(0) {}
-  RollingHash(const mint &val_, int len_) : val(val_), len(len_) {}
+  RollingHashValue() : val(0), pw(1), ipw(1), len(0) {}
   template <class V>
-  RollingHash(const V &s) : len(s.size())
+  RollingHashValue(const V &s) : RollingHashValue()
   {
-    val = 0;
-    fec(c : s) val = val * base() + c;
+    const mint b = base(), ib = RollingHashBase<mint, id>::inv_base();
+    for (const auto &x : s)
+    {
+      val = val * b + x;
+      pw *= b;
+      ipw *= ib;
+      len++;
+    }
   }
 
-  mint hash() const { return val; }
-  template <class I = ll>
-  I size() const { return len; }
+  static mint base() { return RollingHashBase<mint, id>::base(); }
+  mint value() const { return val; }
+  ll size() const { return len; }
 
-  using RH = RollingHash<mint, id>;
-  RH &operator+=(const RH &rhs)
+  RollingHashValue &operator+=(const RollingHashValue &rhs)
   {
-    val = val * pow(rhs.len) + rhs.val;
+    val = val * rhs.pw + rhs.val;
+    pw *= rhs.pw;
+    ipw *= rhs.ipw;
     len += rhs.len;
     return *this;
   }
-  friend RH operator+(const RH &lhs, const RH &rhs) { return RH(lhs) += rhs; }
-  friend bool operator==(const RH &lhs, const RH &rhs) { return lhs.len == rhs.len && lhs.val == rhs.val; }
-  friend bool operator!=(const RH &lhs, const RH &rhs) { return lhs.len != rhs.len || lhs.val != rhs.val; }
-  friend auto safe_hash_key(const RH &x) { return pair{x.val, x.len}; }
+  friend RollingHashValue operator+(RollingHashValue lhs, const RollingHashValue &rhs) { return lhs += rhs; }
+
+  RollingHashValue remove_prefix(const RollingHashValue &prefix) const
+  {
+    assert(prefix.len <= len);
+    mint suffix_pw = pw * prefix.ipw;
+    return {val - prefix.val * suffix_pw, suffix_pw, ipw * prefix.pw, len - prefix.len};
+  }
+
+  friend bool operator==(const RollingHashValue &lhs, const RollingHashValue &rhs)
+  {
+    return lhs.len == rhs.len && lhs.val == rhs.val;
+  }
+  friend bool operator!=(const RollingHashValue &lhs, const RollingHashValue &rhs) { return !(lhs == rhs); }
+  friend auto safe_hash_key(const RollingHashValue &x) { return pair{x.val, x.len}; }
+
+  CPP_DUMP_DEFINE_DATA(val, len);
 };
 
-template <class mint = modint61, int id = INT_MIN>
-struct RollingHashSubstring
+template <class V>
+RollingHashValue(const V &) -> RollingHashValue<>;
+
+template <class Derived>
+struct RollingHashSequenceOps
 {
 private:
-  vc<mint> sm;
-  static mint pow(int i) { return RollingHashBase<mint, id>::pow(i); }
+  const Derived &self() const { return static_cast<const Derived &>(*this); }
 
 public:
-  static mint base() { return RollingHashBase<mint, id>::base(); }
-
-  RollingHashSubstring() : sm(1) {}
-  template <class V>
-  RollingHashSubstring(const V &s)
+  auto content() const
   {
-    const int n = s.size();
-    sm.resize(n + 1);
-    repi(i, n) sm[i + 1] = sm[i] * base() + s[i];
+    using T = remove_cv_t<typename Derived::element_type>;
+    using V = conditional_t<is_same_v<T, char>, string, vc<T>>;
+    V res;
+    res.reserve(self().size());
+    for (ll i = 0; i < self().size(); i++) res.push_back(self().get(i));
+    return res;
   }
 
-  template <class I = ll>
-  I size() const { return sm.size() - 1; }
-  RollingHash<mint, id> hash(int l, int r) const
+  RollingHashRange<Derived> substr(ll l, ll r) const &;
+  RollingHashRange<Derived> substr(ll l = 0) const &;
+  RollingHashRange<Derived> substr(ll, ll) const && = delete;
+  RollingHashRange<Derived> substr(ll = 0) const && = delete;
+
+  template <class Other>
+  ll lcp(const Other &rhs) const
   {
-    assert(0 <= l && l <= r && r <= size());
-    mint val = sm[r] - sm[l] * pow(r - l);
-    return {val, r - l};
+    ll ok = 0, ng = min(self().size(), rhs.size()) + 1;
+    while (ng - ok > 1)
+    {
+      ll mid = (ok + ng) / 2;
+      (self().hash(0, mid) == rhs.hash(0, mid) ? ok : ng) = mid;
+    }
+    return ok;
   }
 
-  // 列を追加する
-  template <class V>
-  void push_back(const V &s) { fec(c : s) sm.eb(sm.back() * base() + c); }
-
-  void pop_back()
+  template <class Other>
+  ll lcs(const Other &rhs) const
   {
-    assert(size() > 0);
-    sm.pop_back();
+    ll ok = 0, ng = min(self().size(), rhs.size()) + 1;
+    while (ng - ok > 1)
+    {
+      ll mid = (ok + ng) / 2;
+      (self().hash(self().size() - mid, self().size()) == rhs.hash(rhs.size() - mid, rhs.size()) ? ok : ng) = mid;
+    }
+    return ok;
+  }
+
+  template <class Other>
+  int compare(const Other &rhs) const
+  {
+    ll k = lcp(rhs);
+    if (k == min(self().size(), rhs.size()))
+      return self().size() < rhs.size() ? -1 : self().size() > rhs.size() ? 1 : 0;
+    if (self().get(k) < rhs.get(k)) return -1;
+    if (rhs.get(k) < self().get(k)) return 1;
+    return 0;
+  }
+
+  template <class Other>
+  bool operator==(const Other &rhs) const { return self().size() == rhs.size() && self().hash() == rhs.hash(); }
+  template <class Other>
+  bool operator!=(const Other &rhs) const { return !(*this == rhs); }
+  template <class Other>
+  bool operator<(const Other &rhs) const { return compare(rhs) < 0; }
+  template <class Other>
+  bool operator<=(const Other &rhs) const { return compare(rhs) <= 0; }
+  template <class Other>
+  bool operator>(const Other &rhs) const { return compare(rhs) > 0; }
+  template <class Other>
+  bool operator>=(const Other &rhs) const { return compare(rhs) >= 0; }
+};
+
+template <class Sequence>
+struct RollingHashRange : RollingHashSequenceOps<RollingHashRange<Sequence>>
+{
+private:
+  const Sequence *seq;
+  ll l, r;
+
+  template <class V, class mint, int id>
+  friend struct RollingHashConcat;
+
+public:
+  using element_type = typename Sequence::element_type;
+
+  RollingHashRange(const Sequence &seq, ll l, ll r) : seq(&seq), l(l), r(r)
+  {
+    assert(0 <= l && l <= r && r <= seq.size());
+  }
+
+  ll size() const { return r - l; }
+  auto hash() const { return seq->hash(l, r); }
+  auto hash(ll a, ll b) const
+  {
+    assert(0 <= a && a <= b && b <= size());
+    return seq->hash(l + a, l + b);
+  }
+  decltype(auto) get(ll i) const
+  {
+    assert(0 <= i && i < size());
+    return seq->get(l + i);
   }
 };
 
-// s[i, ...) と t[j, ...) の LCP の長さ
-template <class I = ll, class mint, int id>
-I calc_lcp_rh(const RollingHashSubstring<mint, id> &rh_s, int i, const RollingHashSubstring<mint, id> &rh_t, int j)
+template <class Derived>
+RollingHashRange<Derived> RollingHashSequenceOps<Derived>::substr(ll l, ll r) const &
 {
-  assert(0 <= i && i <= rh_s.size());
-  assert(0 <= j && j <= rh_t.size());
-  auto judge = [&](int l1, int r1, int l2, int r2)
+  return {self(), l, r};
+}
+
+template <class Derived>
+RollingHashRange<Derived> RollingHashSequenceOps<Derived>::substr(ll l) const &
+{
+  return {self(), l, self().size()};
+}
+
+template <class L, class R>
+struct RollingHashConcatView : RollingHashSequenceOps<RollingHashConcatView<L, R>>
+{
+private:
+  L lhs;
+  R rhs;
+
+  template <class V, class mint, int id>
+  friend struct RollingHashConcat;
+
+public:
+  using element_type = common_type_t<typename L::element_type, typename R::element_type>;
+
+  RollingHashConcatView(L lhs, R rhs) : lhs(lhs), rhs(rhs) {}
+
+  ll size() const { return lhs.size() + rhs.size(); }
+  auto hash() const { return hash(0, size()); }
+  auto hash(ll l, ll r) const
   {
-    if (r1 > rh_s.size() || r2 > rh_t.size())
-      return false;
-    return rh_s.hash(l1, r1) == rh_t.hash(l2, r2);
-  };
-  return calc_lcp(i, j, judge);
-}
+    assert(0 <= l && l <= r && r <= size());
+    if (r <= lhs.size()) return lhs.hash(l, r);
+    if (lhs.size() <= l) return rhs.hash(l - lhs.size(), r - lhs.size());
+    return lhs.hash(l, lhs.size()) + rhs.hash(0, r - lhs.size());
+  }
+  decltype(auto) get(ll i) const
+  {
+    assert(0 <= i && i < size());
+    return i < lhs.size() ? lhs.get(i) : rhs.get(i - lhs.size());
+  }
+};
 
-// s[l1, r1) と t[l2, r2) の辞書順比較
-// < なら -1, == なら 0, > なら 1
-template <class V, class mint, int id>
-int compare_substr_rh(
-  const V &s, const RollingHashSubstring<mint, id> &rh_s, int l1, int r1,
-  const V &t, const RollingHashSubstring<mint, id> &rh_t, int l2, int r2
-)
+template <class L, class R, enable_if_t<is_rolling_hash_view<L> && is_rolling_hash_view<R>, int> = 0>
+auto operator+(const L &lhs, const R &rhs)
 {
-  assert(0 <= l1 && l1 <= r1 && r1 <= SZ(s));
-  assert(0 <= l2 && l2 <= r2 && r2 <= SZ(t));
-  auto [i, j] = compare_substr(l1, r1, l2, r2, calc_lcp_rh(rh_s, l1, rh_t, l2));
-  if (i >= SZ(s) && j >= SZ(t))
-    return 0;
-  else if (i >= SZ(s))
-    return -1;
-  else if (j >= SZ(t))
-    return 1;
-  else
-    return s[i] < t[j] ? -1 : s[i] > t[j] ? 1 : 0;
+  return RollingHashConcatView<L, R>(lhs, rhs);
 }
 
-#ifdef LOCAL
-CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(size(), hash());
-#endif
+template <class V = string, class mint = modint61, int id = INT_MIN>
+struct RollingHash : RollingHashSequenceOps<RollingHash<V, mint, id>>
+{
+private:
+  const V *s;
+  vc<mint> sm;
+
+public:
+  using element_type = typename V::value_type;
+
+  explicit RollingHash(const V &s) : s(&s), sm(s.size() + 1)
+  {
+    assert(s.size() <= INT_MAX);
+    for (ll i = 0; i < (ll)s.size(); i++) sm[i + 1] = sm[i] * base() + s[i];
+    RollingHashBase<mint, id>::pow(s.size());
+    RollingHashBase<mint, id>::inv_pow(s.size());
+  }
+  RollingHash(V &&) = delete;
+
+  static mint base() { return RollingHashBase<mint, id>::base(); }
+  ll size() const { return s->size(); }
+  RollingHashValue<mint, id> hash() const { return hash(0, size()); }
+  RollingHashValue<mint, id> hash(ll l, ll r) const
+  {
+    assert(0 <= l && l <= r && r <= size());
+    int len = r - l;
+    mint pw = RollingHashBase<mint, id>::pow(len);
+    return {sm[r] - sm[l] * pw, pw, RollingHashBase<mint, id>::inv_pow(len), len};
+  }
+  decltype(auto) get(ll i) const
+  {
+    assert(0 <= i && i < size());
+    return (*s)[i];
+  }
+};
+
+template <class V>
+RollingHash(const V &) -> RollingHash<V>;
+
+template <class V = string, class mint = modint61, int id = INT_MIN>
+struct RollingHashConcat : RollingHashSequenceOps<RollingHashConcat<V, mint, id>>
+{
+private:
+  using RH = RollingHash<V, mint, id>;
+  using Value = RollingHashValue<mint, id>;
+  struct Block
+  {
+    const RH *src;
+    int l, r;
+    Value pref;
+  };
+
+  vc<Block> blocks;
+
+  void append_range(const RH &src, ll l, ll r) { append(src, l, r); }
+
+  template <class Sequence>
+  void append_range(const RollingHashRange<Sequence> &src, ll l, ll r)
+  {
+    append_range(*src.seq, src.l + l, src.l + r);
+  }
+
+  template <class L, class R>
+  void append_range(const RollingHashConcatView<L, R> &src, ll l, ll r)
+  {
+    ll m = src.lhs.size();
+    if (l < m) append_range(src.lhs, l, min(r, m));
+    if (m < r) append_range(src.rhs, max(l, m) - m, r - m);
+  }
+
+  void append_range(const RollingHashConcat &src, ll l, ll r)
+  {
+    for (int i = 0; i < (int)src.blocks.size(); i++)
+    {
+      ll prv = i == 0 ? 0 : src.blocks[i - 1].pref.size();
+      ll nxt = src.blocks[i].pref.size();
+      if (r <= prv) break;
+      if (nxt <= l) continue;
+      const Block &b = src.blocks[i];
+      append(*b.src, b.l + max(l, prv) - prv, b.l + min(r, nxt) - prv);
+    }
+  }
+
+  void append(const RH &src, ll l, ll r)
+  {
+    if (l == r) return;
+    assert(r <= INT_MAX);
+    Value add = src.hash(l, r);
+    if (!blocks.empty() && blocks.back().src == &src && blocks.back().r == l)
+    {
+      blocks.back().r = int(r);
+      blocks.back().pref += add;
+      return;
+    }
+    Value pref = blocks.empty() ? add : blocks.back().pref + add;
+    blocks.push_back({&src, int(l), int(r), pref});
+  }
+
+  Value prefix_hash(ll r) const
+  {
+    assert(0 <= r && r <= size());
+    if (r == 0) return {};
+    auto it = lower_bound(blocks.begin(), blocks.end(), r, [](const Block &block, ll x)
+    {
+      return block.pref.size() < x;
+    });
+    ll before = it == blocks.begin() ? 0 : prev(it)->pref.size();
+    Value res = it == blocks.begin() ? Value() : prev(it)->pref;
+    return res + it->src->hash(it->l, it->l + r - before);
+  }
+
+public:
+  using element_type = typename V::value_type;
+
+  RollingHashConcat() = default;
+  RollingHashConcat(const RollingHashRange<RH> &range) { *this += range; }
+  template <class L, class R>
+  RollingHashConcat(const RollingHashConcatView<L, R> &view) { append_range(view, 0, view.size()); }
+
+  template <class L, class R>
+  RollingHashConcat &operator=(const RollingHashConcatView<L, R> &rhs)
+  {
+    RollingHashConcat res(rhs);
+    res.blocks.reserve(blocks.capacity());
+    blocks = std::move(res.blocks);
+    return *this;
+  }
+
+  void reserve(int n) { blocks.reserve(n); }
+  ll size() const { return blocks.empty() ? 0 : blocks.back().pref.size(); }
+
+  RollingHashConcat &operator+=(const RH &rhs)
+  {
+    append(rhs, 0, rhs.size());
+    return *this;
+  }
+  RollingHashConcat &operator+=(const RollingHashRange<RH> &rhs)
+  {
+    append(*rhs.seq, rhs.l, rhs.r);
+    return *this;
+  }
+
+  Value hash() const { return blocks.empty() ? Value() : blocks.back().pref; }
+  Value hash(ll l, ll r) const
+  {
+    assert(0 <= l && l <= r && r <= size());
+    return prefix_hash(r).remove_prefix(prefix_hash(l));
+  }
+  decltype(auto) get(ll i) const
+  {
+    assert(0 <= i && i < size());
+    auto it = lower_bound(blocks.begin(), blocks.end(), i + 1, [](const Block &block, ll x)
+    {
+      return block.pref.size() < x;
+    });
+    ll before = it == blocks.begin() ? 0 : prev(it)->pref.size();
+    return it->src->get(it->l + i - before);
+  }
+};

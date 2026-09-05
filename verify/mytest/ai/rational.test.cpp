@@ -1,6 +1,7 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
 #include "template/template_all_but_modint.hpp"
+#include "math/bigint.hpp"
 #include "math/modint/modint.hpp"
 #include "math/rational.hpp"
 
@@ -80,9 +81,49 @@ void test_modint()
   assert(oss.str() == "2/4");
 }
 
+// Test focus: ordered rationals represent signed infinity canonically and obey extended-real arithmetic.
+void test_infinity()
+{
+  using R = Rational<ll>;
+  R inf(123, 0), ninf(-456, 0);
+  assert(inf == R(1, 0) && ninf == R(-1, 0));
+  assert(inf.is_infinite() && !inf.is_finite());
+  assert(R(10).is_finite() && !R(10).is_infinite());
+  assert(ninf < R(-1'000'000) && R(1'000'000) < inf);
+  assert(-inf == ninf);
+  assert(inf + R(10) == inf);
+  assert(ninf - R(10) == ninf);
+  assert(inf - ninf == inf);
+  assert(inf * R(-2) == ninf);
+  assert(ninf / R(-2) == inf);
+  assert(R(123) / inf == R(0));
+  assert(numeric_limits<R>::has_infinity);
+  assert(numeric_limits<R>::infinity() == inf);
+}
+
+// Test focus: BigInteger numerators support ordering, reduction, infinity, and integral conversion.
+void test_bigint()
+{
+  using BI = BigInteger<>;
+  using R = Rational<BI>;
+  R x(BI(2), BI(4)), y(BI(1), BI(2));
+  R inf(BI(1), BI(0)), ninf(BI(-1), BI(0));
+  assert(x == y);
+  assert((x.reduced() == pair<BI, BI>(BI(1), BI(2))));
+  assert(ninf < R(-100) && R(100) < inf);
+  assert(inf + R(1) == inf);
+  assert(R(1) / ninf == R(0));
+  assert(-inf == ninf);
+  ostringstream oss;
+  oss << inf;
+  assert(oss.str() == "1/0");
+}
+
 int main()
 {
   test_integer();
   test_modint();
+  test_infinity();
+  test_bigint();
   cout << "Hello World" << endl;
 }

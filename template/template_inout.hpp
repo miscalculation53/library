@@ -67,61 +67,67 @@ void rd1(char &c) {
   do {
     if (pil + 1 > pir) load();
     c = ibuf[pil++];
-  } while (isspace(c));
+  } while (c <= ' ');
 }
 
 void rd1(string &x) {
   x.clear();
-  char c;
-  do {
-    if (pil + 1 > pir) load();
-    c = ibuf[pil++];
-  } while (isspace(c));
-  do {
-    x += c;
+  while (true) {
     if (pil == pir) load();
-    c = ibuf[pil++];
-  } while (!isspace(c));
+    while (pil < pir && ibuf[pil] <= ' ') ++pil;
+    if (pil < pir) break;
+  }
+  while (true) {
+    uint32_t p = pil;
+    while (pil < pir && ibuf[pil] > ' ') ++pil;
+    x.append(ibuf + p, pil - p);
+    if (pil < pir) {
+      ++pil;
+      return;
+    }
+    load();
+  }
 }
 
 template <typename T>
 void rd1_real(T &x) {
   string s;
   rd1(s);
+#if __cplusplus >= 202002L
+  if constexpr (!is_same_v<T, long double>)
+  {
+    auto [p, ec] = from_chars(s.data(), s.data() + s.size(), x);
+    if (ec == errc{} && p == s.data() + s.size()) return;
+  }
+#endif
   if constexpr (is_same_v<T, long double>)
     x = stold(s);
   else
     x = stod(s);
 }
 
-template <typename T>
+template <bool check_buffer = true, typename T>
 void rd1_integer(T &x) {
-  if (pil + 100 > pir) load();
-  char c;
-  do
-    c = ibuf[pil++];
-  while (c < '-');
-  bool minus = 0;
-  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {
-    if (c == '-') { minus = 1, c = ibuf[pil++]; }
-  }
   using U = unsigned_integer_t<T>;
+  bool minus = false;
   U val = 0;
-  while ('0' <= c) { val = val * 10 + (c & 15), c = ibuf[pil++]; }
-  pil--;
+  if constexpr (check_buffer)
+    if (pil + 100 > pir) load();
+  uint32_t p = pil;
+  while (ibuf[p] < '-') ++p;
+  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {
+    if (ibuf[p] == '-') minus = true, ++p;
+  }
+  while ('0' <= ibuf[p]) val = val * 10 + (ibuf[p++] & 15);
+  pil = p;
   if constexpr (is_signed<T>::value || is_same_v<T, i128>)
   {
     if (minus)
     {
       const U min_abs = U(numeric_limits<T>::max()) + 1;
-      assert(val <= min_abs);
       x = val == min_abs ? numeric_limits<T>::lowest() : -T(val);
     }
-    else
-    {
-      assert(val <= U(numeric_limits<T>::max()));
-      x = T(val);
-    }
+    else x = T(val);
   }
   else
     x = T(val);
@@ -157,19 +163,28 @@ void rd1(vc<T> &x) {
 
 template <class... T>
 void read(T &...x) {
-  (rd1(x), ...);
+  if constexpr (sizeof...(T) <= SIZ / 100 &&
+                ((!is_same_v<T, char> &&
+                  (is_integral_v<T> || is_same_v<T, i128> || is_same_v<T, u128>)) && ...)) {
+    if (pil + 100 * sizeof...(T) > pir) load();
+    (rd1_integer<false>(x), ...);
+  }
+  else
+    (rd1(x), ...);
 }
 
 void wt1(const char c) {
   if (por == SIZ) flush();
   obuf[por++] = c;
 }
-void wt1(const string s) {
-  for (char c: s) wt1(c);
-}
-void wt1(const char *s) {
-  size_t len = strlen(s);
-  for (size_t i = 0; i < len; i++) wt1(s[i]);
+void wt1(string_view s) {
+  while (!s.empty()) {
+    if (por == SIZ) flush();
+    size_t n = min<size_t>(s.size(), SIZ - por);
+    memcpy(obuf + por, s.data(), n);
+    por += n;
+    s.remove_prefix(n);
+  }
 }
 
 template <typename T>
@@ -210,10 +225,19 @@ void wt1_integer(T x) {
 
 template <typename T>
 void wt1_real(T x) {
+#if __cplusplus >= 202002L
+  if constexpr (!is_same_v<T, long double>)
+  {
+    auto [p, ec] = to_chars(out, out + sizeof(out), x, chars_format::fixed, 15);
+    if (ec == errc{}) {
+      wt1(string_view(out, p));
+      return;
+    }
+  }
+#endif
   ostringstream oss;
   oss << fixed << setprecision(15) << x;
-  string s = oss.str();
-  wt1(s);
+  wt1(oss.str());
 }
 
 void wt1(int x) { wt1_integer(x); }

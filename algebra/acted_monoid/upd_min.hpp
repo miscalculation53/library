@@ -10,7 +10,7 @@
  * @docs docs/algebra/acted_monoid/upd_min.md
  */
 
-template <class T, T infty = INF, T idnty = INF + 1>
+template <class T, auto infty = INF, auto idnty = INF + 1>
 struct ActedMonoidUpdMin
 {
   using M = MonoidMin<T, infty>;
@@ -19,12 +19,12 @@ struct ActedMonoidUpdMin
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
-  static constexpr S mapping(F f, S x) { return f == idnty ? x : f; }
+  static constexpr S mapping(F f, S x) { return f == resolved_value<T, idnty>() ? x : f; }
   static constexpr auto composition = MF::op;
   static constexpr auto id = MF::e;
 };
 
-template <class T, T infty = INF, T idnty = INF + 1>
+template <class T, auto infty = INF, auto idnty = INF + 1>
 struct ActedMonoidUpdMax
 {
   using M = MonoidMax<T, infty>;
@@ -33,12 +33,12 @@ struct ActedMonoidUpdMax
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
-  static constexpr S mapping(F f, S x) { return f == idnty ? x : f; }
+  static constexpr S mapping(F f, S x) { return f == resolved_value<T, idnty>() ? x : f; }
   static constexpr auto composition = MF::op;
   static constexpr auto id = MF::e;
 };
 
-template <class T, T infty = INF, T idnty = INF + 1>
+template <class T, auto infty = INF, auto idnty = INF + 1>
 struct ActedMonoidUpdMinMax
 {
   using M = MonoidMinMax<T, infty>;
@@ -49,7 +49,10 @@ struct ActedMonoidUpdMinMax
   static constexpr auto e = M::e;
   static constexpr S mapping(F f, S x)
   {
-    return f == idnty || (x.mn == infty && x.mx == -infty) ? x : S{f};
+    if (f == resolved_value<T, idnty>() ||
+        (x.mn == resolved_value<T, infty>() && x.mx == -resolved_value<T, infty>()))
+      return x;
+    return S{f};
   }
   static constexpr auto composition = MF::op;
   static constexpr auto id = MF::e;

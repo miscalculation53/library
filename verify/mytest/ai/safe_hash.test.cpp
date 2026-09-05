@@ -67,9 +67,9 @@ void test_library_types()
   rational_mints[Rational<mint>(2, 4)] = 3;
   assert(rational_mints.at(Rational<mint>(3, 6)) == 3);
 
-  unordered_map<RollingHash<mint, 0>, int, safe_hash> rolling_hashes;
-  rolling_hashes[RollingHash<mint, 0>(string("abc"))] = 4;
-  assert(rolling_hashes.at(RollingHash<mint, 0>(string("abc"))) == 4);
+  unordered_map<RollingHashValue<mint, 0>, int, safe_hash> rolling_hashes;
+  rolling_hashes[RollingHashValue<mint, 0>(string("abc"))] = 4;
+  assert(rolling_hashes.at(RollingHashValue<mint, 0>(string("abc"))) == 4);
 
   unordered_map<ModintDiv<mint>, int, safe_hash> modint_divs;
   modint_divs[ModintDiv<mint>(mint(5), -2)] = 5;

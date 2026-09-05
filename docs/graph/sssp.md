@@ -6,6 +6,17 @@ TODO：
 
 `Graph` を継承した `ShortestPath` 構造体を実装している。
 
+```cpp
+ShortestPath<is_directed, Cost, auto infty = INF>
+```
+
+`infty` には `Cost` に変換できる値、または `Cost` に変換できる値を返す引数なし関数を指定できる。`BigInteger` などを使う場合は関数を指定する。
+
+```cpp
+using R = Rational<BigInteger<>>;
+ShortestPath<true, R, numeric_limits<R>::infinity> graph(n, edges);
+```
+
 ## 詳細なドキュメント
 
 #### solve

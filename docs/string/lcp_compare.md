@@ -40,16 +40,10 @@ pair<int, int> compare_substr(int l1, int r1, int l2, int r2, int lcp)
 
 ```cpp
 string S, T;  // 英小文字のみからなる
-RollingHashSubstr<> rhS(S), rhT(T);
+RollingHash rhS(S), rhT(T);
 // S[l1, r1) と S[l2, r2) の比較 (< は -1, = は 0, > は 1)
 auto cmp = [&](ll l1, ll r1, ll l2, ll r2) -> ll
 {
-  auto is_equal = [&](ll l1, ll r1, ll l2, ll r2) -> bool
-  { return rhS.hash(l1, r1) == rhT.hash(l2, r2); };
-  ll lcp = calc_lcp(l1, l2, is_equal);
-  auto [i, j] = compare_substr(l1, r1, l2, r2, lcp);
-  char c1 = i < SZ(S) ? S.at(i) : '!';
-  char c2 = j < SZ(T) ? T.at(j) : '!';
-  return c1 < c2 ? -1 : c1 > c2 ? 1 : 0;
+  return rhS.substr(l1, r1).compare(rhT.substr(l2, r2));
 };
 ```

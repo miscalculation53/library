@@ -148,7 +148,7 @@ struct DynamicMatrixMod2 : vc<DynamicBitset>
   // rref なら簡約階段行列、そうでなければ階段行列を返す。
   M row_reduction(bool rref = false) const
   {
-    const int n = this->size();
+    const int n = this->size(), m = this->m;
     M a(*this);
     for (int i = 0, j = 0; i < n && j < m; j++)
     {
@@ -158,9 +158,10 @@ struct DynamicMatrixMod2 : vc<DynamicBitset>
       if (pivot == n)
         continue;
       std::swap(a[i], a[pivot]);
+      int l = j / V::word_bits * V::word_bits;
       if (rref)
-        repi(k, i) if (a[k].test(j)) a[k] ^= a[i];
-      repi(k, i + 1, n) if (a[k].test(j)) a[k] ^= a[i];
+        repi(k, i) if (a[k].test(j)) a[k].xor_slice(l, m, a[i], l);
+      repi(k, i + 1, n) if (a[k].test(j)) a[k].xor_slice(l, m, a[i], l);
       i++;
     }
     return a;
@@ -196,13 +197,13 @@ struct DynamicMatrixMod2 : vc<DynamicBitset>
     M a(n, 2 * n);
     repi(i, n)
     {
-      repi(j, n) if ((*this)[i].test(j)) a[i].set(j);
+      a[i].assign_slice(0, n, (*this)[i], 0);
       a[i].set(n + i);
     }
     M b = a.row_reduction(true);
     repi(i, n) if (!b[i].test(i)) return {false, {}};
     M res(n, n);
-    repi(i, n) repi(j, n) if (b[i].test(n + j)) res[i].set(j);
+    repi(i, n) res[i].assign_slice(0, n, b[i], n);
     return {true, res};
   }
 
@@ -214,7 +215,7 @@ struct DynamicMatrixMod2 : vc<DynamicBitset>
     M a(n, m + 1);
     repi(i, n)
     {
-      repi(j, m) if ((*this)[i].test(j)) a[i].set(j);
+      a[i].assign_slice(0, m, (*this)[i], 0);
       if (b.test(i))
         a[i].set(m);
     }

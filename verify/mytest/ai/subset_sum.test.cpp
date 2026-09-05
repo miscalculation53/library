@@ -3,8 +3,8 @@
 #include "template/template_all_but_modint.hpp"
 #include "algo/subset_sum.hpp"
 
-// Test focus: frequency input is not expanded, and both reconstruction formats
-// agree with brute force, including negative elements in the original array.
+// Test focus: frequency input is not expanded, the reachable range is capped by
+// the usable total, and both reconstruction strategies agree with brute force.
 void test_frequency()
 {
   mt19937 rng(123456789);
@@ -15,6 +15,11 @@ void test_frequency()
     repi(v, 1, vmax + 1) freq[v] = rng() % 6;
     SubsetSumFromFrequency ss(freq, s);
 
+    int sm = 0;
+    repi(v, 1, vmax + 1) if (v <= s)
+      sm = min(s, sm + v * min(freq[v], s / v));
+    assert(ss.reachable().size() == sm + 1);
+
     vc<bool> dp(s + 1);
     dp[0] = true;
     repi(v, 1, vmax + 1) repi(_, freq[v]) repi(x, s, v - 1, -1)
@@ -23,6 +28,7 @@ void test_frequency()
     repi(x, s + 1)
     {
       assert(ss.exists(x) == dp[x]);
+      if (x <= sm) assert(ss.reachable()[x] == dp[x]);
       auto [ok, ans] = ss.answer(x);
       assert(ok == dp[x]);
       if (!ok)
@@ -47,6 +53,7 @@ void test_frequency()
   repi(x, 1001)
   {
     assert(ss.exists(x));
+    assert(ss.reachable()[x]);
     auto [ok, ans] = ss.answer(x);
     assert(ok);
     ll sum = 0;
@@ -54,6 +61,19 @@ void test_frequency()
       sum += v * c;
     assert(sum == x);
   }
+
+  vc<int> dense_freq(101, 1);
+  dense_freq[0] = 0;
+  SubsetSumFromFrequency dense(dense_freq, 1000);
+  auto [ok, ans] = dense.answer(1000);
+  assert(ok);
+  int sum = 0;
+  for (auto [v, c] : ans)
+  {
+    assert(c == 1);
+    sum += v;
+  }
+  assert(sum == 1000);
 }
 
 void test_original_array()
@@ -90,7 +110,27 @@ void test_original_array()
       repi(i, n) if (ans[i]) sum += a[i];
       assert(sum == x);
     }
+
+    assert(ss.min_sum() == mn);
+    if (mn <= smax)
+    {
+      int lim = smax - mn, sm = 0;
+      vc<int> freq(lim + 1);
+      fec(x : a) if (abs(x) <= lim) freq[abs(x)]++;
+      repi(v, 1, lim + 1)
+        sm = min(lim, sm + v * min(freq[v], lim / v));
+      assert(ss.reachable().size() == sm + 1);
+      repi(i, sm + 1) assert(ss.reachable()[i] == possible[i]);
+    }
+    else
+      assert(ss.reachable().size() == 0);
   }
+
+  SubsetSum sparse(vc<int>{200000}, 200000);
+  assert(sparse.reachable().size() == 200001);
+  assert(sparse.reachable().count() == 2);
+  auto [ok, ans] = sparse.answer(200000);
+  assert(ok && ans == vc<bool>{true});
 }
 
 int main()

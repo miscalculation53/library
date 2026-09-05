@@ -10,7 +10,7 @@
  * @docs docs/algebra/acted_monoid/clamp_min_max.md
  */
 
-template <class T, T infty = INF>
+template <class T, auto infty = INF>
 struct ActedMonoidClampMin
 {
   using M = MonoidMin<T, infty>;
@@ -19,12 +19,12 @@ struct ActedMonoidClampMin
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
-  static constexpr S mapping(const F &f, S x) { return x == infty ? x : f(x); }
+  static constexpr S mapping(const F &f, S x) { return x == resolved_value<T, infty>() ? x : f(x); }
   static constexpr auto composition = MF::op;
   static constexpr auto id = MF::e;
 };
 
-template <class T, T infty = INF>
+template <class T, auto infty = INF>
 struct ActedMonoidClampMax
 {
   using M = MonoidMax<T, infty>;
@@ -33,12 +33,12 @@ struct ActedMonoidClampMax
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
-  static constexpr S mapping(const F &f, S x) { return x == -infty ? x : f(x); }
+  static constexpr S mapping(const F &f, S x) { return x == -resolved_value<T, infty>() ? x : f(x); }
   static constexpr auto composition = MF::op;
   static constexpr auto id = MF::e;
 };
 
-template <class T, T infty = INF>
+template <class T, auto infty = INF>
 struct ActedMonoidClampMinMax
 {
   using M = MonoidMinMax<T, infty>;
@@ -49,7 +49,7 @@ struct ActedMonoidClampMinMax
   static constexpr auto e = M::e;
   static constexpr S mapping(const F &f, S x)
   {
-    return x.mn == infty ? x : S{f(x.mn), f(x.mx)};
+    return x.mn == resolved_value<T, infty>() ? x : S{f(x.mn), f(x.mx)};
   }
   static constexpr auto composition = MF::op;
   static constexpr auto id = MF::e;

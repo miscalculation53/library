@@ -49,7 +49,7 @@ cht.reset_monotone_query();
 template <
   class T = ll,
   class Calc = larger_int_t<T>,
-  Calc infty = Calc(INF)
+  auto infty = INF
 >
 struct ConvexHullTrickDotProduct
 ```
@@ -69,6 +69,7 @@ ConvexHullTrickDotProduct()
 - 内部の `Rational<Calc>` の演算結果が `Calc` の範囲に収まる
 - 内積が `Calc` の範囲に収まる
 - `infty` は空集合の最小値クエリで返してよく、内部 CHT のすべての有限な境界より大きい正の値
+- `infty` には `Calc` に変換できる値、または `Calc` に変換できる値を返す引数なし関数を指定できる
 
 ##### 計算量
 
@@ -174,7 +175,7 @@ void clear()
 template <
   class T = ll,
   class Calc = larger_int_t<T>,
-  Calc infty = Calc(INF)
+  auto infty = INF
 >
 struct ConvexHullTrickDotProductMonotoneSlope
 ```

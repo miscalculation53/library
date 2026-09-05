@@ -6,13 +6,14 @@
 #include "../math/rational.hpp"
 #include "../utils/is_integral_ext.hpp"
 #include "../utils/larger_int.hpp"
+#include "../utils/resolved_value.hpp"
 
 /**
  * @brief Dot Product Convex Hull Trick
  * @docs docs/convex/convex_hull_trick_dot_product.md
  */
 
-template <class T, class Calc, Calc infty, template <class, class, auto> class CHT>
+template <class T, class Calc, auto infty, template <class, class, auto> class CHT>
 struct ConvexHullTrickDotProductBase
 {
   static_assert(is_integral_ext<T> || is_floating_point_v<T>);
@@ -61,7 +62,11 @@ private:
   template <bool minimize>
   pair<Calc, LinearForm> query_impl(T x, T y) const
   {
-    if (!has_line) return {minimize ? infty : -infty, {0, 0, -1}};
+    if (!has_line)
+    {
+      const Calc &inf = resolved_value<Calc, infty>();
+      return {minimize ? inf : -inf, {0, 0, -1}};
+    }
     LinearForm f;
     if (x == 0 && y == 0)
       f = fst;
@@ -86,7 +91,11 @@ private:
   template <bool minimize>
   pair<Calc, LinearForm> query_monotone_impl(T x, T y)
   {
-    if (!has_line) return {minimize ? infty : -infty, {0, 0, -1}};
+    if (!has_line)
+    {
+      const Calc &inf = resolved_value<Calc, infty>();
+      return {minimize ? inf : -inf, {0, 0, -1}};
+    }
     assert(y != 0);
     R q{Calc(x), Calc(y)};
     LinearForm f;
@@ -158,13 +167,13 @@ public:
 };
 
 // 係数を任意順に追加できる Dot Product Convex Hull Trick
-template <class T = ll, class Calc = larger_int_t<T>, Calc infty = Calc(INF)>
+template <class T = ll, class Calc = larger_int_t<T>, auto infty = INF>
 struct ConvexHullTrickDotProduct
     : ConvexHullTrickDotProductBase<T, Calc, infty, ConvexHullTrick>
 {};
 
 // 係数 a を単調に追加する Dot Product Convex Hull Trick
-template <class T = ll, class Calc = larger_int_t<T>, Calc infty = Calc(INF)>
+template <class T = ll, class Calc = larger_int_t<T>, auto infty = INF>
 struct ConvexHullTrickDotProductMonotoneSlope
     : ConvexHullTrickDotProductBase<T, Calc, infty, ConvexHullTrickMonotoneSlope>
 {};

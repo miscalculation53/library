@@ -7,49 +7,118 @@
  * @docs docs/algo/subset_sum.md
  */
 
+struct SubsetSum;
+
 struct SubsetSumFromFrequency
 {
 private:
+  friend struct SubsetSum;
+
   int s;
   vc<pair<int, int>> val_cnt;
+  DynamicBitset dp;
   vc<int> time;
+  vc<DynamicBitset> history;
+  bool keep_history;
 
-public:
-  SubsetSumFromFrequency() : s(0), time(1, 0) {}
-
-  // freq[v] := 値 v の個数
-  // smax: 計算する部分和の範囲
-  template <class T>
-  SubsetSumFromFrequency(const vc<T> &freq, int smax) : s(smax)
+  void build(const vc<pair<int, int>> &freq, int smax)
   {
-    static_assert(is_integral_ext<T>);
+    s = smax;
     assert(s >= 0);
-    time.assign(s + 1, -1);
-    time[0] = 0;
-    DynamicBitset dp(s + 1);
-    dp.set(0);
-    int vmax = min(s, SZ<int>(freq) - 1);
-    repi(v, 1, vmax + 1)
+    val_cnt.clear();
+    history.clear();
+
+    ll sm = 0;
+    for (auto [v, c] : freq)
     {
-      assert(freq[v] >= 0);
-      int c = freq[v] < T(s / v) ? int(freq[v]) : s / v;
+      assert(v > 0 && c >= 0);
+      if (v > s)
+        continue;
+      chmin(c, s / v);
+      sm = min<ll>(s, sm + ll(v) * c);
+    }
+    s = int(sm);
+
+    dp.resize(s + 1);
+    dp.reset();
+    dp.set(0);
+    for (auto [v, c] : freq)
+    {
+      if (v > s)
+        continue;
+      chmin(c, s / v);
       for (ll k = 1; c > 0; k *= 2)
       {
         int x = int(min<ll>(c, k));
         c -= x;
-        int t = val_cnt.size();
         val_cnt.eb(v, x);
-        int w = v * x;
-        dp.or_slice(w, s + 1, dp, 0, [&](int i) { time[i] = t + 1; });
       }
     }
+
+    ll bitset_bytes = ll((s + DynamicBitset::word_bits) / DynamicBitset::word_bits) * ll(sizeof(DynamicBitset::Word));
+    keep_history = ll(val_cnt.size()) * bitset_bytes < ll(s + 1) * ll(sizeof(int));
+    if (keep_history)
+      history.reserve(val_cnt.size());
+    else
+    {
+      time.assign(s + 1, -1);
+      time[0] = 0;
+    }
+
+    int hi = 0;
+    repi(t, SZ(val_cnt))
+    {
+      auto [v, c] = val_cnt[t];
+      int w = v * c;
+      int r = min(s, hi + w) + 1;
+      if (keep_history)
+      {
+        dp.or_slice(w, r, dp, 0);
+        history.eb(dp);
+      }
+      else
+        dp.or_slice(w, r, dp, 0, [&](int i) { time[i] = t + 1; });
+      hi = r - 1;
+      if (hi == s && (t & 63) == 63 && dp.all())
+      {
+        val_cnt.resize(t + 1);
+        if (keep_history)
+          history.resize(t + 1);
+        break;
+      }
+    }
+  }
+
+public:
+  SubsetSumFromFrequency() : s(0), dp(1), time(1, 0), keep_history(false) { dp.set(0); }
+
+  // freq[v] := 値 v の個数
+  // smax: 計算する部分和の範囲
+  template <class T>
+  SubsetSumFromFrequency(const vc<T> &freq, int smax)
+  {
+    static_assert(is_integral_ext<T>);
+    assert(smax >= 0);
+    vc<pair<int, int>> f;
+    int vmax = min(smax, SZ<int>(freq) - 1);
+    repi(v, 1, vmax + 1)
+    {
+      assert(freq[v] >= 0);
+      int c = freq[v] < T(smax / v) ? int(freq[v]) : smax / v;
+      if (c)
+        f.eb(v, c);
+    }
+    build(f, smax);
   }
 
   // x を作れるか
   bool exists(int x) const
   {
-    return 0 <= x && x <= s && time[x] != -1;
+    return 0 <= x && x <= s && dp.test(x);
   }
+
+  // x 番目: x を作れるか
+  const DynamicBitset &reachable() const { return dp; }
 
   // x を作れる場合、second は (値, 個数) の列
   pair<bool, vc<pair<int, int>>> answer(int x) const
@@ -63,7 +132,15 @@ public:
     {
       auto [v, c] = val_cnt[t];
       int w = v * c;
-      if (y >= w && time[y - w] != -1 && time[y - w] <= t)
+      bool can = false;
+      if (y >= w)
+      {
+        if (keep_history)
+          can = t == 0 ? y == w : history[t - 1].test(y - w);
+        else
+          can = time[y - w] != -1 && time[y - w] <= t;
+      }
+      if (can)
       {
         y -= w;
         if (res.empty() || res.back().first != v)
@@ -79,15 +156,16 @@ struct SubsetSum
 {
 private:
   int n, s, xmax;
-  i128 negsum;
+  ll negsum;
   vc<bool> isneg;
-  vvc<int> ids;
+  vc<pair<int, int>> elems;
   SubsetSumFromFrequency ss;
 
 public:
-  SubsetSum() : n(0), s(0), xmax(-1), negsum(0) {}
+  SubsetSum() : n(0), s(-1), xmax(-1), negsum(0) {}
 
-  // smax はクエリで聞かれる target の値の最大値。a は負要素を持ってもよい。
+  // smax はクエリで聞かれる target の値の最大値
+  // a は負要素を持ってもよい
   template <class T>
   SubsetSum(const vc<T> &a, int smax) : n(SZ<int>(a)), xmax(smax), negsum(0)
   {
@@ -96,44 +174,75 @@ public:
     repi(i, n) if (a[i] < 0)
     {
       isneg[i] = true;
-      negsum += i128(a[i]);
+      negsum += ll(a[i]);
     }
-    i128 shifted_s = i128(smax) - negsum;
+    ll shifted_s = ll(smax) - negsum;
     assert(shifted_s <= numeric_limits<int>::max());
-    s = shifted_s < 0 ? 0 : int(shifted_s);
+    if (shifted_s < 0)
+    {
+      s = -1;
+      return;
+    }
 
-    ids.resize(s + 1);
-    vc<int> freq(s + 1);
+    ll sm = 0;
+    fec(a_i : a)
+    {
+      ll x = ll(a_i);
+      if (x < 0) x = -x;
+      if (x <= shifted_s)
+        sm = min(shifted_s, sm + x);
+    }
+    s = int(sm);
+
     repi(i, n)
     {
-      i128 x = i128(a[i]);
+      ll x = ll(a[i]);
       if (x < 0)
       {
-        if (x < -i128(s))
+        if (x < -ll(s))
           continue;
         x = -x;
       }
       if (x <= s)
       {
         int v = int(x);
-        ids[v].eb(i);
-        freq[v]++;
+        if (v)
+          elems.eb(v, i);
       }
     }
-    ss = SubsetSumFromFrequency(freq, s);
+    sort(elems.begin(), elems.end());
+    vc<pair<int, int>> freq;
+    for (auto [v, i] : elems)
+    {
+      if (freq.empty() || freq.back().first != v)
+        freq.eb(v, 0);
+      ++freq.back().second;
+    }
+    ss.build(freq, s);
+    s = ss.reachable().size() - 1;
   }
 
-  // x を作れるか返す。
+  // x を作れるか
   bool exists(int x) const
   {
-    i128 y = i128(x) - negsum;
+    ll y = ll(x) - negsum;
     return x <= xmax && 0 <= y && y <= s && ss.exists(int(y));
   }
 
-  // x を作れるなら、元配列の各要素を使用するか返す。
+  // x 番目: min_sum() + x を作れるか
+  const DynamicBitset &reachable() const
+  {
+    static const DynamicBitset empty;
+    return s < 0 ? empty : ss.reachable();
+  }
+
+  // 作れる和の最小値
+  ll min_sum() const { return negsum; }
+
+  // x を作れる場合、second の i 番目: a[i] を使うかどうか
   pair<bool, vc<bool>> answer(int x) const
   {
-    i128 y = i128(x) - negsum;
+    ll y = ll(x) - negsum;
     if (x > xmax || !(0 <= y && y <= s))
       return {false, {}};
     auto [ok, cnt] = ss.answer(int(y));
@@ -141,10 +250,15 @@ public:
       return {false, {}};
 
     vc<bool> res(n, false);
+    int p = elems.size();
     for (auto [v, c] : cnt)
     {
-      assert(c <= SZ(ids[v]));
-      repi(k, c) res[ids[v][k]] = true;
+      while (p && elems[p - 1].first > v) p--;
+      int q = p;
+      while (q && elems[q - 1].first == v) q--;
+      assert(p - q >= c);
+      repi(k, c) res[elems[q + k].second] = true;
+      p = q;
     }
     repi(i, n) if (isneg[i]) res[i] = !res[i];
     return {true, res};

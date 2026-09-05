@@ -3,6 +3,7 @@
 #include "../template/template_all_but_modint.hpp"
 
 #include "../utils/is_integral_ext.hpp"
+#include "../utils/resolved_value.hpp"
 
 /**
  * @brief Convex Hull Trick
@@ -43,6 +44,7 @@ struct ConvexHullTrick
 
 private:
   static constexpr int sgn = is_same_v<Compare, less<>> || is_same_v<Compare, less<T>> ? -1 : 1;
+  static constexpr decltype(auto) inf() { return resolved_value<T, infty>(); }
 
   struct Node
   {
@@ -78,11 +80,11 @@ private:
   {
     if (y == st.end())
     {
-      x->r = T(infty);
+      x->r = inf();
       return false;
     }
     if (x->a == y->a)
-      x->r = x->b > y->b ? T(infty) : -T(infty);
+      x->r = x->b > y->b ? inf() : -inf();
     else
       x->r = border(*x, *y);
     return x->r >= y->r;
@@ -101,7 +103,7 @@ public:
   {
     add_cnt++;
     reset_monotone_query();
-    Node p{sgn * a, sgn * b, T(infty), id};
+    Node p{sgn * a, sgn * b, inf(), id};
     auto same = st.lower_bound(p);
     if (same != st.end() && same->a == p.a)
     {
@@ -124,7 +126,7 @@ public:
   {
     if (st.empty())
     {
-      const T e = sgn < 0 ? T(infty) : -T(infty);
+      const T e = sgn < 0 ? inf() : -inf();
       return {e, {T(0), e, -1}};
     }
     auto it = st.lower_bound(x);
@@ -140,7 +142,7 @@ public:
   {
     if (st.empty())
     {
-      const T e = sgn < 0 ? T(infty) : -T(infty);
+      const T e = sgn < 0 ? inf() : -inf();
       return {e, {T(0), e, -1}};
     }
     if (!qit)
@@ -179,11 +181,11 @@ public:
   {
     vc<Segment> res;
     res.reserve(st.size());
-    T l = -T(infty);
+    T l = -inf();
     for (auto it = st.begin(); it != st.end(); ++it)
     {
       auto nxt = next(it);
-      T r = nxt == st.end() ? T(infty) : it->r;
+      T r = nxt == st.end() ? inf() : it->r;
       res.eb(Segment{line(*it), l, r});
       l = r;
     }
@@ -211,6 +213,7 @@ struct ConvexHullTrickMonotoneSlope
 
 private:
   static constexpr int sgn = is_same_v<Compare, less<>> || is_same_v<Compare, less<T>> ? -1 : 1;
+  static constexpr decltype(auto) inf() { return resolved_value<T, infty>(); }
 
   struct Node
   {
@@ -250,7 +253,7 @@ private:
       dq.pop_back();
     }
     if (!dq.empty()) dq.back().r = border(dq.back(), p);
-    p.r = T(infty);
+    p.r = inf();
     dq.eb(p);
   }
 
@@ -267,7 +270,7 @@ private:
       if (r < dq.front().r) break;
       dq.pop_front();
     }
-    p.r = dq.empty() ? T(infty) : border(p, dq.front());
+    p.r = dq.empty() ? inf() : border(p, dq.front());
     dq.emplace_front(p);
   }
 
@@ -284,7 +287,7 @@ public:
   {
     add_cnt++;
     reset_monotone_query();
-    Node p{sgn * a, sgn * b, T(infty), id};
+    Node p{sgn * a, sgn * b, inf(), id};
     if (last_a)
     {
       int d = (*last_a < p.a) - (p.a < *last_a);
@@ -307,7 +310,7 @@ public:
   {
     if (dq.empty())
     {
-      const T e = sgn < 0 ? T(infty) : -T(infty);
+      const T e = sgn < 0 ? inf() : -inf();
       return {e, {T(0), e, -1}};
     }
     auto it = lower_bound(dq.begin(), dq.end(), x,
@@ -324,7 +327,7 @@ public:
   {
     if (dq.empty())
     {
-      const T e = sgn < 0 ? T(infty) : -T(infty);
+      const T e = sgn < 0 ? inf() : -inf();
       return {e, {T(0), e, -1}};
     }
     if (qpos == -1)
@@ -364,10 +367,10 @@ public:
   {
     vc<Segment> res;
     res.reserve(dq.size());
-    T l = -T(infty);
+    T l = -inf();
     repi(i, dq.size())
     {
-      T r = i + 1 == SZ(dq) ? T(infty) : dq[i].r;
+      T r = i + 1 == SZ(dq) ? inf() : dq[i].r;
       res.eb(Segment{line(dq[i]), l, r});
       l = r;
     }

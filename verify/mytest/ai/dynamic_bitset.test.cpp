@@ -144,6 +144,102 @@ void test_slice(mt19937 &rng)
   }
 }
 
+// Test focus: aligned suffix XOR keeps untouched bits and zero padding intact,
+// including empty bitsets, non-multiple-of-64 sizes, and self XOR.
+void test_aligned_xor_slice()
+{
+  mt19937_64 rng(20260901);
+  for (int n : {0, 1, 63, 64, 65, 127, 128, 129, 255, 256, 257})
+    for (int l = 0; l <= n; l += 64)
+      for (bool self : {false, true})
+        repi(_, 100)
+        {
+          DynamicBitset a(n), b(n);
+          repi(i, n) a.set(i, rng() & 1), b.set(i, rng() & 1);
+          auto old = a, src = self ? a : b;
+          a.xor_slice(l, n, self ? a : b, l);
+          int count = 0;
+          repi(i, n)
+          {
+            bool value = old.test(i) != (i >= l && src.test(i));
+            assert(a.test(i) == value);
+            count += value;
+          }
+          assert(a.count() == count);
+          a.resize(n + 64);
+          repi(i, n, n + 64) assert(!a.test(i));
+        }
+}
+
+// Test focus: unsigned, most-significant-bit-first ordering agrees with integers
+// and equal-length binary strings, including empty and multiword bitsets.
+void check_comparison(const DynamicBitset &a, const DynamicBitset &b, int cmp)
+{
+  assert((a == b) == (cmp == 0));
+  assert((a != b) == (cmp != 0));
+  assert((a < b) == (cmp < 0));
+  assert((a <= b) == (cmp <= 0));
+  assert((a > b) == (cmp > 0));
+  assert((a >= b) == (cmp >= 0));
+}
+
+void test_comparison()
+{
+  for (int n = 0; n <= 8; n++)
+  {
+    vc<DynamicBitset> values;
+    repi(x, 1 << n)
+    {
+      DynamicBitset a(n);
+      repi(i, n) a.set(i, (x >> i) & 1);
+      values.eb(a);
+    }
+    repi(x, 1 << n) repi(y, 1 << n)
+      check_comparison(values[x], values[y], (x > y) - (x < y));
+  }
+
+  mt19937_64 rng(20260901);
+  for (int n : {0, 1, 63, 64, 65, 127, 128, 129, 255, 256, 257})
+  {
+    if (n)
+    {
+      DynamicBitset high(n), low(n, true);
+      high.set(n - 1);
+      low.reset(n - 1);
+      check_comparison(high, low, 1);
+      repi(i, n)
+      {
+        auto a = high, b = high;
+        a.reset(i);
+        b.set(i);
+        check_comparison(a, b, -1);
+      }
+    }
+    vc<DynamicBitset> values;
+    vc<string> strings;
+    repi(_, 100)
+    {
+      string sa(n, '0'), sb(n, '0');
+      repi(i, n) sa[i] += rng() & 1, sb[i] += rng() & 1;
+      DynamicBitset a(sa), b(sb);
+      check_comparison(a, b, sa.compare(sb));
+      check_comparison(a, a, 0);
+      values.eb(a);
+      values.eb(a);
+      strings.eb(sa);
+      strings.eb(sa);
+    }
+    sort(ALL(values));
+    sort(ALL(strings));
+    repi(i, values.size()) assert(values[i].to_string() == strings[i]);
+    set<DynamicBitset> unique_values(ALL(values));
+    set<string> unique_strings(ALL(strings));
+    assert(unique_values.size() == unique_strings.size());
+  }
+  assert(DynamicBitset("1") != DynamicBitset("01"));
+  assert(DynamicBitset() != DynamicBitset("0"));
+}
+
 int main()
 {
   {
@@ -266,5 +362,7 @@ int main()
     verify(bs, a);
   }
   test_slice(rng);
+  test_aligned_xor_slice();
+  test_comparison();
   cout << "Hello World" << endl;
 }

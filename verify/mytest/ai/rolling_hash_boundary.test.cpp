@@ -2,13 +2,14 @@
 
 #include "string/rolling_hash.hpp"
 
-// Test focus: full-range hashing and repeated pop_back keep the logical size in sync.
+// Test focus: empty and full ranges keep their length and hash value consistent.
 int main()
 {
-  RollingHashSubstring<> rh(string("abc"));
+  string s = "abc";
+  RollingHash rh(s);
   assert(rh.size() == 3);
-  assert(rh.hash(0, rh.size()) == RollingHash(string("abc")));
-  rep(_, 3) rh.pop_back();
-  assert(rh.size() == 0);
+  assert(rh.hash() == RollingHashValue(s));
+  assert(rh.substr(0, 0).hash() == RollingHashValue());
+  assert(rh.substr().hash() == RollingHashValue(s));
   PRINT("Hello World");
 }

@@ -8,7 +8,7 @@
  * @docs docs/algebra/min_count.md
  */
 
-template <class T, class U = ll, T infty = INF>
+template <class T, class U = ll, auto infty = INF>
 struct MonoidMinCount
 {
   struct S
@@ -27,11 +27,11 @@ struct MonoidMinCount
     else
       return {a.mn, a.cnt + b.cnt};
   }
-  static constexpr S e() { return {infty, 0}; }
+  static constexpr S e() { return {resolved_value<T, infty>(), 0}; }
   template <class I>
   static constexpr S pow(const S &a, I k) { return k == 0 ? e() : S{a.mn, U(a.cnt * k)}; }
 };
-template <class T, class U = ll, T infty = INF>
+template <class T, class U = ll, auto infty = INF>
 struct MonoidMaxCount
 {
   struct S
@@ -50,7 +50,7 @@ struct MonoidMaxCount
     else
       return {a.mx, a.cnt + b.cnt};
   }
-  static constexpr S e() { return {-infty, 0}; }
+  static constexpr S e() { return {-resolved_value<T, infty>(), 0}; }
   template <class I>
   static constexpr S pow(const S &a, I k) { return k == 0 ? e() : S{a.mx, U(a.cnt * k)}; }
 };

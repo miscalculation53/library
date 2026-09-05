@@ -10,12 +10,13 @@
  * @docs docs/algebra/acted_monoid/chmin_chmax_add_min_max_sum.md
  */
 
-template <class T, T infty = INF>
+template <class T, auto infty = INF>
 struct MonoidMinMaxSumBeats
 {
   struct S
   {
-    T mn = infty, mx = -infty, mn2 = infty, mx2 = -infty, sum = T{};
+    T mn = resolved_value<T, infty>(), mx = -resolved_value<T, infty>();
+    T mn2 = resolved_value<T, infty>(), mx2 = -resolved_value<T, infty>(), sum = T{};
     int len = 0, mn_cnt = 0, mx_cnt = 0;
     bool fail = false;
     S() {}
@@ -65,7 +66,7 @@ public:
   static constexpr S e() { return {}; }
 };
 
-template <class T, T infty = INF>
+template <class T, auto infty = INF>
 struct ActedMonoidChminChmaxAddMinMaxSum
 {
   using M = MonoidMinMaxSumBeats<T, infty>;

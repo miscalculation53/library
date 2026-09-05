@@ -2,7 +2,7 @@
 
 `unordered_map` への衝突攻撃を防ぐための、実行時ランダムを使ったハッシュ関数。
 
-整数、128 bit 整数、`std::hash` が定義された型に加え、`pair`、`tuple`、`array`、`vector`、`basic_string`、`basic_string_view` を再帰的にハッシュ化できる。ライブラリの型では `mint`、`Rational`、`RollingHash`、`ModintDiv`、`BigInteger` に対応している。
+整数、128 bit 整数、`std::hash` が定義された型に加え、`pair`、`tuple`、`array`、`vector`、`basic_string`、`basic_string_view` を再帰的にハッシュ化できる。ライブラリの型では `mint`、`Rational`、`RollingHashValue`、`ModintDiv`、`BigInteger` に対応している。
 
 整数と複合型の各要素は splitmix64 で秘密 seed と混合する。文字列は秘密 base を使って内容を走査するため、入力だけから衝突する bucket を構成できない。
 

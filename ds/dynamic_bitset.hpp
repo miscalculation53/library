@@ -48,6 +48,34 @@ private:
     if (l == r)
       return *this;
 
+    if constexpr (op == 2)
+    {
+      if (this == &b && bl == 0 && l > 0)
+      {
+        int dw = l / word_bits, db = l % word_bits;
+        int lw = l / word_bits, rw = (r - 1) / word_bits;
+        repi(w, rw, lw - 1, -1)
+        {
+          Word x = dat[w - dw] << db;
+          if (db && w > dw)
+            x |= dat[w - dw - 1] >> (word_bits - db);
+          int lo = max(l, w * word_bits), hi = min(r, (w + 1) * word_bits);
+          Word mask = low_mask(hi - lo) << (lo % word_bits);
+          Word added = x & ~dat[w] & mask;
+          dat[w] |= x & mask;
+          if constexpr (!is_same_v<F, nullptr_t>)
+          {
+            while (added)
+            {
+              f(w * word_bits + __builtin_ctzll(added));
+              added &= added - 1;
+            }
+          }
+        }
+        return *this;
+      }
+    }
+
     auto apply_word = [&](int w)
     {
       int lo = max(l, w * word_bits), hi = min(r, (w + 1) * word_bits);
@@ -436,8 +464,14 @@ public:
   {
     return apply_slice<2>(l, r, b, bl, f);
   }
-  DynamicBitset &xor_slice(int l, int r, const DynamicBitset &b, int bl)
+  [[gnu::always_inline]] DynamicBitset &xor_slice(int l, int r, const DynamicBitset &b, int bl)
   {
+    if (l == bl && l % word_bits == 0 && r == n && n == b.n)
+    {
+      assert(0 <= l && l <= r);
+      repi(w, l / word_bits, SZ(dat)) dat[w] ^= b.dat[w];
+      return *this;
+    }
     return apply_slice<3>(l, r, b, bl, nullptr);
   }
 
@@ -470,6 +504,17 @@ public:
     return a.n == b.n && a.dat == b.dat;
   }
   friend bool operator!=(const DynamicBitset &a, const DynamicBitset &b) { return !(a == b); }
+  friend bool operator<(const DynamicBitset &a, const DynamicBitset &b)
+  {
+    assert(a.n == b.n);
+    repi(i, SZ(a.dat) - 1, -1, -1)
+      if (a.dat[i] != b.dat[i])
+        return a.dat[i] < b.dat[i];
+    return false;
+  }
+  friend bool operator>(const DynamicBitset &a, const DynamicBitset &b) { return b < a; }
+  friend bool operator<=(const DynamicBitset &a, const DynamicBitset &b) { return !(b < a); }
+  friend bool operator>=(const DynamicBitset &a, const DynamicBitset &b) { return !(a < b); }
 };
 
 #if defined LOCAL or not defined FAST_IO

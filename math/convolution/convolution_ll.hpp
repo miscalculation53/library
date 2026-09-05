@@ -18,7 +18,10 @@ vc<ll> convolution_4e18(const vc<ll> &a, const vc<ll> &b)
     return {};
   const int n = a.size(), m = b.size();
   const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);
-  if (min(cnta, cntb) <= 150)
+  int z = bit_ceil(n + m - 1);
+  ll naive_work = min(ll(cnta) * m, ll(cntb) * n);
+  ll ntt_work = ll(z) * max(1, int(countr_zero((unsigned)z)));
+  if (naive_work <= 18 * ntt_work)
     return internal::convolution_naive(a, b);
   return internal::convolution_crt<2013265921, 2113929217>(a, b);
 }

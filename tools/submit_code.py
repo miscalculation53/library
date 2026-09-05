@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import fnmatch
 import hashlib
 import json
@@ -885,6 +885,88 @@ class CompilerWorkspace:
         )
         return functions
 
+    def uninstantiated_template_functions(self, text: str) -> list[tuple[int, str]]:
+        for path in self.directory.glob("templates.*"):
+            if path.is_file():
+                path.unlink()
+
+        use_pch = self._prepare_candidate_source(text)
+        started = time.monotonic()
+        result = self._run(
+            [
+                *self._candidate_command(use_pch),
+                "-O0",
+                "-fdump-lang-raw",
+                "-dumpdir",
+                str(self.directory) + os.sep,
+                "-dumpbase",
+                "templates.",
+                "-c",
+                str(self.source),
+                "-o",
+                str(self.directory / "templates.o"),
+            ]
+        )
+        if result.returncode != 0:
+            self.reporter.detail(
+                "template analysis failed: " + first_error(result.stderr)
+            )
+            return []
+
+        dump = next(self.directory.glob("templates.*.raw"), None)
+        if dump is None:
+            self.reporter.detail("template analysis did not produce a GCC dump file")
+            return []
+
+        identifiers: dict[str, str] = {}
+        pseudo_records: set[tuple[int, str]] = set()
+        instantiated_records: set[tuple[int, str]] = set()
+        source_pattern = re.compile(
+            rf"\bsrcp:\s+(?:.*[/\\])?{re.escape(self.source.name)}:(\d+)\b"
+        )
+
+        def consume(record: str) -> None:
+            identifier = re.match(r"^@(\d+)\s+identifier_node\b", record)
+            if identifier is not None:
+                spelling = re.search(r"\bstrg:\s+(.*?)\s+lngt:\s+\d+", record)
+                if spelling is not None:
+                    identifiers[identifier.group(1)] = spelling.group(1)
+                return
+            if " function_decl " not in record or not re.search(r"\bbody:\s+@\d+", record):
+                return
+            match = source_pattern.search(record)
+            name = re.search(r"\bname:\s+@(\d+)", record)
+            if match is None or name is None:
+                return
+            line_number = int(match.group(1))
+            if "pseudo tmpl" in record:
+                pseudo_records.add((line_number, name.group(1)))
+            else:
+                instantiated_records.add((line_number, name.group(1)))
+
+        record = ""
+        with dump.open(encoding="utf-8", errors="replace") as stream:
+            for line in stream:
+                if re.match(r"^@\d+\s+\w", line):
+                    consume(record)
+                    record = line
+                else:
+                    record += line
+            consume(record)
+        try:
+            dump.unlink()
+        except FileNotFoundError:
+            pass
+        result = sorted(
+            (line, identifiers.get(name, ""))
+            for line, name in pseudo_records - instantiated_records
+        )
+        self.reporter.detail(
+            f"template analysis: {len(result)} uninstantiated "
+            f"function line(s), {time.monotonic() - started:.2f}s"
+        )
+        return result
+
     def preprocess_directives(self, text: str) -> tuple[bool, str, str]:
         self.write(text)
         result = self._run(
@@ -1626,6 +1708,7 @@ class Removal:
     start: int
     end: int
     label: str
+    name: str | None = field(default=None, compare=False)
 
     @property
     def size(self) -> int:
@@ -1764,6 +1847,387 @@ def ipa_unused_candidates(
             continue
         deduplicated.append(candidate)
     return deduplicated
+
+
+def uninstantiated_template_candidates(
+    text: str,
+    *,
+    compiler: CompilerWorkspace,
+    keep_functions: set[str],
+) -> list[Removal]:
+    lines = text.splitlines(keepends=True)
+    tokens = structural_tokens(lines)
+    candidates: list[Removal] = []
+    for line_number, name in compiler.uninstantiated_template_functions(text):
+        line_index = line_number - 1
+        if not 0 <= line_index < len(lines) or "(" not in lines[line_index]:
+            continue
+        if not name:
+            source = "".join(lines[line_index : min(len(lines), line_index + 3)])
+            operator = re.search(
+                r"\boperator\s*(\[\]|\(\)|<=>|<<=?|>>=?|->\*?|"
+                r"[+\-*/%&|^~!=<>]=?|[_A-Za-z]\w*)",
+                source,
+            )
+            name = "operator" + operator.group(1) if operator is not None else "operator"
+        if name in keep_functions:
+            continue
+        removal = removal_from_function_line(
+            lines,
+            tokens,
+            line_index,
+            "uninstantiated template function",
+        )
+        if removal is not None:
+            candidates.append(
+                Removal(removal.start, removal.end, removal.label, name)
+            )
+
+    deduplicated: list[Removal] = []
+    for candidate in sorted(set(candidates), key=lambda value: (value.start, -value.end)):
+        if any(
+            existing.start <= candidate.start and candidate.end <= existing.end
+            for existing in deduplicated
+        ):
+            continue
+        deduplicated.append(candidate)
+    return deduplicated
+
+
+def stub_uninstantiated_template_functions(
+    text: str,
+    candidates: Sequence[Removal],
+    *,
+    deleted: set[Removal] | None = None,
+) -> str:
+    def body_opening(source: str) -> int:
+        paren_depth = bracket_depth = 0
+        in_block_comment = False
+        quote: str | None = None
+        escaped = False
+        index = 0
+        while index < len(source):
+            ch = source[index]
+            next_ch = source[index + 1] if index + 1 < len(source) else ""
+            if in_block_comment:
+                if ch == "*" and next_ch == "/":
+                    in_block_comment = False
+                    index += 2
+                else:
+                    index += 1
+                continue
+            if quote is not None:
+                if escaped:
+                    escaped = False
+                elif ch == "\\":
+                    escaped = True
+                elif ch == quote:
+                    quote = None
+                index += 1
+                continue
+            if ch == "/" and next_ch == "/":
+                newline = source.find("\n", index + 2)
+                index = len(source) if newline < 0 else newline + 1
+                continue
+            if ch == "/" and next_ch == "*":
+                in_block_comment = True
+                index += 2
+                continue
+            if ch in {'"', "'"}:
+                quote = ch
+            elif ch == "(":
+                paren_depth += 1
+            elif ch == ")":
+                paren_depth = max(0, paren_depth - 1)
+            elif ch == "[":
+                bracket_depth += 1
+            elif ch == "]":
+                bracket_depth = max(0, bracket_depth - 1)
+            elif ch == "{" and paren_depth == 0 and bracket_depth == 0:
+                return index
+            index += 1
+        return -1
+
+    lines = text.splitlines(keepends=True)
+    deleted = deleted or set()
+    for candidate in sorted(candidates, reverse=True):
+        if candidate in deleted:
+            lines[candidate.start : candidate.end + 1] = []
+            continue
+        source = "".join(lines[candidate.start : candidate.end + 1])
+        if re.search(r"\bfriend\b", source):
+            continue
+        opening = body_opening(source)
+        closing = source.rfind("}")
+        if opening < 0 or closing < opening:
+            continue
+        declaration = source[:opening].rstrip()
+        initializer = re.search(r"\)\s*:\s*", declaration)
+        if initializer is not None:
+            declaration = declaration[: initializer.start() + 1].rstrip()
+        declaration += ";\n"
+        lines[candidate.start : candidate.end + 1] = [declaration]
+    return collapse_blank_lines("".join(lines))
+
+
+def removable_template_body_candidates(
+    text: str, candidates: Sequence[Removal]
+) -> list[Removal]:
+    lines = text.splitlines(keepends=True)
+    eligible: list[Removal] = []
+    for candidate in candidates:
+        source = "".join(lines[candidate.start : candidate.end + 1])
+        if re.search(r"\bfriend\b", source):
+            continue
+        eligible.append(candidate)
+    return eligible
+
+
+def reduce_template_body_candidates(
+    text: str,
+    candidates: Sequence[Removal],
+    *,
+    compiler: CompilerWorkspace,
+    writer: CheckpointWriter,
+    reporter: Reporter,
+    target_bytes: int | None = None,
+) -> tuple[str, int]:
+    started = time.monotonic()
+    original_text = text
+    accepted: set[Removal] = set()
+    validations = 0
+    target_checkpointed = below_byte_limit(text, target_bytes) or (
+        writer.current is not None
+        and below_byte_limit(writer.current, target_bytes)
+    )
+
+    byte_sizes = {
+        candidate: len(
+            "".join(
+                original_text.splitlines(keepends=True)[
+                    candidate.start : candidate.end + 1
+                ]
+            ).encode()
+        )
+        for candidate in candidates
+    }
+
+    def split(items: Sequence[Removal]) -> tuple[list[Removal], list[Removal]]:
+        weights = {str(index): byte_sizes[item] for index, item in enumerate(items)}
+        left_keys, _ = split_weighted(list(weights), weights)
+        count = len(left_keys)
+        return list(items[:count]), list(items[count:])
+
+    def mentioned_in(candidate: Removal, diagnostics: str) -> bool:
+        if not candidate.name:
+            return False
+        if candidate.name.startswith("operator"):
+            return candidate.name in diagnostics
+        return re.search(
+            rf"(?<![_A-Za-z0-9]){re.escape(candidate.name)}(?![_A-Za-z0-9])",
+            diagnostics,
+        ) is not None
+
+    active = list(candidates)
+    for _ in range(min(32, len(candidates))):
+        validations += 1
+        reporter.phase(
+            "templates",
+            f"validation {validations}: testing {len(active)} template body(s)",
+        )
+        candidate_text = stub_uninstantiated_template_functions(
+            original_text, active
+        )
+        valid, stderr = compiler.validate(candidate_text)
+        if valid:
+            accepted.update(active)
+            text = candidate_text
+            writer.save(
+                f"removed {len(active)} uninstantiated template body(s)", text
+            )
+            if not target_checkpointed and below_byte_limit(text, target_bytes):
+                target_checkpointed = True
+                reporter.checkpoint(
+                    f"submission ready: {reporter.byte_count(encoded_size(text), 'green')} "
+                    f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
+                )
+            break
+
+        blocked = {
+            candidate
+            for candidate in active
+            if mentioned_in(candidate, stderr)
+        }
+        if not blocked:
+            reporter.detail(first_error(stderr))
+            break
+        reporter.detail(
+            "keeping required template definition(s): "
+            + ", ".join(sorted({candidate.name or "" for candidate in blocked}))
+        )
+        active = [candidate for candidate in active if candidate not in blocked]
+
+    if accepted:
+        deleted = set(accepted)
+        declaration_fallback: list[Removal] | None = None
+        for _ in range(min(32, len(deleted))):
+            validations += 1
+            reporter.phase(
+                "templates",
+                f"validation {validations}: removing {len(deleted)} declarations",
+            )
+            candidate_text = stub_uninstantiated_template_functions(
+                original_text, list(accepted), deleted=deleted
+            )
+            valid, stderr = compiler.validate(candidate_text)
+            if valid:
+                text = candidate_text
+                writer.save(
+                    f"removed {len(deleted)} uninstantiated template declaration(s)",
+                    text,
+                )
+                if not target_checkpointed and below_byte_limit(text, target_bytes):
+                    target_checkpointed = True
+                    reporter.checkpoint(
+                        f"submission ready: {reporter.byte_count(encoded_size(text), 'green')} "
+                        f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
+                    )
+                break
+
+            blocked = {
+                candidate
+                for candidate in deleted
+                if mentioned_in(candidate, stderr)
+            }
+            if not blocked:
+                reporter.detail(
+                    "template declaration cleanup was rejected: "
+                    + first_error(stderr)
+                )
+                declaration_fallback = sorted(deleted)
+                break
+            reporter.detail(
+                "keeping required template declaration(s): "
+                + ", ".join(sorted({candidate.name or "" for candidate in blocked}))
+            )
+            deleted.difference_update(blocked)
+
+        if declaration_fallback:
+            deleted.clear()
+
+            def try_delete(batch: Sequence[Removal]) -> bool:
+                nonlocal text, validations, target_checkpointed
+                proposal = deleted.union(batch)
+                candidate_text = stub_uninstantiated_template_functions(
+                    original_text, list(accepted), deleted=proposal
+                )
+                validations += 1
+                reporter.phase(
+                    "templates",
+                    f"validation {validations}: testing {len(batch)} declaration(s)",
+                )
+                valid, stderr = compiler.validate(candidate_text)
+                if not valid:
+                    reporter.detail(first_error(stderr))
+                    return False
+                deleted.update(batch)
+                text = candidate_text
+                writer.save(
+                    f"removed {len(batch)} uninstantiated template declaration(s)",
+                    text,
+                )
+                if not target_checkpointed and below_byte_limit(text, target_bytes):
+                    target_checkpointed = True
+                    reporter.checkpoint(
+                        f"submission ready: {reporter.byte_count(encoded_size(text), 'green')} "
+                        f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
+                    )
+                return True
+
+            def reduce_declarations(items: Sequence[Removal]) -> None:
+                active_items = [item for item in items if item not in deleted]
+                if not active_items or try_delete(active_items) or len(active_items) == 1:
+                    return
+                left, right = split(active_items)
+                reduce_declarations(left)
+                reduce_declarations(right)
+
+            reduce_declarations(declaration_fallback)
+
+        reporter.done(
+            "templates",
+            f"accepted {len(accepted)}/{len(candidates)} template body(s)",
+            started,
+        )
+        return text, len(accepted)
+
+    def try_accept(batch: Sequence[Removal]) -> bool:
+        nonlocal text, validations, target_checkpointed
+        proposal = accepted.union(batch)
+        candidate_text = stub_uninstantiated_template_functions(
+            original_text, proposal
+        )
+        validations += 1
+        reporter.phase(
+            "templates",
+            f"validation {validations}: testing {len(batch)} template body(s)",
+        )
+        valid, stderr = compiler.validate(candidate_text)
+        if not valid:
+            reporter.detail(first_error(stderr))
+            return False
+        accepted.update(batch)
+        text = candidate_text
+        writer.save(f"removed {len(batch)} uninstantiated template body(s)", text)
+        if not target_checkpointed and below_byte_limit(text, target_bytes):
+            target_checkpointed = True
+            reporter.checkpoint(
+                f"submission ready: {reporter.byte_count(encoded_size(text), 'green')} "
+                f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
+            )
+        return True
+
+    def reduce_batch(items: Sequence[Removal]) -> None:
+        active = [item for item in items if item not in accepted]
+        if not active or try_accept(active) or len(active) == 1:
+            return
+        left, right = split(active)
+        reduce_batch(left)
+        reduce_batch(right)
+
+    reduce_batch(candidates)
+    if accepted:
+        validations += 1
+        reporter.phase(
+            "templates",
+            f"validation {validations}: removing {len(accepted)} declarations",
+        )
+        candidate_text = collapse_blank_lines(
+            apply_removals(original_text, accepted)
+        )
+        valid, stderr = compiler.validate(candidate_text)
+        if valid:
+            text = candidate_text
+            writer.save(
+                f"removed {len(accepted)} uninstantiated template declaration(s)",
+                text,
+            )
+            if not target_checkpointed and below_byte_limit(text, target_bytes):
+                target_checkpointed = True
+                reporter.checkpoint(
+                    f"submission ready: {reporter.byte_count(encoded_size(text), 'green')} "
+                    f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
+                )
+        else:
+            reporter.detail(
+                "template declaration cleanup was rejected: " + first_error(stderr)
+            )
+    reporter.done(
+        "templates",
+        f"accepted {len(accepted)}/{len(candidates)} template body(s)",
+        started,
+    )
+    return text, len(accepted)
 
 
 def unused_candidates(
@@ -2143,6 +2607,37 @@ def cleanup_text(
         else:
             pending_validation = False
         return True, accepted
+
+    started = time.monotonic()
+    reporter.phase("templates", "finding uninstantiated template functions")
+    template_candidates = uninstantiated_template_candidates(
+        text,
+        compiler=compiler,
+        keep_functions=keep_functions,
+    )
+    reporter.done(
+        "templates",
+        f"found {len(template_candidates)} candidate(s)",
+        started,
+    )
+    if template_candidates:
+        template_candidates = removable_template_body_candidates(
+            text, template_candidates
+        )
+        if template_candidates:
+            text, accepted = reduce_template_body_candidates(
+                text,
+                template_candidates,
+                compiler=compiler,
+                writer=writer,
+                reporter=reporter,
+                target_bytes=target_bytes,
+            )
+            if accepted:
+                pending_validation = False
+        else:
+            reporter.detail("no declaration-only template body is safe to try")
+    validate_pending()
 
     for pass_index in range(1, max_passes + 1):
         stage = f"pass {pass_index}/{max_passes}"

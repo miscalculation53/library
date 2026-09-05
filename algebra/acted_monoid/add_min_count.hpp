@@ -10,7 +10,7 @@
  * @docs docs/algebra/acted_monoid/add_min_count.md
  */
 
-template <class T, class U = ll, T infty = INF>
+template <class T, class U = ll, auto infty = INF>
 struct ActedMonoidAddMinCount
 {
   using M = MonoidMinCount<T, U, infty>;
@@ -24,7 +24,7 @@ struct ActedMonoidAddMinCount
   static constexpr auto id = MF::e;
 };
 
-template <class T, class U = ll, T infty = INF>
+template <class T, class U = ll, auto infty = INF>
 struct ActedMonoidAddMaxCount
 {
   using M = MonoidMaxCount<T, U, infty>;

@@ -8,12 +8,12 @@
  * @docs docs/algebra/upd.md
  */
 
-template <class T, T idnty>
+template <class T, auto idnty>
 struct MonoidUpd
 {
   using S = T;
-  static constexpr S op(S f, S g) { return f == idnty ? g : f; }
-  static constexpr S e() { return idnty; }
+  static constexpr S op(S f, S g) { return f == resolved_value<T, idnty>() ? g : f; }
+  static constexpr decltype(auto) e() { return resolved_value<T, idnty>(); }
 };
 
 template <class T>

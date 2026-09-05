@@ -441,6 +441,82 @@ int main() {
         self.assertNotIn("\n\n\n", cleaned)
         self.assertNotIn("\n\n\n", written)
 
+    def test_uninstantiated_template_methods_are_removed(self) -> None:
+        cxx = shutil.which("g++-15") or shutil.which("g++-14")
+        if cxx is None:
+            self.skipTest("GNU C++ compiler is unavailable")
+        source = '''#include <bits/stdc++.h>
+template <class T>
+struct Box {
+  T used(T x) { return x + 1; }
+  T unused(T x) { return x + 2; }
+  T unused_recursive(T x) { return x ? unused_recursive(x - 1) : 0; }
+};
+int main() {
+  Box<int> box;
+  return box.used(0) - 1;
+}
+'''
+        reporter = submit_code.Reporter()
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "bundle.cpp"
+            output.write_text(source)
+            writer = submit_code.CheckpointWriter(output, reporter)
+            writer.current = source
+            with submit_code.CompilerWorkspace(
+                cxx=cxx,
+                standard="c++23",
+                include_paths=[],
+                extra_args=[],
+                timeout=None,
+                reporter=reporter,
+            ) as compiler:
+                candidates = submit_code.uninstantiated_template_candidates(
+                    source,
+                    compiler=compiler,
+                    keep_functions=set(),
+                )
+                self.assertIn("unused", {candidate.name for candidate in candidates})
+                self.assertIn(
+                    "unused_recursive", {candidate.name for candidate in candidates}
+                )
+                cleaned, accepted = submit_code.reduce_unused_candidates(
+                    source,
+                    candidates,
+                    compiler=compiler,
+                    writer=writer,
+                    reporter=reporter,
+                )
+        self.assertGreaterEqual(accepted, 2)
+        self.assertIn("T used(T x)", cleaned)
+        self.assertNotIn("T unused(T x)", cleaned)
+        self.assertNotIn("unused_recursive", cleaned)
+
+    def test_uninstantiated_template_bodies_can_be_stubbed_together(self) -> None:
+        source = '''template <class T>
+struct Box {
+  Box() : value{} {}
+  T helper(T x) { return x + 1; }
+  T unused(T x) { return helper(x); }
+  T value;
+};
+int main() { return 0; }
+'''
+        lines = source.splitlines(keepends=True)
+        tokens = submit_code.structural_tokens(lines)
+        candidates = [
+            submit_code.removal_from_function_line(lines, tokens, line, "unused")
+            for line in (2, 3, 4)
+        ]
+        cleaned = submit_code.stub_uninstantiated_template_functions(
+            source, [candidate for candidate in candidates if candidate is not None]
+        )
+        self.assertIn("T helper(T x);", cleaned)
+        self.assertIn("T unused(T x);", cleaned)
+        self.assertIn("Box();", cleaned)
+        self.assertNotIn(": value", cleaned)
+        self.assertNotIn("return helper", cleaned)
+
     def test_unused_macro_before_standard_header_is_detected(self) -> None:
         cxx = shutil.which("g++-15") or shutil.which("g++-14")
         if cxx is None:

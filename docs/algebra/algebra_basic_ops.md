@@ -29,6 +29,8 @@
 
 - `FieldAddSubMulDiv<T>`
 
+`infty` には `T` に変換できる値、または `T` に変換できる値を返す引数なし関数を指定できる。
+
 ### 累乗
 
 `MonoidAdd<T>`, `MonoidMin<T, infty>`, `MonoidMax<T, infty>`, `GroupAddSub<T>` は、反復演算を直接計算できる場合に `pow` を持つ。`MonoidAdd<T>` と `GroupAddSub<T>` では `T * I` が定義されている場合に限り使用できる。

@@ -10,7 +10,7 @@
  * @docs docs/algebra/acted_monoid/upd_min_sum.md
  */
 
-template <class T, T infty = INF>
+template <class T, auto infty = INF>
 struct ActedMonoidUpdMinSum
 {
   using M = MonoidMinSum<T, infty>;
@@ -27,7 +27,7 @@ struct ActedMonoidUpdMinSum
   static constexpr auto id = MF::e;
 };
 
-template <class T, T infty = INF>
+template <class T, auto infty = INF>
 struct ActedMonoidUpdMaxSum
 {
   using M = MonoidMaxSum<T, infty>;
@@ -44,7 +44,7 @@ struct ActedMonoidUpdMaxSum
   static constexpr auto id = MF::e;
 };
 
-template <class T, T infty = INF>
+template <class T, auto infty = INF>
 struct ActedMonoidUpdMinMaxSum
 {
   using M = MonoidMinMaxSum<T, infty>;

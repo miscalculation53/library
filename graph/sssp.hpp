@@ -5,6 +5,7 @@
 #include "graph.hpp"
 #include "../ds/my_queue.hpp"
 #include "../utils/is_integral_ext.hpp"
+#include "../utils/resolved_value.hpp"
 
 /**
  * @brief 単一始点最短路問題
@@ -16,7 +17,7 @@
 // - fibonacci heap を用いた dijkstra の高速化
 // - SPFA 等
 
-template <bool is_directed, class Cost, const Cost infty = INF>
+template <bool is_directed, class Cost, auto infty = INF>
 struct ShortestPath : Graph<is_directed, Cost>
 {
   using Graph<is_directed, Cost>::Graph;
@@ -27,6 +28,8 @@ struct ShortestPath : Graph<is_directed, Cost>
   using Graph<is_directed, Cost>::edges;
 
 private:
+  static constexpr decltype(auto) inf() { return resolved_value<Cost, infty>(); }
+
   vc<Cost> dists;
   vc<Edge<Cost>> prv;
   int source = -1;
@@ -44,7 +47,7 @@ public:
     const int n = size();
     assert(0 <= s && s < n);
     init_solve(s, t);
-    dists.assign(n, infty);
+    dists.assign(n, inf());
     prv.assign(n, {});
     MyQueue<int> que;
     dists[s] = 0;
@@ -72,7 +75,7 @@ public:
     const int n = size();
     assert(0 <= s && s < n);
     init_solve(s, t);
-    dists.assign(n, infty);
+    dists.assign(n, inf());
     prv.assign(n, {});
     vc<int> cur{int(s)}, nxt;
     vc<unsigned char> used(n, false);
@@ -110,7 +113,7 @@ public:
     assert(0 <= s && s < n);
     assert(0 <= max_cost && max_cost < INT_MAX);
     init_solve(s, t);
-    dists.assign(n, infty);
+    dists.assign(n, inf());
     prv.assign(n, {});
 
     const int bcnt = max_cost + 1;
@@ -173,7 +176,7 @@ public:
     const int n = size();
     assert(0 <= s && s < n);
     init_solve(s, t);
-    dists.assign(n, infty);
+    dists.assign(n, inf());
     prv.assign(n, {});
     pql<pair<Cost, int>> pque;
     dists[s] = 0;
@@ -204,13 +207,13 @@ public:
     const int n = size();
     assert(0 <= s && s < n);
     init_solve(s, t);
-    dists.assign(n, infty);
+    dists.assign(n, inf());
     prv.assign(n, {});
     vc<bool> ok(n, false);
     dists[s] = 0;
     repi(_, n)
     {
-      Cost mn = infty;
+      Cost mn = inf();
       int v = -1;
       repi(u, n) if (!ok[u] && chmin(mn, dists[u])) v = u;
       if (v == -1)
@@ -234,23 +237,23 @@ public:
     const int n = size();
     assert(0 <= s && s < n);
     init_solve(s, -1);
-    dists.assign(n, infty);
+    dists.assign(n, inf());
     prv.assign(n, {});
     dists[s] = 0;
     repi(t, 2 * n)
     {
       repi(v, n)
       {
-        if (dists[v] == infty)
+        if (dists[v] == inf())
           continue;
         fec(e : out_arcs(v))
         {
-          Cost nd = dists[v] == -infty ? -infty : dists[v] + e.cost;
+          Cost nd = dists[v] == -inf() ? -inf() : dists[v] + e.cost;
           if (dists[e.to] > nd)
           {
             prv[e.to] = Edge<Cost>(v, e.to, e.cost, e.index);
             if (t == n - 1)
-              dists[e.to] = -infty;
+              dists[e.to] = -inf();
             else
               dists[e.to] = nd;
           }
@@ -264,7 +267,7 @@ public:
   {
     bool neg = false;
     int zcnt = 0;
-    Cost wplus1 = -infty;
+    Cost wplus1 = -inf();
     Cost max_cost = 0;
     bool wpluscnt_geq2 = false;
     repi(v, size()) fec(e : out_arcs(v))
@@ -355,24 +358,24 @@ public:
     const int n = size();
     assert(SZ(dists) == n && source != -1 && "solve(s) is not called");
     assert(solved_all && "solve(s, t) must not stop at t");
-    assert(dists[source] != -infty && "the shortest-path graph must be finite");
+    assert(dists[source] != -inf() && "the shortest-path graph must be finite");
     vc<mint> cnt(n, 0);
     vc<int> indeg(n, 0);
     int active = 0;
-    repi(v, n) if (dists[v] != infty && dists[v] != -infty) active++;
+    repi(v, n) if (dists[v] != inf() && dists[v] != -inf()) active++;
     repi(v, n)
     {
-      if (dists[v] == infty || dists[v] == -infty)
+      if (dists[v] == inf() || dists[v] == -inf())
         continue;
       fec(e : out_arcs(v))
       {
-        if (dists[e.to] != infty && dists[e.to] != -infty &&
+        if (dists[e.to] != inf() && dists[e.to] != -inf() &&
             dists[e.to] == dists[v] + e.cost)
           indeg[e.to]++;
       }
     }
     MyQueue<int> que;
-    repi(v, n) if (dists[v] != infty && dists[v] != -infty && indeg[v] == 0) que.push(v);
+    repi(v, n) if (dists[v] != inf() && dists[v] != -inf() && indeg[v] == 0) que.push(v);
     cnt[source] = 1;
     int processed = 0;
     while (!que.empty())
@@ -382,7 +385,7 @@ public:
       processed++;
       fec(e : out_arcs(v))
       {
-        if (dists[e.to] != infty && dists[e.to] != -infty &&
+        if (dists[e.to] != inf() && dists[e.to] != -inf() &&
             dists[e.to] == dists[v] + e.cost)
         {
           cnt[e.to] += cnt[v];
