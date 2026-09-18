@@ -697,6 +697,51 @@ BigInteger<base, digit> operator-(T a, const BigInteger<base, digit> &b)
   return BigInteger<base, digit>(a) - b;
 }
 
+template <int base, int digit>
+BigInteger<base, digit> gcd(BigInteger<base, digit> a, BigInteger<base, digit> b)
+{
+  a = a.abs(), b = b.abs();
+  while (b != 0)
+  {
+    a %= b;
+    swap(a, b);
+  }
+  return a;
+}
+
+template <int base, int digit>
+BigInteger<base, digit> lcm(BigInteger<base, digit> a, BigInteger<base, digit> b)
+{
+  if (a == 0 || b == 0)
+    return 0;
+  a = a.abs(), b = b.abs();
+  return a / gcd(a, b) * b;
+}
+
+template <int base, int digit, class T, enable_if_t<is_integral_ext<T>, int> = 0>
+BigInteger<base, digit> gcd(BigInteger<base, digit> a, T b)
+{
+  return gcd(move(a), BigInteger<base, digit>(b));
+}
+
+template <class T, int base, int digit, enable_if_t<is_integral_ext<T>, int> = 0>
+BigInteger<base, digit> gcd(T a, BigInteger<base, digit> b)
+{
+  return gcd(BigInteger<base, digit>(a), move(b));
+}
+
+template <int base, int digit, class T, enable_if_t<is_integral_ext<T>, int> = 0>
+BigInteger<base, digit> lcm(BigInteger<base, digit> a, T b)
+{
+  return lcm(move(a), BigInteger<base, digit>(b));
+}
+
+template <class T, int base, int digit, enable_if_t<is_integral_ext<T>, int> = 0>
+BigInteger<base, digit> lcm(T a, BigInteger<base, digit> b)
+{
+  return lcm(BigInteger<base, digit>(a), move(b));
+}
+
 #if defined LOCAL or not defined FAST_IO
 template <int base, int digit>
 istream &operator>>(istream &is, BigInteger<base, digit> &a)

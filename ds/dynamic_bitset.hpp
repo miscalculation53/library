@@ -174,7 +174,6 @@ public:
   DynamicBitset &assign(const string &s, char zero = '0', char one = '1')
   {
     assert(zero != one);
-    assert(s.size() <= size_t(numeric_limits<int>::max()));
     n = int(s.size());
     dat.assign(word_size(n), 0);
     repi(i, n)

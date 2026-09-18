@@ -1,0 +1,18 @@
+{
+  "name": "kyopro-submit-status",
+  "displayName": "oj-b / cln 準備状況",
+  "description": "提出用コードの生成状況とサイズをステータスバーに表示します。",
+  "version": "0.1.0",
+  "publisher": "dai-oi-local",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished", "onLanguage:cpp"],
+  "main": "./extension.js",
+  "capabilities": { "untrustedWorkspaces": { "supported": true } },
+  "contributes": {
+    "commands": [
+      { "command": "kyoproSubmitStatus.showLog", "title": "oj-b / cln: 生成ログを表示" },
+      { "command": "kyoproSubmitStatus.openBundle", "title": "oj-b / cln: 提出用コードを開く" }
+    ]
+  }
+}

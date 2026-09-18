@@ -57,21 +57,34 @@ int main(int argc, char **argv)
   {
     repi(_, 5) repi(v, n) fec(e : graph->out_edges(v)) checksum += e.from + e.to + e.cost + e.index;
   };
-  auto scan_arcs = [&]
-  {
-    repi(_, 5) repi(v, n) fec(e : graph->out_arcs(v)) checksum += v + e.to + e.cost + e.index;
-  };
   double old_scan = elapsed_ms(scan_old);
   double edge_scan = elapsed_ms(scan_edges);
-  double arc_scan = elapsed_ms(scan_arcs);
+
+  vc<pair<int, int>> uv;
+  uv.reserve(m);
+  fec([u, v, w] : es) uv.eb(u, v);
+  unique_ptr<GraphDirected<>> unweighted;
+  double unweighted_build = elapsed_ms([&] { unweighted = make_unique<GraphDirected<>>(n, uv); });
+  // 同じ端点と辺番号を走査し、重みを使わない用途で比較する。
+  auto scan_topology = [&](const auto &g)
+  {
+    ll sum = 0;
+    repi(_, 5) repi(v, n) fec(e : g.out_edges(v)) sum += e.from + e.to + e.index;
+    checksum = sum;
+  };
+  double weighted_topology = elapsed_ms([&] { scan_topology(*graph); });
+  double unweighted_topology = elapsed_ms([&] { scan_topology(*unweighted); });
 
   cout << "n=" << n << " m=" << m << '\n';
   cout << "old payload: " << sizeof(Edge<ll>) * size_t(m) / (1 << 20) << " MiB\n";
   cout << "new payload: " << (sizeof(int) * 2 + sizeof(ll)) * size_t(m) / (1 << 20) << " MiB\n";
+  cout << "unweighted payload: " << sizeof(int) * 2 * size_t(m) / (1 << 20) << " MiB\n";
   cout << fixed << setprecision(3);
   cout << "old build: " << old_build << " ms, scan x5: " << old_scan << " ms\n";
   cout << "new build: " << new_build << " ms\n";
   cout << "out_edges scan x5: " << edge_scan << " ms\n";
-  cout << "out_arcs scan x5: " << arc_scan << " ms\n";
+  cout << "unweighted build: " << unweighted_build << " ms\n";
+  cout << "weighted topology scan x5: " << weighted_topology << " ms\n";
+  cout << "unweighted topology scan x5: " << unweighted_topology << " ms\n";
   cerr << checksum << '\n';
 }

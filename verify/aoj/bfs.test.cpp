@@ -35,7 +35,8 @@ void main2()
     fec(vi : v) UV.eb(u, vi);
   }
 
-  ShortestPath<true, ll> G(N, UV);
+  Graph<true> G_input(N, UV);
+  ShortestPath G(G_input);
   auto dists = G.solve(0);
   rep(i, N) PRINT(i + 1, dists.at(i) == INF ? -1 : dists.at(i));
 }

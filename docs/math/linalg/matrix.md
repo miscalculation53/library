@@ -137,3 +137,17 @@ $A\boldsymbol{x} = \boldsymbol{b}$ の解を求め、
 
 - $O(nm \min(n, m) + m^2)$
 
+
+## 32 bit modint の積に関する補足
+
+ベクトルとの積は各行の `dot_product<F>` で計算する。
+行列積 $A\in S^{n\times m}$、$B\in S^{m\times k}$ では、
+[`dot_product` の高速化対象](../dot_product.md)で $n,m,k\ge16$、
+かつ $A$ の非零要素が半分以上のとき、$B$ の転置を保持して内積を計算する。
+この経路では返り値に加えて $O(mk)$ の作業領域を使う。
+`BS` は従来のブロック計算経路に対して適用される。
+
+
+### 通常の 32 bit modint の掃き出しで使う作業領域
+
+`F = FieldAddSubMulDiv<mint>` で、`mint` が `static_modint32` または `dynamic_modint32` のとき、行数・列数がともに 32 以上なら内部で 64 bit 整数の作業配列を使う。`row_reduction` の入力コピーに加えて、行数を $n$、列数を $m$ として約 $8nm$ byte と $O(n)$ の作業領域をヒープに確保する。`rank`・`det`・`inv`・`solve` からこの掃き出しを呼ぶ場合も同様（`inv`・`solve` では拡大行列の大きさで数える）。

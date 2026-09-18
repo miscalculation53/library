@@ -8,7 +8,7 @@
 #include "template_rep.hpp"
 #include "template_vector.hpp"
 #include "../utils/is_integral_ext.hpp"
-#include "../utils/resolved_value.hpp"
+#include "../utils/resolved_infty.hpp"
 
 /**
  * @brief テンプレート（アルゴリズム）
@@ -195,21 +195,21 @@ struct MonoidAdd
   template <class I, class = decltype(declval<S>() * declval<I>())>
   static constexpr S pow(const S &a, I k) { return a * k; }
 };
-template <class T, auto infty = INF>
+template <class T, auto infty = nullptr>
 struct MonoidMin
 {
   using S = T;
   static constexpr S op(S a, S b) { return min(a, b); }
-  static constexpr decltype(auto) e() { return resolved_value<T, infty>(); }
+  static constexpr decltype(auto) e() { return resolved_infty<T, infty>(); }
   template <class I>
   static constexpr S pow(const S &a, I k) { return k == 0 ? e() : a; }
 };
-template <class T, auto infty = INF>
+template <class T, auto infty = nullptr>
 struct MonoidMax
 {
   using S = T;
   static constexpr S op(S a, S b) { return max(a, b); }
-  static constexpr S e() { return -resolved_value<T, infty>(); }
+  static constexpr S e() { return -resolved_infty<T, infty>(); }
   template <class I>
   static constexpr S pow(const S &a, I k) { return k == 0 ? e() : a; }
 };

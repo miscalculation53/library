@@ -194,25 +194,26 @@ pair<int, int> parent_child(int u, int v)
 
 - $O(1)$
 
-#### reordered_edge_info
+#### edge_to_vertex_values
 
 ```cpp
-vc<EdgeInfo> reordered_edge_info(
-  const vc<P>& es,
-  const vc<EdgeInfo>& edge_info)
+vc<T> edge_to_vertex_values(
+  const vc<tuple<I, I, T>>& es, const T& root_value = T{}) const
 ```
 
-`edge_info[i]` が `es[i]` の情報であるとき、長さ $n$ の配列 `res` を返す。根以外の頂点 `v` について、`res[v]` は辺 `(parent(v), v)` の情報になる。`res[root()]` は未定義。
+`(u, v, value)` の列を頂点番号順の長さ $n$ の配列に変換する。各辺の値を子側の頂点に置き、根には `root_value` を置く。辺の並び順と端点の向きは任意。
+
+数値の和では `root_value = 0`、群の積ではその単位元を指定する。
 
 ##### 制約
 
-- `es` の長さは $n-1$
-- `edge_info` の長さは $n-1$ 以上
-- `es` はこの `EulerTour` と同じ木の辺集合
+- `es` はこの木の各辺をちょうど一度含む
+- `T` はコピー構築・コピー代入ができる
+- `root_value` を省略する場合、`T{}` が構築できる
 
 ##### 計算量
 
-- 時間：$O(n)$
+- $O(n)$（値のコピーを $O(1)$ とする）
 
 #### lca
 

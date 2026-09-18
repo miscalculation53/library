@@ -2,6 +2,7 @@
 
 #include "../../template/template_all_but_modint.hpp"
 #include "../../algebra/algebra_basic_ops.hpp"
+#include "../dot_product.hpp"
 // #include "and_or_convolution.hpp"
 // #include "../../algebra/polynomial_ring.hpp"
 
@@ -54,7 +55,10 @@ vc<typename R::S> subset_convolution
   {
     F fc;
     fill(ALL(fc), R::e0());
-    repi(i, lg + 1) repi(j, lg + 1 - i) fc[i + j] = R::add(fc[i + j], R::mul(fa[s][i], fb[s][j]));
+    if constexpr (internal::dot_product_mod32<R>::value)
+      repi(p, lg + 1) fc[p] = dot_product<R>(p + 1, fa[s].begin(), fb[s].rbegin() + (29 - p));
+    else
+      repi(i, lg + 1) repi(j, lg + 1 - i) fc[i + j] = R::add(fc[i + j], R::mul(fa[s][i], fb[s][j]));
     swap(fa[s], fc);
   }
   for (int w = len >> 1; w; w >>= 1)

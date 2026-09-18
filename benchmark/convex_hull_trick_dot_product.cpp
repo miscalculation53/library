@@ -25,8 +25,8 @@ struct ViaCHT
 {
   template <class Compare>
   using Hull = conditional_t<monotone,
-                             ConvexHullTrickMonotoneSlope<T, Compare>,
-                             ConvexHullTrick<T, Compare>>;
+                             ConvexHullTrickMonotoneSlope<T, T, Compare>,
+                             ConvexHullTrick<T, T, Compare>>;
 
   Hull<less<>> lo;
   Hull<greater<>> hi;

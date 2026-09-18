@@ -11,9 +11,104 @@ struct InspectGraph : Graph<directed, Cost, erasable>
   static constexpr int stored_edge_size() { return sizeof(typename Graph<directed, Cost, erasable>::GE); }
 };
 
+#ifdef LOCAL
+struct DumpCost
+{
+  ll distance;
+  string label;
+  CPP_DUMP_DEFINE_DATA(distance, label);
+};
+
+template <class Cost>
+void check_dump_edge(const Edge<Cost> &e, const string &cost_text)
+{
+  for (const auto &text : {cp::export_var(e), cp::export_var(vc<Edge<Cost>>{e})})
+  {
+    assert(text.find("from= " + to_string(e.from)) != string::npos);
+    assert(text.find("to= " + to_string(e.to)) != string::npos);
+    assert(text.find("cost= " + cost_text) != string::npos);
+    assert(text.find("index= " + to_string(e.index)) != string::npos);
+  }
+}
+
+void check_dump()
+{
+  cp::options::es_style = cp::types::es_style_t::no_es;
+  cp::options::max_line_width = 1000;
+  check_dump_edge(Edge<>(2, 1, 7), "1");
+  check_dump_edge(Edge<bool>(2, 1, true, 7), "true");
+  check_dump_edge(Edge<int>(2, 1, 4, 7), "4");
+  check_dump_edge(Edge<ll>(2, 1, 10000000000LL, 7), "10000000000");
+  check_dump_edge(Edge<double>(2, 1, 2.5, 7), "2.5");
+  check_dump_edge(Edge<i128>(2, 1, i128(1) << 100, 7), "1267650600228229401496703205376");
+  check_dump_edge(Edge<vc<int>>(2, 1, {4, 9}, 7), "[ 4, 9 ]");
+  check_dump_edge(Edge<DumpCost>(2, 1, {17, "road"}, 7),
+                  "DumpCost{ distance= 17, label= \"road\" }");
+  const GraphDirected<double> g(3, vc<tuple<int, int, double>>{{2, 1, 2.5}});
+  check_dump_edge(g.out_edges(2).front(), "2.5");
+}
+#endif
+
+#if __cplusplus >= 202002L
+template <class Cost = void>
+using ErasableUndirected = GraphUndirected<Cost, true>;
+
+void check_deduction()
+{
+  const vc<pair<ll, ll>> uv{{0, 1}, {1, 2}};
+  const vc<tuple<ll, ll, ll>> uvw{{0, 1, 7}, {1, 2, 9}};
+  GraphDirected unweighted(3, uv);
+  GraphUndirected weighted(3, uvw);
+  GraphDirected uniform(3, uv, 5LL);
+  GraphUndirected fractional(3, uv, 0.5);
+  GraphDirected from_edges(3, vc<Edge<int>>{{0, 1, 4, 42}});
+  GraphUndirected from_unit_edges(3, vc<Edge<>>{{0, 1, 42}});
+  static_assert(is_same_v<decltype(unweighted), GraphDirected<void>>);
+  static_assert(is_same_v<decltype(weighted), GraphUndirected<ll>>);
+  static_assert(is_same_v<decltype(uniform), GraphDirected<ll>>);
+  static_assert(is_same_v<decltype(fractional), GraphUndirected<double>>);
+  static_assert(is_same_v<decltype(from_edges), GraphDirected<int>>);
+  static_assert(is_same_v<decltype(from_unit_edges), GraphUndirected<void>>);
+  assert(unweighted.out_edges(0).front().cost == 1);
+  assert(weighted.out_edges(1).back().cost == 9);
+  fec(e : uniform.edges()) assert(e.cost == 5);
+  fec(e : fractional.edges()) assert(e.cost == 0.5);
+  assert(from_edges.edges().front().cost == 4 && from_edges.edges().front().index == 0);
+  assert(from_unit_edges.edges().front().cost == 1 && from_unit_edges.edges().front().index == 0);
+
+  GraphDirected empty(0, vc<pair<int, int>>{});
+  GraphUndirected empty_weighted(0, vc<tuple<int, int, int>>{});
+  static_assert(is_same_v<decltype(empty), GraphDirected<void>>);
+  static_assert(is_same_v<decltype(empty_weighted), GraphUndirected<int>>);
+  assert(empty.edges().empty() && empty_weighted.edges().empty());
+  GraphUndirected copy(weighted);
+  static_assert(is_same_v<decltype(copy), GraphUndirected<ll>>);
+  assert(copy.out_edges(1).back().cost == 9);
+
+  ErasableUndirected erasable(3, uv);
+  ErasableUndirected erasable_weighted(3, uvw);
+  static_assert(is_same_v<decltype(erasable), GraphUndirected<void, true>>);
+  static_assert(is_same_v<decltype(erasable_weighted), GraphUndirected<ll, true>>);
+  erasable.erase_edge(0);
+  erasable_weighted.erase_edge(0);
+  assert(erasable.num_of_edges() == 1 && erasable.edges().front().cost == 1);
+  assert(erasable_weighted.num_of_edges() == 1 && erasable_weighted.edges().front().cost == 9);
+}
+#endif
+
 int main()
 {
+#ifdef LOCAL
+  check_dump();
+#endif
+#if __cplusplus >= 202002L
+  check_deduction();
+#endif
   static_assert(InspectGraph<true, ll>::stored_edge_size() == 16);
+  static_assert(InspectGraph<true, bool>::stored_edge_size() == 12);
+  static_assert(InspectGraph<true, void>::stored_edge_size() == 8);
+  static_assert(InspectGraph<true, void, true>::stored_edge_size() == 12);
+  static_assert(sizeof(Edge<void>) == 12);
   static_assert(InspectGraph<true, ll, true>::stored_edge_size() == sizeof(Edge<ll>));
 
   {
@@ -26,9 +121,7 @@ int main()
     auto row = g.out_edges(2);
     assert(row.size() == 3);
     for (auto &e : row) assert(e.from == 2);
-    auto arcs = g.out_arcs(2);
-    static_assert(sizeof(remove_cv_t<remove_reference_t<decltype(arcs[0])>>) == 16);
-    assert(arcs[0].to == 0 && arcs[0].cost == 7 && arcs[0].index == 0);
+    static_assert(is_same_v<decltype(row[0]), Edge<ll>>);
     assert(row[0].from == 2 && row[0].to == 0 && row[0].cost == 7 && row[0].index == 0);
     assert(row[1].from == 2 && row[1].to == 2 && row[1].cost == 5 && row[1].index == 1);
     assert(row.back().index == 2);

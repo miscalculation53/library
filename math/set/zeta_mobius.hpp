@@ -2,6 +2,7 @@
 
 #include "../../template/template_all_but_modint.hpp"
 #include "../../algebra/algebra_basic_ops.hpp"
+#include "../modint/internal_mod32.hpp"
 
 /**
  * @brief ゼータ・メビウス変換
@@ -37,7 +38,10 @@ void mobius_subset_destructive(vc<typename G::S> &a)
   assert(has_single_bit(len));
   for (int d = len >> 1; d; d >>= 1)
     repi(iu, 0, len, d * 2) repi(i, iu, iu + d)
-      a[i + d] = G::op(a[i + d], G::inv(a[i]));
+      if constexpr (internal::ordinary_mod32_add_group<G>::value)
+        a[i + d] -= a[i];
+      else
+        a[i + d] = G::op(a[i + d], G::inv(a[i]));
 }
 
 // ζ'a[s] = Σ{s ⊆ t} a[t]
@@ -69,7 +73,10 @@ void mobius_supset_destructive(vc<typename G::S> &a)
   assert(has_single_bit(len));
   for (int d = len >> 1; d; d >>= 1)
     repi(iu, 0, len, d * 2) repi(i, iu, iu + d)
-      a[i] = G::op(a[i], G::inv(a[i + d]));
+      if constexpr (internal::ordinary_mod32_add_group<G>::value)
+        a[i] -= a[i + d];
+      else
+        a[i] = G::op(a[i], G::inv(a[i + d]));
 }
 
 // ζa[s] = Σ{t ⊆ s} a[t]

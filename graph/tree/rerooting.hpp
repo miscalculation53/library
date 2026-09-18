@@ -25,7 +25,12 @@ vc<typename M::S> rerooting(int n, const vc<Pair> &es, const PUTE &pute, const P
   if (n == 0)
     return {};
   RootedTree gr(n, es, 0);
-  vc<int> eids = gr.reordered_edge_info(es, permid<int>(n - 1));
+  vc<int> eids(n, -1);
+  repi(i, n - 1)
+  {
+    auto [u, v] = es[i];
+    eids[gr.parent_child(u, v).second] = i;
+  }
   // 1. 普通に木 DP をする (その結果は g に入る)
   vc<S> f(n, M::e()), g(n, M::e());
   fe(v : gr.bottom_up_vertices())

@@ -14,13 +14,10 @@ template <class F>
 void segmented_sieve(ll l, ll r, const F &f)
 {
   assert(1 <= l && l <= r);
-  LinearSieve::reserve(sqrtl(r) + 1);
   vc<ll> rem(r - l + 1);
   repi(i, rem.size()) rem[i] = l + i;
-  for (ll p : LinearSieve::primes)
+  for (ll p : LinearSieve::primes(int(iroot(r, 2))))
   {
-    if (p > r / p)
-      break;
     rep(x, max(2 * p, divceil(l, p) * p), r + 1, p)
     {
       f(p, x);

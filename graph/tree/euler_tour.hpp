@@ -277,17 +277,16 @@ public:
     assert(0 <= v && v < n);
     return depth(u) < depth(v) ? pair{u, v} : pair{v, u};
   }
-  // 長さ n の配列。v 番目には v が子側になる辺の情報が格納される。根は未定義。
-  template <class P, class EdgeInfo>
-  vc<EdgeInfo> reordered_edge_info(const vc<P> &es, const vc<EdgeInfo> &edge_info) const
+  // (u, v, value) の列を頂点番号順に変換する。各辺の値を子側に置く。
+  template <class I, class T>
+  vc<T> edge_to_vertex_values(const vc<tuple<I, I, T>> &es, const T &root_value = T{}) const
   {
-    assert(SZ(es) == n - 1 && SZ(edge_info) >= n - 1);
-    vc<EdgeInfo> res(n);
-    repi(i, n - 1)
+    assert(SZ(es) == n - 1);
+    vc<T> res(n, root_value);
+    fec([u, v, value] : es)
     {
-      auto [u, v] = es[i];
-      int eid = depth(u) < depth(v) ? v : u;
-      res[eid] = edge_info[i];
+      int child = parent_child(u, v).second;
+      res[child] = value;
     }
     return res;
   }

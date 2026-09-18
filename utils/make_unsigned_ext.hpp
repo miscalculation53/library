@@ -17,6 +17,11 @@ struct make_unsigned_ext<i128>
 {
   using type = u128;
 };
+template <>
+struct make_unsigned_ext<u128>
+{
+  using type = u128;
+};
 template <class T>
 using make_unsigned_ext_t = typename make_unsigned_ext<T>::type;
 

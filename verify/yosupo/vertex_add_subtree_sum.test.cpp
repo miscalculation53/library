@@ -27,7 +27,7 @@ void main2()
   VEC(ll, N - 1, P);
   P.insert(P.begin(), 0);
   RootedTree G(N, P);
-  FenwickTree<GroupAddSub<ll>> fw(G.reordered_vertex_info(A));
+  FenwickTree<GroupAddSub<ll>> fw(G.reordered_vertex_values(A));
   rep(_, Q)
   {
     LL(t);

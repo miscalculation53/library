@@ -2,6 +2,15 @@
 
 係数環 `R` 上の多項式を、係数列として扱う。
 
+## 使用例
+
+```cpp
+using P = PolynomialRingVector<RingAddSubMul<ll>>;
+const P::S f = {1, 2};
+assert(P::add(f, P::minus(f)) == P::e0());
+assert((P::mul(f, {1, -2}) == P::S{1, 0, -4}));
+```
+
 ## 詳細なドキュメント
 
 ### PolynomialRingArray
@@ -84,6 +93,11 @@ PolynomialRingVector<R>
 ```
 
 要素型は `vc<R::S>`。`a[i]` を $x^i$ の係数とし、次数を打ち切らない。
+`R::S` は零との等値比較ができる必要がある。
+
+演算結果は末尾の零係数を取り除き、零多項式は空の vector に統一する。
+入力の末尾に零係数があっても演算できるが、vector の等値比較は長さも比較するので、
+直接比較する要素を作る場合は末尾に零係数を残さない。
 
 #### add
 
@@ -91,7 +105,7 @@ PolynomialRingVector<R>
 S add(const S& a, const S& b)
 ```
 
-多項式 $a+b$ を返す。返り値の長さは `max(a.size(), b.size())`。
+多項式 $a+b$ を返す。末尾の零係数を取り除く。
 
 ##### 制約
 
@@ -145,7 +159,7 @@ S mul(const S& a, const S& b)
 S e1()
 ```
 
-定数多項式 $1$ を `{R::e1()}` として返す。
+定数多項式 $1$ を `{R::e1()}` として返す。係数環で $1=0$ の場合は空の vector を返す。
 
 ##### 計算量
 

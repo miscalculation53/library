@@ -21,7 +21,7 @@ void init() {}
 void main2()
 {
   LL(N, Q);
-  ConvexHullTrick cht;
+  ConvexHullTrick<ll> cht;
   repi(i, N)
   {
     LL(a, b);

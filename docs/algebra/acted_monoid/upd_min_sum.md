@@ -1,5 +1,7 @@
 ## 概要
 
+`infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
+
 区間更新と、区間最小値または最大値および区間和の取得を処理する作用つきモノイド。
 
 ## 使用例
@@ -18,7 +20,7 @@ cout << res.mn << ' ' << res.sum << '\n';
 ### ActedMonoidUpdMinSum
 
 ```cpp
-ActedMonoidUpdMinSum<T, infty = INF>
+ActedMonoidUpdMinSum<T, infty = nullptr>
 ```
 
 要素型 `S` は公開メンバ `mn`, `sum`, `len` を持つ。作用型 `F` は、単位元かを表す `is_id` と更新値 `val` を持つ。
@@ -130,7 +132,7 @@ F id()
 ### ActedMonoidUpdMinMaxSum
 
 ```cpp
-ActedMonoidUpdMinMaxSum<T, infty = INF>
+ActedMonoidUpdMinMaxSum<T, infty = nullptr>
 ```
 
 区間最小値と最大値を同時に取得する版。要素型 `S` は公開メンバ `mn`, `mx`, `sum`, `len` を持つ。作用型 `F` は、単位元かを表す `is_id` と更新値 `val` を持つ。
@@ -242,7 +244,7 @@ F id()
 ### ActedMonoidUpdMaxSum
 
 ```cpp
-ActedMonoidUpdMaxSum<T, infty = INF>
+ActedMonoidUpdMaxSum<T, infty = nullptr>
 ```
 
 要素型 `S` は公開メンバ `mx`, `sum`, `len` を持つ。作用型 `F` は、単位元かを表す `is_id` と更新値 `val` を持つ。

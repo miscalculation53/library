@@ -2,6 +2,7 @@
 
 #include "../../template/template_all_but_modint.hpp"
 #include "../../algebra/algebra_basic_ops.hpp"
+#include "../modint/internal_mod32.hpp"
 
 /**
  * @brief アダマール変換・xor 畳み込み
@@ -19,11 +20,36 @@ void hadamard_abel_group_destructive(vc<typename G::S> &a)
   if (len == 0)
     return;
   assert(has_single_bit(len));
+  if constexpr (internal::ordinary_mod32_add_group<G>::value)
+  {
+    if (len >= 1024)
+    {
+      // 各中間値は入力の高々 len 項の符号付き和。
+      // len <= INT_MAX, mod < 2^31 より絶対値は 2^62 未満。
+      vc<ll> b(len);
+      repi(i, len) b[i] = a[i].val();
+      for (int d = 1; d < len; d *= 2)
+        repi(iu, 0, len, d * 2) repi(i, iu, iu + d)
+        {
+          ll x = b[i], y = b[i + d];
+          b[i] = x + y;
+          b[i + d] = x - y;
+        }
+      repi(i, len) a[i] = typename G::S(b[i]);
+      return;
+    }
+  }
   for (int d = 1; d < len; d *= 2)
     repi(iu, 0, len, d * 2) repi(i, iu, iu + d)
     {
       auto x = G::op(a[i], a[i + d]);
-      auto y = G::op(a[i], G::inv(a[i + d]));
+      auto y = [&]()
+      {
+        if constexpr (internal::ordinary_mod32_add_group<G>::value)
+          return a[i] - a[i + d];
+        else
+          return G::op(a[i], G::inv(a[i + d]));
+      }();
       a[i] = x;
       a[i + d] = y;
     }

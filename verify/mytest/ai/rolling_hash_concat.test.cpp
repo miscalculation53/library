@@ -100,6 +100,23 @@ void test_view()
   assert(xy.substr(2, 7).hash() == RollingHashValue((sx + sy).substr(2, 5)));
 }
 
+// Test focus: owning rolling-hash sequences are converted to whole-range views by operator+.
+void test_owner_plus()
+{
+  string s = "abc", t = "def";
+  RollingHash rs(s), rt(t);
+  RollingHashConcat cat = rt.substr();
+
+  assert((rs + rt).content() == "abcdef");
+  assert((rs.substr(1) + cat).content() == "bcdef");
+  assert((cat + rs).content() == "defabc");
+  RollingHashConcat joined = rs + rt;
+  assert(joined.content() == "abcdef");
+
+  cat = rs + cat;
+  assert(cat.content() == "abcdef");
+}
+
 // Test focus: an owning concatenation can retain the best of differently shaped lightweight views.
 void test_assign_view()
 {
@@ -144,6 +161,7 @@ int main()
   test_concat();
   test_multiple_sources();
   test_view();
+  test_owner_plus();
   test_assign_view();
   test_large_value();
   test_generic_sequence();

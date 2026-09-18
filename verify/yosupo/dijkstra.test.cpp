@@ -26,7 +26,8 @@ void main2()
 {
   LL(N, M, s, t);
   VEC(tlll, M, ABC);
-  ShortestPath<true, ll> G(N, ABC);
+  Graph<true, ll> G_input(N, ABC);
+  ShortestPath G(G_input);
   auto dists = G.solve(s, t);
   auto path = G.path(t);
   if (dists.at(t) == INF)

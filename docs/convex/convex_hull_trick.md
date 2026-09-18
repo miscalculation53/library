@@ -7,25 +7,51 @@
 - `Compare = less<>`：最小値
 - `Compare = greater<>`：最大値
 
-係数、交点、クエリ座標、返り値はすべて `T` で管理する。`T` が整数型の場合は、2直線の交点を floor した整数境界を持つ。厳密な有理数座標を使う場合は `T = Rational<ll>`、浮動小数点数を使う場合は `T = long double` などとする。
+係数 $a,b$、クエリ座標 $x$、交点の境界は `T` で管理し、評価値 $ax+b$ は `U` で計算して返す。`T` は必須で、`U` の既定値は `larger_int_t<T>` である。例えば `T = ll` なら `U = i128`、`T = Rational<ll>` なら `U = Rational<i128>` になる。
+
+型引数は `T, U, Compare, inftyT, inftyU` の順に指定する。評価の中間計算も `ll` に収まる場合は `ConvexHullTrick<ll, ll>` とできる。`U` を広げても、係数の符号反転や交点を作る差の計算は `T` のままである。
+
+`inftyT` は境界と空集合で返す直線の切片に、`inftyU` は空集合で返す評価値に使う。省略時（`nullptr`）は、それぞれ `T`, `U` の[既定の無限大](../utils/default_infty.md)を使う。例えば `ConvexHullTrick<ll>` の境界は `INF`、空集合の評価値は `i128` の `INF * INF` になる。値や関数を明示した場合はその指定を使う。非空のクエリ結果をこれらの値で打ち切る処理は行わない。
+
+`T` が整数型の場合は、2直線の交点を floor した整数境界を持つ。厳密な有理数座標を使う場合は `T = Rational<ll>`、浮動小数点数を使う場合は `T = long double` などとする。
 
 `query_monotone` は広義単調な $x$ に対して、前回選んだ直線から現在位置を動かす。増加・減少方向は最初の異なる2クエリから自動で判定する。
 
 ## 使用例
 
 ```cpp
-ConvexHullTrick<ll, less<>> cht;
+ConvexHullTrick<ll> cht;
 cht.add_line(2, 3);     // id = 0
 cht.add_line(-1, 8, 20);
 
 auto [value, line] = cht.query(4);
+// value は i128、line.a と line.b は ll
 int id = line.id;
 ```
+
+返り値を `ll` にする場合や、最大値を求める場合は次のように指定する。
+
+```cpp
+ConvexHullTrick<ll, ll> small_value_cht;
+ConvexHullTrick<ll, i128, greater<>> max_cht;
+```
+
+境界用と返り値用の無限大は型ごとに選ばれる。有理数では指定を省略すると $1/0$ になる。片方だけを明示することもできる。
+
+```cpp
+ConvexHullTrick<int> integer_cht;  // 境界は (1 << 30) - 1、返り値用は ll の INF
+using R = Rational<ll>;
+using W = Rational<i128>;
+ConvexHullTrick<R, W> rational_cht;  // 境界用・返り値用ともに 1/0
+ConvexHullTrick<R, W, less<>, nullptr, INF> finite_empty_cht;
+```
+
+`INF` を明示すると、有理数でも有限値 `INF/1` として扱う。従来の有限の既定値を両方に使いたい場合は、第4・第5引数に `INF, INF` を指定する。
 
 傾きとクエリがどちらも単調な場合は次のように使う。増加・減少のどちらでもよいが、途中で方向を変えてはいけない。
 
 ```cpp
-ConvexHullTrickMonotoneSlope<ll, less<>> cht;
+ConvexHullTrickMonotoneSlope<ll> cht;
 repi(i, lines.size()) cht.add_line(lines[i].first, lines[i].second, i);
 for (ll x : queries) answer.eb(cht.query_monotone(x).first);
 ```
@@ -38,13 +64,27 @@ cht.reset_monotone_query();
 for (ll x : decreasing_queries) answer2.eb(cht.query_monotone(x).first);
 ```
 
-有理数を使う場合は、係数もクエリも `Rational` にする。
+有理数を使う場合は、係数もクエリも `Rational` にする。整数係数に有理数座標をクエリする場合も、係数を分母1の `Rational` として追加する。
 
 ```cpp
 using R = Rational<ll>;
-ConvexHullTrick<R, less<>> cht;
+ConvexHullTrick<R> cht;
 cht.add_line(R(2), R(3));
 auto [value, line] = cht.query(R(1, 2));
+// value は Rational<i128>、line.a と line.b は Rational<ll>
+```
+
+返り値も `Rational<ll>` にする場合は `ConvexHullTrick<R, R>` と指定する。異なる `Rational` 型への変換は明示的に行う。
+
+```cpp
+Rational<i128> expected(R(4));
+assert(value == expected);
+```
+
+直線だけが必要な場合も `query(x).second` を使う。従来の `query_line(x)` は `query(x).second`、`query_line_monotone(x)` は `query_monotone(x).second` に置き換える。どちらも値の計算を行うため、中間計算と結果が `U` に収まる必要がある。
+
+```cpp
+auto best_line = cht.query(R(1, 2)).second;
 ```
 
 ## 詳細なドキュメント
@@ -52,7 +92,8 @@ auto [value, line] = cht.query(R(1, 2));
 ### ConvexHullTrick
 
 ```cpp
-template <class T = ll, class Compare = less<>, auto infty = INF>
+template <class T, class U = larger_int_t<T>, class Compare = less<>,
+          auto inftyT = nullptr, auto inftyU = nullptr>
 struct ConvexHullTrick
 ```
 
@@ -67,10 +108,13 @@ ConvexHullTrick()
 ##### 制約
 
 - `T` に必要な四則演算および大小比較が定義されている
-- `T` が整数型なら符号つきである
+- `U` に `T` からの明示変換、加算、乗算、符号反転が定義されている
+- `T`, `U` が整数型なら符号つきである
 - `Compare` は `less<>`, `less<T>`, `greater<>`, `greater<T>` のいずれか
-- `infty` は空集合の最小値クエリで返してよく、すべての有限な境界より大きい正の値
-- `infty` には `T` に変換できる値、または `T` に変換できる値を返す引数なし関数を指定できる
+- `inftyT` は、すべての有限な境界の絶対値より大きい正の値で、変換後の値とその符号反転が `T` に収まる
+- `inftyU` は空集合の最小値クエリで返してよい正の値で、変換後の値とその符号反転が `U` に収まる
+- 各引数には、対応する型に変換できる値、またはそのような値を返す引数なし関数を指定できる
+- `inftyT` が `U` に収まる必要も、`inftyU` が `T` に収まる必要もない
 
 ##### 計算量
 
@@ -103,7 +147,8 @@ void add_line(T a, T b, int id)
 
 ##### 制約
 
-- 係数の符号反転、係数差、切片差、交点、評価値が `T` の範囲に収まる
+- 係数の符号反転、係数差、切片差、交点が `T` の範囲に収まる
+- `T = Rational<V>` の場合、未約分の分子・分母が `V` に収まり、比較の交差積が `larger_int_t<V>` に収まる
 
 ##### 計算量
 
@@ -112,12 +157,19 @@ void add_line(T a, T b, int id)
 #### query
 
 ```cpp
-pair<T, Line> query(const T &x)
+pair<U, Line> query(const T &x) const
 ```
 
 $x$ における最適値と、それを達成する直線を返す。同じ最適値を取る直線が複数ある場合は、そのうち1本を返す。
 
-空の場合、最小値クエリでは `{infty, {0, infty, -1}}`、最大値クエリでは `{-infty, {0, -infty, -1}}` を返す。
+評価は `U(a) * U(x) + U(b)` で行う。返される `Line` の係数は `T` のままである。
+
+空の場合、最小値クエリでは `{eU, {0, eT, -1}}`、最大値クエリでは `{-eU, {0, -eT, -1}}` を返す。`eT` は `inftyT` を `T` として解決した値、`eU` は `inftyU` を `U` として解決した値である。空集合を表す直線の切片と返り値は、それぞれの無限大を使うため一致するとは限らない。
+
+##### 制約
+
+- 評価の中間計算と結果が `U` の範囲に収まる
+- `U = Rational<V>` の場合、評価の未約分の分子・分母が `V` の範囲に収まる
 
 ##### 計算量
 
@@ -126,14 +178,15 @@ $x$ における最適値と、それを達成する直線を返す。同じ最�
 #### query_monotone
 
 ```cpp
-pair<T, Line> query_monotone(const T &x)
+pair<U, Line> query_monotone(const T &x)
 ```
 
 広義単調な $x$ における最適値と直線を返す。同じ $x$ を繰り返してもよい。増加・減少方向は自動で判定する。
 
 ##### 制約
 
-- `reset_monotone_query` または最後の `add_line` 以降に渡す $x$ は広義単調
+- 評価値については `query` と同じ制約を満たす
+- `reset_monotone_query` または最後の `add_line` 以降、`query_monotone` に渡す $x$ は広義単調
 
 ##### 計算量
 
@@ -146,7 +199,7 @@ pair<T, Line> query_monotone(const T &x)
 void reset_monotone_query()
 ```
 
-`query_monotone` が保持する現在位置、最後の $x$、増減方向を消去する。直線集合は変更しない。前の単調列と無関係な新しい単調列を始める前に呼ぶ。`add_line` と `clear` は自動でこの状態をリセットする。
+`query_monotone` の現在位置、最後の $x$、増減方向を消去する。直線集合は変更しない。前の単調列と無関係な新しい単調列を始める前に呼ぶ。`add_line` と `clear` は自動でこの状態をリセットする。
 
 ##### 計算量
 
@@ -155,14 +208,14 @@ void reset_monotone_query()
 #### segments
 
 ```cpp
-vc<Segment> segments()
+vc<Segment> segments() const
 ```
 
-各直線と、その直線をCHTが選ぶ境界区間 $(\mathrm{left},\mathrm{right}]$ を、$x$ の増加順に返す。最初の `left` は `-infty`、最後の `right` は `infty` になる。
+各直線と、その直線をCHTが選ぶ境界区間 $(\mathrm{left},\mathrm{right}]$ を、$x$ の増加順に返す。最初の `left` は `-eT`、最後の `right` は `eT` になる。ここで `eT` は `inftyT` を `T` として解決した値である。
 
 ##### 制約
 
-- 有限な境界の絶対値は `infty` 以下
+- 有限な境界の絶対値は、`inftyT` を `T` として解決した値より小さい
 
 ##### 計算量
 
@@ -183,7 +236,8 @@ void clear()
 ### ConvexHullTrickMonotoneSlope
 
 ```cpp
-template <class T = ll, class Compare = less<>, auto infty = INF>
+template <class T, class U = larger_int_t<T>, class Compare = less<>,
+          auto inftyT = nullptr, auto inftyU = nullptr>
 struct ConvexHullTrickMonotoneSlope
 ```
 

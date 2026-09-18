@@ -1,5 +1,7 @@
 ## 概要
 
+`infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
+
 区間 `chmin`・`chmax`・加算と、区間最小値・最大値の取得を通常の遅延セグメント木で処理する作用つきモノイド。
 
 作用は $f(x)=\operatorname{clamp}(x,lo,hi)+bias$ で表す。$f$ は単調非減少なので、任意の列 $a$ について次が成り立つ。
@@ -29,7 +31,7 @@ auto [mn, mx] = seg.prod(l, r);
 ### ActedMonoidClampMinMax
 
 ```cpp
-ActedMonoidClampMinMax<T, infty = INF>
+ActedMonoidClampMinMax<T, infty = nullptr>
 ```
 
 要素型 `S` は区間最小値 `mn` と区間最大値 `mx` を持つ。作用型 `F` は `MonoidClampAdd<T, infty>::S`。
@@ -114,8 +116,8 @@ F id()
 ### ActedMonoidClampMin / ActedMonoidClampMax
 
 ```cpp
-ActedMonoidClampMin<T, infty = INF>
-ActedMonoidClampMax<T, infty = INF>
+ActedMonoidClampMin<T, infty = nullptr>
+ActedMonoidClampMax<T, infty = nullptr>
 ```
 
 最小値だけ、または最大値だけを保持する省メモリ版。作用型 `F` は `MonoidClampAdd<T, infty>::S`。

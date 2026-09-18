@@ -6,14 +6,14 @@
 #include "../math/rational.hpp"
 #include "../utils/is_integral_ext.hpp"
 #include "../utils/larger_int.hpp"
-#include "../utils/resolved_value.hpp"
+#include "../utils/resolved_infty.hpp"
 
 /**
  * @brief Dot Product Convex Hull Trick
  * @docs docs/convex/convex_hull_trick_dot_product.md
  */
 
-template <class T, class Calc, auto infty, template <class, class, auto> class CHT>
+template <class T, class U, auto inftyU, template <class, class, class, auto, auto> class CHT>
 struct ConvexHullTrickDotProductBase
 {
   static_assert(is_integral_ext<T> || is_floating_point_v<T>);
@@ -22,10 +22,12 @@ struct ConvexHullTrickDotProductBase
   using LinearForm = ConvexHullTrickLine<T>;
 
 private:
-  using R = Rational<Calc>;
+  using R = Rational<T>;
+  using V = Rational<U>;
   using RationalLine = ConvexHullTrickLine<R>;
-  using MinCHT = CHT<R, less<>, infty>;
-  using MaxCHT = CHT<R, greater<>, infty>;
+  // 境界の無限大は、空集合で返す U 型の inftyU と独立に持つ。
+  using MinCHT = CHT<R, V, less<>, R::infty, inftyU>;
+  using MaxCHT = CHT<R, V, greater<>, R::infty, inftyU>;
 
   MinCHT mn;
   MaxCHT mx;
@@ -43,9 +45,9 @@ private:
     return x.a == y.a && x.b == y.b;
   }
 
-  static Calc dot(const LinearForm &f, T x, T y)
+  static U dot(const LinearForm &f, T x, T y)
   {
-    return Calc(f.a) * Calc(x) + Calc(f.b) * Calc(y);
+    return U(f.a) * U(x) + U(f.b) * U(y);
   }
 
   template <class Hull>
@@ -60,11 +62,11 @@ private:
   }
 
   template <bool minimize>
-  pair<Calc, LinearForm> query_impl(T x, T y) const
+  pair<U, LinearForm> query_impl(T x, T y) const
   {
     if (!has_line)
     {
-      const Calc &inf = resolved_value<Calc, infty>();
+      const U &inf = resolved_infty<U, inftyU>();
       return {minimize ? inf : -inf, {0, 0, -1}};
     }
     LinearForm f;
@@ -79,7 +81,7 @@ private:
     }
     else
     {
-      R q{Calc(x), Calc(y)};
+      R q{x, y};
       if constexpr (minimize)
         f = form((y > 0 ? mn.query(q) : mx.query(q)).second);
       else
@@ -89,15 +91,15 @@ private:
   }
 
   template <bool minimize>
-  pair<Calc, LinearForm> query_monotone_impl(T x, T y)
+  pair<U, LinearForm> query_monotone_impl(T x, T y)
   {
     if (!has_line)
     {
-      const Calc &inf = resolved_value<Calc, infty>();
+      const U &inf = resolved_infty<U, inftyU>();
       return {minimize ? inf : -inf, {0, 0, -1}};
     }
     assert(y != 0);
-    R q{Calc(x), Calc(y)};
+    R q{x, y};
     LinearForm f;
     if constexpr (minimize)
       f = form((y > 0 ? mn.query_monotone(q) : mx.query_monotone(q)).second);
@@ -107,16 +109,16 @@ private:
   }
 
 public:
-  // ax + by を追加する。id は 0 始まりの追加順になる。
+  // ax + by
   void add(T a, T b) { add(a, b, add_cnt); }
 
-  // ax + by を指定した id で追加する。
+  // ax + by
   void add(T a, T b, int id)
   {
     add_cnt++;
     LinearForm f{a, b, id};
-    mn.add_line(R(Calc(a)), R(Calc(b)), id);
-    mx.add_line(R(Calc(a)), R(Calc(b)), id);
+    mn.add_line(R(a), R(b), id);
+    mx.add_line(R(a), R(b), id);
     if (!has_line)
       fst = mna = mxa = f;
     else
@@ -127,26 +129,26 @@ public:
     has_line = true;
   }
 
-  // (x, y) における最小値と一次式を返す。空なら infty とダミー一次式を返す。
-  pair<Calc, LinearForm> min_query(T x, T y) const { return query_impl<true>(x, y); }
+  pair<U, LinearForm> min_query(T x, T y) const { return query_impl<true>(x, y); }
 
-  // (x, y) における最大値と一次式を返す。空なら -infty とダミー一次式を返す。
-  pair<Calc, LinearForm> max_query(T x, T y) const { return query_impl<false>(x, y); }
+  pair<U, LinearForm> max_query(T x, T y) const { return query_impl<false>(x, y); }
 
-  // x/y が単調なクエリ列に対する最小値と一次式を返す。
-  pair<Calc, LinearForm> min_query_monotone(T x, T y) { return query_monotone_impl<true>(x, y); }
+  // x/y が単調
+  pair<U, LinearForm> min_query_monotone(T x, T y) { return query_monotone_impl<true>(x, y); }
 
-  // x/y が単調なクエリ列に対する最大値と一次式を返す。
-  pair<Calc, LinearForm> max_query_monotone(T x, T y) { return query_monotone_impl<false>(x, y); }
+  // x/y が単調
+  pair<U, LinearForm> max_query_monotone(T x, T y) { return query_monotone_impl<false>(x, y); }
 
-  // 単調クエリの現在位置と方向を消去する。
   void reset_monotone_query()
   {
     mn.reset_monotone_query();
     mx.reset_monotone_query();
   }
 
-  // 係数点の凸包頂点を反時計回りに返す。
+  // (a, b) として見る必要のあるものだけ集めた集合
+  // 反時計回り
+  // (a, b) が最適であるための (x, y) の条件は、両隣 (循環ありで) よりもよいこと
+  // (図形的には、凸包の頂点とみなせる)
   vc<LinearForm> convex_hull() const
   {
     vc<LinearForm> res;
@@ -156,7 +158,6 @@ public:
     return res;
   }
 
-  // すべての一次式、単調性の状態、自動採番を消去する。
   void clear()
   {
     mn.clear();
@@ -166,14 +167,17 @@ public:
   }
 };
 
-// 係数を任意順に追加できる Dot Product Convex Hull Trick
-template <class T = ll, class Calc = larger_int_t<T>, auto infty = INF>
+// T: ax + by の a, x, b, y の型
+// U: ax + by の型
+template <class T, class U = larger_int_t<T>, auto inftyU = nullptr>
 struct ConvexHullTrickDotProduct
-    : ConvexHullTrickDotProductBase<T, Calc, infty, ConvexHullTrick>
+    : ConvexHullTrickDotProductBase<T, U, inftyU, ConvexHullTrick>
 {};
 
-// 係数 a を単調に追加する Dot Product Convex Hull Trick
-template <class T = ll, class Calc = larger_int_t<T>, auto infty = INF>
+// T: ax + by の a, x, b, y の型
+// U: ax + by の型
+// 係数 a が単調
+template <class T, class U = larger_int_t<T>, auto inftyU = nullptr>
 struct ConvexHullTrickDotProductMonotoneSlope
-    : ConvexHullTrickDotProductBase<T, Calc, infty, ConvexHullTrickMonotoneSlope>
+    : ConvexHullTrickDotProductBase<T, U, inftyU, ConvexHullTrickMonotoneSlope>
 {};

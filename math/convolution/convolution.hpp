@@ -4,6 +4,7 @@
 
 #include "../modint/modint.hpp"
 #include "../crt.hpp"
+#include "../dot_product.hpp"
 
 /**
  * @brief 畳み込み
@@ -14,6 +15,12 @@ template <class T>
 T convolution_point_get(const vc<T> &a, const vc<T> &b, int p)
 {
   const int n = a.size(), m = b.size();
+  if constexpr (internal::dot_product_mod32_value<T>::value)
+  {
+    if (p < 0 || ll(p) >= ll(n) + m - 1 || n == 0 || m == 0) return T(0);
+    const int l = max(0, p - m + 1), r = min(n, p + 1);
+    return dot_product<RingAddSubMul<T>>(r - l, a.begin() + l, b.rbegin() + (m - 1 - p + l));
+  }
   T res = 0;
   repi(i, max(0, p - m + 1), min(n, p + 1)) res += a[i] * b[p - i];
   return res;
@@ -307,6 +314,15 @@ vc<mint> convolution_naive(const vc<mint> &a, const vc<mint> &b)
   const int n = a.size(), m = b.size();
   const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);
   vc<mint> c(n + m - 1);
+  if constexpr (dot_product_mod32_value<mint>::value)
+  {
+    // 零を飛ばす方が有利な入力や短い積は、従来のループを使う。
+    if (min(n, m) >= 16 && ll(cnta) * 2 >= n && ll(cntb) * 2 >= m)
+    {
+      repi(p, n + m - 1) c[p] = convolution_point_get(a, b, p);
+      return c;
+    }
+  }
   if ((ll)m * cnta > (ll)n * cntb)
   {
     repi(j, m)

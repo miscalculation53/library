@@ -6,7 +6,7 @@ open addressing と linear probing による高速なハッシュマップ。
 
 デフォルトのハッシュ関数は `safe_hash` であり、衝突攻撃への耐性を持つ。
 
-イテレータは実装していない。キーと値は配列上に直接確保するため、`Key` と `Value` はデフォルト構築可能である必要がある。
+範囲 `for` による走査に対応する。キーと値は配列上に直接確保するため、`Key` と `Value` はデフォルト構築可能である必要がある。
 
 ## 使用例
 
@@ -17,6 +17,12 @@ mp[{x, y}]++;
 
 if (int* p = mp.find_ptr({a, b}))
   cout << *p << '\n';
+
+for (const auto& [key, val] : mp)
+  cout << key.first << ' ' << key.second << ' ' << val << '\n';
+
+for (auto& [key, val] : mp)
+  val++;  // 値を更新できる。key は変更しない。
 ```
 
 ## 詳細なドキュメント
@@ -41,7 +47,7 @@ void reserve(size_t n)
 
 `n` 要素を追加の再ハッシュなしで格納できる容量を確保する。現在より容量を減らすことはない。
 
-この呼び出しおよびその後の再ハッシュで、以前に取得した値へのポインタと参照は無効になる。
+容量が増えた場合、およびその後の再ハッシュで、以前に取得したイテレータ・値へのポインタ・参照は無効になる。
 
 ##### 計算量
 
@@ -59,6 +65,37 @@ bool empty() const
 ##### 計算量
 
 - $O(1)$
+
+#### begin / end / cbegin / cend
+
+```cpp
+iterator begin()
+iterator end()
+const_iterator begin() const
+const_iterator end() const
+const_iterator cbegin() const
+const_iterator cend() const
+```
+
+登録済みの要素だけを走査する前方イテレータを返す。走査順は未規定。
+`*it` は非 `const` では `pair<Key, Value>&`、`const` では `const pair<Key, Value>&` を返す。
+`it->first`, `it->second`、前置・後置 `++`、等値比較を使える。`iterator` から `const_iterator` に変換できる。
+
+範囲 `for` では次の書き方を使える。
+
+- `for (auto [key, val] : mp)`：要素をコピーして使う。
+- `for (auto& [key, val] : mp)`：格納された値を更新できる。
+- `for (const auto& [key, val] : mp)`：要素をコピーせず読み取る。`const` なマップでも使える。
+
+イテレータ経由で格納されたキーを変更してはいけない。型としては書き換え可能だが、変更するとハッシュ値と格納位置の対応が崩れる。
+要素の値だけの更新はイテレータを無効化しない。
+再ハッシュ、要素の削除、`clear` はイテレータを無効化するため、走査中には行わない。
+
+##### 計算量
+
+- 全要素の走査：確保済みの容量に比例（空きスロットを含む）
+- `begin` / `cbegin` / `++`：最悪で容量に比例
+- `end` / `cend` / 参照 / 比較：$O(1)$
 
 #### find_ptr
 

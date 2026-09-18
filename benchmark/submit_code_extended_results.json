@@ -1,0 +1,4667 @@
+{
+  "date": "2026-09-13",
+  "environment": {
+    "compiler": "GCC 15.2.0",
+    "python": "3.14.4",
+    "standard": "c++23",
+    "pch": "warm",
+    "timing": "one sequential run per version; excludes bundling, initial PCH preparation, and process startup"
+  },
+  "tool_sha256": {
+    "before": "ba90513bf76c06594e890a9cde61437f7808e5cfa85a768a31bb1487491447dd",
+    "after": "7bca61b8ec2fe63f7fa0dfb3a227440762eaecd9de197040b52891c73689436e"
+  },
+  "results": [
+    {
+      "before": {
+        "case": "beats",
+        "fixture": "verify/yosupo/range_chmin_chmax_add_range_sum.test.cpp",
+        "input_bytes": 73364,
+        "input_sha256": "ad15ef27149b7643581f89a45ac181ae9d15ea6f6575f98949804cfa32bc07e4",
+        "first_seconds": 1.3550517922267318,
+        "first_bytes": 54558,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.2188318334519863,
+            "ok": true
+          },
+          {
+            "kind": "syntax",
+            "seconds": 0.8879044586792588,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.1142707914114,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.474495374597609,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7107193749397993,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3787371665239334,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.308538750745356,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.2932117087766528,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7463455414399505,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.1248762924224138,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8750885417684913,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.2078519584611058,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.076559916138649,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 3.6041267095133662,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1614742083474994,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 1.3550517922267318,
+            "bytes": 54558,
+            "stage": "comments, inactive branches, and blank lines"
+          },
+          {
+            "seconds": 7.016338417306542,
+            "bytes": 38018,
+            "stage": "removed 171 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 9.130806917324662,
+            "bytes": 23860,
+            "stage": "removed 168 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 10.453899167478085,
+            "bytes": 23874,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 13.555421084165573,
+            "bytes": 16327,
+            "stage": "removed 89 unused declaration(s)"
+          },
+          {
+            "seconds": 16.593732874840498,
+            "bytes": 14915,
+            "stage": "removed 10 unused declaration(s)"
+          },
+          {
+            "seconds": 18.915583584457636,
+            "bytes": 14355,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 24.245071291923523,
+            "bytes": 14059,
+            "stage": "removed 4 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 24.245372166857123,
+        "final_bytes": 14059
+      },
+      "after": {
+        "case": "beats",
+        "fixture": "verify/yosupo/range_chmin_chmax_add_range_sum.test.cpp",
+        "input_bytes": 73364,
+        "input_sha256": "ad15ef27149b7643581f89a45ac181ae9d15ea6f6575f98949804cfa32bc07e4",
+        "first_seconds": 1.8053515423089266,
+        "first_bytes": 54558,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.2303856248036027,
+            "ok": true
+          },
+          {
+            "kind": "syntax",
+            "seconds": 1.3308179583400488,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.3655508337542415,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.343434208072722,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8023787504062057,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3352476675063372,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3145362501963973,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.3370139999315143,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6963597917929292,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.3187449593096972,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6425015004351735,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.1380954580381513,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1091875843703747,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 3.4476603753864765,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1785915838554502,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 1.8053515423089266,
+            "bytes": 54558,
+            "stage": "comments, inactive branches, and blank lines"
+          },
+          {
+            "seconds": 7.61295191757381,
+            "bytes": 38018,
+            "stage": "removed 171 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 9.772794917225838,
+            "bytes": 23860,
+            "stage": "removed 168 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 11.102487416937947,
+            "bytes": 23874,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 14.207849958911538,
+            "bytes": 16327,
+            "stage": "removed 89 unused declaration(s)"
+          },
+          {
+            "seconds": 17.21530537493527,
+            "bytes": 14915,
+            "stage": "removed 10 unused declaration(s)"
+          },
+          {
+            "seconds": 19.503237917087972,
+            "bytes": 14355,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 24.708967459388077,
+            "bytes": 14059,
+            "stage": "removed 4 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 24.70925316773355,
+        "final_bytes": 14059
+      }
+    },
+    {
+      "before": {
+        "case": "fps_composition",
+        "fixture": "verify/yosupo/fps_compositional_inverse.test.cpp",
+        "input_bytes": 118146,
+        "input_sha256": "812475e1680142bfd2389dbc33f2f92cea2ecfd5bcf6e144060839b513fa5dad",
+        "first_seconds": 12.726914166472852,
+        "first_bytes": 59852,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.22174695786088705,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.557240874506533,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8464557500556111,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.873630290850997,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7375541245564818,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8703924585133791,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7392381243407726,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7624714160338044,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.813641999848187,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 2.1003985414281487,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.40138154104352,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.6622977498918772,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5960569586604834,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.6266243755817413,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.516954374499619,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 4.432219916954637,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.634558125399053,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 10.084428332746029,
+            "bytes": 70070,
+            "stage": "removed 179 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 12.726914166472852,
+            "bytes": 59852,
+            "stage": "removed 178 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 14.576375000178814,
+            "bytes": 54705,
+            "stage": "unreferenced types, aliases, and lambdas"
+          },
+          {
+            "seconds": 16.418552791699767,
+            "bytes": 54719,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 21.045135541819036,
+            "bytes": 50701,
+            "stage": "removed 58 unused declaration(s)"
+          },
+          {
+            "seconds": 24.404018041677773,
+            "bytes": 48957,
+            "stage": "removed 7 unused declaration(s)"
+          },
+          {
+            "seconds": 27.645374874584377,
+            "bytes": 48397,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 34.608977207913995,
+            "bytes": 48256,
+            "stage": "removed 2 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 34.60940945800394,
+        "final_bytes": 48256
+      },
+      "after": {
+        "case": "fps_composition",
+        "fixture": "verify/yosupo/fps_compositional_inverse.test.cpp",
+        "input_bytes": 118146,
+        "input_sha256": "812475e1680142bfd2389dbc33f2f92cea2ecfd5bcf6e144060839b513fa5dad",
+        "first_seconds": 13.476532875560224,
+        "first_bytes": 59852,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.21431616693735123,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 4.112901832908392,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9617675831541419,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.9149009576067328,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7370938332751393,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8565116673707962,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.752245250158012,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7749067917466164,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.906656957231462,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.8791079577058554,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.1168016670271754,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.6475036246702075,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5440240418538451,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.591565708629787,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.650192084722221,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 5.053299916908145,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.77859575022012,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 10.831695667468011,
+            "bytes": 70070,
+            "stage": "removed 179 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 13.476532875560224,
+            "bytes": 59852,
+            "stage": "removed 178 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 15.348242750391364,
+            "bytes": 54705,
+            "stage": "unreferenced types, aliases, and lambdas"
+          },
+          {
+            "seconds": 17.287863083183765,
+            "bytes": 54719,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 21.41859762556851,
+            "bytes": 50701,
+            "stage": "removed 58 unused declaration(s)"
+          },
+          {
+            "seconds": 24.72266337554902,
+            "bytes": 48957,
+            "stage": "removed 7 unused declaration(s)"
+          },
+          {
+            "seconds": 28.07680941745639,
+            "bytes": 48397,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 35.800898416899145,
+            "bytes": 48256,
+            "stage": "removed 2 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 35.801268542185426,
+        "final_bytes": 48256
+      }
+    },
+    {
+      "before": {
+        "case": "bbla_rank",
+        "fixture": "verify/yosupo/bbla_rank.test.cpp",
+        "input_bytes": 94252,
+        "input_sha256": "4a44c04678ecc32da102ecbe219be20a176ec9b0ddeee81069565c50e92fbf27",
+        "first_seconds": 1.7698370832949877,
+        "first_bytes": 63097,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.21465341746807098,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.2185165416449308,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.0330296251922846,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8224377082660794,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1397082079201937,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.6486470000818372,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1117647914215922,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.161114750429988,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.1595582086592913,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5478067081421614,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.0187564166262746,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9717242503538728,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 0.9645850844681263,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 3.154448208399117,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.0627511255443096,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 1.7698370832949877,
+            "bytes": 63097,
+            "stage": "unreferenced types, aliases, and lambdas"
+          },
+          {
+            "seconds": 7.888059708289802,
+            "bytes": 41776,
+            "stage": "removed 181 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 9.664535292424262,
+            "bytes": 25637,
+            "stage": "removed 180 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 10.839247374795377,
+            "bytes": 25651,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 13.608079957775772,
+            "bytes": 21280,
+            "stage": "removed 64 unused declaration(s)"
+          },
+          {
+            "seconds": 15.644551792182028,
+            "bytes": 20605,
+            "stage": "removed 6 unused declaration(s)"
+          },
+          {
+            "seconds": 21.4782974999398,
+            "bytes": 20240,
+            "stage": "removed 5 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 21.47862191684544,
+        "final_bytes": 20240
+      },
+      "after": {
+        "case": "bbla_rank",
+        "fixture": "verify/yosupo/bbla_rank.test.cpp",
+        "input_bytes": 94252,
+        "input_sha256": "4a44c04678ecc32da102ecbe219be20a176ec9b0ddeee81069565c50e92fbf27",
+        "first_seconds": 2.448417874984443,
+        "first_bytes": 63097,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.2316810004413128,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8410605834797025,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.3569228751584888,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7845427086576819,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.2871147505939007,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.714734542183578,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.2429021252319217,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4843365419656038,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.3342784168198705,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7259737085551023,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.1781123327091336,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1129757072776556,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.0586590403690934,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 3.4538165414705873,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.227111415937543,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 2.448417874984443,
+            "bytes": 63097,
+            "stage": "unreferenced types, aliases, and lambdas"
+          },
+          {
+            "seconds": 9.082045749761164,
+            "bytes": 41776,
+            "stage": "removed 181 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 11.059738833457232,
+            "bytes": 25637,
+            "stage": "removed 180 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 12.560589250177145,
+            "bytes": 25651,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 15.69181604217738,
+            "bytes": 21280,
+            "stage": "removed 64 unused declaration(s)"
+          },
+          {
+            "seconds": 18.037648333236575,
+            "bytes": 20605,
+            "stage": "removed 6 unused declaration(s)"
+          },
+          {
+            "seconds": 24.436557833105326,
+            "bytes": 20240,
+            "stage": "removed 5 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 24.436964167281985,
+        "final_bytes": 20240
+      }
+    },
+    {
+      "before": {
+        "case": "dirichlet",
+        "fixture": "verify/yosupo/dirichlet_inverse_and_prefix_sums.test.cpp",
+        "input_bytes": 129269,
+        "input_sha256": "8438ebb191860d4b715c3e9d9287c4df8d0f26f4336fed5bab75281547f993a9",
+        "first_seconds": 8.397345708683133,
+        "first_bytes": 65184,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.21240137424319983,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.071102083660662,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7294686660170555,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.395446459762752,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.181628666818142,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7069405000656843,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1807205406948924,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1868087919428945,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1737513756379485,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.242582875303924,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4721128745004535,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.0437859166413546,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9708200003951788,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 0.970344333909452,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.951992416754365,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 3.354218208231032,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9715147921815515,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 8.397345708683133,
+            "bytes": 65184,
+            "stage": "removed 238 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 10.359476208686829,
+            "bytes": 52218,
+            "stage": "removed 233 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 11.620758792385459,
+            "bytes": 43903,
+            "stage": "unreferenced types, aliases, and lambdas"
+          },
+          {
+            "seconds": 12.81651100050658,
+            "bytes": 43917,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 15.629817083477974,
+            "bytes": 38477,
+            "stage": "removed 65 unused declaration(s)"
+          },
+          {
+            "seconds": 17.722295249812305,
+            "bytes": 36923,
+            "stage": "removed 11 unused declaration(s)"
+          },
+          {
+            "seconds": 19.71943849977106,
+            "bytes": 36363,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 24.647712292149663,
+            "bytes": 35998,
+            "stage": "removed 5 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 24.64803108293563,
+        "final_bytes": 35998
+      },
+      "after": {
+        "case": "dirichlet",
+        "fixture": "verify/yosupo/dirichlet_inverse_and_prefix_sums.test.cpp",
+        "input_bytes": 129269,
+        "input_sha256": "8438ebb191860d4b715c3e9d9287c4df8d0f26f4336fed5bab75281547f993a9",
+        "first_seconds": 9.524658332578838,
+        "first_bytes": 65184,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.2284343745559454,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.977156708948314,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7848798334598541,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3209580825641751,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3604377079755068,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7954775411635637,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3289961656555533,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3065477097406983,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3156357500702143,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.3449692912399769,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8414289159700274,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.1745449164882302,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.0726808747276664,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.0762314582243562,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.0611944580450654,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 3.908075542189181,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1686370000243187,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 9.524658332578838,
+            "bytes": 65184,
+            "stage": "removed 238 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 11.733402249403298,
+            "bytes": 52218,
+            "stage": "removed 233 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 13.127562874928117,
+            "bytes": 43903,
+            "stage": "unreferenced types, aliases, and lambdas"
+          },
+          {
+            "seconds": 14.470510124228895,
+            "bytes": 43917,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 17.773818041197956,
+            "bytes": 38477,
+            "stage": "removed 65 unused declaration(s)"
+          },
+          {
+            "seconds": 20.113972374238074,
+            "bytes": 36923,
+            "stage": "removed 11 unused declaration(s)"
+          },
+          {
+            "seconds": 22.33916408289224,
+            "bytes": 36363,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 28.066936999559402,
+            "bytes": 35998,
+            "stage": "removed 5 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 28.067318041808903,
+        "final_bytes": 35998
+      }
+    },
+    {
+      "before": {
+        "case": "mod2",
+        "fixture": "verify/yosupo/matrix_product_mod2_dynamic.test.cpp",
+        "input_bytes": 80060,
+        "input_sha256": "dc2ee823c69b66afab83bdd57a638067204ef88f4450e72c9cf7ce39ee24db5b",
+        "first_seconds": 1.0723622497171164,
+        "first_bytes": 55125,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.23985458351671696,
+            "ok": true
+          },
+          {
+            "kind": "syntax",
+            "seconds": 0.5900626666843891,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 2.9873685827478766,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.2229532077908516,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1082201655954123,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.080512374639511,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.220909083262086,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5819233749061823,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.1337589574977756,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.519387500360608,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.0713815409690142,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9476884994655848,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 3.080809375271201,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9837450832128525,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 1.0723622497171164,
+            "bytes": 55125,
+            "stage": "comments, inactive branches, and blank lines"
+          },
+          {
+            "seconds": 6.337359290570021,
+            "bytes": 38980,
+            "stage": "removed 151 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 7.453532540239394,
+            "bytes": 25137,
+            "stage": "removed 151 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 8.546980374492705,
+            "bytes": 25151,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 11.421920040622354,
+            "bytes": 18661,
+            "stage": "removed 76 unused declaration(s)"
+          },
+          {
+            "seconds": 14.125259624794126,
+            "bytes": 16605,
+            "stage": "removed 13 unused declaration(s)"
+          },
+          {
+            "seconds": 16.185341957956553,
+            "bytes": 16183,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 20.842839082702994,
+            "bytes": 15726,
+            "stage": "removed 6 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 20.843201582320035,
+        "final_bytes": 15726
+      },
+      "after": {
+        "case": "mod2",
+        "fixture": "verify/yosupo/matrix_product_mod2_dynamic.test.cpp",
+        "input_bytes": 80060,
+        "input_sha256": "dc2ee823c69b66afab83bdd57a638067204ef88f4450e72c9cf7ce39ee24db5b",
+        "first_seconds": 1.951531458646059,
+        "first_bytes": 55125,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.2540462911128998,
+            "ok": true
+          },
+          {
+            "kind": "syntax",
+            "seconds": 1.435222334228456,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.2276286659762263,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.600100832991302,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5056506246328354,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3578507918864489,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.2235051663592458,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7262029582634568,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.1639588745310903,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6826313342899084,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.0600090846419334,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.0580602083355188,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 4.1388144586235285,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7232653750106692,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 1.951531458646059,
+            "bytes": 55125,
+            "stage": "comments, inactive branches, and blank lines"
+          },
+          {
+            "seconds": 7.9099576668813825,
+            "bytes": 38980,
+            "stage": "removed 151 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 9.42504399921745,
+            "bytes": 25137,
+            "stage": "removed 151 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 10.79971450008452,
+            "bytes": 25151,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 13.826146666891873,
+            "bytes": 18661,
+            "stage": "removed 76 unused declaration(s)"
+          },
+          {
+            "seconds": 16.727371749468148,
+            "bytes": 16605,
+            "stage": "removed 13 unused declaration(s)"
+          },
+          {
+            "seconds": 18.890588792040944,
+            "bytes": 16183,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 25.37898970860988,
+            "bytes": 15726,
+            "stage": "removed 6 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 25.379388874396682,
+        "final_bytes": 15726
+      }
+    },
+    {
+      "before": {
+        "case": "rectangles",
+        "fixture": "verify/yosupo/area_of_union_of_rectangles.test.cpp",
+        "input_bytes": 72192,
+        "input_sha256": "f0a49decb5daaa809205b01df28e5cf1b8aa411088655e67025a8da753db100b",
+        "first_seconds": 1.3532801251858473,
+        "first_bytes": 53375,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.23691433388739824,
+            "ok": true
+          },
+          {
+            "kind": "syntax",
+            "seconds": 0.8520514164119959,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.227943249978125,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5639626672491431,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8233478330075741,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4136999994516373,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.289928208105266,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.3293392919003963,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7132985405623913,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.2578225005418062,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7996668331325054,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.2008604165166616,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.2571656247600913,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 3.6369084576144814,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.132389291189611,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 1.3532801251858473,
+            "bytes": 53375,
+            "stage": "comments, inactive branches, and blank lines"
+          },
+          {
+            "seconds": 7.235199125483632,
+            "bytes": 36278,
+            "stage": "removed 173 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 9.491690833121538,
+            "bytes": 22260,
+            "stage": "removed 170 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 10.793332749977708,
+            "bytes": 22274,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 13.894945874810219,
+            "bytes": 14085,
+            "stage": "removed 94 unused declaration(s)"
+          },
+          {
+            "seconds": 16.989426500163972,
+            "bytes": 12790,
+            "stage": "removed 8 unused declaration(s)"
+          },
+          {
+            "seconds": 19.477554624900222,
+            "bytes": 12230,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 24.815845374949276,
+            "bytes": 11934,
+            "stage": "removed 4 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 24.81612633354962,
+        "final_bytes": 11934
+      },
+      "after": {
+        "case": "rectangles",
+        "fixture": "verify/yosupo/area_of_union_of_rectangles.test.cpp",
+        "input_bytes": 72192,
+        "input_sha256": "f0a49decb5daaa809205b01df28e5cf1b8aa411088655e67025a8da753db100b",
+        "first_seconds": 1.9053977075964212,
+        "first_bytes": 53375,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.24031408410519361,
+            "ok": true
+          },
+          {
+            "kind": "syntax",
+            "seconds": 1.4110094588249922,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.2592892916873097,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3722404167056084,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7655297080054879,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.318021290935576,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3296927902847528,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.396426041610539,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.705577416345477,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.2132737915962934,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.674316542223096,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.215454749763012,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1476985001936555,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 3.526713124476373,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1788199581205845,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 1.9053977075964212,
+            "bytes": 53375,
+            "stage": "comments, inactive branches, and blank lines"
+          },
+          {
+            "seconds": 7.619249625131488,
+            "bytes": 36278,
+            "stage": "removed 173 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 9.723115166649222,
+            "bytes": 22260,
+            "stage": "removed 170 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 11.066611624322832,
+            "bytes": 22274,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 14.234044541604817,
+            "bytes": 14085,
+            "stage": "removed 94 unused declaration(s)"
+          },
+          {
+            "seconds": 17.158971291966736,
+            "bytes": 12790,
+            "stage": "removed 8 unused declaration(s)"
+          },
+          {
+            "seconds": 19.556217291392386,
+            "bytes": 12230,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 24.856839374639094,
+            "bytes": 11934,
+            "stage": "removed 4 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 24.857066582888365,
+        "final_bytes": 11934
+      }
+    },
+    {
+      "before": {
+        "case": "potential",
+        "fixture": "benchmark/submit_code_potential.cpp",
+        "input_bytes": 86050,
+        "input_sha256": "e4872de7f96d6c71bc86a51646322cdd970947346107fe8a24a84b6b84478b51",
+        "first_seconds": 5.465041915886104,
+        "first_bytes": 57291,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.6380128748714924,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 4.244685749523342,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.9631797075271606,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9255065843462944,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4974710419774055,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.2624585423618555,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8049544570967555,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5239328742027283,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.488994000479579,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.134986000135541,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.4601734997704625,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.1260261675342917,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.273430165834725,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4922072915360332,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 4.5303977923467755,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1767602916806936,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 5.465041915886104,
+            "bytes": 57291,
+            "stage": "unreferenced types, aliases, and lambdas"
+          },
+          {
+            "seconds": 13.29640237428248,
+            "bytes": 40716,
+            "stage": "removed 173 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 16.390879749320447,
+            "bytes": 26483,
+            "stage": "removed 172 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 17.931928457692266,
+            "bytes": 26497,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 21.634300665929914,
+            "bytes": 21826,
+            "stage": "removed 70 unused declaration(s)"
+          },
+          {
+            "seconds": 25.280614416114986,
+            "bytes": 20519,
+            "stage": "removed 8 unused declaration(s)"
+          },
+          {
+            "seconds": 28.111034874804318,
+            "bytes": 19959,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 34.42794616520405,
+            "bytes": 19594,
+            "stage": "removed 5 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 34.42837450001389,
+        "final_bytes": 19594
+      },
+      "after": {
+        "case": "potential",
+        "fixture": "benchmark/submit_code_potential.cpp",
+        "input_bytes": 86050,
+        "input_sha256": "e4872de7f96d6c71bc86a51646322cdd970947346107fe8a24a84b6b84478b51",
+        "first_seconds": 2.240604833699763,
+        "first_bytes": 57291,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.21551112458109856,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6719406247138977,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.139222167432308,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8415412083268166,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3315737498924136,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7629873752593994,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3095988323912024,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4560621250420809,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.5175969582051039,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.9006314584985375,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.1820088345557451,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6529900832101703,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.1624762080609798,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1960253743454814,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 3.8546581249684095,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.253822916187346,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 2.240604833699763,
+            "bytes": 57291,
+            "stage": "unreferenced types, aliases, and lambdas"
+          },
+          {
+            "seconds": 9.01817850023508,
+            "bytes": 40716,
+            "stage": "removed 173 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 11.110885166563094,
+            "bytes": 26483,
+            "stage": "removed 172 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 12.584088874980807,
+            "bytes": 26497,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 16.080393667332828,
+            "bytes": 21826,
+            "stage": "removed 70 unused declaration(s)"
+          },
+          {
+            "seconds": 18.971352041698992,
+            "bytes": 20519,
+            "stage": "removed 8 unused declaration(s)"
+          },
+          {
+            "seconds": 21.383543916977942,
+            "bytes": 19959,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 27.134752458892763,
+            "bytes": 19594,
+            "stage": "removed 5 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 27.135157709009945,
+        "final_bytes": 19594
+      }
+    },
+    {
+      "before": {
+        "case": "inversions",
+        "fixture": "verify/yosupo/static_range_inversions_query.test.cpp",
+        "input_bytes": 81650,
+        "input_sha256": "f81f90ac4f329fd48ac0f24b288f62665f4262cbc81fdbf15e0155a8e6eed215",
+        "first_seconds": 1.252551875077188,
+        "first_bytes": 58524,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.21745724976062775,
+            "ok": true
+          },
+          {
+            "kind": "syntax",
+            "seconds": 0.7973930416628718,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.1653959173709154,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.602862291969359,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3890301249921322,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3403621250763535,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3426932087168097,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.3796344166621566,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.713467582128942,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.2342620408162475,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6928669167682528,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.1944427909329534,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1827352503314614,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 3.7344409991055727,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.2504582908004522,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 1.252551875077188,
+            "bytes": 58524,
+            "stage": "comments, inactive branches, and blank lines"
+          },
+          {
+            "seconds": 8.620854792185128,
+            "bytes": 40472,
+            "stage": "removed 195 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 9.968355875462294,
+            "bytes": 24796,
+            "stage": "removed 195 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 11.32422325015068,
+            "bytes": 24810,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 14.480057625100017,
+            "bytes": 16153,
+            "stage": "removed 99 unused declaration(s)"
+          },
+          {
+            "seconds": 17.446240417659283,
+            "bytes": 14438,
+            "stage": "removed 8 unused declaration(s)"
+          },
+          {
+            "seconds": 19.858197083696723,
+            "bytes": 13733,
+            "stage": "removed 3 unused declaration(s)"
+          },
+          {
+            "seconds": 25.47175170853734,
+            "bytes": 13346,
+            "stage": "removed 5 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 25.47207304276526,
+        "final_bytes": 13346
+      },
+      "after": {
+        "case": "inversions",
+        "fixture": "verify/yosupo/static_range_inversions_query.test.cpp",
+        "input_bytes": 81650,
+        "input_sha256": "f81f90ac4f329fd48ac0f24b288f62665f4262cbc81fdbf15e0155a8e6eed215",
+        "first_seconds": 2.0627995003014803,
+        "first_bytes": 58524,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.23586825001984835,
+            "ok": true
+          },
+          {
+            "kind": "syntax",
+            "seconds": 1.5678285006433725,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.377569541335106,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6493338756263256,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5106764156371355,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.529348500072956,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.515047624707222,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.718179166316986,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8885449580848217,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.3543736254796386,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.702150708064437,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.2708090832456946,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8314891252666712,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 4.507078208960593,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.2670014994218946,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 2.0627995003014803,
+            "bytes": 58524,
+            "stage": "comments, inactive branches, and blank lines"
+          },
+          {
+            "seconds": 9.858105333521962,
+            "bytes": 40472,
+            "stage": "removed 195 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 11.396324791945517,
+            "bytes": 24796,
+            "stage": "removed 195 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 12.927619541995227,
+            "bytes": 24810,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 16.604944333434105,
+            "bytes": 16153,
+            "stage": "removed 99 unused declaration(s)"
+          },
+          {
+            "seconds": 19.704106833785772,
+            "bytes": 14438,
+            "stage": "removed 8 unused declaration(s)"
+          },
+          {
+            "seconds": 22.856946875341237,
+            "bytes": 13733,
+            "stage": "removed 3 unused declaration(s)"
+          },
+          {
+            "seconds": 29.250277708284557,
+            "bytes": 13346,
+            "stage": "removed 5 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 29.250578625127673,
+        "final_bytes": 13346
+      }
+    },
+    {
+      "before": {
+        "case": "convolution_dynamic",
+        "fixture": "verify/yosupo/convolution_arbitrary_dynamic.test.cpp",
+        "input_bytes": 98226,
+        "input_sha256": "d32aa07345c257809e3693b95bb58adef9bfeb73fd88c4dbd5632ab992022168",
+        "first_seconds": 10.205342374742031,
+        "first_bytes": 55477,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.2439410826191306,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.9306704998016357,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8502315003424883,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6334615414962173,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6599334590137005,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.0737124998122454,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8509453749284148,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9208948323503137,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8328472077846527,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 2.5119507499039173,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7174818748608232,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7989265834912658,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9498735424131155,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 2.4896345417946577,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.1070751659572124,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.2758610844612122,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9163476256653666,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8470936249941587,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5637974999845028,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.6689211660996079,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4173518754541874,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.6751910001039505,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.6753909587860107,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4240683754906058,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4118943754583597,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.409691541455686,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3978704996407032,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7855477491393685,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8019966250285506,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8147568749263883,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8214472094550729,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.393858416005969,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8038406250998378,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.482946709729731,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9593036668375134,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.420726040378213,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4964604591950774,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8168757501989603,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.429020625539124,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4921349165961146,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8035159995779395,
+            "ok": false
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.707981209270656,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4096774170175195,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8912129169330001,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8683830425143242,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4562534159049392,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8177115004509687,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4163492918014526,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3996640415862203,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.6726647084578872,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.6895387498661876,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.6895228745415807,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5500784581527114,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8075784165412188,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8662495836615562,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4018287500366569,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8221592083573341,
+            "ok": false
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.7303052078932524,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7458642907440662,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8073841677978635,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8424984170123935,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9281082497909665,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.52050825022161,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3938480829820037,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.6707720002159476,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.6722357915714383,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7982768323272467,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8019322091713548,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7950165830552578,
+            "ok": false
+          },
+          {
+            "kind": "ipa",
+            "seconds": 3.9824973745271564,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.337246666662395,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7822473756968975,
+            "ok": false
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 10.205342374742031,
+            "bytes": 55477,
+            "stage": "removed 159 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 13.15687108412385,
+            "bytes": 45811,
+            "stage": "removed 158 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 16.002446750178933,
+            "bytes": 45825,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 24.80090054217726,
+            "bytes": 44623,
+            "stage": "removed 24 unused declaration(s)"
+          },
+          {
+            "seconds": 26.941156334243715,
+            "bytes": 44003,
+            "stage": "removed 6 unused declaration(s)"
+          },
+          {
+            "seconds": 31.604986041784286,
+            "bytes": 43727,
+            "stage": "removed 3 unused declaration(s)"
+          },
+          {
+            "seconds": 33.71369816735387,
+            "bytes": 42514,
+            "stage": "removed 24 unused declaration(s)"
+          },
+          {
+            "seconds": 36.53141700010747,
+            "bytes": 42331,
+            "stage": "removed 4 unused declaration(s)"
+          },
+          {
+            "seconds": 37.96418479178101,
+            "bytes": 42252,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 39.39473408367485,
+            "bytes": 41989,
+            "stage": "removed 5 unused declaration(s)"
+          },
+          {
+            "seconds": 40.803895625285804,
+            "bytes": 41422,
+            "stage": "removed 8 unused declaration(s)"
+          },
+          {
+            "seconds": 45.47433579247445,
+            "bytes": 40970,
+            "stage": "removed 8 unused declaration(s)"
+          },
+          {
+            "seconds": 47.7922875424847,
+            "bytes": 40924,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 50.20367562491447,
+            "bytes": 40395,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 51.71099908370525,
+            "bytes": 39282,
+            "stage": "removed 4 unused declaration(s)"
+          },
+          {
+            "seconds": 53.977912958711386,
+            "bytes": 38187,
+            "stage": "removed 6 unused declaration(s)"
+          },
+          {
+            "seconds": 55.48899341747165,
+            "bytes": 37595,
+            "stage": "removed 6 unused declaration(s)"
+          },
+          {
+            "seconds": 62.79854220896959,
+            "bytes": 36995,
+            "stage": "removed 5 unused declaration(s)"
+          },
+          {
+            "seconds": 65.06079904176295,
+            "bytes": 36917,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 66.47053087502718,
+            "bytes": 36288,
+            "stage": "removed 3 unused declaration(s)"
+          },
+          {
+            "seconds": 70.11073600035161,
+            "bytes": 35951,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 73.22457791678607,
+            "bytes": 35623,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 80.80446166731417,
+            "bytes": 35271,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 82.20821112487465,
+            "bytes": 35063,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 92.0800872920081,
+            "bytes": 34339,
+            "stage": "removed 5 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 92.91290708445013,
+        "final_bytes": 34339
+      },
+      "after": {
+        "case": "convolution_dynamic",
+        "fixture": "verify/yosupo/convolution_arbitrary_dynamic.test.cpp",
+        "input_bytes": 98226,
+        "input_sha256": "d32aa07345c257809e3693b95bb58adef9bfeb73fd88c4dbd5632ab992022168",
+        "first_seconds": 11.270386000163853,
+        "first_bytes": 55345,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.22393512446433306,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 4.835470125079155,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8441365836188197,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.800582000054419,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7331056660041213,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8069845419377089,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5809212494641542,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5919032925739884,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5366446245461702,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.5724534578621387,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8563757501542568,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.4883000003173947,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.586593416519463,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.367788958363235,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.2928330833092332,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 4.868140459060669,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7731983754783869,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 11.270386000163853,
+            "bytes": 55345,
+            "stage": "removed 159 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 13.68677637539804,
+            "bytes": 45679,
+            "stage": "removed 158 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 15.351888874545693,
+            "bytes": 40566,
+            "stage": "unreferenced types, aliases, and lambdas"
+          },
+          {
+            "seconds": 16.91305079218,
+            "bytes": 40580,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 20.448678917251527,
+            "bytes": 36819,
+            "stage": "removed 61 unused declaration(s)"
+          },
+          {
+            "seconds": 23.60799099970609,
+            "bytes": 35491,
+            "stage": "removed 7 unused declaration(s)"
+          },
+          {
+            "seconds": 26.346928916871548,
+            "bytes": 34931,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 33.7595291249454,
+            "bytes": 34635,
+            "stage": "removed 4 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 33.75989937502891,
+        "final_bytes": 34635
+      }
+    },
+    {
+      "before": {
+        "case": "bigint",
+        "fixture": "verify/yosupo/big_integer_division.test.cpp",
+        "input_bytes": 121447,
+        "input_sha256": "407930719d0b21fb7455651b43df1be3158bae6ecd51a8a4c112a3057b621eeb",
+        "first_seconds": 13.219461834058166,
+        "first_bytes": 57868,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.23175520915538073,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.7265253327786922,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8886418752372265,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7916170423850417,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8281568745151162,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9794043330475688,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8518018750473857,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9056337084621191,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6914502503350377,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.9360596658661962,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6070497911423445,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9401206253096461,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9878807505592704,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.006777584552765,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 2.057717208750546,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9354067072272301,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.765946957282722,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.9884958332404494,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6818405417725444,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8590243747457862,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5857916250824928,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9615933336317539,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.0132694588974118,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9030419597402215,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8846192909404635,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8768690004944801,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8705451255664229,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7794911665841937,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6983007499948144,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8965551257133484,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.809715624898672,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8907144153490663,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.0557033335790038,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9105737078934908,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8363996669650078,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6447641672566533,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5589696671813726,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9428992914035916,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8508448330685496,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.0061395410448313,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.0599670829251409,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.773867791518569,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4779657078906894,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4394612908363342,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8408866245299578,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8557816669344902,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5803071670234203,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4262421242892742,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8555378345772624,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.835634957998991,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.479640250094235,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.917132624424994,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.860315291211009,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.478263541124761,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5413311254233122,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9309567082673311,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9422892099246383,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.88417112454772,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8643022496253252,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8916562078520656,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9538148334249854,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8674570005387068,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8481842502951622,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8649137504398823,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.927655290812254,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8408815003931522,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4650657922029495,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8241222919896245,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8523324597626925,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8337472500279546,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7876549577340484,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7692799996584654,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.782794333063066,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.362589292228222,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.382439749315381,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8164550000801682,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9574425835162401,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4705059165135026,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5775377498939633,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7979227909818292,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.82215974945575,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8294068332761526,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.427095666527748,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9451756672933698,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3678081668913364,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8128104172646999,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7900334997102618,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8263940829783678,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.777212000451982,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3754648342728615,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7174135828390718,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7265929579734802,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7822918323799968,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7493942501023412,
+            "ok": false
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.4298612494021654,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4158106250688434,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7500033751130104,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7622711667791009,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7631861250847578,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.394265334121883,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7798996670171618,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7798016248270869,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7532329577952623,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3733193334192038,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8071860838681459,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3357210420072079,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7655290002003312,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3286474579945207,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7319375416263938,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3550130845978856,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7275119163095951,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3500616252422333,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7541212076321244,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7542120423167944,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3593522505834699,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7806176673620939,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8365136664360762,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7496433341875672,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7748546665534377,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3566092923283577,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7796457083895802,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7588978325948119,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7532726246863604,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9292755424976349,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7560210833325982,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8677537497133017,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3388996673747897,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8946208329871297,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5720341242849827,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9700127495452762,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9774065427482128,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6357957078143954,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.839140540920198,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8155480837449431,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9845793750137091,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.0801115417852998,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9135528327897191,
+            "ok": false
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.967167042195797,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8892167909070849,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8437020424753428,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8845790000632405,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9414381673559546,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.874750416725874,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5764500834047794,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9269130835309625,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8574544591829181,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9258095836266875,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8962384592741728,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8402985827997327,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8840622501447797,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9049237910658121,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6802352499216795,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.512682500295341,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.0760701252147555,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.865047000348568,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9551567081362009,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8767904583364725,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7942221248522401,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.7864697091281414,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8662107074633241,
+            "ok": false
+          },
+          {
+            "kind": "ipa",
+            "seconds": 4.786365499719977,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5956867914646864,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.9063104167580605,
+            "ok": false
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 10.328525834716856,
+            "bytes": 71704,
+            "stage": "removed 208 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 13.219461834058166,
+            "bytes": 57868,
+            "stage": "removed 207 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 15.928875708952546,
+            "bytes": 57882,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 24.6448354171589,
+            "bytes": 56931,
+            "stage": "removed 20 unused declaration(s)"
+          },
+          {
+            "seconds": 27.38606429286301,
+            "bytes": 56821,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 29.401490959338844,
+            "bytes": 56779,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 31.10974987503141,
+            "bytes": 56730,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 33.5934728756547,
+            "bytes": 56531,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 40.98974254261702,
+            "bytes": 56290,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 42.701466084457934,
+            "bytes": 56023,
+            "stage": "removed 4 unused declaration(s)"
+          },
+          {
+            "seconds": 45.43541350029409,
+            "bytes": 55638,
+            "stage": "removed 6 unused declaration(s)"
+          },
+          {
+            "seconds": 50.1960503757,
+            "bytes": 55610,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 51.85462545976043,
+            "bytes": 55480,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 53.4268701672554,
+            "bytes": 55330,
+            "stage": "removed 4 unused declaration(s)"
+          },
+          {
+            "seconds": 56.2473577093333,
+            "bytes": 53647,
+            "stage": "removed 31 unused declaration(s)"
+          },
+          {
+            "seconds": 60.13839670922607,
+            "bytes": 53348,
+            "stage": "removed 5 unused declaration(s)"
+          },
+          {
+            "seconds": 61.64072912558913,
+            "bytes": 53301,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 63.10427675023675,
+            "bytes": 53254,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 66.4309745002538,
+            "bytes": 53014,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 67.86954750027508,
+            "bytes": 52388,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 71.07550079282373,
+            "bytes": 50821,
+            "stage": "removed 6 unused declaration(s)"
+          },
+          {
+            "seconds": 74.37746275030077,
+            "bytes": 50732,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 75.9414964178577,
+            "bytes": 50643,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 87.38174941763282,
+            "bytes": 50391,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 93.68645408470184,
+            "bytes": 50300,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 95.08065650053322,
+            "bytes": 50151,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 98.36053566727787,
+            "bytes": 49994,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 99.96062712557614,
+            "bytes": 49895,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 103.88354800082743,
+            "bytes": 49665,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 106.23021354246885,
+            "bytes": 49596,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 110.86961179226637,
+            "bytes": 49449,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 120.59712525084615,
+            "bytes": 48892,
+            "stage": "removed 4 unused declaration(s)"
+          },
+          {
+            "seconds": 124.33754900004715,
+            "bytes": 48641,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 126.50289916712791,
+            "bytes": 48174,
+            "stage": "removed 3 unused declaration(s)"
+          },
+          {
+            "seconds": 128.628920041956,
+            "bytes": 47843,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 130.73866233415902,
+            "bytes": 47025,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 132.8478308757767,
+            "bytes": 46688,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 135.75639154203236,
+            "bytes": 46360,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 140.30724133457989,
+            "bytes": 45997,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 146.57714033406228,
+            "bytes": 45584,
+            "stage": "removed 3 unused declaration(s)"
+          },
+          {
+            "seconds": 149.07612604275346,
+            "bytes": 45452,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 152.70251429267228,
+            "bytes": 45371,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 155.3800097927451,
+            "bytes": 45288,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 166.57529462501407,
+            "bytes": 45246,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 174.5900230007246,
+            "bytes": 44845,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 176.11419112514704,
+            "bytes": 44235,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 179.0876420000568,
+            "bytes": 44018,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 190.67381862550974,
+            "bytes": 43722,
+            "stage": "removed 4 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 191.6441567922011,
+        "final_bytes": 43722
+      },
+      "after": {
+        "case": "bigint",
+        "fixture": "verify/yosupo/big_integer_division.test.cpp",
+        "input_bytes": 121447,
+        "input_sha256": "407930719d0b21fb7455651b43df1be3158bae6ecd51a8a4c112a3057b621eeb",
+        "first_seconds": 12.607586791738868,
+        "first_bytes": 57589,
+        "commands": [
+          {
+            "kind": "preprocess",
+            "seconds": 0.23467420786619186,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 4.0454534171149135,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8766657086089253,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.6477100001648068,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5202184580266476,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 0.8287314176559448,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5698030833154917,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.565834792330861,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.542542957700789,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.7315273331478238,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.5879721669480205,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.729552624747157,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4991025840863585,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.5803888756781816,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 4.909665792249143,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.535506833344698,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 10.171949042007327,
+            "bytes": 72292,
+            "stage": "removed 208 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 12.607586791738868,
+            "bytes": 57589,
+            "stage": "removed 207 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 14.26890604197979,
+            "bytes": 49701,
+            "stage": "unreferenced types, aliases, and lambdas"
+          },
+          {
+            "seconds": 15.840799916535616,
+            "bytes": 49715,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 20.293865375220776,
+            "bytes": 45958,
+            "stage": "removed 61 unused declaration(s)"
+          },
+          {
+            "seconds": 23.636234457604587,
+            "bytes": 43808,
+            "stage": "removed 8 unused declaration(s)"
+          },
+          {
+            "seconds": 32.54986720811576,
+            "bytes": 43512,
+            "stage": "removed 4 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 32.55018770787865,
+        "final_bytes": 43512
+      }
+    },
+    {
+      "before": {
+        "case": "aho",
+        "fixture": "verify/yosupo/aho_corasick.test.cpp",
+        "input_bytes": 64026,
+        "input_sha256": "7418a130cd136036182b25d38904b4c8228753a0af87009bdbe08a99d29f1455",
+        "first_seconds": 0.0,
+        "first_bytes": 64026,
+        "commands": [
+          {
+            "kind": "syntax",
+            "seconds": 1.850486708804965,
+            "ok": true
+          },
+          {
+            "kind": "preprocess",
+            "seconds": 0.24516624957323074,
+            "ok": true
+          },
+          {
+            "kind": "syntax",
+            "seconds": 1.4813980823382735,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.684796250425279,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.924908041022718,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5426229992881417,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5784827498719096,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4628649996593595,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.4965778328478336,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.9911966249346733,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.3007397083565593,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.863836083561182,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.854453374631703,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.5963632501661777,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 7.513792499899864,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.381250916980207,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 1.8854641243815422,
+            "bytes": 58307,
+            "stage": "comments and blank lines"
+          },
+          {
+            "seconds": 3.820452249608934,
+            "bytes": 45218,
+            "stage": "comments, inactive branches, and blank lines"
+          },
+          {
+            "seconds": 12.203067458234727,
+            "bytes": 29876,
+            "stage": "removed 151 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 13.78781829122454,
+            "bytes": 16463,
+            "stage": "removed 151 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 15.261485165916383,
+            "bytes": 16477,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 18.801776457577944,
+            "bytes": 11927,
+            "stage": "removed 75 unused declaration(s)"
+          },
+          {
+            "seconds": 21.998199999332428,
+            "bytes": 10674,
+            "stage": "removed 7 unused declaration(s)"
+          },
+          {
+            "seconds": 26.482525915838778,
+            "bytes": 10466,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 37.052950624376535,
+            "bytes": 10009,
+            "stage": "removed 6 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 37.05378562491387,
+        "final_bytes": 10009
+      },
+      "after": {
+        "case": "aho",
+        "fixture": "verify/yosupo/aho_corasick.test.cpp",
+        "input_bytes": 64026,
+        "input_sha256": "7418a130cd136036182b25d38904b4c8228753a0af87009bdbe08a99d29f1455",
+        "first_seconds": 0.0,
+        "first_bytes": 64026,
+        "commands": [
+          {
+            "kind": "syntax",
+            "seconds": 1.7409131675958633,
+            "ok": true
+          },
+          {
+            "kind": "preprocess",
+            "seconds": 0.2816738337278366,
+            "ok": true
+          },
+          {
+            "kind": "syntax",
+            "seconds": 1.8135442920029163,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.596265958622098,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.4913129583001137,
+            "ok": false
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5826379163190722,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.8362512504681945,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.971575167030096,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.3967379992827773,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.9569982085376978,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.5095073748379946,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.9629500415176153,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.2091167094185948,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.2209275420755148,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 3.5468763327226043,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.1086491253226995,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 1.7770894588902593,
+            "bytes": 58307,
+            "stage": "comments and blank lines"
+          },
+          {
+            "seconds": 4.1075045838952065,
+            "bytes": 45218,
+            "stage": "comments, inactive branches, and blank lines"
+          },
+          {
+            "seconds": 11.883276917040348,
+            "bytes": 29876,
+            "stage": "removed 151 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 13.726855916902423,
+            "bytes": 16463,
+            "stage": "removed 151 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 15.710626916959882,
+            "bytes": 16477,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 19.125557417050004,
+            "bytes": 11927,
+            "stage": "removed 75 unused declaration(s)"
+          },
+          {
+            "seconds": 22.634179041720927,
+            "bytes": 10674,
+            "stage": "removed 7 unused declaration(s)"
+          },
+          {
+            "seconds": 25.093459708616138,
+            "bytes": 10466,
+            "stage": "removed 1 unused declaration(s)"
+          },
+          {
+            "seconds": 30.35250229202211,
+            "bytes": 10009,
+            "stage": "removed 6 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 30.352792833931744,
+        "final_bytes": 10009
+      }
+    },
+    {
+      "before": {
+        "case": "connectivity",
+        "fixture": "verify/yosupo/offline_dynamic_connectivity.test.cpp",
+        "input_bytes": 71284,
+        "input_sha256": "9074980acc9b2859385e041d86d3518a160516c0142d1abdec24af24ac32df4b",
+        "first_seconds": 2.932912333868444,
+        "first_bytes": 64083,
+        "commands": [
+          {
+            "kind": "syntax",
+            "seconds": 2.8933559572324157,
+            "ok": true
+          },
+          {
+            "kind": "preprocess",
+            "seconds": 0.2657221248373389,
+            "ok": true
+          },
+          {
+            "kind": "syntax",
+            "seconds": 3.006670624949038,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 6.1762820007279515,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.77096754219383,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.0870344173163176,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.3248387090861797,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 2.0917523745447397,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.771780375391245,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.819045833311975,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.242369291372597,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.7659712499007583,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.7397143747657537,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 5.6559757916256785,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.695871166884899,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 2.932912333868444,
+            "bytes": 64083,
+            "stage": "comments and blank lines"
+          },
+          {
+            "seconds": 6.438323916867375,
+            "bytes": 50994,
+            "stage": "comments, inactive branches, and blank lines"
+          },
+          {
+            "seconds": 16.96745862532407,
+            "bytes": 34371,
+            "stage": "removed 172 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 19.06233087554574,
+            "bytes": 20332,
+            "stage": "removed 172 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 21.401000292040408,
+            "bytes": 20346,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 26.33069366682321,
+            "bytes": 15517,
+            "stage": "removed 76 unused declaration(s)"
+          },
+          {
+            "seconds": 30.434064167551696,
+            "bytes": 14264,
+            "stage": "removed 7 unused declaration(s)"
+          },
+          {
+            "seconds": 33.980901792645454,
+            "bytes": 13704,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 43.1841114172712,
+            "bytes": 13317,
+            "stage": "removed 5 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 43.18464587535709,
+        "final_bytes": 13317
+      },
+      "after": {
+        "case": "connectivity",
+        "fixture": "verify/yosupo/offline_dynamic_connectivity.test.cpp",
+        "input_bytes": 71284,
+        "input_sha256": "9074980acc9b2859385e041d86d3518a160516c0142d1abdec24af24ac32df4b",
+        "first_seconds": 1.8943101251497865,
+        "first_bytes": 64083,
+        "commands": [
+          {
+            "kind": "syntax",
+            "seconds": 1.8557139998301864,
+            "ok": true
+          },
+          {
+            "kind": "preprocess",
+            "seconds": 0.21359395887702703,
+            "ok": true
+          },
+          {
+            "kind": "syntax",
+            "seconds": 1.297259415499866,
+            "ok": true
+          },
+          {
+            "kind": "templates",
+            "seconds": 3.8685996253043413,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5429163752123713,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.5122522497549653,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.526315207593143,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.6494727907702327,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 2.007975292392075,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.4200154580175877,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.900450167246163,
+            "ok": true
+          },
+          {
+            "kind": "compile",
+            "seconds": 1.3955092495307326,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3463442493230104,
+            "ok": true
+          },
+          {
+            "kind": "ipa",
+            "seconds": 3.8978326665237546,
+            "ok": true
+          },
+          {
+            "kind": "link",
+            "seconds": 1.3883441677317023,
+            "ok": true
+          }
+        ],
+        "checkpoints": [
+          {
+            "seconds": 1.8943101251497865,
+            "bytes": 64083,
+            "stage": "comments and blank lines"
+          },
+          {
+            "seconds": 3.6089731669053435,
+            "bytes": 50994,
+            "stage": "comments, inactive branches, and blank lines"
+          },
+          {
+            "seconds": 10.163564916700125,
+            "bytes": 34371,
+            "stage": "removed 172 uninstantiated template body(s)"
+          },
+          {
+            "seconds": 11.682649625465274,
+            "bytes": 20332,
+            "stage": "removed 172 uninstantiated template declaration(s)"
+          },
+          {
+            "seconds": 13.221408334560692,
+            "bytes": 20346,
+            "stage": "anonymous namespace"
+          },
+          {
+            "seconds": 16.943295000120997,
+            "bytes": 15517,
+            "stage": "removed 76 unused declaration(s)"
+          },
+          {
+            "seconds": 20.30519733391702,
+            "bytes": 14264,
+            "stage": "removed 7 unused declaration(s)"
+          },
+          {
+            "seconds": 23.085572000592947,
+            "bytes": 13704,
+            "stage": "removed 2 unused declaration(s)"
+          },
+          {
+            "seconds": 29.101649125106633,
+            "bytes": 13317,
+            "stage": "removed 5 unused declaration(s)"
+          }
+        ],
+        "total_seconds": 29.10192962549627,
+        "final_bytes": 13317
+      }
+    }
+  ],
+  "validation": {
+    "artifacts": [
+      {
+        "artifact": "beats",
+        "runs": 6
+      },
+      {
+        "artifact": "after-beats-first",
+        "runs": 6
+      },
+      {
+        "artifact": "after-beats",
+        "runs": 6
+      },
+      {
+        "artifact": "fps_composition",
+        "runs": 6
+      },
+      {
+        "artifact": "after-fps_composition-first",
+        "runs": 6
+      },
+      {
+        "artifact": "after-fps_composition",
+        "runs": 6
+      },
+      {
+        "artifact": "bbla_rank",
+        "runs": 12
+      },
+      {
+        "artifact": "after-bbla_rank-first",
+        "runs": 12
+      },
+      {
+        "artifact": "after-bbla_rank",
+        "runs": 12
+      },
+      {
+        "artifact": "dirichlet",
+        "runs": 7
+      },
+      {
+        "artifact": "after-dirichlet-first",
+        "runs": 7
+      },
+      {
+        "artifact": "after-dirichlet",
+        "runs": 7
+      },
+      {
+        "artifact": "mod2",
+        "runs": 5
+      },
+      {
+        "artifact": "after-mod2-first",
+        "runs": 5
+      },
+      {
+        "artifact": "after-mod2",
+        "runs": 5
+      },
+      {
+        "artifact": "rectangles",
+        "runs": 6
+      },
+      {
+        "artifact": "after-rectangles-first",
+        "runs": 6
+      },
+      {
+        "artifact": "after-rectangles",
+        "runs": 6
+      },
+      {
+        "artifact": "potential",
+        "runs": 5
+      },
+      {
+        "artifact": "after-potential-first",
+        "runs": 5
+      },
+      {
+        "artifact": "after-potential",
+        "runs": 5
+      },
+      {
+        "artifact": "inversions",
+        "runs": 6
+      },
+      {
+        "artifact": "after-inversions-first",
+        "runs": 6
+      },
+      {
+        "artifact": "after-inversions",
+        "runs": 6
+      },
+      {
+        "artifact": "convolution_dynamic",
+        "runs": 6
+      },
+      {
+        "artifact": "after-convolution_dynamic-first",
+        "runs": 6
+      },
+      {
+        "artifact": "after-convolution_dynamic",
+        "runs": 6
+      },
+      {
+        "artifact": "bigint",
+        "runs": 5
+      },
+      {
+        "artifact": "after-bigint-first",
+        "runs": 5
+      },
+      {
+        "artifact": "after-bigint",
+        "runs": 5
+      },
+      {
+        "artifact": "aho",
+        "runs": 6
+      },
+      {
+        "artifact": "after-aho-first",
+        "runs": 6
+      },
+      {
+        "artifact": "after-aho",
+        "runs": 6
+      },
+      {
+        "artifact": "connectivity",
+        "runs": 5
+      },
+      {
+        "artifact": "after-connectivity-first",
+        "runs": 5
+      },
+      {
+        "artifact": "after-connectivity",
+        "runs": 5
+      }
+    ],
+    "executions": 225,
+    "optimization": "-O2",
+    "core_and_background_tests": 60
+  }
+}

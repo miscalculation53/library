@@ -11,7 +11,7 @@ template <class T>
 struct make_unsigned_ext;
 ```
 
-標準の `make_unsigned_t<T>` と同様に符号なし型を得る。`i128` に対しては `u128` を返す。
+標準の `make_unsigned_t<T>` と同様に符号なし型を得る。`i128` と `u128` に対しては `u128` を返す。
 
 ##### 制約
 

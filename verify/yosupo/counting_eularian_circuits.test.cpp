@@ -24,7 +24,7 @@ void main2()
 {
   LL(N, M);
   VEC(pll, M, UV);
-  GraphDirected<bool> G(N, UV);
+  GraphDirected<> G(N, UV);
   dump(G.edges(), G.adj_matrix_ecnt());
   PRINT(count_eularian_circuits<mint>(G.adj_matrix_ecnt()));
 }

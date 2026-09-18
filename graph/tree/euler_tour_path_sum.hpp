@@ -23,6 +23,7 @@ struct PathSum : EulerTour<need_lca, RMQ>
   using S = typename G::S;
 
 private:
+  bool edge = false;
   DS fw;
   template <class T>
   void build(const vc<T> &vec)
@@ -36,6 +37,8 @@ private:
     vc<S> fw_init(2 * this->n, G::e());
     repi(i, this->n)
     {
+      if (edge && i == this->root())
+        continue;
       fw_init[this->in[i]] = vec[i];
       fw_init[this->out[i] + 1] = G::inv(vec[i]);
     }
@@ -44,15 +47,16 @@ private:
 
 public:
   PathSum() {}
-  template <class I, class T>
-  PathSum(int n, const vc<I> &par, const vc<T> &vec = {})
-    : EulerTour<need_lca, RMQ>(n, par)
+  // edge のとき vec[v] は (parent(v), v) の値。根の値は単位元。
+  template <class I, class T = S>
+  PathSum(int n, const vc<I> &par, const vc<T> &vec = {}, bool edge = false)
+    : EulerTour<need_lca, RMQ>(n, par), edge(edge)
   {
     build(vec);
   }
-  template <class P, class T>
-  PathSum(int n, const vc<P> &es, int rt, const vc<T> &vec = {})
-    : EulerTour<need_lca, RMQ>(n, es, rt)
+  template <class P, class T = S>
+  PathSum(int n, const vc<P> &es, int rt, const vc<T> &vec = {}, bool edge = false)
+    : EulerTour<need_lca, RMQ>(n, es, rt), edge(edge)
   {
     build(vec);
   }
@@ -60,6 +64,7 @@ public:
   void add(int v, const S &x)
   {
     assert(0 <= v && v < this->n);
+    assert(!edge || v != this->root());
     fw.add(this->in[v], x);
     fw.add(this->out[v] + 1, G::inv(x));
   }
@@ -81,6 +86,7 @@ public:
   void set(int v, const S &x)
   {
     assert(0 <= v && v < this->n);
+    assert(!edge || v != this->root());
     S cur = get(v);
     S diff = G::op(x, G::inv(cur));
     add(v, diff);
@@ -93,7 +99,8 @@ public:
     S su = sum(u), sv = sum(v), isw = G::inv(sum(w));
     S res = G::op(su, sv);
     res = G::op(res, G::op(isw, isw));
-    res = G::op(res, get(w));
+    if (!edge)
+      res = G::op(res, get(w));
     return res;
   }
 };

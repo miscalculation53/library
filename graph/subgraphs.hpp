@@ -26,13 +26,17 @@ pair<vc<Graph<is_directed, Cost>>, vc<I>> subgraphs(const Graph<is_directed, Cos
   repi(u, n) nvids[u] = cnt[ids[u]]++;
   vc<Graph<is_directed, Cost>> graphs(k);
   {
-    vvc<tuple<int, int, Cost>> uvs(k);
-    repi(u, n) fec(e : g.out_arcs(u))
+    using InputEdge = conditional_t<is_void_v<Cost>, pair<int, int>, tuple<int, int, Cost>>;
+    vvc<InputEdge> uvs(k);
+    repi(u, n) fec(e : g.out_edges(u))
     {
       if constexpr (!is_directed)
         if (u > e.to) continue;
       if (ids[u] == ids[e.to])
-        uvs[ids[u]].eb(nvids[u], nvids[e.to], e.cost);
+      {
+        if constexpr (is_void_v<Cost>) uvs[ids[u]].eb(nvids[u], nvids[e.to]);
+        else uvs[ids[u]].eb(nvids[u], nvids[e.to], e.cost);
+      }
     }
     repi(l, k) graphs[l] = Graph<is_directed, Cost>(cnt[l], uvs[l]);
   }

@@ -26,7 +26,8 @@ void main2()
 {
   LL(N, M, S);
   VEC(tlll, M, UVW);
-  ShortestPath<true, ll> G(N, UVW);
+  Graph<true, ll> G_input(N, UVW);
+  ShortestPath G(G_input);
   auto dists = G.solve(S);
   if (MIN(dists) == -INF)
     PRINTRETURN("NEGATIVE CYCLE");

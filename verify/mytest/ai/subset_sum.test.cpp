@@ -131,6 +131,23 @@ void test_original_array()
   assert(sparse.reachable().count() == 2);
   auto [ok, ans] = sparse.answer(200000);
   assert(ok && ans == vc<bool>{true});
+
+  // クエリ上限を大きくしても、必要なテーブルは要素の総和まででよい。
+  const vc<int> a{-2, 3, 5};
+  SubsetSum large_limit(a, INT_MAX);
+  const set<int> possible{-2, 0, 1, 3, 5, 6, 8};
+  assert(large_limit.reachable().size() == 11);
+  for (int x = -3; x <= 9; x++)
+  {
+    assert(large_limit.exists(x) == bool(possible.count(x)));
+    auto [found, chosen] = large_limit.answer(x);
+    assert(found == bool(possible.count(x)));
+    if (!found) continue;
+    int sum = 0;
+    for (int i = 0; i < int(a.size()); i++) if (chosen[i]) sum += a[i];
+    assert(sum == x);
+  }
+  assert(!large_limit.exists(INT_MAX));
 }
 
 int main()

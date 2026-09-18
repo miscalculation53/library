@@ -5,6 +5,8 @@
 #include "bbla.hpp"
 #include "../../ds/csr.hpp"
 #include "../modint/modint.hpp"
+#include "../dot_product.hpp"
+#include "row_reduction_mod32.hpp"
 
 /**
  * @brief 行列（array）
@@ -56,12 +58,7 @@ struct MatrixArray : array<array<typename F::S, m>, n>
   {
     Vn res;
     fill(ALL(res), F::e0());
-    repi(i, n)
-    {
-      S sm = F::e0();
-      repi(j, m) sm = F::add(sm, F::mul((*this)[i][j], v[j]));
-      res[i] = sm;
-    }
+    repi(i, n) res[i] = dot_product<F>(m, (*this)[i].begin(), v.begin());
     return res;
   }
   template <int p>
@@ -69,6 +66,20 @@ struct MatrixArray : array<array<typename F::S, m>, n>
   {
     MatrixArray<F, n, p> res;
     repi(i, n) repi(j, p) res[i][j] = F::e0();
+    if constexpr (internal::dot_product_mod32<F>::value && n >= 16 && m >= 16 && p >= 16)
+    {
+      ll nonzero = 0;
+      for (const auto &row : *this) nonzero += m - count(row.begin(), row.end(), F::e0());
+      if (nonzero == 0) return res;
+      if (nonzero * 2 >= ll(n) * m)
+      {
+        // 転置の作業領域はヒープに置き、大きな array でスタックを増やさない。
+        vc<array<S, m>> bt(p);
+        repi(k, m) repi(j, p) bt[j][k] = b[k][j];
+        repi(i, n) repi(j, p) res[i][j] = dot_product<F>(m, (*this)[i].begin(), bt[j].begin());
+        return res;
+      }
+    }
     repi(ii, 0, n, BS) repi(kk, 0, m, BS) repi(jj, 0, p, BS)
     {
       repi(i, ii, min(ii + BS, n)) repi(k, kk, min(kk + BS, m))
@@ -112,6 +123,14 @@ struct MatrixArray : array<array<typename F::S, m>, n>
   tuple<M, I, S> row_reduction(bool rref = false) const
   {
     M a(*this);
+    if constexpr (internal::ordinary_mod32_field<F>::value)
+    {
+      if (n >= 32 && m >= 32)
+      {
+        auto [rk, de] = internal::row_reduction_mod32<S>(a, n, m, rref);
+        return {std::move(a), I(rk), de};
+      }
+    }
     I rk = 0;
     S de = F::e1();
     for (int i = 0, j = 0; i < n && j < m; j++)
@@ -133,19 +152,25 @@ struct MatrixArray : array<array<typename F::S, m>, n>
       }
       de = F::mul(de, a[i][j]);
       S aij_inv = F::inv(a[i][j]);
-      repi(l, m) a[i][l] = F::mul(a[i][l], aij_inv);
+      // ピボットより左は零。浮動小数点でも消去済みの成分を明示的に保つ。
+      repi(l, j + 1, m) a[i][l] = F::mul(a[i][l], aij_inv);
+      a[i][j] = F::e1();
       if (rref)
       {
         repi(k, i)
         {
           S akj = a[k][j];
-          repi(l, m) a[k][l] = F::add(a[k][l], F::minus(F::mul(a[i][l], akj)));
+          if (akj == F::e0()) continue;
+          a[k][j] = F::e0();
+          repi(l, j + 1, m) a[k][l] = F::add(a[k][l], F::minus(F::mul(a[i][l], akj)));
         }
       }
       repi(k, i + 1, n)
       {
         S akj = a[k][j];
-        repi(l, m) a[k][l] = F::add(a[k][l], F::minus(F::mul(a[i][l], akj)));
+        if (akj == F::e0()) continue;
+        a[k][j] = F::e0();
+        repi(l, j + 1, m) a[k][l] = F::add(a[k][l], F::minus(F::mul(a[i][l], akj)));
       }
       i++;
       rk++;

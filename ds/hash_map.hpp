@@ -73,7 +73,74 @@ private:
   }
 
 public:
+  // 空きスロットを飛ばして走査する。要素のキーは変更しないこと。
+  template <bool IsConst>
+  class basic_iterator
+  {
+    friend struct HashMap;
+    template <bool>
+    friend class basic_iterator;
+
+    using Map = conditional_t<IsConst, const HashMap, HashMap>;
+    Map *mp = nullptr;
+    size_t index = 0;
+
+    void skip_empty()
+    {
+      while (index < mp->ctrl.size() && !mp->ctrl[index])
+        index++;
+    }
+
+    basic_iterator(Map *mp, size_t index) : mp(mp), index(index) { skip_empty(); }
+
+  public:
+    using iterator_category = forward_iterator_tag;
+    using value_type = pair<Key, Value>;
+    using difference_type = ptrdiff_t;
+    using reference = conditional_t<IsConst, const value_type &, value_type &>;
+    using pointer = conditional_t<IsConst, const value_type *, value_type *>;
+
+    basic_iterator() = default;
+
+    template <bool OtherConst, enable_if_t<IsConst && !OtherConst, int> = 0>
+    basic_iterator(const basic_iterator<OtherConst> &other) : mp(other.mp), index(other.index) {}
+
+    reference operator*() const { return mp->dat[index]; }
+    pointer operator->() const { return &mp->dat[index]; }
+
+    basic_iterator &operator++()
+    {
+      index++;
+      skip_empty();
+      return *this;
+    }
+    basic_iterator operator++(int)
+    {
+      auto old = *this;
+      ++*this;
+      return old;
+    }
+
+    template <bool OtherConst>
+    bool operator==(const basic_iterator<OtherConst> &other) const
+    {
+      return mp == other.mp && index == other.index;
+    }
+    template <bool OtherConst>
+    bool operator!=(const basic_iterator<OtherConst> &other) const { return !(*this == other); }
+  };
+
+  using iterator = basic_iterator<false>;
+  using const_iterator = basic_iterator<true>;
+
   HashMap() {}
+
+  iterator begin() { return iterator(this, 0); }
+  iterator end() { return iterator(this, ctrl.size()); }
+  const_iterator begin() const { return const_iterator(this, 0); }
+  const_iterator end() const { return const_iterator(this, ctrl.size()); }
+  const_iterator cbegin() const { return begin(); }
+  const_iterator cend() const { return end(); }
 
   // n 要素を再ハッシュせず格納できる容量を確保する
   void reserve(size_t n)

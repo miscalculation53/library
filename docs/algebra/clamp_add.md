@@ -1,5 +1,7 @@
 ## 概要
 
+`infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
+
 $f(x)=\operatorname{clamp}(x,\mathrm{lo},\mathrm{hi})+\mathrm{bias}$ という形の単調非減少関数を、関数合成について扱うモノイド。
 
 加算、`chmin`、`chmax`、区間への clamp、定数関数を表現でき、これらを任意の順に合成しても同じ形になる。AtCoder ABC196 E - Filters のように、加算・下限設定・上限設定からなる操作列をまとめる用途や、遅延セグメント木の作用として利用できる。
@@ -25,7 +27,7 @@ assert(f(20) == 10);
 ### MonoidClampAdd
 
 ```cpp
-MonoidClampAdd<T, infty = INF>
+MonoidClampAdd<T, infty = nullptr>
 ```
 
 要素型 `S` は `lo`, `hi`, `bias` を持ち、$x \mapsto \operatorname{clamp}(x,\mathrm{lo},\mathrm{hi})+\mathrm{bias}$ を表す。

@@ -21,3 +21,8 @@ $\displaystyle b(t) = \sum_{0 \leq s \lt 2^n} a(s) \prod_{0 \leq i \lt n} (-1)^{
 $\displaystyle c(u) = \sum_{s \oplus t = u} a(s)b(t)$
 
 アダマール変換して、各点積をとって、逆アダマール変換する。
+
+
+### 通常の 32 bit modint の作業領域
+
+`static_modint32`・`dynamic_modint32` の標準の加法群（`GroupAddSub<mint>`、または標準の環・体から取り出した `GroupOfRingAdd`）では、配列長 $N$ が 1024 以上のとき 64 bit 整数の作業配列を使う。この場合は破壊的なアダマール変換でも約 $8N$ byte、すなわち $O(N)$ の追加領域を使う。順変換・逆変換ともに同じで、返却される各要素は通常の modint の値である。

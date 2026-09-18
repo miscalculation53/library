@@ -1,5 +1,7 @@
 ## 概要
 
+`infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
+
 区間の長さ、和、最小値、最大値のうち必要な情報を持つモノイド。
 
 ## 使用例
@@ -61,7 +63,7 @@ S e()
 ### MonoidMinMax
 
 ```cpp
-MonoidMinMax<T, infty = INF>
+MonoidMinMax<T, infty = nullptr>
 ```
 
 `infty` には `T` に変換できる値、または `T` に変換できる値を返す引数なし関数を指定できる。
@@ -114,8 +116,8 @@ S e()
 ### MonoidMinSum / MonoidMaxSum
 
 ```cpp
-MonoidMinSum<T, infty = INF>
-MonoidMaxSum<T, infty = INF>
+MonoidMinSum<T, infty = nullptr>
+MonoidMaxSum<T, infty = nullptr>
 ```
 
 `MonoidMinSum` の要素型 `S` は `mn`, `sum`, `len`、`MonoidMaxSum` は `mx`, `sum`, `len` を持つ。
@@ -171,7 +173,7 @@ S e()
 ### MonoidMinMaxSum
 
 ```cpp
-MonoidMinMaxSum<T, infty = INF>
+MonoidMinMaxSum<T, infty = nullptr>
 ```
 
 要素型 `S` は `mn`, `mx`, `sum`, `len` を持つ。

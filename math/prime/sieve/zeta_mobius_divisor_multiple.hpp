@@ -3,6 +3,7 @@
 #include "template/template_all_but_modint.hpp"
 #include "math/prime/sieve/linear_sieve.hpp"
 #include "algebra/algebra_basic_ops.hpp"
+#include "../../modint/internal_mod32.hpp"
 
 /**
  * @brief 約数・倍数 ゼータ・メビウス変換（$1$ 以上 $n$ 以下）
@@ -16,12 +17,9 @@ template <class M>
 vc<typename M::S> zeta_divisor(const vc<typename M::S> &a)
 {
   const int n = SZ<int>(a) - 1;
-  LinearSieve::reserve(n);
   auto b = a;
-  fec(p : LinearSieve::primes)
+  fec(p : LinearSieve::primes(n))
   {
-    if (p > n)
-      break;
     for (int i = 1; i * p <= n; i++)
       b[i * p] = M::op(b[i * p], b[i]);
   }
@@ -36,14 +34,14 @@ template <class G>
 vc<typename G::S> mobius_divisor(const vc<typename G::S> &a)
 {
   const int n = SZ<int>(a) - 1;
-  LinearSieve::reserve(n);
   auto b = a;
-  fec(p : LinearSieve::primes)
+  fec(p : LinearSieve::primes(n))
   {
-    if (p > n)
-      break;
     for (int i = n / p; i >= 1; i--)
-      b[i * p] = G::op(b[i * p], G::inv(b[i]));
+      if constexpr (internal::ordinary_mod32_add_group<G>::value)
+        b[i * p] -= b[i];
+      else
+        b[i * p] = G::op(b[i * p], G::inv(b[i]));
   }
   return b;
 }
@@ -55,12 +53,9 @@ template <class M>
 vc<typename M::S> zeta_multiple(const vc<typename M::S> &a)
 {
   const int n = SZ<int>(a) - 1;
-  LinearSieve::reserve(n);
   auto b = a;
-  fec(p : LinearSieve::primes)
+  fec(p : LinearSieve::primes(n))
   {
-    if (p > n)
-      break;
     for (int i = n / p; i >= 1; i--)
       b[i] = M::op(b[i], b[i * p]);
   }
@@ -75,14 +70,14 @@ template <class G>
 vc<typename G::S> mobius_multiple(const vc<typename G::S> &a)
 {
   const int n = SZ<int>(a) - 1;
-  LinearSieve::reserve(n);
   auto b = a;
-  fec(p : LinearSieve::primes)
+  fec(p : LinearSieve::primes(n))
   {
-    if (p > n)
-      break;
     for (int i = 1; i * p <= n; i++)
-      b[i] = G::op(b[i], G::inv(b[i * p]));
+      if constexpr (internal::ordinary_mod32_add_group<G>::value)
+        b[i] -= b[i * p];
+      else
+        b[i] = G::op(b[i], G::inv(b[i * p]));
   }
   return b;
 }

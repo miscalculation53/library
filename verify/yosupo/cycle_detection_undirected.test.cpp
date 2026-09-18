@@ -23,7 +23,7 @@ void main2()
 {
   LL(N, M);
   VEC(pll, M, UV);
-  GraphUndirected<ll> G(N, UV);
+  GraphUndirected<> G(N, UV);
   auto [ok, cycle] = cycle_detection(G);
   if (!ok)
     PRINTRETURN(-1);

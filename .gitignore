@@ -2,3 +2,4 @@
 **/exec
 **/__pycache__/
 .venv
+.submit-code/

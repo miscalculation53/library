@@ -37,6 +37,10 @@ INCLUDE_GUARD_OPEN_DIRECTIVE = re.compile(
     r"^\s*#\s*ifndef\s+([_A-Za-z]\w*)\s*$"
 )
 IDENTIFIER = re.compile(r"\b[_A-Za-z]\w*\b")
+RAW_STRING_OPEN = re.compile(r'(?:u8|u|U|L)?R"([^ ()\\\t\r\n]{0,16})\(')
+# Consume the complete preprocessing number before looking for character
+# literals. This includes hexadecimal digits, digit separators, and exponents.
+CPP_NUMBER = re.compile(r"(?:[0-9]|\.[0-9])(?:[\w.]|'\w|(?<=[eEpP])[+-])*")
 DEFAULT_KEEP_FUNCTIONS = {"read", "write", "print", "init", "main2", "test"}
 DEFAULT_BYTE_LIMIT = 65536
 LIBRARY_SOURCE_BASE = "https://github.com/miscalculation53/library/tree/wip/"
@@ -102,9 +106,71 @@ def restore_source_links(text: str, links: Sequence[str]) -> str:
     return "".join(output)
 
 
-def strip_cleanup_comments(text: str) -> str:
-    protected, links = protect_source_links(text)
-    return restore_source_links(strip_comments(protected), links)
+def strip_cleanup_comments(text: str, keep_comments: Iterable[str] = ()) -> str:
+    protected, comments = protect_cleanup_comments(text, keep_comments)
+    protected, links = protect_source_links(protected)
+    stripped = restore_source_links(strip_comments(protected, comments), links)
+    return restore_cleanup_comments(stripped, comments)
+
+
+def source_comments(text: str) -> set[str]:
+    return {text[start:end] for start, end in comment_spans(text)}
+
+
+def comment_record_path(output: Path) -> Path:
+    return output.parent / ".submit-code" / output.name / "comments.json"
+
+
+def save_source_comments(output: Path, comments: set[str]) -> None:
+    # Keep the expansion-time snapshot outside the submitted code, including
+    # when the source is edited before cleanup or the bundle has a custom name.
+    atomic_write(comment_record_path(output), json.dumps(
+        {"comments": sorted(comments)}, ensure_ascii=False,
+    ) + "\n")
+
+
+def load_source_comments(output: Path) -> set[str]:
+    record = comment_record_path(output)
+    if record.is_file():
+        return set(json.loads(record.read_text(encoding="utf-8"))["comments"])
+    # Also support bundles generated before comment snapshots were introduced.
+    stem = "main" if output.name == "bundle.cpp" else output.stem.removesuffix("-bundle")
+    for extension in (".cpp", ".cc", ".cxx", ".C"):
+        source = output.with_name(stem + extension)
+        if source != output and source.is_file():
+            return source_comments(source.read_text(encoding="utf-8"))
+    return set()
+
+
+def protect_cleanup_comments(text: str, comments: Iterable[str]) -> tuple[str, dict[str, str]]:
+    keep = set(comments)
+    if not keep:
+        return text, {}
+    prefix = "submit_code_comment_" + hashlib.sha256(text.encode()).hexdigest()[:16] + "_"
+    while prefix in text:
+        prefix += "_"
+    output: list[str] = []
+    originals: dict[str, str] = {}
+    previous = 0
+    for start, end in comment_spans(text):
+        comment = text[start:end]
+        if comment not in keep:
+            continue
+        marker = f"/*{prefix}{len(originals)}" + "\n" * comment.count("\n") + "*/"
+        originals[marker] = comment
+        output.extend((text[previous:start], marker))
+        previous = end
+    output.append(text[previous:])
+    return "".join(output), originals
+
+
+def restore_cleanup_comments(text: str, comments: dict[str, str]) -> str:
+    normalized = {marker.replace("\n", ""): comment for marker, comment in comments.items()}
+    return re.sub(
+        r"/\*(submit_code_comment_[0-9a-f]{16}_+\d+)\s*\*/",
+        lambda match: normalized.get(f"/*{match.group(1)}*/", match.group()),
+        text,
+    ) if comments else text
 
 
 class Reporter:
@@ -445,8 +511,8 @@ class BundleDocument:
         current: Origin | None = None
         source_line = 1
 
-        for line in text.splitlines(keepends=True):
-            match = LINE_DIRECTIVE.match(line.rstrip("\r\n"))
+        for line, visible in zip(text.splitlines(keepends=True), preprocessor_lines(text)):
+            match = LINE_DIRECTIVE.match(visible.rstrip("\r\n"))
             if match:
                 try:
                     raw_path = json.loads(match.group(2))
@@ -634,7 +700,7 @@ class CompilerWorkspace:
             return None
         return text[: include.end()] + "\n", include.end()
 
-    def _ensure_pch(self, text: str) -> bool:
+    def _ensure_pch(self, text: str, *, build: bool = True) -> bool:
         prefix = self._pch_prefix(text)
         if prefix is None:
             self.pch_prefix_end = None
@@ -675,7 +741,6 @@ class CompilerWorkspace:
             )
         )
         cache_dir = cache_root / cache_key
-        cache_dir.mkdir(parents=True, exist_ok=True)
         self.pch_header = cache_dir / "standard_prelude.hpp"
         self.pch_output = cache_dir / "standard_prelude.hpp.gch"
         if self.pch_header.is_file() and self.pch_output.is_file():
@@ -687,6 +752,11 @@ class CompilerWorkspace:
             except OSError:
                 pass
 
+        # A single early checkpoint is faster to check without building a PCH.
+        # Leave availability unknown so later, repeated checks can still build it.
+        if not build:
+            return False
+        cache_dir.mkdir(parents=True, exist_ok=True)
         atomic_write(self.pch_header, header_text)
         temporary_output = cache_dir / f".{self.pch_output.name}.{os.getpid()}.tmp"
         result = self._run(
@@ -718,8 +788,8 @@ class CompilerWorkspace:
             )
         return self.pch_available
 
-    def _prepare_candidate_source(self, text: str) -> bool:
-        use_pch = self._ensure_pch(text)
+    def _prepare_candidate_source(self, text: str, *, build_pch: bool = True) -> bool:
+        use_pch = self._ensure_pch(text, build=build_pch)
         if use_pch and self.pch_prefix_end is not None:
             prefix = text[: self.pch_prefix_end]
             masked_prefix = "".join("\n" if char == "\n" else " " for char in prefix)
@@ -737,23 +807,23 @@ class CompilerWorkspace:
     def _run(self, command: Sequence[str]) -> subprocess.CompletedProcess[str]:
         return run_command(command, timeout=self.timeout)
 
-    def syntax(self, text: str) -> tuple[bool, str]:
+    def syntax(self, text: str, *, build_pch: bool = True) -> tuple[bool, str]:
         digest = hashlib.sha256(text.encode()).hexdigest()
         cached = self.syntax_cache.get(digest)
         if cached is not None:
             return cached
-        use_pch = self._prepare_candidate_source(text)
+        use_pch = self._prepare_candidate_source(text, build_pch=build_pch)
         result = self._run([*self._candidate_command(use_pch), "-fsyntax-only", str(self.source)])
         value = result.returncode == 0, result.stderr
         self.syntax_cache[digest] = value
         return value
 
-    def link(self, text: str) -> tuple[bool, str]:
+    def link(self, text: str, *, build_pch: bool = True) -> tuple[bool, str]:
         digest = hashlib.sha256(text.encode()).hexdigest()
         cached = self.link_cache.get(digest)
         if cached is not None:
             return cached
-        use_pch = self._prepare_candidate_source(text)
+        use_pch = self._prepare_candidate_source(text, build_pch=build_pch)
         for artifact in (self.object, self.executable):
             try:
                 artifact.unlink()
@@ -803,8 +873,8 @@ class CompilerWorkspace:
         self.link_cache[digest] = value
         return value
 
-    def validate(self, text: str) -> tuple[bool, str]:
-        return self.link(text)
+    def validate(self, text: str, *, build_pch: bool = True) -> tuple[bool, str]:
+        return self.link(text, build_pch=build_pch)
 
     def compiler_warnings(self, text: str, *, allow_pch: bool = True) -> str:
         if allow_pch:
@@ -901,10 +971,8 @@ class CompilerWorkspace:
                 str(self.directory) + os.sep,
                 "-dumpbase",
                 "templates.",
-                "-c",
+                "-fsyntax-only",
                 str(self.source),
-                "-o",
-                str(self.directory / "templates.o"),
             ]
         )
         if result.returncode != 0:
@@ -924,18 +992,23 @@ class CompilerWorkspace:
         source_pattern = re.compile(
             rf"\bsrcp:\s+(?:.*[/\\])?{re.escape(self.source.name)}:(\d+)\b"
         )
+        record_pattern = re.compile(r"^@\d+\s+\w")
+        identifier_pattern = re.compile(r"^@(\d+)\s+identifier_node\b")
+        spelling_pattern = re.compile(r"\bstrg:\s+(.*?)\s+lngt:\s+\d+")
+        body_pattern = re.compile(r"\bbody:\s+@\d+")
+        name_pattern = re.compile(r"\bname:\s+@(\d+)")
 
         def consume(record: str) -> None:
-            identifier = re.match(r"^@(\d+)\s+identifier_node\b", record)
+            identifier = identifier_pattern.match(record)
             if identifier is not None:
-                spelling = re.search(r"\bstrg:\s+(.*?)\s+lngt:\s+\d+", record)
+                spelling = spelling_pattern.search(record)
                 if spelling is not None:
                     identifiers[identifier.group(1)] = spelling.group(1)
                 return
-            if " function_decl " not in record or not re.search(r"\bbody:\s+@\d+", record):
+            if " function_decl " not in record or not body_pattern.search(record):
                 return
             match = source_pattern.search(record)
-            name = re.search(r"\bname:\s+@(\d+)", record)
+            name = name_pattern.search(record)
             if match is None or name is None:
                 return
             line_number = int(match.group(1))
@@ -947,12 +1020,18 @@ class CompilerWorkspace:
         record = ""
         with dump.open(encoding="utf-8", errors="replace") as stream:
             for line in stream:
-                if re.match(r"^@\d+\s+\w", line):
-                    consume(record)
-                    record = line
-                else:
+                if line.startswith("@") and record_pattern.match(line):
+                    if record:
+                        consume(record)
+                    # Most of the dump describes standard-library types and
+                    # expressions. Only these two record kinds are relevant.
+                    record = line if (
+                        " identifier_node " in line or " function_decl " in line
+                    ) else ""
+                elif record:
                     record += line
-            consume(record)
+            if record:
+                consume(record)
         try:
             dump.unlink()
         except FileNotFoundError:
@@ -967,7 +1046,7 @@ class CompilerWorkspace:
         )
         return result
 
-    def preprocess_directives(self, text: str) -> tuple[bool, str, str]:
+    def preprocess_directives(self, text: str, *, keep_comments: bool = False) -> tuple[bool, str, str]:
         self.write(text)
         result = self._run(
             [
@@ -975,6 +1054,7 @@ class CompilerWorkspace:
                 f"-std={self.standard}",
                 "-E",
                 "-fdirectives-only",
+                *(["-CC"] if keep_comments else []),
                 "-x",
                 "c++",
                 *(
@@ -1090,52 +1170,52 @@ def prune_header_origins(
     return removed
 
 
-def strip_comments(text: str) -> str:
-    output: list[str] = []
+def comment_spans(text: str) -> Iterable[tuple[int, int]]:
     index = 0
     size = len(text)
 
     while index < size:
         if text.startswith("//", index):
+            start = index
             index += 2
             while index < size:
                 if text[index] == "\n":
-                    output.append("\n")
-                    index += 1
                     break
                 if text[index] == "\\" and index + 1 < size and text[index + 1] == "\n":
-                    output.append("\n")
                     index += 2
                     continue
                 index += 1
+            yield start, index
             continue
 
         if text.startswith("/*", index):
-            output.append(" ")
+            start = index
             index += 2
             while index < size and not text.startswith("*/", index):
-                if text[index] == "\n":
-                    output.append("\n")
                 index += 1
             if index < size:
                 index += 2
+            yield start, index
             continue
 
-        raw_match = re.match(r'(?:u8|u|U|L)?R"([^ ()\\\t\r\n]{0,16})\(', text[index:])
+        raw_match = RAW_STRING_OPEN.match(text, index)
         if raw_match:
             opener = raw_match.group(0)
             delimiter = raw_match.group(1)
             closer = f'){delimiter}"'
             end = text.find(closer, index + len(opener))
             if end < 0:
-                output.append(text[index:])
                 break
             end += len(closer)
-            output.append(text[index:end])
             index = end
             continue
 
         ch = text[index]
+        if ch.isdigit() or ch == ".":
+            number = CPP_NUMBER.match(text, index)
+            if number:
+                index = number.end()
+                continue
         if ch in {'"', "'"}:
             quote = ch
             start = index
@@ -1150,12 +1230,22 @@ def strip_comments(text: str) -> str:
                     escaped = True
                 elif current == quote:
                     break
-            output.append(text[start:index])
             continue
 
-        output.append(ch)
         index += 1
 
+
+def strip_comments(text: str, keep_comments: Iterable[str] = ()) -> str:
+    keep = set(keep_comments)
+    output: list[str] = []
+    previous = 0
+    for start, end in comment_spans(text):
+        comment = text[start:end]
+        output.append(text[previous:start])
+        output.append(comment if comment in keep else
+                      (" " if comment.startswith("/*") else "") + "\n" * comment.count("\n"))
+        previous = end
+    output.append(text[previous:])
     return "".join(output)
 
 
@@ -1163,6 +1253,7 @@ def preprocessor_lines(text: str) -> list[str]:
     """Return comment-free lines, masking lines continued from a literal or macro."""
 
     lines = strip_comments(text).splitlines(keepends=True)
+    lines.extend([""] * (len(text.splitlines(keepends=True)) - len(lines)))
     result: list[str] = []
     raw_closer: str | None = None
     quote: str | None = None
@@ -1200,15 +1291,18 @@ def preprocessor_lines(text: str) -> list[str]:
                     quote = None
                 continue
 
-            raw_match = re.match(
-                r'(?:u8|u|U|L)?R"([^ ()\\\t\r\n]{0,16})\(', line[index:]
-            )
+            raw_match = RAW_STRING_OPEN.match(line, index)
             if raw_match:
                 raw_closer = f'){raw_match.group(1)}"'
                 index += len(raw_match.group(0))
                 continue
 
             ch = line[index]
+            if ch.isdigit() or ch == ".":
+                number = CPP_NUMBER.match(line, index)
+                if number:
+                    index = number.end()
+                    continue
             if ch in {'"', "'"}:
                 quote = ch
             index += 1
@@ -1227,11 +1321,23 @@ def collapse_blank_lines(text: str) -> str:
     previous_continues = False
     previous_blank = False
 
-    for line in text.splitlines(keepends=True):
+    # Comment contents must not open a raw/string literal in this scanner, and
+    # blank lines inside a block comment are part of the author's formatting.
+    comment_lines: set[int] = set()
+    previous_end = previous_line = 0
+    for start, end in comment_spans(text):
+        first = previous_line + text.count("\n", previous_end, start)
+        last = first + text.count("\n", start, end)
+        comment_lines.update(range(first, last + 1))
+        previous_end, previous_line = end, last
+    lines = text.splitlines(keepends=True)
+    visible = strip_comments(text).splitlines(keepends=True)
+    visible.extend([""] * (len(lines) - len(visible)))
+    for line_index, (original, line) in enumerate(zip(lines, visible)):
         preserve_indentation = (
             raw_closer is not None or quote is not None or previous_continues
         )
-        protected = preserve_indentation
+        protected = preserve_indentation or line_index in comment_lines
         index = 0
         while index < len(line):
             if raw_closer is not None:
@@ -1259,10 +1365,7 @@ def collapse_blank_lines(text: str) -> str:
                         break
                 continue
 
-            raw_match = re.match(
-                r'(?:u8|u|U|L)?R"([^ ()\\\t\r\n]{0,16})\(',
-                line[index:],
-            )
+            raw_match = RAW_STRING_OPEN.match(line, index)
             if raw_match:
                 protected = True
                 delimiter = raw_match.group(1)
@@ -1271,6 +1374,11 @@ def collapse_blank_lines(text: str) -> str:
                 continue
 
             ch = line[index]
+            if ch.isdigit() or ch == ".":
+                number = CPP_NUMBER.match(line, index)
+                if number:
+                    index = number.end()
+                    continue
             if ch in {'"', "'"}:
                 protected = True
                 quote = ch
@@ -1280,15 +1388,15 @@ def collapse_blank_lines(text: str) -> str:
 
         previous_continues = line.rstrip("\r\n").endswith("\\")
         if protected:
-            output.append(line)
+            output.append(original)
             previous_blank = False
             continue
         if line.strip():
-            output.append(line)
+            output.append(original)
             previous_blank = False
             continue
         if not previous_blank:
-            output.append(line)
+            output.append(original)
             previous_blank = True
 
     return "".join(output)
@@ -1296,14 +1404,15 @@ def collapse_blank_lines(text: str) -> str:
 
 def wrap_include_directives(text: str) -> tuple[str, dict[int, str]]:
     lines = text.splitlines(keepends=True)
+    visible = preprocessor_lines(text)
     output: list[str] = []
     includes: dict[int, str] = {}
     index = 0
 
     while index < len(lines):
         line = lines[index]
-        is_line_directive = LINE_DIRECTIVE.match(line.rstrip("\r\n")) is not None
-        if not INCLUDE_DIRECTIVE.match(line) and not is_line_directive:
+        is_line_directive = LINE_DIRECTIVE.match(visible[index].rstrip("\r\n")) is not None
+        if not INCLUDE_DIRECTIVE.match(visible[index]) and not is_line_directive:
             output.append(line)
             index += 1
             continue
@@ -1330,7 +1439,8 @@ def filter_preprocessor_output(
     includes: dict[int, str],
 ) -> str:
     source_resolved = source_path.resolve()
-    current_file: Path | None = None
+    in_source = False
+    source_files = {str(source_path): True, str(source_resolved): True}
     result: list[str] = []
     begin_pattern = re.compile(r"^\s*#pragma\s+submit_code_include_begin\s+(\d+)\s*$")
     end_pattern = re.compile(r"^\s*#pragma\s+submit_code_include_end\s+(\d+)\s*$")
@@ -1341,15 +1451,17 @@ def filter_preprocessor_output(
             try:
                 raw_path = json.loads(marker.group(2))
             except json.JSONDecodeError:
-                current_file = None
+                in_source = False
                 continue
-            if raw_path.startswith("<"):
-                current_file = None
-            else:
-                current_file = Path(raw_path).resolve()
+            if raw_path not in source_files:
+                source_files[raw_path] = (
+                    not raw_path.startswith("<")
+                    and Path(raw_path).resolve() == source_resolved
+                )
+            in_source = source_files[raw_path]
             continue
 
-        if current_file != source_resolved:
+        if not in_source:
             continue
         begin = begin_pattern.match(line)
         if begin:
@@ -1363,11 +1475,14 @@ def filter_preprocessor_output(
     return "".join(result)
 
 
-def safe_cleanup_candidate(text: str, compiler: CompilerWorkspace) -> str:
-    protected, links = protect_source_links(text)
-    uncommented = strip_comments(protected)
+def safe_cleanup_candidate(
+    text: str, compiler: CompilerWorkspace, keep_comments: Iterable[str] = (),
+) -> str:
+    protected, comments = protect_cleanup_comments(text, keep_comments)
+    protected, links = protect_source_links(protected)
+    uncommented = strip_comments(protected, comments)
     wrapped, includes = wrap_include_directives(uncommented)
-    valid, output, stderr = compiler.preprocess_directives(wrapped)
+    valid, output, stderr = compiler.preprocess_directives(wrapped, keep_comments=bool(comments))
     if not valid:
         raise ToolError(f"preprocessor failed: {first_error(stderr)}")
     filtered = filter_preprocessor_output(
@@ -1375,7 +1490,8 @@ def safe_cleanup_candidate(text: str, compiler: CompilerWorkspace) -> str:
         source_path=compiler.source,
         includes=includes,
     )
-    return collapse_blank_lines(restore_source_links(filtered, links))
+    filtered = restore_source_links(filtered, links)
+    return collapse_blank_lines(restore_cleanup_comments(filtered, comments))
 
 
 def insert_anonymous_namespace(text: str) -> str:
@@ -1404,6 +1520,7 @@ def insert_anonymous_namespace(text: str) -> str:
     tokens = structural_tokens(lines)
     brace_depth = 0
     main_line: int | None = None
+    standard_namespaces: list[tuple[int, int]] = []
     main_pattern = re.compile(r"^\s*(?:[_A-Za-z]\w*(?:::\w+)*[\s*&]+)*main\s*\(")
     for line_index, line in enumerate(lines):
         if brace_depth == 0 and main_pattern.match(line):
@@ -1411,6 +1528,11 @@ def insert_anonymous_namespace(text: str) -> str:
             break
         if line.lstrip().startswith("#"):
             continue
+        if brace_depth == 0 and re.match(r"^\s*namespace\s+std\b", line):
+            end = find_braced_entity_end(tokens, line_index)
+            if end is None:
+                return text
+            standard_namespaces.append((line_index, end))
         for token in tokens[line_index]:
             if token == "{":
                 brace_depth += 1
@@ -1431,15 +1553,17 @@ def insert_anonymous_namespace(text: str) -> str:
     ):
         return text
 
-    return "".join(
-        [
-            *lines[:include_end],
-            "namespace {\n",
-            *lines[include_end:main_line],
-            "}\n",
-            *lines[main_line:],
-        ]
-    )
+    # Standard-library specializations must stay in the global std namespace.
+    # Separate anonymous-namespace blocks still refer to the same namespace.
+    wrapped = [*lines[:include_end], "namespace {\n"]
+    cursor = include_end
+    for start, end in standard_namespaces:
+        if not include_end <= start < main_line:
+            continue
+        wrapped.extend([*lines[cursor:start], "}\n", *lines[start : end + 1], "namespace {\n"])
+        cursor = end + 1
+    wrapped.extend([*lines[cursor:main_line], "}\n", *lines[main_line:]])
+    return "".join(wrapped)
 
 
 def structural_tokens(lines: Sequence[str]) -> list[list[str]]:
@@ -1487,6 +1611,11 @@ def structural_tokens(lines: Sequence[str]) -> list[list[str]]:
                 in_block_comment = True
                 index += 2
                 continue
+            if ch.isdigit() or ch == ".":
+                number = CPP_NUMBER.match(line, index)
+                if number:
+                    index = number.end()
+                    continue
             if ch in {'"', "'"}:
                 quote = ch
                 index += 1
@@ -1553,6 +1682,11 @@ def code_identifiers(text: str) -> Iterable[str]:
             in_block_comment = True
             index += 2
             continue
+        if ch.isdigit() or ch == ".":
+            number = CPP_NUMBER.match(text, index)
+            if number:
+                index = number.end()
+                continue
         if ch == "R" and next_ch == '"':
             open_paren = text.find("(", index + 2, index + 19)
             if open_paren >= 0:
@@ -1627,15 +1761,70 @@ def find_statement_end(tokens: Sequence[Sequence[str]], start: int) -> int | Non
     return None
 
 
-def template_prefix_start(lines: Sequence[str], start: int) -> int:
-    if start <= 0 or not lines[start - 1].strip().endswith(">"):
-        return start
-    for line_index in range(start - 1, max(-1, start - 65), -1):
+def template_prefix_start(
+    lines: Sequence[str], start: int, tokens: Sequence[Sequence[str]]
+) -> int:
+    limit = max(0, start - 64)
+    line_index = start - 1
+    while line_index >= limit:
         stripped = lines[line_index].strip()
-        if stripped.startswith("template"):
-            return line_index
-        if stripped.endswith(";") or stripped in {"{", "}"}:
+        if re.match(r"requires\b", stripped):
+            stack: list[str] = []
+            for token in tokens[line_index]:
+                if token in "([{":
+                    stack.append(token)
+                elif token in ")]}":
+                    if not stack or stack.pop() != {")": "(", "]": "[", "}": "{"}[token]:
+                        stack = ["unbalanced"]
+                        break
+            if not stack:
+                # Includes parenthesized constraints such as
+                # requires(!requires { expression; }).
+                line_index -= 1
+                continue
+        # A requires-expression has its own braces and semicolons. Keep that
+        # whole constraint attached to the template instead of leaving it
+        # behind when the following definition is deleted.
+        if tokens[line_index] and tokens[line_index][-1] == "}":
+            depth = 0
+            opening_line: int | None = None
+            for previous in range(line_index, limit - 1, -1):
+                for token in reversed(tokens[previous]):
+                    if token == "}":
+                        depth += 1
+                    elif token == "{":
+                        depth -= 1
+                        if depth == 0:
+                            opening_line = previous
+                            break
+                if opening_line is not None:
+                    break
+            if opening_line is not None:
+                prefix = "".join(lines[limit:opening_line])
+                prefix += lines[opening_line].split("{", 1)[0] + "{"
+                constraint = re.search(
+                    r"\brequires\s+requires\s*(?:\([^{};]*\))?\s*\{$",
+                    strip_comments(prefix),
+                )
+                if constraint is not None:
+                    # strip_comments preserves newlines, including multi-line comments.
+                    requires_line = limit + strip_comments(prefix)[:constraint.start()].count("\n")
+                    if re.match(r"\s*template\b", lines[requires_line]):
+                        return requires_line
+                    line_index = requires_line - 1
+                    continue
+        # A requires-clause or a split return type can lie between the
+        # template-head and the function name. Do not leave it behind when
+        # deleting the declaration, or repeatedly retry an invalid fragment.
+        if (
+            any(token in ";{}" for token in tokens[line_index])
+            or stripped.startswith("#")
+            or re.match(r"(?:public|private|protected)\s*:", stripped)
+        ):
             break
+        if stripped == "template" or re.match(r"template\s*<", stripped):
+            return line_index
+        line_index -= 1
     return start
 
 
@@ -1720,10 +1909,12 @@ def removal_from_function_line(
 ) -> Removal | None:
     if not 0 <= line_index < len(lines):
         return None
-    end = find_braced_entity_end(tokens, line_index)
-    if end is None:
+    source = "".join(lines[line_index:])
+    body = function_body_span(source)
+    if body is None:
         return None
-    start = template_prefix_start(lines, line_index)
+    end = line_index + source.count("\n", 0, body[1])
+    start = template_prefix_start(lines, line_index, tokens)
     return Removal(start, end, label)
 
 
@@ -1862,6 +2053,17 @@ def uninstantiated_template_candidates(
         line_index = line_number - 1
         if not 0 <= line_index < len(lines) or "(" not in lines[line_index]:
             continue
+        if name in {"__ct", "__dt"}:
+            # GCC's internal constructor/destructor names do not appear in
+            # linker diagnostics. Use the source name to retain required
+            # definitions without bisecting every otherwise valid candidate.
+            special_member = re.match(
+                r"^\s*(?:(?:explicit|constexpr|consteval|inline)\s+)*"
+                r"(~?[_A-Za-z]\w*)\s*\(", lines[line_index]
+            )
+            if special_member is None or special_member.group(1) in {"explicit", "requires"}:
+                continue
+            name = special_member.group(1)
         if not name:
             source = "".join(lines[line_index : min(len(lines), line_index + 3)])
             operator = re.search(
@@ -1869,7 +2071,14 @@ def uninstantiated_template_candidates(
                 r"[+\-*/%&|^~!=<>]=?|[_A-Za-z]\w*)",
                 source,
             )
-            name = "operator" + operator.group(1) if operator is not None else "operator"
+            if operator is None:
+                continue
+            name = "operator" + operator.group(1)
+        if name.startswith("operator") and "operator" not in set(code_identifiers(lines[line_index])):
+            # GCC also reports the generated call operators of generic lambdas.
+            # Their source is a lambda expression, which cannot be stubbed as a
+            # function declaration ("auto f = [](auto x);").
+            continue
         if name in keep_functions:
             continue
         removal = removal_from_function_line(
@@ -1894,60 +2103,98 @@ def uninstantiated_template_candidates(
     return deduplicated
 
 
+def function_body_span(source: str) -> tuple[int, int] | None:
+    """Locate a function body, passing over braced constructor initializers."""
+    paren_depth = bracket_depth = brace_depth = 0
+    opening: int | None = None
+    constraint_body = False
+    index = 0
+
+    def skip_trivia(position: int) -> int:
+        while position < len(source):
+            if source[position].isspace():
+                position += 1
+            elif source.startswith("//", position):
+                end = source.find("\n", position + 2)
+                position = len(source) if end < 0 else end + 1
+            elif source.startswith("/*", position):
+                end = source.find("*/", position + 2)
+                position = len(source) if end < 0 else end + 2
+            else:
+                break
+        return position
+
+    while index < len(source):
+        index = skip_trivia(index)
+        if index >= len(source):
+            break
+        raw = RAW_STRING_OPEN.match(source, index)
+        if raw:
+            closer = ')' + raw.group(1) + '"'
+            end = source.find(closer, raw.end())
+            if end < 0:
+                return None
+            index = end + len(closer)
+            continue
+        ch = source[index]
+        if ch.isdigit() or ch == ".":
+            number = CPP_NUMBER.match(source, index)
+            if number:
+                index = number.end()
+                continue
+        if ch in {'"', "'"}:
+            quote = ch
+            index += 1
+            while index < len(source):
+                if source[index] == "\\":
+                    index += 2
+                elif source[index] == quote:
+                    index += 1
+                    break
+                else:
+                    index += 1
+            continue
+        if opening is not None:
+            if ch == "{":
+                brace_depth += 1
+            elif ch == "}":
+                brace_depth -= 1
+                if brace_depth == 0:
+                    after = skip_trivia(index + 1)
+                    if source.startswith("...", after):
+                        after = skip_trivia(after + 3)
+                    if constraint_body or (after < len(source) and source[after] in ",{"):
+                        # C() : member{...}, other(...) { actual body }
+                        opening = None
+                    else:
+                        return opening, index
+        elif ch == "(":
+            paren_depth += 1
+        elif ch == ")":
+            paren_depth = max(0, paren_depth - 1)
+        elif ch == "[":
+            bracket_depth += 1
+        elif ch == "]":
+            bracket_depth = max(0, bracket_depth - 1)
+        elif ch == "{" and paren_depth == bracket_depth == 0:
+            opening = index
+            brace_depth = 1
+            constraint_body = re.search(
+                r"\brequires\s+requires\s*(?:\([^{};]*\))?\s*$",
+                strip_comments(source[:index]),
+            ) is not None
+        elif ch == ";" and paren_depth == bracket_depth == 0:
+            return None
+        index += 1
+    return None
+
+
 def stub_uninstantiated_template_functions(
     text: str,
     candidates: Sequence[Removal],
     *,
     deleted: set[Removal] | None = None,
 ) -> str:
-    def body_opening(source: str) -> int:
-        paren_depth = bracket_depth = 0
-        in_block_comment = False
-        quote: str | None = None
-        escaped = False
-        index = 0
-        while index < len(source):
-            ch = source[index]
-            next_ch = source[index + 1] if index + 1 < len(source) else ""
-            if in_block_comment:
-                if ch == "*" and next_ch == "/":
-                    in_block_comment = False
-                    index += 2
-                else:
-                    index += 1
-                continue
-            if quote is not None:
-                if escaped:
-                    escaped = False
-                elif ch == "\\":
-                    escaped = True
-                elif ch == quote:
-                    quote = None
-                index += 1
-                continue
-            if ch == "/" and next_ch == "/":
-                newline = source.find("\n", index + 2)
-                index = len(source) if newline < 0 else newline + 1
-                continue
-            if ch == "/" and next_ch == "*":
-                in_block_comment = True
-                index += 2
-                continue
-            if ch in {'"', "'"}:
-                quote = ch
-            elif ch == "(":
-                paren_depth += 1
-            elif ch == ")":
-                paren_depth = max(0, paren_depth - 1)
-            elif ch == "[":
-                bracket_depth += 1
-            elif ch == "]":
-                bracket_depth = max(0, bracket_depth - 1)
-            elif ch == "{" and paren_depth == 0 and bracket_depth == 0:
-                return index
-            index += 1
-        return -1
-
     lines = text.splitlines(keepends=True)
     deleted = deleted or set()
     for candidate in sorted(candidates, reverse=True):
@@ -1957,12 +2204,12 @@ def stub_uninstantiated_template_functions(
         source = "".join(lines[candidate.start : candidate.end + 1])
         if re.search(r"\bfriend\b", source):
             continue
-        opening = body_opening(source)
-        closing = source.rfind("}")
-        if opening < 0 or closing < opening:
+        body = function_body_span(source)
+        if body is None:
             continue
+        opening, closing = body
         declaration = source[:opening].rstrip()
-        initializer = re.search(r"\)\s*:\s*", declaration)
+        initializer = re.search(r"\)\s*:(?!:)\s*", declaration)
         if initializer is not None:
             declaration = declaration[: initializer.start() + 1].rstrip()
         declaration += ";\n"
@@ -2001,12 +2248,55 @@ def reduce_template_body_candidates(
         and below_byte_limit(writer.current, target_bytes)
     )
 
+    # Stubbing leaves signatures behind. Before the first size checkpoint, also
+    # try deleting definitions whose names occur only at their declaration.
+    # Use the same compiler candidates and link validation as the normal pass.
+    quick_deleted: set[Removal] = set()
+    if target_bytes is not None and not target_checkpointed:
+        counts = Counter(code_identifiers(text))
+        quick_deleted = {
+            candidate for candidate in candidates
+            if candidate.name and counts[candidate.name] == 1
+        }
+
+    original_lines = original_text.splitlines(keepends=True)
+    dependencies: dict[Removal, set[Removal]] | None = None
+
+    def keep_dependencies(required: set[Removal]) -> set[Removal]:
+        nonlocal dependencies
+        if dependencies is None:
+            by_name: dict[str, set[Removal]] = {}
+            for candidate in candidates:
+                if candidate.name:
+                    by_name.setdefault(candidate.name, set()).add(candidate)
+            dependencies = {}
+            for candidate in candidates:
+                source = "".join(original_lines[candidate.start : candidate.end + 1])
+                calls = re.findall(
+                    r"\b([_A-Za-z]\w*)\s*(?=\(|<[^;{}()]*>\s*\()",
+                    strip_comments(source),
+                )
+                dependencies[candidate] = {
+                    dependency
+                    for name in calls
+                    for dependency in by_name.get(name, ())
+                }
+        # Retaining a required definition also requires its template callees.
+        # Keep same-named overloads conservatively, but do not interpret every
+        # variable named "n" or "size" as a reference to a member function.
+        # Indirect calls not recognized here are still checked by the linker.
+        required = set(required)
+        pending = list(required)
+        while pending:
+            for dependency in dependencies[pending.pop()] - required:
+                required.add(dependency)
+                pending.append(dependency)
+        return required
+
     byte_sizes = {
         candidate: len(
             "".join(
-                original_text.splitlines(keepends=True)[
-                    candidate.start : candidate.end + 1
-                ]
+                original_lines[candidate.start : candidate.end + 1]
             ).encode()
         )
         for candidate in candidates
@@ -2029,6 +2319,7 @@ def reduce_template_body_candidates(
         ) is not None
 
     active = list(candidates)
+    required_definitions: set[Removal] = set()
     for _ in range(min(32, len(candidates))):
         validations += 1
         reporter.phase(
@@ -2036,7 +2327,7 @@ def reduce_template_body_candidates(
             f"validation {validations}: testing {len(active)} template body(s)",
         )
         candidate_text = stub_uninstantiated_template_functions(
-            original_text, active
+            original_text, active, deleted=quick_deleted.intersection(active)
         )
         valid, stderr = compiler.validate(candidate_text)
         if valid:
@@ -2060,12 +2351,30 @@ def reduce_template_body_candidates(
         }
         if not blocked:
             reporter.detail(first_error(stderr))
+            if quick_deleted:
+                # A declaration can carry a multi-line constraint or be named
+                # through a macro. Fall back to retaining all signatures.
+                quick_deleted.clear()
+                continue
             break
         reporter.detail(
             "keeping required template definition(s): "
             + ", ".join(sorted({candidate.name or "" for candidate in blocked}))
         )
-        active = [candidate for candidate in active if candidate not in blocked]
+        required_definitions.update(blocked)
+        blocked = keep_dependencies(required_definitions)
+        if target_bytes is not None and not target_checkpointed:
+            smallest = collapse_blank_lines(apply_removals(
+                original_text, [candidate for candidate in candidates if candidate not in blocked]
+            ))
+            if not below_byte_limit(smallest, target_bytes):
+                # Broad overload dependencies can keep too much code alive.
+                # Prefer the compiler's precise checks when even deleting every
+                # remaining candidate cannot meet the submission limit.
+                blocked = required_definitions
+        # Rebuild from the original set so a later size check can also release
+        # dependencies that were kept speculatively on an earlier attempt.
+        active = [candidate for candidate in candidates if candidate not in blocked]
 
     if accepted:
         deleted = set(accepted)
@@ -2113,7 +2422,7 @@ def reduce_template_body_candidates(
             deleted.difference_update(blocked)
 
         if declaration_fallback:
-            deleted.clear()
+            deleted = quick_deleted.intersection(accepted)
 
             def try_delete(batch: Sequence[Removal]) -> bool:
                 nonlocal text, validations, target_checkpointed
@@ -2230,6 +2539,93 @@ def reduce_template_body_candidates(
     return text, len(accepted)
 
 
+def unreferenced_declaration_candidates(text: str) -> list[Removal]:
+    """Find unreachable groups of types, aliases, and plain lambda constants.
+
+    Names are deliberately unqualified: a same-named declaration in another
+    scope keeps both alive. Initializers and declarations that can introduce
+    runtime effects are not considered removable here.
+    """
+    uncommented = strip_comments(text)
+    if "##" in uncommented:
+        # Token pasting can reference a name that never appears as an identifier.
+        return []
+    lines = uncommented.splitlines(keepends=True)
+    visible_lines = preprocessor_lines(uncommented)
+    if len(visible_lines) != len(lines):
+        return []
+    tokens = structural_tokens(lines)
+    type_pattern = re.compile(r"^\s*(?:struct|class)\s+([_A-Za-z]\w*)\b")
+    alias_pattern = re.compile(r"^\s*using\s+([_A-Za-z]\w*)\s*=")
+    lambda_pattern = re.compile(
+        r"^\s*(?:inline\s+)?constexpr\s+auto\s+([_A-Za-z]\w*)\s*=\s*\[\s*\]"
+    )
+    candidates: list[Removal] = []
+    references: dict[str, set[str]] = {}
+    skip_until = -1
+    continued = False
+    for index, line in enumerate(lines):
+        directive = continued or line.lstrip().startswith("#")
+        continued = directive and line.rstrip("\r\n").endswith("\\")
+        if directive or index <= skip_until:
+            continue
+        type_match = type_pattern.match(visible_lines[index])
+        alias_match = alias_pattern.match(visible_lines[index])
+        lambda_match = lambda_pattern.match(visible_lines[index])
+        match = type_match or alias_match or lambda_match
+        if match is None:
+            continue
+        start = template_prefix_start(lines, index, tokens)
+        if alias_match:
+            end = find_statement_end(tokens, index)
+        else:
+            end = find_braced_entity_end(tokens, index)
+        if end is None:
+            continue
+        skip_until = end
+        # Removals cover complete lines. Do not accidentally remove another
+        # declaration or an expression sharing the final line.
+        statement_tokens = [token for row in tokens[index : end + 1] for token in row]
+        depth = 0
+        terminators: list[int] = []
+        for position, token in enumerate(statement_tokens):
+            if token in "([{":
+                depth += 1
+            elif token in ")]}":
+                depth -= 1
+            elif token == ";" and depth == 0:
+                terminators.append(position)
+        if terminators != [len(statement_tokens) - 1] or re.search(r";\s*$", lines[end]) is None:
+            continue
+        if not alias_match and re.search(r"}\s*;\s*$", lines[end]) is None:
+            # In particular, retain "struct X { ... } object;" and invoked
+            # lambdas: neither may be discarded just because X is unreferenced.
+            continue
+        source = "".join(lines[start : end + 1])
+        identifiers = set(code_identifiers(source))
+        if type_match:
+            header = "".join(lines[start:index])
+            is_template = "template" in header and re.search(r"template\s*<\s*>", header) is None
+            if "friend" in identifiers:
+                continue
+            if not is_template and identifiers.intersection({"static", "inline"}):
+                continue
+            if {"static", "inline"}.issubset(identifiers):
+                continue
+        name = match.group(1)
+        candidates.append(Removal(start, end, f"unreferenced declaration {name}", name))
+        references.setdefault(name, set()).update(identifiers)
+
+    names = set(references)
+    live = set(code_identifiers(apply_removals(uncommented, candidates))) & names
+    pending = list(live)
+    while pending:
+        for dependency in (references[pending.pop()] & names) - live:
+            live.add(dependency)
+            pending.append(dependency)
+    return [candidate for candidate in candidates if candidate.name not in live]
+
+
 def unused_candidates(
     text: str,
     *,
@@ -2314,8 +2710,6 @@ def unused_candidates(
 
     counts = Counter(code_identifiers(text))
     macro_pattern = re.compile(r"^\s*#\s*define\s+([_A-Za-z]\w*)\b")
-    struct_pattern = re.compile(r"^\s*struct\s+([_A-Za-z]\w*)\b")
-    using_pattern = re.compile(r"^\s*using\s+([_A-Za-z]\w*)\s*=")
     for line_index, line in enumerate(lines):
         macro_match = macro_pattern.match(line)
         if macro_match and counts[macro_match.group(1)] == 1:
@@ -2323,28 +2717,8 @@ def unused_candidates(
             while end + 1 < len(lines) and lines[end].rstrip().endswith("\\"):
                 end += 1
             removals.add(Removal(line_index, end, "unused macro (text scan)"))
-        struct_match = struct_pattern.match(line)
-        if struct_match and counts[struct_match.group(1)] == 1:
-            end = find_braced_entity_end(tokens, line_index)
-            if end is not None:
-                removals.add(
-                    Removal(
-                        template_prefix_start(lines, line_index),
-                        end,
-                        f"unused struct {struct_match.group(1)}",
-                    )
-                )
-        using_match = using_pattern.match(line)
-        if using_match and counts[using_match.group(1)] == 1:
-            end = find_statement_end(tokens, line_index)
-            if end is not None:
-                removals.add(
-                    Removal(
-                        template_prefix_start(lines, line_index),
-                        end,
-                        f"unused using {using_match.group(1)}",
-                    )
-                )
+
+    removals.update(unreferenced_declaration_candidates(text))
 
     ordered = sorted(removals)
     deduplicated: list[Removal] = []
@@ -2386,9 +2760,10 @@ def reduce_unused_candidates(
         and below_byte_limit(writer.current, target_bytes)
     )
 
+    original_lines = text.splitlines(keepends=True)
     byte_sizes = {
         candidate: len(
-            "".join(text.splitlines(keepends=True)[candidate.start : candidate.end + 1]).encode()
+            "".join(original_lines[candidate.start : candidate.end + 1]).encode()
         )
         for candidate in candidates
     }
@@ -2471,7 +2846,9 @@ def cleanup_text(
     require_validation: bool,
     reporter: Reporter,
     target_bytes: int | None = None,
+    keep_comments: Iterable[str] = (),
 ) -> str:
+    keep_comments = set(keep_comments)
     target_checkpointed = below_byte_limit(text, target_bytes) or (
         writer.current is not None
         and below_byte_limit(writer.current, target_bytes)
@@ -2488,11 +2865,11 @@ def cleanup_text(
         )
 
     if target_bytes is not None:
-        quick_candidate = collapse_blank_lines(strip_cleanup_comments(text))
+        quick_candidate = collapse_blank_lines(strip_cleanup_comments(text, keep_comments))
         if below_byte_limit(quick_candidate, target_bytes):
             started = time.monotonic()
             reporter.phase("cleanup", "validating a quick comment-only checkpoint")
-            valid, stderr = compiler.syntax(quick_candidate)
+            valid, stderr = compiler.syntax(quick_candidate, build_pch=False)
             if valid:
                 if quick_candidate != text:
                     text = quick_candidate
@@ -2506,10 +2883,10 @@ def cleanup_text(
 
     started = time.monotonic()
     reporter.phase("cleanup", "processing comments and conditional branches")
-    safe_candidate = safe_cleanup_candidate(text, compiler)
+    safe_candidate = safe_cleanup_candidate(text, compiler, keep_comments)
     if below_byte_limit(safe_candidate, target_bytes):
         if safe_candidate != text or require_validation:
-            valid, stderr = compiler.syntax(safe_candidate)
+            valid, stderr = compiler.syntax(safe_candidate, build_pch=False)
             if not valid:
                 raise ToolError(
                     f"safe cleanup did not validate: {first_error(stderr)}"
@@ -2542,20 +2919,29 @@ def cleanup_text(
     text = safe_candidate
     pending_validation = safe_changed or require_validation
 
-    started = time.monotonic()
-    reporter.phase("namespace", "checking anonymous namespace insertion")
-    namespace_candidate = insert_anonymous_namespace(text)
-    if namespace_candidate != text:
-        valid, stderr = compiler.validate(namespace_candidate)
+    def try_declaration_checkpoint() -> None:
+        nonlocal text, pending_validation
+        if target_bytes is None or target_checkpointed:
+            return
+        candidates = unreferenced_declaration_candidates(text)
+        if not candidates:
+            return
+        candidate_text = collapse_blank_lines(apply_removals(text, candidates))
+        if not below_byte_limit(candidate_text, target_bytes):
+            return
+        started = time.monotonic()
+        reporter.phase("declarations", f"checking {len(candidates)} unreferenced declaration(s)")
+        valid, stderr = compiler.validate(candidate_text, build_pch=False)
         if valid:
-            text = namespace_candidate
-            writer.save("anonymous namespace", text)
+            text = candidate_text
             pending_validation = False
+            writer.save("unreferenced types, aliases, and lambdas", text)
+            report_target_checkpoint()
         else:
-            reporter.detail(
-                "anonymous namespace was not inserted: " + first_error(stderr)
-            )
-    reporter.done("namespace", "anonymous namespace check complete", started)
+            reporter.detail("quick declaration cleanup was rejected: " + first_error(stderr))
+        reporter.done("declarations", "quick checkpoint checked", started)
+
+    try_declaration_checkpoint()
 
     def validate_pending() -> None:
         nonlocal pending_validation
@@ -2637,7 +3023,25 @@ def cleanup_text(
                 pending_validation = False
         else:
             reporter.detail("no declaration-only template body is safe to try")
+    try_declaration_checkpoint()
     validate_pending()
+
+    # Template analysis works before namespace insertion. Checking the wrapper
+    # after template reduction avoids compiling and linking the full bundle
+    # before any removable code has been discarded.
+    started = time.monotonic()
+    reporter.phase("namespace", "checking anonymous namespace insertion")
+    namespace_candidate = insert_anonymous_namespace(text)
+    if namespace_candidate != text:
+        valid, stderr = compiler.validate(namespace_candidate)
+        if valid:
+            text = namespace_candidate
+            writer.save("anonymous namespace", text)
+        else:
+            reporter.detail(
+                "anonymous namespace was not inserted: " + first_error(stderr)
+            )
+    reporter.done("namespace", "anonymous namespace check complete", started)
 
     for pass_index in range(1, max_passes + 1):
         stage = f"pass {pass_index}/{max_passes}"
@@ -2648,6 +3052,7 @@ def cleanup_text(
         if accepted == 0:
             reporter.detail(f"no unused candidate was accepted in pass {pass_index}")
             break
+        try_declaration_checkpoint()
     validate_pending()
 
     started = time.monotonic()
@@ -2675,6 +3080,7 @@ def cleanup_text(
         reporter.detail(
             f"IPA cleanup accepted {accepted}/{len(ipa_candidates)} candidate(s)"
         )
+    try_declaration_checkpoint()
     return text
 
 
@@ -2825,6 +3231,11 @@ class FastBundler:
                         )
                     included = self._resolve(local_include.group(1), path)
                     output.append(self._expand(included))
+                    # The include itself is replaced, but its trailing note
+                    # still belongs to the submitted source.
+                    if not add_source_link:
+                        for start, end in comment_spans(line):
+                            output.append(line[start:end].rstrip("\r\n") + "\n")
                     continue
 
                 if INCLUDE_DIRECTIVE.match(directive) and '"' in directive:
@@ -2955,6 +3366,7 @@ def expand_command(args: argparse.Namespace, repo_root: Path) -> None:
         )
 
     privacy_check_line_directives(bundled)
+    save_source_comments(output, source_comments(source.read_text(encoding="utf-8")))
     atomic_write(output, bundled)
     reporter.done(
         "bundle",
@@ -2971,6 +3383,8 @@ def bundle_command(args: argparse.Namespace, repo_root: Path) -> None:
         raise ToolError(f"source file does not exist: {source}")
     if source == output:
         raise ToolError("bundle output must differ from the source file")
+    comments = source_comments(source.read_text(encoding="utf-8"))
+    save_source_comments(output, comments)
 
     include_paths = merge_include_paths(
         default_include_paths(repo_root, source), args.include
@@ -3062,6 +3476,7 @@ def bundle_command(args: argparse.Namespace, repo_root: Path) -> None:
                 safe_only=not args.aggressive,
                 require_validation=False,
                 reporter=reporter,
+                keep_comments=comments,
             )
 
         writer.save("final", bundled, force=True)
@@ -3133,6 +3548,7 @@ def cleanup_command(args: argparse.Namespace, repo_root: Path) -> None:
             require_validation=True,
             reporter=reporter,
             target_bytes=target_bytes,
+            keep_comments=load_source_comments(path),
         )
         writer.save("final", cleaned)
         checkpoint_available = below_byte_limit(cleaned, target_bytes) or (

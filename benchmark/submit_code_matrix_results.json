@@ -1,0 +1,191 @@
+{
+  "date": "2026-09-10",
+  "python": "3.14.4",
+  "compiler": "GCC 15.2.0 / x86_64-apple-darwin25",
+  "standard": "c++23",
+  "cppcheck": "2.20.0",
+  "before_tool_sha256": "8f7d5a0892d26ad04d0657fa5a76c9cb65ba3ec4eb02ff70f487defed58f54c6",
+  "after_tool_sha256": "59d02e8a6e71187d243ceec53f95ba82a4ad17801921e99234b4cbf2866644ce",
+  "measurements": [
+    {
+      "case": "affine",
+      "fixture": "verify/yosupo/range_affine_range.sum.test.cpp",
+      "input_bytes": 80008,
+      "input_sha256": "4b6ca7b67af4cf9c9b118d468ada952ac364c823fbf7c073f97ebf385fbc5364",
+      "before": {
+        "first_seconds": 2.6276535419747233,
+        "first_bytes": 58626,
+        "total_seconds": 22.718863458372653,
+        "final_bytes": 18111
+      },
+      "after": {
+        "first_seconds": 2.342142208479345,
+        "first_bytes": 58626,
+        "total_seconds": 22.18482383340597,
+        "final_bytes": 18111
+      },
+      "failed_commands_before": 1,
+      "failed_commands_after": 1
+    },
+    {
+      "case": "tree",
+      "fixture": "verify/yosupo/vertex_set_path_composite.test.cpp",
+      "input_bytes": 88074,
+      "input_sha256": "52b278c75b1089fc483d4d92db39b3d1223debba8aba32b86284172ea2ee0c48",
+      "before": {
+        "first_seconds": 7.155083582736552,
+        "first_bytes": 49480,
+        "total_seconds": 22.584270250052214,
+        "final_bytes": 24889
+      },
+      "after": {
+        "first_seconds": 6.7349508330225945,
+        "first_bytes": 49608,
+        "total_seconds": 22.50337970815599,
+        "final_bytes": 24911
+      },
+      "failed_commands_before": 2,
+      "failed_commands_after": 2
+    },
+    {
+      "case": "multipoint",
+      "fixture": "verify/yosupo/poly_multipoint_evaluation.test.cpp",
+      "input_bytes": 108139,
+      "input_sha256": "40de7c684d84b7a03916cf4bdc07e397aae56c5615ca35a109d5a427c4d3fd09",
+      "before": {
+        "first_seconds": 12.620809959247708,
+        "first_bytes": 60261,
+        "total_seconds": 32.42308683414012,
+        "final_bytes": 37467
+      },
+      "after": {
+        "first_seconds": 9.11971545778215,
+        "first_bytes": 62564,
+        "total_seconds": 29.742659457959235,
+        "final_bytes": 40363
+      },
+      "failed_commands_before": 5,
+      "failed_commands_after": 3
+    },
+    {
+      "case": "scc",
+      "fixture": "verify/yosupo/scc.test.cpp",
+      "input_bytes": 69633,
+      "input_sha256": "005df1e900cc3e90d9b5ae9c7477d693446b39e4615395082ccde316651dee76",
+      "before": {
+        "first_seconds": 1.4958459585905075,
+        "first_bytes": 62993,
+        "total_seconds": 61.60207437444478,
+        "final_bytes": 13654
+      },
+      "after": {
+        "first_seconds": 1.5232011256739497,
+        "first_bytes": 62993,
+        "total_seconds": 26.970131125301123,
+        "final_bytes": 16827
+      },
+      "failed_commands_before": 14,
+      "failed_commands_after": 1
+    },
+    {
+      "case": "matrix",
+      "fixture": "verify/yosupo/matrix_det.test.cpp",
+      "input_bytes": 97726,
+      "input_sha256": "8a9373b9d00b8f30ddaad4f3d04c5c1b3c006eed3fc73f324eb6d6a330c88e5e",
+      "before": {
+        "first_seconds": 10.59798074979335,
+        "first_bytes": 53742,
+        "total_seconds": 29.241774291731417,
+        "final_bytes": 31631
+      },
+      "after": {
+        "first_seconds": 9.235016042366624,
+        "first_bytes": 56214,
+        "total_seconds": 28.30222229193896,
+        "final_bytes": 34516
+      },
+      "failed_commands_before": 4,
+      "failed_commands_after": 3
+    },
+    {
+      "case": "factorize",
+      "fixture": "verify/yosupo/factorize.test.cpp",
+      "input_bytes": 71848,
+      "input_sha256": "b648cc674c30e07f0075ce6348c5c96d016bf896cbc851d66f48724c916c4274",
+      "before": {
+        "first_seconds": 1.6588100837543607,
+        "first_bytes": 59158,
+        "total_seconds": 21.895974374376237,
+        "final_bytes": 18666
+      },
+      "after": {
+        "first_seconds": 1.5134574575349689,
+        "first_bytes": 59158,
+        "total_seconds": 21.540844249539077,
+        "final_bytes": 18666
+      },
+      "failed_commands_before": 1,
+      "failed_commands_after": 1
+    },
+    {
+      "case": "rolling",
+      "fixture": "verify/mytest/ai/rolling_hash_string_interop.test.cpp",
+      "input_bytes": 96995,
+      "input_sha256": "e45b9702d808b7335e34226058c9b050a044b10020165063526329bb3ba41375",
+      "before": {
+        "first_seconds": 8.77719945833087,
+        "first_bytes": 58427,
+        "total_seconds": 26.032247041352093,
+        "final_bytes": 40895
+      },
+      "after": {
+        "first_seconds": 8.250549791380763,
+        "first_bytes": 58466,
+        "total_seconds": 25.050464499741793,
+        "final_bytes": 41088
+      },
+      "failed_commands_before": 3,
+      "failed_commands_after": 3
+    },
+    {
+      "case": "cht",
+      "fixture": "verify/mytest/ai/convex_hull_trick.test.cpp",
+      "input_bytes": 85534,
+      "input_sha256": "d65840d0b7ba1530d5596301d10947d1e37ef1bc020456a2c179e10e90956cc2",
+      "before": {
+        "first_seconds": 10.657761375419796,
+        "first_bytes": 49316,
+        "total_seconds": 77.97693008277565,
+        "final_bytes": 36030
+      },
+      "after": {
+        "first_seconds": 8.825791459530592,
+        "first_bytes": 49316,
+        "total_seconds": 47.07985579222441,
+        "final_bytes": 34855
+      },
+      "failed_commands_before": 8,
+      "failed_commands_after": 1
+    }
+  ],
+  "validation": {
+    "unit_tests": 41,
+    "cases": {
+      "affine": 16,
+      "tree": 16,
+      "multipoint": 12,
+      "scc": 24,
+      "matrix": 12,
+      "factorize": 1,
+      "rolling": 1,
+      "cht": 1
+    },
+    "artifacts": 24,
+    "executions": 249,
+    "contest18_regression": {
+      "bytes": 42288,
+      "cases": 15,
+      "executions": 30
+    }
+  }
+}

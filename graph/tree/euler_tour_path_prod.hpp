@@ -13,6 +13,8 @@
 
 // G は群
 // 根からのパスだけなら LCA いらない
+// コンストラクタ: n, par, vec, edge か n, es, rt, vec, edge
+// vec[v]: v のデータ (省略したら単位元)
 template <
   class G,
   bool need_lca = true,
@@ -25,6 +27,7 @@ struct PathProd : EulerTour<need_lca, RMQ>
   using S = typename G::S;
 
 private:
+  bool edge = false;
   DS1 seg1;
   DS2 seg2;
   template <class T>
@@ -39,6 +42,8 @@ private:
     vc<S> seg_init(2 * this->n, G::e());
     repi(i, this->n)
     {
+      if (edge && i == this->root())
+        continue;
       seg_init[this->in[i]] = vec[i];
       seg_init[this->out[i] + 1] = G::inv(vec[i]);
     }
@@ -47,15 +52,15 @@ private:
 
 public:
   PathProd() {}
-  template <class I, class T>
-  PathProd(int n, const vc<I> &par, const vc<T> &vec = {})
-    : EulerTour<need_lca, RMQ>(n, par)
+  template <class I, class T = S>
+  PathProd(int n, const vc<I> &par, const vc<T> &vec = {}, bool edge = false)
+    : EulerTour<need_lca, RMQ>(n, par), edge(edge)
   {
     build(vec);
   }
-  template <class P, class T>
-  PathProd(int n, const vc<P> &es, int rt, const vc<T> &vec = {})
-    : EulerTour<need_lca, RMQ>(n, es, rt)
+  template <class P, class T = S>
+  PathProd(int n, const vc<P> &es, int rt, const vc<T> &vec = {}, bool edge = false)
+    : EulerTour<need_lca, RMQ>(n, es, rt), edge(edge)
   {
     build(vec);
   }
@@ -68,6 +73,7 @@ public:
   void set(int v, const S &x)
   {
     assert(0 <= v && v < this->n);
+    assert(!edge || v != this->root());
     S ix = G::inv(x);
     seg1.set(this->in[v], x), seg1.set(this->out[v] + 1, ix);
     seg2.set(this->in[v], x), seg2.set(this->out[v] + 1, ix);
@@ -84,7 +90,7 @@ public:
     assert(0 <= v && v < this->n);
     int w = this->lca(u, v);
     S up = seg2.prod(this->in[w] + 1, this->in[u] + 1);
-    S down = seg1.prod(this->in[w], this->in[v] + 1);
+    S down = seg1.prod(this->in[w] + edge, this->in[v] + 1);
     return G::op(up, down);
   }
 };

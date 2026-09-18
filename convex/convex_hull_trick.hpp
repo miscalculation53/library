@@ -3,7 +3,8 @@
 #include "../template/template_all_but_modint.hpp"
 
 #include "../utils/is_integral_ext.hpp"
-#include "../utils/resolved_value.hpp"
+#include "../utils/larger_int.hpp"
+#include "../utils/resolved_infty.hpp"
 
 /**
  * @brief Convex Hull Trick
@@ -32,10 +33,14 @@ struct ConvexHullTrickSegment
   CPP_DUMP_DEFINE_DATA(line, left, right);
 };
 
-template <class T = ll, class Compare = less<>, auto infty = INF>
+// T: ax + b の a, x, b の型
+// U: ax + b の型
+template <class T, class U = larger_int_t<T>, class Compare = less<>,
+          auto inftyT = nullptr, auto inftyU = nullptr>
 struct ConvexHullTrick
 {
   static_assert(!is_integral_ext<T> || is_signed_ext<T>);
+  static_assert(!is_integral_ext<U> || is_signed_ext<U>);
   static_assert(is_same_v<Compare, less<>> || is_same_v<Compare, less<T>> ||
                 is_same_v<Compare, greater<>> || is_same_v<Compare, greater<T>>);
 
@@ -44,7 +49,8 @@ struct ConvexHullTrick
 
 private:
   static constexpr int sgn = is_same_v<Compare, less<>> || is_same_v<Compare, less<T>> ? -1 : 1;
-  static constexpr decltype(auto) inf() { return resolved_value<T, infty>(); }
+  static constexpr decltype(auto) infT() { return resolved_infty<T, inftyT>(); }
+  static constexpr decltype(auto) infU() { return resolved_infty<U, inftyU>(); }
 
   struct Node
   {
@@ -65,7 +71,7 @@ private:
   int add_cnt = 0, qdir = 0;
 
   static Line line(const Node &p) { return {sgn * p.a, sgn * p.b, p.id}; }
-  static T eval(const Node &p, const T &x) { return sgn * (p.a * x + p.b); }
+  static U eval(const Line &p, const T &x) { return U(p.a) * U(x) + U(p.b); }
 
   static T border(const Node &x, const Node &y)
   {
@@ -80,30 +86,28 @@ private:
   {
     if (y == st.end())
     {
-      x->r = inf();
+      x->r = infT();
       return false;
     }
     if (x->a == y->a)
-      x->r = x->b > y->b ? inf() : -inf();
+      x->r = x->b > y->b ? infT() : -infT();
     else
       x->r = border(*x, *y);
     return x->r >= y->r;
   }
 
 public:
-  // y = ax + b を追加
-  // 直線の id は 0 始まりの追加順になる
+  // y = ax + b
   // O(log(直線の個数))
   void add_line(T a, T b) { add_line(a, b, add_cnt); }
 
-  // y = ax + b を追加
-  // 直線の id を指定
+  // y = ax + b
   // O(log(直線の個数))
   void add_line(T a, T b, int id)
   {
     add_cnt++;
     reset_monotone_query();
-    Node p{sgn * a, sgn * b, inf(), id};
+    Node p{sgn * a, sgn * b, infT(), id};
     auto same = st.lower_bound(p);
     if (same != st.end() && same->a == p.a)
     {
@@ -122,28 +126,30 @@ public:
 
   // (値, 直線)
   // O(log(直線の個数))
-  pair<T, Line> query(const T &x) const
+  pair<U, Line> query(const T &x) const
   {
     if (st.empty())
     {
-      const T e = sgn < 0 ? inf() : -inf();
-      return {e, {T(0), e, -1}};
+      const T eT = sgn < 0 ? infT() : -infT();
+      const U eU = sgn < 0 ? infU() : -infU();
+      return {eU, {T(0), eT, -1}};
     }
     auto it = st.lower_bound(x);
     if (it == st.end()) --it;
-    const Node &p = *it;
-    return {eval(p, x), line(p)};
+    Line p = line(*it);
+    return {eval(p, x), p};
   }
 
   // (値, 直線)
   // x は単調 (増減方向は自動で判定される)
   // おおむね償却 O(1)
-  pair<T, Line> query_monotone(const T &x)
+  pair<U, Line> query_monotone(const T &x)
   {
     if (st.empty())
     {
-      const T e = sgn < 0 ? inf() : -inf();
-      return {e, {T(0), e, -1}};
+      const T eT = sgn < 0 ? infT() : -infT();
+      const U eU = sgn < 0 ? infU() : -infU();
+      return {eU, {T(0), eT, -1}};
     }
     if (!qit)
     {
@@ -163,8 +169,8 @@ public:
       while (*qit != st.begin() && !(prev(*qit)->r < x)) --*qit;
     }
     last_x = x;
-    const Node &p = **qit;
-    return {eval(p, x), line(p)};
+    Line p = line(**qit);
+    return {eval(p, x), p};
   }
 
   void reset_monotone_query()
@@ -176,16 +182,17 @@ public:
 
   // Segment: line, left, right
   // 直線 line が最適になる x の範囲 (left, right]
+  // 整数の場合、端点はどちらの直線に入れてもいいというわけではないので注意!!
   // x の昇順に返す
   vc<Segment> segments() const
   {
     vc<Segment> res;
     res.reserve(st.size());
-    T l = -inf();
+    T l = -infT();
     for (auto it = st.begin(); it != st.end(); ++it)
     {
       auto nxt = next(it);
-      T r = nxt == st.end() ? inf() : it->r;
+      T r = nxt == st.end() ? infT() : it->r;
       res.eb(Segment{line(*it), l, r});
       l = r;
     }
@@ -201,10 +208,14 @@ public:
 };
 
 // **追加する直線の傾き**が単調
-template <class T = ll, class Compare = less<>, auto infty = INF>
+// T: ax + b の a, x, b の型
+// U: ax + b の型
+template <class T, class U = larger_int_t<T>, class Compare = less<>,
+          auto inftyT = nullptr, auto inftyU = nullptr>
 struct ConvexHullTrickMonotoneSlope
 {
   static_assert(!is_integral_ext<T> || is_signed_ext<T>);
+  static_assert(!is_integral_ext<U> || is_signed_ext<U>);
   static_assert(is_same_v<Compare, less<>> || is_same_v<Compare, less<T>> ||
                 is_same_v<Compare, greater<>> || is_same_v<Compare, greater<T>>);
 
@@ -213,7 +224,8 @@ struct ConvexHullTrickMonotoneSlope
 
 private:
   static constexpr int sgn = is_same_v<Compare, less<>> || is_same_v<Compare, less<T>> ? -1 : 1;
-  static constexpr decltype(auto) inf() { return resolved_value<T, infty>(); }
+  static constexpr decltype(auto) infT() { return resolved_infty<T, inftyT>(); }
+  static constexpr decltype(auto) infU() { return resolved_infty<U, inftyU>(); }
 
   struct Node
   {
@@ -228,7 +240,7 @@ private:
   int add_cnt = 0, adir = 0, qpos = -1, qdir = 0;
 
   static Line line(const Node &p) { return {sgn * p.a, sgn * p.b, p.id}; }
-  static T eval(const Node &p, const T &x) { return sgn * (p.a * x + p.b); }
+  static U eval(const Line &p, const T &x) { return U(p.a) * U(x) + U(p.b); }
 
   static T border(const Node &x, const Node &y)
   {
@@ -253,7 +265,7 @@ private:
       dq.pop_back();
     }
     if (!dq.empty()) dq.back().r = border(dq.back(), p);
-    p.r = inf();
+    p.r = infT();
     dq.eb(p);
   }
 
@@ -270,7 +282,7 @@ private:
       if (r < dq.front().r) break;
       dq.pop_front();
     }
-    p.r = dq.empty() ? inf() : border(p, dq.front());
+    p.r = dq.empty() ? infT() : border(p, dq.front());
     dq.emplace_front(p);
   }
 
@@ -287,7 +299,7 @@ public:
   {
     add_cnt++;
     reset_monotone_query();
-    Node p{sgn * a, sgn * b, inf(), id};
+    Node p{sgn * a, sgn * b, infT(), id};
     if (last_a)
     {
       int d = (*last_a < p.a) - (p.a < *last_a);
@@ -306,29 +318,31 @@ public:
 
   // (値, 直線)
   // O(log(直線の個数))
-  pair<T, Line> query(const T &x) const
+  pair<U, Line> query(const T &x) const
   {
     if (dq.empty())
     {
-      const T e = sgn < 0 ? inf() : -inf();
-      return {e, {T(0), e, -1}};
+      const T eT = sgn < 0 ? infT() : -infT();
+      const U eU = sgn < 0 ? infU() : -infU();
+      return {eU, {T(0), eT, -1}};
     }
     auto it = lower_bound(dq.begin(), dq.end(), x,
                           [](const Node &p, const T &x) { return p.r < x; });
     if (it == dq.end()) --it;
-    const Node &p = *it;
-    return {eval(p, x), line(p)};
+    Line p = line(*it);
+    return {eval(p, x), p};
   }
 
   // (値, 直線)
   // x は単調 (増減方向は自動で判定される)
   // おおむね償却 O(1)
-  pair<T, Line> query_monotone(const T &x)
+  pair<U, Line> query_monotone(const T &x)
   {
     if (dq.empty())
     {
-      const T e = sgn < 0 ? inf() : -inf();
-      return {e, {T(0), e, -1}};
+      const T eT = sgn < 0 ? infT() : -infT();
+      const U eU = sgn < 0 ? infU() : -infU();
+      return {eU, {T(0), eT, -1}};
     }
     if (qpos == -1)
     {
@@ -349,8 +363,8 @@ public:
       while (qpos > 0 && !(dq[qpos - 1].r < x)) qpos--;
     }
     last_x = x;
-    const Node &p = dq[qpos];
-    return {eval(p, x), line(p)};
+    Line p = line(dq[qpos]);
+    return {eval(p, x), p};
   }
 
   void reset_monotone_query()
@@ -367,10 +381,10 @@ public:
   {
     vc<Segment> res;
     res.reserve(dq.size());
-    T l = -inf();
+    T l = -infT();
     repi(i, dq.size())
     {
-      T r = i + 1 == SZ(dq) ? inf() : dq[i].r;
+      T r = i + 1 == SZ(dq) ? infT() : dq[i].r;
       res.eb(Segment{line(dq[i]), l, r});
       l = r;
     }

@@ -33,7 +33,8 @@ void test_resolve()
 void test_shortest_path()
 {
   vc<tuple<int, int, R>> edges{{0, 1, R(BI(1), BI(2))}, {1, 2, R(BI(2), BI(3))}};
-  ShortestPath<true, R, numeric_limits<R>::infinity> graph(4, edges);
+  Graph<true, R> graph_input(4, edges);
+  ShortestPath<true, R, numeric_limits<R>::infinity> graph(graph_input);
   auto dist = graph.dijkstra(0);
   assert(dist[0] == R(0));
   assert(dist[1] == R(BI(1), BI(2)));

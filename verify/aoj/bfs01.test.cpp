@@ -52,7 +52,8 @@ void main2()
       UVW.eb(v, u, A <= i && i <= C && B <= j && j <= D ? 0 : 1);
     }
   }
-  ShortestPath<true, ll> G(M * M, UVW);
+  Graph<true, ll> G_input(M * M, UVW);
+  ShortestPath G(G_input);
 
   ll ans = 0;
   rep(i, N)

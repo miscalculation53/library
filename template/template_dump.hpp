@@ -1,6 +1,7 @@
 #pragma once
 
 #include "template_types.hpp"
+#include "template_dump_map.hpp"
 
 /**
  * @brief テンプレート（dump）
@@ -8,14 +9,13 @@
  */
 
 #ifdef LOCAL
-#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump
 namespace cpp_dump::_detail
 {
   inline string export_var(
-      const i128 &x, const string &indent, size_t last_line_length,
-      size_t current_depth, bool fail_on_newline, const export_command &command
+      const i128 &x, const string &, size_t,
+      size_t, bool, const export_command &
   ) {
-    return export_var(i128tos(x), indent, last_line_length, current_depth, fail_on_newline, command);
+    return es::signed_number(i128tos(x));
   }
 
   template <class T>

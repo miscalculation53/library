@@ -19,7 +19,7 @@ Graph<is_directed, Cost> contracted_graph(const Graph<is_directed, Cost> &g, con
   assert(SZ(ids) == n);
   const int k = ids.empty() ? 0 : MAX(ids) + 1;
   vc<pair<int, int>> uv;
-  repi(u, n) fec(e : g.out_arcs(u))
+  repi(u, n) fec(e : g.out_edges(u))
   {
     if constexpr (!is_directed)
       if (u > e.to) continue;

@@ -3,6 +3,7 @@
 #include "template/template_all_but_modint.hpp"
 #include "utils/larger_int.hpp"
 #include "math/modint/modint.hpp"
+#include "math/rational.hpp"
 
 // Test focus: widening rules for integers and identity rules for real and modint types.
 static_assert(is_same_v<larger_int_t<int>, long long>);
@@ -14,6 +15,11 @@ static_assert(is_same_v<larger_int_t<float>, float>);
 static_assert(is_same_v<larger_int_t<double>, double>);
 static_assert(is_same_v<larger_int_t<long double>, long double>);
 static_assert(is_same_v<larger_int_t<modint998244353>, modint998244353>);
+static_assert(is_same_v<larger_int_t<Rational<int>>, Rational<ll>>);
+static_assert(is_same_v<larger_int_t<Rational<ll>>, Rational<i128>>);
+static_assert(is_same_v<larger_int_t<Rational<i128>>, Rational<i128>>);
+static_assert(is_same_v<larger_int_t<Rational<double>>, Rational<double>>);
+static_assert(is_same_v<larger_int_t<Rational<modint998244353>>, Rational<modint998244353>>);
 
 int main()
 {

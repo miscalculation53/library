@@ -53,21 +53,6 @@ private:
       assert(den != T(0));
   }
 
-  static T gcd_abs(T a, T b)
-  {
-    if constexpr (is_rational_ordered_v<T>)
-    {
-      if (a < 0) a = -a;
-      if (b < 0) b = -b;
-    }
-    while (b != T(0))
-    {
-      T r = a % b;
-      a = b, b = r;
-    }
-    return a;
-  }
-
   static T unit_sign(const T &x)
   {
     assert(x != T(0));
@@ -87,14 +72,38 @@ public:
     normalize_sign();
   }
 
+  template <class U, enable_if_t<is_constructible_v<T, const U &>, int> = 0>
+  explicit Rational(const Rational<U> &x) : num(T(x.num)), den(T(x.den))
+  {
+    normalize_sign();
+  }
+
+  static Rational infty()
+  {
+    static_assert(is_rational_ordered_v<T>);
+    return {T(1), T(0)};
+  }
+
   bool is_infinite() const { return den == T(0); }
   bool is_finite() const { return den != T(0); }
 
   pair<T, T> reduced() const
   {
-    if constexpr (rational_has_mod<T>::value)
+    if constexpr (is_same_v<T, i128> || is_same_v<T, u128>)
     {
-      T g = gcd_abs(num, den);
+      // std::gcd は標準モードでは 128 ビット整数を受け付けない。
+      u128 a = num < T(0) ? -u128(num) : u128(num), b = u128(den);
+      while (b)
+      {
+        u128 r = a % b;
+        a = b, b = r;
+      }
+      T g = T(a);
+      return g == T(0) ? pair<T, T>{num, den} : pair<T, T>{num / g, den / g};
+    }
+    else if constexpr (rational_has_mod<T>::value)
+    {
+      T g = gcd(num, den);
       return g == T(0) ? pair<T, T>{num, den} : pair<T, T>{num / g, den / g};
     }
     else
@@ -289,8 +298,7 @@ struct numeric_limits<::Rational<T>> : numeric_limits<T>
   static constexpr bool has_infinity = ::is_rational_ordered_v<T>;
   static ::Rational<T> infinity() noexcept
   {
-    static_assert(::is_rational_ordered_v<T>);
-    return ::Rational<T>(T(1), T(0));
+    return ::Rational<T>::infty();
   }
   static constexpr bool is_signed = numeric_limits<T>::is_signed;
   static constexpr bool is_integer = false;

@@ -18,7 +18,8 @@ int main()
       ll w = max_cost == 0 ? 0 : rng() % (max_cost + 1);
       es.eb(u, v, w);
     }
-    ShortestPath<true, ll> g(n, es);
+    Graph<true, ll> g_input(n, es);
+    ShortestPath g(g_input);
     int s = rng() % n;
     auto expected = g.dijkstra(s);
     auto actual = g.dial(s, max_cost);
@@ -49,8 +50,18 @@ int main()
     vc<tuple<int, int, ll>> es;
     repi(i, n - 1) es.eb(i, i + 1, i % 4);
     repi(i, 400) es.eb(i % n, (i * 37 + 11) % n, i % 4);
-    ShortestPath<true, ll> g(n, es);
+    Graph<true, ll> g_input(n, es);
+    ShortestPath g(g_input);
     assert(g.solve(0) == g.dijkstra(0));
+  }
+  // 重みが大きいときも、計算量の比較で積をあふれさせずに Dijkstra を選ぶ。
+  {
+    const i128 w = i128(1) << 123;
+    Graph<true, i128> g_input(128, vc<tuple<int, int, i128>>{{0, 1, w}, {0, 2, w / 2}});
+    ShortestPath g(g_input);
+    auto ds = g.solve(0);
+    assert(ds == g.dijkstra(0));
+    assert(ds[1] == w && ds[2] == w / 2);
   }
   PRINT("Hello World");
 }

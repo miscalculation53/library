@@ -3,6 +3,7 @@
 #include "../../template/template_all_but_modint.hpp"
 
 #include "../../algebra/algebra_basic_ops.hpp"
+#include "../dot_product.hpp"
 
 /**
  * @brief クロネッカー冪の作用
@@ -60,7 +61,10 @@ void kronecker_power_array_destructive(const array<array<typename SR::S, k>, k> 
   {
     array<S, k> res;
     fill(ALL(res), SR::e0());
-    repi(i, k) repi(j, k) res[i] = SR::add(res[i], SR::mul(mat[i][j], arr[j]));
+    if constexpr (internal::dot_product_mod32<SR>::value && k >= 8)
+      repi(i, k) res[i] = dot_product<SR>(k, mat[i].begin(), arr.begin());
+    else
+      repi(i, k) repi(j, k) res[i] = SR::add(res[i], SR::mul(mat[i][j], arr[j]));
     return res;
   };
   tensor_power_array_destructive<k>(linear_map, v);
@@ -72,7 +76,7 @@ void kronecker_power_array_destructive(const array<array<typename SR::S, k>, k> 
 template <class SR, int k>
 vc<typename SR::S> kronecker_power_array(const array<array<typename SR::S, k>, k> &mat, vc<typename SR::S> v)
 {
-  kronecker_power_array_destructive<SR>(mat, v);
+  kronecker_power_array_destructive<SR, k>(mat, v);
   return v;
 }
 

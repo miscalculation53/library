@@ -31,7 +31,7 @@ void main2()
   VEC(pll, N - 1, UV);
   RootedTree G(N, UV, randrange(0, N));
   using M = NormalAndOppositeGroup<OppositeGroup<GroupAffineFunction<mint>>>;
-  SegmentTree<M> seg(G.reordered_vertex_info(AB));
+  SegmentTree<M> seg(G.reordered_vertex_values(AB));
   rep(_, Q)
   {
     LL(t);

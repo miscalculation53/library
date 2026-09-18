@@ -4,7 +4,7 @@
 #include "math/bigint.hpp"
 
 // Test focus: signed arithmetic, leading zeros, decimal and hexadecimal I/O,
-// scalar operations, and term updates cover sign and limb boundaries.
+// scalar operations, gcd/lcm, and term updates cover sign and limb boundaries.
 int digit_value(char c)
 {
   if ('0' <= c && c <= '9')
@@ -160,5 +160,21 @@ int main()
   test_base<10, 6>(rng);
   test_base<16, 5>(rng);
   assert(BigInteger<>(numeric_limits<ll>::min()).to_string() == std::to_string(numeric_limits<ll>::min()));
+  using BI = BigInteger<>;
+  assert(gcd(BI(-48), BI(18)) == 6);
+  assert(gcd(BI(0), BI(0)) == 0);
+  assert(gcd(BI("12345678901234567890"), 90) == 90);
+  assert(gcd(-90, BI("12345678901234567890")) == 90);
+  assert(lcm(BI(-12), BI(18)) == 36);
+  assert(lcm(BI(0), BI(18)) == 0);
+  assert(lcm(BI(21), 6) == 42);
+  assert(lcm(6, BI(21)) == 42);
+  repi(_, 1000)
+  {
+    ll a = ll(rng() % 2'000'000'001) - 1'000'000'000;
+    ll b = ll(rng() % 2'000'000'001) - 1'000'000'000;
+    assert(gcd(BI(a), BI(b)) == std::gcd(a, b));
+    assert(lcm(BI(a), BI(b)) == BI(std::lcm(a, b)));
+  }
   cout << "Hello World" << endl;
 }

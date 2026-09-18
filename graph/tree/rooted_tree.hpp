@@ -340,17 +340,16 @@ public:
     assert(0 <= v && v < n);
     return dep[u] < dep[v] ? pair{u, v} : pair{v, u};
   }
-  // 長さ n の配列。v 番目には v が子側になる辺の情報が格納される。根は未定義。
-  template <class P, class EdgeInfo>
-  vc<EdgeInfo> reordered_edge_info(const vc<P> &es, const vc<EdgeInfo> &edge_info) const
+  // (u, v, value) の列を頂点番号順に変換する。各辺の値を子側に置く。
+  template <class I, class T>
+  vc<T> edge_to_vertex_values(const vc<tuple<I, I, T>> &es, const T &root_value = T{}) const
   {
-    assert(SZ(es) == n - 1 && SZ(edge_info) >= n - 1);
-    vc<EdgeInfo> res(n);
-    repi(i, n - 1)
+    assert(SZ(es) == n - 1);
+    vc<T> res(n, root_value);
+    fec([u, v, value] : es)
     {
-      auto [u, v] = es[i];
-      int eid = dep[u] < dep[v] ? v : u;
-      res[eid] = edge_info[i];
+      int child = parent_child(u, v).second;
+      res[child] = value;
     }
     return res;
   }
@@ -423,12 +422,12 @@ public:
 
   // costs[v] := (parent(v), v) のコスト としたときの、各頂点の深さ
   // costs[root()] は参照されない
-  // 使う際は reordered_edge_info 関数も適切に活用するとよい
+  // edge_to_vertex_values で辺の値を頂点番号順に変換できる
   template <class T>
   vc<T> weighted_depths(vc<T> costs) const
   {
-    vc<T> res(n, 0);
-    auto vs = top_down_vertices();
+    assert(SZ(costs) == n);
+    const auto &vs = top_down_vertices();
     costs[root()] = 0;
     rep(i, 1, n)
     {
@@ -440,9 +439,9 @@ public:
 
   // 頂点データを行きがけ順に並べ替える
   template <class T>
-  vc<T> reordered_vertex_info(const vc<T> &vertex_info) const
+  vc<T> reordered_vertex_values(const vc<T> &vertex_values) const
   {
-    return permuted(vertex_info, preinv);
+    return permuted(vertex_values, preinv);
   }
   // v の部分木が行きがけ順 [l, r) の頂点であるような (l, r)
   // edge のときは辺属性 (v を除く)
@@ -453,8 +452,8 @@ public:
   // u から v へのパスが
   // 行きがけ順 [l_1, r_1), ..., [l_k, r_k) の頂点 (この順) であるとき
   // f(l_1, r_1, isrev), ..., f(l_k, r_k, isrev) を順に実行する
-  // isrev は逆向きのとき
-  // edge のときは辺属性 (lca(u, v) を除く)
+  // isrev は逆向き (r-1, ..., l の順) のとき
+  // edge のときは辺属性 (lca(u, v) を除いたもの)
   template <class F>
   void path_query(int u, int v, F f, bool edge = false) const
   {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../template/template_all_but_modint.hpp"
+#include "../../algebra/algebra_basic_ops.hpp"
 
 #include "fps.hpp"
 #include "../convolution/convolution_many.hpp"
@@ -23,7 +24,7 @@ FormalPowerSeries<mint> interpolation(const vc<mint> &xs, const vc<mint> &ys)
   repi(i, n) fs[i] = {-xs[i], 1};
   F g = convolution_many(fs);
   vc<mint> a = multipoint_evaluation(g.diff(), xs);
-  vc<mint> ia = inv_many(a);
+  vc<mint> ia = inv_many<FieldAddSubMulDiv<mint>>(a);
   vc<pair<F, F>> rs(n);
   repi(i, n) rs[i] = {{ys[i] * ia[i]}, fs[i]};
   return rational_sum(rs, n).first;

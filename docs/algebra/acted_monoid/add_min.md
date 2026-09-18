@@ -1,5 +1,7 @@
 ## 概要
 
+`infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
+
 作用つきモノイド：加算・最小値／最大値取得
 
 ## 詳細なドキュメント
@@ -7,7 +9,7 @@
 ### ActedMonoidAddMin
 
 ```cpp
-ActedMonoidAddMin<T, infty = INF>
+ActedMonoidAddMin<T, infty = nullptr>
 ```
 
 区間加算と区間最小値取得を処理するための作用つきモノイド。`S = F = T`。
@@ -87,7 +89,7 @@ F id()
 ### ActedMonoidAddMinMax
 
 ```cpp
-ActedMonoidAddMinMax<T, infty = INF>
+ActedMonoidAddMinMax<T, infty = nullptr>
 ```
 
 区間加算と、区間最小値・最大値の取得を処理する作用つきモノイド。要素型 `S` は公開メンバ `mn`, `mx` を持ち、作用型 `F` は `T`。
@@ -184,7 +186,7 @@ F id()
 ### ActedMonoidAddMax
 
 ```cpp
-ActedMonoidAddMax<T, infty = INF>
+ActedMonoidAddMax<T, infty = nullptr>
 ```
 
 区間加算と区間最大値取得を処理するための作用つきモノイド。各関数の計算量は $O(1)$。

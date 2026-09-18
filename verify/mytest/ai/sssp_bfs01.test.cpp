@@ -15,7 +15,8 @@ int main()
     repi(_, rng() % (6 * n + 1))
       es.eb(rng() % n, rng() % n, rng() & 1 ? 0 : positive_cost);
 
-    ShortestPath<true, ll> g(n, es);
+    Graph<true, ll> g_input(n, es);
+    ShortestPath g(g_input);
     int s = rng() % n;
     auto expected = g.dijkstra(s);
     assert(g.bfs01(s) == expected);

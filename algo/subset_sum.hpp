@@ -177,7 +177,6 @@ public:
       negsum += ll(a[i]);
     }
     ll shifted_s = ll(smax) - negsum;
-    assert(shifted_s <= numeric_limits<int>::max());
     if (shifted_s < 0)
     {
       s = -1;

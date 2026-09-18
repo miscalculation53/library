@@ -149,10 +149,12 @@ $\mathrm{ceil}(a^{1/k})$ を返す。$a, k$ は、型 `T` にキャストして�
 
 （メモ：`__builtin_mul_overflow` というものもある）
 
+上限 `m` を省略した場合は、[型ごとの既定の無限大](../utils/default_infty.md)を `T` に対して使う。`ll` は `INF`、`i128` は `INF * INF`、`int` は `(1 << 30) - 1` になる。`m` を明示した場合はその値を使う。
+
 #### mul_limited
 
 ```cpp
-T mul_limited<T = ll>(a, b, m = INF)
+T mul_limited<T = ll>(a, b, m = default_infty<T>())
 ```
 
 $\min(a \times b, m)$ を返す。$a, b, m$ は、型 `T` にキャストしてから計算する。
@@ -169,7 +171,7 @@ $\min(a \times b, m)$ を返す。$a, b, m$ は、型 `T` にキャストして�
 #### pow_limited
 
 ```cpp
-T pow_limited<T = ll>(a, b, m = INF)
+T pow_limited<T = ll>(a, b, m = default_infty<T>())
 ```
 
 $\min(a^b, m)$ を返す。$a, b, m$ は、型 `T` にキャストしてから計算する。

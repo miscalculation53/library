@@ -1,6 +1,7 @@
 typeset -g KYOPRO_SUBMIT_CODE_TOOL="$HOME/Documents/02_kyopro/02_solve/library/tools/submit_code.py"
+typeset -g KYOPRO_SUBMIT_BACKGROUND_TOOL="${KYOPRO_SUBMIT_CODE_TOOL:h}/submit_code_background.py"
 
-unalias oj-b oj-bc oj-bs oj-ba oj-b0 cln cln-all 2>/dev/null
+unalias oj-b oj-bc oj-bs oj-ba oj-b0 cln cln-all oj-bg oj-bg-status oj-bg-stop 2>/dev/null
 
 # 通常のローカル include は直接たどり、未対応の場合だけ oj-bundle を使う。
 oj-b() {
@@ -39,4 +40,14 @@ cln-all() {
 # oj-b の旧名。既存の呼び出しとの互換性のため残す。
 oj-b0() {
   oj-b "$@"
+}
+
+oj-bg() {
+  command python3 "$KYOPRO_SUBMIT_BACKGROUND_TOOL" start "${1:-main.cpp}"
+}
+oj-bg-status() {
+  command python3 "$KYOPRO_SUBMIT_BACKGROUND_TOOL" status "${1:-main.cpp}"
+}
+oj-bg-stop() {
+  command python3 "$KYOPRO_SUBMIT_BACKGROUND_TOOL" stop "${1:-main.cpp}"
 }

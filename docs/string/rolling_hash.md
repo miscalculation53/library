@@ -12,21 +12,29 @@ $$
 
 - `RollingHashValue`：ある列のハッシュと長さを表す値。値どうしを $O(1)$ で連結できる。
 - `RollingHash`：一つの元列を前計算し、任意の連続部分列のハッシュを $O(1)$ で求める。
+- `RollingHashDeque`：要素を両端から追加・削除しながら、任意の連続部分列のハッシュを $O(1)$ で求める。
 - `RollingHashConcat`：複数の `RollingHash` の断片を順に追加し、断片を連結した仮想的な列を扱う。
 
-`RollingHash`、`RollingHashConcat` と、それらの `substr` が返す view では、部分列のハッシュ、LCP、LCS、辞書順比較を行える。また、二つの view に対する `x + y` は、要素をコピーせずに $xy$ を表す view を返す。二つの view の元列は異なってもよい。
+`RollingHash`、`RollingHashDeque`、`RollingHashConcat` と、それらの `substr` が返す view では、部分列のハッシュ、LCP、LCS、辞書順比較を行える。また、これらの型に対する `x + y` は、所有型を自動的に列全体の view として扱い、要素をコピーせずに $xy$ を表す view を返す。二つの view の元列は異なってもよい。要素型が文字のときは、`string` や文字列リテラルを連結・比較のどちら側にも直接置ける。
 
 `a + b + c + ...` は断片を入れ子にした軽量な非所有 view を作る。少数の断片を一時的に比較する用途に向く。`RollingHashConcat` は断片を vector で管理し、断片を繰り返し追加する場合や、断片数が多い場合に向く。
 
+連結する個数や括弧の付き方が異なる view は C++ 上では異なる型になる。異なる形の候補から答えを更新する場合は、`RollingHashConcat ans = "{";` のように更新先を `RollingHashConcat` として宣言する。`chmin(ans, candidate)` の代入時に candidate の断片が `ans` へ保持される。
+
 `RollingHashValue += RollingHashValue` は常に $O(1)$、`RollingHashConcat += RollingHash` または `RollingHashConcat += RollingHashRange` は償却 $O(1)$ である。断片数に比例する処理が隠れないよう、`RollingHashConcat += RollingHashConcat` は定義していない。
 
-追加した各断片は元の `RollingHash` への参照を保持する。利用中は、追加元のすべての `RollingHash` とその元列を破棄・移動・変更してはならない。異なる元列でも `mint` と `id` が同じなら同じ基数を使うため、一つの `RollingHashConcat` に混在させられる。
+各型のテンプレート引数 `hash_count` でハッシュの本数を指定する。デフォルトは $1$ 本で、`RollingHash<string, modint61, 0, 2>` のように $2$ を指定すると、同じ法の上で独立な二つの基数を用いる。$2$ 本版には `RollingHash2<>`、`RollingHashValue2<>`、`RollingHashDeque2<>`、`RollingHashConcat2<>` という別名もある。衝突確率をさらに下げたい場合に用いる。時間・メモリ使用量はおおむね本数に比例する。
+
+追加した各断片は元の `RollingHash` への参照を保持する。利用中は、追加元のすべての `RollingHash` とその元列を破棄・移動・変更してはならない。`string` や文字列リテラルから追加した部分は内部で所有する。異なる元列でも `mint` と `id` が同じなら同じ基数を使うため、一つの `RollingHashConcat` に混在させられる。
 
 ## 使用例
 
 ```cpp
 string s = "abracadabra";
 RollingHash rh(s);
+RollingHashDeque deq("suffix");
+deq.push_front(rh.substr(0, 3));
+deq.push_back('!');
 
 auto x = rh.substr(0, 4);
 auto y = rh.substr(7, 11);
@@ -48,8 +56,29 @@ auto ab = a + b;
 auto ba = b + a;
 bool less = (ab < ba);
 
+auto whole = rh + t;  // rh.substr() + t.substr() と同じ
+auto decorated = "[" + rh.substr(0, 4) + "]";
+bool is_abra = (rh.substr(0, 4) == "abra");
+
 string restored = t.content();
 dump(t);  // LOCAL では仮想列の実際の内容を表示する
+```
+
+先頭へ列を追加しながら辞書順比較を繰り返す場合は `RollingHashDeque` を使う。
+
+```cpp
+vc<string> s = {"cba", "cb", "c"};
+vc<RollingHash<>> rh;
+for (const string& x : s) rh.emplace_back(x);
+
+RollingHashDeque ans;
+rep(_, K) {
+  auto it = min_element(all(rh), [&](const auto& x, const auto& y) {
+    return x + ans < y + ans;
+  });
+  ans.push_front(*it);
+}
+PRINT(ans.content());
 ```
 
 ## 詳細なドキュメント
@@ -59,12 +88,14 @@ dump(t);  // LOCAL では仮想列の実際の内容を表示する
 #### コンストラクタ
 
 ```cpp
-(1) RollingHashValue<mint=modint61, int id=INT_MIN>()
-(2) RollingHashValue<mint=modint61, int id=INT_MIN>(V s)
+(1) RollingHashValue<mint=modint61, int id=INT_MIN, int hash_count=1>()
+(2) RollingHashValue<mint=modint61, int id=INT_MIN, int hash_count=1>(V s)
+(3) RollingHashValue<mint=modint61, int id=INT_MIN, int hash_count=1>(char c)
 ```
 
 - (1)：空列のハッシュを作る。
 - (2)：列 `s` のハッシュを作る。
+- (3)：文字 `c` 一つからなる列のハッシュを作る。
 
 `mint` と `id` が同じ型は同じ基数を使用する。`LOCAL` では基数は $1000$ になる。
 
@@ -72,14 +103,15 @@ dump(t);  // LOCAL では仮想列の実際の内容を表示する
 
 - (1)：$O(1)$
 - (2)：$O(\lvert s \rvert)$
+- (3)：$O(1)$
 
 #### value
 
 ```cpp
-mint value()
+auto value()
 ```
 
-ハッシュ値を返す。
+ハッシュ値を返す。`hash_count == 1` なら `mint`、それ以外なら `array<mint, hash_count>` を返す。
 
 ##### 計算量
 
@@ -102,11 +134,23 @@ ll size()
 - `+=`, `+`：列を連結したハッシュを求める。
 - `==`, `!=`：長さとハッシュ値を比較する。
 
+`char`、`string`、`string_view`、文字列リテラルは暗黙に `RollingHashValue` に変換されるため、`+` のどちら側にも直接置ける。`+=` でも直接追加できる。
+
+```cpp
+RollingHashValue h = "ab";
+auto x = h + 'c';          // "abc" のハッシュ
+auto y = 'z' + h;          // "zab" のハッシュ
+auto z = "[" + h + "]";    // "[ab]" のハッシュ
+h += 'c';
+h += string("de");         // "abcde" のハッシュ
+```
+
 `RollingHashValue` は $B^{\lvert s \rvert}$ も値の一部として保持するため、論理的な列の長さが大きくても連結の計算量は変わらない。
 
 ##### 計算量
 
-- $O(1)$
+- 値どうし、または `char` を含む場合：$O(1)$
+- 文字列を含む場合：そのハッシュを構築するため $O(\lvert s \rvert)$
 
 #### remove_prefix
 
@@ -129,10 +173,10 @@ RollingHashValue remove_prefix(RollingHashValue prefix)
 #### コンストラクタ
 
 ```cpp
-RollingHash<V=string, mint=modint61, int id=INT_MIN>(const V& s)
+RollingHash<V=string, mint=modint61, int id=INT_MIN, int hash_count=1>(const V& s)
 ```
 
-元列 `s` を前計算する。`RollingHash` は `s` への参照を保持するため、利用中は `s` を破棄・変更してはならない。
+元列 `s` を前計算する。左辺値から初期化した場合は `s` への参照を保持するため、利用中は `s` を破棄・変更してはならない。右辺値から初期化した場合は元列を内部で所有する。
 
 ##### 計算量
 
@@ -141,8 +185,8 @@ RollingHash<V=string, mint=modint61, int id=INT_MIN>(const V& s)
 #### hash
 
 ```cpp
-(1) RollingHashValue<mint, id> hash()
-(2) RollingHashValue<mint, id> hash(ll l, ll r)
+(1) RollingHashValue<mint, id, hash_count> hash()
+(2) RollingHashValue<mint, id, hash_count> hash(ll l, ll r)
 ```
 
 - (1)：列全体のハッシュを返す。
@@ -184,25 +228,159 @@ $s_i$ を返す。
 
 - $O(1)$
 
+### RollingHashDeque
+
+#### コンストラクタ
+
+```cpp
+(1) RollingHashDeque<V=string, mint=modint61, int id=INT_MIN, int hash_count=1>()
+(2) RollingHashDeque<V=string, mint=modint61, int id=INT_MIN, int hash_count=1>(V s)
+```
+
+- (1)：空列を作る。
+- (2)：`s` の内容を持つ列を作る。
+
+##### 計算量
+
+- (1)：$O(1)$
+- (2)：$O(\lvert s \rvert)$
+
+#### push_front / push_back
+
+```cpp
+(1) void push_front(T x)
+(2) void push_back(T x)
+(3) void push_front(const Sequence& s)
+(4) void push_back(const Sequence& s)
+```
+
+- (1), (2)：列の先頭または末尾に要素 `x` を一つ追加する。
+- (3), (4)：列の先頭または末尾に列 `s` の全要素を順序を保って追加する。
+
+`Sequence` には通常の列のほか、`RollingHash`、`RollingHashDeque`、`RollingHashConcat` とそれらの view を渡せる。文字列を管理している場合は、`string` と文字列リテラルも直接渡せる。
+
+##### 計算量
+
+- (1), (2)：償却 $O(1)$
+- (3), (4)：$O(\lvert s \rvert)$
+
+#### reserve
+
+```cpp
+void reserve(int n)
+```
+
+再確保せずに $n$ 要素を格納できる領域と、$B^0,\ldots,B^n$ を前計算する。
+
+##### 制約
+
+- $\mathrm{size}() \leq n$
+
+##### 計算量
+
+- $O(n)$
+
+#### pop_front / pop_back
+
+```cpp
+void pop_front()
+void pop_back()
+```
+
+列の先頭または末尾の要素を削除する。
+
+##### 制約
+
+- 列が空でない
+
+##### 計算量
+
+- 償却 $O(1)$
+
+#### operator+=
+
+```cpp
+(1) RollingHashDeque& operator+=(T x)
+(2) RollingHashDeque& operator+=(const Sequence& s)
+```
+
+`push_back(x)` または `push_back(s)` と同じ。
+
+##### 計算量
+
+- (1)：償却 $O(1)$
+- (2)：$O(\lvert s \rvert)$
+
+#### hash
+
+```cpp
+(1) RollingHashValue<mint, id, hash_count> hash()
+(2) RollingHashValue<mint, id, hash_count> hash(ll l, ll r)
+```
+
+- (1)：列全体のハッシュを返す。
+- (2)：列の $[l,r)$ のハッシュを返す。
+
+##### 制約
+
+- $0 \leq l \leq r \leq \mathrm{size}()$
+
+##### 計算量
+
+- $O(1)$
+
+#### get
+
+```cpp
+const T& get(ll i)
+```
+
+列の $i$ 番目の要素を返す。
+
+##### 制約
+
+- $0 \leq i < \mathrm{size}()$
+
+##### 計算量
+
+- $O(1)$
+
+#### clear
+
+```cpp
+void clear()
+```
+
+列を空にする。
+
+##### 計算量
+
+- $O(n)$
+
 ### RollingHashConcat
 
 #### コンストラクタ
 
 ```cpp
-(1) RollingHashConcat<V=string, mint=modint61, int id=INT_MIN>()
-(2) RollingHashConcat<V=string, mint=modint61, int id=INT_MIN>(RollingHashRange<RollingHash<V, mint, id>> range)
-(3) RollingHashConcat<V=string, mint=modint61, int id=INT_MIN>(RollingHashConcatView view)
+(1) RollingHashConcat<V=string, mint=modint61, int id=INT_MIN, int hash_count=1>()
+(2) RollingHashConcat<V=string, mint=modint61, int id=INT_MIN, int hash_count=1>(V s)
+(3) RollingHashConcat<V=string, mint=modint61, int id=INT_MIN, int hash_count=1>(RollingHash<V, mint, id, hash_count> source)
+(4) RollingHashConcat<V=string, mint=modint61, int id=INT_MIN, int hash_count=1>(RollingHashRange<RollingHash<V, mint, id, hash_count>> range)
+(5) RollingHashConcat<V=string, mint=modint61, int id=INT_MIN, int hash_count=1>(RollingHashConcatView view)
 ```
 
 - (1)：断片を連結する空の列を作る。
-- (2)：`range` を最初の断片として持つ列を作る。`RollingHashConcat cat = rh.substr(l, r);` と書ける。
-- (3)：`+` で連結した view の各断片を保持する列を作る。
+- (2)：`s` を内部で所有し、その全体を最初の断片として持つ列を作る。
+- (3)：`source` 全体を最初の断片として持つ列を作る。
+- (4)：`range` を最初の断片として持つ列を作る。`RollingHashConcat cat = rh.substr(l, r);` と書ける。
+- (5)：`+` で連結した view の各断片を保持する列を作る。
 
 ##### 計算量
 
 - (1)：$O(1)$
-- (2)：$O(1)$
-- (3)：断片数を $b$ として $O(b)$
+- (2)：$O(\lvert s \rvert)$
+- (3), (4)：$O(1)$
+- (5)：断片数を $b$ として $O(b)$
 
 #### reserve
 
@@ -231,18 +409,21 @@ ll size()
 #### operator+=
 
 ```cpp
-(1) RollingHashConcat& operator+=(const RollingHash<V, mint, id>& source)
-(2) RollingHashConcat& operator+=(const RollingHashRange<RollingHash<V, mint, id>>& range)
+(1) RollingHashConcat& operator+=(const RollingHash<V, mint, id, hash_count>& source)
+(2) RollingHashConcat& operator+=(const RollingHashRange<RollingHash<V, mint, id, hash_count>>& range)
+(3) RollingHashConcat& operator+=(const V& s)
 ```
 
 - (1)：`source` 全体を末尾に追加する。
 - (2)：`range` が参照する元列の連続部分列を末尾に追加する。
+- (3)：`s` を内部で所有し、その全体を末尾に追加する。
 
 同じ元列の隣接する断片は自動的に一つにまとめる。異なる元列から得た断片を混在させてもよい。`RollingHashConcat` どうしを追加する演算は定義していない。
 
 ##### 計算量
 
-- 償却 $O(1)$
+- (1), (2)：償却 $O(1)$
+- (3)：$O(\lvert s \rvert)$
 
 #### operator=
 
@@ -259,8 +440,8 @@ RollingHashConcat& operator=(RollingHashConcatView view)
 #### hash
 
 ```cpp
-(1) RollingHashValue<mint, id> hash()
-(2) RollingHashValue<mint, id> hash(ll l, ll r)
+(1) RollingHashValue<mint, id, hash_count> hash()
+(2) RollingHashValue<mint, id, hash_count> hash(ll l, ll r)
 ```
 
 - (1)：仮想列全体のハッシュを返す。
@@ -323,7 +504,7 @@ $n = \mathrm{size}()$、`get` 一回の計算量を $G$ とする。
 - (1)：$[l, r)$ を表す非所有 view を返す。
 - (2)：$[l, \mathrm{size}())$ を表す非所有 view を返す。
 
-返された view より先に元の `RollingHash`、`RollingHashConcat`、または view を破棄してはならない。
+返された view より先に元の `RollingHash`、`RollingHashDeque`、`RollingHashConcat`、または view を破棄してはならない。また、view の利用中に元の `RollingHashDeque` を変更してはならない。
 
 ##### 計算量
 
@@ -345,8 +526,25 @@ $n = \mathrm{size}()$、`get` 一回の計算量を $G$ とする。
 
 ##### 計算量
 
-- `RollingHash` の view：$O(1)$
+- `RollingHash`、`RollingHashDeque` の view：$O(1)$
 - 断片数 $b$ の `RollingHashConcat` の view：$O(\log b)$
+
+#### hash_value
+
+```cpp
+auto hash_value(ll l, ll r)
+```
+
+列の $[l,r)$ のハッシュ値だけを返す。`hash_count == 1` なら `mint`、それ以外なら `array<mint, hash_count>` を返す。長さや基数の累乗も含む `RollingHashValue` が必要な場合は `hash(l,r)` を使う。
+
+##### 制約
+
+- $0 \leq l \leq r \leq \mathrm{size}()$
+
+##### 計算量
+
+- `RollingHash`、`RollingHashDeque` とその view：$O(1)$
+- 断片数 $b$ の `RollingHashConcat` とその view：$O(\log b)$
 
 #### lcp / lcs
 
@@ -357,11 +555,14 @@ ll lcs(const Other& rhs)
 
 二つの列の最長共通接頭辞、最長共通接尾辞の長さを返す。
 
+要素型が文字のときは `rhs` に `string` または文字列リテラルも渡せる。この場合、文字列側のハッシュをその場で構築する。
+
 $L$ を短い方の列の長さ、$H$ を一回の部分ハッシュ取得の計算量とする。
 
 ##### 計算量
 
 - $O(H \log (L + 1))$
+- `rhs` が文字列の場合：上記に加えて $O(\lvert rhs \rvert)$
 
 #### compare
 
@@ -371,23 +572,29 @@ int compare(const Other& rhs)
 
 辞書順で自身が `rhs` より小さい、等しい、大きいとき、それぞれ $-1, 0, 1$ を返す。`<`, `<=`, `>`, `>=` も使用できる。
 
+要素型が文字のときは、`rhs` に `string` または文字列リテラルも渡せる。比較演算子では文字列を左辺に置くこともできる。この場合、文字列側のハッシュをその場で構築する。
+
 $L$ を短い方の列の長さ、$H$ を一回の部分ハッシュ取得の計算量とする。
 
 ##### 計算量
 
-- `RollingHash` の view どうし：$O(\log (L + 1))$
+- `RollingHash`、`RollingHashDeque` の view どうし：$O(\log (L + 1))$
 - 断片数 $b$ の `RollingHashConcat` の view を含む場合：$O(\log b \log (L + 1))$
+- 一方が文字列の場合：上記に加えて $O(\lvert s \rvert)$
 
 #### operator+
 
 ```cpp
-auto operator+(View lhs, View rhs)
+auto operator+(SequenceOrString lhs, SequenceOrString rhs)
 ```
 
-`lhs` と `rhs` を連結した非所有 view を返す。`View` は `RollingHashRange` またはこの演算で作った連結 view であり、3個以上の view も `a + b + c + ...` と結合できる。元の列や断片をコピーしない。各 view の元列は異なってもよい。主に $xy$ と $yx$ の比較に用いる。
+`lhs` と `rhs` を連結した view を返す。少なくとも一方は `RollingHash`、`RollingHashDeque`、`RollingHashConcat`、それらの `substr`、またはこの演算で作った連結 view とする。所有型は自動的に列全体の view として扱われる。要素型が文字のときは、もう一方に `string` または文字列リテラルも置ける。文字列部分は結果が所有するため、元の文字列を破棄してもよい。
+
+3個以上も `a + b + c + ...` と結合できる。Rolling Hash の列どうしは元の列や断片をコピーせず、各 view の元列は異なってもよい。主に $xy$ と $yx$ の比較に用いる。
 
 $k$ 個の view を左結合または右結合で連結した場合、型も同じ形で入れ子になる。各要素へのアクセスや全体のハッシュ取得は最悪 $O(k)$ になるため、断片が多い場合は `RollingHashConcat` を用いる。
 
 ##### 計算量
 
-- $O(1)$
+- Rolling Hash の列どうし：$O(1)$
+- 長さ $n$ の文字列を含む場合：$O(n)$

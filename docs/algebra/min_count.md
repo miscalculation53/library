@@ -1,5 +1,7 @@
 ## 概要
 
+`infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
+
 最小値の個数も持つモノイド
 
 ## 詳細なドキュメント
@@ -7,7 +9,7 @@
 ### MonoidMinCount
 
 ```cpp
-MonoidMinCount<T, U = ll, infty = INF>
+MonoidMinCount<T, U = ll, infty = nullptr>
 ```
 
 `infty` には `T` に変換できる値、または `T` に変換できる値を返す引数なし関数を指定できる。
@@ -74,7 +76,7 @@ S pow(const S& a, I k)
 ### MonoidMaxCount
 
 ```cpp
-MonoidMaxCount<T, U = ll, infty = INF>
+MonoidMaxCount<T, U = ll, infty = nullptr>
 ```
 
 最大値と、その最大値の出現数を持つモノイド。要素型 `S` は `mx`, `cnt` を持つ。

@@ -8,12 +8,13 @@
  * @docs docs/graph/graph.md
  */
 
-template <class Cost>
+template <class Cost = void>
 struct Edge
 {
   int from, to;
   Cost cost;
   int index;
+  CPP_DUMP_DEFINE_DATA(from, to, cost, index);
   Edge() : from(-1), to(-1), index(-1) {}
   Edge(int s, int t, Cost c, int i = -1) : from(s), to(t), cost(c), index(i) {}
   operator int() const { return to; }
@@ -22,21 +23,25 @@ struct Edge
   Edge rev() const { return Edge(to, from, cost, index); }
 };
 
-template <class Cost>
-struct GraphArc
+template <>
+struct Edge<void>
 {
-  int to, index;
-  Cost cost;
+  int from, to, index;
+  static constexpr ll cost = 1;
+  CPP_DUMP_DEFINE_DATA(from, to, cost, index);
+  Edge() : from(-1), to(-1), index(-1) {}
+  Edge(int s, int t, int i = -1) : from(s), to(t), index(i) {}
   operator int() const { return to; }
-  bool operator<(const GraphArc &rhs) const { return cost < rhs.cost; }
+  bool operator<(const Edge &) const { return false; }
+  Edge rev() const { return Edge(to, from, index); }
 };
 #ifdef LOCAL
-CPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<bool>, from, to, cost)
-CPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<int>, from, to, cost)
-CPP_DUMP_DEFINE_EXPORT_OBJECT(Edge<ll>, from, to, cost)
-CPP_DUMP_DEFINE_EXPORT_OBJECT(GraphArc<bool>, to, cost)
-CPP_DUMP_DEFINE_EXPORT_OBJECT(GraphArc<int>, to, cost)
-CPP_DUMP_DEFINE_EXPORT_OBJECT(GraphArc<ll>, to, cost)
+namespace cpp_dump::_detail
+{
+  // 辺の int 変換より、全メンバの表示を優先する。
+  template <class Cost>
+  inline constexpr bool is_ostream<Edge<Cost>> = false;
+}
 #endif
 
 template <class Cost>
@@ -49,19 +54,40 @@ vc<Edge<Cost>> rev_path(const vc<Edge<Cost>> &path)
 }
 
 // コンストラクタ: n, es
-template <bool is_directed, class Cost, bool is_erasable = false>
+template <bool is_directed, class Cost = void, bool is_erasable = false>
 struct Graph
 {
   using E = Edge<Cost>;
-  using A = GraphArc<Cost>;
 
 protected:
-  using GE = conditional_t<is_erasable, E, A>;
+  template <class C, bool unweighted = is_void_v<C>>
+  struct InternalEdge
+  {
+    int to, index;
+    C cost;
+  };
+  template <class C>
+  struct InternalEdge<C, true>
+  {
+    int to, index;
+    static constexpr ll cost = 1;
+  };
+  using GE = conditional_t<is_erasable, E, InternalEdge<Cost>>;
+  using Weight = decay_t<decltype(E::cost)>;
 
   int n = 0, m = 0, era = 0;
   CSR<GE, is_erasable> g;
   vc<int> eid_to_elist_id;
 
+  static E make_edge(int from, int to, const Weight &cost, int index)
+  {
+    if constexpr (is_void_v<Cost>)
+      return E(from, to, index);
+    else
+      return E(from, to, cost, index);
+  }
+
+  struct OutEdgeRow;
   struct OutEdgeIter
   {
     using iterator_category = input_iterator_tag;
@@ -70,17 +96,22 @@ protected:
     using pointer = const E *;
     using reference = const E &;
 
-    int from;
+  private:
+    friend struct OutEdgeRow;
+    int from = -1;
     typename vc<GE>::const_iterator it;
     mutable E e;
+    OutEdgeIter(int from, typename vc<GE>::const_iterator it) : from(from), it(it) {}
 
+  public:
+    OutEdgeIter() = default;
     reference operator*() const
     {
       if constexpr (is_erasable)
         return *it;
       else
       {
-        e = E(from, it->to, it->cost, it->index);
+        e = make_edge(from, it->to, it->cost, it->index);
         return e;
       }
     }
@@ -102,15 +133,18 @@ protected:
 
   struct OutEdgeRow
   {
+  private:
     const Graph *g;
     int from, l, r;
 
-    OutEdgeRow(const Graph *g, int from)
-        : g(g), from(from), l(g->g.offset(from)), r(l + g->g[from].size()) {}
     OutEdgeIter iter(int pos) const
     {
-      return {from, g->g.get_elist().begin() + pos, {}};
+      return {from, g->g.get_elist().begin() + pos};
     }
+
+  public:
+    OutEdgeRow(const Graph *g, int from)
+        : g(g), from(from), l(g->g.offset(from)), r(l + g->g[from].size()) {}
     OutEdgeIter begin() const { return iter(l); }
     OutEdgeIter end() const { return iter(r); }
     template <class I = ll>
@@ -146,7 +180,7 @@ protected:
     else
     {
       cauto &e = g.get_elist()[pos];
-      return E(from, e.to, e.cost, e.index);
+      return make_edge(from, e.to, e.cost, e.index);
     }
   }
 
@@ -173,9 +207,11 @@ protected:
       int j = cnt[u]++;
       int k = g.offset(u) + j;
       if constexpr (is_erasable)
-        g[u][j] = E(u, v, w, i);
+        g[u][j] = make_edge(u, v, w, i);
+      else if constexpr (is_void_v<Cost>)
+        g[u][j] = GE{int(v), i};
       else
-        g[u][j] = A{int(v), i, w};
+        g[u][j] = GE{int(v), i, w};
       if constexpr (is_erasable)
       {
         int id = is_directed ? i : 2 * i + (u <= v);
@@ -188,9 +224,11 @@ protected:
           j = cnt[v]++;
           k = g.offset(v) + j;
           if constexpr (is_erasable)
-            g[v][j] = E(v, u, w, i);
+            g[v][j] = make_edge(v, u, w, i);
+          else if constexpr (is_void_v<Cost>)
+            g[v][j] = GE{int(u), i};
           else
-            g[v][j] = A{int(u), i, w};
+            g[v][j] = GE{int(u), i, w};
           if constexpr (is_erasable)
             eid_to_elist_id[2 * i + (v <= u)] = k;
         }
@@ -201,12 +239,17 @@ protected:
 public:
   Graph() {}
   template <class I>
-  Graph(int n, const vc<pair<I, I>> &es, const Cost &dflt_cost = 1) : n(n), m(es.size()), era(0)
+  Graph(int n, const vc<pair<I, I>> &es) : n(n), m(es.size()), era(0)
+  {
+    build(LMD(i, (tuple{es[i].first, es[i].second, Weight(1)})));
+  }
+  template <class I, class C = Cost, enable_if_t<!is_void_v<C>, int> = 0>
+  Graph(int n, const vc<pair<I, I>> &es, const Weight &dflt_cost) : n(n), m(es.size()), era(0)
   {
     build(LMD(i, (tuple{es[i].first, es[i].second, dflt_cost})));
   }
-  template <class I>
-  Graph(int n, const vc<tuple<I, I, Cost>> &es) : n(n), m(es.size()), era(0)
+  template <class I, class C, enable_if_t<is_same_v<C, Cost> && !is_void_v<C>, int> = 0>
+  Graph(int n, const vc<tuple<I, I, C>> &es) : n(n), m(es.size()), era(0)
   {
     build(LMD(i, es[i]));
   }
@@ -227,15 +270,13 @@ public:
   {
     return OutEdgeRow(this, v);
   }
-  // v から出る辺を from を持たない軽量な形で返す
-  auto out_arcs(int v) const { return g[v]; }
   // v から出る頂点の集合
   template <class I = ll>
   vc<I> out_vertices(int v) const
   {
     vc<I> res;
     res.reserve(g[v].size());
-    fec(e : out_arcs(v)) res.eb(e.to);
+    fec(e : g[v]) res.eb(e.to);
     return res;
   }
 
@@ -273,7 +314,7 @@ public:
   vvc<I> adj_matrix_ecnt() const
   {
     vvc<I> res(n, vc<I>(n, 0));
-    repi(v, n) fec(e : out_arcs(v)) res[v][e.to]++;
+    repi(v, n) fec(e : g[v]) res[v][e.to]++;
     return res;
   }
 
@@ -284,10 +325,10 @@ public:
     vc<I> res(n);
     if constexpr (is_directed)
     {
-      repi(v, n) fec(e : out_arcs(v)) res[e.to]++;
+      repi(v, n) fec(e : g[v]) res[e.to]++;
     }
     else
-      repi(v, n) res[v] = out_arcs(v).size();
+      repi(v, n) res[v] = g[v].size();
     return res;
   }
   // 出次数の列
@@ -295,7 +336,7 @@ public:
   vc<I> outdegs() const
   {
     vc<I> res(n);
-    repi(v, n) res[v] = out_arcs(v).size();
+    repi(v, n) res[v] = g[v].size();
     return res;
   }
 
@@ -347,17 +388,32 @@ private:
   }
 };
 
-template <class Cost, bool is_erasable = false>
+// C++20 の別名テンプレートの型推論で、有向・無向と削除可否を引き継ぐ。
+template <bool is_directed, bool is_erasable = false, class I>
+Graph(int, const vc<pair<I, I>> &) -> Graph<is_directed, void, is_erasable>;
+template <bool is_directed, bool is_erasable = false, class I, class Cost>
+Graph(int, const vc<tuple<I, I, Cost>> &) -> Graph<is_directed, Cost, is_erasable>;
+template <bool is_directed, bool is_erasable = false, class I, class Cost>
+Graph(int, const vc<pair<I, I>> &, const Cost &) -> Graph<is_directed, Cost, is_erasable>;
+template <bool is_directed, bool is_erasable = false, class Cost>
+Graph(int, const vc<Edge<Cost>> &) -> Graph<is_directed, Cost, is_erasable>;
+
+template <class Cost = void, bool is_erasable = false>
 using GraphDirected = Graph<true, Cost, is_erasable>;
-template <class Cost, bool is_erasable = false>
+template <class Cost = void, bool is_erasable = false>
 using GraphUndirected = Graph<false, Cost, is_erasable>;
 
 template <class Cost>
 GraphDirected<Cost> rev_graph(const GraphDirected<Cost> &g)
 {
   const int n = g.size(), m = g.num_of_edges();
-  vc<tuple<int, int, Cost>> uvw;
-  uvw.reserve(m);
-  repi(v, n) fec(e : g.out_arcs(v)) uvw.eb(e.to, v, e.cost);
-  return GraphDirected<Cost>(n, uvw);
+  using InputEdge = conditional_t<is_void_v<Cost>, pair<int, int>, tuple<int, int, Cost>>;
+  vc<InputEdge> es;
+  es.reserve(m);
+  repi(v, n) fec(e : g.out_edges(v))
+  {
+    if constexpr (is_void_v<Cost>) es.eb(e.to, v);
+    else es.eb(e.to, v, e.cost);
+  }
+  return GraphDirected<Cost>(n, es);
 }

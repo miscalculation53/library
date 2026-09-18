@@ -24,7 +24,7 @@ void main2()
 {
   LL(N, M, r);
   VEC(pll, M, UV);
-  GraphDirected<bool> G(N, UV);
+  GraphDirected<> G(N, UV);
   PRINT(count_spanning_trees_directed<mint>(G.adj_matrix_ecnt(), r));
 }
 

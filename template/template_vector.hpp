@@ -14,7 +14,7 @@ template <class T = ll, class V>
 inline T SZ(const V &x) { return x.size(); }
 #define eb emplace_back
 
-#define LMD(x, fx) ([&](auto x) { return fx; })
+#define LMD(x, fx) ([&](const auto &x) { return fx; })
 template <class F>
 auto gen_vec(int n, const F &f)
 {
@@ -93,7 +93,7 @@ vc<T> merged(const vc<T> &a, const vc<T> &b)
 }
 
 template <class T, class I>
-T vecget(const vc<T> &v, I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)
+T vecget(const vc<T> &v, I i, const T &dflt_negative = -default_infty<T>(), const T &dflt_positive = default_infty<T>())
 {
   if (i < 0)
     return dflt_negative;

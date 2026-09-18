@@ -34,10 +34,12 @@ struct HalfPlaneIntersection
 #### コンストラクタ
 
 ```cpp
-HalfPlaneIntersection(T infty = numeric_limits<T>::max() / 2)
+HalfPlaneIntersection(T infty = default_infty<T>())
 ```
 
 空の Half-Plane Intersection を構築する。`infty` は非有界判定用の内部の枠に使う。
+
+省略時は整数型 `T` の[既定の無限大](../utils/default_infty.md)を使う。`ll` では `INF`、`int` では `(1 << 30) - 1` になる。枠の大きさを明示した場合はその値を使う。
 
 ##### 制約
 

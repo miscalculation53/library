@@ -10,7 +10,7 @@
  * @docs docs/algebra/acted_monoid/add_min.md
  */
 
-template <class T, auto infty = INF>
+template <class T, auto infty = nullptr>
 struct ActedMonoidAddMin
 {
   using M = MonoidMin<T, infty>;
@@ -24,7 +24,7 @@ struct ActedMonoidAddMin
   static constexpr auto id = MF::e;
 };
 
-template <class T, auto infty = INF>
+template <class T, auto infty = nullptr>
 struct ActedMonoidAddMax
 {
   using M = MonoidMax<T, infty>;
@@ -38,7 +38,7 @@ struct ActedMonoidAddMax
   static constexpr auto id = MF::e;
 };
 
-template <class T, auto infty = INF>
+template <class T, auto infty = nullptr>
 struct ActedMonoidAddMinMax
 {
   using M = MonoidMinMax<T, infty>;
@@ -49,7 +49,7 @@ struct ActedMonoidAddMinMax
   static constexpr auto e = M::e;
   static constexpr S mapping(F f, S x)
   {
-    if (x.mn == resolved_value<T, infty>() && x.mx == -resolved_value<T, infty>())
+    if (x.mn == resolved_infty<T, infty>() && x.mx == -resolved_infty<T, infty>())
       return x;
     x.mn += f, x.mx += f;
     return x;

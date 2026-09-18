@@ -98,6 +98,7 @@ void test_infinity()
   assert(ninf / R(-2) == inf);
   assert(R(123) / inf == R(0));
   assert(numeric_limits<R>::has_infinity);
+  assert(R::infty() == inf && -R::infty() == ninf);
   assert(numeric_limits<R>::infinity() == inf);
 }
 
@@ -108,6 +109,7 @@ void test_bigint()
   using R = Rational<BI>;
   R x(BI(2), BI(4)), y(BI(1), BI(2));
   R inf(BI(1), BI(0)), ninf(BI(-1), BI(0));
+  assert(R::infty() == inf && -R::infty() == ninf);
   assert(x == y);
   assert((x.reduced() == pair<BI, BI>(BI(1), BI(2))));
   assert(ninf < R(-100) && R(100) < inf);
@@ -119,11 +121,42 @@ void test_bigint()
   assert(oss.str() == "1/0");
 }
 
+void test_converting_constructor()
+{
+  using R = Rational<ll>;
+  using W = Rational<i128>;
+  static_assert(is_constructible_v<W, R>);
+  static_assert(!is_convertible_v<R, W>);
+  W x(R(-18, 24));
+  assert(x.num == -18 && x.den == 24);
+  W y(R(18, -24));
+  assert(y.num == -18 && y.den == 24);
+  W inf(numeric_limits<R>::infinity());
+  W ninf(-numeric_limits<R>::infinity());
+  assert(inf.num == 1 && inf.den == 0);
+  assert(ninf.num == -1 && ninf.den == 0);
+
+  constexpr ll v = 4'000'000'000LL;
+  W product = W(R(v, v - 1)) * W(R(v, v - 1));
+  assert(product.num == i128(v) * v);
+  assert(product.den == i128(v - 1) * (v - 1));
+  ostringstream oss;
+  oss << x << ' ' << product << ' ' << inf;
+  assert(oss.str() == "-3/4 16000000000000000000/15999999992000000001 1/0");
+  W lowest(numeric_limits<i128>::lowest());
+  assert((lowest.reduced() == pair<i128, i128>{numeric_limits<i128>::lowest(), 1}));
+  Rational<u128> unsigned_wide(u128(1) << 127, u128(1) << 126);
+  assert((unsigned_wide.reduced() == pair<u128, u128>{2, 1}));
+  Rational<BigInteger<>> big(R(-18, 24));
+  assert(big.num == BigInteger<>(-18) && big.den == BigInteger<>(24));
+}
+
 int main()
 {
   test_integer();
   test_modint();
   test_infinity();
   test_bigint();
+  test_converting_constructor();
   cout << "Hello World" << endl;
 }

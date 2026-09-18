@@ -145,7 +145,6 @@ SubsetSum(vc<T> a, int smax)
 ##### 制約
 
 - `T` は整数型
-- $smax-\sum_{a_i<0}a_i$ は `int` の範囲内
 - $a_i$ と $\sum_{a_i<0}a_i$ は `long long` の範囲内
 
 ##### 計算量

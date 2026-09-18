@@ -93,6 +93,19 @@ BigInteger abs()
 
 - $O(N)$
 
+#### gcd, lcm
+
+```cpp
+BigInteger gcd(BigInteger a, BigInteger b)
+BigInteger lcm(BigInteger a, BigInteger b)
+```
+
+最大公約数、最小公倍数を返す。引数の一方を整数型にすることもできる。結果は常に非負で、`gcd(0, 0) == 0`、一方が $0$ のとき `lcm` は $0$ を返す。
+
+##### 計算量
+
+`gcd` は $O(\log \min(\lvert a\rvert,\lvert b\rvert))$ 回の剰余演算を行う。`lcm` は GCD に加えて除算、乗算を各 $1$ 回行う。
+
 #### BigInteger 同士の加減算
 
 ```cpp

@@ -1,5 +1,7 @@
 ## 概要
 
+`infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
+
 区間加算と、区間最小値または最大値および区間和の取得を処理する作用つきモノイド。
 
 ## 使用例
@@ -18,7 +20,7 @@ cout << res.mn << ' ' << res.sum << '\n';
 ### ActedMonoidAddMinSum
 
 ```cpp
-ActedMonoidAddMinSum<T, infty = INF>
+ActedMonoidAddMinSum<T, infty = nullptr>
 ```
 
 要素型 `S` は公開メンバ `mn`, `sum`, `len` を持ち、作用型 `F` は `T`。
@@ -114,7 +116,7 @@ F id()
 ### ActedMonoidAddMinMaxSum
 
 ```cpp
-ActedMonoidAddMinMaxSum<T, infty = INF>
+ActedMonoidAddMinMaxSum<T, infty = nullptr>
 ```
 
 区間最小値と最大値を同時に取得する版。要素型 `S` は公開メンバ `mn`, `mx`, `sum`, `len` を持ち、作用型 `F` は `T`。
@@ -210,7 +212,7 @@ F id()
 ### ActedMonoidAddMaxSum
 
 ```cpp
-ActedMonoidAddMaxSum<T, infty = INF>
+ActedMonoidAddMaxSum<T, infty = nullptr>
 ```
 
 要素型 `S` は公開メンバ `mx`, `sum`, `len` を持ち、作用型 `F` は `T`。

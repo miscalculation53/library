@@ -60,9 +60,9 @@ struct GroupMulDiv
   static constexpr S inv(S a) { return e() / a; }
 };
 
-template <class T, auto infty = INF>
+template <class T, auto infty = nullptr>
 using SemiRingMinPlus = SemiRingFromMonoidMonoid<MonoidMin<T, infty>, MonoidAdd<T>>;
-template <class T, auto infty = INF>
+template <class T, auto infty = nullptr>
 using SemiRingMaxPlus = SemiRingFromMonoidMonoid<MonoidMax<T, infty>, MonoidAdd<T>>;
 template <class T>
 using RingAddSubMul = RingFromGroupMonoid<GroupAddSub<T>, MonoidMul<T>>;

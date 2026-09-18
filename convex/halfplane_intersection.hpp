@@ -133,7 +133,7 @@ private:
 
 public:
   // 空の半平面集合を作る。infty は非有界判定用の内部の枠に使う。
-  explicit HalfPlaneIntersection(T infty = numeric_limits<T>::max() / T(2)) : infty(infty)
+  explicit HalfPlaneIntersection(T infty = default_infty<T>()) : infty(infty)
   {
     assert(infty > 0);
   }

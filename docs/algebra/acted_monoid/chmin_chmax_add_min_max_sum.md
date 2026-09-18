@@ -1,5 +1,7 @@
 ## 概要
 
+`infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
+
 区間 `chmin`・`chmax`・加算と、区間最小値・最大値・和の取得を Segment Tree Beats で処理する作用つきモノイド。
 
 各区間について、最小値・第二最小値・最小値の個数、最大値・第二最大値・最大値の個数、要素数、総和を持つ。clamp によって第二最小値以上または第二最大値以下の要素まで変化し、保持情報だけでは更新できない場合は `fail` を立てる。`SegmentTreeBeats` はその作用を子へ伝播し、親を再構築する。
@@ -23,7 +25,7 @@ cout << res.mn << ' ' << res.mx << ' ' << res.sum << '\n';
 ### ActedMonoidChminChmaxAddMinMaxSum
 
 ```cpp
-ActedMonoidChminChmaxAddMinMaxSum<T, infty = INF>
+ActedMonoidChminChmaxAddMinMaxSum<T, infty = nullptr>
 ```
 
 作用型 `F` は `MonoidClampAdd<T, infty>::S`。`F::chmin`, `F::chmax`, `F::add` で各更新を構築する。

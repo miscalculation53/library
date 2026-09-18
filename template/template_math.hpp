@@ -11,6 +11,7 @@
 #include "template_rep.hpp"
 
 #include "../utils/is_integral_ext.hpp"
+#include "../utils/default_infty.hpp"
 
 /**
  * @brief テンプレート（演算）
@@ -63,7 +64,7 @@ T mul_limited(A a, B b, M m)
   return T(a) > T(m) / T(b) ? T(m) : T(a) * T(b);
 }
 template <class T = ll, class A, class B>
-T mul_limited(A a, B b) { return mul_limited<T>(a, b, INF); }
+T mul_limited(A a, B b) { return mul_limited<T>(a, b, default_infty<T>()); }
 template <class T = ll, class A, class B, class M>
 T pow_limited(A a, B b, M m)
 {
@@ -90,7 +91,7 @@ T pow_limited(A a, B b, M m)
   return res;
 }
 template <class T = ll, class A, class B>
-T pow_limited(A a, B b) { return pow_limited<T>(a, b, INF); }
+T pow_limited(A a, B b) { return pow_limited<T>(a, b, default_infty<T>()); }
 
 template <class T = ll, class A, class K>
 constexpr T iroot(A a, K k)

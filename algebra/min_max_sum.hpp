@@ -24,12 +24,12 @@ struct MonoidLenSum
   static constexpr S e() { return {0, T{}}; }
 };
 
-template <class T, auto infty = INF>
+template <class T, auto infty = nullptr>
 struct MonoidMinMax
 {
   struct S
   {
-    T mn = resolved_value<T, infty>(), mx = -resolved_value<T, infty>();
+    T mn = resolved_infty<T, infty>(), mx = -resolved_infty<T, infty>();
     S() {}
     S(T x) : mn(x), mx(x) {}
     S(T mn, T mx) : mn(mn), mx(mx) {}
@@ -39,12 +39,12 @@ struct MonoidMinMax
   static constexpr S e() { return {}; }
 };
 
-template <class T, auto infty = INF>
+template <class T, auto infty = nullptr>
 struct MonoidMinSum
 {
   struct S
   {
-    T mn = resolved_value<T, infty>(), sum = T{};
+    T mn = resolved_infty<T, infty>(), sum = T{};
     int len = 0;
     S() {}
     S(T x, int len = 1) : mn(x), sum(x * len), len(len) {}
@@ -58,12 +58,12 @@ struct MonoidMinSum
   static constexpr S e() { return {}; }
 };
 
-template <class T, auto infty = INF>
+template <class T, auto infty = nullptr>
 struct MonoidMaxSum
 {
   struct S
   {
-    T mx = -resolved_value<T, infty>(), sum = T{};
+    T mx = -resolved_infty<T, infty>(), sum = T{};
     int len = 0;
     S() {}
     S(T x, int len = 1) : mx(x), sum(x * len), len(len) {}
@@ -77,12 +77,12 @@ struct MonoidMaxSum
   static constexpr S e() { return {}; }
 };
 
-template <class T, auto infty = INF>
+template <class T, auto infty = nullptr>
 struct MonoidMinMaxSum
 {
   struct S
   {
-    T mn = resolved_value<T, infty>(), mx = -resolved_value<T, infty>(), sum = T{};
+    T mn = resolved_infty<T, infty>(), mx = -resolved_infty<T, infty>(), sum = T{};
     int len = 0;
     S() {}
     S(T x, int len = 1) : mn(x), mx(x), sum(x * len), len(len) {}

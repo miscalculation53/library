@@ -109,9 +109,11 @@ $a$, $b$ はともに昇順にソートされているとき、$a$ と $b$ を�
 #### vecget
 
 ```cpp
-T vecget(vc<T> v, int i, T dflt_negative = -INF, T dflt_positive = INF)
+T vecget(vc<T> v, int i, T dflt_negative = -default_infty<T>(), T dflt_positive = default_infty<T>())
 ```
 
 範囲外も考慮した vector の取得。範囲内なら通常の `[]` や `at` と同じで、範囲外なら負方向は `dflt_negative`, 正方向は `dflt_positive` を返す。
+
+省略時は `T` の[既定の無限大](../utils/default_infty.md)の符号を変えた値を返す。例えば `i128` なら `±(INF * INF)`、`Rational` なら `±1/0` になる。明示指定した範囲外の値はそのまま使う。
 
 用途としては、ソート済み配列が無限に広がっていると考えたい場合（特に、`binsearch` や `expsearch` に渡すとき）。`LB` や `UB` だと頭が壊れるとき用に。→ 二分探索に lt, leq, gt, geq 系をつけたので出番がないかも。
