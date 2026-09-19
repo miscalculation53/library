@@ -2,13 +2,15 @@
 
 $2$ 次元累積和
 
+更新と取得を混ぜ、取得に使った原点側の矩形を確定できる場合は [動的累積和](cumulative_sum_dynamic_2d.md) を使う。
+
 ## 詳細なドキュメント
 
 #### コンストラクタ
 
 ```cpp
-(1) CumulativeSum2D<G = GroupAddSub<ll>>()
-(2) CumulativeSum2D<G = GroupAddSub<ll>>(const vvc<G::S>& a)
+(1) CumulativeSum2D<G>()
+(2) CumulativeSum2D<G>(const vvc<G::S>& a)
 ```
 
 - (1)：デフォルトコンストラクタ。

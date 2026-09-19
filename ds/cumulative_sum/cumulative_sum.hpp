@@ -9,7 +9,7 @@
  * @docs docs/ds/cumulative_sum/cumulative_sum.md
  */
 
-template <class G = GroupAddSub<ll>>
+template <class G>
 struct CumulativeSum
 {
   using S = typename G::S;

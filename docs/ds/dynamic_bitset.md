@@ -189,16 +189,18 @@ template <class F>
 DynamicBitset &or_slice(int l, int r, const DynamicBitset &b, int bl, const F &f)
 ```
 
-各 $0\leq i<r-l$ に対して、`a[l + i]` に `b[bl + i]` を代入、AND、OR、XORする。
+$k=\min(r-l, b.\operatorname{size}()-bl)$ とし、各 $0\leq i<k$ に対して、`a[l + i]` に `b[bl + i]` を代入、AND、OR、XORする。`a` の長さと、区間 $[l,l+k)$ の外側のビットは保持する。
+
+参照元が短い場合、残りの宛先はそのまま保持する。論理演算では不足分を AND は `1`、OR・XOR は `0` とすることに相当する。`bl == b.size()` の場合は全体を保持する。
 
 `a` と `b` が同一で区間が重なっていても、変更前の `b` の区間を使用する。コールバックを渡す形式では、ORによって `0` から `1` に変わる宛先の各位置 $i$ について `f(i)` を1回呼ぶ。
 
 ##### 制約
 
 - $0\leq l\leq r\leq a.\operatorname{size}()$
-- $0\leq bl$、$bl+r-l\leq b.\operatorname{size}()$
+- $0\leq bl\leq b.\operatorname{size}()$
 
 ##### 計算量
 
-- コールバックなし：$O(1+(r-l)/w)$
-- コールバックあり：$O(1+(r-l)/w+z)$。$z$ は `f` の呼び出し回数
+- コールバックなし：$O(1+k/w)$
+- コールバックあり：$O(1+k/w+z)$。$z$ は `f` の呼び出し回数

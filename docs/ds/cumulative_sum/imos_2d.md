@@ -2,14 +2,16 @@
 
 $2$ 次元 imos 法
 
+更新と取得を混ぜ、取得した位置まで原点側の差分を順次展開する場合は [動的 imos 法](imos_dynamic_2d.md) を使う。
+
 ## 詳細なドキュメント
 
 #### コンストラクタ
 
 ```cpp
-(1) Imos2D<G = GroupAddSub<ll>>()
-(2) Imos2D<G = GroupAddSub<ll>>(int n, int m)
-(3) Imos2D<G = GroupAddSub<ll>>(const vvc<G::S>& a)
+(1) Imos2D<G>()
+(2) Imos2D<G>(int n, int m)
+(3) Imos2D<G>(const vvc<G::S>& a)
 ```
 
 - (1)：デフォルトコンストラクタ。

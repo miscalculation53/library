@@ -44,7 +44,8 @@ private:
   DynamicBitset &apply_slice(int l, int r, const DynamicBitset &b, int bl, const F &f)
   {
     assert(0 <= l && l <= r && r <= n);
-    assert(0 <= bl && bl + r - l <= b.n);
+    assert(0 <= bl && bl <= b.n);
+    r = l + min(r - l, b.n - bl);
     if (l == r)
       return *this;
 

@@ -2,13 +2,15 @@
 
 $1$ 次元累積和
 
+更新と取得を混ぜ、取得した接頭辞を確定できる場合は [動的累積和](cumulative_sum_dynamic.md) を使う。
+
 ## 詳細なドキュメント
 
 #### コンストラクタ
 
 ```cpp
-(1) CumulativeSum<G = GroupAddSub<ll>>()
-(2) CumulativeSum<G = GroupAddSub<ll>>(const vc<G::S>& a)
+(1) CumulativeSum<G>()
+(2) CumulativeSum<G>(const vc<G::S>& a)
 ```
 
 - (1)：デフォルトコンストラクタ。

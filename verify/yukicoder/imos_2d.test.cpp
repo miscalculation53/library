@@ -27,7 +27,7 @@ void main2()
   offset(XYHP, tlll{M, M, 0});
   auto ini = dvec({2 * M + 2, 2 * M + 2}, ll(0));
   fec([ x, y, hp ] : XYHP) ini.at(x).at(y) = hp;
-  Imos2D imos(ini);
+  Imos2D<GroupAddSub<ll>> imos(ini);
   rep(_, K)
   {
     LL(ax, ay, w, h, d);

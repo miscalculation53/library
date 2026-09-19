@@ -24,7 +24,7 @@ void main2()
   LL(N, M);
   VEC(pll, M, LR);
   offset(LR, pll{0, -1});
-  Imos imos(N);
+  Imos<GroupAddSub<ll>> imos(N);
   fec([ l, r ] : LR) imos.add(r, l, 1);
   PRINTV(reversed(imos.content()));
 }

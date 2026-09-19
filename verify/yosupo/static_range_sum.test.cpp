@@ -23,7 +23,7 @@ void main2()
 {
   LL(N, Q);
   VEC(ll, N, A);
-  auto cum = CumulativeSum(A);
+  auto cum = CumulativeSum<GroupAddSub<ll>>(A);
   rep(_, Q)
   {
     LL(l, r);

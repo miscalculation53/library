@@ -101,25 +101,25 @@ void test_slice(mt19937 &rng)
     repi(i, m) if (rng() & 1) b.set(i), bv[i] = true;
 
     int sn = self ? n : m;
-    int len = rng() % (min(n, sn) + 1);
-    int l = rng() % (n - len + 1), bl = rng() % (sn - len + 1);
+    int l = rng() % (n + 1), r = l + rng() % (n - l + 1);
+    int bl = rng() % (sn + 1), len = min(r - l, sn - bl);
     int op = rng() % 4;
     vc<bool> old = av, src = self ? av : bv, called(n);
 
     auto apply = [&](const DynamicBitset &s)
     {
       if (op == 0)
-        a.assign_slice(l, l + len, s, bl);
+        a.assign_slice(l, r, s, bl);
       else if (op == 1)
-        a.and_slice(l, l + len, s, bl);
+        a.and_slice(l, r, s, bl);
       else if (op == 2)
-        a.or_slice(l, l + len, s, bl, [&](int i)
+        a.or_slice(l, r, s, bl, [&](int i)
                    {
                      assert(!called[i]);
                      called[i] = true;
                    });
       else
-        a.xor_slice(l, l + len, s, bl);
+        a.xor_slice(l, r, s, bl);
     };
     if (self)
       apply(a);
@@ -142,6 +142,50 @@ void test_slice(mt19937 &rng)
     repi(i, n) if (i < l || l + len <= i) assert(!called[i]);
     verify(a, av);
   }
+}
+
+// Test focus: shorter slices preserve the remaining destination bits for every
+// operation, including empty sources and lengths around word boundaries.
+void test_slice_boundaries()
+{
+  for (int n : {0, 1, 63, 64, 65, 127, 128, 129})
+    for (int m : {0, 1, 63, 64, 65, 127, 128, 129})
+      for (int l : {0, n / 2, n})
+        for (int bl : {0, m / 2, m})
+          repi(op, 5)
+          {
+            bool initial = op <= 1;
+            DynamicBitset a(n, initial), b(m, !initial);
+            vc<bool> called(n);
+            if (op == 0)
+              a.assign_slice(l, n, b, bl);
+            else if (op == 1)
+              a.and_slice(l, n, b, bl);
+            else if (op == 2)
+              a.or_slice(l, n, b, bl);
+            else if (op == 3)
+              a.xor_slice(l, n, b, bl);
+            else
+              a.or_slice(l, n, b, bl, [&](int i)
+                         {
+                           assert(0 <= i && i < n && !called[i]);
+                           called[i] = true;
+                         });
+
+            assert(a.size() == n);
+            int count = 0;
+            repi(i, n)
+            {
+              bool changed = i >= l && i - l < m - bl;
+              bool value = initial != changed;
+              assert(a.test(i) == value);
+              assert(called[i] == (op == 4 && changed));
+              count += value;
+            }
+            assert(a.count() == count);
+            a.resize(n + 64);
+            repi(i, n, n + 64) assert(!a.test(i));
+          }
 }
 
 // Test focus: aligned suffix XOR keeps untouched bits and zero padding intact,
@@ -362,6 +406,7 @@ int main()
     verify(bs, a);
   }
   test_slice(rng);
+  test_slice_boundaries();
   test_aligned_xor_slice();
   test_comparison();
   cout << "Hello World" << endl;

@@ -10,7 +10,7 @@
  */
 
 // G は可換
-template <class G = GroupAddSub<ll>>
+template <class G>
 struct Imos2D
 {
   using S = typename G::S;

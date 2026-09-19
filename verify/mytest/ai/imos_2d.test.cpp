@@ -6,7 +6,7 @@
 // Test focus: boundary/empty rectangles and matrices with a zero-sized dimension are no-ops.
 void test()
 {
-  Imos2D<> imos(2, 3);
+  Imos2D<GroupAddSub<ll>> imos(2, 3);
   imos.add(2, 2, 0, 3, 10);
   imos.add(0, 2, 3, 3, 10);
   imos.add(1, 1, 1, 2, 10);
@@ -15,11 +15,11 @@ void test()
   imos.add(0, 2, 1, 3, 4);
   assert(imos.content() == vvl({{0, 4, 4}, {0, 4, 4}}));
 
-  Imos2D<> zero_rows(0, 3);
+  Imos2D<GroupAddSub<ll>> zero_rows(0, 3);
   zero_rows.add(0, 0, 0, 3, 10);
   assert(zero_rows.content().empty());
 
-  Imos2D<> zero_columns(2, 0);
+  Imos2D<GroupAddSub<ll>> zero_columns(2, 0);
   zero_columns.add(0, 2, 0, 0, 10);
   assert(zero_columns.content() == vvl(2));
 }
