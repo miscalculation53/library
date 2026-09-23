@@ -6,6 +6,8 @@
 
 の $3$ つを用意。`modint61` は `static_modint64<(1LL << 61) - 1>` のエイリアス。
 
+動的 modint は、値の生成や `mod()` の呼び出しより先に `mint::set_mod(m)` で法を設定する。初期化忘れは `set_mod` の呼び出しを促すメッセージ付きの `assert` で検出する（`NDEBUG` 定義時は無効）。
+
 ACL の modint にあるメソッドと入出力はだいたい揃っているが、dynamic には `raw` が存在しない。
 
 ---
@@ -21,6 +23,7 @@ ACL の modint にあるメソッドと入出力はだいたい揃っている�
 
 制約：
 
+- 動的 modint は使用前に `set_mod(m)` を呼び、$m \geq 1$ とする。`dynamic_modint64_odd` では $m$ を奇数とする。
 - `dynamic_modint64_odd<INT_MIN>` はライブラリの内部で使用するので使用しないこと
 - mod の上限は、`ll` に収まるなら OK なはず（証明したわけではない）
   - $2^{63}-1 = 9.223372036854775807 \times 10^{18}$

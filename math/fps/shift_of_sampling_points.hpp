@@ -45,11 +45,11 @@ vc<mint> shift_of_sampling_points_many(const vc<mint> &ys, const mint2 &c, int m
   assert(m >= 0);
   F p(n);
   repi(i, n) p[i] = i % 2 == 0 ? 1 : -1;
-  F a = (F(ys).egf() * p.egf()).pre(n);
+  F a = (F(ys).egf() * p.egf()).resized(n);
   F q(n);
   q[0] = 1;
   repi(i, 1, n) q[i] = q[i - 1] * (c - i + 1);
   F b = (a.ogf() * q.egf().rev()) >> (n - 1);
   F r(m, 1);
-  return (b.egf() * r.egf()).pre(m).ogf();
+  return (b.egf() * r.egf()).resized(m).ogf();
 }

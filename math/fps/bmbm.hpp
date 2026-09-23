@@ -20,7 +20,7 @@ pair<FormalPowerSeries<mint>, FormalPowerSeries<mint>> linear_recurrence_gf(cons
   assert(SZ(a) >= d);
   F q = -F(c);
   q[0] = 1;
-  F p = (F(a) * q).pre(d);
+  F p = (F(a) * q).resized(d);
   return {p, q};
 }
 

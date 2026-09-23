@@ -22,7 +22,12 @@ namespace internal
     V _v;
 
   public:
-    static constexpr M mod() { return Policy::mod(); }
+    static constexpr M mod()
+    {
+      M m = Policy::mod();
+      assert(m > 0 && "modint: modulus is not set; call mint::set_mod(m) before use");
+      return m;
+    }
 
     template <class T = Policy>
     static auto set_mod(M m) -> decltype(T::set_mod(m)) { return T::set_mod(m); }
@@ -34,22 +39,23 @@ namespace internal
       return x;
     }
 
-    modint_impl() : _v(0) {}
+    modint_impl() : _v(0) { (void)mod(); }
 
     template <class T, typename = enable_if_t<is_integral_ext<T>>>
     modint_impl(T v)
     {
+      const V m = mod();
       V rem;
       if constexpr (is_signed_ext<T>)
       {
         using S = make_signed_t<V>;
-        S x = v % S(Policy::umod());
+        S x = v % S(m);
         if (x < 0)
-          x += Policy::umod();
+          x += m;
         rem = x;
       }
       else
-        rem = V(v % Policy::umod());
+        rem = V(v % m);
       _v = Policy::init(rem);
     };
 

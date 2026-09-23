@@ -174,7 +174,7 @@ int main()
     for (auto &x : q) x = rng();
     for (auto &x : p) x = rng();
     q[0] = 1;
-    auto a = (p * q.inv(n)).pre(n);
+    auto a = (p * q.inv(n)).resized(n);
     check_bm<mint>(a);
     // Terminal corruption forces a large, non-unique minimal recurrence.
     a.back() += 1;

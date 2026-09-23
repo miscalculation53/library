@@ -19,5 +19,5 @@ FormalPowerSeries<mint> taylor_shift(const FormalPowerSeries<mint> &f, mint2 c)
   FormalPowerSeries<mint> g(n);
   g[0] = 1;
   repi(i, 1, f.sz()) g[i] = c * g[i - 1];
-  return (f.ogf().rev() * g.egf()).pre(n).rev().egf();
+  return (f.ogf().rev() * g.egf()).resized(n).rev().egf();
 }

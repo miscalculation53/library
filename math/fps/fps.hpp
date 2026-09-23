@@ -34,10 +34,12 @@ struct FormalPowerSeries : vc<mint>
       pop_back();
   }
   mint get(int i) const { return 0 <= i && i < sz() ? (*this)[i] : 0; }
-  F pre(int len) const
+  F resized(int n) const
   {
-    assert(len >= 0);
-    return F(begin(), begin() + min(sz(), len));
+    assert(n >= 0);
+    F res(n);
+    copy_n(begin(), min(sz(), n), res.begin());
+    return res;
   }
   F rev(int d = -1) const
   {
@@ -105,15 +107,14 @@ struct FormalPowerSeries : vc<mint>
   F &operator*=(const F &g) { return *this = *this * g; }
   F operator*(const F &g) const { return convolution(*this, g); }
 
-  F div_sparse_destructive(const F &g, int d = -1)
+  F div_sparse_destructive(const F &g, int n)
   {
+    assert(n >= 0);
     assert(g.get(0) != 0);
-    if (d < 0)
-      d = max(sz(), g.sz());
     mint iv = g.front().inv();
     auto gnz = g.nz();
-    resize(d);
-    repi(i, d)
+    resize(n);
+    repi(i, n)
     {
       fec([j, b] : gnz)
       {
@@ -125,25 +126,26 @@ struct FormalPowerSeries : vc<mint>
       }
       (*this)[i] *= iv;
     }
-    return pre(d);
+    return *this;
   }
-  F div_sparse(const F &g, int d = -1) const { return F(*this).div_sparse_destructive(g, d); }
+  F div_sparse(const F &g, int n) const { return F(*this).div_sparse_destructive(g, n); }
 
   // 定数項が非零
-  F inv(int d = -1) const
+  F inv(int n) const
   {
+    assert(n >= 0);
     assert(get(0) != 0);
-    if (d < 0)
-      d = sz();
+    if (n == 0)
+      return {};
     if (cnt_nz() <= 200)
-      return F{1}.div_sparse(*this, d);
+      return F{1}.div_sparse(*this, n);
     F f, g2, g{front().inv()};
-    for (int m = 1; m < d; m *= 2)
+    for (int m = 1; m < n; m *= 2)
     {
       if (ntt_ok<mint>(2 * m))
       {
-        f = pre(2 * m), g2 = F(g);
-        f.resize(2 * m), ntt(f);
+        f = resized(2 * m), g2 = F(g);
+        ntt(f);
         g2.resize(2 * m), ntt(g2);
         repi(i, 2 * m) f[i] *= g2[i];
         intt(f);
@@ -157,35 +159,33 @@ struct FormalPowerSeries : vc<mint>
         g.insert(g.end(), f.begin(), f.begin() + m);
       }
       else
-        g = (g * mint(2) - g * g * pre(2 * m)).pre(2 * m);
+        g = (g * mint(2) - g * g * resized(2 * m)).resized(2 * m);
     }
-    return g.pre(d);
+    return g.resized(n);
   }
-  F &operator/=(const F &g)
+  F div(const F &g, int n) const
   {
+    assert(n >= 0);
+    assert(g.get(0) != 0);
+    if (n == 0)
+      return {};
     if (g.cnt_nz() <= 200)
-    {
-      div_sparse_destructive(g);
-      return *this;
-    }
-    const int d = max(sz(), g.sz());
-    *this = (*this * g.inv(d)).pre(d);
-    return *this;
+      return div_sparse(g, n);
+    return (resized(n) * g.inv(n)).resized(n);
   }
-  F operator/(const F &g) const { return F(*this) /= g; }
 
   F div_poly(const F &g) const
   {
     const int k = sz() - g.sz() + 1;
     if (k <= 0)
       return {};
-    return (rev().pre(k) * g.rev().inv(k)).pre(k).rev();
+    return (rev().resized(k) * g.rev().inv(k)).resized(k).rev();
   }
   pair<F, F> divmod(const F &g) const
   {
     F q = div_poly(g);
     const int l = sz() - q.sz();
-    F r = pre(l) - (q.pre(l) * g.pre(l)).pre(l);
+    F r = resized(l) - (q.resized(min(l, q.sz())) * g.resized(min(l, g.sz()))).resized(l);
     r.shrink();
     return {q, r};
   }
@@ -230,15 +230,14 @@ struct FormalPowerSeries : vc<mint>
     return res;
   }
   // 定数項が 1
-  F log(int d = -1) const
+  F log(int n) const
   {
+    assert(n >= 0);
     assert(get(0) == 1);
-    if (d < 0)
-      d = sz();
-    if (d == 0)
+    if (n == 0)
       return {};
-    F f = pre(d);
-    return (f.diff() * f.inv(d - 1)).pre(d - 1).integ();
+    F f = resized(n);
+    return (f.diff() * f.inv(n - 1)).resized(n - 1).integ();
   }
 
   // 微分方程式 a(x)f'(x) + b(x)f(x) = 0, [x^0]f(x) = 1 を満たす f を d 項まで求める
@@ -269,24 +268,25 @@ struct FormalPowerSeries : vc<mint>
     }
     return f;
   }
-  F exp_sparse(int d = -1) const
+  F exp_sparse(int n) const
   {
+    assert(n >= 0);
     assert(get(0) == 0);
-    if (d < 0)
-      d = sz();
-    return diff_eq(F{1}, -diff(), d);
+    return diff_eq(F{1}, -diff(), n);
   }
   // k < 0 のときは定数項が非零
-  F pow_sparse(ll k, int d = -1) const
+  F pow_sparse(ll k, int n) const
   {
-    if (d < 0)
-      d = sz();
+    assert(n >= 0);
+    assert(k >= 0 || get(0) != 0);
+    if (n == 0)
+      return {};
     auto [exi, d0, a0] = nz_front();
     if (!exi)
     {
       assert(k >= 0 && "k < 0 but [x^0]f(x) == 0");
-      F res(d);
-      if (k == 0 && d > 0)
+      F res(n);
+      if (k == 0)
         res[0] = 1;
       return res;
     }
@@ -294,54 +294,54 @@ struct FormalPowerSeries : vc<mint>
     F f = ((*this) >> d0) * ia0;
     if (k >= 0)
     {
-      F g = diff_eq(f, -k * f.diff(), d - mul_limited(d0, k, d));
-      F h = (g * a0.pow(k)) << mul_limited(d0, k, d);
-      return h.pre(d);
+      const int shift = mul_limited(d0, k, n);
+      F g = diff_eq(f, -mint(k) * f.diff(), n - shift);
+      F h = (g * a0.pow(k)) << shift;
+      return h;
     }
     else
     {
       assert(d0 == 0 && "k < 0 but [x^0]f(x) == 0");
-      F g = diff_eq(f, -k * f.diff(), d);
-      F h = (g * ia0.pow(-k));
-      return h.pre(d);
+      F g = diff_eq(f, -mint(k) * f.diff(), n);
+      return g * ia0.pow(ull(-(k + 1)) + 1);
     }
   }
   // (存在するか, 平方根のひとつ)
-  pair<bool, F> sqrt_sparse(int d = -1) const
+  pair<bool, F> sqrt_sparse(int n) const
   {
-    if (d < 0)
-      d = sz();
+    assert(n >= 0);
     auto [exi, d0, a0] = nz_front();
     if (!exi)
-      return {true, F(d)};
+      return {true, F(n)};
     if (d0 % 2 != 0)
       return {false, {}};
-    if (d0 >= d)
-      return {true, F(d)};
     auto [ok, r] = sqrt_mod(a0);
     if (!ok)
       return {false, {}};
+    if (d0 / 2 >= n)
+      return {true, F(n)};
     mint i2 = Binomial<mint>::inv(2);
     F f = ((*this) >> d0) / a0;
-    F g = diff_eq(f, -i2 * f.diff(), d - d0 / 2);
-    return {true, ((g * r) << (d0 / 2)).pre(d)};
+    F g = diff_eq(f, -i2 * f.diff(), n - d0 / 2);
+    return {true, (g * r) << (d0 / 2)};
   }
 
   // 定数項が 0
-  F exp(int d = -1) const
+  F exp(int n) const
   {
+    assert(n >= 0);
     assert(get(0) == 0);
-    if (d < 0)
-      d = sz();
-    if (ntt_ok<mint>(2 * d))
+    if (n == 0)
+      return {};
+    if (ntt_ok<mint>(2 * n))
     {
       if (cnt_nz() <= 320)
-        return exp_sparse(d);
+        return exp_sparse(n);
       // https://arxiv.org/pdf/1301.5804.pdf
       F f{1}, g{1};
       F f2, g2, f3, q, s, h, u;
       g2 = {0};
-      for (int m = 1; m < d; m *= 2)
+      for (int m = 1; m < n; m *= 2)
       {
         mint im = mint(m).inv(), i2m = mint(2 * m).inv();
         f2 = f, f2.resize(2 * m), ntt(f2);
@@ -387,82 +387,83 @@ struct FormalPowerSeries : vc<mint>
         // h
         f.insert(f.end(), u.begin(), u.end());
       }
-      return f.pre(d);
+      return f.resized(n);
     }
     else
     {
       if (cnt_nz() <= 3000)
-        return exp_sparse(d);
+        return exp_sparse(n);
       F f{1};
-      for (int m = 1; m < d; m *= 2)
+      for (int m = 1; m < n; m *= 2)
       {
-        f = (f * (pre(2 * m) + F{1} - f.log(2 * m))).pre(2 * m);
+        f = (f * (resized(2 * m) + F{1} - f.log(2 * m))).resized(2 * m);
       }
-      return f.pre(d);
+      return f.resized(n);
     }
   }
   // k < 0 のときは定数項が非零
-  F pow(ll k, int d = -1) const
+  F pow(ll k, int n) const
   {
-    if (d < 0)
-      d = sz();
-    if (ntt_ok<mint>(2 * d))
+    assert(n >= 0);
+    assert(k >= 0 || get(0) != 0);
+    if (n == 0)
+      return {};
+    if (ntt_ok<mint>(2 * n))
     {
       if (cnt_nz() <= 100)
-        return pow_sparse(k, d);
+        return pow_sparse(k, n);
     }
     else
     {
       if (cnt_nz() <= 1300)
-        return pow_sparse(k, d);
+        return pow_sparse(k, n);
     }
     if (k == 0)
     {
-      F res(d);
-      if (d > 0)
-        res[0] = 1;
+      F res(n);
+      res[0] = 1;
       return res;
     }
     if (k < 0)
     {
       assert(get(0) != 0);
       mint iv = get(0).inv();
-      F res = ((*this * iv).log(d) * mint(k)).exp(d);
-      return (res * iv.pow(-k)).pre(d);
+      F res = ((*this * iv).log(n) * mint(k)).exp(n);
+      return res * iv.pow(ull(-(k + 1)) + 1);
     }
     repi(i, sz())
     {
       if ((*this)[i] != 0)
       {
-        F res = (((*this / (*this)[i]) >> i).log(d) * mint(k)).exp(d);
-        return (res * (*this)[i].pow(k) << (i * k)).pre(d);
+        const int shift = mul_limited(i, k, n);
+        F res = (((*this / (*this)[i]) >> i).log(n - shift) * mint(k)).exp(n - shift);
+        return (res * (*this)[i].pow(k)) << shift;
       }
-      if (mul_limited(i + 1, k, d) >= d)
-        return F(d);
+      if (mul_limited(i + 1, k, n) >= n)
+        return F(n);
     }
-    return F(d);
+    return F(n);
   }
-  pair<bool, F> sqrt(int d = -1) const
+  pair<bool, F> sqrt(int n) const
   {
+    assert(n >= 0);
     if (cnt_nz() <= 200)
-      return sqrt_sparse(d);
-    if (d < 0)
-      d = sz();
+      return sqrt_sparse(n);
     auto [exi, d0, a0] = nz_front();
     if (!exi)
-      return {true, F(d)};
+      return {true, F(n)};
     if (d0 % 2 != 0)
       return {false, {}};
-    if (d0 >= d)
-      return {true, F(d)};
     auto [ok, r] = sqrt_mod(a0);
     if (!ok)
       return {false, {}};
+    if (d0 / 2 >= n)
+      return {true, F(n)};
     mint i2 = Binomial<mint>::inv(2);
     F f = ((*this) >> d0) / a0, g{1};
-    for (int m = 1; m < d; m *= 2)
-      g = (g + f.pre(2 * m) * g.inv(2 * m)) * i2;
-    return {true, ((g * r) << (d0 / 2)).pre(d)};
+    for (int m = 1; m < n - d0 / 2; m *= 2)
+      g = (g + f.resized(2 * m) * g.inv(2 * m)).resized(2 * m) * i2;
+    return {true, (g.resized(n - d0 / 2) * r) << (d0 / 2)};
   }
 
   F pow_mod(ll k, const F &g) const
@@ -500,12 +501,16 @@ struct FormalPowerSeries : vc<mint>
   }
   // (1 + cx^d) をかけたもの
   F mul_bin(int d, mint c) const { return F(*this).mul_bin_destructive(d, c); }
-  // (1 + cx^d) でわる
-  F div_bin_destructive(int d, mint c)
+  // (1 + cx^k) でわり、長さ n まで求める
+  F div_bin_destructive(int k, mint c, int n)
   {
-    resize(sz() + d);
-    rep(i, sz() - d)(*this)[i + d] -= (*this)[i] * c;
+    assert(k >= 0 && n >= 0);
+    assert(k > 0 || 1 + c != 0);
+    resize(n);
+    if (k == 0)
+      return *this /= 1 + c;
+    repi(i, max(0, n - k))(*this)[i + k] -= (*this)[i] * c;
     return *this;
   }
-  F div_bin(int d, mint c) const { return F(*this).div_bin_destructive(d, c); }
+  F div_bin(int k, mint c, int n) const { return F(*this).div_bin_destructive(k, c, n); }
 };

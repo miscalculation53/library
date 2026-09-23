@@ -89,6 +89,19 @@ bool empty()
 
 - $O(1)$
 
+#### size
+
+```cpp
+template <class I = ll>
+I size() const
+```
+
+現在の要素数を型 `I` で返す。
+
+##### 計算量
+
+- $O(1)$
+
 #### content
 
 ```cpp

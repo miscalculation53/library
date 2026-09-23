@@ -30,7 +30,7 @@ void main2()
     IN(mint, a);
     f.at(i) = a;
   }
-  auto [ok, g] = f.sqrt();
+  auto [ok, g] = f.sqrt(N);
   if (ok)
     PRINT(g);
   else

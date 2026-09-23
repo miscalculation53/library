@@ -46,6 +46,8 @@ public:
     normalize();
   }
   bool empty() const { return body.empty(); }
+  template <class I = ll>
+  I size() const { return body.size() - era.size(); }
   T top() const { return body.top(); }
 
   vc<T> content() const

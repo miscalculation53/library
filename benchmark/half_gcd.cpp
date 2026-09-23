@@ -86,7 +86,7 @@ int main(int argc, char **argv)
       for (auto &x : p) x = rng();
       for (auto &x : q) x = rng();
       q[0] = 1;
-      auto a = (p * q.inv(n)).pre(n);
+      auto a = (p * q.inv(n)).resized(n);
       bench("recurrence", a, reps);
     }
   vc<mint> a(65536);

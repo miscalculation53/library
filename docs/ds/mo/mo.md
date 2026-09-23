@@ -31,7 +31,7 @@ $[0, n)$ 内の区間 $[l, r)$ たちに関するクエリを処理する。
 - (2) だけで渡す関数：
   - `add(i, isleft)`：今の区間に $i$ を追加する関数。`isleft` が `true` のときは左端に、`false` のときは右端に追加する
   - `del(i, isleft)`：今の区間から $i$ を削除する関数。`isleft` が `true` のときは左端から、`false` のときは右端から削除する
-- (3) では `slider` を渡す。`slider` の例としては ds/fenwick_tree/inversion.hpp に実装した `InversionSlider` がある。`slider` 内部に実装するものは：
+- (3) では `slider` を渡す。[InversionSlider](../fenwick_tree/inversion.md) や [BinomialPrefixSumSlider](../../math/modint/binomial_prefix_sum_slider.md) を利用できる。`slider` 内部に実装するものは：
   - `l`, `r`：現在の区間 $[l, r)$
   - `lpp()`, `lmm()`, `rpp()`, `rmm()`：現在の区間を更新する関数
   - `set(nl, nr)`：`lpp()`, `lmm()`, `rpp()`, `rmm()` を用いて区間を $[\mathrm{nl}, \mathrm{nr})$ に更新する関数

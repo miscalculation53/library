@@ -15,13 +15,12 @@ template <class mint>
 FormalPowerSeries<mint> compositional_inv
 (
   const FormalPowerSeries<mint> &f,
-  int n = -1
+  int n
 )
 {
   using F = FormalPowerSeries<mint>;
+  assert(n >= 0);
   assert(f.get(0) == 0 && f.get(1) != 0);
-  if (n < 0)
-    n = f.size();
   if (n == 0)
     return {};
   if (n == 1)
@@ -33,7 +32,7 @@ FormalPowerSeries<mint> compositional_inv
   reverse(ALL(h)), h.pop_back();
   dump(h);
   assert(h.get(0) == 1);
-  F g = h.pow(-mint(n - 1).inv().val());
+  F g = h.pow(-mint(n - 1).inv().val(), n - 1);
   g.insert(g.begin(), 0);
   mint pw = 1;
   repi(i, 1, n) pw = pw * ic, g[i] *= pw;

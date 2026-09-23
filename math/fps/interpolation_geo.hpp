@@ -53,7 +53,7 @@ FormalPowerSeries<mint> interpolation_geo(const mint &a, const mint &r, const vc
     repi(i, n + 1) prod[i] = ipow(-1, i) * t[i] * s[n] * is[i] * is[n - i];
   }
   F sum = multipoint_evaluation_geo(w, n, mint(1), r);
-  F ans = (prod * sum).pre(n).rev();
+  F ans = (prod * sum).resized(n).rev();
   mint ia = a.inv();
   vc<mint> pwia(n, 1);
   repi(i, 1, n) pwia[i] = pwia[i - 1] * ia;

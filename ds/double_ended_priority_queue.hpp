@@ -34,8 +34,10 @@ public:
     return x;
   }
   bool empty() const { return mn.empty(); }
+  template <class I = ll>
+  I size() const { return mn.template size<I>(); }
   T get_min() const { return mn.top(); }
   T get_max() const { return mx.top(); }
-
+  
   vc<T> content() const { return mn.content(); }
 };

@@ -87,7 +87,6 @@ void test_pow(int n)
   f[0] = 1;
   const auto expected = naive_mul(f, f, n);
   assert(f.pow(2, n) == expected);
-  assert(f.pow(2) == expected);
   assert(f.pow(0, 0).empty());
 }
 

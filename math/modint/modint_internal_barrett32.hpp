@@ -7,8 +7,9 @@ namespace internal
 
 struct barrett32
 {
-  uint m;
-  ull im;
+  uint m = 0;
+  ull im = 0;
+  barrett32() = default;
   explicit barrett32(uint m) : m(m), im((ull)(-1) / m + 1) {}
   uint umod() const { return m; }
   uint mul(uint a, uint b) const
@@ -29,8 +30,12 @@ struct policy_barrett32
   using mod_type = int;
   
   static constexpr bool is_prime = false;
-  static inline barrett32 reducer{998244353};
-  static void set_mod(mod_type m) { reducer = barrett32(m); }
+  static inline barrett32 reducer{};
+  static void set_mod(mod_type m)
+  {
+    assert(m >= 1 && "modint: set_mod(m) requires m >= 1");
+    reducer = barrett32(m);
+  }
   static mod_type mod() { return reducer.umod(); }
   static value_type umod() { return reducer.umod(); }
   static value_type init(value_type v) { return v; }

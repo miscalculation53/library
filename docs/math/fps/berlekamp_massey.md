@@ -8,6 +8,8 @@
 [$O(n\log^2 n)$ の Half-GCD 版](berlekamp_massey_fast.md) もある。
 通常版は低次数の列や逐次更新に適しており、[実測比較](../../../benchmark/half_gcd.md) を参照。
 
+2変数の係数表から有理母関数を推測する場合は [2変数有理母関数の推定](rational_gf_2d.md) を使う。
+
 ## 詳細なドキュメント
 
 #### berlekamp_massey
