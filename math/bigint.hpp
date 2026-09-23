@@ -5,6 +5,7 @@
 #include "math/convolution/convolution_ll.hpp"
 #include "utils/is_integral_ext.hpp"
 #include "utils/make_unsigned_ext.hpp"
+#include "utils/integer_arithmetic.hpp"
 
 /**
  * @brief 多倍長整数
@@ -285,16 +286,8 @@ public:
   BigInteger(T x)
   {
     using U = make_unsigned_ext_t<T>;
-    U ux = x;
-    if constexpr (is_signed_ext<T>)
-    {
-      if (x < 0)
-        is_nega = true, ux = -ux;
-      else
-        is_nega = false;
-    }
-    else
-      is_nega = false;
+    U ux = unsigned_abs(x);
+    is_nega = is_negative(x);
     
     if (ux == 0)
       return;
