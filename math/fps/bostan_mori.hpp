@@ -17,7 +17,8 @@ template <class mint>
 mint bostan_mori(const FormalPowerSeries<mint> &p, const FormalPowerSeries<mint> &q, ll k)
 {
   using F = FormalPowerSeries<mint>;
-  assert(k >= 0);
+  if (k < 0)
+    return 0;
   static const internal::fft_info<mint> info;
   auto [r, u] = p.divmod(q);
   mint res = k < r.sz() ? r[(int)k] : 0;
