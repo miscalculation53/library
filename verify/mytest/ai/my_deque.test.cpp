@@ -42,9 +42,10 @@ int main()
     }
     else
       deq.reserve(expected.size() + rng() % 20);
-    assert(deq.size() == ssize(expected));
+    assert(deq.size() == SZ(expected));
     assert(deq.empty() == expected.empty());
     const MyDeque<int> &const_deq = deq;
+    assert(const_deq.content() == vc<int>(expected.begin(), expected.end()));
     repi(i, expected.size()) assert(const_deq[i] == expected[i]);
   }
   PRINT("Hello World");

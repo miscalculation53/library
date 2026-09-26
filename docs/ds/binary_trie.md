@@ -56,6 +56,8 @@ assert(bt.max_right_ng(0, pred) == 5);
 assert(bt.max_right_ok_by(0, pred, cnt) == 3);
 
 bt.set(3, 0);  // 3 を削除
+bt.xor_all(1);
+assert((bt.content() == map<ll, ll>{{2, 0}, {4, 1}}));
 ```
 
 ## 詳細なドキュメント
@@ -563,3 +565,16 @@ void xor_all(Key value)
 ##### 計算量
 
 - $O(1)$
+
+#### content
+
+```cpp
+map<Key, S> content() const
+```
+
+`modify`, `set`, `add` で登録したキーと現在の値を、`xor_all` を反映した `map` のコピーとして返す。
+値を `M::e()` に戻したキーも含む。構築直後や `clear()` の直後は空の `map` を返す。
+
+##### 計算量
+
+- $O(V)$。$V$ は現在の頂点数。キーの昇順に走査し、ヒント付き挿入を使う

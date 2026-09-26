@@ -12,6 +12,7 @@ deq.push_back(2);
 deq.push_front(1);
 deq.push_back(3);
 assert(deq.front() == 1 && deq.back() == 3);
+assert(deq.content() == vc<int>({1, 2, 3}));
 ```
 
 ## 詳細なドキュメント
@@ -135,3 +136,15 @@ void clear()
 ##### 計算量
 
 - $O(1)$
+
+#### content
+
+```cpp
+vc<T> content() const
+```
+
+現在の全要素を先頭から末尾まで順に並べた配列のコピーを返す。空なら空の配列を返す。
+
+##### 計算量
+
+- $O(\mathrm{size}())$

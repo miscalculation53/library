@@ -23,18 +23,23 @@ void test_random()
   using S = M::S;
   BinaryTrie<width, M> bt;
   array<S, n> a{};
+  array<bool, n> registered{};
   const auto cnt = [](const S &s) { return s.cnt; };
   bt.reserve(1 << 10);
+  assert(as_const(bt).content().empty());
 
   auto verify = [&]()
   {
     S all = M::e();
+    map<ll, S> expected;
     repi(i, n)
     {
       assert(bt.get(i) == a[i]);
       all = M::op(all, a[i]);
+      if (registered[i]) expected.emplace(i, a[i]);
     }
     assert(bt.all_sum() == all);
+    assert(as_const(bt).content() == expected);
 
     repi(_, 20)
     {
@@ -145,6 +150,7 @@ void test_random()
   {
     int t = randint(0, 3);
     ll key = randint(0, n - 1);
+    if (t < 3) registered[key] = true;
     if (t == 0)
     {
       ll c = randint(0, 3);
@@ -169,14 +175,18 @@ void test_random()
     {
       ll x = randint(0, n - 1);
       array<S, n> b{};
+      array<bool, n> next_registered{};
       repi(i, n) b[i ^ x] = a[i];
+      repi(i, n) next_registered[i ^ x] = registered[i];
       a = b;
+      registered = next_registered;
       bt.xor_all(x);
     }
     verify();
   }
 
   bt.clear();
+  assert(as_const(bt).content().empty());
   assert(bt.all_sum() == M::e());
   repi(i, n) assert(bt.get(i) == M::e());
 }
@@ -199,6 +209,7 @@ void test_sparse_boundary_keys()
   assert(bt.max_right_ok_by(0, pred, cnt, x) == 100);
 
   bt.set(2, 0);
+  assert((as_const(bt).content() == map<ll, ll>{{2, 0}, {100, 1}}));
   assert(bt.max_right_ng(0, pred) == 256);
   assert(bt.max_right_ok_by(0, pred, cnt) == 100);
 }
@@ -233,6 +244,7 @@ void test_width_63()
   assert(bt.min_left_ok_by(mx, max_is_ng, cnt) == limit);
 
   bt.xor_all(mx);
+  assert((as_const(bt).content() == map<ll, ll>{{0, 1}, {mx ^ hi, 3}, {mx, 2}}));
   assert(bt.get(mx) == 2);
   assert(bt.get(mx ^ hi) == 3);
   assert(bt.get(0) == 1);

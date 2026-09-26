@@ -449,18 +449,34 @@ public:
   {
     return {pre[v] + edge, post[v]};
   }
-  // u から v へのパスが
-  // 行きがけ順 [l_1, r_1), ..., [l_k, r_k) の頂点 (この順) であるとき
-  // f(l_1, r_1, isrev), ..., f(l_k, r_k, isrev) を順に実行する
-  // isrev は逆向き (r-1, ..., l の順) のとき
+  class PathRange
+  {
+  private:
+    // 各端点から根までの light edge 数は log2(n) 以下。
+    static constexpr int capacity = 2 * numeric_limits<int>::digits;
+    array<tuple<int, int, bool>, capacity> intervals;
+    int count = 0;
+    friend class RootedTree;
+    PathRange() = default;
+
+  public:
+    using iterator = decltype(intervals)::const_iterator;
+    iterator begin() const { return intervals.begin(); }
+    iterator end() const { return intervals.begin() + count; }
+    int size() const { return count; }
+    bool empty() const { return count == 0; }
+    vc<tuple<int, int, bool>> to_v() const { return {begin(), end()}; }
+  };
+
+  // u から v へのパスを行きがけ順の半開区間 (l, r, isrev) に分解する
+  // パス順に走査でき、isrev は逆向き (r-1, ..., l の順) のとき true
   // edge のときは辺属性 (lca(u, v) を除いたもの)
-  template <class F>
-  void path_query(int u, int v, F f, bool edge = false) const
+  PathRange path_query(int u, int v, bool edge = false) const
   {
     assert(0 <= u && u < n);
     assert(0 <= v && v < n);
-    static pair<int, int> down_path[30];
-    int down_cnt = 0;
+    PathRange res;
+    int down_begin = PathRange::capacity;
     while (true)
     {
       int hu = internal_head(u), hv = internal_head(v);
@@ -468,12 +484,12 @@ public:
         break;
       if (dep[hu] > dep[hv])
       {
-        f(pre[hu], pre[u] + 1, true);
+        res.intervals[res.count++] = {pre[hu], pre[u] + 1, true};
         u = parent_of_head(hu);
       }
       else
       {
-        down_path[down_cnt++] = {pre[hv], pre[v] + 1};
+        res.intervals[--down_begin] = {pre[hv], pre[v] + 1, false};
         v = parent_of_head(hv);
       }
     }
@@ -483,20 +499,18 @@ public:
       int l = pre[v] + edge;
       int r = pre[u] + 1;
       if (l < r)
-        f(l, r, true);
+        res.intervals[res.count++] = {l, r, true};
     }
     else
     {
       int l = pre[u] + edge;
       int r = pre[v] + 1;
       if (l < r)
-        f(l, r, false);
+        res.intervals[res.count++] = {l, r, false};
     }
 
-    repi(i, down_cnt - 1, -1, -1)
-    {
-      auto [l, r] = down_path[i];
-      f(l, r, false);
-    }
+    while (down_begin < PathRange::capacity)
+      res.intervals[res.count++] = res.intervals[down_begin++];
+    return res;
   }
 };

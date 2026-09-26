@@ -82,12 +82,14 @@ B_1 ... B_N
 LL(N);
 VEC(ll, N, A, B);
 auto AB = zip(pair{A, B});
-// 上記はマクロを使って ZIP(AB, A, B) と書ける (ただしこのマクロではすべて tuple になる)
+// 上記はマクロを使って ZIP(AB, A, B) と書ける
 ranges::sort(AB);
 tie(A, B) = unzip(AB);
 ```
   
 このように、vector 2 つで与えられたものを、pair の vector にして、ソートして、vector 2 つに戻す、ということもできる。
+
+`ZIP` は vector が 2 個なら `pair`、それ以外なら `tuple` を要素とする vector を作る。
   
 #### 例 6：グラフ
 ```

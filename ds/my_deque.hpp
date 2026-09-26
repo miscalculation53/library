@@ -122,4 +122,12 @@ public:
     assert(0 <= i && i < sz);
     return (*this)[i];
   }
+
+  vc<T> content() const
+  {
+    vc<T> res;
+    res.reserve(sz);
+    repi(i, sz) res.eb((*this)[i]);
+    return res;
+  }
 };

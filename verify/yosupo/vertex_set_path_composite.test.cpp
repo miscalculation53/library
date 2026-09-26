@@ -44,10 +44,11 @@ void main2()
     {
       LL(u, v, x);
       auto res = M::e();
-      G.path_query(u, v, [&](ll l, ll r, bool isrev)
-                   {
-      auto tmp = seg.prod(l, r);
-      res = M::op(res, isrev ? tmp.rev() : tmp);});
+      for (auto [l, r, isrev] : G.path_query(u, v))
+      {
+        auto tmp = seg.prod(l, r);
+        res = M::op(res, isrev ? tmp.rev() : tmp);
+      }
       auto [c, d] = res.normal;
       PRINT(c * x + d);
     }

@@ -31,8 +31,8 @@ void main2()
   VEC(pll, M, UV);
   GraphUndirected<> G(N, UV);
   mint ans = 0;
-  triangles(G, [&](ll u, ll v, ll w)
-            { dump(u, v, w); ans += X.at(u) * X.at(v) * X.at(w); });
+  for (auto [u, v, w] : triangles(G))
+    ans += X.at(u) * X.at(v) * X.at(w);
   PRINT(ans);
 }
 

@@ -24,15 +24,15 @@ void main2()
   vl cnt(R - L + 1, 0);
   vl val(R - L + 1);
   rep(x, L, R + 1) val.at(x - L) = x;
-  segmented_sieve(L, R, [&](ll p, ll x)
-                  {
-                    ll &y = val.at(x - L);
-                    while (y % p == 0)
-                    {
-                      y /= p;
-                      cnt.at(x - L)++;
-                    } 
-                  });
+  for (auto [p, x] : segmented_sieve(L, R))
+  {
+    ll &y = val.at(x - L);
+    while (y % p == 0)
+    {
+      y /= p;
+      cnt.at(x - L)++;
+    }
+  }
   ll ans = 0;
   rep(x, L, R + 1)
   {

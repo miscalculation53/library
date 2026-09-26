@@ -366,4 +366,25 @@ public:
     assert(in_range(x));
     xor_lazy ^= x;
   }
+
+  // 登録されたキーと値を、xor_all を反映した map で返す。
+  map<Key, S> content() const
+  {
+    map<Key, S> res;
+    auto dfs = [&](auto dfs, int v, int i, Key key) -> void
+    {
+      if (v == -1)
+        return;
+      if (i == -1)
+      {
+        res.emplace_hint(res.end(), key, nodes[v].sum);
+        return;
+      }
+      const int z = (xor_lazy >> i) & 1;
+      // 現在のキーの昇順で走査し、map の末尾へ挿入する。
+      repi(b, 2) dfs(dfs, nodes[v].chi[b ^ z], i - 1, key | (Key(b) << i));
+    };
+    dfs(dfs, 0, width - 1, Key(0));
+    return res;
+  }
 };

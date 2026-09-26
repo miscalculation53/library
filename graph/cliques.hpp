@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../template/template_all_but_modint.hpp"
-
 #include "graph.hpp"
 
 /**
@@ -9,79 +8,126 @@
  * @docs docs/graph/cliques.md
  */
 
-// すべての (空でない) クリーク vc<I> C に対して f(C) を実行
-// クリークの個数はたかだか 2^{sqrt(2m)} 個
-// 計算量は O(2^{sqrt(2m)}*n)
-template <class I = ll, class Cost, bool is_erasable, class F>
-void cliques(const GraphUndirected<Cost, is_erasable> &g, const F &f)
+template <class I = ll>
+class CliqueRange
 {
-  const int n = g.size(), m = g.num_of_edges();
-  int b = 1;
-  while (1LL * b * b < 2LL * m)
-    b++;
-  vc<int> id(n, -1);
-  // vs のクリークをすべて調べる (v >= 0 なら v は必ず含む)
-  auto check = [&](const vc<int> &vs, int v)
+  struct Data
   {
-    const int k = vs.size();
-    int j = -1;
-    repi(i, k)
+    vc<int> vertices;
+    CSR<int> forward;
+
+    template <class Cost, bool is_erasable>
+    explicit Data(const GraphUndirected<Cost, is_erasable> &g) : vertices(g.size())
     {
-      id[vs[i]] = i;
-      if (vs[i] == v)
-        j = i;
+      const int n = g.size();
+      iota(vertices.begin(), vertices.end(), 0);
+      // 次数順に向きづけると、各頂点から先の候補数は sqrt(2m) 以下。
+      sort(vertices.begin(), vertices.end(), [&](int u, int v)
+      { return pair{g.out_edges(u).size(), u} < pair{g.out_edges(v).size(), v}; });
+      vc<int> rank(n);
+      repi(i, n) rank[vertices[i]] = i;
+      vc<pair<int, int>> es;
+      es.reserve(g.num_of_edges());
+      repi(u, n) for (auto e : g.out_edges(u))
+        if (rank[u] < rank[e.to]) es.emplace_back(rank[u], rank[e.to]);
+      forward = CSR<int>(n, es);
+      forward.sortunique();
     }
-    vvc<char> adj(k, vc<char>(k, false));
-    repi(i, k)
-    {
-      adj[i][i] = true;
-      fec(e : g.out_edges(vs[i])) if (id[e.to] >= 0) adj[i][id[e.to]] = true;
-    }
-    vc<int> cur;
-    auto dfs = [&](auto dfs, int i) -> void
-    {
-      if (i == k)
-      {
-        if (!cur.empty())
-          f(GEN_VEC(cur.size(), h, I(vs[cur[h]])));
-        return;
-      }
-      if (i != j)
-        dfs(dfs, i + 1);
-      if (all_of(ALL(cur), [&](int h) { return adj[i][h]; }))
-      {
-        cur.eb(i);
-        dfs(dfs, i + 1);
-        cur.pop_back();
-      }
-    };
-    dfs(dfs, 0);
-    fec(v : vs) id[v] = -1;
   };
-  while (true)
+  shared_ptr<const Data> data;
+
+  struct State
   {
-    repi(v, n + 1)
+    struct Frame
     {
-      if (v == n)
+      vc<int> candidates;
+      int pos = 0;
+    };
+    shared_ptr<const Data> data;
+    int root = 0;
+    vc<Frame> stack;
+    vc<I> clique;
+
+    explicit State(shared_ptr<const Data> data) : data(move(data)) {}
+
+    bool next(vc<I> &value)
+    {
+      while (true)
       {
-        vc<int> vs;
-        repi(v, n) if (id[v] != -2) vs.eb(v);
-        check(vs, -1);
-        return;
-      }
-      if (id[v] == -2)
-        continue;
-      vc<int> vs = {v};
-      vs.reserve(g.out_edges(v).size() + 1);
-      fec(e : g.out_edges(v)) if (id[e.to] != -2) vs.eb(e.to);
-      sortunique(vs);
-      const int k = vs.size();
-      if (k <= b)
-      {
-        check(vs, v);
-        id[v] = -2;
-        break;
+        if (stack.empty())
+        {
+          if (root == int(data->vertices.size())) return false;
+          const int u = root++;
+          clique = {I(data->vertices[u])};
+          stack.push_back({data->forward[u].to_v(), 0});
+        }
+        else
+        {
+          auto &frame = stack.back();
+          if (frame.pos == int(frame.candidates.size()))
+          {
+            stack.pop_back();
+            clique.pop_back();
+            continue;
+          }
+          const int u = frame.candidates[frame.pos++];
+          const auto row = data->forward[u];
+          vc<int> candidates;
+          set_intersection(frame.candidates.begin() + frame.pos, frame.candidates.end(),
+                           row.begin(), row.end(), back_inserter(candidates));
+          clique.push_back(I(data->vertices[u]));
+          stack.push_back({move(candidates), 0});
+        }
+        value = clique;
+        return true;
       }
     }
-  }
+  };
+
+public:
+  class Iterator
+  {
+    friend class CliqueRange;
+    shared_ptr<State> state;
+    vc<I> value;
+    explicit Iterator(shared_ptr<const Data> data)
+        : state(make_shared<State>(move(data))) { ++*this; }
+
+  public:
+    using iterator_category = input_iterator_tag;
+    using value_type = vc<I>;
+    using difference_type = ptrdiff_t;
+    using pointer = const value_type *;
+    using reference = const value_type &;
+
+    Iterator() = default;
+    reference operator*() const { return value; }
+    pointer operator->() const { return &value; }
+    Iterator &operator++()
+    {
+      if (!state->next(value)) state.reset();
+      return *this;
+    }
+    Iterator operator++(int) { auto old = *this; ++*this; return old; }
+    bool operator==(const Iterator &other) const
+    {
+      if (!state || !other.state) return !state && !other.state;
+      return state->data == other.state->data && value == other.value;
+    }
+    bool operator!=(const Iterator &other) const { return !(*this == other); }
+  };
+
+  template <class Cost, bool is_erasable>
+  explicit CliqueRange(const GraphUndirected<Cost, is_erasable> &g)
+      : data(make_shared<Data>(g)) {}
+
+  Iterator begin() const { return Iterator(data); }
+  Iterator end() const { return Iterator(); }
+};
+
+// 無向グラフの空でないクリークを、頂点列として一度ずつ列挙する。
+template <class I = ll, class Cost, bool is_erasable>
+CliqueRange<I> cliques(const GraphUndirected<Cost, is_erasable> &g)
+{
+  return CliqueRange<I>(g);
 }

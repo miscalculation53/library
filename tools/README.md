@@ -1,5 +1,14 @@
 # ツール
 
+## 転置コードの生成
+
+`transpose.py` は、線形な順方向の処理から転置を計算する C++ を生成する。
+ループ・分岐・再帰と、既存の畳み込み・NTT・多項式の剰余を利用できる。
+コンテストでの手順と `Do Use FFT` の解答例は
+[転置コード生成](transpose_examples/README.md)を参照。
+既存の C++ テンプレートから演算を記録して転置を構築する
+[C++ 版](transpose_examples/CPP.md)も利用できる。
+
 ## `oj-verify` の互換モジュール
 
 `online-judge-verify-helper==5.6.0` は、現在の `setuptools` から削除された

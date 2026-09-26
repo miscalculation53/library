@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../template/template_all_but_modint.hpp"
+#include "../../algo/radix_sort.hpp"
 
 /**
  * @brief Mo's algorithm
@@ -11,57 +12,66 @@ namespace internal
 {
 
 template <class I>
-I mo_order_cost(const vc<pair<I, I>> &lrs, const vc<int> &ord)
+ll mo_order_cost(const vc<pair<I, I>> &lrs, const vc<int> &ord)
 {
-  I res = 0;
+  ll res = 0;
   repi(i, SZ(lrs) - 1)
   {
-    res += abs(lrs[ord[i + 1]].first - lrs[ord[i]].first);
-    res += abs(lrs[ord[i + 1]].second - lrs[ord[i]].second);
+    res += abs(ll(lrs[ord[i + 1]].first) - ll(lrs[ord[i]].first));
+    res += abs(ll(lrs[ord[i + 1]].second) - ll(lrs[ord[i]].second));
   }
   return res;
 }
 
 template <class I>
-vc<int> mo_order_params(const vc<pair<I, I>> &lrs, int b, int t)
+vc<int> mo_order_params(const vc<pair<I, I>> &lrs, const vc<int> &by_right, int n, int b, int t)
 {
   const int q = lrs.size();
-  cauto &[ls, rs] = unzip(lrs);
-  auto comp = [&](int i, int j)
+  const ll offset = ll(t) * b / 2;
+  const int blocks = (n + offset) / b + 1;
+  vc<int> block(q), cursor(blocks), ord(q);
+  repi(i, q)
+    cursor[block[i] = (ll(lrs[i].first) + offset) / b]++;
+  int sum = 0;
+  repi(k, blocks)
   {
-    int segi = (ls[i] + t * b / 2) / b, segj = (ls[j] + t * b / 2) / b;
-    if (segi != segj)
-      return segi < segj;
-    return (segi & 1) ? (rs[i] > rs[j]) : (rs[i] < rs[j]);
-  };
-  vc<int> ord = permid<int>(q);
-  sort(ALL(ord), comp);
+    int count = cursor[k];
+    cursor[k] = sum + ((k & 1) ? count : 0);
+    sum += count;
+  }
+  // 偶数ブロックは右端の昇順、奇数ブロックは降順に配置する。
+  for (int i : by_right)
+  {
+    int k = block[i];
+    ord[(k & 1) ? --cursor[k] : cursor[k]++] = i;
+  }
   return ord;
 }
 
 template <class I>
 vc<int> mo_order(const vc<pair<I, I>> &lrs)
 {
-  if (lrs.empty())
-    return {};
-  cauto &[ls, rs] = unzip(lrs);
-  const int n = max(MAX(ls), MAX(rs));
   const int q = lrs.size();
-  const int b1 = max(1, int(n / sqrt(q + 1)));
-  const int b2 = max(1, int(sqrt(3) * n / sqrt(2 * q + 1)));
-  const int b3 = max(1, int(sqrt(2) * n / sqrt(q + 1)));
-  array<vc<int>, 6> ords = {
-    mo_order_params(lrs, b1, 0),
-    mo_order_params(lrs, b1, 1),
-    mo_order_params(lrs, b2, 0),
-    mo_order_params(lrs, b2, 1),
-    mo_order_params(lrs, b3, 0),
-    mo_order_params(lrs, b3, 1),
-  };
-  array<I, 6> costs;
-  repi(i, 6) costs[i] = mo_order_cost(lrs, ords[i]);
-  int j = ARGMIN(costs);
-  return ords[j];
+  if (q <= 1)
+    return permid<int>(q);
+  int n = 0;
+  fec([l, r] : lrs) chmax(n, int(max(l, r)));
+  // 右端の整列を 6 通りの候補で共用する。
+  auto by_right = radix_argsort(lrs, [](const auto &lr) { return lr.second; });
+  const int b1 = max(1, int(n / sqrt(q + 1.0)));
+  const int b2 = max(1, int(sqrt(3) * n / sqrt(2.0 * q + 1)));
+  const int b3 = max(1, int(sqrt(2) * n / sqrt(q + 1.0)));
+  vc<int> best;
+  ll best_cost = LLONG_MAX;
+  for (int b : {b1, b2, b3})
+    for (int t : {0, 1})
+    {
+      auto ord = mo_order_params(lrs, by_right, n, b, t);
+      ll cost = mo_order_cost(lrs, ord);
+      if (cost < best_cost)
+        best_cost = cost, best = move(ord);
+    }
+  return best;
 }
 
 };
@@ -76,11 +86,10 @@ void mo(int n, const vc<pair<I, I>> &lrs, const AddL &add_l, const AddR &add_r, 
 {
   fec([ l, r ] : lrs) { assert(0 <= l && l <= n && 0 <= r && r <= n); }
   vc<int> ord = internal::mo_order(lrs);
-  cauto & [ ls, rs ] = unzip(lrs);
   int l = 0, r = 0;
   fe(i : ord)
   {
-    const int li = ls[i], ri = rs[i];
+    const int li = lrs[i].first, ri = lrs[i].second;
     while (li < l)
       add_l(--l, r);
     while (r < ri)

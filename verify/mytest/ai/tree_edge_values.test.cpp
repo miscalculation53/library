@@ -125,10 +125,10 @@ void test_random_trees()
           expected += edge_values[par[x] == p ? x : p];
         }
         ll actual = 0;
-        tree.path_query(u, v, [&](int l, int r, bool)
+        for (auto [l, r, isrev] : tree.path_query(u, v, true))
         {
           repi(i, l, r) actual += ordered[i];
-        }, true);
+        }
         assert(actual == expected);
         all_distance_sums[u] += expected;
         diameter = max(diameter, expected);

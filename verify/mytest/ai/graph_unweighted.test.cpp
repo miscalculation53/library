@@ -198,15 +198,15 @@ void enumeration(mt19937 &rng)
       if ((mask >> u & 1) && (mask >> v & 1) && !adj[u][v]) ok = false;
     if (ok) expected.eb(mask);
   }
-  cliques(g, [&](const auto &vs)
+  for (const auto &vs : cliques(g))
   {
     int mask = 0;
     fec(v : vs) mask |= 1 << v;
     got.eb(mask);
-  });
+  }
   sort(ALL(got));
   assert(got == expected);
-  triangles(g, [&](int u, int v, int w) { triples.eb((1 << u) | (1 << v) | (1 << w)); });
+  for (auto [u, v, w] : triangles(g)) triples.eb((1 << u) | (1 << v) | (1 << w));
   got.clear();
   fec(mask : expected) if (__builtin_popcount(mask) == 3) got.eb(mask);
   sort(ALL(triples));

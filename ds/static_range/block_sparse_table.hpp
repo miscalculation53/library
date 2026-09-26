@@ -62,6 +62,8 @@ public:
       return res;
     }
   }
+
+  vc<S> content() const { return v; }
 };
 
 // M は冪等 (max, min, and, or, gcd, lcm など)

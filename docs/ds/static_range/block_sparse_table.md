@@ -56,3 +56,16 @@ $v_l \bullet \cdots \bullet v_{r-1}$ の値を返す。
 
 - $r - l \lt B$ のとき、$O(B)$
 - $r - l \geq B$ のとき、$O(1)$
+
+#### content
+
+```cpp
+vc<M::S> content() const
+```
+
+構築時の全要素を添字順に並べた配列のコピーを返す。空列では空の配列を返す。
+`BlockSparseTable` と `BlockDisjointSparseTable` の両方で使える。
+
+##### 計算量
+
+- $O(n)$

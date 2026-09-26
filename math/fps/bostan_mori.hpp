@@ -12,7 +12,7 @@
 
 // [x^k] p(x)/q(x) を求める
 // 制約: [x^0] q(x) != 0
-// 計算量: q(x) の次数を d として O(d log d log k) 時間
+// 計算量: deg p < d = deg q のとき O(d log(d+1) (1 + log(1+k/d))) 時間
 template <class mint>
 mint bostan_mori(const FormalPowerSeries<mint> &p, const FormalPowerSeries<mint> &q, ll k)
 {
@@ -25,6 +25,23 @@ mint bostan_mori(const FormalPowerSeries<mint> &p, const FormalPowerSeries<mint>
   const int d = SZ(q) - 1;
   if (d == 0)
     return res;
+  // 残りの添字が d 以下なら、FPS 除算の必要な係数だけを求める。
+  auto finish = [&](const F &a, const F &b) -> mint
+  {
+    if (k == 0)
+      return res + a.get(0) / b[0];
+    if (k == 1)
+    {
+      const mint ib0 = b[0].inv();
+      return res + (a.get(1) - a.get(0) * b.get(1) * ib0) * ib0;
+    }
+    const int n = (int)k + 1;
+    return res + convolution_point_get<mint>(a, b.resized(n).inv(n), (int)k);
+  };
+  if (k <= d)
+    return finish(u, q);
+  // 小さい次数では、途中の FPS 用の配列確保を省いて最後まで反復する。
+  const int cutoff = d < 64 ? 0 : d;
   if (ntt_ok<mint>(2 * d + 1))
   {
     const int z = bit_ceil(2 * d + 1);
@@ -45,7 +62,7 @@ mint bostan_mori(const FormalPowerSeries<mint> &p, const FormalPowerSeries<mint>
     u.resize(z / 2), v.resize(z / 2);
     F u2 = u, v2 = v;
     ntt(u), ntt(v);
-    while (k > 0)
+    while (k > cutoff)
     {
       {
         mint tmp = 1;
@@ -92,13 +109,13 @@ mint bostan_mori(const FormalPowerSeries<mint> &p, const FormalPowerSeries<mint>
       repi(i, z / 2) u2[i] *= iz, v2[i] *= iz;
       k >>= 1;
     }
-    return res + u2[0] / v2[0];
+    return finish(u2, v2);
   }
   else
   {
     F v = q;
     u.resize(d + 1), v.resize(d + 1);
-    while (k > 0)
+    while (k > cutoff)
     {
       F w = v;
       repi(i, 1, d + 1, 2) w[i] = -w[i];
@@ -112,6 +129,6 @@ mint bostan_mori(const FormalPowerSeries<mint> &p, const FormalPowerSeries<mint>
       }
       k >>= 1;
     }
-    return res + u[0] / v[0];
+    return finish(u, v);
   }
 }

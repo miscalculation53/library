@@ -62,4 +62,6 @@ public:
     const int j = msb_pos(l ^ (r - 1));
     return {dat[j][l], dat[j][r - 1]};
   }
+
+  vc<S> content() const { return dat.empty() ? vc<S>{} : dat[0]; }
 };

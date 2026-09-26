@@ -688,6 +688,20 @@ auto zip(const tuple<vc<Ts>...> &tv)
   return vt;
 }
 
+namespace internal
+{
+
+template <class... Ts>
+auto zip_vectors(const vc<Ts> &...v)
+{
+  if constexpr (sizeof...(Ts) == 2)
+    return zip(pair{v...});
+  else
+    return zip(tuple{v...});
+}
+
+};
+
 #define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)
-#define ZIP(vt, ...) auto vt = zip(tuple{__VA_ARGS__})
+#define ZIP(vt, ...) auto vt = internal::zip_vectors(__VA_ARGS__)
 // ----------

@@ -21,9 +21,9 @@ ll distance = (depths[u] - depths[a]) + (depths[v] - depths[a]);  // 18
 // HLD の区間クエリには行きがけ順の配列を使う。
 FenwickTree<GroupAddSub<ll>> fw(tree.reordered_vertex_values(values));
 ll sum = 0;
-tree.path_query(u, v, [&](int l, int r, bool) {
+for (auto [l, r, isrev] : tree.path_query(u, v, true)) {  // 辺の値を集計する
   sum += fw.sum(l, r);
-}, true);  // 辺の値を集計する
+}
 ```
 
 木 DP は `bottom_up_vertices()` で子から親へ処理できる。
@@ -332,12 +332,30 @@ pair<int, int> subtree_interval(int v, bool edge = false) const
 #### path_query
 
 ```cpp
-void path_query(int u, int v, F f, bool edge = false) const
+PathRange path_query(int u, int v, bool edge = false) const
 ```
 
-パスを HLD 順の半開区間に分解し、`u` から `v` への順に `f(l, r, isrev)` を呼ぶ。`isrev = true` の区間は添字の降順、それ以外は昇順に値を集計する。
+パスを HLD 順の半開区間に分解し、`tuple<int, int, bool>` の列 `(l, r, isrev)` を返す。範囲 `for` 文で `u` から `v` への順に走査できる。`isrev = true` の区間は添字の降順、それ以外は昇順に値を集計する。
 
-`edge = false` は両端を含む頂点値、`edge = true` は子側に載せた辺の値を扱う。辺モードでは LCA の値を除く。`u == v` の辺パスは空で、`f` の呼び出しは $0$ 回。
+`edge = false` は両端を含む頂点値、`edge = true` は子側に載せた辺の値を扱う。辺モードでは LCA の値を除く。`u == v` の辺パスは空になる。各区間は `l < r` を満たす。
+
+`PathRange` は区間列を自身の固定長バッファに保持する。`begin()`、`end()`、区間数を返す `size()`、`empty()`、`vector` に変換する `to_v()` を持つ。イテレータは読み取り専用で、範囲オブジェクトが有効な間に使う。範囲を保存して再走査したり、別のパスの走査を入れ子にしたりできる。
+
+```cpp
+for (auto [l, r, isrev] : tree.path_query(u, v)) {
+  if (isrev) {
+    for (int i = r - 1; i >= l; --i) {
+      int x = tree.preorder_select(i);
+      // 頂点 x を処理する。
+    }
+  } else {
+    for (int i = l; i < r; ++i) {
+      int x = tree.preorder_select(i);
+      // 頂点 x を処理する。
+    }
+  }
+}
+```
 
 ##### 制約
 
@@ -345,4 +363,6 @@ void path_query(int u, int v, F f, bool edge = false) const
 
 ##### 計算量
 
-- $O(\log n)$ に、$O(\log n)$ 回の `f` の実行時間を加えた時間
+- `path_query`：$O(\log n)$
+- `begin`、`end`、`size`、`empty`、イテレータの参照・移動：$O(1)$
+- 全区間の走査、`to_v`：$O(\log n)$（利用者側の処理を除く）

@@ -47,4 +47,6 @@ public:
     int j = bit_width(r - l) - 1;
     return M::op(dat[j][l], dat[j][r - (1 << j)]);
   }
+
+  vc<S> content() const { return dat.empty() ? vc<S>{} : dat[0]; }
 };

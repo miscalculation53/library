@@ -39,8 +39,8 @@ void main2()
     {
       LL(u, v);
       ll sm = 0;
-      G.path_query(u, v, [&](ll l, ll r, bool)
-                   { sm += fw.sum(l, r); });
+      for (auto [l, r, isrev] : G.path_query(u, v))
+        sm += fw.sum(l, r);
       PRINT(sm);
     }
   }
