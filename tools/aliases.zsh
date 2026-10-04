@@ -1,7 +1,12 @@
 typeset -g KYOPRO_SUBMIT_CODE_TOOL="$HOME/Documents/02_kyopro/02_solve/library/tools/submit_code.py"
 typeset -g KYOPRO_SUBMIT_BACKGROUND_TOOL="${KYOPRO_SUBMIT_CODE_TOOL:h}/submit_code_background.py"
 
-unalias oj-b oj-bc oj-bs oj-ba oj-b0 cln cln-all oj-bg oj-bg-status oj-bg-stop 2>/dev/null
+unalias oj-b oj-bc oj-bs oj-ba oj-b0 cln cln-all oj-bg oj-bg-status oj-bg-stop wip-save 2>/dev/null
+
+# library の WIP を Codex に commit・push してもらう。
+wip-save() {
+  command bash "${KYOPRO_SUBMIT_CODE_TOOL:h}/wip_save.sh"
+}
 
 # 通常のローカル include は直接たどり、未対応の場合だけ oj-bundle を使う。
 oj-b() {

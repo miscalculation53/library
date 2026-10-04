@@ -1,5 +1,28 @@
 # ツール
 
+## WIP の保存
+
+`aliases.zsh` を読み込んだ端末で `wip-save` を実行すると、Codex が library の
+変更を `wip` というメッセージで commit し、`miscalculation53/library` の
+`origin/wip` へ push する。コマンドは任意のディレクトリから実行できる。
+既に開いている端末では、一度だけ次を実行する。
+
+```sh
+source "$HOME/Documents/02_kyopro/02_solve/library/tools/aliases.zsh"
+wip-save
+```
+
+Codex CLI のログインが必要。`wip_save.sh` は PATH 上の Codex、ChatGPT アプリ、
+Codex アプリの順に実行ファイルを探し、現在のモデル設定で
+[`codex exec`](https://learn.chatgpt.com/docs/non-interactive-mode) を起動する。
+権限が必要な操作には自動承認審査を使う。
+
+リモートにも更新がある場合は merge で取り込み、競合時には双方の変更を読んで
+統合・検証する。仕様の判断が必要な競合では、今回の merge を取り消して停止する。
+手元の変更は先に commit される。認証や承認審査で止まった場合も理由を表示する。
+対象は `wip` ブランチと上記リポジトリに限定し、force push は行わない。
+最後にリモートとの一致と未コミット変更の有無を確認し、未完了なら終了コードを1にする。
+
 ## 転置コードの生成
 
 `transpose.py` は、線形な順方向の処理から転置を計算する C++ を生成する。
