@@ -14,7 +14,7 @@ struct LIS
 private:
   int n, len;
   vc<int> pos;
-  GroupIndex<int> grp;
+  GroupIndexRaw<int, int> grp;
 
 public:
   LIS() {}
@@ -44,7 +44,7 @@ public:
         pos[i] += len;
     }
 
-    grp = GroupIndex<int>(pos);
+    grp = decltype(grp)(pos);
   }
 
   // LIS の長さ

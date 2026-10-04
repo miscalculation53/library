@@ -45,16 +45,14 @@ void check_ranges(int n, const vc<pair<I, I>> &lrs, mt19937 &rng)
   mo(n, lrs, add, del, rem);
   for (int s : seen) assert(s == 1);
 
-  auto permutation = permid<int>(n);
-  shuffle(ALL(permutation), rng);
-  InversionSlider slider(permutation);
+  InversionSlider slider(a);
   slider.set(n / 2, n);
   fill(ALL(seen), 0);
   mo(n, lrs, slider, [&](int qid)
   {
     ll inversions = 0;
     for (int i = lrs[qid].first; i < lrs[qid].second; i++)
-      for (int j = i + 1; j < lrs[qid].second; j++) inversions += permutation[i] > permutation[j];
+      for (int j = i + 1; j < lrs[qid].second; j++) inversions += a[i] > a[j];
     assert(slider.inversion_num == inversions && seen[qid]++ == 0);
   });
   for (int s : seen) assert(s == 1);

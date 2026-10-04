@@ -14,6 +14,8 @@ BigInteger<base = 10, digit = 6>
 
 以下では、内部基数での桁数を $N$、長さ $N$ の畳み込み時間を $M(N)$ とする。現在の実装では、大きな整数同士の乗算に畳み込みを使う。
 
+整数との加減算・乗除算・剰余では、整数の絶対値 $v$ と内部基数 $B=\mathrm{base}^{\mathrm{digit}}$ を使って計算幅を選ぶ。64 bit 以上の整数を渡しても、$v\le\lfloor(2^{64}-1)/B\rfloor$ なら各桁を `ull` で処理する。それより大きい値は従来の拡張型を使う。[速度比較](runtime_integer_width.md)。
+
 制約：
 
 - $2 \leq \mathrm{base} \leq 36$

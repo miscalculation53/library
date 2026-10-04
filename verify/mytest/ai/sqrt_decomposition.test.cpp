@@ -8,6 +8,21 @@ void check_ranges(int n)
   for (int l = 0; l <= n; l++)
     for (int r = l; r <= n; r++)
     {
+      int end = l, previous_block = -1, partial_count = 0;
+      for (auto seg : sqrt_decomposition_blocks<B>(n, l, r))
+      {
+        assert(seg.b > previous_block);
+        assert(seg.l == end && seg.l < seg.r);
+        assert(seg.block_l == seg.b * B);
+        assert(seg.block_r == min(n, seg.block_l + B));
+        assert(seg.l == max(l, seg.block_l));
+        assert(seg.r == min(r, seg.block_r));
+        assert(seg.full() == (l <= seg.block_l && seg.block_r <= r));
+        previous_block = seg.b;
+        partial_count += !seg.full();
+        end = seg.r;
+      }
+      assert(end == r && partial_count <= 2);
       int next = l;
       auto point = [&](int i)
       {
@@ -67,6 +82,19 @@ int main()
   sqrt_decomposition<large_b>(large_n, next, large_n,
       [&](int i) { assert(i == next++); }, [](int) { assert(false); });
   assert(next == large_n);
+  called = 0;
+  for (auto seg : sqrt_decomposition_blocks<1>(large_n, 0, large_n))
+  {
+    assert(seg.b == 0 && seg.l == 0 && seg.r == 1 && seg.full());
+    called++;
+    break;
+  }
+  assert(called == 1);
+  for (auto seg : sqrt_decomposition_blocks<large_b>(large_n, large_b, large_n))
+  {
+    assert(seg.b == 1 && seg.l == large_b && seg.r == large_n && seg.full());
+    assert(seg.block_l == large_b && seg.block_r == large_n);
+  }
 
   // 演算順に意味がある例：文字列の区間を復元する。
   string a = "abcdefghijklmn", result;

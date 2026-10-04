@@ -14,7 +14,7 @@
 // ids の番号は [0, k) になっていることを想定
 // (graphs, nvids) を返す
 // もとのグラフの頂点 u <-> 部分グラフ l の頂点 i の対応は
-// u = grp.idxs[l][i]  (GroupIndex を使う)
+// u = grp.idxs(l)[i]  (GroupIndex を使う)
 // l = ids[u], i = nvids[u]
 template <bool is_directed, class Cost, class I>
 pair<vc<Graph<is_directed, Cost>>, vc<I>> subgraphs(const Graph<is_directed, Cost> &g, const vc<I> &ids)

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../template/template_all_but_modint.hpp"
-#include "extgcd.hpp"
 
 /**
  * @brief Stern Brocot Tree
@@ -25,12 +24,25 @@ public:
   T den() const { return q + s; }
 
   SBTNode() : p(0), q(1), r(1), s(0) {}
-  SBTNode(T num_, T den_)
+  SBTNode(T num_, T den_) : SBTNode()
   {
-    auto [g, _, __] = extgcd(num_, den_);
-    num_ /= g, den_ /= g;
-    p = num_, q = den_, r = 0, s = 0;
-    *this = SBTNode(encode_path());
+    assert(num_ > 0 && den_ > 0);
+    // ユークリッド互除法の各商から境界を直接更新する。
+    while (num_ != den_)
+    {
+      if (num_ > den_)
+      {
+        T d = (num_ - 1) / den_;
+        p += d * r, q += d * s;
+        num_ -= d * den_;
+      }
+      else
+      {
+        T d = (den_ - 1) / num_;
+        r += d * p, s += d * q;
+        den_ -= d * num_;
+      }
+    }
   }
   SBTNode(T p, T q, T r, T s) : p(p), q(q), r(r), s(s) {}
   SBTNode(const Path &path) : p(0), q(1), r(1), s(0) { fec([ dir, d ] : path) descend(dir, d); }
@@ -61,9 +73,14 @@ public:
   }
   T depth() const
   {
-    T res = 0;
-    fec([ dir, d ] : encode_path()) res += d;
-    return res;
+    T f = num(), g = den(), res = 0;
+    while (g != 0)
+    {
+      res += f / g;
+      f %= g;
+      swap(f, g);
+    }
+    return res - 1;
   }
 
   Path encode_path() const
@@ -123,49 +140,59 @@ template <class T = ll, class F>
 SBTNode<T> sbt_search(const F &judge, T max_value)
 {
   SBTNode<T> node;
-  const bool judge_01 = judge(0, 1), judge_10 = judge(1, 0);
+  const bool judge_01 = judge(0, 1);
+  [[maybe_unused]] const bool judge_10 = judge(1, 0);
   assert(judge_01 != judge_10);
   assert(max_value >= 1);
-  while (node.num() <= max_value && node.den() <= max_value)
+  bool judge_now = judge(1, 1);
+  while (true)
   {
-    const bool judge_now = judge(node.num(), node.den());
-    const char dir = judge_now ^ judge_01 ? 'L' : 'R';
+    const bool right = judge_now == judge_01;
+    T &a = right ? node.p : node.r, &b = right ? node.q : node.s;
+    const T c = right ? node.r : node.p, d = right ? node.s : node.q;
+    // 判定済みの媒介分数を対応する境界へ移す。
+    a += c, b += d;
+    if (c > max_value - a || d > max_value - b)
+      return node;
+    // 次の一段で向きが変わる場合は、除算を省く。
+    if (judge(a + c, b + d) != judge_now)
+    {
+      judge_now = !judge_now;
+      continue;
+    }
     T max_d;
-    if (dir == 'L')
-    {
-      if (node.p == 0)
-        max_d = (max_value - node.s) / node.q;
-      else
-        max_d = min((max_value - node.r) / node.p, (max_value - node.s) / node.q);
-    }
+    if (c == 0)
+      max_d = (max_value - b) / d;
+    else if (d == 0)
+      max_d = (max_value - a) / c;
     else
+      max_d = min((max_value - a) / c, (max_value - b) / d);
+    auto judge_next = [&](T k) -> bool
     {
-      if (node.s == 0)
-        max_d = (max_value - node.p) / node.r;
-      else
-        max_d = min((max_value - node.q) / node.s, (max_value - node.p) / node.r);
-    }
-    auto judge_next = [&](T d) -> bool
-    {
-      auto next_node = node;
-      next_node.descend(dir, d);
-      return judge_now == judge(next_node.num(), next_node.den());
+      return judge_now == judge(a + k * c, b + k * d);
     };
-    T dl = 1, dr = 2;
-    while (dr <= max_d)
+    T dl = 1, dr = min(T(2), max_d);
+    while (dl < dr)
     {
       if (!judge_next(dr))
         break;
-      dl = dr, dr = min(2 * dr, max_d + 1);
+      dl = dr;
+      dr = dl > max_d - dl ? max_d : 2 * dl;
+    }
+    if (dl == max_d)
+    {
+      a += dl * c, b += dl * d;
+      return node;
     }
     while (dr - dl > 1)
     {
       T dm = dl + (dr - dl) / 2;
       (judge_next(dm) ? dl : dr) = dm;
     }
-    node.descend(dir, dl);
+    a += dl * c, b += dl * d;
+    // 次の媒介分数は、判定が反転する最初の境界。
+    judge_now = !judge_now;
   }
-  return node;
 }
 
 // a/b < p/q < c/d を満たす p/q のうち q が最小のもの

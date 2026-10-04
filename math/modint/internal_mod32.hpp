@@ -8,8 +8,8 @@ namespace internal
 // val()/raw() が通常の [0, mod) 表現に対応し、mod < 2^31 である型。
 template <class S>
 struct ordinary_mod32 : false_type {};
-template <int mod>
-struct ordinary_mod32<static_modint32<mod>> : true_type {};
+template <int mod, class PowInv>
+struct ordinary_mod32<modint_impl<policy_static<mod>, PowInv>> : true_type {};
 template <int id>
 struct ordinary_mod32<dynamic_modint32<id>> : true_type {};
 

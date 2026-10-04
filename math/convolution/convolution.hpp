@@ -161,10 +161,10 @@ template <int id>
 void intt(vc<dynamic_modint32<id>> &) { assert(false); }
 
 // 破壊的に変更する
-template <auto mod>
-void ntt(vc<internal::modint_impl<internal::policy_static<mod>>> &a)
+template <auto mod, class PowInv>
+void ntt(vc<internal::modint_impl<internal::policy_static<mod>, PowInv>> &a)
 {
-  using mint = internal::modint_impl<internal::policy_static<mod>>;
+  using mint = internal::modint_impl<internal::policy_static<mod>, PowInv>;
   int n = int(a.size());
   assert(n > 0);
   int h = countr_zero((unsigned int)n);
@@ -229,10 +229,10 @@ void ntt(vc<internal::modint_impl<internal::policy_static<mod>>> &a)
 }
 
 // 破壊的に変更する
-template <auto mod>
-void intt(vc<internal::modint_impl<internal::policy_static<mod>>> &a)
+template <auto mod, class PowInv>
+void intt(vc<internal::modint_impl<internal::policy_static<mod>, PowInv>> &a)
 {
-  using mint = internal::modint_impl<internal::policy_static<mod>>;
+  using mint = internal::modint_impl<internal::policy_static<mod>, PowInv>;
   int n = int(a.size());
   assert(n > 0);
   int h = countr_zero((unsigned int)n);

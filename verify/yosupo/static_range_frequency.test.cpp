@@ -15,7 +15,6 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "ds/coordinate_compression.hpp"
 #include "ds/group_index.hpp"
 
 void init() {}
@@ -24,15 +23,12 @@ void main2()
 {
   LL(N, Q);
   VEC(ll, N, A);
-  CoordinateCompression cc(A);
-  GroupIndex grp(compressed(A));
-  rep(val, cc.size()) dump(val, grp.idxs(val));
+  GroupIndex grp(A);
   rep(_, Q)
   {
     LL(l, r, x);
-    auto v = cc.get_id(x);
-    dump(v, l, r, grp.lt_cnt(v, r), grp.lt_cnt(v, l));
-    PRINT(grp.in_cnt(v, l, r));
+    dump(x, l, r, grp.lt_cnt(x, r), grp.lt_cnt(x, l));
+    PRINT(grp.in_cnt(x, l, r));
   }
   dump(grp.to_vv() | cp::index());
 }

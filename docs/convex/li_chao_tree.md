@@ -10,13 +10,34 @@
 
 `Compare = less<>` で最小値、`greater<>` で最大値を求める。
 係数と座標は `T`、評価値は `U` で扱う。`U` の既定値は `larger_int_t<T>` なので、`T = ll` なら `U = i128` になる。
-圧縮版では浮動小数点数や `Rational` の座標も使える。浮動小数点数の演算には丸め誤差がある。
+圧縮版では、座標・傾き・切片に浮動小数点数や `Rational` を使える。`T = Rational<ll>` なら `U = Rational<i128>` になる。
 
 区間追加は両版とも半開区間 `[l, r)`。傾き・追加順・取得順は任意でよい。
 動的版は必要なノードを連続配列に追加し、圧縮版はソート・重複除去した座標に対する配列を持つ。
 
 以下、動的版の範囲内の整数の個数を $C$、圧縮版へ渡した座標数を $Q$、重複除去後の座標数を $M$、作成済みノード数を $K$ とする。
 対数を含む計算量では、範囲の大きさが 1 の場合を $O(1)$ とする。
+計算量は評価・比較を $O(1)$ としている。多倍長整数を使う場合は、その演算コストも掛かる。
+
+### 有理数・実数でも使える原理
+
+2 本の直線 $f(x)=ax+b$, $g(x)=cx+d$ の差は $(a-c)x+(b-d)$ なので、大小関係の逆転は高々 1 回である。
+これは整数・有理数・実数に共通する。
+
+各ノードでは、担当する座標列の中央で小さい方の直線を保持する。
+もう一方が勝つ可能性があるのは左右の片側だけなので、その子へ追加を続ける。両端でも勝てなければ追加を終了する。
+取得時は、対象座標への経路にある直線を評価し、最小値を取る。最大値の場合も大小を逆にすれば同様。
+
+圧縮版は、昇順の座標列 `xs` の**添字**を半分に分ける。
+例えば `xs = {-3/2, 1/3, 2/3, 5/2}` なら、中央の添字は `2`、比較する座標は `xs[2] = 2/3` になる。
+直線の評価には常に元の座標を使い、`a * xs[k] + b` を計算する。
+座標の間隔によらず候補点の個数が半減するので、木の深さは $O(\log M)$ になる。交点の計算も不要。
+
+圧縮版では、取得する全座標を構築時に登録する。直線の係数や追加順は、その後に決まってよい。
+動的版 `LiChaoTree` は整数範囲を扱う実装である。連続区間を二分する方式で有理数・実数を扱う場合は、精度や深さなどの終了条件を別途設計する必要がある。
+
+有理数では、未約分の分子・分母や比較の交差積が使用する型に収まれば厳密に計算できる。
+浮動小数点数では丸め誤差により直線の大小判定が変わることがある。登録済みの座標値を再利用するか、`query_index` で取得すると座標の再計算によるずれを避けられる。
 
 ## 使用例
 
@@ -55,9 +76,29 @@ LiChaoTreeCompressed<ll, ll> small_values({-1, 0, 1});
 LiChaoTree<ll, i128, less<>, 1000, 1000000> custom_empty(-10, 11);
 auto empty = custom_empty.query(0);
 // empty.first = 1000000、empty.second = {0, 1000, -1}
+```
+
+有理数は `Rational`、浮動小数点数は `double` や `long double` を指定する。
+
+```cpp
+#include "convex/li_chao_tree.hpp"
+#include "math/rational.hpp"
 
 using R = Rational<ll>;
-LiChaoTreeCompressed<R> rational_tree({R(-1, 2), R(0), R(1, 2)});
+LiChaoTreeCompressed<R> rational_tree({R(-3, 2), R(1, 3), R(2, 3), R(5, 2)});
+rational_tree.add_line(R(1, 2), R(1, 3));   // y = x/2 + 1/3
+rational_tree.add_line(R(-1), R(1));       // y = -x + 1
+auto [value, line] = rational_tree.query(R(2, 3));
+assert(value == Rational<i128>(1, 3) && line.id == 1);
+
+// 半開区間 [1/4, 3/4) 内の登録座標へ追加する。
+rational_tree.add_segment(R(1, 4), R(3, 4), R(0), R(-1, 7));
+assert(rational_tree.query(R(1, 3)).first == Rational<i128>(-1, 7));
+
+LiChaoTreeCompressed<long double> real_tree({-1.5L, 0.25L, 2.5L});
+real_tree.add_line(0.5L, 0.25L);
+real_tree.add_line(-1.0L, 1.0L);
+assert(real_tree.query_index(1).first == 0.375L);  // x = 0.25
 ```
 
 ## 詳細なドキュメント

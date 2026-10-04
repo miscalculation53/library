@@ -9,10 +9,11 @@ using mint = modint998244353;
 volatile ull checksum_sink = 0;
 struct Query { vl residues, moduli; };
 
-template <bool optimized>
+template <int method>
 pair<mint, mint> run(const Query &q)
 {
-  if constexpr (optimized) return crt_mod_width_candidate<mint>(q.residues, q.moduli);
+  if constexpr (method == 1) return crt_mod_width_candidate<mint>(q.residues, q.moduli);
+  else if constexpr (method == 2) return crt_mod<mint>(q.residues, q.moduli);
   else return crt_mod_before_width<mint>(q.residues, q.moduli);
 }
 
@@ -33,24 +34,24 @@ int main()
       queries.push_back(q);
     }
     using Fn = pair<mint, mint> (*)(const Query &);
-    const array<Fn, 2> functions = {run<false>, run<true>};
-    for (const auto &q : queries) if (functions[0](q) != functions[1](q)) abort();
-    array<vc<double>, 2> times;
+    const array<Fn, 3> functions = {run<0>, run<1>, run<2>};
+    for (const auto &q : queries) if (functions[0](q) != functions[1](q) || functions[0](q) != functions[2](q)) abort();
+    array<vc<double>, 3> times;
     for (int repeat = 0; repeat < 9; ++repeat)
-      for (int j = 0; j < 2; ++j)
+      for (int j = 0; j < 3; ++j)
       {
-        int method = (j + repeat) % 2;
+        int method = (j + repeat) % 3;
         ull sum = 0;
         auto begin = Clock::now();
         for (const auto &q : queries) sum += functions[method](q).first.val();
         times[method].push_back(chrono::duration<double, milli>(Clock::now() - begin).count());
         checksum_sink = sum;
       }
-    for (int method = 0; method < 2; ++method)
+    for (int method = 0; method < 3; ++method)
     {
       sort(ALL(times[method]));
       cout << "crt_mod," << (small ? "small31_" : "large40_") << size << ','
-           << (method ? "candidate" : "wide") << ',' << queries.size() << ','
+           << (array<const char *, 3>{"wide", "candidate", "library"}[method]) << ',' << queries.size() << ','
            << fixed << setprecision(3) << times[method][4] << '\n';
     }
   }

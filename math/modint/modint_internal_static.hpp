@@ -13,7 +13,7 @@ struct policy_static
 {
   using mod_type = decltype(M);
   using value_type = make_unsigned_t<mod_type>;
-  using calc_type = larger_int_t<value_type>;
+  using calc_type = conditional_t<(M <= UINT_MAX), ull, larger_int_t<value_type>>;
 
   static constexpr bool is_prime = isprime_constexpr(M);
 

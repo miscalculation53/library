@@ -6,6 +6,8 @@
 
 の $3$ つを用意。`modint61` は `static_modint64<(1LL << 61) - 1>` のエイリアス。
 
+`static_modint64<M>` は $M\le2^{32}-1$ のとき積と剰余を `ull` で計算する。計算幅はコンパイル時に決まり、値の格納型と `val()` の返り値は従来どおり 64 bit。[速度比較](../runtime_integer_width.md)。
+
 動的 modint は、値の生成や `mod()` の呼び出しより先に `mint::set_mod(m)` で法を設定する。初期化忘れは `set_mod` の呼び出しを促すメッセージ付きの `assert` で検出する（`NDEBUG` 定義時は無効）。
 
 ACL の modint にあるメソッドと入出力はだいたい揃っているが、dynamic には `raw` が存在しない。

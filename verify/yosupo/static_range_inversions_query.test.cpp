@@ -15,7 +15,6 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "ds/coordinate_compression.hpp"
 #include "ds/mo/mo.hpp"
 #include "ds/fenwick_tree/inversion.hpp"
 
@@ -26,9 +25,6 @@ void main2()
   LL(N, Q);
   VEC(ll, N, A);
   VEC(pll, Q, LR);
-
-  vpll vec = GEN_VEC(N, i, (pll{A.at(i), i}));
-  A = compressed(vec);
 
   InversionSlider slider(A);
   vl ans(Q);

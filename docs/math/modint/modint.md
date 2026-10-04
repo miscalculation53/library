@@ -2,6 +2,8 @@
 
 ACL の modint がベース
 
+素数を法として累乗・逆元を大量に計算する場合は、前計算後に各操作が $O(1)$ になる [fast_modint](modint_fast.md) も使える。
+
 `modint`（`dynamic_modint32<-1>`）などの動的 modint は、値の生成や `mod()` の呼び出しより先に `mint::set_mod(m)` で法を設定する。初期化忘れは `set_mod` の呼び出しを促すメッセージ付きの `assert` で検出する（`NDEBUG` 定義時は無効）。
 
 相違点：

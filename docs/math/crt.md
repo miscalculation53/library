@@ -134,16 +134,15 @@ pair<T, T> crt<T = ll>(V rs, V ms)
 ```cpp
 (1) pair<mint, mint> crt_mod<mint>(V rs, V ms)
 (2) pair<mint, mint> crt_mod_constexpr<mint>(V rs, V ms)
-(3) pair<mint, mint> crt_mod<mint>(V rs, V ms)
 ```
 
 **$m_i, m_j \ (i \neq j)$ が互いに素であることを前提としている。互いに素でない場合、pre_crt を先に呼ぶこと。**
 
 この制約のもと、解は必ず存在する。$(r, m)$ を `mint` の mod で求めて返す。
 
-(2) は、`V` が array で $m_i$ がコンパイル時定数のときに高速化したもの。
+(1) は法の型が 32 bit の場合に Barrett reduction を使う。法を `ll` に格納した場合も、式が 4 本以上で法がすべて $2^{31}-1$ 以下なら計算幅を切り替える。4〜15 本では `ull` の積と剰余、16 本以上では Barrett reduction を使う。
 
-(3) は、$m_i$ が `int` の範囲で動的に決定されるときに剰余演算を高速化したもの。（$m_i$ が `ll` の範囲のときも作ることは可能であるが、使う場面があまりなさそうなこともあり未実装。）
+(2) は、`V` が array で $m_i$ がコンパイル時定数のときに高速化したもの。すべての法が $2^{31}-1$ 以下なら、法・剰余を `int`、途中の計算を `ll` に切り替える。[速度比較](runtime_integer_width.md)。
 
 ##### 制約
 

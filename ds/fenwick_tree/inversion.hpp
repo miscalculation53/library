@@ -29,21 +29,25 @@ ll inversion_number(const V &v)
   return res;
 }
 
-template <class I>
+template <class T = ll>
 struct InversionSlider
 {
-  int n, l, r;
-  ll inversion_num;
-  vc<I> vec;
-  FenwickTree01<> fw;
+  int n = 0, l = 0, r = 0;
+  ll inversion_num = 0;
+  vc<int> vec;
+  FenwickTree01<> fw{0};
 
-  InversionSlider() {}
-  InversionSlider(const vc<I> &vec)
-  : n(vec.size()), l(0), r(0), inversion_num(0), vec(vec), fw(vec.size())
-  { assert(is_permutation(vec)); }
+  InversionSlider() = default;
+  InversionSlider(const vc<T> &a) : n(a.size()), vec(n), fw(n)
+  {
+    auto p = permid<int>(n);
+    stable_sort(ALL(p), [&](int i, int j) { return a[i] < a[j]; });
+    repi(i, n) vec[p[i]] = i;
+  }
 
   void lpp()
   {
+    assert(l < r);
     int a = vec[l];
     inversion_num -= fw.sum(0, a);
     fw.set(a, 0);
@@ -51,6 +55,7 @@ struct InversionSlider
   }
   void rpp()
   {
+    assert(r < n);
     int a = vec[r];
     inversion_num += fw.sum(a + 1, n);
     fw.set(a, 1);
@@ -58,6 +63,7 @@ struct InversionSlider
   }
   void lmm()
   {
+    assert(0 < l);
     l--;
     int a = vec[l];
     fw.set(a, 1);
@@ -65,6 +71,7 @@ struct InversionSlider
   }
   void rmm()
   {
+    assert(l < r);
     r--;
     int a = vec[r];
     fw.set(a, 0);
@@ -73,6 +80,7 @@ struct InversionSlider
 
   void set(int nl, int nr)
   {
+    assert(0 <= nl && nl <= nr && nr <= n);
     while (nl < l)
       lmm();
     while (r < nr)

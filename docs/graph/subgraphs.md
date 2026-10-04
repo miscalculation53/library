@@ -20,7 +20,7 @@ pair<vc<Graph<is_directed, Cost>>, vc<I>> subgraphs(Graph<is_directed, Cost> g, 
 もとのグラフの頂点 $u$ が、$l$ 番目の部分グラフの頂点 $i$ に対応しているとすると、
 
 - $u$ から $(l, i)$ は、`l = ids[u]`, `i = nvids[u]`
-- $(l, i)$ から $u$ は、`GroupIndex grp(ids)` を用いて `u = grp.idxs[l][i]`
+- $(l, i)$ から $u$ は、`GroupIndex grp(ids)` を用いて `u = grp.idxs(l)[i]`
 
 により取得できる。
 

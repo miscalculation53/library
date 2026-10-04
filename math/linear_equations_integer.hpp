@@ -26,6 +26,23 @@ LinearEquationsIntegerResult<T>
 linear_equations_integer(A a, B b, C c, D d, E e, F f)
 {
   const U aa = a, bb = b, cc = c, dd = d, ee = e, ff = f;
+  if constexpr (is_same_v<U, i128> && is_integral_v<A> && is_signed_v<A> && sizeof(A) <= sizeof(ll) &&
+                is_integral_v<B> && is_signed_v<B> && sizeof(B) <= sizeof(ll) &&
+                is_integral_v<C> && is_signed_v<C> && sizeof(C) <= sizeof(ll) &&
+                is_integral_v<D> && is_signed_v<D> && sizeof(D) <= sizeof(ll) &&
+                is_integral_v<E> && is_signed_v<E> && sizeof(E) <= sizeof(ll) &&
+                is_integral_v<F> && is_signed_v<F> && sizeof(F) <= sizeof(ll))
+  {
+    // 各入力が [-2^31, 2^31) なら、中間値も ll に収まる。
+    constexpr ull offset = 1ULL << 31;
+    if (((ull(a) + offset) |
+         (ull(b) + offset) |
+         (ull(c) + offset) |
+         (ull(d) + offset) |
+         (ull(e) + offset) |
+         (ull(f) + offset)) < 2 * offset)
+      return linear_equations_integer<T, ll>(ll(aa), ll(bb), ll(cc), ll(dd), ll(ee), ll(ff));
+  }
   const U det = aa * ee - bb * dd;
   if (det != 0)
   {

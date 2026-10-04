@@ -34,7 +34,7 @@ public:
     assert(0 <= p && p < n);
     p += siz;
     dat[p] = x;
-    while (p)
+    while (p > 1)
       p >>= 1, update(p);
   }
 

@@ -26,6 +26,19 @@ private:
   vl vec;
   bool is_nega = false;
 
+  // 各桁の積・余りは BASE * v 未満になる。
+  template <class U, class F>
+  static void with_scalar_width(U v, F f)
+  {
+    if constexpr (sizeof(U) >= sizeof(ull))
+      if (v <= numeric_limits<ull>::max() / BASE)
+      {
+        f(ull(v));
+        return;
+      }
+    f(larger_int_t<U>(v));
+  }
+
   static int char_to_digit(char c)
   {
     if ('0' <= c && c <= '9')
@@ -493,11 +506,13 @@ public:
       if (v < 0)
         v_nega = true, uv = -uv;
     }
-    using V = larger_int_t<U>;
-    if (is_nega == v_nega)
-      add_abs(0, (V)uv);
-    else
-      sub_abs(0, (V)uv);
+    with_scalar_width(uv, [&](auto value)
+    {
+      if (is_nega == v_nega)
+        add_abs(0, value);
+      else
+        sub_abs(0, value);
+    });
     return *this;
   }
   template <class T, typename = enable_if_t<is_integral_ext<T>>>
@@ -513,11 +528,13 @@ public:
       if (v < 0)
         v_nega = true, uv = -uv;
     }
-    using V = larger_int_t<U>;
-    if (is_nega != v_nega)
-      add_abs(0, (V)uv);
-    else
-      sub_abs(0, (V)uv);
+    with_scalar_width(uv, [&](auto value)
+    {
+      if (is_nega != v_nega)
+        add_abs(0, value);
+      else
+        sub_abs(0, value);
+    });
     return *this;
   }
   template <class T, typename = enable_if_t<is_integral_ext<T>>>
@@ -538,19 +555,22 @@ public:
         v_nega = true, uv = -uv;
     }
     is_nega ^= v_nega;
-    using V = larger_int_t<U>;
-    V car = 0;
-    repi(i, SZ(vec))
+    with_scalar_width(uv, [&](auto value)
     {
-      car += (V)vec[i] * uv;
-      vec[i] = (ll)(car % BASE);
-      car /= BASE;
-    }
-    while (car > 0)
-    {
-      vec.eb((ll)(car % BASE));
-      car /= BASE;
-    }
+      using V = decltype(value);
+      V car = 0;
+      repi(i, SZ(vec))
+      {
+        car += (V)vec[i] * value;
+        vec[i] = (ll)(car % BASE);
+        car /= BASE;
+      }
+      while (car > 0)
+      {
+        vec.eb((ll)(car % BASE));
+        car /= BASE;
+      }
+    });
     return *this;
   }
   template <class T, typename = enable_if_t<is_integral_ext<T>>>
@@ -568,15 +588,18 @@ public:
         v_nega = true, uv = -uv;
     }
     is_nega ^= v_nega;
-    using V = larger_int_t<U>;
-    V rem = 0;
-    repi(i, SZ(vec) - 1, -1, -1)
+    with_scalar_width(uv, [&](auto value)
     {
-      V cur = vec[i] + rem * BASE;
-      vec[i] = (ll)(cur / uv);
-      rem = cur % uv;
-    }
-    zero_suppress();
+      using V = decltype(value);
+      V rem = 0;
+      repi(i, SZ(vec) - 1, -1, -1)
+      {
+        V cur = vec[i] + rem * BASE;
+        vec[i] = (ll)(cur / value);
+        rem = cur % value;
+      }
+      zero_suppress();
+    });
     return *this;
   }
   template <class T, typename = enable_if_t<is_integral_ext<T>>>
@@ -592,26 +615,29 @@ public:
       if (v < 0)
         uv = -uv;
     }
-    using V = larger_int_t<U>;
-    V rem = 0;
-    repi(i, SZ(vec) - 1, -1, -1)
+    with_scalar_width(uv, [&](auto value)
     {
-      V cur = vec[i] + rem * BASE;
-      rem = cur % uv;
-    }
-    vec.clear();
-    if (rem > 0)
-    {
-      while (rem > 0)
+      using V = decltype(value);
+      V rem = 0;
+      repi(i, SZ(vec) - 1, -1, -1)
       {
-        vec.eb((ll)(rem % BASE));
-        rem /= BASE;
+        V cur = vec[i] + rem * BASE;
+        rem = cur % value;
       }
-    }
-    else
-    {
-      is_nega = false;
-    }
+      vec.clear();
+      if (rem > 0)
+      {
+        while (rem > 0)
+        {
+          vec.eb((ll)(rem % BASE));
+          rem /= BASE;
+        }
+      }
+      else
+      {
+        is_nega = false;
+      }
+    });
     return *this;
   }
 

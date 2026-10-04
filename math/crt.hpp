@@ -65,7 +65,16 @@ pair<mint, mint> crt_mod(const V1 &rs, const V2 &ms)
   const int n = rs.size();
   mint r = 0, m = 1;
 
-  if constexpr (sizeof(T) <= 4)
+  // 小さい法は 4 本以上で計算幅を切り替え、16 本以上で Barrett を使う。
+  bool small = sizeof(T) <= 4;
+  if constexpr (sizeof(T) > 4)
+    if (n >= 4)
+    {
+      small = true;
+      for (auto mod : ms)
+        if (mod > INT_MAX) { small = false; break; }
+    }
+  if (sizeof(T) <= 4 || (small && n >= 16))
   {
     vc<internal::barrett32> ba;
     ba.reserve(n);
@@ -78,7 +87,10 @@ pair<mint, mint> crt_mod(const V1 &rs, const V2 &ms)
       assert(g == 1);
       if (im < 0)
         im += ms[i];
-      ll diff = safemod(ll(rs[i]) - rr[i], ms[i]);
+      ll diff = rs[i] % ll(ms[i]);
+      if (diff < 0) diff += ms[i];
+      diff -= rr[i];
+      if (diff < 0) diff += ms[i];
       uint t = ba[i].mul(diff, im);
       r += t * m, m *= ms[i];
       repi(j, i + 1, n)
@@ -92,24 +104,33 @@ pair<mint, mint> crt_mod(const V1 &rs, const V2 &ms)
   }
   else
   {
-    vc<ull> rr(n, 0), mm(n, 1);
-    repi(i, n)
+    auto solve = [&](auto word)
     {
-      assert(ms[i] >= 1);
-      auto [g, im, _] = extgcd<ll>(mm[i], ms[i]);
-      assert(g == 1);
-      if (im < 0)
-        im += ms[i];
-      i128 diff = safemod((i128)rs[i] - rr[i], ms[i]);
-      ull t = (ull)((u128)diff * im % ms[i]);
-      r += t * m, m *= ms[i];
-      repi(j, i + 1, n)
+      using W = decltype(word);
+      vc<ull> rr(n, 0), mm(n, 1);
+      repi(i, n)
       {
-        rr[j] += (ull)((u128)t * mm[j] % ms[j]);
-        if (rr[j] >= (ull)ms[j]) rr[j] -= ms[j];
-        mm[j] = (ull)((u128)mm[j] * ms[i] % ms[j]);
+        assert(ms[i] >= 1);
+        auto [g, im, _] = extgcd<ll>(mm[i], ms[i]);
+        assert(g == 1);
+        if (im < 0)
+          im += ms[i];
+        ll diff = rs[i] % ll(ms[i]);
+        if (diff < 0) diff += ms[i];
+        diff -= ll(rr[i]);
+        if (diff < 0) diff += ms[i];
+        ull t = (ull)(W(diff) * im % ms[i]);
+        r += t * m, m *= ms[i];
+        repi(j, i + 1, n)
+        {
+          rr[j] += (ull)(W(t) * mm[j] % ms[j]);
+          if (rr[j] >= (ull)ms[j]) rr[j] -= ms[j];
+          mm[j] = (ull)(W(mm[j]) * ms[i] % ms[j]);
+        }
       }
-    }
+    };
+    if (small) solve(ull(0));
+    else solve(u128(0));
   }
   return {r, m};
 }
@@ -122,6 +143,18 @@ pair<mint, mint> crt_mod(const V1 &rs, const V2 &ms)
 template <class mint, class U1, class U2, size_t n>
 constexpr pair<mint, mint> crt_mod_constexpr(const array<U1, n> &rs, const array<U2, n> &ms)
 {
+  if constexpr (sizeof(U2) > 4)
+  {
+    bool small = true;
+    for (auto mod : ms)
+      if (mod > INT_MAX) { small = false; break; }
+    if (small)
+    {
+      array<int, n> residues{}, moduli{};
+      repi(i, n) residues[i] = rs[i], moduli[i] = ms[i];
+      return crt_mod_constexpr<mint>(residues, moduli);
+    }
+  }
   using T = larger_int_t<U2>;
   assert(rs.size() == ms.size());
   mint r = 0, m = 1;
@@ -133,7 +166,7 @@ constexpr pair<mint, mint> crt_mod_constexpr(const array<U1, n> &rs, const array
     assert(U1(0) <= rs[i] && U2(rs[i]) < ms[i]);
     auto [g, im, _] = extgcd<T>(mm[i], ms[i]);
     assert(g == 1);
-    T t = safemod((rs[i] - rr[i]) * im, ms[i]);
+    T t = safemod<T>((rs[i] - rr[i]) * im, ms[i]);
     r += t * m, m *= ms[i];
     repi(j, i + 1, n)
     {

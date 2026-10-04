@@ -230,6 +230,111 @@ void noninteger_coordinates()
   }
 }
 
+template <bool Min, class T, class U = larger_int_t<T>>
+void random_noninteger_coordinates()
+{
+  using Compare = conditional_t<Min, less<>, greater<>>;
+  mt19937_64 rng(314159265);
+  auto sample = [&]() -> T
+  {
+    int num = int(rng() % 101) - 50;
+    // Dyadic floating-point inputs keep every evaluation exact in this test.
+    int den = is_floating_point_v<T> ? 1 << (rng() % 5) : 1 + rng() % 13;
+    return T(num) / T(den);
+  };
+  for (int trial = 0; trial < 20; ++trial)
+  {
+    vc<T> xs;
+    for (int i = 0; i < 20; ++i) xs.push_back(sample());
+    xs.push_back(T(1) / T(2)), xs.push_back(T(2) / T(4));
+    shuffle(xs.begin(), xs.end(), rng);
+    LiChaoTreeCompressed<T, U, Compare> tree(xs);
+    xs = tree.coordinates();
+    assert(is_sorted(xs.begin(), xs.end()));
+    assert(adjacent_find(xs.begin(), xs.end()) == xs.end());
+    for (int epoch = 0; epoch < 2; ++epoch)
+    {
+      vc<Entry<T>> entries;
+      auto check = [&]()
+      {
+        for (int k = 0; k < int(xs.size()); ++k)
+        {
+          assert(tree.lower_bound(xs[k]) == k);
+          check_result<Min, U>(entries, xs[k], tree.query(xs[k]));
+          check_result<Min, U>(entries, xs[k], tree.query_index(k));
+        }
+      };
+      check();
+      for (int i = 0; i < 40; ++i)
+      {
+        T a = sample(), b = sample(), l = sample(), r = sample();
+        if (r < l) swap(l, r);
+        int type = rng() % 3;
+        if (type == 0) tree.add_line(a, b);
+        else if (type == 1) tree.add_segment(l, r, a, b);
+        else
+        {
+          int il = rng() % (xs.size() + 1), ir = rng() % (xs.size() + 1);
+          if (ir < il) swap(il, ir);
+          l = il == int(xs.size()) ? T(100) : xs[il];
+          r = ir == int(xs.size()) ? T(100) : xs[ir];
+          tree.add_segment_index(il, ir, a, b);
+        }
+        entries.push_back({l, r, a, b, i, type == 0});
+        check();
+      }
+      tree.clear();
+      assert(tree.coordinates() == xs);
+    }
+  }
+}
+
+template <bool Min, class T>
+void adjacent_floating_coordinates()
+{
+  using Compare = conditional_t<Min, less<>, greater<>>;
+  T mid = T(0.5), lo = nextafter(mid, T(0)), hi = nextafter(mid, T(1));
+  LiChaoTreeCompressed<T, T, Compare> tree({hi, mid, lo, mid});
+  assert(tree.coordinates() == (vc<T>{lo, mid, hi}));
+  tree.add_line(T(1), T(0));
+  tree.add_line(T(-1), T(1));
+  assert(tree.query(lo).second.id == (Min ? 0 : 1));
+  assert(tree.query(mid).first == mid);
+  assert(tree.query(hi).second.id == (Min ? 1 : 0));
+  tree.add_segment(mid, hi, T(0), Min ? T(-2) : T(2));
+  assert(tree.query(lo).second.id == (Min ? 0 : 1));
+  assert(tree.query(mid).second.id == 2);
+  assert(tree.query(hi).second.id == (Min ? 1 : 0));
+}
+
+void rational_examples_and_widening()
+{
+  using R = Rational<ll>;
+  using U = Rational<i128>;
+  static_assert(is_same_v<decltype(declval<LiChaoTreeCompressed<R>>().query(R(0)).first), U>);
+  LiChaoTreeCompressed<R> tree({R(-3, 2), R(1, 3), R(2, 3), R(5, 2)});
+  tree.add_line(R(1, 2), R(1, 3));
+  tree.add_line(R(-1), R(1));
+  assert(tree.query(R(1, 3)).first == U(1, 2));
+  assert(tree.query(R(2, 3)).first == U(1, 3));
+  assert(tree.query(R(2, 3)).second.id == 1);
+  tree.add_segment(R(1, 4), R(3, 4), R(0), R(-1, 7));
+  assert(tree.query(R(1, 3)).first == U(-1, 7));
+  assert(tree.query(R(2, 3)).first == U(-1, 7));
+  assert(tree.query(R(-3, 2)).first == U(-5, 12));
+  assert(tree.query(R(5, 2)).first == U(-3, 2));
+
+  // A product beyond ll is evaluated after widening numerator and denominator.
+  ll a = 4'000'000'001LL, x = 4'000'000'003LL;
+  LiChaoTreeCompressed<R> wide({R(x, 5)});
+  wide.add_line(R(a, 3), R(-2, 7));
+  U expected(i128(a) * x * 7 - 30, 105);
+  assert(wide.query(R(x, 5)).first == expected);
+  wide.add_line(R(a, 3), R(-3, 7));
+  assert(wide.query(R(x, 5)).second.id == 1);
+  assert(wide.query(R(x, 5)).first == U(i128(a) * x * 7 - 45, 105));
+}
+
 void coordinate_i128()
 {
   // Explicit U avoids requesting a nonexistent wider built-in integer.
@@ -266,6 +371,17 @@ int main()
   noninteger_coordinates<false, long double>();
   noninteger_coordinates<true, Rational<ll>>();
   noninteger_coordinates<false, Rational<ll>>();
+  random_noninteger_coordinates<true, double>();
+  random_noninteger_coordinates<false, double>();
+  random_noninteger_coordinates<true, long double>();
+  random_noninteger_coordinates<false, long double>();
+  random_noninteger_coordinates<true, Rational<ll>>();
+  random_noninteger_coordinates<false, Rational<ll>>();
+  adjacent_floating_coordinates<true, double>();
+  adjacent_floating_coordinates<false, double>();
+  adjacent_floating_coordinates<true, long double>();
+  adjacent_floating_coordinates<false, long double>();
+  rational_examples_and_widening();
   coordinate_i128();
   cout << "Hello World\n";
 }

@@ -11,7 +11,7 @@
 namespace internal
 {
 
-  template <class Policy>
+  template <class Policy, class PowInv = void>
   struct modint_impl
   {
     using V = typename Policy::value_type;
@@ -31,6 +31,12 @@ namespace internal
 
     template <class T = Policy>
     static auto set_mod(M m) -> decltype(T::set_mod(m)) { return T::set_mod(m); }
+
+    static void precompute()
+    {
+      if constexpr (!is_void_v<PowInv>)
+        (void)PowInv::get();
+    }
 
     static mint raw(V v)
     {
@@ -118,6 +124,8 @@ namespace internal
     mint pow(T n) const
     {
       assert(n >= 0);
+      if constexpr (!is_void_v<PowInv>)
+        return raw(PowInv::get().pow(val(), n));
       mint x = *this, r = 1;
       while (n)
       {
@@ -130,7 +138,11 @@ namespace internal
     }
     mint inv() const
     {
-      if constexpr (Policy::is_prime)
+      if constexpr (!is_void_v<PowInv>)
+      {
+        return raw(PowInv::get().inv(val()));
+      }
+      else if constexpr (Policy::is_prime)
       {
         return pow(mod() - 2);
       }
@@ -200,8 +212,8 @@ template <class T>
 struct is_modint : std::false_type
 {
 };
-template <class Policy>
-struct is_modint<internal::modint_impl<Policy>> : std::true_type
+template <class Policy, class PowInv>
+struct is_modint<internal::modint_impl<Policy, PowInv>> : std::true_type
 {
 };
 template <class T>
@@ -209,10 +221,10 @@ inline constexpr bool is_modint_v = is_modint<T>::value;
 
 template <class T>
 struct is_static_modint : false_type {};
-template <int m>
-struct is_static_modint<static_modint32<m>> : true_type {};
-template <ll m>
-struct is_static_modint<static_modint64<m>> : true_type {};
+template <int m, class PowInv>
+struct is_static_modint<internal::modint_impl<internal::policy_static<m>, PowInv>> : true_type {};
+template <ll m, class PowInv>
+struct is_static_modint<internal::modint_impl<internal::policy_static<m>, PowInv>> : true_type {};
 template <class T>
 inline constexpr bool is_static_modint_v = is_static_modint<T>::value;
 
