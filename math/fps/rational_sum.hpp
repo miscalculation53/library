@@ -29,6 +29,14 @@ pair<FormalPowerSeries<mint>, FormalPowerSeries<mint>> rational_plus
   F p = p_, q = q_, r = r_, s = s_;
   p.resize(pz), q.resize(z), r.resize(rz), s.resize(z);
   ntt(p), ntt(q), ntt(r), ntt(s);
+  if (pz == z && rz == z)
+  {
+    repi(i, z) p[i] = p[i] * s[i] + q[i] * r[i], q[i] *= s[i];
+    intt(p), intt(q);
+    mint iz = mint(z).inv();
+    p *= iz, q *= iz;
+    return {p.resized(max(k+n-1, l+m-1)), q.resized(l+n-1)};
+  }
   repi(i, pz) p[i] *= s[i];
   repi(i, rz) r[i] *= q[i];
   repi(i, z) q[i] *= s[i];

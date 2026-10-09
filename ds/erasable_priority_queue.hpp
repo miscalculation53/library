@@ -8,16 +8,19 @@
  */
 
 // Compare は、less が昇順で greater が降順
-// 消しすぎない方法は未実装
 template <class T, class Compare = less<T>>
 struct ErasablePriorityQueue
 {
+  using value_type = T;
+  using compare_type = Compare;
+
 private:
   struct ReverseCompare
   {
     Compare comp;
     bool operator()(const T &a, const T &b) const { return comp(b, a); }
   };
+  Compare comp;
   priority_queue<T, vc<T>, ReverseCompare> body, era;
   void normalize()
   {
@@ -26,9 +29,12 @@ private:
   }
 
 public:
-  ErasablePriorityQueue() {}
+  ErasablePriorityQueue() : ErasablePriorityQueue(Compare()) {}
+  explicit ErasablePriorityQueue(const Compare &comp)
+      : comp(comp), body(ReverseCompare{comp}), era(ReverseCompare{comp}) {}
   template <class It>
-  ErasablePriorityQueue(It begi, It endi) : body(begi, endi) {}
+  ErasablePriorityQueue(It begi, It endi, const Compare &comp = Compare())
+      : comp(comp), body(begi, endi, ReverseCompare{comp}), era(ReverseCompare{comp}) {}
   void push(const T &x)
   {
     body.push(x);
@@ -36,6 +42,7 @@ public:
   }
   void pop()
   {
+    assert(!empty());
     body.pop();
     normalize();
   }
@@ -48,7 +55,12 @@ public:
   bool empty() const { return body.empty(); }
   template <class I = ll>
   I size() const { return body.size() - era.size(); }
-  T top() const { return body.top(); }
+  T top() const { assert(!empty()); return body.top(); }
+  void clear()
+  {
+    body = decltype(body)(ReverseCompare{comp});
+    era = decltype(era)(ReverseCompare{comp});
+  }
 
   vc<T> content() const
   {

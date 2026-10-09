@@ -34,6 +34,21 @@ auto dvec(const V (&sz)[d], const T &init)
     return init;
 }
 
+template <class T, size_t d, size_t i = 0>
+auto dvec(const ll (&sz)[d], const T &init)
+{
+  return dvec<T, d, i, ll>(sz, init);
+}
+
+template <class V, class T>
+void fill(V &v, const T &value)
+{
+  if constexpr (is_assignable_v<decltype(*std::begin(v)), const T &>)
+    std::fill(std::begin(v), std::end(v), value);
+  else
+    for (auto &row : v) fill(row, value);
+}
+
 template <class T = ll>
 T ctol(const char &c, const string &s)
 {

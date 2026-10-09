@@ -314,6 +314,14 @@ vc<mint> convolution_naive(const vc<mint> &a, const vc<mint> &b)
   const int n = a.size(), m = b.size();
   const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);
   vc<mint> c(n + m - 1);
+  if (ll(cnta) * 2 < n && ll(cntb) * 2 < m)
+  {
+    vc<pair<int, mint>> an, bn;
+    repi(i, n) if (a[i] != 0) an.eb(i, a[i]);
+    repi(j, m) if (b[j] != 0) bn.eb(j, b[j]);
+    for (auto [i, x] : an) for (auto [j, y] : bn) c[i+j] += x*y;
+    return c;
+  }
   if constexpr (dot_product_mod32_value<mint>::value)
   {
     // 零を飛ばす方が有利な入力や短い積は、従来のループを使う。

@@ -10,7 +10,7 @@
 `h == 0` の場合、列数は配列に保存されず、`shape()` は `(0, 0)` を返す。
 
 乗算は [Kronecker 置換](https://flintlib.org/doc/gr_poly.html) で1変数の畳み込みに帰着する。
-逆数と `exp` は全次数に対する精度を倍増させる Newton 法を用いる。
+逆数は $x$ の精度、`exp` は全次数に対する精度を倍増させる Newton 法を用いる。
 乗算・逆数・除算・`log`・`exp` は、出力係数数を $N=hw$ として $O(N\log(N+1))$ 時間。
 
 [2変数有理母関数の推定](rational_gf_2d.md) が返す分子・分母を、そのままコンストラクタへ渡せる。
@@ -46,6 +46,8 @@ assert(gf);
 auto [p, denominator] = *gf;
 auto more = F(p).div(denominator, 50, 60);
 ```
+
+逆数はまず $x$ の定数係数を $y$ の FPS として反転し、$\bmod y^w$ の係数環で $x$ の精度を倍増する。
 
 ## 詳細なドキュメント
 
@@ -155,8 +157,7 @@ F div(const F& g, int h, int w) const;
 F inv(int h, int w) const;
 ```
 
-$1/f$ を求める。$g\leftarrow g(2-fg)$ で、全次数が $m$ 未満の精度を $2m$ 未満へ伸ばす。
-長方形全体を得るため、精度が $h+w-1$ に達するまで更新する。
+$1/f$ を求める。まず $f(0,y)$ の逆数を $\bmod y^w$ で作り、$g\leftarrow g(2-fg)$ で $x$ の精度を $m$ 項から $2m$ 項へ伸ばす。必要な $h$ 行に達するまで更新する。
 
 ##### 制約
 

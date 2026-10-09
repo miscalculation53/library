@@ -12,16 +12,25 @@ $\displaystyle f(x) = g(x) \sum_{i=0}^{n-1} \frac{y_i}{g'(x_i)} \cdot \frac{1}{x
 
 結局、計算手順としては次のようになる：
 
-- $g(x)$ を多項式の総積で $O(n \log^2 n)$ 時間で計算する。
-- 各 $g'(x_i)$ を多点評価で $O(n \log^2 n)$ 時間で計算する。
-- $f(x)$ を有理式の総和で $O(n \log^2 n)$ 時間で計算する。分母は $g(x)$ であるから分子を答えとすればよい。
+- 評価点の積木を構築し、根から $g(x)$ を得る。
+- 同じ積木で $g'(x_i)$ を多点評価する。
+- 葉に $y_i/g'(x_i)$ を置き、積木の分母を共有して分子だけを併合する。
+
+各段で積木と NTT 結果を再利用する。詳しい比較は [FPS の高速化とコスト評価](../../../benchmark/fps_optimization.md) を参照。
+
+## 使用例
+
+```cpp
+using mint = modint998244353;
+auto f = interpolation(vc<mint>{0, 1, 2}, vc<mint>{1, 6, 17}); // {1, 2, 3}
+```
 
 ## 詳細なドキュメント
 
 #### interpolation
 
 ```cpp
-FormalPowerSeries<mint> interpolation(vc<mint> xs, vc<mint> ys)
+FormalPowerSeries<mint> interpolation(const vc<mint>& xs, const vc<mint>& ys)
 ```
 
 $f(x_i) = y_i \ (0 \leq i \leq n-1)$ を満たす高々 $n-1$ 次の多項式 $f(x)$ を求める。
@@ -29,6 +38,7 @@ $f(x_i) = y_i \ (0 \leq i \leq n-1)$ を満たす高々 $n-1$ 次の多項式 $f
 ##### 制約
 
 - $\lvert \mathrm{xs} \rvert = \lvert \mathrm{ys} \rvert$
+- 評価点 $x_i$ は相異なる。係数は体上で計算する。
 
 ##### 計算量
 

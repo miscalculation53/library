@@ -8,18 +8,24 @@
  */
 
 #include "erasable_priority_queue.hpp"
+#include "../utils/reverse_compare.hpp"
 
-template <class T>
+template <class T, class Compare = less<T>>
 struct DoubleEndedPriorityQueue
 {
+  using value_type = T;
+  using compare_type = Compare;
+
 private:
-  ErasablePriorityQueue<T> mn;
-  ErasablePriorityQueue<T, greater<T>> mx;
+  ErasablePriorityQueue<T, Compare> mn;
+  ErasablePriorityQueue<T, reverse_compare_t<Compare>> mx;
 
 public:
-  DoubleEndedPriorityQueue() {}
+  DoubleEndedPriorityQueue() : DoubleEndedPriorityQueue(Compare()) {}
+  explicit DoubleEndedPriorityQueue(const Compare &comp) : mn(comp), mx(reverse_compare(comp)) {}
   template <class It>
-  DoubleEndedPriorityQueue(It begi, It endi) : mn(begi, endi), mx(begi, endi) {}
+  DoubleEndedPriorityQueue(It begi, It endi, const Compare &comp = Compare())
+      : mn(begi, endi, comp), mx(begi, endi, reverse_compare(comp)) {}
   void push(const T &x) { mn.push(x), mx.push(x); }
   T extract_min()
   {
@@ -38,6 +44,9 @@ public:
   I size() const { return mn.template size<I>(); }
   T get_min() const { return mn.top(); }
   T get_max() const { return mx.top(); }
-  
+  // x が存在することをユーザが保証する。
+  void erase(const T &x) { mn.erase(x), mx.erase(x); }
+  void clear() { mn.clear(), mx.clear(); }
+
   vc<T> content() const { return mn.content(); }
 };

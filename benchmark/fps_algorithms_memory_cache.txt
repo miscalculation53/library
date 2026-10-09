@@ -1,0 +1,5 @@
+variant=transposed_cache
+mod=998244353
+n=65536
+checksum=4630140224569648521
+peak_rss_bytes=38121472

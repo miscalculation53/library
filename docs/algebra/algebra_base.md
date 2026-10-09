@@ -14,6 +14,8 @@ https://noshi91.hatenablog.com/entry/2020/04/22/212649 の E の方法を採用�
   - スニペットにしたい
   - 一応 `Monoid`, `Group`, `SemiRing`, `Ring`, `Field` のテンプレート引数に型と関数を渡すことで作れる（ACL の使い方と大差ない感じになる）。しかし、この使い方はあまり想定していない（struct を 1 個しか使わないならこれでもいいかも。2 個以上使うとき名前をいちいちつけないといけないのが微妙だと（個人的には）思う）
 - 群をモノイドとして使う、環を半環として使う、体を半環や環として使う は OK
+- 要素が 1 つだけの群として [GroupTrivial](trivial.md) がある。集約を省く場合にも使える。
+- 逆元の関数 `M::inv` の有無を `HasInverse<M>::value` で調べられる。
 - モノイドや群の演算の順序を逆にしたものをとってくるものとして次がある
   - `OppositeMonoid<M>`
   - `OppositeGroup<G>`
@@ -59,6 +61,17 @@ https://noshi91.hatenablog.com/entry/2020/04/22/212649 の E の方法を採用�
 `S`, `S op(S a, S b)`, `S e()` に加えて `S inv(S a)` を持つ。
 
 演算が可換なものは可換群やアーベル群と呼ばれる（実装上では変えていない）。
+
+#### HasInverse
+
+```cpp
+template <class M, class = void>
+struct HasInverse;
+```
+
+`const M::S&` の値 `x` に対して、`M::inv(x)` を呼べるとき `HasInverse<M>::value` が `true` になる。
+コンパイル時に、逆元を使う実装を選ぶために利用する。
+群として使う場合の演算の性質は利用者が保証する。
 
 #### 作用つきモノイド
 

@@ -5,6 +5,7 @@
 #include "../modint/binomial.hpp"
 #include "../convolution/convolution.hpp"
 #include "../modint/sqrt_mod.hpp"
+#include "internal_ntt.hpp"
 
 /**
  * @brief 形式的冪級数
@@ -26,6 +27,7 @@ struct FormalPowerSeries : vc<mint>
   using vc<mint>::front;
 
   FormalPowerSeries(const vc<mint> &f) : vc<mint>(f) {}
+  FormalPowerSeries(vc<mint> &&f) : vc<mint>(std::move(f)) {}
 
   int sz() const { return size(); }
   void shrink()
@@ -80,14 +82,14 @@ struct FormalPowerSeries : vc<mint>
     fem(a : *this) a *= k;
     return *this;
   }
-  F operator*(const mint &k) const { return F(*this) *= k; }
+  F operator*(const mint &k) const { F res(*this); res *= k; return res; }
   friend F operator*(const mint &k, const F &f) { return f * k; }
   F &operator/=(const mint &k)
   {
     *this *= k.inv();
     return *this;
   }
-  F operator/(const mint &k) const { return F(*this) /= k; }
+  F operator/(const mint &k) const { F res(*this); res /= k; return res; }
   F &operator+=(const F &g)
   {
     const int n = size(), m = g.size();
@@ -95,7 +97,7 @@ struct FormalPowerSeries : vc<mint>
     repi(i, m)(*this)[i] += g[i];
     return *this;
   }
-  F operator+(const F &g) const { return F(*this) += g; }
+  F operator+(const F &g) const { F res(*this); res += g; return res; }
   F &operator-=(const F &g)
   {
     const int n = size(), m = g.size();
@@ -103,7 +105,7 @@ struct FormalPowerSeries : vc<mint>
     repi(i, m)(*this)[i] -= g[i];
     return *this;
   }
-  F operator-(const F &g) const { return F(*this) -= g; }
+  F operator-(const F &g) const { F res(*this); res -= g; return res; }
   F &operator*=(const F &g) { return *this = *this * g; }
   F operator*(const F &g) const { return convolution(*this, g); }
 
@@ -112,8 +114,29 @@ struct FormalPowerSeries : vc<mint>
     assert(n >= 0);
     assert(g.get(0) != 0);
     mint iv = g.front().inv();
-    auto gnz = g.nz();
+    vc<pair<int, mint>> gnz;
+    repi(j, min(n, g.sz())) if (g[j] != 0) gnz.eb(j, g[j]);
     resize(n);
+    if constexpr (internal::ordinary_mod32<mint>::value)
+    {
+      vc<pair<int, mint>> terms;
+      for (auto [j, b] : gnz) if (j > 0 && j < n) terms.eb(j, b);
+      const ull mod = mint::mod();
+      const int block = mod <= (1U << 30) ? 16 : 4;
+      repi(i, n)
+      {
+        ull sum = 0;
+        int used = 0;
+        for (const auto &[j, b] : terms)
+        {
+          if (j > i) break;
+          sum += ull((*this)[i - j].val()) * b.val();
+          if (++used == block) sum %= mod, used = 0;
+        }
+        (*this)[i] = ((*this)[i] - mint::raw(sum % mod)) * iv;
+      }
+      return *this;
+    }
     repi(i, n)
     {
       fec([j, b] : gnz)
@@ -137,31 +160,14 @@ struct FormalPowerSeries : vc<mint>
     assert(get(0) != 0);
     if (n == 0)
       return {};
-    if (cnt_nz() <= 200)
+    mint iv = get(0).inv();
+    if (auto tail = internal::fps_tail_power(*this, n, iv, -iv * iv, iv * iv * iv)) return std::move(*tail);
+    if (internal::fps_use_sparse(*this, n, internal::FPSSparseOperation::inv))
       return F{1}.div_sparse(*this, n);
-    F f, g2, g{front().inv()};
-    for (int m = 1; m < n; m *= 2)
-    {
-      if (ntt_ok<mint>(2 * m))
-      {
-        f = resized(2 * m), g2 = F(g);
-        ntt(f);
-        g2.resize(2 * m), ntt(g2);
-        repi(i, 2 * m) f[i] *= g2[i];
-        intt(f);
-        f >>= m;
-        f.resize(2 * m), ntt(f);
-        repi(i, 2 * m) f[i] *= g2[i];
-        intt(f);
-        mint iz = mint(2 * m).inv();
-        iz *= -iz;
-        repi(i, m) f[i] *= iz;
-        g.insert(g.end(), f.begin(), f.begin() + m);
-      }
-      else
-        g = (g * mint(2) - g * g * resized(2 * m)).resized(2 * m);
-    }
-    return g.resized(n);
+    const int N = bit_ceil(n);
+    if (n >= 512 && ll(n) * 4 <= ll(N) * 3 && ntt_ok<mint>(N))
+      return internal::fps_inv_block(*this, n, 8);
+    return internal::fps_inv_newton(*this, n);
   }
   F div(const F &g, int n) const
   {
@@ -169,17 +175,21 @@ struct FormalPowerSeries : vc<mint>
     assert(g.get(0) != 0);
     if (n == 0)
       return {};
-    if (g.cnt_nz() <= 200)
+    if (internal::fps_use_sparse(g, n, internal::FPSSparseOperation::div))
       return div_sparse(g, n);
     return (resized(n) * g.inv(n)).resized(n);
   }
 
   F div_poly(const F &g) const
   {
+    assert(!g.empty() && g.back() != 0);
     const int k = sz() - g.sz() + 1;
     if (k <= 0)
       return {};
-    return (rev().resized(k) * g.rev().inv(k)).resized(k).rev();
+    F a(k), b(min(k, g.sz()));
+    copy_n(this->rbegin(), k, a.begin());
+    copy_n(g.rbegin(), b.sz(), b.begin());
+    return (a * b.inv(k)).resized(k).rev();
   }
   pair<F, F> divmod(const F &g) const
   {
@@ -237,32 +247,67 @@ struct FormalPowerSeries : vc<mint>
     if (n == 0)
       return {};
     F f = resized(n);
-    return (f.diff() * f.inv(n - 1)).resized(n - 1).integ();
+    return f.diff().div(f, n - 1).integ();
   }
 
   // 微分方程式 a(x)f'(x) + b(x)f(x) = 0, [x^0]f(x) = 1 を満たす f を d 項まで求める
-  // 制約: [x^0]a(x) = 1
+  // 制約: [x^0]a(x) = 1、法は素数、0 <= d <= mod
   // 計算量: O( d * (a, b の非零の個数) )
   static F diff_eq(const F &a, const F &b, int d)
   {
     assert(a.get(0) == 1);
-    assert(d >= 0);
+    assert(d >= 0 && ll(d) <= mint::mod());
     if (d == 0)
       return {};
     F f(d);
     f[0] = 1;
-    auto anz = a.nz(), bnz = b.nz();
+    auto terms = [d](const F &f)
+    {
+      vc<pair<int, mint>> res;
+      repi(i, min(d, f.sz())) if (f[i] != 0) res.eb(i, f[i]);
+      return res;
+    };
+    auto anz = terms(a), bnz = terms(b);
+    if constexpr (internal::ordinary_mod32<mint>::value)
+    {
+      vc<mint> df(d);
+      const ull mod = mint::mod();
+      const int block = mod <= (1U << 30) ? 16 : 4;
+      Binomial<mint>::reserve(d - 1);
+      repi(t, 1, d)
+      {
+        ull sum = 0;
+        int used = 0;
+        for (const auto &[i, ai] : anz)
+        {
+          if (i == 0) continue;
+          if (i > t) break;
+          sum += ull(ai.val()) * df[t - i].val();
+          if (++used == block) sum %= mod, used = 0;
+        }
+        for (const auto &[j, bj] : bnz)
+        {
+          if (j >= t) break;
+          sum += ull(bj.val()) * f[t - 1 - j].val();
+          if (++used == block) sum %= mod, used = 0;
+        }
+        f[t] = -mint::raw(sum % mod) * Binomial<mint>::inv_[t];
+        df[t] = mint(t) * f[t];
+      }
+      return f;
+    }
     repi(k, d - 1)
     {
       fec([i, ai] : anz)
       {
-        if (0 <= k - i + 1)
-          f[k + 1] -= ai * (k - i + 1) * f[k - i + 1];
+        if (i == 0) continue;
+        if (i > k + 1) break;
+        f[k + 1] -= ai * (k - i + 1) * f[k - i + 1];
       }
       fec([j, bj] : bnz)
       {
-        if (0 <= k - j && k - j < k + 1)
-          f[k + 1] -= bj * f[k - j];
+        if (j > k) break;
+        f[k + 1] -= bj * f[k - j];
       }
       f[k + 1] *= Binomial<mint>::inv(k + 1);
     }
@@ -272,7 +317,7 @@ struct FormalPowerSeries : vc<mint>
   {
     assert(n >= 0);
     assert(get(0) == 0);
-    return diff_eq(F{1}, -diff(), n);
+    return diff_eq(F{1}, -resized(min(n, sz())).diff(), n);
   }
   // k < 0 のときは定数項が非零
   F pow_sparse(ll k, int n) const
@@ -281,6 +326,9 @@ struct FormalPowerSeries : vc<mint>
     assert(k >= 0 || get(0) != 0);
     if (n == 0)
       return {};
+    if (k == 0) return F{1}.resized(n);
+    if (k == 1) return resized(n);
+    if (k == -1) return F{1}.div_sparse(*this, n);
     auto [exi, d0, a0] = nz_front();
     if (!exi)
     {
@@ -290,22 +338,18 @@ struct FormalPowerSeries : vc<mint>
         res[0] = 1;
       return res;
     }
+    const int shift = k >= 0 ? mul_limited(d0, k, n) : 0;
+    if (shift >= n) return F(n);
+    const int need = n - shift;
     mint ia0 = a0.inv();
-    F f = ((*this) >> d0) * ia0;
-    if (k >= 0)
-    {
-      const int shift = mul_limited(d0, k, n);
-      F g = diff_eq(f, -mint(k) * f.diff(), n - shift);
-      F h = (g * a0.pow(k)) << shift;
-      return h;
-    }
-    else
-    {
-      assert(d0 == 0 && "k < 0 but [x^0]f(x) == 0");
-      F g = diff_eq(f, -mint(k) * f.diff(), n);
-      return g * ia0.pow(ull(-(k + 1)) + 1);
-    }
+    F f(min(need, sz() - d0));
+    copy_n(begin() + d0, f.sz(), f.begin());
+    f *= ia0;
+    F g = diff_eq(f, -mint(k) * f.diff(), need);
+    mint factor = k >= 0 ? a0.pow(k) : ia0.pow(ull(-(k + 1)) + 1);
+    return (g * factor) << shift;
   }
+
   // (存在するか, 平方根のひとつ)
   pair<bool, F> sqrt_sparse(int n) const
   {
@@ -321,8 +365,11 @@ struct FormalPowerSeries : vc<mint>
     if (d0 / 2 >= n)
       return {true, F(n)};
     mint i2 = Binomial<mint>::inv(2);
-    F f = ((*this) >> d0) / a0;
-    F g = diff_eq(f, -i2 * f.diff(), n - d0 / 2);
+    const int need = n - d0 / 2;
+    F f(min(need, sz() - d0));
+    copy_n(begin() + d0, f.sz(), f.begin());
+    f /= a0;
+    F g = diff_eq(f, -i2 * f.diff(), need);
     return {true, (g * r) << (d0 / 2)};
   }
 
@@ -333,73 +380,40 @@ struct FormalPowerSeries : vc<mint>
     assert(get(0) == 0);
     if (n == 0)
       return {};
-    if (ntt_ok<mint>(2 * n))
+    int first = 1;
+    while (first < min(n, sz()) && (*this)[first] == 0) ++first;
+    if (first >= min(n, sz())) return F{1}.resized(n);
+    if (ll(first) * 2 >= n)
     {
-      if (cnt_nz() <= 320)
-        return exp_sparse(n);
-      // https://arxiv.org/pdf/1301.5804.pdf
-      F f{1}, g{1};
-      F f2, g2, f3, q, s, h, u;
-      g2 = {0};
-      for (int m = 1; m < n; m *= 2)
-      {
-        mint im = mint(m).inv(), i2m = mint(2 * m).inv();
-        f2 = f, f2.resize(2 * m), ntt(f2);
-
-        // a
-        f3 = f, ntt(f3);
-        repi(i, m) f3.at(i) *= g2.at(i);
-        intt(f3);
-        f3 >>= m / 2;
-        f3.resize(m), ntt(f3);
-        repi(i, m) f3.at(i) *= g2.at(i);
-        intt(f3);
-        repi(i, m / 2) f3.at(i) *= -im * im;
-        g.insert(g.end(), f3.begin(), f3.begin() + m / 2);
-        g2 = g, g2.resize(2 * m), ntt(g2);
-
-        // b, c
-        q = diff(), q.resize(2 * m), fill(q.begin() + m - 1, q.end(), 0);
-        ntt(q);
-        repi(i, 2 * m) q.at(i) *= f2.at(i);
-        intt(q);
-        q = q.circular_mod(m);
-        repi(i, m) q.at(i) *= i2m;
-
-        // d, e
-        q.resize(m + 1);
-        s = ((f.diff() - q) << 1).circular_mod(m);
-        s.resize(2 * m), ntt(s);
-        repi(i, 2 * m) s.at(i) *= g2.at(i);
-        intt(s);
-        repi(i, m) s.at(i) *= i2m;
-        s.resize(m);
-
-        // f, g
-        h = *this, h.resize(2 * m), s.resize(2 * m);
-        u = (h - (s << (m - 1)).integ()) >> m;
-        ntt(u);
-        repi(i, 2 * m) u.at(i) *= f2.at(i);
-        intt(u);
-        repi(i, m) u.at(i) *= i2m;
-        u.resize(m);
-
-        // h
-        f.insert(f.end(), u.begin(), u.end());
-      }
-      return f.resized(n);
+      F res = resized(n);
+      res[0] = 1;
+      return res;
     }
-    else
+    if (internal::fps_use_sparse(*this, n, internal::FPSSparseOperation::exp)) return exp_sparse(n);
+    if (ntt_ok<mint>(bit_ceil(n)))
     {
-      if (cnt_nz() <= 3000)
-        return exp_sparse(n);
-      F f{1};
-      for (int m = 1; m < n; m *= 2)
-      {
-        f = (f * (resized(2 * m) + F{1} - f.log(2 * m))).resized(2 * m);
-      }
-      return f.resized(n);
+      if (n < 512) return internal::fps_exp_bs(*this, n);
+      return internal::fps_exp_block(*this, n, n <= 4096 ? 4 : 16);
     }
+    // Maintain f and its reciprocal across Bostan-Schost updates.
+    Binomial<mint>::reserve(n - 1);
+    F f{1, get(1)}, g{1};
+    for (int m = 2; m < n; m *= 2)
+    {
+      F fg2 = f * (g * g);
+      g.resize(m);
+      repi(i, m / 2, m) g[i] = -fg2.get(i);
+      F q(m - 1);
+      repi(i, 1, min(m, sz())) q[i - 1] = mint(i) * (*this)[i];
+      F r = (f * q).circular_mod(m), s(m);
+      repi(i, m)
+        s[(i + 1) % m] = (i + 1 < m ? mint(i + 1) * f[i + 1] : mint(0)) - r[i];
+      F t = (g * s).resized(m), u(min(m, n - m));
+      repi(i, u.sz()) u[i] = get(m + i) - t[i] * Binomial<mint>::inv_[m + i];
+      F v = (f * u).resized(u.sz());
+      f.insert(f.end(), v.begin(), v.end());
+    }
+    return f.resized(n);
   }
   // k < 0 のときは定数項が非零
   F pow(ll k, int n) const
@@ -408,47 +422,44 @@ struct FormalPowerSeries : vc<mint>
     assert(k >= 0 || get(0) != 0);
     if (n == 0)
       return {};
-    if (ntt_ok<mint>(2 * n))
+    if (k == 0) return F{1}.resized(n);
+    if (k == 1) return resized(n);
+    if (k == -1) return inv(n);
+    auto [exists, d0, a0] = nz_front();
+    if (!exists) return F(n);
+    const int shift = k >= 0 ? mul_limited(d0, k, n) : 0;
+    if (shift >= n) return F(n);
+    const int need = n - shift;
+    if (2 <= k && k <= 8)
     {
-      if (cnt_nz() <= 100)
-        return pow_sparse(k, n);
-    }
-    else
-    {
-      if (cnt_nz() <= 1300)
-        return pow_sparse(k, n);
-    }
-    if (k == 0)
-    {
-      F res(n);
-      res[0] = 1;
-      return res;
-    }
-    if (k < 0)
-    {
-      assert(get(0) != 0);
-      mint iv = get(0).inv();
-      F res = ((*this * iv).log(n) * mint(k)).exp(n);
-      return res * iv.pow(ull(-(k + 1)) + 1);
-    }
-    repi(i, sz())
-    {
-      if ((*this)[i] != 0)
+      F base(need);
+      copy_n(begin() + d0, min(need, sz() - d0), base.begin());
+      F res = base;
+      for (int bit = bit_width(unsigned(k)) - 2; bit >= 0; --bit)
       {
-        const int shift = mul_limited(i, k, n);
-        F res = (((*this / (*this)[i]) >> i).log(n - shift) * mint(k)).exp(n - shift);
-        return (res * (*this)[i].pow(k)) << shift;
+        res = (res * res).resized(need);
+        if (k >> bit & 1) res = (res * base).resized(need);
       }
-      if (mul_limited(i + 1, k, n) >= n)
-        return F(n);
+      return res << shift;
     }
-    return F(n);
+    mint iv = a0.inv();
+    mint factor = k >= 0 ? a0.pow(k) : iv.pow(ull(-(k + 1)) + 1);
+    F f(need);
+    copy_n(begin() + d0, min(need, sz() - d0), f.begin());
+    if (need <= 2 || mint::mod() != 2)
+      if (auto tail = internal::fps_tail_power(f, need, factor, mint(k) * factor * iv,
+          need <= 2 ? mint(0) : mint(k) * (mint(k) - 1) * Binomial<mint>::inv(2) * factor * iv * iv))
+        return (std::move(*tail) << shift);
+    if (internal::fps_use_sparse(*this, need, internal::FPSSparseOperation::pow, d0))
+      return pow_sparse(k, n);
+    f *= iv;
+    F res = (f.log(need) * mint(k)).exp(need);
+    return (res * factor) << shift;
   }
+
   pair<bool, F> sqrt(int n) const
   {
     assert(n >= 0);
-    if (cnt_nz() <= 200)
-      return sqrt_sparse(n);
     auto [exi, d0, a0] = nz_front();
     if (!exi)
       return {true, F(n)};
@@ -459,11 +470,19 @@ struct FormalPowerSeries : vc<mint>
       return {false, {}};
     if (d0 / 2 >= n)
       return {true, F(n)};
-    mint i2 = Binomial<mint>::inv(2);
-    F f = ((*this) >> d0) / a0, g{1};
-    for (int m = 1; m < n - d0 / 2; m *= 2)
-      g = (g + f.resized(2 * m) * g.inv(2 * m)).resized(2 * m) * i2;
-    return {true, (g.resized(n - d0 / 2) * r) << (d0 / 2)};
+    const int need = n - d0 / 2;
+    F shifted(need);
+    copy_n(begin() + d0, min(need, sz() - d0), shifted.begin());
+    mint iv = a0.inv(), half = Binomial<mint>::inv(2);
+    if (auto tail = internal::fps_tail_power(shifted, need, r, r * iv * half, -r * iv * iv * half * half * half))
+      return {true, std::move(*tail) << (d0 / 2)};
+    if (internal::fps_use_sparse(*this, need, internal::FPSSparseOperation::sqrt, d0))
+      return sqrt_sparse(n);
+    F f = std::move(shifted); f *= iv;
+    F g = need >= 512 && ntt_ok<mint>(bit_ceil(need))
+      ? internal::fps_sqrt_block(f, need, 16)
+      : internal::fps_sqrt_newton(f, need);
+    return {true, (g * r) << (d0 / 2)};
   }
 
   F pow_mod(ll k, const F &g) const

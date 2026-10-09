@@ -139,16 +139,15 @@ struct FormalPowerSeries2D : vvc<mint>
   {
     assert(h >= 0 && w >= 0 && get(0, 0) != 0);
     if (h == 0 || w == 0) return F(h, w);
-    F g{{get(0, 0).inv()}};
-    // 全次数 < m の精度を倍増。長方形全体には h+w-1 の精度が必要。
-    const int need = h + w - 1;
-    for (int m = 1; m < need;)
+    F g(1, w);
+    auto first = FormalPowerSeries<mint>((*this)[0]).inv(w);
+    copy(first.begin(), first.end(), g[0].begin());
+    for (int m = 1; m < h; m *= 2)
     {
-      m += min(m, need - m);
-      const int nh = min(h, m), nw = min(w, m);
-      F error = -mul(g, nh, nw);
+      int nh = min(h, 2 * m);
+      F error = -mul(g, nh, w);
       error[0][0] += 2;
-      g = g.mul(error, nh, nw);
+      g = g.mul(error, nh, w);
     }
     return g.resized(h, w);
   }

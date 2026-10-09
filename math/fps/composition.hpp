@@ -4,6 +4,7 @@
 
 #include "../../bit/bit_reverse.hpp"
 #include "fps.hpp"
+#include "../convolution/middle_product.hpp"
 
 /**
  * @brief FPS 合成
@@ -108,7 +109,7 @@ FormalPowerSeries<mint> composition
       repi(j, 2 * k) repi(i, l / 2)
         p2[j * (2 * l) + 2 * i + 1] = p[j * (l / 2) + i];
       // 畳み込みの転置：a_i = sum_j r_j p2_{i+j}。
-      p2 = (p2 * r.rev()) >> (2 * N - 1);
+      p2 = middle_product(p2, r);
       repi(j, k) repi(i, l) res[j * l + i] += p2[j * (2 * l) + i];
     }
     return res;
