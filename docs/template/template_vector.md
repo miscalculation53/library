@@ -29,10 +29,11 @@ T SZ<T=ll>(x)
 #### gen_vec
 
 ```cpp
-gen_vec(int n, F f)
+template <class F>
+auto gen_vec(int n, const F& f)
 ```
 
-長さ $n$ で、$i$ 番目が $f(i)$ の vector を返す。（あまり使わないかも。）
+長さ $n$ で、$i$ 番目が $f(i)$ の vector を返す。$i=0,\ldots,n-1$ の順に1回ずつ生成する。
 
 利点：
 
@@ -40,6 +41,26 @@ gen_vec(int n, F f)
 - vector を一時変数のように扱える
 
 マクロとして `GEN_VEC(n, i, f(i))` がある。これは `gen_vec(n, LMD(i, f(i)))`。
+
+生成した値から各要素を直接構築する。ムーブ専用の型や、デフォルトコンストラクタ・代入演算子を持たない型にも対応する。
+
+```cpp
+auto squares = GEN_VEC(5, i, i * i);
+auto pointers = GEN_VEC(5, i, make_unique<int>(i));
+// MeldableIntegerSetPoolで各集合を個別に作る。
+MeldableIntegerSetPool pool(100);
+auto sets = gen_vec(5, [&](int) { return pool.make_set(); });
+```
+
+##### 制約
+
+- $0\leq n$
+- `f` は整数の添字で呼び出せる
+- `f(i)` の返り値の型はvectorの要素型として使え、生成した値からコピーまたはムーブ構築できる
+
+##### 計算量
+
+- $O(n+1)$。`f` と要素の構築にかかる時間は別途必要
 
 ### 多次元 vector の生成
 

@@ -4,6 +4,10 @@ HLD を含む根つき木クラス。親子関係、部分木、LCA、パスの�
 
 木の構造と辺の値を分けて管理する。構築には端点の組または親配列を渡し、辺の値は `edge_to_vertex_values` で子側の頂点に対応付ける。`depth` と `dist` は辺数に基づく。同じ木でも、根ごとに別のインスタンスを構築する。
 
+森林には [add_virtual_root](add_virtual_root.md) で仮想根を追加し、`RootedTree` として扱える。
+
+[グラフ・木の可視化](../visualize.md) の `dump_graph(tree)` で、親から子への辺をブラウザに表示できる。
+
 ## 使用例
 
 ```cpp
@@ -34,6 +38,22 @@ for (int v : tree.bottom_up_vertices()) {
     // dp[c] を使って dp[v] を更新する。
   }
 }
+```
+
+頂点の値が親方向に単調に増える場合、条件が切り替わる境界を検索できる。
+
+```cpp
+vc<int> value = {3, 2, 1, 1};
+auto [child, parent] = tree.first_ancestor(3, [&](int x) { return value[x] >= 2; });
+assert(child == 3 && parent == 1);
+```
+
+親配列は `parents()` で取り出せる。`LOCAL` では `dump(tree)` が頂点数・根・親配列を表示する。
+
+```cpp
+assert(tree.parents() == vc<int>({-1, 0, 1, 1}));
+dump(tree);
+dump(tree.parents() | cp::index()); // 親配列を添字付きで表示する。
 ```
 
 ## 詳細なドキュメント
@@ -112,6 +132,18 @@ int parent(int v) const
 ##### 計算量
 
 - $O(1)$
+
+#### parents
+
+```cpp
+vc<int> parents() const
+```
+
+頂点番号順の親配列のコピーを返す。根の親は `-1`。親配列・辺列のどちらから構築した木でも、同じ形式で取得できる。
+
+##### 計算量
+
+- $O(n)$
 
 #### children, light_children, heavy_child, head
 
@@ -237,6 +269,33 @@ int parent(int v) const
 
 - (1), (2)：$O(\log n)$
 - (3)：$O(1)$
+
+#### first_ancestor
+
+```cpp
+template <class Pred>
+pair<int, int> first_ancestor(int v, const Pred& pred) const
+```
+
+`v` 自身から根へ向かう道で、`pred` が `false` から `true` に切り替わる境界を `(子側, 親側)` のペアで返す。境界の子側は `false`、親側は `true` で、2頂点は隣接する。
+
+| 道上の条件 | 返り値 |
+|---|---|
+| 途中で `false` から `true` に変わる | `(最後のfalseの頂点, 最初のtrueの頂点)` |
+| `v` 自身が `true`（道上の全頂点が `true`） | `(-1, v)` |
+| 根まで `false`（道上の全頂点が `false`） | `(root(), -1)` |
+
+HLDの各パスの先頭を調べ、条件を満たすパス内だけ二分探索する。条件を満たす最初の祖先は、ペアの親側として取得できる。
+
+##### 制約
+
+- $0\leq v<n$
+- `v` から根への道で、`pred` は `false` から `true` の向きに単調
+- 探索中に各頂点の `pred` の結果が変わらない
+
+##### 計算量
+
+- $O(\log n)$。`pred` の呼び出し回数も $O(\log n)$（各呼び出しを $O(1)$ とする）
 
 #### la, jump
 

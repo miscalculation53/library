@@ -177,6 +177,15 @@ public:
       return preinv[pre[v] - 1];
   }
 
+  // 頂点番号順の親配列を返す。根の親は -1。
+  vc<int> parents() const
+  {
+    vc<int> par(n, -1);
+    int rt = root();
+    repi(v, n) if (v != rt) par[v] = parent(v);
+    return par;
+  }
+
   // v が属する heavy path の先頭を返す
   int head(int v) const
   {
@@ -386,6 +395,35 @@ public:
     return pre[u] <= pre[v] && pre[v] < post[u];
   }
 
+  // v から根への道で、pred が false -> true に切り替わる境界 (子側, 親側)。
+  // 境界の子側は false、親側は true。存在しない側は -1 とする。
+  // v 自身が true なら (-1, v)、根まで false なら (root(), -1) を返す。
+  // pred は、この道に沿って false -> true の向きに単調であること。
+  template <class Pred>
+  pair<int, int> first_ancestor(int v, const Pred &pred) const
+  {
+    assert(0 <= v && v < n);
+    int rt = root(), child = -1;
+    while (true)
+    {
+      int h = internal_head(v);
+      if (pred(h))
+      {
+        int ok = pre[h], ng = pre[v] + 1;
+        while (ng - ok > 1)
+        {
+          int mid = ok + (ng - ok) / 2;
+          if (pred(preinv[mid])) ok = mid;
+          else ng = mid;
+        }
+        return {ok < pre[v] ? preinv[ok + 1] : child, preinv[ok]};
+      }
+      if (h == rt) return {rt, -1};
+      child = h;
+      v = parent_of_head(h);
+    }
+  }
+
   // v の k 個上。なければ -1
   int la(int v, int k) const
   {
@@ -514,3 +552,7 @@ public:
     return res;
   }
 };
+
+#ifdef LOCAL
+CPP_DUMP_DEFINE_EXPORT_OBJECT(RootedTree, size(), root(), parents());
+#endif

@@ -26,6 +26,16 @@ public:
   UnionFind(int n) : par(n, -1), vdat(n), gdat(n)
   { repi(i, n) vdat[i] = typename UFData::VData(i); }
 
+  // 配列の容量を再利用して、頂点数 n の初期状態に戻す。
+  void reset(int n)
+  {
+    assert(n >= 0);
+    par.assign(n, -1);
+    vdat.resize(n);
+    gdat = typename UFData::GData(n);
+    repi(i, n) vdat[i] = typename UFData::VData(i);
+  }
+
   virtual int leader(int x)
   {
     assert(0 <= x && x < SZ<int>(par));

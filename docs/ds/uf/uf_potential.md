@@ -27,6 +27,22 @@ UnionFindPotential<G>(int n)
 
 leader, size, same, group_ids は Unionfind と同じ（経路圧縮を行う実装になっていて、計算量はならし $O(\alpha(n))$）。
 
+#### reset
+
+```cpp
+void reset(int n)
+```
+
+配列の容量を再利用して、頂点数 $n$ の初期状態に戻す。ポテンシャルは群の単位元に戻り、各成分の `valid` は `true` になる。`UFData` の初期化方法と制約は通常の [UnionFind](uf.md) と同じ。
+
+##### 制約
+
+- $0 \leq n$
+
+##### 計算量
+
+- $O(n_{\mathrm{old}} + n)$。$n_{\mathrm{old}}$ は初期化前の頂点数。群の単位元の生成、係数の代入・破棄、`UFData` の構築・代入・破棄の時間を除く。
+
 #### merge
 
 ```cpp

@@ -18,8 +18,10 @@ inline T SZ(const V &x) { return x.size(); }
 template <class F>
 auto gen_vec(int n, const F &f)
 {
-  vc<decltype(f(0))> res(n);
-  repi(i, n) res[i] = f(i);
+  assert(n >= 0);
+  vc<decltype(f(0))> res;
+  res.reserve(n);
+  repi(i, n) res.eb(f(i));
   return res;
 }
 #define GEN_VEC(n, i, fi) (gen_vec(n, LMD(i, fi)))

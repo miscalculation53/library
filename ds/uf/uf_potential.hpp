@@ -27,6 +27,13 @@ public:
   : UF(n), weight_(n, G::e()), valid_(n, true) {}
   using UF::same;
 
+  void reset(int n)
+  {
+    UF::reset(n);
+    weight_.assign(n, G::e());
+    valid_.assign(n, true);
+  }
+
   int leader(int x) override
   {
     assert(0 <= x && x < SZ<int>(par));
