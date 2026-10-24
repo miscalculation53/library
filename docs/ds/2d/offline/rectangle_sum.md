@@ -1,10 +1,28 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 平面上の点が事前に複数与えられたとき、矩形領域の点の重みの和を求めるクエリをオフラインでまとめて $O((N + Q) \log (N + Q))$ 時間で処理する。可換群が載る。左下に無限に広がる矩形領域 $(-\infty, \mathrm{rx}) \times (-\infty, \mathrm{ry})$ の場合は可換モノイドでよく、これも実装している。
 
 以下では一般の矩形領域の場合のインターフェースを説明する。左下に無限に広がる矩形領域の場合に使える `LowerLeftSum` もインターフェースはほとんど同じ。
 
+## 使用例
+
+```cpp
+#include "algebra/algebra_basic_ops.hpp"
+#include "ds/2d/offline/rectangle_sum.hpp"
+
+RectangleSum<GroupAddSub<ll>, int> queries;
+queries.point_add(1, 2, 4);
+queries.point_add(3, 2, 7);
+queries.rectangle_sum(0, 3, 0, 4);
+queries.rectangle_sum(0, 4, 0, 4);
+assert(queries.run() == (vc<ll>{4, 11}));
+```
+
 ## 詳細なドキュメント
+
+### RectangleSum / LowerLeftSum
 
 #### コンストラクタ
 

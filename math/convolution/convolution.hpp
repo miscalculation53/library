@@ -1,5 +1,12 @@
 #pragma once
 
+/*!
+ * Portions corresponding to AtCoder Library (CC0-1.0): primitive-root search and NTT butterflies.
+ * Upstream: atcoder/convolution.hpp and atcoder/internal_math.hpp
+ * https://github.com/atcoder/ac-library/tree/864245a00b00dd008d1abfdc239618fdb7d139da
+ * License: https://github.com/atcoder/ac-library/blob/864245a00b00dd008d1abfdc239618fdb7d139da/LICENSE
+ */
+
 #include "../../template/template_all_but_modint.hpp"
 
 #include "../modint/modint.hpp"
@@ -29,7 +36,8 @@ T convolution_point_get(const vc<T> &a, const vc<T> &b, int p)
 namespace internal
 {
 
-constexpr int primitive_root_constexpr(int m)
+template <class T>
+constexpr T primitive_root_constexpr(T m)
 {
   if (m == 2)
     return 1;
@@ -51,13 +59,13 @@ constexpr int primitive_root_constexpr(int m)
     return 31;
   if (m == 2113929217)
     return 5;
-  int divs[20] = {};
+  T divs[20] = {};
   divs[0] = 2;
   int cnt = 1;
-  int x = (m - 1) / 2;
+  T x = (m - 1) / 2;
   while (x % 2 == 0)
     x /= 2;
-  for (int i = 3; (long long)(i)*i <= x; i += 2)
+  for (T i = 3; i <= x / i; i += 2)
   {
     if (x % i == 0)
     {
@@ -72,7 +80,7 @@ constexpr int primitive_root_constexpr(int m)
   {
     divs[cnt++] = x;
   }
-  for (int g = 2;; g++)
+  for (T g = 2;; g++)
   {
     bool ok = true;
     for (int i = 0; i < cnt; i++)
@@ -87,10 +95,22 @@ constexpr int primitive_root_constexpr(int m)
       return g;
   }
 }
-template <int m>
-constexpr int primitive_root_for_convolution = primitive_root_constexpr(m);
+template <auto m>
+constexpr auto primitive_root_for_convolution = primitive_root_constexpr(m);
 
-template <class mint, int g = internal::primitive_root_for_convolution<mint::mod()>>
+// A quadratic nonresidue supplies the full power-of-two part of the order.
+template <class T>
+constexpr T ntt_generator_constexpr(T m)
+{
+  if (m <= INT_MAX) return primitive_root_constexpr(m);
+  if ((m - 1) % 4 == 2) return m - 1;
+  for (T g = 2; ; ++g)
+    if (powmod_constexpr(g, (m - 1) / 2, m) == m - 1) return g;
+}
+template <auto m>
+constexpr auto ntt_generator_for_convolution = ntt_generator_constexpr(m);
+
+template <class mint, auto g = internal::ntt_generator_for_convolution<mint::mod()>>
 struct fft_info
 {
   static constexpr int rank2 = countr_zero(mint::mod() - 1);
@@ -149,7 +169,7 @@ bool ntt_ok(int n)
     if constexpr (!internal::isprime<mint::mod()>)
       return false;
     static constexpr int rank2 = countr_zero(mint::mod() - 1);
-    return n <= (1 << rank2);
+    return ull(n) <= (1ULL << rank2);
   }
   else
     return false;
@@ -171,6 +191,7 @@ void ntt(vc<internal::modint_impl<internal::policy_static<mod>, PowInv>> &a)
   assert(n == (1 << h));
   assert(ntt_ok<mint>(n));
 
+  using wide = conditional_t<(mint::mod() <= INT_MAX), ull, u128>;
   static const internal::fft_info<mint> info;
 
   int len = 0; // a[i, i+(n>>len), i+2*(n>>len), ..] is transformed
@@ -207,13 +228,13 @@ void ntt(vc<internal::modint_impl<internal::policy_static<mod>, PowInv>> &a)
         int offset = s << (h - len);
         for (int i = 0; i < p; i++)
         {
-          auto mod2 = 1ULL * mint::mod() * mint::mod();
-          auto a0 = 1ULL * a[i + offset].val();
-          auto a1 = 1ULL * a[i + offset + p].val() * rot.val();
-          auto a2 = 1ULL * a[i + offset + 2 * p].val() * rot2.val();
-          auto a3 = 1ULL * a[i + offset + 3 * p].val() * rot3.val();
+          auto mod2 = wide(mint::mod()) * mint::mod();
+          auto a0 = wide(a[i + offset].val());
+          auto a1 = wide(a[i + offset + p].val()) * rot.val();
+          auto a2 = wide(a[i + offset + 2 * p].val()) * rot2.val();
+          auto a3 = wide(a[i + offset + 3 * p].val()) * rot3.val();
           auto a1na3imag =
-              1ULL * mint(a1 + mod2 - a3).val() * imag.val();
+              wide(mint(a1 + mod2 - a3).val()) * imag.val();
           auto na2 = mod2 - a2;
           a[i + offset] = a0 + a2 + a1 + a3;
           a[i + offset + 1 * p] = a0 + a2 + (2 * mod2 - (a1 + a3));
@@ -239,6 +260,7 @@ void intt(vc<internal::modint_impl<internal::policy_static<mod>, PowInv>> &a)
   assert(n == (1 << h));
   assert(ntt_ok<mint>(n));
 
+  using wide = conditional_t<(mint::mod() <= INT_MAX), ull, u128>;
   static const internal::fft_info<mint> info;
 
   int len = h; // a[i, i+(n>>len), i+2*(n>>len), ..] is transformed
@@ -257,7 +279,7 @@ void intt(vc<internal::modint_impl<internal::policy_static<mod>, PowInv>> &a)
           auto r = a[i + offset + p];
           a[i + offset] = l + r;
           a[i + offset + p] =
-              ((unsigned long long)mint::mod() + l.val() - (uint)r.val()) *
+              (wide(mint::mod()) + l.val() - wide(r.val())) *
               irot.val();
           ;
         }
@@ -278,14 +300,13 @@ void intt(vc<internal::modint_impl<internal::policy_static<mod>, PowInv>> &a)
         int offset = s << (h - len + 2);
         for (int i = 0; i < p; i++)
         {
-          auto a0 = 1ULL * a[i + offset + 0 * p].val();
-          auto a1 = 1ULL * a[i + offset + 1 * p].val();
-          auto a2 = 1ULL * a[i + offset + 2 * p].val();
-          auto a3 = 1ULL * a[i + offset + 3 * p].val();
+          auto a0 = wide(a[i + offset + 0 * p].val());
+          auto a1 = wide(a[i + offset + 1 * p].val());
+          auto a2 = wide(a[i + offset + 2 * p].val());
+          auto a3 = wide(a[i + offset + 3 * p].val());
 
           auto a2na3iimag =
-              1ULL *
-              mint((mint::mod() + a2 - a3) * iimag.val()).val();
+              wide(mint((wide(mint::mod()) + a2 - a3) * iimag.val()).val());
 
           a[i + offset] = a0 + a1 + a2 + a3;
           a[i + offset + 1 * p] =
@@ -401,7 +422,12 @@ vc<T> convolution_crt(const vc<T> &a, const vc<T> &b)
   }(make_index_sequence<k>{});
 
   vc<T> c(n + m - 1);
-  repi(i, n + m - 1) c[i] = get<1>(crt(cs[i], ms_arr));
+  repi(i, n + m - 1)
+  {
+    const auto solution = crt(cs[i], ms_arr);
+    assert(solution);
+    c[i] = solution->first;
+  }
   return c;
 }
 

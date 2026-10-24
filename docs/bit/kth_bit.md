@@ -1,6 +1,17 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 下から $k$ 番目のビットを取得
+
+## 使用例
+
+```cpp
+#include "bit/kth_bit.hpp"
+
+assert(kth_bit_pos(0b101100ULL, 0) == 2);
+assert(kth_bit_pos(0b101100ULL, 2) == 5);
+```
 
 ## 詳細なドキュメント
 

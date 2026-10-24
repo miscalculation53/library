@@ -52,6 +52,20 @@ LIBRARY_SOURCE_LINK = re.compile(
 SOURCE_LINK_PRAGMA = re.compile(
     r"^\s*#\s*pragma\s+submit_code_source_link\s+(\d+)\s*$"
 )
+SUBMISSION_PREFIX = "// submit-code: "
+SUBMISSION_FIELDS = (
+    r"source=(?P<source>[0-9a-f]{64}) input=(?P<input>[0-9a-f]{64}) body=(?P<body>[0-9a-f]{64})"
+)
+SUBMISSION_HEADER = re.compile(
+    re.escape(SUBMISSION_PREFIX) + SUBMISSION_FIELDS + r"\n"
+)
+SUBMISSION_FOOTER = re.compile(
+    r"\n\n" + re.escape(SUBMISSION_PREFIX) + r"hash=(?P<hash>[0-9a-f]{12}) "
+    + SUBMISSION_FIELDS + r"\n\Z"
+)
+SUBMISSION_TRAILER = re.compile(
+    r"\n\n" + re.escape(SUBMISSION_PREFIX) + r"[^\n]*\n?\Z"
+)
 
 
 class ToolError(RuntimeError):
@@ -60,6 +74,47 @@ class ToolError(RuntimeError):
 
 class FastBundleUnsupported(ToolError):
     pass
+
+
+@dataclass(frozen=True)
+class SubmissionStamp:
+    source_digest: str
+    input_digest: str
+
+    def render(self, text: str) -> str:
+        body_digest = hashlib.sha256(text.encode()).hexdigest()
+        # Blank lines keep the footer separate even after a trailing backslash.
+        return (
+            text + f"\n\n{SUBMISSION_PREFIX}hash={self.source_digest[:12]} source={self.source_digest} "
+            f"input={self.input_digest} body={body_digest}\n"
+        )
+
+    @staticmethod
+    def detach(text: str) -> tuple[str, bool]:
+        trailer = SUBMISSION_TRAILER.search(text)
+        if trailer is not None:
+            return text[:trailer.start()], True
+        if text.startswith(SUBMISSION_PREFIX):
+            return text.partition("\n")[2], True
+        return text, False
+
+    @staticmethod
+    def read(text: str) -> tuple[SubmissionStamp, str]:
+        match = SUBMISSION_FOOTER.search(text)
+        if match is not None:
+            body = text[:match.start()]
+            if match.group("hash") != match.group("source")[:12]:
+                raise ToolError("表示用ハッシュが変更されています。oj-b で再生成してください。")
+        else:
+            # Existing files with a first-line record migrate during cleanup.
+            match = SUBMISSION_HEADER.match(text)
+            body = text[match.end():] if match is not None else ""
+        if match is None:
+            raise ToolError("照合情報がありません。oj-b で展開し直してください。")
+        source_digest, input_digest, body_digest = (match.group(name) for name in ("source", "input", "body"))
+        if hashlib.sha256(body.encode()).hexdigest() != body_digest:
+            raise ToolError("生成後に提出用ファイルが変更されています。oj-b で再生成してください。")
+        return SubmissionStamp(source_digest, input_digest), body
 
 
 def library_source_url(path: Path, library_root: Path | None) -> str | None:
@@ -117,15 +172,71 @@ def source_comments(text: str) -> set[str]:
     return {text[start:end] for start, end in comment_spans(text)}
 
 
+def important_comments(text: str) -> list[str]:
+    return list(dict.fromkeys(
+        comment for start, end in comment_spans(text)
+        if (comment := text[start:end]).startswith(("/*!", "//!"))
+    ))
+
+
+def retain_important_comments(text: str, comments: Sequence[str]) -> str:
+    if not comments:
+        return text
+    present = source_comments(text)
+    # Notices inside removed declarations or branches move to the beginning.
+    # An extra newline also terminates a line comment ending in a backslash.
+    missing = dict.fromkeys(comment for comment in comments if comment not in present)
+    return "".join(comment + "\n\n" for comment in missing) + text
+
+
+def replace_lines_preserving_comments(
+    text: str, replacements: dict[int, str], keep_comments: Iterable[str] = (),
+) -> str:
+    """Keep notices at changed lines and leave other comments in place."""
+    if not replacements:
+        return text
+    keep = set(keep_comments)
+    notices: dict[int, list[str]] = {}
+    output: list[str] = []
+    previous = previous_line = 0
+    for start, end in comment_spans(text):
+        first = previous_line + text.count("\n", previous, start)
+        last = first + text.count("\n", start, end)
+        changed = next(
+            (index for index in range(first, last + 1) if index in replacements), None,
+        )
+        comment = text[start:end]
+        output.append(text[previous:start])
+        if changed is None:
+            output.append(comment)
+        else:
+            # Strip the whole comment even when only its opening line changes.
+            # Preserve line numbers until all replacements have been applied.
+            output.append((" " if comment.startswith("/*") else "") + "\n" * comment.count("\n"))
+            if comment.startswith(("/*!", "//!")) or comment in keep:
+                notices.setdefault(changed, []).append(comment)
+        previous, previous_line = end, last
+    output.append(text[previous:])
+    lines = "".join(output).splitlines(keepends=True)
+    lines.extend([""] * (len(text.splitlines(keepends=True)) - len(lines)))
+    result: list[str] = []
+    for index, line in enumerate(lines):
+        result.extend(comment + "\n\n" for comment in notices.get(index, ()))
+        result.append(replacements.get(index, line))
+    return "".join(result)
+
+
 def comment_record_path(output: Path) -> Path:
     return output.parent / ".submit-code" / output.name / "comments.json"
 
 
-def save_source_comments(output: Path, comments: set[str]) -> None:
+def save_source_comments(
+    output: Path, comments: set[str], *, provenance: dict | None = None,
+) -> None:
     # Keep the expansion-time snapshot outside the submitted code, including
     # when the source is edited before cleanup or the bundle has a custom name.
     atomic_write(comment_record_path(output), json.dumps(
-        {"comments": sorted(comments)}, ensure_ascii=False,
+        {"comments": sorted(comments), **(provenance or {})}, ensure_ascii=False,
     ) + "\n")
 
 
@@ -143,7 +254,7 @@ def load_source_comments(output: Path) -> set[str]:
 
 
 def protect_cleanup_comments(text: str, comments: Iterable[str]) -> tuple[str, dict[str, str]]:
-    keep = set(comments)
+    keep = set(comments).union(important_comments(text))
     if not keep:
         return text, {}
     prefix = "submit_code_comment_" + hashlib.sha256(text.encode()).hexdigest()[:16] + "_"
@@ -290,11 +401,22 @@ def atomic_write(path: Path, text: str) -> None:
 
 
 class CheckpointWriter:
-    def __init__(self, path: Path, reporter: Reporter) -> None:
+    def __init__(
+        self, path: Path, reporter: Reporter, *, stamp: SubmissionStamp | None = None,
+    ) -> None:
         self.path = path
         self.reporter = reporter
         self.current: str | None = None
         self.preserve_below: int | None = None
+        self.stamp = stamp
+        # Count the footer in size decisions, outside compiler analysis and cleanup.
+        self.stamp_size = len(stamp.render("").encode()) if stamp else 0
+
+    def size(self, text: str) -> int:
+        return encoded_size(text) + self.stamp_size
+
+    def below_limit(self, text: str, limit: int | None) -> bool:
+        return limit is not None and self.size(text) < limit
 
     def save(self, stage: str, text: str, *, force: bool = False) -> bool:
         if not force and text == self.current:
@@ -302,14 +424,15 @@ class CheckpointWriter:
         if (
             self.preserve_below is not None
             and self.current is not None
-            and len(self.current.encode()) < self.preserve_below
-            and len(text.encode()) >= self.preserve_below
+            and self.size(self.current) < self.preserve_below
+            and self.size(text) >= self.preserve_below
         ):
             return False
-        before = len(self.current.encode()) if self.current is not None else len(text.encode())
-        atomic_write(self.path, text)
+        before = self.size(self.current) if self.current is not None else self.size(text)
+        rendered = self.stamp.render(text) if self.stamp else text
+        atomic_write(self.path, rendered)
         self.current = text
-        self.reporter.size(stage, before, len(text.encode()))
+        self.reporter.size(stage, before, self.size(text))
         return True
 
 
@@ -496,6 +619,7 @@ class BundleDocument:
         self.origins = origins
         self.protected = set(protected)
         self.library_root = library_root.resolve() if library_root is not None else None
+        self.important_comments = important_comments("".join(line.text for line in self.lines))
 
     @classmethod
     def parse(
@@ -584,7 +708,7 @@ class BundleDocument:
                 expected_line = line.source_line + 1
             output.append(line.text)
 
-        return "".join(output)
+        return retain_important_comments("".join(output), self.important_comments)
 
 
 def read_direct_local_includes(
@@ -838,6 +962,7 @@ class CompilerWorkspace:
                     str(self.source),
                     "-o",
                     str(self.executable),
+                    "-lquadmath",
                 ]
             )
             value = result.returncode == 0, result.stderr
@@ -867,6 +992,7 @@ class CompilerWorkspace:
                 "-o",
                 str(self.executable),
                 *self.extra_args,
+                "-lquadmath",
             ]
         )
         value = link_result.returncode == 0, link_result.stderr
@@ -1432,11 +1558,49 @@ def wrap_include_directives(text: str) -> tuple[str, dict[int, str]]:
     return "".join(output), includes
 
 
+def wrap_portable_conditionals(text: str) -> tuple[str, dict[int, str]]:
+    """Retain f128 feature selection for compilation on the judge's target."""
+    lines = text.splitlines(keepends=True)
+    visible = preprocessor_lines(text)
+    feature = re.compile(r"\b(?:LIBRARY_HAS_FLOAT128|LIBRARY_USE_QUADMATH|__STDCPP_FLOAT128_T__)\b")
+    stack: list[tuple[int, bool]] = []
+    spans: list[tuple[int, int]] = []
+    for index, line in enumerate(visible):
+        if CONDITIONAL_OPEN_DIRECTIVE.match(line):
+            stack.append((index, feature.search(line) is not None))
+        elif CONDITIONAL_BRANCH_DIRECTIVE.match(line) and stack:
+            start, portable = stack[-1]
+            stack[-1] = (start, portable or feature.search(line) is not None)
+        elif CONDITIONAL_CLOSE_DIRECTIVE.match(line) and stack:
+            start, portable = stack.pop()
+            if portable:
+                spans.append((start, index + 1))
+
+    output: list[str] = []
+    blocks: dict[int, str] = {}
+    cursor = 0
+    for start, end in sorted(spans):
+        if start < cursor:
+            continue
+        output.extend(lines[cursor:start])
+        block_id = len(blocks)
+        blocks[block_id] = "".join(lines[start:end])
+        output.append(f"#pragma submit_code_portable_begin {block_id}\n")
+        output.append(blocks[block_id])
+        if not blocks[block_id].endswith("\n"):
+            output.append("\n")
+        output.append(f"#pragma submit_code_portable_end {block_id}\n")
+        cursor = end
+    output.extend(lines[cursor:])
+    return "".join(output), blocks
+
+
 def filter_preprocessor_output(
     output: str,
     *,
     source_path: Path,
     includes: dict[int, str],
+    portable_blocks: dict[int, str] | None = None,
 ) -> str:
     source_resolved = source_path.resolve()
     in_source = False
@@ -1444,6 +1608,9 @@ def filter_preprocessor_output(
     result: list[str] = []
     begin_pattern = re.compile(r"^\s*#pragma\s+submit_code_include_begin\s+(\d+)\s*$")
     end_pattern = re.compile(r"^\s*#pragma\s+submit_code_include_end\s+(\d+)\s*$")
+    portable_begin = re.compile(r"^\s*#pragma\s+submit_code_portable_begin\s+(\d+)\s*$")
+    portable_end = re.compile(r"^\s*#pragma\s+submit_code_portable_end\s+(\d+)\s*$")
+    in_portable = False
 
     for line in output.splitlines(keepends=True):
         marker = GNU_LINE_MARKER.match(line.rstrip("\r\n"))
@@ -1463,6 +1630,17 @@ def filter_preprocessor_output(
 
         if not in_source:
             continue
+        if portable_end.match(line):
+            in_portable = False
+            continue
+        if in_portable:
+            continue
+        portable = portable_begin.match(line)
+        if portable:
+            assert portable_blocks is not None
+            result.append(portable_blocks[int(portable.group(1))])
+            in_portable = True
+            continue
         begin = begin_pattern.match(line)
         if begin:
             include_id = int(begin.group(1))
@@ -1481,7 +1659,8 @@ def safe_cleanup_candidate(
     protected, comments = protect_cleanup_comments(text, keep_comments)
     protected, links = protect_source_links(protected)
     uncommented = strip_comments(protected, comments)
-    wrapped, includes = wrap_include_directives(uncommented)
+    portable, portable_blocks = wrap_portable_conditionals(uncommented)
+    wrapped, includes = wrap_include_directives(portable)
     valid, output, stderr = compiler.preprocess_directives(wrapped, keep_comments=bool(comments))
     if not valid:
         raise ToolError(f"preprocessor failed: {first_error(stderr)}")
@@ -1489,9 +1668,11 @@ def safe_cleanup_candidate(
         output,
         source_path=compiler.source,
         includes=includes,
+        portable_blocks=portable_blocks,
     )
     filtered = restore_source_links(filtered, links)
-    return collapse_blank_lines(restore_cleanup_comments(filtered, comments))
+    cleaned = restore_cleanup_comments(filtered, comments)
+    return collapse_blank_lines(retain_important_comments(cleaned, important_comments(text)))
 
 
 def insert_anonymous_namespace(text: str) -> str:
@@ -2195,6 +2376,7 @@ def stub_uninstantiated_template_functions(
     *,
     deleted: set[Removal] | None = None,
 ) -> str:
+    notices = important_comments(text)
     lines = text.splitlines(keepends=True)
     deleted = deleted or set()
     for candidate in sorted(candidates, reverse=True):
@@ -2214,7 +2396,7 @@ def stub_uninstantiated_template_functions(
             declaration = declaration[: initializer.start() + 1].rstrip()
         declaration += ";\n"
         lines[candidate.start : candidate.end + 1] = [declaration]
-    return collapse_blank_lines("".join(lines))
+    return collapse_blank_lines(retain_important_comments("".join(lines), notices))
 
 
 def removable_template_body_candidates(
@@ -2243,9 +2425,9 @@ def reduce_template_body_candidates(
     original_text = text
     accepted: set[Removal] = set()
     validations = 0
-    target_checkpointed = below_byte_limit(text, target_bytes) or (
+    target_checkpointed = writer.below_limit(text, target_bytes) or (
         writer.current is not None
-        and below_byte_limit(writer.current, target_bytes)
+        and writer.below_limit(writer.current, target_bytes)
     )
 
     # Stubbing leaves signatures behind. Before the first size checkpoint, also
@@ -2336,10 +2518,10 @@ def reduce_template_body_candidates(
             writer.save(
                 f"removed {len(active)} uninstantiated template body(s)", text
             )
-            if not target_checkpointed and below_byte_limit(text, target_bytes):
+            if not target_checkpointed and writer.below_limit(text, target_bytes):
                 target_checkpointed = True
                 reporter.checkpoint(
-                    f"submission ready: {reporter.byte_count(encoded_size(text), 'green')} "
+                    f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
                     f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
                 )
             break
@@ -2367,7 +2549,7 @@ def reduce_template_body_candidates(
             smallest = collapse_blank_lines(apply_removals(
                 original_text, [candidate for candidate in candidates if candidate not in blocked]
             ))
-            if not below_byte_limit(smallest, target_bytes):
+            if not writer.below_limit(smallest, target_bytes):
                 # Broad overload dependencies can keep too much code alive.
                 # Prefer the compiler's precise checks when even deleting every
                 # remaining candidate cannot meet the submission limit.
@@ -2395,10 +2577,10 @@ def reduce_template_body_candidates(
                     f"removed {len(deleted)} uninstantiated template declaration(s)",
                     text,
                 )
-                if not target_checkpointed and below_byte_limit(text, target_bytes):
+                if not target_checkpointed and writer.below_limit(text, target_bytes):
                     target_checkpointed = True
                     reporter.checkpoint(
-                        f"submission ready: {reporter.byte_count(encoded_size(text), 'green')} "
+                        f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
                         f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
                     )
                 break
@@ -2445,10 +2627,10 @@ def reduce_template_body_candidates(
                     f"removed {len(batch)} uninstantiated template declaration(s)",
                     text,
                 )
-                if not target_checkpointed and below_byte_limit(text, target_bytes):
+                if not target_checkpointed and writer.below_limit(text, target_bytes):
                     target_checkpointed = True
                     reporter.checkpoint(
-                        f"submission ready: {reporter.byte_count(encoded_size(text), 'green')} "
+                        f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
                         f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
                     )
                 return True
@@ -2488,10 +2670,10 @@ def reduce_template_body_candidates(
         accepted.update(batch)
         text = candidate_text
         writer.save(f"removed {len(batch)} uninstantiated template body(s)", text)
-        if not target_checkpointed and below_byte_limit(text, target_bytes):
+        if not target_checkpointed and writer.below_limit(text, target_bytes):
             target_checkpointed = True
             reporter.checkpoint(
-                f"submission ready: {reporter.byte_count(encoded_size(text), 'green')} "
+                f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
                 f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
             )
         return True
@@ -2521,10 +2703,10 @@ def reduce_template_body_candidates(
                 f"removed {len(accepted)} uninstantiated template declaration(s)",
                 text,
             )
-            if not target_checkpointed and below_byte_limit(text, target_bytes):
+            if not target_checkpointed and writer.below_limit(text, target_bytes):
                 target_checkpointed = True
                 reporter.checkpoint(
-                    f"submission ready: {reporter.byte_count(encoded_size(text), 'green')} "
+                    f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
                     f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
                 )
         else:
@@ -2733,12 +2915,12 @@ def unused_candidates(
 
 
 def apply_removals(text: str, removals: Iterable[Removal]) -> str:
-    lines = text.splitlines(keepends=True)
-    use = [True] * len(lines)
+    line_count = len(text.splitlines(keepends=True))
+    replacements: dict[int, str] = {}
     for removal in removals:
-        for line_index in range(max(0, removal.start), min(len(lines), removal.end + 1)):
-            use[line_index] = False
-    return "".join(line for line_index, line in enumerate(lines) if use[line_index])
+        for line_index in range(max(0, removal.start), min(line_count, removal.end + 1)):
+            replacements[line_index] = ""
+    return replace_lines_preserving_comments(text, replacements)
 
 
 def reduce_unused_candidates(
@@ -2755,9 +2937,9 @@ def reduce_unused_candidates(
     accepted: set[Removal] = set()
     cache: dict[frozenset[Removal], tuple[bool, str]] = {}
     validations = 0
-    target_checkpointed = below_byte_limit(text, target_bytes) or (
+    target_checkpointed = writer.below_limit(text, target_bytes) or (
         writer.current is not None
-        and below_byte_limit(writer.current, target_bytes)
+        and writer.below_limit(writer.current, target_bytes)
     )
 
     original_lines = text.splitlines(keepends=True)
@@ -2799,10 +2981,10 @@ def reduce_unused_candidates(
         accepted.update(batch)
         text = candidate_text
         writer.save(f"removed {len(batch)} unused declaration(s)", text)
-        if not target_checkpointed and below_byte_limit(text, target_bytes):
+        if not target_checkpointed and writer.below_limit(text, target_bytes):
             target_checkpointed = True
             reporter.checkpoint(
-                f"submission ready: {reporter.byte_count(encoded_size(text), 'green')} "
+                f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
                 f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
             )
         if reporter.verbose:
@@ -2849,24 +3031,24 @@ def cleanup_text(
     keep_comments: Iterable[str] = (),
 ) -> str:
     keep_comments = set(keep_comments)
-    target_checkpointed = below_byte_limit(text, target_bytes) or (
+    target_checkpointed = writer.below_limit(text, target_bytes) or (
         writer.current is not None
-        and below_byte_limit(writer.current, target_bytes)
+        and writer.below_limit(writer.current, target_bytes)
     )
 
     def report_target_checkpoint() -> None:
         nonlocal target_checkpointed
-        if target_checkpointed or not below_byte_limit(text, target_bytes):
+        if target_checkpointed or not writer.below_limit(text, target_bytes):
             return
         target_checkpointed = True
         reporter.checkpoint(
-            f"submission ready: {reporter.byte_count(encoded_size(text), 'green')} "
+            f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
             f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
         )
 
     if target_bytes is not None:
         quick_candidate = collapse_blank_lines(strip_cleanup_comments(text, keep_comments))
-        if below_byte_limit(quick_candidate, target_bytes):
+        if writer.below_limit(quick_candidate, target_bytes):
             started = time.monotonic()
             reporter.phase("cleanup", "validating a quick comment-only checkpoint")
             valid, stderr = compiler.syntax(quick_candidate, build_pch=False)
@@ -2884,7 +3066,7 @@ def cleanup_text(
     started = time.monotonic()
     reporter.phase("cleanup", "processing comments and conditional branches")
     safe_candidate = safe_cleanup_candidate(text, compiler, keep_comments)
-    if below_byte_limit(safe_candidate, target_bytes):
+    if writer.below_limit(safe_candidate, target_bytes):
         if safe_candidate != text or require_validation:
             valid, stderr = compiler.syntax(safe_candidate, build_pch=False)
             if not valid:
@@ -2898,7 +3080,7 @@ def cleanup_text(
     reporter.done(
         "cleanup",
         f"preprocessing complete: "
-        f"{reporter.byte_count(encoded_size(safe_candidate), 'cyan')}",
+        f"{reporter.byte_count(writer.size(safe_candidate), 'cyan')}",
         started,
     )
 
@@ -2927,7 +3109,7 @@ def cleanup_text(
         if not candidates:
             return
         candidate_text = collapse_blank_lines(apply_removals(text, candidates))
-        if not below_byte_limit(candidate_text, target_bytes):
+        if not writer.below_limit(candidate_text, target_bytes):
             return
         started = time.monotonic()
         reporter.phase("declarations", f"checking {len(candidates)} unreferenced declaration(s)")
@@ -3132,6 +3314,7 @@ class FastBundler:
         self.once: set[Path] = set()
         self.system_includes: set[str] = set()
         self.stack: list[Path] = []
+        self.inputs: dict[str, str] = {}
 
     def _resolve(self, name: str, included_from: Path) -> Path:
         for root in [included_from.parent, *self.include_paths]:
@@ -3177,9 +3360,11 @@ class FastBundler:
     def _expand(self, path: Path, *, add_source_link: bool = True) -> str:
         path = path.resolve()
         try:
-            text = path.read_text(encoding="utf-8")
+            data = path.read_bytes()
+            text = data.decode("utf-8").replace("\r\n", "\n").replace("\r", "\n")
         except (OSError, UnicodeError) as exc:
             raise FastBundleUnsupported(f"could not read {path.name}: {exc}") from exc
+        self.inputs[str(path)] = hashlib.sha256(data).hexdigest()
         if not text.endswith("\n"):
             text += "\n"
 
@@ -3205,22 +3390,22 @@ class FastBundler:
             raise FastBundleUnsupported(f"include cycle without #pragma once: {chain}")
 
         self.stack.append(path)
-        output: list[str] = []
+        prefix = ""
         if add_source_link:
             url = library_source_url(path, self.library_root)
             if url is not None:
-                output.append(source_link_comment(url))
+                prefix = source_link_comment(url)
+        replacements: dict[int, str] = {}
         conditional_depth = 0
         try:
-            for line_index, (line, uncommented_line) in enumerate(
-                zip(lines, uncommented_lines)
-            ):
+            for line_index, uncommented_line in enumerate(uncommented_lines):
                 directive = uncommented_line.rstrip("\r\n")
 
                 if (
                     PRAGMA_ONCE_DIRECTIVE.match(directive)
                     or line_index in include_guard_lines
                 ):
+                    replacements[line_index] = ""
                     continue
 
                 local_include = LOCAL_INCLUDE_DIRECTIVE.match(directive)
@@ -3230,12 +3415,7 @@ class FastBundler:
                             f"conditional local include in {path.name}"
                         )
                     included = self._resolve(local_include.group(1), path)
-                    output.append(self._expand(included))
-                    # The include itself is replaced, but its trailing note
-                    # still belongs to the submitted source.
-                    if not add_source_link:
-                        for start, end in comment_spans(line):
-                            output.append(line[start:end].rstrip("\r\n") + "\n")
+                    replacements[line_index] = self._expand(included)
                     continue
 
                 if INCLUDE_DIRECTIVE.match(directive) and '"' in directive:
@@ -3247,13 +3427,14 @@ class FastBundler:
                 if system_include and conditional_depth == 0:
                     name = system_include.group(1)
                     if name in self.system_includes:
+                        replacements[line_index] = ""
                         continue
                     self.system_includes.add(name)
 
                 if re.match(r'^\s*#\s*(?:line\s+)?\d+\s+"', directive):
+                    replacements[line_index] = ""
                     continue
 
-                output.append(line)
                 if CONDITIONAL_OPEN_DIRECTIVE.match(directive):
                     conditional_depth += 1
                 elif CONDITIONAL_CLOSE_DIRECTIVE.match(directive):
@@ -3265,7 +3446,9 @@ class FastBundler:
 
             if conditional_depth != 0:
                 raise FastBundleUnsupported(f"unmatched conditional in {path.name}")
-            return "".join(output)
+            return prefix + replace_lines_preserving_comments(
+                text, replacements, source_comments(text) if not add_source_link else (),
+            )
         finally:
             self.stack.pop()
 
@@ -3279,6 +3462,7 @@ def run_oj_bundle(
     source: Path,
     include_paths: Sequence[Path],
     cxx: str,
+    inputs: dict[str, str] | None = None,
 ) -> str:
     command = [executable]
     for include_path in include_paths:
@@ -3289,7 +3473,124 @@ def run_oj_bundle(
     result = run_command(command, cwd=source.parent, env=env)
     if result.returncode != 0:
         raise ToolError(f"oj-bundle failed:\n{redact_home(result.stderr).rstrip()}")
-    return result.stdout
+    return restore_oj_bundle_notices(result.stdout, source, include_paths, inputs=inputs)
+
+
+def restore_oj_bundle_notices(
+    text: str, source: Path, include_paths: Sequence[Path],
+    *, inputs: dict[str, str] | None = None,
+) -> str:
+    # oj-bundle removes include/guard lines together with their comments.
+    # Read local dependencies as well, including headers reduced to no lines.
+    files: dict[Path, str] = {}
+    pending = [source.resolve()]
+    # Line markers also cover local headers included with angle brackets.
+    for line in preprocessor_lines(text):
+        match = LINE_DIRECTIVE.match(line.rstrip("\r\n"))
+        if match is not None:
+            path = Path(json.loads(match.group(2)))
+            if not path.is_absolute():
+                path = source.parent / path
+            if path.is_file():
+                pending.append(path.resolve())
+    resolver = FastBundler(include_paths)
+    while pending:
+        path = pending.pop()
+        if path in files:
+            continue
+        data = path.read_bytes()
+        if inputs is not None:
+            inputs[str(path)] = hashlib.sha256(data).hexdigest()
+        original = data.decode("utf-8").replace("\r\n", "\n").replace("\r", "\n")
+        if not original.endswith("\n"):
+            original += "\n"
+        files[path] = original
+        for line in preprocessor_lines(original):
+            match = LOCAL_INCLUDE_DIRECTIVE.match(line.rstrip("\r\n"))
+            if match is not None:
+                pending.append(resolver._resolve(match.group(1), path))
+    if not any(important_comments(original) for original in files.values()):
+        return text
+
+    # Locate emitted source lines before recovering comments on lost directives.
+    # Complete comments stay in place; partial block comments are restored whole.
+    original_lines = {path: original.splitlines(keepends=True) for path, original in files.items()}
+    located: list[tuple[Path | None, int, str, bool]] = []
+    emitted: dict[Path, set[int]] = {}
+    current: Path | None = None
+    source_line = 0
+    for line in text.splitlines(keepends=True):
+        if original_lines.get(current, [])[source_line : source_line + 1] == [line]:
+            located.append((current, source_line, line, False))
+            assert current is not None
+            emitted.setdefault(current, set()).add(source_line)
+            source_line += 1
+            continue
+        match = LINE_DIRECTIVE.match(line.rstrip("\r\n"))
+        if match is not None:
+            path = Path(json.loads(match.group(2)))
+            if not path.is_absolute():
+                path = source.parent / path
+            current = path.resolve()
+            source_line = int(match.group(1)) - 1
+            located.append((current, source_line, line, True))
+        else:
+            located.append((None, source_line, line, False))
+            source_line += 1
+
+    recovered: dict[Path, list[tuple[int, str]]] = {}
+    stripped: dict[Path, list[str]] = {}
+    for path, original in files.items():
+        recovered[path] = []
+        parts: list[str] = []
+        previous = previous_line = 0
+        for start, end in comment_spans(original):
+            first = previous_line + original.count("\n", previous, start)
+            last = first + original.count("\n", start, end)
+            comment = original[start:end]
+            parts.append(original[previous:start])
+            if all(index in emitted.get(path, set()) for index in range(first, last + 1)):
+                parts.append(comment)
+            else:
+                parts.append((" " if comment.startswith("/*") else "") + "\n" * comment.count("\n"))
+                if comment.startswith(("/*!", "//!")):
+                    recovered[path].append((first, comment))
+            previous, previous_line = end, last
+        parts.append(original[previous:])
+        stripped[path] = "".join(parts).splitlines(keepends=True)
+        stripped[path].extend([""] * (len(original_lines[path]) - len(stripped[path])))
+
+    positions: dict[Path, list[tuple[int, int]]] = {}
+    for position, (path, index, _, marker) in enumerate(located):
+        if path in files and not marker:
+            positions.setdefault(path, []).append((index, position))
+    insertions: dict[int, list[tuple[Path, int, str]]] = {}
+    absent: list[str] = []
+    for path, notices in recovered.items():
+        rows = positions.get(path, [])
+        for first, comment in notices:
+            if not rows:
+                # A header made only of removed directives has no emitted rows.
+                absent.append(comment)
+                continue
+            position = next((position for index, position in rows if index >= first), rows[-1][1] + 1)
+            insertions.setdefault(position, []).append((path, first, comment))
+
+    output: list[str] = []
+    for position in range(len(located) + 1):
+        for path, first, comment in insertions.get(position, ()):
+            # Restore the notice's origin so later rendering keeps its link.
+            output.append(f"#line {first + 1} {json.dumps(str(path))}\n{comment}\n\n")
+        if position == len(located):
+            break
+        path, index, line, marker = located[position]
+        if position in insertions and path in files and not marker:
+            output.append(f"#line {index + 1} {json.dumps(str(path))}\n")
+        if path in files and not marker:
+            output.extend(stripped[path][index : index + 1])
+        else:
+            output.append(line)
+    return retain_important_comments("".join(output), absent)
 
 
 def privacy_check_line_directives(text: str) -> None:
@@ -3320,6 +3621,41 @@ def common_compiler_from_args(
     )
 
 
+def canonical_oj_bundle(
+    text: str, source: Path, include_paths: Sequence[Path], repo_root: Path,
+) -> str:
+    resolver = OriginResolver(
+        base_dir=source.parent, source=source, include_paths=include_paths,
+    )
+    return BundleDocument.parse(
+        text, resolver=resolver, library_root=repo_root,
+    ).render(set(), keep_line=False)
+
+
+def expand_source(
+    source: Path, include_paths: Sequence[Path], repo_root: Path,
+    *, cxx: str | None, oj_bundle: str | None,
+    no_fallback: bool = False, reporter: Reporter,
+) -> tuple[str, str, dict[str, str]]:
+    try:
+        bundler = FastBundler(include_paths, library_root=repo_root)
+        bundled = bundler.bundle(source)
+        return bundled, "fast", bundler.inputs
+    except FastBundleUnsupported as exc:
+        if no_fallback:
+            raise
+        reporter.warning(f"fast expansion unsupported: {exc}")
+    reporter.phase("bundle", "running oj-bundle compatibility fallback")
+    inputs: dict[str, str] = {}
+    raw_bundle = run_oj_bundle(
+        executable=discover_oj_bundle(repo_root, oj_bundle), source=source,
+        include_paths=include_paths,
+        cxx=resolve_executable(cxx, ("g++-15", "g++-14", "g++")),
+        inputs=inputs,
+    )
+    return canonical_oj_bundle(raw_bundle, source, include_paths, repo_root), "oj-bundle", inputs
+
+
 def expand_command(args: argparse.Namespace, repo_root: Path) -> None:
     reporter = Reporter(args.verbose, args.color)
     source = Path(args.source).expanduser().resolve()
@@ -3333,44 +3669,21 @@ def expand_command(args: argparse.Namespace, repo_root: Path) -> None:
         default_include_paths(repo_root, source), args.include
     )
     started = time.monotonic()
-    method = "fast"
     reporter.phase("bundle", "expanding local includes")
-    try:
-        bundled = FastBundler(include_paths, library_root=repo_root).bundle(source)
-    except FastBundleUnsupported as exc:
-        if args.no_fallback:
-            raise
-        method = "oj-bundle fallback"
-        reporter.warning(f"fast expansion unsupported: {exc}")
-        reporter.phase("bundle", "running oj-bundle compatibility fallback")
-        cxx = resolve_executable(args.cxx, ("g++-15", "g++-14", "g++"))
-        oj_bundle = discover_oj_bundle(repo_root, args.oj_bundle)
-        raw_bundle = run_oj_bundle(
-            executable=oj_bundle,
-            source=source,
-            include_paths=include_paths,
-            cxx=cxx,
-        )
-        resolver = OriginResolver(
-            base_dir=source.parent,
-            source=source,
-            include_paths=include_paths,
-        )
-        bundled = BundleDocument.parse(
-            raw_bundle,
-            resolver=resolver,
-            library_root=repo_root,
-        ).render(
-            set(),
-            keep_line=False,
-        )
-
+    bundled, method, inputs = expand_source(
+        source, include_paths, repo_root, cxx=args.cxx, oj_bundle=args.oj_bundle,
+        no_fallback=args.no_fallback, reporter=reporter,
+    )
     privacy_check_line_directives(bundled)
-    save_source_comments(output, source_comments(source.read_text(encoding="utf-8")))
-    atomic_write(output, bundled)
+    stamp = SubmissionStamp(inputs[str(source)], hashlib.sha256(bundled.encode()).hexdigest())
+    rendered = stamp.render(bundled)
+    save_source_comments(output, source_comments(source.read_text(encoding="utf-8")), provenance={
+        "source": str(source), "inputs": inputs, "input_digest": stamp.input_digest,
+    })
+    atomic_write(output, rendered)
     reporter.done(
         "bundle",
-        f"{method}: {reporter.byte_count(len(bundled.encode()), 'green')}",
+        f"{method}: {reporter.byte_count(encoded_size(rendered), 'green')}",
         started,
     )
 
@@ -3384,12 +3697,10 @@ def bundle_command(args: argparse.Namespace, repo_root: Path) -> None:
     if source == output:
         raise ToolError("bundle output must differ from the source file")
     comments = source_comments(source.read_text(encoding="utf-8"))
-    save_source_comments(output, comments)
 
     include_paths = merge_include_paths(
         default_include_paths(repo_root, source), args.include
     )
-    writer = CheckpointWriter(output, reporter)
     command_started = time.monotonic()
 
     with common_compiler_from_args(
@@ -3398,13 +3709,21 @@ def bundle_command(args: argparse.Namespace, repo_root: Path) -> None:
         started = time.monotonic()
         reporter.phase("bundle", "running oj-bundle")
         oj_bundle = discover_oj_bundle(repo_root, args.oj_bundle)
+        inputs: dict[str, str] = {}
         raw_bundle = run_oj_bundle(
             executable=oj_bundle,
             source=source,
             include_paths=include_paths,
             cxx=compiler.cxx,
+            inputs=inputs,
         )
         reporter.done("bundle", "oj-bundle completed", started)
+        canonical = canonical_oj_bundle(raw_bundle, source, include_paths, repo_root)
+        stamp = SubmissionStamp(inputs[str(source)], hashlib.sha256(canonical.encode()).hexdigest())
+        save_source_comments(output, comments, provenance={
+            "source": str(source), "inputs": inputs, "input_digest": stamp.input_digest,
+        })
+        writer = CheckpointWriter(output, reporter, stamp=stamp)
         resolver = OriginResolver(
             base_dir=source.parent,
             source=source,
@@ -3482,7 +3801,7 @@ def bundle_command(args: argparse.Namespace, repo_root: Path) -> None:
         writer.save("final", bundled, force=True)
     reporter.done(
         "bundle",
-        f"finished at {reporter.byte_count(encoded_size(bundled), 'green')}",
+        f"finished at {reporter.byte_count(writer.size(bundled), 'green')}",
         command_started,
     )
 
@@ -3493,8 +3812,18 @@ def cleanup_command(args: argparse.Namespace, repo_root: Path) -> None:
     path = Path(args.file).expanduser().resolve()
     if not path.is_file():
         raise ToolError(f"file does not exist: {path}")
-    text = path.read_text(encoding="utf-8")
-    writer = CheckpointWriter(path, reporter)
+    text = path.read_bytes().decode("utf-8")
+    stamp = None
+    detached, had_stamp = SubmissionStamp.detach(text)
+    if had_stamp:
+        try:
+            stamp, text = SubmissionStamp.read(text)
+        except ToolError:
+            # A hand-edited bundle can still be cleaned, but its original input
+            # association must be discarded rather than certified again.
+            text = detached
+            reporter.warning("生成後の編集を検出したため照合情報を外します。照合には oj-b で再生成してください。")
+    writer = CheckpointWriter(path, reporter, stamp=stamp)
     writer.current = text
     target_bytes = None if args.target_bytes == 0 else args.target_bytes
     if target_bytes is not None and target_bytes <= 0:
@@ -3507,13 +3836,13 @@ def cleanup_command(args: argparse.Namespace, repo_root: Path) -> None:
     )
     reporter.phase(
         "cleanup",
-        f"starting at {reporter.byte_count(encoded_size(text), 'cyan')}; "
+        f"starting at {reporter.byte_count(writer.size(text), 'cyan')}; "
         f"target {target_description}",
     )
-    if below_byte_limit(text, target_bytes):
+    if writer.below_limit(text, target_bytes):
         reporter.checkpoint(
             f"submission already ready: "
-            f"{reporter.byte_count(encoded_size(text), 'green')} < "
+            f"{reporter.byte_count(writer.size(text), 'green')} < "
             f"{reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
         )
 
@@ -3550,20 +3879,20 @@ def cleanup_command(args: argparse.Namespace, repo_root: Path) -> None:
             target_bytes=target_bytes,
             keep_comments=load_source_comments(path),
         )
-        writer.save("final", cleaned)
-        checkpoint_available = below_byte_limit(cleaned, target_bytes) or (
+        writer.save("final", cleaned, force=had_stamp)
+        checkpoint_available = writer.below_limit(cleaned, target_bytes) or (
             writer.current is not None
-            and below_byte_limit(writer.current, target_bytes)
+            and writer.below_limit(writer.current, target_bytes)
         )
         if target_bytes is not None and not checkpoint_available:
             reporter.warning(
                 f"target not reached: "
-                f"{reporter.byte_count(encoded_size(cleaned), 'red')} >= "
+                f"{reporter.byte_count(writer.size(cleaned), 'red')} >= "
                 f"{reporter.byte_count(target_bytes, 'yellow')}"
             )
     reporter.done(
         "cleanup",
-        f"finished at {reporter.byte_count(encoded_size(cleaned), 'green')}",
+        f"finished at {reporter.byte_count(writer.size(cleaned), 'green')}",
         command_started,
     )
 

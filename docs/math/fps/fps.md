@@ -1,8 +1,10 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 多項式、あるいは形式的冪級数を適当な次数で打ち切ったもの、を扱うライブラリ。
 
-設計の参考にしたもの： https://github.com/KentaroMatsushita/icpc_library/blob/main/src/FPS/poly.hpp
+API 設計の参考：[icpc_library の FPS](https://github.com/KentaroMatsushita/icpc_library/blob/5dcfe73194d439b191f8ea7bc19d57c85bf15594/src/FPS/poly.hpp)（[Unlicense](https://github.com/KentaroMatsushita/icpc_library/blob/5dcfe73194d439b191f8ea7bc19d57c85bf15594/LICENSE)）。
 
 `vc<mint>` を継承しており、同じコンストラクタやメンバ関数が使える。
 
@@ -55,9 +57,7 @@ $g = \exp f$ を求めたい。$A(g) = \log g - f$ とすると $A'(g) = \dfrac{
 
 $g \equiv \hat{g} - \dfrac{\log \hat{g} - f}{\frac{1}{\hat{g}}} = \hat{g}(1 - \log \hat{g} + f) \pmod {x^{2d}}$
 
-NTT が使える大きい入力では、`exp` と `sqrt` はブロックごとの NTT 結果を再利用する。`exp` は Harvey の方式、`sqrt` はブロック単位の逐次更新を使う。最後の不要なブロックは計算範囲から外す。逆数は Newton 法を基本とし、2 の冪の境界直後ではブロック方式を選ぶ。CRT を使う `exp` は逆数を維持する Bostan–Schost の更新、`sqrt` は高次側だけの Newton 更新を使う。
-
-実装・速度・NTT の定数倍は [FPS の高速化とコスト評価](../../../benchmark/fps_optimization.md) を参照。
+NTT が使える大きい入力では、`exp` と `sqrt` はブロックごとの NTT 結果を再利用する。`exp` は Harvey の方式、`sqrt` はブロック単位の逐次更新を使う。ブロック対の積はまとめて累算し、作業領域を再利用する。最後の不要なブロックは計算範囲から外す。逆数は Newton 法を基本とし、2 の冪の境界直後ではブロック方式を選ぶ。CRT を使う `exp` は逆数を維持する Bostan–Schost の更新、`sqrt` は高次側だけの Newton 更新を使う。
 
 #### log
 
@@ -75,11 +75,11 @@ sqrt も $1/2$ 乗だと思って同様に
 
 #### 疎なとき
 
-通常の `inv/div/exp/pow/sqrt` は、$W(f,n)=\sum_{1\le j<n,\ f_j\ne0}(n-j)$ と dense 側の変換長・変換回数から経路を選ぶ。`pow/sqrt` は先頭の零と出力のシフトを取り除いた長さで判定する。`pow/sqrt` の疎な微分方程式には各項が 2 回寄与する。NTT と CRT には実測から異なる係数を使う。
+通常の `inv/div/log/exp/pow/sqrt` は、$W(f,n)=\sum_{1\le j<n,\ f_j\ne0}(n-j)$ と dense 側の変換長・変換回数から経路を選ぶ。`pow/sqrt` は先頭の零と出力のシフトを取り除いた長さで判定する。`pow/sqrt` の疎な微分方程式には各項が 2 回寄与する。NTT と CRT には実測から異なる係数を使う。
 
 `pow` の指数 $0,1,-1$ は直接処理し、$2\le k\le8$ は打ち切った積の繰り返しで求める。`exp` は最初の非零次数を $d$ とすると、$2d\ge n$ の場合に $1+f$ を直接返す。逆数・平方根・累乗も $f=c+O(x^d)$, $3d\ge n$ の場合は二次までの展開で求める。
 
-乗算は定義通り、除算は乗算の逆演算と考える、log は $f'/f$ の積分。
+乗算は定義通り、除算は乗算の逆演算として計算する。疎な `log` は $h=x(\log f)'$ とおき、$fh=xf'$ の係数比較から求める。非零次数の最大公約数を $g$ とすると、$f(x)=F(x^g)$ として次数を圧縮し、計算後に元の次数へ戻す。
 
 exp, pow は疎な微分方程式を使う。$[x^0]a = 1$ を満たす $a(x), b(x)$ が与えられたとき
 
@@ -103,7 +103,7 @@ $a(x) F'(x) + b(x) F(x) = 0, [x^0] F(x) = 1$
 (4) fps resized(int n)
 (5) fps rev(int d = -1)
 (6) int cnt_nz()
-(7) tuple<bool, int, mint> nz_front()
+(7) optional<pair<int, mint>> nz_front()
 (8) vc<pair<int, mint>> nz()
 ```
 
@@ -113,7 +113,7 @@ $a(x) F'(x) + b(x) F(x) = 0, [x^0] F(x) = 1$
 - (4) $[x^0]f,\ldots,[x^{n-1}]f$ を格納した長さ $n$ のコピーを返す。短い入力は末尾を $0$ で埋める。元の配列はそのまま保つ。
 - (5) 全体を逆順にしたコピーを返す。$d \ge 0$ を指定すると `resized(d).rev()` と同じ結果を返す。
 - (6) 非零な係数の個数を返す。
-- (7) 非零な係数がなければ、$(\mathrm{false}, -1, 0)$ を返す。非零な係数があれば、最初の非零な係数が $i$ 次の $a_i$ であるとして $(\mathrm{true}, i, a_i)$ を返す。
+- (7) 最初の非零な係数が $i$ 次の $a_i$ であるとして `(i, a_i)` を返す。非零な係数がなければ `nullopt`。
 - (8) 非零な係数の (次数, 係数) のペアをすべて格納した vector を返す。
 
 ##### 制約
@@ -236,7 +236,7 @@ mint eval(mint x)
 (1) fps log(int n)
 (2) fps exp(int n)
 (3) fps pow(ll k, int n)
-(4) pair<bool, fps> sqrt(int n)
+(4) optional<fps> sqrt(int n)
 ```
 
 いずれも、疎なときに高速化できるものは自動的に高速化する。成功時の結果の長さはちょうど $n$。
@@ -244,7 +244,7 @@ mint eval(mint x)
 - (1)：$\displaystyle \log f(x) = \sum_{i=1}^\infty \frac{(-1)^{i-1}}{i} (f(x) - 1)^i$ の先頭 $n$ 項を返す。
 - (2)：$\displaystyle \exp f(x) = \sum_{i=0}^\infty \frac{f(x)^i}{i!}$ の先頭 $n$ 項を返す。
 - (3)：$f(x)^k$ の先頭 $n$ 項を返す。$f^0 = 1$ とする。
-- (4)：形式的冪級数としての平方根 $g(x)^2 = f(x)$ が存在するとき、$(\mathrm{true}, g\bmod x^n)$ を返す。存在しないときは $(\mathrm{false}, 空)$ を返す。存在判定には入力全体を使う。
+- (4)：形式的冪級数としての平方根 $g(x)^2 = f(x)$ が存在するとき、$g\bmod x^n$ を返す。存在しないときは `nullopt`。存在判定には入力全体を使う。平方根が存在し `n == 0` の場合は値ありの空配列を返す。
 
 平方根の先頭非零項が $x^s$ の項であるとき、先頭 $n$ 項の計算には入力の $n+s-1$ 次までの係数を使う場合がある。例えば $f=x^4$ に対する `sqrt(3)` は $\pm x^2$ を返す。入力の保存範囲外は $0$ として計算する。
 
@@ -261,14 +261,14 @@ mint eval(mint x)
 入力と出力の長さの最大値を $N$、入力の非零係数の個数を $c$ とする。
 
 - $O(N \log N)$。疎な場合は $O(N(c+1))$
-- `pow` はさらに $O(\log(|k|+1))$、`sqrt` はさらに $O(\log^2 \bmod)$
+- `pow` はさらに $O(\log |k|)$、`sqrt` はさらに $O(\log^2 \bmod)$
 
 #### exp_sparse, pow_sparse, sqrt_sparse
 
 ```cpp
 (1) fps exp_sparse(int n)
 (2) fps pow_sparse(ll k, int n)
-(3) pair<bool, fps> sqrt_sparse(int n)
+(3) optional<fps> sqrt_sparse(int n)
 ```
 
 疎な場合の算法を使う。計算結果、長さ、制約はそれぞれ `exp(n)`, `pow(k, n)`, `sqrt(n)` と同じ。
@@ -278,7 +278,7 @@ mint eval(mint x)
 入力と出力の長さの最大値を $N$、入力の非零係数の個数を $c$ とする。
 
 - $O(N(c+1))$
-- `pow_sparse` はさらに $O(\log(|k|+1))$、`sqrt_sparse` はさらに $O(\log^2 \bmod)$
+- `pow_sparse` はさらに $O(\log |k|)$、`sqrt_sparse` はさらに $O(\log^2 \bmod)$
 
 #### mul_bin, div_bin
 

@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 重複する要素を比較器の順に管理し、順位の取得・削除と区間のモノイド積を行う Treap。
@@ -85,7 +87,7 @@ move 後の元の木は空になり、比較器・射影を保つ。
 
 ##### 計算量
 
-- 空の構築は $O(1)$。範囲の構築は期待 $O(n\log(n+1))$。
+- 空の構築は $O(1)$。範囲の構築は期待 $O(n\log n)$。
 - move 構築は $O(1)$。move 代入は元の格納要素数を $m$ として $O(m)$。
 
 #### push / insert / erase / erase_by_order
@@ -107,7 +109,7 @@ void erase_by_order(int k);
 
 ##### 計算量
 
-- 期待 $O(\log(n+1))$。
+- 期待 $O(\log n)$。
 
 #### front / back / pop_front / pop_back / get_by_order
 
@@ -128,7 +130,7 @@ T get_by_order(int k) const;
 
 ##### 計算量
 
-- 期待 $O(\log(n+1))$。
+- 期待 $O(\log n)$。
 
 #### order_of_key / upper_order_of_key / count / contains
 
@@ -144,7 +146,7 @@ bool contains(const T& x) const;
 
 ##### 計算量
 
-- 期待 $O(\log(n+1))$。
+- 期待 $O(\log n)$。
 
 #### all_prod / prod_by_order / prod_by_key
 
@@ -165,7 +167,7 @@ S prod_by_key(const T& lo, const T& hi) const;
 ##### 計算量
 
 - `all_prod` は $O(1)$。
-- 区間集約は期待 $O(\log(n+1))$。
+- 区間集約は期待 $O(\log n)$。
 
 #### split_by_order / split_by_key / join
 
@@ -187,7 +189,7 @@ void join(OrderedMultisetTree&& other);
 
 ##### 計算量
 
-- 期待 $O(\log(n+1))$。
+- 期待 $O(\log n)$。
 
 #### size / empty / projection / clear / content
 

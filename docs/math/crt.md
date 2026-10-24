@@ -1,6 +1,6 @@
-## 概要
+このドキュメントには AI による作成・変更が含まれています。
 
-https://qiita.com/drken/items/ae02240cd1f8edfc86fd
+## 概要
 
 連立合同方程式
 
@@ -25,80 +25,34 @@ x \equiv r_n \pmod {m_n} \\\\
   - 任意 mod 畳み込みとか
   - 前者より計算量が悪い
 
-### 中身
+### 解法
 
-冒頭の記事の内容を自分用に書き直した。
+`crt2` は2本の合同式を最大公約数と逆元で併合し、`crt` はこれを順に適用する。併合後の法は元の法の最小公倍数になる。
 
-#### crt2
+`crt_mod` は互いに素な法に対する混合基数表示を順に決め、必要な法での値だけを保持する。積全体を明示せずに、別の法での解と周期を求められる。
 
-$g = \gcd(m_1, m_2), $ $k$ を $m_1k \equiv r_2 - r_1 \pmod {m_2}$ の解（解ならば $k \bmod \dfrac{m_1}{g}$ は一意）として
+`pre_crt` は各素数について必要な最大指数の条件を残し、法を互いに素にする前処理である。最大指数が同じなら、元の添字が最も後ろの要素にその素数冪を残す。最大公約数で共有部分を移すため、素因数分解は不要。実装はこの入出力仕様から独立に設計している。
 
-$r = r_1 + m_1 \cdot \left(k \dfrac{r_2 - r_1}{g} \bmod \dfrac{m_1}{g} \right)$
-$m = m_1 \cdot \dfrac{m_2}{g}$
+数学的な背景：[中国剰余定理の解説](https://qiita.com/drken/items/ae02240cd1f8edfc86fd)。`crt2` の AtCoder Library 由来部分はヘッダの出典表示を参照。
 
-なお、$\mathrm{lcm}(m_1, \dots, m_n)$ が `ll` に収まるならばオーバーフローしないことの証明は https://rsk0315.hatenablog.com/entry/2021/01/18/065720#crt にある。
+## 使用例
 
-#### crt_mod
-
-$m_i, m_j \ (i \neq j)$ が互いに素であるとする。
-
-$\begin{aligned}
-r_1 &\equiv t_1 & \pmod {m_1} \\\\
-r_2 &\equiv t_1 + t_2m_1 &\pmod {m_2} \\\\
-r_3 &\equiv t_1 + t_2m_1 + t_3m_1m_2 &\pmod {m_3} \\\\
-\vdots
-\end{aligned}$
-
-を上から順に解いていく形になる（$0 \leq t_i \lt m_i$）。計算途中で、$t_i$ および $m_1\cdots m_i$ の $\bmod \ m_{i+1}, ..., m_n$ および modint の mod での値が必要。
-
-#### pre_crt
-
-各 $i$ について、$m_i$ がどの $m_j \ (j \gt i)$ とも互いに素になるように処理する。
-
-$x \equiv r \pmod m$ という条件は、$m$ の素因数分解を $m = p_1^{e_1} \cdots p_k^{e_k}$ とすると
-
-$\begin{cases}
-x \equiv r \pmod {p_1^{e_1}} \\\\
-\vdots \\\\
-x \equiv r \pmod {p_k^{e_k}} \\\\
-\end{cases}$
-
-と分けられる。
-
-$m_i$ と $m_j$ で共通の素因数については、（条件が矛盾しなければ）$e$ が大きいほうの条件となる。共通しない素因数については、そのまま条件となる。
-
-これは陽に素因数分解せずとも、最大公約数を利用して求められる。
-
-$\begin{aligned}
-m_i &= p^a q^b s^c, \\\\
-m_j &= p^d q^e u^f
-\end{aligned}$
-
-であり、$a \gt d, b \lt e$ であるとする（もっと素因数が多い場合も同様）。このとき（$r_i, r_j$ を変えずに）$m_i$ を $p^as^c$ に、$m_j$ を $q^eu^f$ にすればよい。
-
-$\begin{aligned}
-g := \gcd(m_i, m_j) &= p^d q^b, \\\\
-m_i/g &= p^{a-d}s^c, \\\\
-m_j/g &= q^{e-b}u^f, \\\\
-g_i := \gcd(m_i/g, g) &= p^{\min(d,a-d)}, \\\\
-g_j := g/g_i &= p^{\max(0,2d-a)} q^b
-\end{aligned}$
-
-となる。あとは $\gcd(g_i, g_j)$ を $g_j$ から $g_i$ に渡していくことを $\max\left(0, \left\lceil\dfrac{2d-a}{a-d}\right\rceil\right)$ 繰り返せば $g_i = p^d, g_j = q^b$ となるので、$(m_i/g) \cdot g_i = p^a s^c, (m_j/g) \cdot g_j = q^e u^f$ となる。
-
-これもうちょっと賢い方法がありそうな予感もするけどどうなんだろう（使う場面があるかもよくわからない）
+```cpp
+auto answer = crt(vc<ll>{2, 3}, vc<ll>{3, 5});
+assert(answer);
+assert(((*answer) == pair<ll, ll>{8, 15}));
+```
 
 ## 詳細なドキュメント
 
 #### crt2
 
 ```cpp
-tuple<bool, T, T> crt2<T = ll>(T r1, T m1, T r2, T m2)
+template <class T = ll, class R0, class R1, class M0, class M1>
+constexpr optional<pair<T, T>> crt2(R0 r0, R1 r1, M0 m0, M1 m1)
 ```
 
-$2$ 元の場合を解く。解が存在しない場合は $(\mathrm{false}, $ 未定義$, $ 未定義$)$、存在する場合は $(\mathrm{true}, r, m)$ を返す。
-
-$n$ 元の場合は $2$ 元の場合を繰り返し解いていることになる。応用例：たとえば $n$ 元の場合に「$r, m$ がある値 $\mathrm{LIM}$ を超えるかどうか（超えないならもとの値）」を求めるには、繰り返しのたびに超えるかどうかを見ればよい。（$\mathrm{LIM}$ が $10^{18}$ 程度のとき、うまく書き換えると `ll` だけでできる（未実装）のだが、`i128` で計算してしまうと思考停止できそう。） https://atcoder.jp/contests/abc150/tasks/abc150_d
+$2$ 元の場合を解く。引数は剰余 `r0, r1`、法 `m0, m1` の順。解が存在する場合は `(r, m)`、存在しない場合は `nullopt` を返す。
 
 ##### 制約
 
@@ -113,10 +67,11 @@ $n$ 元の場合は $2$ 元の場合を繰り返し解いていることにな�
 #### crt
 
 ```cpp
-pair<T, T> crt<T = ll>(V rs, V ms)
+template <class T = ll, class V1, class V2>
+constexpr optional<pair<T, T>> crt(const V1& rs, const V2& ms)
 ```
 
-解が存在しない場合は $(\mathrm{false}, $ 未定義$, $ 未定義$)$、存在する場合は $(\mathrm{true}, r, m)$ を返す。
+解が存在する場合は `(r, m)`、存在しない場合は `nullopt` を返す。条件が0個の場合は値ありの `(0, 1)`。
 
 ##### 制約
 
@@ -140,14 +95,14 @@ pair<T, T> crt<T = ll>(V rs, V ms)
 
 この制約のもと、解は必ず存在する。$(r, m)$ を `mint` の mod で求めて返す。
 
-(1) は法の型が 32 bit の場合に Barrett reduction を使う。法を `ll` に格納した場合も、式が 4 本以上で法がすべて $2^{31}-1$ 以下なら計算幅を切り替える。4〜15 本では `ull` の積と剰余、16 本以上では Barrett reduction を使う。
+(1) は法が $2^{31}-1$ 以下の32 bit整数なら Barrett reduction を使う。法を `ll` に格納した場合も、式が4本以上で法がすべてこの範囲なら計算幅を切り替える。4〜15本では `ull` の積と剰余、16本以上では Barrett reduction を使う。大きい符号なし整数や128 bit整数の法は、各法の範囲内で安全に剰余を計算する経路で扱う。
 
-(2) は、`V` が array で $m_i$ がコンパイル時定数のときに高速化したもの。すべての法が $2^{31}-1$ 以下なら、法・剰余を `int`、途中の計算を `ll` に切り替える。[速度比較](runtime_integer_width.md)。
+(2) は `array` 用で、C++17以降では定数式としても評価できる。実行時の符号付き32・64 bit整数では、法がすべて $2^{31}-1$ 以下なら、法・剰余を `int`、途中の計算を `ll` に切り替える。
 
 ##### 制約
 
-- `V` は整数を格納した array または vector
-- `mint` は modint（ull などを $\bmod\ 2^{64}$ の modint として使っても可）
+- `rs` と `ms` は同じ長さの組込み整数列。符号付き・符号なし、GNUの128 bit整数を扱える。
+- `mint` は整数からの構築・加算・乗算が目的の環の演算になる型。modint、`ull`、`BigInteger` などを使える。
 - $m_i \geq 1$
 - **$m_i, m_j \ (i \neq j)$ は互いに素**
 - (2)：
@@ -161,20 +116,25 @@ pair<T, T> crt<T = ll>(V rs, V ms)
 #### pre_crt
 
 ```cpp
-bool pre_crt(V rs, V &ms)
+template <class V1, class V2>
+bool pre_crt(const V1 &rs, V2 &ms);
 ```
 
-**`ms` に対して破壊的変更を行う。**
+解が存在すれば `true` を返し、`ms` を変換する。解が存在しない場合は `false` を返し、そのときの `ms` の内容は未規定とする。空入力は `true` を返す。
 
-解が存在しない場合、false を返す（このときの `ms` の内部は未定義）。
-
-解が存在する場合、true を返す。このとき、等価な連立合同方程式である状態を保ったまま、`ms` が $m_i$ たちが互いに素となるように書き換わる。
+`rs` と `ms` の要素型は異なっていてもよい。同じオブジェクトを両引数へ渡した場合も、変更前の値から合同式を計算し、そのオブジェクトを変換後の法で更新する。
 
 ##### 制約
 
-- `V` は整数を格納した array または vector
-- $m_i \geq 1$
+- `rs` と `ms` は、`vector` や `array` などの同じ長さの整数列。
+- 要素型は組込み整数型、または整数の加減乗除・剰余・比較ができる多倍長整数型。GNUの128 bit整数も扱える。
+- 剰余側は `bool` も使える。法の要素型は `bool` を除く。
+- 負数の除算は0方向、または負の無限大方向に丸める。
+- 各 `ms[i]` は正。
 
 ##### 計算量
 
-- $O(n^2 \log^2 \max(m_1, \dots, m_n))$
+要素数を $n$、元の法の最大値を $M$ とする。
+
+- $O(n^2 \log^2 M)$ 回の整数演算
+- 異なる整数型間で直接正規化できない場合は、剰余の絶対値を $R_i$ として追加で $O(\sum_i \log R_i)$ 回の整数演算

@@ -1,8 +1,25 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 `std::set` および `std::multiset` と比較して、$k$ 番目取得ができる。
 
+## 使用例
+
+```cpp
+#include "ds/pbds_set.hpp"
+
+pbds_set<int> s;
+s.insert(7);
+s.insert(2);
+s.insert(5);
+assert(*s.find_by_order(1) == 5); // 0 始まりで 1 番目
+assert(s.lt_cnt(5) == 1);
+```
+
 ## 詳細なドキュメント
+
+### pbds_set / pbds_multiset
 
 #### コンストラクタ
 

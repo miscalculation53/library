@@ -17,7 +17,7 @@
 
 #include "math/modint/modint.hpp"
 using mint = modint998244353;
-#include "graph/tree/rerooting.hpp"
+#include "tree/rerooting.hpp"
 
 struct M
 {

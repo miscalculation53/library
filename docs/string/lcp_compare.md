@@ -1,8 +1,26 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 前者は Rolling Hash で一致判定は簡単にできるときなどに使える。後者は Rolling Hash の他に、SA/LCP と一緒に使える。
 
 また、文字列を結合したものの一致判定などができるようなちょっと ad-hoc な場面でも使える。例題： https://atcoder.jp/contests/abc416/tasks/abc416_g
+
+## 使用例
+
+```cpp
+#include "string/lcp_compare.hpp"
+
+string s = "abc", t = "abd";
+auto equal = [&](int l1, int r1, int l2, int r2) {
+  return r1 <= int(s.size()) && r2 <= int(t.size())
+      && s.substr(l1, r1 - l1) == t.substr(l2, r2 - l2);
+};
+int len = calc_lcp(0, 0, equal);
+assert(len == 2);
+auto [i, j] = compare_substr(0, 3, 0, 3, len);
+assert(s[i] < t[j]);
+```
 
 ## 詳細なドキュメント
 
@@ -33,17 +51,3 @@ pair<int, int> compare_substr(int l1, int r1, int l2, int r2, int lcp)
 ##### 計算量
 
 - $O(1)$
-
-----
-
-使用例
-
-```cpp
-string S, T;  // 英小文字のみからなる
-RollingHash rhS(S), rhT(T);
-// S[l1, r1) と S[l2, r2) の比較 (< は -1, = は 0, > は 1)
-auto cmp = [&](ll l1, ll r1, ll l2, ll r2) -> ll
-{
-  return rhS.substr(l1, r1).compare(rhT.substr(l2, r2));
-};
-```

@@ -21,6 +21,16 @@ int main()
   assert(x == -1.25);
   assert(y == 2.5L);
 
+  const string hexadecimal = "0x1p2 -0x1.8p+2 +0X1.4P3 ";
+  memcpy(fastio::ibuf, hexadecimal.data(), hexadecimal.size());
+  fastio::pil = 0, fastio::pir = uint32_t(hexadecimal.size());
+  fastio::ibuf[fastio::pir] = '\x7f';
+  float hex_float;
+  double hex_double;
+  long double hex_long_double;
+  fastio::read(hex_float, hex_double, hex_long_double);
+  assert(hex_float == 4 && hex_double == -6 && hex_long_double == 10);
+
   string s(1000, 'x');
   fastio::por = 0;
   fastio::write(s, ":", 1.25);

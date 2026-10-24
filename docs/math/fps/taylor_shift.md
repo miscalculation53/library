@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 多項式 $f(x)$ に対して $f(x + c)$ を求める。
@@ -11,6 +13,15 @@ f(x + c) &= \sum_{i = 0}^{n-1} a_i (x + c)^i \\\\
 \end{aligned}$
 
 となっているので、$A_i = a_i i!, C_i = \dfrac{c^i}{i!}$ とすると $\displaystyle b_j = \sum_{i = j}^{n - 1} A_i C_{i - j}$ である。ここで $A$ を反転した列 $\overline{A}$ を考えると（つまり $\overline{A}_i = A_{n - 1 - i}$）、$\displaystyle b_j = \sum_{i = j}^{n - 1} \overline{A}_{n - 1 - i} C_{i - j} = (\overline{A} * C)_{n-1-j}$ となるのでこの畳み込みを計算すればよい。
+
+## 使用例
+
+```cpp
+using mint = modint998244353;
+FormalPowerSeries<mint> f{1, 2, 1};
+auto g = taylor_shift(f, mint(1));
+assert((g == FormalPowerSeries<mint>{4, 4, 1}));
+```
 
 ## 詳細なドキュメント
 

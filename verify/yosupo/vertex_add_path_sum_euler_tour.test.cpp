@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "graph/tree/euler_tour_path_sum.hpp"
+#include "tree/euler_tour_path_sum.hpp"
 
 void init() {}
 

@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 一番よく使うやつ（素数 mod 二項係数 $\displaystyle \binom{n}{k}$ クエリを前計算 $O(\max(n))$ クエリ $O(1)$ で処理する）。
@@ -65,6 +67,14 @@ https://hos-lyric.hatenablog.com/entry/2021/06/10/004947
 本ライブラリは流儀 1 になっている
 
 （多分自分のレートが低いからだと思うが）まだ困ったことがない、困ったら仕様変更を考えるかも
+
+## 使用例
+
+```cpp
+using mint = modint998244353;
+assert(Binomial<mint>::C(5, 2) == 10);
+assert(Binomial<mint>::fac(5) == 120);
+```
 
 ## 詳細なドキュメント
 

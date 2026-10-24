@@ -1,6 +1,20 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
-座標圧縮
+値の大小関係を保って、異なる値を連続した非負整数に対応させる。
+
+## 使用例
+
+```cpp
+#include "ds/coordinate_compression.hpp"
+
+vc<ll> a{30, 10, 30};
+CoordinateCompression<ll> cc(a);
+assert(cc.get_id(30) == 1);
+assert(cc.get_val(0) == 10);
+assert(compressed(a) == (vc<ll>{1, 0, 1}));
+```
 
 ## 詳細なドキュメント
 
@@ -8,9 +22,9 @@
 
 座標圧縮を行うクラス。
 
-~~（別に sortunique して lower_bound をそのまま書けばよくない？）~~
+一括変換の `compressed` はソート順に順位を付ける。固定幅整数には基数ソートを使い、各要素の二分探索を省く。
 
-使う際の注意点：同じ $i$ に対して `get_id(A[i])` を毎回呼び出すのは実行時間の観点から効率的でない。これで TLE することもある。このような場面では、前計算した値（`compressed(A)` にあたる）を使うようにする。
+同じ列の要素を繰り返し参照する場合は、`compressed(A)` の結果を保持すると、その後の探索を省ける。
 
 #### コンストラクタ
 
@@ -22,9 +36,20 @@ $a$ の重複を除いた値たち（$n$ 個あるとする）に対して、小
 
 `vals = sortuniqued(a)` と同じこと。
 
+##### 制約
+
+- 値の比較と等値比較が整合する全順序を持つこと。
+
+##### 計算量
+
+$N=|a|$ として、
+
+- 固定幅整数型（`bool` を除き、`i128`, `u128` を含む）：$O(N)$
+- その他：$O(N\log N)$
+
 #### メンバ変数
 
-- `val`：$i$ 番目には、$a$ のうち（重複を除いて）$i$ 番目に小さい値、つまり添字 $i$ に対応する値が入る。
+- `vals`：$i$ 番目には、$a$ のうち（重複を除いて）$i$ 番目に小さい値、つまり添字 $i$ に対応する値が入る。
 
 #### get_val
 
@@ -70,6 +95,18 @@ I=ll size()
 
 - $O(1)$
 
+#### content
+
+```cpp
+vc<T> content() const
+```
+
+圧縮対象の値を重複除去した昇順の列で返す。列の添字は圧縮後の添字に一致する。
+
+##### 計算量
+
+- $O(n)$。$n$ は異なる値の個数
+
 #### compressed
 
 ```cpp
@@ -86,7 +123,8 @@ vc<I> compressed(vc<T> a)
 
 ##### 計算量
 
-- $O(\lvert a \rvert \log \lvert a \rvert)$
+- 固定幅整数型（`bool` を除き、`i128`, `u128` を含む）：$O(\lvert a \rvert)$
+- その他：$O(\lvert a \rvert\log\lvert a \rvert)$
 
 #### compressed_unordered
 
@@ -105,4 +143,5 @@ vc<I> compressed_unordered(vc<T> a)
 
 ##### 計算量
 
-- $O(\lvert a \rvert \log \lvert a \rvert)$
+- 固定幅整数型（`bool` を除き、`i128`, `u128` を含む）：$O(\lvert a \rvert)$
+- その他：$O(\lvert a \rvert\log\lvert a \rvert)$

@@ -52,6 +52,13 @@ public:
   T sum(int l, int r) const
   {
     assert(0 <= l && l <= r && r <= n);
+    const int li = l / B, ri = r / B;
+    if (li == ri)
+    {
+      const Word lm = (Word(1) << (l % B)) - 1;
+      const Word rm = (Word(1) << (r % B)) - 1;
+      return popcount(dat[li] & rm & ~lm);
+    }
     return sum(r) - sum(l);
   }
   bool get(int i) const

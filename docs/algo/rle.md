@@ -1,6 +1,18 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 ランレングス圧縮
+
+## 使用例
+
+```cpp
+#include "algo/rle.hpp"
+
+auto runs = rle(string("aaabbc"));
+assert(runs[0].val == 'a' && runs[0].len == 3);
+assert(runs[1].left == 3 && runs[1].right == 5);
+```
 
 ## 詳細なドキュメント
 

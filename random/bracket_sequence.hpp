@@ -7,7 +7,7 @@
  * @docs docs/random/bracket_sequence.md
  */
 
-// https://kanpurin.hatenablog.com/entry/2023/02/20/184752#kakkoretsu
+//! https://kanpurin.hatenablog.com/entry/2023/02/20/184752#kakkoretsu
 string random_bracket_sequence(int n)
 {
   string s;

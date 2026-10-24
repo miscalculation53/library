@@ -1,6 +1,18 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 $128$ ビット整数に対応した make_singed と make_unsigned
+
+## 使用例
+
+```cpp
+#include "template/template_all_but_modint.hpp"
+#include "utils/make_unsigned_ext.hpp"
+
+static_assert(is_same_v<make_unsigned_ext_t<i128>, u128>);
+static_assert(is_same_v<make_signed_ext_t<u128>, i128>);
+```
 
 ## 詳細なドキュメント
 

@@ -1,6 +1,19 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 代数的構造（ビット演算）
+
+## 使用例
+
+```cpp
+#include "algebra/bit.hpp"
+#include "ds/segtree/segtree.hpp"
+
+SegmentTree<GroupXor<ull>> seg(vc<ull>{3, 5, 6});
+assert(seg.prod(0, 2) == 6);
+assert(GroupXor<ull>::inv(5) == 5);
+```
 
 ## 詳細なドキュメント
 

@@ -61,12 +61,13 @@ protected:
     }
 
     vc<T> to_v() const { return vc<T>(ALL(*this)); }
+    vc<T> content() const { return to_v(); }
   };
   using Row = RowBase<typename vc<T>::iterator>;
   using ConstRow = RowBase<typename vc<T>::const_iterator>;
 
 public:
-  CSR() {}
+  CSR() : n(0), m(0), start{0} {}
   // 各行の要素数を指定し、値初期化された CSR を構築する
   CSR(const vc<int> &row_sizes)
       : n(row_sizes.size())
@@ -185,6 +186,7 @@ public:
     repi(i, n) res[i] = {elist.begin() + start[i], elist.begin() + get_last(i)};
     return res;
   }
+  vvc<T> content() const { return to_vv(); }
 
   vc<T> &get_elist() { return elist; }
   const vc<T> &get_elist() const { return elist; }

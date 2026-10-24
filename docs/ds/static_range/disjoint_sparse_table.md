@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 静的列に対するモノイドの区間積クエリを、前計算 $O(N \log N)$ 時間・空間、クエリ $O(1)$ 時間で処理する。
@@ -23,7 +25,22 @@
 
 どの段を参照すればよいかの計算は、$l$ と $r-1$ で異なるビットのうち最上位のものを見ればよく、`msb_pos(l ^ (r - 1))` で計算できる。
 
+前計算はクエリで参照する段まで行い、配列の長さが2の冪の場合も必要な段数だけを確保する。
+
+## 使用例
+
+```cpp
+#include "algebra/algebra_basic_ops.hpp"
+#include "ds/static_range/disjoint_sparse_table.hpp"
+
+DisjointSparseTable<MonoidAdd<ll>> sums(vc<ll>{2, 5, 3, 7});
+assert(sums.prod(1, 4) == 15);
+assert(sums.prod(0, 2) == 7);
+```
+
 ## 詳細なドキュメント
+
+### DisjointSparseTable
 
 #### コンストラクタ
 

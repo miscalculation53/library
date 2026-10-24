@@ -51,6 +51,9 @@ void main2()
   VEC(ll, N, Ain);
   A = Ain;
 
+  // Obj: 1 u v は辺、2 v x は頂点への加算。
+  using Obj = tlll;
+  OfflineDynamicConnectivity<Obj> dc(Q);
   vc<tlll> queries(Q);
   rep(q, Q)
   {
@@ -66,26 +69,13 @@ void main2()
       if (t == 0 || t == 1) if (u > v)
           swap(u, v);
       queries.at(q) = {t, u, v};
+      if (t == 0)
+        dc.add(q, Obj{1, u, v});
+      else if (t == 1)
+        dc.erase_if(q, Obj{1, u, v});
+      else if (t == 2)
+        dc.add(q, Obj{2, u, v});
     }
-  }
-
-  // Obj
-  // 1 u v: u と v を結ぶ辺
-  // 2 v x: v に重み x を加算
-  using Obj = tlll;
-  vc<pair<ll, Obj>> time_obj;
-  rep(q, Q)
-  {
-    auto [t, u, v] = queries.at(q);
-    if (t == 0 || t == 1)
-      time_obj.eb(q, Obj{1, u, v});
-  }
-  auto span_obj = add_del_to_span(Q, time_obj);
-  rep(q, Q)
-  {
-    auto [t, v, x] = queries.at(q);
-    if (t == 2)
-      span_obj.eb(q, Q, Obj{2, v, x});
   }
 
   UnionFindUndo<UFData> uf(N);
@@ -108,7 +98,7 @@ void main2()
     if (t == 3)
       PRINT(uf.get_vdata(v).vsum);
   };
-  offline_dynamic_connectivity(Q, span_obj, add, undo, run);
+  dc.run(add, undo, run);
 }
 
 void test()

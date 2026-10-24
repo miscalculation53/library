@@ -10,16 +10,18 @@
  * @docs docs/algebra/acted_monoid/upd_sum.md
  */
 
-template <class T>
+template <class T, class L = ll>
 struct ActedMonoidUpdSum
 {
-  using M = MonoidLenSum<T>;
+  using M = MonoidLenSum<T, L>;
+  using UL = typename M::UL;
   using MF = MonoidUpdFlag<T>;
   using S = typename M::S;
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
-  static constexpr S mapping(F f, S x) { return f.is_id ? x : S{x.len, f.val * x.len}; }
+  static constexpr auto pow = M::pow;
+  static constexpr S mapping(F f, S x) { return f.is_id ? x : S(x.len, f.val * UL(x.len)); }
   static constexpr auto composition = MF::op;
   static constexpr auto id = MF::e;
 };

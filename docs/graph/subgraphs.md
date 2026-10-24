@@ -1,6 +1,20 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 部分グラフへの分解
+
+## 使用例
+
+```cpp
+#include "graph/subgraphs.hpp"
+
+GraphUndirected<> g(4, vc<pair<int, int>>{{0, 1}, {1, 2}, {2, 3}});
+auto [parts, local_ids] = subgraphs(g, vc<int>{0, 0, 1, 1});
+assert(parts.size() == 2);
+assert(parts[0].size() == 2 && parts[0].num_of_edges() == 1);
+assert(local_ids == vc<int>({0, 1, 0, 1}));
+```
 
 ## 詳細なドキュメント
 
@@ -27,4 +41,3 @@ pair<vc<Graph<is_directed, Cost>>, vc<I>> subgraphs(Graph<is_directed, Cost> g, 
 ##### 計算量
 
 - $O(n + m + \lvert\mathrm{ids}\rvert)$
-

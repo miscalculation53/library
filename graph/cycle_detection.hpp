@@ -1,6 +1,15 @@
+/*!
+ * SPDX-License-Identifier: CC0-1.0
+ * Independently written from the public API contract and mathematical definitions.
+ * To the extent possible under law, the authors waive all copyright and related
+ * or neighboring rights to this file under CC0 1.0 Universal.
+ * https://creativecommons.org/publicdomain/zero/1.0/
+ */
 #pragma once
 
-#include "../template/template_all_but_modint.hpp"
+#include <cstddef>
+#include <utility>
+#include <vector>
 
 #include "graph.hpp"
 
@@ -9,56 +18,55 @@
  * @docs docs/graph/cycle_detection.md
  */
 
-// 無向 or 有向 グラフのサイクル検出
-// サイクルがなければ (false, 空)
-// サイクルがあれば (true, サイクルの辺を並べた配列)
 template <bool is_directed, class Cost>
-pair<bool, vc<Edge<Cost>>> cycle_detection(const Graph<is_directed, Cost> &g)
-{
-  const int n = g.size();
-  vc<bool> seen(n, false), finished(n, false);
-  vc<Edge<Cost>> prv(n);
-  vc<Edge<Cost>> res;
-  auto dfs = [&](auto dfs, int v) -> void
-  {
-    if (!res.empty())
-      return;
-    seen[v] = true;
-    fec(e : g.out_edges(v))
-    {
-      if (!res.empty())
-        return;
-      if (e.index == prv[v].index)
-        continue;
-      if (finished[e.to])
-        continue;
-      if (seen[e.to])
-      {
-        res.eb(e);
-        return;
-      }
-      prv[e.to] = e;
-      dfs(dfs, e.to);
-    }
-    finished[v] = true;
-  };
+optional<vc<Edge<Cost>>> cycle_detection(const Graph<is_directed, Cost>& g) {
+    const int n = g.template size<int>();
+    std::vector<int> position(n, -1);
+    struct Frame {
+        int vertex;
+        int next;
+    };
+    std::vector<Frame> frames;
+    std::vector<Edge<Cost>> path_edges;
+    frames.reserve(n);
+    path_edges.reserve(n);
 
-  repi(sv, n)
-  {
-    if (finished[sv])
-      continue;
-    dfs(dfs, sv);
-    if (!res.empty())
-      break;
-  }
-  if (res.empty())
-    return {false, {}};
-  int v = res.front().from, w = res.front().to;
-  while (v != w)
-  {
-    cauto &e = prv[v];
-    res.eb(e);
-    v = e.from;
-  }
-  return {true, reversed(res)};
+    for (int root = 0; root < n; ++root) {
+        if (position[root] != -1) continue;
+        frames.push_back({root, 0});
+        position[root] = 0;
+        while (!frames.empty()) {
+            Frame &frame = frames.back();
+            const int vertex = frame.vertex;
+            if (static_cast<std::size_t>(frame.next) == g.out_edges(vertex).size()) {
+                position[vertex] = -2;
+                frames.pop_back();
+                if (!path_edges.empty()) path_edges.pop_back();
+                continue;
+            }
+
+            const Edge<Cost> edge = g.out_edges(vertex)[frame.next++];
+            if constexpr (!is_directed) {
+                if (!path_edges.empty() && edge.index == path_edges.back().index) continue;
+            }
+            const int target_position = position[edge.to];
+            if (target_position == -1) {
+                position[edge.to] = static_cast<int>(frames.size());
+                path_edges.emplace_back(edge);
+                frames.push_back({edge.to, 0});
+                continue;
+            }
+            if (target_position >= 0) {
+                vc<Edge<Cost>> cycle;
+                cycle.reserve(path_edges.size() - static_cast<std::size_t>(target_position) + 1);
+                for (std::size_t p = static_cast<std::size_t>(target_position);
+                     p < path_edges.size(); ++p) {
+                    cycle.emplace_back(path_edges[p]);
+                }
+                cycle.emplace_back(edge);
+                return optional<vc<Edge<Cost>>>(std::move(cycle));
+            }
+        }
+    }
+    return nullopt;
 }

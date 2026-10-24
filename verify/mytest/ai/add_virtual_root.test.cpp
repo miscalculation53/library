@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-#include "graph/tree/add_virtual_root.hpp"
+#include "tree/add_virtual_root.hpp"
 
 // Compare the resulting HLD tree with explicit parent walks.
 void check_tree(const RootedTree &tree, const vc<int> &par, mt19937 &rng)

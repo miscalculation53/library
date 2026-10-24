@@ -18,14 +18,20 @@ Graph<is_directed, Cost> contracted_graph(const Graph<is_directed, Cost> &g, con
   const int n = g.size();
   assert(SZ(ids) == n);
   const int k = ids.empty() ? 0 : MAX(ids) + 1;
+  vc<pair<int, int>> members;
+  members.reserve(n);
+  for (int v = 0; v < n; v++) members.eb(ids[v], v);
+  CSR<int> groups(k, members);
+  vc<int> seen(k, -1);
   vc<pair<int, int>> uv;
-  repi(u, n) fec(e : g.out_edges(u))
+  for (int from = 0; from < k; from++) for (int v : groups[from])
+    for (const auto &e : g.out_edges(v))
   {
-    if constexpr (!is_directed)
-      if (u > e.to) continue;
-    if (ids[u] != ids[e.to])
-      uv.eb(ids[u], ids[e.to]);
+    const int to = ids[e.to];
+    if (from == to || seen[to] == from) continue;
+    seen[to] = from;
+    if constexpr (!is_directed) if (from > to) continue;
+    uv.eb(from, to);
   }
-  sortunique(uv);
   return Graph<is_directed, Cost>(k, uv);
 }

@@ -9,10 +9,11 @@
  * @docs docs/algebra/acted_monoid/add_min_sum.md
  */
 
-template <class T, auto infty = nullptr>
+template <class T, auto infty = nullptr, class L = ll>
 struct ActedMonoidAddMinSum
 {
-  using M = MonoidMinSum<T, infty>;
+  using M = MonoidMinSum<T, infty, L>;
+  using UL = typename M::UL;
   using MF = MonoidAdd<T>;
   using S = typename M::S;
   using F = typename MF::S;
@@ -22,17 +23,18 @@ struct ActedMonoidAddMinSum
   {
     if (x.len == 0)
       return x;
-    x.mn += f, x.sum += f * x.len;
+    x.mn += f, x.sum += f * UL(x.len);
     return x;
   }
   static constexpr auto composition = MF::op;
   static constexpr auto id = MF::e;
 };
 
-template <class T, auto infty = nullptr>
+template <class T, auto infty = nullptr, class L = ll>
 struct ActedMonoidAddMaxSum
 {
-  using M = MonoidMaxSum<T, infty>;
+  using M = MonoidMaxSum<T, infty, L>;
+  using UL = typename M::UL;
   using MF = MonoidAdd<T>;
   using S = typename M::S;
   using F = typename MF::S;
@@ -42,17 +44,18 @@ struct ActedMonoidAddMaxSum
   {
     if (x.len == 0)
       return x;
-    x.mx += f, x.sum += f * x.len;
+    x.mx += f, x.sum += f * UL(x.len);
     return x;
   }
   static constexpr auto composition = MF::op;
   static constexpr auto id = MF::e;
 };
 
-template <class T, auto infty = nullptr>
+template <class T, auto infty = nullptr, class L = ll>
 struct ActedMonoidAddMinMaxSum
 {
-  using M = MonoidMinMaxSum<T, infty>;
+  using M = MonoidMinMaxSum<T, infty, L>;
+  using UL = typename M::UL;
   using MF = MonoidAdd<T>;
   using S = typename M::S;
   using F = typename MF::S;
@@ -62,7 +65,7 @@ struct ActedMonoidAddMinMaxSum
   {
     if (x.len == 0)
       return x;
-    x.mn += f, x.mx += f, x.sum += f * x.len;
+    x.mn += f, x.mx += f, x.sum += f * UL(x.len);
     return x;
   }
   static constexpr auto composition = MF::op;

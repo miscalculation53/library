@@ -6,6 +6,7 @@
 #include "../convolution/convolution.hpp"
 #include "../modint/sqrt_mod.hpp"
 #include "internal_ntt.hpp"
+#include "internal_sparse_log.hpp"
 
 /**
  * @brief 形式的冪級数
@@ -52,10 +53,10 @@ struct FormalPowerSeries : vc<mint>
     return res;
   }
   int cnt_nz() const { return count_if(ALL(*this), LMD(x, x != 0)); }
-  tuple<bool, int, mint> nz_front() const
+  optional<pair<int, mint>> nz_front() const
   {
-    repi(i, sz()) if ((*this)[i] != 0) return {true, i, (*this)[i]};
-    return {false, -1, 0};
+    repi(i, sz()) if ((*this)[i] != 0) return pair<int, mint>{i, (*this)[i]};
+    return nullopt;
   }
   vc<pair<int, mint>> nz() const
   {
@@ -246,6 +247,9 @@ struct FormalPowerSeries : vc<mint>
     assert(get(0) == 1);
     if (n == 0)
       return {};
+    if (internal::fps_use_sparse(*this, n - 1, internal::FPSSparseOperation::div))
+      return internal::sparse_fps::logarithm<
+          internal::ordinary_mod32<mint>::value>(*this, n);
     F f = resized(n);
     return f.diff().div(f, n - 1).integ();
   }
@@ -329,8 +333,8 @@ struct FormalPowerSeries : vc<mint>
     if (k == 0) return F{1}.resized(n);
     if (k == 1) return resized(n);
     if (k == -1) return F{1}.div_sparse(*this, n);
-    auto [exi, d0, a0] = nz_front();
-    if (!exi)
+    const auto first = nz_front();
+    if (!first)
     {
       assert(k >= 0 && "k < 0 but [x^0]f(x) == 0");
       F res(n);
@@ -338,6 +342,7 @@ struct FormalPowerSeries : vc<mint>
         res[0] = 1;
       return res;
     }
+    const auto [d0, a0] = *first;
     const int shift = k >= 0 ? mul_limited(d0, k, n) : 0;
     if (shift >= n) return F(n);
     const int need = n - shift;
@@ -350,27 +355,27 @@ struct FormalPowerSeries : vc<mint>
     return (g * factor) << shift;
   }
 
-  // (存在するか, 平方根のひとつ)
-  pair<bool, F> sqrt_sparse(int n) const
+  // 平方根のひとつ。存在しなければ nullopt。
+  optional<F> sqrt_sparse(int n) const
   {
     assert(n >= 0);
-    auto [exi, d0, a0] = nz_front();
-    if (!exi)
-      return {true, F(n)};
+    const auto first = nz_front();
+    if (!first) return F(n);
+    const auto [d0, a0] = *first;
     if (d0 % 2 != 0)
-      return {false, {}};
-    auto [ok, r] = sqrt_mod(a0);
-    if (!ok)
-      return {false, {}};
+      return nullopt;
+    const auto root = sqrt_mod(a0);
+    if (!root) return nullopt;
+    const mint r = *root;
     if (d0 / 2 >= n)
-      return {true, F(n)};
+      return F(n);
     mint i2 = Binomial<mint>::inv(2);
     const int need = n - d0 / 2;
     F f(min(need, sz() - d0));
     copy_n(begin() + d0, f.sz(), f.begin());
     f /= a0;
     F g = diff_eq(f, -i2 * f.diff(), need);
-    return {true, (g * r) << (d0 / 2)};
+    return (g * r) << (d0 / 2);
   }
 
   // 定数項が 0
@@ -425,8 +430,9 @@ struct FormalPowerSeries : vc<mint>
     if (k == 0) return F{1}.resized(n);
     if (k == 1) return resized(n);
     if (k == -1) return inv(n);
-    auto [exists, d0, a0] = nz_front();
-    if (!exists) return F(n);
+    const auto first = nz_front();
+    if (!first) return F(n);
+    const auto [d0, a0] = *first;
     const int shift = k >= 0 ? mul_limited(d0, k, n) : 0;
     if (shift >= n) return F(n);
     const int need = n - shift;
@@ -457,32 +463,32 @@ struct FormalPowerSeries : vc<mint>
     return (res * factor) << shift;
   }
 
-  pair<bool, F> sqrt(int n) const
+  optional<F> sqrt(int n) const
   {
     assert(n >= 0);
-    auto [exi, d0, a0] = nz_front();
-    if (!exi)
-      return {true, F(n)};
+    const auto first = nz_front();
+    if (!first) return F(n);
+    const auto [d0, a0] = *first;
     if (d0 % 2 != 0)
-      return {false, {}};
-    auto [ok, r] = sqrt_mod(a0);
-    if (!ok)
-      return {false, {}};
+      return nullopt;
+    const auto root = sqrt_mod(a0);
+    if (!root) return nullopt;
+    const mint r = *root;
     if (d0 / 2 >= n)
-      return {true, F(n)};
+      return F(n);
     const int need = n - d0 / 2;
     F shifted(need);
     copy_n(begin() + d0, min(need, sz() - d0), shifted.begin());
     mint iv = a0.inv(), half = Binomial<mint>::inv(2);
     if (auto tail = internal::fps_tail_power(shifted, need, r, r * iv * half, -r * iv * iv * half * half * half))
-      return {true, std::move(*tail) << (d0 / 2)};
+      return std::move(*tail) << (d0 / 2);
     if (internal::fps_use_sparse(*this, need, internal::FPSSparseOperation::sqrt, d0))
       return sqrt_sparse(n);
     F f = std::move(shifted); f *= iv;
     F g = need >= 512 && ntt_ok<mint>(bit_ceil(need))
       ? internal::fps_sqrt_block(f, need, 16)
       : internal::fps_sqrt_newton(f, need);
-    return {true, (g * r) << (d0 / 2)};
+    return (g * r) << (d0 / 2);
   }
 
   F pow_mod(ll k, const F &g) const

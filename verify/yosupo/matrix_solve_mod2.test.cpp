@@ -26,11 +26,12 @@ void main2()
   STR(b_);
   bitset<4096> b;
   rep(i, N) b.set(i, b_.at(i) - '0');
-  auto [ok, sol, basis] = A.solve(b);
-  if (!ok)
+  const auto result = A.solve(b);
+  if (!result)
     PRINT(-1);
   else
   {
+    const auto &[sol, basis] = *result;
     PRINT(basis.size());
     string sol_(M, '0');
     rep(j, M) if (sol.test(j)) sol_.at(j) = '1';

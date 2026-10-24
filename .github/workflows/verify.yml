@@ -14,6 +14,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  tool-tests:
+    name: test tools
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      with:
+        persist-credentials: false
+    - name: Set up Python
+      uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+      with:
+        python-version: '3.11'
+    - name: Test performance comparison tool
+      run: python -m unittest discover -s tools/tests -p test_compare_performance.py
+
   verify:
     name: verify (${{ matrix.name }})
     runs-on: ubuntu-latest
@@ -80,6 +96,22 @@ jobs:
           ln -s "$(command -v g++-14 || command -v g++)" "$RUNNER_TEMP/bin/g++-15"
           echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
         fi
+
+    - name: Prepare comparison library headers
+      if: ${{ matrix.directory == 'verify/mytest' }}
+      shell: bash
+      run: |
+        if [[ ! -f /usr/include/boost/multiprecision/cpp_int.hpp ]]; then
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends libboost-dev
+        fi
+        reference_root="$RUNNER_TEMP/ac-library"
+        mkdir -p "$reference_root"
+        curl --fail --location --retry 3 \
+          https://codeload.github.com/atcoder/ac-library/tar.gz/864245a00b00dd008d1abfdc239618fdb7d139da \
+          --output "$RUNNER_TEMP/ac-library.tar.gz"
+        tar -xzf "$RUNNER_TEMP/ac-library.tar.gz" --strip-components=1 -C "$reference_root"
+        printf 'CPLUS_INCLUDE_PATH=%s\n' "$reference_root" >> "$GITHUB_ENV"
 
     - name: Run tests
       run: >-
@@ -163,7 +195,7 @@ jobs:
   publish:
     name: publish verification result
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [verify, verify-yukicoder]
+    needs: [tool-tests, verify, verify-yukicoder]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -214,8 +246,8 @@ jobs:
 
   docs:
     name: build documentation
-    if: ${{ always() && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    needs: [verify, verify-yukicoder]
+    if: ${{ always() && needs.tool-tests.result == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    needs: [tool-tests, verify, verify-yukicoder]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:

@@ -1,6 +1,22 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 テンプレート（rep）
+
+## 使用例
+
+```cpp
+#include "template/template_all_but_modint.hpp"
+
+vc<ll> a;
+rep(i, 2, 8, 2) a.push_back(i);
+assert(a == vc<ll>({2, 4, 6}));
+fem(x : a) x += 1;
+ll sum = 0;
+fec(x : a) sum += x;
+assert(sum == 15);
+```
 
 ## 詳細なドキュメント
 
@@ -12,13 +28,14 @@
 - `rep(i, l, r)`： `rep(i, l, r, 1)` と同じ
 - `rep(i, r)`： `rep(i, 0, r, 1)` と同じ
 
-引数の数が違う `rep1`, `rep2`, `rep3` をすべて `rep` で呼べるようにしてある（参考： https://trap.jp/post/1224/ ）。
+引数の数が違う `rep1`, `rep2`, `rep3` をすべて `rep` で呼べる。
+開始値・終端・刻み幅を配列に保持し、構造化束縛でループ変数を取り出す。
 
 また、`rep` では `ll` 型を、`repi` では `int` 型を用いる。
 
 引数は**最初の $1$ 回だけ**評価される。
 
-（滅多にないと思うが、）`lllll`, `rrrrr`, `ddddd`, `nnnnn` という名前の変数を `rep` や `repi` の内部で使わないこと。
+`library_repeat_end` と `library_repeat_step` はループ内部で予約する。
 
 ### 範囲 for 
 

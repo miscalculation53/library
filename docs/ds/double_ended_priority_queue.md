@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 最小値と最大値の両方を取得・削除できる優先度付きキュー。
@@ -8,6 +10,21 @@
 `value_type`, `compare_type` を公開する。
 [PriorityContainer](priority_container.md) で他のコンテナと操作を統一できる。
 計算量の $h$ は、遅延削除分を含む内部ヒープの要素数とする。
+
+## 使用例
+
+```cpp
+#include "ds/double_ended_priority_queue.hpp"
+
+DoubleEndedPriorityQueue<int> q;
+q.push(4);
+q.push(1);
+q.push(7);
+assert(q.extract_min() == 1);
+assert(q.get_max() == 7);
+assert(q.extract_max() == 7);
+assert(q.get_min() == 4);
+```
 
 ## 詳細なドキュメント
 
@@ -48,7 +65,7 @@ void push(const T& x)
 
 ##### 計算量
 
-- 償却 $O(\log(h+1))$
+- 償却 $O(\log h)$
 
 #### extract_min, extract_max
 
@@ -66,7 +83,7 @@ void push(const T& x)
 
 ##### 計算量
 
-- 償却 $O(\log(h+1))$
+- 償却 $O(\log h)$
 
 #### get_min, get_max
 
@@ -121,7 +138,7 @@ vc<T> content()
 
 ##### 計算量
 
-- $O(h\log(h+1))$
+- $O(h\log h)$
 
 #### erase / clear
 
@@ -139,4 +156,4 @@ void clear();
 
 ##### 計算量
 
-- `erase` は償却 $O(\log(h+1))$。`clear` は $O(h)$。
+- `erase` は償却 $O(\log h)$。`clear` は $O(h)$。

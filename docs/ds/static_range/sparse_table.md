@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 静的列に対するモノイドの区間積クエリを、モノイドが冪等（$\max, \min, \gcd, \mathrm{lcm}, \mathrm{and}, \mathrm{or}$ など）のときに限って、前計算 $O(N\log N)$ 時間・空間、クエリ $O(1)$ 時間で処理する。
@@ -8,7 +10,20 @@
 
 クエリ：$[l, r)$ の答えは、$l \leq r-2^j \leq l+2^j \leq r$ なる $j$ をとってきて、$[l, l+2^j)$ の答えと $[r-2^j, r)$ の答えの積として計算する（冪等なのでこれでよい）。
 
+## 使用例
+
+```cpp
+#include "algebra/algebra_basic_ops.hpp"
+#include "ds/static_range/sparse_table.hpp"
+
+SparseTable<MonoidMin<ll>> rmq(vc<ll>{5, 2, 7, 1});
+assert(rmq.prod(0, 3) == 2);
+assert(rmq.prod(1, 4) == 1);
+```
+
 ## 詳細なドキュメント
+
+### SparseTable
 
 #### コンストラクタ
 

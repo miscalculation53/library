@@ -1,5 +1,7 @@
 #pragma once
 
+/*! SPDX-License-Identifier: CC0-1.0 */
+
 #include "sequence.hpp"
 
 /**
@@ -7,5 +9,4 @@
  * @docs docs/ds/bbst/lazy_sequence.md
  */
 
-template <class AM>
-using LazySequenceTree = bbst_detail::SequenceTreeImpl<AM, true>;
+template <class AM> using LazySequenceTree = bbst_detail::SequenceTreeImpl<AM, true>;

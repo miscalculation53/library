@@ -3,7 +3,7 @@
 #include "../../template/template_all_but_modint.hpp"
 
 /**
- * @brief 必要なところだけ作る遅延セグメント木
+ * @brief 一様な区間をまとめて保持する疎遅延セグメント木
  * @docs docs/ds/segtree/sparse_lazy_segtree.md
  */
 
@@ -14,50 +14,59 @@ struct SparseLazySegmentTree
   using F = typename AM::F;
 
 private:
-  ll n;
+  template <class A, class = void>
+  struct HasPow : false_type {};
+  template <class A>
+  struct HasPow<A, void_t<decltype(A::pow(declval<const S &>(), ll{}))>> : true_type {};
+
+  static S repeat(S x, ll len)
+  {
+    if constexpr (HasPow<AM>::value)
+      return AM::pow(x, len);
+    else
+    {
+      S res = AM::e();
+      while (len)
+      {
+        if (len & 1) res = AM::op(res, x);
+        len >>= 1;
+        if (len) x = AM::op(x, x);
+      }
+      return res;
+    }
+  }
+
+  struct Entry
+  {
+    ll l, r;
+    S unit, val;
+    Entry(ll l, ll r, const S &unit) : l(l), r(r), unit(unit), val(repeat(unit, r - l)) {}
+  };
   struct Node
   {
+    Entry entry;
     S prod;
     F lazy;
+    ll lo, hi;
     array<int, 2> chi;
     bool has_lazy;
-    Node(const S &prod) : prod(prod), lazy(AM::id()), chi{-1, -1}, has_lazy(false) {}
+    Node(const Entry &entry)
+        : entry(entry), prod(entry.val), lazy(AM::id()), lo(entry.l), hi(entry.r), chi{-1, -1}, has_lazy(false) {}
   };
+  ll n;
   vc<Node> nodes;
-  struct InitialNode
-  {
-    S prod;
-    array<int, 2> chi;
-    InitialNode(const S &prod, int l = -1, int r = -1) : prod(prod), chi{l, r} {}
-  };
-  vc<InitialNode> initial_nodes;
-  int initial_root;
 
-  int make_node(int z)
+  int make_node(const Entry &entry)
   {
     int i = nodes.size();
-    nodes.eb(initial_nodes[z].prod);
+    nodes.eb(entry);
     return i;
-  }
-
-  int ensure_child(int i, int d, int z)
-  {
-    int j = nodes[i].chi[d];
-    if (j == -1)
-    {
-      j = make_node(z);
-      nodes[i].chi[d] = j;
-    }
-    return j;
-  }
-
-  S node_prod(int i, int z) const
-  {
-    return i == -1 ? initial_nodes[z].prod : nodes[i].prod;
   }
 
   void all_apply(int i, const F &f)
   {
+    nodes[i].entry.unit = AM::mapping(f, nodes[i].entry.unit);
+    nodes[i].entry.val = AM::mapping(f, nodes[i].entry.val);
     nodes[i].prod = AM::mapping(f, nodes[i].prod);
     if (nodes[i].has_lazy)
       nodes[i].lazy = AM::composition(f, nodes[i].lazy);
@@ -68,84 +77,151 @@ private:
     }
   }
 
-  void push(int i, int z)
+  void push(int i)
   {
-    if (!nodes[i].has_lazy || initial_nodes[z].chi[0] == -1)
-      return;
+    if (!nodes[i].has_lazy) return;
     F f = nodes[i].lazy;
-    int l = ensure_child(i, 0, initial_nodes[z].chi[0]);
-    int r = ensure_child(i, 1, initial_nodes[z].chi[1]);
-    all_apply(l, f), all_apply(r, f);
+    repi(d, 2)
+    {
+      int j = nodes[i].chi[d];
+      if (j != -1) all_apply(j, f);
+    }
     nodes[i].lazy = AM::id();
     nodes[i].has_lazy = false;
   }
 
-  void pull(int i, int z)
+  void pull(int i)
   {
-    nodes[i].prod = AM::op(node_prod(nodes[i].chi[0], initial_nodes[z].chi[0]),
-                           node_prod(nodes[i].chi[1], initial_nodes[z].chi[1]));
+    int l = nodes[i].chi[0], r = nodes[i].chi[1];
+    S sml = l == -1 ? AM::e() : nodes[l].prod;
+    S smr = r == -1 ? AM::e() : nodes[r].prod;
+    nodes[i].prod = AM::op(AM::op(sml, nodes[i].entry.val), smr);
+    nodes[i].lo = l == -1 ? nodes[i].entry.l : nodes[l].lo;
+    nodes[i].hi = r == -1 ? nodes[i].entry.r : nodes[r].hi;
+  }
+
+  // 各ノードに一点を置く疎セグ木と同じ配置で、区間の左端をキーにする。
+  void insert(Entry x, ll a, ll b, int i)
+  {
+    push(i);
+    ll c = a + (b - a) / 2;
+    int d = x.l < c ? 0 : 1;
+    if ((d == 0 && nodes[i].entry.l < x.l) || (d == 1 && x.l < nodes[i].entry.l))
+      swap(x, nodes[i].entry);
+    int j = nodes[i].chi[d];
+    if (j == -1)
+    {
+      j = make_node(x);
+      nodes[i].chi[d] = j;
+    }
+    else if (d == 0)
+      insert(std::move(x), a, c, j);
+    else
+      insert(std::move(x), c, b, j);
+    pull(i);
   }
 
   template <class G>
-  void modify_impl(ll p, const G &g, ll a, ll b, int i, int z)
+  void modify_entry(ll p, const G &g, int i)
   {
-    if (b - a == 1)
-    {
-      g(nodes[i].prod);
-      nodes[i].lazy = AM::id();
-      nodes[i].has_lazy = false;
-      return;
-    }
-    push(i, z);
-    ll c = a + (b - a) / 2;
-    int d = p < c ? 0 : 1;
-    int nz = initial_nodes[z].chi[d];
-    int j = ensure_child(i, d, nz);
-    if (d == 0)
-      modify_impl(p, g, a, c, j, nz);
+    push(i);
+    if (nodes[i].entry.l == p)
+      g(nodes[i].entry);
     else
-      modify_impl(p, g, c, b, j, nz);
-    pull(i, z);
+      modify_entry(p, g, nodes[i].chi[p < nodes[i].entry.l ? 0 : 1]);
+    pull(i);
   }
 
-  void apply_impl(ll l, ll r, const F &f, ll a, ll b, int i, int z)
+  void split(ll p)
   {
-    if (l <= a && b <= r)
+    if (p == 0 || p == n) return;
+    int i = 0, prev = -1;
+    while (i != -1)
+    {
+      push(i);
+      if (nodes[i].entry.l == p) return;
+      if (nodes[i].entry.l < p)
+        prev = i, i = nodes[i].chi[1];
+      else
+        i = nodes[i].chi[0];
+    }
+    ll l = nodes[prev].entry.l, r = nodes[prev].entry.r;
+    S unit = nodes[prev].entry.unit;
+    modify_entry(l, [&](Entry &x)
+    {
+      x.r = p;
+      x.val = repeat(x.unit, p - l);
+    }, 0);
+    insert(Entry(p, r, unit), 0, n, 0);
+  }
+
+  void apply_impl(ll l, ll r, const F &f, int i)
+  {
+    if (nodes[i].hi <= l || r <= nodes[i].lo) return;
+    if (l <= nodes[i].lo && nodes[i].hi <= r)
     {
       all_apply(i, f);
       return;
     }
-    push(i, z);
-    ll c = a + (b - a) / 2;
-    if (l < c)
+    push(i);
+    ll p = nodes[i].entry.l;
+    if (l <= p && p < r)
     {
-      int nz = initial_nodes[z].chi[0];
-      int j = ensure_child(i, 0, nz);
-      apply_impl(l, r, f, a, c, j, nz);
+      nodes[i].entry.unit = AM::mapping(f, nodes[i].entry.unit);
+      nodes[i].entry.val = AM::mapping(f, nodes[i].entry.val);
     }
-    if (c < r)
+    repi(d, 2)
     {
-      int nz = initial_nodes[z].chi[1];
-      int j = ensure_child(i, 1, nz);
-      apply_impl(l, r, f, c, b, j, nz);
+      int j = nodes[i].chi[d];
+      if (j != -1) apply_impl(l, r, f, j);
     }
-    pull(i, z);
+    pull(i);
   }
 
-  S prod_impl(ll l, ll r, ll a, ll b, int i, int z, const F &f) const
+  S entry_prod(int i, ll l, ll r, const F &f) const
   {
-    if (b <= l || r <= a)
-      return AM::e();
-    if (l <= a && b <= r)
-      return AM::mapping(f, node_prod(i, z));
-    F nf = f;
-    if (i != -1 && nodes[i].has_lazy)
-      nf = AM::composition(f, nodes[i].lazy);
-    ll c = a + (b - a) / 2;
-    int li = i == -1 ? -1 : nodes[i].chi[0];
-    int ri = i == -1 ? -1 : nodes[i].chi[1];
-    return AM::op(prod_impl(l, r, a, c, li, initial_nodes[z].chi[0], nf),
-                  prod_impl(l, r, c, b, ri, initial_nodes[z].chi[1], nf));
+    const Entry &x = nodes[i].entry;
+    ll a = max(l, x.l), b = min(r, x.r);
+    if (b <= a) return AM::e();
+    return AM::mapping(f, a == x.l && b == x.r ? x.val : repeat(x.unit, b - a));
+  }
+
+  S prod_impl(ll l, ll r, int i, const F &f) const
+  {
+    if (nodes[i].hi <= l || r <= nodes[i].lo) return AM::e();
+    if (l <= nodes[i].lo && nodes[i].hi <= r)
+      return AM::mapping(f, nodes[i].prod);
+    F nf = nodes[i].has_lazy ? AM::composition(f, nodes[i].lazy) : f;
+    int li = nodes[i].chi[0], ri = nodes[i].chi[1];
+    S sml = li == -1 ? AM::e() : prod_impl(l, r, li, nf);
+    S smm = entry_prod(i, l, r, f);
+    S smr = ri == -1 ? AM::e() : prod_impl(l, r, ri, nf);
+    return AM::op(AM::op(sml, smm), smr);
+  }
+
+  template <class G>
+  ll search_entry(ll l, ll r, S unit, S &sm, const G &g, bool from_right) const
+  {
+    vc<S> powers{std::move(unit)};
+    ll len = r - l, step = 1;
+    while (step <= len / 2)
+    {
+      powers.eb(AM::op(powers.back(), powers.back()));
+      step *= 2;
+    }
+    ll pos = from_right ? r : l;
+    repi(k, SZ(powers) - 1, -1, -1)
+    {
+      step = 1LL << k;
+      if (step > (from_right ? pos - l : r - pos)) continue;
+      S x = from_right ? AM::op(powers[k], sm) : AM::op(sm, powers[k]);
+      if (g(x))
+      {
+        sm = std::move(x);
+        pos += from_right ? -step : step;
+      }
+    }
+    return pos;
   }
 
   template <class G>
@@ -153,34 +229,35 @@ private:
   {
     assert(0 <= l && l <= n);
     assert(g(AM::e()));
-    if (l == n)
-      return n;
+    if (l == n) return n;
     S sm = AM::e();
-    auto dfs = [&](auto dfs, ll a, ll b, int i, int z, const F &f) -> ll
+    auto dfs = [&](auto dfs, int i, const F &f) -> ll
     {
-      if (b <= l)
-        return -1;
-      if (l <= a)
+      if (nodes[i].hi <= l) return -1;
+      if (l <= nodes[i].lo)
       {
-        S x = AM::op(sm, AM::mapping(f, node_prod(i, z)));
+        S x = AM::op(sm, AM::mapping(f, nodes[i].prod));
         if (g(x))
         {
           sm = std::move(x);
           return -1;
         }
-        if (b - a == 1)
-          return a;
       }
-      F nf = f;
-      if (i != -1 && nodes[i].has_lazy)
-        nf = AM::composition(f, nodes[i].lazy);
-      ll c = a + (b - a) / 2;
-      int li = i == -1 ? -1 : nodes[i].chi[0];
-      int ri = i == -1 ? -1 : nodes[i].chi[1];
-      ll res = dfs(dfs, a, c, li, initial_nodes[z].chi[0], nf);
-      return res == -1 ? dfs(dfs, c, b, ri, initial_nodes[z].chi[1], nf) : res;
+      F nf = nodes[i].has_lazy ? AM::composition(f, nodes[i].lazy) : f;
+      int li = nodes[i].chi[0], ri = nodes[i].chi[1];
+      ll res = li == -1 ? -1 : dfs(dfs, li, nf);
+      if (res != -1) return res;
+      ll a = max(l, nodes[i].entry.l), b = nodes[i].entry.r;
+      if (a < b)
+      {
+        S x = AM::op(sm, entry_prod(i, a, b, f));
+        if (!g(x))
+          return search_entry(a, b, AM::mapping(f, nodes[i].entry.unit), sm, g, false);
+        sm = std::move(x);
+      }
+      return ri == -1 ? -1 : dfs(dfs, ri, nf);
     };
-    ll res = dfs(dfs, 0, n, 0, initial_root, AM::id());
+    ll res = dfs(dfs, 0, AM::id());
     return res == -1 ? n : res;
   }
 
@@ -189,35 +266,36 @@ private:
   {
     assert(0 <= r && r <= n);
     assert(g(AM::e()));
-    if (r == 0)
-      return 0;
+    if (r == 0) return 0;
     S sm = AM::e();
-    auto dfs = [&](auto dfs, ll a, ll b, int i, int z, const F &f) -> ll
+    auto dfs = [&](auto dfs, int i, const F &f) -> ll
     {
-      if (r <= a)
-        return -1;
-      if (b <= r)
+      if (r <= nodes[i].lo) return -1;
+      if (nodes[i].hi <= r)
       {
-        S x = AM::op(AM::mapping(f, node_prod(i, z)), sm);
+        S x = AM::op(AM::mapping(f, nodes[i].prod), sm);
         if (g(x))
         {
           sm = std::move(x);
           return -1;
         }
-        if (b - a == 1)
-          return a;
       }
-      F nf = f;
-      if (i != -1 && nodes[i].has_lazy)
-        nf = AM::composition(f, nodes[i].lazy);
-      ll c = a + (b - a) / 2;
-      int li = i == -1 ? -1 : nodes[i].chi[0];
-      int ri = i == -1 ? -1 : nodes[i].chi[1];
-      ll res = dfs(dfs, c, b, ri, initial_nodes[z].chi[1], nf);
-      return res == -1 ? dfs(dfs, a, c, li, initial_nodes[z].chi[0], nf) : res;
+      F nf = nodes[i].has_lazy ? AM::composition(f, nodes[i].lazy) : f;
+      int li = nodes[i].chi[0], ri = nodes[i].chi[1];
+      ll res = ri == -1 ? -1 : dfs(dfs, ri, nf);
+      if (res != -1) return res;
+      ll a = nodes[i].entry.l, b = min(r, nodes[i].entry.r);
+      if (a < b)
+      {
+        S x = AM::op(entry_prod(i, a, b, f), sm);
+        if (!g(x))
+          return search_entry(a, b, AM::mapping(f, nodes[i].entry.unit), sm, g, true);
+        sm = std::move(x);
+      }
+      return li == -1 ? -1 : dfs(dfs, li, nf);
     };
-    ll res = dfs(dfs, 0, n, 0, initial_root, AM::id());
-    return res == -1 ? 0 : res + 1;
+    ll res = dfs(dfs, 0, AM::id());
+    return res == -1 ? 0 : res;
   }
 
 public:
@@ -225,27 +303,7 @@ public:
   SparseLazySegmentTree(ll n, const S &initial_value) : n(n)
   {
     assert(n >= 0);
-    map<ll, int> ids;
-    auto build = [&](auto build, ll len) -> int
-    {
-      auto it = ids.find(len);
-      if (it != ids.end())
-        return it->second;
-      int l = -1, r = -1;
-      S prod = len == 0 ? AM::e() : initial_value;
-      if (len >= 2)
-      {
-        l = build(build, len / 2);
-        r = build(build, len - len / 2);
-        prod = AM::op(initial_nodes[l].prod, initial_nodes[r].prod);
-      }
-      int z = initial_nodes.size();
-      initial_nodes.eb(prod, l, r);
-      ids[len] = z;
-      return z;
-    };
-    initial_root = build(build, n);
-    nodes.eb(initial_nodes[initial_root].prod);
+    nodes.eb(Entry(0, n, initial_value));
   }
 
   // 少なくとも n ノード分の領域をあらかじめ確保する
@@ -256,63 +314,80 @@ public:
   void modify(ll p, const G &g)
   {
     assert(0 <= p && p < n);
-    modify_impl(p, g, 0, n, 0, initial_root);
+    split(p), split(p + 1);
+    modify_entry(p, [&](Entry &x) { g(x.unit); x.val = x.unit; }, 0);
   }
 
   // p 番目の値を x にする
-  void set(ll p, const S &x)
-  {
-    modify(p, [&](S &y) { y = x; });
-  }
+  void set(ll p, const S &x) { modify(p, [&](S &y) { y = x; }); }
 
   // p 番目の値を返す
   S get(ll p) const
   {
     assert(0 <= p && p < n);
-    return prod_impl(p, p + 1, 0, n, 0, initial_root, AM::id());
+    int i = 0;
+    F f = AM::id();
+    while (true)
+    {
+      if (nodes[i].entry.l <= p && p < nodes[i].entry.r)
+        return AM::mapping(f, nodes[i].entry.unit);
+      F nf = nodes[i].has_lazy ? AM::composition(f, nodes[i].lazy) : f;
+      i = nodes[i].chi[p < nodes[i].entry.l ? 0 : 1];
+      f = std::move(nf);
+    }
   }
 
   // p 番目に作用 f を適用する
   void apply(ll p, const F &f)
   {
     assert(0 <= p && p < n);
-    apply_impl(p, p + 1, f, 0, n, 0, initial_root);
+    apply(p, p + 1, f);
   }
 
   // [l, r) に作用 f を適用する
   void apply(ll l, ll r, const F &f)
   {
     assert(0 <= l && l <= r && r <= n);
-    if (l != r)
-      apply_impl(l, r, f, 0, n, 0, initial_root);
+    if (l == r) return;
+    split(l), split(r);
+    apply_impl(l, r, f, 0);
   }
 
   // [l, r) の積を返す
   S prod(ll l, ll r) const
   {
     assert(0 <= l && l <= r && r <= n);
-    if (l == r)
-      return AM::e();
-    return prod_impl(l, r, 0, n, 0, initial_root, AM::id());
+    if (l == r) return AM::e();
+    return prod_impl(l, r, 0, AM::id());
   }
 
   // 全体の積を返す
-  S all_prod() const
+  S all_prod() const { return nodes[0].prod; }
+
+  // 保持している区間を (左端, 右端, 一点の値) の順で返す
+  vc<tuple<ll, ll, S>> content() const
   {
-    return nodes[0].prod;
+    vc<tuple<ll, ll, S>> res;
+    if (n == 0) return res;
+    res.reserve(nodes.size());
+    auto dfs = [&](auto dfs, int i, const F &f) -> void
+    {
+      if (i == -1) return;
+      const Node &x = nodes[i];
+      F nf = x.has_lazy ? AM::composition(f, x.lazy) : f;
+      dfs(dfs, x.chi[0], nf);
+      res.eb(x.entry.l, x.entry.r, AM::mapping(f, x.entry.unit));
+      dfs(dfs, x.chi[1], nf);
+    };
+    dfs(dfs, 0, AM::id());
+    return res;
   }
 
   // g(prod(l, r)) が true となる最大の r を返す
   template <class G>
-  ll max_right_ok(ll l, const G &g) const
-  {
-    return max_right_bound(l, g);
-  }
+  ll max_right_ok(ll l, const G &g) const { return max_right_bound(l, g); }
 
   // g(prod(l, r)) が true となる最小の l を返す
   template <class G>
-  ll min_left_ok(ll r, const G &g) const
-  {
-    return min_left_bound(r, g);
-  }
+  ll min_left_ok(ll r, const G &g) const { return min_left_bound(r, g); }
 };

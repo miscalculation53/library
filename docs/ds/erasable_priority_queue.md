@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 削除予定の要素を別のヒープに積み、任意要素の削除を遅延して行う priority queue
@@ -5,6 +7,21 @@
 `value_type`, `compare_type` を公開する。
 [PriorityContainer](priority_container.md) で他のコンテナと操作を統一できる。
 計算量の $h$ は、遅延削除分を含む内部ヒープの要素数とする。
+
+## 使用例
+
+```cpp
+#include "ds/erasable_priority_queue.hpp"
+
+ErasablePriorityQueue<int> q; // 小さい値を優先
+q.push(3);
+q.push(1);
+q.push(5);
+q.erase(1);
+assert(q.top() == 3);
+q.pop();
+assert(q.top() == 5);
+```
 
 ## 詳細なドキュメント
 
@@ -47,7 +64,7 @@ void push(const T& x)
 
 ##### 計算量
 
-- 償却 $O(\log(h+1))$
+- 償却 $O(\log h)$
 
 #### pop
 
@@ -63,7 +80,7 @@ void pop()
 
 ##### 計算量
 
-- 償却 $O(\log(h+1))$
+- 償却 $O(\log h)$
 
 #### erase
 
@@ -80,7 +97,7 @@ void erase(const T& x)
 
 ##### 計算量
 
-- 償却 $O(\log(h+1))$
+- 償却 $O(\log h)$
 
 #### top
 
@@ -133,7 +150,7 @@ vc<T> content()
 
 ##### 計算量
 
-- $O(h\log(h+1))$
+- $O(h\log h)$
 
 #### clear
 

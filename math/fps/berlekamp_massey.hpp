@@ -9,7 +9,7 @@
  * @docs docs/math/fps/berlekamp_massey.md
  */
 
-// https://codeforces.com/blog/entry/61306
+//! https://codeforces.com/blog/entry/61306
 
 // F は体 (FieldAddSubMulDiv<mint> など)
 // 入力: a[0], ..., a[n-1]

@@ -120,11 +120,11 @@ public:
   // x 番目: x を作れるか
   const DynamicBitset &reachable() const { return dp; }
 
-  // x を作れる場合、second は (値, 個数) の列
-  pair<bool, vc<pair<int, int>>> answer(int x) const
+  // x を作る (値, 個数) の列。作れなければ nullopt。
+  optional<vc<pair<int, int>>> answer(int x) const
   {
     if (!exists(x))
-      return {false, {}};
+      return nullopt;
 
     vc<pair<int, int>> res;
     int y = x;
@@ -148,7 +148,7 @@ public:
         res.back().second += c;
       }
     }
-    return {true, res};
+    return res;
   }
 };
 
@@ -238,19 +238,18 @@ public:
   // 作れる和の最小値
   ll min_sum() const { return negsum; }
 
-  // x を作れる場合、second の i 番目: a[i] を使うかどうか
-  pair<bool, vc<bool>> answer(int x) const
+  // i 番目は a[i] を使うかどうか。x を作れなければ nullopt。
+  optional<vc<bool>> answer(int x) const
   {
     ll y = ll(x) - negsum;
     if (x > xmax || !(0 <= y && y <= s))
-      return {false, {}};
-    auto [ok, cnt] = ss.answer(int(y));
-    if (!ok)
-      return {false, {}};
+      return nullopt;
+    const auto cnt = ss.answer(int(y));
+    if (!cnt) return nullopt;
 
     vc<bool> res(n, false);
     int p = elems.size();
-    for (auto [v, c] : cnt)
+    for (auto [v, c] : *cnt)
     {
       while (p && elems[p - 1].first > v) p--;
       int q = p;
@@ -260,6 +259,6 @@ public:
       p = q;
     }
     repi(i, n) if (isneg[i]) res[i] = !res[i];
-    return {true, res};
+    return res;
   }
 };

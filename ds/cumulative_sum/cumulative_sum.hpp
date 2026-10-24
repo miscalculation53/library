@@ -39,4 +39,14 @@ public:
     assert(0 <= l && l <= r && r <= n);
     return G::op(G::inv(s[l]), s[r]);
   }
+
+  vc<S> content() const
+  {
+    if (s.empty()) return {};
+    vc<S> res;
+    const int n = SZ<int>(s) - 1;
+    res.reserve(n);
+    repi(i, n) res.eb(G::op(G::inv(s[i]), s[i + 1]));
+    return res;
+  }
 };

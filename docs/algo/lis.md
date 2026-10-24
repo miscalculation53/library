@@ -1,6 +1,19 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
-https://miscalc.hatenablog.com/entry/2024/07/25/212618
+数学的な背景：[LIS の候補についての解説](https://miscalc.hatenablog.com/entry/2024/07/25/212618)。
+
+## 使用例
+
+```cpp
+#include "algo/lis.hpp"
+
+LIS lis(vc<int>{3, 1, 2, 4});
+assert(lis.len_of_lis() == 3);
+assert(lis.pos_in_lis(0) == -1);
+for (int i : lis.candidates(0)) assert(i == 1);
+```
 
 ## 詳細なドキュメント
 
@@ -58,7 +71,7 @@ I pos_in_lis<I = ll>(int i)
 I lds_id<I = ll>(int i)
 ```
 
-列を `comp` に関する広義減少部分列へ分解したものの一つについて、`a[i]` が属する列の番号を返す。
+`a[i]` で終わる最長部分列の長さから1を引いた値を返す。同じ番号の添字を昇順に並べると、隣り合う値の `comp` は偽となる。
 
 ##### 制約
 

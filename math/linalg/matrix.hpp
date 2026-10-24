@@ -7,6 +7,7 @@
 #include "../modint/modint.hpp"
 #include "../dot_product.hpp"
 #include "row_reduction_mod32.hpp"
+#include "internal_matrix_power_mod32.hpp"
 
 /**
  * @brief 行列
@@ -20,7 +21,8 @@ struct Matrix : vvc<typename F::S>
   using S = typename F::S;
   using M = Matrix;
   using V = vc<S>;
-  using vvc<S>::vector;
+  using Base = vvc<S>;
+  using Base::Base;
   using vvc<S>::operator=;
 
   Matrix(int n, int m, const S &diag = F::e0(), const S &non_diag = F::e0())
@@ -116,6 +118,17 @@ struct Matrix : vvc<typename F::S>
   {
     auto [n, m] = shape<int>();
     assert(n == m);
+    if (n == 0) return M(n, n, F::e1());
+    if constexpr (internal::ordinary_mod32_field<F>::value &&
+                  internal::matrix_power_mod32_detail::supported_builtin_exponent_v<T>)
+    {
+      if (n >= 24 && k > 0 && internal::matrix_power_mod32_detail::binary_multiplication_count(k) > 10 &&
+          internal::matrix_power_mod32_detail::is_prime_modulus<S>())
+      {
+        const vvc<S> &a = *this;
+        return M(internal::matrix_power_mod32_detail::power_over_field(a, k));
+      }
+    }
     M res(n, n, F::e1()), tmp(*this);
     while (k > 0)
     {
@@ -272,8 +285,8 @@ struct Matrix : vvc<typename F::S>
   }
 
   // 正方行列
-  // (存在するか, 存在する場合逆行列)
-  pair<bool, M> inv() const
+  // 逆行列。存在しなければ nullopt。
+  optional<M> inv() const
   {
     auto [n, m] = shape<int>();
     assert(n == m);
@@ -281,15 +294,15 @@ struct Matrix : vvc<typename F::S>
     repi(i, n) repi(j, n) a[i][j] = (*this)[i][j];
     repi(i, n) a[i][n + i] = F::e1();
     M b = get<0>(a.row_reduction(true));
-    repi(i, n) if (b[i][i] == F::e0()) return {false, {}};
+    repi(i, n) if (b[i][i] == F::e0()) return nullopt;
     M res(n, n);
     repi(i, n) repi(j, n) res[i][j] = b[i][n + j];
-    return {true, res};
+    return res;
   }
 
-  // (解が存在するか, 解のひとつ, 基底)
+  // (解のひとつ, 基底)。解が存在しなければ nullopt。
   // O(nm min(n, m) + m^2)
-  tuple<bool, V, vc<V>> solve(const V &b) const
+  optional<pair<V, vc<V>>> solve(const V &b) const
   {
     auto [n, m] = shape<int>();
     assert(SZ(b) == n);
@@ -306,7 +319,7 @@ struct Matrix : vvc<typename F::S>
       while (j < m && a[i][j] == F::e0())
         j++;
       if (j == m)
-        return {false, {}, {}};
+        return nullopt;
       sol[j] = a[i][m], piv[j] = i;
     }
     repi(j, m)
@@ -318,6 +331,6 @@ struct Matrix : vvc<typename F::S>
       repi(k, j) if (piv[k] != -1) ba[k] = F::minus(a[piv[k]][j]);
       basis.eb(ba);
     }
-    return {true, sol, basis};
+    return pair{move(sol), move(basis)};
   }
 };

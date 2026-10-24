@@ -1,6 +1,19 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 テンプレート（ビット演算）
+
+## 使用例
+
+```cpp
+#include "template/template_all_but_modint.hpp"
+
+assert(popcount(0b101100ULL) == 3);
+assert(bit_width(9ULL) == 4);
+assert(bit_ceil(9ULL) == 16);
+assert(MASK(3) == 7);
+```
 
 ## 詳細なドキュメント
 

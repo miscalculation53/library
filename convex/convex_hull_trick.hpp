@@ -1,5 +1,10 @@
 #pragma once
 
+/*!
+ * Line insertion core; author: Simon Lindholm. File license: CC0.
+ * https://github.com/kth-competitive-programming/kactl/blob/b3548e973f8772010c1ef84e6d427c749733fd2c/content/data-structures/LineContainer.h
+ */
+
 #include "../template/template_all_but_modint.hpp"
 
 #include "../utils/is_integral_ext.hpp"

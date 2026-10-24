@@ -48,9 +48,10 @@ struct ModintDiv
   { return !(lhs == rhs); }
   friend auto safe_hash_key(const ModintDiv &x) { return pair{x.b, x.c}; }
   CPP_DUMP_DEFINE_DATA(b, c);
-  // (mod p で表現可能か, mod p での値)
-  pair<bool, mint> to_modint() const
+  // mod p での値。表現できなければ nullopt。
+  optional<mint> to_modint() const
   {
-    return {c >= 0, c == 0 ? b : mint(0)};
+    if (c < 0) return nullopt;
+    return c == 0 ? b : mint(0);
   }
 };

@@ -12,8 +12,8 @@
  * @docs docs/math/prime/large/order_primitive_root.md
  */
 
-// https://37zigen.com/primitive-root/#i-4
-// https://x.com/noshi91/status/1317025404700405760
+//! https://37zigen.com/primitive-root/#i-4
+//! https://x.com/noshi91/status/1317025404700405760
 
 namespace internal
 {

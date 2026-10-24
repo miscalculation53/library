@@ -22,11 +22,12 @@ void main2()
   STR(b_);
   DynamicBitset b(N);
   repi(i, N) b.set(i, b_[i] - '0');
-  auto [ok, sol, basis] = A.solve(b);
-  if (!ok)
+  const auto result = A.solve(b);
+  if (!result)
     PRINT(-1);
   else
   {
+    const auto &[sol, basis] = *result;
     PRINT(basis.size());
     string sol_(M, '0');
     repi(j, M) if (sol.test(j)) sol_[j] = '1';

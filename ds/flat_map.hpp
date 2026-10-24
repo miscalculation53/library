@@ -59,4 +59,11 @@ struct FlatMap
   };
   Iterator begin() const { return Iterator(0, *this); }
   Iterator end() const { return Iterator(cc.size(), *this); }
+  vc<pair<Key, Value>> content() const
+  {
+    vc<pair<Key, Value>> res;
+    res.reserve(size());
+    for (auto entry : *this) res.eb(std::move(entry));
+    return res;
+  }
 };

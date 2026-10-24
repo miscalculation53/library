@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 行列木定理などを用いて、全域木やオイラー路の個数を求める。
@@ -50,6 +52,17 @@ $\displaystyle (根\ r\ から出る全域有向木の個数) \cdot \prod_{v \in
 ---
 
 行列ライブラリの `det()` メソッドに依存している。現状では `det()` が体の場合・密行列の場合のみの実装となっているが、`det()` を mod 合成数や疎行列の場合に対応させたら、こちらのライブラリでもそれが使えるようになる。
+
+## 使用例
+
+```cpp
+#include "graph/matrix_tree.hpp"
+#include "math/modint/modint.hpp"
+
+vvc<int> adjacency{{0, 1, 1}, {1, 0, 1}, {1, 1, 0}};
+auto count = count_spanning_trees_undirected<modint998244353>(adjacency);
+assert(count == 3);
+```
 
 ## 詳細なドキュメント
 

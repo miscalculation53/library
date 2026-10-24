@@ -2,6 +2,9 @@
 
 #include "template/template_all_but_modint.hpp"
 #include "ds/segtree/sparse_segtree.hpp"
+#include "algebra/min_max_sum.hpp"
+#include "algebra/affine_function.hpp"
+#include "math/modint/modint.hpp"
 
 struct StringConcatMonoid
 {
@@ -14,7 +17,7 @@ struct StringConcatMonoid
 void test_sparse_segtree_modify()
 {
   constexpr ll n = 1LL << 40;
-  SparseSegmentTree<MonoidAdd<ll>> seg(n);
+  SparseSegmentTree<MonoidAdd<ll>> seg(n, 0);
   seg.reserve(1 << 12);
   map<ll, ll> a;
   mt19937_64 rng(123456789);
@@ -62,7 +65,7 @@ void test_sparse_segtree_modify()
 void test_sparse_segtree_repeated_modify()
 {
   constexpr int n = 257;
-  SparseSegmentTree<MonoidAdd<ll>> seg(n);
+  SparseSegmentTree<MonoidAdd<ll>> seg(n, 0);
   seg.reserve(n + 1);
   array<ll, n> a{};
   mt19937_64 rng(314159265);
@@ -90,7 +93,7 @@ void test_sparse_segtree_repeated_modify()
 void test_sparse_segtree_binary_search()
 {
   constexpr int n = 257;
-  SparseSegmentTree<MonoidAdd<ll>> seg(n);
+  SparseSegmentTree<MonoidAdd<ll>> seg(n, 0);
   seg.reserve(n + 1);
   array<ll, n> a{};
   mt19937 rng(161803398);
@@ -123,7 +126,7 @@ void test_sparse_segtree_binary_search()
 void test_sparse_segtree_binary_search_large_index()
 {
   constexpr ll n = 1LL << 40;
-  SparseSegmentTree<MonoidAdd<ll>> seg(n);
+  SparseSegmentTree<MonoidAdd<ll>> seg(n, 0);
   seg.reserve(1 << 10);
   map<ll, ll> a;
   mt19937_64 rng(141421356);
@@ -174,7 +177,7 @@ void test_sparse_segtree_binary_search_large_index()
 void test_sparse_segtree_noncommutative()
 {
   constexpr int n = 64;
-  SparseSegmentTree<StringConcatMonoid> seg(n);
+  SparseSegmentTree<StringConcatMonoid> seg(n, "");
   seg.reserve(n + 1);
   array<string, n> a;
   vc<int> order(n);
@@ -220,10 +223,143 @@ void test_sparse_segtree_noncommutative()
 // Test focus: both boundary searches return zero on an empty domain.
 void test_sparse_segtree_empty()
 {
-  SparseSegmentTree<MonoidAdd<ll>> seg(0);
+  SparseSegmentTree<MonoidAdd<ll>> seg(0, 7);
   auto pred = [](ll sum) { return sum == 0; };
+  assert(seg.prod(0, 0) == 0 && seg.all_prod() == 0 && seg.content().empty());
   assert(seg.max_right_ok(0, pred) == 0);
   assert(seg.min_left_ok(0, pred) == 0);
+}
+
+// Test focus: untouched points contribute the initial value, including search boundaries inside gaps.
+void test_sparse_segtree_initial_value()
+{
+  static_assert(!is_default_constructible_v<SparseSegmentTree<MonoidAdd<ll>>>);
+  static_assert(!is_constructible_v<SparseSegmentTree<MonoidAdd<ll>>, ll>);
+  mt19937 rng(20261014);
+  for (int n : {1, 2, 3, 17, 64, 257})
+  {
+    SparseSegmentTree<MonoidAdd<ll>> seg(n, 3);
+    vc<ll> a(n, 3);
+    map<ll, ll> registered;
+    assert(seg.content().empty() && seg.all_prod() == 3LL * n);
+    repi(iter, 1000)
+    {
+      int l = rng() % (n + 1), r = rng() % (n + 1);
+      if (l > r) swap(l, r);
+      assert(seg.prod(l, r) == accumulate(a.begin() + l, a.begin() + r, 0LL));
+      ll limit = rng() % (3 * n + 1), sum = 0;
+      auto pred = [&](ll x) { return x <= limit; };
+      int expected_r = l;
+      while (expected_r < n && sum + a[expected_r] <= limit)
+        sum += a[expected_r++];
+      assert(seg.max_right_ok(l, pred) == expected_r);
+      int expected_l = r;
+      sum = 0;
+      while (expected_l > 0 && sum + a[expected_l - 1] <= limit)
+        sum += a[--expected_l];
+      assert(seg.min_left_ok(r, pred) == expected_l);
+
+      int p = rng() % n, called = 0;
+      ll value = rng() % 8;
+      seg.modify(p, [&](ll &x)
+      {
+        called++;
+        assert(x == a[p]);
+        x = value;
+      });
+      a[p] = registered[p] = value;
+      assert(called == 1 && seg.get(p) == a[p]);
+      assert(seg.all_prod() == accumulate(ALL(a), 0LL));
+      assert(seg.content() == registered);
+    }
+  }
+
+  SparseSegmentTree<MonoidMin<ll>> seg(5, 0);
+  assert(seg.all_prod() == 0 && seg.get(3) == 0);
+  seg.set(2, 7);
+  assert(seg.prod(2, 3) == 7 && seg.prod(1, 4) == 0);
+  auto positive = [](ll x) { return x > 0; };
+  assert(seg.max_right_ok(2, positive) == 3 && seg.min_left_ok(3, positive) == 2);
+}
+
+// Test focus: noncommutative products preserve the order of initial runs and updated points.
+void test_sparse_segtree_initial_noncommutative()
+{
+  constexpr int n = 31;
+  SparseSegmentTree<StringConcatMonoid> seg(n, "ab");
+  array<string, n> a;
+  a.fill("ab");
+  mt19937 rng(173205080);
+  repi(iter, 300)
+  {
+    repi(l, n + 1) repi(r, l, n + 1)
+    {
+      string expected;
+      repi(p, l, r) expected += a[p];
+      assert(seg.prod(l, r) == expected);
+      auto prefix = [&](const string &x)
+      {
+        return x.size() <= expected.size() && equal(ALL(x), expected.begin());
+      };
+      auto suffix = [&](const string &x)
+      {
+        return x.size() <= expected.size() && equal(ALL(x), expected.end() - x.size());
+      };
+      assert(seg.max_right_ok(l, prefix) == r);
+      assert(seg.min_left_ok(r, suffix) == l);
+    }
+    int p = rng() % n;
+    a[p] = "[" + to_string(p) + "]";
+    seg.set(p, a[p]);
+  }
+}
+
+// Test focus: full-width implicit lengths remain valid with and without a specialized pow.
+void test_sparse_segtree_initial_large_index()
+{
+  using M = MonoidLenSum<ll>;
+  struct WithoutPow
+  {
+    using S = M::S;
+    static S e() { return M::e(); }
+    static S op(const S &a, const S &b) { return M::op(a, b); }
+  };
+  auto test = [](auto monoid)
+  {
+    using A = decltype(monoid);
+    for (ll n : {1LL << 40, LLONG_MAX})
+    {
+      SparseSegmentTree<A> seg(n, typename A::S(0));
+      auto pred = [](const typename A::S &x) { return x.len <= 10; };
+      assert(seg.all_prod().len == n && seg.all_prod().val == 0);
+      assert(seg.max_right_ok(n / 2, pred) == n / 2 + 10);
+      assert(seg.min_left_ok(n / 2, pred) == n / 2 - 10);
+      assert(seg.max_right_ok(n - 5, pred) == n && seg.min_left_ok(5, pred) == 0);
+      seg.set(n - 1, typename A::S(7));
+      seg.modify(n / 2, [](typename A::S &x) { assert(x.len == 1 && x.val == 0); x.val = 2; });
+      seg.set(0, typename A::S(3));
+      auto got = seg.prod(1, n);
+      assert(got.len == n - 1 && got.val == 9);
+      assert(seg.all_prod().len == n && seg.all_prod().val == 12);
+      assert(seg.get(n / 3).len == 1 && seg.get(n / 3).val == 0);
+      assert(seg.max_right_ok(n / 2, pred) == n / 2 + 10);
+      assert(seg.min_left_ok(n / 2, pred) == n / 2 - 10);
+      assert(seg.prod(0, 0).len == 0 && seg.prod(n, n).len == 0);
+    }
+  };
+  test(M{}), test(WithoutPow{});
+
+  using A = MonoidAffineFunction<modint998244353>;
+  constexpr ll n = LLONG_MAX;
+  const A::S initial{2, 3};
+  SparseSegmentTree<A> seg(n, initial);
+  auto same = [](const A::S &x, const A::S &y) { return x.b == y.b && x.c == y.c; };
+  assert(same(seg.all_prod(), pow_monoid<A>(initial, n)));
+  seg.set(0, {5, 7});
+  seg.set(n - 1, {11, 13});
+  auto middle = pow_monoid<A>(initial, n - 2);
+  assert(same(seg.prod(1, n - 1), middle));
+  assert(same(seg.all_prod(), A::op(A::op({5, 7}, middle), {11, 13})));
 }
 
 int main()
@@ -234,5 +370,8 @@ int main()
   test_sparse_segtree_binary_search_large_index();
   test_sparse_segtree_noncommutative();
   test_sparse_segtree_empty();
+  test_sparse_segtree_initial_value();
+  test_sparse_segtree_initial_noncommutative();
+  test_sparse_segtree_initial_large_index();
   cout << "Hello World" << endl;
 }

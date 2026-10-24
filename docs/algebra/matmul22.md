@@ -1,6 +1,21 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 代数的構造（$2 \times 2$ 行列の積）
+
+## 使用例
+
+```cpp
+#include "algebra/matmul22.hpp"
+#include "math/modint/modint.hpp"
+
+using G = GroupMatMul22<modint998244353>;
+G::S a{1, 1, 0, 1};
+auto b = G::op(a, a);
+assert(b[0] == 1 && b[1] == 2 && b[2] == 0 && b[3] == 1);
+assert(G::op(a, G::inv(a)) == G::e());
+```
 
 ## 詳細なドキュメント
 

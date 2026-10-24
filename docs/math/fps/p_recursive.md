@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 多項式係数の線形漸化式
@@ -142,7 +144,7 @@ $0$-indexed の第 $k$ 項を返す。`k < a.size()` の場合は `a[k]`。
 ##### 計算量
 
 - 既知の項は $O(1)$
-- $d=0$ は $N=k-|a|+1$ として $O(r^3\log(N+1))$
-- $d>0$ は $r$ 次正方行列の [polynomial_matrix_product](polynomial_matrix_product.md) と同じ。通常、$T=\min(N,p)$, $L=\sqrt{dT}$ として $O\bigl(r^2d^2+r^2M(L)+r^3L+r^3\log(N+1)\bigr)$。$M(L)$ は長さ $O(L)$ の畳み込みの計算量
+- $d=0$ は $N=k-|a|+1$ として $O(r^3\log N)$
+- $d>0$ は $r$ 次正方行列の [polynomial_matrix_product](polynomial_matrix_product.md) と同じ。通常、$T=\min(N,p)$, $L=\sqrt{dT}$ として $O\bigl(r^2d^2+r^2M(L)+r^3L+r^3\log N\bigr)$。$M(L)$ は長さ $O(L)$ の畳み込みの計算量
 
 短い区間や補間に十分な点が取れない場合の計算量は、リンク先の直接計算の項を参照。

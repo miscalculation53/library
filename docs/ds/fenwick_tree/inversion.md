@@ -1,8 +1,12 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 列の転倒数を求める `inversion_number` と、区間を伸縮しながら転倒数を管理する `InversionSlider`。
 
 どちらも比較可能な値の列を直接受け取り、重複、負数、大きい整数、文字列などを扱える。`InversionSlider` は構築時に値の順序を前計算し、[Mo](../mo/mo.md) に渡せる。
+
+固定幅整数の順序付けには基数ソートを使う。既に管理している要素数から prefix の個数を引き、反対側の個数を求めることで、Fenwick Tree の走査を省く。
 
 ## 使用例
 
@@ -20,7 +24,7 @@ ll part = slider.inversion_num; // 1
 #### inversion_number
 
 ```cpp
-ll inversion_number(V v)
+ll inversion_number(const V& v)
 ```
 
 $0 \leq i \lt j \lt \lvert v \rvert$ かつ $v_i \gt v_j$ を満たす $(i, j)$ の個数を返す。
@@ -56,7 +60,8 @@ $0 \leq i \lt j \lt \lvert v \rvert$ かつ $v_i \gt v_j$ を満たす $(i, j)$ 
 $n = |a|$、値の比較を $O(1)$ として、
 
 - (1)：$O(1)$
-- (2)：$O(n \log(n+1))$
+- (2)、固定幅整数型（`bool` を除く）：$O(n)$
+- (2)、その他：$O(n\log n)$
 
 #### メンバ変数
 
@@ -83,7 +88,7 @@ void set(int nl, int nr)
 
 呼び出し前の区間を $[l,r)$ とし、$D = |\mathrm{nl}-l|+|\mathrm{nr}-r|$ として、
 
-- $O(1+D\log(n+1))$
+- $O(1+D\log n)$
 
 #### lpp, rpp, lmm, rmm
 
@@ -105,4 +110,4 @@ void rmm()
 
 ##### 計算量
 
-- $O(\log(n+1))$
+- $O(\log n)$

@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 キー順に要素を管理し、順位区間・キー区間のモノイド積を取れる map。
@@ -8,7 +10,7 @@
 `!cmp(a,b) && !cmp(b,a)` で判定する。
 同じ主キーに複数の値を持たせる場合は `(key,id)` などをキーにする。
 
-基本操作は Treap による期待 $O(\log(n+1))$。比較・モノイド演算・値のコピーを $O(1)$ とする。
+基本操作は Treap による期待 $O(\log n)$。比較・モノイド演算・値のコピーを $O(1)$ とする。
 所有権と計算量の前提は [共通実装](treap_base.md) を参照。
 
 ## 使用例
@@ -59,7 +61,7 @@ OrderedMapTree<Key,M,Compare>(Iter first, Iter last, const Compare& cmp = Compar
 
 ##### 計算量
 
-- 空の場合は $O(1)$、入力が $n$ 個なら期待 $O(n\log(n+1))$。
+- デフォルト構築・比較器のみを指定した構築は $O(1)$、入力が $n$ 個なら期待 $O(n\log n)$。
 
 #### size / empty / clear / content
 
@@ -94,7 +96,7 @@ pair<Key,S> get_by_order(int k) const;
 
 ##### 計算量
 
-- 期待 $O(\log(n+1))$。
+- 期待 $O(\log n)$。
 
 #### order_of_key / upper_order_of_key
 
@@ -108,7 +110,7 @@ int upper_order_of_key(const Key& key) const;
 
 ##### 計算量
 
-- 期待 $O(\log(n+1))$。
+- 期待 $O(\log n)$。
 
 #### insert / erase / erase_by_order / set / set_by_order
 
@@ -131,7 +133,7 @@ void set_by_order(int k, const S& value);
 
 ##### 計算量
 
-- 期待 $O(\log(n+1))$。
+- 期待 $O(\log n)$。
 
 #### prod_by_order / prod_by_key / all_prod
 
@@ -151,7 +153,7 @@ S all_prod() const;
 
 ##### 計算量
 
-- 区間積は期待 $O(\log(n+1))$。`all_prod` は $O(1)$。
+- 区間積は期待 $O(\log n)$。`all_prod` は $O(1)$。
 
 #### split_by_order / split_by_key / join
 
@@ -174,8 +176,8 @@ void join(OrderedMapTree&& other);
 
 ##### 計算量
 
-- 分割は期待 $O(\log(n+1))$。
-- `join` は相手のサイズを $m$ として期待 $O(\log(n+m+1))$。
+- 分割は期待 $O(\log n)$。
+- `join` は相手のサイズを $m$ として期待 $O(\log(n+m))$。
 
 #### max_right_ok / min_left_ok
 
@@ -194,7 +196,7 @@ template <class G> int min_left_ok(int r, const G& g) const;
 
 ##### 計算量
 
-- 期待 $O(\log(n+1))$。`g` の実行を $O(1)$ とする。
+- 期待 $O(\log n)$。`g` の実行を $O(1)$ とする。
 
 ### 対応する問題
 

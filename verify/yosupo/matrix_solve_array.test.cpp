@@ -30,10 +30,11 @@ void main2()
   rep(i, N) rep(j, M) A.at(i).at(j) = A_.at(i).at(j);
   array<mint, MX> b{};
   rep(i, N) b.at(i) = b_.at(i);
-  auto [ok, sol, basis] = A.solve(b);
-  if (!ok)
+  auto result = A.solve(b);
+  if (!result)
     PRINTRETURN(-1);
-  dump(ok, sol, basis);
+  auto &[sol, basis] = *result;
+  dump(sol, basis);
   while (!basis.empty())
   {
     bool popped = false;
@@ -49,7 +50,7 @@ void main2()
     if (!popped)
       break;
   }
-  dump(ok, sol, basis);
+  dump(sol, basis);
   PRINT(basis.size());
   rep(j, M) WRITE(sol.at(j), " ");
   WRITE("\n");

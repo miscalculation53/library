@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 01 列に対する Fenwick Tree は、長さ $B = 64$ の 01 列を `ull` で持つことで、長さ $n/64$ の Fenwick Tree に対する処理で行え、多少の高速化になる。（$\log_2 n$ が $\log_2(n/64) = \log_2 n - 6$ になる。）
@@ -7,7 +9,21 @@
 - 転倒数
 - 集合を管理する
 
+## 使用例
+
+```cpp
+#include "ds/fenwick_tree/fenwick_tree_01.hpp"
+
+FenwickTree01<> fw(vc<int>{0, 1, 0, 1, 1});
+assert(fw.sum(1, 4) == 2);
+fw.set(2, true);
+assert(fw.sum(5) == 4);
+assert(fw.get(2));
+```
+
 ## 詳細なドキュメント
+
+### FenwickTree01
 
 #### コンストラクタ
 
@@ -21,10 +37,10 @@
 - (1) 長さ $n$、全要素単位元で初期化する。
 - (2) vector $v$ で初期化する。
 
-#### 計算量
+##### 計算量
 
 - (1)：$O(n)$
-- (2)：$O\left(n + \dfrac{n}{B}\log \dfrac{n}{B}\right)$
+- (2)：$O(n)$
 
 #### size
 
@@ -48,6 +64,8 @@ $n$ を返す。
 - (1)：$[0, r)$ の和を返す。
 - (2)：$[l, r)$ の和を返す。
 
+両端が同じワードに収まる区間は、ビットマスクと popcount で直接求める。
+
 ##### 制約
 
 - (1)：$0 \leq r \leq n$
@@ -55,7 +73,8 @@ $n$ を返す。
 
 ##### 計算量
 
-- $O\left(1 + \log \dfrac{n}{B}\right)$
+- (1)：$O\left(\log \dfrac{n}{B}\right)$
+- (2)：同じワード内なら $O(1)$、それ以外は $O\left(\log \dfrac{n}{B}\right)$
 
 #### get
 

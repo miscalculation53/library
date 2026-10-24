@@ -16,7 +16,7 @@
 #include "template/template_all_but_modint.hpp"
 
 #include "ds/uf/uf_undo.hpp"
-#include "graph/tree/dsu_on_tree.hpp"
+#include "tree/dsu_on_tree.hpp"
 
 void init()
 {

@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 一点加算・矩形和ができる（ただし、一点加算が起こる点は（本ライブラリでは）先読みする必要がある）。log ふたつ。
@@ -10,7 +12,22 @@
 
 どうしても点が先読みできない場合（そんな場合あるのか？）、map を使うことになりそう（遅そう）。
 
+## 使用例
+
+```cpp
+#include "ds/2d/sparse/fenwick_tree.hpp"
+
+vc<pair<int, int>> points{{1, 2}, {3, 2}};
+FenwickTree2DSparse<GroupAddSub<ll>, int> fw(points);
+fw.add(0, 4); // points[0] に加算
+fw.add(1, 7);
+assert(fw.sum(0, 3, 0, 4) == 4);
+assert(fw.sum(0, 4, 0, 4) == 11);
+```
+
 ## 詳細なドキュメント
+
+### FenwickTree2DSparse
 
 #### コンストラクタ
 

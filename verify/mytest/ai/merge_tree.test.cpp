@@ -1,7 +1,7 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-#include "graph/tree/merge_tree.hpp"
-#include "graph/tree/add_virtual_root.hpp"
+#include "tree/merge_tree.hpp"
+#include "tree/add_virtual_root.hpp"
 
 // The oracle explicitly tracks the current history root of each original vertex.
 int main()

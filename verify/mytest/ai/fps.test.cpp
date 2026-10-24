@@ -98,9 +98,9 @@ void test_sqrt()
   root[0] = 1;
   const auto square = naive_mul(root, root, n);
 
-  auto [ok, actual] = square.sqrt(n);
-  assert(ok);
-  assert(naive_mul(actual, actual, n) == square);
+  const auto actual = square.sqrt(n);
+  assert(actual);
+  assert(naive_mul(*actual, *actual, n) == square);
 }
 
 template <class mint>

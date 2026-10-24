@@ -36,4 +36,5 @@ public:
   void pop_front() { assert(!empty()); data.pop_front(); }
   void pop_back() { assert(!empty()); data.pop_back(); }
   void clear() { data.clear(); }
+  vc<T> content() const { return {data.begin(), data.end()}; }
 };

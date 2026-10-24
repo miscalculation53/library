@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-#include "graph/tree/mo_on_tree.hpp"
+#include "tree/mo_on_tree.hpp"
 
 // BFS on the input graph supplies paths independently of RootedTree and LCA.
 vc<int> bfs_parents(const vvc<int> &adj, int root)

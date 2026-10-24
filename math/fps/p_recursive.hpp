@@ -34,7 +34,9 @@ vc<FormalPowerSeries<mint>> guess_p_recursive(
         pw *= i;
       }
     }
-    auto [ok, sol, basis] = mat.solve(vc<mint>(n - r));
+    const auto solution = mat.solve(vc<mint>(n - r));
+    assert(solution);
+    const auto &basis = solution->second;
     // 基底は自由変数の列順なので、先頭の有効な基底が最小次数になる。
     for (const auto &b : basis)
     {

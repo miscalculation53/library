@@ -86,7 +86,7 @@ public:
   }
 
   // 各頂点が属する連結成分の番号 (順番は未定義)
-  // ACL の groups が欲しい場合: これに group_index を使う
+  // 成分ごとの頂点一覧は content() で取得できる
   template <class I = ll>
   vc<I> group_ids()
   {
@@ -100,5 +100,12 @@ public:
       gid[v] = gid[l];
     }
     return gid;
+  }
+
+  vvc<int> content() const { return content(cur_time); }
+  vvc<int> content(int t) const
+  {
+    t = clamp(t, 0, cur_time);
+    return internal::union_find_content(par, [&](int v) { return par[v] < 0 || upd_time[v] > t; });
   }
 };

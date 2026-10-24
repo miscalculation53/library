@@ -1,6 +1,19 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 テンプレート（アルゴリズム）
+
+## 使用例
+
+```cpp
+#include "template/template_all_but_modint.hpp"
+
+vc<int> a{3, 1, 4};
+assert(SUM<ll>(a) == 8 && ARGMAX(a) == 2);
+assert(mex(vc<int>{0, 2, 3}) == 1);
+assert(permid<int>(3) == vc<int>({0, 1, 2}));
+```
 
 ## 詳細なドキュメント
 

@@ -1,5 +1,10 @@
 #pragma once
 
+/*!
+ * Integer golden-section search; upstream license: CC0-1.0.
+ * https://github.com/NyaanNyaan/library/blob/b3981adc80a800b2584980b01821324ea6c77183/dp/golden-section-search.hpp
+ */
+
 #include "../template/template_all_but_modint.hpp"
 
 /**

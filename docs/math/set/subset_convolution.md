@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 subset convolution を計算する。
@@ -19,6 +21,14 @@ $\displaystyle c(u) = \sum_{\substack{u = s \cup t \\\\  \lvert u \rvert = \lver
 と解釈して、or 畳み込みに多項式環を載せる。
 
 $f(s) = a(s) x^{\lvert s \rvert}, g(t) = b(t) x^{\lvert t \rvert}$ として $f$ と $g$ の or 畳み込み $h$ を計算すると、$[x^{\lvert u \rvert}] h(u) = c(u)$ となっている。
+
+## 使用例
+
+```cpp
+vc<ll> a{1, 2}, b{3, 4};
+auto c = subset_convolution<RingAddSubMul<ll>>(a, b);
+assert((c == vc<ll>{3, 10}));
+```
 
 ## 詳細なドキュメント
 

@@ -26,14 +26,52 @@ auto gen_vec(int n, const F &f)
 }
 #define GEN_VEC(n, i, fi) (gen_vec(n, LMD(i, fi)))
 
-// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0
+namespace template_vector_detail
+{
+template <class T, size_t depth>
+struct nested_vector
+{
+  using type = vc<typename nested_vector<T, depth - 1>::type>;
+};
+template <class T>
+struct nested_vector<T, 0>
+{
+  using type = T;
+};
+
+template <class T, size_t depth, class V>
+void populate_dimensions(typename nested_vector<T, depth>::type &result, const V *sizes, const T &init)
+{
+  if constexpr (depth == 1)
+  {
+    typename nested_vector<T, depth>::type replacement(size_t(*sizes), init);
+    result.swap(replacement);
+  }
+  else
+  {
+    result.resize(size_t(*sizes));
+    for (auto &child : result) populate_dimensions<T, depth - 1>(child, sizes + 1, init);
+  }
+}
+
+template <class T, size_t depth, class V>
+typename nested_vector<T, depth>::type build_dimensions(const V *sizes, const T &init)
+{
+  if constexpr (depth == 0) return init;
+  else
+  {
+    typename nested_vector<T, depth>::type result;
+    populate_dimensions<T, depth>(result, sizes, init);
+    return result;
+  }
+}
+}
+
 template <class T, size_t d, size_t i = 0, class V>
 auto dvec(const V (&sz)[d], const T &init)
 {
-  if constexpr (i < d)
-    return vc(sz[i], dvec<T, d, i + 1>(sz, init));
-  else
-    return init;
+  if constexpr (i >= d) return init;
+  else return template_vector_detail::build_dimensions<T, d - i>(sz + i, init);
 }
 
 template <class T, size_t d, size_t i = 0>

@@ -1,8 +1,21 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 `infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
 
 `+`, `-`, `*`, `/`, `min`, `max`, `0`, `1` を使って定義できるやつ
+
+## 使用例
+
+```cpp
+#include "algebra/algebra_basic_ops.hpp"
+#include "ds/segtree/segtree.hpp"
+
+SegmentTree<MonoidMin<ll>> seg(vc<ll>{4, 2, 7});
+assert(seg.prod(0, 3) == 2);
+assert(pow_group<GroupAddSub<ll>>(3, -2) == -6);
+```
 
 ## 詳細なドキュメント
 

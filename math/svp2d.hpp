@@ -35,8 +35,12 @@ pair<T, T> svp2d(const pair<T, T> &a, const pair<T, T> &b)
   while ((U)a1 * a1 + (U)a2 * a2 > (U)b1 * b1 + (U)b2 * b2)
   {
     swap(a1, b1), swap(a2, b2);
-    T k = divround<U>((U)a1 * b1 + (U)a2 * b2, (U)a1 * a1 + (U)a2 * a2);
-    b1 -= k * a1, b2 -= k * a2;
+    const U dot = U(a1) * b1 + U(a2) * b2, norm = U(a1) * a1 + U(a2) * a2;
+    U k = dot / norm, r = dot % norm;
+    // 最も近い整数を選び、同距離なら大きい方を選ぶ。
+    if (r > 0 && r >= norm - r) ++k;
+    if (r < 0 && -r > norm + r) --k;
+    b1 = T(U(b1) - k * a1), b2 = T(U(b2) - k * a2);
     if (b1 == 0 && b2 == 0)
       return {a1, a2};
   }

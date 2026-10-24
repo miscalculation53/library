@@ -54,4 +54,19 @@ public:
     assert(0 <= lj && lj <= rj && rj <= m);
     return G::op(G::op(s[ri][rj], s[li][lj]), G::inv(G::op(s[ri][lj], s[li][rj])));
   }
+
+  vvc<S> content() const
+  {
+    if (s.empty()) return {};
+    const int n = SZ<int>(s) - 1, m = SZ<int>(s[0]) - 1;
+    vvc<S> res(n);
+    repi(i, n)
+    {
+      res[i].reserve(m);
+      repi(j, m)
+        res[i].eb(G::op(G::op(s[i + 1][j + 1], s[i][j]),
+                       G::inv(G::op(s[i + 1][j], s[i][j + 1]))));
+    }
+    return res;
+  }
 };

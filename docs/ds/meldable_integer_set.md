@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 $[0,n)$ の整数集合を、併合可能な疎なセグメント木で管理する。葉は64種類分のビットを持ち、内部ノードは部分木の要素数を持つ。
@@ -88,7 +90,7 @@ void reserve(size_t count)
 ##### 計算量
 
 - `universe_size` / `node_count`：$O(1)$
-- `reserve`：$O(P+1)$
+- `reserve`：$O(P)$
 
 #### make_set
 
@@ -118,7 +120,7 @@ void clear()
 
 ##### 計算量
 
-- $O(P+1)$
+- $O(P)$
 
 ### MeldableIntegerSet
 
@@ -209,7 +211,7 @@ MeldableIntegerSet clone() const
 
 ##### 計算量
 
-- 償却 $O(V+1)$
+- 償却 $O(V)$
 
 #### lt_cnt / leq_cnt / geq_cnt / gt_cnt
 
@@ -299,7 +301,7 @@ vc<ll> content() const
 
 ##### 計算量
 
-- $O(V+s+1)$。$s$ は列挙するキーの個数（`f` の実行時間を除く）
+- $O(V+s)$。$s$ は列挙するキーの個数（`f` の実行時間を除く）
 
 #### begin / end / cbegin / cend
 

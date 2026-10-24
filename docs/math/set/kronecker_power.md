@@ -1,8 +1,10 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 a.k.a. ゼータ変換の一般化
 
-https://q.c.titech.ac.jp/docs/progs/kronecker.html
+数学的な背景：[クロネッカー積で掛ける行列積の計算（2021年3月の保存版）](https://web.archive.org/web/20210323185214/http://q.c.titech.ac.jp/docs/progs/kronecker.html)
 
 クロネッカー積 $\otimes$ は
 
@@ -99,6 +101,14 @@ c...d...  ....a.b.  ....ab..
 また、これは特にビット演算を使わずにできるので $k=2$ に限らず使える。
 
 参考：Nyaan さんの提出 https://atcoder.jp/contests/abc288/submissions/38620359
+
+## 使用例
+
+```cpp
+array<array<ll, 2>, 2> mat{{{1, 0}, {1, 1}}};
+auto b = kronecker_power_array<RingAddSubMul<ll>, 2>(mat, vc<ll>{1, 2, 3, 4});
+assert((b == vc<ll>{1, 3, 4, 10}));
+```
 
 ## 詳細なドキュメント
 

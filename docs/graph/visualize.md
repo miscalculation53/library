@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれている可能性があります。
+
 ## 概要
 
 `Graph`・`RootedTree`・親配列から、[GRAPH × GRAPH](https://hello-world-494ec.firebaseapp.com/) の可視化リンクを作る。リンクを開くと、グラフと入力形式の設定が復元される。

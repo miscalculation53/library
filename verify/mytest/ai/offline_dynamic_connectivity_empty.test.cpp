@@ -6,7 +6,8 @@
 int main()
 {
   int called = 0;
-  offline_dynamic_connectivity(0, vc<tuple<int, int, int>>{}, [](int) {}, [] {}, [&](int) { called++; });
+  OfflineDynamicConnectivity<int> dc(0);
+  dc.run([](int) {}, [] {}, [&](int) { called++; });
   assert(called == 0);
   PRINT("Hello World");
 }

@@ -10,16 +10,18 @@
  * @docs docs/algebra/acted_monoid/affine_sum.md
  */
 
-template <class T>
+template <class T, class L = ll>
 struct ActedMonoidAffineSum
 {
-  using M = MonoidLenSum<T>;
+  using M = MonoidLenSum<T, L>;
+  using UL = typename M::UL;
   using MF = MonoidAffineFunction<T>;
   using S = typename M::S;
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
-  static constexpr S mapping(F f, S x) { return {x.len, f.b * x.val + f.c * x.len}; }
+  static constexpr auto pow = M::pow;
+  static constexpr S mapping(F f, S x) { return S(x.len, f.b * x.val + f.c * UL(x.len)); }
   static constexpr auto composition = MF::op;
   static constexpr auto id = MF::e;
 };

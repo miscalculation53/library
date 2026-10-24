@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-#include "graph/tree/rooted_tree.hpp"
+#include "tree/rooted_tree.hpp"
 
 using Segment = tuple<int, int, bool>;
 

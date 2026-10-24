@@ -160,6 +160,7 @@ void test_partition()
     {
       vector<int> left(a.begin(), a.begin() + n), right(a.begin() + n, a.end());
       assert(q.left().content() == left && q.right().content() == right);
+      assert(as_const(q).content() == a);
     }
     if constexpr (Q::supports_contains)
     {
@@ -343,6 +344,7 @@ void test_conditions_and_monoid()
       native(PartitionBySize{2}, descending);
   native.insert(30); native.insert(10); native.insert(20);
   assert(native.left().back() == 20 && native.left().all_prod() == 50 && native.right().all_prod() == 10);
+  assert((as_const(native).content() == vl{30, 20, 10}));
 
   using Min = MonoidMin<int>;
   test_partition<less<int>, OrderedMultisetTree>();

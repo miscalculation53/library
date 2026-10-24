@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 要素を `Compare` 順の接頭辞と残りに分け、条件を満たす最大の接頭辞を左側に保つ。
@@ -189,8 +191,8 @@ bool contains(const T& x) const;
 - 個数条件と中央値条件では、1 回の追加・削除について $m=O(1)$。
 - 和などの一般条件では、1 回の更新で多数の要素が移動する場合がある。
 
-`multiset` は $B=O(\log(n+1))$、Treap は期待 $O(\log(n+1))$。
-遅延削除ヒープは、内部に保持する要素数を $h$ として償却 $B=O(\log(h+1))$。
+`multiset` は $B=O(\log n)$、Treap は期待 $O(\log n)$。
+遅延削除ヒープは、内部に保持する要素数を $h$ として償却 $B=O(\log h)$。
 
 #### extract_left / extract_right
 
@@ -271,6 +273,22 @@ const RightContainer& right() const;
 
 - 参照取得は $O(1)$。集約取得・集約演算が $O(1)$ なら、全体の集約の取得も $O(1)$。
 - 境界の取得は基底コンテナの端の取得の計算量。
+
+#### content
+
+```cpp
+vc<T> content() const;
+```
+
+全要素を `Compare` 順で返す。左右の内容をこの順でつなぎ、重複も維持する。
+
+##### 制約
+
+- [PriorityContainer](priority_container.md) の `content` と同じ。
+
+##### 計算量
+
+- 左右の `content` の計算量に $O(n)$ を加えたもの。
 
 #### clear
 

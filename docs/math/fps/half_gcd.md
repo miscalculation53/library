@@ -1,10 +1,13 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 体上の多項式の Euclid の互除法を、複数ステップまとめて進める。
 多項式乗算の計算量を $M(n)$ とすると $O(M(n)\log n)$ 時間。
 必要な長さの NTT が使える場合は $O(n\log^2 n)$ 時間、$O(n)$ 空間。
 `FormalPowerSeries<mint>` の乗算・逆数と同じ係数型を使う。
-計測・使い分けは [ベンチマーク](../../../benchmark/half_gcd.md) を参照。
+
+## 使用例
 
 ```cpp
 using mint = modint998244353;
@@ -12,27 +15,54 @@ using P = FormalPowerSeries<mint>;
 auto [g, s, t] = polynomial_extgcd(P{1, 2, 1}, P{1, 1});
 // g == {1,1}, s*a + t*b == g
 auto g2 = polynomial_gcd(P{1, 2, 1}, P{1, 1});
-auto [ok, h] = polynomial_inv_mod(P{0, 1}, P{1, 0, 1});
-// x * (-x) == 1 mod (1+x^2), h == {0,-1}
+auto h = polynomial_inv_mod(P{0, 1}, P{1, 0, 1});
+assert(h && *h == (P{0, -1}));
+// x * (-x) == 1 mod (1+x^2)
 ```
 
-## API
+## 詳細なドキュメント
 
 係数は定数項から順に並べる。返す多項式は末尾の零を取り除き、零多項式は空配列。
 入力の末尾の零は許す。入力は値渡しで、呼び出し元を変更しない。
 
-- `polynomial_extgcd(a,b)`：`(g,s,t)` を返し、`s*a+t*b == g`。`g` は monic な最大公約数。
-  両方零のときは `({},{},{})`。
-- `polynomial_gcd(a,b)`：monic な最大公約数。現実装は拡張 GCD の結果から取り出すため、
-  Bézout 係数を省く専用実装に比べて定数倍を詰める余地がある。
-- `polynomial_inv_mod(f,g)`：`(存在するか,h)`。`f*h == 1 (mod g)`、`deg(h)<deg(g)`。
-  `g` は非零。非定数の `g` では `gcd(f,g)==1` が存在条件。
-  非零定数の `g` では `(true,{})`。存在しなければ `(false,{})`。
+#### polynomial_extgcd, polynomial_gcd
 
-`mint` は体の演算を満たすこと（例えば素数を法とする modint）。
-上記の時間計算量では $n$ を入力多項式の最大係数数とする。
-直接 NTT が使えない場合も既存の convolution の代替経路を使用するが、今回の速度測定は
-`modint998244353` の直接 NTT のみ。
+```cpp
+(1) tuple<P, P, P> polynomial_extgcd(P a, P b)
+(2) P polynomial_gcd(P a, P b)
+```
+
+`P = FormalPowerSeries<mint>` とする。(1) は `(g, s, t)` を返し、`s*a+t*b == g` を満たす。
+`g` は最高次係数を $1$ にそろえた最大公約数。(2) は `g` だけを返す。
+両方が零なら、(1) は空多項式三つ、(2) は空多項式を返す。
+
+##### 制約
+
+- `mint` は体をなす modint。
+
+##### 計算量
+
+- 最大係数数を $n$、多項式乗算の時間を $M(n)$ として $O(M(n)\log n)$。
+- 必要な長さの NTT が使える場合は $O(n\log^2 n)$。
+
+#### polynomial_inv_mod
+
+```cpp
+optional<P> polynomial_inv_mod(P f, P mod_poly)
+```
+
+`f*h == 1 (mod mod_poly)`、`deg(h)<deg(mod_poly)` を満たす逆元 `h` を返す。
+非定数の法では `gcd(f,mod_poly)==1` が存在条件。逆元がなければ `nullopt`。
+非零定数の法では、値ありの空多項式を返す。
+
+##### 制約
+
+- `mint` は体をなす modint。
+- `mod_poly` は非零多項式。
+
+##### 計算量
+
+- 最大係数数を $n$ として $O(M(n)\log n)$。
 
 ## 共通部分
 

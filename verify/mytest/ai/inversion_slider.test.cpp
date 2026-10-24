@@ -16,6 +16,7 @@ void check(const vc<T> &a)
     repi(i, l, r) repi(j, i + 1, r) expected[l][r] += a[j] < a[i];
     ranges.emplace_back(l, r);
   }
+  assert(inversion_number(a) == expected[0][n]);
   auto verify = [&](int l, int r)
   {
     assert(slider.l == l && slider.r == r);
@@ -79,6 +80,8 @@ int main()
   check<string>({"pear", "apple", "pear", "", "banana"});
   check<pair<int, int>>({{1, 2}, {1, 1}, {-1, 3}, {1, 2}});
   check<LessOnly>({{2}, {1}, {2}, {-1}, {1}});
+  assert(inversion_number(string("caba")) == 4);
+  assert(inversion_number(deque<int>{3, 1, 2, 1}) == 4);
 
   const int n = 100000;
   vc<int> descending(n);

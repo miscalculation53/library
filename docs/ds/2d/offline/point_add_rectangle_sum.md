@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 点加算クエリと矩形和クエリが混ざって与えられるとき、矩形和（オフライン）を用いてオフラインで処理する。
@@ -11,7 +13,23 @@ Library Checker にある定式化のほかに、後のほうの点加算クエ�
 
 `RectangleSum` に対する `LowerLeftSum` と同様、`PointAddRectangleSum` に対する `PointAddLowerLeftSum` もある。
 
+## 使用例
+
+```cpp
+#include "algebra/algebra_basic_ops.hpp"
+#include "ds/2d/offline/point_add_rectangle_sum.hpp"
+
+PointAddRectangleSum<GroupAddSub<ll>, ll> queries;
+queries.point_add(1, 2, 4);
+queries.rectangle_sum(0, 4, 0, 4);
+queries.point_add(3, 2, 7);
+queries.rectangle_sum(0, 4, 0, 4);
+assert(queries.run() == (vc<ll>{4, 11}));
+```
+
 ## 詳細なドキュメント
+
+### PointAddRectangleSum / PointAddLowerLeftSum
 
 #### コンストラクタ
 

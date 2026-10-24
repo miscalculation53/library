@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれている可能性があります。
+
 ## 概要
 
 open addressing と linear probing による高速なハッシュマップ。
@@ -96,6 +98,22 @@ const_iterator cend() const
 - 全要素の走査：確保済みの容量に比例（空きスロットを含む）
 - `begin` / `cbegin` / `++`：最悪で容量に比例
 - `end` / `cend` / 参照 / 比較：$O(1)$
+
+#### content
+
+```cpp
+vc<pair<Key, Value>> content() const
+```
+
+登録済みのキーと値を走査順でコピーして返す。順序は未規定。キーの大小比較は不要。
+
+##### 制約
+
+- `Key`, `Value` はコピー構築可能
+
+##### 計算量
+
+- 確保済みの容量に比例
 
 #### find_ptr
 
@@ -198,11 +216,3 @@ void clear()
 ##### 計算量
 
 - 容量に比例
-
-### 性能比較
-
-`benchmark/hash_map.cpp` は `unordered_map`、`gp_hash_table`、`HashMap` に同じ `safe_hash` と事前容量確保を使い、整数キーと `pair` キーを比較する。コンパイル例は次の通り。
-
-```sh
-g++-15 -std=c++20 -O3 -march=native -I. benchmark/hash_map.cpp
-```

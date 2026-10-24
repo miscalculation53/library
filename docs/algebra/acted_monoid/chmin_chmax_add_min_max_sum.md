@@ -1,8 +1,12 @@
+このドキュメントには AI による作成・変更が含まれている可能性があります。
+
 ## 概要
 
 `infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
 
 区間 `chmin`・`chmax`・加算と、区間最小値・最大値・和の取得を Segment Tree Beats で処理する作用つきモノイド。
+
+区間情報の結合と更新判定は、[hitonanode/cplib-cpp の実装](https://github.com/hitonanode/cplib-cpp/blob/master/segmenttree/trees/range-chmin-chmax-add-range-sum.hpp)を基にしている。上流の MIT ライセンス全文・著作権表示をヘッダの重要コメントに保持する。
 
 各区間について、最小値・第二最小値・最小値の個数、最大値・第二最大値・最大値の個数、要素数、総和を持つ。clamp によって第二最小値以上または第二最大値以下の要素まで変化し、保持情報だけでは更新できない場合は `fail` を立てる。`SegmentTreeBeats` はその作用を子へ伝播し、親を再構築する。
 
@@ -25,7 +29,7 @@ cout << res.mn << ' ' << res.mx << ' ' << res.sum << '\n';
 ### ActedMonoidChminChmaxAddMinMaxSum
 
 ```cpp
-ActedMonoidChminChmaxAddMinMaxSum<T, infty = nullptr>
+ActedMonoidChminChmaxAddMinMaxSum<T, infty = nullptr, L = ll>
 ```
 
 作用型 `F` は `MonoidClampAdd<T, infty>::S`。`F::chmin`, `F::chmax`, `F::add` で各更新を構築する。
@@ -33,12 +37,13 @@ ActedMonoidChminChmaxAddMinMaxSum<T, infty = nullptr>
 #### S のコンストラクタ
 
 ```cpp
-S(T x, int len = 1)
+S(T x, L len = 1)
 ```
 
 値 `x` が `len` 個並ぶ区間情報を構築する。一点の初期値は `S(x)` で構築できる。
 
 `S` は公開メンバ `mn`, `mx`, `mn2`, `mx2`, `sum`, `len`, `mn_cnt`, `mx_cnt`, `fail` を持つ。
+長さ `len` と個数 `mn_cnt`, `mx_cnt` は整数型 `L` で保持する。既定値は `ll`。各区間の長さと個数を保持できる型を、`infty` の後に指定する。
 
 ##### 制約
 
@@ -120,7 +125,7 @@ F id()
 
 ### SegmentTreeBeats と組み合わせた場合
 
-`SegmentTreeBeats<ActedMonoidChminChmaxAddMinMaxSum<T, infty>>` として利用する。
+`SegmentTreeBeats<ActedMonoidChminChmaxAddMinMaxSum<T, infty, L>>` として利用する。
 
 #### apply / prod
 

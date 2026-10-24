@@ -1,6 +1,16 @@
 #pragma once
 
 #include "template_types.hpp"
+
+#if defined(LOCAL) && LIBRARY_HAS_FLOAT128
+namespace cpp_dump::_detail
+{
+  struct export_command;
+  inline string export_var(const f128 &, const string &, size_t,
+                           size_t, bool, const export_command &);
+}
+#endif
+
 #include "template_dump_map.hpp"
 
 /**
@@ -11,6 +21,16 @@
 #ifdef LOCAL
 namespace cpp_dump::_detail
 {
+#if LIBRARY_HAS_FLOAT128
+  inline string export_var(
+      const f128 &x, const string &, size_t,
+      size_t, bool, const export_command &
+  ) {
+    return es::signed_number(template_float128_detail::format(
+        x, chars_format::general, numeric_limits<f128>::max_digits10));
+  }
+#endif
+
   inline string export_var(
       const i128 &x, const string &, size_t,
       size_t, bool, const export_command &

@@ -3,6 +3,7 @@
 #include "../../template/template_all_but_modint.hpp"
 
 #include "fenwick_tree_01.hpp"
+#include "../../algo/stable_argsort.hpp"
 
 /**
  * @brief 転倒数
@@ -15,16 +16,15 @@ template <class V>
 ll inversion_number(const V &v)
 {
   const int n = v.size();
-  vc<int> p = permid<int>(n);
-  stable_sort(ALL(p), [&](int i, int j)
-       { return v[i] < v[j]; });
+  auto p = stable_argsort(v);
   FenwickTree01 fw(n);
   ll res = 0;
+  int processed = 0;
   fe(i : p)
   {
-    ll tmp = fw.sum(i + 1, n);
-    res += tmp;
+    res += processed - fw.sum(i + 1);
     fw.set(i, 1);
+    processed++;
   }
   return res;
 }
@@ -40,8 +40,7 @@ struct InversionSlider
   InversionSlider() = default;
   InversionSlider(const vc<T> &a) : n(a.size()), vec(n), fw(n)
   {
-    auto p = permid<int>(n);
-    stable_sort(ALL(p), [&](int i, int j) { return a[i] < a[j]; });
+    auto p = stable_argsort(a);
     repi(i, n) vec[p[i]] = i;
   }
 
@@ -49,7 +48,7 @@ struct InversionSlider
   {
     assert(l < r);
     int a = vec[l];
-    inversion_num -= fw.sum(0, a);
+    inversion_num -= fw.sum(a);
     fw.set(a, 0);
     l++;
   }
@@ -57,7 +56,7 @@ struct InversionSlider
   {
     assert(r < n);
     int a = vec[r];
-    inversion_num += fw.sum(a + 1, n);
+    inversion_num += (r - l) - fw.sum(a + 1);
     fw.set(a, 1);
     r++;
   }
@@ -67,7 +66,7 @@ struct InversionSlider
     l--;
     int a = vec[l];
     fw.set(a, 1);
-    inversion_num += fw.sum(0, a);
+    inversion_num += fw.sum(a);
   }
   void rmm()
   {
@@ -75,7 +74,7 @@ struct InversionSlider
     r--;
     int a = vec[r];
     fw.set(a, 0);
-    inversion_num -= fw.sum(a + 1, n);
+    inversion_num -= (r - l) - fw.sum(a + 1);
   }
 
   void set(int nl, int nr)

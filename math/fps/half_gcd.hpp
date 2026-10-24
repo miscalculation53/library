@@ -176,20 +176,20 @@ FormalPowerSeries<mint> polynomial_gcd(FormalPowerSeries<mint> a, FormalPowerSer
   return get<0>(polynomial_extgcd(std::move(a), std::move(b)));
 }
 
-// f*g == 1 (mod mod_poly)、deg(g) < deg(mod_poly)。存在しなければ false。
-// mod_poly は非零。非零定数を法とするときは (true,{}) を返す。
+// f*g == 1 (mod mod_poly)、deg(g) < deg(mod_poly)。存在しなければ nullopt。
+// mod_poly は非零。非零定数を法とするときは値ありの空配列を返す。
 // f(0)==0 でも互いに素ならよい。
 template <class mint>
-pair<bool, FormalPowerSeries<mint>> polynomial_inv_mod(
+optional<FormalPowerSeries<mint>> polynomial_inv_mod(
     FormalPowerSeries<mint> f, FormalPowerSeries<mint> mod_poly)
 {
   mod_poly.shrink();
   assert(!mod_poly.empty());
-  if (mod_poly.sz() == 1) return {true, {}};
+  if (mod_poly.sz() == 1) return FormalPowerSeries<mint>{};
   f.shrink();
   f = internal::PolynomialHalfGCD<mint>::divmod(std::move(f), mod_poly).second;
   auto [g, s, t] = polynomial_extgcd(std::move(f), mod_poly);
-  if (g.sz() != 1) return {false, {}};
+  if (g.sz() != 1) return nullopt;
   s = internal::PolynomialHalfGCD<mint>::divmod(std::move(s), mod_poly).second;
-  return {true, std::move(s)};
+  return s;
 }

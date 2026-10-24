@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 注意：無向グラフというよりは、双方向に異なる重みがついた有向グラフと思うべき（無向グラフの設定で使えると勘違いするのがありがち）
@@ -15,7 +17,22 @@
 
 原理的には UFData を一緒に持たせたり Undo 可能にしたりといったことも可能であろうが、欲しくなる場面があまりない気がする（？）
 
+## 使用例
+
+```cpp
+#include "ds/uf/uf_potential.hpp"
+
+UnionFindPotential<GroupAddSub<ll>> uf(3);
+assert(uf.merge(0, 1, 4)); // a[1] - a[0] = 4
+assert(uf.merge(1, 2, 3)); // a[2] - a[1] = 3
+assert(uf.diff(0, 2) == 7);
+assert(!uf.merge(0, 2, 8)); // 既存の差分と矛盾
+assert(!uf.valid(0));
+```
+
 ## 詳細なドキュメント
+
+### UnionFindPotential
 
 #### コンストラクタ
 
@@ -26,6 +43,8 @@ UnionFindPotential<G>(int n)
 `G` は群、$n$ は頂点数。
 
 leader, size, same, group_ids は Unionfind と同じ（経路圧縮を行う実装になっていて、計算量はならし $O(\alpha(n))$）。
+
+`content() const` も通常の [UnionFind](uf.md#content) と同じ形式で使え、$O(n)$ で現在の連結成分ごとの頂点一覧を返す。ポテンシャルを維持する。
 
 #### reset
 

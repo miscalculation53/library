@@ -147,6 +147,14 @@ public:
   size_t size() const { return num; }
   bool empty() const { return num == 0; }
 
+  vc<Key> content() const
+  {
+    vc<Key> res;
+    res.reserve(num);
+    for (const auto &key : *this) res.eb(key);
+    return res;
+  }
+
   // key が存在すれば格納されたキーへのポインタ、存在しなければ nullptr を返す
   const Key *find_ptr(const Key &key) const
   {

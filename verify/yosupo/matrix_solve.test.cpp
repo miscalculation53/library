@@ -26,9 +26,10 @@ void main2()
   VEC2(mint, N, M, A_);
   VEC(mint, N, b);
   Matrix<FieldAddSubMulDiv<mint>> A(A_);
-  auto [ok, sol, basis] = A.solve(b);
-  if (!ok)
+  auto result = A.solve(b);
+  if (!result)
     PRINTRETURN(-1);
+  auto &[sol, basis] = *result;
   PRINT(basis.size());
   PRINT(sol);
   PRINTV(basis);

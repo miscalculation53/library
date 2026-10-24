@@ -1,6 +1,19 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 行列
+
+## 使用例
+
+```cpp
+using mint = modint998244353;
+Matrix<FieldAddSubMulDiv<mint>> a(vvc<mint>{{1, 1}, {1, 0}});
+auto b = a.pow(5);
+assert(b[0][1] == 5);
+auto solution = a.solve(vc<mint>{3, 2});
+assert(solution && solution->first[0] == 2 && solution->first[1] == 1);
+```
 
 ## 詳細なドキュメント
 
@@ -38,6 +51,8 @@ Matrix<F, BS> pow(int k)
 ```
 
 行列の $k$ 乗を返す。
+
+`F = FieldAddSubMulDiv<mint>` で通常の 32 bit modint を使い、法が素数の場合は、行列の構造と多項式による計算を使って行列積の回数を削減する。環・半環を指定した場合は二分累乗で計算する。
 
 ##### 制約
 
@@ -102,10 +117,10 @@ F::S det()
 #### inv
 
 ```cpp
-pair<bool, Matrix<F, BS>> inv()
+optional<Matrix<F, BS>> inv() const
 ```
 
-(逆行列が存在するか, 存在する場合逆行列) を返す。
+逆行列を返す。存在しなければ `nullopt`。$0\times0$ 行列では値ありの空行列を返す。
 
 ##### 制約
 
@@ -118,16 +133,10 @@ pair<bool, Matrix<F, BS>> inv()
 #### solve
 
 ```cpp
-tuple<bool, vc<F::S>, vvc<F::S>> solve(vc<F::S> b)
+optional<pair<vc<F::S>, vvc<F::S>>> solve(const vc<F::S>& b) const
 ```
 
-$A\boldsymbol{x} = \boldsymbol{b}$ の解を求め、
-
-- 解が存在するかどうか
-- 解が存在する場合の解のひとつ $\boldsymbol{x}_0$
-- 解空間の基底 $\{\boldsymbol{c}_i\}_i$
-
-を返す。すなわち、解は $\boldsymbol{x} = \boldsymbol{x}_0 + \sum_i \lambda_i \boldsymbol{c}_i$ の形で表されるベクトル全体。
+$A\boldsymbol{x} = \boldsymbol{b}$ の解を求め、解のひとつ $\boldsymbol{x}_0$ と解空間の基底 $\{\boldsymbol{c}_i\}_i$ のペアを返す。解がなければ `nullopt`。すなわち、解は $\boldsymbol{x} = \boldsymbol{x}_0 + \sum_i \lambda_i \boldsymbol{c}_i$ の形で表されるベクトル全体。
 
 ##### 制約
 

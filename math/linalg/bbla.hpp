@@ -8,7 +8,7 @@
  * @docs docs/math/linalg/bbla.md
  */
 
-// https://yukicoder.me/wiki/black_box_linear_algebra
+//! https://yukicoder.me/wiki/black_box_linear_algebra
 
 namespace bbla
 {

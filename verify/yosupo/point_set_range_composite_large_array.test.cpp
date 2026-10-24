@@ -25,7 +25,8 @@ void main2()
 {
   LL(N, Q);
 
-  SparseSegmentTree<OppositeMonoid<GroupAffineFunction<mint>>> seg(N);
+  using M = OppositeMonoid<GroupAffineFunction<mint>>;
+  SparseSegmentTree<M> seg(N, M::e());
   seg.reserve(Q + 1);
   rep(_, Q)
   {

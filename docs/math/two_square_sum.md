@@ -1,18 +1,29 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 二平方和
+
+## 使用例
+
+```cpp
+auto representations = two_square_sum(25);
+assert((representations == vc<pair<ll, ll>>{{0, 5}, {3, 4}}));
+auto prime_representation = two_square_sum_prime(13LL);
+assert(prime_representation && prime_representation->first == 2 && prime_representation->second == 3);
+```
 
 ## 詳細なドキュメント
 
 #### two_square_sum_prime
 
 ```cpp
-pair<bool, pair<T, T>> two_square_sum_prime(T p)
+optional<pair<T, T>> two_square_sum_prime(T p)
 ```
 
 素数 `p` について、$p = a^2 + b^2$ となる組を求める。
 
-返り値の `first` は表現が存在するかどうか。存在する場合、`second` は $0 \leq a \leq b$ を満たす一意な組。
+存在する場合は $0 \leq a \leq b$ を満たす一意な組 `(a, b)`、存在しない場合は `nullopt` を返す。
 
 ##### 制約
 
@@ -32,7 +43,7 @@ vc<pair<ll, ll>> two_square_sum(ll n)
 
 整数 `n` について、$n = a^2 + b^2$ となる組 `(a, b)` をすべて返す。
 
-返る組は $0 \leq a \leq b$ を満たし、重複を含まない。
+返る組は $0 \leq a \leq b$ を満たし、重複を含まない。$n<0$ なら空配列、$n=0$ なら `{{0, 0}}` を返す。
 
 ##### 制約
 
@@ -40,7 +51,6 @@ vc<pair<ll, ll>> two_square_sum(ll n)
 
 ##### 計算量
 
-- $n < 0$ または $n=0$：$O(1)$
-- $n>0$：`factorize(n)` の計算量に加え、候補の生成と重複除去に出現した候補数に応じた時間
+- `factorize(n)` の計算量に加え、候補の生成と重複除去に出現した候補数に応じた時間
 
 $p \equiv 1 \pmod 4$ である素因数の指数和を $k$ とすると、生成候補数の粗い上界は $2^k$、追加時間は $O(k2^k \log 2^k)$。

@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 各頂点に正の有理数 $\dfrac{p+r}{q+s}$ が一対一対応する二分探索木。性質：
@@ -5,6 +7,15 @@
 - $\dfrac{p+r}{q+s}$ の左の子は $\dfrac{p+(r+p)}{q+(s+q)}$、右の子は $\dfrac{(p+r)+r}{(q+s)+s}$
 - $\dfrac{p+r}{q+s}$ の子孫として現れる有理数の範囲は $\left(\dfrac{p}{q}, \dfrac{r}{s} \right)$
 - パスを RLE したものの長さは $O(\log 値)$
+
+## 使用例
+
+```cpp
+SBTNode<ll> node(2, 3);
+assert(node.num() == 2 && node.den() == 3);
+node.descend('L', 1);
+assert(node.num() == 3 && node.den() == 5);
+```
 
 ## 詳細なドキュメント
 
@@ -143,3 +154,31 @@ SBTNode<T> sbt_search(auto judge, T max_value)
 ##### 計算量
 
 - $O(\log \mathrm{max\_value})$ 回の `judge` の呼び出し
+
+
+#### abc408g
+
+```cpp
+template <class T>
+pair<T, T> abc408g(T a, T b, T c, T d)
+```
+
+開区間 $a/b < p/q < c/d$ 内で、分母 $q > 0$ が最小の分数を返す。同じ分母の候補が複数あれば、分子 $p$ が最小のものを返す。端点は未約分のまま渡せる。
+
+$d=0,\ c>0$ は正の無限大を表す。符号付き・符号なし整数型、GNU の128 bit整数、`BigInteger`などの整数型を扱える。型の加減乗除と比較が数学的な整数演算に一致し、非負値の除算が切り捨て商を返すことを前提とする。
+
+```cpp
+auto [p, q] = abc408g<ll>(1, 2, 2, 3); // 3/5
+auto [x, y] = abc408g<ll>(0, 1, 1, 0); // 1/1
+```
+
+##### 制約
+
+- $a \ge 0,\ b > 0,\ d \ge 0$
+- $d>0$ のとき $a/b<c/d$
+- $d=0$ のとき $c>0$
+- 答えの分子・分母が `T` に収まる
+
+##### 計算量
+
+- $M=\max(a,b,c,d)$ として $O(\log M)$ 回の整数演算

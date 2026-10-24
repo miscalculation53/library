@@ -1,8 +1,12 @@
+このドキュメントには AI による作成・変更が含まれている可能性があります。
+
 ## 概要
 
 `infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
 
 区間更新と、区間最小値または最大値および区間和の取得を処理する作用つきモノイド。
+
+`L` は区間長の整数型で、既定値は `ll`。各区間の長さを保持できる型を、`infty` の後に指定する。
 
 ## 使用例
 
@@ -20,7 +24,7 @@ cout << res.mn << ' ' << res.sum << '\n';
 ### ActedMonoidUpdMinSum
 
 ```cpp
-ActedMonoidUpdMinSum<T, infty = nullptr>
+ActedMonoidUpdMinSum<T, infty = nullptr, L = ll>
 ```
 
 要素型 `S` は公開メンバ `mn`, `sum`, `len` を持つ。作用型 `F` は、単位元かを表す `is_id` と更新値 `val` を持つ。
@@ -29,8 +33,8 @@ ActedMonoidUpdMinSum<T, infty = nullptr>
 
 ```cpp
 (1) S()
-(2) S(T x, int len = 1)
-(3) S(T mn, T sum, int len)
+(2) S(T x, L len = 1)
+(3) S(T mn, T sum, L len)
 ```
 
 - (2)：値 `x` が `len` 個並ぶ区間情報を構築する。
@@ -132,7 +136,7 @@ F id()
 ### ActedMonoidUpdMinMaxSum
 
 ```cpp
-ActedMonoidUpdMinMaxSum<T, infty = nullptr>
+ActedMonoidUpdMinMaxSum<T, infty = nullptr, L = ll>
 ```
 
 区間最小値と最大値を同時に取得する版。要素型 `S` は公開メンバ `mn`, `mx`, `sum`, `len` を持つ。作用型 `F` は、単位元かを表す `is_id` と更新値 `val` を持つ。
@@ -141,8 +145,8 @@ ActedMonoidUpdMinMaxSum<T, infty = nullptr>
 
 ```cpp
 (1) S()
-(2) S(T x, int len = 1)
-(3) S(T mn, T mx, T sum, int len)
+(2) S(T x, L len = 1)
+(3) S(T mn, T mx, T sum, L len)
 ```
 
 - (2)：値 `x` が `len` 個並ぶ区間情報を構築する。
@@ -244,7 +248,7 @@ F id()
 ### ActedMonoidUpdMaxSum
 
 ```cpp
-ActedMonoidUpdMaxSum<T, infty = nullptr>
+ActedMonoidUpdMaxSum<T, infty = nullptr, L = ll>
 ```
 
 要素型 `S` は公開メンバ `mx`, `sum`, `len` を持つ。作用型 `F` は、単位元かを表す `is_id` と更新値 `val` を持つ。
@@ -253,8 +257,8 @@ ActedMonoidUpdMaxSum<T, infty = nullptr>
 
 ```cpp
 (1) S()
-(2) S(T x, int len = 1)
-(3) S(T mx, T sum, int len)
+(2) S(T x, L len = 1)
+(3) S(T mx, T sum, L len)
 ```
 
 - (2)：値 `x` が `len` 個並ぶ区間情報を構築する。

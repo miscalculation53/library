@@ -1,6 +1,20 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 半環 `SR` などの内積（積和）を計算する。
+
+## 使用例
+
+```cpp
+vc<ll> a{4, 10, -2}, b{7, 1, 8};
+auto x = dot_product<RingAddSubMul<ll>>(3, a.begin(), b.begin());  // 22
+auto y = dot_product<SemiRingMinPlus<ll>>(3, a.begin(), b.begin()); // 6
+```
+
+## 詳細なドキュメント
+
+#### dot_product
 
 ```cpp
 SR::S dot_product<SR>(int n, It1 a, It2 b)
@@ -8,17 +22,22 @@ SR::S dot_product<SR>(int n, It1 a, It2 b)
 
 それぞれの iterator から `n` 要素ずつ読み、$\sum_{i=0}^{n-1}a_i b_i$ を返す。
 `n >= 0`。`n=0` は零元。逆向き iterator にも対応する。
-時間 $O(n)$、追加空間 $O(1)$。
+追加空間 $O(1)$。
+
+##### 制約
+
+- $n\ge0$。両方の iterator から $n$ 要素を読める。
+- `SR` は後述の半環の演算を備える。
+
+##### 計算量
+
+- $O(n)$
 
 必要なインターフェースは `SR::S`、`SR::e0()`、`SR::add(a, b)`、`SR::mul(a, b)` のみ。
 逆元・符号反転・乗法の単位元は使わないので、体である必要はない。
 積は `SR::mul(a_i, b_i)` の順に計算し、零元から入力順に加算する。
 
-```cpp
-vc<ll> a{4, 10, -2}, b{7, 1, 8};
-auto x = dot_product<RingAddSubMul<ll>>(3, a.begin(), b.begin());  // 22
-auto y = dot_product<SemiRingMinPlus<ll>>(3, a.begin(), b.begin()); // 6
-```
+
 
 `S` が `static_modint32<mod>` または `dynamic_modint32<id>` で、
 `SR` が次のいずれかなら専用の高速化を適用する。

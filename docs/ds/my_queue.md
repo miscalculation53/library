@@ -1,8 +1,23 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 `vector` と先頭位置で管理する自作 queue。
 
 デフォルトの `std::queue` は、`std::deque` を使っているが、`std::deque` はメモリ使用量が多い。
+
+## 使用例
+
+```cpp
+#include "ds/my_queue.hpp"
+
+MyQueue<int> q;
+q.push(3);
+q.push(8);
+assert(q.front() == 3);
+q.pop();
+assert(q.content() == (vc<int>{8}));
+```
 
 ## 詳細なドキュメント
 

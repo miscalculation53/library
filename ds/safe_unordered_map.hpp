@@ -1,5 +1,26 @@
 #pragma once
 
+/*!
+ * SplitMix64 mixing function: https://prng.di.unimi.it/splitmix64.c
+ *
+ * Written in 2015 by Sebastiano Vigna (vigna@acm.org)
+ *
+ * To the extent possible under law, the author has dedicated all copyright
+ * and related and neighboring rights to this software to the public domain
+ * worldwide.
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+ * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+
 #include "../template/template_all_but_modint.hpp"
 
 /**
@@ -7,7 +28,7 @@
  * @docs docs/ds/safe_unordered_map.md
  */
 
-// https://xuzijian629.hatenablog.com/entry/2019/03/31/130708
+//! https://xuzijian629.hatenablog.com/entry/2019/03/31/130708
 
 struct safe_hash
 {

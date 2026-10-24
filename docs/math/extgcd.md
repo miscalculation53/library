@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 拡張ユークリッド互除法により、最大公約数とベズー係数を求める。
@@ -26,6 +28,13 @@
     
     と書ける。
 
+## 使用例
+
+```cpp
+auto [g, x, y] = extgcd(30LL, 18LL);
+assert(g == 6 && 30 * x + 18 * y == g);
+```
+
 ## 詳細なドキュメント
 
 #### extgcd
@@ -50,4 +59,4 @@ tuple<T, T, T> extgcd(T a, T b)
 
 ##### 計算量
 
-- $O(1 + \log \min(\lvert a \rvert, \lvert b \rvert))$
+- $O(\log \min(\lvert a \rvert, \lvert b \rvert))$

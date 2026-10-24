@@ -1,6 +1,20 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 テンプレート（vector）
+
+## 使用例
+
+```cpp
+#include "template/template_all_but_modint.hpp"
+
+auto squares = GEN_VEC(4, i, i * i);
+assert(squares == vc<int>({0, 1, 4, 9}));
+auto dp = dvec<ll>({2, 3}, -1);
+dp[1][2] = 5;
+assert(dp[0][0] == -1 && dp[1][2] == 5);
+```
 
 ## 詳細なドキュメント
 
@@ -60,7 +74,7 @@ auto sets = gen_vec(5, [&](int) { return pool.make_set(); });
 
 ##### 計算量
 
-- $O(n+1)$。`f` と要素の構築にかかる時間は別途必要
+- $O(n)$。`f` と要素の構築にかかる時間は別途必要
 
 ### 多次元 vector の生成
 

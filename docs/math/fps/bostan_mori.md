@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 $\displaystyle [x^k] \frac{p(x)}{q(x)}$ を求めるアルゴリズム。ただし $[x^0]q(x) \neq 0$ とする。線形漸化的数列の第 $k$ 項を求めるなどの応用がある。
@@ -13,7 +15,7 @@ $\dfrac{P(x)}{Q(x)} = \dfrac{P(x) Q(-x)}{Q(x) Q(-x)} = \dfrac{U_\text{e}(x^2) + 
 
 この実装では、次数 $d \ge 64$ のとき、残りの添字 $t$ が $d$ 以下になったら FPS 除算に切り替える。分母の逆数を $t+1$ 項求め、分子との積の第 $t$ 係数を内積で取り出す。これにより、末尾の約 $\log_2 d$ 回の Bostan–Mori の反復を省ける。最初から $k \le d$ なら、次数によらず直接 FPS 除算で求める。
 
-NTT を直接使える法と、任意の法の両方に適用する。[速度比較](bostan_mori_benchmark.md)も参照。
+NTT を直接使える法と、任意の法の両方に適用する。
 
 ## 使用例
 
@@ -46,6 +48,6 @@ $[x^k] \dfrac{p(x)}{q(x)}$ を求める。$k < 0$ のときは $0$ を返す。
 
 $k \ge 0$、$q(x)$ の次数を $d \ge 1$ として
 
-- $O\!\left(d\log(d+1)\left(1+\log\left(1+\frac{k}{d}\right)\right)\right)$
+- $O\!\left(d\log d\left(1+\log\left(1+\frac{k}{d}\right)\right)\right)$
 
 $\deg p \ge d$ の場合は、最初の多項式除算の計算量が加わる。$d=0$ の場合は $O(|p|)$。

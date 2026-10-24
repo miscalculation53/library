@@ -13,6 +13,22 @@ template <class T>
 struct has_less<T, void_t<decltype(declval<T>() < declval<T>())>> : true_type
 {};
 
+template <class T, class = void>
+struct has_ordered_helpers : false_type
+{};
+
+template <class T>
+struct has_ordered_helpers<T, void_t<decltype(abs(declval<T>())), decltype(sgn(declval<T>()))>> : true_type
+{};
+
+template <class T, class = void>
+struct has_rounding_helpers : false_type
+{};
+
+template <class T>
+struct has_rounding_helpers<T, void_t<decltype(floor(declval<T>())), decltype(ceil(declval<T>()))>> : true_type
+{};
+
 // Test focus: unreduced storage, overflow-safe comparison, arithmetic, reduction, and printing.
 void test_integer()
 {
@@ -39,16 +55,16 @@ void test_integer()
   assert(quot.num == 10 && quot.den == 12);
   auto self = x;
   self += self;
-  assert(self.num == 16 && self.den == 16);
+  assert(self.num == 4 && self.den == 4);
   self = x;
   self -= self;
-  assert(self.num == 0 && self.den == 16);
+  assert(self.num == 0 && self.den == 4);
   self = x;
   self *= self;
   assert(self.num == 4 && self.den == 16);
   self = x;
   self /= self;
-  assert(self.num == 8 && self.den == 8);
+  assert(self.num == 1 && self.den == 1);
   assert(-x == Rational<ll>(-1, 2));
   assert(x + 1 == Rational<ll>(3, 2));
   assert(1 + x == Rational<ll>(3, 2));
@@ -62,6 +78,138 @@ void test_integer()
   static_assert(has_less<Rational<ll>>::value);
 }
 
+// 大きな共通因子を掛ける前に処理し、gcd を使わずに表現の肥大化を抑える。
+void test_gcd_free_arithmetic()
+{
+  using R = Rational<ll>;
+  const ll v = numeric_limits<ll>::max();
+  auto check = [](const R &x, ll num, ll den) { assert(x.num == num && x.den == den); };
+  R x(1, v), y(2, v), zero(0, v - 1);
+  check(x + y, 3, v);
+  check(y - x, 1, v);
+  check(x - y, -1, v);
+  check(x + R(-2, -v), 3, v);
+  R sum;
+  repi(i, 1000) sum += x;
+  check(sum, 1000, v);
+  sum = x;
+  sum += sum;
+  check(sum, 2, v);
+  sum -= sum;
+  check(sum, 0, v);
+
+  check(x + zero, 1, v);
+  check(zero + x, 1, v);
+  check(x - zero, 1, v);
+  check(zero - x, -1, v);
+  check(x * zero, 0, 1);
+  check(zero * x, 0, 1);
+  check(zero / x, 0, 1);
+  check(zero * zero, 0, 1);
+
+  check(R(v, 3) * R(5, v), 5, 3);
+  check(R(5, v) * R(v, 3), 5, 3);
+  check(R(2, v) * R(v, 2), 1, 1);
+  check(R(2, v) / R(3, v), 2, 3);
+  check(R(2, v) / R(-3, v), -2, 3);
+  check(R(v, 3) / R(v, 5), 5, 3);
+  check(R(-v, 3) / R(-v, 5), 5, 3);
+  check(R(1LL << 62) / R(-1, 2), numeric_limits<ll>::lowest(), 1);
+  R self(v, v);
+  self *= self;
+  check(self, 1, 1);
+  self = R(v, v);
+  self /= self;
+  check(self, 1, 1);
+  self = R(numeric_limits<ll>::lowest(), v);
+  self /= self;
+  check(self, 1, 1);
+
+  // 交差積は ll を超えるが、差と保存する分母は ll に収まる。
+  check(R(v, 2) + R(-v, 3), v, 6);
+  check(R(v, 2) - R(v, 3), v, 6);
+  const uint uv = numeric_limits<uint>::max();
+  auto udiff = Rational<uint>(uv, 2) - Rational<uint>(uv, 3);
+  assert(udiff.num == uv && udiff.den == 6);
+
+  // 128 ビット型でも共通分母の比較は乗算を要しない。
+  using W = Rational<i128>;
+  const i128 wv = numeric_limits<i128>::max();
+  auto wsum = W(wv, 2) + W(-wv, 3);
+  auto wdiff = W(wv, 2) - W(wv, 3);
+  assert(wsum.num == wv && wsum.den == 6);
+  assert(wdiff.num == wv && wdiff.den == 6);
+  assert(W(wv - 1, wv) < W(wv, wv));
+  assert(W(wv, wv) == W(wv, wv));
+  assert(W(wv - 1, wv) != W(wv, wv));
+  assert(W(-wv, wv) < W(-wv + 1, wv));
+  const u128 uwv = numeric_limits<u128>::max();
+  assert(Rational<u128>(uwv - 1, uwv) < Rational<u128>(uwv, uwv));
+}
+
+// 小さな値は整数の交差積を参照にして、すべての四則演算を検証する。
+void test_small_arithmetic()
+{
+  using R = Rational<ll>;
+  auto check = [](const R &x, ll num, ll den) {
+    assert(x.den > 0);
+    assert(x.num * den == num * x.den);
+  };
+  for (ll a = -6; a <= 6; ++a)
+    for (ll b = 1; b <= 6; ++b)
+      for (ll c = -6; c <= 6; ++c)
+        for (ll d = 1; d <= 6; ++d)
+        {
+          R x(a, b), y(c, d);
+          check(x + y, a * d + c * b, b * d);
+          check(x - y, a * d - c * b, b * d);
+          check(x * y, a * c, b * d);
+          if (c != 0) check(x / y, a * d, b * c);
+          assert((x == y) == (a * d == c * b));
+          assert((x < y) == (a * d < c * b));
+        }
+}
+
+void test_helpers()
+{
+  using R = Rational<ll>;
+  static_assert(has_ordered_helpers<R>::value && has_rounding_helpers<R>::value);
+  static_assert(!has_rounding_helpers<Rational<double>>::value);
+  for (ll num = -30; num <= 30; ++num)
+    for (ll den = 1; den <= 20; ++den)
+    {
+      R x(num, den);
+      R a = abs(x);
+      assert(a.num == std::abs(num) && a.den == den);
+      assert(x.abs() == a);
+      assert(sgn(x) == (num > 0) - (num < 0) && x.sgn() == sgn(x));
+      ll f = floor(x), c = ceil(x);
+      assert(f * den <= num && num < (f + 1) * den);
+      assert((c - 1) * den < num && num <= c * den);
+      assert(x.floor() == f && x.ceil() == c);
+      if (num != 0)
+      {
+        R y = inv(x);
+        assert(y.num == (num < 0 ? -den : den) && y.den == std::abs(num));
+        assert(x.inv() == y && x * y == R(1));
+      }
+      assert(x.num == num && x.den == den);
+    }
+  const ll lo = numeric_limits<ll>::lowest(), hi = numeric_limits<ll>::max();
+  assert(floor(R(lo)) == lo && ceil(R(lo)) == lo);
+  assert(floor(R(hi)) == hi && ceil(R(hi)) == hi);
+  assert(floor(R(lo, 3)) == lo / 3 - 1 && ceil(R(lo, 3)) == lo / 3);
+  assert(floor(R(hi, 3)) == hi / 3 && ceil(R(hi, 3)) == hi / 3 + 1);
+  assert(sgn(R(lo, hi)) == -1 && sgn(R(hi, hi)) == 1);
+  assert((R(lo, 2).reduced() == pair<ll, ll>{lo / 2, 1}));
+  const ull uhi = numeric_limits<ull>::max();
+  assert(floor(Rational<ull>(uhi, 2)) == uhi / 2);
+  assert(ceil(Rational<ull>(uhi, 2)) == uhi / 2 + 1);
+  const i128 wlo = numeric_limits<i128>::lowest();
+  assert(floor(Rational<i128>(wlo, 3)) == wlo / 3 - 1);
+  assert(ceil(Rational<i128>(wlo, 3)) == wlo / 3);
+}
+
 // Test focus: Rational<mint> supports field arithmetic without ordering or integer reduction.
 void test_modint()
 {
@@ -73,6 +221,15 @@ void test_modint()
   assert(x * Rational<mint>(mint(6), mint(5)) == Rational<mint>(mint(3), mint(5)));
   assert(x / Rational<mint>(mint(3), mint(7)) == Rational<mint>(mint(7), mint(6)));
   assert(!has_less<Rational<mint>>::value);
+  static_assert(!has_ordered_helpers<Rational<mint>>::value);
+  static_assert(!has_rounding_helpers<Rational<mint>>::value);
+  assert(x.inv() == Rational<mint>(mint(2)) && inv(x) == x.inv());
+  auto common_sum = x + Rational<mint>(mint(3), mint(4));
+  assert(common_sum.num == mint(5) && common_sum.den == mint(4));
+  auto common_quot = x / Rational<mint>(mint(3), mint(4));
+  assert(common_quot.num == mint(2) && common_quot.den == mint(3));
+  auto canceled = x * Rational<mint>(mint(4), mint(2));
+  assert(canceled.num == mint(1) && canceled.den == mint(1));
 
   auto [num, den] = x.reduced();
   assert(num == mint(2) && den == mint(4));
@@ -100,6 +257,9 @@ void test_infinity()
   assert(numeric_limits<R>::has_infinity);
   assert(R::infty() == inf && -R::infty() == ninf);
   assert(numeric_limits<R>::infinity() == inf);
+  assert(abs(inf) == inf && abs(ninf) == inf);
+  assert(sgn(inf) == 1 && sgn(ninf) == -1);
+  assert(inv(inf) == R(0) && inv(ninf) == R(0));
 }
 
 // Test focus: BigInteger numerators support ordering, reduction, infinity, and integral conversion.
@@ -116,6 +276,17 @@ void test_bigint()
   assert(inf + R(1) == inf);
   assert(R(1) / ninf == R(0));
   assert(-inf == ninf);
+  static_assert(has_ordered_helpers<R>::value && has_rounding_helpers<R>::value);
+  BI large("10000000000000000000000000000000000000001");
+  R z(-large, BI(3));
+  assert(abs(z).num == large && abs(z).den == BI(3));
+  assert(sgn(z) == -1);
+  assert(floor(z) == -large / BI(3) - BI(1));
+  assert(ceil(z) == -large / BI(3));
+  assert(inv(z).num == BI(-3) && inv(z).den == large);
+  assert(abs(ninf) == inf && sgn(inf) == 1 && inv(ninf) == R(0));
+  auto common_sum = R(BI(2), large) + R(BI(3), large);
+  assert(common_sum.num == BI(5) && common_sum.den == large);
   ostringstream oss;
   oss << inf;
   assert(oss.str() == "1/0");
@@ -154,6 +325,9 @@ void test_converting_constructor()
 int main()
 {
   test_integer();
+  test_gcd_free_arithmetic();
+  test_small_arithmetic();
+  test_helpers();
   test_modint();
   test_infinity();
   test_bigint();

@@ -1,6 +1,23 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 undo 可能な vector など
+
+## 使用例
+
+```cpp
+#include "ds/undo.hpp"
+
+VectorUndo<int> a(vc<int>{1, 2});
+a.snapshot();
+a.set(0, 7);
+a.set(1, 9);
+a.undo();
+assert(a.get(0) == 7 && a.get(1) == 2);
+a.rollback();
+assert(a.content() == (vc<int>{1, 2}));
+```
 
 ## 詳細なドキュメント
 

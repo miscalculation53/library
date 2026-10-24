@@ -1,6 +1,18 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 一次関数を合成で扱うモノイドと群。
+
+## 使用例
+
+```cpp
+#include "algebra/affine_function.hpp"
+
+using M = MonoidAffineFunction<ll>;
+auto h = M::op(M::S(2, 3), M::S(4, 5));  // (2x+3) ∘ (4x+5)
+assert(h.b == 8 && h.c == 13);
+```
 
 ## 詳細なドキュメント
 

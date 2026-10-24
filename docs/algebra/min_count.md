@@ -1,8 +1,20 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 `infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
 
 最小値の個数も持つモノイド
+
+## 使用例
+
+```cpp
+#include "algebra/min_count.hpp"
+
+using M = MonoidMinCount<ll>;
+auto x = M::op(M::S(2, 3), M::S(2, 4));
+assert(x.mn == 2 && x.cnt == 7);
+```
 
 ## 詳細なドキュメント
 

@@ -1,9 +1,36 @@
 #pragma once
 
+/*!
+ * Portions adapted from https://github.com/hitonanode/cplib-cpp/blob/30eca5de7eb8e520cd13d5d7fd23d9edaeebe60e/graph/shortest_path.hpp
+ *
+ * MIT License
+ *
+ * Copyright (c) 2019 Ryotaro Sato
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 #include "../template/template_all_but_modint.hpp"
 
 #include "graph.hpp"
 #include "../ds/my_queue.hpp"
+#include "../ds/fibonacci_heap.hpp"
 #include "../utils/is_integral_ext.hpp"
 #include "../utils/resolved_infty.hpp"
 
@@ -12,9 +39,8 @@
  * @docs docs/graph/sssp.md
  */
 
-// 参考: https://hitonanode.github.io/cplib-cpp/graph/shortest_path.hpp
+//! 参考: https://hitonanode.github.io/cplib-cpp/graph/shortest_path.hpp
 // todo:
-// - fibonacci heap を用いた dijkstra の高速化
 // - SPFA 等
 
 template <bool is_directed, class Cost, auto infty = nullptr>
@@ -224,6 +250,36 @@ public:
       {
         if (chmin(dists[e.to], dists[v] + e.cost))
           prv[e.to] = e;
+      }
+    }
+    return dists;
+  }
+
+  vc<Dist> dijkstra_fibonacci(int s, int t = -1)
+  {
+    const int n = g.size();
+    assert(0 <= s && s < n);
+    init_solve(s, t);
+    dists.assign(n, inf());
+    prv.assign(n, {});
+    FibonacciHeap<Dist> que(n);
+    dists[s] = 0;
+    que.push(s, Dist(0));
+    while (!que.empty())
+    {
+      const auto [d, v] = que.top();
+      que.pop();
+      if (v == t) break;
+      for (const auto &e : g.out_edges(v))
+      {
+        if constexpr (is_integral_ext<Dist>)
+          if (e.cost >= inf() - d) continue;
+        const Dist next = d + e.cost;
+        if (next < dists[e.to])
+        {
+          dists[e.to] = next, prv[e.to] = e;
+          que.push_or_decrease(e.to, next);
+        }
       }
     }
     return dists;

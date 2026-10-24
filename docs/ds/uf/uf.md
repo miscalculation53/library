@@ -181,9 +181,23 @@ vc<I=ll> group_ids()
 
 長さ $n$ の vector を返す。$i$ 番目の要素には頂点 $i$ が属する連結成分の番号が格納される。番号の順番は未定義。
 
-ACL の `groups()` 相当のものが欲しい場合、これに `group_index` を噛ませること。
+成分ごとの頂点一覧は `content()` で取得できる。
 
 ##### 計算量
 
 - `compress` が `true` の場合、$O(n)$
 - `compress` が `false` の場合、$O(n \log n)$
+
+#### content
+
+```cpp
+vvc<int> content() const
+```
+
+連結成分ごとの頂点一覧を返す。各成分内は頂点番号の昇順、成分の並びは各成分の最小頂点番号の昇順となる。
+
+取得時の探索結果を一時配列に保持する。親配列・付加情報を維持し、`UnionFindUndo` とポテンシャルつき UnionFind でも利用できる。
+
+##### 計算量
+
+- $O(n)$

@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 素数 $p$ に対し、乗法群 $(\mathbb{Z}/p\mathbb{Z})^\times$ の元の位数や原始根を求めるライブラリ。
@@ -69,6 +71,14 @@ $n \geq 2$ の原始根が存在する条件は、$n$ が $2, 4, p^e, 2p^e$（$p
 - https://integers.hatenablog.com/entry/2016/07/24/163831
 - https://en.wikipedia.org/wiki/Primitive_root_modulo_n
 - https://ocw.mit.edu/courses/18-781-theory-of-numbers-spring-2012/resources/mit18_781s12_lec8/
+
+## 使用例
+
+```cpp
+auto fac = factorize(16); // 17 - 1
+ll g = primitive_root(17, fac);
+assert(order_mod(g, 17, fac) == 16);
+```
 
 ## 詳細なドキュメント
 

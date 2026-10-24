@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 乗法的関数の $f(1), \dots, f(n)$ を列挙する。
@@ -86,7 +88,7 @@ $f(p^e)$ を返す。両方呼べる場合は単引数を優先する。
 
 ##### 計算量
 
-- $O(n+1)$ に、各素数冪でのコールバック評価時間の合計を加えたもの。
+- $O(n)$ に、各素数冪でのコールバック評価時間の合計を加えたもの。
 
 #### enumerate_completely_multiplicative
 
@@ -109,7 +111,7 @@ auto enumerate_completely_multiplicative(int n, const F &f_primepower);
 
 ##### 計算量
 
-- コールバックが $O(t)$ 時間なら $O(n+1+\pi(n)t)$。
+- コールバックが $O(t)$ 時間なら $O(n+\pi(n)t)$。
 
 
 ##### 制約
@@ -124,16 +126,16 @@ auto enumerate_completely_multiplicative(int n, const F &f_primepower);
 
 整数 $a$ を環に写す時間を $C(a)$ とする。
 通常の数値型の `RingAddSubMul`・`FieldAddSubMulDiv`、および `RingXorAnd` では $C(a)=O(1)$。
-一般の環では $C(a)=O(\log(|a|+1))$。
+一般の環では $C(a)=O(\log |a|)$。
 
 | ラムダ式 | 素数冪一つあたりの時間 |
 | --- | --- |
 | `e_primepower`, `zeta_primepower`, `mobius_primepower` | $O(1)$ |
 | `id_primepower`, `divisor_sum_primepower`, `totient_primepower` | 整数変換を $O(1)$ 回 |
-| `divisor_count_primepower` | $O(1+C(e+1))$ |
-| `pow_primepower(k)` | $O(C(p^e)+\log(k+1)+1)$ |
+| `divisor_count_primepower` | $O(C(e+1))$ |
+| `pow_primepower(k)` | $O(C(p^e)+\log k)$ |
 | `pow_inv_primepower(k)` | 上記に逆元計算時間を加えたもの |
-| `divisor_k_primepower(k)` | $O(C(p)+\log(k+1)+e+1)$ |
+| `divisor_k_primepower(k)` | $O(C(p)+\log k+e)$ |
 
 ## アルゴリズム
 

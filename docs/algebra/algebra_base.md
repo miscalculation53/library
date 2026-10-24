@@ -1,8 +1,21 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 データ構造などに代数的構造を載せるとき、代数的構造を struct で表現することにする。
 
 https://noshi91.hatenablog.com/entry/2020/04/22/212649 の E の方法を採用。
+
+## 使用例
+
+```cpp
+#include "algebra/algebra_basic_ops.hpp"
+
+using G = GroupAddSub<ll>;
+assert(G::op(3, 5) == 8);
+assert(G::op(3, G::inv(3)) == G::e());
+static_assert(HasInverse<G>::value);
+```
 
 ## 詳細なドキュメント
 

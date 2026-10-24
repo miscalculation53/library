@@ -10,12 +10,12 @@ int main()
   FormalPowerSeries<modint998244353> a(n), b(m);
   for (auto &x : a) cin >> x;
   for (auto &x : b) cin >> x;
-  auto [ok, c] = polynomial_inv_mod(a, b);
-  if (!ok) cout << -1 << '\n';
+  const auto c = polynomial_inv_mod(a, b);
+  if (!c) cout << -1 << '\n';
   else
   {
-    cout << c.size() << '\n';
-    for (auto x : c) cout << x << ' ';
+    cout << c->size() << '\n';
+    for (auto x : *c) cout << x << ' ';
     cout << '\n';
   }
 }

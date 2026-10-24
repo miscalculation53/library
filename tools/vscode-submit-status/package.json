@@ -1,9 +1,9 @@
 {
   "name": "kyopro-submit-status",
   "displayName": "oj-b / cln 準備状況",
-  "description": "提出用コードの生成状況とサイズをステータスバーに表示します。",
-  "version": "0.1.0",
-  "publisher": "dai-oi-local",
+  "description": "提出用コードを自動照合し、生成の進行状況とサイズを表示します。",
+  "version": "0.3.2",
+  "publisher": "kyopro-local",
   "engines": { "vscode": "^1.85.0" },
   "categories": ["Other"],
   "activationEvents": ["onStartupFinished", "onLanguage:cpp"],

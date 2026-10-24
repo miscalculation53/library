@@ -42,6 +42,8 @@ struct DefaultMap : map<Key, Value>
 
   Value at(const Key &key) const { return operator[](key); }
   Value &at(const Key &key) { return operator[](key); }
+
+  vc<pair<Key, Value>> content() const { return {this->begin(), this->end()}; }
 };
 
 // default_value は値、またはそれを返す引数なしの関数
@@ -64,6 +66,8 @@ struct DefaultUnorderedMap : unordered_map<Key, Value, safe_hash>
 
   Value at(const Key &key) const { return operator[](key); }
   Value &at(const Key &key) { return operator[](key); }
+
+  vc<pair<Key, Value>> content() const { return {this->begin(), this->end()}; }
 };
 
 // default_value は値、またはそれを返す引数なしの関数

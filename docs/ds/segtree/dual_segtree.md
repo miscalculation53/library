@@ -1,6 +1,21 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 双対セグメント木。区間作用・一点取得ができる。
+
+## 使用例
+
+```cpp
+#include "ds/segtree/dual_segtree.hpp"
+
+using A = ActCompoundAssignment<MonoidAdd<ll>>;
+DualSegmentTree<A> seg(vc<ll>{1, 2, 3});
+seg.apply(0, 2, 5);
+assert(seg.get(0) == 6);
+seg.set(1, 10);
+assert(seg.content() == (vc<ll>{6, 10, 3}));
+```
 
 ## 詳細なドキュメント
 

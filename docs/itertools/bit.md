@@ -1,6 +1,21 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 部分集合・上位集合全探索
+
+## 使用例
+
+```cpp
+#include "itertools/bit.hpp"
+
+vc<ull> masks;
+for (ull mask : bsubsets(0b101ULL)) masks.push_back(mask);
+assert(masks == vc<ull>({5, 4, 1, 0}));
+masks.clear();
+for (ull mask : bsupsets(3, 0b001ULL)) masks.push_back(mask);
+assert(masks == vc<ull>({1, 3, 5, 7}));
+```
 
 ## 詳細なドキュメント
 

@@ -1,6 +1,15 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 多倍長整数
+
+## 使用例
+
+```cpp
+BigInteger<> a("12345678901234567890"), b(10);
+assert((a / b).to_string() == "1234567890123456789");
+```
 
 ## 詳細なドキュメント
 
@@ -14,7 +23,7 @@ BigInteger<base = 10, digit = 6>
 
 以下では、内部基数での桁数を $N$、長さ $N$ の畳み込み時間を $M(N)$ とする。現在の実装では、大きな整数同士の乗算に畳み込みを使う。
 
-整数との加減算・乗除算・剰余では、整数の絶対値 $v$ と内部基数 $B=\mathrm{base}^{\mathrm{digit}}$ を使って計算幅を選ぶ。64 bit 以上の整数を渡しても、$v\le\lfloor(2^{64}-1)/B\rfloor$ なら各桁を `ull` で処理する。それより大きい値は従来の拡張型を使う。[速度比較](runtime_integer_width.md)。
+整数との加減算・乗除算・剰余では、整数の絶対値 $v$ と内部基数 $B=\mathrm{base}^{\mathrm{digit}}$ を使って計算幅を選ぶ。64 bit 以上の整数を渡しても、$v\le\lfloor(2^{64}-1)/B\rfloor$ なら各桁を `ull` で処理する。それより大きい値は従来の拡張型を使う。
 
 制約：
 
@@ -167,7 +176,7 @@ BigInteger inv(int d)
 - (2)：商と剰余 `(q, r)` を返す。`*this == q * b + r` で、`r` の符号は `*this` と同じ。
 - (3), (5)：(2) の剰余を返す。
 
-除数が内部基数で1桁なら線形時間の除算を行う。それ以外では、小〜中サイズには筆算除算、大きいサイズにはNewton法による逆数計算を使用する。
+除数が内部基数で1桁なら線形時間の除算を行う。小さな除数には筆算を使い、大きな除数には整数逆数の近似を使う。被除数が長い場合は、除数の桁数に合わせたブロックごとに処理する。
 
 ##### 制約
 
@@ -175,11 +184,10 @@ BigInteger inv(int d)
 
 ##### 計算量
 
-被除数と除数の内部桁数をそれぞれ $N$, $D$、商の最大桁数を $Q=\max(1,N-D+1)$ とする。
+被除数と除数の内部桁数をそれぞれ $N$, $D$ とする。
 
-- $D=1$：$O(N)$
-- 筆算除算を使う場合：$O(DQ)$
-- Newton法を使う場合：$O(M(N)\log N)$
+- 時間：$O(\lceil N/D \rceil M(D)+N)$
+- 追加領域：$O(N+D)$
 
 #### 整数型との加減算
 
@@ -315,7 +323,7 @@ void wt1(const BigInteger& a)
 
 ### 丸めつき除算
 
-以下の関数は、引数の片方または両方に整数型を使う overload も持つ。
+以下の関数は、引数の片方または両方に整数型を使う overload も持つ。被除数と除数の内部桁数をそれぞれ $N$, $D$ とする。
 
 #### divfloor
 
@@ -331,7 +339,7 @@ $\left\lfloor a/b \right\rfloor$ を返す。
 
 ##### 計算量
 
-- `b` が `BigInteger`：$O(M(N)\log N)$
+- `b` が `BigInteger`：$O(\lceil N/D \rceil M(D)+N)$
 - `b` が組み込み整数型：$O(N)$
 
 #### divceil
@@ -348,24 +356,7 @@ $\left\lceil a/b \right\rceil$ を返す。
 
 ##### 計算量
 
-- `b` が `BigInteger`：$O(M(N)\log N)$
-- `b` が組み込み整数型：$O(N)$
-
-#### divround
-
-```cpp
-BigInteger divround(a, b)
-```
-
-$a/b$ を最も近い整数へ丸める。同距離の場合は大きい方へ丸める。
-
-##### 制約
-
-- `b > 0`
-
-##### 計算量
-
-- `b` が `BigInteger`：$O(M(N)\log N)$
+- `b` が `BigInteger`：$O(\lceil N/D \rceil M(D)+N)$
 - `b` が組み込み整数型：$O(N)$
 
 #### safemod
@@ -382,7 +373,7 @@ $0 \leq r < b$ を満たす剰余 $r$ を返す。
 
 ##### 計算量
 
-- `b` が `BigInteger`：$O(M(N)\log N)$
+- `b` が `BigInteger`：$O(\lceil N/D \rceil M(D)+N)$
 - `b` が組み込み整数型：$O(N)$
 
 #### safedivmod
@@ -399,5 +390,5 @@ pair<BigInteger, BigInteger> safedivmod(a, b)
 
 ##### 計算量
 
-- `b` が `BigInteger`：$O(M(N)\log N)$
+- `b` が `BigInteger`：$O(\lceil N/D \rceil M(D)+N)$
 - `b` が組み込み整数型：$O(N)$

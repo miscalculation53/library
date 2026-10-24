@@ -9,7 +9,7 @@
  * @docs docs/math/modint/modint_fast.md
  */
 
-// https://maspypy.com/o1-mod-inv-mod-pow
+//! https://maspypy.com/o1-mod-inv-mod-pow
 namespace internal
 {
 

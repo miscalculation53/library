@@ -16,7 +16,7 @@
 #include "template/template_all_but_modint.hpp"
 
 #include "string/aho_corasick.hpp"
-#include "graph/tree/rooted_tree.hpp"
+#include "tree/rooted_tree.hpp"
 
 void init()
 {

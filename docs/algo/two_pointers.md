@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 尺取り法。
@@ -22,6 +24,20 @@ $$
 $$
 L_r = \min\left\{x \in \mathbb{Z} \mathrel{\middle|} 0 \leq x \leq r,\ \operatorname{judge}(x,r) = \mathrm{true}\right\}
 $$
+
+## 使用例
+
+```cpp
+#include "algo/two_pointers.hpp"
+
+vc<int> a{1, 2, 3};
+int sum = 0;
+auto add = [&](int, int r) { sum += a[r]; };
+auto erase = [&](int l, int) { sum -= a[l]; };
+auto judge = [&](int, int) { return sum <= 3; };
+auto r = right_ok(3, add, erase, judge);
+assert(r == vc<ll>({2, 2, 3, 3}));
+```
 
 ## 詳細なドキュメント
 

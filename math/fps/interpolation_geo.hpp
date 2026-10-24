@@ -14,7 +14,7 @@
 
 // i = 0, 1, ..., n-1 に対し f(ar^i) = y[i] であるとき f (n-1 次) を求める
 // 制約: 1 <= i < n に対して r^i != 1
-// https://noshi91.github.io/algorithm-encyclopedia/polynomial-interpolation-geometric#noredirect
+//! https://noshi91.github.io/algorithm-encyclopedia/polynomial-interpolation-geometric#noredirect
 template <class mint>
 FormalPowerSeries<mint> interpolation_geo(const mint &a, const mint &r, const vc<mint> &ys)
 {

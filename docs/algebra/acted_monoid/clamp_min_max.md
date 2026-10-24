@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれている可能性があります。
+
 ## 概要
 
 `infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
@@ -12,6 +14,8 @@ $$
 $$
 
 したがって和を取得しない部分問題では Segment Tree Beats は不要で、`LazySegmentTree` を利用できる。
+
+操作列による一つの初期値の移動距離・利得は [MonoidClampAddCost](../clamp_add_cost.md)、配列全体への更新後の和は [ActedMonoidChminChmaxAddMinMaxSum](chmin_chmax_add_min_max_sum.md) が対応する。
 
 ## 使用例
 

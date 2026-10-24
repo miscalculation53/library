@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 $m$ の約数の整除関係に関する約数・倍数 ゼータ・メビウス変換。
@@ -93,6 +95,15 @@ g(m) &:= \sum_{\mathrm{lcm}(a_{i_1}, \dots, a_{i_k}) \mid m} h(i_1, \dots, i_k) 
 
 以下、本ライブラリの話。
 
+## 使用例
+
+```cpp
+ZetaMobiusDivisorMultipleLarge transform(12, factorize(12));
+auto a = transform.divisor_map([](ll) { return 1LL; });
+auto sums = transform.zeta_divisor<MonoidAdd<ll>>(a);
+assert(sums.get_by_d(12) == 6); // 12 の約数の個数
+```
+
 ## 詳細なドキュメント
 
 #### メンバ変数
@@ -117,7 +128,7 @@ ZetaMobiusDivisorMultipleLarge(ll m)
 
 ```cpp
 (1) DivisorMap<T> divisor_map()
-(2) DivisorMap<T> divisor_map(function<T(ll)> func)
+(2) auto divisor_map(F func)
 ```
 
 変換の対象となる列は `DivisorMap` という構造体で管理する。

@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 https://noshi91.github.io/algorithm-encyclopedia/polynomial-interpolation-geometric#noredirect
@@ -5,6 +7,14 @@ https://noshi91.github.io/algorithm-encyclopedia/polynomial-interpolation-geomet
 導出は ↑ を参照（結構手間）。
 
 実装上は $r^n \equiv 1$ となる場合にちょっと注意。
+
+## 使用例
+
+```cpp
+using mint = modint998244353;
+auto f = interpolation_geo(mint(1), mint(2), vc<mint>{2, 3, 5});
+assert(f.eval(3) == 4); // f(x) = 1 + x
+```
 
 ## 詳細なドキュメント
 

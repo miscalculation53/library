@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 静的・オフラインな区間クエリについて、区間の端を追加・削除する処理を $O(N\sqrt{Q})$ 回、現在の区間の答えを計算する処理を $O(Q)$ 回行うことで処理するアルゴリズム。
@@ -5,12 +7,28 @@
 右端を [基数ソート](../../algo/radix_sort.md) で一度整列し、ブロック幅 3 通りと半ブロックずらしの有無から 6 通りの処理順を作る。
 クエリ間の移動距離の総和が最小の候補を採用する。総和は `long long` で計算する。
 
-定数倍の解析は [noshi91 の記事](https://noshi91.hatenablog.com/entry/2023/04/13/224811)、実装の比較は [ベンチマーク](../../../benchmark/mo.md) を参照。
+定数倍の解析は [noshi91 の記事](https://noshi91.hatenablog.com/entry/2023/04/13/224811)を参照。
 
 もしかして：
 
 - 削除が苦しいとき → Rollback Mo を検討
 - 平方分割を使って追加・削除を $O(1)$ 時間、答えの取得を $O(\sqrt{N})$ 時間にできれば、全体 $O(N\sqrt{Q} + Q\sqrt{N})$ 時間にできる
+
+## 使用例
+
+```cpp
+#include "ds/mo/mo.hpp"
+
+vc<ll> a{2, 5, 3};
+vc<pair<int, int>> ranges{{0, 2}, {1, 3}};
+vc<ll> answers(ranges.size());
+ll sum = 0;
+mo(a.size(), ranges,
+   [&](int i, bool) { sum += a[i]; },
+   [&](int i, bool) { sum -= a[i]; },
+   [&](int qid) { answers[qid] = sum; });
+assert(answers == (vc<ll>{7, 8}));
+```
 
 ## 詳細なドキュメント
 
@@ -53,5 +71,3 @@ $q = \lvert \mathrm{lrs} \rvert$ として
 - 前処理：固定幅の整数型に対して $O(q)$
 - $O(n\sqrt{q})$ 回の `add`, `del` 呼び出し
 - $O(q)$ 回の `rem` 呼び出し
-
-$q=0$ のときは $O(1)$。

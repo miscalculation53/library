@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 デフォルト値を指定できる map。Python の defaultdict のように、未登録のキーへのアクセス時に指定した値を使う。
@@ -28,6 +30,8 @@ lists[0].push_back(300);
 ```
 
 ## 詳細なドキュメント
+
+### DefaultMap / DefaultUnorderedMap / DefaultHashMap
 
 #### コンストラクタ
 
@@ -63,10 +67,25 @@ Value at(const Key& key) const
 
 ##### 計算量
 
-- `DefaultMap`：$O(\log(n + 1))$
+- `DefaultMap`：$O(\log n)$
 - `DefaultUnorderedMap` / `DefaultHashMap`：償却期待 $O(1)$、最悪 $O(n)$
 
 デフォルト値の生成や値のコピーにかかる時間は別途必要。
+
+#### content
+
+```cpp
+vc<pair<Key, Value>> content() const
+```
+
+登録済みのキーと値を返す。`DefaultMap` はキーの昇順、`DefaultUnorderedMap` と `DefaultHashMap` は走査順で返す。ハッシュを使う型の順序は未規定。
+
+デフォルト値の生成やキーの挿入は行わず、取得時点のコピーを作る。
+
+##### 計算量
+
+- `DefaultMap` / `DefaultUnorderedMap`：$O(n)$
+- `DefaultHashMap`：確保済みの容量に比例
 
 #### その他の操作
 

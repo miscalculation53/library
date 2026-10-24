@@ -39,8 +39,9 @@ optional<pair<vvc<T>, vvc<T>>> pade_2d(
     }
     rhs[row++] = -a[i][j];
   }
-  auto [ok, sol, basis] = mat.solve(rhs);
-  if (!ok) return nullopt;
+  const auto solution = mat.solve(rhs);
+  if (!solution) return nullopt;
+  const auto &sol = solution->first;
 
   vvc<T> p, q(1, vc<T>{T(1)});
   auto set = [](vvc<T> &f, int i, int j, T value)

@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 数論関数 $f$ の累積和 $F(x)=\sum_{i=1}^x f(i)$ を、根を取った商集合
@@ -97,7 +99,6 @@ for (ll l = 1, root = iroot(N, 2); l <= root; ) {
 以下では $D\ge1$ を固定定数とし、64 bit 整数の演算・整数根、環の基本演算・要素のコピーを $O(1)$ とする。
 また、$X=\lfloor N^{1/D}\rfloor$、$B=\lfloor N^{1/(D+1)}\rfloor$、
 $M=\lvert Q_{N,D}\rvert$ とする。$M=O(N^{1/(D+1)})$。
-時間計算量は $N\ge1$ に対する評価で、$N=0$ は $O(1)$。
 入力の準備・環の逆元計算の時間は別途加える。
 
 #### e_prefix_sum, zeta_prefix_sum, id_prefix_sum
@@ -129,7 +130,7 @@ auto triangular = id_prefix_sum(x, R{});
 
 - `e_prefix_sum`：$O(1)$。
 - `zeta_prefix_sum`, `id_prefix_sum`：通常の数値型の `RingAddSubMul`・
-  `FieldAddSubMulDiv`、および `RingXorAnd` では $O(1)$。一般の環では $O(\log(x+1)+1)$。
+  `FieldAddSubMulDiv`、および `RingXorAnd` では $O(1)$。一般の環では $O(\log x)$。
 - この時間は、構築時のコールバック評価時間に含める。
 
 #### dirichlet_convolution_sum
@@ -341,7 +342,7 @@ map<ll, S> content() const;
 
 ##### 計算量
 
-- $O(|Q_{N,D}|+1)=O(N^{1/(D+1)}+1)$。キーの昇順に挿入する。
+- $O(|Q_{N,D}|)=O(N^{1/(D+1)})$。キーの昇順に挿入する。
 
 #### convolve, operator*
 
@@ -418,7 +419,7 @@ Dirichlet 積の非負整数乗の累積和を返す。指数 $0$ では単位�
 
 ##### 計算量
 
-- $O(N^{2/(2D+1)}\log(\mathrm{exponent}+1)+N^{1/(D+1)})$。
+- $O(N^{2/(2D+1)}\log\mathrm{exponent}+N^{1/(D+1)})$。
 
 #### 加減算・スカラー演算
 
@@ -583,4 +584,3 @@ $B$ 以下の係数の積は `DirichletSeries::convolve` に渡す。
 `D=1` の積は従来の座標計算に特化した実装を使う。
 `DirichletSeries` 自体のインターフェースは変わらず、乗法的関数の和や一般化した Euler 積も
 従来通り `DirichletPrefixSum<R>` を使う。
-実測は [測定記録](../../../../benchmark/dirichlet_prefix_sum.md) を参照。

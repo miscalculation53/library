@@ -1,12 +1,27 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 https://qiita.com/okateim/items/e2f4a734db4e5f90e410
 
-ブロック分割と sparse table を組み合わせることで、ブロック幅 $B$ に対して前計算 $O\left(\dfrac{N}{B} \log \dfrac{N}{B}\right)$ 時間・空間（$B = \log N$ ととると $O(N)$）、異なるブロック間のクエリ $O(1)$ 時間になるのだった。モノイドが $\min, \max$ などであるときに限り、同じブロック内のクエリも適切な前計算のもと $O(1)$ 時間でできるようにする。（アイデアはスライド最小値。）
+ブロック分割と sparse table を組み合わせることで、ブロック幅 $B$ に対して前計算 $O\left(N+\dfrac{N}{B} \log \dfrac{N}{B}\right)$ 時間・空間（$B = \Theta(\log N)$ ととると $O(N)$）、異なるブロック間のクエリ $O(1)$ 時間となる。モノイドが $\min, \max$ などの場合は、単調スタックの状態をビット列として前計算し、同じブロック内のクエリも $O(1)$ 時間で求める。
 
-実用上どちらが速いかはちゃんと測定してない（$N, Q$ の大きさにもよるかも。$N = Q$ なら雑に LC に投げた感じ同じくらい？ LC の fastest はブロック分割までらしい）。
+ブロック全体の積は、共通のブロック分割実装で求めた suffix の値を再利用する。
+
+## 使用例
+
+```cpp
+#include "algebra/algebra_basic_ops.hpp"
+#include "ds/static_range/linear_rmq.hpp"
+
+LinearRMQ<MonoidMin<ll>> rmq(vc<ll>{5, 2, 7, 1});
+assert(rmq.prod(0, 3) == 2);
+assert(rmq.get(3) == 1);
+```
 
 ## 詳細なドキュメント
+
+### LinearRMQ
 
 #### コンストラクタ
 
@@ -26,7 +41,7 @@ LinearRMQ<M, Word = uint64_t>(vc<M::S> v)
 
 `Word` のビット数を $B$ として
 
-- $O\left(\dfrac{n}{B}\log \dfrac{n}{B}\right)$
+- $O\left(n+\dfrac{n}{B}\log \dfrac{n}{B}\right)$
 
 #### get
 

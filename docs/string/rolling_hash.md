@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 基数 $B$ を固定し、列 $s$ のハッシュを
@@ -561,7 +563,7 @@ $L$ を短い方の列の長さ、$H$ を一回の部分ハッシュ取得の計
 
 ##### 計算量
 
-- $O(H \log (L + 1))$
+- $O(H \log L)$
 - `rhs` が文字列の場合：上記に加えて $O(\lvert rhs \rvert)$
 
 #### compare
@@ -578,8 +580,8 @@ $L$ を短い方の列の長さ、$H$ を一回の部分ハッシュ取得の計
 
 ##### 計算量
 
-- `RollingHash`、`RollingHashDeque` の view どうし：$O(\log (L + 1))$
-- 断片数 $b$ の `RollingHashConcat` の view を含む場合：$O(\log b \log (L + 1))$
+- `RollingHash`、`RollingHashDeque` の view どうし：$O(\log L)$
+- 断片数 $b$ の `RollingHashConcat` の view を含む場合：$O(\log b \log L)$
 - 一方が文字列の場合：上記に加えて $O(\lvert s \rvert)$
 
 #### operator+

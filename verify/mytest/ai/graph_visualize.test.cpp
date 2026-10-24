@@ -1,7 +1,7 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
 #include "graph/visualize.hpp"
-#include "graph/tree/merge_tree.hpp"
+#include "tree/merge_tree.hpp"
 
 // Parse URL parameters independently, as the site's URL loader does.
 map<string, string> parameters(const string &url)

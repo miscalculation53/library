@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 https://kmyk.github.io/blog/blog/2021/04/23/modulo-with-zero/
@@ -10,6 +12,15 @@ https://kmyk.github.io/blog/blog/2021/04/23/modulo-with-zero/
 を用いて $r = bp^c$ の形で表現し、$(b, c)$ を（$b$ は modint で）持つ。これにより乗除算が $r = 0$（$b = 0$）を除いて常にできるようになる。（加減算はできない）
 
 $p$ の倍数と $0$ は modint では同一視されるが、この表現では異なることに注意（$b = 0$ と $b \neq 0$）。たとえば「modint の列の区間積を累積和で求める」などは、$r \equiv 0$ を $(b, c) = (1, 1)$ だと思うことでできる。modint からの初期化はこの方法で実装している。
+
+## 使用例
+
+```cpp
+using mint = modint998244353;
+ModintDiv<mint> a(mint(2), 1), b(mint(3), 1);
+auto x = (a / b).to_modint();
+assert(x && *x == mint(2) / 3);
+```
 
 ## 詳細なドキュメント
 
@@ -61,14 +72,14 @@ $b \neq 0$ のとき、逆元 $(b^{-1}, -c)$ を返す。
 #### to_modint
 
 ```cpp
-pair<bool, mint> to_modint()
+optional<mint> to_modint() const
 ```
 
-(modint で表現できるか、表現できるときの値) を返す。
+modint で表現した値を返す。表現不能なら `nullopt`。
 
 - $c \gt 0$ なら $0$
 - $c = 0$ なら $b$
-- $c \lt 0$ なら表現不能
+- $c \lt 0$ なら `nullopt`
 
 ##### 計算量
 

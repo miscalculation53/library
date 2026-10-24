@@ -21,7 +21,8 @@ public:
   DisjointSparseTable() {}
   DisjointSparseTable(const vc<S> &v) : n(v.size())
   {
-    const int lg = bit_width(n);
+    if (n == 0) return;
+    const int lg = max(1, int(bit_width(n - 1)));
     dat.assign(lg, vc<S>(n));
     repi(j, lg)
     {

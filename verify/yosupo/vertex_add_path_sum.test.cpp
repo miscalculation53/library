@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "graph/tree/rooted_tree.hpp"
+#include "tree/rooted_tree.hpp"
 #include "ds/fenwick_tree/fenwick_tree.hpp"
 
 void init() {}

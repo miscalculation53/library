@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 長さ $n$ の数列から最短線形漸化式を一括で復元する。
@@ -5,9 +7,19 @@
 [多項式 Half-GCD](half_gcd.md) に帰着する。
 必要な長さの NTT が使える場合は $O(n\log^2 n)$ 時間、$O(n)$ 空間。
 
+## 使用例
+
 ```cpp
 vc<modint998244353> a{0, 1, 1, 2, 3, 5};
 auto c = berlekamp_massey_fast(a); // {-1,1,1}
+```
+
+## 詳細なドキュメント
+
+#### berlekamp_massey_fast
+
+```cpp
+vc<mint> berlekamp_massey_fast(const vc<mint>& a)
 ```
 
 返り値は `c[0] == -1`、`d = c.size()-1` として
@@ -23,7 +35,14 @@ $a_i=\sum_{j=1}^d c_j a_{i-j}$ がすべての $d\le i<n$ で成立する最小�
 
 長い低次数の列では、$O(n(d+1))$ の通常版が速いことがある。
 自動切り替えはせず、別 API として提供する。逐次更新には従来の `BerlekampMassey<F>` を使う。
-実測値は [ベンチマーク](../../../benchmark/half_gcd.md) を参照。
+
+##### 制約
+
+- 係数型 `mint` は体をなす modint。
+
+##### 計算量
+
+- 長さを $n$ として $O(n\log^2 n)$。必要な長さの NTT が使える場合。
 
 ## 帰着
 

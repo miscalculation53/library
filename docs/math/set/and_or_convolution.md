@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 and 畳み込みと or 畳み込みを計算する。
@@ -39,6 +41,14 @@ $\begin{aligned}
 &= \sum_{s\cup u} a(s) \sum_{t\cup u} b(t) \\\\  
 &= \zeta a(u) \zeta b(u)
 \end{aligned}$
+
+## 使用例
+
+```cpp
+vc<ll> a{1, 2}, b{3, 4};
+auto c = or_convolution<RingAddSubMul<ll>>(a, b);
+assert((c == vc<ll>{3, 18}));
+```
 
 ## 詳細なドキュメント
 

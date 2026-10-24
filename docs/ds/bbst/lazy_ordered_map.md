@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 [OrderedMapTree](ordered_map.md) に値への区間作用を加えた map。
@@ -52,7 +54,7 @@ void apply_by_key(const Key& lo, const Key& hi, const F& f);
 
 ##### 計算量
 
-- 期待 $O(\log(n+1))$。作用・モノイド演算・比較・値のコピーを $O(1)$ とする。
+- 期待 $O(\log n)$。作用・モノイド演算・比較・値のコピーを $O(1)$ とする。
 
 ### 対応する問題
 

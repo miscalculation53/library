@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 挿入・削除・反転・区間移動・分割・連結とモノイド積を扱う列。
@@ -6,8 +8,11 @@
 
 `M` は `S`, `op`, `e` を持つモノイドとする。
 各要素は `M::S` 型で、順位は格納した要素の個数で数える。
-各基本操作は Treap による期待 $O(\log(n+1))$。演算・値のコピーを $O(1)$ とする。
-所有権と計算量の前提は [共通実装](treap_base.md) を参照。
+各基本操作は Treap による期待 $O(\log n)$。演算・値のコピーを $O(1)$ とする。
+所有権と計算量の前提は [共通方針](treap_base.md) を参照。
+
+同じ型の列のノードをページにまとめて確保し、空になったページを解放する。
+確保領域は、同じ型の生存する列の総要素数を $N$ として $O(N)$。値型のアラインメントを保つ。
 
 ## 使用例
 
@@ -46,7 +51,7 @@ template <class Iter> SequenceTree<M>(Iter first, Iter last);
 
 ##### 計算量
 
-- 空の列は $O(1)$、$n$ 要素の列は $O(n)$。
+- デフォルト構築は $O(1)$、$n$ 要素からの構築は $O(n)$。
 
 #### size / empty / clear / content
 
@@ -85,8 +90,8 @@ void erase(int l, int r);
 
 ##### 計算量
 
-- 単一要素の操作は期待 $O(\log(n+1))$。
-- 区間版 `erase` は期待 $O(\log(n+1)+r-l)$。
+- 単一要素の操作は期待 $O(\log n)$。
+- 区間版 `erase` は期待 $O(\log n+r-l)$。
 
 #### prod / all_prod
 
@@ -103,7 +108,7 @@ S all_prod() const;
 
 ##### 計算量
 
-- `prod` は期待 $O(\log(n+1))$、`all_prod` は $O(1)$。
+- `prod` は期待 $O(\log n)$、`all_prod` は $O(1)$。
 
 #### split / concat / extract
 
@@ -124,8 +129,8 @@ SequenceTree<M> extract(int l, int r);
 
 ##### 計算量
 
-- `split`, `extract` は期待 $O(\log(n+1))$。
-- `concat` は相手の長さを $m$ として期待 $O(\log(n+m+1))$。
+- `split`, `extract` は期待 $O(\log n)$。
+- `concat` は相手の長さを $m$ として期待 $O(\log(n+m))$。
 
 #### reverse / move / rotate
 
@@ -147,7 +152,7 @@ void rotate(int l, int m, int r);
 
 ##### 計算量
 
-- 期待 $O(\log(n+1))$。
+- 期待 $O(\log n)$。
 
 #### max_right_ok / min_left_ok
 
@@ -166,4 +171,4 @@ template <class G> int min_left_ok(int r, const G& g) const;
 
 ##### 計算量
 
-- 期待 $O(\log(n+1))$。`g` の実行を $O(1)$ とする。
+- 期待 $O(\log n)$。`g` の実行を $O(1)$ とする。

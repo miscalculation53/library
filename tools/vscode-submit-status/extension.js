@@ -9,8 +9,7 @@ function activate(context) {
     bar.command = 'kyoproSubmitStatus.showLog';
     const output = vscode.window.createOutputChannel('oj-b / cln');
     let target = null, selection = 0, busy = false, disposed = false;
-    let logOpen = false, previousLog = null, latestToken = null, headerInvalidToken = null;
-    const dirtyHeaders = new Set();
+    let logOpen = false, previousLog = null;
 
     async function showLog() {
         if (!target) return;
@@ -39,14 +38,8 @@ function activate(context) {
         const current = target;
         try {
             const data = await snapshot(current);
-            const dirtyFiles = await Promise.all(vscode.workspace.textDocuments
-                .filter(doc => doc.isDirty && doc.uri.scheme === 'file')
-                .map(async doc => ({ file: await fs.realpath(doc.uri.fsPath).catch(() => doc.uri.fsPath),
-                    header: /\.(h|hh|hpp|hxx)$/.test(doc.uri.fsPath) })));
             if (disposed || target !== current) return;
-            latestToken = data.request?.token;
-            const dirty = dirtyFiles.some(doc => doc.file === current.source || doc.file === current.output || doc.header);
-            const view = present(data, dirty, headerInvalidToken !== null && headerInvalidToken === latestToken);
+            const view = present(data);
             bar.text = view.text;
             bar.tooltip = `${path.basename(current.source)} → ${path.basename(current.output)}\n${view.detail}\n\n${current.source}\nクリックするとログを表示します。表示中も Ctrl+Option+N で実行できます。`;
             bar.backgroundColor = view.error ? new vscode.ThemeColor('statusBarItem.errorBackground')
@@ -68,10 +61,9 @@ function activate(context) {
         const version = ++selection;
         try {
             const candidate = await selectFile(editor.document.uri.fsPath);
-            if (disposed || version !== selection || !candidate || candidate.source === target?.source) return;
+            if (disposed || version !== selection || !candidate
+                || (candidate.source === target?.source && candidate.output === target?.output)) return;
             target = candidate;
-            latestToken = null;
-            headerInvalidToken = null;
             bar.text = '$(sync~spin) oj-b / cln: 確認中';
             bar.backgroundColor = undefined;
             bar.show();
@@ -88,15 +80,7 @@ function activate(context) {
             }
         }),
         vscode.window.onDidChangeActiveTextEditor(select),
-        vscode.workspace.onDidChangeTextDocument(event => {
-            if (/\.(h|hh|hpp|hxx)$/.test(event.document.uri.fsPath) && event.document.isDirty)
-                dirtyHeaders.add(event.document.uri.fsPath);
-            void refresh();
-        }),
-        vscode.workspace.onDidSaveTextDocument(doc => {
-            if (dirtyHeaders.delete(doc.uri.fsPath)) headerInvalidToken = latestToken;
-            void refresh();
-        }));
+        vscode.workspace.onDidSaveTextDocument(() => { void refresh(); }));
     const timer = setInterval(refresh, 500);
     context.subscriptions.push({ dispose() { disposed = true; clearInterval(timer); } });
     void select(vscode.window.activeTextEditor);

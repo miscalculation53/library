@@ -7,6 +7,7 @@
 #include "../modint/modint.hpp"
 #include "../dot_product.hpp"
 #include "row_reduction_mod32.hpp"
+#include "internal_matrix_power_mod32.hpp"
 
 /**
  * @brief 行列（array）
@@ -96,6 +97,21 @@ struct MatrixArray : array<array<typename F::S, m>, n>
   M pow(T k) const
   {
     static_assert(n == m);
+    if (n == 0) return M(F::e1());
+    if constexpr (internal::ordinary_mod32_field<F>::value &&
+                  internal::matrix_power_mod32_detail::supported_builtin_exponent_v<T>)
+    {
+      if (n >= 24 && k > 0 && internal::matrix_power_mod32_detail::binary_multiplication_count(k) > 10 &&
+          internal::matrix_power_mod32_detail::is_prime_modulus<S>())
+      {
+        vvc<S> a(n, vc<S>(n));
+        repi(i, n) repi(j, n) a[i][j] = (*this)[i][j];
+        auto value = internal::matrix_power_mod32_detail::power_over_field(a, k);
+        M result;
+        repi(i, n) repi(j, n) result[i][j] = value[i][j];
+        return result;
+      }
+    }
     M res(F::e1()), tmp(*this);
     while (k > 0)
     {
@@ -190,23 +206,23 @@ struct MatrixArray : array<array<typename F::S, m>, n>
     return get<2>(row_reduction());
   }
   // 正方行列
-  // (存在するか, 存在する場合逆行列)
-  pair<bool, M> inv() const
+  // 逆行列。存在しなければ nullopt。
+  optional<M> inv() const
   {
     static_assert(n == m);
     MatrixArray<F, n, 2 * n> a;
     repi(i, n) repi(j, n) a[i][j] = (*this)[i][j];
     repi(i, n) repi(j, n) a[i][n + j] = i == j ? F::e1() : F::e0();
     auto b = get<0>(a.row_reduction(true));
-    repi(i, n) if (b[i][i] == F::e0()) return {false, {}};
+    repi(i, n) if (b[i][i] == F::e0()) return nullopt;
     M res(n, n);
     repi(i, n) repi(j, n) res[i][j] = b[i][n + j];
-    return {true, res};
+    return res;
   }
 
-  // (解が存在するか, 解のひとつ, 基底)
+  // (解のひとつ, 基底)。解が存在しなければ nullopt。
   // O(nm min(n, m) + m^2)
-  tuple<bool, Vm, vc<Vm>> solve(const Vn &b) const
+  optional<pair<Vm, vc<Vm>>> solve(const Vn &b) const
   {
     MatrixArray<F, n, m + 1> a;
     repi(i, n) repi(j, m) a[i][j] = (*this)[i][j];
@@ -224,7 +240,7 @@ struct MatrixArray : array<array<typename F::S, m>, n>
       while (j < m && a[i][j] == F::e0())
         j++;
       if (j == m)
-        return {false, {}, {}};
+        return nullopt;
       sol[j] = a[i][m], piv[j] = i;
     }
     repi(j, m)
@@ -237,6 +253,6 @@ struct MatrixArray : array<array<typename F::S, m>, n>
       repi(k, j) if (piv[k] != -1) ba[k] = F::minus(a[piv[k]][j]);
       basis.eb(ba);
     }
-    return {true, sol, basis};
+    return pair{move(sol), move(basis)};
   }
 };

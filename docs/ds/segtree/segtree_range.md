@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 セグ木のノード番号・区間・点の対応と、区間分解・祖先の列挙を扱う。
@@ -149,8 +151,8 @@ $[l,r)$ を重複なく覆う最小個数のノードを列挙する範囲を返
 ##### 計算量
 
 - `range_to_nodes_from_left` の範囲の取得・イテレータの移動：$O(1)$
-- `range_to_nodes_from_bottom` の範囲の取得・イテレータの移動：それぞれ最悪 $O(\log(n+1)+1)$
-- どちらも範囲の取得から全列挙まで：$O(\log(n+1)+1)$
+- `range_to_nodes_from_bottom` の範囲の取得・イテレータの移動：それぞれ最悪 $O(\log n)$
+- どちらも範囲の取得から全列挙まで：$O(\log n)$
 
 #### point_to_nodes_from_bottom, point_to_nodes_from_top
 
@@ -168,7 +170,7 @@ auto point_to_nodes_from_top(int p) const
 ##### 計算量
 
 - 範囲の取得・イテレータの移動：$O(1)$
-- 全列挙：$O(\log(n+1)+1)$
+- 全列挙：$O(\log n)$
 
 #### ancestors_from_bottom, ancestors_from_top
 

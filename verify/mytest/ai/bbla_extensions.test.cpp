@@ -155,8 +155,8 @@ void test_similarity()
         mint c = randrange(0, mint::mod());
         repi(k, n) change[i][k] += c * change[j][k];
       }
-      auto inverse = change.inv(); assert(inverse.first);
-      M a = change * companion * inverse.second;
+      const auto inverse = change.inv(); assert(inverse);
+      M a = change * companion * *inverse;
       check_factors<mint>(a, factors);
     }
   }

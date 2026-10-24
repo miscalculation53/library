@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 ゼータ変換には可換モノイドが、メビウス変換には可換群が載る。以下に述べる定義は、演算を $+$ とした場合のもの。
@@ -23,6 +25,15 @@ $\displaystyle \zeta' a(s) = \sum_{s \subseteq t} a(t)$
 $\mu' \zeta' a (s) = a(s)$
 
 $\displaystyle \mu' a(s) = \sum_{s \subseteq t} (-1)^{\lvert t \setminus s \rvert} a(t)$
+
+## 使用例
+
+```cpp
+vc<ll> a{1, 2, 3, 4};
+auto sums = zeta_subset<MonoidAdd<ll>>(a);
+assert((sums == vc<ll>{1, 3, 4, 10}));
+assert(mobius_subset<GroupAddSub<ll>>(sums) == a);
+```
 
 ## 詳細なドキュメント
 

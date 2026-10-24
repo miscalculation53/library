@@ -1,7 +1,7 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
 #include "template/template_all_but_modint.hpp"
-#include "graph/tree/euler_tour_path_sum.hpp"
+#include "tree/euler_tour_path_sum.hpp"
 #include "algebra/algebra_basic_ops.hpp"
 
 // Test focus: root-path sums and point updates work without constructing LCA support.

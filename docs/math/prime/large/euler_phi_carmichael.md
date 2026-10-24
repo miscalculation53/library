@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 オイラーのファイ関数 $\phi(n)$ は、$1$ 以上 $n$ 以下で $n$ と互いに素な整数の個数。
@@ -22,6 +24,14 @@ $n = p_1^{e_1} \cdots p_k^{e_k}$ とするとき $\lambda(n) = \mathrm{lcm}(\lam
 ```
 
 $n$ の素因数分解形のみを `fac` に渡す。
+
+## 使用例
+
+```cpp
+auto fac = factorize(12);
+assert(euler_phi(fac) == 4);
+assert(carmichael(fac) == 2);
+```
 
 ## 詳細なドキュメント
 

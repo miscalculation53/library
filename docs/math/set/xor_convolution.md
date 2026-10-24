@@ -1,6 +1,16 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 アダマール変換・xor 畳み込み
+
+## 使用例
+
+```cpp
+using mint = modint998244353;
+auto c = xor_convolution<FieldAddSubMulDiv<mint>>(vc<mint>{1, 2}, vc<mint>{3, 4});
+assert((c == vc<mint>{11, 10}));
+```
 
 ## 詳細なドキュメント
 

@@ -8,7 +8,7 @@
  * @docs docs/algebra/majority_vote.md
  */
 
-template <class T>
+template <class T, class L = ll>
 struct MajorityVote
 {
   // 相異なる 2 要素をペアにして消すことを繰り返したら cand が cnt 個残る
@@ -16,17 +16,17 @@ struct MajorityVote
   struct S
   {
     T cand;
-    int cnt;
-    S(T cand = T{}, int cnt = 1) : cand(cand), cnt(cnt) {}
+    L cnt;
+    S(T cand = T{}, L cnt = 1) : cand(cand), cnt(cnt) {}
   };
   static constexpr S op(const S &a, const S &b)
   {
     if (a.cand == b.cand)
-      return {a.cand, a.cnt + b.cnt};
+      return {a.cand, L(a.cnt + b.cnt)};
     else if (a.cnt >= b.cnt)
-      return {a.cand, a.cnt - b.cnt};
+      return {a.cand, L(a.cnt - b.cnt)};
     else
-      return {b.cand, b.cnt - a.cnt};
+      return {b.cand, L(b.cnt - a.cnt)};
   }
   static constexpr S e() { return {T{}, 0}; }
 };

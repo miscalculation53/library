@@ -1,10 +1,25 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 $2$ 次元 imos 法
 
 更新と取得を混ぜ、取得した位置まで原点側の差分を順次展開する場合は [動的 imos 法](imos_dynamic_2d.md) を使う。
 
+## 使用例
+
+```cpp
+#include "ds/cumulative_sum/imos_2d.hpp"
+
+Imos2D<GroupAddSub<ll>> a(2, 3);
+a.add(0, 2, 1, 3, 4); // [0, 2) × [1, 3) に 4 を加算
+a.add(1, 2, 0, 2, 1);
+assert(a.content() == (vvc<ll>{{0, 4, 4}, {1, 5, 4}}));
+```
+
 ## 詳細なドキュメント
+
+### Imos2D
 
 #### コンストラクタ
 

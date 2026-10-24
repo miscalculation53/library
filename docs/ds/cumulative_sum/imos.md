@@ -1,10 +1,25 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 $1$ 次元 imos 法
 
 更新と取得を混ぜ、取得した位置まで差分を順次展開する場合は [動的 imos 法](imos_dynamic.md) を使う。
 
+## 使用例
+
+```cpp
+#include "ds/cumulative_sum/imos.hpp"
+
+Imos<GroupAddSub<ll>> a(4);
+a.add(1, 4, 3);
+a.add(0, 2, 2);
+assert(a.content() == (vc<ll>{2, 5, 3, 3}));
+```
+
 ## 詳細なドキュメント
+
+### Imos
 
 #### コンストラクタ
 

@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれている可能性があります。
+
 ## 概要
 
 長さを実行時に決められる bitset。
@@ -43,6 +45,18 @@ DynamicBitset(const string &s, char zero = '0', char one = '1')
 
 - 第1形式：$O(n/w)$
 - 第2形式：$O(n)$
+
+#### content
+
+```cpp
+vc<bool> content() const
+```
+
+第 $0$ ビットから添字順に並べた列を返す。戻り値の `i` 番目は `test(i)` に等しい。
+
+##### 計算量
+
+- $O(n)$
 
 #### assign / to_string
 

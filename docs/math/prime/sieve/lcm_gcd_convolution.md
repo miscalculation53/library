@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 LCM 畳み込みと GCD 畳み込みを計算する。
@@ -39,6 +41,14 @@ $\begin{aligned}
 &= \sum_{k \mid i} a(i) \sum_{k \mid j} b(j) \\\\  
 &= \zeta' a(k) \zeta' b(k)
 \end{aligned}$
+
+## 使用例
+
+```cpp
+vc<ll> a{0, 1, 1, 0}, b{0, 0, 1, 0};
+auto c = lcm_convolution<RingAddSubMul<ll>>(a, b);
+assert(c[2] == 2);
+```
 
 ## 詳細なドキュメント
 

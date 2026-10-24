@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 2変数の形式的冪級数 $f(x,y)=\sum_{i,j\ge0}f_{i,j}x^iy^j$ を扱う。
@@ -11,7 +13,7 @@
 
 乗算は [Kronecker 置換](https://flintlib.org/doc/gr_poly.html) で1変数の畳み込みに帰着する。
 逆数は $x$ の精度、`exp` は全次数に対する精度を倍増させる Newton 法を用いる。
-乗算・逆数・除算・`log`・`exp` は、出力係数数を $N=hw$ として $O(N\log(N+1))$ 時間。
+乗算・逆数・除算・`log`・`exp` は、出力係数数を $N=hw$ として $O(N\log N)$ 時間。
 
 [2変数有理母関数の推定](rational_gf_2d.md) が返す分子・分母を、そのままコンストラクタへ渡せる。
 
@@ -53,9 +55,7 @@ auto more = F(p).div(denominator, 50, 60);
 
 以下、`F = FormalPowerSeries2D<mint>`、法を $p$ とする。
 `mint` は素数を法とする modint で、[畳み込み](../convolution/convolution.md) に対応するものを使う。
-長さ $O(N)$ の畳み込みの計算量を $M(N)=O(N\log(N+1))$ と書く。
-打ち切り長を指定する演算の計算量は $h,w\ge1$ の場合を示す。
-空の結果の生成は $O(h+1)$。
+長さ $O(N)$ の畳み込みの計算量を $M(N)=O(N\log N)$ と書く。
 
 ### FormalPowerSeries2D
 
@@ -234,4 +234,4 @@ $k=0$ なら $1$ を返し、零多項式の $0$ 乗も $1$ とする。
 
 ##### 計算量
 
-- $O(M(hw)\log(|k|+2))$
+- $O(M(hw)\log |k|)$

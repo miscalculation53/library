@@ -12,7 +12,7 @@
 
 // [x^k] p(x)/q(x) を求める
 // 制約: [x^0] q(x) != 0
-// 計算量: deg p < d = deg q のとき O(d log(d+1) (1 + log(1+k/d))) 時間
+// 計算量: deg p < d = deg q のとき O(d log d (1 + log(1+k/d))) 時間
 template <class mint>
 mint bostan_mori(const FormalPowerSeries<mint> &p, const FormalPowerSeries<mint> &q, ll k)
 {

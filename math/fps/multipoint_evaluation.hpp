@@ -14,6 +14,27 @@ template <class mint> struct FPSMultipointTree
   int count, base;
 
   vc<F> product, spectrum;
+  static F extend_spectrum(const F &a, F cached, int z)
+  {
+    if (cached.empty())
+    {
+      F result = a.resized(z);
+      ntt(result);
+      return result;
+    }
+    int k = z / 2;
+    F odd(k);
+    odd[0] = a[0] - a[k];
+    mint root = mint(ntt_generator_constexpr(mint::mod())).pow((mint::mod() - 1) / z), power = root;
+    repi(j, 1, k)
+    {
+      odd[j] = a[j] * power;
+      power *= root;
+    }
+    ntt(odd);
+    cached.insert(cached.end(), odd.begin(), odd.end());
+    return cached;
+  }
   explicit FPSMultipointTree(const vc<mint> &xs)
       : count(xs.size()), base(bit_ceil(max(1, count))), product(2 * base), spectrum(2 * base)
   {
@@ -26,10 +47,12 @@ template <class mint> struct FPSMultipointTree
           min(a.sz() - std::count(a.begin(), a.end(), mint(0)),
               b.sz() - std::count(b.begin(), b.end(), mint(0))) > 60)
       {
-        F x = a.resized(z), y = b.resized(z);
-        ntt(x), ntt(y);
+        F x = extend_spectrum(a, std::move(spectrum[2 * i]), z);
+        F y = extend_spectrum(b, std::move(spectrum[2 * i + 1]), z);
         spectrum[2 * i] = x, spectrum[2 * i + 1] = y;
         repi(j, z) x[j] *= y[j];
+        // The even-root half of the next transform is this cyclic product.
+        if (i > 1) spectrum[i] = x;
         intt(x);
         mint iz = mint(z).inv();
         for (auto &v : x)
@@ -39,7 +62,10 @@ template <class mint> struct FPSMultipointTree
         product[i] = std::move(x);
       }
       else
+      {
+        spectrum[2 * i].clear(), spectrum[2 * i + 1].clear();
         product[i] = a * b;
+      }
     }
   }
   vc<mint> evaluate(F f) const

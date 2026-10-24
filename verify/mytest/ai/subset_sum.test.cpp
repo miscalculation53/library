@@ -29,10 +29,11 @@ void test_frequency()
     {
       assert(ss.exists(x) == dp[x]);
       if (x <= sm) assert(ss.reachable()[x] == dp[x]);
-      auto [ok, ans] = ss.answer(x);
-      assert(ok == dp[x]);
-      if (!ok)
+      const auto result = ss.answer(x);
+      assert(result.has_value() == dp[x]);
+      if (!result)
         continue;
+      const auto &ans = *result;
       vc<int> used(vmax + 1);
       int sum = 0;
       for (auto [v, c] : ans)
@@ -54,8 +55,9 @@ void test_frequency()
   {
     assert(ss.exists(x));
     assert(ss.reachable()[x]);
-    auto [ok, ans] = ss.answer(x);
-    assert(ok);
+    const auto result = ss.answer(x);
+    assert(result);
+    const auto &ans = *result;
     ll sum = 0;
     for (auto [v, c] : ans)
       sum += v * c;
@@ -65,8 +67,9 @@ void test_frequency()
   vc<int> dense_freq(101, 1);
   dense_freq[0] = 0;
   SubsetSumFromFrequency dense(dense_freq, 1000);
-  auto [ok, ans] = dense.answer(1000);
-  assert(ok);
+  const auto result = dense.answer(1000);
+  assert(result);
+  const auto &ans = *result;
   int sum = 0;
   for (auto [v, c] : ans)
   {
@@ -101,10 +104,11 @@ void test_original_array()
     {
       bool expected = mn <= x && x <= smax && possible[x - mn];
       assert(ss.exists(x) == expected);
-      auto [ok, ans] = ss.answer(x);
-      assert(ok == expected);
-      if (!ok)
+      const auto result = ss.answer(x);
+      assert(result.has_value() == expected);
+      if (!result)
         continue;
+      const auto &ans = *result;
       assert(SZ(ans) == n);
       int sum = 0;
       repi(i, n) if (ans[i]) sum += a[i];
@@ -129,8 +133,8 @@ void test_original_array()
   SubsetSum sparse(vc<int>{200000}, 200000);
   assert(sparse.reachable().size() == 200001);
   assert(sparse.reachable().count() == 2);
-  auto [ok, ans] = sparse.answer(200000);
-  assert(ok && ans == vc<bool>{true});
+  const auto ans = sparse.answer(200000);
+  assert(ans && *ans == vc<bool>{true});
 
   // クエリ上限を大きくしても、必要なテーブルは要素の総和まででよい。
   const vc<int> a{-2, 3, 5};
@@ -140,11 +144,11 @@ void test_original_array()
   for (int x = -3; x <= 9; x++)
   {
     assert(large_limit.exists(x) == bool(possible.count(x)));
-    auto [found, chosen] = large_limit.answer(x);
-    assert(found == bool(possible.count(x)));
-    if (!found) continue;
+    const auto chosen = large_limit.answer(x);
+    assert(chosen.has_value() == bool(possible.count(x)));
+    if (!chosen) continue;
     int sum = 0;
-    for (int i = 0; i < int(a.size()); i++) if (chosen[i]) sum += a[i];
+    for (int i = 0; i < int(a.size()); i++) if ((*chosen)[i]) sum += a[i];
     assert(sum == x);
   }
   assert(!large_limit.exists(INT_MAX));

@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 基底コンテナを新しい型 `PriorityContainer<Container>` で包み、`push`, `front`, `back`, `pop_front`, `pop_back` の共通インターフェースで扱う。
@@ -164,7 +166,7 @@ static PriorityContainer with_compare(const Compare& comp, Projection projection
 
 - 空の構築は $O(1)$。
 - 既存コンテナは、その move と、必要な集約の初期走査の計算量。
-- キャッシュの初期走査は、`multiset` で $O(n)$、ヒープで $O(h\log(h+1))$。
+- キャッシュの初期走査は、`multiset` で $O(n)$、ヒープで $O(h\log h)$。
 
 #### push
 
@@ -262,7 +264,7 @@ vector<value_type> content() const;
 
 - 基底の `content` の計算量、またはコピーと全要素の端の取得・削除の計算量。
 - `multiset`、Treap、`MonotonePriorityDeque` は $O(n)$。
-- ヒープは、内部に保持する要素数を $h$ として $O(h\log(h+1))$。
+- ヒープは、内部に保持する要素数を $h$ として $O(h\log h)$。
 
 ### MinPriorityQueue / MaxPriorityQueue / MinErasablePriorityQueue / MaxErasablePriorityQueue
 
@@ -310,6 +312,6 @@ Q(It first, It last, const Compare& comp = Compare());
 ##### 計算量
 
 - `size`, `empty`, 端の取得は $O(1)$。
-- 通常のヒープの追加・端の削除は $O(\log(n+1))$。
-- 遅延削除ヒープの追加・端の削除・任意削除は、内部要素数を $h$ として償却 $O(\log(h+1))$。
-- `content` は $O(h\log(h+1))$。`clear` は基底ヒープの計算量。
+- 通常のヒープの追加・端の削除は $O(\log n)$。
+- 遅延削除ヒープの追加・端の削除・任意削除は、内部要素数を $h$ として償却 $O(\log h)$。
+- `content` は $O(h\log h)$。`clear` は基底ヒープの計算量。

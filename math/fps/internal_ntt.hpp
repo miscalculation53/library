@@ -4,7 +4,7 @@
 
 namespace internal
 {
-// NTT work is measured in L*log2(L). Coefficients are fitted in benchmark/fps_production_threshold_*.csv.
+// NTT work is measured in L*log2(L). Coefficients are fitted from local timing measurements.
 enum class FPSSparseOperation
 {
   inv,
@@ -411,6 +411,82 @@ template <class F> F fps_sqrt_block(const F &f, int n, int blocks, bool partial 
   return result;
 }
 
+// Keep four block products in registers before updating a frequency accumulator.
+template <class F>
+F fps_exp_block_product(const vc<F> &a, const vc<F> &b, int k, int m, bool delayed,
+                        vc<ull> &positive, vc<ull> &negative)
+{
+  using mint = typename F::value_type;
+  if constexpr (ordinary_mod32<mint>::value)
+    if (delayed)
+    {
+      const ull mod = mint::mod(), batch = numeric_limits<ull>::max() / ((mod - 1) * (mod - 1));
+      F freq(2 * m);
+      ull pending = 0;
+      auto flush = [&]()
+      {
+        repi(j, m)
+        {
+          freq[j] += mint::raw(positive[j] % mod);
+          positive[j] = 0;
+          freq[m + j] += mint::raw(positive[m + j] % mod);
+          freq[m + j] -= mint::raw(negative[j] % mod);
+          positive[m + j] = negative[j] = 0;
+        }
+        pending = 0;
+      };
+      using Term = pair<const mint *, const mint *>;
+      vc<Term> terms;
+      auto append = [&](ull *target, int offset, int length, int first, int count)
+      {
+        if (count == 4)
+        {
+          auto [a0, b0] = terms[first]; auto [a1, b1] = terms[first + 1];
+          auto [a2, b2] = terms[first + 2]; auto [a3, b3] = terms[first + 3];
+          repi(j, length)
+          {
+            int t = offset + j;
+            target[j] += ull(a0[t].val()) * b0[t].val() + ull(a1[t].val()) * b1[t].val()
+                       + ull(a2[t].val()) * b2[t].val() + ull(a3[t].val()) * b3[t].val();
+          }
+        }
+        else
+          repi(i, first, first + count)
+          {
+            auto [x, y] = terms[i];
+            repi(j, length) target[j] += ull(x[offset + j].val()) * y[offset + j].val();
+          }
+      };
+      for (int carry : {0, 1})
+      {
+        terms.clear();
+        for (int i = max(0, k - carry - int(b.size()) + 1); i <= k - carry && i < int(a.size()); ++i)
+          if (!a[i].empty() && !b[k - carry - i].empty())
+            terms.emplace_back(a[i].data(), b[k - carry - i].data());
+        for (int i = 0; i < int(terms.size()); )
+        {
+          int count = min<ull>(min(4, int(terms.size()) - i), batch - pending);
+          if (carry)
+          {
+            append(positive.data(), 0, m, i, count);
+            append(negative.data(), m, m, i, count);
+          }
+          else append(positive.data(), 0, 2 * m, i, count);
+          i += count;
+          pending += count;
+          if (pending == batch) flush();
+        }
+      }
+      if (pending) flush();
+      intt(freq);
+      freq.resize(m);
+      mint iz = mint(2 * m).inv();
+      for (auto &v : freq) v *= iz;
+      return freq;
+    }
+  return fps_block_product(a, b, k, m, delayed);
+}
+
 template <class F> F fps_exp_block(const F &f, int n, int blocks, bool delayed = true)
 {
   using mint = typename F::value_type;
@@ -424,6 +500,9 @@ template <class F> F fps_exp_block(const F &f, int n, int blocks, bool delayed =
   Binomial<mint>::reserve(N - 1);
   int r = (n + m - 1) / m, high = r - s;
   vc<F> g(s), gf(s), q(r), qf(r), ef(high);
+  vc<ull> positive, negative;
+  if constexpr (ordinary_mod32<mint>::value)
+    if (delayed) positive.resize(2 * m), negative.resize(m);
   g[0] = fps_exp_bs(f.resized(m), m);
   F u = g[0].inv(m).resized(2 * m);
   ntt(u);
@@ -438,7 +517,7 @@ template <class F> F fps_exp_block(const F &f, int n, int blocks, bool delayed =
   }
   repi(k, 1, s)
   {
-    F phi = fps_block_product(gf, qf, k, m, delayed).resized(2 * m);
+    F phi = fps_exp_block_product(gf, qf, k, m, delayed, positive, negative).resized(2 * m);
     ntt(phi);
     repi(i, 2 * m) phi[i] *= u[i];
     intt(phi);
@@ -458,7 +537,7 @@ template <class F> F fps_exp_block(const F &f, int n, int blocks, bool delayed =
   }
   repi(k, s, r)
   {
-    F value = fps_block_product(qf, gf, k, m, delayed).resized(2 * m);
+    F value = fps_exp_block_product(qf, gf, k, m, delayed, positive, negative).resized(2 * m);
     ntt(value);
     repi(i, 2 * m) value[i] *= u[i];
     intt(value);
@@ -483,7 +562,7 @@ template <class F> F fps_exp_block(const F &f, int n, int blocks, bool delayed =
   }
   repi(k, high)
   {
-    F value = fps_block_product(gf, ef, k, m, delayed);
+    F value = fps_exp_block_product(gf, ef, k, m, delayed, positive, negative);
     repi(i, m) result[(s + k) * m + i] = -value[i];
   }
   result.resize(n);

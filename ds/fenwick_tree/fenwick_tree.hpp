@@ -54,7 +54,19 @@ public:
   S sum(int l, int r) const
   {
     assert(0 <= l && l <= r && r <= n);
-    return G::op(G::inv(sum(l)), sum(r));
+    // 両端の prefix に共通する節点までで打ち切る。
+    S right = G::e(), left = G::e();
+    while (l < r)
+    {
+      right = G::op(right, dat[r]);
+      r -= r & -r;
+    }
+    while (r < l)
+    {
+      left = G::op(left, dat[l]);
+      l -= l & -l;
+    }
+    return G::op(G::inv(left), right);
   }
   // 逆元が必要
   S get(int i) const
@@ -153,8 +165,13 @@ public:
 
   vc<S> content() const
   {
-    vc<S> res(n);
-    repi(i, n) res[i] = get(i);
+    vc<S> res(dat.begin() + 1, dat.end());
+    // 線形構築で親へ加えた値を、逆順に取り除く。
+    for (int i = n; i > 0; i--)
+    {
+      const int p = i + (i & -i);
+      if (p <= n) res[p - 1] = G::op(res[p - 1], G::inv(res[i - 1]));
+    }
     return res;
   }
 };

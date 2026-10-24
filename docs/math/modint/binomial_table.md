@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 任意 mod 二項係数 $\displaystyle \binom{n}{k}$ クエリを前計算 $O(\max(n)^2)$ クエリ $O(1)$ で処理する。
@@ -15,6 +17,13 @@ BinomialTable<mint>::C(n, k)
 - `mint` は modint 系
 
 以下 mod を $p$ と書く。
+
+## 使用例
+
+```cpp
+using mint = static_modint32<12>;
+assert(BinomialTable<mint>::C(5, 2) == 10);
+```
 
 ## 詳細なドキュメント
 

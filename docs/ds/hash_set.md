@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 open addressing と linear probing によるハッシュセット。[HashMap](hash_map.md) と同じ方式で、キーだけを配列上に格納する。
@@ -77,7 +79,7 @@ void reserve(size_t n)
 ##### 計算量
 
 - 容量を増やす場合：期待 $O(C_{\mathrm{old}} + C_{\mathrm{new}})$、最悪 $O(C_{\mathrm{old}} + C_{\mathrm{new}} + n^2)$（ここで $n$ は現在の要素数）
-- 容量が十分な場合：$O(\log(n + 1))$（ここで $n$ は引数）
+- 容量が十分な場合：$O(\log n)$（ここで $n$ は引数）
 
 #### size / empty
 
@@ -112,6 +114,18 @@ const_iterator cend() const
 - 全要素の走査：$O(C)$
 - `begin` / `cbegin` / `++`：最悪 $O(C)$
 - `end` / `cend` / 参照 / 比較：$O(1)$
+
+#### content
+
+```cpp
+vc<Key> content() const
+```
+
+登録済みのキーを走査順でコピーして返す。順序は未規定。キーの大小比較は不要。
+
+##### 計算量
+
+- $O(C)$
 
 #### find_ptr / contains
 
@@ -178,11 +192,3 @@ void swap(HashSet& a, HashSet& b)
 ##### 計算量
 
 - $O(1)$（`Hash`, `Equal` の交換を $O(1)$ とする）
-
-### 性能比較
-
-`benchmark/hash_set.cpp` は、20万個の頂点に1キーずつ持たせ、成分を2倍ずつ併合する処理を `set`, `unordered_set`, `HashSet` で比較する。ハッシュ集合には同じ `safe_hash` を使い、全キーが異なる場合と1000種類のキーを繰り返す場合を測る。
-
-```sh
-g++-15 -std=c++20 -O3 -march=native -I. benchmark/hash_set.cpp
-```

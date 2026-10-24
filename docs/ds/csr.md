@@ -1,8 +1,22 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 グラフの隣接リストに代表されるような `vvc<T>` の構造の代替。一次元の vector のみでよく、高速・省メモリ。
 
 `vvc<T>` と比較してできないことは `v[i].push_back(x)`、それ以外は（実装しているかはともかく）大体できるような気がする（要出典）
+
+## 使用例
+
+```cpp
+#include "ds/csr.hpp"
+
+CSR<int> rows(vvc<int>{{2, 4}, {}, {7}});
+assert(rows.size() == 3);
+assert(rows[0][1] == 4);
+assert(rows[1].empty());
+assert(rows[2].content() == (vc<int>{7}));
+```
 
 ## 詳細なドキュメント
 
@@ -17,6 +31,7 @@
 (4) CSR(vvc<T> vv)
 ```
 
+- (1)：行数 $0$ の空の CSR を構築する。
 - (2)：`row_sizes[i]` 個の値初期化された要素を持つ第 $i$ 行を構築する。`get_elist()` と `offset()` を使って要素を直接書き込める。
 - (3)：$n$ は $\mathrm{vv}$ の長さを表す。$\mathrm{ies}$ の要素 $(i, e)$ は、$\mathrm{vv}[i]$ に $e$ が含まれることを表す。この表現を CSR 表現に変換する。
 - (4)：`vvc` での表現を CSR 表現に変換する。
@@ -82,14 +97,17 @@ void sortunique()
 
 - $O\left(\sum_i m_i \log m_i\right)$
 
-#### to_vv
+#### content / to_vv
 
 ```cpp
-vvc<T> to_vv()
+vvc<T> content() const
+vvc<T> to_vv() const
 ```
 
-`vvc` での表現にして返す。
+現在の各行を `vvc` にコピーして返す。空の行も維持し、`pop_back` で削除した要素は除く。
+各行にも `content() const` と `to_v() const` があり、その行を `vc<T>` にコピーできる。
 
 ##### 計算量
 
 - $O(n+m)$
+- 行の取得：その行の要素数に比例

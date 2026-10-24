@@ -1,7 +1,12 @@
 #pragma once
 
-#include "../template/template_all_but_modint.hpp"
+//! SPDX-License-Identifier: CC0-1.0
+//! The mathematical core was frozen before reading the project's public API.
+//! This revision adapts that core and uses exact integer intermediates.
 
+#include <optional>
+
+#include "../template/template_all_but_modint.hpp"
 #include "../utils/is_integral_ext.hpp"
 #include "../utils/larger_int.hpp"
 #include "../utils/make_unsigned_ext.hpp"
@@ -27,6 +32,29 @@ struct LiChaoTreeLine
 
 namespace li_chao_tree_detail
 {
+
+  template <class T, class U, bool Integral = is_integral_ext<T> && is_integral_ext<U>>
+  struct Evaluation
+  {
+    using Type = U;
+    static Type evaluate(const T &a, const T &x, const T &b)
+    {
+      return U(a) * U(x) + U(b);
+    }
+    static U output(const Type &result) { return result; }
+  };
+
+  template <class T, class U>
+  struct Evaluation<T, U, true>
+  {
+    using Type = conditional_t<(sizeof(T) <= 4), long long, i128>;
+    static Type evaluate(const T &a, const T &x, const T &b)
+    {
+      return Type(a) * Type(x) + Type(b);
+    }
+    static U output(const Type &result) { return U(result); }
+  };
+
   template <class T, class U, class Compare, auto inftyT, auto inftyU>
   struct Traits
   {
@@ -36,8 +64,25 @@ namespace li_chao_tree_detail
                   is_same_v<Compare, greater<>> || is_same_v<Compare, greater<T>>);
     using Line = LiChaoTreeLine<T>;
     static constexpr bool minimize = is_same_v<Compare, less<>> || is_same_v<Compare, less<T>>;
+    static constexpr bool integral_endpoints = is_integral_ext<T> && is_integral_ext<U>;
+    using Arithmetic = Evaluation<T, U>;
+    using Calculation = typename Arithmetic::Type;
 
-    static U eval(const Line &f, const T &x) { return U(f.a) * U(x) + U(f.b); }
+    static Calculation exact_eval(const Line &f, const T &x)
+    {
+      return Arithmetic::evaluate(f.a, x, f.b);
+    }
+    static U eval(const Line &f, const T &x) { return Arithmetic::output(exact_eval(f, x)); }
+    static bool calculation_better(const Calculation &x, const Calculation &y)
+    {
+      if constexpr (minimize) return x < y;
+      else return y < x;
+    }
+    static bool coefficient_better(const T &x, const T &y)
+    {
+      if constexpr (minimize) return x < y;
+      else return y < x;
+    }
     static bool better(const U &x, const U &y)
     {
       if constexpr (minimize) return x < y;
@@ -45,7 +90,7 @@ namespace li_chao_tree_detail
     }
     static bool better(const Line &f, const Line &g, const T &x)
     {
-      return better(eval(f, x), eval(g, x));
+      return calculation_better(exact_eval(f, x), exact_eval(g, x));
     }
     static pair<U, Line> empty()
     {
@@ -54,16 +99,125 @@ namespace li_chao_tree_detail
       if constexpr (!minimize) t = -t, u = -u;
       return {u, {T(0), t, -1}};
     }
-    static void update(pair<U, Line> &ans, const Line &f, const T &x)
+    class QueryState
     {
-      if (f.id == -1) return;
-      U value = eval(f, x);
-      if (ans.second.id == -1 || better(value, ans.first)) ans = {value, f};
+      pair<U, Line> fallback = empty();
+      optional<pair<Calculation, Line>> best;
+
+    public:
+      void update(const Line &f, const T &x)
+      {
+        Calculation result = exact_eval(f, x);
+        if (!best || calculation_better(result, best->first)) best.emplace(std::move(result), f);
+      }
+      pair<U, Line> finish() const
+      {
+        if (!best) return fallback;
+        return {Arithmetic::output(best->first), best->second};
+      }
+    };
+
+    static void update(pair<U, Line> &answer, const Line &f, const T &x)
+    {
+      if (f.id < 0) return;
+      if (answer.second.id < 0 || better(f, answer.second, x)) answer = {eval(f, x), f};
+    }
+  };
+
+  enum class Direction { done, left, right };
+
+  template <class T, class U, class Compare, auto inftyT, auto inftyU>
+  class CandidateBank
+  {
+    using Tr = Traits<T, U, Compare, inftyT, inftyU>;
+    using Line = typename Tr::Line;
+    vc<Line> lines;
+
+    void keep(int &slot, const Line &moving, int &moving_id, int &original_id)
+    {
+      if (moving_id < 0)
+      {
+        moving_id = int(lines.size());
+        lines.push_back(moving);
+        original_id = moving_id;
+      }
+      slot = moving_id;
+    }
+
+  public:
+    void reserve(int count) { lines.reserve(count); }
+    void clear() { lines.clear(); }
+    const Line &get(int slot) const { return lines[slot]; }
+
+    bool hidden(int slot, const Line &incoming, const T &first, const T &last) const
+    {
+      if constexpr (!Tr::integral_endpoints) return false;
+      else
+      {
+        if (slot < 0) return false;
+        const Line &held = lines[slot];
+        if (incoming.a == held.a) return !Tr::coefficient_better(incoming.b, held.b);
+        bool loses_to_right;
+        if constexpr (Tr::minimize) loses_to_right = held.a < incoming.a;
+        else loses_to_right = incoming.a < held.a;
+        return !Tr::better(incoming, held, loses_to_right ? first : last);
+      }
+    }
+
+    template <class Middle>
+    Direction advance(int &slot, Line &moving, int &moving_id, int &original_id,
+                      const T &first, const T &last, bool leaf, Middle middle)
+    {
+      if (slot < 0)
+      {
+        keep(slot, moving, moving_id, original_id);
+        return Direction::done;
+      }
+      const int held_id = slot;
+      const Line held = lines[held_id];
+      if constexpr (Tr::integral_endpoints)
+      {
+        if (moving.a == held.a)
+        {
+          if (Tr::coefficient_better(moving.b, held.b)) keep(slot, moving, moving_id, original_id);
+          return Direction::done;
+        }
+        bool loses_to_right;
+        if constexpr (Tr::minimize) loses_to_right = held.a < moving.a;
+        else loses_to_right = moving.a < held.a;
+        if (!Tr::better(moving, held, loses_to_right ? first : last)) return Direction::done;
+        if (!Tr::better(held, moving, loses_to_right ? last : first))
+        {
+          keep(slot, moving, moving_id, original_id);
+          return Direction::done;
+        }
+        const bool exchange = Tr::better(moving, held, middle());
+        if (exchange)
+        {
+          keep(slot, moving, moving_id, original_id);
+          moving = held;
+          moving_id = held_id;
+        }
+        return loses_to_right != exchange ? Direction::left : Direction::right;
+      }
+      else
+      {
+        if (Tr::better(moving, held, middle()))
+        {
+          keep(slot, moving, moving_id, original_id);
+          moving = held;
+          moving_id = held_id;
+        }
+        if (leaf) return Direction::done;
+        const Line &winner = lines[slot];
+        if (Tr::better(moving, winner, first)) return Direction::left;
+        if (Tr::better(moving, winner, last)) return Direction::right;
+        return Direction::done;
+      }
     }
   };
 }
 
-// [xmin, xmax) の範囲を指定する
 template <class T, class U = larger_int_t<T>, class Compare = less<>,
           auto inftyT = nullptr, auto inftyU = nullptr>
 struct LiChaoTree
@@ -73,58 +227,71 @@ struct LiChaoTree
 
 private:
   using Traits = li_chao_tree_detail::Traits<T, U, Compare, inftyT, inftyU>;
+  using Direction = li_chao_tree_detail::Direction;
+  using Bank = li_chao_tree_detail::CandidateBank<T, U, Compare, inftyT, inftyU>;
   struct Node
   {
-    Line line;
-    int chi[2] = {-1, -1};
+    int candidate = -1;
+    int child[2] = {-1, -1};
   };
   T xmin, xmax;
+  Bank bank;
   vc<Node> nodes;
   int add_cnt = 0;
 
-  static T middle(T l, T r)
+  static T midpoint(T first, T last)
   {
     using W = make_unsigned_ext_t<T>;
-    W width = W(r) - W(l);
-    return l + T(width / 2);
+    const W width = W(W(last) - W(first));
+    return T(first + T(width / 2));
   }
-  int child(int p, int dir)
+  int obtain_child(int parent, int side)
   {
-    if (nodes[p].chi[dir] == -1)
+    int child = nodes[parent].child[side];
+    if (child < 0)
     {
-      int i = nodes.size();
+      child = int(nodes.size());
       nodes.emplace_back();
-      nodes[p].chi[dir] = i;
+      nodes[parent].child[side] = child;
     }
-    return nodes[p].chi[dir];
+    return child;
   }
-  void insert(Line f, int p, T l, T r)
+  void place(int at, T first, T last, const Line &fresh, int &original_id)
   {
+    Line moving = fresh;
+    int moving_id = original_id;
     while (true)
     {
-      if (nodes[p].line.id == -1)
-      {
-        nodes[p].line = f;
-        return;
-      }
-      T m = middle(l, r);
-      if (Traits::better(f, nodes[p].line, m)) swap(f, nodes[p].line);
-      if (l == r - 1) return;
-      if (Traits::better(f, nodes[p].line, l)) p = child(p, 0), r = m;
-      else if (Traits::better(f, nodes[p].line, T(r - 1))) p = child(p, 1), l = m;
-      else return;
+      T middle = first;
+      const Direction next = bank.advance(nodes[at].candidate, moving, moving_id,
+          original_id, first, last, first == last,
+          [&] { return middle = midpoint(first, last); });
+      if (next == Direction::done) return;
+      if (next == Direction::left) at = obtain_child(at, 0), last = middle;
+      else at = obtain_child(at, 1), first = T(middle + 1);
     }
   }
-  void insert_segment(Line f, T ql, T qr, int p, T l, T r)
+  void add_range(int at, T first, T last, T qfirst, T qlast,
+                 const Line &fresh, int &original_id)
   {
-    if (ql <= l && r <= qr)
+    if (first == qfirst && last == qlast)
     {
-      insert(f, p, l, r);
+      place(at, first, last, fresh, original_id);
       return;
     }
-    T m = middle(l, r);
-    if (ql < m) insert_segment(f, ql, qr, child(p, 0), l, m);
-    if (m < qr) insert_segment(f, ql, qr, child(p, 1), m, r);
+    if (bank.hidden(nodes[at].candidate, fresh, qfirst, qlast)) return;
+    const T middle = midpoint(first, last);
+    if (qfirst <= middle)
+    {
+      const int child = obtain_child(at, 0);
+      add_range(child, first, middle, qfirst, min(qlast, middle), fresh, original_id);
+    }
+    if (middle < qlast)
+    {
+      const int child = obtain_child(at, 1);
+      add_range(child, T(middle + 1), last, max(qfirst, T(middle + 1)), qlast,
+                fresh, original_id);
+    }
   }
 
 public:
@@ -132,57 +299,58 @@ public:
   {
     assert(xmin < xmax);
   }
-
   void reserve(int n)
   {
     assert(n >= 0);
     nodes.reserve(n);
+    bank.reserve(n);
   }
-
   void add_line(T a, T b) { add_line(a, b, add_cnt); }
   void add_line(T a, T b, int id)
   {
     assert(id >= 0);
     ++add_cnt;
-    insert({a, b, id}, 0, xmin, xmax);
+    int original_id = -1;
+    place(0, xmin, T(xmax - 1), {a, b, id}, original_id);
   }
-
-  // [l, r) に y = ax + b を追加
   void add_segment(T l, T r, T a, T b) { add_segment(l, r, a, b, add_cnt); }
   void add_segment(T l, T r, T a, T b, int id)
   {
     assert(l <= r && id >= 0);
     ++add_cnt;
     l = max(l, xmin), r = min(r, xmax);
-    if (l < r) insert_segment({a, b, id}, l, r, 0, xmin, xmax);
+    if (l < r)
+    {
+      int original_id = -1;
+      add_range(0, xmin, T(xmax - 1), l, T(r - 1), {a, b, id}, original_id);
+    }
   }
-
   pair<U, Line> query(T x) const
   {
     assert(xmin <= x && x < xmax);
-    auto ans = Traits::empty();
-    T l = xmin, r = xmax;
-    int p = 0;
-    while (p != -1)
+    typename Traits::QueryState answer;
+    T first = xmin, last = T(xmax - 1);
+    int at = 0;
+    while (at >= 0)
     {
-      Traits::update(ans, nodes[p].line, x);
-      if (l == r - 1) break;
-      T m = middle(l, r);
-      if (x < m) p = nodes[p].chi[0], r = m;
-      else p = nodes[p].chi[1], l = m;
+      const Node &current = nodes[at];
+      if (current.candidate >= 0) answer.update(bank.get(current.candidate), x);
+      if (current.child[0] < 0 && current.child[1] < 0) break;
+      const T middle = midpoint(first, last);
+      if (x <= middle) at = current.child[0], last = middle;
+      else at = current.child[1], first = T(middle + 1);
     }
-    return ans;
+    return answer.finish();
   }
-
   void clear()
   {
+    bank.clear();
     nodes.clear();
     nodes.emplace_back();
     add_cnt = 0;
   }
 };
 
-// クエリ先読み
 template <class T, class U = larger_int_t<T>, class Compare = less<>,
           auto inftyT = nullptr, auto inftyU = nullptr>
 struct LiChaoTreeCompressed
@@ -191,56 +359,68 @@ struct LiChaoTreeCompressed
 
 private:
   using Traits = li_chao_tree_detail::Traits<T, U, Compare, inftyT, inftyU>;
+  using Direction = li_chao_tree_detail::Direction;
+  using Bank = li_chao_tree_detail::CandidateBank<T, U, Compare, inftyT, inftyU>;
   vc<T> xs;
-  vc<Line> dat;
+  Bank bank;
+  vc<int> candidates;
   int add_cnt = 0;
 
-  void insert(Line f, int p, int l, int r)
+  static int right_child(int at, int first, int middle)
   {
+    return at + 2 * (middle - first + 1);
+  }
+  void place(int at, int first, int last, const Line &fresh, int &original_id)
+  {
+    Line moving = fresh;
+    int moving_id = original_id;
     while (true)
     {
-      if (dat[p].id == -1)
-      {
-        dat[p] = f;
-        return;
-      }
-      int m = (l + r) / 2;
-      if (Traits::better(f, dat[p], xs[m])) swap(f, dat[p]);
-      if (r - l == 1) return;
-      if (Traits::better(f, dat[p], xs[l])) p *= 2, r = m;
-      else if (Traits::better(f, dat[p], xs[r - 1])) p = 2 * p + 1, l = m;
-      else return;
+      int middle = first;
+      const Direction next = bank.advance(candidates[at], moving, moving_id,
+          original_id, xs[first], xs[last], first == last, [&] {
+            middle = first + (last - first) / 2;
+            return xs[middle];
+          });
+      if (next == Direction::done) return;
+      if (next == Direction::left) ++at, last = middle;
+      else at = right_child(at, first, middle), first = middle + 1;
     }
   }
-  void insert_segment(Line f, int ql, int qr, int p, int l, int r)
+  void add_range(int at, int first, int last, int qfirst, int qlast,
+                 const Line &fresh, int &original_id)
   {
-    if (ql <= l && r <= qr)
+    if (first == qfirst && last == qlast)
     {
-      insert(f, p, l, r);
+      place(at, first, last, fresh, original_id);
       return;
     }
-    int m = (l + r) / 2;
-    if (ql < m) insert_segment(f, ql, qr, 2 * p, l, m);
-    if (m < qr) insert_segment(f, ql, qr, 2 * p + 1, m, r);
+    if (bank.hidden(candidates[at], fresh, xs[qfirst], xs[qlast])) return;
+    const int middle = first + (last - first) / 2;
+    if (qfirst <= middle)
+      add_range(at + 1, first, middle, qfirst, min(qlast, middle), fresh, original_id);
+    if (middle < qlast)
+      add_range(right_child(at, first, middle), middle + 1, last,
+                max(qfirst, middle + 1), qlast, fresh, original_id);
   }
   template <bool Indexed>
-  pair<U, Line> query_impl(const T &x, int k = -1) const
+  pair<U, Line> query_impl(const T &x, int position = -1) const
   {
-    auto ans = Traits::empty();
-    int p = 1, l = 0, r = xs.size();
+    typename Traits::QueryState answer;
+    int at = 0, first = 0, last = int(xs.size()) - 1;
     while (true)
     {
-      Traits::update(ans, dat[p], x);
-      if (r - l == 1) break;
-      int m = (l + r) / 2;
+      if (candidates[at] >= 0) answer.update(bank.get(candidates[at]), x);
+      if (first == last) break;
+      const int middle = first + (last - first) / 2;
       bool left;
-      if constexpr (Indexed) left = k < m;
-      else left = x < xs[m];
-      if (left) p *= 2, r = m;
-      else p = 2 * p + 1, l = m;
+      if constexpr (Indexed) left = position <= middle;
+      else left = !(xs[middle] < x);
+      if (left) ++at, last = middle;
+      else at = right_child(at, first, middle), first = middle + 1;
     }
-    assert(xs[l] == x);
-    return ans;
+    assert(xs[first] == x);
+    return answer.finish();
   }
 
 public:
@@ -248,53 +428,55 @@ public:
   {
     sort(this->xs.begin(), this->xs.end());
     this->xs.erase(unique(this->xs.begin(), this->xs.end()), this->xs.end());
-    dat.resize(4 * this->xs.size());
+    if (!this->xs.empty()) candidates.assign(2 * this->xs.size() - 1, -1);
   }
-
   const vc<T> &coordinates() const { return xs; }
-  int lower_bound(const T &x) const { return std::lower_bound(xs.begin(), xs.end(), x) - xs.begin(); }
-
+  int lower_bound(const T &x) const
+  {
+    return std::lower_bound(xs.begin(), xs.end(), x) - xs.begin();
+  }
   void add_line(T a, T b) { add_line(a, b, add_cnt); }
   void add_line(T a, T b, int id)
   {
     assert(id >= 0);
     ++add_cnt;
-    if (!xs.empty()) insert({a, b, id}, 1, 0, xs.size());
+    if (!xs.empty())
+    {
+      int original_id = -1;
+      place(0, 0, int(xs.size()) - 1, {a, b, id}, original_id);
+    }
   }
-
-  // 座標 [l, r) に y = ax + b を追加
   void add_segment(T l, T r, T a, T b) { add_segment(l, r, a, b, add_cnt); }
   void add_segment(T l, T r, T a, T b, int id)
   {
     assert(l <= r);
     add_segment_index(lower_bound(l), lower_bound(r), a, b, id);
   }
-
-  // 圧縮後の添字 [l, r) に y = ax + b を追加
   void add_segment_index(int l, int r, T a, T b) { add_segment_index(l, r, a, b, add_cnt); }
   void add_segment_index(int l, int r, T a, T b, int id)
   {
     assert(0 <= l && l <= r && r <= int(xs.size()) && id >= 0);
     ++add_cnt;
-    if (l < r) insert_segment({a, b, id}, l, r, 1, 0, xs.size());
+    if (l < r)
+    {
+      int original_id = -1;
+      add_range(0, 0, int(xs.size()) - 1, l, r - 1, {a, b, id}, original_id);
+    }
   }
-
-  // x は座標
   pair<U, Line> query(const T &x) const
   {
     assert(!xs.empty());
     return query_impl<false>(x);
   }
-  // k は圧縮後の添字
   pair<U, Line> query_index(int k) const
   {
     assert(0 <= k && k < int(xs.size()));
     return query_impl<true>(xs[k], k);
   }
-
   void clear()
   {
-    fill(dat.begin(), dat.end(), Line{});
+    bank.clear();
+    fill(candidates.begin(), candidates.end(), -1);
     add_cnt = 0;
   }
 };

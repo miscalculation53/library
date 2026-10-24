@@ -189,8 +189,8 @@ struct DynamicMatrixMod2 : vc<DynamicBitset>
     return res;
   }
 
-  // 正方行列の逆行列が存在するかと、存在する場合は逆行列を返す。
-  pair<bool, M> inv() const
+  // 正方行列の逆行列。存在しなければ nullopt。
+  optional<M> inv() const
   {
     const int n = this->size();
     assert(n == m);
@@ -201,14 +201,14 @@ struct DynamicMatrixMod2 : vc<DynamicBitset>
       a[i].set(n + i);
     }
     M b = a.row_reduction(true);
-    repi(i, n) if (!b[i].test(i)) return {false, {}};
+    repi(i, n) if (!b[i].test(i)) return nullopt;
     M res(n, n);
     repi(i, n) res[i].assign_slice(0, n, b[i], n);
-    return {true, res};
+    return res;
   }
 
-  // Ax=b の解が存在するかと、解のひとつ、解空間の基底を返す。
-  tuple<bool, V, vc<V>> solve(const V &b) const
+  // Ax=b の (解のひとつ, 解空間の基底)。解が存在しなければ nullopt。
+  optional<pair<V, vc<V>>> solve(const V &b) const
   {
     const int n = this->size();
     assert(b.size() == n);
@@ -231,7 +231,7 @@ struct DynamicMatrixMod2 : vc<DynamicBitset>
       while (j < m && !a[i].test(j))
         j++;
       if (j == m)
-        return {false, {}, {}};
+        return nullopt;
       sol.set(j, a[i].test(m));
       piv[j] = i;
     }
@@ -244,6 +244,6 @@ struct DynamicMatrixMod2 : vc<DynamicBitset>
       repi(k, j) if (piv[k] != -1 && a[piv[k]].test(j)) v.set(k);
       basis.eb(move(v));
     }
-    return {true, sol, basis};
+    return pair{move(sol), move(basis)};
   }
 };

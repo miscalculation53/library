@@ -1,8 +1,21 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 主に素因数分解を扱うための構造体。
 
 といいつつ素数に関する util 全般を含む。
+
+## 使用例
+
+```cpp
+PrimePower<ll> pp(3, 2);
+assert(pp.pe == 9);
+pp.mul_p();
+assert(pp.e == 3 && pp.pe == 27);
+auto [e, pe, rest] = ord_pow_div(72, 3);
+assert(e == 2 && pe == 9 && rest == 8);
+```
 
 ## 詳細なドキュメント
 

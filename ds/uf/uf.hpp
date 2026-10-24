@@ -7,6 +7,29 @@
  * @docs docs/ds/uf/uf.md
  */
 
+namespace internal
+{
+template <class IsRoot>
+vvc<int> union_find_content(const vc<int> &par, const IsRoot &is_root)
+{
+  const int n = par.size();
+  vc<int> root(n, -1), gid(n, -1);
+  auto leader = [&](auto leader, int v) -> int
+  {
+    if (root[v] != -1) return root[v];
+    return root[v] = is_root(v) ? v : leader(leader, par[v]);
+  };
+  vvc<int> res;
+  repi(v, n)
+  {
+    int r = leader(leader, v);
+    if (gid[r] == -1) gid[r] = res.size(), res.eb();
+    res[gid[r]].eb(v);
+  }
+  return res;
+}
+}
+
 // UFData にデフォルトで用意されているもの
 // - UFDataEmpty (何もなし、ACL 相当)
 // - UFDataEverything (全部載せ)
@@ -69,7 +92,7 @@ public:
   }
 
   // 各頂点が属する連結成分の番号 (順番は未定義)
-  // ACL の groups が欲しい場合: これに group_index を使う
+  // 成分ごとの頂点一覧は content() で取得できる
   template <class I = ll>
   vc<I> group_ids()
   {
@@ -83,6 +106,12 @@ public:
       gid[v] = gid[l];
     }
     return gid;
+  }
+
+  // 成分内は頂点番号順、成分は最小の頂点番号順に返す
+  vvc<int> content() const
+  {
+    return internal::union_find_content(par, [&](int v) { return par[v] < 0; });
   }
 };
 

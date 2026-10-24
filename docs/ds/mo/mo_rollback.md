@@ -1,6 +1,26 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 rollback 可能な Mo's algorithm
+
+## 使用例
+
+```cpp
+#include "ds/mo/mo_rollback.hpp"
+
+vc<ll> a{2, 5, 3};
+vc<pair<int, int>> ranges{{0, 2}, {1, 3}};
+vc<ll> answers(ranges.size());
+ll sum = 0, saved = 0;
+mo_rollback(a.size(), ranges,
+            [&](int i, bool) { sum += a[i]; },
+            [&] { saved = sum; },
+            [&] { sum = saved; },
+            [&] { sum = 0; },
+            [&](int qid) { answers[qid] = sum; });
+assert(answers == (vc<ll>{7, 8}));
+```
 
 ## 詳細なドキュメント
 

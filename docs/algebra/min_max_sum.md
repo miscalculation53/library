@@ -1,8 +1,14 @@
+このドキュメントには AI による作成・変更が含まれている可能性があります。
+
 ## 概要
 
 `infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
 
 区間の長さ、和、最小値、最大値のうち必要な情報を持つモノイド。
+
+`L` は区間長 `len` の整数型で、既定値は `ll`。`int` や `i128` も指定できる。各区間の長さを `L` に保持できることを前提とする。総和の型 `T` は区間長と値に応じて選ぶ。
+
+最小値・最大値も持つ型では、`L` を `infty` の後に指定する。たとえば `MonoidMinMaxSum<ll, nullptr, int>` は長さを `int` で保持する。
 
 ## 使用例
 
@@ -17,7 +23,7 @@ auto z = M::op(x, y);
 ### MonoidLenSum
 
 ```cpp
-MonoidLenSum<T>
+MonoidLenSum<T, L = ll>
 ```
 
 要素型 `S` は区間長 `len` と総和 `val` を持つ。
@@ -27,7 +33,7 @@ MonoidLenSum<T>
 ```cpp
 (1) S()
 (2) S(T val)
-(3) S(int len, T val)
+(3) S(L len, T val)
 ```
 
 (2) は長さ $1$、総和 `val` の要素を構築する。(3) は長さと総和を直接指定する。
@@ -55,6 +61,24 @@ S e()
 ```
 
 空区間 `{0, T{}}` を返す。
+
+##### 計算量
+
+- $O(1)$
+
+#### pow
+
+```cpp
+S pow(const S& x, ll k)
+```
+
+`x` を `k` 回 `op` でまとめた値を返す。長さと総和をそれぞれ `k` 倍し、`k = 0` なら単位元を返す。
+
+##### 制約
+
+- $k \geq 0$
+- `T` は非負整数との乗算を持つ
+- 結果の長さと総和をそれぞれ `L`, `T` に保持できる
 
 ##### 計算量
 
@@ -116,8 +140,8 @@ S e()
 ### MonoidMinSum / MonoidMaxSum
 
 ```cpp
-MonoidMinSum<T, infty = nullptr>
-MonoidMaxSum<T, infty = nullptr>
+MonoidMinSum<T, infty = nullptr, L = ll>
+MonoidMaxSum<T, infty = nullptr, L = ll>
 ```
 
 `MonoidMinSum` の要素型 `S` は `mn`, `sum`, `len`、`MonoidMaxSum` は `mx`, `sum`, `len` を持つ。
@@ -126,8 +150,8 @@ MonoidMaxSum<T, infty = nullptr>
 
 ```cpp
 (1) S()
-(2) S(T x, int len = 1)
-(3) S(T mn_or_mx, T sum, int len)
+(2) S(T x, L len = 1)
+(3) S(T mn_or_mx, T sum, L len)
 ```
 
 (1) は空区間、(2) は値 `x` が `len` 個並ぶ区間、(3) は各情報を直接指定した要素を構築する。
@@ -173,7 +197,7 @@ S e()
 ### MonoidMinMaxSum
 
 ```cpp
-MonoidMinMaxSum<T, infty = nullptr>
+MonoidMinMaxSum<T, infty = nullptr, L = ll>
 ```
 
 要素型 `S` は `mn`, `mx`, `sum`, `len` を持つ。
@@ -182,8 +206,8 @@ MonoidMinMaxSum<T, infty = nullptr>
 
 ```cpp
 (1) S()
-(2) S(T x, int len = 1)
-(3) S(T mn, T mx, T sum, int len)
+(2) S(T x, L len = 1)
+(3) S(T mn, T mx, T sum, L len)
 ```
 
 (1) は空区間、(2) は値 `x` が `len` 個並ぶ区間、(3) は各情報を直接指定した要素を構築する。

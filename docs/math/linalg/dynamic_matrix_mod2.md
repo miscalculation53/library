@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 列数を実行時に決める $\mathbb{F}_2$ 上の行列。
@@ -13,7 +15,11 @@ auto c = a * b;
 
 DynamicBitset v(2);
 v.set(0);
-auto [ok, sol, basis] = a.solve(v);
+if (auto result = a.solve(v))
+{
+  auto [sol, basis] = *result;
+  // sol は解のひとつ、basis は解空間の基底。
+}
 ```
 
 行列を `vc<string>` から作る場合は、文字列の $j$ 文字目が第 $j$ 列に対応する。`solve` に渡す `DynamicBitset` は `test(i)` が方程式の第 $i$ 行に対応する。
@@ -148,10 +154,10 @@ I det<I = ll>()
 #### inv
 
 ```cpp
-pair<bool, DynamicMatrixMod2> inv()
+optional<DynamicMatrixMod2> inv() const
 ```
 
-逆行列が存在しなければ `{false, {}}`、存在すれば `{true, inverse}` を返す。
+逆行列を返す。存在しなければ `nullopt`。$0\times0$ 行列では値ありの空行列を返す。
 
 ##### 計算量
 
@@ -160,10 +166,10 @@ pair<bool, DynamicMatrixMod2> inv()
 #### solve
 
 ```cpp
-tuple<bool, DynamicBitset, vc<DynamicBitset>> solve(const DynamicBitset &b)
+optional<pair<DynamicBitset, vc<DynamicBitset>>> solve(const DynamicBitset &b) const
 ```
 
-$Ax=b$ の解が存在しなければ `{false, {}, {}}` を返す。存在する場合は、解のひとつと解空間の基底を返す。
+$Ax=b$ の解のひとつと解空間の基底のペアを返す。解がなければ `nullopt`。
 
 ##### 計算量
 

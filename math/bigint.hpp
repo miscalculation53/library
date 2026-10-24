@@ -3,6 +3,7 @@
 #include "../template/template_all_but_modint.hpp"
 
 #include "math/convolution/convolution_ll.hpp"
+#include "math/internal/bigint_division.hpp"
 #include "utils/is_integral_ext.hpp"
 #include "utils/make_unsigned_ext.hpp"
 #include "utils/integer_arithmetic.hpp"
@@ -204,19 +205,19 @@ private:
 
   pair<BigInteger, BigInteger> divmod_abs(const BigInteger &b) const
   {
-    BigInteger a = abs(), bb = b.abs();
-    if (a < bb)
-      return {0, a};
-    ll work = ll(bb.vec.size()) * (SZ(a.vec) - SZ(bb.vec) + 1);
-    if (work <= 600'000)
-      return a.divmod_knuth(bb);
-    BigInteger ib = bb.inv(a.vec.size());
-    BigInteger q = (a * ib) >> (SZ(a.vec) + SZ(bb.vec) - 1);
-    BigInteger r = a - bb * q;
-    assert(r >= 0);
-    if (r >= bb)
-      q += 1, r -= bb;
-    return {q, r};
+    auto multiply = [](const vl &left, const vl &right)
+    {
+      BigInteger x, y;
+      x.vec = left;
+      y.vec = right;
+      x *= y;
+      return std::move(x.vec);
+    };
+    auto digits = independent_bigint_division_v2_20261024::divide_magnitude<BASE>(vec, b.vec, multiply);
+    BigInteger q, r;
+    q.vec = std::move(digits.first);
+    r.vec = std::move(digits.second);
+    return {std::move(q), std::move(r)};
   }
 
   int cmp(const BigInteger &b) const
@@ -808,11 +809,6 @@ inline BigInteger<base, digit> divceil(const BigInteger<base, digit> &a, const B
   return q;
 }
 template <int base, int digit>
-inline BigInteger<base, digit> divround(const BigInteger<base, digit> &a, const BigInteger<base, digit> &b)
-{
-  return divfloor(a * 2 + b, b * 2);
-}
-template <int base, int digit>
 inline BigInteger<base, digit> safemod(const BigInteger<base, digit> &a, const BigInteger<base, digit> &b)
 {
   auto [q, r] = a.divmod(b);
@@ -840,11 +836,6 @@ inline BigInteger<base, digit> divceil(const BigInteger<base, digit> &a, T b)
   return q;
 }
 template <int base, int digit, class T, typename = enable_if_t<is_integral_ext<T>>>
-inline BigInteger<base, digit> divround(const BigInteger<base, digit> &a, T b)
-{
-  return divfloor(a * 2 + b, b * 2);
-}
-template <int base, int digit, class T, typename = enable_if_t<is_integral_ext<T>>>
 inline BigInteger<base, digit> safemod(const BigInteger<base, digit> &a, T b)
 {
   BigInteger<base, digit> r = a % b;
@@ -862,11 +853,6 @@ template <class T, int base, int digit, typename = enable_if_t<is_integral_ext<T
 inline BigInteger<base, digit> divceil(T a, const BigInteger<base, digit> &b)
 {
   return divceil(BigInteger<base, digit>(a), b);
-}
-template <class T, int base, int digit, typename = enable_if_t<is_integral_ext<T>>>
-inline BigInteger<base, digit> divround(T a, const BigInteger<base, digit> &b)
-{
-  return divround(BigInteger<base, digit>(a), b);
 }
 template <class T, int base, int digit, typename = enable_if_t<is_integral_ext<T>>>
 inline BigInteger<base, digit> safemod(T a, const BigInteger<base, digit> &b)

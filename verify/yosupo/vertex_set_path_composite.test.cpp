@@ -18,7 +18,7 @@
 #include "math/modint/modint.hpp"
 using mint = modint998244353;
 
-#include "graph/tree/rooted_tree.hpp"
+#include "tree/rooted_tree.hpp"
 #include "ds/segtree/segtree.hpp"
 #include "algebra/affine_function.hpp"
 

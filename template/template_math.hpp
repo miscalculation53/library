@@ -11,6 +11,7 @@
 #include "template_rep.hpp"
 
 #include "../utils/is_integral_ext.hpp"
+#include "../utils/integer_arithmetic.hpp"
 #include "../utils/default_infty.hpp"
 
 /**
@@ -23,14 +24,72 @@ inline bool chmin(T &a, U b) { return a > b ? a = b, true : false; }
 template <class T, class U>
 inline bool chmax(T &a, U b) { return a < b ? a = b, true : false; }
 
+template <class T, enable_if_t<is_same_v<T, i128> || is_same_v<T, u128>, int> = 0>
+inline constexpr T abs(T x) { return is_negative(x) ? -x : x; }
+
+namespace template_math_detail
+{
+template <class T, class U>
+constexpr common_type_t<T, U> gcd(T a, U b)
+{
+  using R = common_type_t<T, U>;
+  using W = make_unsigned_ext_t<R>;
+  W x = W(unsigned_abs(a)), y = W(unsigned_abs(b));
+  while (y != 0)
+  {
+    W r = x % y;
+    x = y, y = r;
+  }
+  return R(x);
+}
+
+template <class T, class U>
+constexpr common_type_t<T, U> lcm(T a, U b)
+{
+  using R = common_type_t<T, U>;
+  using W = make_unsigned_ext_t<R>;
+  W x = W(unsigned_abs(a)), y = W(unsigned_abs(b));
+  return x == 0 || y == 0 ? R(0) : R(x / template_math_detail::gcd(x, y) * y);
+}
+} // namespace template_math_detail
+
+template <class T, enable_if_t<is_integral_ext<T> && !is_same_v<T, bool>, int> = 0>
+constexpr common_type_t<i128, T> gcd(i128 a, T b) { return template_math_detail::gcd(a, b); }
+
+template <class T, enable_if_t<is_integral_ext<T> && !is_same_v<T, bool> && !is_same_v<T, i128> && !is_same_v<T, u128>, int> = 0>
+constexpr common_type_t<T, i128> gcd(T a, i128 b) { return template_math_detail::gcd(a, b); }
+
+template <class T, enable_if_t<is_integral_ext<T> && !is_same_v<T, bool>, int> = 0>
+constexpr common_type_t<u128, T> gcd(u128 a, T b) { return template_math_detail::gcd(a, b); }
+
+template <class T, enable_if_t<is_integral_ext<T> && !is_same_v<T, bool> && !is_same_v<T, i128> && !is_same_v<T, u128>, int> = 0>
+constexpr common_type_t<T, u128> gcd(T a, u128 b) { return template_math_detail::gcd(a, b); }
+
+template <class T, enable_if_t<is_integral_ext<T> && !is_same_v<T, bool>, int> = 0>
+constexpr common_type_t<i128, T> lcm(i128 a, T b) { return template_math_detail::lcm(a, b); }
+
+template <class T, enable_if_t<is_integral_ext<T> && !is_same_v<T, bool> && !is_same_v<T, i128> && !is_same_v<T, u128>, int> = 0>
+constexpr common_type_t<T, i128> lcm(T a, i128 b) { return template_math_detail::lcm(a, b); }
+
+template <class T, enable_if_t<is_integral_ext<T> && !is_same_v<T, bool>, int> = 0>
+constexpr common_type_t<u128, T> lcm(u128 a, T b) { return template_math_detail::lcm(a, b); }
+
+template <class T, enable_if_t<is_integral_ext<T> && !is_same_v<T, bool> && !is_same_v<T, i128> && !is_same_v<T, u128>, int> = 0>
+constexpr common_type_t<T, u128> lcm(T a, u128 b) { return template_math_detail::lcm(a, b); }
+
 template <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>
 inline constexpr T divfloor(U a, V b) { return T(a) / T(b) - (T(a) % T(b) && (T(a) ^ T(b)) < 0); }
 template <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>
 inline constexpr T divceil(U a, V b) { return T(a) / T(b) + (T(a) % T(b) && (T(a) ^ T(b)) >= 0); }
 template <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>
-inline constexpr T divround(U a, V b) { return divfloor<T>(2 * T(a) + T(b), 2 * T(b)); }
-template <class T = ll, class U, class V, typename = enable_if_t<is_integral_ext<U> && is_integral_ext<V>>>
-inline constexpr T safemod(U a, V b) { return T(a) - T(b) * divfloor<T>(a, b); }
+inline constexpr T safemod(U a, V b)
+{
+  const T x = T(a), y = T(b);
+  if constexpr (is_signed_ext<T>)
+    if (y == T(-1)) return T(0);
+  const T r = x % y;
+  return r != T(0) && is_negative(x) != is_negative(y) ? T(r + y) : r;
+}
 
 template <class T = ll, class U, class V>
 constexpr T ipow(U a, V b)
@@ -156,7 +215,7 @@ constexpr T iroot_ceil(A a, K k)
   return ipow<T>(x, k) == a ? x : x + 1;
 }
 
-// https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html
+//! https://misawa.github.io/others/avoid_errors/techniques_to_avoid_errors.html
 template <class D = decltype(EPS), class A>
 int SGN(A a, D eps = EPS) { return int(a > eps) - int(a < -eps); }
 

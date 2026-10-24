@@ -46,21 +46,21 @@ void test_slice_copy()
           j++;
         a[i] ^= a[j];
       }
-    auto [ok, inverse] = a.inv();
-    assert(ok && inverse.m == n && SZ(inverse) == n);
-    assert(a * inverse == identity && inverse * a == identity);
+    const auto inverse = a.inv();
+    assert(inverse && inverse->m == n && SZ(*inverse) == n);
+    assert(a * *inverse == identity && *inverse * a == identity);
 
     DynamicBitset x(n);
     repi(i, n) if (rng() & 1) x.set(i);
-    auto [solvable, sol, basis] = a.solve(multiply(a, x));
-    assert(solvable && sol == x && basis.empty());
+    const auto solution = a.solve(multiply(a, x));
+    assert(solution && solution->first == x && solution->second.empty());
     if (n)
     {
       a[0].reset();
-      assert(!a.inv().first);
+      assert(!a.inv());
       DynamicBitset rhs(n);
       rhs.set(0);
-      assert(!get<0>(a.solve(rhs)));
+      assert(!a.solve(rhs));
     }
   }
 
@@ -72,8 +72,10 @@ void test_slice_copy()
       DynamicBitset x(m);
       repi(j, m) if (rng() & 1) x.set(j);
       auto b = multiply(a, x);
-      auto [ok, sol, basis] = a.solve(b);
-      assert(ok && sol.size() == m && multiply(a, sol) == b);
+      const auto solution = a.solve(b);
+      assert(solution);
+      const auto &[sol, basis] = *solution;
+      assert(sol.size() == m && multiply(a, sol) == b);
       assert(SZ(basis) == m - a.rank());
       fec(v : basis) assert(v.size() == m && v.any() && multiply(a, v).none());
       DynamicMatrixMod2 kernel(basis.size(), m);

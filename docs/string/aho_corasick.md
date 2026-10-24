@@ -1,8 +1,22 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
-trie に、failure link と呼ばれる逆辺を追加する。failure link の行き先 $\mathrm{fail}[s]$ は、$s$ の最長接頭辞（注：ノードと文字列を同一視する）。加えて、$\mathrm{nxt}[s][c]$ という配列も持っている。これは $s$ から始めて、$c$ 番目の子がない間は failure link をたどっていき、$c$ 番目の子がある頂点が見つかったらその子を返すものである。
+trie に failure link を追加する。根以外の頂点 $s$ の failure link は、trie に存在する $s$ の真の接尾辞のうち最長のものを表す頂点へ向かう（頂点と文字列を同一視する）。加えて、$\mathrm{nxt}[s][c]$ という配列も持つ。これは $s$ から始めて、$c$ 番目の子がない間は failure link をたどり、$c$ 番目の子がある頂点が見つかったらその子を返すものである。
 
 Wikipedia の図が参考になりそう https://ja.wikipedia.org/wiki/%E3%82%A8%E3%82%A4%E3%83%9B%E2%80%93%E3%82%B3%E3%83%A9%E3%82%B7%E3%83%83%E3%82%AF%E6%B3%95
+
+## 使用例
+
+```cpp
+#include "string/aho_corasick.hpp"
+
+// 0 を 'a'、1 を 'b' とする。
+AhoCorasick<2> ac(vvc<int>{{0, 1}, {1}});
+int v = ac.next<int>(ac.next<int>(0, 0), 1);
+assert(ac.trie.to_string<int>(v) == vc<int>({0, 1}));
+assert(ac.trie.to_string<int>(ac.failure(v)) == vc<int>({1}));
+```
 
 ## 詳細なドキュメント
 
@@ -36,6 +50,10 @@ AhoCorasick<int CHAR_NUM>(const vvc<C> &strs)
 
 文字列集合 `strs` から構築する。文字の種類数 `CHAR_NUM` $=\sigma$ を指定する。
 
+trie への挿入には `insert_last` を使い、終点だけを求める。既存の接頭辞をたどった後、追加する接尾辞の長さに合わせて容量をまとめて確保する。容量は現在値を倍増して選び、重複する文字列は既存の頂点だけをたどる。
+
+BFS のキューは頂点数に合わせて一括確保する。遷移表は根から BFS 順に各行を完成させる。
+
 ##### 制約
 
 - $0 \leq \mathrm{strs}[i][j] < \sigma$
@@ -56,7 +74,7 @@ AhoCorasick<int CHAR_NUM>(const vvc<C> &strs)
 I failure(int v)
 ```
 
-頂点 $v$ の failure link の行き先、つまり $v$ の表す文字列の最長 suffix を表すノードを返す。根のときは $-1$ を返す。
+頂点 $v$ の failure link の行き先、つまりtrieに存在する真の接尾辞のうち最長のものを表す頂点を返す。根のときは $-1$ を返す。
 
 なお、`RootedTree` と組み合わせて
 
@@ -89,4 +107,3 @@ I next(int v, int c)
 ##### 計算量
 
 - $O(1)$
-

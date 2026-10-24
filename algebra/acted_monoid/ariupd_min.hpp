@@ -16,11 +16,11 @@ struct ActedMonoidAriUpdMin
 {
   struct S
   {
-    int l = 0, r = 0;
+    ll l = 0, r = 0;
     T mn = resolved_infty<T, infty>();
     S() {}
-    S(int i, T val) : l(i), r(i + 1), mn(val) {}
-    S(int l, int r, T mn) : l(l), r(r), mn(mn) {}
+    S(ll i, T val) : l(i), r(i + 1), mn(val) {}
+    S(ll l, ll r, T mn) : l(l), r(r), mn(mn) {}
     CPP_DUMP_DEFINE_DATA(l, r, mn);
   };
   using MF = MonoidUpdFlag<array<T, 2>>;
@@ -36,7 +36,7 @@ struct ActedMonoidAriUpdMin
   {
     if (f.is_id || x.l == x.r)
       return x;
-    const int i = f.val[1] < T{} ? x.r - 1 : x.l;
+    const ll i = f.val[1] < T{} ? x.r - 1 : x.l;
     if constexpr (is_integral_ext<T>)
     {
       using U = decltype(0U + make_unsigned_ext_t<T>{});
@@ -55,11 +55,11 @@ struct ActedMonoidAriUpdMax
 {
   struct S
   {
-    int l = 0, r = 0;
+    ll l = 0, r = 0;
     T mx = -resolved_infty<T, infty>();
     S() {}
-    S(int i, T val) : l(i), r(i + 1), mx(val) {}
-    S(int l, int r, T mx) : l(l), r(r), mx(mx) {}
+    S(ll i, T val) : l(i), r(i + 1), mx(val) {}
+    S(ll l, ll r, T mx) : l(l), r(r), mx(mx) {}
     CPP_DUMP_DEFINE_DATA(l, r, mx);
   };
   using MF = MonoidUpdFlag<array<T, 2>>;
@@ -75,7 +75,7 @@ struct ActedMonoidAriUpdMax
   {
     if (f.is_id || x.l == x.r)
       return x;
-    const int i = f.val[1] < T{} ? x.l : x.r - 1;
+    const ll i = f.val[1] < T{} ? x.l : x.r - 1;
     if constexpr (is_integral_ext<T>)
     {
       using U = decltype(0U + make_unsigned_ext_t<T>{});
@@ -94,11 +94,11 @@ struct ActedMonoidAriUpdMinMax
 {
   struct S
   {
-    int l = 0, r = 0;
+    ll l = 0, r = 0;
     T mn = resolved_infty<T, infty>(), mx = -resolved_infty<T, infty>();
     S() {}
-    S(int i, T val) : l(i), r(i + 1), mn(val), mx(val) {}
-    S(int l, int r, T mn, T mx) : l(l), r(r), mn(mn), mx(mx) {}
+    S(ll i, T val) : l(i), r(i + 1), mn(val), mx(val) {}
+    S(ll l, ll r, T mn, T mx) : l(l), r(r), mn(mn), mx(mx) {}
     CPP_DUMP_DEFINE_DATA(l, r, mn, mx);
   };
   using MF = MonoidUpdFlag<array<T, 2>>;

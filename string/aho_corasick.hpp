@@ -14,7 +14,12 @@ struct AhoCorasick
 {
 private:
   int n;
-  vc<array<int, CHAR_NUM>> nxt;
+  struct TransitionRow : array<int, CHAR_NUM>
+  {
+    // BFS writes every entry before this row is used.
+    TransitionRow() {}
+  };
+  vc<TransitionRow> nxt;
   vc<int> fail;
 
 public:
@@ -23,30 +28,37 @@ public:
   template <class C>
   AhoCorasick(const vvc<C> &strs)
   {
-    fec(s : strs) trie.insert(s);
+    fec(s : strs) trie.template insert_last<int>(s);
     n = trie.num_of_vertices();
     fail.assign(n, -1);
     nxt.resize(n);
     MyQueue<int> que;
-    que.push(0);
+    que.reserve(n);
+    repi(c, CHAR_NUM)
+    {
+      int v = trie.template child<int>(0, c);
+      nxt[0][c] = v == -1 ? 0 : v;
+      if (v != -1)
+      {
+        fail[v] = 0;
+        que.push(v);
+      }
+    }
     while (!que.empty())
     {
       int p = que.front();
       que.pop();
-
+      const auto &fallback = nxt[fail[p]];
       repi(c, CHAR_NUM)
       {
-        int v = trie.child(p, c);
+        int v = trie.template child<int>(p, c);
         if (v != -1)
         {
           nxt[p][c] = v;
-          fail[v] = p == 0 ? 0 : nxt[fail[p]][c];
+          fail[v] = fallback[c];
           que.push(v);
         }
-        else
-        {
-          nxt[p][c] = p == 0 ? 0 : nxt[fail[p]][c];
-        }
+        else nxt[p][c] = fallback[c];
       }
     }
   }

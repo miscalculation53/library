@@ -91,6 +91,12 @@ class Superseded(Exception):
     pass
 
 
+class GenerationInterrupted(Exception):
+    def __init__(self, reason: str, message: str):
+        super().__init__(message)
+        self.reason = reason
+
+
 class Job:
     def __init__(self, directory: Path, request: dict, log):
         self.directory = directory
@@ -106,9 +112,11 @@ class Job:
         if read_json(self.directory / "request.json").get("token") != self.request["token"]:
             raise Superseded()
         if digest(self.source) != self.request["source_digest"]:
-            raise RuntimeError("元コードが変更されたため中止しました。次の実行で再生成します。")
+            raise GenerationInterrupted(
+                "source_changed", "元コードの編集により中断しました。次の実行で再生成します。")
         if digest(self.output) != self.expected_output:
-            raise RuntimeError("提出用ファイルが別の操作で変更されたため中止しました。")
+            raise GenerationInterrupted(
+                "output_changed", "提出用ファイルの編集により中断しました。次の実行で再生成します。")
 
     def update(self, phase: str, **details) -> None:
         with locked(self.directory):
@@ -187,10 +195,10 @@ class Job:
                                below_limit=self.published_size < 65536, reused=True)
                         return
                     # An interrupted run of exactly the same expansion can resume from
-                    # its last checked checkpoint, including one already below the limit.
+                    # its last published result, including one already below the limit.
                     atomic_write(scratch, self.output.read_text())
-            self.update("cleaning")
-            # Expansion alone has not checked the code. Publish only cleanup checkpoints.
+            # Make the latest expansion available before cleanup starts validating it.
+            self.publish(scratch)
             self.run(["cleanup", str(scratch), "-I", str(self.source.parent)],
                      checkpoint=scratch)
             self.publish(scratch)
@@ -237,8 +245,12 @@ def worker(directory: Path) -> None:
                     with locked(directory):
                         if read_json(directory / "request.json") == request:
                             previous = read_json(directory / "status.json")
-                            status(directory, request, "failed", error=str(exc),
-                                   bytes=previous.get("bytes"))
+                            if isinstance(exc, GenerationInterrupted):
+                                status(directory, request, "interrupted", reason=exc.reason,
+                                       message=str(exc), bytes=previous.get("bytes"))
+                            else:
+                                status(directory, request, "failed", error=str(exc),
+                                       bytes=previous.get("bytes"))
             with locked(directory):
                 if read_json(directory / "request.json") == request:
                     fcntl.flock(running, fcntl.LOCK_UN)
@@ -271,7 +283,8 @@ def main() -> int:
                 else:
                     value = read_json(directory / "status.json")
                     names = {"queued": "開始待ち", "expanding": "展開中", "cleaning": "短縮中",
-                             "done": "完了", "failed": "失敗", "stopped": "停止"}
+                             "done": "完了", "failed": "失敗", "stopped": "停止",
+                             "interrupted": "編集により中断"}
                     phase = names.get(value.get("phase"), "不明")
                     print(f"{output.name}: {phase}")
                     if value.get("bytes") is not None:
@@ -281,6 +294,8 @@ def main() -> int:
                         print("元コードは生成開始時から変更されています。次の実行で再生成します。")
                     if value.get("error"):
                         print(value["error"])
+                    if value.get("message"):
+                        print(value["message"])
                     print(f"ログ: {directory / 'log.txt'}")
     except (OSError, ValueError) as exc:
         print(f"[oj-b + cln] {exc}", file=sys.stderr)

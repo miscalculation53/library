@@ -161,18 +161,20 @@ void test_array_operations()
   using A=MatrixArray<F,33,33>;
   A a(S(1));
   repi(i,33) repi(j,i+1,33) a[i][j]=gen();
-  auto [ok,inv]=a.inv();
-  assert(ok && a*inv==A::e1());
+  const auto inv=a.inv();
+  assert(inv && a * *inv==A::e1());
   array<S,33> x; for(auto &v:x) v=gen();
   auto b=a*x;
-  auto [solvable,sol,basis]=a.solve(b);
-  assert(solvable && sol==x && basis.empty());
+  const auto solution=a.solve(b);
+  assert(solution && solution->first==x && solution->second.empty());
   a[32]=a[0]; b=a*x;
-  auto [consistent,particular,kernel]=a.solve(b);
-  assert(consistent && a*particular==b && kernel.size()==1);
+  const auto family=a.solve(b);
+  assert(family);
+  const auto &[particular,kernel]=*family;
+  assert(a*particular==b && kernel.size()==1);
   assert((a*kernel[0]==array<S,33>{}));
   b[32]+=S(1);
-  assert(!get<0>(a.solve(b)));
+  assert(!a.solve(b));
 }
 
 template <class S>

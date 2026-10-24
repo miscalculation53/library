@@ -149,14 +149,15 @@ void algorithms(int n, const vc<pair<int, int>> &uv)
   }
   // 単位重み版ともサイクルの有無を比較し、復元した辺を入力と照合する。
   Graph<directed, ll> weighted(n, uv);
-  auto [found, cycle] = cycle_detection(g);
-  assert(found == cycle_detection(weighted).first);
-  assert(found == !cycle.empty());
+  const auto cycle = cycle_detection(g);
+  assert(cycle.has_value() == cycle_detection(weighted).has_value());
+  if (!cycle) return;
+  assert(!cycle->empty());
   vc<bool> used(uv.size());
-  repi(i, cycle.size())
+  repi(i, cycle->size())
   {
-    auto e = cycle[i];
-    assert(e.to == cycle[(i + 1) % cycle.size()].from && !used[e.index]);
+    auto e = (*cycle)[i];
+    assert(e.to == (*cycle)[(i + 1) % cycle->size()].from && !used[e.index]);
     auto [u, v] = uv[e.index];
     if constexpr (!directed) if (u != e.from) swap(u, v);
     assert(u == e.from && v == e.to && e.cost == 1);

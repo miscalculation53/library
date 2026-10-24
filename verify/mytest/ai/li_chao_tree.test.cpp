@@ -349,6 +349,54 @@ void coordinate_i128()
   assert(tree.query(hi - 1).first == -2);
 }
 
+template <bool Min>
+void wide_integer_evaluations()
+{
+  using Compare = conditional_t<Min, less<>, greater<>>;
+  i128 bound = i128(1) << 25, a = i128(1) << 100, b = i128(1) << 126;
+  vc<i128> xs{-bound, -bound + 1, -1, 0, 1, bound - 1, bound};
+  LiChaoTree<i128, i128, Compare> dynamic(-bound, bound + 1);
+  LiChaoTreeCompressed<i128, i128, Compare> compressed(xs);
+  vc<Entry<i128>> entries;
+  auto add = [&](i128 l, i128 r, i128 slope, i128 intercept, bool whole)
+  {
+    int id = entries.size();
+    entries.push_back({l, r, slope, intercept, id, whole});
+    if (whole) dynamic.add_line(slope, intercept), compressed.add_line(slope, intercept);
+    else dynamic.add_segment(l, r, slope, intercept), compressed.add_segment(l, r, slope, intercept);
+    for (int k = 0; k < int(xs.size()); ++k)
+    {
+      check_result<Min, i128>(entries, xs[k], dynamic.query(xs[k]));
+      check_result<Min, i128>(entries, xs[k], compressed.query(xs[k]));
+      check_result<Min, i128>(entries, xs[k], compressed.query_index(k));
+    }
+  };
+  add(-bound, bound + 1, a, -a, true);
+  add(-bound, bound + 1, -a, a, true);
+  add(-bound, bound + 1, a + 1, b, true);
+  add(-bound, bound + 1, -a - 1, -b, true);
+  add(-bound, 0, -a - 1, a + 1, false);
+  add(0, bound + 1, 0, -(i128(1) << 125) - 1, false);
+
+  // Only the selected value must fit the return type.
+  LiChaoTree<i128, int, Compare> narrow(-bound, bound + 1);
+  LiChaoTreeCompressed<i128, int, Compare> narrow_compressed(xs);
+  entries.clear();
+  for (auto [slope, intercept] : {pair<i128, i128>{0, Min ? 7 : -7},
+                                {a, Min ? b : -b}, {-a, Min ? b : -b}})
+  {
+    int id = entries.size();
+    entries.push_back({-bound, bound + 1, slope, intercept, id, true});
+    narrow.add_line(slope, intercept), narrow_compressed.add_line(slope, intercept);
+    for (int k = 0; k < int(xs.size()); ++k)
+    {
+      check_result<Min, i128>(entries, xs[k], narrow.query(xs[k]));
+      check_result<Min, i128>(entries, xs[k], narrow_compressed.query(xs[k]));
+      check_result<Min, i128>(entries, xs[k], narrow_compressed.query_index(k));
+    }
+  }
+}
+
 int main()
 {
   static_assert(is_same_v<decltype(declval<LiChaoTree<ll>>().query(0).first), i128>);
@@ -357,6 +405,8 @@ int main()
   random_checks<false, int>();
   random_checks<true, ll>();
   random_checks<false, ll>();
+  random_checks<true, i128, i128>();
+  random_checks<false, i128, i128>();
   boundaries<true, signed char, int>();
   boundaries<false, signed char, int>();
   boundaries<true, int, ll>();
@@ -383,5 +433,7 @@ int main()
   adjacent_floating_coordinates<false, long double>();
   rational_examples_and_widening();
   coordinate_i128();
+  wide_integer_evaluations<true>();
+  wide_integer_evaluations<false>();
   cout << "Hello World\n";
 }

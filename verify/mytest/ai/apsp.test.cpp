@@ -185,6 +185,7 @@ void unweighted_tests()
 }
 
 constexpr int int_inf() { return 1000000000; }
+constexpr ll large_inf() { return LLONG_MAX; }
 
 int main()
 {
@@ -226,5 +227,30 @@ int main()
     repi(s, 26) repi(t, 26)
       assert(ds[s][t] == (s < 24 && t < 24 ? -int_inf() : s == t ? 0 : int_inf()));
   }
+  // 非負整数の高速経路でも、大きい値・到達不能・親辺を保持する。
+  GraphDirected<ll> large_input(4, vc<tuple<int, int, ll>>{
+      {0, 1, INF - 7}, {1, 2, INF - 5}, {0, 2, 3}});
+  AllPairsShortestPath large(large_input);
+  assert(large.floyd_warshall()[0][2] == 3);
+  assert(large.path(0, 2).size() == 1 && large.path(0, 2)[0].index == 2);
+  assert(large.floyd_warshall()[0][3] == INF && !large.negative_cycle());
+
+  // 2 * infty が型の範囲を超える設定では、飽和演算を使う。
+  GraphDirected<ll> max_input(3, vc<tuple<int, int, ll>>{
+      {0, 1, LLONG_MAX / 2 + 1}, {1, 2, LLONG_MAX / 2 + 1}, {0, 2, 3}});
+  AllPairsShortestPath<true, ll, large_inf> max_graph(max_input);
+  assert(max_graph.floyd_warshall()[0][2] == 3 && !max_graph.negative_cycle());
+  assert(max_graph.path(0, 2)[0].index == 2);
+
+  const i128 w = i128(1) << 120;
+  GraphDirected<i128> wide_input(4, vc<tuple<int, int, i128>>{{0, 1, w}, {1, 2, w}});
+  AllPairsShortestPath wide(wide_input);
+  assert(wide.floyd_warshall()[0][2] == 2 * w);
+  assert(wide.path(0, 2).size() == 2 && !wide.negative_cycle());
+
+  GraphDirected<double> real_input(3, vc<tuple<int, int, double>>{{0, 1, 0.5}, {1, 2, -0.25}});
+  AllPairsShortestPath real(real_input);
+  assert(real.floyd_warshall()[0][2] == 0.25 && !real.negative_cycle());
+  assert(real.path(0, 2).size() == 2);
   PRINT("Hello World");
 }

@@ -157,6 +157,14 @@ public:
   // 空なら true を返す
   bool empty() const { return num == 0; }
 
+  vc<pair<Key, Value>> content() const
+  {
+    vc<pair<Key, Value>> res;
+    res.reserve(num);
+    for (const auto &entry : *this) res.eb(entry);
+    return res;
+  }
+
   // key が存在すれば対応する値へのポインタ、存在しなければ nullptr を返す
   Value *find_ptr(const Key &key)
   {

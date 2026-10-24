@@ -108,12 +108,12 @@ void random_checks(int max_n, int trials)
     assert(g == u);
     if (b.sz() > 1)
     {
-      auto [ok, iv] = polynomial_inv_mod(a, b);
-      assert(ok == (g.sz() == 1));
-      if (ok)
+      const auto iv = polynomial_inv_mod(a, b);
+      assert(iv.has_value() == (g.sz() == 1));
+      if (iv)
       {
-        assert(iv.sz() < b.sz());
-        assert(naive_remainder(a * iv, b) == P<mint>{1});
+        assert(iv->sz() < b.sz());
+        assert(naive_remainder(a * *iv, b) == P<mint>{1});
       }
     }
     if (a.sz() > b.sz())
@@ -180,10 +180,10 @@ int main()
     a.back() += 1;
     check_bm<mint>(a);
   }
-  auto [ok, inv] = polynomial_inv_mod(P<mint>{0, 1}, P<mint>{1, 0, 1});
-  assert(ok && inv == (P<mint>{0, -1}));
-  assert(polynomial_inv_mod(P<mint>{}, P<mint>{7}).first);
-  assert(polynomial_inv_mod(P<mint>{2, 3}, P<mint>{7}).second.empty());
-  assert(!polynomial_inv_mod(P<mint>{0, 1}, P<mint>{0, 0, 1}).first);
+  const auto inv = polynomial_inv_mod(P<mint>{0, 1}, P<mint>{1, 0, 1});
+  assert(inv && *inv == (P<mint>{0, -1}));
+  assert(polynomial_inv_mod(P<mint>{}, P<mint>{7}));
+  assert(polynomial_inv_mod(P<mint>{2, 3}, P<mint>{7})->empty());
+  assert(!polynomial_inv_mod(P<mint>{0, 1}, P<mint>{0, 0, 1}));
   cout << "Hello World\n";
 }

@@ -3,10 +3,11 @@
 #include "../template/template_all_but_modint.hpp"
 
 #include "../utils/is_integral_ext.hpp"
+#include "../utils/integer_arithmetic.hpp"
 #include "../utils/larger_int.hpp"
 
 /**
- * @brief 約分しない有理数
+ * @brief 演算時に gcd を使わない有理数
  * @docs docs/math/rational.md
  */
 
@@ -87,18 +88,53 @@ public:
   bool is_infinite() const { return den == T(0); }
   bool is_finite() const { return den != T(0); }
 
+  template <class U = T, enable_if_t<is_rational_ordered_v<U>, int> = 0>
+  int sgn() const { return int(T(0) < num) - int(num < T(0)); }
+
+  template <class U = T, enable_if_t<is_rational_ordered_v<U>, int> = 0>
+  Rational abs() const { return num < T(0) ? -*this : *this; }
+
+  Rational inv() const
+  {
+    assert(num != T(0));
+    return is_infinite() ? Rational(T(0)) : Rational(den, num);
+  }
+
+  template <class U = T, enable_if_t<is_rational_ordered_v<U> && rational_has_mod<U>::value, int> = 0>
+  T floor() const
+  {
+    assert(is_finite());
+    T q = num / den;
+    return num < T(0) && num % den != T(0) ? T(q - T(1)) : q;
+  }
+
+  template <class U = T, enable_if_t<is_rational_ordered_v<U> && rational_has_mod<U>::value, int> = 0>
+  T ceil() const
+  {
+    assert(is_finite());
+    T q = num / den;
+    return T(0) < num && num % den != T(0) ? T(q + T(1)) : q;
+  }
+
+  template <class U = T, enable_if_t<is_rational_ordered_v<U>, int> = 0>
+  friend int sgn(const Rational &x) { return x.sgn(); }
+
+  template <class U = T, enable_if_t<is_rational_ordered_v<U>, int> = 0>
+  friend Rational abs(const Rational &x) { return x.abs(); }
+
+  friend Rational inv(const Rational &x) { return x.inv(); }
+
+  template <class U = T, enable_if_t<is_rational_ordered_v<U> && rational_has_mod<U>::value, int> = 0>
+  friend T floor(const Rational &x) { return x.floor(); }
+
+  template <class U = T, enable_if_t<is_rational_ordered_v<U> && rational_has_mod<U>::value, int> = 0>
+  friend T ceil(const Rational &x) { return x.ceil(); }
+
   pair<T, T> reduced() const
   {
-    if constexpr (is_same_v<T, i128> || is_same_v<T, u128>)
+    if constexpr (is_integral_ext<T>)
     {
-      // std::gcd は標準モードでは 128 ビット整数を受け付けない。
-      u128 a = num < T(0) ? -u128(num) : u128(num), b = u128(den);
-      while (b)
-      {
-        u128 r = a % b;
-        a = b, b = r;
-      }
-      T g = T(a);
+      T g = T(gcd(unsigned_abs(num), unsigned_abs(den)));
       return g == T(0) ? pair<T, T>{num, den} : pair<T, T>{num / g, den / g};
     }
     else if constexpr (rational_has_mod<T>::value)
@@ -127,8 +163,24 @@ public:
         return *this;
       }
     }
+    if (rhs.num == T(0))
+      return *this;
+    if (num == T(0))
+      return *this = rhs;
+    if (den == rhs.den)
+    {
+      num += rhs.num;
+      return *this;
+    }
     T rhs_num = rhs.num, rhs_den = rhs.den;
-    num = num * rhs_den + rhs_num * den;
+    if constexpr (is_integral_ext<T> && !is_same_v<T, bool>)
+    {
+      // 交差積が大きくても、最終的な分子が T に収まれば正確に復元できる。
+      using C = unsigned_arithmetic_t<T>;
+      num = wrapping_cast<T>(C(num) * C(rhs_den) + C(rhs_num) * C(den));
+    }
+    else
+      num = num * rhs_den + rhs_num * den;
     den *= rhs_den;
     normalize_sign();
     return *this;
@@ -147,8 +199,26 @@ public:
         return *this;
       }
     }
+    if (rhs.num == T(0))
+      return *this;
+    if (num == T(0))
+    {
+      num = -rhs.num, den = rhs.den;
+      return *this;
+    }
+    if (den == rhs.den)
+    {
+      num -= rhs.num;
+      return *this;
+    }
     T rhs_num = rhs.num, rhs_den = rhs.den;
-    num = num * rhs_den - rhs_num * den;
+    if constexpr (is_integral_ext<T> && !is_same_v<T, bool>)
+    {
+      using C = unsigned_arithmetic_t<T>;
+      num = wrapping_cast<T>(C(num) * C(rhs_den) - C(rhs_num) * C(den));
+    }
+    else
+      num = num * rhs_den - rhs_num * den;
     den *= rhs_den;
     normalize_sign();
     return *this;
@@ -176,7 +246,16 @@ public:
         return *this;
       }
     }
+    if (num == T(0) || rhs.num == T(0))
+    {
+      num = T(0), den = T(1);
+      return *this;
+    }
     T rhs_num = rhs.num, rhs_den = rhs.den;
+    if (num == rhs_den)
+      num = T(1), rhs_den = T(1);
+    if (den == rhs_num)
+      den = T(1), rhs_num = T(1);
     num *= rhs_num;
     den *= rhs_den;
     normalize_sign();
@@ -202,10 +281,31 @@ public:
         return *this;
       }
     }
+    if (num == T(0))
+    {
+      den = T(1);
+      return *this;
+    }
     T rhs_num = rhs.num, rhs_den = rhs.den;
-    num *= rhs_den;
-    den *= rhs_num;
-    normalize_sign();
+    if (num == rhs_num)
+      num = T(1), rhs_num = T(1);
+    if (den == rhs_den)
+      den = T(1), rhs_den = T(1);
+    if constexpr (is_integral_ext<T> && !is_same_v<T, bool>)
+    {
+      using C = unsigned_arithmetic_t<T>;
+      C next_num = C(num) * C(rhs_den), next_den = C(den) * C(rhs_num);
+      if constexpr (is_signed_ext<T>)
+        if (rhs_num < T(0))
+          next_num = C(0) - next_num, next_den = C(0) - next_den;
+      num = wrapping_cast<T>(next_num), den = wrapping_cast<T>(next_den);
+    }
+    else
+    {
+      num *= rhs_den;
+      den *= rhs_num;
+      normalize_sign();
+    }
     return *this;
   }
 
@@ -221,6 +321,8 @@ public:
   {
     if (lhs.is_infinite() || rhs.is_infinite())
       return lhs.is_infinite() && rhs.is_infinite() && lhs.num == rhs.num;
+    if (lhs.den == rhs.den)
+      return lhs.num == rhs.num;
     using C = larger_int_t<T>;
     return C(lhs.num) * C(rhs.den) == C(rhs.num) * C(lhs.den);
   }
@@ -246,6 +348,8 @@ public:
         return lhs.num < T(0);
       return T(0) < rhs.num;
     }
+    if (lhs.den == rhs.den)
+      return lhs.num < rhs.num;
     using C = larger_int_t<T>;
     return C(lhs.num) * C(rhs.den) < C(rhs.num) * C(lhs.den);
   }

@@ -29,7 +29,7 @@ struct montgomery64odd
   ull inv_reduce(i128 v) const { return reduce(u128(v % m + m) * sq); }
 };
 
-// https://www.mathenachia.blog/even-mod-montgomery-impl/
+//! https://www.mathenachia.blog/even-mod-montgomery-impl/
 struct montgomery64
 {
   ull m = 0, mx = 0, imx = 0, d = 0, q = 0;

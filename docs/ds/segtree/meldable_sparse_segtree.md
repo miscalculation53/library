@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 長さ $n$、各点の初期値が `M::e()` の列を、併合可能な疎なセグメント木で管理する。`MeldableSparseSegmentTreePool<M>` がノードプールを持ち、`make_tree()` で木 `MeldableSparseSegmentTree<M>` を作る。各木はプールへのポインタと根を持ち、`seg.set(p,x)`、`seg.prod(l,r)`、`seg.merge(other)` で操作する。
@@ -88,7 +90,7 @@ void reserve(size_t count)
 ##### 計算量
 
 - `universe_size` / `node_count`：$O(1)$
-- `reserve`：$O(P+1)$
+- `reserve`：$O(P)$
 
 #### make_tree
 
@@ -118,7 +120,7 @@ void clear()
 
 ##### 計算量
 
-- $O(P+1)$
+- $O(P)$
 
 ### MeldableSparseSegmentTree
 
@@ -234,7 +236,7 @@ MeldableSparseSegmentTree<M> clone() const
 
 ##### 計算量
 
-- 償却 $O(V+1)$
+- 償却 $O(V)$
 
 #### prod / all_prod
 
@@ -288,7 +290,7 @@ map<ll,S> content() const
 
 ##### 計算量
 
-- $O(V+1)$
+- $O(V)$
 
 #### clear
 

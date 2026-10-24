@@ -4,8 +4,8 @@
 
 #include "ds/coordinate_compression.hpp"
 #include "ds/meldable_integer_set.hpp"
-#include "graph/tree/merge_tree.hpp"
-#include "graph/tree/rooted_tree.hpp"
+#include "tree/merge_tree.hpp"
+#include "tree/rooted_tree.hpp"
 
 void init() {}
 void main2()

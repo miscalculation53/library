@@ -1,7 +1,7 @@
 #pragma once
 
 #include "graph.hpp"
-#include "tree/rooted_tree.hpp"
+#include "../tree/rooted_tree.hpp"
 #include "../utils/is_integral_ext.hpp"
 
 /**

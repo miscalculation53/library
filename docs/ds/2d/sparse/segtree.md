@@ -1,36 +1,60 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
-一点更新・矩形和ができる（ただし、一点更新が起こる点は（本ライブラリでは）先読みする必要がある）。log ふたつ。なお、$2$ 次元目にセグメント木以外のデータ構造も載せられるようになっており、たとえば更新がない場合は Cumulative Sum や (Disjoint) Sparse Table なども載せられる。
+構築時に登録した点の一点更新と、半開矩形内の重みの和を扱う。$2$ 次元目のデータ構造 `D` は `SegmentTree` が既定で、更新がない場合は `CumulativeSum` や (Disjoint) Sparse Table も選べる。
 
-この構造では、内側のデータ構造が $y$ 順に値をまとめる一方、外側の木は $x$ 区間ごとの結果をまとめる。一般の非可換モノイドでは両者の順序を同時に保てないため、`M` は可換である必要がある。
+`D<M>` が `CumulativeSum<M>` と同じ型の場合、静的な可換群の矩形和として構築する。$x$ 順の点列を $y$ の順位のビットで安定分割し、各層の位置写像と前置和を保持する。構築は $O(p \log p)$、矩形和と単一 $x$ の和は $O(\log p)$、全点の和は $O(1)$、保持領域は $O(p \log p)$。ここで $p$ は登録した点数とし、群の演算は $O(1)$ とする。
 
-中身について：普通に点を二分探索で探そうとするとそのパートに log ふたつがついてしまうが、Fractional Cascading を使うと回避できる。これは各ノードに $y$ 座標の列に加え、子に潜ったときのその列でのインデックスも持っておくというアイデア。再帰セグ木でやる必要がある。
+その他の `D` では、内側のデータ構造が $y$ 順に値をまとめる一方、外側の木は $x$ 区間ごとの結果をまとめる。一般の非可換モノイドでは両者の順序を同時に保てないため、`M` は可換である必要がある。
+
+その他の `D` では、Fractional Cascading により $y$ の二分探索を根で一度だけ行う。各ノードの $y$ 座標列から子の列へ移る添字を保持し、外側の木を走査する。
 
 構築時に与えた点の添字を `point_id` として一点更新に使う。$x$ 座標は内部で自動的に座標圧縮し、一点更新では座標の二分探索を行わない。矩形クエリには生の座標を渡す。
 
-各ノードの $y$ 座標列は CSR で管理し、子ノードでの添字も同じ平坦な添字に対応する連続配列へ格納する。初期値は内側のデータ構造へ移した後、座標管理側には重複して保持しない。
+その他の `D` では、各ノードの $y$ 座標列を CSR で管理し、子ノードでの添字も同じ平坦な添字に対応する連続配列へ格納する。初期値は内側のデータ構造へ移した後、座標管理側には重複して保持しない。
+
+## 使用例
+
+```cpp
+#include "algebra/algebra_basic_ops.hpp"
+#include "ds/cumulative_sum/cumulative_sum.hpp"
+#include "ds/2d/sparse/segtree.hpp"
+
+SegmentTree2DSparse<GroupAddSub<long long>, int, CumulativeSum> seg(
+    {{0, 0, 3}, {0, 1, 5}, {2, 1, 7}});
+assert(seg.sum(0, 2, 0, 2) == 8);
+assert(seg.sum(0, 0, 2) == 8);
+assert(seg.all_sum() == 15);
+```
 
 ## 詳細なドキュメント
 
 #### コンストラクタ
 
 ```cpp
-SegmentTree2DSparse<M, I, D>(vc<tuple<I, I, M::S>> xyws)
+SegmentTree2DSparse<M, I, D>()
+SegmentTree2DSparse<M, I, D>(const vc<tuple<I, I, M::S>>& xyws)
 ```
 
-- `M` は可換モノイド
-- `I` は座標の型
+- `M` は可換モノイド。`D<M>` が `CumulativeSum<M>` と同じ型の場合は可換群で、`M::inv` を持つ
+- `I` は座標の型。`CumulativeSum` の経路では `<` が狭義弱順序を与える
 - `D<M>` は $2$ 次元目に載せるデータ構造。`D` のデフォルトは `SegmentTree`
 - `xyws` は更新されうる点と初期値
 - `xyws[i]` の点は `point_id = i` で指定する
 - 同じ座標が複数回含まれる場合、初期値は `M::op` でまとめられ、それらの `point_id` は同じ点を指す
 - `D<M>` は `vc<M::S>` から構築できる
+- `CumulativeSum` の経路では、座標と値をコピー・ムーブ・代入できる
+- 集計演算の結果と中間値を表現できる `M::S` を選ぶ
+
+`CumulativeSum` のデフォルト構築は空集合を表す。コピーは値コピーになる。その他の `D` のコピーでは、`D<M>` 自身のコピー動作が適用される。
 
 ##### 計算量
 
 $p = \lvert\mathrm{xyws}\rvert$ として、`D<M>` の構築が要素数に対して線形なら
 
-- $O(p \log^2 p)$
+- `CumulativeSum`：$O(p \log p)$
+- その他の `D`：$O(p \log^2 p)$
 
 #### set
 
@@ -108,8 +132,8 @@ void modify(int point_id, const F& f)
 
 $f(p)$ を内側の区間クエリの計算量として
 
-- (1)：$O(\log p + f(p))$
-- (2)：$O(\log p \cdot f(p))$
+- `CumulativeSum`：(1)、(2) ともに $O(\log p)$
+- その他の `D`：(1) は $O(\log p + f(p))$、(2) は $O(\log p \cdot f(p))$
 
 #### all_sum
 
@@ -127,7 +151,8 @@ M::S all_sum()
 
 $f(p)$ を内側の区間クエリの計算量として
 
-- $O(f(p))$
+- `CumulativeSum`：$O(1)$
+- その他の `D`：$O(f(p))$
 
 #### content
 

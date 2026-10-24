@@ -1,15 +1,33 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 「直前の辺追加を undo する」ができる。また snapshot/rollback もできる。
 
 経路圧縮ができないので $\log$ がつくことに注意。
 
+## 使用例
+
+```cpp
+#include "ds/uf/uf_undo.hpp"
+
+UnionFindUndo<UFDataEmpty<>> uf(3);
+uf.merge(0, 1);
+uf.snapshot();
+uf.merge(1, 2);
+assert(uf.same(0, 2));
+uf.rollback();
+assert(uf.same(0, 1) && !uf.same(0, 2));
+```
+
 ## 詳細なドキュメント
+
+### UnionFindUndo
 
 #### コンストラクタ
 
 ```cpp
-UnionFindPartiallyPersistent<class UFData>(int n)
+UnionFindUndo<class UFData>(int n)
 ```
 
 頂点数 $n$ で初期化する。`UFData` は通常の Unionfind と同じ仕様。
@@ -23,6 +41,8 @@ public なのは
 - `UFData::GData gdat`
 
 leader, size, same, get_vdata, merge, group_ids は Unionfind と同じ（経路圧縮できないので計算量 $O(\log n)$）
+
+`content() const` も通常の [UnionFind](uf.md#content) と同じ形式で使え、$O(n)$ で現在の連結成分ごとの頂点一覧を返す。undo の履歴を維持する。
 
 #### undo
 

@@ -1,5 +1,36 @@
 **/*.gch
+/template/.precompiled/
 **/exec
 **/__pycache__/
 .venv
 .submit-code/
+
+# Local benchmarks, research, and authoring notes.
+/benchmark/
+/benchmarks/
+/research/
+AGENTS.md
+/docs/STYLE.md
+/docs/ds/flat_dvec_benchmark.md
+/docs/math/fps/arithmetic_product_benchmark.md
+/docs/math/fps/bostan_mori_benchmark.md
+/docs/math/runtime_integer_width.md
+
+# Local environments and generated files.
+.DS_Store
+/venv/
+/.vscode/*
+!/.vscode/library.code-snippets
+/.agents/
+/.codex/
+/.verify-helper/site/
+/.verify-helper/artifacts/
+/.verify-helper/failures.json
+/.verify-helper/timeouts.json
+bundle.cpp
+*-bundle.cpp
+*.pch
+*.o
+*.out
+*.exe
+*.vsix

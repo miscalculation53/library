@@ -403,6 +403,8 @@ def merge_results(args: argparse.Namespace) -> None:
 
 def publish_docs(args: argparse.Namespace) -> None:
     import onlinejudge_verify.documentation.build
+    import onlinejudge_verify.documentation.configure
+    import onlinejudge_verify.documentation.main
     import onlinejudge_verify.documentation.type
     import onlinejudge_verify.main
     import onlinejudge_verify.marker
@@ -418,6 +420,20 @@ def publish_docs(args: argparse.Namespace) -> None:
     if failed & uncompleted:
         raise RuntimeError("failed and uncompleted verification files overlap")
     cwd = pathlib.Path.cwd().resolve(strict=True)
+    render_config = onlinejudge_verify.documentation.main.load_render_config(basedir=cwd)
+    excluded_paths = [pathlib.Path(path) for path in render_config.config_yml.get("exclude", [])]
+    configure = onlinejudge_verify.documentation.configure
+    original_find_paths = configure._find_matched_file_paths
+
+    def find_public_paths(pred, *, basedir):
+        # verification-helper's Markdown finder returns absolute paths, while
+        # its exclude matcher expects relative paths. Filter both source and
+        # Markdown files before collecting dependencies or rendering pages.
+        return [
+            path for path in original_find_paths(pred, basedir=basedir)
+            if not configure.is_excluded(path.relative_to(basedir), excluded_paths=excluded_paths)
+        ]
+
     marker_class = onlinejudge_verify.marker.VerificationMarker
     original_is_verified = marker_class.is_verified
     original_is_failed = marker_class.is_failed
@@ -458,12 +474,17 @@ def publish_docs(args: argparse.Namespace) -> None:
     marker_class.is_verified = is_verified
     marker_class.is_failed = is_failed
     onlinejudge_verify.documentation.build._get_verification_status_icon = status_icon
+    configure._find_matched_file_paths = find_public_paths
     helper_gitignore = pathlib.Path(".verify-helper/.gitignore")
     helper_gitignore.parent.mkdir(parents=True, exist_ok=True)
     helper_gitignore.touch(exist_ok=True)
     try:
+        # A previously generated private page must also disappear on rebuild.
+        if render_config.destination_dir.exists():
+            shutil.rmtree(render_config.destination_dir)
         onlinejudge_verify.main.subcommand_docs(jobs=args.jobs)
     finally:
+        configure._find_matched_file_paths = original_find_paths
         marker_class.is_verified = original_is_verified
         marker_class.is_failed = original_is_failed
         onlinejudge_verify.documentation.build._get_verification_status_icon = (

@@ -1,6 +1,20 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 テンプレート（二分探索）
+
+## 使用例
+
+```cpp
+#include "template/template_all_but_modint.hpp"
+
+vc<int> a{1, 3, 3, 7};
+assert(LB(a, 3) == 1 && UB(a, 3) == 3);
+assert(in_cnt(a, 2, 7) == 2);
+auto [ok, ng] = binsearch([](ll x) { return x * x <= 30; }, 0, 10);
+assert(ok == 5 && ng == 6);
+```
 
 ## 詳細なドキュメント
 

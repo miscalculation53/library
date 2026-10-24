@@ -13,16 +13,16 @@
 
 // 素数 p に対し、p = a^2 + b^2 となる (a, b)
 // のうち 0 <= a <= b であるもの (1 通り) を求める
-// (存在するか, ペア)
+// 存在すれば (a, b)、存在しなければ nullopt。
 // 表し方が存在しない <=> p が 4n+3 型素数
 template <class T>
-pair<bool, pair<T, T>> two_square_sum_prime(T p)
+optional<pair<T, T>> two_square_sum_prime(T p)
 {
   assert(is_prime(p));
   if (p == 2)
-    return {true, {1, 1}};
+    return pair<T, T>{1, 1};
   if (p % 4 == 3)
-    return {false, {}};
+    return nullopt;
   ll i;
   if (p <= INT_MAX)
   {
@@ -51,7 +51,7 @@ pair<bool, pair<T, T>> two_square_sum_prime(T p)
     i = ii.val();
   }
   auto [a, b] = svp2d<T>({1, i}, {0, p});
-  return {true, minmax({abs(a), abs(b)})};
+  return minmax({abs(a), abs(b)});
 }
 
 // 整数 n に対し n = a^2 + b^2 となる正整数 a, b の組 (0 <= a <= b) をすべて求める
@@ -72,8 +72,9 @@ vc<pair<ll, ll>> two_square_sum(ll n)
       sb *= ipow(p, e / 2);
       continue;
     }
-    auto [ok, cd] = two_square_sum_prime(p);
-    repi(_, e) cds.eb(cd);
+    const auto cd = two_square_sum_prime(p);
+    assert(cd);
+    repi(_, e) cds.eb(*cd);
   }
   vc<pair<ll, ll>> ans = {{0, sb}}, nans;
   fec([ c, d ] : cds)

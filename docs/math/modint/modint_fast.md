@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 素数を法とする `fast_modint<p>`。前計算後の `pow`・`inv`・除算が $O(1)$ になる。
@@ -113,5 +115,3 @@ $$i \equiv -\frac{p \bmod i}{\lfloor p/i\rfloor}\pmod p$$
 | 998244353 | 149 ms | 87.6 ns | 34.5 ns | 93.0 ns | 11.3 ns |
 | 1000000007 | 130 ms | 86.5 ns | 28.3 ns | 87.4 ns | 13.2 ns |
 | 2147483647 | 316 ms | 104.3 ns | 32.0 ns | 118.7 ns | 22.4 ns |
-
-計測コードは `benchmarks/modint_fast.cpp`、結果は `benchmarks/modint_fast.csv`。

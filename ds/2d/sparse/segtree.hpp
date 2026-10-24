@@ -5,6 +5,12 @@
 #include "ds/segtree/segtree.hpp"
 #include "../../csr.hpp"
 #include "common.hpp"
+#include "internal_static_rectangle_group.hpp"
+
+#include <type_traits>
+
+template <class G>
+struct CumulativeSum;
 
 /**
  * @brief $2$ 次元セグメント木（疎、クエリ点先読み）
@@ -15,7 +21,8 @@
 // 点更新は、構築時に与えた点の添字 point_id で指定する
 // セグメント木にデータ構造 D<M> を載せる
 // D のデフォルトは SegmentTree
-// 更新がないなら (disjoint) sparse table とかも
+// CumulativeSum は静的な可換群の矩形和として構築する
+// その他の D はセグメント木の各ノードに載せる
 // D<M> に set, get があるなら set, get が使える
 // M: 可換モノイド
 // I: 座標の型
@@ -26,7 +33,9 @@ struct SegmentTree2DSparse
   using DS = D<M>;
 
 private:
-  int n, siz, lg;
+  static constexpr bool use_static = std::is_same_v<DS, CumulativeSum<M>>;
+  [[no_unique_address]] internal_sparse_2d::static_rectangle_storage<M, I, use_static> static_;
+  int n = 0, siz = 0, lg = 0;
   vc<I> xs;
   struct Y
   {
@@ -54,126 +63,134 @@ private:
 
 public:
   SegmentTree2DSparse() {}
-  SegmentTree2DSparse(const vc<tuple<I, I, S>> &xyws)
+  SegmentTree2DSparse(const vc<tuple<I, I, S>> &xyws) : static_(xyws)
   {
-    fec([x, y, w] : xyws)
+    if constexpr (use_static)
     {
-      xs.eb(x);
+      return;
     }
-    sortunique(xs);
-    n = SZ(xs);
-    siz = bit_ceil(n);
-    lg = countr_zero((unsigned)siz);
-    levels.reserve(lg + 1);
-    dss.resize(2 * siz);
-    vc<S> ws;
+    else
     {
-      vvc<Y> rows(siz);
-      fec([ x, y, w ] : xyws) rows[LB(xs, x)].eb(y, w);
-      vc<Y> nys;
-      vc<int> row_sizes(siz);
-      repi(x, siz)
+      fec([x, y, w] : xyws)
       {
-        sort(ALL(rows[x]));
-        nys.clear();
-        fec(yw : rows[x])
-        {
-          if (nys.empty() || nys.back().y != yw.y)
-            nys.eb(yw);
-          else
-            nys.back().w = M::op(nys.back().w, yw.w);
-        }
-        rows[x].swap(nys);
-        row_sizes[x] = rows[x].size() + 1;
+        xs.eb(x);
       }
-      Level leaf;
-      leaf.ys = CSR<I>(row_sizes);
-      ws.assign(leaf.ys.get_elist().size(), M::e());
-      repi(x, siz)
+      sortunique(xs);
+      n = SZ(xs);
+      siz = bit_ceil(n);
+      lg = countr_zero((unsigned)siz);
+      levels.reserve(lg + 1);
+      dss.resize(2 * siz);
+      vc<S> ws;
       {
-        const int off = leaf.ys.offset(x);
-        vc<S> vec(rows[x].size());
-        repi(k, rows[x].size())
+        vvc<Y> rows(siz);
+        fec([ x, y, w ] : xyws) rows[LB(xs, x)].eb(y, w);
+        vc<Y> nys;
+        vc<int> row_sizes(siz);
+        repi(x, siz)
         {
-          leaf.ys.get_elist()[off + k] = rows[x][k].y;
-          ws[off + k] = vec[k] = move(rows[x][k].w);
-        }
-        leaf.ys.get_elist()[off + rows[x].size()] = numeric_limits<I>::max();
-        dss[siz + x] = DS(vec);
-      }
-      levels.push_back(move(leaf));
-    }
-    repi(h, 1, lg + 1)
-    {
-      const Level &prv = levels[h - 1];
-      const int m = siz >> h;
-      vc<int> row_sizes(m);
-      repi(v, m)
-      {
-        const auto a = prv.ys[2 * v], b = prv.ys[2 * v + 1];
-        int i = 0, j = 0;
-        while (i < a.size() && j < b.size())
-        {
-          row_sizes[v]++;
-          if (a[i] == b[j])
-            i++, j++;
-          else if (a[i] < b[j])
-            i++;
-          else
-            j++;
-        }
-      }
-      Level nxt;
-      nxt.ys = CSR<I>(row_sizes);
-      nxt.to.resize(nxt.ys.get_elist().size());
-      vc<S> nws(nxt.ys.get_elist().size(), M::e());
-      repi(v, m)
-      {
-        const auto a = prv.ys[2 * v], b = prv.ys[2 * v + 1];
-        const int ao = prv.ys.offset(2 * v), bo = prv.ys.offset(2 * v + 1);
-        const int off = nxt.ys.offset(v);
-        int i = 0, j = 0, k = 0;
-        while (i < a.size() && j < b.size())
-        {
-          const int pos = off + k++;
-          nxt.to[pos] = {i, j};
-          if (a[i] == b[j])
+          sort(ALL(rows[x]));
+          nys.clear();
+          fec(yw : rows[x])
           {
-            nxt.ys.get_elist()[pos] = a[i];
-            nws[pos] = M::op(ws[ao + i], ws[bo + j]);
-            i++, j++;
+            if (nys.empty() || nys.back().y != yw.y)
+              nys.eb(yw);
+            else
+              nys.back().w = M::op(nys.back().w, yw.w);
           }
-          else if (a[i] < b[j])
+          rows[x].swap(nys);
+          row_sizes[x] = rows[x].size() + 1;
+        }
+        Level leaf;
+        leaf.ys = CSR<I>(row_sizes);
+        ws.assign(leaf.ys.get_elist().size(), M::e());
+        repi(x, siz)
+        {
+          const int off = leaf.ys.offset(x);
+          vc<S> vec(rows[x].size());
+          repi(k, rows[x].size())
           {
-            nxt.ys.get_elist()[pos] = a[i];
-            nws[pos] = ws[ao + i];
-            i++;
+            leaf.ys.get_elist()[off + k] = rows[x][k].y;
+            ws[off + k] = vec[k] = move(rows[x][k].w);
           }
-          else
+          leaf.ys.get_elist()[off + rows[x].size()] = numeric_limits<I>::max();
+          dss[siz + x] = DS(vec);
+        }
+        levels.push_back(move(leaf));
+      }
+      repi(h, 1, lg + 1)
+      {
+        const Level &prv = levels[h - 1];
+        const int m = siz >> h;
+        vc<int> row_sizes(m);
+        repi(v, m)
+        {
+          const auto a = prv.ys[2 * v], b = prv.ys[2 * v + 1];
+          int i = 0, j = 0;
+          while (i < a.size() && j < b.size())
           {
-            nxt.ys.get_elist()[pos] = b[j];
-            nws[pos] = ws[bo + j];
-            j++;
+            row_sizes[v]++;
+            if (a[i] == b[j])
+              i++, j++;
+            else if (a[i] < b[j])
+              i++;
+            else
+              j++;
           }
         }
-        assert(k == row_sizes[v]);
-        vc<S> vec(row_sizes[v] - 1);
-        repi(t, vec.size()) vec[t] = nws[off + t];
-        dss[(siz >> h) + v] = DS(vec);
+        Level nxt;
+        nxt.ys = CSR<I>(row_sizes);
+        nxt.to.resize(nxt.ys.get_elist().size());
+        vc<S> nws(nxt.ys.get_elist().size(), M::e());
+        repi(v, m)
+        {
+          const auto a = prv.ys[2 * v], b = prv.ys[2 * v + 1];
+          const int ao = prv.ys.offset(2 * v), bo = prv.ys.offset(2 * v + 1);
+          const int off = nxt.ys.offset(v);
+          int i = 0, j = 0, k = 0;
+          while (i < a.size() && j < b.size())
+          {
+            const int pos = off + k++;
+            nxt.to[pos] = {i, j};
+            if (a[i] == b[j])
+            {
+              nxt.ys.get_elist()[pos] = a[i];
+              nws[pos] = M::op(ws[ao + i], ws[bo + j]);
+              i++, j++;
+            }
+            else if (a[i] < b[j])
+            {
+              nxt.ys.get_elist()[pos] = a[i];
+              nws[pos] = ws[ao + i];
+              i++;
+            }
+            else
+            {
+              nxt.ys.get_elist()[pos] = b[j];
+              nws[pos] = ws[bo + j];
+              j++;
+            }
+          }
+          assert(k == row_sizes[v]);
+          vc<S> vec(row_sizes[v] - 1);
+          repi(t, vec.size()) vec[t] = nws[off + t];
+          dss[(siz >> h) + v] = DS(vec);
+        }
+        levels.push_back(move(nxt));
+        ws = move(nws);
       }
-      levels.push_back(move(nxt));
-      ws = move(nws);
-    }
-    vc<S>().swap(ws);
-    handles.reserve(xyws.size());
-    fec([x, y, w] : xyws)
-    {
-      int xi = LB(xs, x);
-      const auto root = levels[lg].ys[0], leaf = levels[0].ys[xi];
-      int root_y = LB(root, y), leaf_y = LB(leaf, y);
-      assert(root_y + 1 < root.size() && root[root_y] == y);
-      assert(leaf_y + 1 < leaf.size() && leaf[leaf_y] == y);
-      handles.eb(xi, root_y, leaf_y, y);
+      vc<S>().swap(ws);
+      handles.reserve(xyws.size());
+      fec([x, y, w] : xyws)
+      {
+        int xi = LB(xs, x);
+        const auto root = levels[lg].ys[0], leaf = levels[0].ys[xi];
+        int root_y = LB(root, y), leaf_y = LB(leaf, y);
+        assert(root_y + 1 < root.size() && root[root_y] == y);
+        assert(leaf_y + 1 < leaf.size() && leaf[leaf_y] == y);
+        handles.eb(xi, root_y, leaf_y, y);
+      }
+
     }
   }
 
@@ -230,48 +247,75 @@ public:
   // {x} × [ly, ry)
   S sum(I x, I ly, I ry) const
   {
-    int xi = LB(xs, x);
-    if (xi == n || xs[xi] != x)
-      return M::e();
-    assert(ly <= ry);
-    const auto row = levels[0].ys[xi];
-    return sparse_2d::range_sum(dss[siz + xi], LB(row, ly), LB(row, ry));
+    if constexpr (use_static)
+    {
+      assert(!(ry < ly));
+      return static_.core.sum_x(x, ly, ry);
+    }
+    else
+    {
+      int xi = LB(xs, x);
+      if (xi == n || xs[xi] != x)
+        return M::e();
+      assert(ly <= ry);
+      const auto row = levels[0].ys[xi];
+      return sparse_2d::range_sum(dss[siz + xi], LB(row, ly), LB(row, ry));
+
+    }
   }
 
   // [lx, rx) × [ly, ry)
   S sum(I lx, I rx, I ly, I ry) const
   {
-    assert(lx <= rx);
-    assert(ly <= ry);
-    int ilx = LB(xs, lx), irx = LB(xs, rx);
-    S res = M::e();
-    auto dfs = [&](auto dfs, int p, int dep, int v, int lk, int rk, int a, int b) -> void
+    if constexpr (use_static)
     {
-      if (b <= ilx || irx <= a)
-        return;
-      if (ilx <= a && b <= irx)
+      assert(!(rx < lx));
+      assert(!(ry < ly));
+      return static_.core.sum(lx, rx, ly, ry);
+    }
+    else
+    {
+      assert(lx <= rx);
+      assert(ly <= ry);
+      int ilx = LB(xs, lx), irx = LB(xs, rx);
+      S res = M::e();
+      auto dfs = [&](auto dfs, int p, int dep, int v, int lk, int rk, int a, int b) -> void
       {
-        res = M::op(res, sparse_2d::range_sum(dss[p], lk, rk));
-        return;
-      }
-      const int c = (a + b) / 2;
-      const Level &lev = levels[dep];
-      const int off = lev.ys.offset(v);
-      dfs(dfs, 2 * p, dep - 1, 2 * v,
-          lev.to[off + lk].first, lev.to[off + rk].first, a, c);
-      dfs(dfs, 2 * p + 1, dep - 1, 2 * v + 1,
-          lev.to[off + lk].second, lev.to[off + rk].second, c, b);
-    };
-    const auto root = levels[lg].ys[0];
-    dfs(dfs, 1, lg, 0, LB(root, ly), LB(root, ry), 0, siz);
-    return res;
+        if (b <= ilx || irx <= a)
+          return;
+        if (ilx <= a && b <= irx)
+        {
+          res = M::op(res, sparse_2d::range_sum(dss[p], lk, rk));
+          return;
+        }
+        const int c = (a + b) / 2;
+        const Level &lev = levels[dep];
+        const int off = lev.ys.offset(v);
+        dfs(dfs, 2 * p, dep - 1, 2 * v,
+            lev.to[off + lk].first, lev.to[off + rk].first, a, c);
+        dfs(dfs, 2 * p + 1, dep - 1, 2 * v + 1,
+            lev.to[off + lk].second, lev.to[off + rk].second, c, b);
+      };
+      const auto root = levels[lg].ys[0];
+      dfs(dfs, 1, lg, 0, LB(root, ly), LB(root, ry), 0, siz);
+      return res;
+
+    }
   }
 
   // すべての点の重み和を求める
   S all_sum() const
   {
-    const auto root = levels[lg].ys[0];
-    return sparse_2d::range_sum(dss[1], 0, root.size() - 1);
+    if constexpr (use_static)
+    {
+      return static_.core.all_sum();
+    }
+    else
+    {
+      const auto root = levels[lg].ys[0];
+      return sparse_2d::range_sum(dss[1], 0, root.size() - 1);
+
+    }
   }
 
   vc<tuple<I, I, S>> content() const

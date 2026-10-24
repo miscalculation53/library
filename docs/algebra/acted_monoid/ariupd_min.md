@@ -1,7 +1,10 @@
+このドキュメントには AI による作成・変更が含まれている可能性があります。
+
 ## 概要
 
 添字の一次式 $c+di$ の区間代入と、区間最小値・最大値の取得を処理する作用つきモノイド。
 係数は定数項から順に `{c, d}` と並べる。
+添字と区間端点 `l`, `r` は `ll` 型で保持する。
 
 - `ActedMonoidAriUpdMin`：最小値を `.mn` で取得する。
 - `ActedMonoidAriUpdMax`：最大値を `.mx` で取得する。
@@ -77,8 +80,8 @@ ActedMonoidAriUpdMin<T, infty = nullptr>
 
 ```cpp
 (1) S()
-(2) S(int i, T val)
-(3) S(int l, int r, T mn)
+(2) S(ll i, T val)
+(3) S(ll l, ll r, T mn)
 ```
 
 - (1)：`l = r = 0`, `mn = infty` の空区間を構築する。
@@ -190,8 +193,8 @@ ActedMonoidAriUpdMax<T, infty = nullptr>
 
 ```cpp
 (1) S()
-(2) S(int i, T val)
-(3) S(int l, int r, T mx)
+(2) S(ll i, T val)
+(3) S(ll l, ll r, T mx)
 ```
 
 - (1)：`l = r = 0`, `mx = -infty` の空区間を構築する。
@@ -263,8 +266,8 @@ ActedMonoidAriUpdMinMax<T, infty = nullptr>
 
 ```cpp
 (1) S()
-(2) S(int i, T val)
-(3) S(int l, int r, T mn, T mx)
+(2) S(ll i, T val)
+(3) S(ll l, ll r, T mn, T mx)
 ```
 
 - (1)：`l = r = 0`, `mn = infty`, `mx = -infty` の空区間を構築する。

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../template/template_all_but_modint.hpp"
+#include "../utils/is_integral_ext.hpp"
+#include "../utils/make_unsigned_ext.hpp"
 
 /**
  * @brief Stern Brocot Tree
@@ -195,16 +197,115 @@ SBTNode<T> sbt_search(const F &judge, T max_value)
   }
 }
 
-// a/b < p/q < c/d を満たす p/q のうち q が最小のもの
-// q != 1 なら一意。q == 1 なら p が最小となるようにとる
-// https://atcoder.jp/contests/abc408/tasks/abc408_g/editorial
+// 数学的な背景。区間補助関数は入出力仕様から独立に実装。
+//! https://atcoder.jp/contests/abc408/tasks/abc408_g/editorial
+// 0 <= a/b < c/d の開区間内で、分母、分子の順に最小の分数を返す。
+// b > 0。正の無限大は c > 0, d = 0 で表す。答えは T に収まるものとする。
+// O(log(max(a,b,c,d))) 回の整数演算、補助領域は整数オブジェクト O(1) 個。
 template <class T>
 pair<T, T> abc408g(T a, T b, T c, T d)
 {
-  T n = a / b;
-  a -= n * b, c -= n * d;
-  if (c > d)
-    return {n + 1, 1};
-  auto [p, q] = abc408g(d, c, b, a);
-  return {p * n + q, p};
+  if constexpr (is_same_v<T, u128>)
+    if (((u128(a) | u128(b) | u128(c) | u128(d)) >> 63) == 0)
+    {
+      const auto [p, q] = abc408g<uint64_t>(uint64_t(a), uint64_t(b), uint64_t(c), uint64_t(d));
+      return {T(p), T(q)};
+    }
+  auto work = [](T &x) -> decltype(auto)
+  {
+    if constexpr (is_integral_ext<T>) return make_unsigned_ext_t<T>(x);
+    else return (x);
+  };
+  using U = remove_reference_t<decltype(work(a))>;
+  decltype(auto) ln = work(a);
+  decltype(auto) ld = work(b);
+  decltype(auto) rn = work(c);
+  decltype(auto) rd = work(d);
+  const bool below_one = ln < ld;
+  if (below_one && rn > rd) return {T(1), T(1)};
+
+  auto advance = [&](U &L, U &R)
+  {
+    ln = move(rd);
+    rn = move(ld);
+    ld = move(R);
+    rd = move(L);
+  };
+  U first_k(0);
+  if (below_one)
+  {
+    swap(ln, rd);
+    swap(ld, rn);
+  }
+  else
+  {
+    U L = ln - ld;
+    if (L < ld)
+    {
+      if (rd == U(0))
+      {
+        U one(1), n = one + one;
+        return {T(move(n)), T(move(one))};
+      }
+      U R = rn - rd;
+      if (R > rd)
+      {
+        U one(1), n = one + one;
+        return {T(move(n)), T(move(one))};
+      }
+      first_k = U(1);
+      advance(L, R);
+    }
+    else
+    {
+      first_k = ln / ld;
+      if (rd == U(0))
+      {
+        U one(1), n = first_k + one;
+        return {T(move(n)), T(move(one))};
+      }
+      U R = rn - first_k * rd;
+      if (R > rd)
+      {
+        U one(1), n = first_k + one;
+        return {T(move(n)), T(move(one))};
+      }
+      L = U(ln - first_k * ld);
+      advance(L, R);
+    }
+  }
+
+  U A(move(first_k)), B(1), C(1), D(0);
+  while (true)
+  {
+    U L = ln - ld;
+    if (L < ld)
+    {
+      U R = rn - rd;
+      if (R > rd) return {T(A + A + B), T(C + C + D)};
+      U next_A = A + B, next_C = C + D;
+      advance(L, R);
+      B = move(A);
+      D = move(C);
+      A = move(next_A);
+      C = move(next_C);
+    }
+    else
+    {
+      const U k = ln / ld;
+      U R = rn - k * rd;
+      if (R > rd)
+      {
+        const U n = k + U(1);
+        return {T(A * n + B), T(C * n + D)};
+      }
+      L = U(ln - k * ld);
+      U next_A = A * k + B, next_C = C * k + D;
+      advance(L, R);
+      B = move(A);
+      D = move(C);
+      A = move(next_A);
+      C = move(next_C);
+    }
+  }
 }

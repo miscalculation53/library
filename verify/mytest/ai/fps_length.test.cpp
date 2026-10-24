@@ -57,9 +57,10 @@ void test_lengths()
     assert(F{}.pow_sparse(0, n) == one);
     assert(F{}.pow(3, n) == zero);
     assert(F{}.pow_sparse(3, n) == zero);
-    assert(F{}.sqrt(n) == make_pair(true, zero));
-    assert(F{}.sqrt_sparse(n) == make_pair(true, zero));
-    assert(F{1}.sqrt(n).second == one || F{1}.sqrt(n).second == -one);
+    assert(F{}.sqrt(n) == zero);
+    assert(F{}.sqrt_sparse(n) == zero);
+    const auto root = F{1}.sqrt(n);
+    assert(root && (*root == one || *root == -one));
 
     const F f{1, 1};
     assert((f * f == F{1, 2, 1}));
@@ -156,13 +157,13 @@ void test_sqrt_lengths()
       const F root = base << shift, square = product(root, root, 2 * root.sz() - 1);
       for (int n : {0, 1, 3, 16, root.sz() + 11})
       {
-        const auto [ok, actual] = square.sqrt(n);
-        const auto [sparse_ok, sparse_actual] = square.sqrt_sparse(n);
+        const auto actual = square.sqrt(n);
+        const auto sparse_actual = square.sqrt_sparse(n);
         const F expected = root.resized(n);
-        assert(ok && actual.sz() == n);
-        assert(actual == expected || actual == -expected);
-        assert(sparse_ok && sparse_actual.sz() == n);
-        assert(sparse_actual == expected || sparse_actual == -expected);
+        assert(actual && actual->sz() == n);
+        assert(*actual == expected || *actual == -expected);
+        assert(sparse_actual && sparse_actual->sz() == n);
+        assert(*sparse_actual == expected || *sparse_actual == -expected);
       }
     }
   }
@@ -172,8 +173,8 @@ void test_sqrt_lengths()
   {
     for (const F &f : vc<F>{{0, 1}, {0, 0, nonsquare}})
     {
-      assert(f.sqrt(n) == make_pair(false, F{}));
-      assert(f.sqrt_sparse(n) == make_pair(false, F{}));
+      assert(!f.sqrt(n));
+      assert(!f.sqrt_sparse(n));
     }
   }
 }

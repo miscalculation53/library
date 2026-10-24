@@ -1,6 +1,17 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 ビットリバース
+
+## 使用例
+
+```cpp
+#include "bit/bit_reverse.hpp"
+
+assert(bitrev(8, 3) == 6);  // 011 → 110
+assert(bit_reverse32(1) == (uint32_t(1) << 31));
+```
 
 ## 詳細なドキュメント
 

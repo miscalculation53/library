@@ -16,7 +16,7 @@ struct MonoidIndexPowerSum
     T val = T{};
     array<T, D + 1> power_sum{};
     S() {}
-    S(int i, T val) : val(val)
+    S(ll i, T val) : val(val)
     {
       power_sum[0] = T(1);
       repi(k, 1, D + 1) power_sum[k] = power_sum[k - 1] * T(i);

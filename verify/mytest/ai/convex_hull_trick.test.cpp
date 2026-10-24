@@ -373,12 +373,12 @@ void verify_wide_rational_value_type()
   constexpr ll m = 1'000'000'000'000'000'000LL;
   const vc<pair<ll, ll>> lines{{-m, m}, {0, -m}, {m, m}};
   for (auto [a, b] : lines) cht.add_line(R(a), R(b));
-  vc<R> queries{R(-m, m - 1), R(-1, 2), R(0), R(1, 2), R(m, m - 1)};
+  vc<R> queries{R(-m, 2), R(-m, m - 1), R(-1, 2), R(0), R(1, 2), R(m, m - 1), R(m, 2)};
   auto check = [&](R x, const auto &result)
   {
     i128 expected = numeric_limits<i128>::max();
     for (auto [a, b] : lines) chmin(expected, i128(a) * x.num + i128(b) * x.den);
-    assert(result.first.num == expected && result.first.den == x.den);
+    assert(result.first == W(expected, x.den));
   };
   for (R x : queries)
   {

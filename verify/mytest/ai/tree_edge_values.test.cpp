@@ -1,10 +1,10 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-#include "graph/tree/rooted_tree.hpp"
-#include "graph/tree/euler_tour_path_sum.hpp"
-#include "graph/tree/euler_tour_path_prod.hpp"
-#include "graph/tree/diameter.hpp"
-#include "graph/tree/rerooting.hpp"
+#include "tree/rooted_tree.hpp"
+#include "tree/euler_tour_path_sum.hpp"
+#include "tree/euler_tour_path_prod.hpp"
+#include "tree/diameter.hpp"
+#include "tree/rerooting.hpp"
 
 // A finite noncommutative group checks path order without numerical overflow.
 struct PermutationGroup

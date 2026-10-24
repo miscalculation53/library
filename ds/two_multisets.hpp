@@ -136,6 +136,13 @@ public:
   S all_prod() const { return M::op(lo.all_prod(), hi.all_prod()); }
   const LeftContainer &left() const { return lo; }
   const RightContainer &right() const { return hi; }
+  vc<T> content() const
+  {
+    auto res = lo.content(), right = hi.content();
+    res.reserve(size());
+    res.insert(res.end(), make_move_iterator(right.begin()), make_move_iterator(right.end()));
+    return res;
+  }
   const Condition &condition() const { return *cond; }
   void set_condition(Condition condition) { cond.emplace(std::move(condition)); balance(); }
   void insert(const T &x)

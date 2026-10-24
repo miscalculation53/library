@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-#include "graph/tree/rooted_tree.hpp"
+#include "tree/rooted_tree.hpp"
 
 // Both sides of the boundary match a linear walk, including the absent-side sentinels.
 int main()

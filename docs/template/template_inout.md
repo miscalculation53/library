@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 テンプレート（入出力）
@@ -178,7 +180,24 @@ READ(A);
 
 ### 入出力のタイプ
 
-`FAST_IO`, `FAST_CIO`, `INTERACTIVE` のうちどれか $1$ つまでを `#define` する。$2$ つ以上を define してはならない。
+`FAST_IO`, `FAST_CIO`, `INTERACTIVE` から用途に応じて $1$ つまで `#define` する。
+
+- `FAST_IO`：`fread` / `fwrite` による高速入出力。入力・出力にそれぞれ 128 KiB のバッファを使う。`LOCAL` では通常の入出力に切り替わる。
+- `FAST_CIO`：`cin` / `cout` を使う。`template_main.hpp` が `cin.tie(nullptr); ios::sync_with_stdio(false);` を設定する。
+- `INTERACTIVE`：`cin` / `cout` を使い、`PRINT` ごとに改行して flush する。
+- 指定なし、または `LOCAL`：`cin` / `cout` を使う。
+
+`INTERACTIVE` 以外では、`PRINT` の改行に `'\n'` を使う。
+`FAST_IO` の標準入出力は `READ` / `WRITE` / `PRINT` 系に統一する。出力バッファは終了時に自動で flush され、途中で出力を確定したい場合は `fastio::flush()` を呼ぶ。
+
+どの場合も、次のマクロを使える。
+
+- `READ`：定義済み変数に入力
+- `WRITE`：区切りを追加せず出力
+- `IN`：変数を定義して入力
+- `PRINT`：引数を空白で区切り、最後に改行して出力
+
+`FAST_IO` では整数を複数桁ずつ読み取り、出力を桁群の表で変換する。128 bit 整数の出力では、先に大きな桁群へ分けて除算を減らす。バッファ処理と十進変換は、公開 API の仕様から独立に再設計した。
 
 ### pair, array, tuple の加減算
 
@@ -195,34 +214,6 @@ READ(A);
 - `pair`：各成分の演算が $O(1)$ なら $O(1)$
 - `array<T, N>`, `tuple<Ts...>`：各成分の演算が $O(1)$ なら $O(N)$
 
-- `FAST_IO`
-  - （人から借りた）爆速入出力
-    - 参考： https://maspypy.com/library-checker-many-a-b
-  - cin, cout と併用してはならない
-  - cin でたまにやる、`12+345` に対して `ll x, y; char c; cin >> x >> c >> y;` とするようなやつは多分未対応？（TLE するので注意）
-    - 実装してないだけなのか原理的に難しいのかを知らない
-- `FAST_CIO`
-  - cin, cout を使う
-  - `cin.tie(0); ios::sync_with_stdio(false);` をする
-  - `ENDL` を `"\n"` にする
-- `INTERACTIVE`
-  - cin, cout を使う
-  - `cin.tie(0); ios::sync_with_stdio(false);` をする
-  - `ENDL` を `endl` にする
-- 上記のどれも define されていないとき、または `LOCAL` が define されているとき
-  - cin, cout を使う
-  - `cin.tie(0); ios::sync_with_stdio(false);` をする
-  - `ENDL` を `"\n"` にする
-
-どの場合も、`READ`, `WRITE`, `IN`, `PRINT` が使える。これらの使い方はこの後詳しく述べるが、大雑把には次の通り：
-
-- `READ`：定義済み変数に入力（cin でできることに相当）
-- `WRITE`：空白や改行を自動で入れずに出力（cout でできることに相当）
-- `IN`：変数を定義すると同時に入力
-- `PRINT`：空白や改行を自動で入れて出力
-
-ほとんどの場合 `IN` 系（`LL(...)` なども含む）と `PRINT` 系で十分だと思う。
-
 ### 入力
 
 #### READ
@@ -232,11 +223,26 @@ READ(A);
 対応している型：
 
 - 整数型
-  - i128 含む
+  - `i128`, `u128` を含む。`bool` は `0` / `1`。
+- `char`, `string`
+- `float`, `double`, `long double`, `f128`
 - modint 系（modint 側に実装）
 - pair, tuple, array
 - vector
   - 確保された size に応じて入力
+
+`FAST_IO` のトークンは ASCII の空白文字で区切る。整数の先頭には `+` / `-` を付けられる。`-` は符号付き整数に使う。
+`READ(x, c, y)` で `12+345` を整数・文字・整数として読むこともできる。
+末尾の改行や空白は省略でき、長い空白やバッファをまたぐトークンにも対応する。
+
+##### 制約
+
+- 各入力値は読み取り先の型で表現できる。
+- `READ` が要求する個数の値を入力する。`FAST_IO` で次のトークンを探して EOF に達した場合は `abort()` する。
+
+##### 計算量
+
+- 読み取る文字数に比例する。
 
 他にも
 
@@ -281,6 +287,10 @@ READ(A);
 - `PRINT(...)`：出力（引数は複数、空白区切り、最後に改行）
 
 対応している型は `READ` と同じ。tuple-like や vector は要素を空白区切り。
+
+`FAST_IO` の浮動小数点数は小数点以下 15 桁の固定小数点形式で出力する。`f128` は小数点以下 35 桁にする。
+`f128` の通常の入出力にも対応し、出力は `defaultfloat`, `fixed`, `scientific` と `setprecision` を使える。入力は空白で区切られた十進表記（指数表記を含む）を使う。型の選択は [テンプレート（型）](template_types.md) を参照。
+`fwrite` が一部を書き込んだ場合は残りを出力し、書き込みが失敗した場合は `abort()` する。
 
 #### それ以外
 

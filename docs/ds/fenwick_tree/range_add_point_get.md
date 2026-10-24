@@ -1,8 +1,25 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 Fenwick Tree で累積和配列を管理するとできる。
 
+## 使用例
+
+```cpp
+#include "ds/fenwick_tree/range_add_point_get.hpp"
+
+RangeAddPointGet<GroupAddSub<ll>> a(vc<ll>{1, 2, 3});
+a.add(0, 2, 5);
+assert(a.get(0) == 6);
+assert(a.get(2) == 3);
+a.set(1, 10);
+assert(a.content() == (vc<ll>{6, 10, 3}));
+```
+
 ## 詳細なドキュメント
+
+### RangeAddPointGet
 
 #### コンストラクタ
 
@@ -73,4 +90,3 @@ $p$ 番目の要素を取得する。
 ##### 計算量
 
 - $O(\log n)$
-

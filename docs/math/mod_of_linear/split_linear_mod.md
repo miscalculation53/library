@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 $((ai+b)\bmod m)_{0\le i<n}$ を $O(\sqrt n)$ 本の等差数列に分ける。各部分列について、値と元の添字の両方を等差数列として返す。
@@ -80,4 +82,4 @@ vc<LinearModArithmetic> split_linear_mod(ll n, ll m, ll a, ll b)
 
 ##### 計算量
 
-- $O(\log m+\sqrt n\log(n+1))$。
+- $O(\log m+\sqrt n\log n)$。

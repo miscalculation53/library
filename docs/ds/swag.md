@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 stack, queue, deque について、「現在格納されているすべての要素のモノイド積」が取得できるようにしたもの。
@@ -6,7 +8,23 @@ stack, queue, deque について、「現在格納されているすべての要
 
 アイデア：stack は簡単。queue, deque は、stack 2 つで作るテクを使う。
 
+## 使用例
+
+```cpp
+#include "algebra/algebra_basic_ops.hpp"
+#include "ds/swag.hpp"
+
+FoldableQueue<MonoidAdd<ll>> q;
+q.push(3);
+q.push(5);
+assert(q.all_prod() == 8);
+q.pop();
+assert(q.all_prod() == 5);
+```
+
 ## 詳細なドキュメント
+
+### FoldableStack / FoldableQueue / FoldableDeque
 
 #### コンストラクタ
 

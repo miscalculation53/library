@@ -27,14 +27,14 @@ void main2()
   const int MX = local_oj(4, 500);
   MatrixArray<FieldAddSubMulDiv<mint>, MX, MX> A(1, 0);
   rep(i, N) rep(j, N) A.at(i).at(j) = A_.at(i).at(j);
-  auto [ok, B] = A.inv();
-  if (!ok)
+  const auto B = A.inv();
+  if (!B)
     PRINT(-1);
   else
   {
     rep(i, N)
     {
-      rep(j, N) WRITE(B.at(i).at(j), " ");
+      rep(j, N) WRITE(B->at(i).at(j), " ");
       WRITE("\n");
     }
   }

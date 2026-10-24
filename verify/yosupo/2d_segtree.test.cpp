@@ -41,6 +41,7 @@ void main2()
   }
 
   SegmentTree2DSparse<MonoidAdd<ll>, ll> seg(pts);
+  int next_point_id = N;
   rep(qid, Q)
   {
     cauto &q = qs[qid];
@@ -48,7 +49,7 @@ void main2()
     if (t == 0)
     {
       auto [_, x, y, w, __] = q;
-      seg.modify(qid, [&](ll &val)
+      seg.modify(next_point_id++, [&](ll &val)
                  { val += w; });
     }
     else if (t == 1)

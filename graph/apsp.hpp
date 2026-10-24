@@ -144,6 +144,27 @@ public:
     {
       if (chmin(dist[v][e.to], e.cost)) prev[v][e.to] = e.index;
     }
+    if constexpr (is_integral_ext<Dist>)
+    {
+      // 密な非負整数グラフでは、2 * inf() が型に収まれば飽和判定を省ける。
+      bool nonnegative = inf() <= numeric_limits<Dist>::max() / 2 && ll(n) * n < 16 * ll(by_id.size());
+      fec(e : by_id) if (e.cost < Dist(0)) nonnegative = false;
+      if (nonnegative)
+      {
+        repi(k, n) repi(i, n)
+        {
+          auto &row = dist[i];
+          const auto &via = dist[k];
+          const Dist a = row[k];
+          if (a == inf()) continue;
+          auto &parent = prev[i];
+          const auto &via_parent = prev[k];
+          repi(j, n)
+            if (chmin(row[j], a + via[j])) parent[j] = via_parent[j];
+        }
+        return dist;
+      }
+    }
     repi(k, n) repi(i, n)
     {
       if (dist[i][k] == inf()) continue;

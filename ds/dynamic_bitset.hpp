@@ -499,6 +499,14 @@ public:
     return res;
   }
 
+  // 添字順のビット列を返す。
+  vc<bool> content() const
+  {
+    vc<bool> res(n);
+    repi(i, n) res[i] = test(i);
+    return res;
+  }
+
   friend bool operator==(const DynamicBitset &a, const DynamicBitset &b)
   {
     return a.n == b.n && a.dat == b.dat;

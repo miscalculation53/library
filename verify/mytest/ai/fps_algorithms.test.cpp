@@ -23,8 +23,8 @@ void check_algorithms()
       assert(shifted.pow(8, n) == F(n));
     }
     auto square = (f * f).resized(n);
-    auto [ok, root] = square.sqrt(n);
-    assert(ok && (root * root).resized(n) == square);
+    const auto root = square.sqrt(n);
+    assert(root && (*root * *root).resized(n) == square);
     for (int k : {0, 1, 2, 3, 8, 9, -1, -5})
       assert(f.pow(k, min(n, 129)) == f.pow_sparse(k, min(n, 129)));
     // The output depends only on the requested prefix.
@@ -46,8 +46,8 @@ void check_algorithms()
       assert(tail.inv(n) == F{1}.div_sparse(tail, n));
       assert(tail.pow(9, n) == tail.pow_sparse(9, n));
       assert(tail.pow(-5, n) == tail.pow_sparse(-5, n));
-      auto [exists, root] = tail.sqrt(n);
-      assert(exists && (root * root).resized(n) == tail);
+      const auto root = tail.sqrt(n);
+      assert(root && (*root * *root).resized(n) == tail);
     }
   }
   for (int n : {0, 1, 2, 31, 32, 33, 63, 64, 65, 127, 128, 129, 511, 512, 513})

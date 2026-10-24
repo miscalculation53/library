@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 `infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../utils/default_infty.md)を距離の型 `Dist` に対して使う。値や関数を明示した場合は、その指定を使う。
@@ -74,7 +76,8 @@ $s$ を始点として最短路を求め、各頂点への最短路が格納さ�
 - `bfs`：辺のコストがすべて $1$ のとき、$O(n + m)$ 時間
 - `bfs01`：辺のコストが $0$ または共通の正の値のとき、$O(n + m)$ 時間
 - `dial`：辺のコストが $0$ 以上 $C$ 以下の整数のとき、$O(m + nC)$ 時間
-- `dijkstra`：辺のコストが非負のとき、$O(m \log n)$ 時間
+- `dijkstra`：辺のコストが非負のとき、$O((n+m)\log(n+m))$ 時間
+- `dijkstra_fibonacci`：辺のコストが非負のとき、ならし $O(m+n\log n)$ 時間
 - `dijkstra_dense`：辺のコストが非負で密グラフのとき、$O(n^2)$ 時間
 - `bellman_ford`：辺のコストが負でもよいとき、$O(nm)$ 時間
 
@@ -103,6 +106,24 @@ $s$ を始点として Dial 法で最短路を求める。`max_cost` を $C$ と
 ##### 計算量
 
 - $O(m + nC)$
+
+#### dijkstra_fibonacci
+
+```cpp
+vc<Dist> dijkstra_fibonacci(int s, int t = -1);
+```
+
+[FibonacciHeap](../ds/fibonacci_heap.md) の `decrease_key` を使って最短路を求める。戻り値・打切り・親辺の記録は `dijkstra` と同じ。`solve` からは従来の方式を選び、この方式は明示的に指定する。
+
+##### 制約
+
+- $0\leq s<n$
+- すべての辺のコストが非負
+- 有限の最短距離が `Dist` に収まり、`infty` 未満
+
+##### 計算量
+
+- ならし $O(m+n\log n)$
 
 #### prev_edges
 

@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "graph/tree/cartesian_tree.hpp"
+#include "tree/cartesian_tree.hpp"
 
 void init() {}
 

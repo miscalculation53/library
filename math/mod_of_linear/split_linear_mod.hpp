@@ -26,7 +26,7 @@ struct LinearModArithmetic
 
 // (a*i+b) mod m (0 <= i < n) を分割する。n <= m/gcd(a,m)。
 // 各部分列の元の添字は l, l+gap, ...。全体の順序は並べ替わる。
-// https://codeforces.com/blog/entry/141889
+//! https://codeforces.com/blog/entry/141889
 inline vc<LinearModArithmetic> split_linear_mod(ll n, ll m, ll a, ll b)
 {
   assert(n >= 0 && m >= 1);

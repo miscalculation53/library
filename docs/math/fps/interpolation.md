@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 https://37zigen.com/lagrange-interpolation/
@@ -16,7 +18,7 @@ $\displaystyle f(x) = g(x) \sum_{i=0}^{n-1} \frac{y_i}{g'(x_i)} \cdot \frac{1}{x
 - 同じ積木で $g'(x_i)$ を多点評価する。
 - 葉に $y_i/g'(x_i)$ を置き、積木の分母を共有して分子だけを併合する。
 
-各段で積木と NTT 結果を再利用する。詳しい比較は [FPS の高速化とコスト評価](../../../benchmark/fps_optimization.md) を参照。
+各段で積木と NTT 結果を再利用する。
 
 ## 使用例
 

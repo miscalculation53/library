@@ -1,18 +1,33 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
-左端と右端をイベントとして $x$ 座標順に平面走査する。$y$ 軸上では「区間への被覆数加算」と「被覆数が $0$ でない部分の長さ」が必要になる。
+追加した半開長方形の和集合の面積を求める。重なった部分は一度だけ数える。負座標、重複、接触、面積 $0$ の長方形も扱える。
 
-被覆数の最小値と、その最小値を取る区間の長さを遅延セグ木で管理する。最小値が $0$ ならその長さを全体から引き、正なら全体が覆われている。
+$x$ 座標順に平面走査し、圧縮した $y$ 座標の被覆長を配列上の区間木で管理する。追加メモリは $O(q)$。
+
+## 使用例
+
+```cpp
+#include "ds/2d/offline/area_of_union_of_rectangles.hpp"
+
+AreaOfUnionOfRectangles<long long> area;
+area.rectangle_add(0, 3, 0, 2);
+area.rectangle_add(2, 5, 1, 3);
+auto answer = area.run(); // 11
+```
 
 ## 詳細なドキュメント
+
+### AreaOfUnionOfRectangles
 
 #### コンストラクタ
 
 ```cpp
-AreaOfUnionOfRectangles<T=ll> area;
+AreaOfUnionOfRectangles<T> area;
 ```
 
-空のデータ構造を構築する。`T` は座標と面積の型。
+空のデータ構造を構築する。`T` は座標と面積の型で、既定は `ll`。通常の整数型・浮動小数点型に対応する。
 
 ##### 計算量
 
@@ -21,15 +36,14 @@ AreaOfUnionOfRectangles<T=ll> area;
 #### rectangle_add
 
 ```cpp
-void rectangle_add(T lx, T rx, T ly, T ry)
+void rectangle_add(T lx, T rx, T ly, T ry);
 ```
 
-半開区間 $[\mathrm{lx}, \mathrm{rx}) \times [\mathrm{ly}, \mathrm{ry})$ の長方形を追加する。
+半開長方形 $[lx, rx) \times [ly, ry)$ を追加する。幅または高さが $0$ なら面積への寄与は $0$。
 
 ##### 制約
 
-- $\mathrm{lx} \leq \mathrm{rx}$
-- $\mathrm{ly} \leq \mathrm{ry}$
+- $lx \leq rx$、$ly \leq ry$
 - 座標差と答えが `T` に収まる
 
 ##### 計算量
@@ -39,13 +53,13 @@ void rectangle_add(T lx, T rx, T ly, T ry)
 #### run
 
 ```cpp
-T run()
+T run();
 ```
 
-追加済みの長方形の和集合の面積を返す。
+追加済みのすべての長方形の和集合面積を返す。空なら `T(0)`。繰り返し呼び出せ、その後に追加した長方形も次回の計算に含む。
 
 ##### 計算量
 
 追加した長方形の個数を $q$ として、
 
-- 時間：$O(q \log q)$
+- $O(q \log q)$

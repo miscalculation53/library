@@ -202,7 +202,7 @@ auto answers = newton_basis_transpose<mint>(coefficients, m, pb, 1);
 ### 確認方法
 
 ```sh
-python3 tools/test_transpose.py
+python3 tools/tests/test_transpose.py
 g++-15 -std=c++20 -O2 -I . verify/mytest/ai/linear_transpose.test.cpp \
   -o /tmp/linear_transpose_test
 /tmp/linear_transpose_test

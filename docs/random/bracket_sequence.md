@@ -1,6 +1,22 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 正しい括弧列のランダム生成
+
+## 使用例
+
+```cpp
+#include "random/bracket_sequence.hpp"
+
+string s = random_bracket_sequence(4);
+int balance = 0;
+for (char c : s) {
+  balance += c == '(' ? 1 : -1;
+  assert(balance >= 0);
+}
+assert(s.size() == 8 && balance == 0);
+```
 
 ## 詳細なドキュメント
 

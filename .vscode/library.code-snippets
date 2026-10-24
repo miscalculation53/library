@@ -1,0 +1,149 @@
+{
+  "MyMonoid": {
+    "scope": "cpp",
+    "prefix": "monoid",
+    "body": [
+      "struct ${1:MyMonoid}",
+      "{",
+      "  using S = ${2:ll};",
+      "  static S op(const S &a, const S &b) { return ${3:a + b}; }",
+      "  static S e() { return ${4:S(0)}; }",
+      "};",
+      "$0"
+    ],
+    "description": "モノイド: S, op, e（初期値は加算）"
+  },
+  "MyGroup": {
+    "scope": "cpp",
+    "prefix": "group",
+    "body": [
+      "struct ${1:MyGroup}",
+      "{",
+      "  using S = ${2:ll};",
+      "  static S op(const S &a, const S &b) { return ${3:a + b}; }",
+      "  static S e() { return ${4:S(0)}; }",
+      "  static S inv(const S &a) { return ${5:-a}; }",
+      "};",
+      "$0"
+    ],
+    "description": "群: S, op, e, inv（初期値は加算群）"
+  },
+  "MySemiRing": {
+    "scope": "cpp",
+    "prefix": "semiring",
+    "body": [
+      "struct ${1:MySemiRing}",
+      "{",
+      "  using S = ${2:ll};",
+      "  static S add(const S &a, const S &b) { return ${3:a + b}; }",
+      "  static S e0() { return ${4:S(0)}; }",
+      "  static S mul(const S &a, const S &b) { return ${5:a * b}; }",
+      "  static S e1() { return ${6:S(1)}; }",
+      "};",
+      "$0"
+    ],
+    "description": "半環: S, add, e0, mul, e1"
+  },
+  "MyRing": {
+    "scope": "cpp",
+    "prefix": "ring",
+    "body": [
+      "struct ${1:MyRing}",
+      "{",
+      "  using S = ${2:ll};",
+      "  static S add(const S &a, const S &b) { return ${3:a + b}; }",
+      "  static S e0() { return ${4:S(0)}; }",
+      "  static S minus(const S &a) { return ${5:-a}; }",
+      "  static S mul(const S &a, const S &b) { return ${6:a * b}; }",
+      "  static S e1() { return ${7:S(1)}; }",
+      "};",
+      "$0"
+    ],
+    "description": "環: 半環に加法逆元 minus を追加"
+  },
+  "MyField": {
+    "scope": "cpp",
+    "prefix": "field",
+    "body": [
+      "struct ${1:MyField}",
+      "{",
+      "  using S = ${2:mint};",
+      "  static S add(const S &a, const S &b) { return ${3:a + b}; }",
+      "  static S e0() { return ${4:S(0)}; }",
+      "  static S minus(const S &a) { return ${5:-a}; }",
+      "  static S mul(const S &a, const S &b) { return ${6:a * b}; }",
+      "  static S e1() { return ${7:S(1)}; }",
+      "  static S inv(const S &a) { return ${8:S(1) / a}; }",
+      "};",
+      "$0"
+    ],
+    "description": "体: 環に乗法逆元 inv を追加（a != 0）"
+  },
+  "MyActedMonoid": {
+    "scope": "cpp",
+    "prefix": [
+      "actedmonoid",
+      "acted_monoid"
+    ],
+    "description": "作用つきモノイド: S, F, op, e, mapping, composition, id（初期値は区間加算・区間和）",
+    "body": [
+      "struct ${1:MyActedMonoid}",
+      "{",
+      "  using S = ${2:pair<ll, ll>}; // 初期値: (区間長, 和)",
+      "  using F = ${3:ll};",
+      "  static S op(const S &a, const S &b) { return ${4:S(a.first + b.first, a.second + b.second)}; }",
+      "  static S e() { return ${5:S(0, 0)}; }",
+      "  static S mapping(const F &f, const S &x) { return ${6:S(x.first, x.second + f * x.first)}; }",
+      "  // composition(f, g): g を適用してから f を適用する。",
+      "  static F composition(const F &f, const F &g) { return ${7:f + g}; }",
+      "  static F id() { return ${8:F(0)}; }",
+      "};",
+      "$0"
+    ]
+  },
+  "qcfium": {
+    "prefix": "qcfium",
+    "body": [
+      "#pragma GCC target(\"avx2\")",
+      "#pragma GCC optimize(\"O3\")",
+      "#pragma GCC optimize(\"unroll-loops\")"
+    ],
+    "description": ""
+  },
+  "tester": {
+    "prefix": "tester",
+    "body": [
+      "//*",
+      "#ifdef LOCAL",
+      "  rep(testcase, 100000)",
+      "  {",
+      "    cout << endl;",
+      "    dump(testcase);",
+      "",
+      "    // ----- generate cases -----",
+      "    ",
+      "    $1",
+      "    ",
+      "    // --------------------------",
+      "",
+      "    // ------ check output ------",
+      "    ",
+      "    #define INPUT $2",
+      "    auto god = naive(INPUT);",
+      "    auto ans = solve(INPUT);",
+      "    if (god != ans)",
+      "    {",
+      "      dump(INPUT);",
+      "      dump(god, ans);",
+      "      exit(0);",
+      "    }",
+      "    ",
+      "    // --------------------------",
+      "  }",
+      "  dump(\"ok\");",
+      "#endif",
+      "//*/"
+    ],
+    "description": ""
+  }
+}

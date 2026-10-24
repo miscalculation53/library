@@ -96,8 +96,66 @@ void check_default()
   assert((copy.idxs(2).to_v() == vc<int>{0, 2}));
 }
 
+template <class T>
+void check_large(const vc<T> &a)
+{
+  const GroupIndex grp(a);
+  map<T, vl> expected;
+  repi(i, a.size()) expected[a[i]].eb(i);
+  assert(grp.size() == int(expected.size()));
+  auto it = expected.begin();
+  for (auto [value, indices] : grp)
+  {
+    assert(it != expected.end() && value == it->first && indices.to_v() == it->second);
+    assert(grp.idxs(value).to_v() == it->second);
+    ++it;
+  }
+  assert(it == expected.end());
+}
+
+template <class I = ll>
+void check_search_boundaries(int n, int k)
+{
+  vc<int> a(n);
+  map<int, vc<I>> expected;
+  for (int i = 0; i < n; ++i)
+  {
+    a[i] = (i * 17 + i / 3) % k;
+    expected[a[i]].push_back(I(i));
+  }
+  const GroupIndex<int, true, I> grp(a);
+  static_assert(is_same_v<decltype(grp.in_cnt(0, 0, 1)), I>);
+  const vc<int> boundaries{INT_MIN, -1, 0, 1, 63, 64, 65, n / 2, n - 1, n, n + 1, INT_MAX};
+  for (int value = -1; value <= k; ++value)
+  {
+    const vc<I> &is = expected[value];
+    assert(grp.idxs(value).to_v() == is);
+    assert(grp.in_cnt(value, 2, 1) == 0);
+    for (int p : boundaries)
+    {
+      I lo = lower_bound(ALL(is), p) - is.begin();
+      I hi = upper_bound(ALL(is), p) - is.begin();
+      assert(grp.lt_cnt(value, p) == lo && grp.leq_cnt(value, p) == hi);
+      assert(grp.geq_cnt(value, p) == I(is.size()) - lo && grp.gt_cnt(value, p) == I(is.size()) - hi);
+      assert(grp.lt_max(value, p) == (lo == 0 ? I(-1) : is[lo - 1]));
+      assert(grp.leq_max(value, p) == (hi == 0 ? I(-1) : is[hi - 1]));
+      assert(grp.geq_min(value, p) == (lo == I(is.size()) ? I(n) : is[lo]));
+      assert(grp.gt_min(value, p) == (hi == I(is.size()) ? I(n) : is[hi]));
+      for (int q : boundaries) if (p <= q)
+        assert(grp.in_cnt(value, p, q) == lower_bound(ALL(is), q) - (is.begin() + lo));
+    }
+  }
+}
+
 int main()
 {
+  for (int n : {1023, 1024, 1025, 1087, 1088})
+    for (int k : {1, 2, 8, 16, 17}) check_search_boundaries(n, k);
+  check_search_boundaries(2048, 512);
+  check_search_boundaries<signed char>(100, 3);
+  check_search_boundaries<short>(1024, 3);
+  check_search_boundaries<i128>(1024, 3);
+
   GroupIndex inferred(vstr{"b", "a", "b"});
   static_assert(is_same_v<decltype(inferred), GroupIndex<string>>);
   static_assert(is_same_v<decltype(inferred.lt_max("b", 1)), ll>);
@@ -131,6 +189,7 @@ int main()
   check<signed char, false>({127, 0, 127}, {-1, 0, 1, 127});
   check<string>({"pear", "apple", "pear", ""}, {"", "apple", "orange", "pear", "z"});
   check<pair<int, int>>({{2, 3}, {-1, 4}, {2, 3}}, {{-1, 4}, {0, 0}, {2, 3}, {3, 0}});
+  check<bool>({true, false, true}, {false, true});
 
   mt19937 rng(20260930);
   repi(trial, 200)
@@ -143,6 +202,22 @@ int main()
     for (auto &value : a) value = value * 100000000 - 500000000;
     check<int>(a, {-500000001, -500000000, -200000000, 0, 200000000, 200000001});
   }
+
+  for (int n : {33, 257, 511, 512, 513, 65535, 65536, 65537})
+  {
+    vl a(n);
+    vc<i128> wide(n);
+    repi(i, n)
+    {
+      a[i] = i % 3 == 0 ? LLONG_MIN : i % 3 == 1 ? LLONG_MAX : ll(rng());
+      wide[i] = i128(rng()) * (i128(1) << 80) - (i128(1) << 120);
+    }
+    check_large(a);
+    check_large(wide);
+  }
+  vc<string> words(2048);
+  for (auto &word : words) word = string(30, 'a') + to_string(rng() % 300);
+  check_large(words);
 
   cout << "Hello World" << endl;
 }

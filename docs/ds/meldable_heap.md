@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 複数の優先度付きキューを、併合可能な左偏木で管理する。`MeldableHeapPool<T, Compare>` がノード配列と比較関数を持ち、`make_heap()` でヒープを作る。既定の `less<T>` では最小値を取り出す。
@@ -72,7 +74,7 @@ void clear()
 ##### 計算量
 
 - `node_count`：$O(1)$
-- `reserve` / `clear`：$O(P+1)$
+- `reserve` / `clear`：$O(P)$
 
 #### make_heap
 
@@ -141,8 +143,8 @@ void pop()
 
 ##### 計算量
 
-- `push` / `emplace`：償却 $O(\log(s+2))$
-- `pop`：$O(\log(s+1))$
+- `push` / `emplace`：償却 $O(\log s)$
+- `pop`：$O(\log s)$
 
 #### content / dump
 
@@ -160,7 +162,7 @@ dump(heap);  // LOCAL 時
 
 ##### 計算量
 
-- $O(s\log(s+1)+1)$
+- $O(s\log s)$
 
 #### merge
 
@@ -176,7 +178,7 @@ void merge(MeldableHeap& other)
 
 ##### 計算量
 
-- $O(\log(a+1)+\log(b+1)+1)$
+- $O(\log a+\log b)$
 
 #### clone / clear / swap
 
@@ -195,5 +197,5 @@ void swap(MeldableHeap& a, MeldableHeap& b) noexcept
 
 ##### 計算量
 
-- `clone`：償却 $O(s+1)$
+- `clone`：償却 $O(s)$
 - `clear` / `swap`：$O(1)$

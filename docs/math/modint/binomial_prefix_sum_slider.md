@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 二項係数の prefix sum
@@ -48,7 +50,7 @@ BinomialPrefixSumSlider<mint> slider(int max_n = 0)
 
 ##### 計算量
 
-- $O(\mathrm{max\_n}+1)$
+- $O(\mathrm{max\_n})$
 
 #### lpp / lmm / rpp / rmm
 
@@ -75,7 +77,7 @@ void rmm()
 ##### 計算量
 
 - `Binomial` のテーブルが必要な $n$ まで計算済みなら $O(1)$
-- テーブルの追加計算は、到達した $n$ の最大値までの総和で $O(\max(n)+1)$
+- テーブルの追加計算は、到達した $n$ の最大値までの総和で $O(\max(n))$
 
 #### set
 

@@ -1,8 +1,23 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 `infty` の省略時（`nullptr`）は、[型ごとの既定の無限大](../../utils/default_infty.md)を `T` に対して使う。値や関数を明示した場合は、その指定を使う。
 
 作用つきモノイド：加算・最小値・最小値の個数取得
+
+## 使用例
+
+```cpp
+#include "algebra/acted_monoid/add_min_count.hpp"
+#include "ds/segtree/lazy_segtree.hpp"
+
+using AM = ActedMonoidAddMinCount<ll>;
+LazySegmentTree<AM> seg(vc<AM::S>{AM::S(2), AM::S(2), AM::S(5)});
+seg.apply(0, 2, 1);
+auto x = seg.all_prod();
+assert(x.mn == 3 && x.cnt == 2);
+```
 
 ## 詳細なドキュメント
 
