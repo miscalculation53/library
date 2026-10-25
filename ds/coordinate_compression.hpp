@@ -32,14 +32,14 @@ struct CoordinateCompression
     assert(0 <= i && i < SZ(vals));
     return vals[i];
   }
-  // 値 val に対応する添字 (なければ -1)
+  // 値 val に対応する添字。存在しなければ nullopt。
   template <class I = ll>
-  I get_id(const T &val) const
+  optional<I> get_id(const T &val) const
   {
     auto it = lower_bound(ALL(vals), val);
     if (it == vals.end() || *it != val)
-      return -1;
-    return it - vals.begin();
+      return nullopt;
+    return I(it - vals.begin());
   }
 
   template <class I = ll>
@@ -56,7 +56,7 @@ vc<I> compressed(const vc<T> &vec)
   {
     CoordinateCompression cc(vec);
     vc<I> res(vec.size());
-    repi(i, vec.size()) res[i] = cc.get_id(vec[i]);
+    repi(i, vec.size()) res[i] = *cc.get_id(vec[i]);
     return res;
   }
   auto ord = stable_argsort(vec);

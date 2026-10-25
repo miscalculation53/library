@@ -24,7 +24,7 @@ void main2()
   LL(M, N, K);
   VEC(string, M, S);
   auto A = gen_vec(M, [&](ll i)
-                   { return stov(S.at(i), "JOI"); });
+                   { return *stov(S.at(i), "JOI"); });
   array<vvl, 3> B;
   B.fill(vvl(M, vl(N, 0)));
   rep(i, M) rep(j, N) B.at(A.at(i).at(j)).at(i).at(j) = 1;

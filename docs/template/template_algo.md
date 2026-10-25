@@ -11,6 +11,7 @@
 
 vc<int> a{3, 1, 4};
 assert(SUM<ll>(a) == 8 && ARGMAX(a) == 2);
+assert(!ARGMIN(vc<int>{}));
 assert(mex(vc<int>{0, 2, 3}) == 1);
 assert(permid<int>(3) == vc<int>({0, 1, 2}));
 ```
@@ -55,11 +56,11 @@ assert(permid<int>(3) == vc<int>({0, 1, 2}));
 #### ARGMAX, ARGMIN
 
 ```cpp
-(1) I=ll ARGMAX(V v)
-(2) I=ll ARGMIN(V v)
+(1) optional<I> ARGMAX<I = ll>(const V& v)
+(2) optional<I> ARGMIN<I = ll>(const V& v)
 ```
 
-それぞれ、$v$ の要素が最大値、最小値をとるインデックス（のうち最小のもの）を返す。$v$ が空のときは $0$ を返す。
+それぞれ、$v$ の要素が最大値、最小値をとるインデックス（のうち最小のもの）を返す。$v$ が空なら `nullopt` を返す。先頭が答えなら、値 $0$ を持つ `optional` を返す。
 
 ##### 計算量
 

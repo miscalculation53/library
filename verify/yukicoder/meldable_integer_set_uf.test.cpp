@@ -39,7 +39,7 @@ void main2()
   CoordinateCompression cc(W);
   int K = cc.size();
   vvc<pll> uvs(K + 1);
-  fec([u, v, w] : UVW) uvs[cc.get_id(w)].eb(u, v);
+  fec([u, v, w] : UVW) uvs[*cc.get_id(w)].eb(u, v);
   VEC(pll, Q, SC);
   offset(SC, pll{-1, 0});
 

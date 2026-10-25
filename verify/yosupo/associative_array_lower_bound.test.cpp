@@ -45,16 +45,16 @@ void main2()
   {
     if (t == 0)
     {
-      ll i = cc.get_id(k);
+      ll i = *cc.get_id(k);
       vals.at(i) = v;
     }
     else if (t == 1)
     {
-      ll i = cc.get_id(k);
-      if (i == -1)
+      auto i = cc.get_id(k);
+      if (!i)
         PRINT(0);
       else
-        PRINT(vals.at(i));
+        PRINT(vals.at(*i));
     }
   }
 }

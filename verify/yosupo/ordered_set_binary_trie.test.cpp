@@ -35,7 +35,7 @@ void main2()
     {
       x--;
       if (x < bt.all_sum())
-        PRINT(bt.kth_by(x, identity{}));
+        PRINT(*bt.kth_by(x, identity{}));
       else
         PRINT(-1);
     }
@@ -43,17 +43,17 @@ void main2()
       PRINT(bt.leq_sum(x));
     else if (t == 4)
     {
-      ll val = bt.leq_max_by(x, identity{});
-      if (val != -1)
-        PRINT(val);
+      auto val = bt.leq_max_by(x, identity{});
+      if (val)
+        PRINT(*val);
       else
         PRINT(-1);
     }
     else if (t == 5)
     {
-      ll val = bt.geq_min_by(x, identity{});
-      if (val != -1)
-        PRINT(val);
+      auto val = bt.geq_min_by(x, identity{});
+      if (val)
+        PRINT(*val);
       else
         PRINT(-1);
     }

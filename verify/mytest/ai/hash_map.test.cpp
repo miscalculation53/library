@@ -41,9 +41,9 @@ void test()
     {
       auto p = mp.find_ptr(key);
       auto it = expected.find(key);
-      assert((p == nullptr) == (it == expected.end()));
+      assert((!p) == (it == expected.end()));
       if (p)
-        assert(*p == it->second);
+        assert(p->get() == it->second);
     }
     assert(mp.size() == expected.size());
   }

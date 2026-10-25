@@ -27,9 +27,9 @@ int main()
     if (op.type == 0) tree.add_segment(op.l, op.r, op.a, op.b);
     else
     {
-      auto [value, line] = tree.query(op.l);
-      if (line.id == -1) cout << "INFINITY\n";
-      else cout << value << '\n';
+      auto result = tree.query(op.l);
+      if (!result) cout << "INFINITY\n";
+      else cout << result->first << '\n';
     }
   }
 }

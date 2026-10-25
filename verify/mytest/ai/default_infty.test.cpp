@@ -77,8 +77,8 @@ void test_graphs()
       {0, 1, large}, {1, 2, 3}, {2, 0, 4}, {2, 3, 1}};
   Graph<false, i128> cycle_input(5, cycle_edges);
   MinimumCycle cycle(cycle_input);
-  assert((cycle.edge_costs() == vc<i128>{large + 7, large + 7, large + 7, WIDE_INF}));
-  assert((cycle.vertex_costs() == vc<i128>{large + 7, large + 7, large + 7, WIDE_INF, WIDE_INF}));
+  assert((cycle.edge_costs() == vc<optional<i128>>{large + 7, large + 7, large + 7, nullopt}));
+  assert((cycle.vertex_costs() == vc<optional<i128>>{large + 7, large + 7, large + 7, nullopt, nullopt}));
 
   using R = Rational<ll>;
   vc<tuple<int, int, R>> rational_edges{{0, 1, R(1, 2)}, {1, 2, R(2, 3)}};
@@ -94,20 +94,24 @@ void test_graphs()
 void test_cht_and_helpers()
 {
   ConvexHullTrick<ll> cht;
-  assert(cht.query(0).first == WIDE_INF && cht.query(0).second.b == INF);
+
+  assert(!cht.query(0));
   ConvexHullTrick<int> small;
-  assert(small.query(0).first == INF && small.query(0).second.b == (1 << 30) - 1);
+  assert(!small.query(0));
   small.add_line(1, 2);
-  assert(small.query(3).first == 5);
+  assert(small.query(3)->first == 5);
   using R = Rational<ll>;
   ConvexHullTrick<R> rational;
-  assert(rational.query(R(0)).first.is_infinite());
+
+  assert(!rational.query(R(0)));
   rational.add_line(R(2), R(3));
-  auto value = rational.query(R(1, 2)).first;
+  auto value = rational.query(R(1, 2))->first;
   assert(value.num == 4 * value.den);
   ConvexHullTrickDotProduct<ll> dot;
-  assert(dot.min_query(0, 1).first == WIDE_INF);
-  assert(dot.max_query(0, 1).first == -WIDE_INF);
+
+  assert(!dot.min_query(0, 1));
+
+  assert(!dot.max_query(0, 1));
 
   assert(vecget(vc<int>{1}, -1) == -((1 << 30) - 1));
   assert(vecget(vc<i128>{1}, 1) == WIDE_INF);

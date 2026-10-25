@@ -1,4 +1,4 @@
-このドキュメントには AI による作成・変更が含まれている可能性があります。
+このドキュメントには AI による作成・変更が含まれています。
 
 ## 概要
 
@@ -17,8 +17,8 @@ HashMap<pair<ll, ll>, int> mp;
 mp.reserve(q);
 mp[{x, y}]++;
 
-if (int* p = mp.find_ptr({a, b}))
-  cout << *p << '\n';
+if (auto value = mp.find_ptr({a, b}))
+  cout << value->get() << '\n';
 
 for (const auto& [key, val] : mp)
   cout << key.first << ' ' << key.second << ' ' << val << '\n';
@@ -118,11 +118,11 @@ vc<pair<Key, Value>> content() const
 #### find_ptr
 
 ```cpp
-(1) Value* find_ptr(const Key& key)
-(2) const Value* find_ptr(const Key& key) const
+(1) optional<reference_wrapper<Value>> find_ptr(const Key& key)
+(2) optional<reference_wrapper<const Value>> find_ptr(const Key& key) const
 ```
 
-`key` が存在すれば対応する値へのポインタ、存在しなければ `nullptr` を返す。
+`key` に対応する値への参照を返す。存在しなければ `nullopt`。値が `0` でも値あり。`result->get()` で格納された値を参照・更新でき、const オブジェクトでは読み取り専用の参照となる。
 
 ##### 計算量
 

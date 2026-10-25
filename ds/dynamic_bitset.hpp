@@ -338,15 +338,15 @@ public:
   // [l, r) の全ビットが 1 か返す。
   bool all(int l, int r) const { return count(l, r) == r - l; }
 
-  // 最初の value、存在しなければ size() を返す。
-  int find_first(bool value = true) const { return find_next(-1, value); }
-  // i より右にある最初の value、存在しなければ size() を返す。
-  int find_next(int i, bool value = true) const
+  // 最初の value、存在しなければ nullopt を返す。
+  optional<int> find_first(bool value = true) const { return find_next(-1, value); }
+  // i より右にある最初の value、存在しなければ nullopt を返す。
+  optional<int> find_next(int i, bool value = true) const
   {
     assert(-1 <= i && i < n);
     i++;
     if (i == n)
-      return n;
+      return nullopt;
     int w = i / word_bits, b = i % word_bits;
     Word x = (value ? dat[w] : ~dat[w]) & (~Word(0) << b);
     while (true)
@@ -354,21 +354,21 @@ public:
       if (x)
       {
         int res = w * word_bits + __builtin_ctzll(x);
-        return min(res, n);
+        return res < n ? optional<int>(res) : nullopt;
       }
       if (++w == SZ(dat))
-        return n;
+        return nullopt;
       x = value ? dat[w] : ~dat[w];
     }
   }
-  // 最後の value、存在しなければ -1 を返す。
-  int find_last(bool value = true) const { return find_prev(n, value); }
-  // i より左にある最初の value、存在しなければ -1 を返す。
-  int find_prev(int i, bool value = true) const
+  // 最後の value、存在しなければ nullopt を返す。
+  optional<int> find_last(bool value = true) const { return find_prev(n, value); }
+  // i より左にある最初の value、存在しなければ nullopt を返す。
+  optional<int> find_prev(int i, bool value = true) const
   {
     assert(0 <= i && i <= n);
     if (i == 0)
-      return -1;
+      return nullopt;
     i--;
     int w = i / word_bits, b = i % word_bits;
     Word x = (value ? dat[w] : ~dat[w]) & low_mask(b + 1);
@@ -377,7 +377,7 @@ public:
       if (x)
         return w * word_bits + 63 - __builtin_clzll(x);
       if (w-- == 0)
-        return -1;
+        return nullopt;
       x = value ? dat[w] : ~dat[w];
     }
   }

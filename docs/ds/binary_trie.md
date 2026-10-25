@@ -6,7 +6,7 @@ $[0, 2^{\mathrm{width}})$ の整数をキーとする疎な列を Binary Trie �
 
 各キーには可換モノイド `M` の要素が対応する。更新されていないキーの値は `M::e()` である。長い単一子の区間を省略して保持する。
 
-キーの型 `Key` は符号付き整数型で、キー自体は非負とする。該当するキーが存在しない場合の番兵には、左端の外側を表す $-1$ と右端の外側を表す $2^{\mathrm{width}}$ を使う。どちらを返すかは各関数の説明に記載する。デフォルトの `Key = ll` では `width <= 63` であり、`uint64_t` の全域は扱わない。
+キーの型 `Key` は符号付き整数型で、キー自体は非負とする。独自のキー検索は `optional` を返し、該当するキーがなければ `nullopt`。常に定義される境界 `max_right_ng`・`min_left_ng` は、それぞれ値域の右端・左端の外側も返す。デフォルトの `Key = ll` では `width <= 63` であり、`uint64_t` の全域は扱わない。
 
 ```cpp
 struct M
@@ -85,7 +85,7 @@ using Boundary = conditional_t<
 >;
 ```
 
-`Boundary` は二分探索4関数の返り値型である。通常は `Key` と同じであり、$2^{\mathrm{width}}$ が `Key` に収まらない場合だけ `larger_int_t<Key>` になる。
+`Boundary` は境界探索2関数の返り値型、および実在キーを探す2関数の `optional` 内の型である。通常は `Key` と同じであり、$2^{\mathrm{width}}$ が `Key` に収まらない場合だけ `larger_int_t<Key>` になる。
 
 #### コンストラクタ
 
@@ -312,7 +312,7 @@ $R<N$ なら `(key ^ xor_value) == R` であるキーを返す。$R=N$ なら番
 
 ```cpp
 template <class F, class Count>
-Boundary max_right_ok_by(
+optional<Boundary> max_right_ok_by(
   Key lower,
   const F& f,
   const Count& cnt,
@@ -328,7 +328,7 @@ $$
 \mathrm{cnt}(\operatorname{get}(\mathrm{key})) > 0
 $$
 
-該当するキーがなければ `-1` を返す。
+該当するキーがなければ `nullopt` を返す。
 
 ##### 制約
 
@@ -372,7 +372,7 @@ $L>0$ なら `(key ^ xor_value) == L - 1` であるキーを返す。$L=0$ な�
 
 ```cpp
 template <class F, class Count>
-Boundary min_left_ok_by(
+optional<Boundary> min_left_ok_by(
   Key upper,
   const F& f,
   const Count& cnt,
@@ -388,7 +388,7 @@ L \leq (\mathrm{key} \mathbin{\mathtt{xor}} \mathrm{xor\_value}) < U,
 \mathrm{cnt}(\operatorname{get}(\mathrm{key})) > 0
 $$
 
-該当するキーがなければ番兵 $N$ を返す。
+該当するキーがなければ `nullopt` を返す。
 
 ##### 制約
 
@@ -403,19 +403,18 @@ $$
 
 ```cpp
 template <class Count, class F>
-Key kth_by(
+optional<Key> kth_by(
   Count k,
   const F& cnt,
   Key xor_value = 0
 ) const
 ```
 
-各キーを `cnt(get(key))` 個ずつ並べ、`key ^ xor_value` の昇順に並べたときの $k$ 番目のキーを返す。戻り値は XOR 前のキーである。
+各キーを `cnt(get(key))` 個ずつ並べ、`key ^ xor_value` の昇順に並べたときの $k$ 番目のキーを返す。戻り値は XOR 前のキーである。範囲外の `k` は `nullopt`。
 
 ##### 制約
 
 - `cnt` は概要に記載した条件を満たす
-- $0 \leq k <$ `cnt(all_sum())`
 - $0 \leq \mathrm{xor\_value} < 2^{\mathrm{width}}$
 
 ##### 計算量
@@ -426,18 +425,17 @@ Key kth_by(
 
 ```cpp
 template <class F>
-Key min_element_by(
+optional<Key> min_element_by(
   const F& cnt,
   Key xor_value = 0
 ) const
 ```
 
-`cnt(get(key))` が正であるキーのうち、`key ^ xor_value` が最小であるものを返す。
+`cnt(get(key))` が正であるキーのうち、`key ^ xor_value` が最小であるものを返す。該当するキーがなければ `nullopt`。
 
 ##### 制約
 
 - `cnt` は概要に記載した条件を満たす
-- `cnt(all_sum()) > 0`
 - $0 \leq \mathrm{xor\_value} < 2^{\mathrm{width}}$
 
 ##### 計算量
@@ -448,18 +446,17 @@ Key min_element_by(
 
 ```cpp
 template <class F>
-Key max_element_by(
+optional<Key> max_element_by(
   const F& cnt,
   Key xor_value = 0
 ) const
 ```
 
-`cnt(get(key))` が正であるキーのうち、`key ^ xor_value` が最大であるものを返す。
+`cnt(get(key))` が正であるキーのうち、`key ^ xor_value` が最大であるものを返す。該当するキーがなければ `nullopt`。
 
 ##### 制約
 
 - `cnt` は概要に記載した条件を満たす
-- `cnt(all_sum()) > 0`
 - $0 \leq \mathrm{xor\_value} < 2^{\mathrm{width}}$
 
 ##### 計算量
@@ -470,14 +467,14 @@ Key max_element_by(
 
 ```cpp
 template <class F>
-Key lt_max_by(
+optional<Key> lt_max_by(
   Key value,
   const F& cnt,
   Key xor_value = 0
 ) const
 ```
 
-`cnt(get(key))` が正かつ `(key ^ xor_value) < value` であるキーのうち、`key ^ xor_value` が最大であるものを返す。該当するキーがなければ `-1` を返す。
+`cnt(get(key))` が正かつ `(key ^ xor_value) < value` であるキーのうち、`key ^ xor_value` が最大であるものを返す。該当するキーがなければ `nullopt` を返す。
 
 ##### 制約
 
@@ -492,14 +489,14 @@ Key lt_max_by(
 
 ```cpp
 template <class F>
-Key leq_max_by(
+optional<Key> leq_max_by(
   Key value,
   const F& cnt,
   Key xor_value = 0
 ) const
 ```
 
-`cnt(get(key))` が正かつ `(key ^ xor_value) <= value` であるキーのうち、`key ^ xor_value` が最大であるものを返す。該当するキーがなければ `-1` を返す。
+`cnt(get(key))` が正かつ `(key ^ xor_value) <= value` であるキーのうち、`key ^ xor_value` が最大であるものを返す。該当するキーがなければ `nullopt` を返す。
 
 ##### 制約
 
@@ -514,14 +511,14 @@ Key leq_max_by(
 
 ```cpp
 template <class F>
-Key geq_min_by(
+optional<Key> geq_min_by(
   Key value,
   const F& cnt,
   Key xor_value = 0
 ) const
 ```
 
-`cnt(get(key))` が正かつ `(key ^ xor_value) >= value` であるキーのうち、`key ^ xor_value` が最小であるものを返す。該当するキーがなければ `-1` を返す。
+`cnt(get(key))` が正かつ `(key ^ xor_value) >= value` であるキーのうち、`key ^ xor_value` が最小であるものを返す。該当するキーがなければ `nullopt` を返す。
 
 ##### 制約
 
@@ -536,14 +533,14 @@ Key geq_min_by(
 
 ```cpp
 template <class F>
-Key gt_min_by(
+optional<Key> gt_min_by(
   Key value,
   const F& cnt,
   Key xor_value = 0
 ) const
 ```
 
-`cnt(get(key))` が正かつ `(key ^ xor_value) > value` であるキーのうち、`key ^ xor_value` が最小であるものを返す。該当するキーがなければ `-1` を返す。
+`cnt(get(key))` が正かつ `(key ^ xor_value) > value` であるキーのうち、`key ^ xor_value` が最小であるものを返す。該当するキーがなければ `nullopt` を返す。
 
 ##### 制約
 

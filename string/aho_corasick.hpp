@@ -36,7 +36,7 @@ public:
     que.reserve(n);
     repi(c, CHAR_NUM)
     {
-      int v = trie.template child<int>(0, c);
+      int v = trie.template child<int>(0, c).value_or(-1);
       nxt[0][c] = v == -1 ? 0 : v;
       if (v != -1)
       {
@@ -51,7 +51,7 @@ public:
       const auto &fallback = nxt[fail[p]];
       repi(c, CHAR_NUM)
       {
-        int v = trie.template child<int>(p, c);
+        int v = trie.template child<int>(p, c).value_or(-1);
         if (v != -1)
         {
           nxt[p][c] = v;
@@ -63,13 +63,14 @@ public:
     }
   }
 
-  // v の failure link の行き先 (根 0 に対しては -1)
+  // v の failure link の行き先。根 0 に対しては nullopt。
   // これは v の最長 suffix
   template <class I = ll>
-  I failure(int v)
+  optional<I> failure(int v)
   {
     assert(0 <= v && v < n);
-    return fail[v];
+    if (fail[v] == -1) return nullopt;
+    return I(fail[v]);
   }
 
   // 文字 c を追加できない限り failure link を辿る → 初めて追加できたときにいる頂点

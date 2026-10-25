@@ -21,8 +21,8 @@ MergeTree merges(n);
 vc<tuple<int, int, ll>> edges = {{0, 1, 2}, {2, 3, 5}, {1, 2, 8}, {0, 3, 10}};
 vc<ll> weight(n, 0);
 for (auto [u, v, w] : edges) {
-  int node = merges.merge(u, v);
-  if (node != -1) weight.push_back(w);
+  auto node = merges.merge(u, v);
+  if (node) weight.push_back(w);
 }
 auto par = merges.parents();
 RootedTree tree(par.size(), par);
@@ -63,10 +63,10 @@ $n$ 個の葉を作る。併合の順番や、併合に付随する情報は利�
 #### merge
 
 ```cpp
-int merge(int u, int v)
+optional<int> merge(int u, int v)
 ```
 
-元の頂点 `u`, `v` の成分を併合し、新しい親ノードの番号を返す。同じ成分の場合は `-1` を返す。新しいノードの番号は $n,n+1,\ldots$ の順に増える。
+元の頂点 `u`, `v` の成分を併合し、新しい親ノードの番号を返す。同じ成分の場合は `nullopt` を返す。新しいノードの番号は $n,n+1,\ldots$ の順に増える。
 
 ##### 制約
 

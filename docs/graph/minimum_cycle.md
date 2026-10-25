@@ -9,9 +9,9 @@
 
 無向は非負重み、有向は負閉路のないグラフで最小閉路を求める。有向で計算中に負閉路を検出した場合は、`-infty` で報告する。
 自己ループは長さ 1、異なる平行辺による無向閉路は長さ 2 として扱う。
-該当する閉路がない場合は `(infty, 空の辺列)` を返す。`infty` の省略時は [型ごとの既定値](../utils/default_infty.md) を使う。
+該当する閉路がない場合は `nullopt` を返す。重み $0$ の閉路は値ありで返す。`infty` の省略時は [型ごとの既定値](../utils/default_infty.md) を使う。
 
-負閉路の検出時は、`solve()`・`solve_vertex(s)`・`solve_edge(eid)` が `(-infty, 空の辺列)`、`vertex_costs()`・`edge_costs()` が全要素 `-infty` の配列を返す。
+負閉路の検出時は、値ありの状態として `solve()`・`solve_vertex(s)`・`solve_edge(eid)` が `(-infty, 空の辺列)`、`vertex_costs()`・`edge_costs()` が全要素 `-infty` の配列を返す。
 `-infty` は計算を打ち切ったことを表す状態値。全件版では、各要素に関する負閉路の有無を個別に判定する代わりに、配列全体で検出を報告する。
 
 通常の最短路の手法選択は [ShortestPath](sssp.md)・[AllPairsShortestPath](apsp.md) に任せる。
@@ -25,16 +25,16 @@ APSP を使う計算では、先に `negative_cycle()` で判定し、負閉路�
 vc<tuple<int, int, ll>> es = {{0, 1, 1}, {1, 2, 2}, {2, 0, 4}, {2, 3, 3}};
 GraphUndirected<ll> g(4, es);
 MinimumCycle mc(g);
-auto [cost, cycle] = mc.solve();  // 全体。cost == 7
+auto [cost, cycle] = *mc.solve();  // 全体。cost == 7
 
 auto through_vertex = mc.solve_vertex(1);      // 頂点 1 を通る閉路。辺列は 1 から始まる
 auto through_edge = mc.solve_edge(0);   // 辺 0 を通る閉路。辺列の先頭は辺 0
-auto vertices = mc.vertex_costs();      // {7, 7, 7, INF}
-auto edges = mc.edge_costs();            // {7, 7, 7, INF}
+auto vertices = mc.vertex_costs();      // {7, 7, 7, nullopt}
+auto edges = mc.edge_costs();            // {7, 7, 7, nullopt}
 
 GraphUndirected<> unweighted(4, vc<pair<int, int>>{{0, 1}, {1, 2}, {2, 0}, {2, 3}});
 MinimumCycle shortest(unweighted);
-auto [length, path] = shortest.solve();  // ll の length == 3、vc<Edge<void>> の path
+auto [length, path] = *shortest.solve();  // ll の length == 3、vc<Edge<void>> の path
 ```
 
 ## 詳細なドキュメント
@@ -45,7 +45,7 @@ auto [length, path] = shortest.solve();  // ll の length == 3、vc<Edge<void>> 
 template <bool is_directed, class Cost, auto infty = nullptr>
 struct MinimumCycle;
 using Dist = typename ShortestPath<is_directed, Cost, infty>::Dist;
-using Result = pair<Dist, vc<Edge<Cost>>>;
+using Result = optional<pair<Dist, vc<Edge<Cost>>>>;
 ```
 
 閉路の辺列は巡回順で、無向でも `from`・`to` は進行方向に合わせる。
@@ -122,10 +122,10 @@ Result solve_edge(int eid) const;
 #### vertex_costs
 
 ```cpp
-vc<Dist> vertex_costs() const;
+vc<optional<Dist>> vertex_costs() const;
 ```
 
-各頂点を通る最小閉路の重みを頂点番号順に返す。該当する閉路がない要素は `infty`。
+各頂点を通る最小閉路の重みを頂点番号順に返す。該当する閉路がない要素は `nullopt`。
 **有向・無向とも APSP の結果を利用する。** 指定頂点版と同じ閉路判定を、距離・親辺の各行に適用する。
 有向でグラフのどこかに負閉路がある場合は、長さ $n$ の全要素 `-infty` の配列を返す。
 
@@ -136,10 +136,10 @@ vc<Dist> vertex_costs() const;
 #### edge_costs
 
 ```cpp
-vc<Dist> edge_costs() const;
+vc<optional<Dist>> edge_costs() const;
 ```
 
-各辺を通る最小閉路の重みを辺番号順に返す。該当する閉路がない要素は `infty`。
+各辺を通る最小閉路の重みを辺番号順に返す。該当する閉路がない要素は `nullopt`。
 有向は APSP の距離から求める。無向は最初に通る辺が異なる経路を 2 種類保持する専用の Dijkstra を全始点で行う。
 有向でグラフのどこかに負閉路がある場合は、長さ $m$ の全要素 `-infty` の配列を返す。
 **無向の各辺版を APSP の結果から求める処理は未実装。** 無向の各辺版の空間は $O(n+m)$。

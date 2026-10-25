@@ -26,9 +26,9 @@ int main()
     {
       ll x;
       cin >> x;
-      auto [value, line] = tree.query(x);
-      if (line.id == -1) cout << "INFINITY\n";
-      else cout << value << '\n';
+      auto result = tree.query(x);
+      if (!result) cout << "INFINITY\n";
+      else cout << result->first << '\n';
     }
   }
 }

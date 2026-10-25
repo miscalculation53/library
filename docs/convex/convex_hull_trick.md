@@ -1,4 +1,4 @@
-このドキュメントには AI による作成・変更が含まれている可能性があります。
+このドキュメントには AI による作成・変更が含まれています。
 
 ## 概要
 
@@ -13,7 +13,7 @@
 
 型引数は `T, U, Compare, inftyT, inftyU` の順に指定する。評価の中間計算も `ll` に収まる場合は `ConvexHullTrick<ll, ll>` とできる。`U` を広げても、係数の符号反転や交点を作る差の計算は `T` のままである。
 
-`inftyT` は境界と空集合で返す直線の切片に、`inftyU` は空集合で返す評価値に使う。省略時（`nullptr`）は、それぞれ `T`, `U` の[既定の無限大](../utils/default_infty.md)を使う。例えば `ConvexHullTrick<ll>` の境界は `INF`、空集合の評価値は `i128` の `INF * INF` になる。値や関数を明示した場合はその指定を使う。非空のクエリ結果をこれらの値で打ち切る処理は行わない。
+`inftyT` は境界に使い、省略時は `T` の[既定の無限大](../utils/default_infty.md)を使う。空の問い合わせは `nullopt`。型引数 `inftyU` は既存の型指定との互換性のため保持し、問い合わせ結果には使わない。
 
 `T` が整数型の場合は、2直線の交点を floor した整数境界を持つ。厳密な有理数座標を使う場合は `T = Rational<ll>`、浮動小数点数を使う場合は `T = long double` などとする。
 
@@ -26,7 +26,7 @@ ConvexHullTrick<ll> cht;
 cht.add_line(2, 3);     // id = 0
 cht.add_line(-1, 8, 20);
 
-auto [value, line] = cht.query(4);
+auto [value, line] = *cht.query(4);
 // value は i128、line.a と line.b は ll
 int id = line.id;
 ```
@@ -38,32 +38,31 @@ ConvexHullTrick<ll, ll> small_value_cht;
 ConvexHullTrick<ll, i128, greater<>> max_cht;
 ```
 
-境界用と返り値用の無限大は型ごとに選ばれる。有理数では指定を省略すると $1/0$ になる。片方だけを明示することもできる。
+境界の型は `T` から決まる。有理数では指定を省略すると $1/0$ になる。
 
 ```cpp
-ConvexHullTrick<int> integer_cht;  // 境界は (1 << 30) - 1、返り値用は ll の INF
+ConvexHullTrick<int> integer_cht;  // 境界は (1 << 30) - 1
 using R = Rational<ll>;
 using W = Rational<i128>;
-ConvexHullTrick<R, W> rational_cht;  // 境界用・返り値用ともに 1/0
-ConvexHullTrick<R, W, less<>, nullptr, INF> finite_empty_cht;
+ConvexHullTrick<R, W> rational_cht;  // 境界は 1/0
 ```
 
-`INF` を明示すると、有理数でも有限値 `INF/1` として扱う。従来の有限の既定値を両方に使いたい場合は、第4・第5引数に `INF, INF` を指定する。
+第4引数に `INF` を明示すると、有理数の境界も有限値 `INF/1` になる。
 
 傾きとクエリがどちらも単調な場合は次のように使う。増加・減少のどちらでもよいが、途中で方向を変えてはいけない。
 
 ```cpp
 ConvexHullTrickMonotoneSlope<ll> cht;
 repi(i, lines.size()) cht.add_line(lines[i].first, lines[i].second, i);
-for (ll x : queries) answer.eb(cht.query_monotone(x).first);
+for (ll x : queries) answer.eb(cht.query_monotone(x)->first);
 ```
 
 同じ直線集合に対して別の単調クエリ列を始める場合は、間で状態をリセットする。
 
 ```cpp
-for (ll x : increasing_queries) answer1.eb(cht.query_monotone(x).first);
+for (ll x : increasing_queries) answer1.eb(cht.query_monotone(x)->first);
 cht.reset_monotone_query();
-for (ll x : decreasing_queries) answer2.eb(cht.query_monotone(x).first);
+for (ll x : decreasing_queries) answer2.eb(cht.query_monotone(x)->first);
 ```
 
 有理数を使う場合は、係数もクエリも `Rational` にする。整数係数に有理数座標をクエリする場合も、係数を分母1の `Rational` として追加する。
@@ -72,7 +71,7 @@ for (ll x : decreasing_queries) answer2.eb(cht.query_monotone(x).first);
 using R = Rational<ll>;
 ConvexHullTrick<R> cht;
 cht.add_line(R(2), R(3));
-auto [value, line] = cht.query(R(1, 2));
+auto [value, line] = *cht.query(R(1, 2));
 // value は Rational<i128>、line.a と line.b は Rational<ll>
 ```
 
@@ -83,10 +82,10 @@ Rational<i128> expected(R(4));
 assert(value == expected);
 ```
 
-直線だけが必要な場合も `query(x).second` を使う。従来の `query_line(x)` は `query(x).second`、`query_line_monotone(x)` は `query_monotone(x).second` に置き換える。どちらも値の計算を行うため、中間計算と結果が `U` に収まる必要がある。
+直線だけが必要な場合も、値があることを確認して `query(x)->second` を使う。値と直線の取得では、評価の中間計算と結果が `U` に収まる必要がある。
 
 ```cpp
-auto best_line = cht.query(R(1, 2)).second;
+auto best_line = cht.query(R(1, 2))->second;
 ```
 
 ## 詳細なドキュメント
@@ -114,9 +113,7 @@ ConvexHullTrick()
 - `T`, `U` が整数型なら符号つきである
 - `Compare` は `less<>`, `less<T>`, `greater<>`, `greater<T>` のいずれか
 - `inftyT` は、すべての有限な境界の絶対値より大きい正の値で、変換後の値とその符号反転が `T` に収まる
-- `inftyU` は空集合の最小値クエリで返してよい正の値で、変換後の値とその符号反転が `U` に収まる
-- 各引数には、対応する型に変換できる値、またはそのような値を返す引数なし関数を指定できる
-- `inftyT` が `U` に収まる必要も、`inftyU` が `T` に収まる必要もない
+- `inftyT` には `T` に変換できる値、またはそのような値を返す引数なし関数を指定できる
 
 ##### 計算量
 
@@ -159,14 +156,14 @@ void add_line(T a, T b, int id)
 #### query
 
 ```cpp
-pair<U, Line> query(const T &x) const
+optional<pair<U, Line>> query(const T &x) const
 ```
 
 $x$ における最適値と、それを達成する直線を返す。同じ最適値を取る直線が複数ある場合は、そのうち1本を返す。
 
 評価は `U(a) * U(x) + U(b)` で行う。返される `Line` の係数は `T` のままである。
 
-空の場合、最小値クエリでは `{eU, {0, eT, -1}}`、最大値クエリでは `{-eU, {0, -eT, -1}}` を返す。`eT` は `inftyT` を `T` として解決した値、`eU` は `inftyU` を `U` として解決した値である。空集合を表す直線の切片と返り値は、それぞれの無限大を使うため一致するとは限らない。
+空の場合は `nullopt`。値 $0$ を達成する直線がある場合も、値ありで返す。
 
 ##### 制約
 
@@ -180,10 +177,10 @@ $x$ における最適値と、それを達成する直線を返す。同じ最�
 #### query_monotone
 
 ```cpp
-pair<U, Line> query_monotone(const T &x)
+optional<pair<U, Line>> query_monotone(const T &x)
 ```
 
-広義単調な $x$ における最適値と直線を返す。同じ $x$ を繰り返してもよい。増加・減少方向は自動で判定する。
+広義単調な $x$ における最適値と直線を返す。空の場合は `nullopt`。同じ $x$ を繰り返してもよい。増加・減少方向は自動で判定する。
 
 ##### 制約
 

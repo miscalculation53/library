@@ -20,20 +20,20 @@ struct FlatMap
   
   const Value &operator[](const Key &key) const
   {
-    const int i = cc.get_id(key);
-    assert(i != -1);
-    return vals[i];
+    const auto i = cc.get_id(key);
+    assert(i);
+    return vals[*i];
   }
   Value &operator[](const Key &key)
   {
-    const int i = cc.get_id(key);
-    assert(i != -1);
-    return vals[i];
+    const auto i = cc.get_id(key);
+    assert(i);
+    return vals[*i];
   }
   const Value &at(const Key &key) const { return operator[](key); }
   Value &at(const Key &key) { return operator[](key); }
 
-  bool contains(const Key &key) { return cc.get_id(key) != -1; }
+  bool contains(const Key &key) { return cc.get_id(key).has_value(); }
 
   template <class I = ll>
   inline I size() const { return cc.size(); }

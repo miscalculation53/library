@@ -9,9 +9,9 @@
 
 // sum[j=0..r] c[j](n) * a[n+j] = 0。1 <= r <= max_order, deg(c[j]) <= max_degree。
 // 初期項数に収まる範囲を探索し、位数、係数次数の順に小さい候補を返す。
-// 見つからない場合（項数不足を含む）は空配列。
+// 見つからない場合（項数不足を含む）は nullopt。
 template <class mint>
-vc<FormalPowerSeries<mint>> guess_p_recursive(
+optional<vc<FormalPowerSeries<mint>>> guess_p_recursive(
     const vc<mint> &a, int max_order = 10, int max_degree = 10)
 {
   assert(max_order >= 1 && max_degree >= 0);
@@ -54,7 +54,7 @@ vc<FormalPowerSeries<mint>> guess_p_recursive(
       return c;
     }
   }
-  return {};
+  return nullopt;
 }
 
 // sum[j=0..r] c[j](n) * a[n+j] = 0 に従って先頭 size 項へ伸ばす。

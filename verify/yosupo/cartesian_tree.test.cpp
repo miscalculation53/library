@@ -25,7 +25,7 @@ void main2()
   VEC(ll, N, A);
 
   CartesianTree ct(A);
-  auto P = GEN_VEC(N, i, i == ct.root() ? i : ct.parent(i));
+  auto P = GEN_VEC(N, i, i == ct.root() ? i : *ct.parent(i));
   PRINT(P);
   dump(ct);
 }

@@ -69,33 +69,36 @@ public:
 
   template <class I = ll>
   I root() const { return root_; }
-  // 存在しなければ -1
+  // 存在しなければ nullopt
   template <class I = ll>
-  I parent(int i) const
+  optional<I> parent(int i) const
   {
     assert(0 <= i && i < n);
-    return nodes[i].par;
+    if (nodes[i].par == -1) return nullopt;
+    return I(nodes[i].par);
   }
-  // 存在しなければ -1
+  // 存在しなければ nullopt
   template <class I = ll>
-  I left_child(int i) const
+  optional<I> left_child(int i) const
   {
     assert(0 <= i && i < n);
-    return nodes[i].chi_l;
+    if (nodes[i].chi_l == -1) return nullopt;
+    return I(nodes[i].chi_l);
   }
-  // 存在しなければ -1
+  // 存在しなければ nullopt
   template <class I = ll>
-  I right_child(int i) const
+  optional<I> right_child(int i) const
   {
     assert(0 <= i && i < n);
-    return nodes[i].chi_r;
+    if (nodes[i].chi_r == -1) return nullopt;
+    return I(nodes[i].chi_r);
   }
   // 存在する子をイテレートする
   template <class I = ll>
   ChildList<I> children(int i) const
   {
     assert(0 <= i && i < n);
-    ChildList<I> res;
+    ChildList<I> res{};
     if (nodes[i].chi_l != -1) res.data[res.sz++] = nodes[i].chi_l;
     if (nodes[i].chi_r != -1) res.data[res.sz++] = nodes[i].chi_r;
     return res;

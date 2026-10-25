@@ -11,16 +11,16 @@ void check(const FastIntegerSet &st, const set<int> &expected)
   for (int x : {numeric_limits<int>::min(), -1, 0, 1, 63, 64, 65, n - 1, n, numeric_limits<int>::max()})
   {
     auto lower = expected.lower_bound(x), upper = expected.upper_bound(x);
-    assert(st.next(x) == (lower == expected.end() ? n : *lower));
-    assert(st.geq_min(x) == st.next(x));
-    assert(st.gt_min(x) == (upper == expected.end() ? n : *upper));
-    assert(st.prev(x) == (upper == expected.begin() ? -1 : *prev(upper)));
-    assert(st.leq_max(x) == st.prev(x));
-    assert(st.lt_max(x) == (lower == expected.begin() ? -1 : *prev(lower)));
+    assert(st.next(x).value_or(st.universe_size()) == (lower == expected.end() ? n : *lower));
+    assert(st.geq_min(x).value_or(st.universe_size()) == st.next(x).value_or(st.universe_size()));
+    assert(st.gt_min(x).value_or(st.universe_size()) == (upper == expected.end() ? n : *upper));
+    assert(st.prev(x).value_or(-1) == (upper == expected.begin() ? -1 : *prev(upper)));
+    assert(st.leq_max(x).value_or(-1) == st.prev(x).value_or(-1));
+    assert(st.lt_max(x).value_or(-1) == (lower == expected.begin() ? -1 : *prev(lower)));
     if (0 <= x && x < n) assert(st[x] == (expected.count(x) != 0));
   }
-  assert(st.min_element() == (expected.empty() ? n : *expected.begin()));
-  assert(st.max_element() == (expected.empty() ? -1 : *expected.rbegin()));
+  assert(st.min_element().value_or(st.universe_size()) == (expected.empty() ? n : *expected.begin()));
+  assert(st.max_element().value_or(-1) == (expected.empty() ? -1 : *expected.rbegin()));
 }
 
 // Test focus: exhaustive small universes and all neighbor/range boundaries match std::set.
@@ -35,8 +35,8 @@ void test_exhaustive()
     repi(x, -2, n + 3)
     {
       auto lo = expected.lower_bound(x), hi = expected.upper_bound(x);
-      assert(st.next(x) == (lo == expected.end() ? n : *lo));
-      assert(st.prev(x) == (hi == expected.begin() ? -1 : *prev(hi)));
+      assert(st.next(x).value_or(st.universe_size()) == (lo == expected.end() ? n : *lo));
+      assert(st.prev(x).value_or(-1) == (hi == expected.begin() ? -1 : *prev(hi)));
     }
     repi(l, n + 1) repi(r, l, n + 1)
     {
@@ -72,8 +72,8 @@ void test_random()
           assert(st.insert(key) == expected.insert(key).second);
       }
       auto lo = expected.lower_bound(key), hi = expected.upper_bound(key);
-      assert(st.next(key) == (lo == expected.end() ? n : *lo));
-      assert(st.prev(key) == (hi == expected.begin() ? -1 : *prev(hi)));
+      assert(st.next(key).value_or(st.universe_size()) == (lo == expected.end() ? n : *lo));
+      assert(st.prev(key).value_or(-1) == (hi == expected.begin() ? -1 : *prev(hi)));
       if (iter % 257 == 0) check(st, expected);
       if (iter % 2000 == 1999)
       {

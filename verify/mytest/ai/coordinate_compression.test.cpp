@@ -67,6 +67,6 @@ int main()
   auto ord = stable_argsort(records, [](const Item &x) { return x.key; });
   assert(ord == expected);
   repi(i, records.size()) assert(*records[i].value == i);
-  assert(CoordinateCompression<int>(vc<int>{1, 3}).get_id(2) == -1);
+  assert(!CoordinateCompression<int>(vc<int>{1, 3}).get_id(2));
   cout << "Hello World" << endl;
 }

@@ -46,11 +46,13 @@ BruteResult brute_force(int n, const vc<tuple<int, int, ll>> &es)
 
 template <bool directed, class Cost, class EdgeCost>
 void check_result(int n, const vc<tuple<int, int, Cost>> &es,
-                  const pair<Cost, vc<Edge<EdgeCost>>> &result, Cost expected, Cost inf)
+                  const optional<pair<Cost, vc<Edge<EdgeCost>>>> &result, Cost expected, Cost inf)
 {
-  const auto &[weight, cycle] = result;
+  if (expected == inf) { assert(!result); return; }
+  assert(result);
+  const auto &[weight, cycle] = *result;
   assert(weight == expected);
-  if (weight == inf || weight == -inf)
+  if (weight == -inf)
   {
     assert(cycle.empty());
     return;
@@ -75,6 +77,14 @@ void check_result(int n, const vc<tuple<int, int, Cost>> &es,
   assert(cur == cycle.front().from && sum == weight);
 }
 
+template <class T>
+vc<optional<T>> optional_costs(const vc<T> &values, T inf)
+{
+  vc<optional<T>> result;
+  for (T value : values) result.push_back(value == inf ? nullopt : optional<T>(value));
+  return result;
+}
+
 template <bool directed, class Cost = ll>
 void check(int n, const vc<tuple<int, int, ll>> &es)
 {
@@ -90,21 +100,21 @@ void check(int n, const vc<tuple<int, int, ll>> &es)
     else return Graph<directed, Cost>(n, es);
   }();
   const MinimumCycle g(input);
-  static_assert(is_same_v<typename MinimumCycle<directed, Cost>::Result, pair<ll, vc<Edge<Cost>>>>);
+  static_assert(is_same_v<typename MinimumCycle<directed, Cost>::Result, optional<pair<ll, vc<Edge<Cost>>>>>);
   check_result<directed>(n, es, g.solve(), brute.cost, ll(INF));
-  assert(g.edge_costs() == brute.edges);
-  assert(g.vertex_costs() == brute.vertices);
+  assert(g.edge_costs() == optional_costs(brute.edges, ll(INF)));
+  assert(g.vertex_costs() == optional_costs(brute.vertices, ll(INF)));
   repi(v, n)
   {
     const auto result = g.solve_vertex(v);
     check_result<directed>(n, es, result, brute.vertices[v], ll(INF));
-    if (result.first != INF) assert(result.second.front().from == v);
+    if (result) assert(result->second.front().from == v);
   }
   repi(eid, es.size())
   {
     const auto result = g.solve_edge(eid);
     check_result<directed>(n, es, result, brute.edges[eid], ll(INF));
-    if (result.first != INF) assert(result.second.front().index == eid);
+    if (result) assert(result->second.front().index == eid);
   }
 }
 
@@ -185,8 +195,8 @@ void negative_cycle_reports()
     const MinimumCycle mc(input);
     check_result<true>(n, es, mc.solve(), -ll(INF), ll(INF));
     // 全要素 -infty は一括計算を打ち切った印。非連結な成分の要素も含む。
-    assert(mc.vertex_costs() == vl(n, -INF));
-    assert(mc.edge_costs() == vl(es.size(), -INF));
+    assert(mc.vertex_costs() == vc<optional<ll>>(n, -INF));
+    assert(mc.edge_costs() == vc<optional<ll>>(es.size(), -INF));
     check_result<true>(n, es, mc.solve_vertex(0), 5LL, ll(INF));
     check_result<true>(n, es, mc.solve_edge(0), 5LL, ll(INF));
     for (int s : {2, 3, 4})
@@ -211,8 +221,8 @@ void negative_cycle_reports()
   const MinimumCycle<true, int, int_infinity> mc(input);
   for (const auto &res : {mc.solve(), mc.solve_vertex(0), mc.solve_edge(0)})
     check_result<true>(2, es, res, -int_infinity(), int_infinity());
-  assert(mc.vertex_costs() == vc<int>(2, -int_infinity()));
-  assert(mc.edge_costs() == vc<int>(1, -int_infinity()));
+  assert(mc.vertex_costs() == vc<optional<int>>(2, -int_infinity()));
+  assert(mc.edge_costs() == vc<optional<int>>(1, -int_infinity()));
   check_result<true>(2, es, mc.solve_vertex(1), int_infinity(), int_infinity());
 }
 
@@ -238,11 +248,11 @@ int main()
       {0, 1, 800000000}, {1, 2, 800000000}, {2, 0, 800000000},
       {0, 0, 1}, {1, 1, 1}, {2, 2, 1}});
   MinimumCycle bounded(large);
-  assert(bounded.solve().first == 1 && bounded.solve_vertex(0).first == 1);
-  assert((bounded.vertex_costs() == vc<int>{1, 1, 1}));
+  assert(bounded.solve()->first == 1 && bounded.solve_vertex(0)->first == 1);
+  assert((bounded.vertex_costs() == vc<optional<int>>{1, 1, 1}));
   Graph<false> unweighted_input(3, vc<pair<int, int>>{{0, 1}, {1, 2}, {2, 0}});
   MinimumCycle unweighted(unweighted_input);
-  assert(unweighted.solve().first == 3);
+  assert(unweighted.solve()->first == 3);
   // APSP 側が Johnson を選ぶ疎グラフ。指定版は SSSP の Bellman–Ford を使う。
   check<true>(80, {{0, 1, -3}, {1, 2, 5}, {2, 0, 1}});
   mt19937 rng(20260908);

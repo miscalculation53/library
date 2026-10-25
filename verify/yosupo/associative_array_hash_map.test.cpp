@@ -29,8 +29,8 @@ void main2()
     }
     else
     {
-      const ll *value = values.find_ptr(key);
-      PRINT(value ? *value : 0LL);
+      auto value = values.find_ptr(key);
+      PRINT(value ? value->get() : 0LL);
     }
   }
 }

@@ -27,7 +27,7 @@ void main2()
   rep(_, Q)
   {
     LL(s, t, i);
-    PRINT(G.jump(s, t, i));
+    PRINT(G.jump(s, t, i).value_or(-1));
   }
 }
 

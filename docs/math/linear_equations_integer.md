@@ -16,12 +16,12 @@ $$
 
 ```cpp
 auto res = linear_equations_integer(2, 3, 7, 1, -1, 1);
-assert(res.dim == 0);
-assert((res.sol == pair<ll, ll>{2, 1}));
+assert(res && res->dim == 0);
+assert((res->sol == pair<ll, ll>{2, 1}));
 
 auto line = linear_equations_integer(2, 4, 6, 1, 2, 3);
-assert(line.dim == 1);
-// すべての解は line.sol + k * line.basis[0] (k は整数)
+assert(line && line->dim == 1);
+// すべての解は line->sol + k * line->basis[0] (k は整数)
 ```
 
 ## 詳細なドキュメント
@@ -29,16 +29,15 @@ assert(line.dim == 1);
 #### linear_equations_integer
 
 ```cpp
-LinearEquationsIntegerResult<T>
+optional<LinearEquationsIntegerResult<T>>
 linear_equations_integer<T=ll, U=larger_int_t<T>>(a, b, c, d, e, f)
 ```
 
-$ax+by=c$, $dx+ey=f$ の整数解全体を返す。返り値を `res` とすると、各メンバは次の意味を持つ。
+$ax+by=c$, $dx+ey=f$ の整数解全体を返す。解がなければ `nullopt` を返す。値がある返り値を `res` とすると、各メンバは次の意味を持つ。
 
-- `res.dim == -1`：整数解は存在しない
-- `res.dim == 0`：整数解は `res.sol` の1つだけ
-- `res.dim == 1`：整数解は `res.sol + k * res.basis[0]` $(k\in\mathbb Z)$
-- `res.dim == 2`：整数解は `res.sol + k_0 * res.basis[0] + k_1 * res.basis[1]` $(k_0,k_1\in\mathbb Z)$
+- `res->dim == 0`：整数解は `res->sol` の1つだけ
+- `res->dim == 1`：整数解は `res->sol + k * res->basis[0]` $(k\in\mathbb Z)$
+- `res->dim == 2`：整数解は `res->sol + k_0 * res->basis[0] + k_1 * res->basis[1]` $(k_0,k_1\in\mathbb Z)$
 
 積や行列式の計算には `U` を使い、解と基底は `T` に格納する。
 

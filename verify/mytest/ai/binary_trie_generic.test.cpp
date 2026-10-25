@@ -161,10 +161,10 @@ static void compare_only_rank_and_zero_count() {
         if (q >= a && geq == -1) geq = key;
         if (q > a && gt == -1) gt = key;
       }
-      expect(trie.lt_max_by(a, count, x) == lt);
-      expect(trie.leq_max_by(a, count, x) == leq);
-      expect(trie.geq_min_by(a, count, x) == geq);
-      expect(trie.gt_min_by(a, count, x) == gt);
+      expect(trie.lt_max_by(a, count, x).value_or(-1) == lt);
+      expect(trie.leq_max_by(a, count, x).value_or(-1) == leq);
+      expect(trie.geq_min_by(a, count, x).value_or(-1) == geq);
+      expect(trie.gt_min_by(a, count, x).value_or(-1) == gt);
       for (long long limit = 0; limit <= 5; ++limit) {
         const auto f = [limit](const long long& value) { return value <= limit; };
         long long sum = 0;
@@ -183,8 +183,8 @@ static void compare_only_rank_and_zero_count() {
           sum += values[key];
           if (values[key] != 0) left_ok = key;
         }
-        expect(trie.max_right_ok_by(a, f, count, x) == right_ok);
-        expect(trie.min_left_ok_by(a, f, count, x) == left_ok);
+        expect(trie.max_right_ok_by(a, f, count, x).value_or(-1) == right_ok);
+        expect(trie.min_left_ok_by(a, f, count, x).value_or(32) == left_ok);
         expect(trie.max_right_ng(a, f, x) == right_ng);
         expect(trie.min_left_ng(a, f, x) == left_ng);
       }
@@ -193,12 +193,12 @@ static void compare_only_rank_and_zero_count() {
   trie.clear();
   const auto always = [](const long long&) { return true; };
   for (int a = 0; a < 32; ++a) {
-    expect(trie.lt_max_by(a, count) == -1);
-    expect(trie.leq_max_by(a, count) == -1);
-    expect(trie.geq_min_by(a, count) == -1);
-    expect(trie.gt_min_by(a, count) == -1);
-    expect(trie.max_right_ok_by(a, always, count) == -1);
-    expect(trie.min_left_ok_by(a, always, count) == 32);
+    expect(trie.lt_max_by(a, count).value_or(-1) == -1);
+    expect(trie.leq_max_by(a, count).value_or(-1) == -1);
+    expect(trie.geq_min_by(a, count).value_or(-1) == -1);
+    expect(trie.gt_min_by(a, count).value_or(-1) == -1);
+    expect(!trie.max_right_ok_by(a, always, count));
+    expect(!trie.min_left_ok_by(a, always, count));
   }
 }
 
@@ -226,10 +226,10 @@ static void volatile_key_api() {
   expect(trie.kth_by(Rank::at(0), measure) == 1);
   expect(trie.min_element_by(count) == 1);
   expect(trie.max_element_by(count) == maximum);
-  expect(trie.lt_max_by(maximum, count) == 1);
-  expect(trie.leq_max_by(maximum, count) == maximum);
-  expect(trie.geq_min_by(Plain(1), count) == 1);
-  expect(trie.gt_min_by(Plain(1), count) == maximum);
+  expect(trie.lt_max_by(maximum, count).value_or(-1) == 1);
+  expect(trie.leq_max_by(maximum, count).value_or(-1) == maximum);
+  expect(trie.geq_min_by(Plain(1), count).value_or(-1) == 1);
+  expect(trie.gt_min_by(Plain(1), count).value_or(-1) == maximum);
   expect(trie.max_right_ng(Plain(0), f) == maximum);
   expect(trie.max_right_ok_by(Plain(0), f, count) == 1);
   expect(trie.min_left_ng(maximum, f) == 1);

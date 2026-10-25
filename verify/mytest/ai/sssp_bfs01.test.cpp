@@ -27,12 +27,12 @@ int main()
     assert(partial[t] == expected[t]);
     auto path = g.path(t);
     if (expected[t] == INF)
-      assert(path.empty());
+      assert(!path);
     else
     {
       ll sum = 0;
       int v = s;
-      fec(e : path)
+      fec(e : *path)
       {
         assert(e.from == v);
         v = e.to, sum += e.cost;

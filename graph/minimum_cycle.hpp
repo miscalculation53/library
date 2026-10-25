@@ -12,7 +12,7 @@ template <bool is_directed, class Cost, auto infty = nullptr>
 struct MinimumCycle
 {
   using Dist = typename ShortestPath<is_directed, Cost, infty>::Dist;
-  using Result = pair<Dist, vc<Edge<Cost>>>;
+  using Result = optional<pair<Dist, vc<Edge<Cost>>>>;
 
 private:
   using SP = ShortestPath<is_directed, Cost, infty>;
@@ -20,7 +20,7 @@ private:
   const Graph<is_directed, Cost> &g;
 
   // s に接続する各辺について、最初に別の辺を通って戻る最短経路を求める。
-  void update_edge_costs(int s, vc<Dist> &res) const
+  void update_edge_costs(int s, vc<optional<Dist>> &res) const
   {
     using Candidate = pair<Dist, int>;
     struct SameFirstEdge
@@ -58,7 +58,7 @@ private:
       {
         auto [d, first_edge] = best[e.to].get(i);
         if (first_edge == e.index) continue;
-        res[e.index] = add(d, e.cost);
+        if (Dist cost = add(d, e.cost); cost != inf()) res[e.index] = cost;
         break;
       }
     }
@@ -134,7 +134,8 @@ private:
   static Result restore(int s, Dist cost, const Edge<Cost> &closing,
                         const vc<Edge<Cost>> &prv)
   {
-    if (cost == inf() || cost == -inf()) return {cost, {}};
+    if (cost == inf()) return nullopt;
+    if (cost == -inf()) return pair<Dist, vc<Edge<Cost>>>{cost, {}};
     auto cycle = path(s, closing.from, prv);
     cycle.eb(closing);
     if constexpr (!is_directed)
@@ -142,7 +143,7 @@ private:
       auto right = rev_path(path(s, closing.to, prv));
       cycle.insert(cycle.end(), right.begin(), right.end());
     }
-    return {cost, cycle};
+    return pair<Dist, vc<Edge<Cost>>>{cost, std::move(cycle)};
   }
 
 public:
@@ -150,12 +151,12 @@ public:
   MinimumCycle(const Graph<is_directed, Cost> &&) = delete;
 
   // グラフ全体の最小閉路 (重み, 辺列)
-  // 閉路がなければ (infty, 空)
+  // 閉路がなければ nullopt
   // 負閉路があるならば (-infty, 空)
   Result solve() const
   {
     AP ap(g);
-    if (ap.negative_cycle()) return {-inf(), {}};
+    if (ap.negative_cycle()) return pair<Dist, vc<Edge<Cost>>>{-inf(), {}};
     Dist ans = inf();
     int source = -1;
     Edge<Cost> closing;
@@ -165,7 +166,7 @@ public:
       auto [cost, edge] = from_source(s, ds, prv);
       if (chmin(ans, cost)) source = s, closing = edge, best_prev = prv;
     });
-    if (!ok) return {-inf(), {}};
+    if (!ok) return pair<Dist, vc<Edge<Cost>>>{-inf(), {}};
     return restore(source, ans, closing, best_prev);
   }
 
@@ -199,41 +200,42 @@ public:
     }
     if (closing.from == closing.to)
     {
-      if (closing.cost < Dist(0)) return {-inf(), {}};
-      return {closing.cost, {closing}};
+      if (closing.cost < Dist(0)) return pair<Dist, vc<Edge<Cost>>>{-inf(), {}};
+      return pair<Dist, vc<Edge<Cost>>>{closing.cost, {closing}};
     }
     Graph<is_directed, Cost> without(g.size(), remaining);
     SP sp(without);
     const auto ds = sp.solve(closing.to, closing.from);
-    fec(d : ds) if (d == -inf()) return {-inf(), {}};
-    if (ds[closing.from] == inf()) return {inf(), {}};
+    fec(d : ds) if (d == -inf()) return pair<Dist, vc<Edge<Cost>>>{-inf(), {}};
+    if (ds[closing.from] == inf()) return nullopt;
     const Dist cost = add(ds[closing.from], closing.cost);
-    if (cost < Dist(0)) return {-inf(), {}};
-    if (cost == inf()) return {inf(), {}};
+    if (cost < Dist(0)) return pair<Dist, vc<Edge<Cost>>>{-inf(), {}};
+    if (cost == inf()) return nullopt;
     auto back = sp.path(closing.from);
     vc<Edge<Cost>> cycle{closing};
-    for (auto &e : back)
+    assert(back);
+    for (auto &e : *back)
     {
       e.index = remaining[e.index].index;
       cycle.eb(e);
     }
-    return {cost, cycle};
+    return pair<Dist, vc<Edge<Cost>>>{cost, std::move(cycle)};
   }
 
   // 各辺に対し、その辺を含む最小閉路の重み
-  // 負閉路がある場合は全要素 -infty
-  vc<Dist> edge_costs() const
+  // 閉路がない要素は nullopt。負閉路がある場合は全要素が値ありの -infty。
+  vc<optional<Dist>> edge_costs() const
   {
     const int n = g.size();
-    vc<Dist> res(g.num_of_edges(), inf());
+    vc<optional<Dist>> res(g.num_of_edges());
     if constexpr (is_directed)
     {
       AP ap(g);
-      if (ap.negative_cycle()) return vc<Dist>(g.num_of_edges(), -inf());
+      if (ap.negative_cycle()) return vc<optional<Dist>>(g.num_of_edges(), -inf());
       const auto &ds = ap.solve();
-      if (ap.negative_cycle()) return vc<Dist>(g.num_of_edges(), -inf());
+      if (ap.negative_cycle()) return vc<optional<Dist>>(g.num_of_edges(), -inf());
       fec(e : g.edges()) if (ds[e.to][e.from] != inf())
-        res[e.index] = add(e.cost, ds[e.to][e.from]);
+        if (Dist cost = add(e.cost, ds[e.to][e.from]); cost != inf()) res[e.index] = cost;
     }
     else
     {
@@ -244,17 +246,18 @@ public:
   }
 
   // 各頂点に対し、その頂点を含む最小閉路の重み
-  // 負閉路がある場合は全要素 -infty
-  vc<Dist> vertex_costs() const
+  // 閉路がない要素は nullopt。負閉路がある場合は全要素が値ありの -infty。
+  vc<optional<Dist>> vertex_costs() const
   {
-    vc<Dist> res(g.size(), inf());
+    vc<optional<Dist>> res(g.size());
     AP ap(g);
-    if (ap.negative_cycle()) return vc<Dist>(g.size(), -inf());
+    if (ap.negative_cycle()) return vc<optional<Dist>>(g.size(), -inf());
     bool ok = ap.for_each_source([&](int s, const auto &ds, const auto &prv)
     {
-      res[s] = from_source(s, ds, prv).first;
+      Dist cost = from_source(s, ds, prv).first;
+      if (cost != inf()) res[s] = cost;
     });
-    if (!ok) return vc<Dist>(g.size(), -inf());
+    if (!ok) return vc<optional<Dist>>(g.size(), -inf());
     return res;
   }
 };

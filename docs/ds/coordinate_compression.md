@@ -72,10 +72,10 @@ T get_val(int i)
 #### get_id
 
 ```cpp
-I=ll get_id(T v)
+optional<I> get_id(T v)
 ```
 
-値 $v$ に対応する添字を返す。$v$ が存在しない場合 $-1$ を返す。
+値 $v$ に対応する添字を返す。$v$ が存在しない場合 `nullopt` を返す。
 
 $v$ が存在する場合は `LB(vals, v)` と同じこと。
 
@@ -113,7 +113,7 @@ vc<T> content() const
 vc<I> compressed(vc<T> a)
 ```
 
-長さ $\lvert a \rvert$ で、$i$ 番目が `get_id(a[i])` であるような vector を返す。
+長さ $\lvert a \rvert$ で、$i$ 番目が `*get_id(a[i])` であるような vector を返す。
 
 言い換えると、次の条件を満たす「最小の」非負整数列 $b$ を返す。
 

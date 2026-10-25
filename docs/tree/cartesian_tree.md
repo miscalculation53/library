@@ -11,6 +11,7 @@ Cartesian Tree
 
 CartesianTree tree(vc<int>{3, 1, 2});
 assert(tree.root() == 1);
+assert(!tree.parent(1) && !tree.left_child(0));
 assert(tree.left_child(1) == 0 && tree.right_child(1) == 2);
 assert((tree.range(1) == pair<ll, ll>(0, 3)));
 ```
@@ -57,10 +58,10 @@ I root<I = ll>()
 #### parent
 
 ```cpp
-I parent<I = ll>(int i)
+optional<I> parent<I = ll>(int i)
 ```
 
-頂点 `i` の親を返す。`i` が根の場合は $-1$。
+頂点 `i` の親を返す。`i` が根の場合は `nullopt`。
 
 ##### 制約
 
@@ -73,11 +74,11 @@ I parent<I = ll>(int i)
 #### left_child, right_child
 
 ```cpp
-(1) I left_child<I = ll>(int i)
-(2) I right_child<I = ll>(int i)
+(1) optional<I> left_child<I = ll>(int i)
+(2) optional<I> right_child<I = ll>(int i)
 ```
 
-頂点 `i` の左の子、右の子を返す。対応する子が存在しない場合は $-1$。
+頂点 `i` の左の子、右の子を返す。対応する子が存在しない場合は `nullopt`。
 
 ##### 制約
 

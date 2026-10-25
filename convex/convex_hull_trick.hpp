@@ -55,7 +55,6 @@ struct ConvexHullTrick
 private:
   static constexpr int sgn = is_same_v<Compare, less<>> || is_same_v<Compare, less<T>> ? -1 : 1;
   static constexpr decltype(auto) infT() { return resolved_infty<T, inftyT>(); }
-  static constexpr decltype(auto) infU() { return resolved_infty<U, inftyU>(); }
 
   struct Node
   {
@@ -129,33 +128,23 @@ public:
     while ((y = x) != st.begin() && (--x)->r >= y->r) set_r(x, st.erase(y));
   }
 
-  // (値, 直線)
+  // (値, 直線)。空なら nullopt。
   // O(log(直線の個数))
-  pair<U, Line> query(const T &x) const
+  optional<pair<U, Line>> query(const T &x) const
   {
-    if (st.empty())
-    {
-      const T eT = sgn < 0 ? infT() : -infT();
-      const U eU = sgn < 0 ? infU() : -infU();
-      return {eU, {T(0), eT, -1}};
-    }
+    if (st.empty()) return nullopt;
     auto it = st.lower_bound(x);
     if (it == st.end()) --it;
     Line p = line(*it);
-    return {eval(p, x), p};
+    return pair<U, Line>{eval(p, x), p};
   }
 
-  // (値, 直線)
+  // (値, 直線)。空なら nullopt。
   // x は単調 (増減方向は自動で判定される)
   // おおむね償却 O(1)
-  pair<U, Line> query_monotone(const T &x)
+  optional<pair<U, Line>> query_monotone(const T &x)
   {
-    if (st.empty())
-    {
-      const T eT = sgn < 0 ? infT() : -infT();
-      const U eU = sgn < 0 ? infU() : -infU();
-      return {eU, {T(0), eT, -1}};
-    }
+    if (st.empty()) return nullopt;
     if (!qit)
     {
       qit = st.lower_bound(x);
@@ -175,7 +164,7 @@ public:
     }
     last_x = x;
     Line p = line(**qit);
-    return {eval(p, x), p};
+    return pair<U, Line>{eval(p, x), p};
   }
 
   void reset_monotone_query()
@@ -230,7 +219,6 @@ struct ConvexHullTrickMonotoneSlope
 private:
   static constexpr int sgn = is_same_v<Compare, less<>> || is_same_v<Compare, less<T>> ? -1 : 1;
   static constexpr decltype(auto) infT() { return resolved_infty<T, inftyT>(); }
-  static constexpr decltype(auto) infU() { return resolved_infty<U, inftyU>(); }
 
   struct Node
   {
@@ -321,34 +309,24 @@ public:
       push_back(p);
   }
 
-  // (値, 直線)
+  // (値, 直線)。空なら nullopt。
   // O(log(直線の個数))
-  pair<U, Line> query(const T &x) const
+  optional<pair<U, Line>> query(const T &x) const
   {
-    if (dq.empty())
-    {
-      const T eT = sgn < 0 ? infT() : -infT();
-      const U eU = sgn < 0 ? infU() : -infU();
-      return {eU, {T(0), eT, -1}};
-    }
+    if (dq.empty()) return nullopt;
     auto it = lower_bound(dq.begin(), dq.end(), x,
                           [](const Node &p, const T &x) { return p.r < x; });
     if (it == dq.end()) --it;
     Line p = line(*it);
-    return {eval(p, x), p};
+    return pair<U, Line>{eval(p, x), p};
   }
 
-  // (値, 直線)
+  // (値, 直線)。空なら nullopt。
   // x は単調 (増減方向は自動で判定される)
   // おおむね償却 O(1)
-  pair<U, Line> query_monotone(const T &x)
+  optional<pair<U, Line>> query_monotone(const T &x)
   {
-    if (dq.empty())
-    {
-      const T eT = sgn < 0 ? infT() : -infT();
-      const U eU = sgn < 0 ? infU() : -infU();
-      return {eU, {T(0), eT, -1}};
-    }
+    if (dq.empty()) return nullopt;
     if (qpos == -1)
     {
       qpos = lower_bound(dq.begin(), dq.end(), x,
@@ -369,7 +347,7 @@ public:
     }
     last_x = x;
     Line p = line(dq[qpos]);
-    return {eval(p, x), p};
+    return pair<U, Line>{eval(p, x), p};
   }
 
   void reset_monotone_query()

@@ -19,6 +19,9 @@ GraphDirected<ll> g(4, vc<tuple<int, int, ll>>{{0, 1, 2}, {1, 2, 3}});
 ShortestPath sp(g);  // 有向・無向と Cost は g から推論する
 auto dist = sp.solve(0);
 auto path = sp.path(2);
+assert(path && path->size() == 2);
+assert(sp.path(0) && sp.path(0)->empty());
+assert(!sp.path(3));
 // dist == {0, 2, 5, INF}
 
 GraphDirected<> unweighted(4, vc<pair<int, int>>{{0, 1}, {1, 2}});
@@ -147,10 +150,10 @@ $\mathrm{prv}[v] \coloneqq$ $s$-$v$ 最短路のひとつにおいて $v$ に行
 #### path
 
 ```cpp
-vc<Edge<Cost>> path(int t) const
+optional<vc<Edge<Cost>>> path(int t) const
 ```
 
-$s$-$t$ 最短路のひとつを辺の vector として返す。距離が `infty` または `-infty` の場合は空の vector を返す。`solve` の呼び出し後に呼ぶ（`solve` の呼び出し時に $t$ を指定していてもよい）。
+$s$-$t$ 最短路のひとつを辺の vector として返す。距離が `infty` または `-infty` の場合は `nullopt` を返す。有限距離で $s=t$ の場合は、値ありの空配列を返す。`solve` の呼び出し後に呼ぶ（`solve` の呼び出し時に $t$ を指定していてもよい）。
 
 ##### 制約
 

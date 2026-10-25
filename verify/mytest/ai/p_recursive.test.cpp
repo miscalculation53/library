@@ -45,9 +45,9 @@ void known_sequences()
     const auto &seq = seqs[t];
     vc<mint> prefix(seq.begin(), seq.begin() + 30);
     auto guessed = guess_p_recursive(prefix, 4, 2);
-    assert(valid(seq, guessed));
-    assert(guessed.size() == recs[t].size());
-    for (const auto &c : {recs[t], guessed})
+    assert(guessed && valid(seq, *guessed));
+    assert(guessed->size() == recs[t].size());
+    for (const auto &c : {recs[t], *guessed})
     {
       assert(p_recursive_extend(prefix, c, len) == seq);
       for (int k : {0, 1, 29, 30, 31, 63, 64, 65, 255, 256, 257, 999})
@@ -58,9 +58,9 @@ void known_sequences()
     }
   }
   assert(guess_p_recursive(vc<mint>(30, 0), 3, 2) == (Rec<mint>{{}, {1}}));
-  assert(guess_p_recursive<mint>({}, 3, 2).empty());
-  assert(guess_p_recursive<mint>({1, 2}, 1, 0).empty());
-  assert(guess_p_recursive(vc<mint>(factorial.begin(), factorial.begin() + 30), 1, 0).empty());
+  assert(!guess_p_recursive<mint>({}, 3, 2));
+  assert(!guess_p_recursive<mint>({1, 2}, 1, 0));
+  assert(!guess_p_recursive(vc<mint>(factorial.begin(), factorial.begin() + 30), 1, 0));
   assert(p_recursive_extend<mint>({1}, recs[0], 0).empty());
 }
 
@@ -93,8 +93,8 @@ void random_checks(int trials)
     const int known = r + (r + 1) * (d + 1) + 12;
     vc<mint> prefix(seq.begin(), seq.begin() + known);
     auto guessed = guess_p_recursive(prefix, r, d);
-    assert(valid(seq, guessed));
-    for (const auto &rec : {c, guessed})
+    assert(guessed && valid(seq, *guessed));
+    for (const auto &rec : {c, *guessed})
     {
       assert(p_recursive_extend(prefix, rec, len) == seq);
       for (int k : {known, known + 1, 127, len - 1})
@@ -105,7 +105,7 @@ void random_checks(int trials)
     if (d == 0)
     {
       auto bm = berlekamp_massey<FieldAddSubMulDiv<mint>>(prefix);
-      assert(guessed.size() == bm.size());
+      assert(guessed->size() == bm.size());
     }
   }
 }
@@ -126,9 +126,9 @@ void singularities()
   vc<mint> jump(30, 7);
   fill(jump.begin(), jump.begin() + 6, mint(3));
   auto guessed = guess_p_recursive(jump, 1, 1);
-  assert(valid(jump, guessed));
-  assert(guessed.back().eval(5) == 0);
-  assert(p_recursive_nth(jump, guessed, 50) == 7);
+  assert(guessed && valid(jump, *guessed));
+  assert(guessed->back().eval(5) == 0);
+  assert(p_recursive_nth(jump, *guessed, 50) == 7);
 }
 
 void exhaustive_guess()
@@ -163,13 +163,13 @@ void exhaustive_guess()
           }
         }
       auto c = guess_p_recursive(a, max_r, max_d);
-      found[max_r][max_d] = !c.empty();
-      if (best_r == 0) assert(c.empty());
+      found[max_r][max_d] = bool(c);
+      if (best_r == 0) assert(!c);
       else
       {
-        assert(SZ(c) == best_r + 1 && valid(a, c));
+        assert(c && SZ(*c) == best_r + 1 && valid(a, *c));
         int actual_d = 0;
-        for (const auto &f : c) chmax(actual_d, f.sz() - 1);
+        for (const auto &f : *c) chmax(actual_d, f.sz() - 1);
         assert(actual_d == best_d);
       }
       if (max_r > 1 && found[max_r - 1][max_d]) assert(found[max_r][max_d]);
@@ -199,13 +199,13 @@ void guess_bounds()
       {
         auto c = guess_p_recursive(a, r, d);
         assert(c == expected[t]);
-        assert(p_recursive_extend(a, c, 100) == seqs[t]);
+        assert(p_recursive_extend(a, *c, 100) == seqs[t]);
       }
   }
   vc<mint> a(catalan.begin(), catalan.begin() + 10);
   assert(guess_p_recursive(a, 1, 1) == expected[0]);
-  assert(guess_p_recursive(a, 1, 0).empty());
-  assert(guess_p_recursive(vc<mint>(fib.begin(), fib.begin() + 10), 1, 10).empty());
+  assert(!guess_p_recursive(a, 1, 0));
+  assert(!guess_p_recursive(vc<mint>(fib.begin(), fib.begin() + 10), 1, 10));
 }
 
 template <class mint>

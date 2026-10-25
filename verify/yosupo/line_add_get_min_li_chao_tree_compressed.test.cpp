@@ -24,6 +24,6 @@ int main()
   for (auto op : queries)
   {
     if (op.type == 0) tree.add_line(op.a, op.b);
-    else cout << tree.query_index(tree.lower_bound(op.a)).first << '\n';
+    else cout << tree.query_index(tree.lower_bound(op.a))->first << '\n';
   }
 }

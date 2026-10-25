@@ -77,15 +77,14 @@ struct DefaultHashMap : HashMap<Key, Value, Hash, Equal>
   Value operator[](const Key &key) const
   {
     auto p = this->find_ptr(key);
-    return p ? *p : internal::default_map_value<Value, default_value>();
+    return p ? p->get() : internal::default_map_value<Value, default_value>();
   }
 
   Value &operator[](const Key &key)
   {
     auto p = this->find_ptr(key);
-    if (!p)
-      p = this->insert(key, internal::default_map_value<Value, default_value>()).first;
-    return *p;
+    if (p) return p->get();
+    return *this->insert(key, internal::default_map_value<Value, default_value>()).first;
   }
 
   Value at(const Key &key) const { return operator[](key); }

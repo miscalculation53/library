@@ -33,7 +33,7 @@ void verify_hull(CHT &cht, const vc<pair<ll, ll>> &lines)
 {
   rep3(x, -100, 101, 1)
   {
-    auto [value, line] = cht.query(x);
+    auto [value, line] = *cht.query(x);
     assert(value == brute<minimize>(lines, x));
     assert(value == line.a * x + line.b);
     assert(0 <= line.id && line.id < SZ(lines));
@@ -75,12 +75,12 @@ void verify_hull(CHT &cht, const vc<pair<ll, ll>> &lines)
   vc<ll> queries;
   rep3(x, -100, 101, 1) queries.eb(x);
   cht.reset_monotone_query();
-  for (ll x : queries) assert(cht.query_monotone(x).first == brute<minimize>(lines, x));
+  for (ll x : queries) assert(cht.query_monotone(x)->first == brute<minimize>(lines, x));
   reverse(queries.begin(), queries.end());
   cht.reset_monotone_query();
   for (ll x : queries)
   {
-    auto [value, line] = cht.query_monotone(x);
+    auto [value, line] = *cht.query_monotone(x);
     assert(value == brute<minimize>(lines, x));
     assert(value == line.a * x + line.b);
     assert(0 <= line.id && line.id < SZ(lines));
@@ -133,17 +133,22 @@ void test_monotone_slope()
 void test_empty_and_clear()
 {
   ConvexHullTrick<ll, ll, less<>, 1234567, 1234567> min_cht;
-  assert(min_cht.query(10).first == 1234567);
-  assert((min_cht.query(10).second == ConvexHullTrickLine<ll>{0, 1234567, -1}));
+  assert(!min_cht.query(10));
 
   ConvexHullTrickMonotoneSlope<ll, ll, greater<>, 7654321, 7654321> max_cht;
-  assert(max_cht.query(-10).first == -7654321);
-  assert((max_cht.query_monotone(-10).second == ConvexHullTrickLine<ll>{0, -7654321, -1}));
+  assert(!max_cht.query(-10));
+  assert(!max_cht.query_monotone(-10));
 
   min_cht.add_line(3, 4, 42);
-  assert(min_cht.query(5).second.id == 42);
+  assert(min_cht.query(5)->second.id == 42);
   min_cht.clear();
-  assert(min_cht.query(5).first == 1234567);
+  assert(!min_cht.query(5));
+  min_cht.add_line(0, 0);
+  auto zero = min_cht.query(0);
+  assert(zero && zero->first == 0);
+  max_cht.add_line(0, 0);
+  auto monotone_zero = max_cht.query_monotone(0);
+  assert(monotone_zero && monotone_zero->first == 0);
 }
 
 void test_segment_boundaries()
@@ -159,8 +164,8 @@ void test_segment_boundaries()
   assert(segments[1].left == -1);
   assert(segments[1].right == ll(INF));
   assert(segments[1].line.id == 20);
-  assert(cht.query(-1).second.id == 10);
-  assert(cht.query(0).second.id == 20);
+  assert(cht.query(-1)->second.id == 10);
+  assert(cht.query(0)->second.id == 20);
 #ifdef LOCAL
   dump(segments[0].line, segments[0]);
 #endif
@@ -172,10 +177,10 @@ void verify_query_outside_infty()
   CHT cht;
   cht.add_line(0, 0, 0);
   cht.add_line(1, 0, 1);
-  assert(cht.query(-100).second.id == 1);
-  assert(cht.query(100).second.id == 0);
-  assert(cht.query_monotone(-100).second.id == 1);
-  assert(cht.query_monotone(100).second.id == 0);
+  assert(cht.query(-100)->second.id == 1);
+  assert(cht.query(100)->second.id == 0);
+  assert(cht.query_monotone(-100)->second.id == 1);
+  assert(cht.query_monotone(100)->second.id == 0);
 }
 
 void test_query_outside_infty()
@@ -191,13 +196,13 @@ void verify_auto_id()
   cht.add_line(1, 0);
   cht.add_line(0, -5, 42);
   cht.add_line(-1, 0);
-  assert(cht.query(-10).second.id == 0);
-  assert(cht.query(0).second.id == 42);
-  assert(cht.query(10).second.id == 2);
+  assert(cht.query(-10)->second.id == 0);
+  assert(cht.query(0)->second.id == 42);
+  assert(cht.query(10)->second.id == 2);
 
   cht.clear();
   cht.add_line(0, 1);
-  assert(cht.query(0).second.id == 0);
+  assert(cht.query(0)->second.id == 0);
 }
 
 void test_auto_id()
@@ -223,7 +228,7 @@ void test_floating_point()
     long double x = random_ll(-1000, 1000) / 13.0L;
     long double ans = numeric_limits<long double>::max();
     for (auto [a, b] : lines) ans = min(ans, a * x + b);
-    assert(abs(cht.query(x).first - ans) < 1e-15L);
+    assert(abs(cht.query(x)->first - ans) < 1e-15L);
   }
 #endif
 }
@@ -254,7 +259,7 @@ void test_rational()
         expected = value;
     }
 
-    auto [value, line] = direct_cht.query(x);
+    auto [value, line] = *direct_cht.query(x);
     assert(value == *expected);
     assert(value == line.a * x + line.b);
   }
@@ -272,7 +277,7 @@ void test_rational()
       if (!expected || (minimize ? value < *expected : *expected < value))
         expected = value;
     }
-    assert(direct_cht.query_monotone(x).first == *expected);
+    assert(direct_cht.query_monotone(x)->first == *expected);
   }
 
   sort(lines.begin(), lines.end());
@@ -288,7 +293,7 @@ void test_rational()
       if (!expected || (minimize ? value < *expected : *expected < value))
         expected = value;
     }
-    assert(monotone_cht.query(x).first == *expected);
+    assert(monotone_cht.query(x)->first == *expected);
   }
 }
 
@@ -305,7 +310,7 @@ void test_long_double_coordinate()
   repi(_, 500)
   {
     ll x = random_ll(-1000, 1000), y = random_ll(1, 1000);
-    auto [value, line] = cht.query((long double)x / y);
+    auto [value, line] = *cht.query((long double)x / y);
     (void)value;
     i128 got = i128(line.a) * x + i128(line.b) * y;
     i128 expected = numeric_limits<i128>::max();
@@ -318,8 +323,8 @@ template <bool minimize, class CHT>
 void verify_wide_value_type()
 {
   CHT cht;
-  static_assert(is_same_v<decltype(cht.query(ll(0)).first), i128>);
-  static_assert(is_same_v<decltype(cht.query(ll(0)).second.a), ll>);
+  static_assert(is_same_v<decltype(cht.query(ll(0))->first), i128>);
+  static_assert(is_same_v<decltype(cht.query(ll(0))->second.a), ll>);
   constexpr ll m = 1'000'000'000'000'000'000LL;
   const vc<pair<ll, ll>> lines{{-m, m}, {0, -m}, {m, m}};
   repi(i, lines.size()) cht.add_line(lines[i].first, lines[i].second, i);
@@ -333,9 +338,9 @@ void verify_wide_value_type()
       if constexpr (minimize) chmin(expected, value);
       else chmax(expected, value);
     }
-    assert(result.first == expected);
-    assert(result.first == i128(result.second.a) * x + result.second.b);
-    assert((lines[result.second.id] == pair{result.second.a, result.second.b}));
+    assert(result->first == expected);
+    assert(result->first == i128(result->second.a) * x + result->second.b);
+    assert((lines[result->second.id] == pair{result->second.a, result->second.b}));
   };
   for (ll x : queries)
   {
@@ -351,12 +356,12 @@ template <class CHT>
 void verify_same_value_type()
 {
   CHT cht;
-  static_assert(is_same_v<decltype(cht.query(ll(0)).first), ll>);
+  static_assert(is_same_v<decltype(cht.query(ll(0))->first), ll>);
   // The value fits ll, but evaluating the sign-reversed line first would overflow.
   cht.add_line(-1, -1);
   const ll x = numeric_limits<ll>::max();
-  assert(cht.query(x).first == numeric_limits<ll>::lowest());
-  assert(cht.query_monotone(x).first == numeric_limits<ll>::lowest());
+  assert(cht.query(x)->first == numeric_limits<ll>::lowest());
+  assert(cht.query_monotone(x)->first == numeric_limits<ll>::lowest());
 }
 
 template <class CHT>
@@ -365,11 +370,11 @@ void verify_wide_rational_value_type()
   using R = Rational<ll>;
   using W = Rational<i128>;
   CHT cht;
-  static_assert(is_same_v<decltype(cht.query(R(0)).first), W>);
-  static_assert(is_same_v<decltype(cht.query(R(0)).second.a), R>);
+  static_assert(is_same_v<decltype(cht.query(R(0))->first), W>);
+  static_assert(is_same_v<decltype(cht.query(R(0))->second.a), R>);
   auto empty = cht.query(R(0));
-  assert(empty.first.num == 1 && empty.first.den == 0);
-  assert(empty.second.id == -1);
+  assert(!empty);
+  assert(!empty);
   constexpr ll m = 1'000'000'000'000'000'000LL;
   const vc<pair<ll, ll>> lines{{-m, m}, {0, -m}, {m, m}};
   for (auto [a, b] : lines) cht.add_line(R(a), R(b));
@@ -378,7 +383,7 @@ void verify_wide_rational_value_type()
   {
     i128 expected = numeric_limits<i128>::max();
     for (auto [a, b] : lines) chmin(expected, i128(a) * x.num + i128(b) * x.den);
-    assert(result.first == W(expected, x.den));
+    assert(result->first == W(expected, x.den));
   };
   for (R x : queries)
   {
@@ -392,7 +397,7 @@ void verify_wide_rational_value_type()
   cht.clear();
   cht.add_line(R(2, 3), R(-5, 7));
   cht.add_line(R(0), R(0));
-  auto value = cht.query(R(7, 11)).first;
+  auto value = cht.query(R(7, 11))->first;
   assert(value.num == -67 && value.den == 231);
 
   cht.clear();
@@ -400,7 +405,7 @@ void verify_wide_rational_value_type()
   cht.add_line(R(0), R(1), 1);
   cht.add_line(R(-3), R(3), 2);
   auto middle = cht.query(R(1, 2));
-  assert(middle.first.num == middle.first.den && middle.second.id == 1);
+  assert(middle->first.num == middle->first.den && middle->second.id == 1);
 }
 
 constexpr i128 wide_infty_value() { return i128(1) << 100; }
@@ -411,9 +416,7 @@ void verify_independent_infty(T infty_t, U infty_u)
   CHT cht;
   auto check_empty = [&](const auto &result)
   {
-    assert(result.first == (minimize ? infty_u : -infty_u));
-    assert(result.second.a == 0 && result.second.id == -1);
-    assert(result.second.b == (minimize ? infty_t : -infty_t));
+    assert(!result);
   };
   check_empty(cht.query(0));
   check_empty(cht.query_monotone(0));
@@ -427,8 +430,8 @@ void verify_independent_infty(T infty_t, U infty_u)
   for (T x : {T(-2), T(0), T(2)})
   {
     U expected = minimize ? -U(abs(x)) : U(abs(x));
-    assert(cht.query(x).first == expected);
-    assert(cht.query_monotone(x).first == expected);
+    assert(cht.query(x)->first == expected);
+    assert(cht.query_monotone(x)->first == expected);
   }
   cht.clear();
   check_empty(cht.query(0));
@@ -464,12 +467,12 @@ void test_value_types()
   using W = Rational<i128>;
   ConvexHullTrick<R, W, less<>, R::infty, INF> finite_empty;
   auto empty = finite_empty.query(R(0));
-  assert(empty.first.num == i128(INF) && empty.first.den == 1);
-  assert(empty.second.b.is_infinite());
+  assert(!empty);
+  assert(!empty);
   ConvexHullTrick<R, W, less<>, R::infty, W::infty> infinite;
-  assert(infinite.query(R(0)).first.is_infinite());
+  assert(!infinite.query(R(0)));
   infinite.add_line(R(1), R(2));
-  assert(infinite.query(R(3)).first.num == 5);
+  assert(infinite.query(R(3))->first.num == 5);
 }
 
 int main()

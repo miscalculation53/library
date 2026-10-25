@@ -12,8 +12,8 @@ int main()
   vl weight(4, 0);
   auto merge = [&](int u, int v, ll w)
   {
-    int node = merges.merge(u, v);
-    if (node != -1)
+    auto node = merges.merge(u, v);
+    if (node)
     {
       assert(node == SZ<int>(weight));
       weight.eb(w);
@@ -23,7 +23,7 @@ int main()
   assert(merge(0, 1, 2) == 4);
   assert(merge(2, 3, 5) == 5);
   assert(merge(1, 2, 8) == 6);
-  assert(merge(0, 3, 10) == -1);
+  assert(!merge(0, 3, 10));
   auto par = merges.parents();
   assert(par == vc<int>({4, 4, 5, 5, 6, 6, -1}));
   RootedTree tree(par.size(), par);
@@ -44,14 +44,14 @@ int main()
     {
       int u = rng() % n, v = rng() % n;
       int a = current[u], b = current[v];
-      int node = builder.merge(u, v);
-      if (a == b) assert(node == -1);
+      auto node = builder.merge(u, v);
+      if (a == b) assert(!node);
       else
       {
         assert(node == SZ<int>(expected));
-        expected[a] = expected[b] = node;
+        expected[a] = expected[b] = *node;
         expected.eb(-1);
-        for (int &root : current) if (root == a || root == b) root = node;
+        for (int &root : current) if (root == a || root == b) root = *node;
       }
     }
     auto parents = builder.parents();

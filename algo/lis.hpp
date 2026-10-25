@@ -51,12 +51,13 @@ public:
   template <class I = ll>
   I len_of_lis() { return len; }
 
-  // i 番目の要素について、LIS に使われ得るなら LIS での位置、使われ得ないなら -1
+  // i 番目の要素が LIS に使われ得るならその位置、それ以外は nullopt。
   template <class I = ll>
-  I pos_in_lis(int i)
+  optional<I> pos_in_lis(int i)
   {
     assert(0 <= i && i < n);
-    return pos[i] >= len ? -1 : pos[i];
+    if (pos[i] >= len) return nullopt;
+    return I(pos[i]);
   }
 
   // LDS (広義) への分解のひとつにおいて、i 番目の要素は何番目の LDS か

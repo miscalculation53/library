@@ -1,4 +1,4 @@
-このドキュメントには AI による作成・変更が含まれている可能性があります。
+このドキュメントには AI による作成・変更が含まれています。
 
 ## 概要
 
@@ -80,10 +80,12 @@ $T$ 回呼んだとき、
 #### lpf
 
 ```cpp
-PrimePower<P=int> lpf(int n)
+template <class P = int>
+static optional<PrimePower<P>> lpf(int n);
 ```
 
 $n$ の最小素因数 $p$ と $n$ が $p$ で割り切れる回数 $e$ について $(p, e, p^e)$ を返す。
+$n = 1$ では `nullopt` を返す。
 
 ##### 制約
 

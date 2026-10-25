@@ -36,8 +36,8 @@ assert(s.lt_cnt(5) == 1);
 - `lt_cnt`, `leq_cnt`, `gt_cnt`, `geq_cnt`
   - 個数を数える
 - `lt_max_it`, `leq_max_it`, `gt_min_it`, `geq_min_it`
-  - イテレータを返す（なければ `end()`）
-- `lt_max_id`, `leq_max_id`, `gt_max_id`, `geq_max_id`
-  - 添字を返す（なければ `lt`, `leq` は $-1$、`gt`, `geq` は $n$）
+  - `optional<const_iterator>` を返す（不在は `nullopt`）
+- `lt_max_id`, `leq_max_id`, `gt_min_id`, `geq_min_id`
+  - `optional<I>` で添字を返す（不在は `nullopt`、添字 $0$ は値あり）
 
 **注意**：`pbds_multiset` のほうは、イテレータが指す値が `pair<T, int>` になっている（一応、`second` は追加された順番。これを使うことはあまり想定していない）。

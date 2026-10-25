@@ -11,12 +11,14 @@ int main()
   if (T == 0)
   {
     GraphUndirected<ll> g(N, es);
-    ans = MinimumCycle(g).solve().first;
+    auto result = MinimumCycle(g).solve();
+    ans = result ? result->first : INF;
   }
   else
   {
     GraphDirected<ll> g(N, es);
-    ans = MinimumCycle(g).solve().first;
+    auto result = MinimumCycle(g).solve();
+    ans = result ? result->first : INF;
   }
   PRINT(ans == INF ? -1 : ans);
 }

@@ -52,7 +52,7 @@ LiChaoTree<ll> tree(-10, 11);  // 整数 -10, ..., 10 が対象
 tree.add_line(2, 3);          // y = 2x + 3、id = 0
 tree.add_segment(-2, 5, -1, 8, 20);  // [-2, 5) に y = -x + 8
 
-auto [value, line] = tree.query(4);
+auto [value, line] = *tree.query(4);
 // value = 4 (i128)、line = {-1, 8, 20}
 ```
 
@@ -72,14 +72,14 @@ int l = tree.lower_bound(-3), r = tree.lower_bound(10);
 tree.add_segment_index(l, r, 0, -7);  // 座標 -3, 2 に y = -7
 ```
 
-最大値、評価型、空の結果の値も指定できる。
+最大値や評価型も指定できる。空の問い合わせは `nullopt` を返す。
 
 ```cpp
 LiChaoTree<ll, i128, greater<>> max_tree(-100, 101);
 LiChaoTreeCompressed<ll, ll> small_values({-1, 0, 1});
 LiChaoTree<ll, i128, less<>, 1000, 1000000> custom_empty(-10, 11);
 auto empty = custom_empty.query(0);
-// empty.first = 1000000、empty.second = {0, 1000, -1}
+assert(!empty);
 ```
 
 有理数は `Rational`、浮動小数点数は `double` や `long double` を指定する。
@@ -92,17 +92,17 @@ using R = Rational<ll>;
 LiChaoTreeCompressed<R> rational_tree({R(-3, 2), R(1, 3), R(2, 3), R(5, 2)});
 rational_tree.add_line(R(1, 2), R(1, 3));   // y = x/2 + 1/3
 rational_tree.add_line(R(-1), R(1));       // y = -x + 1
-auto [value, line] = rational_tree.query(R(2, 3));
+auto [value, line] = *rational_tree.query(R(2, 3));
 assert(value == Rational<i128>(1, 3) && line.id == 1);
 
 // 半開区間 [1/4, 3/4) 内の登録座標へ追加する。
 rational_tree.add_segment(R(1, 4), R(3, 4), R(0), R(-1, 7));
-assert(rational_tree.query(R(1, 3)).first == Rational<i128>(-1, 7));
+assert(rational_tree.query(R(1, 3))->first == Rational<i128>(-1, 7));
 
 LiChaoTreeCompressed<long double> real_tree({-1.5L, 0.25L, 2.5L});
 real_tree.add_line(0.5L, 0.25L);
 real_tree.add_line(-1.0L, 1.0L);
-assert(real_tree.query_index(1).first == 0.375L);  // x = 0.25
+assert(real_tree.query_index(1)->first == 0.375L);  // x = 0.25
 ```
 
 ## 詳細なドキュメント
@@ -131,11 +131,9 @@ LiChaoTree(T xmin, T xmax)
 - `U` に `T` からの明示変換、加算、乗算、大小比較、符号反転が定義されている
 - `U` が整数型なら符号付きである
 - `Compare` は `less<>`, `less<T>`, `greater<>`, `greater<T>` のいずれか
-- `inftyT`, `inftyU` は、それぞれ `T`, `U` に変換できる正の値、またはその値を返す引数なし関数
-- 無限大として指定した値とその符号反転が、対応する型で表現できる
 
-`nullptr` を指定した場合は、対応する型の[既定の無限大](../utils/default_infty.md)を使う。
-これらの無限大は、適用される直線がない座標で返す値に使う。
+型引数 `inftyT`, `inftyU` は既存の型指定との互換性のため保持する。
+問い合わせの不在判定には `optional` の値の有無を使う。
 
 ##### 計算量
 
@@ -200,14 +198,12 @@ ID の扱いは `add_line` と共通。
 #### query
 
 ```cpp
-pair<U, Line> query(T x) const
+optional<pair<U, Line>> query(T x) const
 ```
 
 $x$ に適用される直線の最適値と、その直線を返す。同値の場合は最適な直線のうち 1 本を返す。
 
-適用される直線がない場合は、最小値なら `{eU, {0, eT, -1}}`、最大値なら `{-eU, {0, -eT, -1}}` を返す。
-`eT`, `eU` は `inftyT`, `inftyU` をそれぞれの型として解決した値。
-空の判定には `result.second.id == -1` を使う。直線がある場合は、指定した無限大の大きさによらず実際の評価値を返す。
+適用される直線がない場合は `nullopt`。直線がある場合は評価値と直線を値ありで返し、評価値 $0$ も成功結果となる。
 
 ##### 制約
 
@@ -338,8 +334,8 @@ ID の扱いは `add_line` と共通。
 #### query・query_index
 
 ```cpp
-pair<U, Line> query(const T &x) const
-pair<U, Line> query_index(int k) const
+optional<pair<U, Line>> query(const T &x) const
+optional<pair<U, Line>> query_index(int k) const
 ```
 
 `query(x)` は登録座標 `x`、`query_index(k)` は `coordinates()[k]` における結果を返す。

@@ -22,10 +22,10 @@ int main()
     {
       ll cost = 0;
       int u = s;
-      for (const auto &e : path) assert(e.from == u), u = e.to, cost += e.cost;
+      for (const auto &e : *path) assert(e.from == u), u = e.to, cost += e.cost;
       assert(u == t && cost == expected[t]);
     }
-    else assert(path.empty());
+    else assert(!path);
   }
   const GraphDirected<ll> large(3, vc<tuple<int, int, ll>>{{0, 1, 3'000'000'000'000'000'000LL},
       {1, 2, 8'000'000'000'000'000'000LL}, {0, 2, 7}});

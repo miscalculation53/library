@@ -30,10 +30,10 @@ void main2()
   ShortestPath G(G_input);
   auto dists = G.solve(s, t);
   auto path = G.path(t);
-  if (dists.at(t) == INF)
+  if (!path)
     PRINTRETURN(-1);
-  PRINT(dists.at(t), path.size());
-  fec(e : path) PRINT(e.from, e.to);
+  PRINT(dists.at(t), path->size());
+  fec(e : *path) PRINT(e.from, e.to);
 }
 
 void test()

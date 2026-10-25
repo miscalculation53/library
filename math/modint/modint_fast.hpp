@@ -109,9 +109,9 @@ private:
       x = q;
       for (ull e = 0; ; e += step, x = ull(x) * backward % p)
       {
-        if (const uint *v = baby.find_ptr(x))
+        if (auto v = baby.find_ptr(x))
         {
-          logarithm[q] = (e + *v) % (p - 1);
+          logarithm[q] = (e + v->get()) % (p - 1);
           break;
         }
       }

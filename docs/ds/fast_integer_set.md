@@ -20,7 +20,7 @@ assert(st.contains(3));
 assert(st.size() == 2);
 assert(st.next(4) == 70);
 assert(st.prev(69) == 3);
-assert(st.next(71) == st.universe_size());
+assert(!st.next(71));
 
 for (int key : st) cout << key << '\n';
 st.enumerate(0, 64, [&](int key) { cout << key << '\n'; });
@@ -106,24 +106,24 @@ bool erase(int x)
 #### next / prev / 隣接検索
 
 ```cpp
-int next(int x) const
-int prev(int x) const
-int geq_min(int x) const
-int gt_min(int x) const
-int leq_max(int x) const
-int lt_max(int x) const
-int min_element() const
-int max_element() const
+optional<int> next(int x) const
+optional<int> prev(int x) const
+optional<int> geq_min(int x) const
+optional<int> gt_min(int x) const
+optional<int> leq_max(int x) const
+optional<int> lt_max(int x) const
+optional<int> min_element() const
+optional<int> max_element() const
 ```
 
 | 関数 | 返すキー | 該当するキーがない場合 |
 |---|---|---|
-| `next(x)`, `geq_min(x)` | `x` 以上で最小 | `n` |
-| `gt_min(x)` | `x` より大きいキーの最小 | `n` |
-| `prev(x)`, `leq_max(x)` | `x` 以下で最大 | `-1` |
-| `lt_max(x)` | `x` より小さいキーの最大 | `-1` |
-| `min_element()` | 全体の最小 | `n` |
-| `max_element()` | 全体の最大 | `-1` |
+| `next(x)`, `geq_min(x)` | `x` 以上で最小 | `nullopt` |
+| `gt_min(x)` | `x` より大きいキーの最小 | `nullopt` |
+| `prev(x)`, `leq_max(x)` | `x` 以下で最大 | `nullopt` |
+| `lt_max(x)` | `x` より小さいキーの最大 | `nullopt` |
+| `min_element()` | 全体の最小 | `nullopt` |
+| `max_element()` | 全体の最大 | `nullopt` |
 
 `x` は値域の外でもよい。
 

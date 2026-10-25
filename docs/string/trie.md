@@ -12,6 +12,7 @@ trie 木を管理するライブラリ。
 #include "string/trie.hpp"
 
 Trie<26> trie;
+assert(!trie.parent(0) && !trie.child(0, 0));
 auto path = trie.insert(vc<int>{0, 1, 2});  // "abc"
 assert(path.front() == 0 && path.size() == 4);
 assert(trie.to_string<int>(path.back()) == vc<int>({0, 1, 2}));
@@ -43,10 +44,10 @@ I num_of_vertices<I=ll>()
 #### parent
 
 ```cpp
-I parent(int v)
+optional<I> parent<I = ll>(int v) const
 ```
 
-頂点 $v$ の親の頂点番号を返す。$v$ が根のときは $-1$ を返す。
+頂点 $v$ の親の頂点番号を返す。$v$ が根なら `nullopt` を返す。
 
 ##### 制約
 
@@ -59,10 +60,10 @@ I parent(int v)
 #### child
 
 ```cpp
-I child(int v, int c)
+optional<I> child<I = ll>(int v, int c) const
 ```
 
-頂点 $v$ の文字 $c$ 方向への子（なければ $-1$）を返す。
+頂点 $v$ の文字 $c$ 方向への子を返す。対応する子がなければ `nullopt`。
 
 ##### 制約
 

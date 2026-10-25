@@ -165,33 +165,35 @@ public:
     return res;
   }
 
-  // key が存在すれば対応する値へのポインタ、存在しなければ nullptr を返す
-  Value *find_ptr(const Key &key)
+  // key に対応する値への参照。存在しなければ nullopt。
+  optional<reference_wrapper<Value>> find_ptr(const Key &key)
   {
     size_t i = find_index(key, hasher(key));
-    return i == npos ? nullptr : &dat[i].second;
+    if (i == npos) return nullopt;
+    return std::ref(dat[i].second);
   }
-  const Value *find_ptr(const Key &key) const
+  optional<reference_wrapper<const Value>> find_ptr(const Key &key) const
   {
     size_t i = find_index(key, hasher(key));
-    return i == npos ? nullptr : &dat[i].second;
+    if (i == npos) return nullopt;
+    return std::cref(dat[i].second);
   }
 
   // key が存在すれば true を返す
-  bool contains(const Key &key) const { return find_ptr(key) != nullptr; }
+  bool contains(const Key &key) const { return find_index(key, hasher(key)) != npos; }
 
   // key に対応する値を返す
   Value &at(const Key &key)
   {
-    Value *p = find_ptr(key);
-    assert(p != nullptr);
-    return *p;
+    auto value = find_ptr(key);
+    assert(value);
+    return value->get();
   }
   const Value &at(const Key &key) const
   {
-    const Value *p = find_ptr(key);
-    assert(p != nullptr);
-    return *p;
+    auto value = find_ptr(key);
+    assert(value);
+    return value->get();
   }
 
   // key に対応する値を返し、存在しなければ Value{} を挿入する

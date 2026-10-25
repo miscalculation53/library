@@ -122,8 +122,8 @@ struct DynamicMatrixMod2 : vc<DynamicBitset>
     assert(m == SZ(b));
     M res(n, k);
     repi(i, n)
-      for (int j = (*this)[i].find_first(); j < m; j = (*this)[i].find_next(j))
-        res[i] ^= b[j];
+      for (auto j = (*this)[i].find_first(); j; j = (*this)[i].find_next(*j))
+        res[i] ^= b[*j];
     return res;
   }
   M &operator*=(const M &b) { return *this = *this * b; }

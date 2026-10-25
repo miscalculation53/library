@@ -30,9 +30,9 @@ using P = FormalPowerSeries<mint>;
 vc<mint> factorial(20, 1);
 for (int i = 1; i < 20; ++i) factorial[i] = factorial[i - 1] * i;
 auto guessed = guess_p_recursive(factorial); // 位数・係数次数の上限はともに 10
-// guessed = {{-1, -1}, {1}}: -(n+1)a[n] + a[n+1] = 0
-assert(!guessed.empty());
-mint fact = p_recursive_nth(factorial, guessed, 1'000'000);
+// *guessed = {{-1, -1}, {1}}: -(n+1)a[n] + a[n+1] = 0
+assert(guessed);
+mint fact = p_recursive_nth(factorial, *guessed, 1'000'000);
 
 // Catalan 数: (n+2)C[n+1] - (4n+2)C[n] = 0
 vc<P> c = {{-2, -4}, {2, 1}};
@@ -51,14 +51,14 @@ mint value = p_recursive_nth(a, c, 1'000'000);
 
 ```cpp
 template <class mint>
-vc<FormalPowerSeries<mint>> guess_p_recursive(
+optional<vc<FormalPowerSeries<mint>>> guess_p_recursive(
     const vc<mint>& a, int max_order = 10, int max_degree = 10);
 ```
 
 $N=|a|$, $R=\texttt{max\_order}$, $D=\texttt{max\_degree}$、法を $p$ とする。
 $r=1,\ldots,R$ の順に、次数 $d\le D$ かつ $d<p$ の漸化式を探す。
 各候補は $N-r\ge(r+1)(d+1)$ を満たす範囲で探索し、$0\le n<N-r$ のすべての式を使う。
-同じ位数では係数多項式の最大次数が最小の候補を優先する。候補がなければ空配列を返す。
+同じ位数では係数多項式の最大次数が最小の候補を優先する。候補がなければ `nullopt` を返す。
 
 各位数で、初期項数に見合う次数
 
@@ -71,7 +71,7 @@ $$d_r=\min\left(D,p-1,\left\lfloor\frac{N-r}{r+1}\right\rfloor-1\right)$$
 デフォルトの上限はともに $10$。小さい位数・次数の漸化式を試すための設定で、必要に応じて引き上げる。
 例えば Catalan 数の先頭 $10$ 項なら、`guess_p_recursive(a)` と `guess_p_recursive(a, 10, 10)` のどちらでも位数 $1$・次数 $1$ の漸化式が得られる。
 
-返り値は長さ $r+1$ で、$c_r$ は非零、その最高次係数は $1$。
+値ありの返り値は長さ $r+1$ で、$c_r$ は非零、その最高次係数は $1$。
 各多項式の末尾の零は除き、零多項式は空配列で表す。
 同じ位数・次数に複数の候補がある場合はそのうち一つを返す。
 全係数に共通する因子も残し、その根における元の漸化式の制約を保存する。

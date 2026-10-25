@@ -40,36 +40,61 @@ struct pbds_set : tree<T, null_type, Compare, rb_tree_tag, tree_order_statistics
   template <class I = ll>
   inline I gt_cnt(const T &x) const { return (I)this->size() - leq_cnt<I>(x); }
 
-  // x 未満で最大の要素のイテレータ (なければ end())
-  inline auto lt_max_it(const T &x) const
+  // 近傍要素のイテレータ。該当する要素がなければ nullopt。
+  optional<typename base::const_iterator> lt_max_it(const T &x) const
   {
-    auto it = geq_min_it(x);
-    return it == this->begin() ? this->end() : prev(it);
+    auto it = this->lower_bound(x);
+    if (it == this->begin()) return nullopt;
+    return prev(it);
   }
-  // x 以下で最大の要素のイテレータ (なければ end())
-  inline auto leq_max_it(const T &x) const
+  optional<typename base::const_iterator> leq_max_it(const T &x) const
   {
-    auto it = gt_min_it(x);
-    return it == this->begin() ? this->end() : prev(it);
+    auto it = this->upper_bound(x);
+    if (it == this->begin()) return nullopt;
+    return prev(it);
   }
-  // x 以上で最小の要素のイテレータ (なければ end())
-  inline auto geq_min_it(const T &x) const { return this->lower_bound(x); }
-  // x 超過で最小の要素のイテレータ (なければ end())
-  inline auto gt_min_it(const T &x) const { return this->upper_bound(x); }
+  optional<typename base::const_iterator> geq_min_it(const T &x) const
+  {
+    auto it = this->lower_bound(x);
+    if (it == this->end()) return nullopt;
+    return it;
+  }
+  optional<typename base::const_iterator> gt_min_it(const T &x) const
+  {
+    auto it = this->upper_bound(x);
+    if (it == this->end()) return nullopt;
+    return it;
+  }
 
-  // x 未満で最大の要素の番号 (なければ -1)
+  // 近傍要素の順位。該当する要素がなければ nullopt。
   template <class I = ll>
-  inline I lt_max_id(const T &x) const { return lt_cnt<I>(x) - 1; }
-  // x 以下で最大の要素の番号 (なければ -1)
+  optional<I> lt_max_id(const T &x) const
+  {
+    I k = lt_cnt<I>(x);
+    if (k == 0) return nullopt;
+    return k - 1;
+  }
   template <class I = ll>
-  inline I leq_max_id(const T &x) const { return leq_cnt<I>(x) - 1; }
-
-  // x 以上で最小の要素の番号 (なければ size())
+  optional<I> leq_max_id(const T &x) const
+  {
+    I k = leq_cnt<I>(x);
+    if (k == 0) return nullopt;
+    return k - 1;
+  }
   template <class I = ll>
-  inline I geq_min_id(const T &x) const { return lt_cnt<I>(x); }
-  // x 超過で最小の要素の番号 (なければ size())
+  optional<I> geq_min_id(const T &x) const
+  {
+    I k = lt_cnt<I>(x);
+    if (k == I(this->size())) return nullopt;
+    return k;
+  }
   template <class I = ll>
-  inline I gt_min_id(const T &x) const { return leq_cnt<I>(x); }
+  optional<I> gt_min_id(const T &x) const
+  {
+    I k = leq_cnt<I>(x);
+    if (k == I(this->size())) return nullopt;
+    return k;
+  }
 };
 
 template <class T, class Compare>
@@ -138,33 +163,59 @@ public:
   template <class I = ll>
   inline I gt_cnt(const T &x) const { return (I)this->size() - leq_cnt<I>(x); }
   
-  // x 未満で最大の要素のイテレータ (なければ end())
-  inline auto lt_max_it(const T &x) const
+  // 近傍要素のイテレータ。該当する要素がなければ nullopt。
+  optional<typename base::const_iterator> lt_max_it(const T &x) const
   {
-    auto it = geq_min_it(x);
-    return it == this->begin() ? this->end() : prev(it);
+    auto it = this->lower_bound({x, 0});
+    if (it == this->begin()) return nullopt;
+    return prev(it);
   }
-  // x 以下で最大の要素のイテレータ (なければ end())
-  inline auto leq_max_it(const T &x) const
+  optional<typename base::const_iterator> leq_max_it(const T &x) const
   {
-    auto it = gt_min_it(x);
-    return it == this->begin() ? this->end() : prev(it);
+    auto it = this->upper_bound({x, (int)1e9});
+    if (it == this->begin()) return nullopt;
+    return prev(it);
   }
-  // x 以上で最小の要素のイテレータ (なければ end())
-  inline auto geq_min_it(const T &x) const { return this->lower_bound({x, 0}); }
-  // x 超過で最小の要素のイテレータ (なければ end())
-  inline auto gt_min_it(const T &x) const { return this->upper_bound({x, (int)1e9}); }
+  optional<typename base::const_iterator> geq_min_it(const T &x) const
+  {
+    auto it = this->lower_bound({x, 0});
+    if (it == this->end()) return nullopt;
+    return it;
+  }
+  optional<typename base::const_iterator> gt_min_it(const T &x) const
+  {
+    auto it = this->upper_bound({x, (int)1e9});
+    if (it == this->end()) return nullopt;
+    return it;
+  }
 
-  // x 未満で最大の要素の番号 (なければ -1)
+  // 近傍要素の順位。該当する要素がなければ nullopt。
   template <class I = ll>
-  inline I lt_max_id(const T &x) const { return lt_cnt<I>(x) - 1; }
-  // x 以下で最大の要素の番号 (なければ -1)
+  optional<I> lt_max_id(const T &x) const
+  {
+    I k = lt_cnt<I>(x);
+    if (k == 0) return nullopt;
+    return k - 1;
+  }
   template <class I = ll>
-  inline I leq_max_id(const T &x) const { return leq_cnt<I>(x) - 1; }
-  // x 以上で最小の要素の番号 (なければ size())
+  optional<I> leq_max_id(const T &x) const
+  {
+    I k = leq_cnt<I>(x);
+    if (k == 0) return nullopt;
+    return k - 1;
+  }
   template <class I = ll>
-  inline I geq_min_id(const T &x) const { return lt_cnt<I>(x); }
-  // x 超過で最小の要素の番号 (なければ size())
+  optional<I> geq_min_id(const T &x) const
+  {
+    I k = lt_cnt<I>(x);
+    if (k == I(this->size())) return nullopt;
+    return k;
+  }
   template <class I = ll>
-  inline I gt_min_id(const T &x) const { return leq_cnt<I>(x); }
+  optional<I> gt_min_id(const T &x) const
+  {
+    I k = leq_cnt<I>(x);
+    if (k == I(this->size())) return nullopt;
+    return k;
+  }
 };

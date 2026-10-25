@@ -20,6 +20,8 @@
 ## 使用例
 
 ```cpp
+const int n = 4;
+vc<tuple<int, int, ll>> edges{{0, 1, 2}, {1, 2, 3}};
 GraphDirected<ll> g(n, edges);
 AllPairsShortestPath ap(g);
 if (ap.negative_cycle()) {
@@ -191,13 +193,13 @@ bool negative_cycle() const;
 #### path / prev_edges
 
 ```cpp
-vc<Edge<Cost>> path(int s, int t) const;
+optional<vc<Edge<Cost>>> path(int s, int t) const;
 vc<Edge<Cost>> prev_edges(int s) const;
 ```
 
 計算後に呼ぶ。グラフに負閉路があっても、有限の最短距離を持つ組について経路を復元できる。
 
-- `path(s,t)`：最短パスの辺を順に返す。距離が `infty`・`-infty`、または $s=t$ なら空。
+- `path(s,t)`：最短パスの辺を順に返す。距離が `infty`・`-infty` なら `nullopt`。有限距離で $s=t$ なら値ありの空配列。
 - `prev_edges(s)`：各頂点へ入る親辺を返す。始点・距離が `infty` または `-infty` の頂点は `index == -1`。
 - 辺の `index` は入力辺列の添字。無向の場合、返す辺の向きは復元パスに合わせる。
 - Johnson の場合も返す辺の重みは元の重み。

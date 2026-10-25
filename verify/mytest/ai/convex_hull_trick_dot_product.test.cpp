@@ -74,7 +74,7 @@ void verify_dot_product(CHT &cht, const vc<pair<ll, ll>> &forms)
   repi(_, 200)
   {
     ll x = random_dot_ll(-50, 50), y = random_dot_ll(-50, 50);
-    auto [value, form] = dot_query<minimize>(cht, x, y);
+    auto [value, form] = *dot_query<minimize>(cht, x, y);
     assert(value == brute_dot<minimize>(forms, x, y));
     assert(value == i128(form.a) * x + i128(form.b) * y);
     assert(0 <= form.id && form.id < SZ(forms));
@@ -85,7 +85,7 @@ void verify_dot_product(CHT &cht, const vc<pair<ll, ll>> &forms)
   cht.reset_monotone_query();
   for (auto [x, y] : qs)
   {
-    auto [value, form] = dot_query_monotone<minimize>(cht, x, y);
+    auto [value, form] = *dot_query_monotone<minimize>(cht, x, y);
     assert(value == brute_dot<minimize>(forms, x, y));
     assert(value == i128(form.a) * x + i128(form.b) * y);
     assert(0 <= form.id && form.id < SZ(forms));
@@ -94,7 +94,7 @@ void verify_dot_product(CHT &cht, const vc<pair<ll, ll>> &forms)
   reverse(qs.begin(), qs.end());
   cht.reset_monotone_query();
   for (auto [x, y] : qs)
-    assert(dot_query_monotone<minimize>(cht, x, y).first == brute_dot<minimize>(forms, x, y));
+    assert(dot_query_monotone<minimize>(cht, x, y)->first == brute_dot<minimize>(forms, x, y));
 }
 
 template <class CHT>
@@ -103,8 +103,8 @@ void verify_interleaved_monotone(CHT &cht, const vc<pair<ll, ll>> &forms)
   cht.reset_monotone_query();
   for (auto [x, y] : ratio_queries())
   {
-    assert(cht.min_query_monotone(x, y).first == brute_dot<true>(forms, x, y));
-    assert(cht.max_query_monotone(x, y).first == brute_dot<false>(forms, x, y));
+    assert(cht.min_query_monotone(x, y)->first == brute_dot<true>(forms, x, y));
+    assert(cht.max_query_monotone(x, y)->first == brute_dot<false>(forms, x, y));
   }
 }
 
@@ -147,10 +147,10 @@ void test_monotone_slope()
 void test_convex_hull_and_clear()
 {
   ConvexHullTrickDotProduct<ll> cht;
-  assert(cht.min_query(1, 2).first == i128(INF) * INF);
-  assert(cht.max_query(1, 2).first == -i128(INF) * INF);
-  assert((cht.min_query(1, 2).second == decltype(cht)::LinearForm{0, 0, -1}));
-  assert((cht.max_query(1, 2).second == decltype(cht)::LinearForm{0, 0, -1}));
+  assert(!cht.min_query(1, 2));
+  assert(!cht.max_query(1, 2));
+  assert(!cht.min_query_monotone(1, 2));
+  assert(!cht.max_query_monotone(1, 2));
 
   cht.add(0, 0, 0);
   cht.add(4, 0, 1);
@@ -167,19 +167,19 @@ void test_convex_hull_and_clear()
     i128 cr = i128(a.a - o.a) * (b.b - o.b) - i128(a.b - o.b) * (b.a - o.a);
     assert(cr > 0);
   }
-  assert(cht.min_query(1, 0).first == 0);
-  assert(cht.min_query(-1, 0).first == -4);
-  assert(cht.min_query(0, 1).first == 0);
-  assert(cht.min_query(0, -1).first == -3);
-  assert(cht.min_query(0, 0).first == 0);
-  assert(cht.max_query(1, 0).first == 4);
-  assert(cht.max_query(-1, 0).first == 0);
-  assert(cht.max_query(0, 1).first == 3);
-  assert(cht.max_query(0, -1).first == 0);
-  assert(cht.max_query(0, 0).first == 0);
+  assert(cht.min_query(1, 0)->first == 0);
+  assert(cht.min_query(-1, 0)->first == -4);
+  assert(cht.min_query(0, 1)->first == 0);
+  assert(cht.min_query(0, -1)->first == -3);
+  assert(cht.min_query(0, 0)->first == 0);
+  assert(cht.max_query(1, 0)->first == 4);
+  assert(cht.max_query(-1, 0)->first == 0);
+  assert(cht.max_query(0, 1)->first == 3);
+  assert(cht.max_query(0, -1)->first == 0);
+  assert(cht.max_query(0, 0)->first == 0);
   cht.clear();
-  assert(cht.min_query(3, 4).first == i128(INF) * INF);
-  assert(cht.max_query(3, 4).first == -i128(INF) * INF);
+  assert(!cht.min_query(3, 4));
+  assert(!cht.max_query(3, 4));
 }
 
 template <class CHT>
@@ -189,17 +189,17 @@ void verify_auto_id()
   cht.add(1, 0);
   cht.add(0, 1, 42);
   cht.add(-1, 0);
-  assert(cht.min_query(-1, 0).second.id == 0);
-  assert(cht.min_query(0, -1).second.id == 42);
-  assert(cht.min_query(1, 0).second.id == 2);
-  assert(cht.max_query(-1, 0).second.id == 2);
-  assert(cht.max_query(0, 1).second.id == 42);
-  assert(cht.max_query(1, 0).second.id == 0);
+  assert(cht.min_query(-1, 0)->second.id == 0);
+  assert(cht.min_query(0, -1)->second.id == 42);
+  assert(cht.min_query(1, 0)->second.id == 2);
+  assert(cht.max_query(-1, 0)->second.id == 2);
+  assert(cht.max_query(0, 1)->second.id == 42);
+  assert(cht.max_query(1, 0)->second.id == 0);
 
   cht.clear();
   cht.add(2, 3);
-  assert(cht.min_query(1, 1).second.id == 0);
-  assert(cht.max_query(1, 1).second.id == 0);
+  assert(cht.min_query(1, 1)->second.id == 0);
+  assert(cht.max_query(1, 1)->second.id == 0);
 }
 
 void test_auto_id()
@@ -224,7 +224,7 @@ void test_online()
     else
     {
       ll x = random_dot_ll(-100, 100), y = random_dot_ll(-100, 100);
-      assert(cht.min_query(x, y).first == brute_dot<true>(forms, x, y));
+      assert(cht.min_query(x, y)->first == brute_dot<true>(forms, x, y));
     }
   }
 }
@@ -235,7 +235,7 @@ void test_wide_inner_product()
   ConvexHullTrickDotProduct<ll> cht;
   cht.add(v, v, 0);
   cht.add(-v, v, 1);
-  auto [value, form] = cht.max_query(v, v);
+  auto [value, form] = *cht.max_query(v, v);
   assert(value == i128(2) * v * v);
   assert(form.id == 0);
 }
@@ -258,7 +258,7 @@ void test_floating_point()
     long double y = random_dot_ll(-100, 100) / 17.0L;
     long double ans = numeric_limits<long double>::lowest();
     for (auto [a, b] : forms) ans = max(ans, a * x + b * y);
-    assert(abs(cht.max_query(x, y).first - ans) < 1e-14L);
+    assert(abs(cht.max_query(x, y)->first - ans) < 1e-14L);
   }
 #endif
 }
@@ -267,8 +267,8 @@ template <class CHT>
 void verify_wide_input()
 {
   CHT cht;
-  static_assert(is_same_v<decltype(cht.min_query(ll(0), ll(1)).first), i128>);
-  static_assert(is_same_v<decltype(cht.min_query(ll(0), ll(1)).second.a), ll>);
+  static_assert(is_same_v<decltype(cht.min_query(ll(0), ll(1))->first), i128>);
+  static_assert(is_same_v<decltype(cht.min_query(ll(0), ll(1))->second.a), ll>);
   constexpr ll m = 1'000'000'000'000'000'000LL;
   const vc<pair<ll, ll>> forms{{-m, m}, {-m / 2, -m}, {0, m / 2}, {m, m}};
   repi(i, forms.size()) cht.add(forms[i].first, forms[i].second, i);
@@ -276,23 +276,23 @@ void verify_wide_input()
   for (ll x : coords) for (ll y : coords)
   {
     auto mn = cht.min_query(x, y), mx = cht.max_query(x, y);
-    assert(mn.first == brute_dot<true>(forms, x, y));
-    assert(mx.first == brute_dot<false>(forms, x, y));
-    assert(mn.first == i128(mn.second.a) * x + i128(mn.second.b) * y);
-    assert(mx.first == i128(mx.second.a) * x + i128(mx.second.b) * y);
+    assert(mn->first == brute_dot<true>(forms, x, y));
+    assert(mx->first == brute_dot<false>(forms, x, y));
+    assert(mn->first == i128(mn->second.a) * x + i128(mn->second.b) * y);
+    assert(mx->first == i128(mx->second.a) * x + i128(mx->second.b) * y);
   }
   vc<pair<ll, ll>> queries{{-m, m - 1}, {1, -2}, {0, m}, {1, 2}, {-m, -(m - 1)}};
   for (auto [x, y] : queries)
   {
-    assert(cht.min_query_monotone(x, y).first == brute_dot<true>(forms, x, y));
-    assert(cht.max_query_monotone(x, y).first == brute_dot<false>(forms, x, y));
+    assert(cht.min_query_monotone(x, y)->first == brute_dot<true>(forms, x, y));
+    assert(cht.max_query_monotone(x, y)->first == brute_dot<false>(forms, x, y));
   }
   cht.reset_monotone_query();
   reverse(ALL(queries));
   for (auto [x, y] : queries)
   {
-    assert(cht.min_query_monotone(x, y).first == brute_dot<true>(forms, x, y));
-    assert(cht.max_query_monotone(x, y).first == brute_dot<false>(forms, x, y));
+    assert(cht.min_query_monotone(x, y)->first == brute_dot<true>(forms, x, y));
+    assert(cht.max_query_monotone(x, y)->first == brute_dot<false>(forms, x, y));
   }
   assert(!cht.convex_hull().empty());
 }
@@ -301,7 +301,7 @@ template <class CHT>
 void verify_same_value_type()
 {
   CHT cht;
-  static_assert(is_same_v<decltype(cht.min_query(0, 1).first), ll>);
+  static_assert(is_same_v<decltype(cht.min_query(0, 1)->first), ll>);
   const vc<pair<ll, ll>> forms{{-20, 3}, {0, -40}, {20, 3}};
   repi(i, forms.size()) cht.add(forms[i].first, forms[i].second, i);
   verify_dot_product<true>(cht, forms);
@@ -311,12 +311,12 @@ void verify_same_value_type()
   constexpr ll x = 1'000'000'000'000'000'000LL;
   cht.clear();
   cht.add(-1, -1);
-  assert(cht.min_query(x, 1).first == -x - 1);
+  assert(cht.min_query(x, 1)->first == -x - 1);
   cht.clear();
   cht.add(-1, 1);
   // Both the dot product and its sign-normalized rational value fit ll with room to spare.
-  assert(cht.min_query(x, -1).first == -x - 1);
-  assert(cht.max_query_monotone(x, -1).first == -x - 1);
+  assert(cht.min_query(x, -1)->first == -x - 1);
+  assert(cht.max_query_monotone(x, -1)->first == -x - 1);
 }
 
 constexpr i128 wide_empty_value() { return i128(1) << 100; }
@@ -328,22 +328,22 @@ void test_value_types()
   verify_same_value_type<ConvexHullTrickDotProduct<ll, ll>>();
   verify_same_value_type<ConvexHullTrickDotProductMonotoneSlope<ll, ll>>();
 
-  // The value sentinel need not fit the input type or bound the intersections.
+  // Legacy infinity parameters do not turn an empty query into a value.
   ConvexHullTrickDotProduct<ll, i128, wide_empty_value> wide_empty;
-  assert(wide_empty.min_query(0, 0).first == wide_empty_value());
-  assert(wide_empty.max_query(0, 0).first == -wide_empty_value());
+  assert(!wide_empty.min_query(0, 0));
+  assert(!wide_empty.max_query(0, 0));
   wide_empty.add(2, 3);
-  assert(wide_empty.min_query(4, 5).first == 23);
+  assert(wide_empty.min_query(4, 5)->first == 23);
   ConvexHullTrickDotProduct<int, ll, 1> small_empty;
   small_empty.add(0, 0);
   small_empty.add(1, 100);
-  assert(small_empty.min_query(-200, 1).first == -100);
-  assert(small_empty.max_query(-200, 1).first == 0);
+  assert(small_empty.min_query(-200, 1)->first == -100);
+  assert(small_empty.max_query(-200, 1)->first == 0);
 
   ConvexHullTrickDotProduct<double, long double> real;
-  static_assert(is_same_v<decltype(real.min_query(0, 1).first), long double>);
+  static_assert(is_same_v<decltype(real.min_query(0, 1)->first), long double>);
   real.add(2.25, 1.5);
-  assert(real.max_query(1.75, -0.5).first == 3.1875L);
+  assert(real.max_query(1.75, -0.5)->first == 3.1875L);
 }
 
 int main()

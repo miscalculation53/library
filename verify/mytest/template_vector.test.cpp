@@ -21,7 +21,11 @@ void test2()
   assert(ctol('J', "JOI") == 0);
   assert(ctol('O', "JOI") == 1);
   assert(ctol('I', "JOI") == 2);
-  assert(ctol('?', "JOI") == -1);
+  assert(!ctol('?', "JOI"));
+  assert(!ctol('J', ""));
+  assert(ctol<unsigned>('J', "JOI") == 0);
+  assert(!stov("JO?", "JOI"));
+  assert(stov("", "") && stov("", "")->empty());
 
   vl v = {0, 1, 2, 3, 4};
   auto v1 = stov("ABCDE", 'A');

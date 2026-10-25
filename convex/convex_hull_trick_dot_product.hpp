@@ -25,7 +25,7 @@ private:
   using R = Rational<T>;
   using V = Rational<U>;
   using RationalLine = ConvexHullTrickLine<R>;
-  // 境界の無限大は、空集合で返す U 型の inftyU と独立に持つ。
+  // CHT の境界には有理数の正の無限大を使う。
   using MinCHT = CHT<R, V, less<>, R::infty, inftyU>;
   using MaxCHT = CHT<R, V, greater<>, R::infty, inftyU>;
 
@@ -62,13 +62,9 @@ private:
   }
 
   template <bool minimize>
-  pair<U, LinearForm> query_impl(T x, T y) const
+  optional<pair<U, LinearForm>> query_impl(T x, T y) const
   {
-    if (!has_line)
-    {
-      const U &inf = resolved_infty<U, inftyU>();
-      return {minimize ? inf : -inf, {0, 0, -1}};
-    }
+    if (!has_line) return nullopt;
     LinearForm f;
     if (x == 0 && y == 0)
       f = fst;
@@ -83,29 +79,25 @@ private:
     {
       R q{x, y};
       if constexpr (minimize)
-        f = form((y > 0 ? mn.query(q) : mx.query(q)).second);
+        f = form((y > 0 ? mn.query(q) : mx.query(q))->second);
       else
-        f = form((y > 0 ? mx.query(q) : mn.query(q)).second);
+        f = form((y > 0 ? mx.query(q) : mn.query(q))->second);
     }
-    return {dot(f, x, y), f};
+    return pair<U, LinearForm>{dot(f, x, y), f};
   }
 
   template <bool minimize>
-  pair<U, LinearForm> query_monotone_impl(T x, T y)
+  optional<pair<U, LinearForm>> query_monotone_impl(T x, T y)
   {
-    if (!has_line)
-    {
-      const U &inf = resolved_infty<U, inftyU>();
-      return {minimize ? inf : -inf, {0, 0, -1}};
-    }
+    if (!has_line) return nullopt;
     assert(y != 0);
     R q{x, y};
     LinearForm f;
     if constexpr (minimize)
-      f = form((y > 0 ? mn.query_monotone(q) : mx.query_monotone(q)).second);
+      f = form((y > 0 ? mn.query_monotone(q) : mx.query_monotone(q))->second);
     else
-      f = form((y > 0 ? mx.query_monotone(q) : mn.query_monotone(q)).second);
-    return {dot(f, x, y), f};
+      f = form((y > 0 ? mx.query_monotone(q) : mn.query_monotone(q))->second);
+    return pair<U, LinearForm>{dot(f, x, y), f};
   }
 
 public:
@@ -129,15 +121,15 @@ public:
     has_line = true;
   }
 
-  pair<U, LinearForm> min_query(T x, T y) const { return query_impl<true>(x, y); }
+  optional<pair<U, LinearForm>> min_query(T x, T y) const { return query_impl<true>(x, y); }
 
-  pair<U, LinearForm> max_query(T x, T y) const { return query_impl<false>(x, y); }
-
-  // x/y が単調
-  pair<U, LinearForm> min_query_monotone(T x, T y) { return query_monotone_impl<true>(x, y); }
+  optional<pair<U, LinearForm>> max_query(T x, T y) const { return query_impl<false>(x, y); }
 
   // x/y が単調
-  pair<U, LinearForm> max_query_monotone(T x, T y) { return query_monotone_impl<false>(x, y); }
+  optional<pair<U, LinearForm>> min_query_monotone(T x, T y) { return query_monotone_impl<true>(x, y); }
+
+  // x/y が単調
+  optional<pair<U, LinearForm>> max_query_monotone(T x, T y) { return query_monotone_impl<false>(x, y); }
 
   void reset_monotone_query()
   {

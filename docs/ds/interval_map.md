@@ -23,9 +23,9 @@ assert(mp[3] == 7 && mp[8] == -1);
 
 mp.erase(4, 6);          // [2, 4): 7 と [6, 8): 7 が残る
 auto it = mp.get_it(3);
-assert(it != mp.end() && it->l == 2 && it->r == 4 && it->x == 7);
+assert(it && (*it)->l == 2 && (*it)->r == 4 && (*it)->x == 7);
 it = mp.next_it(4);
-assert(it->l == 6);
+assert(it && (*it)->l == 6);
 dump(mp.content());      // {(2, 4, 7), (6, 8, 7)}
 
 for (const auto &[l, r, x] : mp)
@@ -104,15 +104,15 @@ T operator[](const I p) const
 #### get_it / next_it
 
 ```cpp
-iterator get_it(const I p) const
-iterator next_it(const I p) const
+optional<iterator> get_it(const I p) const
+optional<iterator> next_it(const I p) const
 ```
 
-- `get_it(p)`：`p` を含む区間のイテレータ。未登録なら `end()`。
-- `next_it(p)`：`p` を含む区間、または `p` より右側で最初の区間のイテレータ。該当する区間がなければ `end()`。
+- `get_it(p)`：`p` を含む区間のイテレータ。未登録なら `nullopt`。
+- `next_it(p)`：`p` を含む区間、または `p` より右側で最初の区間のイテレータ。該当する区間がなければ `nullopt`。
 
 要素は公開メンバ `I l, r; T x;` を持つ `Segment`。
-`iterator` は `set` の `const_iterator` で、`it->l`, `it->r`, `it->x` から区間と値を取得できる。
+`iterator` は `set` の `const_iterator` で、値ありの検索結果 `result` に対し、`(*result)->l`, `(*result)->r`, `(*result)->x` から区間と値を取得できる。
 
 ##### 計算量
 

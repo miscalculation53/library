@@ -71,20 +71,22 @@ public:
   template <class I = ll>
   I num_of_vertices() const { return par.size(); }
 
-  // 頂点 v の親 (なければ -1) を返す
+  // 頂点 v の親を返す。根では nullopt。
   template <class I = ll>
-  I parent(int v) const
+  optional<I> parent(int v) const
   {
     assert(0 <= v && v < num_of_vertices());
-    return par[v];
+    if (par[v] == -1) return nullopt;
+    return I(par[v]);
   }
-  // 頂点 v の文字 c 方向への子 (なければ -1) を返す
+  // 頂点 v の文字 c 方向への子を返す。存在しなければ nullopt。
   template <class I = ll>
-  I child(int v, int c) const
+  optional<I> child(int v, int c) const
   {
     assert(0 <= v && v < num_of_vertices());
     assert(0 <= c && c < CHAR_NUM);
-    return chi[v][c];
+    if (chi[v][c] == -1) return nullopt;
+    return I(chi[v][c]);
   }
 
   // 頂点 v (デフォルトでは根) から始めて s を挿入

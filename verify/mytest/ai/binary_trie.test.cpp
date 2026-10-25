@@ -94,10 +94,10 @@ void test_random()
         if (y >= v) geq_keys.eb(key);
         if (y > v) gt_keys.eb(key);
       }
-      check(bt.lt_max_by(v, cnt, x), lt_keys, true);
-      check(bt.leq_max_by(v, cnt, x), leq_keys, true);
-      check(bt.geq_min_by(v, cnt, x), geq_keys, false);
-      check(bt.gt_min_by(v, cnt, x), gt_keys, false);
+      check(bt.lt_max_by(v, cnt, x).value_or(-1), lt_keys, true);
+      check(bt.leq_max_by(v, cnt, x).value_or(-1), leq_keys, true);
+      check(bt.geq_min_by(v, cnt, x).value_or(-1), geq_keys, false);
+      check(bt.gt_min_by(v, cnt, x).value_or(-1), gt_keys, false);
 
       ll lower = randint(0, n - 1), upper = randint(0, n - 1);
       ll lim = randint(0, max(0LL, all.cnt + 2));
@@ -121,7 +121,7 @@ void test_random()
       else
         assert(got_right_ng == (right_ng ^ x));
       auto got_right_ok = bt.max_right_ok_by(lower, pred, cnt, x);
-      assert(got_right_ok == (right_ok == -1 ? -1 : right_ok ^ x));
+      assert(got_right_ok.value_or(-1) == (right_ok == -1 ? -1 : right_ok ^ x));
 
       sum = 0;
       ll left_ng = -1, left_ok = n;
@@ -142,7 +142,7 @@ void test_random()
       else
         assert(got_left_ng == (left_ng ^ x));
       auto got_left_ok = bt.min_left_ok_by(upper, pred, cnt, x);
-      assert(got_left_ok == (left_ok == n ? n : left_ok ^ x));
+      assert(got_left_ok.value_or(n) == (left_ok == n ? n : left_ok ^ x));
     }
   };
 
@@ -241,7 +241,7 @@ void test_width_63()
 
   auto max_is_ng = [](ll s) { return s < 1; };
   assert(bt.min_left_ng(mx, max_is_ng) == mx);
-  assert(bt.min_left_ok_by(mx, max_is_ng, cnt) == limit);
+  assert(!bt.min_left_ok_by(mx, max_is_ng, cnt));
 
   bt.xor_all(mx);
   assert((as_const(bt).content() == map<ll, ll>{{0, 1}, {mx ^ hi, 3}, {mx, 2}}));
@@ -250,12 +250,12 @@ void test_width_63()
   assert(bt.get(0) == 1);
   assert(bt.min_element_by(cnt, mx) == mx);
   assert(bt.max_element_by(cnt, mx) == 0);
-  assert(bt.gt_min_by(mx, cnt) == -1);
-  assert(bt.lt_max_by(0, cnt) == -1);
+  assert(bt.gt_min_by(mx, cnt).value_or(-1) == -1);
+  assert(bt.lt_max_by(0, cnt).value_or(-1) == -1);
 
   auto first_ng = [](ll s) { return s < 2; };
   assert(bt.max_right_ng(mx, first_ng) == mx);
-  assert(bt.max_right_ok_by(mx, first_ng, cnt) == -1);
+  assert(!bt.max_right_ok_by(mx, first_ng, cnt));
 
   bt.add(hi, 4);
   assert(bt.all_sum() == 10 && bt.get(hi) == 4);

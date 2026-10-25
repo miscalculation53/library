@@ -92,16 +92,8 @@ namespace li_chao_tree_detail
     {
       return calculation_better(exact_eval(f, x), exact_eval(g, x));
     }
-    static pair<U, Line> empty()
-    {
-      T t = resolved_infty<T, inftyT>();
-      U u = resolved_infty<U, inftyU>();
-      if constexpr (!minimize) t = -t, u = -u;
-      return {u, {T(0), t, -1}};
-    }
     class QueryState
     {
-      pair<U, Line> fallback = empty();
       optional<pair<Calculation, Line>> best;
 
     public:
@@ -110,18 +102,12 @@ namespace li_chao_tree_detail
         Calculation result = exact_eval(f, x);
         if (!best || calculation_better(result, best->first)) best.emplace(std::move(result), f);
       }
-      pair<U, Line> finish() const
+      optional<pair<U, Line>> finish() const
       {
-        if (!best) return fallback;
-        return {Arithmetic::output(best->first), best->second};
+        if (!best) return nullopt;
+        return pair<U, Line>{Arithmetic::output(best->first), best->second};
       }
     };
-
-    static void update(pair<U, Line> &answer, const Line &f, const T &x)
-    {
-      if (f.id < 0) return;
-      if (answer.second.id < 0 || better(f, answer.second, x)) answer = {eval(f, x), f};
-    }
   };
 
   enum class Direction { done, left, right };
@@ -325,7 +311,7 @@ public:
       add_range(0, xmin, T(xmax - 1), l, T(r - 1), {a, b, id}, original_id);
     }
   }
-  pair<U, Line> query(T x) const
+  optional<pair<U, Line>> query(T x) const
   {
     assert(xmin <= x && x < xmax);
     typename Traits::QueryState answer;
@@ -404,7 +390,7 @@ private:
                 max(qfirst, middle + 1), qlast, fresh, original_id);
   }
   template <bool Indexed>
-  pair<U, Line> query_impl(const T &x, int position = -1) const
+  optional<pair<U, Line>> query_impl(const T &x, int position = -1) const
   {
     typename Traits::QueryState answer;
     int at = 0, first = 0, last = int(xs.size()) - 1;
@@ -463,12 +449,12 @@ public:
       add_range(0, 0, int(xs.size()) - 1, l, r - 1, {a, b, id}, original_id);
     }
   }
-  pair<U, Line> query(const T &x) const
+  optional<pair<U, Line>> query(const T &x) const
   {
     assert(!xs.empty());
     return query_impl<false>(x);
   }
-  pair<U, Line> query_index(int k) const
+  optional<pair<U, Line>> query_index(int k) const
   {
     assert(0 <= k && k < int(xs.size()));
     return query_impl<true>(xs[k], k);

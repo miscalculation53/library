@@ -15,7 +15,7 @@ Wikipedia の図が参考になりそう https://ja.wikipedia.org/wiki/%E3%82%A8
 AhoCorasick<2> ac(vvc<int>{{0, 1}, {1}});
 int v = ac.next<int>(ac.next<int>(0, 0), 1);
 assert(ac.trie.to_string<int>(v) == vc<int>({0, 1}));
-assert(ac.trie.to_string<int>(ac.failure(v)) == vc<int>({1}));
+assert(ac.trie.to_string<int>(*ac.failure(v)) == vc<int>({1}));
 ```
 
 ## 詳細なドキュメント
@@ -71,15 +71,18 @@ BFS のキューは頂点数に合わせて一括確保する。遷移表は根�
 #### failure
 
 ```cpp
-I failure(int v)
+optional<I> failure<I = ll>(int v)
 ```
 
-頂点 $v$ の failure link の行き先、つまりtrieに存在する真の接尾辞のうち最長のものを表す頂点を返す。根のときは $-1$ を返す。
+頂点 $v$ の failure link の行き先、つまりtrieに存在する真の接尾辞のうち最長のものを表す頂点を返す。根のときは `nullopt` を返す。根へ向かうリンクは値 $0$ を持つ成功結果となる。
 
 なお、`RootedTree` と組み合わせて
 
 ```cpp
-RootedTree<bool, false> G(GEN_VEC(aho.trie.num_of_vertices(), i, failure(i)));
+#include "tree/rooted_tree.hpp"
+
+int n = aho.trie.num_of_vertices();
+RootedTree tree(n, GEN_VEC(n, i, aho.failure(i).value_or(-1)));
 ```
 のようにすると failure link のみからなる木が作れる。failure link は子から親への辺として描かれることが多いが、`RootedTree` の辺は親から子への辺として管理されることに注意。
 

@@ -34,9 +34,17 @@ auto MAX(const V &v) { return *max_element(ALL(v)); }
 template <class V>
 auto MIN(const V &v) { return *min_element(ALL(v)); }
 template <class I = ll, class V>
-I ARGMAX(const V &v) { return max_element(ALL(v)) - v.begin(); }
+optional<I> ARGMAX(const V &v)
+{
+  if (v.empty()) return nullopt;
+  return I(max_element(ALL(v)) - v.begin());
+}
 template <class I = ll, class V>
-I ARGMIN(const V &v) { return min_element(ALL(v)) - v.begin(); }
+optional<I> ARGMIN(const V &v)
+{
+  if (v.empty()) return nullopt;
+  return I(min_element(ALL(v)) - v.begin());
+}
 
 template<class T = ll, class V>
 T mex(const V &a)

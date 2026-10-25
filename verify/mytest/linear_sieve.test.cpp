@@ -78,8 +78,28 @@ void test1()
   }
 }
 
+void test_lpf()
+{
+  static_assert(is_same_v<decltype(LinearSieve::lpf(2)), optional<PrimePower<int>>>);
+  static_assert(is_same_v<decltype(LinearSieve::lpf<ull>(2)), optional<PrimePower<ull>>>);
+  assert(!LinearSieve::lpf(1));
+  assert(!LinearSieve::lpf<ull>(1));
+  for (int n = 2; n <= 10000; ++n)
+  {
+    int p = 2;
+    while (n % p) ++p;
+    int e = 0, pe = 1, remaining = n;
+    while (remaining % p == 0) remaining /= p, ++e, pe *= p;
+    const auto factor = LinearSieve::lpf(n);
+    assert(factor && *factor == PrimePower<int>(p, e, pe));
+    assert(LinearSieve::lpf<ull>(n) == optional<PrimePower<ull>>(PrimePower<ull>(p, e, pe)));
+    assert(LinearSieve::is_prime(n) == (p == n));
+  }
+}
+
 int main()
 {
+  test_lpf();
   test_primes();
   test1();
 

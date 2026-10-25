@@ -17,8 +17,8 @@ void dsu_on_tree(const RootedTree &g, const Add &add, const Reset &reset, const 
   auto dfs = [&](auto dfs, int v, bool keep) -> void
   {
     fec(c : g.light_children(v)) dfs(dfs, c, false);
-    if (g.heavy_child(v) != -1)
-      dfs(dfs, g.heavy_child(v), true);
+    if (auto heavy = g.heavy_child(v))
+      dfs(dfs, *heavy, true);
     add(v);
     fec(c : g.light_children(v)) repi(i, g.preorder(c), g.postorder(c)) add(g.preorder_select(i));
     rem(v);

@@ -103,11 +103,11 @@ void algorithms(int n, const vc<pair<int, int>> &uv)
     repi(t, n)
     {
       auto path = sp.path(t);
-      static_assert(is_same_v<decltype(path), vc<Edge<void>>>);
-      if (dist[s][t] == INF) { assert(path.empty()); continue; }
-      assert(path.size() == size_t(dist[s][t]));
+      static_assert(is_same_v<decltype(path), optional<vc<Edge<void>>>>);
+      if (dist[s][t] == INF) { assert(!path); continue; }
+      assert(path && path->size() == size_t(dist[s][t]));
       int v = s;
-      fec(e : path)
+      fec(e : *path)
       {
         assert(e.from == v && e.cost == 1);
         auto [a, b] = uv[e.index];
@@ -126,7 +126,8 @@ void algorithms(int n, const vc<pair<int, int>> &uv)
     assert(sp.dial(0, 1) == dist[0]);
     assert(sp.bellman_ford(0) == dist[0]);
     assert(sp.solve(0, n - 1)[n - 1] == dist[0][n - 1]);
-    assert(sp.path(n - 1).size() == (dist[0][n - 1] == INF ? 0 : size_t(dist[0][n - 1])));
+    assert(bool(sp.path(n - 1)) == (dist[0][n - 1] != INF));
+    if (auto path = sp.path(n - 1)) assert(path->size() == size_t(dist[0][n - 1]));
     ShortestPath<directed, void, 1000> finite(g);
     auto ds = finite.solve(0);
     repi(t, n) assert(ds[t] == (dist[0][t] == INF ? 1000 : dist[0][t]));

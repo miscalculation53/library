@@ -44,13 +44,13 @@ void main2()
   PRINT(aho.trie.num_of_vertices());
   rep(i, 1, aho.trie.num_of_vertices())
   {
-    PRINT(aho.trie.parent(i), aho.failure(i));
+    PRINT(*aho.trie.parent(i), *aho.failure(i));
   }
   vl V(N);
   rep(i, N)
   {
     ll v = 0;
-    fec(c : S.at(i)) v = aho.trie.child(v, c - 'a');
+    fec(c : S.at(i)) v = *aho.trie.child(v, c - 'a');
     V.at(i) = v;
   }
   PRINT(V);

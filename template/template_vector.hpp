@@ -90,10 +90,10 @@ void fill(V &v, const T &value)
 }
 
 template <class T = ll>
-T ctol(const char &c, const string &s)
+optional<T> ctol(const char &c, const string &s)
 {
-  repi(i, SZ<int>(s)) if (s[i] == c) return i;
-  return -1;
+  repi(i, SZ<int>(s)) if (s[i] == c) return T(i);
+  return nullopt;
 }
 template <class T = ll>
 vc<T> stov(const string &s, char first)
@@ -102,10 +102,17 @@ vc<T> stov(const string &s, char first)
                  { return s[i] - first; });
 }
 template <class T = ll>
-vc<T> stov(const string &s, const string &t)
+optional<vc<T>> stov(const string &s, const string &t)
 {
-  return gen_vec(SZ<int>(s), [&](int i) -> T
-                 { return ctol(s[i], t); });
+  vc<T> res;
+  res.reserve(s.size());
+  for (char c : s)
+  {
+    auto index = ctol<T>(c, t);
+    if (!index) return nullopt;
+    res.push_back(*index);
+  }
+  return res;
 }
 template <class T>
 string vtos(const vc<T> &v, char first)

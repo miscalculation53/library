@@ -130,11 +130,11 @@ vc<Key> content() const
 #### find_ptr / contains
 
 ```cpp
-const Key* find_ptr(const Key& key) const
+optional<reference_wrapper<const Key>> find_ptr(const Key& key) const
 bool contains(const Key& key) const
 ```
 
-`find_ptr` は `key` と同値なキーが存在すれば格納されたキーへのポインタ、存在しなければ `nullptr` を返す。
+`find_ptr` は格納されたキーへの読み取り専用参照を返す。不在は `nullopt`。値ありの `result->get()` は格納されたキーそのものを参照する。
 `contains` は存在する場合に `true` を返す。
 
 再ハッシュ、要素の削除、`clear` で、以前に取得したポインタ・参照は無効になる。`swap` とムーブでは、ポインタ・参照は交換先・移動先の要素を指す。ムーブ代入では、代入先が元々持っていた要素へのポインタ・参照が無効になる。

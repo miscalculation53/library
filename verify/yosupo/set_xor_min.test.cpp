@@ -32,7 +32,7 @@ void main2()
     else if (t == 1)
       bt.set(x, 0);
     else
-      PRINT(bt.min_element_by(identity{}, x) ^ x);
+      PRINT(*bt.min_element_by(identity{}, x) ^ x);
   }
 }
 

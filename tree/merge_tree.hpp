@@ -29,12 +29,12 @@ public:
 
   bool same(int u, int v) { return uf.same(u, v); }
   // 元の頂点 u, v の成分をマージする
-  // 新しい親の番号 (マージ済みなら -1) を返す
+  // 新しい親の番号を返す。同じ成分なら nullopt。
   // 新しくマージされたら木に頂点が増える
-  int merge(int u, int v)
+  optional<int> merge(int u, int v)
   {
     int x = uf.leader(u), y = uf.leader(v);
-    if (x == y) return -1;
+    if (x == y) return nullopt;
     int a = top[x], b = top[y], z = par.size();
     par.eb(-1);
     par[a] = par[b] = z;

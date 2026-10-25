@@ -49,7 +49,7 @@ private:
       }
     }
 
-    auto it = next_it(l);
+    auto it = next_it(l).value_or(segs.end());
     while (it != segs.end() && it->l < r)
     {
       const Segment a = *it;
@@ -89,25 +89,27 @@ public:
   }
 
   // p を含む区間
-  // 未登録なら end()
-  iterator get_it(const I p) const
+  // 未登録なら nullopt。
+  optional<iterator> get_it(const I p) const
   {
     auto it = segs.upper_bound(p);
-    if (it == segs.begin()) return segs.end();
+    if (it == segs.begin()) return nullopt;
     --it;
-    return p < it->r ? it : segs.end();
+    if (p < it->r) return it;
+    return nullopt;
   }
-  // p を含む区間、またはその右側で最初の区間
-  iterator next_it(const I p) const
+  // p を含む区間、またはその右側で最初の区間。なければ nullopt。
+  optional<iterator> next_it(const I p) const
   {
     auto it = segs.upper_bound(p);
     if (it != segs.begin() && p < prev(it)->r) return prev(it);
-    return it;
+    if (it != segs.end()) return it;
+    return nullopt;
   }
   T get(const I p) const
   {
     auto it = get_it(p);
-    return it == segs.end() ? dflt : it->x;
+    return it ? (*it)->x : dflt;
   }
   T operator[](const I p) const { return get(p); }
 

@@ -87,18 +87,19 @@ public:
   }
 
   template <class P = int>
-  static PrimePower<P> lpf(int n)
+  static optional<PrimePower<P>> lpf(int n)
   {
     assert(n >= 1);
+    if (n == 1) return nullopt;
     reserve(n);
-    return lpf_[n];
+    return PrimePower<P>(lpf_[n]);
   }
 
   static bool is_prime(int n)
   {
     if (n <= 1)
       return false;
-    return lpf(n).p == n;
+    return lpf(n)->p == n;
   }
 
   // 重複を含めた素因数の個数 Ω(n)

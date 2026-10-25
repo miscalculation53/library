@@ -1,4 +1,4 @@
-このドキュメントには AI による作成・変更が含まれている可能性があります。
+このドキュメントには AI による作成・変更が含まれています。
 
 ## 概要
 
@@ -154,13 +154,13 @@ vc<int> parents() const
 ```cpp
 (1) auto children(int v) const
 (2) auto light_children(int v) const
-(3) int heavy_child(int v) const
+(3) optional<int> heavy_child(int v) const
 (4) int head(int v) const
 ```
 
 - (1)：子の頂点番号を走査する範囲を返す。
 - (2)：light edge でつながる子を走査する範囲を返す。
-- (3)：heavy child を返す。葉では `-1`。
+- (3)：heavy child を返す。葉では `nullopt`。
 - (4)：`v` が属する heavy path の先頭を返す。
 
 (1), (2) の範囲には `empty()` と `to_v()` がある。`to_v()` は頂点番号の配列を返す。
@@ -304,14 +304,14 @@ HLDの各パスの先頭を調べ、条件を満たすパス内だけ二分探�
 #### la, jump
 
 ```cpp
-(1) int la(int v, int k) const
-(2) int jump(int u, int v, int k) const
+(1) optional<int> la(int v, int k) const
+(2) optional<int> jump(int u, int v, int k) const
 ```
 
 - (1)：`v` から親方向へ $k$ 辺進んだ頂点を返す。
 - (2)：`u` から `v` へのパスを $k$ 辺進んだ頂点を返す。
 
-該当する頂点が存在する場合はその番号、パスの長さを超えた場合は `-1` を返す。
+該当する頂点の番号を返す。パスの長さを超えた場合は `nullopt`。$k=0$ なら始点自身を返し、頂点番号 $0$ も成功結果となる。
 
 ##### 制約
 

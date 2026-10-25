@@ -198,21 +198,29 @@ private:
   }
 
 public:
-  int next(int x) const { return fast_set_neighbor<true>(x); }
-  int prev(int x) const { return fast_set_neighbor<false>(x); }
+  optional<int> next(int x) const
+  {
+    int key = fast_set_neighbor<true>(x);
+    return key == n ? nullopt : optional<int>(key);
+  }
+  optional<int> prev(int x) const
+  {
+    int key = fast_set_neighbor<false>(x);
+    return key < 0 ? nullopt : optional<int>(key);
+  }
 
-  int geq_min(int x) const { return next(x); }
-  int gt_min(int x) const { return x >= n - 1 ? n : next(x + 1); }
-  int leq_max(int x) const { return prev(x); }
-  int lt_max(int x) const { return x <= 0 ? -1 : prev(x - 1); }
-  int min_element() const { return next(0); }
-  int max_element() const { return prev(n - 1); }
+  optional<int> geq_min(int x) const { return next(x); }
+  optional<int> gt_min(int x) const { return x >= n - 1 ? nullopt : next(x + 1); }
+  optional<int> leq_max(int x) const { return prev(x); }
+  optional<int> lt_max(int x) const { return x <= 0 ? nullopt : prev(x - 1); }
+  optional<int> min_element() const { return next(0); }
+  optional<int> max_element() const { return prev(n - 1); }
 
   template <class F>
   void enumerate(int l, int r, const F &f) const
   {
     assert(0 <= l && l <= r && r <= n);
-    for (int x = next(l); x < r; x = next(x + 1)) f(x);
+    for (int x = fast_set_neighbor<true>(l); x < r; x = fast_set_neighbor<true>(x + 1)) f(x);
   }
 
   void clear()
@@ -246,13 +254,13 @@ public:
     const_iterator() = default;
     int operator*() const { return key; }
     const int *operator->() const { return &key; }
-    const_iterator &operator++() { key = st->next(key + 1); return *this; }
+    const_iterator &operator++() { key = st->fast_set_neighbor<true>(key + 1); return *this; }
     const_iterator operator++(int) { auto old = *this; ++*this; return old; }
     bool operator==(const const_iterator &other) const { return st == other.st && key == other.key; }
     bool operator!=(const const_iterator &other) const { return !(*this == other); }
   };
   using iterator = const_iterator;
-  iterator begin() const { return iterator(this, next(0)); }
+  iterator begin() const { return iterator(this, fast_set_neighbor<true>(0)); }
   iterator end() const { return iterator(this, n); }
   const_iterator cbegin() const { return begin(); }
   const_iterator cend() const { return end(); }

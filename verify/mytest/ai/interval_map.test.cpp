@@ -56,12 +56,12 @@ void check(const IntervalMap<int, int> &mp, const vc<optional<int>> &a,
     assert(mp.get(p) == value.value_or(unit));
     assert(mp[p] == value.value_or(unit));
     const auto it = mp.get_it(p);
-    assert((it != mp.end()) == value.has_value());
-    if (it != mp.end()) assert(it->l <= p && p < it->r && it->x == *value);
+    assert(it.has_value() == value.has_value());
+    if (it) assert((*it)->l <= p && p < (*it)->r && (*it)->x == *value);
     const auto jt = mp.next_it(p);
     auto expected = find_if(want.begin(), want.end(), [&](const Row &row) { return p < std::get<1>(row); });
-    assert((jt == mp.end()) == (expected == want.end()));
-    if (jt != mp.end()) assert((Row{jt->l, jt->r, jt->x}) == *expected);
+    assert((!jt) == (expected == want.end()));
+    if (jt) assert((Row{(*jt)->l, (*jt)->r, (*jt)->x}) == *expected);
   }
 }
 
@@ -162,8 +162,8 @@ void test_construction()
   assert(inferred.content().size() == 4);
   assert(IntervalMap<int>(vc<int>{}).empty());
   IntervalMap<string> strings(vc<string>{"a", "a", "b"}, "empty");
-  strings.set(-1, 2, strings.get_it(0)->x);
-  assert(strings.content().size() == 2 && strings.get_it(0)->l == -1);
+  strings.set(-1, 2, (*strings.get_it(0))->x);
+  assert(strings.content().size() == 2 && (*strings.get_it(0))->l == -1);
   strings.erase(0, 2);
   assert(strings.get(0) == "empty" && strings.get(-1) == "a" && strings.get(2) == "b");
 }
@@ -189,7 +189,7 @@ void test_types()
   mp.set(0, hi, "a");
   assert(mp.content().size() == 1 && mp.begin()->l == lo && mp.begin()->r == hi);
   assert(mp[lo] == "a" && mp[hi - 1] == "a" && mp[hi] == "empty");
-  assert(mp.get_it(hi) == mp.end() && mp.next_it(hi) == mp.end());
+  assert(!mp.get_it(hi) && !mp.next_it(hi));
   mp.erase(lo + 1, hi - 1);
   assert(mp.content().size() == 2 && mp.get(lo + 1) == "empty");
   mp.set(lo, hi, mp.begin()->x);
@@ -220,7 +220,7 @@ void test_types()
   generic.set(Key{4}, Key{6}, generic.begin()->x);
   generic.erase(Key{2}, Key{3});
   assert(generic.content().size() == 2 && generic[Key{2}].value == "empty");
-  assert(generic.next_it(Key{2})->l.value == 3);
+  assert((*generic.next_it(Key{2}))->l.value == 3);
 }
 
 void test_many_segments()

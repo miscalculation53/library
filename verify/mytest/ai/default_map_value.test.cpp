@@ -97,7 +97,7 @@ void test_hash_map()
 {
   DefaultHashMap<int, ll, -7, ModHash, ModEqual> mp;
   const auto &cmp = mp;
-  assert(mp.find_ptr(6) == nullptr && cmp.find_ptr(6) == nullptr);
+  assert(!mp.find_ptr(6) && !cmp.find_ptr(6));
   assert(!mp.contains(6) && mp.empty());
   assert(mp[6] == -7);
   mp[6] = 60;
@@ -112,7 +112,7 @@ void test_hash_map()
   assert(!inserted && *p == 60);
   assert(mp.insert_or_assign(14, 140));
   assert(!mp.insert_or_assign(14, 141));
-  assert(*cmp.find_ptr(14) == 141);
+  assert(cmp.find_ptr(14)->get() == 141);
 
   mp.clear();
   repi(i, 300)

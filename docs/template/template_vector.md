@@ -14,6 +14,9 @@ assert(squares == vc<int>({0, 1, 4, 9}));
 auto dp = dvec<ll>({2, 3}, -1);
 dp[1][2] = 5;
 assert(dp[0][0] == -1 && dp[1][2] == 5);
+auto codes = stov("JOJO", "JOI");
+assert(codes && *codes == vc<ll>({0, 1, 0, 1}));
+assert(!ctol('?', "JOI"));
 ```
 
 ## 詳細なドキュメント
@@ -136,23 +139,29 @@ fill(a, 7);
 
 #### ctol
 
-`T ctol<T = ll>(char c, string s)`
+```cpp
+optional<T> ctol<T = ll>(const char& c, const string& s)
+```
 
 文字と数値の関係を表す文字列 $s$ を使って、文字 $c$ を数値に変換する。たとえば、`ctol(c, "JOI")` なら、`J` $\to 0$, `O` $\to 1$, `I` $\to 2$ という変換をする。
 
-厳密には、$s$ の中に初めて $c$ が現れる index（見つからなければ $-1$）を返す。（基本的に $s$ の文字が異なることを想定しているが、そうでなくても動作する。）
+$s$ の中に初めて $c$ が現れる添字を返す。見つからなければ `nullopt`。先頭で見つかれば値 $0$ を返す。重複した文字にも対応する。
+
+##### 計算量
+
+- $O(\lvert s\rvert)$
 
 #### stov
 
 ```cpp
 (1) vc<T = ll> stov(string s, char first)
-(2) vc<T = ll> stov(string s, string t)
+(2) optional<vc<T>> stov<T = ll>(const string& s, const string& t)
 ```
 
 - (1)：$s$ の各文字 `s[i]` を `s[i] - first` として数値に変換し、それを並べた vector を返す。
   - `first` は基本的には `'A'`, `'a'`, `'0'` を使うことが多いと思う。
 
-- (2)：$s$ の各文字 `s[i]` を `ctol(s[i], t)` として数値に変換し、それを並べた vector を返す。
+- (2)：各文字を `t` 内の最初の添字へ変換し、配列を返す。`t` に含まれない文字があれば `nullopt`。空文字列の変換は、空配列を持つ成功結果となる。
 
 ### 結合
 

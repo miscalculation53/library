@@ -238,12 +238,13 @@ public:
     return res;
   }
 
-  vc<Edge<Cost>> path(int s, int t) const
+  // 有限の最短経路は辺列、距離が ±infty なら nullopt。
+  optional<vc<Edge<Cost>>> path(int s, int t) const
   {
     const int n = g.size();
     assert(solved && 0 <= s && s < n && 0 <= t && t < n);
     vc<Edge<Cost>> res;
-    if (dist[s][t] == inf() || dist[s][t] == -inf()) return res;
+    if (dist[s][t] == inf() || dist[s][t] == -inf()) return nullopt;
     while (t != s)
     {
       assert(prev[s][t] != -1 && int(res.size()) < n);

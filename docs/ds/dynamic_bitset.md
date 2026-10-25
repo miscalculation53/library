@@ -1,4 +1,4 @@
-このドキュメントには AI による作成・変更が含まれている可能性があります。
+このドキュメントには AI による作成・変更が含まれています。
 
 ## 概要
 
@@ -18,8 +18,9 @@
 DynamicBitset a(100);
 a.set_range(10, 20);
 a.flip(15);
-int first = a.find_first();
-int next = a.find_next(first);
+auto first = a.find_first();
+auto next = first ? a.find_next(*first) : nullopt;
+assert(first == 10 && next == 11);
 a.or_slice(7, a.size(), a, 0);
 
 DynamicBitset b("0010110");
@@ -145,13 +146,13 @@ bool all(int l, int r)
 #### find_first / find_next / find_last / find_prev
 
 ```cpp
-int find_first(bool value = true)
-int find_next(int i, bool value = true)
-int find_last(bool value = true)
-int find_prev(int i, bool value = true)
+optional<int> find_first(bool value = true)
+optional<int> find_next(int i, bool value = true)
+optional<int> find_last(bool value = true)
+optional<int> find_prev(int i, bool value = true)
 ```
 
-`find_next(i, value)` は $i$ より右、`find_prev(i, value)` は $i$ より左にある最初の `value` の位置を返す。存在しない場合、右方向の検索は `size()`、左方向の検索は $-1$ を返す。
+`find_next(i, value)` は $i$ より右、`find_prev(i, value)` は $i$ より左にある最初の `value` の位置を返す。存在しない場合は `nullopt` を返す。位置 $0$ も値ありとして返す。
 
 ##### 計算量
 

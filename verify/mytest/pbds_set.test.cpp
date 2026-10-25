@@ -26,31 +26,31 @@ void test1()
     assert(gt_min(a, k) == st.gt_min_id(k));
     assert(geq_min(a, k) == st.geq_min_id(k));
     {
-      ll i = lt_max(a, k);
+      auto i = lt_max(a, k);
       auto it = st.lt_max_it(k);
-      ll x = 0 <= i && i < n ? a[i] : -1;
-      ll y = it != st.end() ? *it : -1;
+      ll x = i ? a[*i] : -1;
+      ll y = it ? **it : -1;
       assert(x == y);
     }
     {
-      ll i = leq_max(a, k);
+      auto i = leq_max(a, k);
       auto it = st.leq_max_it(k);
-      ll x = 0 <= i && i < n ? a[i] : -1;
-      ll y = it != st.end() ? *it : -1;
+      ll x = i ? a[*i] : -1;
+      ll y = it ? **it : -1;
       assert(x == y);
     }
     {
-      ll i = gt_min(a, k);
+      auto i = gt_min(a, k);
       auto it = st.gt_min_it(k);
-      ll x = 0 <= i && i < n ? a[i] : -1;
-      ll y = it != st.end() ? *it : -1;
+      ll x = i ? a[*i] : -1;
+      ll y = it ? **it : -1;
       assert(x == y);
     }
     {
-      ll i = geq_min(a, k);
+      auto i = geq_min(a, k);
       auto it = st.geq_min_it(k);
-      ll x = 0 <= i && i < n ? a[i] : -1;
-      ll y = it != st.end() ? *it : -1;
+      ll x = i ? a[*i] : -1;
+      ll y = it ? **it : -1;
       assert(x == y);
     }
   }
@@ -78,31 +78,31 @@ void test2()
     assert(gt_min(a, k) == ms.gt_min_id(k));
     assert(geq_min(a, k) == ms.geq_min_id(k));
     {
-      ll i = lt_max(a, k);
+      auto i = lt_max(a, k);
       auto it = ms.lt_max_it(k);
-      ll x = 0 <= i && i < n ? a[i] : -1;
-      ll y = it != ms.end() ? it->first : -1;
+      ll x = i ? a[*i] : -1;
+      ll y = it ? (*it)->first : -1;
       assert(x == y);
     }
     {
-      ll i = leq_max(a, k);
+      auto i = leq_max(a, k);
       auto it = ms.leq_max_it(k);
-      ll x = 0 <= i && i < n ? a[i] : -1;
-      ll y = it != ms.end() ? it->first : -1;
+      ll x = i ? a[*i] : -1;
+      ll y = it ? (*it)->first : -1;
       assert(x == y);
     }
     {
-      ll i = gt_min(a, k);
+      auto i = gt_min(a, k);
       auto it = ms.gt_min_it(k);
-      ll x = 0 <= i && i < n ? a[i] : -1;
-      ll y = it != ms.end() ? it->first : -1;
+      ll x = i ? a[*i] : -1;
+      ll y = it ? (*it)->first : -1;
       assert(x == y);
     }
     {
-      ll i = geq_min(a, k);
+      auto i = geq_min(a, k);
       auto it = ms.geq_min_it(k);
-      ll x = 0 <= i && i < n ? a[i] : -1;
-      ll y = it != ms.end() ? it->first : -1;
+      ll x = i ? a[*i] : -1;
+      ll y = it ? (*it)->first : -1;
       assert(x == y);
     }
   }

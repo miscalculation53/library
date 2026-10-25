@@ -288,12 +288,12 @@ public:
     vc<int> to_v() const { return vc<int>(begin(), end()); }
   };
 
-  // v の heavy child (なければ -1)
-  int heavy_child(int v) const
+  // v の heavy child。葉では nullopt。
+  optional<int> heavy_child(int v) const
   {
     assert(0 <= v && v < n);
     if (post[v] - pre[v] == 1)
-      return -1;
+      return nullopt;
     return preinv[pre[v] + 1];
   }
   ChildRange children(int v) const
@@ -391,21 +391,21 @@ public:
     }
   }
 
-  // v の k 個上。なければ -1
-  int la(int v, int k) const
+  // v の k 個上。存在しなければ nullopt。
+  optional<int> la(int v, int k) const
   {
     assert(0 <= v && v < n);
     assert(0 <= k);
     if (k == 0) return v;
     if (k > dep[v])
-      return -1;
+      return nullopt;
     const int target_depth = dep[v] - k;
     while (dep[internal_head(v)] > target_depth) v = parent_of_head(internal_head(v));
     return preinv[pre[v] - dep[v] + target_depth];
   }
 
-  // u から v に k 個進む。なければ -1
-  int jump(int u, int v, int k) const
+  // u から v に k 個進む。存在しなければ nullopt。
+  optional<int> jump(int u, int v, int k) const
   {
     assert(0 <= u && u < n);
     assert(0 <= v && v < n);
@@ -415,7 +415,7 @@ public:
     int d_ul = dep[u] - dep[l];
     int d_vl = dep[v] - dep[l];
     if (k > d_ul + d_vl)
-      return -1;
+      return nullopt;
     if (k <= d_ul)
       return la(u, k);
     return la(v, d_ul + d_vl - k);

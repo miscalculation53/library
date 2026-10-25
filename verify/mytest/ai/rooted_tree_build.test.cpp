@@ -31,7 +31,7 @@ void check(const vc<pair<int, int>> &es, int root)
       assert(out - in == size[v] && 0 <= in && out <= n);
       assert(tree->preorder_select(in) == v && !seen[in]++);
       int next = in + 1, biggest = 0, children = 0;
-      const int heavy = tree->heavy_child(v);
+      const auto heavy = tree->heavy_child(v);
       for (int c : tree->children(v))
       {
         assert(par[c] == v && tree->preorder(c) == next);
@@ -41,8 +41,8 @@ void check(const vc<pair<int, int>> &es, int root)
       }
       assert(next == out);
       assert(children == int(adj[v].size()) - (v != root));
-      assert((heavy == -1) == (children == 0));
-      if (heavy != -1) assert(size[heavy] == biggest);
+      assert(!heavy == (children == 0));
+      if (heavy) assert(size[*heavy] == biggest);
       if (v != root) assert(tree->parent(v) == par[v]);
     }
     const auto [brackets, vertices] = tree->dfs_ordered_vertices();
@@ -83,8 +83,8 @@ void check(const vc<pair<int, int>> &es, int root)
       {
         const int expected = k > length ? -1 : k <= depth[u] - depth[a]
             ? climb(u, k) : climb(v, length - k);
-        assert(tree->jump(u, v, k) == expected);
-        assert(tree->la(u, k) == climb(u, k));
+        assert(tree->jump(u, v, k).value_or(-1) == expected);
+        assert(tree->la(u, k).value_or(-1) == climb(u, k));
       }
     }
   }

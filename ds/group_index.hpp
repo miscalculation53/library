@@ -165,37 +165,37 @@ public:
   // 値が val になる添字たち
   auto idxs(const T &val) const { return csr.at(row_id(val)); }
 
-  // 値が val になる添字のうち i 未満で最大のもの (なければ -1)
-  I lt_max(const T &val, int i) const
+  // 値が val になる添字のうち i 未満で最大のもの (なければ nullopt)
+  optional<I> lt_max(const T &val, int i) const
   {
     int row = row_id(val);
     auto is = csr.at(row);
     I j = row_count(row, i, false);
-    return j == 0 ? -1 : is[j - 1];
+    return j == 0 ? nullopt : optional<I>(is[j - 1]);
   }
-  // 値が val になる添字のうち i 以下で最大のもの (なければ -1)
-  I leq_max(const T &val, int i) const
+  // 値が val になる添字のうち i 以下で最大のもの (なければ nullopt)
+  optional<I> leq_max(const T &val, int i) const
   {
     int row = row_id(val);
     auto is = csr.at(row);
     I j = row_count(row, i, true);
-    return j == 0 ? -1 : is[j - 1];
+    return j == 0 ? nullopt : optional<I>(is[j - 1]);
   }
-  // 値が val になる添字のうち i 超過で最小のもの (なければ n)
-  I gt_min(const T &val, int i) const
+  // 値が val になる添字のうち i 超過で最小のもの (なければ nullopt)
+  optional<I> gt_min(const T &val, int i) const
   {
     int row = row_id(val);
     auto is = csr.at(row);
     I j = row_count(row, i, true);
-    return j == is.size() ? n : is[j];
+    return j == is.size() ? nullopt : optional<I>(is[j]);
   }
-  // 値が val になる添字のうち i 以上で最小のもの (なければ n)
-  I geq_min(const T &val, int i) const
+  // 値が val になる添字のうち i 以上で最小のもの (なければ nullopt)
+  optional<I> geq_min(const T &val, int i) const
   {
     int row = row_id(val);
     auto is = csr.at(row);
     I j = row_count(row, i, false);
-    return j == is.size() ? n : is[j];
+    return j == is.size() ? nullopt : optional<I>(is[j]);
   }
   // 値が val になる i 未満の添字の個数
   // i 番目が val のとき、「これは何番目の val か？」に一致

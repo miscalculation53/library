@@ -90,6 +90,8 @@ vc<pair<Key, Value>> content() const
 #### その他の操作
 
 内部のコンテナの操作をそのまま利用できる。
+`DefaultHashMap::find_ptr` は [HashMap](hash_map.md#find_ptr) と同じ optional の参照を返す。
+
 `DefaultHashMap` では `reserve`, `find_ptr`, `contains`, `insert`, `insert_or_assign`, `erase`, `clear`, `size`, `empty`, `begin`, `end`, `cbegin`, `cend` が使える。
 
 `for (auto& [key, val] : hmp)` で登録済みの要素を走査できる。走査によるデフォルト値の生成やキーの挿入は行わない。

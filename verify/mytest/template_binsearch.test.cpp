@@ -35,60 +35,47 @@ void test1()
 
 void test2()
 {
-  ll n = 1 + mt() % 10;
+  ll n = mt() % 11;
   vl a(n);
   rep(i, n) a[i] = 1 + mt() % 10;
   sort(ALL(a));
   ll k = -1 + mt() % 12;
-
-  ll i1, i2;
-  i1 = lt_max(a, k);
-  i2 = expsearch([&](ll i)
-                 { return vecget(a, i) < k; }, 0, true)
-           .first;
-  assert(i1 == i2);
-  i1 = leq_max(a, k);
-  i2 = expsearch([&](ll i)
-                 { return vecget(a, i) <= k; }, 0, true)
-           .first;
-  assert(i1 == i2);
-  i1 = gt_min(a, k);
-  i2 = expsearch([&](ll i)
-                 { return k < vecget(a, i); }, 0, true)
-           .first;
-  assert(i1 == i2);
-  i1 = geq_min(a, k);
-  i2 = expsearch([&](ll i)
-                 { return k <= vecget(a, i); }, 0, true)
-           .first;
-  assert(i1 == i2);
-
-  i1 = lt_cnt(a, k);
-  i2 = count_if(ALL(a), [&](ll ai)
-                { return ai < k; });
-  assert(i1 == i2);
-  i1 = leq_cnt(a, k);
-  i2 = count_if(ALL(a), [&](ll ai)
-                { return ai <= k; });
-  assert(i1 == i2);
-  i1 = gt_cnt(a, k);
-  i2 = count_if(ALL(a), [&](ll ai)
-                { return k < ai; });
-  assert(i1 == i2);
-  i1 = geq_cnt(a, k);
-  i2 = count_if(ALL(a), [&](ll ai)
-                { return k <= ai; });
-  assert(i1 == i2);
+  optional<ll> lt, leq, gt, geq;
+  rep(i, n)
+  {
+    if (a[i] < k) lt = i;
+    if (a[i] <= k) leq = i;
+    if (!gt && a[i] > k) gt = i;
+    if (!geq && a[i] >= k) geq = i;
+  }
+  assert(lt_max(a, k) == lt);
+  assert(leq_max(a, k) == leq);
+  assert(gt_min(a, k) == gt);
+  assert(geq_min(a, k) == geq);
+  multiset<ll> values(ALL(a));
+  auto check_iterator = [&](auto result, optional<ll> expected)
+  {
+    assert(bool(result) == bool(expected));
+    if (result) assert(**result == a[*expected]);
+  };
+  check_iterator(lt_max(values, k), lt);
+  check_iterator(leq_max(values, k), leq);
+  check_iterator(gt_min(values, k), gt);
+  check_iterator(geq_min(values, k), geq);
+  assert(lt_cnt(a, k) == count_if(ALL(a), [&](ll x) { return x < k; }));
+  assert(leq_cnt(a, k) == count_if(ALL(a), [&](ll x) { return x <= k; }));
+  assert(gt_cnt(a, k) == count_if(ALL(a), [&](ll x) { return x > k; }));
+  assert(geq_cnt(a, k) == count_if(ALL(a), [&](ll x) { return x >= k; }));
 }
 
 void test3()
 {
   vc<int> v = {1, 3, 5, 7, 9};
-  int i = leq_max(v, 6);
-  assert(v[i] == 5);
+  auto i = leq_max(v, 6);
+  assert(i && v[*i] == 5);
   set<int> s = {1, 3, 5, 7, 9};
   auto it = leq_max(s, 6);
-  assert(*it == 5);
+  assert(it && **it == 5);
 }
 
 // https://atcoder.jp/contests/kupc2013/tasks/kupc2013_a
@@ -98,7 +85,7 @@ void test4()
   auto solve = [](int q, vc<P> v) -> string
   {
     v.insert(v.begin(), {1, "kogakubu10gokan"});
-    int i = leq_max(v, q, {}, [](const P &p)
+    int i = *leq_max(v, q, {}, [](const P &p)
                     { return p.first; });
     return v[i].second;
   };
@@ -124,6 +111,12 @@ int main()
 {
   rep(_, 10000) test1();
   rep(_, 10000) test2();
+  static_assert(is_same_v<decltype(lt_max<unsigned>(vc<int>{}, 0)), optional<unsigned>>);
+  assert(!lt_max<unsigned>(vc<int>{}, 0));
+  assert(!geq_min<unsigned>(vc<int>{}, 0));
+  assert(geq_min<unsigned>(vc<int>{0}, 0) == 0);
+  assert(!gt_min(vc<int>{0}, 0));
+  assert(!lt_max(set<int>{}, 0));
   test3();
   test4();
 

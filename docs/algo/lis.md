@@ -11,7 +11,8 @@
 
 LIS lis(vc<int>{3, 1, 2, 4});
 assert(lis.len_of_lis() == 3);
-assert(lis.pos_in_lis(0) == -1);
+assert(!lis.pos_in_lis(0));
+assert(lis.pos_in_lis(1) == 0);
 for (int i : lis.candidates(0)) assert(i == 1);
 ```
 
@@ -52,10 +53,10 @@ LIS の長さを返す。
 #### pos_in_lis
 
 ```cpp
-I pos_in_lis<I = ll>(int i)
+optional<I> pos_in_lis<I = ll>(int i)
 ```
 
-`a[i]` がいずれかの LIS に使われ得る場合、その LIS 内での位置を $0$ 始まりで返す。使われ得ない場合は $-1$ を返す。
+`a[i]` がいずれかの LIS に使われ得る場合、その LIS 内での位置を $0$ 始まりで返す。使われ得ない場合は `nullopt` を返す。位置 $0$ も成功結果となる。
 
 ##### 制約
 

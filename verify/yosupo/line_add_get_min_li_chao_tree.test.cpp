@@ -30,7 +30,7 @@ int main()
     {
       ll x;
       cin >> x;
-      cout << tree.query(x).first << '\n';
+      cout << tree.query(x)->first << '\n';
     }
   }
 }

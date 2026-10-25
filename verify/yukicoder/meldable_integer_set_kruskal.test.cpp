@@ -24,8 +24,8 @@ void main2()
   vl weight(N, 0);
   for (auto [u, v, w] : UVW)
   {
-    int z = merges.merge(u, v);
-    if (z != -1) weight.eb(w);
+    auto z = merges.merge(u, v);
+    if (z) weight.eb(w);
   }
   auto par = merges.parents();
   RootedTree tree(par.size(), par);

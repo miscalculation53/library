@@ -113,23 +113,23 @@ void check_linear(array<ll, 6> q)
   if (det != 0)
   {
     Big x = Big(c) * e - Big(b) * f, y = Big(a) * f - Big(c) * d;
-    if (x % det != 0 || y % det != 0) { assert(r.dim == -1); return; }
-    assert(r.dim == 0 && Big(r.sol.first) == x / det && Big(r.sol.second) == y / det);
+    if (x % det != 0 || y % det != 0) { assert(!r); return; }
+    assert(r && r->dim == 0 && Big(r->sol.first) == x / det && Big(r->sol.second) == y / det);
   }
   else
   {
     bool z1 = a == 0 && b == 0, z2 = d == 0 && e == 0;
     if ((z1 && c != 0) || (z2 && f != 0) ||
         Big(a) * f != Big(c) * d || Big(b) * f != Big(c) * e)
-    { assert(r.dim == -1); return; }
-    if (z1 && z2) { assert(r.dim == 2); return; }
+    { assert(!r); return; }
+    if (z1 && z2) { assert(r && r->dim == 2); return; }
     ll p = z1 ? d : a, q = z1 ? e : b, rhs = z1 ? f : c;
     ll g = std::gcd(p, q);
-    if (rhs % g) { assert(r.dim == -1); return; }
-    assert(r.dim == 1);
-    assert(r.basis[0].first == q / g && r.basis[0].second == -p / g);
+    if (rhs % g) { assert(!r); return; }
+    assert(r && r->dim == 1);
+    assert(r->basis[0].first == q / g && r->basis[0].second == -p / g);
   }
-  auto [x, y] = r.sol;
+  auto [x, y] = r->sol;
   assert(Big(a) * x + Big(b) * y == c && Big(d) * x + Big(e) * y == f);
 }
 

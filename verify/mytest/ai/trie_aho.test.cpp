@@ -5,6 +5,9 @@
 void test_trie()
 {
   Trie<3> paths, terminals;
+  assert(!paths.parent(0));
+  assert(!paths.child(0, 0));
+  static_assert(is_same_v<decltype(paths.child<unsigned>(0, 0)), optional<unsigned>>);
   vvc<int> labels(1);
   mt19937 rng(20261119);
   repi(step, 600)
@@ -49,7 +52,7 @@ void test_aho(const vvc<int> &patterns)
   for (const auto &[s, v] : index)
   {
     assert(aho.trie.to_string<int>(v) == s);
-    if (v == 0) assert(aho.failure(v) == -1);
+    if (v == 0) assert(!aho.failure(v));
     else
     {
       vc<int> suffix(s.begin() + 1, s.end());
@@ -81,7 +84,7 @@ void test_aho_long()
     assert(aho.next(v, 1) == (v == length ? length + 2 : length + 1));
     assert(aho.next(v, 2) == 0);
   }
-  assert(aho.trie.child(length, 0) == -1);
+  assert(!aho.trie.child(length, 0));
   assert(aho.trie.child(length, 1) == length + 2);
   assert(aho.failure(length + 1) == 0);
   assert(aho.failure(length + 2) == length + 1);

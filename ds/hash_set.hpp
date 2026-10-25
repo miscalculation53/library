@@ -155,14 +155,15 @@ public:
     return res;
   }
 
-  // key が存在すれば格納されたキーへのポインタ、存在しなければ nullptr を返す
-  const Key *find_ptr(const Key &key) const
+  // 格納されたキーへの参照。存在しなければ nullopt。
+  optional<reference_wrapper<const Key>> find_ptr(const Key &key) const
   {
     size_t i = find_index(key, hasher(key));
-    return i == npos ? nullptr : &dat[i];
+    if (i == npos) return nullopt;
+    return std::cref(dat[i]);
   }
 
-  bool contains(const Key &key) const { return find_ptr(key) != nullptr; }
+  bool contains(const Key &key) const { return find_index(key, hasher(key)) != npos; }
 
   // key を挿入し、格納されたキーへのポインタと新規挿入かを返す
   pair<const Key *, bool> insert(const Key &key)

@@ -29,44 +29,44 @@ void main2()
   CoordinateCompression cc(concat(A, X));
 
   FenwickTree01 fw(cc.size());
-  fec(a : A) fw.set(cc.get_id(a), 1);
+  fec(a : A) fw.set(*cc.get_id(a), 1);
   fe([t, x] : TX)
   {
     if (t == 0)
-      fw.set(cc.get_id(x), 1);
+      fw.set(*cc.get_id(x), 1);
     else if (t == 1)
-      fw.set(cc.get_id(x), 0);
+      fw.set(*cc.get_id(x), 0);
     else if (t == 2)
     {
       x--;
-      ll ans = fw.kth_in_set(x);
-      if (ans == cc.size())
+      auto ans = fw.kth_in_set(x);
+      if (!ans)
         PRINT(-1);
       else
-        PRINT(cc.get_val(ans));
+        PRINT(cc.get_val(*ans));
     }
     else if (t == 3)
     {
-      PRINT(fw.sum(cc.get_id(x) + 1));
+      PRINT(fw.sum(*cc.get_id(x) + 1));
     }
     else if (t == 4)
     {
-      ll i = fw.leq_max_in_set(cc.get_id(x));
-      if (0 <= i && i < fw.size_of_set())
+      auto i = fw.leq_max_in_set(*cc.get_id(x));
+      if (i)
       {
-        ll ans = fw.kth_in_set(i);
-        PRINT(cc.get_val(ans));
+        auto ans = fw.kth_in_set(*i);
+        PRINT(cc.get_val(*ans));
       }
       else
         PRINT(-1);
     }
     else if (t == 5)
     {
-      ll i = fw.geq_min_in_set(cc.get_id(x));
-      if (0 <= i && i < fw.size_of_set())
+      auto i = fw.geq_min_in_set(*cc.get_id(x));
+      if (i)
       {
-        ll ans = fw.kth_in_set(i);
-        PRINT(cc.get_val(ans));
+        auto ans = fw.kth_in_set(*i);
+        PRINT(cc.get_val(*ans));
       }
       else
         PRINT(-1);

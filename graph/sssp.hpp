@@ -395,13 +395,14 @@ public:
 
   // solve(s, t) の後に呼ぶ
   // (sssp の実行で t を指定して打ち切っていても動作する)
-  vc<Edge<Cost>> path(int t) const
+  // 有限の最短経路は辺列、距離が ±infty なら nullopt。
+  optional<vc<Edge<Cost>>> path(int t) const
   {
     const int n = g.size();
     assert(SZ(dists) == n && "solve(s, t) is not called");
     assert(0 <= t && t < n);
     vc<Edge<Cost>> res;
-    if (dists[t] == inf() || dists[t] == -inf()) return res;
+    if (dists[t] == inf() || dists[t] == -inf()) return nullopt;
     while (true)
     {
       cauto &e = prv[t];

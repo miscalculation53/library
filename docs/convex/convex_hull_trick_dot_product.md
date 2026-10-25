@@ -1,4 +1,4 @@
-このドキュメントには AI による作成・変更が含まれている可能性があります。
+このドキュメントには AI による作成・変更が含まれています。
 
 ## 概要
 
@@ -19,7 +19,7 @@ $$
 
 `T` は係数 $a,b$ とクエリ座標 $x,y$ の型で、必ず指定する。`U` は内積の計算と返り値の型で、既定値は `larger_int_t<T>` である。例えば `T = ll` なら `U = i128` になる。内積の中間計算も `ll` に収まる場合は `ConvexHullTrickDotProduct<ll, ll>` と指定できる。型引数の順序は `T, U, inftyU` である。
 
-公開引数 `inftyU` は空集合の返り値に使う。省略時（`nullptr`）は `U` の[既定の無限大](../utils/default_infty.md)を使う。例えば `ConvexHullTrickDotProduct<ll>` では `U = i128` なので `INF * INF` になる。従来と同じ有限値を返したい場合は、第3引数に `INF` を明示する。
+空の問い合わせは `nullopt` を返す。型引数 `inftyU` は既存の型指定との互換性のため保持する。
 
 内部CHTの `query` または `query_monotone` が返す `(値, 直線)` の直線を使い、内積を `U(a) * U(x) + U(b) * U(y)` で計算する。内部でも $a(x/y)+b$ を `Rational<U>` で評価するため、分子・分母の中間計算や符号反転も含め、`U` に十分な余裕を持って収まることを仮定する。
 
@@ -32,8 +32,8 @@ ConvexHullTrickDotProduct<ll> cht;
 cht.add(2, -3);     // id = 0
 cht.add(-1, 4, 20);
 
-auto [min_value, min_form] = cht.min_query(5, 2);
-auto [max_value, max_form] = cht.max_query(5, 2);
+auto [min_value, min_form] = *cht.min_query(5, 2);
+auto [max_value, max_form] = *cht.max_query(5, 2);
 // min_value と max_value は i128、一次式の係数は ll
 ```
 
@@ -46,7 +46,7 @@ ConvexHullTrickDotProduct<ll, ll> small_value_cht;
 整数係数の直線 $at+b$ に、有理数座標 $t=p/q$ をクエリする場合は、$q>0$ として `(p,q)` を渡す。取得した内積が答えの分子になる。
 
 ```cpp
-auto [numerator, form] = cht.min_query(1, 2);
+auto [numerator, form] = *cht.min_query(1, 2);
 Rational<i128> value(numerator, i128(2));  // t = 1/2 における最小値
 ```
 
@@ -56,7 +56,7 @@ $y\neq 0$ かつ $x/y$ が単調な場合は次のように使う。
 
 ```cpp
 for (auto [x, y] : ratio_monotone_queries)
-  answer.eb(cht.min_query_monotone(x, y).first);
+  answer.eb(cht.min_query_monotone(x, y)->first);
 ```
 
 別の単調クエリ列を始める場合は、間で状態をリセットする。
@@ -94,10 +94,8 @@ ConvexHullTrickDotProduct()
 - `U` に `T` からの明示変換、加算、乗算、符号反転が定義されている
 - 内積の中間計算と結果が `U` の範囲に収まる
 - $y\neq 0$ の場合、内部で評価する $a(x/y)+b$ の分子・分母とその中間計算も `U` の範囲に収まる
-- `inftyU` は空集合の最小値クエリで返してよい正の値で、符号反転も `U` に収まる
-- `inftyU` には `U` に変換できる値、または `U` に変換できる値を返す引数なし関数を指定できる
 
-内部CHTには、境界用の `inftyT` に `Rational<T>::infty`、評価値用の `inftyU` に公開引数の指定を渡す。境界は常に分母0の正の無限大になる。内部の評価値用は、指定が `nullptr` なら `Rational<U>` の既定値 $1/0$、値や関数が指定されていればその値を `Rational<U>` に変換する。公開引数 `inftyU` は境界には使わないため、`T` に収まる必要も、有限な交点より大きい必要もない。空集合のクエリは外側で処理する。
+内部CHTの境界には `Rational<T>::infty` を使う。
 
 ##### 計算量
 
@@ -130,13 +128,13 @@ void add(T a, T b, int id)
 #### min_query・max_query
 
 ```cpp
-pair<U, LinearForm> min_query(T x, T y) const
-pair<U, LinearForm> max_query(T x, T y) const
+optional<pair<U, LinearForm>> min_query(T x, T y) const
+optional<pair<U, LinearForm>> max_query(T x, T y) const
 ```
 
 $(x,y)$ における最小値または最大値を `U` で返し、それを達成する一次式を添える。一次式の係数は `T` のままである。
 
-空の場合はそれぞれ `{eU, {0,0,-1}}`, `{-eU, {0,0,-1}}` を返す。ここで `eU` は公開引数 `inftyU` を `U` として解決した値である。$(x,y)=(0,0)$ の場合は、値 $0$ と最初に追加した一次式を返す。
+空の場合は `nullopt`。$(x,y)=(0,0)$ で一次式があれば、値 $0$ と最初に追加した一次式を値ありで返す。
 
 ##### 計算量
 
@@ -145,11 +143,11 @@ $(x,y)$ における最小値または最大値を `U` で返し、それを達�
 #### min_query_monotone・max_query_monotone
 
 ```cpp
-pair<U, LinearForm> min_query_monotone(T x, T y)
-pair<U, LinearForm> max_query_monotone(T x, T y)
+optional<pair<U, LinearForm>> min_query_monotone(T x, T y)
+optional<pair<U, LinearForm>> max_query_monotone(T x, T y)
 ```
 
-$x/y$ が広義単調なクエリ列に対し、最小値または最大値と一次式を返す。$x/y$ の増加・減少方向は内部 CHT が自動で判定する。$y$ の符号が変わってもよい。
+$x/y$ が広義単調なクエリ列に対し、最小値または最大値と一次式を返す。空の場合は `nullopt`。$x/y$ の増加・減少方向は内部 CHT が自動で判定する。$y$ の符号が変わってもよい。
 
 ##### 制約
 

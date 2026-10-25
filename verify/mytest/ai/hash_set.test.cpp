@@ -22,7 +22,7 @@ void check(const Set &st, const set<typename Set::iterator::value_type> &expecte
   assert(st.empty() == expected.empty());
   assert(size_t(distance(st.cbegin(), st.cend())) == st.size());
   for (const auto &key : expected)
-    assert(st.contains(key) && *st.find_ptr(key) == key);
+    assert(st.contains(key) && st.find_ptr(key)->get() == key);
 }
 
 // Test focus: key-only iteration is const and works with standard forward-iterator algorithms.
@@ -32,7 +32,7 @@ void test_iteration()
   using Iter = Set::iterator;
   static_assert(is_same_v<Iter, Set::const_iterator>);
   static_assert(is_same_v<decltype(*declval<Iter>()), const int &>);
-  static_assert(is_same_v<decltype(declval<Set &>().find_ptr(0)), const int *>);
+  static_assert(is_same_v<decltype(declval<Set &>().find_ptr(0)), optional<reference_wrapper<const int>>>);
   static_assert(is_same_v<decltype(declval<Set &>().insert(0)), pair<const int *, bool>>);
   static_assert(is_nothrow_move_constructible_v<Set> && is_nothrow_move_assignable_v<Set>);
   static_assert(is_nothrow_swappable_v<Set>);
@@ -59,7 +59,7 @@ void test_iteration()
   assert(it++ == saved && saved == st.begin());
   assert(it != saved);
   assert(++saved == it);
-  assert(st.begin().operator->() == st.find_ptr(*st.begin()));
+  assert(st.begin().operator->() == &st.find_ptr(*st.begin())->get());
   vector<int> keys(st.begin(), st.end());
   assert((set<int>(ALL(keys)) == set<int>{0, 4, 6, 14, 22, 255}));
 
@@ -76,7 +76,7 @@ void test_collisions()
 {
   HashSet<int, IdentityHash> boundary;
   for (int key = 0; key < 5; key++) boundary.insert(key);
-  const int *p = boundary.find_ptr(0);
+  const int *p = &boundary.find_ptr(0)->get();
   auto [q, duplicated] = boundary.insert(0);
   assert(!duplicated && p == q);
   boundary.insert(5);
@@ -131,8 +131,8 @@ void test_random()
     else if (type == 1)
     {
       auto p = st.find_ptr(key);
-      assert((p != nullptr) == (expected.count(key) != 0));
-      if (p) assert(*p == key);
+      assert((p.has_value()) == (expected.count(key) != 0));
+      if (p) assert(p->get() == key);
     }
     else
     {
@@ -175,9 +175,9 @@ void test_equal()
   auto [p, inserted] = st.insert(3);
   auto [q, duplicated] = st.insert(19);
   assert(inserted && !duplicated && p == q && *q == 3);
-  assert(st.size() == 1 && *st.find_ptr(35) == 3);
+  assert(st.size() == 1 && st.find_ptr(35)->get() == 3);
   st.reserve(100);
-  assert(*st.find_ptr(51) == 3);
+  assert(st.find_ptr(51)->get() == 3);
   assert(st.erase(67) && st.empty());
 }
 
@@ -233,8 +233,29 @@ void test_transfer()
   check(z, {30});
 }
 
+namespace adl_key_test
+{
+struct Key {
+  int value = 0;
+  friend bool operator==(const Key &a, const Key &b) { return a.value == b.value; }
+};
+void cref(const Key &) = delete;
+struct Hash { size_t operator()(const Key &key) const { return key.value; } };
+}
+
+void test_optional_reference()
+{
+  HashSet<adl_key_test::Key, adl_key_test::Hash> values;
+  assert(!values.find_ptr({0}));
+  const auto inserted = values.insert({0});
+  auto stored = values.find_ptr({0});
+  assert(stored && stored->get().value == 0);
+  assert(&stored->get() == inserted.first);
+}
+
 int main()
 {
+  test_optional_reference();
   test_iteration();
   test_collisions();
   test_random();

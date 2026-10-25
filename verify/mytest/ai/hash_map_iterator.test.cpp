@@ -73,7 +73,7 @@ void test_iteration()
   assert(it != cit && cit != it);
   ++cit;
   assert(cit == it);
-  assert(&saved->second == mp.find_ptr(saved->first));
+  assert(&saved->second == &mp.find_ptr(saved->first)->get());
   saved->second = -100;
   expected[saved->first] = -100;
   check(mp, expected);
@@ -151,8 +151,33 @@ void test_default_hash_map()
   assert(mp.size() == 2 && factory_calls == 2);
 }
 
+namespace adl_reference_test
+{
+struct Value { int value = 0; };
+void ref(Value &) = delete;
+void cref(const Value &) = delete;
+}
+
+void test_optional_references()
+{
+  using Value = adl_reference_test::Value;
+  HashMap<int, Value> values;
+  const auto &constant = values;
+  static_assert(is_same_v<decltype(values.find_ptr(0)), optional<reference_wrapper<Value>>>);
+  static_assert(is_same_v<decltype(constant.find_ptr(0)), optional<reference_wrapper<const Value>>>);
+  assert(!values.find_ptr(0) && !constant.find_ptr(0));
+  values[0].value = 0;
+  auto stored = values.find_ptr(0);
+  assert(stored && stored->get().value == 0);
+  auto reference = *stored;
+  reference.get().value = 7;
+  assert(&reference.get() == &values.at(0));
+  assert(constant.find_ptr(0)->get().value == 7);
+}
+
 int main()
 {
+  test_optional_references();
   test_iteration();
   test_collisions();
   test_default_hash_map();

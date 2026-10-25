@@ -48,28 +48,28 @@ void shared_graph()
                                      : vl{0, 2, directed ? 5 : 4, directed ? 6 : 5, INF};
   assert(ds == expected);
   const auto &saved = sp;
-  auto path = edge_ids(saved.path(3));
+  auto path = edge_ids(*saved.path(3));
   auto counts = saved.template count_paths<ll>();
   other.solve(2);
   const auto &matrix = ap.solve();
   assert(matrix[0] == ds);
-  const auto ap_path = edge_ids(ap.path(0, 3));
+  const auto ap_path = edge_ids(*ap.path(0, 3));
   assert(ap.for_each_source([&](int s, const auto &row, const auto &)
   {
-    assert(row == matrix[s] && edge_ids(ap.path(0, 3)) == ap_path);
+    assert(row == matrix[s] && edge_ids(*ap.path(0, 3)) == ap_path);
   }));
-  assert(edge_ids(saved.path(3)) == path && saved.template count_paths<ll>() == counts);
+  assert(edge_ids(*saved.path(3)) == path && saved.template count_paths<ll>() == counts);
   const ll length = is_void_v<Cost> ? 3 : 9;
-  assert(mc.solve_vertex(0).first == length);
-  assert(mc.solve_edge(0).first == length);
-  assert(mc.solve().first == length);
-  assert((mc.edge_costs() == vl{length, length, length, INF}));
-  assert((mc.vertex_costs() == vl{length, length, length, INF, INF}));
-  assert(matrix[0] == ds && edge_ids(saved.path(3)) == path);
+  assert(mc.solve_vertex(0)->first == length);
+  assert(mc.solve_edge(0)->first == length);
+  assert(mc.solve()->first == length);
+  assert((mc.edge_costs() == vc<optional<ll>>{length, length, length, nullopt}));
+  assert((mc.vertex_costs() == vc<optional<ll>>{length, length, length, nullopt, nullopt}));
+  assert(matrix[0] == ds && edge_ids(*saved.path(3)) == path);
   assert(ap.johnson()[0] == ds);
   assert(saved.template count_paths<ll>() == counts);
   sp.solve(3);
-  assert(ap.path(0, 3).size() == path.size());
+  assert(ap.path(0, 3)->size() == path.size());
   assert(g.num_of_edges() == 4 && g.out_edges(0).front().cost == (is_void_v<Cost> ? 1 : 2));
 }
 
@@ -82,18 +82,18 @@ void unweighted_custom_infinity()
   AllPairsShortestPath<directed, void, infty> ap(g);
   const MinimumCycle<directed, void, infty> mc(g);
   static_assert(is_same_v<typename decltype(ap)::Dist, ll>);
-  static_assert(is_same_v<typename decltype(mc)::Result, pair<ll, vc<Edge<void>>>>);
+  static_assert(is_same_v<typename decltype(mc)::Result, optional<pair<ll, vc<Edge<void>>>>>);
   const ll inf = unweighted_infinity();
   for (const auto &ds : {ap.solve(), ap.repeated_sssp(), ap.floyd_warshall(), ap.johnson()})
   {
     assert((ds[0] == vl{0, 1, directed ? 2 : 1, inf, inf}));
     assert(!ap.negative_cycle());
-    assert(ap.path(0, 3).empty() && ap.prev_edges(0)[3].index == -1);
+    assert(!ap.path(0, 3) && ap.prev_edges(0)[3].index == -1);
   }
-  assert((mc.edge_costs() == vl{3, 3, 3}));
-  assert((mc.vertex_costs() == vl{3, 3, 3, inf, inf}));
-  assert(mc.solve().first == 3 && mc.solve_edge(0).first == 3);
-  assert(mc.solve_vertex(3).first == inf && mc.solve_vertex(3).second.empty());
+  assert((mc.edge_costs() == vc<optional<ll>>{3, 3, 3}));
+  assert((mc.vertex_costs() == vc<optional<ll>>{3, 3, 3, nullopt, nullopt}));
+  assert(mc.solve()->first == 3 && mc.solve_edge(0)->first == 3);
+  assert(!mc.solve_vertex(3));
   const auto saved = ap.solve();
   int rows = 0;
   assert(ap.for_each_source([&](int s, const auto &ds, const auto &prev)
@@ -104,10 +104,10 @@ void unweighted_custom_infinity()
   assert(rows == 5);
   g = Graph<directed>(2, vc<pair<int, int>>{{0, 1}});
   assert(ap.solve().size() == 2 && !ap.negative_cycle());
-  assert(mc.solve().first == inf && mc.solve().second.empty());
-  assert(mc.solve_edge(0).first == inf && mc.solve_edge(0).second.empty());
-  assert((mc.edge_costs() == vl{inf}));
-  assert((mc.vertex_costs() == vl{inf, inf}));
+  assert(!mc.solve());
+  assert(!mc.solve_edge(0));
+  assert((mc.edge_costs() == vc<optional<ll>>{nullopt}));
+  assert((mc.vertex_costs() == vc<optional<ll>>{nullopt, nullopt}));
 }
 
 void negative_edges()
@@ -120,11 +120,11 @@ void negative_edges()
   auto ds = sp.solve(0);
   assert((ds == vl{0, -3, 2, INF}));
   assert(ap.johnson()[0] == ds);
-  assert(ap.path(0, 2).front().cost == -3);
-  assert(mc.solve_vertex(0).first == 3);
-  assert(mc.solve_edge(0).first == 3);
-  assert(mc.solve().first == 3);
-  assert(sp.path(2).front().cost == -3 && g.out_edges(0).front().cost == -3);
+  assert(ap.path(0, 2)->front().cost == -3);
+  assert(mc.solve_vertex(0)->first == 3);
+  assert(mc.solve_edge(0)->first == 3);
+  assert(mc.solve()->first == 3);
+  assert(sp.path(2)->front().cost == -3 && g.out_edges(0).front().cost == -3);
 }
 
 int main()

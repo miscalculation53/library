@@ -21,18 +21,16 @@ void check_result(const vc<Entry<T>> &entries, const T &x, const Result &result)
     if (!e.whole && !(e.l <= x && x < e.r)) continue;
     U value = U(e.a) * U(x) + U(e.b);
     if (!best || (Min ? value < *best : *best < value)) best = value;
-    found |= result.second.id == e.id && result.second.a == e.a && result.second.b == e.b;
+    found |= result && result->second.id == e.id && result->second.a == e.a && result->second.b == e.b;
   }
   if (!best)
   {
-    assert(result.second.id == -1);
-    U inf = resolved_infty<U>();
-    assert(result.first == (Min ? inf : -inf));
+    assert(!result);
   }
   else
   {
-    assert(found && result.first == *best);
-    assert(result.first == U(result.second.a) * U(x) + U(result.second.b));
+    assert(result && found && result->first == *best);
+    assert(result->first == U(result->second.a) * U(x) + U(result->second.b));
   }
 }
 
@@ -147,7 +145,7 @@ void boundaries()
   // Compressed coordinates can include the largest representable value.
   LiChaoTreeCompressed<T, U, Compare> endpoint({hi});
   endpoint.add_line(lo, hi);
-  assert(endpoint.query(hi).first == U(lo) * U(hi) + U(hi));
+  assert(endpoint.query(hi)->first == U(lo) * U(hi) + U(hi));
 }
 
 template <bool Min>
@@ -159,7 +157,7 @@ void single_point_and_ids()
   auto check = [&](int id, ll value)
   {
     for (auto result : {dynamic.query(5), compressed.query(5), compressed.query_index(0)})
-      assert(result.second.id == id && result.first == value);
+      assert(result->second.id == id && result->first == value);
   };
   dynamic.add_segment(6, 8, 0, 100, 99);
   compressed.add_segment(6, 8, 0, 100, 99);
@@ -192,20 +190,19 @@ void sentinels()
   LiChaoTreeCompressed<int, i128, Compare, 123, large_empty_value> compressed({-2, 0, 2});
   for (auto result : {dynamic.query(0), compressed.query(0)})
   {
-    assert(result.first == (Min ? large_empty_value() : -large_empty_value()));
-    assert(result.second.a == 0 && result.second.b == (Min ? 123 : -123) && result.second.id == -1);
+    assert(!result);
   }
-  // A valid value can lie beyond the chosen empty-set sentinel.
+  // Legacy infinity parameters do not bound a valid value.
   using WideCompare = conditional_t<Min, less<ll>, greater<ll>>;
   LiChaoTree<ll, i128, WideCompare, 7, 11> wide(-3, 4);
   LiChaoTreeCompressed<ll, i128, WideCompare, 7, 11> wide_c({-3, 0, 3});
   ll b = Min ? numeric_limits<ll>::max() : numeric_limits<ll>::lowest();
   wide.add_line(0, b), wide_c.add_line(0, b);
-  assert(wide.query(0).first == b && wide_c.query(0).first == b);
+  assert(wide.query(0)->first == b && wide_c.query(0)->first == b);
   // The value type may be smaller when all evaluations fit it.
   LiChaoTree<ll, int, conditional_t<Min, less<>, greater<>>, INF, 100> narrow(-2, 3);
   narrow.add_line(0, Min ? 200 : -200);
-  assert(narrow.query(0).first == (Min ? 200 : -200));
+  assert(narrow.query(0)->first == (Min ? 200 : -200));
 }
 
 template <bool Min, class T, class U = larger_int_t<T>>
@@ -298,41 +295,41 @@ void adjacent_floating_coordinates()
   assert(tree.coordinates() == (vc<T>{lo, mid, hi}));
   tree.add_line(T(1), T(0));
   tree.add_line(T(-1), T(1));
-  assert(tree.query(lo).second.id == (Min ? 0 : 1));
-  assert(tree.query(mid).first == mid);
-  assert(tree.query(hi).second.id == (Min ? 1 : 0));
+  assert(tree.query(lo)->second.id == (Min ? 0 : 1));
+  assert(tree.query(mid)->first == mid);
+  assert(tree.query(hi)->second.id == (Min ? 1 : 0));
   tree.add_segment(mid, hi, T(0), Min ? T(-2) : T(2));
-  assert(tree.query(lo).second.id == (Min ? 0 : 1));
-  assert(tree.query(mid).second.id == 2);
-  assert(tree.query(hi).second.id == (Min ? 1 : 0));
+  assert(tree.query(lo)->second.id == (Min ? 0 : 1));
+  assert(tree.query(mid)->second.id == 2);
+  assert(tree.query(hi)->second.id == (Min ? 1 : 0));
 }
 
 void rational_examples_and_widening()
 {
   using R = Rational<ll>;
   using U = Rational<i128>;
-  static_assert(is_same_v<decltype(declval<LiChaoTreeCompressed<R>>().query(R(0)).first), U>);
+  static_assert(is_same_v<decltype(declval<LiChaoTreeCompressed<R>>().query(R(0))->first), U>);
   LiChaoTreeCompressed<R> tree({R(-3, 2), R(1, 3), R(2, 3), R(5, 2)});
   tree.add_line(R(1, 2), R(1, 3));
   tree.add_line(R(-1), R(1));
-  assert(tree.query(R(1, 3)).first == U(1, 2));
-  assert(tree.query(R(2, 3)).first == U(1, 3));
-  assert(tree.query(R(2, 3)).second.id == 1);
+  assert(tree.query(R(1, 3))->first == U(1, 2));
+  assert(tree.query(R(2, 3))->first == U(1, 3));
+  assert(tree.query(R(2, 3))->second.id == 1);
   tree.add_segment(R(1, 4), R(3, 4), R(0), R(-1, 7));
-  assert(tree.query(R(1, 3)).first == U(-1, 7));
-  assert(tree.query(R(2, 3)).first == U(-1, 7));
-  assert(tree.query(R(-3, 2)).first == U(-5, 12));
-  assert(tree.query(R(5, 2)).first == U(-3, 2));
+  assert(tree.query(R(1, 3))->first == U(-1, 7));
+  assert(tree.query(R(2, 3))->first == U(-1, 7));
+  assert(tree.query(R(-3, 2))->first == U(-5, 12));
+  assert(tree.query(R(5, 2))->first == U(-3, 2));
 
   // A product beyond ll is evaluated after widening numerator and denominator.
   ll a = 4'000'000'001LL, x = 4'000'000'003LL;
   LiChaoTreeCompressed<R> wide({R(x, 5)});
   wide.add_line(R(a, 3), R(-2, 7));
   U expected(i128(a) * x * 7 - 30, 105);
-  assert(wide.query(R(x, 5)).first == expected);
+  assert(wide.query(R(x, 5))->first == expected);
   wide.add_line(R(a, 3), R(-3, 7));
-  assert(wide.query(R(x, 5)).second.id == 1);
-  assert(wide.query(R(x, 5)).first == U(i128(a) * x * 7 - 45, 105));
+  assert(wide.query(R(x, 5))->second.id == 1);
+  assert(wide.query(R(x, 5))->first == U(i128(a) * x * 7 - 45, 105));
 }
 
 void coordinate_i128()
@@ -343,10 +340,10 @@ void coordinate_i128()
   tree.add_segment(lo, lo + 1, 0, -1);
   tree.add_segment(hi - 1, hi, 0, -2);
   tree.add_line(0, 5);
-  assert(tree.query(lo).first == -1);
-  assert(tree.query(lo + 1).first == 5);
-  assert(tree.query(0).first == 5);
-  assert(tree.query(hi - 1).first == -2);
+  assert(tree.query(lo)->first == -1);
+  assert(tree.query(lo + 1)->first == 5);
+  assert(tree.query(0)->first == 5);
+  assert(tree.query(hi - 1)->first == -2);
 }
 
 template <bool Min>
@@ -399,8 +396,8 @@ void wide_integer_evaluations()
 
 int main()
 {
-  static_assert(is_same_v<decltype(declval<LiChaoTree<ll>>().query(0).first), i128>);
-  static_assert(is_same_v<decltype(declval<LiChaoTreeCompressed<int>>().query(0).first), ll>);
+  static_assert(is_same_v<decltype(declval<LiChaoTree<ll>>().query(0)->first), i128>);
+  static_assert(is_same_v<decltype(declval<LiChaoTreeCompressed<int>>().query(0)->first), ll>);
   random_checks<true, int>();
   random_checks<false, int>();
   random_checks<true, ll>();
