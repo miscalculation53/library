@@ -42,6 +42,9 @@ node --test tools/tests/status.test.js
 実行します。通常の8 shard には secret を渡さず、yukicoder 用の2 shard にだけ
 `YUKICODER_TOKEN` を渡します。各 shard は timestamp、担当ファイル一覧、実際に
 失敗したファイル、最後まで処理できなかったファイルを artifact に保存します。
+`verify/atcoder/` は手動検証用として保存し、CI の実行・集約対象から外します。
+AtCoder のシステムテスト取得に必要な `DROPBOX_TOKEN` は使用しません。
+Pages では AtCoder のファイルを未検証の `❓` と表示します。
 テストが失敗した場合も artifact のアップロードを試みます。各ジョブの Summary には、
 担当した全ファイルを `Verified`、`Failed`、`Not completed` に分けて表示します。
 
@@ -51,7 +54,7 @@ node --test tools/tests/status.test.js
 証明書の検証エラーは通常どおり報告します。
 
 `main` への push では、実際の verify 失敗がない場合に限り、全 shard の artifact が
-全 verify ファイルを重複なく覆うことを `parallel_verify.py` で確認して timestamp を
+CI 対象の全 verify ファイルを重複なく覆うことを `parallel_verify.py` で確認して timestamp を
 統合します。その後にだけ `GITHUB_TOKEN` で timestamp を main へ反映します。
 ドキュメント生成は verify の成否にかかわらず行い、実際に失敗したファイルを `❌`、
 タイムアウト、キャンセル、artifact の欠落によって完了しなかったファイルを `❓` と
@@ -59,7 +62,7 @@ node --test tools/tests/status.test.js
 公開するため、`GH_PAT` は使用しません。mainを更新するジョブとドキュメントを公開する
 ジョブは分かれており、前者だけに `contents: write`、Pagesのデプロイだけに
 `pages: write` と `id-token: write` を与えます。pull requestではどちらの書き込み処理も
-行いません。`DROPBOX_TOKEN` も使用しません。
+行いません。
 
 Pages Actionsを初めて使うときだけ、GitHubの `Settings > Pages` で
 `Build and deployment > Source` を `GitHub Actions` に変更する必要があります。
@@ -75,6 +78,9 @@ workflowの設定変更が必要です。
 公開サイトの対象は `.verify-helper/docs/_config.yml` の `exclude` に従います。
 除外対象のソースと Markdown は依存関係の収集前に外し、再生成時には既存の生成ページを
 消してから作り直します。以前生成した開発用ページも、次回の公開対象から外れます。
+生成 Markdown の本文にある `{{`・`{%` は、Jekyll の Liquid 構文として解釈される前に
+文字列として出力する形へ変換します。C++ の初期化リストなどは元どおり表示し、
+front matter とレイアウトの Liquid はそのまま扱います。
 `oj-verify` が35分で全ファイルを処理できなかった場合、その shard は失敗ではなく
 警告として終了し、未処理ファイルを Job Summary に表示します。GitHub Pages でも
 未処理の verify ファイルは `❓` と表示し、実際に検証が失敗したものだけを `❌` と

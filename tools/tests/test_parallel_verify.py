@@ -269,6 +269,42 @@ print('[SUCCESS] test success: 10 cases')
             self.assertNotIn("::error file=", output.getvalue())
             self.assertIn("[SUCCESS] test success: 10 cases", output.getvalue())
 
+    def test_ci_targets_and_merge_exclude_manual_atcoder_examples(self):
+        import onlinejudge_verify.utils
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            targets = ["verify/aoj/a.test.cpp", "verify/mytest/b.test.cpp"]
+            manual = "verify/atcoder/manual.test.cpp"
+            for name in targets + [manual]:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.touch()
+            self.write_artifact(root / "artifacts", "shard", targets)
+            args = argparse.Namespace(artifacts=root / "artifacts", output=root / "merged.json")
+            old_cwd = Path.cwd()
+            try:
+                os.chdir(root)
+                with mock.patch.object(
+                    onlinejudge_verify.utils, "iterate_verification_files",
+                    side_effect=lambda: iter(map(Path, targets + [manual])),
+                ):
+                    self.assertEqual(
+                        parallel_verify.verification_files(Path("verify")),
+                        list(map(Path, targets)),
+                    )
+                    self.assertEqual(
+                        parallel_verify.verification_files(Path("verify/atcoder")), [],
+                    )
+                    parallel_verify.merge_results(args)
+                    self.assertEqual(set(json.loads(args.output.read_text())), set(targets))
+                    self.assertEqual(json.loads((root / "timeouts.json").read_text()), [])
+                    self.write_artifact(root / "artifacts", "shard", targets[:1])
+                    with self.assertRaisesRegex(RuntimeError, "verify/mytest/b.test.cpp"):
+                        parallel_verify.merge_results(args)
+            finally:
+                os.chdir(old_cwd)
+
     def test_merge_requires_exactly_one_result_per_verification_file(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -629,6 +665,44 @@ print('[SUCCESS] test success: 10 cases')
             "x-access-token:secret-token",
         )
 
+    def test_docs_preserves_literal_liquid_in_generated_bodies_only(self):
+        import onlinejudge_verify.main
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            destination = root / ".verify-helper/markdown"
+            front_matter = "---\nlayout: document\ndata: '{{1, 2}'\n---\n"
+            body = "```cpp\nvc<array<int, 2>>{{1, 2}, {3, 4}};\n```\n{% raw %}{{x}}{% endraw %}\n"
+            layout = "<main>{{ content }}</main>\n"
+            args = argparse.Namespace(jobs=1, timeouts=root / "timeouts.json", failures=root / "failures.json")
+
+            def generate_pages(*, jobs):
+                (destination / "algebra").mkdir(parents=True)
+                (destination / "algebra/example.hpp.md").write_text(front_matter + body)
+                (destination / "_layouts").mkdir()
+                (destination / "_layouts/document.html").write_text(layout)
+                (destination / "plain.md").write_text("ordinary Markdown\n")
+
+            old_cwd = Path.cwd()
+            try:
+                os.chdir(root)
+                with mock.patch.object(
+                    onlinejudge_verify.main, "subcommand_docs", side_effect=generate_pages,
+                ):
+                    parallel_verify.publish_docs(args)
+                rendered = (destination / "algebra/example.hpp.md").read_text()
+                self.assertTrue(rendered.startswith(front_matter))
+                self.assertIn("{{ '{{' }}1, 2}, {3, 4}}", rendered)
+                self.assertIn("{{ '{%' }} raw %}", rendered)
+                self.assertEqual((destination / "_layouts/document.html").read_text(), layout)
+                self.assertEqual((destination / "plain.md").read_text(), "ordinary Markdown\n")
+            finally:
+                os.chdir(old_cwd)
+
+    def test_docs_rejects_unterminated_front_matter(self):
+        with self.assertRaisesRegex(ValueError, "unterminated front matter"):
+            parallel_verify.escape_markdown_liquid("---\nlayout: document\n{{1, 2}\n")
+
     def test_docs_excludes_local_files_and_clears_stale_pages(self):
         import onlinejudge_verify.documentation.configure as configure
         import onlinejudge_verify.main
@@ -689,8 +763,11 @@ print('[SUCCESS] test success: 10 cases')
             verify.mkdir()
             timed_out = verify / "timed-out.test.cpp"
             failed = verify / "failed.test.cpp"
+            manual = verify / "atcoder/manual.test.cpp"
             timed_out.touch()
             failed.touch()
+            manual.parent.mkdir()
+            manual.touch()
             timeouts = root / "timeouts.json"
             failures = root / "failures.json"
             compat_build = root / "tools/ojverify_pkg_resources_compat/build/lib"
@@ -717,6 +794,8 @@ print('[SUCCESS] test success: 10 cases')
                 self.assertFalse(marker_class.is_failed(object(), timed_out))
                 self.assertFalse(marker_class.is_verified(object(), failed))
                 self.assertTrue(marker_class.is_failed(object(), failed))
+                self.assertFalse(marker_class.is_verified(object(), manual))
+                self.assertFalse(marker_class.is_failed(object(), manual))
                 self.assertEqual(get_status_icon(waiting), ":question:")
 
             old_cwd = Path.cwd()
@@ -726,7 +805,7 @@ print('[SUCCESS] test success: 10 cases')
                     marker_class, "is_verified", autospec=True, return_value=True
                 ):
                     with mock.patch.object(
-                        marker_class, "is_failed", autospec=True, return_value=False
+                        marker_class, "is_failed", autospec=True, return_value=True
                     ):
                         with mock.patch.object(
                             onlinejudge_verify.main,
@@ -735,7 +814,7 @@ print('[SUCCESS] test success: 10 cases')
                         ):
                             parallel_verify.publish_docs(args)
                         self.assertTrue(marker_class.is_verified(object(), failed))
-                        self.assertFalse(marker_class.is_failed(object(), failed))
+                        self.assertTrue(marker_class.is_failed(object(), failed))
                         self.assertEqual(get_status_icon(waiting), ":warning:")
             finally:
                 os.chdir(old_cwd)

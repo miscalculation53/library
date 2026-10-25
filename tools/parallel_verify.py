@@ -18,6 +18,7 @@ TIMESTAMP_FORMAT = "%Y-%m-%d %H:%M:%S %z"
 REMOTE_MARKER = pathlib.Path(".verify-helper/timestamps.remote.json")
 TIMEOUTS_FILE = pathlib.Path(".verify-helper/timeouts.json")
 FAILURES_FILE = pathlib.Path(".verify-helper/failures.json")
+MANUAL_VERIFICATION_DIR = pathlib.Path("verify/atcoder")
 
 
 def load_object(path: pathlib.Path) -> Dict[str, str]:
@@ -56,6 +57,9 @@ def verification_files(directory: pathlib.Path) -> List[pathlib.Path]:
     files = []
     for path in onlinejudge_verify.utils.iterate_verification_files():
         absolute = path.resolve(strict=True)
+        # AtCoder examples are checked manually; CI does not use DROPBOX_TOKEN.
+        if absolute.is_relative_to(cwd / MANUAL_VERIFICATION_DIR):
+            continue
         if absolute.is_relative_to(directory):
             files.append(absolute.relative_to(cwd))
     return sorted(files)
@@ -480,6 +484,19 @@ def merge_results(args: argparse.Namespace) -> None:
     )
 
 
+def escape_markdown_liquid(text: str) -> str:
+    boundary = 0
+    if text.startswith("---\n"):
+        closing = text.find("\n---\n", 3)
+        if closing < 0:
+            raise ValueError("generated Markdown has unterminated front matter")
+        boundary = closing + len("\n---\n")
+    body = re.sub(
+        r"\{\{|\{%", lambda match: "{{ '" + match.group() + "' }}", text[boundary:]
+    )
+    return text[:boundary] + body
+
+
 def publish_docs(args: argparse.Namespace) -> None:
     import onlinejudge_verify.documentation.build
     import onlinejudge_verify.documentation.configure
@@ -530,12 +547,16 @@ def publish_docs(args: argparse.Namespace) -> None:
 
     def is_verified(marker: object, path: pathlib.Path) -> bool:
         key = relative_key(path)
+        if key is not None and pathlib.Path(key).is_relative_to(MANUAL_VERIFICATION_DIR):
+            return False
         if key in failed or key in uncompleted:
             return False
         return original_is_verified(marker, path)
 
     def is_failed(marker: object, path: pathlib.Path) -> bool:
         key = relative_key(path)
+        if key is not None and pathlib.Path(key).is_relative_to(MANUAL_VERIFICATION_DIR):
+            return False
         if key in failed:
             return True
         if key in uncompleted:
@@ -562,6 +583,13 @@ def publish_docs(args: argparse.Namespace) -> None:
         if render_config.destination_dir.exists():
             shutil.rmtree(render_config.destination_dir)
         onlinejudge_verify.main.subcommand_docs(jobs=args.jobs)
+        # Jekyll evaluates Liquid before Markdown, including fenced C++ code.
+        # Preserve literal delimiters in page bodies; layouts stay active.
+        for path in render_config.destination_dir.rglob("*.md"):
+            original = path.read_text(encoding="utf-8")
+            escaped = escape_markdown_liquid(original)
+            if escaped != original:
+                path.write_text(escaped, encoding="utf-8")
     finally:
         configure._find_matched_file_paths = original_find_paths
         marker_class.is_verified = original_is_verified
