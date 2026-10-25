@@ -15,6 +15,8 @@ static_assert(is_same_v<decltype(pow(2, f128(3))), f128>);
 static_assert(is_same_v<decltype(fma(f128(1), 2, 3)), f128>);
 static_assert(is_same_v<decltype(fma(1, f128(2), 3)), f128>);
 static_assert(is_same_v<decltype(fma(1, 2, f128(3))), f128>);
+static_assert(is_same_v<decltype(nexttoward(f128(1), 2.0L)), f128>);
+static_assert(is_same_v<decltype(nexttoward(1.0, 2.0L)), double>);
 
 void stream_test()
 {
@@ -178,6 +180,8 @@ void math_test()
   assert(copysign(f128(7), -1) == -7);
   assert(nextafter(f128(1), 2) - 1 == numeric_limits<f128>::epsilon());
   assert(nexttoward(f128(1), 2.0L) == nextafter(f128(1), 2));
+  assert(nexttoward(f128(1), 0.0L) == nextafter(f128(1), 0));
+  assert(signbit(nexttoward(f128(0), -0.0L)));
   const f128 inf = numeric_limits<f128>::infinity(), nan = numeric_limits<f128>::quiet_NaN();
   assert(isfinite(f128(1)) && !isfinite(inf) && isinf(inf) && isnan(nan));
   assert(isnormal(f128(1)) && !isnormal(numeric_limits<f128>::denorm_min()));

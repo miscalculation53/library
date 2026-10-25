@@ -30,6 +30,9 @@ jobs:
     - name: Test performance comparison tool
       run: python -m unittest discover -s tools/tests -p test_compare_performance.py
 
+    - name: Test verification linking
+      run: python -m unittest discover -s tools/tests -p test_verify_link.py
+
   verify:
     name: verify (${{ matrix.name }})
     runs-on: ubuntu-latest

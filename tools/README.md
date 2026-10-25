@@ -10,6 +10,10 @@
 `requirements.txt` の依存を入れた Python 環境と Node.js を使い、ライブラリのルートで実行する。
 コンパイルを含むテストでは GNU C++ も使う。
 
+`oj-verify` の四倍精度リンクには `.verify-helper/quadmath.specs` を使う。
+GCC の既定のライブラリ指定を保ち、オブジェクトファイルの後へ `-lquadmath` を追加する。
+これにより、Linux の `--as-needed` が有効な環境でも四倍精度関数をリンクできる。
+
 ```sh
 python3 -m unittest discover -s tools/tests
 node --test tools/tests/status.test.js

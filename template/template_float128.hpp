@@ -103,8 +103,6 @@ constexpr bool arithmetic = is_arithmetic_v<T> || is_same_v<T, f128>;
 _p_F128_TERNARY_MIXED(fma)
 _p_F128_TERNARY_MIXED(hypot)
 #undef _p_F128_TERNARY_MIXED
-inline f128 nexttoward(f128 x, long double y)
-{ return f128(nextafterq(__float128(x), __float128(y))); }
 inline f128 frexp(f128 x, int *exponent)
 { return f128(frexpq(__float128(x), exponent)); }
 inline f128 ldexp(f128 x, int exponent)
@@ -147,6 +145,9 @@ inline int fpclassify(T x)
   return isnormal(x) ? FP_NORMAL : FP_SUBNORMAL;
 }
 #endif
+
+inline f128 nexttoward(f128 x, long double y)
+{ return nextafter(x, f128(y)); }
 
 namespace template_float128_detail
 {
