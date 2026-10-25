@@ -1,4 +1,6 @@
 #define PROBLEM "https://yukicoder.me/problems/no/60"
+// 答えは 10^9 以下の整数。公式出力の改行の有無に合わせ、数値を誤差ゼロで比較する。
+#define ERROR 0
 
 #define SINGLE_TESTCASE
 // #define MULTI_TESTCASE
@@ -27,7 +29,7 @@ void main2()
   offset(XYHP, tlll{M, M, 0});
   auto ini = dvec({2 * M + 2, 2 * M + 2}, ll(0));
   fec([ x, y, hp ] : XYHP) ini.at(x).at(y) = hp;
-  Imos2D imos(ini);
+  Imos2D<GroupAddSub<ll>> imos(ini);
   rep(_, K)
   {
     LL(ax, ay, w, h, d);
@@ -41,10 +43,7 @@ void main2()
     if (res.at(x).at(y) > 0)
       ans += res.at(x).at(y);
   }
-  if (N <= 7)
-    WRITE(ans);
-  else 
-    PRINT(ans);
+  PRINT(ans);
 }
 
 void test() {}

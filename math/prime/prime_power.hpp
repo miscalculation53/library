@@ -1,6 +1,7 @@
 #pragma once
 
 #include "template/template_all_but_modint.hpp"
+#include "utils/larger_int.hpp"
 
 /**
  * @brief 素べき構造体
@@ -26,7 +27,11 @@ struct PrimePower
   template <class P2>
   bool operator!=(const PrimePower<P2> &rhs) const { return !(*this == rhs); }
 
-  void mul_p() { e++, pe = ull(pe) * ull(p); }
+  void mul_p()
+  {
+    using U = larger_int_t<P>;
+    e++, pe = U(pe) * U(p);
+  }
   void div_p() { e--, pe /= p; }
 };
 #ifdef LOCAL
@@ -108,7 +113,9 @@ vc<PrimePower<P>> factorized_mul
       fac.emplace_back(fac2[j++]);
     else
     {
-      fac.emplace_back(fac1[i].p, fac1[i].e + fac2[j].e, ull(fac1[i].pe) * ull(fac2[j].pe));
+      using U = larger_int_t<P>;
+      fac.emplace_back(fac1[i].p, fac1[i].e + fac2[j].e,
+                       U(fac1[i].pe) * U(fac2[j].pe));
       i++, j++;
     }
   }

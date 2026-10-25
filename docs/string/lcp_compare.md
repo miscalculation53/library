@@ -1,8 +1,28 @@
-## 部分文字列の一致判定 → LCP、LCP → 部分文字列の辞書順比較
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
 
 前者は Rolling Hash で一致判定は簡単にできるときなどに使える。後者は Rolling Hash の他に、SA/LCP と一緒に使える。
 
 また、文字列を結合したものの一致判定などができるようなちょっと ad-hoc な場面でも使える。例題： https://atcoder.jp/contests/abc416/tasks/abc416_g
+
+## 使用例
+
+```cpp
+#include "string/lcp_compare.hpp"
+
+string s = "abc", t = "abd";
+auto equal = [&](int l1, int r1, int l2, int r2) {
+  return r1 <= int(s.size()) && r2 <= int(t.size())
+      && s.substr(l1, r1 - l1) == t.substr(l2, r2 - l2);
+};
+int len = calc_lcp(0, 0, equal);
+assert(len == 2);
+auto [i, j] = compare_substr(0, 3, 0, 3, len);
+assert(s[i] < t[j]);
+```
+
+## 詳細なドキュメント
 
 #### calc_lcp
 
@@ -20,7 +40,6 @@ I calc_lcp(int i, int j, auto is_equal)
 
 - `is_equal` の呼び出しを $O(\log n)$ 回
 
-
 #### compare_substr
 
 ```cpp
@@ -32,23 +51,3 @@ pair<int, int> compare_substr(int l1, int r1, int l2, int r2, int lcp)
 ##### 計算量
 
 - $O(1)$
-
-----
-
-使用例
-
-```cpp
-string S, T;  // 英小文字のみからなる
-RollingHashSubstr<> rhS(S), rhT(T);
-// S[l1, r1) と S[l2, r2) の比較 (< は -1, = は 0, > は 1)
-auto cmp = [&](ll l1, ll r1, ll l2, ll r2) -> ll
-{
-  auto is_equal = [&](ll l1, ll r1, ll l2, ll r2) -> bool
-  { return rhS.hash(l1, r1) == rhT.hash(l2, r2); };
-  ll lcp = calc_lcp(l1, l2, is_equal);
-  auto [i, j] = compare_substr(l1, r1, l2, r2, lcp);
-  char c1 = i < SZ(S) ? S.at(i) : '!';
-  char c2 = j < SZ(T) ? T.at(j) : '!';
-  return c1 < c2 ? -1 : c1 > c2 ? 1 : 0;
-};
-```

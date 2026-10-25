@@ -1,5 +1,12 @@
 #pragma once
 
+/*!
+ * Portions corresponding to AtCoder Library (CC0-1.0): primality testing.
+ * Upstream: atcoder/internal_math.hpp
+ * https://github.com/atcoder/ac-library/tree/864245a00b00dd008d1abfdc239618fdb7d139da
+ * License: https://github.com/atcoder/ac-library/blob/864245a00b00dd008d1abfdc239618fdb7d139da/LICENSE
+ */
+
 #include "../../template/template_all_but_modint.hpp"
 
 #include "../../utils/larger_int.hpp"

@@ -1,4 +1,6 @@
-## 分割統治による静的列の区間積クエリ
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
 
 https://maspypy.com/%e5%88%86%e5%89%b2%e7%b5%b1%e6%b2%bb%e3%81%ab%e3%82%88%e3%82%8b%e9%9d%99%e7%9a%84%e5%88%97%e3%81%ae%e5%8c%ba%e9%96%93%e7%a9%8d%e3%82%af%e3%82%a8%e3%83%aa
 
@@ -11,6 +13,20 @@ https://maspypy.com/%e5%88%86%e5%89%b2%e7%b5%b1%e6%b2%bb%e3%81%ab%e3%82%88%e3%82
     - SWAG
       - これはクエリが queue や deque のようになっている場合だけ
 - その他、クエリの区間幅が常に小さいときなどに速いらしい（冒頭の maspy さんの記事参照）。
+
+## 使用例
+
+```cpp
+#include "algebra/algebra_basic_ops.hpp"
+#include "ds/static_range/dc_range_prod.hpp"
+
+vc<ll> a{2, 5, 3, 7};
+vc<pair<int, int>> ranges{{0, 2}, {1, 4}, {2, 2}};
+auto answers = dc_range_prod<MonoidAdd<ll>>(a, ranges);
+assert(answers == (vc<ll>{7, 15, 0}));
+```
+
+## 詳細なドキュメント
 
 #### dc_range_prod
 

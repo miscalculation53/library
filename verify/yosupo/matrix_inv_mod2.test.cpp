@@ -23,11 +23,11 @@ void main2()
   LL(N);
   VEC(string, N, A_);
   MatrixMod2<4096> A(A_);
-  auto [ok, B] = A.inv();
-  if (!ok)
+  const auto B = A.inv();
+  if (!B)
     PRINT(-1);
   else
-    PRINT(B.to_vstr());
+    PRINT(B->to_vstr());
 }
 
 void test() {}

@@ -44,18 +44,18 @@ void main2()
     else if (t == 4)
     {
       auto it = st.leq_max_it(x);
-      if (it == st.end())
+      if (!it)
         PRINT(-1);
       else
-        PRINT(*it);
+        PRINT(**it);
     }
     else if (t == 5)
     {
       auto it = st.geq_min_it(x);
-      if (it == st.end())
+      if (!it)
         PRINT(-1);
       else
-        PRINT(*it);
+        PRINT(**it);
     }
   }
 }

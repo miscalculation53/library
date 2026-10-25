@@ -9,21 +9,20 @@
  * @docs docs/math/modint/sqrt_mod.md
  */
 
-// 平方根が存在しなければ (false, 0)
-// 平方根が存在すれば (true, 平方根のひとつ)
+// 平方根のひとつを返す。存在しなければ nullopt。
 // 平方根のもうひとつは -1 倍したもの
 // O(log^2 p)
 template <class mint>
-pair<bool, mint> sqrt_mod(mint n)
+optional<mint> sqrt_mod(mint n)
 {
   auto p = mint::mod();
   assert(is_prime(mint::mod()));
   if (n == 0)
-    return {true, 0};
+    return mint(0);
   if (p == 2)
-    return {true, n};
+    return n;
   if (n.pow((p - 1) / 2) == -1)
-    return {false, 0};
+    return nullopt;
   auto q = p - 1;
   int s = 0;
   while (q % 2 == 0)
@@ -43,5 +42,5 @@ pair<bool, mint> sqrt_mod(mint n)
     mint b = c.pow(ull(1) << (m - m2 - 1));
     m = m2, c = b * b, t *= c, r *= b;
   }
-  return {true, r};
+  return r;
 }

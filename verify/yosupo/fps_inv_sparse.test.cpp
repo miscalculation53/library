@@ -30,7 +30,7 @@ void main2()
     IN(mint, a);
     f.at(i) = a;
   }
-  fps g = f.inv();
+  fps g = f.inv(N);
   PRINT(g);
 }
 

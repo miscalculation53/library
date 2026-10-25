@@ -87,7 +87,6 @@ void test_pow(int n)
   f[0] = 1;
   const auto expected = naive_mul(f, f, n);
   assert(f.pow(2, n) == expected);
-  assert(f.pow(2) == expected);
   assert(f.pow(0, 0).empty());
 }
 
@@ -99,9 +98,9 @@ void test_sqrt()
   root[0] = 1;
   const auto square = naive_mul(root, root, n);
 
-  auto [ok, actual] = square.sqrt(n);
-  assert(ok);
-  assert(naive_mul(actual, actual, n) == square);
+  const auto actual = square.sqrt(n);
+  assert(actual);
+  assert(naive_mul(*actual, *actual, n) == square);
 }
 
 template <class mint>

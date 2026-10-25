@@ -1,8 +1,43 @@
-## Power Projection
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
 
 https://maspypy.com/fps-%e5%90%88%e6%88%90%e3%83%bb%e9%80%86%e9%96%a2%e6%95%b0%e3%81%ae%e8%a7%a3%e8%aa%ac-1-%e9%80%86%e9%96%a2%e6%95%b0%e3%81%a8-power-projection
 
 FPS $f(x), g(x)$ が与えられるので、$i=0,\dots,m-1$ に対して $[x^{n}]g(x)f(x)^i$ を求める。（$w_j = [x^{n-j}] g_j(x)$ とおけば、これは $\sum_{j=0}^{n} w_j \cdot [x^j] f(x)^i$ である。）
+
+## 使用例
+
+```cpp
+using mint = modint998244353;
+using P = FormalPowerSeries<mint>;
+auto coefficients = power_projection(2, 4, P{0, 1}, P{1});
+assert((coefficients == P{0, 0, 1, 0}));
+```
+
+## 詳細なドキュメント
+
+#### power_projection
+
+```cpp
+FormalPowerSeries<mint> power_projection(
+    int n, int m, const FormalPowerSeries<mint>& f,
+    const FormalPowerSeries<mint>& g)
+```
+
+$i=0,\ldots,m-1$ に対する $[x^n]g(x)f(x)^i$ を長さ $m$ の配列で返す。
+入力の保存範囲外の係数は $0$ として扱う。
+
+##### 制約
+
+- $n,m\ge0$。
+- 係数は FPS の乗算・逆数が使える体上の modint。
+
+##### 計算量
+
+- $O(n\log^2 n+m\log m)$。
+
+## アルゴリズム
 
 $g(x)f(x)^i = [y^i] \dfrac{g(x)}{1-yf(x)}$ であるから、$y$ の多項式 $[x^n] \dfrac{g(x)}{1-yf(x)}$ の $m-1$ 次までを求めればよい。$P(x,y) = g(x), Q(x,y) = 1-yf(x)$ とおく。Bostan–Mori と同様に
 

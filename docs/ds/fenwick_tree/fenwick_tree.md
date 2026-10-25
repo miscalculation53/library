@@ -1,10 +1,29 @@
-## Fenwick Tree
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
 
 可換群に対して一点加算・区間取得ができるデータ構造。（取得が prefix だけでよいなら群でなくモノイドでもよい）
 
 できることはセグ木の下位互換だが、定数倍がよく、実装が軽い。
 
-### コンストラクタ
+## 使用例
+
+```cpp
+#include "ds/fenwick_tree/fenwick_tree.hpp"
+
+FenwickTree<GroupAddSub<ll>> fw(vc<ll>{2, 5, 3});
+fw.add(1, 4);
+assert(fw.sum(2) == 11);    // [0, 2)
+assert(fw.sum(1, 3) == 12); // [1, 3)
+fw.set(0, 7);
+assert(fw.get(0) == 7);
+```
+
+## 詳細なドキュメント
+
+### FenwickTree
+
+#### コンストラクタ
 
 ```cpp
 (1) FenwickTree<G>(int n)
@@ -14,18 +33,15 @@
 - (1) 長さ $n$、全要素単位元で初期化する。
 - (2) vector $v$ で初期化する。
 
-#### 制約
+##### 制約
 
 - `G` は**可換**
   - 群であることが多いが、モノイドでも一部機能は OK
 
-#### 計算量
+##### 計算量
 
 - (1)：$O(n)$
-- (2)：$O(n\log n)$
-
-
-### メンバ関数
+- (2)：$O(n)$
 
 #### size
 
@@ -39,7 +55,6 @@ $n$ を返す。
 
 - $O(1)$
 
-
 #### sum
 
 ```cpp
@@ -50,6 +65,8 @@ $n$ を返す。
 - (1)：$[0, r)$ の和を返す。モノイドでよい。
 - (2)：$[l, r)$ の和を返す。群であることが必要。
 
+区間和は、左右の prefix に共通する節点までで走査を打ち切る。
+
 ##### 制約
 
 - (1)：$0 \leq r \leq n$
@@ -58,7 +75,6 @@ $n$ を返す。
 ##### 計算量
 
 - $O(\log n)$
-
 
 #### get
 
@@ -76,7 +92,6 @@ $i$ 番目の値を返す。群であることが必要。
 
 - $O(\log n)$
 
-
 #### add
 
 ```cpp
@@ -92,7 +107,6 @@ $i$ 番目の要素に $x$ を加算する。モノイドでよい。
 ##### 計算量
 
 - $O(\log n)$
-
 
 #### set
 
@@ -110,27 +124,54 @@ $i$ 番目の要素を $x$ にする。群であることが必要。
 
 - $O(\log n)$
 
-
 #### leq_max, lt_max, gt_min, geq_min
 
 ```cpp
-(1) I leq_max<I=ll>(G::S w)
-(2) I lt_max<I=ll>(G::S w)
-(3) I gt_max<I=ll>(G::S w)
-(4) I geq_max<I=ll>(G::S w)
+(1) optional<I> leq_max<I=ll>(G::S w)
+(2) optional<I> lt_max<I=ll>(G::S w)
+(3) optional<I> gt_min<I=ll>(G::S w)
+(4) optional<I> geq_min<I=ll>(G::S w)
 ```
 
 `G` が整数の通常の足し算で、要素が非負であるとする。このとき、$[0, r)$ の要素の和に関して二分探索する：
 
-- (1)：$\mathrm{sum}[0, r) \leq w$ となる $r$ の最大値（なければ $-1$）を返す。
-- (2)：$\mathrm{sum}[0, r) \lt w$ となる $r$ の最大値（なければ $-1$）を返す。
-- (3)：$\mathrm{sum}[0, r) \gt w$ となる $r$ の最大値（なければ $n$）を返す。
-- (4)：$\mathrm{sum}[0, r) \geq w$ となる $r$ の最大値（なければ $n$）を返す。
+- (1)：$\mathrm{sum}[0, r) \leq w$ となる $r$ の最大値（なければ `nullopt`）を返す。
+- (2)：$\mathrm{sum}[0, r) \lt w$ となる $r$ の最大値（なければ `nullopt`）を返す。
+- (3)：$\mathrm{sum}[0, r) \gt w$ となる $r$ の最小値（なければ `nullopt`）を返す。
+- (4)：$\mathrm{sum}[0, r) \geq w$ となる $r$ の最小値（なければ `nullopt`）を返す。
 
 ##### 計算量
 
 - $O(\log n)$
 
+#### lt_max_id_sum
+
+```cpp
+template <class I = ll>
+optional<pair<I, S>> lt_max_id_sum(S w) const
+```
+
+`sum(r) < w` を満たす最大の接頭辞長と、その累積和を返す。該当する接頭辞がなければ `nullopt`。長さ $0$ の接頭辞も値ありとして返す。
+
+##### 制約
+
+- 要素は非負整数で、`G` は通常の加算を表す。
+
+##### 計算量
+
+- $O(\log n)$
+
+#### content
+
+```cpp
+vc<S> content() const
+```
+
+全要素を添字順に並べた配列のコピーを返す。線形構築の逆操作で各要素を復元する。群であることが必要。
+
+##### 計算量
+
+- $O(n)$
 
 ---
 
@@ -171,12 +212,12 @@ $x$ が $[l, r)$ 番目であるとして $l, r$ を返す。$l$ は `sum(x)` �
 #### kth_in_multiset
 
 ```cpp
-I kth_in_multiset<I=ll>(G::S k)
+optional<I> kth_in_multiset<I=ll>(G::S k)
 ```
 
-「集合の $k$ 番目に小さい要素」を返す。ただし、$k \lt 0$ なら $-1$ を、$k \geq (多重集合のサイズ)$ なら $n$ を返す。
+「集合の $k$ 番目に小さい要素」を返す。範囲外の `k` は `nullopt` を返す。
 
-なおこれは（$k \geq 0$ のとき）`leq_max` と一致する。
+有効な `k` では `leq_max` と一致する。
 
 ##### 計算量
 
@@ -185,16 +226,16 @@ I kth_in_multiset<I=ll>(G::S k)
 #### lt_max_in_multiset など
 
 ```cpp
-(1) I lt_max_in_multiset<I=ll>(T x)
-(2) I leq_max_in_multiset<I=ll>(T x)
-(3) I geq_max_in_multiset<I=ll>(T x)
-(4) I gt_max_in_multiset<I=ll>(T x)
+(1) optional<I> lt_max_in_multiset<I=ll>(T x)
+(2) optional<I> leq_max_in_multiset<I=ll>(T x)
+(3) optional<I> geq_min_in_multiset<I=ll>(T x)
+(4) optional<I> gt_min_in_multiset<I=ll>(T x)
 ```
 
-- (1)：$x$ 未満で最大の要素が**小さい方から何番目か**を返す。なければ $-1$ を返す。
-- (2)：$x$ 以下で最大の要素が**小さい方から何番目か**を返す。なければ $-1$ を返す。
-- (3)：$x$ 以上で最小の要素が**小さい方から何番目か**を返す。なければ多重集合の要素数を返す。
-- (4)：$x$ 超過で最小の要素が**小さい方から何番目か**を返す。なければ多重集合の要素数を返す。
+- (1)：$x$ 未満で最大の要素が**小さい方から何番目か**を返す。なければ `nullopt` を返す。
+- (2)：$x$ 以下で最大の要素が**小さい方から何番目か**を返す。なければ `nullopt` を返す。
+- (3)：$x$ 以上で最小の要素が**小さい方から何番目か**を返す。なければ `nullopt` を返す。
+- (4)：$x$ 超過で最小の要素が**小さい方から何番目か**を返す。なければ `nullopt` を返す。
 
 ##### 計算量
 

@@ -23,8 +23,8 @@ void main2()
 {
   LL(y, p);
   mint::set_mod(p);
-  auto [ok, x] = sqrt_mod(mint(y));
-  PRINT(ok ? x.val() : -1);
+  const auto x = sqrt_mod(mint(y));
+  PRINT(x ? x->val() : -1);
 }
 
 void test()

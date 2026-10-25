@@ -1,4 +1,23 @@
-## 直積全探索
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
+
+直積全探索
+
+## 使用例
+
+```cpp
+#include "itertools/direct_product.hpp"
+
+int count = 0;
+for (const auto& indices : direct_product(vc<int>{2, 3})) {
+  assert(indices.size() == 2);
+  ++count;
+}
+assert(count == 6);
+```
+
+## 詳細なドキュメント
 
 #### direct_product
 

@@ -1,29 +1,58 @@
 #pragma once
 
 #include "../../template/template_all_but_modint.hpp"
+#include "../../utils/make_unsigned_ext.hpp"
 
 #include "../algebra_base.hpp"
 #include "../clamp_add.hpp"
+
+/*!
+ * Adapted from hitonanode/cplib-cpp:
+ * https://github.com/hitonanode/cplib-cpp/blob/30eca5de7eb8e520cd13d5d7fd23d9edaeebe60e/segmenttree/trees/range-chmin-chmax-add-range-sum.hpp
+ * Changes: monoid/action interfaces, coefficient and length types, and clamp/add composition.
+ *
+ * MIT License
+ *
+ * Copyright (c) 2019 Ryotaro Sato
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 
 /**
  * @brief 作用つきモノイド：chmin・chmax・加算、最小値・最大値・和取得
  * @docs docs/algebra/acted_monoid/chmin_chmax_add_min_max_sum.md
  */
 
-template <class T, T infty = INF>
+template <class T, auto infty = nullptr, class L = ll>
 struct MonoidMinMaxSumBeats
 {
+  using UL = make_unsigned_ext_t<common_type_t<L, ull>>;
   struct S
   {
-    T mn = infty, mx = -infty, mn2 = infty, mx2 = -infty, sum = T{};
-    int len = 0, mn_cnt = 0, mx_cnt = 0;
+    T mn = resolved_infty<T, infty>(), mx = -resolved_infty<T, infty>();
+    T mn2 = resolved_infty<T, infty>(), mx2 = -resolved_infty<T, infty>(), sum = T{};
+    L len = 0, mn_cnt = 0, mx_cnt = 0;
     bool fail = false;
     S() {}
-    S(T x, int len = 1)
-        : mn(x), mx(x), sum(x * len), len(len), mn_cnt(len), mx_cnt(len) {}
-#ifdef LOCAL
-    auto dump_data() const { return tie(mn, mx, mn2, mx2, sum, len, mn_cnt, mx_cnt, fail); }
-#endif
+    S(T x, L len = 1)
+        : mn(x), mx(x), sum(x * UL(len)), len(len), mn_cnt(len), mx_cnt(len) {}
+    CPP_DUMP_DEFINE_DATA(mn, mx, mn2, mx2, sum, len, mn_cnt, mx_cnt, fail);
   };
 
 private:
@@ -67,10 +96,11 @@ public:
   static constexpr S e() { return {}; }
 };
 
-template <class T, T infty = INF>
+template <class T, auto infty = nullptr, class L = ll>
 struct ActedMonoidChminChmaxAddMinMaxSum
 {
-  using M = MonoidMinMaxSumBeats<T, infty>;
+  using M = MonoidMinMaxSumBeats<T, infty, L>;
+  using UL = typename M::UL;
   using MF = MonoidClampAdd<T, infty>;
   using S = typename M::S;
   using F = typename MF::S;
@@ -86,13 +116,13 @@ struct ActedMonoidChminChmaxAddMinMaxSum
     {
       x.mn = x.mx2 = f(x.mn);
       x.mx = x.mn2 = f(x.mx);
-      x.sum = x.mn * x.mn_cnt + x.mx * x.mx_cnt;
+      x.sum = x.mn * UL(x.mn_cnt) + x.mx * UL(x.mx_cnt);
       return x;
     }
     if (f.lo < x.mn2 && x.mx2 < f.hi)
     {
       T nxt_mn = max(x.mn, f.lo), nxt_mx = min(x.mx, f.hi);
-      x.sum += (nxt_mn - x.mn) * x.mn_cnt - (x.mx - nxt_mx) * x.mx_cnt + f.bias * x.len;
+      x.sum += (nxt_mn - x.mn) * UL(x.mn_cnt) - (x.mx - nxt_mx) * UL(x.mx_cnt) + f.bias * UL(x.len);
       x.mn = nxt_mn + f.bias, x.mx = nxt_mx + f.bias;
       x.mn2 += f.bias, x.mx2 += f.bias;
       return x;

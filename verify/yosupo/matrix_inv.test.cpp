@@ -25,11 +25,11 @@ void main2()
   LL(N);
   VEC2(mint, N, N, A_);
   Matrix<FieldAddSubMulDiv<mint>> A(A_);
-  auto [ok, B] = A.inv();
-  if (!ok)
+  const auto B = A.inv();
+  if (!B)
     PRINT(-1);
   else
-    PRINTV(B);
+    PRINTV(*B);
 }
 
 void test() {}

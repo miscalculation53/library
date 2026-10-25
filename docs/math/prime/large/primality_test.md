@@ -1,10 +1,19 @@
-## 素数判定
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
 
 与えられた整数が素数かどうかをミラー・ラビン素数判定法で判定する。
 
+## 使用例
+
 ```cpp
-bool is_prime_int(int n)
+assert(is_prime(998244353));
+assert(!is_prime(1000000000));
 ```
+
+## 詳細なドキュメント
+
+#### is_prime
 
 ```cpp
 bool is_prime(ll n)

@@ -8,6 +8,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#include "template_float128.hpp"
+
 #ifndef EPS
 #define EPS 1e-11
 #endif
@@ -47,8 +49,8 @@ i128 stoi128(const string &s)
 {
   const bool neg = s.front() == '-';
   u128 res = 0;
-  for (int i = neg; i < (int)s.size(); i++)
-    res = 10 * res + s[i] - '0';
+  for (size_t i = size_t(neg); i < s.size(); i++)
+    res = 10 * res + unsigned(s[i] - '0');
   if (neg)
     return -i128(res - 1) - 1;
   return i128(res);
@@ -61,10 +63,10 @@ string i128tos(i128 x)
   if (x < 0)
     ux = u128(-(x + 1)) + 1, sign = "-";
   else
-    ux = x;
+    ux = u128(x);
   while (ux > 0)
   {
-    res += '0' + ux % 10;
+    res += char('0' + ux % 10);
     ux /= 10;
   }
   reverse(res.begin(), res.end());
@@ -73,7 +75,7 @@ string i128tos(i128 x)
 istream &operator>>(istream &is, i128 &a)
 {
   string s;
-  is >> s;
+  if (!(is >> s)) return is;
   a = stoi128(s);
   return is;
 }

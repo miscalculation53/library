@@ -1,4 +1,6 @@
-## 多項式の評価点シフト
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
 
 $n$ 個の等間隔な評価点 $y_i = f(i) \ (0 \leq i \leq n-1)$ が与えられた多項式について、$1$ 個の点で評価することが $O(n)$ 時間ででき（これはこのテク自体が「ラグランジュ補間」と呼ばれているのをよく見る気がする）、連続する何個かの点で評価することが $O((n+m)\log (n+m))$ 時間でできる。多項式を陽に復元してから多点評価すると log ふたつかかるがそれより速い。
 
@@ -13,6 +15,18 @@ f(c) &= \sum_{i=0}^{n-1} y_i \prod_{j=0, j \neq i}^{n-1} \frac{c - j}{i - j} \\\
 なので $c-j$ の左右からの累積積を用いて計算できる。
 
 連続する $m$ 点のほうは、除算を使いそうだがそれだとゼロ除算が面倒で、畳み込みを使う。この方法は大昔に https://mathlog.info/articles/3351 を読んで導出を追ったがすべて忘却してしまった……。
+
+## 使用例
+
+```cpp
+using mint = modint998244353;
+vc<mint> ys{0, 1, 4}; // f(x) = x^2
+assert(shift_of_sampling_points_one(ys, mint(3)) == 9);
+auto next = shift_of_sampling_points_many(ys, mint(3), 2);
+assert((next == vc<mint>{9, 16}));
+```
+
+## 詳細なドキュメント
 
 #### shift_of_sampling_points
 

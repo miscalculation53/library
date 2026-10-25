@@ -1,10 +1,26 @@
-## Berlekamp–Massey
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
 
 競プロ的には線形漸化的数列の線形漸化式を復元するアルゴリズムとしての使い道の方が多いが、数列の最小多項式を求めているとも解釈できる。
 
 線型漸化的数列が $d$ 個の係数で表される線形漸化式を持つことがわかっているとき、先頭 $2d + 1$ 項がわかっていれば正しい線形漸化式が復元できる。
 
-一般の体で $O(n^2)$ 時間で動作する。NTT が使える場合 Half GCD というアルゴリズムで $O(n \log^2 n)$ 時間になるらしいが、未履修……。
+一般の体で $O(n^2)$ 時間で動作する。NTT が使える場合の
+[$O(n\log^2 n)$ の Half-GCD 版](berlekamp_massey_fast.md) もある。
+通常版は低次数の列や逐次更新に適する。
+
+2変数の係数表から有理母関数を推測する場合は [2変数有理母関数の推定](rational_gf_2d.md) を使う。
+
+## 使用例
+
+```cpp
+using mint = modint998244353;
+auto c = berlekamp_massey<FieldAddSubMulDiv<mint>>(vc<mint>{0, 1, 1, 2, 3, 5});
+assert((c == vc<mint>{-1, 1, 1}));
+```
+
+## 詳細なドキュメント
 
 #### berlekamp_massey
 
@@ -21,3 +37,18 @@ vc<F::S> berlekamp_massey(vc<F::S> a)
 ##### 計算量
 
 - $O(n^2)$
+
+
+### 逐次更新
+
+```cpp
+BerlekampMassey<F> bm;
+bm.append(a_i);                  // 次の 1 項を追加
+int d = bm.degree();             // 現在の接頭辞の最短漸化式の次数
+auto c = bm.coefficients();      // c[0] == -F::e1()
+```
+
+`berlekamp_massey<F>(a)` と同じ処理を逐次実行する。
+全体で $O(n^2)$ 時間、保持する数列・係数に $O(n)$ 空間。
+`coefficients()` は現在の係数をコピーして返すので $O(d)$ 時間。
+途中の接頭辞に対する漸化式が、未知の後続項でも成立するとは限らない。

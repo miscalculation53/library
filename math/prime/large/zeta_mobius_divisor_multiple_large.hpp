@@ -2,7 +2,7 @@
 
 #include "template/template_all_but_modint.hpp"
 #include "math/prime/large/factorize.hpp"
-#include "math/algebra/algebra_basic_ops.hpp"
+#include "algebra/algebra_basic_ops.hpp"
 
 /**
  * @brief 約数・倍数 ゼータ・メビウス変換（大きい $m$ の約数）

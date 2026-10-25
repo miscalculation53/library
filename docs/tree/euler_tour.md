@@ -1,0 +1,280 @@
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
+
+木のオイラーツアー
+
+## 使用例
+
+```cpp
+#include "tree/euler_tour.hpp"
+
+EulerTour tour(4, vc<pair<int, int>>{{0, 1}, {1, 2}, {1, 3}}, 0);
+assert(tour.lca(2, 3) == 1);
+assert(tour.depth(3) == 2);
+```
+
+## 詳細なドキュメント
+
+### EulerTour
+
+根付き木のオイラーツアーを構築し、深さ、部分木、親子関係、パス、LCA などを扱う。
+
+`need_lca = true` の場合は、オイラーツアー上の RMQ も構築する。
+
+#### コンストラクタ
+
+```cpp
+(1) EulerTour<need_lca = true, RMQ>()
+(2) EulerTour<need_lca = true, RMQ>(int n, const vc<I>& par)
+(3) EulerTour<need_lca = true, RMQ>(int n, const vc<P>& es, int root)
+```
+
+- (1)：デフォルトコンストラクタ。
+- (2)：親配列 `par` から構築する。根は `par[root] < 0` または `par[root] == root` で表す。
+- (3)：無向木の辺集合 `es` と根 `root` から構築する。
+
+##### 制約
+
+- $n \geq 1$
+- (2)：`par` の長さは $n$ で、ちょうど一つの根を持つ木を表す
+- (3)：`es` の長さは $n-1$ で、各辺の端点は $[0,n)$ にあり、全体が木である
+- (3)：$0 \leq \mathrm{root} < n$
+- `need_lca = true` の場合、`RMQ` は `ull` の区間最小値を処理できる
+
+##### 計算量
+
+RMQ の長さ $2n-1$ に対する構築時間を $T_{\mathrm{RMQ}}(n)$ として、
+
+- 時間：$O(n + T_{\mathrm{RMQ}}(n))$
+
+デフォルトの `RMQ` では $O(n \log n)$。
+
+#### size
+
+```cpp
+I size<I = ll>()
+```
+
+頂点数 $n$ を返す。
+
+##### 計算量
+
+- $O(1)$
+
+#### root
+
+```cpp
+int root()
+```
+
+根の頂点番号を返す。
+
+##### 計算量
+
+- $O(1)$
+
+#### depth
+
+```cpp
+I depth<I = ll>(int v)
+```
+
+頂点 `v` の深さを返す。
+
+##### 制約
+
+- $0 \leq v < n$
+
+##### 計算量
+
+- $O(1)$
+
+#### subtree_size
+
+```cpp
+I subtree_size<I = ll>(int v)
+```
+
+`v` を根とする部分木の頂点数を返す。`v` 自身も含む。
+
+##### 制約
+
+- $0 \leq v < n$
+
+##### 計算量
+
+- $O(1)$
+
+#### cut_and_subtree_size
+
+```cpp
+pair<I, I> cut_and_subtree_size<I = ll>(int u, int v)
+```
+
+辺 $(u,v)$ を切ったときの、`u` 側と `v` 側の連結成分の頂点数をこの順に返す。
+
+##### 制約
+
+- $0 \leq u,v < n$
+- $(u,v)$ は木の辺
+
+##### 計算量
+
+- $O(1)$
+
+#### parent
+
+```cpp
+int parent(int v)
+```
+
+頂点 `v` の親を返す。
+
+##### 制約
+
+- $0 \leq v < n$
+- $v \neq \mathrm{root}()$
+
+##### 計算量
+
+- $O(1)$
+
+#### path_to_root
+
+```cpp
+vc<int> path_to_root(int v)
+```
+
+`v` から根までのパス上の頂点を、`v` から根へ向かう順に返す。両端を含む。
+
+##### 制約
+
+- $0 \leq v < n$
+
+##### 計算量
+
+- 時間：$O(\mathrm{depth}(v))$
+
+#### path
+
+```cpp
+vc<int> path(int u, int v)
+```
+
+`u` から `v` までのパス上の頂点を順に返す。両端を含む。
+
+##### 制約
+
+- $0 \leq u,v < n$
+
+##### 計算量
+
+- 時間：$O(\mathrm{depth}(u) + \mathrm{depth}(v))$
+
+#### children
+
+```cpp
+auto children(int v)
+```
+
+頂点 `v` の子を走査できる範囲を返す。`to_v()` で vector に変換できる。
+
+##### 制約
+
+- $0 \leq v < n$
+
+##### 計算量
+
+- 範囲の取得：$O(1)$
+- 全要素の走査・`to_v()`：$O(\deg_{\mathrm{child}}(v))$
+
+#### parent_child
+
+```cpp
+pair<int, int> parent_child(int u, int v)
+```
+
+辺 $(u,v)$ の端点を `(親, 子)` の順に返す。
+
+##### 制約
+
+- $0 \leq u,v < n$
+- $(u,v)$ は木の辺
+
+##### 計算量
+
+- $O(1)$
+
+#### edge_to_vertex_values
+
+```cpp
+vc<T> edge_to_vertex_values(
+  const vc<tuple<I, I, T>>& es, const T& root_value = T{}) const
+```
+
+`(u, v, value)` の列を頂点番号順の長さ $n$ の配列に変換する。各辺の値を子側の頂点に置き、根には `root_value` を置く。辺の並び順と端点の向きは任意。
+
+数値の和では `root_value = 0`、群の積ではその単位元を指定する。
+
+##### 制約
+
+- `es` はこの木の各辺をちょうど一度含む
+- `T` はコピー構築・コピー代入ができる
+- `root_value` を省略する場合、`T{}` が構築できる
+
+##### 計算量
+
+- $O(n)$（値のコピーを $O(1)$ とする）
+
+#### lca
+
+```cpp
+int lca(int u, int v)
+```
+
+`u` と `v` の最小共通祖先を返す。
+
+##### 制約
+
+- `need_lca = true`
+- $0 \leq u,v < n$
+
+##### 計算量
+
+- `RMQ::prod` $1$ 回
+- デフォルトの `RMQ` では $O(1)$
+
+#### dist
+
+```cpp
+I dist<I = ll>(int u, int v)
+```
+
+`u` と `v` の間の辺数を返す。
+
+##### 制約
+
+- `need_lca = true`
+- $0 \leq u,v < n$
+
+##### 計算量
+
+- `lca` $1$ 回
+- デフォルトの `RMQ` では $O(1)$
+
+#### is_ancestor
+
+```cpp
+bool is_ancestor(int u, int v)
+```
+
+`u` が `v` の祖先なら `true` を返す。`u == v` の場合も `true`。
+
+##### 制約
+
+- $0 \leq u,v < n$
+
+##### 計算量
+
+- $O(1)$

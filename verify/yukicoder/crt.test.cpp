@@ -22,9 +22,10 @@ void init() {}
 void main2()
 {
   LL(x1, y1, x2, y2, x3, y3);
-  auto [ok, r, m] = crt(array{x1, x2, x3}, array{y1, y2, y3});
-  if (!ok)
+  const auto result = crt(array{x1, x2, x3}, array{y1, y2, y3});
+  if (!result)
     PRINTRETURN(-1);
+  auto [r, m] = *result;
   if (r == 0)
     r += m;
   PRINT(r);

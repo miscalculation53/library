@@ -3,8 +3,10 @@
 #include "../template/template_all_but_modint.hpp"
 
 #include "math/convolution/convolution_ll.hpp"
+#include "math/internal/bigint_division.hpp"
 #include "utils/is_integral_ext.hpp"
 #include "utils/make_unsigned_ext.hpp"
+#include "utils/integer_arithmetic.hpp"
 
 /**
  * @brief 多倍長整数
@@ -24,6 +26,29 @@ private:
   static constexpr int BASE = ipow(base, digit);
   vl vec;
   bool is_nega = false;
+
+  // 各桁の積・余りは BASE * v 未満になる。
+  template <class U, class F>
+  static void with_scalar_width(U v, F f)
+  {
+    if constexpr (sizeof(U) >= sizeof(ull))
+      if (v <= numeric_limits<ull>::max() / BASE)
+      {
+        f(ull(v));
+        return;
+      }
+    f(larger_int_t<U>(v));
+  }
+
+  static int char_to_digit(char c)
+  {
+    if ('0' <= c && c <= '9')
+      return c - '0';
+    if ('a' <= c && c <= 'z')
+      return c - 'a' + 10;
+    return c - 'A' + 10;
+  }
+  static char digit_to_char(int x) { return x < 10 ? char('0' + x) : char('A' + x - 10); }
 
   void zero_suppress()
   {
@@ -100,6 +125,101 @@ private:
   BigInteger operator<<(size_t k) const { return BigInteger(*this) <<= k; }
   BigInteger operator>>(size_t k) const { return BigInteger(*this) >>= k; }
 
+  pair<BigInteger, int> divmod_digit(int d) const
+  {
+    BigInteger q = *this;
+    ll rem = 0;
+    repi(i, SZ(q.vec) - 1, -1, -1)
+    {
+      ll cur = q.vec[i] + rem * BASE;
+      q.vec[i] = cur / d;
+      rem = cur % d;
+    }
+    q.zero_suppress();
+    return {q, int(rem)};
+  }
+
+  pair<BigInteger, BigInteger> divmod_knuth(const BigInteger &b) const
+  {
+    BigInteger q, r;
+    vl u = vec, v = b.vec;
+    const ll d = BASE / (v.back() + 1);
+    auto normalize = [&](vl &a)
+    {
+      ll car = 0;
+      fem(x : a)
+      {
+        ll cur = x * d + car;
+        x = cur % BASE, car = cur / BASE;
+      }
+      if (car) a.eb(car);
+    };
+    normalize(u), normalize(v);
+    const int n = v.size();
+    u.eb(0);
+    const int m = SZ(u) - n - 1;
+    q.vec.resize(m + 1);
+    repi(j, m, -1, -1)
+    {
+      ll cur = u[j + n] * BASE + u[j + n - 1];
+      ll x = cur / v[n - 1], rem = cur % v[n - 1];
+      if (x == BASE)
+        x--, rem += v[n - 1];
+      while (n >= 2 && rem < BASE && x * v[n - 2] > rem * BASE + u[j + n - 2])
+        x--, rem += v[n - 1];
+
+      ll bor = 0;
+      repi(i, n)
+      {
+        ll z = x * v[i] + bor;
+        bor = z / BASE, z %= BASE;
+        if (u[j + i] < z)
+          u[j + i] += BASE, bor++;
+        u[j + i] -= z;
+      }
+      u[j + n] -= bor;
+      if (u[j + n] < 0)
+      {
+        x--;
+        ll car = 0;
+        repi(i, n)
+        {
+          ll z = u[j + i] + v[i] + car;
+          u[j + i] = z % BASE, car = z / BASE;
+        }
+        u[j + n] += car;
+      }
+      q.vec[j] = x;
+    }
+
+    r.vec.assign(u.begin(), u.begin() + n);
+    ll rem = 0;
+    repi(i, n - 1, -1, -1)
+    {
+      ll cur = r.vec[i] + rem * BASE;
+      r.vec[i] = cur / d, rem = cur % d;
+    }
+    q.zero_suppress(), r.zero_suppress();
+    return {q, r};
+  }
+
+  pair<BigInteger, BigInteger> divmod_abs(const BigInteger &b) const
+  {
+    auto multiply = [](const vl &left, const vl &right)
+    {
+      BigInteger x, y;
+      x.vec = left;
+      y.vec = right;
+      x *= y;
+      return std::move(x.vec);
+    };
+    auto digits = independent_bigint_division_v2_20261024::divide_magnitude<BASE>(vec, b.vec, multiply);
+    BigInteger q, r;
+    q.vec = std::move(digits.first);
+    r.vec = std::move(digits.second);
+    return {std::move(q), std::move(r)};
+  }
+
   int cmp(const BigInteger &b) const
   {
     if (is_nega ^ b.is_nega)
@@ -117,6 +237,8 @@ private:
   template <class T>
   void add_abs(int q, T val)
   {
+    if (q >= SZ(vec))
+      vec.resize(q + 1);
     int i = q;
     while (val > 0)
     {
@@ -131,6 +253,8 @@ private:
   template <class T>
   void sub_abs(int q, T val)
   {
+    if (q >= SZ(vec))
+      vec.resize(q + 1);
     int i = q;
     while (val > 0)
     {
@@ -161,9 +285,14 @@ public:
     {
       int r = len - i * digit;
       int l = max(0, r - digit);
-      string t = s.substr(offs + l, r - l);
-      if (!t.empty())
-        vec[i] = stoi(t, 0, base);
+      ll x = 0;
+      repi(j, l, r)
+      {
+        int d = char_to_digit(s[offs + j]);
+        assert(0 <= d && d < base);
+        x = x * base + d;
+      }
+      vec[i] = x;
     }
     zero_suppress();
   }
@@ -171,16 +300,8 @@ public:
   BigInteger(T x)
   {
     using U = make_unsigned_ext_t<T>;
-    U ux = x;
-    if constexpr (is_signed_ext<T>)
-    {
-      if (x < 0)
-        is_nega = true, ux = -ux;
-      else
-        is_nega = false;
-    }
-    else
-      is_nega = false;
+    U ux = unsigned_abs(x);
+    is_nega = is_negative(x);
     
     if (ux == 0)
       return;
@@ -196,11 +317,29 @@ public:
     const int n = vec.size();
     if (n == 0)
       return "0";
-    string s = is_nega ? "-" : "";
-    s += base_repr_str(vec.back(), base);
+    string s;
+    s.reserve(size_t(n) * digit + is_nega);
+    if (is_nega)
+      s += '-';
+    ll x = vec.back();
+    char buf[digit];
+    int len = 0;
+    do
+    {
+      buf[len++] = digit_to_char(x % base);
+      x /= base;
+    } while (x);
+    repi(i, len - 1, -1, -1) s += buf[i];
     repi(i, SZ(vec) - 2, -1, -1)
     {
-      s += base_repr_str(vec[i], base, digit);
+      size_t p = s.size();
+      s.resize(p + digit);
+      x = vec[i];
+      repi(j, digit - 1, -1, -1)
+      {
+        s[p + j] = digit_to_char(x % base);
+        x /= base;
+      }
     }
     return s;
   }
@@ -230,24 +369,36 @@ public:
   {
     if (b.vec.empty())
       return *this;
-    if (is_nega ^ b.is_nega)
-      return *this -= -b;
     if (vec.size() < b.vec.size())
       vec.resize(b.vec.size());
-    repi(i, b.vec.size()) vec[i] += b.vec[i];
-    carry();
+    if (is_nega == b.is_nega)
+    {
+      repi(i, b.vec.size()) vec[i] += b.vec[i];
+      carry();
+    }
+    else
+    {
+      repi(i, b.vec.size()) vec[i] -= b.vec[i];
+      borrow(0, SZ(b.vec) - 1);
+    }
     return *this;
   }
   BigInteger &operator-=(const BigInteger &b)
   {
     if (b.vec.empty())
       return *this;
-    if (is_nega ^ b.is_nega)
-      return *this += -b;
     if (vec.size() < b.vec.size())
       vec.resize(b.vec.size());
-    repi(i, b.vec.size()) vec[i] -= b.vec[i];
-    borrow(0, SZ(b.vec) - 1);
+    if (is_nega != b.is_nega)
+    {
+      repi(i, b.vec.size()) vec[i] += b.vec[i];
+      carry();
+    }
+    else
+    {
+      repi(i, b.vec.size()) vec[i] -= b.vec[i];
+      borrow(0, SZ(b.vec) - 1);
+    }
     return *this;
   }
   BigInteger &operator*=(const BigInteger &b)
@@ -258,10 +409,25 @@ public:
       this->is_nega = false;
       return *this;
     }
+    bool neg = is_nega ^ b.is_nega;
+    if (b.vec.size() == 1)
+    {
+      *this *= int(b.vec[0]);
+      is_nega = neg;
+      return *this;
+    }
+    if (vec.size() == 1)
+    {
+      int v = vec[0];
+      *this = b;
+      *this *= v;
+      is_nega = neg;
+      return *this;
+    }
     vec = convolution_4e18(this->vec, b.vec);
     carry();
     zero_suppress();
-    is_nega ^= b.is_nega;
+    is_nega = neg;
     return *this;
   }
   BigInteger operator+(const BigInteger &b) const { return BigInteger(*this) += b; }
@@ -298,20 +464,30 @@ public:
   BigInteger operator/(const BigInteger &b) const
   {
     assert(!b.vec.empty());
-    BigInteger a = abs();
-    if (a < b.abs())
-      return 0;
-    BigInteger ib = b.abs().inv(a.vec.size());
-    BigInteger c = (a * ib) >> (SZ(a.vec) + SZ(b.vec) - 1);
-    if (a >= b.abs() * (c + 1))
-      c += 1;
-    c.is_nega = is_nega ^ b.is_nega;
-    return c;
+    if (b.vec.size() == 1)
+    {
+      BigInteger q = divmod_digit(int(b.vec[0])).first;
+      q.is_nega = !q.vec.empty() && (is_nega ^ b.is_nega);
+      return q;
+    }
+    BigInteger q = divmod_abs(b).first;
+    q.is_nega = !q.vec.empty() && (is_nega ^ b.is_nega);
+    return q;
   }
   pair<BigInteger, BigInteger> divmod(const BigInteger &b) const
   {
-    BigInteger q = *this / b;
-    BigInteger r = *this - q * b;
+    assert(!b.vec.empty());
+    if (b.vec.size() == 1)
+    {
+      auto [q, rem] = divmod_digit(int(b.vec[0]));
+      q.is_nega = !q.vec.empty() && (is_nega ^ b.is_nega);
+      BigInteger r(rem);
+      r.is_nega = rem && is_nega;
+      return {q, r};
+    }
+    auto [q, r] = divmod_abs(b);
+    q.is_nega = !q.vec.empty() && (is_nega ^ b.is_nega);
+    r.is_nega = !r.vec.empty() && is_nega;
     return {q, r};
   }
   BigInteger operator%(const BigInteger &b) const { return divmod(b).second; }
@@ -331,11 +507,13 @@ public:
       if (v < 0)
         v_nega = true, uv = -uv;
     }
-    using V = larger_int_t<U>;
-    if (is_nega == v_nega)
-      add_abs(0, (V)uv);
-    else
-      sub_abs(0, (V)uv);
+    with_scalar_width(uv, [&](auto value)
+    {
+      if (is_nega == v_nega)
+        add_abs(0, value);
+      else
+        sub_abs(0, value);
+    });
     return *this;
   }
   template <class T, typename = enable_if_t<is_integral_ext<T>>>
@@ -351,11 +529,13 @@ public:
       if (v < 0)
         v_nega = true, uv = -uv;
     }
-    using V = larger_int_t<U>;
-    if (is_nega != v_nega)
-      add_abs(0, (V)uv);
-    else
-      sub_abs(0, (V)uv);
+    with_scalar_width(uv, [&](auto value)
+    {
+      if (is_nega != v_nega)
+        add_abs(0, value);
+      else
+        sub_abs(0, value);
+    });
     return *this;
   }
   template <class T, typename = enable_if_t<is_integral_ext<T>>>
@@ -376,19 +556,22 @@ public:
         v_nega = true, uv = -uv;
     }
     is_nega ^= v_nega;
-    using V = larger_int_t<U>;
-    V car = 0;
-    repi(i, SZ(vec))
+    with_scalar_width(uv, [&](auto value)
     {
-      car += (V)vec[i] * uv;
-      vec[i] = (ll)(car % BASE);
-      car /= BASE;
-    }
-    while (car > 0)
-    {
-      vec.eb((ll)(car % BASE));
-      car /= BASE;
-    }
+      using V = decltype(value);
+      V car = 0;
+      repi(i, SZ(vec))
+      {
+        car += (V)vec[i] * value;
+        vec[i] = (ll)(car % BASE);
+        car /= BASE;
+      }
+      while (car > 0)
+      {
+        vec.eb((ll)(car % BASE));
+        car /= BASE;
+      }
+    });
     return *this;
   }
   template <class T, typename = enable_if_t<is_integral_ext<T>>>
@@ -406,15 +589,18 @@ public:
         v_nega = true, uv = -uv;
     }
     is_nega ^= v_nega;
-    using V = larger_int_t<U>;
-    V rem = 0;
-    repi(i, SZ(vec) - 1, -1, -1)
+    with_scalar_width(uv, [&](auto value)
     {
-      V cur = vec[i] + rem * BASE;
-      vec[i] = (ll)(cur / uv);
-      rem = cur % uv;
-    }
-    zero_suppress();
+      using V = decltype(value);
+      V rem = 0;
+      repi(i, SZ(vec) - 1, -1, -1)
+      {
+        V cur = vec[i] + rem * BASE;
+        vec[i] = (ll)(cur / value);
+        rem = cur % value;
+      }
+      zero_suppress();
+    });
     return *this;
   }
   template <class T, typename = enable_if_t<is_integral_ext<T>>>
@@ -430,26 +616,29 @@ public:
       if (v < 0)
         uv = -uv;
     }
-    using V = larger_int_t<U>;
-    V rem = 0;
-    repi(i, SZ(vec) - 1, -1, -1)
+    with_scalar_width(uv, [&](auto value)
     {
-      V cur = vec[i] + rem * BASE;
-      rem = cur % uv;
-    }
-    vec.clear();
-    if (rem > 0)
-    {
-      while (rem > 0)
+      using V = decltype(value);
+      V rem = 0;
+      repi(i, SZ(vec) - 1, -1, -1)
       {
-        vec.eb((ll)(rem % BASE));
-        rem /= BASE;
+        V cur = vec[i] + rem * BASE;
+        rem = cur % value;
       }
-    }
-    else
-    {
-      is_nega = false;
-    }
+      vec.clear();
+      if (rem > 0)
+      {
+        while (rem > 0)
+        {
+          vec.eb((ll)(rem % BASE));
+          rem /= BASE;
+        }
+      }
+      else
+      {
+        is_nega = false;
+      }
+    });
     return *this;
   }
 
@@ -528,6 +717,51 @@ BigInteger<base, digit> operator-(T a, const BigInteger<base, digit> &b)
   return BigInteger<base, digit>(a) - b;
 }
 
+template <int base, int digit>
+BigInteger<base, digit> gcd(BigInteger<base, digit> a, BigInteger<base, digit> b)
+{
+  a = a.abs(), b = b.abs();
+  while (b != 0)
+  {
+    a %= b;
+    swap(a, b);
+  }
+  return a;
+}
+
+template <int base, int digit>
+BigInteger<base, digit> lcm(BigInteger<base, digit> a, BigInteger<base, digit> b)
+{
+  if (a == 0 || b == 0)
+    return 0;
+  a = a.abs(), b = b.abs();
+  return a / gcd(a, b) * b;
+}
+
+template <int base, int digit, class T, enable_if_t<is_integral_ext<T>, int> = 0>
+BigInteger<base, digit> gcd(BigInteger<base, digit> a, T b)
+{
+  return gcd(move(a), BigInteger<base, digit>(b));
+}
+
+template <class T, int base, int digit, enable_if_t<is_integral_ext<T>, int> = 0>
+BigInteger<base, digit> gcd(T a, BigInteger<base, digit> b)
+{
+  return gcd(BigInteger<base, digit>(a), move(b));
+}
+
+template <int base, int digit, class T, enable_if_t<is_integral_ext<T>, int> = 0>
+BigInteger<base, digit> lcm(BigInteger<base, digit> a, T b)
+{
+  return lcm(move(a), BigInteger<base, digit>(b));
+}
+
+template <class T, int base, int digit, enable_if_t<is_integral_ext<T>, int> = 0>
+BigInteger<base, digit> lcm(T a, BigInteger<base, digit> b)
+{
+  return lcm(BigInteger<base, digit>(a), move(b));
+}
+
 #if defined LOCAL or not defined FAST_IO
 template <int base, int digit>
 istream &operator>>(istream &is, BigInteger<base, digit> &a)
@@ -575,11 +809,6 @@ inline BigInteger<base, digit> divceil(const BigInteger<base, digit> &a, const B
   return q;
 }
 template <int base, int digit>
-inline BigInteger<base, digit> divround(const BigInteger<base, digit> &a, const BigInteger<base, digit> &b)
-{
-  return divfloor(a * 2 + b, b * 2);
-}
-template <int base, int digit>
 inline BigInteger<base, digit> safemod(const BigInteger<base, digit> &a, const BigInteger<base, digit> &b)
 {
   auto [q, r] = a.divmod(b);
@@ -607,11 +836,6 @@ inline BigInteger<base, digit> divceil(const BigInteger<base, digit> &a, T b)
   return q;
 }
 template <int base, int digit, class T, typename = enable_if_t<is_integral_ext<T>>>
-inline BigInteger<base, digit> divround(const BigInteger<base, digit> &a, T b)
-{
-  return divfloor(a * 2 + b, b * 2);
-}
-template <int base, int digit, class T, typename = enable_if_t<is_integral_ext<T>>>
 inline BigInteger<base, digit> safemod(const BigInteger<base, digit> &a, T b)
 {
   BigInteger<base, digit> r = a % b;
@@ -629,11 +853,6 @@ template <class T, int base, int digit, typename = enable_if_t<is_integral_ext<T
 inline BigInteger<base, digit> divceil(T a, const BigInteger<base, digit> &b)
 {
   return divceil(BigInteger<base, digit>(a), b);
-}
-template <class T, int base, int digit, typename = enable_if_t<is_integral_ext<T>>>
-inline BigInteger<base, digit> divround(T a, const BigInteger<base, digit> &b)
-{
-  return divround(BigInteger<base, digit>(a), b);
 }
 template <class T, int base, int digit, typename = enable_if_t<is_integral_ext<T>>>
 inline BigInteger<base, digit> safemod(T a, const BigInteger<base, digit> &b)

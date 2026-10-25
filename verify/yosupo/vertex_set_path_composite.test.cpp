@@ -18,9 +18,9 @@
 #include "math/modint/modint.hpp"
 using mint = modint998244353;
 
-#include "graph/tree/rooted_tree.hpp"
+#include "tree/rooted_tree.hpp"
 #include "ds/segtree/segtree.hpp"
-#include "math/algebra/affine_function.hpp"
+#include "algebra/affine_function.hpp"
 
 void init() {}
 
@@ -31,7 +31,7 @@ void main2()
   VEC(pll, N - 1, UV);
   RootedTree G(N, UV, randrange(0, N));
   using M = NormalAndOppositeGroup<OppositeGroup<GroupAffineFunction<mint>>>;
-  SegmentTree<M> seg(G.reordered_vertex_info(AB));
+  SegmentTree<M> seg(G.reordered_vertex_values(AB));
   rep(_, Q)
   {
     LL(t);
@@ -44,10 +44,11 @@ void main2()
     {
       LL(u, v, x);
       auto res = M::e();
-      G.path_query(u, v, [&](ll l, ll r, bool isrev)
-                   {
-      auto tmp = seg.prod(l, r);
-      res = M::op(res, isrev ? tmp.rev() : tmp);});
+      for (auto [l, r, isrev] : G.path_query(u, v))
+      {
+        auto tmp = seg.prod(l, r);
+        res = M::op(res, isrev ? tmp.rev() : tmp);
+      }
       auto [c, d] = res.normal;
       PRINT(c * x + d);
     }

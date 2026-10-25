@@ -24,12 +24,12 @@ void main2()
   LL(M, N, K);
   VEC(string, M, S);
   auto A = gen_vec(M, [&](ll i)
-                   { return stov(S.at(i), "JOI"); });
+                   { return *stov(S.at(i), "JOI"); });
   array<vvl, 3> B;
   B.fill(vvl(M, vl(N, 0)));
   rep(i, M) rep(j, N) B.at(A.at(i).at(j)).at(i).at(j) = 1;
-  array<CumulativeSum2D<>, 3> cums;
-  rep(k, 3) cums.at(k) = CumulativeSum2D(B.at(k));
+  array<CumulativeSum2D<GroupAddSub<ll>>, 3> cums;
+  rep(k, 3) cums.at(k) = CumulativeSum2D<GroupAddSub<ll>>(B.at(k));
   rep(_, K)
   {
     LL(li, lj, ri, rj);

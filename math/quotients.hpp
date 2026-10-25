@@ -7,9 +7,6 @@
  * @docs docs/math/quotients.md
  */
 
-// (y, l, r)
-// y は floor(n / x^d) (x: 整数) として表せる整数
-// y == floor(n / x^d) <=> l < x <= r
 struct quotients
 {
 private:
@@ -17,6 +14,10 @@ private:
   int d;
 
 public:
+  // (y, l, r)
+  // y は floor(n / x^d) (x: 整数) として表せる整数
+  // y == floor(n / x^d) <=> l < x <= r
+  // y の昇順 (つまり l, r の降順)
   quotients(ll n, int d = 1) : n(n), d(d)
   {
     assert(n >= 1 && d >= 1);

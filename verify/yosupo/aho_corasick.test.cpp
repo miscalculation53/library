@@ -26,19 +26,31 @@ void main2()
 {
   LL(N);
   VEC(string, N, S);
-  vvl A(N);
-  rep(i, N) A.at(i) = stov(S.at(i), 'a');
+  vvl A;
+  A.reserve(N);
+  array<bool, 1 + 26 + 26 * 26> seen{};
+  for (const auto &s : S)
+  {
+    if (s.size() <= 2)
+    {
+      int code = 0;
+      for (char c : s) code = 26 * code + (c - 'a') + 1;
+      if (seen[code]) continue;
+      seen[code] = true;
+    }
+    A.eb(stov(s, 'a'));
+  }
   AhoCorasick<26> aho(A);
   PRINT(aho.trie.num_of_vertices());
   rep(i, 1, aho.trie.num_of_vertices())
   {
-    PRINT(aho.trie.parent(i), aho.failure(i));
+    PRINT(*aho.trie.parent(i), *aho.failure(i));
   }
   vl V(N);
   rep(i, N)
   {
     ll v = 0;
-    fec(a : A.at(i)) v = aho.trie.child(v, a);
+    fec(c : S.at(i)) v = *aho.trie.child(v, c - 'a');
     V.at(i) = v;
   }
   PRINT(V);

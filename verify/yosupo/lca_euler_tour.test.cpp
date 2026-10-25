@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "graph/tree/euler_tour.hpp"
+#include "tree/euler_tour.hpp"
 
 void init() {}
 

@@ -20,13 +20,27 @@ pair<T, T> svp2d(const pair<T, T> &a, const pair<T, T> &b)
   assert((a != pair<T, T>{0, 0} && b != pair<T, T>{0, 0}));
   auto [a1, a2] = a;
   auto [b1, b2] = b;
+  if constexpr (is_same_v<U, i128> && is_integral_v<T> && is_signed_v<T> && sizeof(T) <= sizeof(ll))
+  {
+    // 各入力が [-2^30, 2^30) なら、中間値も ll に収まる。
+    constexpr ull offset = 1ULL << 30;
+    if (((ull(a1) + offset) |
+         (ull(a2) + offset) |
+         (ull(b1) + offset) |
+         (ull(b2) + offset)) < 2 * offset)
+      return svp2d<T, ll>(a, b);
+  }
   if ((U)a1 * a1 + (U)a2 * a2 < (U)b1 * b1 + (U)b2 * b2)
     swap(a1, b1), swap(a2, b2);
   while ((U)a1 * a1 + (U)a2 * a2 > (U)b1 * b1 + (U)b2 * b2)
   {
     swap(a1, b1), swap(a2, b2);
-    T k = divround<U>((U)a1 * b1 + (U)a2 * b2, (U)a1 * a1 + (U)a2 * a2);
-    b1 -= k * a1, b2 -= k * a2;
+    const U dot = U(a1) * b1 + U(a2) * b2, norm = U(a1) * a1 + U(a2) * a2;
+    U k = dot / norm, r = dot % norm;
+    // 最も近い整数を選び、同距離なら大きい方を選ぶ。
+    if (r > 0 && r >= norm - r) ++k;
+    if (r < 0 && -r > norm + r) --k;
+    b1 = T(U(b1) - k * a1), b2 = T(U(b2) - k * a2);
     if (b1 == 0 && b2 == 0)
       return {a1, a2};
   }

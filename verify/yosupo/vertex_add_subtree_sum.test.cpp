@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "graph/tree/rooted_tree.hpp"
+#include "tree/rooted_tree.hpp"
 #include "ds/fenwick_tree/fenwick_tree.hpp"
 
 void init() {}
@@ -27,7 +27,7 @@ void main2()
   VEC(ll, N - 1, P);
   P.insert(P.begin(), 0);
   RootedTree G(N, P);
-  FenwickTree<GroupAddSub<ll>> fw(G.reordered_vertex_info(A));
+  FenwickTree<GroupAddSub<ll>> fw(G.reordered_vertex_values(A));
   rep(_, Q)
   {
     LL(t);

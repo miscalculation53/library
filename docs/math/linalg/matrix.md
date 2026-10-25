@@ -1,6 +1,23 @@
-## 行列
+このドキュメントには AI による作成・変更が含まれています。
 
-### コンストラクタ
+## 概要
+
+行列
+
+## 使用例
+
+```cpp
+using mint = modint998244353;
+Matrix<FieldAddSubMulDiv<mint>> a(vvc<mint>{{1, 1}, {1, 0}});
+auto b = a.pow(5);
+assert(b[0][1] == 5);
+auto solution = a.solve(vc<mint>{3, 2});
+assert(solution && solution->first[0] == 2 && solution->first[1] == 1);
+```
+
+## 詳細なドキュメント
+
+#### コンストラクタ
 
 ```cpp
 (1) Matrix<F, int BS = 32>(int n, int m, S diag = F::e0(), S non_diag = F::e0())
@@ -11,8 +28,6 @@
 
 - (1)：$n \times m$ の行列を作る。対角成分と非対角成分の初期値を指定できる。
 - (2)：$a$ の要素を成分とする行列を作る。
-
-### メンバ関数
 
 #### shape
 
@@ -36,6 +51,8 @@ Matrix<F, BS> pow(int k)
 ```
 
 行列の $k$ 乗を返す。
+
+`F = FieldAddSubMulDiv<mint>` で通常の 32 bit modint を使い、法が素数の場合は、行列の構造と多項式による計算を使って行列積の回数を削減する。環・半環を指定した場合は二分累乗で計算する。
 
 ##### 制約
 
@@ -68,7 +85,6 @@ tuple<Matrix<F, BS>, I, F::S> row_reduction(bool rref = false)
 
 - $O(nm\min(n,m))$
 
-
 #### rank
 
 ```cpp
@@ -80,7 +96,6 @@ I rank()
 ##### 計算量
 
 - $O(nm\min(n,m))$
-
 
 #### det
 
@@ -102,10 +117,10 @@ F::S det()
 #### inv
 
 ```cpp
-pair<bool, Matrix<F, BS>> inv()
+optional<Matrix<F, BS>> inv() const
 ```
 
-(逆行列が存在するか, 存在する場合逆行列) を返す。
+逆行列を返す。存在しなければ `nullopt`。$0\times0$ 行列では値ありの空行列を返す。
 
 ##### 制約
 
@@ -118,16 +133,10 @@ pair<bool, Matrix<F, BS>> inv()
 #### solve
 
 ```cpp
-tuple<bool, vc<F::S>, vvc<F::S>> solve(vc<F::S> b)
+optional<pair<vc<F::S>, vvc<F::S>>> solve(const vc<F::S>& b) const
 ```
 
-$A\boldsymbol{x} = \boldsymbol{b}$ の解を求め、
-
-- 解が存在するかどうか
-- 解が存在する場合の解のひとつ $\boldsymbol{x}_0$
-- 解空間の基底 $\{\boldsymbol{c}_i\}_i$
-
-を返す。すなわち、解は $\boldsymbol{x} = \boldsymbol{x}_0 + \sum_i \lambda_i \boldsymbol{c}_i$ の形で表されるベクトル全体。
+$A\boldsymbol{x} = \boldsymbol{b}$ の解を求め、解のひとつ $\boldsymbol{x}_0$ と解空間の基底 $\{\boldsymbol{c}_i\}_i$ のペアを返す。解がなければ `nullopt`。すなわち、解は $\boldsymbol{x} = \boldsymbol{x}_0 + \sum_i \lambda_i \boldsymbol{c}_i$ の形で表されるベクトル全体。
 
 ##### 制約
 
@@ -137,3 +146,17 @@ $A\boldsymbol{x} = \boldsymbol{b}$ の解を求め、
 
 - $O(nm \min(n, m) + m^2)$
 
+
+## 32 bit modint の積に関する補足
+
+ベクトルとの積は各行の `dot_product<F>` で計算する。
+行列積 $A\in S^{n\times m}$、$B\in S^{m\times k}$ では、
+[`dot_product` の高速化対象](../dot_product.md)で $n,m,k\ge16$、
+かつ $A$ の非零要素が半分以上のとき、$B$ の転置を保持して内積を計算する。
+この経路では返り値に加えて $O(mk)$ の作業領域を使う。
+`BS` は従来のブロック計算経路に対して適用される。
+
+
+### 通常の 32 bit modint の掃き出しで使う作業領域
+
+`F = FieldAddSubMulDiv<mint>` で、`mint` が `static_modint32` または `dynamic_modint32` のとき、行数・列数がともに 32 以上なら内部で 64 bit 整数の作業配列を使う。`row_reduction` の入力コピーに加えて、行数を $n$、列数を $m$ として約 $8nm$ byte と $O(n)$ の作業領域をヒープに確保する。`rank`・`det`・`inv`・`solve` からこの掃き出しを呼ぶ場合も同様（`inv`・`solve` では拡大行列の大きさで数える）。

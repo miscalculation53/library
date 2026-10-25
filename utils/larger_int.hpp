@@ -7,9 +7,30 @@
  * @docs docs/utils/larger_int.md
  */
 
+namespace larger_int_detail
+{
+  template <class T>
+  [[deprecated("larger_int: 128-bit integer is not widened; intermediate arithmetic may overflow")]]
+  constexpr bool warn_no_wider_integer()
+  {
+    return true;
+  }
+}
+
 template <class T>
 struct larger_int
 {
+private:
+  static constexpr bool check()
+  {
+    // 型エイリアス経由でも、128 ビット整数を入力にしたときだけ警告する。
+    if constexpr (is_same_v<T, i128> || is_same_v<T, u128>)
+      return larger_int_detail::warn_no_wider_integer<T>();
+    return true;
+  }
+  static_assert(check());
+
+public:
   using type = T;
 };
 
@@ -33,6 +54,15 @@ LARGER_INT(unsigned long, __uint128_t)
 LARGER_INT(unsigned long long, __uint128_t)
 
 #undef LARGER_INT
+
+template <class T>
+struct Rational;
+
+template <class T>
+struct larger_int<Rational<T>>
+{
+  using type = Rational<typename larger_int<T>::type>;
+};
 
 template <class T>
 using larger_int_t = typename larger_int<T>::type;

@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-#include "math/algebra/algebra_basic_ops.hpp"
+#include "algebra/algebra_basic_ops.hpp"
 
 // Test focus: componentwise subtraction and negation work for pair, array, and tuple,
 // including the GroupAddSub<pll> use case.

@@ -1,12 +1,46 @@
-## Unionfind
+## 概要
 
-### コンストラクタ
+UnionFind
+
+## 使用例
+
+```cpp
+UnionFind<UFDataEmpty<>> uf(5);
+uf.merge(0, 1);
+uf.reset(5);  // 確保済みの配列を再利用して初期化する
+assert(!uf.same(0, 1));
+uf.reset(10); // 頂点数を変更することもできる
+```
+
+## 詳細なドキュメント
+
+#### コンストラクタ
 
 ```cpp
 UnionFind<class UFData, bool compress = true>(int n)
 ```
 
 頂点数 $n$ で初期化する。`compress` は経路圧縮を行うかどうか。
+
+#### reset
+
+```cpp
+void reset(int n)
+```
+
+頂点数 $n$ の初期状態に戻す。`par` と `vdat` の vector の容量を再利用し、容量を超えて拡大するときに再確保する。
+
+各頂点のデータを `UFData::VData(i)`、グラフ全体のデータを `UFData::GData(n)` で初期化し直す。これらのデータが内部に持つメモリの再利用は、それぞれの代入の挙動に従う。
+
+##### 制約
+
+- $0 \leq n$
+- `UFData::VData` はコピー構築またはムーブ構築が可能
+- `UFData::GData` に `UFData::GData(n)` を代入できる
+
+##### 計算量
+
+- $O(n_{\mathrm{old}} + n)$。$n_{\mathrm{old}}$ は初期化前の頂点数。`UFData` の構築・代入・破棄の時間を除く。
 
 #### UFData について
 
@@ -50,13 +84,11 @@ UnionFind<class UFData, bool compress = true>(int n)
 - `static void add_edge_same(UF &uf, int x, EWeight w)`
   - $x$ が代表元の連結成分の内部で重み $w$ の辺を追加するのに伴って、`uf` の `vdat` および `gdat` を書き換える関数
 
-### メンバ変数
+#### メンバ変数
 
 public なのは
 
 - `UFData::GData gdat`
-
-### メンバ関数
 
 #### leader
 
@@ -103,16 +135,13 @@ bool same(int x, int y)
 
 - $0 \leq x,y \lt n$
 
-
 ##### 計算量
 
 - `leader` と同じ
 
-
 ##### 計算量
 
 - `leader` と同じ
-
 
 #### get_vdata
 
@@ -121,7 +150,6 @@ UFData::VData get_vdata(int x)
 ```
 
 頂点 $x$ が属する連結成分の `UFData::VData` を取得する。
-
 
 ##### 制約
 
@@ -153,9 +181,23 @@ vc<I=ll> group_ids()
 
 長さ $n$ の vector を返す。$i$ 番目の要素には頂点 $i$ が属する連結成分の番号が格納される。番号の順番は未定義。
 
-ACL の `groups()` 相当のものが欲しい場合、これに `group_index` を噛ませること。
+成分ごとの頂点一覧は `content()` で取得できる。
 
 ##### 計算量
 
 - `compress` が `true` の場合、$O(n)$
 - `compress` が `false` の場合、$O(n \log n)$
+
+#### content
+
+```cpp
+vvc<int> content() const
+```
+
+連結成分ごとの頂点一覧を返す。各成分内は頂点番号の昇順、成分の並びは各成分の最小頂点番号の昇順となる。
+
+取得時の探索結果を一時配列に保持する。親配列・付加情報を維持し、`UnionFindUndo` とポテンシャルつき UnionFind でも利用できる。
+
+##### 計算量
+
+- $O(n)$

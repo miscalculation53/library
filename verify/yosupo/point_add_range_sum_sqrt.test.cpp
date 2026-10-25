@@ -14,7 +14,7 @@
 #define EPS 1e-11
 
 #include "template/template_all_but_modint.hpp"
-#include "ds/sqrt_decomposition_range_sum.hpp"
+#include "ds/sqrt_decomposition/range_sum.hpp"
 
 void init() {}
 

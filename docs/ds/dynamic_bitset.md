@@ -1,0 +1,221 @@
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
+
+長さを実行時に決められる bitset。
+
+通常の `std::bitset` に近い一点操作、全体操作、論理演算、シフトに加え、次の操作を持つ。
+
+- `resize`, `reserve`, `push_back`, `pop_back`
+- 半開区間 $[l,r)$ の `set_range`, `reset_range`, `flip_range`, `count`, `any`, `none`, `all`
+- 前後にある `1` または `0` の検索
+- bitset の区間から区間への論理演算
+- 上位ビットを優先する大小比較
+
+## 使用例
+
+```cpp
+DynamicBitset a(100);
+a.set_range(10, 20);
+a.flip(15);
+auto first = a.find_first();
+auto next = first ? a.find_next(*first) : nullopt;
+assert(first == 10 && next == 11);
+a.or_slice(7, a.size(), a, 0);
+
+DynamicBitset b("0010110");
+cout << b << '\n';
+```
+
+## 詳細なドキュメント
+
+### DynamicBitset
+
+#### コンストラクタ
+
+```cpp
+DynamicBitset(int n, bool value = false)
+DynamicBitset(const string &s, char zero = '0', char one = '1')
+```
+
+第1形式は長さ $n$、全ビットが `value` の bitset を作る。
+
+第2形式は長さを `s.size()` とし、`s` の右端を0 bit目として初期化する。これは `std::bitset` の文字列との変換と同じ順序である。
+
+##### 計算量
+
+- 第1形式：$O(n/w)$
+- 第2形式：$O(n)$
+
+#### content
+
+```cpp
+vc<bool> content() const
+```
+
+第 $0$ ビットから添字順に並べた列を返す。戻り値の `i` 番目は `test(i)` に等しい。
+
+##### 計算量
+
+- $O(n)$
+
+#### assign / to_string
+
+```cpp
+DynamicBitset &assign(const string &s, char zero = '0', char one = '1')
+string to_string(char zero = '0', char one = '1')
+```
+
+`assign` は `s` の右端を0 bit目として代入し、長さを `s.size()` に変更する。`to_string` はその逆変換を行う。
+
+##### 制約
+
+- `zero != one`
+- `s` の各文字は `zero` または `one`
+
+##### 計算量
+
+- $O(n)$
+
+#### 入出力
+
+```cpp
+cin >> a;
+cout << a;
+```
+
+入力は `0`, `1` からなる文字列として読み込み、その長さに変更する。出力は上位ビットから並べる。先頭の0も保持される。
+
+##### 計算量
+
+- $O(n)$
+
+#### resize
+
+```cpp
+void resize(int n, bool value = false)
+```
+
+長さを $n$ に変更する。長さを増やした場合、新しいビットを `value` にする。
+
+##### 計算量
+
+- 償却 $O(1+|n-\operatorname{size()}|/w)$
+
+#### set / reset / flip
+
+```cpp
+bool operator[](int i) const
+Reference operator[](int i)
+DynamicBitset &set(int i, bool value = true)
+DynamicBitset &reset(int i)
+DynamicBitset &flip(int i)
+DynamicBitset &set_range(int l, int r, bool value = true)
+DynamicBitset &reset_range(int l, int r)
+DynamicBitset &flip_range(int l, int r)
+```
+
+`a[i]` は $i$ bit目を取得し、非 `const` の場合は代入や `a[i].flip()` も行える。
+
+`set`, `reset`, `flip` は一点を変更する。`set_range`, `reset_range`, `flip_range` は半開区間 $[l,r)$ を変更する。引数なしの `set`, `reset`, `flip` は全体を変更する。
+
+##### 計算量
+
+- 一点：$O(1)$
+- 区間または全体：$O(1+(r-l)/w)$
+
+#### count / any / none / all
+
+```cpp
+int count()
+int count(int l, int r)
+bool any()
+bool any(int l, int r)
+bool none()
+bool none(int l, int r)
+bool all()
+bool all(int l, int r)
+```
+
+全体または半開区間 $[l,r)$ に対して問い合わせる。
+
+##### 計算量
+
+- $O(1+(r-l)/w)$。引数なしの場合は $O(n/w)$
+
+#### find_first / find_next / find_last / find_prev
+
+```cpp
+optional<int> find_first(bool value = true)
+optional<int> find_next(int i, bool value = true)
+optional<int> find_last(bool value = true)
+optional<int> find_prev(int i, bool value = true)
+```
+
+`find_next(i, value)` は $i$ より右、`find_prev(i, value)` は $i$ より左にある最初の `value` の位置を返す。存在しない場合は `nullopt` を返す。位置 $0$ も値ありとして返す。
+
+##### 計算量
+
+- 調べたワード数に比例
+
+#### 論理演算・シフト
+
+```cpp
+a &= b; a |= b; a ^= b;
+a <<= k; a >>= k;
+a & b; a | b; a ^ b; ~a; a << k; a >> k;
+```
+
+左右の長さは等しいものとする。
+
+##### 計算量
+
+- $O(n/w)$
+
+#### 比較
+
+```cpp
+a == b; a != b;
+a < b; a <= b; a > b; a >= b;
+```
+
+`==`, `!=` は長さと各ビットの一致を判定する。長さが異なる場合、`==` は `false` を返す。
+
+大小比較では、第0ビットを最下位ビットとして、
+$v(a)=\sum_{i=0}^{n-1} a[i]2^i$ の大小を比較する。
+例えば `DynamicBitset("0011") < DynamicBitset("0100")` は `true` となる。
+
+##### 制約
+
+- `<`, `<=`, `>`, `>=` では左右の長さが等しい
+
+##### 計算量
+
+- $O(1+n/w)$。大小比較は上位ワードから調べ、異なるワードが見つかると終了する
+
+#### assign_slice / and_slice / or_slice / xor_slice
+
+```cpp
+DynamicBitset &assign_slice(int l, int r, const DynamicBitset &b, int bl)
+DynamicBitset &and_slice(int l, int r, const DynamicBitset &b, int bl)
+DynamicBitset &or_slice(int l, int r, const DynamicBitset &b, int bl)
+DynamicBitset &xor_slice(int l, int r, const DynamicBitset &b, int bl)
+template <class F>
+DynamicBitset &or_slice(int l, int r, const DynamicBitset &b, int bl, const F &f)
+```
+
+$k=\min(r-l, b.\operatorname{size}()-bl)$ とし、各 $0\leq i<k$ に対して、`a[l + i]` に `b[bl + i]` を代入、AND、OR、XORする。`a` の長さと、区間 $[l,l+k)$ の外側のビットは保持する。
+
+参照元が短い場合、残りの宛先はそのまま保持する。論理演算では不足分を AND は `1`、OR・XOR は `0` とすることに相当する。`bl == b.size()` の場合は全体を保持する。
+
+`a` と `b` が同一で区間が重なっていても、変更前の `b` の区間を使用する。コールバックを渡す形式では、ORによって `0` から `1` に変わる宛先の各位置 $i$ について `f(i)` を1回呼ぶ。
+
+##### 制約
+
+- $0\leq l\leq r\leq a.\operatorname{size}()$
+- $0\leq bl\leq b.\operatorname{size}()$
+
+##### 計算量
+
+- コールバックなし：$O(1+k/w)$
+- コールバックあり：$O(1+k/w+z)$。$z$ は `f` の呼び出し回数

@@ -7,12 +7,21 @@
  * @docs docs/ds/topk_array.md
  */
 
-template <class T, int k, class Compare = less<T>>
+template <class T, int k, class Compare = less<T>, class SameKey = void>
 struct TopKArray
 {
+  static_assert(k >= 1);
+
 private:
   int sz;
   array<T, k> arr;
+
+  void move_up(int i)
+  {
+    if constexpr (k > 1)
+      while (i > 0 && Compare()(arr[i], arr[i - 1]))
+        swap(arr[i], arr[i - 1]), --i;
+  }
 
 public:
   TopKArray() : sz(0), arr{} {}
@@ -27,23 +36,28 @@ public:
   TopKArray(const V &v) : TopKArray(v.begin(), v.end()) {}
 
   // O(k)
-  void add(const T &val)
+  bool add(const T &val)
   {
+    if constexpr (!is_void_v<SameKey>)
+    {
+      repi(i, sz) if (SameKey()(arr[i], val))
+      {
+        if (!Compare()(val, arr[i])) return false;
+        arr[i] = val;
+        move_up(i);
+        return true;
+      }
+    }
     if (sz < k)
       arr[sz++] = val;
     else
     {
       if (!Compare()(val, arr[sz - 1]))
-        return;
+        return false;
       arr[sz - 1] = val;
     }
-    repi(i, sz - 2, -1, -1)
-    {
-      if (Compare()(arr[i + 1], arr[i]))
-        swap(arr[i], arr[i + 1]);
-      else
-        return;
-    }
+    move_up(sz - 1);
+    return true;
   }
   template <class I = ll>
   I size() const { return sz; }
@@ -53,21 +67,23 @@ public:
     assert(0 <= i && i < sz);
     return arr[i];
   }
-  // O(k)
+  // SameKey=void なら O(k)、それ以外は O(k^2)
   TopKArray merged(const TopKArray &other) const
   {
     TopKArray res{};
     int i = 0, j = 0;
     while (res.sz < k && (i < sz || j < other.sz))
     {
-      if (j == other.sz || (i < sz && Compare()(arr[i], other.arr[j])))
-        res.arr[res.sz++] = arr[i++];
+      const T &val = j == other.sz || (i < sz && Compare()(arr[i], other.arr[j]))
+                         ? arr[i++] : other.arr[j++];
+      if constexpr (is_void_v<SameKey>)
+        res.arr[res.sz++] = val;
       else
-        res.arr[res.sz++] = other.arr[j++];
+        res.add(val);
     }
     return res;
   }
-  // O(k)
+  // SameKey=void なら O(k)、それ以外は O(k^2)
   void merge(const TopKArray &other) { *this = merged(other); }
 
   vc<T> content() const
@@ -78,10 +94,10 @@ public:
   }
 };
 
-template <class T, int k, class Compare = less<T>>
+template <class T, int k, class Compare = less<T>, class SameKey = void>
 struct TopKArrayMonoid
 {
-  using S = TopKArray<T, k, Compare>;
+  using S = TopKArray<T, k, Compare, SameKey>;
   static constexpr S op(const S &a, const S &b) { return a.merged(b); }
   static constexpr S e() { return {}; }
 };

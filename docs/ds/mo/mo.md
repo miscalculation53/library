@@ -1,0 +1,73 @@
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
+
+静的・オフラインな区間クエリについて、区間の端を追加・削除する処理を $O(N\sqrt{Q})$ 回、現在の区間の答えを計算する処理を $O(Q)$ 回行うことで処理するアルゴリズム。
+
+右端を [基数ソート](../../algo/radix_sort.md) で一度整列し、ブロック幅 3 通りと半ブロックずらしの有無から 6 通りの処理順を作る。
+クエリ間の移動距離の総和が最小の候補を採用する。総和は `long long` で計算する。
+
+定数倍の解析は [noshi91 の記事](https://noshi91.hatenablog.com/entry/2023/04/13/224811)を参照。
+
+もしかして：
+
+- 削除が苦しいとき → Rollback Mo を検討
+- 平方分割を使って追加・削除を $O(1)$ 時間、答えの取得を $O(\sqrt{N})$ 時間にできれば、全体 $O(N\sqrt{Q} + Q\sqrt{N})$ 時間にできる
+
+## 使用例
+
+```cpp
+#include "ds/mo/mo.hpp"
+
+vc<ll> a{2, 5, 3};
+vc<pair<int, int>> ranges{{0, 2}, {1, 3}};
+vc<ll> answers(ranges.size());
+ll sum = 0;
+mo(a.size(), ranges,
+   [&](int i, bool) { sum += a[i]; },
+   [&](int i, bool) { sum -= a[i]; },
+   [&](int qid) { answers[qid] = sum; });
+assert(answers == (vc<ll>{7, 8}));
+```
+
+## 詳細なドキュメント
+
+#### mo
+
+```cpp
+(1) mo(int n, vc<pair<I, I>> lrs, auto add_l, auto add_r, auto del_l, auto del_r, auto rem)
+(2) mo(int n, vc<pair<I, I>> lrs, auto add, auto del, auto rem)
+(3) mo(int n, vc<pair<I, I>> lrs, Slider &slider, auto rem)
+```
+
+$[0, n)$ 内の区間 $[l, r)$ たちに関するクエリを処理する。
+
+`rem(q)` は、今の区間が $q$ 番目のクエリだとして、その結果を確定させる関数として渡す。
+
+- (1) だけで渡す関数：
+  - `add_l(l, r)`：今の区間が $[l+1, r)$ であるとき、$l$ を追加して $[l, r)$ にする関数
+  - `add_r(l, r)`：今の区間が $[l, r)$ であるとき、$r$ を追加して $[l, r+1)$ にする関数
+  - `del_l(l, r)`：今の区間が $[l, r)$ であるとき、$l$ を削除して $[l+1, r)$ にする関数
+  - `del_r(l, r)`：今の区間が $[l, r+1)$ であるとき、$r$ を削除して $[l, r)$ にする関数
+- (2) だけで渡す関数：
+  - `add(i, isleft)`：今の区間に $i$ を追加する関数。`isleft` が `true` のときは左端に、`false` のときは右端に追加する
+  - `del(i, isleft)`：今の区間から $i$ を削除する関数。`isleft` が `true` のときは左端から、`false` のときは右端から削除する
+- (3) では `slider` を渡す。[InversionSlider](../fenwick_tree/inversion.md) や [BinomialPrefixSumSlider](../../math/modint/binomial_prefix_sum_slider.md) を利用できる。`slider` 内部に実装するものは：
+  - `l`, `r`：現在の区間 $[l, r)$
+  - `lpp()`, `lmm()`, `rpp()`, `rmm()`：現在の区間を更新する関数
+  - `set(nl, nr)`：`lpp()`, `lmm()`, `rpp()`, `rmm()` を用いて区間を $[\mathrm{nl}, \mathrm{nr})$ に更新する関数
+
+##### 制約
+
+- `I` は `bool` を除く整数型
+- $n \geq 0$
+- $0 \leq l, r \leq n$
+  - 実は区間に限らず平面上の点に対しても適用できる（$l \leq r$ でなくてもよい）
+
+##### 計算量
+
+$q = \lvert \mathrm{lrs} \rvert$ として
+
+- 前処理：固定幅の整数型に対して $O(q)$
+- $O(n\sqrt{q})$ 回の `add`, `del` 呼び出し
+- $O(q)$ 回の `rem` 呼び出し

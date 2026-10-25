@@ -1,4 +1,19 @@
-## 多項式の総積
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
+
+多項式の総積
+
+## 使用例
+
+```cpp
+using mint = modint998244353;
+vc<vc<mint>> fs{{1, 1}, {1, 2}, {1, 3}};
+auto p = convolution_many(fs);
+assert((p == vc<mint>{1, 6, 11, 6}));
+```
+
+## 詳細なドキュメント
 
 #### convolution_many
 

@@ -1,5 +1,8 @@
-## LCM/GCD 畳み込み
+このドキュメントには AI による作成・変更が含まれています。
 
+## 概要
+
+LCM 畳み込みと GCD 畳み込みを計算する。
 
 ### 定義
 
@@ -13,9 +16,7 @@ $\displaystyle c(k) = \sum_{\mathrm{lcm}(i, j) = k} a(i) b(j)$
 
 $\displaystyle c(k) = \sum_{\mathrm{gcd}(i, j) = k} a(i) b(j)$
 
-
 ### 計算方法
-
 
 #### LCM 畳み込み
 
@@ -41,8 +42,15 @@ $\begin{aligned}
 &= \zeta' a(k) \zeta' b(k)
 \end{aligned}$
 
+## 使用例
 
-### ライブラリ
+```cpp
+vc<ll> a{0, 1, 1, 0}, b{0, 0, 1, 0};
+auto c = lcm_convolution<RingAddSubMul<ll>>(a, b);
+assert(c[2] == 2);
+```
+
+## 詳細なドキュメント
 
 #### lcm_convolution
 

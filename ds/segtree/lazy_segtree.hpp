@@ -1,5 +1,12 @@
 #pragma once
 
+/*!
+ * Portions corresponding to AtCoder Library (CC0-1.0): iterative lazy propagation and range products.
+ * Upstream: atcoder/lazysegtree.hpp
+ * https://github.com/atcoder/ac-library/tree/864245a00b00dd008d1abfdc239618fdb7d139da
+ * License: https://github.com/atcoder/ac-library/blob/864245a00b00dd008d1abfdc239618fdb7d139da/LICENSE
+ */
+
 #include "../../template/template_all_but_modint.hpp"
 
 /**
@@ -7,7 +14,7 @@
  * @docs docs/ds/segtree/lazy_segtree.md
  */
 
-template <class AM>
+template <class AM, bool enable_beats = false>
 struct LazySegmentTree
 {
   using S = typename AM::S;
@@ -22,7 +29,12 @@ private:
   {
     dat[i] = AM::mapping(f, dat[i]);
     if (i < siz)
+    {
       lazy[i] = AM::composition(f, lazy[i]);
+      if constexpr (enable_beats)
+        if (dat[i].fail)
+          push(i), update(i);
+    }
   }
   void push(int i)
   {

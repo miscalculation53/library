@@ -57,6 +57,11 @@ struct Field
   static constexpr auto inv = inv_;
 };
 
+template <class M, class = void>
+struct HasInverse : false_type {};
+template <class M>
+struct HasInverse<M, void_t<decltype(M::inv(declval<const typename M::S &>()))>> : true_type {};
+
 template <class M>
 struct OppositeMonoid
 {
@@ -160,5 +165,4 @@ struct FieldFromGroupGroup
 
 #ifdef LOCAL
 CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(normal, opposite);
-CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(dump_data());
 #endif

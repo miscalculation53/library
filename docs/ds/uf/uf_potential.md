@@ -1,6 +1,6 @@
-## ポテンシャルつき Unionfind
+このドキュメントには AI による作成・変更が含まれています。
 
-### 概要
+## 概要
 
 注意：無向グラフというよりは、双方向に異なる重みがついた有向グラフと思うべき（無向グラフの設定で使えると勘違いするのがありがち）
 
@@ -13,7 +13,28 @@
 
 ---
 
-### コンストラクタ
+### 設計について
+
+原理的には UFData を一緒に持たせたり Undo 可能にしたりといったことも可能であろうが、欲しくなる場面があまりない気がする（？）
+
+## 使用例
+
+```cpp
+#include "ds/uf/uf_potential.hpp"
+
+UnionFindPotential<GroupAddSub<ll>> uf(3);
+assert(uf.merge(0, 1, 4)); // a[1] - a[0] = 4
+assert(uf.merge(1, 2, 3)); // a[2] - a[1] = 3
+assert(uf.diff(0, 2) == 7);
+assert(!uf.merge(0, 2, 8)); // 既存の差分と矛盾
+assert(!uf.valid(0));
+```
+
+## 詳細なドキュメント
+
+### UnionFindPotential
+
+#### コンストラクタ
 
 ```cpp
 UnionFindPotential<G>(int n)
@@ -21,9 +42,25 @@ UnionFindPotential<G>(int n)
 
 `G` は群、$n$ は頂点数。
 
-### メンバ関数
-
 leader, size, same, group_ids は Unionfind と同じ（経路圧縮を行う実装になっていて、計算量はならし $O(\alpha(n))$）。
+
+`content() const` も通常の [UnionFind](uf.md#content) と同じ形式で使え、$O(n)$ で現在の連結成分ごとの頂点一覧を返す。ポテンシャルを維持する。
+
+#### reset
+
+```cpp
+void reset(int n)
+```
+
+配列の容量を再利用して、頂点数 $n$ の初期状態に戻す。ポテンシャルは群の単位元に戻り、各成分の `valid` は `true` になる。`UFData` の初期化方法と制約は通常の [UnionFind](uf.md) と同じ。
+
+##### 制約
+
+- $0 \leq n$
+
+##### 計算量
+
+- $O(n_{\mathrm{old}} + n)$。$n_{\mathrm{old}}$ は初期化前の頂点数。群の単位元の生成、係数の代入・破棄、`UFData` の構築・代入・破棄の時間を除く。
 
 #### merge
 
@@ -43,7 +80,6 @@ bool merge(int x, int y, G::S w)
 
 - `leader` と同じ
 
-
 #### valid
 
 ```cpp
@@ -59,7 +95,6 @@ bool valid(int x)
 ##### 計算量
 
 - `leader` と同じ
-
 
 #### diff
 
@@ -77,9 +112,3 @@ $x$ と $y$ が同じ連結成分に属するとする。これまでの valid �
 ##### 計算量
 
 - `leader` と同じ
-
----
-
-### 設計について
-
-原理的には UFData を一緒に持たせたり Undo 可能にしたりといったことも可能であろうが、欲しくなる場面があまりない気がする（？）

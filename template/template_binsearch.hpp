@@ -75,26 +75,39 @@ inline T UB(const V &v, const Value &val, Comp comp = {}, Proj proj = {})
 
 // --- vector 等の lt, leq, gt, geq ---
 
-// v[i] < val となる最大の i (なければ -1)
+// 条件を満たす添字を返す。存在しなければ nullopt。
 template <class T = ll, class V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>
 inline auto lt_max(const V &v, const Value &val, Comp comp = {}, Proj proj = {})
--> enable_if_t<is_random_access_iterator_v<typename V::iterator>, T>
-{ return LB<T>(v, val, comp, proj) - 1; }
-// v[i] <= val となる最大の i (なければ -1)
+-> enable_if_t<is_random_access_iterator_v<typename V::iterator>, optional<T>>
+{
+  T pos = LB<T>(v, val, comp, proj);
+  if (pos == 0) return nullopt;
+  return T(pos - 1);
+}
 template <class T = ll, class V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>
 inline auto leq_max(const V &v, const Value &val, Comp comp = {}, Proj proj = {})
--> enable_if_t<is_random_access_iterator_v<typename V::iterator>, T>
-{ return UB<T>(v, val, comp, proj) - 1; }
-// val < v[i] となる最小の i (なければ n)
+-> enable_if_t<is_random_access_iterator_v<typename V::iterator>, optional<T>>
+{
+  T pos = UB<T>(v, val, comp, proj);
+  if (pos == 0) return nullopt;
+  return T(pos - 1);
+}
 template <class T = ll, class V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>
 inline auto gt_min(const V &v, const Value &val, Comp comp = {}, Proj proj = {})
--> enable_if_t<is_random_access_iterator_v<typename V::iterator>, T>
-{ return UB<T>(v, val, comp, proj); }
-// val <= v[i] となる最小の i (なければ n)
+-> enable_if_t<is_random_access_iterator_v<typename V::iterator>, optional<T>>
+{
+  T pos = UB<T>(v, val, comp, proj);
+  if (pos == SZ<T>(v)) return nullopt;
+  return pos;
+}
 template <class T = ll, class V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>
 inline auto geq_min(const V &v, const Value &val, Comp comp = {}, Proj proj = {})
--> enable_if_t<is_random_access_iterator_v<typename V::iterator>, T>
-{ return LB<T>(v, val, comp, proj); }
+-> enable_if_t<is_random_access_iterator_v<typename V::iterator>, optional<T>>
+{
+  T pos = LB<T>(v, val, comp, proj);
+  if (pos == SZ<T>(v)) return nullopt;
+  return pos;
+}
 // v[i] < val となる i の個数
 template <class T = ll, class V, class Value, class Comp = DEFAULT_COMP, class Proj = identity>
 inline auto lt_cnt(const V &v, const Value &val, Comp comp = {}, Proj proj = {})
@@ -127,32 +140,39 @@ inline auto in_cnt(const V &v, L l, R r, Comp comp = {}, Proj proj = {})
 
 // --- set 等の lt, leq, gt, geq ---
 
-// *it < val となる最大の it (なければ end())
+// 条件を満たす要素へのイテレータを返す。存在しなければ nullopt。
 template <class V, class Value>
 inline auto lt_max(const V &v, const Value &val)
--> enable_if_t<!is_random_access_iterator_v<typename V::iterator>, typename V::const_iterator>
+-> enable_if_t<!is_random_access_iterator_v<typename V::iterator>, optional<typename V::const_iterator>>
 {
   auto it = v.lower_bound(val);
-  return it == v.begin() ? v.end() : prev(it);
+  if (it == v.begin()) return nullopt;
+  return prev(it);
 }
-// *it <= val となる最大の it (なければ end())
 template <class V, class Value>
 inline auto leq_max(const V &v, const Value &val)
--> enable_if_t<!is_random_access_iterator_v<typename V::iterator>, typename V::const_iterator>
+-> enable_if_t<!is_random_access_iterator_v<typename V::iterator>, optional<typename V::const_iterator>>
 {
   auto it = v.upper_bound(val);
-  return it == v.begin() ? v.end() : prev(it);
+  if (it == v.begin()) return nullopt;
+  return prev(it);
 }
-// val < *it となる最小の it (なければ end())
 template <class V, class Value>
 inline auto gt_min(const V &v, const Value &val)
--> enable_if_t<!is_random_access_iterator_v<typename V::iterator>, typename V::const_iterator>
-{ return v.upper_bound(val); }
-// val <= *it となる最小の it (なければ end())
+-> enable_if_t<!is_random_access_iterator_v<typename V::iterator>, optional<typename V::const_iterator>>
+{
+  auto it = v.upper_bound(val);
+  if (it == v.end()) return nullopt;
+  return it;
+}
 template <class V, class Value>
 inline auto geq_min(const V &v, const Value &val)
--> enable_if_t<!is_random_access_iterator_v<typename V::iterator>, typename V::const_iterator>
-{ return v.lower_bound(val); }
+-> enable_if_t<!is_random_access_iterator_v<typename V::iterator>, optional<typename V::const_iterator>>
+{
+  auto it = v.lower_bound(val);
+  if (it == v.end()) return nullopt;
+  return it;
+}
 
 // --- 自作二分探索 ---
 

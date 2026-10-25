@@ -16,7 +16,7 @@
 #include "template/template_all_but_modint.hpp"
 #include "math/modint/modint.hpp"
 using mint = modint998244353;
-#include "math/algebra/algebra_basic_ops.hpp"
+#include "algebra/algebra_basic_ops.hpp"
 #include "ds/2d/offline/static_rectangle_add_rectangle_sum.hpp"
 
 void init() {}

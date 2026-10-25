@@ -2,7 +2,7 @@
 
 #include "../../template/template_all_but_modint.hpp"
 
-#include "../../math/algebra/algebra_basic_ops.hpp"
+#include "../../algebra/algebra_basic_ops.hpp"
 #include "fenwick_tree.hpp"
 #include "../../bit/kth_bit.hpp"
 
@@ -52,6 +52,13 @@ public:
   T sum(int l, int r) const
   {
     assert(0 <= l && l <= r && r <= n);
+    const int li = l / B, ri = r / B;
+    if (li == ri)
+    {
+      const Word lm = (Word(1) << (l % B)) - 1;
+      const Word rm = (Word(1) << (r % B)) - 1;
+      return popcount(dat[li] & rm & ~lm);
+    }
     return sum(r) - sum(l);
   }
   bool get(int i) const
@@ -69,27 +76,32 @@ public:
     fw.add(i / B, b ? 1 : -1);
   }
 
-  // sum[0, r) < w となる最大の r (なければ -1)
+  // sum[0, r) < w となる最大の r (なければ nullopt)
   template <class I = ll>
-  inline I lt_max(T w) const
+  inline optional<I> lt_max(T w) const
   {
     if (w <= 0)
-      return -1;
+      return nullopt;
     if (w > sum(n))
       return n;
-    const auto [i, v] = fw.lt_max_id_sum(w);
+    const auto [i, v] = *fw.lt_max_id_sum(w);
     I res = B * i + kth_bit_pos(dat[i], w - v - 1);
     return res;
   }
-  // sum[0, r) >= w となる最小の r (なければ size())
+  // sum[0, r) >= w となる最小の r (なければ nullopt)
   template <class I = ll>
-  I geq_min(T w) const { return lt_max<I>(w) + 1; }
-  // sum[0, r) <= w となる最大の r (なければ -1)
+  optional<I> geq_min(T w) const
+  {
+    auto r = lt_max<I>(w);
+    I index = r ? *r + 1 : 0;
+    return index > n ? nullopt : optional<I>(index);
+  }
+  // sum[0, r) <= w となる最大の r (なければ nullopt)
   template <class I = ll>
-  inline I leq_max(T w) const { return lt_max<I>(w + 1); }
-  // sum[0, r) > w となる最小の r (なければ size())
+  inline optional<I> leq_max(T w) const { return lt_max<I>(w + 1); }
+  // sum[0, r) > w となる最小の r (なければ nullopt)
   template <class I = ll>
-  inline I gt_min(T w) const { return geq_min<I>(w + 1); }
+  inline optional<I> gt_min(T w) const { return geq_min<I>(w + 1); }
 
   // 要素が [0, size()) の集合を管理するのに使ったとき、集合のサイズを返す
   inline T size_of_set() const { return sum(n); }
@@ -98,36 +110,36 @@ public:
   template <class I = ll>
   inline I order_in_set(int x) const { return sum(x); }
   // 要素が [0, size()) の集合を管理するのに使ったとき、k 番目の値
-  // ただし、k < 0 なら -1, k >= size_of_set() なら size()
+  // 範囲外の k は nullopt
   template <class I = ll>
-  inline I kth_in_set(int k) const
+  inline optional<I> kth_in_set(int k) const
   {
-    if (k < 0)
-      return -1;
-    return leq_max<I>(k);
+    if (k < 0) return nullopt;
+    auto key = leq_max<I>(k);
+    return key && *key < n ? key : nullopt;
   }
-  // 要素が [0, size()) の集合を管理するのに使ったとき、x 未満で最大の要素が**何番目か** (なければ -1)
+  // 要素が [0, size()) の集合を管理するのに使ったとき、x 未満で最大の要素が**何番目か** (なければ nullopt)
   template <class I = ll>
-  inline I lt_max_in_set(T x) const
+  inline optional<I> lt_max_in_set(T x) const
   {
     if (x < 0)
-      return -1;
-    return sum(min(x, T(n))) - 1;
+      return nullopt;
+    T count = sum(min(x, T(n)));
+    return count == 0 ? nullopt : optional<I>(I(count - 1));
   }
-  // 要素が [0, size()) の集合を管理するのに使ったとき、x 以下で最大の要素が**何番目か** (なければ -1)
+  // 要素が [0, size()) の集合を管理するのに使ったとき、x 以下で最大の要素が**何番目か** (なければ nullopt)
   template <class I = ll>
-  inline I leq_max_in_set(T x) const { return lt_max_in_set<I>(x + 1); }
-  // 要素が [0, size()) の集合を管理するのに使ったとき、x 以上で最小の要素が**何番目か** (なければ size())
+  inline optional<I> leq_max_in_set(T x) const { return lt_max_in_set<I>(x + 1); }
+  // 要素が [0, size()) の集合を管理するのに使ったとき、x 以上で最小の要素が**何番目か** (なければ nullopt)
   template <class I = ll>
-  inline I geq_min_in_set(T x) const
+  inline optional<I> geq_min_in_set(T x) const
   {
-    if (x > n)
-      return sum(n);
-    return sum(max(T(0), x));
+    T rank = sum(clamp(x, T(0), T(n)));
+    return rank == size_of_set() ? nullopt : optional<I>(I(rank));
   }
-  // 要素が [0, size()) の集合を管理するのに使ったとき、x 超過で最小の要素が**何番目か** (なければ size())
+  // 要素が [0, size()) の集合を管理するのに使ったとき、x 超過で最小の要素が**何番目か** (なければ nullopt)
   template <class I = ll>
-  inline I gt_min_in_set(T x) const { return geq_min_in_set<I>(x + 1); }
+  inline optional<I> gt_min_in_set(T x) const { return geq_min_in_set<I>(x + 1); }
 
   string content() const
   {

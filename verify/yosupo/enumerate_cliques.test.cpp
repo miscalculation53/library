@@ -29,14 +29,14 @@ void main2()
   LL(N, M);
   VEC(mint, N, X);
   VEC(pll, M, UV);
-  GraphUndirected<ll> G(N, UV);
+  GraphUndirected<> G(N, UV);
   mint ans = 0;
-  cliques(G, [&](const vl &vs)
-          {
-            mint prod = 1; 
-            fec(v : vs) prod *= X[v];
-            ans += prod;
-          });
+  for (const auto &vs : cliques(G))
+  {
+    mint prod = 1;
+    fec(v : vs) prod *= X[v];
+    ans += prod;
+  }
   PRINT(ans);
 }
 

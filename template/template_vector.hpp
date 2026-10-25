@@ -14,31 +14,86 @@ template <class T = ll, class V>
 inline T SZ(const V &x) { return x.size(); }
 #define eb emplace_back
 
-#define LMD(x, fx) ([&](auto x) { return fx; })
+#define LMD(x, fx) ([&](const auto &x) { return fx; })
 template <class F>
 auto gen_vec(int n, const F &f)
 {
-  vc<decltype(f(0))> res(n);
-  repi(i, n) res[i] = f(i);
+  assert(n >= 0);
+  vc<decltype(f(0))> res;
+  res.reserve(n);
+  repi(i, n) res.eb(f(i));
   return res;
 }
 #define GEN_VEC(n, i, fi) (gen_vec(n, LMD(i, fi)))
 
-// https://qiita.com/Chippppp/items/13150f5e0ea99f444d97#%E5%A4%9A%E6%AC%A1%E5%85%83vector%E7%94%9F%E6%88%90%E9%96%A2%E6%95%B0
+namespace template_vector_detail
+{
+template <class T, size_t depth>
+struct nested_vector
+{
+  using type = vc<typename nested_vector<T, depth - 1>::type>;
+};
+template <class T>
+struct nested_vector<T, 0>
+{
+  using type = T;
+};
+
+template <class T, size_t depth, class V>
+void populate_dimensions(typename nested_vector<T, depth>::type &result, const V *sizes, const T &init)
+{
+  if constexpr (depth == 1)
+  {
+    typename nested_vector<T, depth>::type replacement(size_t(*sizes), init);
+    result.swap(replacement);
+  }
+  else
+  {
+    result.resize(size_t(*sizes));
+    for (auto &child : result) populate_dimensions<T, depth - 1>(child, sizes + 1, init);
+  }
+}
+
+template <class T, size_t depth, class V>
+typename nested_vector<T, depth>::type build_dimensions(const V *sizes, const T &init)
+{
+  if constexpr (depth == 0) return init;
+  else
+  {
+    typename nested_vector<T, depth>::type result;
+    populate_dimensions<T, depth>(result, sizes, init);
+    return result;
+  }
+}
+}
+
 template <class T, size_t d, size_t i = 0, class V>
 auto dvec(const V (&sz)[d], const T &init)
 {
-  if constexpr (i < d)
-    return vc(sz[i], dvec<T, d, i + 1>(sz, init));
+  if constexpr (i >= d) return init;
+  else return template_vector_detail::build_dimensions<T, d - i>(sz + i, init);
+}
+
+template <class T, size_t d, size_t i = 0>
+auto dvec(const ll (&sz)[d], const T &init)
+{
+  return dvec<T, d, i, ll>(sz, init);
+}
+
+template <class V, class T>
+void fill(V &v, const T &value)
+{
+  if constexpr (is_assignable_v<decltype(*std::begin(v)), const T &>)
+    std::fill(std::begin(v), std::end(v), value);
   else
-    return init;
+    for (auto &row : v) fill(row, value);
 }
 
 template <class T = ll>
-T ctol(const char &c, const string &s)
+optional<T> ctol(const char &c, const string &s)
 {
-  repi(i, SZ<int>(s)) if (s[i] == c) return i;
-  return -1;
+  repi(i, SZ<int>(s)) if (s[i] == c) return T(i);
+  return nullopt;
 }
 template <class T = ll>
 vc<T> stov(const string &s, char first)
@@ -47,10 +102,17 @@ vc<T> stov(const string &s, char first)
                  { return s[i] - first; });
 }
 template <class T = ll>
-vc<T> stov(const string &s, const string &t)
+optional<vc<T>> stov(const string &s, const string &t)
 {
-  return gen_vec(SZ<int>(s), [&](int i) -> T
-                 { return ctol(s[i], t); });
+  vc<T> res;
+  res.reserve(s.size());
+  for (char c : s)
+  {
+    auto index = ctol<T>(c, t);
+    if (!index) return nullopt;
+    res.push_back(*index);
+  }
+  return res;
 }
 template <class T>
 string vtos(const vc<T> &v, char first)
@@ -93,7 +155,7 @@ vc<T> merged(const vc<T> &a, const vc<T> &b)
 }
 
 template <class T, class I>
-T vecget(const vc<T> &v, I i, const T &dflt_negative = -INF, const T &dflt_positive = INF)
+T vecget(const vc<T> &v, I i, const T &dflt_negative = -default_infty<T>(), const T &dflt_positive = default_infty<T>())
 {
   if (i < 0)
     return dflt_negative;

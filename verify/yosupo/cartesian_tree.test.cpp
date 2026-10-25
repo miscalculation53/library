@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "graph/tree/cartesian_tree.hpp"
+#include "tree/cartesian_tree.hpp"
 
 void init() {}
 
@@ -25,7 +25,7 @@ void main2()
   VEC(ll, N, A);
 
   CartesianTree ct(A);
-  auto P = GEN_VEC(N, i, i == ct.root() ? i : ct.parent(i));
+  auto P = GEN_VEC(N, i, i == ct.root() ? i : *ct.parent(i));
   PRINT(P);
   dump(ct);
 }

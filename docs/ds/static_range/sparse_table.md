@@ -1,8 +1,31 @@
-## sparse table
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
 
 静的列に対するモノイドの区間積クエリを、モノイドが冪等（$\max, \min, \gcd, \mathrm{lcm}, \mathrm{and}, \mathrm{or}$ など）のときに限って、前計算 $O(N\log N)$ 時間・空間、クエリ $O(1)$ 時間で処理する。
 
-### コンストラクタ
+### 中身
+
+前計算：各 $i, j \ (0 \leq i + 2^j \lt n)$ に対して $[i, i+2^j)$ の答えを計算しておく（これはダブリング風にできる）。
+
+クエリ：$[l, r)$ の答えは、$l \leq r-2^j \leq l+2^j \leq r$ なる $j$ をとってきて、$[l, l+2^j)$ の答えと $[r-2^j, r)$ の答えの積として計算する（冪等なのでこれでよい）。
+
+## 使用例
+
+```cpp
+#include "algebra/algebra_basic_ops.hpp"
+#include "ds/static_range/sparse_table.hpp"
+
+SparseTable<MonoidMin<ll>> rmq(vc<ll>{5, 2, 7, 1});
+assert(rmq.prod(0, 3) == 2);
+assert(rmq.prod(1, 4) == 1);
+```
+
+## 詳細なドキュメント
+
+### SparseTable
+
+#### コンストラクタ
 
 ```cpp
 SparseTable<M>(vc<M::S> v)
@@ -17,8 +40,6 @@ SparseTable<M>(vc<M::S> v)
 `vec` の長さを $n$ として
 
 - $O(n \log n)$
-
-### メンバ関数
 
 #### get
 
@@ -35,7 +56,6 @@ $v_p$ の値を返す。
 ##### 計算量
 
 - $O(1)$
-
 
 #### prod
 
@@ -54,10 +74,14 @@ $v_l \bullet \cdots \bullet v_{r-1}$ の値を返す。
 - $O(1)$
   - モノイド演算は $1$ 回
 
-----
+#### content
 
-### 中身
+```cpp
+vc<M::S> content() const
+```
 
-前計算：各 $i, j \ (0 \leq i + 2^j \lt n)$ に対して $[i, i+2^j)$ の答えを計算しておく（これはダブリング風にできる）。
+構築時の全要素を添字順に並べた配列のコピーを返す。空列では空の配列を返す。
 
-クエリ：$[l, r)$ の答えは、$l \leq r-2^j \leq l+2^j \leq r$ なる $j$ をとってきて、$[l, l+2^j)$ の答えと $[r-2^j, r)$ の答えの積として計算する（冪等なのでこれでよい）。
+##### 計算量
+
+- $O(n)$

@@ -10,6 +10,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 from typing import Dict, Iterable, List
 
 
@@ -122,9 +123,13 @@ def report_timeout(timeout: float, paths: List[pathlib.Path]) -> None:
     print(message)
 
 
-def run_verify(command: List[str]) -> tuple[subprocess.CompletedProcess, List[str]]:
+def run_verify(
+    command: List[str], *, download_errors: set[str] | None = None
+) -> tuple[subprocess.CompletedProcess, List[str]]:
     failed = []
     pattern = re.compile(r"^::error file=(.+)::failed to verify\s*$")
+    current_file = None
+    downloading = False
     suppress_failure_details = False
     suppression_reported = False
     process = subprocess.Popen(
@@ -139,12 +144,41 @@ def run_verify(command: List[str]) -> tuple[subprocess.CompletedProcess, List[st
     assert process.stdout is not None
     try:
         for line in process.stdout:
-            if line.startswith("INFO:onlinejudge_verify.verify:verify:"):
+            if line.startswith("INFO:onlinejudge_verify.verify:verify: "):
+                current_file = line.removeprefix(
+                    "INFO:onlinejudge_verify.verify:verify: "
+                ).strip()
+                downloading = False
+            if line.startswith("INFO:onlinejudge_verify.verify:$ oj download "):
+                downloading = True
+            if line.startswith("INFO:onlinejudge_verify.languages.cplusplus:"):
+                downloading = False
+                if download_errors is not None:
+                    download_errors.discard(current_file)
+            if (
+                download_errors is not None
+                and current_file is not None
+                and downloading
+                and line.startswith("[ERROR]")
+                and ("SSLEOFError" in line or "UNEXPECTED_EOF_WHILE_READING" in line)
+            ):
+                download_errors.add(current_file)
+            if line.startswith((
+                "INFO:onlinejudge_verify.verify:verify:",
+                "INFO:onlinejudge_verify.languages.cplusplus:",
+            )):
                 suppress_failure_details = False
                 suppression_reported = False
             match = pattern.match(line)
             if match:
-                failed.append(match.group(1))
+                if match.group(1) not in failed:
+                    failed.append(match.group(1))
+                if download_errors is not None and match.group(1) in download_errors:
+                    line = line.replace("::error ", "::warning ", 1)
+            elif line.startswith("ERROR:onlinejudge_verify.verify:failed: "):
+                path = line.removeprefix("ERROR:onlinejudge_verify.verify:failed: ").strip()
+                if path not in failed:
+                    failed.append(path)
             failure = line.startswith("[FAILURE]")
             important = match is not None or failure or line.startswith(
                 (
@@ -174,7 +208,50 @@ def run_verify(command: List[str]) -> tuple[subprocess.CompletedProcess, List[st
         raise
     finally:
         process.stdout.close()
+    if download_errors is not None:
+        download_errors.intersection_update(failed)
     return subprocess.CompletedProcess(command, process.wait()), failed
+
+
+def run_verify_with_download_retries(
+    command: List[str], paths: List[pathlib.Path], timeout: float
+) -> tuple[subprocess.CompletedProcess, List[str]]:
+    deadline = time.monotonic() + timeout
+    prefix = command[:-len(paths)]
+    timeout_index = prefix.index("--timeout") + 1
+    targets = set(map(str, paths))
+    attempted = targets
+    failed = set()
+    retry_command = command
+    for attempt in range(3):
+        download_errors = set() if attempt < 2 else None
+        completed, reported_failed = run_verify(
+            retry_command, download_errors=download_errors
+        )
+        failed.difference_update(attempted)
+        failed.update(reported_failed)
+        retry_paths = sorted((download_errors or set()) & targets)
+        if completed.returncode != 1 or not retry_paths:
+            break
+        delay = 5 * 2**attempt
+        remaining = deadline - time.monotonic() - delay
+        if remaining <= 0:
+            for path in retry_paths:
+                print(f"::error file={path}::failed to verify")
+            break
+        print(
+            f"::warning title=Retrying test data download::"
+            f"TLS connection interrupted; retry {attempt + 1}/2 for "
+            f"{len(retry_paths)} file(s) after {delay} seconds.",
+            flush=True,
+        )
+        time.sleep(delay)
+        retry_command = prefix.copy()
+        retry_command[timeout_index] = str(remaining)
+        retry_command.extend(retry_paths)
+        attempted = set(retry_paths)
+    returncode = completed.returncode or (1 if failed else 0)
+    return subprocess.CompletedProcess(command, returncode), sorted(failed)
 
 
 def write_shard_summary(
@@ -244,7 +321,9 @@ def run_shard(args: argparse.Namespace) -> None:
         *map(str, paths),
     ]
     try:
-        completed, reported_failed = run_verify(command)
+        completed, reported_failed = run_verify_with_download_retries(
+            command, paths, args.timeout
+        )
     except BaseException:
         timestamps = load_object(REMOTE_MARKER)
         pending = unverified_paths(paths, timestamps)
@@ -403,6 +482,8 @@ def merge_results(args: argparse.Namespace) -> None:
 
 def publish_docs(args: argparse.Namespace) -> None:
     import onlinejudge_verify.documentation.build
+    import onlinejudge_verify.documentation.configure
+    import onlinejudge_verify.documentation.main
     import onlinejudge_verify.documentation.type
     import onlinejudge_verify.main
     import onlinejudge_verify.marker
@@ -418,6 +499,20 @@ def publish_docs(args: argparse.Namespace) -> None:
     if failed & uncompleted:
         raise RuntimeError("failed and uncompleted verification files overlap")
     cwd = pathlib.Path.cwd().resolve(strict=True)
+    render_config = onlinejudge_verify.documentation.main.load_render_config(basedir=cwd)
+    excluded_paths = [pathlib.Path(path) for path in render_config.config_yml.get("exclude", [])]
+    configure = onlinejudge_verify.documentation.configure
+    original_find_paths = configure._find_matched_file_paths
+
+    def find_public_paths(pred, *, basedir):
+        # verification-helper's Markdown finder returns absolute paths, while
+        # its exclude matcher expects relative paths. Filter both source and
+        # Markdown files before collecting dependencies or rendering pages.
+        return [
+            path for path in original_find_paths(pred, basedir=basedir)
+            if not configure.is_excluded(path.relative_to(basedir), excluded_paths=excluded_paths)
+        ]
+
     marker_class = onlinejudge_verify.marker.VerificationMarker
     original_is_verified = marker_class.is_verified
     original_is_failed = marker_class.is_failed
@@ -458,12 +553,17 @@ def publish_docs(args: argparse.Namespace) -> None:
     marker_class.is_verified = is_verified
     marker_class.is_failed = is_failed
     onlinejudge_verify.documentation.build._get_verification_status_icon = status_icon
+    configure._find_matched_file_paths = find_public_paths
     helper_gitignore = pathlib.Path(".verify-helper/.gitignore")
     helper_gitignore.parent.mkdir(parents=True, exist_ok=True)
     helper_gitignore.touch(exist_ok=True)
     try:
+        # A previously generated private page must also disappear on rebuild.
+        if render_config.destination_dir.exists():
+            shutil.rmtree(render_config.destination_dir)
         onlinejudge_verify.main.subcommand_docs(jobs=args.jobs)
     finally:
+        configure._find_matched_file_paths = original_find_paths
         marker_class.is_verified = original_is_verified
         marker_class.is_failed = original_is_failed
         onlinejudge_verify.documentation.build._get_verification_status_icon = (

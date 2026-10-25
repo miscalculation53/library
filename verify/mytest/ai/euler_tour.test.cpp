@@ -1,7 +1,7 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
 #include "template/template_all_but_modint.hpp"
-#include "graph/tree/euler_tour.hpp"
+#include "tree/euler_tour.hpp"
 
 // Test focus: the no-LCA specialization still records every vertex depth correctly.
 void test()

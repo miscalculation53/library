@@ -27,13 +27,12 @@ void main2()
     LL(t, x);
     if (t == 0)
     {
-      if (bt.get(x) == 0)
-        bt.set(x, 1);
+      bt.set(x, 1);
     }
     else if (t == 1)
       bt.set(x, 0);
     else
-      PRINT(bt.min_element_by(identity{}, x) ^ x);
+      PRINT(*bt.min_element_by(identity{}, x) ^ x);
   }
 }
 

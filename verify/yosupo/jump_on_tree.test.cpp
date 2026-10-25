@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "graph/tree/rooted_tree.hpp"
+#include "tree/rooted_tree.hpp"
 
 void init() {}
 
@@ -27,7 +27,7 @@ void main2()
   rep(_, Q)
   {
     LL(s, t, i);
-    PRINT(G.jump(s, t, i));
+    PRINT(G.jump(s, t, i).value_or(-1));
   }
 }
 

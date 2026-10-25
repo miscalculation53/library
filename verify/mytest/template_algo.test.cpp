@@ -12,6 +12,10 @@ void test1()
   assert(MIN(a) == 1);
   assert(ARGMAX(a) == 3);
   assert(ARGMIN(a) == 2);
+  assert(!ARGMAX(vl{}));
+  assert(!ARGMIN(vl{}));
+  assert(ARGMAX(vl{7}) == 0 && ARGMIN(vl{7}) == 0);
+  static_assert(is_same_v<decltype(ARGMAX<unsigned>(a)), optional<unsigned>>);
   assert(mex(a) == 0);
 
   vl b = {4, 0, 1, 0, 1, 100};

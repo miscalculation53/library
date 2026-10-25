@@ -38,7 +38,7 @@ vc<pair<typename M::S, typename M::S>> dc_range_prod_left_right
     mids[qi] = (l | (1 << j)) & ~((1 << j) - 1);
   }
   vc<S> dat(n);
-  GroupIndex grp(mids);
+  GroupIndexRaw grp(mids);
   repi(mid, 1, n)
   {
     auto qis = grp.idxs(mid);

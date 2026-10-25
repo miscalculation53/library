@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../template/template_all_but_modint.hpp"
+#include "../../algebra/algebra_basic_ops.hpp"
 
 #include "fps.hpp"
 #include "multipoint_evaluation_geo.hpp"
@@ -13,7 +14,7 @@
 
 // i = 0, 1, ..., n-1 に対し f(ar^i) = y[i] であるとき f (n-1 次) を求める
 // 制約: 1 <= i < n に対して r^i != 1
-// https://noshi91.github.io/algorithm-encyclopedia/polynomial-interpolation-geometric#noredirect
+//! https://noshi91.github.io/algorithm-encyclopedia/polynomial-interpolation-geometric#noredirect
 template <class mint>
 FormalPowerSeries<mint> interpolation_geo(const mint &a, const mint &r, const vc<mint> &ys)
 {
@@ -35,7 +36,7 @@ FormalPowerSeries<mint> interpolation_geo(const mint &a, const mint &r, const vc
   repi(i, 1, n + 1) s[i] = s[i - 1] * (1 - pwr[i]);
   repi(i, n - 1) t[i + 1] = t[i] * pwr[n - i - 2];
   repi(i, n) u[i] = ipow(-1, i) * s[i] * s[n - 1 - i] * t[i];
-  vc<mint> iu = inv_many(u);
+  vc<mint> iu = inv_many<FieldAddSubMulDiv<mint>>(u);
   F w(n);
   repi(i, n) w[i] = ys[i] * iu[i];
   F prod(n + 1);
@@ -48,11 +49,11 @@ FormalPowerSeries<mint> interpolation_geo(const mint &a, const mint &r, const vc
   }
   else
   {
-    vc<mint> is = inv_many(s);
+    vc<mint> is = inv_many<FieldAddSubMulDiv<mint>>(s);
     repi(i, n + 1) prod[i] = ipow(-1, i) * t[i] * s[n] * is[i] * is[n - i];
   }
   F sum = multipoint_evaluation_geo(w, n, mint(1), r);
-  F ans = (prod * sum).pre(n).rev();
+  F ans = (prod * sum).resized(n).rev();
   mint ia = a.inv();
   vc<mint> pwia(n, 1);
   repi(i, 1, n) pwia[i] = pwia[i - 1] * ia;

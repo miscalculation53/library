@@ -1,6 +1,18 @@
-## 畳み込み
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
 
 ACL の畳み込みにだいたい準拠。
+
+## 使用例
+
+```cpp
+using mint = modint998244353;
+auto c = convolution(vc<mint>{1, 2}, vc<mint>{3, 4});
+assert((c == vc<mint>{3, 10, 8}));
+```
+
+## 詳細なドキュメント
 
 #### convolution_point_get
 
@@ -14,7 +26,6 @@ $a$ と $b$ を畳み込んだときの $p$ 番目の要素を返す。長さが
 
 - $O(\lvert a \rvert + \lvert b \rvert)$
 
-
 #### ntt, intt
 
 ```cpp
@@ -22,18 +33,19 @@ $a$ と $b$ を畳み込んだときの $p$ 番目の要素を返す。長さが
 (2) void intt(vc<mint> &a)
 ```
 
-$a$ に対し NTT / INTT を行う（破壊的に変更する）。
+$a$ に対し NTT / INTT を行う（破壊的に変更する）。`intt` は正規化前の値を返すため、`intt(ntt(a))` は元の配列の $|a|$ 倍になる。元に戻す際は `mint(a.size()).inv()` を各係数に掛ける。
+静的な 32 bit・64 bit の modint を使え、法に合わせて中間計算の型を選ぶ。
+大きい法では非平方元から 2 冪位数の根を作る。
 
 ##### 制約
 
-- `mint` は static_modint
+- `mint` は static_modint、法は素数
 - $a$ の長さは $2$ べき
-- $\lvert a \rvert = 2^k$ として、`mint::mod()` は $2$ で $k$ 回以上割り切れる
+- $\lvert a \rvert = 2^k$ として、`mint::mod() - 1` は $2$ で $k$ 回以上割り切れる
 
 ##### 計算量
 
 - $O(\lvert a \rvert \log \lvert a \rvert)$
-
 
 #### convolution
 
@@ -55,4 +67,5 @@ $a$ に対し NTT / INTT を行う（破壊的に変更する）。
 - $O((n+m)\log(n+m))$
   - NTT が可能**でない**場合、定数倍が $3$ 倍程度つく。
   - サイズが小さい場合や $a$ と $b$ のどちらかが疎な場合、$a, b$ の非零要素の個数を $n', m'$ として $O(n + m + \min(n'm, nm'))$ の実装に切り替える。
+  - 両方が疎な場合は非零項同士を列挙し、$O(n+m+n'm')$ で求める。
 

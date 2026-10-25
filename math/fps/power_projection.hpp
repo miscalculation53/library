@@ -74,7 +74,7 @@ FormalPowerSeries<mint> power_projection
         q[j * n + i] = q2[j * (2 * n) + i];
       }
     }
-    return (p.rev().pre(m) * (F{1} + (q.rev() << 1)).inv(m)).pre(m);
+    return (p.rev().resized(m) * (F{1} + (q.rev() << 1)).inv(m)).resized(m);
   }
   else
   {
@@ -105,6 +105,6 @@ FormalPowerSeries<mint> power_projection
         q[j * n + i] = q2[j * (4 * n) + (2 * i)];
       }
     }
-    return (p.rev().pre(m) * (F{1} + (q.rev() << 1)).inv(m)).pre(m);
+    return (p.rev().resized(m) * (F{1} + (q.rev() << 1)).inv(m)).resized(m);
   }
 }

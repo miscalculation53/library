@@ -24,15 +24,14 @@ void main2()
 {
   LL(N, M);
   VEC(pll, M, UV);
-  GraphDirected<ll> G(N, UV);
+  GraphDirected<> G(N, UV);
   auto ids = scc(G);
   dump(ids);
-  GroupIndex grp(ids);
-  PRINT(MAX(ids) + 1);
-  rep(i, MAX(ids) + 1)
+  GroupIndexRaw grp(ids);
+  PRINT(grp.size());
+  for (auto [id, is] : grp)
   {
-    auto v = grp.idxs(i).to_v();
-    PRINT(v.size(), v);
+    PRINT(is.size(), is.to_v());
   }
 }
 

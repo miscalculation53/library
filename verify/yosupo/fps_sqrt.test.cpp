@@ -25,10 +25,9 @@ void main2()
   LL(N);
   VEC(mint, N, f_);
   fps f = f_;
-  auto [ok, g] = f.sqrt();
-  dump(g * g);
-  if (ok)
-    PRINT(g);
+  const auto g = f.sqrt(N);
+  if (g)
+    PRINT(*g);
   else
     PRINT(-1);
 }

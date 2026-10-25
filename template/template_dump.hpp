@@ -2,22 +2,64 @@
 
 #include "template_types.hpp"
 
+#if defined(LOCAL) && LIBRARY_HAS_FLOAT128
+namespace cpp_dump::_detail
+{
+  struct export_command;
+  inline string export_var(const f128 &, const string &, size_t,
+                           size_t, bool, const export_command &);
+}
+#endif
+
+#include "template_dump_map.hpp"
+
 /**
  * @brief テンプレート（dump）
  * @docs docs/template/template_dump.md
  */
 
 #ifdef LOCAL
-#include <cpp-dump.hpp> // https://github.com/philip82148/cpp-dump
 namespace cpp_dump::_detail
 {
+#if LIBRARY_HAS_FLOAT128
   inline string export_var(
-      const i128 &x, const string &indent, size_t last_line_length,
-      size_t current_depth, bool fail_on_newline, const export_command &command
+      const f128 &x, const string &, size_t,
+      size_t, bool, const export_command &
   ) {
-    return export_var(i128tos(x), indent, last_line_length, current_depth, fail_on_newline, command);
+    return es::signed_number(template_float128_detail::format(
+        x, chars_format::general, numeric_limits<f128>::max_digits10));
+  }
+#endif
+
+  inline string export_var(
+      const i128 &x, const string &, size_t,
+      size_t, bool, const export_command &
+  ) {
+    return es::signed_number(i128tos(x));
+  }
+
+  template <class T>
+  inline auto export_object_generic(
+      const T &value, const string &indent, size_t last_line_length,
+      size_t current_depth, bool fail_on_newline, const export_command &command
+  ) -> decltype(value.dump_data(), string())
+  {
+    string class_name = es::class_name(get_typename<T>());
+    _p_CPP_DUMP_DEFINE_EXPORT_OBJECT_COMMON1;
+    apply(
+        [&](const auto &...member)
+        { (append_output(member.first, member.second.get()), ...); },
+        value.dump_data()
+    );
+    _p_CPP_DUMP_DEFINE_EXPORT_OBJECT_COMMON2;
   }
 } // namespace cpp_dump::_detail
+#define _p_LIBRARY_CPP_DUMP_MEMBER(member) pair{string_view(#member), cref(member)}
+#define CPP_DUMP_DEFINE_DATA(...)                                                      \
+  auto dump_data() const                                                               \
+  {                                                                                    \
+    return make_tuple(_p_CPP_DUMP_EXPAND_VA(_p_LIBRARY_CPP_DUMP_MEMBER, __VA_ARGS__)); \
+  }
 #define dump(...) cpp_dump(__VA_ARGS__)
 namespace cp = cpp_dump;
 CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());
@@ -27,7 +69,8 @@ CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 100);
 #define local_oj(a, b) (a)
 CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(content());
 #else
-#define dump(...)
+#define CPP_DUMP_DEFINE_DATA(...)
+#define dump(...) ((void)0)
 #define local(...)
 #define oj(...) __VA_ARGS__
 #define local_oj(a, b) (b)

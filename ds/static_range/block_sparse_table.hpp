@@ -37,7 +37,7 @@ public:
       const int l = i * B, r = min(n, (i + 1) * B);
       repi(j, l + 1, r) cl[j] = M::op(cl[j - 1], v[j - 1]);
       repi(j, r - 1, l - 1, -1) cr[j] = M::op(v[j], cr[j + 1]);
-      repi(j, r - l) stdat[i] = M::op(stdat[i], v[l + j]);
+      stdat[i] = cr[l];
     }
     st = ST(stdat);
   }
@@ -62,15 +62,17 @@ public:
       return res;
     }
   }
+
+  vc<S> content() const { return v; }
 };
 
 // M は冪等 (max, min, and, or, gcd, lcm など)
-// 前計算の時空間 O(n/B log(n/B))
+// 前計算の時空間 O(n + n/B log(n/B))
 // クエリ 最悪 O(B)
 template <class M, int B = 16>
 using BlockSparseTable = BlockSparseTableBase<M, SparseTable<M>, B>;
 
-// 前計算の時空間 O(n/B log(n/B))
+// 前計算の時空間 O(n + n/B log(n/B))
 // クエリ 最悪 O(B)
 template <class M, int B = 16>
 using BlockDisjointSparseTable = BlockSparseTableBase<M, DisjointSparseTable<M>, B>;

@@ -30,9 +30,9 @@ void main2()
     IN(mint, a);
     f.at(i) = a;
   }
-  auto [ok, g] = f.sqrt();
-  if (ok)
-    PRINT(g);
+  const auto g = f.sqrt(N);
+  if (g)
+    PRINT(*g);
   else
     PRINT(-1);
 }

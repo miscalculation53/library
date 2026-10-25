@@ -77,10 +77,39 @@ void test_empty()
   assert(seg.min_left_ok(0, pred) == 0);
 }
 
+// 各有効区間の和が ll に収まる更新は、繰り返しても扱える。
+struct CheckedNonnegativeSum
+{
+  using S = ll;
+  static S e() { return 0; }
+  static S op(S a, S b)
+  {
+    assert(0 <= a && 0 <= b && a <= numeric_limits<ll>::max() - b);
+    return a + b;
+  }
+};
+
+void test_repeated_large_values()
+{
+  const ll large = numeric_limits<ll>::max() - 10;
+  for (int n : {1, 2, 3})
+  {
+    SegmentTree<CheckedNonnegativeSum> seg(vc<ll>(n, 0));
+    for (int step = 0; step < 10; ++step)
+    {
+      seg.set(0, large);
+      assert(seg.get(0) == large);
+      assert(seg.prod(0, n) == large);
+      assert(seg.all_prod() == large);
+    }
+  }
+}
+
 int main()
 {
   test_binary_search();
   test_binary_search_noncommutative();
   test_empty();
+  test_repeated_large_values();
   cout << "Hello World" << endl;
 }

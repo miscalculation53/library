@@ -1,0 +1,364 @@
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
+
+一次関数 $f_i(x)=a_i x+b_i$ を全体または区間へ追加し、指定した $x$ における最適値と、それを達成する直線を求める。
+両構造体は `convex/li_chao_tree.hpp` に置いている。
+
+| 構造体 | 座標の指定 | 用途 |
+| --- | --- | --- |
+| `LiChaoTree` | 整数範囲 `[xmin, xmax)` | クエリ座標が逐次決まる場合、通常の直線追加 |
+| `LiChaoTreeCompressed` | 全クエリ座標をコンストラクタに渡す | 区間追加、少数の座標への反復取得 |
+
+`Compare = less<>` で最小値、`greater<>` で最大値を求める。
+係数と座標は `T`、評価値は `U` で扱う。`U` の既定値は `larger_int_t<T>` なので、`T = ll` なら `U = i128` になる。
+係数・座標・評価型がすべて整数の場合、内部計算型は `T` が 32 ビット以下なら `long long`、それより広ければ `i128` とする。
+積和と候補同士の比較を内部計算型で行い、取得時に最適値を `U` へ変換する。
+`T = i128` では、積と積和が `i128` に収まる範囲で使う。
+圧縮版では、座標・傾き・切片に浮動小数点数や `Rational` を使える。`T = Rational<ll>` なら `U = Rational<i128>` になる。
+
+区間追加は両版とも半開区間 `[l, r)`。傾き・追加順・取得順は任意でよい。
+動的版は必要なノードを連続配列に追加し、圧縮版はソート・重複除去した座標に対する配列を持つ。
+
+以下、動的版の範囲内の整数の個数を $C$、圧縮版へ渡した座標数を $Q$、重複除去後の座標数を $M$、作成済みノード数を $K$ とする。
+計算量は評価・比較を $O(1)$ としている。多倍長整数を使う場合は、その演算コストも掛かる。
+
+### 有理数・実数でも使える原理
+
+2 本の直線 $f(x)=ax+b$, $g(x)=cx+d$ の差は $(a-c)x+(b-d)$ なので、大小関係の逆転は高々 1 回である。
+これは整数・有理数・実数に共通する。
+
+各ノードでは、担当する座標列の中央で小さい方の直線を保持する。
+もう一方が勝つ可能性があるのは左右の片側だけなので、その子へ追加を続ける。両端でも勝てなければ追加を終了する。
+取得時は、対象座標への経路にある直線を評価し、最小値を取る。最大値の場合も大小を逆にすれば同様。
+
+圧縮版は、昇順の座標列 `xs` の**添字**を半分に分ける。
+例えば `xs = {-3/2, 1/3, 2/3, 5/2}` なら、中央の添字は `2`、比較する座標は `xs[2] = 2/3` になる。
+直線の評価には常に元の座標を使い、`a * xs[k] + b` を計算する。
+座標の間隔によらず候補点の個数が半減するので、木の深さは $O(\log M)$ になる。交点の計算も不要。
+
+圧縮版では、取得する全座標を構築時に登録する。直線の係数や追加順は、その後に決まってよい。
+動的版 `LiChaoTree` は整数範囲を扱う実装である。連続区間を二分する方式で有理数・実数を扱う場合は、精度や深さなどの終了条件を別途設計する必要がある。
+
+有理数では、未約分の分子・分母や比較の交差積が使用する型に収まれば厳密に計算できる。
+浮動小数点数では丸め誤差により直線の大小判定が変わることがある。登録済みの座標値を再利用するか、`query_index` で取得すると座標の再計算によるずれを避けられる。
+
+## 使用例
+
+```cpp
+#include "convex/li_chao_tree.hpp"
+
+LiChaoTree<ll> tree(-10, 11);  // 整数 -10, ..., 10 が対象
+tree.add_line(2, 3);          // y = 2x + 3、id = 0
+tree.add_segment(-2, 5, -1, 8, 20);  // [-2, 5) に y = -x + 8
+
+auto [value, line] = *tree.query(4);
+// value = 4 (i128)、line = {-1, 8, 20}
+```
+
+全クエリ座標が分かる場合は圧縮版を使う。追加区間の端点は、登録座標以外の値も指定できる。
+
+```cpp
+LiChaoTreeCompressed<ll> tree({10, -3, 2, 2});
+// 登録座標は {-3, 2, 10}
+tree.add_line(2, 3);
+tree.add_segment(0, 5, -1, 8);
+auto result = tree.query(2);  // value = 6、id = 1
+
+int k = tree.lower_bound(2);
+assert(tree.query_index(k) == result);
+
+int l = tree.lower_bound(-3), r = tree.lower_bound(10);
+tree.add_segment_index(l, r, 0, -7);  // 座標 -3, 2 に y = -7
+```
+
+最大値や評価型も指定できる。空の問い合わせは `nullopt` を返す。
+
+```cpp
+LiChaoTree<ll, i128, greater<>> max_tree(-100, 101);
+LiChaoTreeCompressed<ll, ll> small_values({-1, 0, 1});
+LiChaoTree<ll, i128, less<>, 1000, 1000000> custom_empty(-10, 11);
+auto empty = custom_empty.query(0);
+assert(!empty);
+```
+
+有理数は `Rational`、浮動小数点数は `double` や `long double` を指定する。
+
+```cpp
+#include "convex/li_chao_tree.hpp"
+#include "math/rational.hpp"
+
+using R = Rational<ll>;
+LiChaoTreeCompressed<R> rational_tree({R(-3, 2), R(1, 3), R(2, 3), R(5, 2)});
+rational_tree.add_line(R(1, 2), R(1, 3));   // y = x/2 + 1/3
+rational_tree.add_line(R(-1), R(1));       // y = -x + 1
+auto [value, line] = *rational_tree.query(R(2, 3));
+assert(value == Rational<i128>(1, 3) && line.id == 1);
+
+// 半開区間 [1/4, 3/4) 内の登録座標へ追加する。
+rational_tree.add_segment(R(1, 4), R(3, 4), R(0), R(-1, 7));
+assert(rational_tree.query(R(1, 3))->first == Rational<i128>(-1, 7));
+
+LiChaoTreeCompressed<long double> real_tree({-1.5L, 0.25L, 2.5L});
+real_tree.add_line(0.5L, 0.25L);
+real_tree.add_line(-1.0L, 1.0L);
+assert(real_tree.query_index(1)->first == 0.375L);  // x = 0.25
+```
+
+## 詳細なドキュメント
+
+### LiChaoTree
+
+```cpp
+template <class T, class U = larger_int_t<T>, class Compare = less<>,
+          auto inftyT = nullptr, auto inftyU = nullptr>
+struct LiChaoTree
+```
+
+#### コンストラクタ
+
+```cpp
+LiChaoTree(T xmin, T xmax)
+```
+
+整数座標 `[xmin, xmax)` を対象とする空の木を構築する。
+問題の制約から分かる座標範囲を指定すると、木の深さを抑えられる。
+
+##### 制約
+
+- `xmin < xmax`
+- `T` は符号付き整数型（`i128` も使用可）
+- `U` に `T` からの明示変換、加算、乗算、大小比較、符号反転が定義されている
+- `U` が整数型なら符号付きである
+- `Compare` は `less<>`, `less<T>`, `greater<>`, `greater<T>` のいずれか
+
+型引数 `inftyT`, `inftyU` は既存の型指定との互換性のため保持する。
+問い合わせの不在判定には `optional` の値の有無を使う。
+
+##### 計算量
+
+- $O(1)$
+
+#### Line
+
+```cpp
+using Line = LiChaoTreeLine<T>;
+
+struct LiChaoTreeLine {
+  T a, b;
+  int id;
+};
+```
+
+直線 $y=ax+b$ の係数と ID を保持する。`==` で全メンバを比較できる。
+返される係数は追加時に指定した値である。
+
+#### add_line
+
+```cpp
+void add_line(T a, T b)
+void add_line(T a, T b, int id)
+```
+
+全座標範囲に直線 $y=ax+b$ を追加する。
+
+`id` の省略時は、`clear` 以降に呼んだ追加操作の順番を 0 始まりで使う。
+明示 ID、空区間、対象座標を含まない区間の追加も 1 回と数える。
+同じ ID を複数の追加に使える。
+
+##### 制約
+
+- `id >= 0`
+- 係数・座標・評価型がすべて整数の場合、対象座標での積 `a*x` と積和 `a*x+b` が内部計算型で表現でき、取得する最適値が `U` で表現できる
+- 整数以外の評価型では、変換・積和・大小比較の中間計算と結果が使用する型で扱える
+
+##### 計算量
+
+- $O(\log C)$ 償却
+
+#### add_segment
+
+```cpp
+void add_segment(T l, T r, T a, T b)
+void add_segment(T l, T r, T a, T b, int id)
+```
+
+`[l, r)` と `[xmin, xmax)` の共通部分に直線 $y=ax+b$ を追加する。
+ID の扱いは `add_line` と共通。
+
+##### 制約
+
+- `l <= r`
+- ID と評価型の条件は `add_line` と同じ
+
+##### 計算量
+
+- $O(\log^2 C)$ 償却
+
+#### query
+
+```cpp
+optional<pair<U, Line>> query(T x) const
+```
+
+$x$ に適用される直線の最適値と、その直線を返す。同値の場合は最適な直線のうち 1 本を返す。
+
+適用される直線がない場合は `nullopt`。直線がある場合は評価値と直線を値ありで返し、評価値 $0$ も成功結果となる。
+
+##### 制約
+
+- `xmin <= x && x < xmax`
+- 評価型の条件は `add_line` と同じ
+
+##### 計算量
+
+- $O(\log C)$
+
+#### reserve
+
+```cpp
+void reserve(int n)
+```
+
+少なくとも `n` ノード分の容量を確保する。通常の直線追加では 1 回につき高々 1 ノード増える。
+区間追加では 1 回につき $O(\log C)$ ノード増える。
+
+##### 制約
+
+- `n >= 0`
+
+##### 計算量
+
+- $O(K)$
+
+#### clear
+
+```cpp
+void clear()
+```
+
+全直線を消去し、自動採番を 0 に戻す。座標範囲と確保済みの容量を保持する。
+
+##### 計算量
+
+- $O(K)$
+
+### LiChaoTreeCompressed
+
+```cpp
+template <class T, class U = larger_int_t<T>, class Compare = less<>,
+          auto inftyT = nullptr, auto inftyU = nullptr>
+struct LiChaoTreeCompressed
+```
+
+`Line`、最小値・最大値の選択、評価型、ID、空の取得結果は `LiChaoTree` と共通。
+
+#### コンストラクタ
+
+```cpp
+explicit LiChaoTreeCompressed(vc<T> xs)
+```
+
+取得で使う全座標を受け取り、ソート・重複除去して空の木を構築する。空の座標列も指定できる。
+区間追加の端点は、登録座標以外の値も指定できる。
+
+##### 制約
+
+- `T` に大小比較と等値比較が定義されている
+- `T` が整数型なら符号付きである
+- 係数と座標は有限であり、大小比較が整合的である
+- `U`, `Compare`, `inftyT`, `inftyU` の条件は `LiChaoTree` と同じ
+
+##### 計算量
+
+- $O(Q \log Q)$
+
+#### coordinates・lower_bound
+
+```cpp
+const vc<T>& coordinates() const
+int lower_bound(const T &x) const
+```
+
+`coordinates()` は登録座標を昇順・重複なしで返す。
+`lower_bound(x)` は、`x` 以上となる最初の登録座標の添字を返す。該当する座標がなければ $M$ を返す。
+登録済み座標の添字や、追加区間の端点の添字を取得するときに使う。
+
+##### 計算量
+
+- `coordinates`：$O(1)$
+- `lower_bound`：$O(\log M)$
+
+#### add_line
+
+```cpp
+void add_line(T a, T b)
+void add_line(T a, T b, int id)
+```
+
+全登録座標に直線を追加する。ID の扱いは `LiChaoTree` と共通。
+
+##### 制約
+
+- `id >= 0`
+- 係数・座標・評価型がすべて整数の場合、登録座標での積 `a*x` と積和 `a*x+b` が内部計算型で表現でき、取得する最適値が `U` で表現できる
+- 整数以外では、登録座標での評価と比較が使用する型で扱える。有理数では分子・分母・比較の交差積などの中間計算も含む
+
+##### 計算量
+
+- $O(\log M)$
+
+#### add_segment・add_segment_index
+
+```cpp
+void add_segment(T l, T r, T a, T b)
+void add_segment(T l, T r, T a, T b, int id)
+void add_segment_index(int l, int r, T a, T b)
+void add_segment_index(int l, int r, T a, T b, int id)
+```
+
+`add_segment` は座標が `[l, r)` に入る登録点へ追加する。
+`add_segment_index` は圧縮後の添字が `[l, r)` に入る登録点へ追加する。
+ID の扱いは `add_line` と共通。
+
+##### 制約
+
+- `add_segment`：`l <= r`
+- `add_segment_index`：`0 <= l && l <= r && r <= M`
+- ID と評価型の条件は圧縮版の `add_line` と同じ
+
+##### 計算量
+
+- $O(\log^2 M)$
+
+#### query・query_index
+
+```cpp
+optional<pair<U, Line>> query(const T &x) const
+optional<pair<U, Line>> query_index(int k) const
+```
+
+`query(x)` は登録座標 `x`、`query_index(k)` は `coordinates()[k]` における結果を返す。
+返り値の扱いは `LiChaoTree::query` と共通。
+
+##### 制約
+
+- `query`：`x` は登録座標に含まれる
+- `query_index`：`0 <= k && k < M`
+- 評価型の条件は圧縮版の `add_line` と同じ
+
+##### 計算量
+
+- $O(\log M)$
+
+#### clear
+
+```cpp
+void clear()
+```
+
+全直線を消去し、自動採番を 0 に戻す。登録座標と確保済みの容量を保持する。
+
+##### 計算量
+
+- $O(M)$

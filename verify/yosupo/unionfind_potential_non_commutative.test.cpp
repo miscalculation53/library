@@ -19,7 +19,7 @@
 using mint = modint998244353;
 
 #include "ds/uf/uf_potential.hpp"
-#include "math/algebra/matmul22.hpp"
+#include "algebra/matmul22.hpp"
 
 void init() {}
 

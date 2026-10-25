@@ -21,7 +21,7 @@ void init() {}
 void main2()
 {
   LL(N, Q);
-  ConvexHullTrick cht;
+  ConvexHullTrick<ll> cht;
   repi(i, N)
   {
     LL(a, b);
@@ -38,7 +38,7 @@ void main2()
     else
     {
       LL(x);
-      PRINT(cht.query(x));
+      PRINT(cht.query(x)->first);
     }
   }
 }

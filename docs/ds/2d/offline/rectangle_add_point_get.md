@@ -1,16 +1,34 @@
-## 矩形加算・点取得（オフライン）
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
 
 矩形加算 → 点取得（オフライン）と同様に点加算 → 矩形和（オフライン）に帰着させる。時間計算量は $O((N + Q) \log^2 (N + Q))$。
 
-### コンストラクタ
+## 使用例
+
+```cpp
+#include "algebra/algebra_basic_ops.hpp"
+#include "ds/2d/offline/rectangle_add_point_get.hpp"
+
+RectangleAddPointGet<GroupAddSub<ll>, int> queries;
+queries.rectangle_add(0, 4, 1, 3, 5);
+queries.point_get(2, 2);
+queries.rectangle_add(1, 3, 0, 4, 2);
+queries.point_get(2, 2);
+assert(queries.run() == (vc<ll>{5, 7}));
+```
+
+## 詳細なドキュメント
+
+### RectangleAddPointGet
+
+#### コンストラクタ
 
 ```cpp
 RectangleAddPointGet<G, I>
 ```
 
 `G` は可換群、`I` は座標の型
-
-### メンバ関数
 
 #### rectangle_add
 

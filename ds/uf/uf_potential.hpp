@@ -2,7 +2,7 @@
 
 #include "../../template/template_all_but_modint.hpp"
 
-#include "../../math/algebra/algebra_basic_ops.hpp"
+#include "../../algebra/algebra_basic_ops.hpp"
 #include "uf.hpp"
 
 /**
@@ -26,6 +26,13 @@ public:
   UnionFindPotentialBase(int n)
   : UF(n), weight_(n, G::e()), valid_(n, true) {}
   using UF::same;
+
+  void reset(int n)
+  {
+    UF::reset(n);
+    weight_.assign(n, G::e());
+    valid_.assign(n, true);
+  }
 
   int leader(int x) override
   {

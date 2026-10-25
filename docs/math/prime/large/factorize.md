@@ -1,4 +1,18 @@
-## 素因数分解
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
+
+素因数分解
+
+## 使用例
+
+```cpp
+auto fac = factorize(12);
+assert(fac.size() == 2);
+assert(fac[0].p == 2 && fac[0].e == 2 && fac[1].p == 3);
+```
+
+## 詳細なドキュメント
 
 #### factorize
 
@@ -12,7 +26,7 @@ vc<PrimePower<ll>> factorize(ll n)
 
 ##### 制約
 
-- 特になし（`ll` に収まっていれば OK）
+- $n \geq 1$
 
 ##### 計算量
 

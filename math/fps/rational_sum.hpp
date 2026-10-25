@@ -29,6 +29,14 @@ pair<FormalPowerSeries<mint>, FormalPowerSeries<mint>> rational_plus
   F p = p_, q = q_, r = r_, s = s_;
   p.resize(pz), q.resize(z), r.resize(rz), s.resize(z);
   ntt(p), ntt(q), ntt(r), ntt(s);
+  if (pz == z && rz == z)
+  {
+    repi(i, z) p[i] = p[i] * s[i] + q[i] * r[i], q[i] *= s[i];
+    intt(p), intt(q);
+    mint iz = mint(z).inv();
+    p *= iz, q *= iz;
+    return {p.resized(max(k+n-1, l+m-1)), q.resized(l+n-1)};
+  }
   repi(i, pz) p[i] *= s[i];
   repi(i, rz) r[i] *= q[i];
   repi(i, z) q[i] *= s[i];
@@ -37,7 +45,7 @@ pair<FormalPowerSeries<mint>, FormalPowerSeries<mint>> rational_plus
   repi(i, pz) p[i] *= ipz;
   repi(i, rz) r[i] *= irz;
   repi(i, z) q[i] *= iz;
-  return {p.pre(k + n - 1) + r.pre(l + m - 1), q.pre(l + n - 1)};
+  return {p.resized(k + n - 1) + r.resized(l + m - 1), q.resized(l + n - 1)};
 }
 
 template <class mint>
@@ -57,7 +65,7 @@ pair<FormalPowerSeries<mint>, FormalPowerSeries<mint>> rational_sum
     if (d < 0)
       return res;
     else
-      return {res.first.pre(d), res.second.pre(d)};
+      return {res.first.resized(min(d, res.first.sz())), res.second.resized(min(d, res.second.sz()))};
   };
   return dc(dc, 0, fs.size());
 }

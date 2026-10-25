@@ -36,6 +36,7 @@ public:
 
   mint pow(int n)
   {
+    assert(n >= 0);
     reserve(n);
     return pw[n];
   }

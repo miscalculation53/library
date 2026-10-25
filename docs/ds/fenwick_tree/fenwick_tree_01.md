@@ -1,4 +1,6 @@
-## 01 列に対する Fenwick Tree
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
 
 01 列に対する Fenwick Tree は、長さ $B = 64$ の 01 列を `ull` で持つことで、長さ $n/64$ の Fenwick Tree に対する処理で行え、多少の高速化になる。（$\log_2 n$ が $\log_2(n/64) = \log_2 n - 6$ になる。）
 
@@ -7,7 +9,23 @@
 - 転倒数
 - 集合を管理する
 
-### コンストラクタ
+## 使用例
+
+```cpp
+#include "ds/fenwick_tree/fenwick_tree_01.hpp"
+
+FenwickTree01<> fw(vc<int>{0, 1, 0, 1, 1});
+assert(fw.sum(1, 4) == 2);
+fw.set(2, true);
+assert(fw.sum(5) == 4);
+assert(fw.get(2));
+```
+
+## 詳細なドキュメント
+
+### FenwickTree01
+
+#### コンストラクタ
 
 ```cpp
 (1) FenwickTree01<T = ll, Word = ull>(int n)
@@ -19,14 +37,10 @@
 - (1) 長さ $n$、全要素単位元で初期化する。
 - (2) vector $v$ で初期化する。
 
-
-#### 計算量
+##### 計算量
 
 - (1)：$O(n)$
-- (2)：$O\left(n + \dfrac{n}{B}\log \dfrac{n}{B}\right)$
-
-
-### メンバ関数
+- (2)：$O(n)$
 
 #### size
 
@@ -40,7 +54,6 @@ $n$ を返す。
 
 - $O(1)$
 
-
 #### sum
 
 ```cpp
@@ -51,6 +64,8 @@ $n$ を返す。
 - (1)：$[0, r)$ の和を返す。
 - (2)：$[l, r)$ の和を返す。
 
+両端が同じワードに収まる区間は、ビットマスクと popcount で直接求める。
+
 ##### 制約
 
 - (1)：$0 \leq r \leq n$
@@ -58,8 +73,8 @@ $n$ を返す。
 
 ##### 計算量
 
-- $O\left(1 + \log \dfrac{n}{B}\right)$
-
+- (1)：$O\left(\log \dfrac{n}{B}\right)$
+- (2)：同じワード内なら $O(1)$、それ以外は $O\left(\log \dfrac{n}{B}\right)$
 
 #### get
 
@@ -77,8 +92,6 @@ $i$ 番目の値を返す。
 
 - $O(1)$
 
-
-
 #### set
 
 ```cpp
@@ -95,27 +108,25 @@ $i$ 番目の要素を $b$ にする。
 
 - $O\left(1 + \log \dfrac{n}{B}\right)$
 
-
 #### leq_max, lt_max, gt_min, geq_min
 
 ```cpp
-(1) I leq_max<I=ll>(T w)
-(2) I lt_max<I=ll>(T w)
-(3) I gt_max<I=ll>(T w)
-(4) I geq_max<I=ll>(T w)
+(1) optional<I> leq_max<I=ll>(T w)
+(2) optional<I> lt_max<I=ll>(T w)
+(3) optional<I> gt_min<I=ll>(T w)
+(4) optional<I> geq_min<I=ll>(T w)
 ```
 
 $[0, r)$ の要素の和に関して二分探索する：
 
-- (1)：$\mathrm{sum}[0, r) \leq w$ となる $r$ の最大値（なければ $-1$）を返す。
-- (2)：$\mathrm{sum}[0, r) \lt w$ となる $r$ の最大値（なければ $-1$）を返す。
-- (3)：$\mathrm{sum}[0, r) \gt w$ となる $r$ の最大値（なければ $n$）を返す。
-- (4)：$\mathrm{sum}[0, r) \geq w$ となる $r$ の最大値（なければ $n$）を返す。
+- (1)：$\mathrm{sum}[0, r) \leq w$ となる $r$ の最大値（なければ `nullopt`）を返す。
+- (2)：$\mathrm{sum}[0, r) \lt w$ となる $r$ の最大値（なければ `nullopt`）を返す。
+- (3)：$\mathrm{sum}[0, r) \gt w$ となる $r$ の最小値（なければ `nullopt`）を返す。
+- (4)：$\mathrm{sum}[0, r) \geq w$ となる $r$ の最小値（なければ `nullopt`）を返す。
 
 ##### 計算量
 
 - $O\left(1 + \log \dfrac{n}{B}\right)$
-
 
 ---
 
@@ -156,30 +167,30 @@ $x$ が集合に存在するとき、$x$ が何番目かを返す。存在しな
 #### kth_in_set
 
 ```cpp
-I kth_in_set<I=ll>(G::S k)
+optional<I> kth_in_set<I=ll>(int k)
 ```
 
-「集合の $k$ 番目に小さい要素」を返す。ただし、$k \lt 0$ なら $-1$ を、$k \geq (集合のサイズ)$ なら $n$ を返す。
+「集合の $k$ 番目に小さい要素」を返す。範囲外の `k` は `nullopt` を返す。
 
-なおこれは（$k \geq 0$ のとき）`leq_max` と一致する。
+有効な `k` では `leq_max` と一致する。
 
 ##### 計算量
 
 - $O\left(1 + \log \dfrac{n}{B}\right)$
 
-#### lt_max_in_multiset など
+#### lt_max_in_set など
 
 ```cpp
-(1) I lt_max_in_multiset<I=ll>(T x)
-(2) I leq_max_in_multiset<I=ll>(T x)
-(3) I geq_max_in_multiset<I=ll>(T x)
-(4) I gt_max_in_multiset<I=ll>(T x)
+(1) optional<I> lt_max_in_set<I=ll>(T x)
+(2) optional<I> leq_max_in_set<I=ll>(T x)
+(3) optional<I> geq_min_in_set<I=ll>(T x)
+(4) optional<I> gt_min_in_set<I=ll>(T x)
 ```
 
-- (1)：$x$ 未満で最大の要素が**小さい方から何番目か**を返す。なければ $-1$ を返す。
-- (2)：$x$ 以下で最大の要素が**小さい方から何番目か**を返す。なければ $-1$ を返す。
-- (3)：$x$ 以上で最小の要素が**小さい方から何番目か**を返す。なければ集合の要素数を返す。
-- (4)：$x$ 超過で最小の要素が**小さい方から何番目か**を返す。なければ集合の要素数を返す。
+- (1)：$x$ 未満で最大の要素が**小さい方から何番目か**を返す。なければ `nullopt` を返す。
+- (2)：$x$ 以下で最大の要素が**小さい方から何番目か**を返す。なければ `nullopt` を返す。
+- (3)：$x$ 以上で最小の要素が**小さい方から何番目か**を返す。なければ `nullopt` を返す。
+- (4)：$x$ 超過で最小の要素が**小さい方から何番目か**を返す。なければ `nullopt` を返す。
 
 ##### 計算量
 

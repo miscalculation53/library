@@ -1,8 +1,15 @@
 #pragma once
 
+/*!
+ * Portions corresponding to AtCoder Library (CC0-1.0): iterative propagation of boundary paths.
+ * Upstream: atcoder/lazysegtree.hpp
+ * https://github.com/atcoder/ac-library/tree/864245a00b00dd008d1abfdc239618fdb7d139da
+ * License: https://github.com/atcoder/ac-library/blob/864245a00b00dd008d1abfdc239618fdb7d139da/LICENSE
+ */
+
 #include "../../template/template_all_but_modint.hpp"
 
-#include "../../math/algebra/algebra_basic_ops.hpp"
+#include "../../algebra/algebra_basic_ops.hpp"
 
 /**
  * @brief 双対セグメント木

@@ -15,7 +15,7 @@
 
 #include "template/template_all_but_modint.hpp"
 
-#include "graph/tree/diameter.hpp"
+#include "tree/diameter.hpp"
 
 void init() {}
 

@@ -2,7 +2,7 @@
 
 #include "../../template/template_all_but_modint.hpp"
 
-#include "../../math/algebra/algebra_basic_ops.hpp"
+#include "../../algebra/algebra_basic_ops.hpp"
 
 /**
  * @brief $2$ 次元累積和
@@ -10,7 +10,7 @@
  */
 
 // G は可換
-template <class G = GroupAddSub<ll>>
+template <class G>
 struct CumulativeSum2D
 {
   using S = typename G::S;
@@ -53,5 +53,20 @@ public:
     assert(0 <= li && li <= ri && ri <= n);
     assert(0 <= lj && lj <= rj && rj <= m);
     return G::op(G::op(s[ri][rj], s[li][lj]), G::inv(G::op(s[ri][lj], s[li][rj])));
+  }
+
+  vvc<S> content() const
+  {
+    if (s.empty()) return {};
+    const int n = SZ<int>(s) - 1, m = SZ<int>(s[0]) - 1;
+    vvc<S> res(n);
+    repi(i, n)
+    {
+      res[i].reserve(m);
+      repi(j, m)
+        res[i].eb(G::op(G::op(s[i + 1][j + 1], s[i][j]),
+                       G::inv(G::op(s[i + 1][j], s[i][j + 1]))));
+    }
+    return res;
   }
 };

@@ -1,6 +1,22 @@
-## 黄金分割探索
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
+
+三分探索と使用可能場面はだいたい同じで、探索回数が少なくなる。
 
 https://nyaannyaan.github.io/library/dp/golden-section-search.hpp
+
+## 使用例
+
+```cpp
+#include "algo/golden_section_search.hpp"
+
+auto [x, value] = golden_section_search(
+    [](ll x) { return (x - 7) * (x - 7); }, 0, 20);
+assert(x == 7 && value == 0);
+```
+
+## 詳細なドキュメント
 
 #### golden_section_search
 

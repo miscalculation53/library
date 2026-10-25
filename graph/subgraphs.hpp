@@ -14,7 +14,7 @@
 // ids の番号は [0, k) になっていることを想定
 // (graphs, nvids) を返す
 // もとのグラフの頂点 u <-> 部分グラフ l の頂点 i の対応は
-// u = grp.idxs[l][i]  (GroupIndex を使う)
+// u = grp.idxs(l)[i]  (GroupIndex を使う)
 // l = ids[u], i = nvids[u]
 template <bool is_directed, class Cost, class I>
 pair<vc<Graph<is_directed, Cost>>, vc<I>> subgraphs(const Graph<is_directed, Cost> &g, const vc<I> &ids)
@@ -26,11 +26,17 @@ pair<vc<Graph<is_directed, Cost>>, vc<I>> subgraphs(const Graph<is_directed, Cos
   repi(u, n) nvids[u] = cnt[ids[u]]++;
   vc<Graph<is_directed, Cost>> graphs(k);
   {
-    vvc<tuple<int, int, Cost>> uvs(k);
-    fec(e : g.edges())
+    using InputEdge = conditional_t<is_void_v<Cost>, pair<int, int>, tuple<int, int, Cost>>;
+    vvc<InputEdge> uvs(k);
+    repi(u, n) fec(e : g.out_edges(u))
     {
-      if (ids[e.from] == ids[e.to])
-        uvs[ids[e.from]].eb(nvids[e.from], nvids[e.to], e.cost);
+      if constexpr (!is_directed)
+        if (u > e.to) continue;
+      if (ids[u] == ids[e.to])
+      {
+        if constexpr (is_void_v<Cost>) uvs[ids[u]].eb(nvids[u], nvids[e.to]);
+        else uvs[ids[u]].eb(nvids[u], nvids[e.to], e.cost);
+      }
     }
     repi(l, k) graphs[l] = Graph<is_directed, Cost>(cnt[l], uvs[l]);
   }

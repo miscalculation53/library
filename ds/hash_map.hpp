@@ -1,0 +1,260 @@
+#pragma once
+
+#include "../template/template_all_but_modint.hpp"
+
+#include "safe_unordered_map.hpp"
+
+/**
+ * @brief open addressing によるハッシュマップ
+ * @docs docs/ds/hash_map.md
+ */
+
+template <class Key, class Value, class Hash = safe_hash, class Equal = equal_to<Key>>
+struct HashMap
+{
+private:
+  static constexpr size_t npos = numeric_limits<size_t>::max();
+  vc<pair<Key, Value>> dat;
+  vc<unsigned char> ctrl;
+  size_t num = 0, mask = 0;
+  Hash hasher;
+  Equal equal;
+
+  static unsigned char fingerprint(size_t h)
+  {
+    ull x = h;
+    return static_cast<unsigned char>(((x ^ (x >> 32)) & 127) + 1);
+  }
+
+  size_t find_index(const Key &key, size_t h) const
+  {
+    if (ctrl.empty())
+      return npos;
+    size_t i = h & mask;
+    const unsigned char fp = fingerprint(h);
+    while (ctrl[i])
+    {
+      if (ctrl[i] == fp && equal(dat[i].first, key))
+        return i;
+      i = (i + 1) & mask;
+    }
+    return npos;
+  }
+
+  size_t empty_index(size_t h) const
+  {
+    size_t i = h & mask;
+    while (ctrl[i])
+      i = (i + 1) & mask;
+    return i;
+  }
+
+  void rebuild(size_t cap)
+  {
+    cap = max<size_t>(8, bit_ceil(cap));
+    vc<pair<Key, Value>> old_dat = std::move(dat);
+    vc<unsigned char> old_ctrl = std::move(ctrl);
+    dat.resize(cap), ctrl.assign(cap, 0), mask = cap - 1;
+    num = 0;
+    repi(i, old_ctrl.size())
+      if (old_ctrl[i])
+      {
+        size_t h = hasher(old_dat[i].first), j = empty_index(h);
+        dat[j] = std::move(old_dat[i]), ctrl[j] = fingerprint(h), num++;
+      }
+  }
+
+  void prepare_insert()
+  {
+    if (ctrl.empty())
+      rebuild(8);
+    else if ((num + 1) * 10 > ctrl.size() * 7)
+      rebuild(2 * ctrl.size());
+  }
+
+public:
+  // 空きスロットを飛ばして走査する。要素のキーは変更しないこと。
+  template <bool IsConst>
+  class basic_iterator
+  {
+    friend struct HashMap;
+    template <bool>
+    friend class basic_iterator;
+
+    using Map = conditional_t<IsConst, const HashMap, HashMap>;
+    Map *mp = nullptr;
+    size_t index = 0;
+
+    void skip_empty()
+    {
+      while (index < mp->ctrl.size() && !mp->ctrl[index])
+        index++;
+    }
+
+    basic_iterator(Map *mp, size_t index) : mp(mp), index(index) { skip_empty(); }
+
+  public:
+    using iterator_category = forward_iterator_tag;
+    using value_type = pair<Key, Value>;
+    using difference_type = ptrdiff_t;
+    using reference = conditional_t<IsConst, const value_type &, value_type &>;
+    using pointer = conditional_t<IsConst, const value_type *, value_type *>;
+
+    basic_iterator() = default;
+
+    template <bool OtherConst, enable_if_t<IsConst && !OtherConst, int> = 0>
+    basic_iterator(const basic_iterator<OtherConst> &other) : mp(other.mp), index(other.index) {}
+
+    reference operator*() const { return mp->dat[index]; }
+    pointer operator->() const { return &mp->dat[index]; }
+
+    basic_iterator &operator++()
+    {
+      index++;
+      skip_empty();
+      return *this;
+    }
+    basic_iterator operator++(int)
+    {
+      auto old = *this;
+      ++*this;
+      return old;
+    }
+
+    template <bool OtherConst>
+    bool operator==(const basic_iterator<OtherConst> &other) const
+    {
+      return mp == other.mp && index == other.index;
+    }
+    template <bool OtherConst>
+    bool operator!=(const basic_iterator<OtherConst> &other) const { return !(*this == other); }
+  };
+
+  using iterator = basic_iterator<false>;
+  using const_iterator = basic_iterator<true>;
+
+  HashMap() {}
+
+  iterator begin() { return iterator(this, 0); }
+  iterator end() { return iterator(this, ctrl.size()); }
+  const_iterator begin() const { return const_iterator(this, 0); }
+  const_iterator end() const { return const_iterator(this, ctrl.size()); }
+  const_iterator cbegin() const { return begin(); }
+  const_iterator cend() const { return end(); }
+
+  // n 要素を再ハッシュせず格納できる容量を確保する
+  void reserve(size_t n)
+  {
+    size_t cap = 8;
+    while (cap * 7 < n * 10)
+      cap *= 2;
+    if (cap > ctrl.size())
+      rebuild(cap);
+  }
+
+  // 格納している要素数を返す
+  size_t size() const { return num; }
+  // 空なら true を返す
+  bool empty() const { return num == 0; }
+
+  vc<pair<Key, Value>> content() const
+  {
+    vc<pair<Key, Value>> res;
+    res.reserve(num);
+    for (const auto &entry : *this) res.eb(entry);
+    return res;
+  }
+
+  // key に対応する値への参照。存在しなければ nullopt。
+  optional<reference_wrapper<Value>> find_ptr(const Key &key)
+  {
+    size_t i = find_index(key, hasher(key));
+    if (i == npos) return nullopt;
+    return std::ref(dat[i].second);
+  }
+  optional<reference_wrapper<const Value>> find_ptr(const Key &key) const
+  {
+    size_t i = find_index(key, hasher(key));
+    if (i == npos) return nullopt;
+    return std::cref(dat[i].second);
+  }
+
+  // key が存在すれば true を返す
+  bool contains(const Key &key) const { return find_index(key, hasher(key)) != npos; }
+
+  // key に対応する値を返す
+  Value &at(const Key &key)
+  {
+    auto value = find_ptr(key);
+    assert(value);
+    return value->get();
+  }
+  const Value &at(const Key &key) const
+  {
+    auto value = find_ptr(key);
+    assert(value);
+    return value->get();
+  }
+
+  // key に対応する値を返し、存在しなければ Value{} を挿入する
+  Value &operator[](const Key &key)
+  {
+    size_t h = hasher(key), i = find_index(key, h);
+    if (i != npos)
+      return dat[i].second;
+    prepare_insert(), i = empty_index(h);
+    dat[i] = {key, Value{}}, ctrl[i] = fingerprint(h), num++;
+    return dat[i].second;
+  }
+
+  // key, value を挿入し、挿入した値へのポインタと新規挿入かを返す
+  pair<Value *, bool> insert(const Key &key, const Value &value)
+  {
+    size_t h = hasher(key), i = find_index(key, h);
+    if (i != npos)
+      return {&dat[i].second, false};
+    prepare_insert(), i = empty_index(h);
+    dat[i] = {key, value}, ctrl[i] = fingerprint(h), num++;
+    return {&dat[i].second, true};
+  }
+
+  // key に value を設定し、新規挿入なら true を返す
+  bool insert_or_assign(const Key &key, const Value &value)
+  {
+    auto [p, inserted] = insert(key, value);
+    if (!inserted)
+      *p = value;
+    return inserted;
+  }
+
+  // key を削除し、存在していたなら true を返す
+  bool erase(const Key &key)
+  {
+    if (ctrl.empty())
+      return false;
+    size_t hole = find_index(key, hasher(key));
+    if (hole == npos)
+      return false;
+    size_t i = (hole + 1) & mask;
+    while (ctrl[i])
+    {
+      size_t home = hasher(dat[i].first) & mask;
+      if (((i - home) & mask) >= ((hole - home) & mask))
+      {
+        dat[hole] = std::move(dat[i]), ctrl[hole] = ctrl[i], hole = i;
+      }
+      i = (i + 1) & mask;
+    }
+    dat[hole] = {}, ctrl[hole] = 0, num--;
+    return true;
+  }
+
+  // 全要素を削除する
+  void clear()
+  {
+    repi(i, ctrl.size())
+      if (ctrl[i])
+        dat[i] = {};
+    fill(ALL(ctrl), 0), num = 0;
+  }
+};

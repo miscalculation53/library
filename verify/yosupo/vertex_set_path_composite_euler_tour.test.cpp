@@ -18,8 +18,8 @@
 #include "math/modint/modint.hpp"
 using mint = modint998244353;
 
-#include "graph/tree/euler_tour_path_prod.hpp"
-#include "math/algebra/affine_function.hpp"
+#include "tree/euler_tour_path_prod.hpp"
+#include "algebra/affine_function.hpp"
 
 void init() {}
 

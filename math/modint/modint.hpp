@@ -1,5 +1,12 @@
 #pragma once
 
+/*!
+ * Portions corresponding to AtCoder Library (CC0-1.0): modular arithmetic operators.
+ * Upstream: atcoder/modint.hpp
+ * https://github.com/atcoder/ac-library/tree/864245a00b00dd008d1abfdc239618fdb7d139da
+ * License: https://github.com/atcoder/ac-library/blob/864245a00b00dd008d1abfdc239618fdb7d139da/LICENSE
+ */
+
 #include "../../template/template_all_but_modint.hpp"
 
 #include "../../utils/is_integral_ext.hpp"
@@ -11,7 +18,7 @@
 namespace internal
 {
 
-  template <class Policy>
+  template <class Policy, class PowInv = void>
   struct modint_impl
   {
     using V = typename Policy::value_type;
@@ -22,10 +29,21 @@ namespace internal
     V _v;
 
   public:
-    static constexpr M mod() { return Policy::mod(); }
+    static constexpr M mod()
+    {
+      M m = Policy::mod();
+      assert(m > 0 && "modint: modulus is not set; call mint::set_mod(m) before use");
+      return m;
+    }
 
     template <class T = Policy>
     static auto set_mod(M m) -> decltype(T::set_mod(m)) { return T::set_mod(m); }
+
+    static void precompute()
+    {
+      if constexpr (!is_void_v<PowInv>)
+        (void)PowInv::get();
+    }
 
     static mint raw(V v)
     {
@@ -34,22 +52,23 @@ namespace internal
       return x;
     }
 
-    modint_impl() : _v(0) {}
+    modint_impl() : _v(0) { (void)mod(); }
 
     template <class T, typename = enable_if_t<is_integral_ext<T>>>
     modint_impl(T v)
     {
+      const V m = mod();
       V rem;
       if constexpr (is_signed_ext<T>)
       {
         using S = make_signed_t<V>;
-        S x = v % S(Policy::umod());
+        S x = v % S(m);
         if (x < 0)
-          x += Policy::umod();
+          x += m;
         rem = x;
       }
       else
-        rem = V(v % Policy::umod());
+        rem = V(v % m);
       _v = Policy::init(rem);
     };
 
@@ -112,6 +131,8 @@ namespace internal
     mint pow(T n) const
     {
       assert(n >= 0);
+      if constexpr (!is_void_v<PowInv>)
+        return raw(PowInv::get().pow(val(), n));
       mint x = *this, r = 1;
       while (n)
       {
@@ -124,7 +145,11 @@ namespace internal
     }
     mint inv() const
     {
-      if constexpr (Policy::is_prime)
+      if constexpr (!is_void_v<PowInv>)
+      {
+        return raw(PowInv::get().inv(val()));
+      }
+      else if constexpr (Policy::is_prime)
       {
         return pow(mod() - 2);
       }
@@ -142,6 +167,7 @@ namespace internal
     friend mint operator/(const mint &lhs, const mint &rhs) { return mint(lhs) /= rhs; }
     friend bool operator==(const mint &lhs, const mint &rhs) { return lhs._v == rhs._v; }
     friend bool operator!=(const mint &lhs, const mint &rhs) { return lhs._v != rhs._v; }
+    friend M safe_hash_key(const mint &x) { return x.val(); }
   
 #if defined LOCAL or not defined FAST_IO
     friend std::istream &operator>>(std::istream &is, mint &x)
@@ -193,8 +219,8 @@ template <class T>
 struct is_modint : std::false_type
 {
 };
-template <class Policy>
-struct is_modint<internal::modint_impl<Policy>> : std::true_type
+template <class Policy, class PowInv>
+struct is_modint<internal::modint_impl<Policy, PowInv>> : std::true_type
 {
 };
 template <class T>
@@ -202,10 +228,10 @@ inline constexpr bool is_modint_v = is_modint<T>::value;
 
 template <class T>
 struct is_static_modint : false_type {};
-template <int m>
-struct is_static_modint<static_modint32<m>> : true_type {};
-template <ll m>
-struct is_static_modint<static_modint64<m>> : true_type {};
+template <int m, class PowInv>
+struct is_static_modint<internal::modint_impl<internal::policy_static<m>, PowInv>> : true_type {};
+template <ll m, class PowInv>
+struct is_static_modint<internal::modint_impl<internal::policy_static<m>, PowInv>> : true_type {};
 template <class T>
 inline constexpr bool is_static_modint_v = is_static_modint<T>::value;
 

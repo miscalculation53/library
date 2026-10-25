@@ -20,7 +20,8 @@ pair<FormalPowerSeries<mint>, FormalPowerSeries<mint>> linear_recurrence_gf(cons
   assert(SZ(a) >= d);
   F q = -F(c);
   q[0] = 1;
-  F p = (F(a) * q).pre(d);
+  F p = (F(a) * q).resized(d);
+  q.shrink();
   return {p, q};
 }
 
@@ -30,9 +31,9 @@ mint bmbm(const vc<mint> &a, ll k, bool show_coefs = true)
 {
   auto c = berlekamp_massey<FieldAddSubMulDiv<mint>>(a);
   if (show_coefs)
-    dump(c | cp::index());
+    dump(c | cp::rat() | cp::index());
   auto [p, q] = linear_recurrence_gf(a, c);
   if (show_coefs)
-    dump(p | cp::index(), q | cp::index());
+    dump(p | cp::rat() | cp::index(), q | cp::rat() | cp::index());
   return bostan_mori(p, q, k);
 }

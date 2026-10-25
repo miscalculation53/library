@@ -46,18 +46,18 @@ void main2()
   {
     if (t == 1)
     {
-      ll i = cc.get_id(v);
+      ll i = *cc.get_id(v);
       fw.add(i, 1);
     }
     else if (t == 2)
     {
-      ll i = fw.kth_in_multiset(K);
-      if (i == fw.size())
+      auto i = fw.kth_in_multiset(K);
+      if (!i)
         PRINT(-1);
       else
       {
-        PRINT(cc.get_val(i));
-        fw.add(i, -1);
+        PRINT(cc.get_val(*i));
+        fw.add(*i, -1);
       }
     }
   }

@@ -9,271 +9,541 @@
  * @docs docs/template/template_inout.md
  */
 
-// https://judge.yosupo.jp/submission/170706 (maspy さん)
-// https://judge.yosupo.jp/submission/21623  (Nyaan さん)
+#if LIBRARY_HAS_FLOAT128
+inline istream &operator>>(istream &is, f128 &x)
+{
+  string s;
+  if (is >> s)
+  {
+    f128 value;
+    if (template_float128_detail::parse(s, value)) x = value;
+    else is.setstate(ios::failbit);
+  }
+  return is;
+}
+
+inline ostream &operator<<(ostream &os, f128 x)
+{
+  const auto field = os.flags() & ios::floatfield;
+  const auto format = field == ios::fixed ? chars_format::fixed :
+                      field == ios::scientific ? chars_format::scientific : chars_format::general;
+  string s = template_float128_detail::format(x, format, int(os.precision()));
+  if ((os.flags() & ios::showpos) && !signbit(x)) s.insert(s.begin(), '+');
+  if (os.flags() & ios::uppercase)
+    for (char &c : s) c = char(toupper(static_cast<unsigned char>(c)));
+  return os << s;
+}
+#endif
+
+// 十進変換とバッファ処理は公開 API の仕様から独立に設計。
 #if defined FAST_IO and not defined LOCAL
-namespace fastio {
-template <class T>
-struct unsigned_integer
+namespace fastio
 {
-  using type = make_unsigned_t<T>;
-};
-template <>
-struct unsigned_integer<i128>
-{
-  using type = u128;
-};
-template <>
-struct unsigned_integer<u128>
-{
-  using type = u128;
-};
-template <class T>
-using unsigned_integer_t = typename unsigned_integer<T>::type;
+  constexpr uint32_t SIZ = 1 << 17;
+  inline char ibuf[SIZ + 1], obuf[SIZ];
+  inline uint32_t pil = 0, pir = 0, por = 0;
 
-static constexpr uint32_t SIZ = 1 << 17;
-char ibuf[SIZ];
-char obuf[SIZ];
-char out[100];
-// pointer of ibuf, obuf
-uint32_t pil = 0, pir = 0, por = 0;
+  __attribute__((noinline)) inline void load()
+  {
+    const uint32_t remaining = pir - pil;
+    if (remaining && pil) memmove(ibuf, ibuf + pil, remaining);
+    pil = 0;
+    pir = remaining + uint32_t(fread(ibuf + remaining, 1, SIZ - remaining, stdin));
+    ibuf[pir] = '\x7f';
+  }
 
-struct Pre {
-  char num[10000][4];
-  constexpr Pre() : num() {
-    for (int i = 0; i < 10000; i++) {
-      int n = i;
-      for (int j = 3; j >= 0; j--) {
-        num[i][j] = n % 10 | '0';
-        n /= 10;
+  inline bool ascii_space(unsigned char c)
+  {
+    return c == ' ' || unsigned(c - '\t') < 5;
+  }
+
+  inline void find_token()
+  {
+    for (;;)
+    {
+      const char *p = ibuf + pil;
+      const char *end = ibuf + pir;
+      while (ascii_space(*p)) ++p;
+      pil = uint32_t(p - ibuf);
+      if (p != end) return;
+      load();
+      if (!pir) abort();
+    }
+  }
+
+  __attribute__((noinline)) inline void flush()
+  {
+    size_t written = 0;
+    while (written < por)
+    {
+      const size_t n = fwrite(obuf + written, 1, por - written, stdout);
+      if (!n) abort();
+      written += n;
+    }
+    por = 0;
+  }
+
+  inline void append_bytes(const char *data, size_t size)
+  {
+    while (size)
+    {
+      const size_t n = min(size, size_t(SIZ - por));
+      memcpy(obuf + por, data, n);
+      por += uint32_t(n);
+      data += n;
+      size -= n;
+      if (por == SIZ) flush();
+    }
+  }
+
+  inline void append_char(char c)
+  {
+    if (por == SIZ) flush();
+    obuf[por++] = c;
+  }
+
+  template <class T>
+  using integer_magnitude = conditional_t<(sizeof(T) > sizeof(ull)), u128,
+                            conditional_t<(sizeof(T) > sizeof(uint)), ull, uint>>;
+
+  // 各桁対、4 桁、8 桁の順に十進の重みをまとめる。
+  inline uint decode_eight(uint64_t columns)
+  {
+    columns &= 0x0f0f0f0f0f0f0f0fULL;
+    const uint64_t pairs = (columns & 0x00ff00ff00ff00ffULL) * 10
+                         + ((columns >> 8) & 0x00ff00ff00ff00ffULL);
+    const uint64_t quads = (pairs & 0x0000ffff0000ffffULL) * 100
+                         + ((pairs >> 16) & 0x0000ffff0000ffffULL);
+    return uint(quads) * 10000 + uint(quads >> 32);
+  }
+
+  inline constexpr uint powers_of_ten[8] = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000};
+
+  template <class T>
+  __attribute__((always_inline)) inline void rd1_integer(T &x)
+  {
+    using U = integer_magnitude<T>;
+    const char *p = ibuf + pil;
+    for (;;)
+    {
+      while (ascii_space(*p)) ++p;
+      if (p != ibuf + pir) break;
+      pil = pir;
+      load();
+      if (!pir) abort();
+      p = ibuf;
+    }
+    bool negative = false;
+    if (*p == '+') ++p;
+    else if constexpr (numeric_limits<T>::is_signed)
+    {
+      if (*p == '-') negative = true, ++p;
+    }
+    U value = 0;
+    for (;;)
+    {
+      while (size_t(ibuf + pir - p) >= 8)
+      {
+        uint64_t columns;
+        memcpy(&columns, p, 8);
+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+        columns = __builtin_bswap64(columns);
+#endif
+        const uint64_t stop = ((columns + 0x4646464646464646ULL) |
+                               (columns - 0x3030303030303030ULL)) & 0x8080808080808080ULL;
+        if (stop)
+        {
+          if constexpr (sizeof(U) > sizeof(ull))
+          {
+            const unsigned digits = unsigned(__builtin_ctzll(stop)) / 8;
+            if (digits)
+            {
+              uint tail;
+              if (digits <= 3)
+              {
+                tail = unsigned(p[0] - '0');
+                if (digits >= 2) tail = tail * 10 + unsigned(p[1] - '0');
+                if (digits == 3) tail = tail * 10 + unsigned(p[2] - '0');
+              }
+              else tail = decode_eight(columns << (8 * (8 - digits)));
+              value = value * powers_of_ten[digits] + tail;
+              p += digits;
+            }
+            goto integer_complete;
+          }
+          else
+          {
+            if (stop & 0x80808080ULL)
+            {
+              if (!(stop & 0x808080ULL))
+              {
+                value = value * 1000 + uint(columns & 15) * 100
+                      + uint(columns >> 8 & 15) * 10 + uint(columns >> 16 & 15);
+                p += 3;
+              }
+              else if (!(stop & 0x8080ULL))
+              {
+                value = value * 100 + uint(columns & 15) * 10 + uint(columns >> 8 & 15);
+                p += 2;
+              }
+              else if (!(stop & 0x80ULL))
+              {
+                value = value * 10 + uint(columns & 15);
+                ++p;
+              }
+              goto integer_complete;
+            }
+            break;
+
+          }
+        }
+        columns &= 0x0f0f0f0f0f0f0f0fULL;
+        const uint64_t pairs = (columns & 0x00ff00ff00ff00ffULL) * 10
+                             + ((columns >> 8) & 0x00ff00ff00ff00ffULL);
+        const uint64_t quads = (pairs & 0x0000ffff0000ffffULL) * 100
+                             + ((pairs >> 16) & 0x0000ffff0000ffffULL);
+        value = value * 100000000 + uint(quads) * 10000 + uint(quads >> 32);
+        p += 8;
+      }
+      while (unsigned(*p - '0') < 10)
+      {
+        value = value * 10 + unsigned(*p - '0');
+        ++p;
+      }
+      pil = uint32_t(p - ibuf);
+      if (pil != pir) break;
+      load();
+      p = ibuf;
+      if (!pir) break;
+    }
+integer_complete:
+    pil = uint32_t(p - ibuf);
+    if constexpr (numeric_limits<T>::is_signed)
+    {
+      if (negative && value) x = T(-T(value - 1) - 1);
+      else x = T(value);
+    }
+    else x = T(value);
+  }
+
+  template <class T, enable_if_t<numeric_limits<T>::is_integer, int> = 0>
+  __attribute__((always_inline)) inline void rd1(T &x) { rd1_integer(x); }
+  inline void rd1(char &x)
+  {
+    find_token();
+    x = ibuf[pil++];
+  }
+  inline void rd1(string &x)
+  {
+    find_token();
+    x.clear();
+    for (;;)
+    {
+      const char *p = ibuf + pil;
+      const char *end = ibuf + pir;
+      const char *first = p;
+      while (p != end && !ascii_space(*p)) ++p;
+      x.append(first, size_t(p - first));
+      pil = uint32_t(p - ibuf);
+      if (p != end) return;
+      load();
+      if (!pir) return;
+    }
+  }
+
+  template <class T>
+  void rd1_real(T &x)
+  {
+    string token;
+    rd1(token);
+    const char *first = token.data();
+    const char *last = first + token.size();
+    if (first != last && *first == '+') ++first;
+    auto result = from_chars(first, last, x, chars_format::general);
+    if (result.ec != errc{} || result.ptr != last)
+    {
+      char *end;
+      if constexpr (is_same_v<T, float>) x = strtof(token.c_str(), &end);
+      else if constexpr (is_same_v<T, double>) x = strtod(token.c_str(), &end);
+      else x = strtold(token.c_str(), &end);
+      if (end != token.data() + token.size()) abort();
+    }
+  }
+  inline void rd1(float &x) { rd1_real(x); }
+  inline void rd1(double &x) { rd1_real(x); }
+  inline void rd1(long double &x) { rd1_real(x); }
+#if LIBRARY_HAS_FLOAT128
+  inline void rd1(f128 &x)
+  {
+    string token;
+    rd1(token);
+    if (!template_float128_detail::parse(token, x)) abort();
+  }
+#endif
+
+  template <class A, class B> void rd1(pair<A, B> &x);
+  template <class... T> void rd1(tuple<T...> &x);
+  template <class T, size_t N> void rd1(array<T, N> &x);
+  template <class T> void rd1(vc<T> &x);
+
+  template <class A, class B>
+  void rd1(pair<A, B> &x) { rd1(x.first), rd1(x.second); }
+  template <class... T>
+  void rd1(tuple<T...> &x)
+  {
+    apply([](auto &...element) { (rd1(element), ...); }, x);
+  }
+  template <class T, size_t N>
+  void rd1(array<T, N> &x)
+  {
+    for (auto &element : x) rd1(element);
+  }
+  template <class T>
+  void rd1(vc<T> &x)
+  {
+    if constexpr (is_same_v<T, bool>)
+      for (size_t i = 0; i < x.size(); ++i) { bool value; rd1(value); x[i] = value; }
+    else
+      for (auto &element : x) rd1(element);
+  }
+
+  inline constexpr auto decimal_triplets = []
+  {
+    array<array<char, 3>, 1000> result{};
+    for (unsigned i = 0; i < 1000; ++i)
+    {
+      result[i][0] = char('0' + i / 100);
+      result[i][1] = char('0' + i / 10 % 10);
+      result[i][2] = char('0' + i % 10);
+    }
+    return result;
+  }();
+
+  inline void store_nine(char *out, uint x)
+  {
+    const uint q = x / 1000, r = q / 1000;
+    memcpy(out, decimal_triplets[r].data(), 3);
+    memcpy(out + 3, decimal_triplets[q - r * 1000].data(), 3);
+    memcpy(out + 6, decimal_triplets[x - q * 1000].data(), 3);
+  }
+
+  inline char *prepend_small(char *end, uint x)
+  {
+    while (x >= 1000)
+    {
+      const uint q = x / 1000;
+      end -= 3;
+      memcpy(end, decimal_triplets[x - q * 1000].data(), 3);
+      x = q;
+    }
+    const unsigned digits = 1 + unsigned(x >= 10) + unsigned(x >= 100);
+    end -= digits;
+    memcpy(end, decimal_triplets[x].data() + 3 - digits, digits);
+    return end;
+  }
+
+  inline char *prepend_wide(char *end, ull x)
+  {
+    while (x >= 1000000000ULL)
+    {
+      const ull q = x / 1000000000ULL;
+      end -= 9;
+      store_nine(end, uint(x - q * 1000000000ULL));
+      x = q;
+    }
+    return prepend_small(end, uint(x));
+  }
+
+  inline char *store_leading_triplet(char *out, uint x)
+  {
+    if (x >= 100)
+    {
+      memcpy(out, decimal_triplets[x].data(), 3);
+      return out + 3;
+    }
+    if (x >= 10)
+    {
+      memcpy(out, decimal_triplets[x].data() + 1, 2);
+      return out + 2;
+    }
+    *out = char('0' + x);
+    return out + 1;
+  }
+
+  inline char *store_short(char *out, uint x)
+  {
+    if (x >= 1000000)
+    {
+      const uint q = x / 1000000;
+      const uint r = x - q * 1000000;
+      out = store_leading_triplet(out, q);
+      memcpy(out, decimal_triplets[r / 1000].data(), 3);
+      memcpy(out + 3, decimal_triplets[r % 1000].data(), 3);
+      return out + 6;
+    }
+    if (x >= 1000)
+    {
+      const uint q = x / 1000;
+      out = store_leading_triplet(out, q);
+      memcpy(out, decimal_triplets[x - q * 1000].data(), 3);
+      return out + 3;
+    }
+    return store_leading_triplet(out, x);
+  }
+
+  template <class U>
+  inline char *store_ordinary(char *out, U x)
+  {
+    if constexpr (sizeof(U) > sizeof(uint))
+    {
+      if (x >= 1000000000000000000ULL)
+      {
+        const uint hi = uint(x / 1000000000000000000ULL);
+        const ull tail = x - ull(hi) * 1000000000000000000ULL;
+        const uint middle = uint(tail / 1000000000ULL);
+        out = store_leading_triplet(out, hi);
+        store_nine(out, middle);
+        store_nine(out + 9, uint(tail - ull(middle) * 1000000000ULL));
+        return out + 18;
       }
     }
-  }
-} constexpr pre;
-
-inline void load() {
-  memcpy(ibuf, ibuf + pil, pir - pil);
-  pir = pir - pil + fread(ibuf + pir - pil, 1, SIZ - pir + pil, stdin);
-  pil = 0;
-  if (pir < SIZ) ibuf[pir++] = '\n';
-}
-
-inline void flush() {
-  fwrite(obuf, 1, por, stdout);
-  por = 0;
-}
-
-void rd1(char &c) {
-  do {
-    if (pil + 1 > pir) load();
-    c = ibuf[pil++];
-  } while (isspace(c));
-}
-
-void rd1(string &x) {
-  x.clear();
-  char c;
-  do {
-    if (pil + 1 > pir) load();
-    c = ibuf[pil++];
-  } while (isspace(c));
-  do {
-    x += c;
-    if (pil == pir) load();
-    c = ibuf[pil++];
-  } while (!isspace(c));
-}
-
-template <typename T>
-void rd1_real(T &x) {
-  string s;
-  rd1(s);
-  if constexpr (is_same_v<T, long double>)
-    x = stold(s);
-  else
-    x = stod(s);
-}
-
-template <typename T>
-void rd1_integer(T &x) {
-  if (pil + 100 > pir) load();
-  char c;
-  do
-    c = ibuf[pil++];
-  while (c < '-');
-  bool minus = 0;
-  if constexpr (is_signed<T>::value || is_same_v<T, i128>) {
-    if (c == '-') { minus = 1, c = ibuf[pil++]; }
-  }
-  using U = unsigned_integer_t<T>;
-  U val = 0;
-  while ('0' <= c) { val = val * 10 + (c & 15), c = ibuf[pil++]; }
-  pil--;
-  if constexpr (is_signed<T>::value || is_same_v<T, i128>)
-  {
-    if (minus)
+    if (x >= 1000000000)
     {
-      const U min_abs = U(numeric_limits<T>::max()) + 1;
-      assert(val <= min_abs);
-      x = val == min_abs ? numeric_limits<T>::lowest() : -T(val);
+      const uint hi = uint(x / 1000000000);
+      out = store_short(out, hi);
+      store_nine(out, uint(x - U(hi) * 1000000000));
+      return out + 9;
     }
+    return store_short(out, uint(x));
+  }
+
+  template <class T, bool newline = false>
+  __attribute__((always_inline)) inline void wt1_integer(T x)
+  {
+    using U = integer_magnitude<T>;
+    U magnitude = U(x);
+    bool negative = false;
+    if constexpr (numeric_limits<T>::is_signed)
+    {
+      negative = x < 0;
+      const U sign_mask = U(0) - U(negative);
+      magnitude = (magnitude ^ sign_mask) + U(negative);
+    }
+    if constexpr (sizeof(U) <= sizeof(ull))
+    {
+      if (por > SIZ - 40) flush();
+      char *out = obuf + por;
+      // 負号の位置だけを進め、非負なら数字で上書きする。
+      *out = '-';
+      out += negative;
+      out = store_ordinary(out, magnitude);
+      if constexpr (newline) *out++ = '\n';
+      por = uint32_t(out - obuf);
+      return;
+    }
+    char text[48];
+    char *const end = text + sizeof(text);
+    char *first = end;
+    if constexpr (sizeof(U) > sizeof(ull))
+    {
+      constexpr ull base = 1000000000000000000ULL;
+      while (magnitude >= base)
+      {
+        const U q = magnitude / base;
+        const ull tail = ull(magnitude - q * base);
+        const uint hi = uint(tail / 1000000000ULL);
+        first -= 18;
+        store_nine(first, hi);
+        store_nine(first + 9, uint(tail - ull(hi) * 1000000000ULL));
+        magnitude = q;
+      }
+      first = prepend_wide(first, ull(magnitude));
+    }
+    else if constexpr (sizeof(U) > sizeof(uint)) first = prepend_wide(first, magnitude);
+    else first = prepend_small(first, magnitude);
+    if (negative) *--first = '-';
+    append_bytes(first, size_t(end - first));
+    if constexpr (newline) append_char('\n');
+  }
+
+  template <class T, enable_if_t<numeric_limits<T>::is_integer, int> = 0>
+  __attribute__((always_inline)) inline void wt1(T x) { wt1_integer(x); }
+  inline void wt1(char x) { append_char(x); }
+  inline void wt1(const char *x) { append_bytes(x, strlen(x)); }
+  inline void wt1(string_view x) { append_bytes(x.data(), x.size()); }
+  inline void wt1(const string &x) { append_bytes(x.data(), x.size()); }
+
+  template <class T>
+  void wt1_real(T x)
+  {
+    char text[numeric_limits<T>::max_exponent10 + 64];
+    auto result = to_chars(text, text + sizeof(text), x, chars_format::fixed, 15);
+    if (result.ec != errc{}) abort();
+    append_bytes(text, size_t(result.ptr - text));
+  }
+  inline void wt1(float x) { wt1_real(x); }
+  inline void wt1(double x) { wt1_real(x); }
+  inline void wt1(long double x) { wt1_real(x); }
+#if LIBRARY_HAS_FLOAT128
+  inline void wt1(f128 x)
+  {
+    wt1(template_float128_detail::format(x, chars_format::fixed, 35));
+  }
+#endif
+
+  template <class A, class B> void wt1(const pair<A, B> &x);
+  template <class... T> void wt1(const tuple<T...> &x);
+  template <class T, size_t N> void wt1(const array<T, N> &x);
+  template <class T> void wt1(const vc<T> &x);
+
+  template <class A, class B>
+  void wt1(const pair<A, B> &x) { wt1(x.first), append_char(' '), wt1(x.second); }
+  template <class... T>
+  void wt1(const tuple<T...> &x)
+  {
+    apply([](const auto &...element)
+    {
+      size_t index = 0;
+      ((index++ ? void(append_char(' ')) : void(), wt1(element)), ...);
+    }, x);
+  }
+  template <class T, size_t N>
+  void wt1(const array<T, N> &x)
+  {
+    for (size_t i = 0; i < N; ++i)
+    {
+      if (i) append_char(' ');
+      wt1(x[i]);
+    }
+  }
+  template <class T>
+  void wt1(const vc<T> &x)
+  {
+    for (size_t i = 0; i < x.size(); ++i)
+    {
+      if (i) append_char(' ');
+      wt1(x[i]);
+    }
+  }
+
+  template <class... T>
+  void read(T &...x) { (rd1(x), ...); }
+  template <class... T>
+  void write(T &&...x) { (wt1(forward<T>(x)), ...); }
+  template <class... T>
+  void print(T &&...x)
+  {
+    if constexpr (sizeof...(T) == 1 &&
+                  ((is_integral_v<decay_t<T>> && !is_same_v<decay_t<T>, char>) && ...))
+      (wt1_integer<decay_t<T>, true>(forward<T>(x)), ...);
     else
     {
-      assert(val <= U(numeric_limits<T>::max()));
-      x = T(val);
+      size_t index = 0;
+      ((index++ ? void(append_char(' ')) : void(), wt1(forward<T>(x))), ...);
+      append_char('\n');
     }
   }
-  else
-    x = T(val);
 }
-
-void rd1(int &x) { rd1_integer(x); }
-void rd1(ll &x) { rd1_integer(x); }
-void rd1(i128 &x) { rd1_integer(x); }
-void rd1(uint &x) { rd1_integer(x); }
-void rd1(ull &x) { rd1_integer(x); }
-void rd1(u128 &x) { rd1_integer(x); }
-void rd1(double &x) { rd1_real(x); }
-void rd1(long double &x) { rd1_real(x); }
-// void rd1(f128 &x) { rd1_real(x); }
-
-template <class T, class U>
-void rd1(pair<T, U> &p) {
-  return rd1(p.first), rd1(p.second);
-}
-template <class... T>
-void rd1(tuple<T...> &tpl) {
-  apply([](auto &...x) { (rd1(x), ...); }, tpl);
-}
-
-template <size_t N = 0, typename T>
-void rd1(array<T, N> &x) {
-  for (auto &d: x) rd1(d);
-}
-template <class T>
-void rd1(vc<T> &x) {
-  for (auto &d: x) rd1(d);
-}
-
-template <class... T>
-void read(T &...x) {
-  (rd1(x), ...);
-}
-
-void wt1(const char c) {
-  if (por == SIZ) flush();
-  obuf[por++] = c;
-}
-void wt1(const string s) {
-  for (char c: s) wt1(c);
-}
-void wt1(const char *s) {
-  size_t len = strlen(s);
-  for (size_t i = 0; i < len; i++) wt1(s[i]);
-}
-
-template <typename T>
-void wt1_integer(T x) {
-  if (por > SIZ - 100) flush();
-  using U = unsigned_integer_t<T>;
-  U ux;
-  if constexpr (is_signed<T>::value || is_same_v<T, i128>)
-  {
-    if (x < 0)
-      obuf[por++] = '-', ux = U(0) - U(x);
-    else
-      ux = U(x);
-  }
-  else
-    ux = x;
-  int outi;
-  for (outi = 96; ux >= 10000; outi -= 4) {
-    memcpy(out + outi, pre.num[ux % 10000], 4);
-    ux /= 10000;
-  }
-  if (ux >= 1000) {
-    memcpy(obuf + por, pre.num[ux], 4);
-    por += 4;
-  } else if (ux >= 100) {
-    memcpy(obuf + por, pre.num[ux] + 1, 3);
-    por += 3;
-  } else if (ux >= 10) {
-    int q = (ux * 103) >> 10;
-    obuf[por] = q | '0';
-    obuf[por + 1] = (ux - q * 10) | '0';
-    por += 2;
-  } else
-    obuf[por++] = ux | '0';
-  memcpy(obuf + por, out + outi + 4, 96 - outi);
-  por += 96 - outi;
-}
-
-template <typename T>
-void wt1_real(T x) {
-  ostringstream oss;
-  oss << fixed << setprecision(15) << x;
-  string s = oss.str();
-  wt1(s);
-}
-
-void wt1(int x) { wt1_integer(x); }
-template <class T, enable_if_t<is_integral_v<T>, int> = 0>
-void wt1(T x) { wt1_integer(x); }
-void wt1(i128 x) { wt1_integer(x); }
-void wt1(u128 x) { wt1_integer(x); }
-void wt1(double x) { wt1_real(x); }
-void wt1(long double x) { wt1_real(x); }
-// void wt1(f128 x) { wt1_real(x); }
-
-template <class T, class U>
-void wt1(const pair<T, U> &val) {
-  wt1(val.first);
-  wt1(' ');
-  wt1(val.second);
-}
-template <class... T>
-void wt1(const tuple<T...> &tpl) {
-  if constexpr (sizeof...(T))
-  {
-    int i = 0;
-    apply([&](const auto &...x)
-          { ((i++ ? wt1(' ') : void(), wt1(x)), ...); }, tpl);
-  }
-}
-template <class T, size_t S>
-void wt1(const array<T, S> &val) {
-  auto n = val.size();
-  for (size_t i = 0; i < n; i++) {
-    if (i) wt1(' ');
-    wt1(val[i]);
-  }
-}
-template <class T>
-void wt1(const vector<T> &val) {
-  auto n = val.size();
-  for (size_t i = 0; i < n; i++) {
-    if (i) wt1(' ');
-    wt1(val[i]);
-  }
-}
-
-template <class... T>
-void write(T &&...x) {
-  (wt1(std::forward<T>(x)), ...);
-}
-
-template <class... T>
-void print(T &&...x) {
-  if constexpr (sizeof...(T))
-  {
-    int i = 0;
-    ((i++ ? wt1(' ') : void(), wt1(std::forward<T>(x))), ...);
-  }
-  wt1('\n');
-}
-
-} // namespace fastio
-
 #endif
 
 #if defined FAST_IO and not defined LOCAL
@@ -282,7 +552,7 @@ struct Dummy {
 } dummy;
 #endif
 
-// https://trap.jp/post/1224/
+//! https://trap.jp/post/1224/
 
 // ---- 入力 ----
 #if defined LOCAL or not defined FAST_IO
@@ -335,14 +605,14 @@ void READnodump(Ts &...a) { CIN(a...); }
 template <class... T>
 void READVECnodump(int n, vc<T> &...v)
 {
-  (v.resize(n), ...);
+  (v.resize(size_t(n)), ...);
   READnodump(v...);
 }
 
 template <class... T>
 void READVEC2nodump(int n, int m, vvc<T> &...v)
 {
-  (v.assign(n, vc<T>(m)), ...);
+  (v.assign(size_t(n), vc<T>(size_t(m))), ...);
   READnodump(v...);
 }
 
@@ -351,12 +621,12 @@ void READJAGnodump(int n, vvc<T> &...vs)
 {
   auto read_one = [&](auto &v)
   {
-    v.resize(n);
+    v.resize(size_t(n));
     for (auto &row : v)
     {
       int k;
       READnodump(k);
-      row.resize(k);
+      row.resize(size_t(k));
       READnodump(row);
     }
   };
@@ -489,6 +759,22 @@ pair<T, U> &operator+=(pair<T, U> &a, const P &b)
 }
 template <class T, class U, class P>
 pair<T, U> operator+(pair<T, U> a, const P &b) { return a += b; }
+template <class T, class U, class P>
+pair<T, U> &operator-=(pair<T, U> &a, const P &b)
+{
+  a.first -= b.first;
+  a.second -= b.second;
+  return a;
+}
+template <class T, class U, class P>
+pair<T, U> operator-(pair<T, U> a, const P &b) { return a -= b; }
+template <class T, class U>
+pair<T, U> operator-(pair<T, U> a)
+{
+  a.first = -a.first;
+  a.second = -a.second;
+  return a;
+}
 
 template <class T, size_t n, class A>
 array<T, n> &operator+=(array<T, n> &a, const A &b)
@@ -499,6 +785,22 @@ array<T, n> &operator+=(array<T, n> &a, const A &b)
 }
 template <class T, size_t n, class A>
 array<T, n> operator+(array<T, n> a, const A &b) { return a += b; }
+template <class T, size_t n, class A>
+array<T, n> &operator-=(array<T, n> &a, const A &b)
+{
+  for (size_t i = 0; i < n; i++)
+    a[i] -= b[i];
+  return a;
+}
+template <class T, size_t n, class A>
+array<T, n> operator-(array<T, n> a, const A &b) { return a -= b; }
+template <class T, size_t n>
+array<T, n> operator-(array<T, n> a)
+{
+  for (auto &ai : a)
+    ai = -ai;
+  return a;
+}
 
 namespace internal
 {
@@ -509,6 +811,18 @@ auto &tuple_add_impl(A &a, const B &b, const index_sequence<I...>)
   ((get<I>(a) += get<I>(b)), ...);
   return a;
 }
+template <size_t... I, class A, class B>
+auto &tuple_sub_impl(A &a, const B &b, const index_sequence<I...>)
+{
+  ((get<I>(a) -= get<I>(b)), ...);
+  return a;
+}
+template <size_t... I, class A>
+auto &tuple_neg_impl(A &a, const index_sequence<I...>)
+{
+  ((get<I>(a) = -get<I>(a)), ...);
+  return a;
+}
 
 }; // namespace internal
 
@@ -517,6 +831,17 @@ tuple<Ts...> &operator+=(tuple<Ts...> &a, const Tp &b)
 { return internal::tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{}); }
 template <class... Ts, class Tp>
 tuple<Ts...> operator+(tuple<Ts...> a, const Tp &b) { return a += b; }
+template <class... Ts, class Tp>
+tuple<Ts...> &operator-=(tuple<Ts...> &a, const Tp &b)
+{ return internal::tuple_sub_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{}); }
+template <class... Ts, class Tp>
+tuple<Ts...> operator-(tuple<Ts...> a, const Tp &b) { return a -= b; }
+template <class... Ts>
+tuple<Ts...> operator-(tuple<Ts...> a)
+{
+  internal::tuple_neg_impl(a, make_index_sequence<sizeof...(Ts)>{});
+  return a;
+}
 
 template <class T, class Add>
 void offset(vc<T> &v, const Add &add) { for (auto &vi : v) vi += add; }
@@ -609,6 +934,20 @@ auto zip(const tuple<vc<Ts>...> &tv)
   return vt;
 }
 
+namespace internal
+{
+
+template <class... Ts>
+auto zip_vectors(const vc<Ts> &...v)
+{
+  if constexpr (sizeof...(Ts) == 2)
+    return zip(pair{v...});
+  else
+    return zip(tuple{v...});
+}
+
+};
+
 #define UNZIP(vt, ...) auto [__VA_ARGS__] = unzip(vt)
-#define ZIP(vt, ...) auto vt = zip(tuple{__VA_ARGS__})
+#define ZIP(vt, ...) auto vt = internal::zip_vectors(__VA_ARGS__)
 // ----------

@@ -23,12 +23,12 @@ void main2()
 {
   LL(N, M);
   VEC(pll, M, UV);
-  GraphDirected<ll> G(N, UV);
-  auto [ok, cycle] = cycle_detection(G);
-  if (!ok)
+  GraphDirected<> G(N, UV);
+  const auto cycle = cycle_detection(G);
+  if (!cycle)
     PRINTRETURN(-1);
-  PRINT(cycle.size());
-  fec(e : cycle) PRINT(e.index);
+  PRINT(cycle->size());
+  fec(e : *cycle) PRINT(e.index);
 }
 
 void test() {}

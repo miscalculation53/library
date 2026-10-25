@@ -35,18 +35,18 @@ void main2()
     else if (c == 3)
     {
       auto it = geq_min(st, k);
-      if (it == st.end())
+      if (!it)
         PRINT(-1);
       else
-        PRINT(*it);
+        PRINT(**it);
     }
     else if (c == 4)
     {
       auto it = leq_max(st, k);
-      if (it == st.end())
+      if (!it)
         PRINT(-1);
       else
-        PRINT(*it);
+        PRINT(**it);
     }
   }
 }

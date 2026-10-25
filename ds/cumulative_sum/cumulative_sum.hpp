@@ -2,14 +2,14 @@
 
 #include "../../template/template_all_but_modint.hpp"
 
-#include "../../math/algebra/algebra_basic_ops.hpp"
+#include "../../algebra/algebra_basic_ops.hpp"
 
 /**
  * @brief $1$ 次元累積和
  * @docs docs/ds/cumulative_sum/cumulative_sum.md
  */
 
-template <class G = GroupAddSub<ll>>
+template <class G>
 struct CumulativeSum
 {
   using S = typename G::S;
@@ -38,5 +38,15 @@ public:
     const int n = SZ<int>(s) - 1;
     assert(0 <= l && l <= r && r <= n);
     return G::op(G::inv(s[l]), s[r]);
+  }
+
+  vc<S> content() const
+  {
+    if (s.empty()) return {};
+    vc<S> res;
+    const int n = SZ<int>(s) - 1;
+    res.reserve(n);
+    repi(i, n) res.eb(G::op(G::inv(s[i]), s[i + 1]));
+    return res;
   }
 };

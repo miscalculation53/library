@@ -2,7 +2,7 @@
 
 #include "../../template/template_all_but_modint.hpp"
 
-#include "../../math/algebra/algebra_basic_ops.hpp"
+#include "../../algebra/algebra_basic_ops.hpp"
 
 /**
  * @brief $1$ 次元 imos 法
@@ -10,7 +10,7 @@
  */
 
 // G は可換
-template <class G = GroupAddSub<ll>>
+template <class G>
 struct Imos
 {
   using S = typename G::S;

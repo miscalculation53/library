@@ -13,14 +13,56 @@ struct Trie
 {
 private:
   vc<int> par;
-  vc<array<int, CHAR_NUM>> chi;
+  struct ChildRow : array<int, CHAR_NUM>
+  {
+    ChildRow() { this->fill(-1); }
+  };
+  vc<ChildRow> chi;
+
+  template <class C, class Emit>
+  int insert_impl(const vc<C> &s, int v, const Emit &emit)
+  {
+    assert(0 <= v && v < num_of_vertices());
+    emit(v);
+    auto it = s.begin();
+    for (; it != s.end(); ++it)
+    {
+      auto c = *it;
+      assert(0 <= c && c < CHAR_NUM);
+      int next = chi[v][c];
+      if (next == -1) break;
+      v = next;
+      emit(v);
+    }
+    if (it != s.end())
+    {
+      int required = num_of_vertices<int>() + (s.end() - it);
+      if (required > int(chi.capacity()))
+      {
+        int capacity = chi.capacity();
+        while (capacity < required) capacity *= 2;
+        reserve(capacity);
+      }
+      for (; it != s.end(); ++it)
+      {
+        auto c = *it;
+        assert(0 <= c && c < CHAR_NUM);
+        int next = num_of_vertices<int>();
+        chi[v][c] = next;
+        par.eb(v);
+        chi.eb();
+        v = next;
+        emit(v);
+      }
+    }
+    return v;
+  }
 
 public:
   Trie()
   {
     par = {-1};
-    chi = {{}};
-    fill(ALL(chi[0]), -1);
+    chi.resize(1);
   }
 
   void reserve(int len) { par.reserve(len), chi.reserve(len); }
@@ -29,20 +71,22 @@ public:
   template <class I = ll>
   I num_of_vertices() const { return par.size(); }
 
-  // 頂点 v の親 (なければ -1) を返す
+  // 頂点 v の親を返す。根では nullopt。
   template <class I = ll>
-  I parent(int v) const
+  optional<I> parent(int v) const
   {
     assert(0 <= v && v < num_of_vertices());
-    return par[v];
+    if (par[v] == -1) return nullopt;
+    return I(par[v]);
   }
-  // 頂点 v の文字 c 方向への子 (なければ -1) を返す
+  // 頂点 v の文字 c 方向への子を返す。存在しなければ nullopt。
   template <class I = ll>
-  I child(int v, int c) const
+  optional<I> child(int v, int c) const
   {
     assert(0 <= v && v < num_of_vertices());
     assert(0 <= c && c < CHAR_NUM);
-    return chi[v][c];
+    if (chi[v][c] == -1) return nullopt;
+    return I(chi[v][c]);
   }
 
   // 頂点 v (デフォルトでは根) から始めて s を挿入
@@ -51,23 +95,17 @@ public:
   template <class I = ll, class C>
   vc<I> insert(const vc<C> &s, int v = 0)
   {
-    assert(0 <= v && v < num_of_vertices());
-    vc<I> res = {v};
+    vc<I> res;
     res.reserve(s.size() + 1);
-    fe(c : s)
-    {
-      assert(0 <= c && c < CHAR_NUM);
-      if (chi[v][c] == -1)
-      {
-        chi[v][c] = num_of_vertices();
-        par.eb(v);
-        chi.eb();
-        fill(ALL(chi.back()), -1);
-      }
-      v = chi[v][c];
-      res.eb(v);
-    }
+    insert_impl(s, v, [&](int u) { res.eb(u); });
     return res;
+  }
+
+  // 挿入後の終点だけを返す。
+  template <class I = ll, class C>
+  I insert_last(const vc<C> &s, int v = 0)
+  {
+    return insert_impl(s, v, [](int) {});
   }
 
   // 頂点 v が表す文字列 (vector) を返す
@@ -79,9 +117,14 @@ public:
     while (v != 0)
     {
       int p = par[v];
-      repi(c, CHAR_NUM) if (chi[p][c] == v) res.eb(c);
+      repi(c, CHAR_NUM) if (chi[p][c] == v)
+      {
+        res.eb(c);
+        break;
+      }
       v = p;
     }
-    return reversed(res);
+    reverse(ALL(res));
+    return res;
   }
 };

@@ -1,8 +1,24 @@
-## Aho Corasick
+このドキュメントには AI による作成・変更が含まれています。
 
-trie に、failure link と呼ばれる逆辺を追加する。failure link の行き先 $\mathrm{fail}[s]$ は、$s$ の最長接頭辞（注：ノードと文字列を同一視する）。加えて、$\mathrm{nxt}[s][c]$ という配列も持っている。これは $s$ から始めて、$c$ 番目の子がない間は failure link をたどっていき、$c$ 番目の子がある頂点が見つかったらその子を返すものである。
+## 概要
+
+trie に failure link を追加する。根以外の頂点 $s$ の failure link は、trie に存在する $s$ の真の接尾辞のうち最長のものを表す頂点へ向かう（頂点と文字列を同一視する）。加えて、$\mathrm{nxt}[s][c]$ という配列も持つ。これは $s$ から始めて、$c$ 番目の子がない間は failure link をたどり、$c$ 番目の子がある頂点が見つかったらその子を返すものである。
 
 Wikipedia の図が参考になりそう https://ja.wikipedia.org/wiki/%E3%82%A8%E3%82%A4%E3%83%9B%E2%80%93%E3%82%B3%E3%83%A9%E3%82%B7%E3%83%83%E3%82%AF%E6%B3%95
+
+## 使用例
+
+```cpp
+#include "string/aho_corasick.hpp"
+
+// 0 を 'a'、1 を 'b' とする。
+AhoCorasick<2> ac(vvc<int>{{0, 1}, {1}});
+int v = ac.next<int>(ac.next<int>(0, 0), 1);
+assert(ac.trie.to_string<int>(v) == vc<int>({0, 1}));
+assert(ac.trie.to_string<int>(*ac.failure(v)) == vc<int>({1}));
+```
+
+## 詳細なドキュメント
 
 #### 求め方
 
@@ -26,13 +42,17 @@ $T_1, \dots, T_Q$ で trie と failure link を構築しておく。$S$ に従�
 
 ---
 
-### コンストラクタ
+#### コンストラクタ
 
 ```cpp
 AhoCorasick<int CHAR_NUM>(const vvc<C> &strs)
 ```
 
 文字列集合 `strs` から構築する。文字の種類数 `CHAR_NUM` $=\sigma$ を指定する。
+
+trie への挿入には `insert_last` を使い、終点だけを求める。既存の接頭辞をたどった後、追加する接尾辞の長さに合わせて容量をまとめて確保する。容量は現在値を倍増して選び、重複する文字列は既存の頂点だけをたどる。
+
+BFS のキューは頂点数に合わせて一括確保する。遷移表は根から BFS 順に各行を完成させる。
 
 ##### 制約
 
@@ -44,24 +64,25 @@ AhoCorasick<int CHAR_NUM>(const vvc<C> &strs)
 
 - $O(n \sigma)$
 
-### メンバ変数
+#### メンバ変数
 
 `Trie<CHAR_NUM> trie` を持つ。
-
-### メンバ関数
 
 #### failure
 
 ```cpp
-I failure(int v)
+optional<I> failure<I = ll>(int v)
 ```
 
-頂点 $v$ の failure link の行き先、つまり $v$ の表す文字列の最長 suffix を表すノードを返す。根のときは $-1$ を返す。
+頂点 $v$ の failure link の行き先、つまりtrieに存在する真の接尾辞のうち最長のものを表す頂点を返す。根のときは `nullopt` を返す。根へ向かうリンクは値 $0$ を持つ成功結果となる。
 
 なお、`RootedTree` と組み合わせて
 
 ```cpp
-RootedTree<bool, false> G(GEN_VEC(aho.trie.num_of_vertices(), i, failure(i)));
+#include "tree/rooted_tree.hpp"
+
+int n = aho.trie.num_of_vertices();
+RootedTree tree(n, GEN_VEC(n, i, aho.failure(i).value_or(-1)));
 ```
 のようにすると failure link のみからなる木が作れる。failure link は子から親への辺として描かれることが多いが、`RootedTree` の辺は親から子への辺として管理されることに注意。
 
@@ -89,4 +110,3 @@ I next(int v, int c)
 ##### 計算量
 
 - $O(1)$
-

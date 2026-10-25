@@ -8,6 +8,7 @@
 #include "template_rep.hpp"
 #include "template_vector.hpp"
 #include "../utils/is_integral_ext.hpp"
+#include "../utils/resolved_infty.hpp"
 
 /**
  * @brief テンプレート（アルゴリズム）
@@ -33,9 +34,17 @@ auto MAX(const V &v) { return *max_element(ALL(v)); }
 template <class V>
 auto MIN(const V &v) { return *min_element(ALL(v)); }
 template <class I = ll, class V>
-I ARGMAX(const V &v) { return max_element(ALL(v)) - v.begin(); }
+optional<I> ARGMAX(const V &v)
+{
+  if (v.empty()) return nullopt;
+  return I(max_element(ALL(v)) - v.begin());
+}
 template <class I = ll, class V>
-I ARGMIN(const V &v) { return min_element(ALL(v)) - v.begin(); }
+optional<I> ARGMIN(const V &v)
+{
+  if (v.empty()) return nullopt;
+  return I(min_element(ALL(v)) - v.begin());
+}
 
 template<class T = ll, class V>
 T mex(const V &a)
@@ -119,19 +128,20 @@ V sorted(V v, Args&&... args)
 }
 #endif
 
-template <class V>
-void unique(V &v) { v.erase(std::unique(ALL(v)), v.end()); }
-template <class V>
-V uniqued(V v) { unique(v); return v; }
+template <class V, class Equal = equal_to<>>
+void unique(V &v, Equal equal = {}) { v.erase(std::unique(ALL(v), equal), v.end()); }
+template <class V, class Equal = equal_to<>>
+V uniqued(V v, Equal equal = {}) { unique(v, equal); return v; }
 
-template <class V>
-void sortunique(V &v)
+template <class V, class Compare = less<>, class Equal = equal_to<>>
+void sortunique(V &v, Compare comp = {}, Equal equal = {})
 {
-  sort(ALL(v));
-  unique(v);
+  sort(ALL(v), comp);
+  unique(v, equal);
 }
-template <class V>
-V sortuniqued(V v) { sortunique(v); return v; }
+template <class V, class Compare = less<>, class Equal = equal_to<>>
+V sortuniqued(V v, Compare comp = {}, Equal equal = {})
+{ sortunique(v, comp, equal); return v; }
 
 // 01234 -> 12340
 template <class V, class U>
@@ -193,21 +203,21 @@ struct MonoidAdd
   template <class I, class = decltype(declval<S>() * declval<I>())>
   static constexpr S pow(const S &a, I k) { return a * k; }
 };
-template <class T, const T infty = INF>
+template <class T, auto infty = nullptr>
 struct MonoidMin
 {
   using S = T;
   static constexpr S op(S a, S b) { return min(a, b); }
-  static constexpr S e() { return infty; }
+  static constexpr decltype(auto) e() { return resolved_infty<T, infty>(); }
   template <class I>
   static constexpr S pow(const S &a, I k) { return k == 0 ? e() : a; }
 };
-template <class T, const T infty = INF>
+template <class T, auto infty = nullptr>
 struct MonoidMax
 {
   using S = T;
   static constexpr S op(S a, S b) { return max(a, b); }
-  static constexpr S e() { return -infty; }
+  static constexpr S e() { return -resolved_infty<T, infty>(); }
   template <class I>
   static constexpr S pow(const S &a, I k) { return k == 0 ? e() : a; }
 };

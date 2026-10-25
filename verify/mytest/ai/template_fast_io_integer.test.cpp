@@ -47,6 +47,15 @@ int main()
   assert(v1 == vc<int>({1, 2, 3}));
   assert(v2 == vc<int>({4, 5, 6}));
 
+  string input3b = "12+345";
+  memset(fastio::ibuf, ' ', 100);
+  memcpy(fastio::ibuf, input3b.data(), input3b.size());
+  fastio::pil = 0, fastio::pir = 100;
+  int lhs, rhs;
+  char op;
+  fastio::read(lhs, op, rhs);
+  assert(lhs == 12 && op == '+' && rhs == 345);
+
   string input4 = "2 1 2 1 3 1 4 2 5 6";
   memset(fastio::ibuf, ' ', 100);
   memcpy(fastio::ibuf, input4.data(), input4.size());

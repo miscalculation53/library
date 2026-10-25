@@ -1,6 +1,30 @@
-## テンプレート（二分探索）
+このドキュメントには AI による作成・変更が含まれています。
 
-### LB, UB
+## 概要
+
+テンプレート（二分探索）
+
+## 使用例
+
+```cpp
+#include "template/template_all_but_modint.hpp"
+
+vc<int> a{1, 3, 3, 7};
+assert(LB(a, 3) == 1 && UB(a, 3) == 3);
+assert(in_cnt(a, 2, 7) == 2);
+auto [ok, ng] = binsearch([](ll x) { return x * x <= 30; }, 0, 10);
+assert(ok == 5 && ng == 6);
+auto index = leq_max(a, 2);
+assert(index && a[*index] == 1);
+set<int> values{0, 3};
+auto it = geq_min(values, 0);
+assert(it && **it == 0);
+assert(!gt_min(values, 3));
+```
+
+## 詳細なドキュメント
+
+#### LB, UB
 
 ```cpp
 (1) U=ll LB(V v, T val, Comp comp, Proj proj)
@@ -32,7 +56,7 @@ $v$ がソート済みで、後ろの引数がデフォルトの場合、
 
 - $O(\log \lvert v \rvert)$
 
-### lt, leq, gt, geq
+#### lt, leq, gt, geq
 
 ```cpp
 (1) lt_max(V v, T val, ...)
@@ -46,15 +70,13 @@ $v$ がソート済みで、後ろの引数がデフォルトの場合、
 (9) U=ll in_cnt(V v, T l, T r, ...)
 ```
 
-- (1), (2), (3), (4)：次の条件を満たす $v$ の要素を探し、`V` が vector など（ランダムアクセスイテレータ）なら添字を、set など（ランダムアクセス不可で、メンバ関数に `lower_bound` や `upper_bound` を持つ）ならイテレータを返す。前者のときは $v$ がソート済みであることを想定。
+- (1), (2), (3), (4)：次の条件を満たす $v$ の要素を探し、`V` が vector など（ランダムアクセスイテレータ）なら `optional<U>`（既定は `ll`）で添字を、set など（ランダムアクセス不可で、メンバ関数に `lower_bound` や `upper_bound` を持つ）なら `optional<V::const_iterator>` でイテレータを返す。前者のときは $v$ がソート済みであることを想定。
   - (1)：$\mathrm{val}$ 未満で最大
   - (2)：$\mathrm{val}$ 以下で最大
   - (3)：$\mathrm{val}$ 超過で最小
   - (4)：$\mathrm{val}$ 以上で最小
   
-  そのような要素が存在しない場合は、
-  - 添字が返るときは、配列が無限に伸びている（負方向には $-\infty$ で正方向には $\infty$）とみなして計算し、返す（つまり、$-1$ か $n$ が返る）。
-  - イテレータが返るときは、前か後ろかにかかわらず `end()` を返す。
+  該当する要素がなければ `nullopt`。添字 $0$ や値 $0$ の要素も成功結果として返す。イテレータ版は `*result` でイテレータ、`**result` で要素を取得する。
 
 - (5), (6), (7), (8), (9)：次の条件を満たす $v$ の要素の個数を返す。$v$ はソート済みであることを想定。
   - (5)：$\mathrm{val}$ 未満
@@ -71,13 +93,11 @@ $v$ がソート済みで、後ろの引数がデフォルトの場合、
 - (5), (6), (7), (8), (9)：`V` のイテレータはランダムアクセスイテレータ
 - (1), (2), (3), (4) の前者および (5), (6), (7), (8), (9) では、$v$ がソート済みであることを想定（実際はもう少し緩い）
 
-
 ##### 計算量
 
 - $O(\log \lvert v \rvert)$
 
-
-### binsearch
+#### binsearch
 
 ```cpp
 (1) T binsearch(F judge, T ok, T ng)

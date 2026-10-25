@@ -16,7 +16,7 @@
 #include "template/template_all_but_modint.hpp"
 
 #include "ds/segtree/lazy_segtree.hpp"
-#include "math/algebra/acted_monoid/upd_min.hpp"
+#include "algebra/acted_monoid/upd_min.hpp"
 
 void init()
 {

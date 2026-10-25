@@ -10,10 +10,10 @@
  * @docs docs/algebra/acted_monoid/upd_min_sum.md
  */
 
-template <class T, T infty = INF>
+template <class T, auto infty = nullptr, class L = ll>
 struct ActedMonoidUpdMinSum
 {
-  using M = MonoidMinSum<T, infty>;
+  using M = MonoidMinSum<T, infty, L>;
   using MF = MonoidUpdFlag<T>;
   using S = typename M::S;
   using F = typename MF::S;
@@ -27,10 +27,10 @@ struct ActedMonoidUpdMinSum
   static constexpr auto id = MF::e;
 };
 
-template <class T, T infty = INF>
+template <class T, auto infty = nullptr, class L = ll>
 struct ActedMonoidUpdMaxSum
 {
-  using M = MonoidMaxSum<T, infty>;
+  using M = MonoidMaxSum<T, infty, L>;
   using MF = MonoidUpdFlag<T>;
   using S = typename M::S;
   using F = typename MF::S;
@@ -44,10 +44,10 @@ struct ActedMonoidUpdMaxSum
   static constexpr auto id = MF::e;
 };
 
-template <class T, T infty = INF>
+template <class T, auto infty = nullptr, class L = ll>
 struct ActedMonoidUpdMinMaxSum
 {
-  using M = MonoidMinMaxSum<T, infty>;
+  using M = MonoidMinMaxSum<T, infty, L>;
   using MF = MonoidUpdFlag<T>;
   using S = typename M::S;
   using F = typename MF::S;

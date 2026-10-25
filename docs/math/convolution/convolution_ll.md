@@ -1,4 +1,17 @@
-## 畳み込み（long long）
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
+
+畳み込み（long long）
+
+## 使用例
+
+```cpp
+auto c = convolution_4e18(vc<ll>{1, -2}, vc<ll>{3, 4});
+assert((c == vc<ll>{3, -2, -8}));
+```
+
+## 詳細なドキュメント
 
 #### convolution_4e18
 

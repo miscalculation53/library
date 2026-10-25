@@ -3,8 +3,8 @@
 #include "template/template_all_but_modint.hpp"
 #include "math/modint/modint.hpp"
 #include "ds/segtree/sparse_lazy_segtree.hpp"
-#include "math/algebra/acted_monoid/add_sum.hpp"
-#include "math/algebra/acted_monoid/affine_sum.hpp"
+#include "algebra/acted_monoid/add_sum.hpp"
+#include "algebra/acted_monoid/affine_sum.hpp"
 
 struct ActedMonoidStringAssign
 {
@@ -14,22 +14,6 @@ struct ActedMonoidStringAssign
   using F = char;
   static S mapping(F f, const S &x) { return f == 0 ? x : string(x.size(), f); }
   static F composition(F f, F g) { return f == 0 ? g : f; }
-  static F id() { return 0; }
-};
-
-struct ActedMonoidAddSumLarge
-{
-  struct S
-  {
-    ll len, val;
-    S(ll val) : len(1), val(val) {}
-    S(ll len, ll val) : len(len), val(val) {}
-  };
-  static S op(S a, S b) { return {a.len + b.len, a.val + b.val}; }
-  static S e() { return {0, 0}; }
-  using F = ll;
-  static S mapping(F f, S x) { return {x.len, x.val + f * x.len}; }
-  static F composition(F f, F g) { return f + g; }
   static F id() { return 0; }
 };
 
@@ -123,6 +107,18 @@ void test_affine()
       auto got = seg.prod(l, r);
       assert(got.len == r - l && got.val == expected);
     }
+    if (iter % 17 == 0)
+    {
+      auto runs = as_const(seg).content();
+      int pos = 0;
+      for (auto [left, right, x] : runs)
+      {
+        assert(left == pos && left < right && x.len == 1);
+        repi(i, left, right) assert(x.val == a[i]);
+        pos = right;
+      }
+      assert(pos == n);
+    }
   }
 }
 
@@ -164,7 +160,7 @@ void test_noncommutative()
 // Test focus: 40-bit indices, mostly implicit ranges, point operations, and empty input.
 void test_large_array()
 {
-  using AM = ActedMonoidAddSumLarge;
+  using AM = ActedMonoidAddSum<ll>;
   constexpr ll n = 1LL << 40;
   SparseLazySegmentTree<AM> seg(n, AM::S(0));
   seg.reserve(1 << 15);
@@ -193,6 +189,7 @@ void test_large_array()
   SparseLazySegmentTree<AM> empty(0, AM::S(0));
   assert(empty.prod(0, 0).len == 0);
   assert(empty.all_prod().len == 0);
+  assert(as_const(empty).content().empty());
   assert(empty.max_right_ok(0, pred) == 0);
   assert(empty.min_left_ok(0, pred) == 0);
 }
@@ -210,6 +207,78 @@ void test_explicit_identity_initial_value()
   assert(seg.get(42).len == 1 && seg.get(42).val == 3);
 }
 
+struct ActedMonoidTrackedFlip
+{
+  struct S
+  {
+    inline static int live = 0, peak = 0;
+    ll len;
+    ull val;
+    S(ull val) : S(1, val) {}
+    S(ll len, ull val) : len(len), val(val) { peak = max(peak, ++live); }
+    S(const S &x) : S(x.len, x.val) {}
+    S &operator=(const S &) = default;
+    ~S() { --live; }
+  };
+  using F = bool;
+  static S op(const S &a, const S &b) { return {a.len + b.len, a.val + b.val}; }
+  static S e() { return {0, 0}; }
+  static S mapping(F f, const S &x) { return {x.len, f ? ull(x.len) - x.val : x.val}; }
+  static F composition(F f, F g) { return f != g; }
+  static F id() { return false; }
+};
+
+// Test focus: online splitting uses O(q) aggregate objects; const queries add no nodes.
+void test_storage_growth_and_const_queries()
+{
+  using AM = ActedMonoidTrackedFlip;
+  constexpr ll n = 1'000'000'000'000'000'000LL;
+  constexpr int q = 2000;
+  assert(AM::S::live == 0);
+  AM::S::peak = 0;
+  {
+    SparseLazySegmentTree<AM> seg(n, AM::S(0));
+    mt19937_64 rng(20261014);
+    repi(_, q)
+    {
+      ll l = rng() % n, r = rng() % n;
+      if (l > r) swap(l, r);
+      seg.apply(l, r + 1, true);
+    }
+    assert(AM::S::peak <= 20 * q + 200);
+    int live = AM::S::live;
+    const auto &cseg = seg;
+    {
+      auto runs = cseg.content();
+      assert(runs.size() <= 2 * q + 1);
+      ll pos = 0;
+      ull sum = 0;
+      for (const auto &[l, r, x] : runs)
+      {
+        assert(l == pos && l < r && x.len == 1 && x.val <= 1);
+        assert(cseg.get(l).val == x.val && cseg.get(r - 1).val == x.val);
+        sum += ull(r - l) * x.val;
+        pos = r;
+      }
+      assert(pos == n && sum == cseg.all_prod().val);
+    }
+    assert(AM::S::live == live);
+    repi(_, 1000)
+    {
+      ll l = rng() % n, r = rng() % n;
+      if (l > r) swap(l, r);
+      auto x = cseg.prod(l, r + 1);
+      assert(x.len == r + 1 - l && x.val <= ull(x.len));
+      assert(cseg.get(l).len == 1 && cseg.get(l).val <= 1);
+      auto pred = [](const AM::S &s) { return s.len <= 7; };
+      assert(cseg.max_right_ok(l, pred) == min(n, l + 7));
+      assert(cseg.min_left_ok(r, pred) == max(0LL, r - 7));
+    }
+    assert(AM::S::live == live);
+  }
+  assert(AM::S::live == 0);
+}
+
 int main()
 {
   test_basic_and_binary_search();
@@ -217,5 +286,6 @@ int main()
   test_noncommutative();
   test_large_array();
   test_explicit_identity_initial_value();
+  test_storage_growth_and_const_queries();
   cout << "Hello World" << endl;
 }

@@ -29,47 +29,51 @@ int main()
 
               if (brute.empty())
               {
-                assert(res.dim == -1);
+                assert(!res);
                 continue;
               }
+              assert(res);
               const ll det = a * e - b * d;
               const int expected_dim = (a == 0 && b == 0 && d == 0 && e == 0)
                                          ? 2 : (det == 0 ? 1 : 0);
-              assert(res.dim == expected_dim);
-              auto [x0, y0] = res.sol;
+              assert(res->dim == expected_dim);
+              auto [x0, y0] = res->sol;
               assert(a * x0 + b * y0 == c && d * x0 + e * y0 == f);
-              for (int i = 0; i < res.dim; i++)
+              for (int i = 0; i < res->dim; i++)
               {
-                auto [x, y] = res.basis[i];
+                auto [x, y] = res->basis[i];
                 assert(a * x + b * y == 0 && d * x + e * y == 0);
               }
               for (auto [x, y] : brute)
               {
                 pair<ll, ll> dif{x - x0, y - y0};
-                if (res.dim == 0)
+                if (res->dim == 0)
                   assert((dif == pair<ll, ll>{0, 0}));
-                else if (res.dim == 1)
-                  assert(is_multiple(dif, res.basis[0]));
+                else if (res->dim == 1)
+                  assert(is_multiple(dif, res->basis[0]));
               }
             }
 
+  auto origin = linear_equations_integer(1, 0, 0, 0, 1, 0);
+  assert((origin && origin->dim == 0 && origin->sol == pair<ll, ll>{0, 0}));
+
   auto no_integer = linear_equations_integer(2, 4, 1, 4, 8, 2);
-  assert(no_integer.dim == -1);
+  assert(!no_integer);
 
   auto all = linear_equations_integer(0, 0, 0, 0, 0, 0);
-  assert(all.dim == 2);
-  assert((all.basis == array<pair<ll, ll>, 2>{{{1, 0}, {0, 1}}}));
+  assert(all->dim == 2);
+  assert((all->basis == array<pair<ll, ll>, 2>{{{1, 0}, {0, 1}}}));
 
   auto large = linear_equations_integer<int>(
       50'000, 49'999, 500'030'000,
       49'999, 49'998, 500'020'000);
-  assert((large.dim == 0 && large.sol == pair<int, int>{40'000, -30'000}));
+  assert((large->dim == 0 && large->sol == pair<int, int>{40'000, -30'000}));
 
   const ll n = 4'000'000'000LL;
   auto large_ll = linear_equations_integer(
       n, n - 1, n + 1,
       n - 1, n - 2, n);
-  assert((large_ll.dim == 0 && large_ll.sol == pair<ll, ll>{2, -1}));
+  assert((large_ll->dim == 0 && large_ll->sol == pair<ll, ll>{2, -1}));
 
   PRINT("Hello World");
 }

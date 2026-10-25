@@ -1,10 +1,13 @@
 #pragma once
 
 #include "../../template/template_all_but_modint.hpp"
-#include "../algebra/algebra_basic_ops.hpp"
+#include "../../algebra/algebra_basic_ops.hpp"
 #include "bbla.hpp"
 #include "../../ds/csr.hpp"
 #include "../modint/modint.hpp"
+#include "../dot_product.hpp"
+#include "row_reduction_mod32.hpp"
+#include "internal_matrix_power_mod32.hpp"
 
 /**
  * @brief 行列
@@ -18,7 +21,8 @@ struct Matrix : vvc<typename F::S>
   using S = typename F::S;
   using M = Matrix;
   using V = vc<S>;
-  using vvc<S>::vector;
+  using Base = vvc<S>;
+  using Base::Base;
   using vvc<S>::operator=;
 
   Matrix(int n, int m, const S &diag = F::e0(), const S &non_diag = F::e0())
@@ -71,12 +75,7 @@ struct Matrix : vvc<typename F::S>
     auto [n, m] = shape<int>();
     assert(SZ(v) == m);
     V res(n, F::e0());
-    repi(i, n)
-    {
-      S sm = F::e0();
-      repi(j, m) sm = F::add(sm, F::mul((*this)[i][j], v[j]));
-      res[i] = sm;
-    }
+    repi(i, n) res[i] = dot_product<F>(m, (*this)[i].begin(), v.begin());
     return res;
   }
   M operator*(const M &b) const
@@ -85,6 +84,23 @@ struct Matrix : vvc<typename F::S>
     auto [m_, p] = b.shape<int>();
     assert(m == m_);
     M res(n, p);
+    if constexpr (internal::dot_product_mod32<F>::value)
+    {
+      // 密な積では右辺を転置して内積を取る。小さい・疎な積は下の零を飛ばす処理を使う。
+      if (n >= 16 && m >= 16 && p >= 16)
+      {
+        ll nonzero = 0;
+        for (const auto &row : *this) nonzero += m - count(row.begin(), row.end(), F::e0());
+        if (nonzero == 0) return res;
+        if (nonzero * 2 >= ll(n) * m)
+        {
+          vvc<S> bt(p, vc<S>(m));
+          repi(k, m) repi(j, p) bt[j][k] = b[k][j];
+          repi(i, n) repi(j, p) res[i][j] = dot_product<F>(m, (*this)[i].begin(), bt[j].begin());
+          return res;
+        }
+      }
+    }
     repi(ii, 0, n, BS) repi(kk, 0, m, BS) repi(jj, 0, p, BS)
     {
       repi(i, ii, min(ii + BS, n)) repi(k, kk, min(kk + BS, m))
@@ -102,6 +118,17 @@ struct Matrix : vvc<typename F::S>
   {
     auto [n, m] = shape<int>();
     assert(n == m);
+    if (n == 0) return M(n, n, F::e1());
+    if constexpr (internal::ordinary_mod32_field<F>::value &&
+                  internal::matrix_power_mod32_detail::supported_builtin_exponent_v<T>)
+    {
+      if (n >= 24 && k > 0 && internal::matrix_power_mod32_detail::binary_multiplication_count(k) > 10 &&
+          internal::matrix_power_mod32_detail::is_prime_modulus<S>())
+      {
+        const vvc<S> &a = *this;
+        return M(internal::matrix_power_mod32_detail::power_over_field(a, k));
+      }
+    }
     M res(n, n, F::e1()), tmp(*this);
     while (k > 0)
     {
@@ -130,6 +157,14 @@ struct Matrix : vvc<typename F::S>
   {
     auto [n, m] = shape<int>();
     M a(*this);
+    if constexpr (internal::ordinary_mod32_field<F>::value)
+    {
+      if (n >= 32 && m >= 32)
+      {
+        auto [rk, de] = internal::row_reduction_mod32<S>(a, n, m, rref);
+        return {std::move(a), I(rk), de};
+      }
+    }
     I rk = 0;
     S de = F::e1();
     for (int i = 0, j = 0; i < n && j < m; j++)
@@ -151,19 +186,25 @@ struct Matrix : vvc<typename F::S>
       }
       de = F::mul(de, a[i][j]);
       S aij_inv = F::inv(a[i][j]);
-      repi(l, m) a[i][l] = F::mul(a[i][l], aij_inv);
+      // ピボットより左は零。浮動小数点でも消去済みの成分を明示的に保つ。
+      repi(l, j + 1, m) a[i][l] = F::mul(a[i][l], aij_inv);
+      a[i][j] = F::e1();
       if (rref)
       {
         repi(k, i)
         {
           S akj = a[k][j];
-          repi(l, m) a[k][l] = F::add(a[k][l], F::minus(F::mul(a[i][l], akj)));
+          if (akj == F::e0()) continue;
+          a[k][j] = F::e0();
+          repi(l, j + 1, m) a[k][l] = F::add(a[k][l], F::minus(F::mul(a[i][l], akj)));
         }
       }
       repi(k, i + 1, n)
       {
         S akj = a[k][j];
-        repi(l, m) a[k][l] = F::add(a[k][l], F::minus(F::mul(a[i][l], akj)));
+        if (akj == F::e0()) continue;
+        a[k][j] = F::e0();
+        repi(l, j + 1, m) a[k][l] = F::add(a[k][l], F::minus(F::mul(a[i][l], akj)));
       }
       i++;
       rk++;
@@ -211,7 +252,8 @@ struct Matrix : vvc<typename F::S>
   template <class RandomSample = decltype(bbla::random_sample_mint<typename F::S>)>
   S det_sparse(const S &majority = F::e0(), const RandomSample &random_sample = bbla::random_sample_mint) const
   {
-    auto [n, m] = shape<int>();
+    const auto dims = shape<int>();
+    const int n = dims.first, m = dims.second;
     assert(n == m);
     vc<pair<int, pair<int, S>>> elms;
     const S minus_majority = F::minus(majority);
@@ -222,12 +264,15 @@ struct Matrix : vvc<typename F::S>
         elms.eb(i, pair{j, F::add(val, minus_majority)});
     }
     CSR<pair<int, S>> csr(n, elms);
+    vc<S> y(n, F::e0());
     auto linear_map = [&](vc<S> &x)
     {
       S sm = F::e0();
-      fec(xi : x) sm = F::add(sm, xi);
-      sm = F::mul(majority, sm);
-      vc<S> y(n, sm);
+      if (majority != F::e0())
+      {
+        fec(xi : x) sm = F::add(sm, xi);
+        sm = F::mul(majority, sm);
+      }
       repi(i, n)
       {
         S yi = sm;
@@ -240,8 +285,8 @@ struct Matrix : vvc<typename F::S>
   }
 
   // 正方行列
-  // (存在するか, 存在する場合逆行列)
-  pair<bool, M> inv() const
+  // 逆行列。存在しなければ nullopt。
+  optional<M> inv() const
   {
     auto [n, m] = shape<int>();
     assert(n == m);
@@ -249,15 +294,15 @@ struct Matrix : vvc<typename F::S>
     repi(i, n) repi(j, n) a[i][j] = (*this)[i][j];
     repi(i, n) a[i][n + i] = F::e1();
     M b = get<0>(a.row_reduction(true));
-    repi(i, n) if (b[i][i] == F::e0()) return {false, {}};
+    repi(i, n) if (b[i][i] == F::e0()) return nullopt;
     M res(n, n);
     repi(i, n) repi(j, n) res[i][j] = b[i][n + j];
-    return {true, res};
+    return res;
   }
 
-  // (解が存在するか, 解のひとつ, 基底)
+  // (解のひとつ, 基底)。解が存在しなければ nullopt。
   // O(nm min(n, m) + m^2)
-  tuple<bool, V, vc<V>> solve(const V &b) const
+  optional<pair<V, vc<V>>> solve(const V &b) const
   {
     auto [n, m] = shape<int>();
     assert(SZ(b) == n);
@@ -274,7 +319,7 @@ struct Matrix : vvc<typename F::S>
       while (j < m && a[i][j] == F::e0())
         j++;
       if (j == m)
-        return {false, {}, {}};
+        return nullopt;
       sol[j] = a[i][m], piv[j] = i;
     }
     repi(j, m)
@@ -286,6 +331,6 @@ struct Matrix : vvc<typename F::S>
       repi(k, j) if (piv[k] != -1) ba[k] = F::minus(a[piv[k]][j]);
       basis.eb(ba);
     }
-    return {true, sol, basis};
+    return pair{move(sol), move(basis)};
   }
 };

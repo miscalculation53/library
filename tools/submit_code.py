@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import fnmatch
 import hashlib
 import json
@@ -17,6 +17,7 @@ import sys
 import tempfile
 import time
 from typing import Iterable, Sequence
+from urllib.parse import quote
 
 
 LINE_DIRECTIVE = re.compile(
@@ -36,8 +37,35 @@ INCLUDE_GUARD_OPEN_DIRECTIVE = re.compile(
     r"^\s*#\s*ifndef\s+([_A-Za-z]\w*)\s*$"
 )
 IDENTIFIER = re.compile(r"\b[_A-Za-z]\w*\b")
+RAW_STRING_OPEN = re.compile(r'(?:u8|u|U|L)?R"([^ ()\\\t\r\n]{0,16})\(')
+# Consume the complete preprocessing number before looking for character
+# literals. This includes hexadecimal digits, digit separators, and exponents.
+CPP_NUMBER = re.compile(r"(?:[0-9]|\.[0-9])(?:[\w.]|'\w|(?<=[eEpP])[+-])*")
 DEFAULT_KEEP_FUNCTIONS = {"read", "write", "print", "init", "main2", "test"}
 DEFAULT_BYTE_LIMIT = 65536
+LIBRARY_SOURCE_BASE = "https://github.com/miscalculation53/library/tree/wip/"
+LEGACY_LIBRARY_SITE_BASE = "https://miscalculation53.github.io/library/"
+LIBRARY_SOURCE_LINK = re.compile(
+    rf"^\s*//\s*((?:{re.escape(LIBRARY_SOURCE_BASE)}\S+\.hpp|"
+    rf"{re.escape(LEGACY_LIBRARY_SITE_BASE)}\S+\.html#unbundled))\s*$"
+)
+SOURCE_LINK_PRAGMA = re.compile(
+    r"^\s*#\s*pragma\s+submit_code_source_link\s+(\d+)\s*$"
+)
+SUBMISSION_PREFIX = "// submit-code: "
+SUBMISSION_FIELDS = (
+    r"source=(?P<source>[0-9a-f]{64}) input=(?P<input>[0-9a-f]{64}) body=(?P<body>[0-9a-f]{64})"
+)
+SUBMISSION_HEADER = re.compile(
+    re.escape(SUBMISSION_PREFIX) + SUBMISSION_FIELDS + r"\n"
+)
+SUBMISSION_FOOTER = re.compile(
+    r"\n\n" + re.escape(SUBMISSION_PREFIX) + r"hash=(?P<hash>[0-9a-f]{12}) "
+    + SUBMISSION_FIELDS + r"\n\Z"
+)
+SUBMISSION_TRAILER = re.compile(
+    r"\n\n" + re.escape(SUBMISSION_PREFIX) + r"[^\n]*\n?\Z"
+)
 
 
 class ToolError(RuntimeError):
@@ -46,6 +74,214 @@ class ToolError(RuntimeError):
 
 class FastBundleUnsupported(ToolError):
     pass
+
+
+@dataclass(frozen=True)
+class SubmissionStamp:
+    source_digest: str
+    input_digest: str
+
+    def render(self, text: str) -> str:
+        body_digest = hashlib.sha256(text.encode()).hexdigest()
+        # Blank lines keep the footer separate even after a trailing backslash.
+        return (
+            text + f"\n\n{SUBMISSION_PREFIX}hash={self.source_digest[:12]} source={self.source_digest} "
+            f"input={self.input_digest} body={body_digest}\n"
+        )
+
+    @staticmethod
+    def detach(text: str) -> tuple[str, bool]:
+        trailer = SUBMISSION_TRAILER.search(text)
+        if trailer is not None:
+            return text[:trailer.start()], True
+        if text.startswith(SUBMISSION_PREFIX):
+            return text.partition("\n")[2], True
+        return text, False
+
+    @staticmethod
+    def read(text: str) -> tuple[SubmissionStamp, str]:
+        match = SUBMISSION_FOOTER.search(text)
+        if match is not None:
+            body = text[:match.start()]
+            if match.group("hash") != match.group("source")[:12]:
+                raise ToolError("表示用ハッシュが変更されています。oj-b で再生成してください。")
+        else:
+            # Existing files with a first-line record migrate during cleanup.
+            match = SUBMISSION_HEADER.match(text)
+            body = text[match.end():] if match is not None else ""
+        if match is None:
+            raise ToolError("照合情報がありません。oj-b で展開し直してください。")
+        source_digest, input_digest, body_digest = (match.group(name) for name in ("source", "input", "body"))
+        if hashlib.sha256(body.encode()).hexdigest() != body_digest:
+            raise ToolError("生成後に提出用ファイルが変更されています。oj-b で再生成してください。")
+        return SubmissionStamp(source_digest, input_digest), body
+
+
+def library_source_url(path: Path, library_root: Path | None) -> str | None:
+    if library_root is None:
+        return None
+    try:
+        relative = path.resolve().relative_to(library_root.resolve())
+    except ValueError:
+        return None
+    if relative.suffix != ".hpp":
+        return None
+    encoded = quote(relative.as_posix(), safe="/._-")
+    return f"{LIBRARY_SOURCE_BASE}{encoded}"
+
+
+def source_link_comment(url: str) -> str:
+    return f"// {url}\n"
+
+
+def protect_source_links(text: str) -> tuple[str, list[str]]:
+    output: list[str] = []
+    links: list[str] = []
+    for line in text.splitlines(keepends=True):
+        match = LIBRARY_SOURCE_LINK.match(line.rstrip("\r\n"))
+        if match is None:
+            output.append(line)
+            continue
+        links.append(source_link_comment(match.group(1)))
+        output.append(f"#pragma submit_code_source_link {len(links) - 1}\n")
+    return "".join(output), links
+
+
+def restore_source_links(text: str, links: Sequence[str]) -> str:
+    output: list[str] = []
+    for line in text.splitlines(keepends=True):
+        match = SOURCE_LINK_PRAGMA.match(line.rstrip("\r\n"))
+        if match is None:
+            output.append(line)
+            continue
+        index = int(match.group(1))
+        if index >= len(links):
+            raise ToolError("invalid protected source-link marker")
+        output.append(links[index])
+    return "".join(output)
+
+
+def strip_cleanup_comments(text: str, keep_comments: Iterable[str] = ()) -> str:
+    protected, comments = protect_cleanup_comments(text, keep_comments)
+    protected, links = protect_source_links(protected)
+    stripped = restore_source_links(strip_comments(protected, comments), links)
+    return restore_cleanup_comments(stripped, comments)
+
+
+def source_comments(text: str) -> set[str]:
+    return {text[start:end] for start, end in comment_spans(text)}
+
+
+def important_comments(text: str) -> list[str]:
+    return list(dict.fromkeys(
+        comment for start, end in comment_spans(text)
+        if (comment := text[start:end]).startswith(("/*!", "//!"))
+    ))
+
+
+def retain_important_comments(text: str, comments: Sequence[str]) -> str:
+    if not comments:
+        return text
+    present = source_comments(text)
+    # Notices inside removed declarations or branches move to the beginning.
+    # An extra newline also terminates a line comment ending in a backslash.
+    missing = dict.fromkeys(comment for comment in comments if comment not in present)
+    return "".join(comment + "\n\n" for comment in missing) + text
+
+
+def replace_lines_preserving_comments(
+    text: str, replacements: dict[int, str], keep_comments: Iterable[str] = (),
+) -> str:
+    """Keep notices at changed lines and leave other comments in place."""
+    if not replacements:
+        return text
+    keep = set(keep_comments)
+    notices: dict[int, list[str]] = {}
+    output: list[str] = []
+    previous = previous_line = 0
+    for start, end in comment_spans(text):
+        first = previous_line + text.count("\n", previous, start)
+        last = first + text.count("\n", start, end)
+        changed = next(
+            (index for index in range(first, last + 1) if index in replacements), None,
+        )
+        comment = text[start:end]
+        output.append(text[previous:start])
+        if changed is None:
+            output.append(comment)
+        else:
+            # Strip the whole comment even when only its opening line changes.
+            # Preserve line numbers until all replacements have been applied.
+            output.append((" " if comment.startswith("/*") else "") + "\n" * comment.count("\n"))
+            if comment.startswith(("/*!", "//!")) or comment in keep:
+                notices.setdefault(changed, []).append(comment)
+        previous, previous_line = end, last
+    output.append(text[previous:])
+    lines = "".join(output).splitlines(keepends=True)
+    lines.extend([""] * (len(text.splitlines(keepends=True)) - len(lines)))
+    result: list[str] = []
+    for index, line in enumerate(lines):
+        result.extend(comment + "\n\n" for comment in notices.get(index, ()))
+        result.append(replacements.get(index, line))
+    return "".join(result)
+
+
+def comment_record_path(output: Path) -> Path:
+    return output.parent / ".submit-code" / output.name / "comments.json"
+
+
+def save_source_comments(
+    output: Path, comments: set[str], *, provenance: dict | None = None,
+) -> None:
+    # Keep the expansion-time snapshot outside the submitted code, including
+    # when the source is edited before cleanup or the bundle has a custom name.
+    atomic_write(comment_record_path(output), json.dumps(
+        {"comments": sorted(comments), **(provenance or {})}, ensure_ascii=False,
+    ) + "\n")
+
+
+def load_source_comments(output: Path) -> set[str]:
+    record = comment_record_path(output)
+    if record.is_file():
+        return set(json.loads(record.read_text(encoding="utf-8"))["comments"])
+    # Also support bundles generated before comment snapshots were introduced.
+    stem = "main" if output.name == "bundle.cpp" else output.stem.removesuffix("-bundle")
+    for extension in (".cpp", ".cc", ".cxx", ".C"):
+        source = output.with_name(stem + extension)
+        if source != output and source.is_file():
+            return source_comments(source.read_text(encoding="utf-8"))
+    return set()
+
+
+def protect_cleanup_comments(text: str, comments: Iterable[str]) -> tuple[str, dict[str, str]]:
+    keep = set(comments).union(important_comments(text))
+    if not keep:
+        return text, {}
+    prefix = "submit_code_comment_" + hashlib.sha256(text.encode()).hexdigest()[:16] + "_"
+    while prefix in text:
+        prefix += "_"
+    output: list[str] = []
+    originals: dict[str, str] = {}
+    previous = 0
+    for start, end in comment_spans(text):
+        comment = text[start:end]
+        if comment not in keep:
+            continue
+        marker = f"/*{prefix}{len(originals)}" + "\n" * comment.count("\n") + "*/"
+        originals[marker] = comment
+        output.extend((text[previous:start], marker))
+        previous = end
+    output.append(text[previous:])
+    return "".join(output), originals
+
+
+def restore_cleanup_comments(text: str, comments: dict[str, str]) -> str:
+    normalized = {marker.replace("\n", ""): comment for marker, comment in comments.items()}
+    return re.sub(
+        r"/\*(submit_code_comment_[0-9a-f]{16}_+\d+)\s*\*/",
+        lambda match: normalized.get(f"/*{match.group(1)}*/", match.group()),
+        text,
+    ) if comments else text
 
 
 class Reporter:
@@ -165,11 +401,22 @@ def atomic_write(path: Path, text: str) -> None:
 
 
 class CheckpointWriter:
-    def __init__(self, path: Path, reporter: Reporter) -> None:
+    def __init__(
+        self, path: Path, reporter: Reporter, *, stamp: SubmissionStamp | None = None,
+    ) -> None:
         self.path = path
         self.reporter = reporter
         self.current: str | None = None
         self.preserve_below: int | None = None
+        self.stamp = stamp
+        # Count the footer in size decisions, outside compiler analysis and cleanup.
+        self.stamp_size = len(stamp.render("").encode()) if stamp else 0
+
+    def size(self, text: str) -> int:
+        return encoded_size(text) + self.stamp_size
+
+    def below_limit(self, text: str, limit: int | None) -> bool:
+        return limit is not None and self.size(text) < limit
 
     def save(self, stage: str, text: str, *, force: bool = False) -> bool:
         if not force and text == self.current:
@@ -177,14 +424,15 @@ class CheckpointWriter:
         if (
             self.preserve_below is not None
             and self.current is not None
-            and len(self.current.encode()) < self.preserve_below
-            and len(text.encode()) >= self.preserve_below
+            and self.size(self.current) < self.preserve_below
+            and self.size(text) >= self.preserve_below
         ):
             return False
-        before = len(self.current.encode()) if self.current is not None else len(text.encode())
-        atomic_write(self.path, text)
+        before = self.size(self.current) if self.current is not None else self.size(text)
+        rendered = self.stamp.render(text) if self.stamp else text
+        atomic_write(self.path, rendered)
         self.current = text
-        self.reporter.size(stage, before, len(text.encode()))
+        self.reporter.size(stage, before, self.size(text))
         return True
 
 
@@ -365,10 +613,13 @@ class BundleDocument:
         lines: Sequence[BundledLine],
         origins: dict[str, Origin],
         protected: Iterable[str],
+        library_root: Path | None,
     ) -> None:
         self.lines = list(lines)
         self.origins = origins
         self.protected = set(protected)
+        self.library_root = library_root.resolve() if library_root is not None else None
+        self.important_comments = important_comments("".join(line.text for line in self.lines))
 
     @classmethod
     def parse(
@@ -377,14 +628,15 @@ class BundleDocument:
         *,
         resolver: OriginResolver,
         protected: Iterable[str] = (),
+        library_root: Path | None = None,
     ) -> "BundleDocument":
         lines: list[BundledLine] = []
         origins: dict[str, Origin] = {}
         current: Origin | None = None
         source_line = 1
 
-        for line in text.splitlines(keepends=True):
-            match = LINE_DIRECTIVE.match(line.rstrip("\r\n"))
+        for line, visible in zip(text.splitlines(keepends=True), preprocessor_lines(text)):
+            match = LINE_DIRECTIVE.match(visible.rstrip("\r\n"))
             if match:
                 try:
                     raw_path = json.loads(match.group(2))
@@ -407,7 +659,7 @@ class BundleDocument:
 
         protected_keys = set(protected)
         protected_keys.add(resolver.source_key)
-        return cls(lines, origins, protected_keys)
+        return cls(lines, origins, protected_keys, library_root)
 
     def origin_sizes(self) -> dict[str, int]:
         sizes: dict[str, int] = Counter()
@@ -427,10 +679,22 @@ class BundleDocument:
         output: list[str] = []
         previous_key: str | None = None
         expected_line: int | None = None
+        linked: set[str] = set()
 
         for line in self.lines:
             if line.origin_key in removed:
                 continue
+
+            if line.origin_key is not None and line.origin_key not in linked:
+                origin = self.origins[line.origin_key]
+                url = (
+                    library_source_url(origin.resolved, self.library_root)
+                    if origin.resolved is not None
+                    else None
+                )
+                if url is not None:
+                    output.append(source_link_comment(url))
+                linked.add(line.origin_key)
 
             if keep_line and line.origin_key is not None:
                 if line.origin_key != previous_key or line.source_line != expected_line:
@@ -444,7 +708,7 @@ class BundleDocument:
                 expected_line = line.source_line + 1
             output.append(line.text)
 
-        return "".join(output)
+        return retain_important_comments("".join(output), self.important_comments)
 
 
 def read_direct_local_includes(
@@ -560,7 +824,7 @@ class CompilerWorkspace:
             return None
         return text[: include.end()] + "\n", include.end()
 
-    def _ensure_pch(self, text: str) -> bool:
+    def _ensure_pch(self, text: str, *, build: bool = True) -> bool:
         prefix = self._pch_prefix(text)
         if prefix is None:
             self.pch_prefix_end = None
@@ -601,7 +865,6 @@ class CompilerWorkspace:
             )
         )
         cache_dir = cache_root / cache_key
-        cache_dir.mkdir(parents=True, exist_ok=True)
         self.pch_header = cache_dir / "standard_prelude.hpp"
         self.pch_output = cache_dir / "standard_prelude.hpp.gch"
         if self.pch_header.is_file() and self.pch_output.is_file():
@@ -613,6 +876,11 @@ class CompilerWorkspace:
             except OSError:
                 pass
 
+        # A single early checkpoint is faster to check without building a PCH.
+        # Leave availability unknown so later, repeated checks can still build it.
+        if not build:
+            return False
+        cache_dir.mkdir(parents=True, exist_ok=True)
         atomic_write(self.pch_header, header_text)
         temporary_output = cache_dir / f".{self.pch_output.name}.{os.getpid()}.tmp"
         result = self._run(
@@ -644,8 +912,8 @@ class CompilerWorkspace:
             )
         return self.pch_available
 
-    def _prepare_candidate_source(self, text: str) -> bool:
-        use_pch = self._ensure_pch(text)
+    def _prepare_candidate_source(self, text: str, *, build_pch: bool = True) -> bool:
+        use_pch = self._ensure_pch(text, build=build_pch)
         if use_pch and self.pch_prefix_end is not None:
             prefix = text[: self.pch_prefix_end]
             masked_prefix = "".join("\n" if char == "\n" else " " for char in prefix)
@@ -663,23 +931,23 @@ class CompilerWorkspace:
     def _run(self, command: Sequence[str]) -> subprocess.CompletedProcess[str]:
         return run_command(command, timeout=self.timeout)
 
-    def syntax(self, text: str) -> tuple[bool, str]:
+    def syntax(self, text: str, *, build_pch: bool = True) -> tuple[bool, str]:
         digest = hashlib.sha256(text.encode()).hexdigest()
         cached = self.syntax_cache.get(digest)
         if cached is not None:
             return cached
-        use_pch = self._prepare_candidate_source(text)
+        use_pch = self._prepare_candidate_source(text, build_pch=build_pch)
         result = self._run([*self._candidate_command(use_pch), "-fsyntax-only", str(self.source)])
         value = result.returncode == 0, result.stderr
         self.syntax_cache[digest] = value
         return value
 
-    def link(self, text: str) -> tuple[bool, str]:
+    def link(self, text: str, *, build_pch: bool = True) -> tuple[bool, str]:
         digest = hashlib.sha256(text.encode()).hexdigest()
         cached = self.link_cache.get(digest)
         if cached is not None:
             return cached
-        use_pch = self._prepare_candidate_source(text)
+        use_pch = self._prepare_candidate_source(text, build_pch=build_pch)
         for artifact in (self.object, self.executable):
             try:
                 artifact.unlink()
@@ -694,6 +962,7 @@ class CompilerWorkspace:
                     str(self.source),
                     "-o",
                     str(self.executable),
+                    "-lquadmath",
                 ]
             )
             value = result.returncode == 0, result.stderr
@@ -723,14 +992,15 @@ class CompilerWorkspace:
                 "-o",
                 str(self.executable),
                 *self.extra_args,
+                "-lquadmath",
             ]
         )
         value = link_result.returncode == 0, link_result.stderr
         self.link_cache[digest] = value
         return value
 
-    def validate(self, text: str) -> tuple[bool, str]:
-        return self.link(text)
+    def validate(self, text: str, *, build_pch: bool = True) -> tuple[bool, str]:
+        return self.link(text, build_pch=build_pch)
 
     def compiler_warnings(self, text: str, *, allow_pch: bool = True) -> str:
         if allow_pch:
@@ -811,7 +1081,98 @@ class CompilerWorkspace:
         )
         return functions
 
-    def preprocess_directives(self, text: str) -> tuple[bool, str, str]:
+    def uninstantiated_template_functions(self, text: str) -> list[tuple[int, str]]:
+        for path in self.directory.glob("templates.*"):
+            if path.is_file():
+                path.unlink()
+
+        use_pch = self._prepare_candidate_source(text)
+        started = time.monotonic()
+        result = self._run(
+            [
+                *self._candidate_command(use_pch),
+                "-O0",
+                "-fdump-lang-raw",
+                "-dumpdir",
+                str(self.directory) + os.sep,
+                "-dumpbase",
+                "templates.",
+                "-fsyntax-only",
+                str(self.source),
+            ]
+        )
+        if result.returncode != 0:
+            self.reporter.detail(
+                "template analysis failed: " + first_error(result.stderr)
+            )
+            return []
+
+        dump = next(self.directory.glob("templates.*.raw"), None)
+        if dump is None:
+            self.reporter.detail("template analysis did not produce a GCC dump file")
+            return []
+
+        identifiers: dict[str, str] = {}
+        pseudo_records: set[tuple[int, str]] = set()
+        instantiated_records: set[tuple[int, str]] = set()
+        source_pattern = re.compile(
+            rf"\bsrcp:\s+(?:.*[/\\])?{re.escape(self.source.name)}:(\d+)\b"
+        )
+        record_pattern = re.compile(r"^@\d+\s+\w")
+        identifier_pattern = re.compile(r"^@(\d+)\s+identifier_node\b")
+        spelling_pattern = re.compile(r"\bstrg:\s+(.*?)\s+lngt:\s+\d+")
+        body_pattern = re.compile(r"\bbody:\s+@\d+")
+        name_pattern = re.compile(r"\bname:\s+@(\d+)")
+
+        def consume(record: str) -> None:
+            identifier = identifier_pattern.match(record)
+            if identifier is not None:
+                spelling = spelling_pattern.search(record)
+                if spelling is not None:
+                    identifiers[identifier.group(1)] = spelling.group(1)
+                return
+            if " function_decl " not in record or not body_pattern.search(record):
+                return
+            match = source_pattern.search(record)
+            name = name_pattern.search(record)
+            if match is None or name is None:
+                return
+            line_number = int(match.group(1))
+            if "pseudo tmpl" in record:
+                pseudo_records.add((line_number, name.group(1)))
+            else:
+                instantiated_records.add((line_number, name.group(1)))
+
+        record = ""
+        with dump.open(encoding="utf-8", errors="replace") as stream:
+            for line in stream:
+                if line.startswith("@") and record_pattern.match(line):
+                    if record:
+                        consume(record)
+                    # Most of the dump describes standard-library types and
+                    # expressions. Only these two record kinds are relevant.
+                    record = line if (
+                        " identifier_node " in line or " function_decl " in line
+                    ) else ""
+                elif record:
+                    record += line
+            if record:
+                consume(record)
+        try:
+            dump.unlink()
+        except FileNotFoundError:
+            pass
+        result = sorted(
+            (line, identifiers.get(name, ""))
+            for line, name in pseudo_records - instantiated_records
+        )
+        self.reporter.detail(
+            f"template analysis: {len(result)} uninstantiated "
+            f"function line(s), {time.monotonic() - started:.2f}s"
+        )
+        return result
+
+    def preprocess_directives(self, text: str, *, keep_comments: bool = False) -> tuple[bool, str, str]:
         self.write(text)
         result = self._run(
             [
@@ -819,6 +1180,7 @@ class CompilerWorkspace:
                 f"-std={self.standard}",
                 "-E",
                 "-fdirectives-only",
+                *(["-CC"] if keep_comments else []),
                 "-x",
                 "c++",
                 *(
@@ -934,52 +1296,52 @@ def prune_header_origins(
     return removed
 
 
-def strip_comments(text: str) -> str:
-    output: list[str] = []
+def comment_spans(text: str) -> Iterable[tuple[int, int]]:
     index = 0
     size = len(text)
 
     while index < size:
         if text.startswith("//", index):
+            start = index
             index += 2
             while index < size:
                 if text[index] == "\n":
-                    output.append("\n")
-                    index += 1
                     break
                 if text[index] == "\\" and index + 1 < size and text[index + 1] == "\n":
-                    output.append("\n")
                     index += 2
                     continue
                 index += 1
+            yield start, index
             continue
 
         if text.startswith("/*", index):
-            output.append(" ")
+            start = index
             index += 2
             while index < size and not text.startswith("*/", index):
-                if text[index] == "\n":
-                    output.append("\n")
                 index += 1
             if index < size:
                 index += 2
+            yield start, index
             continue
 
-        raw_match = re.match(r'(?:u8|u|U|L)?R"([^ ()\\\t\r\n]{0,16})\(', text[index:])
+        raw_match = RAW_STRING_OPEN.match(text, index)
         if raw_match:
             opener = raw_match.group(0)
             delimiter = raw_match.group(1)
             closer = f'){delimiter}"'
             end = text.find(closer, index + len(opener))
             if end < 0:
-                output.append(text[index:])
                 break
             end += len(closer)
-            output.append(text[index:end])
             index = end
             continue
 
         ch = text[index]
+        if ch.isdigit() or ch == ".":
+            number = CPP_NUMBER.match(text, index)
+            if number:
+                index = number.end()
+                continue
         if ch in {'"', "'"}:
             quote = ch
             start = index
@@ -994,12 +1356,22 @@ def strip_comments(text: str) -> str:
                     escaped = True
                 elif current == quote:
                     break
-            output.append(text[start:index])
             continue
 
-        output.append(ch)
         index += 1
 
+
+def strip_comments(text: str, keep_comments: Iterable[str] = ()) -> str:
+    keep = set(keep_comments)
+    output: list[str] = []
+    previous = 0
+    for start, end in comment_spans(text):
+        comment = text[start:end]
+        output.append(text[previous:start])
+        output.append(comment if comment in keep else
+                      (" " if comment.startswith("/*") else "") + "\n" * comment.count("\n"))
+        previous = end
+    output.append(text[previous:])
     return "".join(output)
 
 
@@ -1007,6 +1379,7 @@ def preprocessor_lines(text: str) -> list[str]:
     """Return comment-free lines, masking lines continued from a literal or macro."""
 
     lines = strip_comments(text).splitlines(keepends=True)
+    lines.extend([""] * (len(text.splitlines(keepends=True)) - len(lines)))
     result: list[str] = []
     raw_closer: str | None = None
     quote: str | None = None
@@ -1044,15 +1417,18 @@ def preprocessor_lines(text: str) -> list[str]:
                     quote = None
                 continue
 
-            raw_match = re.match(
-                r'(?:u8|u|U|L)?R"([^ ()\\\t\r\n]{0,16})\(', line[index:]
-            )
+            raw_match = RAW_STRING_OPEN.match(line, index)
             if raw_match:
                 raw_closer = f'){raw_match.group(1)}"'
                 index += len(raw_match.group(0))
                 continue
 
             ch = line[index]
+            if ch.isdigit() or ch == ".":
+                number = CPP_NUMBER.match(line, index)
+                if number:
+                    index = number.end()
+                    continue
             if ch in {'"', "'"}:
                 quote = ch
             index += 1
@@ -1071,11 +1447,23 @@ def collapse_blank_lines(text: str) -> str:
     previous_continues = False
     previous_blank = False
 
-    for line in text.splitlines(keepends=True):
+    # Comment contents must not open a raw/string literal in this scanner, and
+    # blank lines inside a block comment are part of the author's formatting.
+    comment_lines: set[int] = set()
+    previous_end = previous_line = 0
+    for start, end in comment_spans(text):
+        first = previous_line + text.count("\n", previous_end, start)
+        last = first + text.count("\n", start, end)
+        comment_lines.update(range(first, last + 1))
+        previous_end, previous_line = end, last
+    lines = text.splitlines(keepends=True)
+    visible = strip_comments(text).splitlines(keepends=True)
+    visible.extend([""] * (len(lines) - len(visible)))
+    for line_index, (original, line) in enumerate(zip(lines, visible)):
         preserve_indentation = (
             raw_closer is not None or quote is not None or previous_continues
         )
-        protected = preserve_indentation
+        protected = preserve_indentation or line_index in comment_lines
         index = 0
         while index < len(line):
             if raw_closer is not None:
@@ -1103,10 +1491,7 @@ def collapse_blank_lines(text: str) -> str:
                         break
                 continue
 
-            raw_match = re.match(
-                r'(?:u8|u|U|L)?R"([^ ()\\\t\r\n]{0,16})\(',
-                line[index:],
-            )
+            raw_match = RAW_STRING_OPEN.match(line, index)
             if raw_match:
                 protected = True
                 delimiter = raw_match.group(1)
@@ -1115,6 +1500,11 @@ def collapse_blank_lines(text: str) -> str:
                 continue
 
             ch = line[index]
+            if ch.isdigit() or ch == ".":
+                number = CPP_NUMBER.match(line, index)
+                if number:
+                    index = number.end()
+                    continue
             if ch in {'"', "'"}:
                 protected = True
                 quote = ch
@@ -1124,15 +1514,15 @@ def collapse_blank_lines(text: str) -> str:
 
         previous_continues = line.rstrip("\r\n").endswith("\\")
         if protected:
-            output.append(line)
+            output.append(original)
             previous_blank = False
             continue
         if line.strip():
-            output.append(line)
+            output.append(original)
             previous_blank = False
             continue
         if not previous_blank:
-            output.append(line)
+            output.append(original)
             previous_blank = True
 
     return "".join(output)
@@ -1140,14 +1530,15 @@ def collapse_blank_lines(text: str) -> str:
 
 def wrap_include_directives(text: str) -> tuple[str, dict[int, str]]:
     lines = text.splitlines(keepends=True)
+    visible = preprocessor_lines(text)
     output: list[str] = []
     includes: dict[int, str] = {}
     index = 0
 
     while index < len(lines):
         line = lines[index]
-        is_line_directive = LINE_DIRECTIVE.match(line.rstrip("\r\n")) is not None
-        if not INCLUDE_DIRECTIVE.match(line) and not is_line_directive:
+        is_line_directive = LINE_DIRECTIVE.match(visible[index].rstrip("\r\n")) is not None
+        if not INCLUDE_DIRECTIVE.match(visible[index]) and not is_line_directive:
             output.append(line)
             index += 1
             continue
@@ -1167,17 +1558,59 @@ def wrap_include_directives(text: str) -> tuple[str, dict[int, str]]:
     return "".join(output), includes
 
 
+def wrap_portable_conditionals(text: str) -> tuple[str, dict[int, str]]:
+    """Retain f128 feature selection for compilation on the judge's target."""
+    lines = text.splitlines(keepends=True)
+    visible = preprocessor_lines(text)
+    feature = re.compile(r"\b(?:LIBRARY_HAS_FLOAT128|LIBRARY_USE_QUADMATH|__STDCPP_FLOAT128_T__)\b")
+    stack: list[tuple[int, bool]] = []
+    spans: list[tuple[int, int]] = []
+    for index, line in enumerate(visible):
+        if CONDITIONAL_OPEN_DIRECTIVE.match(line):
+            stack.append((index, feature.search(line) is not None))
+        elif CONDITIONAL_BRANCH_DIRECTIVE.match(line) and stack:
+            start, portable = stack[-1]
+            stack[-1] = (start, portable or feature.search(line) is not None)
+        elif CONDITIONAL_CLOSE_DIRECTIVE.match(line) and stack:
+            start, portable = stack.pop()
+            if portable:
+                spans.append((start, index + 1))
+
+    output: list[str] = []
+    blocks: dict[int, str] = {}
+    cursor = 0
+    for start, end in sorted(spans):
+        if start < cursor:
+            continue
+        output.extend(lines[cursor:start])
+        block_id = len(blocks)
+        blocks[block_id] = "".join(lines[start:end])
+        output.append(f"#pragma submit_code_portable_begin {block_id}\n")
+        output.append(blocks[block_id])
+        if not blocks[block_id].endswith("\n"):
+            output.append("\n")
+        output.append(f"#pragma submit_code_portable_end {block_id}\n")
+        cursor = end
+    output.extend(lines[cursor:])
+    return "".join(output), blocks
+
+
 def filter_preprocessor_output(
     output: str,
     *,
     source_path: Path,
     includes: dict[int, str],
+    portable_blocks: dict[int, str] | None = None,
 ) -> str:
     source_resolved = source_path.resolve()
-    current_file: Path | None = None
+    in_source = False
+    source_files = {str(source_path): True, str(source_resolved): True}
     result: list[str] = []
     begin_pattern = re.compile(r"^\s*#pragma\s+submit_code_include_begin\s+(\d+)\s*$")
     end_pattern = re.compile(r"^\s*#pragma\s+submit_code_include_end\s+(\d+)\s*$")
+    portable_begin = re.compile(r"^\s*#pragma\s+submit_code_portable_begin\s+(\d+)\s*$")
+    portable_end = re.compile(r"^\s*#pragma\s+submit_code_portable_end\s+(\d+)\s*$")
+    in_portable = False
 
     for line in output.splitlines(keepends=True):
         marker = GNU_LINE_MARKER.match(line.rstrip("\r\n"))
@@ -1185,15 +1618,28 @@ def filter_preprocessor_output(
             try:
                 raw_path = json.loads(marker.group(2))
             except json.JSONDecodeError:
-                current_file = None
+                in_source = False
                 continue
-            if raw_path.startswith("<"):
-                current_file = None
-            else:
-                current_file = Path(raw_path).resolve()
+            if raw_path not in source_files:
+                source_files[raw_path] = (
+                    not raw_path.startswith("<")
+                    and Path(raw_path).resolve() == source_resolved
+                )
+            in_source = source_files[raw_path]
             continue
 
-        if current_file != source_resolved:
+        if not in_source:
+            continue
+        if portable_end.match(line):
+            in_portable = False
+            continue
+        if in_portable:
+            continue
+        portable = portable_begin.match(line)
+        if portable:
+            assert portable_blocks is not None
+            result.append(portable_blocks[int(portable.group(1))])
+            in_portable = True
             continue
         begin = begin_pattern.match(line)
         if begin:
@@ -1207,18 +1653,26 @@ def filter_preprocessor_output(
     return "".join(result)
 
 
-def safe_cleanup_candidate(text: str, compiler: CompilerWorkspace) -> str:
-    uncommented = strip_comments(text)
-    wrapped, includes = wrap_include_directives(uncommented)
-    valid, output, stderr = compiler.preprocess_directives(wrapped)
+def safe_cleanup_candidate(
+    text: str, compiler: CompilerWorkspace, keep_comments: Iterable[str] = (),
+) -> str:
+    protected, comments = protect_cleanup_comments(text, keep_comments)
+    protected, links = protect_source_links(protected)
+    uncommented = strip_comments(protected, comments)
+    portable, portable_blocks = wrap_portable_conditionals(uncommented)
+    wrapped, includes = wrap_include_directives(portable)
+    valid, output, stderr = compiler.preprocess_directives(wrapped, keep_comments=bool(comments))
     if not valid:
         raise ToolError(f"preprocessor failed: {first_error(stderr)}")
     filtered = filter_preprocessor_output(
         output,
         source_path=compiler.source,
         includes=includes,
+        portable_blocks=portable_blocks,
     )
-    return collapse_blank_lines(filtered)
+    filtered = restore_source_links(filtered, links)
+    cleaned = restore_cleanup_comments(filtered, comments)
+    return collapse_blank_lines(retain_important_comments(cleaned, important_comments(text)))
 
 
 def insert_anonymous_namespace(text: str) -> str:
@@ -1247,6 +1701,7 @@ def insert_anonymous_namespace(text: str) -> str:
     tokens = structural_tokens(lines)
     brace_depth = 0
     main_line: int | None = None
+    standard_namespaces: list[tuple[int, int]] = []
     main_pattern = re.compile(r"^\s*(?:[_A-Za-z]\w*(?:::\w+)*[\s*&]+)*main\s*\(")
     for line_index, line in enumerate(lines):
         if brace_depth == 0 and main_pattern.match(line):
@@ -1254,6 +1709,11 @@ def insert_anonymous_namespace(text: str) -> str:
             break
         if line.lstrip().startswith("#"):
             continue
+        if brace_depth == 0 and re.match(r"^\s*namespace\s+std\b", line):
+            end = find_braced_entity_end(tokens, line_index)
+            if end is None:
+                return text
+            standard_namespaces.append((line_index, end))
         for token in tokens[line_index]:
             if token == "{":
                 brace_depth += 1
@@ -1274,15 +1734,17 @@ def insert_anonymous_namespace(text: str) -> str:
     ):
         return text
 
-    return "".join(
-        [
-            *lines[:include_end],
-            "namespace {\n",
-            *lines[include_end:main_line],
-            "}\n",
-            *lines[main_line:],
-        ]
-    )
+    # Standard-library specializations must stay in the global std namespace.
+    # Separate anonymous-namespace blocks still refer to the same namespace.
+    wrapped = [*lines[:include_end], "namespace {\n"]
+    cursor = include_end
+    for start, end in standard_namespaces:
+        if not include_end <= start < main_line:
+            continue
+        wrapped.extend([*lines[cursor:start], "}\n", *lines[start : end + 1], "namespace {\n"])
+        cursor = end + 1
+    wrapped.extend([*lines[cursor:main_line], "}\n", *lines[main_line:]])
+    return "".join(wrapped)
 
 
 def structural_tokens(lines: Sequence[str]) -> list[list[str]]:
@@ -1330,6 +1792,11 @@ def structural_tokens(lines: Sequence[str]) -> list[list[str]]:
                 in_block_comment = True
                 index += 2
                 continue
+            if ch.isdigit() or ch == ".":
+                number = CPP_NUMBER.match(line, index)
+                if number:
+                    index = number.end()
+                    continue
             if ch in {'"', "'"}:
                 quote = ch
                 index += 1
@@ -1396,6 +1863,11 @@ def code_identifiers(text: str) -> Iterable[str]:
             in_block_comment = True
             index += 2
             continue
+        if ch.isdigit() or ch == ".":
+            number = CPP_NUMBER.match(text, index)
+            if number:
+                index = number.end()
+                continue
         if ch == "R" and next_ch == '"':
             open_paren = text.find("(", index + 2, index + 19)
             if open_paren >= 0:
@@ -1470,15 +1942,70 @@ def find_statement_end(tokens: Sequence[Sequence[str]], start: int) -> int | Non
     return None
 
 
-def template_prefix_start(lines: Sequence[str], start: int) -> int:
-    if start <= 0 or not lines[start - 1].strip().endswith(">"):
-        return start
-    for line_index in range(start - 1, max(-1, start - 65), -1):
+def template_prefix_start(
+    lines: Sequence[str], start: int, tokens: Sequence[Sequence[str]]
+) -> int:
+    limit = max(0, start - 64)
+    line_index = start - 1
+    while line_index >= limit:
         stripped = lines[line_index].strip()
-        if stripped.startswith("template"):
-            return line_index
-        if stripped.endswith(";") or stripped in {"{", "}"}:
+        if re.match(r"requires\b", stripped):
+            stack: list[str] = []
+            for token in tokens[line_index]:
+                if token in "([{":
+                    stack.append(token)
+                elif token in ")]}":
+                    if not stack or stack.pop() != {")": "(", "]": "[", "}": "{"}[token]:
+                        stack = ["unbalanced"]
+                        break
+            if not stack:
+                # Includes parenthesized constraints such as
+                # requires(!requires { expression; }).
+                line_index -= 1
+                continue
+        # A requires-expression has its own braces and semicolons. Keep that
+        # whole constraint attached to the template instead of leaving it
+        # behind when the following definition is deleted.
+        if tokens[line_index] and tokens[line_index][-1] == "}":
+            depth = 0
+            opening_line: int | None = None
+            for previous in range(line_index, limit - 1, -1):
+                for token in reversed(tokens[previous]):
+                    if token == "}":
+                        depth += 1
+                    elif token == "{":
+                        depth -= 1
+                        if depth == 0:
+                            opening_line = previous
+                            break
+                if opening_line is not None:
+                    break
+            if opening_line is not None:
+                prefix = "".join(lines[limit:opening_line])
+                prefix += lines[opening_line].split("{", 1)[0] + "{"
+                constraint = re.search(
+                    r"\brequires\s+requires\s*(?:\([^{};]*\))?\s*\{$",
+                    strip_comments(prefix),
+                )
+                if constraint is not None:
+                    # strip_comments preserves newlines, including multi-line comments.
+                    requires_line = limit + strip_comments(prefix)[:constraint.start()].count("\n")
+                    if re.match(r"\s*template\b", lines[requires_line]):
+                        return requires_line
+                    line_index = requires_line - 1
+                    continue
+        # A requires-clause or a split return type can lie between the
+        # template-head and the function name. Do not leave it behind when
+        # deleting the declaration, or repeatedly retry an invalid fragment.
+        if (
+            any(token in ";{}" for token in tokens[line_index])
+            or stripped.startswith("#")
+            or re.match(r"(?:public|private|protected)\s*:", stripped)
+        ):
             break
+        if stripped == "template" or re.match(r"template\s*<", stripped):
+            return line_index
+        line_index -= 1
     return start
 
 
@@ -1551,6 +2078,7 @@ class Removal:
     start: int
     end: int
     label: str
+    name: str | None = field(default=None, compare=False)
 
     @property
     def size(self) -> int:
@@ -1562,10 +2090,12 @@ def removal_from_function_line(
 ) -> Removal | None:
     if not 0 <= line_index < len(lines):
         return None
-    end = find_braced_entity_end(tokens, line_index)
-    if end is None:
+    source = "".join(lines[line_index:])
+    body = function_body_span(source)
+    if body is None:
         return None
-    start = template_prefix_start(lines, line_index)
+    end = line_index + source.count("\n", 0, body[1])
+    start = template_prefix_start(lines, line_index, tokens)
     return Removal(start, end, label)
 
 
@@ -1691,6 +2221,593 @@ def ipa_unused_candidates(
     return deduplicated
 
 
+def uninstantiated_template_candidates(
+    text: str,
+    *,
+    compiler: CompilerWorkspace,
+    keep_functions: set[str],
+) -> list[Removal]:
+    lines = text.splitlines(keepends=True)
+    tokens = structural_tokens(lines)
+    candidates: list[Removal] = []
+    for line_number, name in compiler.uninstantiated_template_functions(text):
+        line_index = line_number - 1
+        if not 0 <= line_index < len(lines) or "(" not in lines[line_index]:
+            continue
+        if name in {"__ct", "__dt"}:
+            # GCC's internal constructor/destructor names do not appear in
+            # linker diagnostics. Use the source name to retain required
+            # definitions without bisecting every otherwise valid candidate.
+            special_member = re.match(
+                r"^\s*(?:(?:explicit|constexpr|consteval|inline)\s+)*"
+                r"(~?[_A-Za-z]\w*)\s*\(", lines[line_index]
+            )
+            if special_member is None or special_member.group(1) in {"explicit", "requires"}:
+                continue
+            name = special_member.group(1)
+        if not name:
+            source = "".join(lines[line_index : min(len(lines), line_index + 3)])
+            operator = re.search(
+                r"\boperator\s*(\[\]|\(\)|<=>|<<=?|>>=?|->\*?|"
+                r"[+\-*/%&|^~!=<>]=?|[_A-Za-z]\w*)",
+                source,
+            )
+            if operator is None:
+                continue
+            name = "operator" + operator.group(1)
+        if name.startswith("operator") and "operator" not in set(code_identifiers(lines[line_index])):
+            # GCC also reports the generated call operators of generic lambdas.
+            # Their source is a lambda expression, which cannot be stubbed as a
+            # function declaration ("auto f = [](auto x);").
+            continue
+        if name in keep_functions:
+            continue
+        removal = removal_from_function_line(
+            lines,
+            tokens,
+            line_index,
+            "uninstantiated template function",
+        )
+        if removal is not None:
+            candidates.append(
+                Removal(removal.start, removal.end, removal.label, name)
+            )
+
+    deduplicated: list[Removal] = []
+    for candidate in sorted(set(candidates), key=lambda value: (value.start, -value.end)):
+        if any(
+            existing.start <= candidate.start and candidate.end <= existing.end
+            for existing in deduplicated
+        ):
+            continue
+        deduplicated.append(candidate)
+    return deduplicated
+
+
+def function_body_span(source: str) -> tuple[int, int] | None:
+    """Locate a function body, passing over braced constructor initializers."""
+    paren_depth = bracket_depth = brace_depth = 0
+    opening: int | None = None
+    constraint_body = False
+    index = 0
+
+    def skip_trivia(position: int) -> int:
+        while position < len(source):
+            if source[position].isspace():
+                position += 1
+            elif source.startswith("//", position):
+                end = source.find("\n", position + 2)
+                position = len(source) if end < 0 else end + 1
+            elif source.startswith("/*", position):
+                end = source.find("*/", position + 2)
+                position = len(source) if end < 0 else end + 2
+            else:
+                break
+        return position
+
+    while index < len(source):
+        index = skip_trivia(index)
+        if index >= len(source):
+            break
+        raw = RAW_STRING_OPEN.match(source, index)
+        if raw:
+            closer = ')' + raw.group(1) + '"'
+            end = source.find(closer, raw.end())
+            if end < 0:
+                return None
+            index = end + len(closer)
+            continue
+        ch = source[index]
+        if ch.isdigit() or ch == ".":
+            number = CPP_NUMBER.match(source, index)
+            if number:
+                index = number.end()
+                continue
+        if ch in {'"', "'"}:
+            quote = ch
+            index += 1
+            while index < len(source):
+                if source[index] == "\\":
+                    index += 2
+                elif source[index] == quote:
+                    index += 1
+                    break
+                else:
+                    index += 1
+            continue
+        if opening is not None:
+            if ch == "{":
+                brace_depth += 1
+            elif ch == "}":
+                brace_depth -= 1
+                if brace_depth == 0:
+                    after = skip_trivia(index + 1)
+                    if source.startswith("...", after):
+                        after = skip_trivia(after + 3)
+                    if constraint_body or (after < len(source) and source[after] in ",{"):
+                        # C() : member{...}, other(...) { actual body }
+                        opening = None
+                    else:
+                        return opening, index
+        elif ch == "(":
+            paren_depth += 1
+        elif ch == ")":
+            paren_depth = max(0, paren_depth - 1)
+        elif ch == "[":
+            bracket_depth += 1
+        elif ch == "]":
+            bracket_depth = max(0, bracket_depth - 1)
+        elif ch == "{" and paren_depth == bracket_depth == 0:
+            opening = index
+            brace_depth = 1
+            constraint_body = re.search(
+                r"\brequires\s+requires\s*(?:\([^{};]*\))?\s*$",
+                strip_comments(source[:index]),
+            ) is not None
+        elif ch == ";" and paren_depth == bracket_depth == 0:
+            return None
+        index += 1
+    return None
+
+
+def stub_uninstantiated_template_functions(
+    text: str,
+    candidates: Sequence[Removal],
+    *,
+    deleted: set[Removal] | None = None,
+) -> str:
+    notices = important_comments(text)
+    lines = text.splitlines(keepends=True)
+    deleted = deleted or set()
+    for candidate in sorted(candidates, reverse=True):
+        if candidate in deleted:
+            lines[candidate.start : candidate.end + 1] = []
+            continue
+        source = "".join(lines[candidate.start : candidate.end + 1])
+        if re.search(r"\bfriend\b", source):
+            continue
+        body = function_body_span(source)
+        if body is None:
+            continue
+        opening, closing = body
+        declaration = source[:opening].rstrip()
+        initializer = re.search(r"\)\s*:(?!:)\s*", declaration)
+        if initializer is not None:
+            declaration = declaration[: initializer.start() + 1].rstrip()
+        declaration += ";\n"
+        lines[candidate.start : candidate.end + 1] = [declaration]
+    return collapse_blank_lines(retain_important_comments("".join(lines), notices))
+
+
+def removable_template_body_candidates(
+    text: str, candidates: Sequence[Removal]
+) -> list[Removal]:
+    lines = text.splitlines(keepends=True)
+    eligible: list[Removal] = []
+    for candidate in candidates:
+        source = "".join(lines[candidate.start : candidate.end + 1])
+        if re.search(r"\bfriend\b", source):
+            continue
+        eligible.append(candidate)
+    return eligible
+
+
+def reduce_template_body_candidates(
+    text: str,
+    candidates: Sequence[Removal],
+    *,
+    compiler: CompilerWorkspace,
+    writer: CheckpointWriter,
+    reporter: Reporter,
+    target_bytes: int | None = None,
+) -> tuple[str, int]:
+    started = time.monotonic()
+    original_text = text
+    accepted: set[Removal] = set()
+    validations = 0
+    target_checkpointed = writer.below_limit(text, target_bytes) or (
+        writer.current is not None
+        and writer.below_limit(writer.current, target_bytes)
+    )
+
+    # Stubbing leaves signatures behind. Before the first size checkpoint, also
+    # try deleting definitions whose names occur only at their declaration.
+    # Use the same compiler candidates and link validation as the normal pass.
+    quick_deleted: set[Removal] = set()
+    if target_bytes is not None and not target_checkpointed:
+        counts = Counter(code_identifiers(text))
+        quick_deleted = {
+            candidate for candidate in candidates
+            if candidate.name and counts[candidate.name] == 1
+        }
+
+    original_lines = original_text.splitlines(keepends=True)
+    dependencies: dict[Removal, set[Removal]] | None = None
+
+    def keep_dependencies(required: set[Removal]) -> set[Removal]:
+        nonlocal dependencies
+        if dependencies is None:
+            by_name: dict[str, set[Removal]] = {}
+            for candidate in candidates:
+                if candidate.name:
+                    by_name.setdefault(candidate.name, set()).add(candidate)
+            dependencies = {}
+            for candidate in candidates:
+                source = "".join(original_lines[candidate.start : candidate.end + 1])
+                calls = re.findall(
+                    r"\b([_A-Za-z]\w*)\s*(?=\(|<[^;{}()]*>\s*\()",
+                    strip_comments(source),
+                )
+                dependencies[candidate] = {
+                    dependency
+                    for name in calls
+                    for dependency in by_name.get(name, ())
+                }
+        # Retaining a required definition also requires its template callees.
+        # Keep same-named overloads conservatively, but do not interpret every
+        # variable named "n" or "size" as a reference to a member function.
+        # Indirect calls not recognized here are still checked by the linker.
+        required = set(required)
+        pending = list(required)
+        while pending:
+            for dependency in dependencies[pending.pop()] - required:
+                required.add(dependency)
+                pending.append(dependency)
+        return required
+
+    byte_sizes = {
+        candidate: len(
+            "".join(
+                original_lines[candidate.start : candidate.end + 1]
+            ).encode()
+        )
+        for candidate in candidates
+    }
+
+    def split(items: Sequence[Removal]) -> tuple[list[Removal], list[Removal]]:
+        weights = {str(index): byte_sizes[item] for index, item in enumerate(items)}
+        left_keys, _ = split_weighted(list(weights), weights)
+        count = len(left_keys)
+        return list(items[:count]), list(items[count:])
+
+    def mentioned_in(candidate: Removal, diagnostics: str) -> bool:
+        if not candidate.name:
+            return False
+        if candidate.name.startswith("operator"):
+            return candidate.name in diagnostics
+        return re.search(
+            rf"(?<![_A-Za-z0-9]){re.escape(candidate.name)}(?![_A-Za-z0-9])",
+            diagnostics,
+        ) is not None
+
+    active = list(candidates)
+    required_definitions: set[Removal] = set()
+    for _ in range(min(32, len(candidates))):
+        validations += 1
+        reporter.phase(
+            "templates",
+            f"validation {validations}: testing {len(active)} template body(s)",
+        )
+        candidate_text = stub_uninstantiated_template_functions(
+            original_text, active, deleted=quick_deleted.intersection(active)
+        )
+        valid, stderr = compiler.validate(candidate_text)
+        if valid:
+            accepted.update(active)
+            text = candidate_text
+            writer.save(
+                f"removed {len(active)} uninstantiated template body(s)", text
+            )
+            if not target_checkpointed and writer.below_limit(text, target_bytes):
+                target_checkpointed = True
+                reporter.checkpoint(
+                    f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
+                    f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
+                )
+            break
+
+        blocked = {
+            candidate
+            for candidate in active
+            if mentioned_in(candidate, stderr)
+        }
+        if not blocked:
+            reporter.detail(first_error(stderr))
+            if quick_deleted:
+                # A declaration can carry a multi-line constraint or be named
+                # through a macro. Fall back to retaining all signatures.
+                quick_deleted.clear()
+                continue
+            break
+        reporter.detail(
+            "keeping required template definition(s): "
+            + ", ".join(sorted({candidate.name or "" for candidate in blocked}))
+        )
+        required_definitions.update(blocked)
+        blocked = keep_dependencies(required_definitions)
+        if target_bytes is not None and not target_checkpointed:
+            smallest = collapse_blank_lines(apply_removals(
+                original_text, [candidate for candidate in candidates if candidate not in blocked]
+            ))
+            if not writer.below_limit(smallest, target_bytes):
+                # Broad overload dependencies can keep too much code alive.
+                # Prefer the compiler's precise checks when even deleting every
+                # remaining candidate cannot meet the submission limit.
+                blocked = required_definitions
+        # Rebuild from the original set so a later size check can also release
+        # dependencies that were kept speculatively on an earlier attempt.
+        active = [candidate for candidate in candidates if candidate not in blocked]
+
+    if accepted:
+        deleted = set(accepted)
+        declaration_fallback: list[Removal] | None = None
+        for _ in range(min(32, len(deleted))):
+            validations += 1
+            reporter.phase(
+                "templates",
+                f"validation {validations}: removing {len(deleted)} declarations",
+            )
+            candidate_text = stub_uninstantiated_template_functions(
+                original_text, list(accepted), deleted=deleted
+            )
+            valid, stderr = compiler.validate(candidate_text)
+            if valid:
+                text = candidate_text
+                writer.save(
+                    f"removed {len(deleted)} uninstantiated template declaration(s)",
+                    text,
+                )
+                if not target_checkpointed and writer.below_limit(text, target_bytes):
+                    target_checkpointed = True
+                    reporter.checkpoint(
+                        f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
+                        f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
+                    )
+                break
+
+            blocked = {
+                candidate
+                for candidate in deleted
+                if mentioned_in(candidate, stderr)
+            }
+            if not blocked:
+                reporter.detail(
+                    "template declaration cleanup was rejected: "
+                    + first_error(stderr)
+                )
+                declaration_fallback = sorted(deleted)
+                break
+            reporter.detail(
+                "keeping required template declaration(s): "
+                + ", ".join(sorted({candidate.name or "" for candidate in blocked}))
+            )
+            deleted.difference_update(blocked)
+
+        if declaration_fallback:
+            deleted = quick_deleted.intersection(accepted)
+
+            def try_delete(batch: Sequence[Removal]) -> bool:
+                nonlocal text, validations, target_checkpointed
+                proposal = deleted.union(batch)
+                candidate_text = stub_uninstantiated_template_functions(
+                    original_text, list(accepted), deleted=proposal
+                )
+                validations += 1
+                reporter.phase(
+                    "templates",
+                    f"validation {validations}: testing {len(batch)} declaration(s)",
+                )
+                valid, stderr = compiler.validate(candidate_text)
+                if not valid:
+                    reporter.detail(first_error(stderr))
+                    return False
+                deleted.update(batch)
+                text = candidate_text
+                writer.save(
+                    f"removed {len(batch)} uninstantiated template declaration(s)",
+                    text,
+                )
+                if not target_checkpointed and writer.below_limit(text, target_bytes):
+                    target_checkpointed = True
+                    reporter.checkpoint(
+                        f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
+                        f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
+                    )
+                return True
+
+            def reduce_declarations(items: Sequence[Removal]) -> None:
+                active_items = [item for item in items if item not in deleted]
+                if not active_items or try_delete(active_items) or len(active_items) == 1:
+                    return
+                left, right = split(active_items)
+                reduce_declarations(left)
+                reduce_declarations(right)
+
+            reduce_declarations(declaration_fallback)
+
+        reporter.done(
+            "templates",
+            f"accepted {len(accepted)}/{len(candidates)} template body(s)",
+            started,
+        )
+        return text, len(accepted)
+
+    def try_accept(batch: Sequence[Removal]) -> bool:
+        nonlocal text, validations, target_checkpointed
+        proposal = accepted.union(batch)
+        candidate_text = stub_uninstantiated_template_functions(
+            original_text, proposal
+        )
+        validations += 1
+        reporter.phase(
+            "templates",
+            f"validation {validations}: testing {len(batch)} template body(s)",
+        )
+        valid, stderr = compiler.validate(candidate_text)
+        if not valid:
+            reporter.detail(first_error(stderr))
+            return False
+        accepted.update(batch)
+        text = candidate_text
+        writer.save(f"removed {len(batch)} uninstantiated template body(s)", text)
+        if not target_checkpointed and writer.below_limit(text, target_bytes):
+            target_checkpointed = True
+            reporter.checkpoint(
+                f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
+                f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
+            )
+        return True
+
+    def reduce_batch(items: Sequence[Removal]) -> None:
+        active = [item for item in items if item not in accepted]
+        if not active or try_accept(active) or len(active) == 1:
+            return
+        left, right = split(active)
+        reduce_batch(left)
+        reduce_batch(right)
+
+    reduce_batch(candidates)
+    if accepted:
+        validations += 1
+        reporter.phase(
+            "templates",
+            f"validation {validations}: removing {len(accepted)} declarations",
+        )
+        candidate_text = collapse_blank_lines(
+            apply_removals(original_text, accepted)
+        )
+        valid, stderr = compiler.validate(candidate_text)
+        if valid:
+            text = candidate_text
+            writer.save(
+                f"removed {len(accepted)} uninstantiated template declaration(s)",
+                text,
+            )
+            if not target_checkpointed and writer.below_limit(text, target_bytes):
+                target_checkpointed = True
+                reporter.checkpoint(
+                    f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
+                    f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
+                )
+        else:
+            reporter.detail(
+                "template declaration cleanup was rejected: " + first_error(stderr)
+            )
+    reporter.done(
+        "templates",
+        f"accepted {len(accepted)}/{len(candidates)} template body(s)",
+        started,
+    )
+    return text, len(accepted)
+
+
+def unreferenced_declaration_candidates(text: str) -> list[Removal]:
+    """Find unreachable groups of types, aliases, and plain lambda constants.
+
+    Names are deliberately unqualified: a same-named declaration in another
+    scope keeps both alive. Initializers and declarations that can introduce
+    runtime effects are not considered removable here.
+    """
+    uncommented = strip_comments(text)
+    if "##" in uncommented:
+        # Token pasting can reference a name that never appears as an identifier.
+        return []
+    lines = uncommented.splitlines(keepends=True)
+    visible_lines = preprocessor_lines(uncommented)
+    if len(visible_lines) != len(lines):
+        return []
+    tokens = structural_tokens(lines)
+    type_pattern = re.compile(r"^\s*(?:struct|class)\s+([_A-Za-z]\w*)\b")
+    alias_pattern = re.compile(r"^\s*using\s+([_A-Za-z]\w*)\s*=")
+    lambda_pattern = re.compile(
+        r"^\s*(?:inline\s+)?constexpr\s+auto\s+([_A-Za-z]\w*)\s*=\s*\[\s*\]"
+    )
+    candidates: list[Removal] = []
+    references: dict[str, set[str]] = {}
+    skip_until = -1
+    continued = False
+    for index, line in enumerate(lines):
+        directive = continued or line.lstrip().startswith("#")
+        continued = directive and line.rstrip("\r\n").endswith("\\")
+        if directive or index <= skip_until:
+            continue
+        type_match = type_pattern.match(visible_lines[index])
+        alias_match = alias_pattern.match(visible_lines[index])
+        lambda_match = lambda_pattern.match(visible_lines[index])
+        match = type_match or alias_match or lambda_match
+        if match is None:
+            continue
+        start = template_prefix_start(lines, index, tokens)
+        if alias_match:
+            end = find_statement_end(tokens, index)
+        else:
+            end = find_braced_entity_end(tokens, index)
+        if end is None:
+            continue
+        skip_until = end
+        # Removals cover complete lines. Do not accidentally remove another
+        # declaration or an expression sharing the final line.
+        statement_tokens = [token for row in tokens[index : end + 1] for token in row]
+        depth = 0
+        terminators: list[int] = []
+        for position, token in enumerate(statement_tokens):
+            if token in "([{":
+                depth += 1
+            elif token in ")]}":
+                depth -= 1
+            elif token == ";" and depth == 0:
+                terminators.append(position)
+        if terminators != [len(statement_tokens) - 1] or re.search(r";\s*$", lines[end]) is None:
+            continue
+        if not alias_match and re.search(r"}\s*;\s*$", lines[end]) is None:
+            # In particular, retain "struct X { ... } object;" and invoked
+            # lambdas: neither may be discarded just because X is unreferenced.
+            continue
+        source = "".join(lines[start : end + 1])
+        identifiers = set(code_identifiers(source))
+        if type_match:
+            header = "".join(lines[start:index])
+            is_template = "template" in header and re.search(r"template\s*<\s*>", header) is None
+            if "friend" in identifiers:
+                continue
+            if not is_template and identifiers.intersection({"static", "inline"}):
+                continue
+            if {"static", "inline"}.issubset(identifiers):
+                continue
+        name = match.group(1)
+        candidates.append(Removal(start, end, f"unreferenced declaration {name}", name))
+        references.setdefault(name, set()).update(identifiers)
+
+    names = set(references)
+    live = set(code_identifiers(apply_removals(uncommented, candidates))) & names
+    pending = list(live)
+    while pending:
+        for dependency in (references[pending.pop()] & names) - live:
+            live.add(dependency)
+            pending.append(dependency)
+    return [candidate for candidate in candidates if candidate.name not in live]
+
+
 def unused_candidates(
     text: str,
     *,
@@ -1775,8 +2892,6 @@ def unused_candidates(
 
     counts = Counter(code_identifiers(text))
     macro_pattern = re.compile(r"^\s*#\s*define\s+([_A-Za-z]\w*)\b")
-    struct_pattern = re.compile(r"^\s*struct\s+([_A-Za-z]\w*)\b")
-    using_pattern = re.compile(r"^\s*using\s+([_A-Za-z]\w*)\s*=")
     for line_index, line in enumerate(lines):
         macro_match = macro_pattern.match(line)
         if macro_match and counts[macro_match.group(1)] == 1:
@@ -1784,28 +2899,8 @@ def unused_candidates(
             while end + 1 < len(lines) and lines[end].rstrip().endswith("\\"):
                 end += 1
             removals.add(Removal(line_index, end, "unused macro (text scan)"))
-        struct_match = struct_pattern.match(line)
-        if struct_match and counts[struct_match.group(1)] == 1:
-            end = find_braced_entity_end(tokens, line_index)
-            if end is not None:
-                removals.add(
-                    Removal(
-                        template_prefix_start(lines, line_index),
-                        end,
-                        f"unused struct {struct_match.group(1)}",
-                    )
-                )
-        using_match = using_pattern.match(line)
-        if using_match and counts[using_match.group(1)] == 1:
-            end = find_statement_end(tokens, line_index)
-            if end is not None:
-                removals.add(
-                    Removal(
-                        template_prefix_start(lines, line_index),
-                        end,
-                        f"unused using {using_match.group(1)}",
-                    )
-                )
+
+    removals.update(unreferenced_declaration_candidates(text))
 
     ordered = sorted(removals)
     deduplicated: list[Removal] = []
@@ -1820,12 +2915,12 @@ def unused_candidates(
 
 
 def apply_removals(text: str, removals: Iterable[Removal]) -> str:
-    lines = text.splitlines(keepends=True)
-    use = [True] * len(lines)
+    line_count = len(text.splitlines(keepends=True))
+    replacements: dict[int, str] = {}
     for removal in removals:
-        for line_index in range(max(0, removal.start), min(len(lines), removal.end + 1)):
-            use[line_index] = False
-    return "".join(line for line_index, line in enumerate(lines) if use[line_index])
+        for line_index in range(max(0, removal.start), min(line_count, removal.end + 1)):
+            replacements[line_index] = ""
+    return replace_lines_preserving_comments(text, replacements)
 
 
 def reduce_unused_candidates(
@@ -1842,14 +2937,15 @@ def reduce_unused_candidates(
     accepted: set[Removal] = set()
     cache: dict[frozenset[Removal], tuple[bool, str]] = {}
     validations = 0
-    target_checkpointed = below_byte_limit(text, target_bytes) or (
+    target_checkpointed = writer.below_limit(text, target_bytes) or (
         writer.current is not None
-        and below_byte_limit(writer.current, target_bytes)
+        and writer.below_limit(writer.current, target_bytes)
     )
 
+    original_lines = text.splitlines(keepends=True)
     byte_sizes = {
         candidate: len(
-            "".join(text.splitlines(keepends=True)[candidate.start : candidate.end + 1]).encode()
+            "".join(original_lines[candidate.start : candidate.end + 1]).encode()
         )
         for candidate in candidates
     }
@@ -1885,10 +2981,10 @@ def reduce_unused_candidates(
         accepted.update(batch)
         text = candidate_text
         writer.save(f"removed {len(batch)} unused declaration(s)", text)
-        if not target_checkpointed and below_byte_limit(text, target_bytes):
+        if not target_checkpointed and writer.below_limit(text, target_bytes):
             target_checkpointed = True
             reporter.checkpoint(
-                f"submission ready: {reporter.byte_count(encoded_size(text), 'green')} "
+                f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
                 f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
             )
         if reporter.verbose:
@@ -1932,28 +3028,30 @@ def cleanup_text(
     require_validation: bool,
     reporter: Reporter,
     target_bytes: int | None = None,
+    keep_comments: Iterable[str] = (),
 ) -> str:
-    target_checkpointed = below_byte_limit(text, target_bytes) or (
+    keep_comments = set(keep_comments)
+    target_checkpointed = writer.below_limit(text, target_bytes) or (
         writer.current is not None
-        and below_byte_limit(writer.current, target_bytes)
+        and writer.below_limit(writer.current, target_bytes)
     )
 
     def report_target_checkpoint() -> None:
         nonlocal target_checkpointed
-        if target_checkpointed or not below_byte_limit(text, target_bytes):
+        if target_checkpointed or not writer.below_limit(text, target_bytes):
             return
         target_checkpointed = True
         reporter.checkpoint(
-            f"submission ready: {reporter.byte_count(encoded_size(text), 'green')} "
+            f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
             f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
         )
 
     if target_bytes is not None:
-        quick_candidate = collapse_blank_lines(strip_comments(text))
-        if below_byte_limit(quick_candidate, target_bytes):
+        quick_candidate = collapse_blank_lines(strip_cleanup_comments(text, keep_comments))
+        if writer.below_limit(quick_candidate, target_bytes):
             started = time.monotonic()
             reporter.phase("cleanup", "validating a quick comment-only checkpoint")
-            valid, stderr = compiler.syntax(quick_candidate)
+            valid, stderr = compiler.syntax(quick_candidate, build_pch=False)
             if valid:
                 if quick_candidate != text:
                     text = quick_candidate
@@ -1967,10 +3065,10 @@ def cleanup_text(
 
     started = time.monotonic()
     reporter.phase("cleanup", "processing comments and conditional branches")
-    safe_candidate = safe_cleanup_candidate(text, compiler)
-    if below_byte_limit(safe_candidate, target_bytes):
+    safe_candidate = safe_cleanup_candidate(text, compiler, keep_comments)
+    if writer.below_limit(safe_candidate, target_bytes):
         if safe_candidate != text or require_validation:
-            valid, stderr = compiler.syntax(safe_candidate)
+            valid, stderr = compiler.syntax(safe_candidate, build_pch=False)
             if not valid:
                 raise ToolError(
                     f"safe cleanup did not validate: {first_error(stderr)}"
@@ -1982,7 +3080,7 @@ def cleanup_text(
     reporter.done(
         "cleanup",
         f"preprocessing complete: "
-        f"{reporter.byte_count(encoded_size(safe_candidate), 'cyan')}",
+        f"{reporter.byte_count(writer.size(safe_candidate), 'cyan')}",
         started,
     )
 
@@ -2003,20 +3101,29 @@ def cleanup_text(
     text = safe_candidate
     pending_validation = safe_changed or require_validation
 
-    started = time.monotonic()
-    reporter.phase("namespace", "checking anonymous namespace insertion")
-    namespace_candidate = insert_anonymous_namespace(text)
-    if namespace_candidate != text:
-        valid, stderr = compiler.validate(namespace_candidate)
+    def try_declaration_checkpoint() -> None:
+        nonlocal text, pending_validation
+        if target_bytes is None or target_checkpointed:
+            return
+        candidates = unreferenced_declaration_candidates(text)
+        if not candidates:
+            return
+        candidate_text = collapse_blank_lines(apply_removals(text, candidates))
+        if not writer.below_limit(candidate_text, target_bytes):
+            return
+        started = time.monotonic()
+        reporter.phase("declarations", f"checking {len(candidates)} unreferenced declaration(s)")
+        valid, stderr = compiler.validate(candidate_text, build_pch=False)
         if valid:
-            text = namespace_candidate
-            writer.save("anonymous namespace", text)
+            text = candidate_text
             pending_validation = False
+            writer.save("unreferenced types, aliases, and lambdas", text)
+            report_target_checkpoint()
         else:
-            reporter.detail(
-                "anonymous namespace was not inserted: " + first_error(stderr)
-            )
-    reporter.done("namespace", "anonymous namespace check complete", started)
+            reporter.detail("quick declaration cleanup was rejected: " + first_error(stderr))
+        reporter.done("declarations", "quick checkpoint checked", started)
+
+    try_declaration_checkpoint()
 
     def validate_pending() -> None:
         nonlocal pending_validation
@@ -2069,6 +3176,55 @@ def cleanup_text(
             pending_validation = False
         return True, accepted
 
+    started = time.monotonic()
+    reporter.phase("templates", "finding uninstantiated template functions")
+    template_candidates = uninstantiated_template_candidates(
+        text,
+        compiler=compiler,
+        keep_functions=keep_functions,
+    )
+    reporter.done(
+        "templates",
+        f"found {len(template_candidates)} candidate(s)",
+        started,
+    )
+    if template_candidates:
+        template_candidates = removable_template_body_candidates(
+            text, template_candidates
+        )
+        if template_candidates:
+            text, accepted = reduce_template_body_candidates(
+                text,
+                template_candidates,
+                compiler=compiler,
+                writer=writer,
+                reporter=reporter,
+                target_bytes=target_bytes,
+            )
+            if accepted:
+                pending_validation = False
+        else:
+            reporter.detail("no declaration-only template body is safe to try")
+    try_declaration_checkpoint()
+    validate_pending()
+
+    # Template analysis works before namespace insertion. Checking the wrapper
+    # after template reduction avoids compiling and linking the full bundle
+    # before any removable code has been discarded.
+    started = time.monotonic()
+    reporter.phase("namespace", "checking anonymous namespace insertion")
+    namespace_candidate = insert_anonymous_namespace(text)
+    if namespace_candidate != text:
+        valid, stderr = compiler.validate(namespace_candidate)
+        if valid:
+            text = namespace_candidate
+            writer.save("anonymous namespace", text)
+        else:
+            reporter.detail(
+                "anonymous namespace was not inserted: " + first_error(stderr)
+            )
+    reporter.done("namespace", "anonymous namespace check complete", started)
+
     for pass_index in range(1, max_passes + 1):
         stage = f"pass {pass_index}/{max_passes}"
         had_candidates, accepted = run_unused_pass(cppcheck, stage)
@@ -2078,6 +3234,7 @@ def cleanup_text(
         if accepted == 0:
             reporter.detail(f"no unused candidate was accepted in pass {pass_index}")
             break
+        try_declaration_checkpoint()
     validate_pending()
 
     started = time.monotonic()
@@ -2105,6 +3262,7 @@ def cleanup_text(
         reporter.detail(
             f"IPA cleanup accepted {accepted}/{len(ipa_candidates)} candidate(s)"
         )
+    try_declaration_checkpoint()
     return text
 
 
@@ -2143,11 +3301,20 @@ def merge_include_paths(defaults: Sequence[Path], provided: Sequence[str]) -> li
 class FastBundler:
     """Expand ordinary local includes without invoking a compiler for every file."""
 
-    def __init__(self, include_paths: Sequence[Path]) -> None:
+    def __init__(
+        self,
+        include_paths: Sequence[Path],
+        *,
+        library_root: Path | None = None,
+    ) -> None:
         self.include_paths = [path.resolve() for path in include_paths]
+        self.library_root = (
+            library_root.resolve() if library_root is not None else None
+        )
         self.once: set[Path] = set()
         self.system_includes: set[str] = set()
         self.stack: list[Path] = []
+        self.inputs: dict[str, str] = {}
 
     def _resolve(self, name: str, included_from: Path) -> Path:
         for root in [included_from.parent, *self.include_paths]:
@@ -2190,12 +3357,14 @@ class FastBundler:
             return set()
         return {first, define, last}
 
-    def _expand(self, path: Path) -> str:
+    def _expand(self, path: Path, *, add_source_link: bool = True) -> str:
         path = path.resolve()
         try:
-            text = path.read_text(encoding="utf-8")
+            data = path.read_bytes()
+            text = data.decode("utf-8").replace("\r\n", "\n").replace("\r", "\n")
         except (OSError, UnicodeError) as exc:
             raise FastBundleUnsupported(f"could not read {path.name}: {exc}") from exc
+        self.inputs[str(path)] = hashlib.sha256(data).hexdigest()
         if not text.endswith("\n"):
             text += "\n"
 
@@ -2221,18 +3390,22 @@ class FastBundler:
             raise FastBundleUnsupported(f"include cycle without #pragma once: {chain}")
 
         self.stack.append(path)
-        output: list[str] = []
+        prefix = ""
+        if add_source_link:
+            url = library_source_url(path, self.library_root)
+            if url is not None:
+                prefix = source_link_comment(url)
+        replacements: dict[int, str] = {}
         conditional_depth = 0
         try:
-            for line_index, (line, uncommented_line) in enumerate(
-                zip(lines, uncommented_lines)
-            ):
+            for line_index, uncommented_line in enumerate(uncommented_lines):
                 directive = uncommented_line.rstrip("\r\n")
 
                 if (
                     PRAGMA_ONCE_DIRECTIVE.match(directive)
                     or line_index in include_guard_lines
                 ):
+                    replacements[line_index] = ""
                     continue
 
                 local_include = LOCAL_INCLUDE_DIRECTIVE.match(directive)
@@ -2242,7 +3415,7 @@ class FastBundler:
                             f"conditional local include in {path.name}"
                         )
                     included = self._resolve(local_include.group(1), path)
-                    output.append(self._expand(included))
+                    replacements[line_index] = self._expand(included)
                     continue
 
                 if INCLUDE_DIRECTIVE.match(directive) and '"' in directive:
@@ -2254,13 +3427,14 @@ class FastBundler:
                 if system_include and conditional_depth == 0:
                     name = system_include.group(1)
                     if name in self.system_includes:
+                        replacements[line_index] = ""
                         continue
                     self.system_includes.add(name)
 
                 if re.match(r'^\s*#\s*(?:line\s+)?\d+\s+"', directive):
+                    replacements[line_index] = ""
                     continue
 
-                output.append(line)
                 if CONDITIONAL_OPEN_DIRECTIVE.match(directive):
                     conditional_depth += 1
                 elif CONDITIONAL_CLOSE_DIRECTIVE.match(directive):
@@ -2272,20 +3446,14 @@ class FastBundler:
 
             if conditional_depth != 0:
                 raise FastBundleUnsupported(f"unmatched conditional in {path.name}")
-            return "".join(output)
+            return prefix + replace_lines_preserving_comments(
+                text, replacements, source_comments(text) if not add_source_link else (),
+            )
         finally:
             self.stack.pop()
 
     def bundle(self, source: Path) -> str:
-        return self._expand(source)
-
-
-def remove_line_directives(text: str) -> str:
-    return "".join(
-        line
-        for line in text.splitlines(keepends=True)
-        if LINE_DIRECTIVE.match(line.rstrip("\r\n")) is None
-    )
+        return self._expand(source, add_source_link=False)
 
 
 def run_oj_bundle(
@@ -2294,6 +3462,7 @@ def run_oj_bundle(
     source: Path,
     include_paths: Sequence[Path],
     cxx: str,
+    inputs: dict[str, str] | None = None,
 ) -> str:
     command = [executable]
     for include_path in include_paths:
@@ -2304,7 +3473,124 @@ def run_oj_bundle(
     result = run_command(command, cwd=source.parent, env=env)
     if result.returncode != 0:
         raise ToolError(f"oj-bundle failed:\n{redact_home(result.stderr).rstrip()}")
-    return result.stdout
+    return restore_oj_bundle_notices(result.stdout, source, include_paths, inputs=inputs)
+
+
+def restore_oj_bundle_notices(
+    text: str, source: Path, include_paths: Sequence[Path],
+    *, inputs: dict[str, str] | None = None,
+) -> str:
+    # oj-bundle removes include/guard lines together with their comments.
+    # Read local dependencies as well, including headers reduced to no lines.
+    files: dict[Path, str] = {}
+    pending = [source.resolve()]
+    # Line markers also cover local headers included with angle brackets.
+    for line in preprocessor_lines(text):
+        match = LINE_DIRECTIVE.match(line.rstrip("\r\n"))
+        if match is not None:
+            path = Path(json.loads(match.group(2)))
+            if not path.is_absolute():
+                path = source.parent / path
+            if path.is_file():
+                pending.append(path.resolve())
+    resolver = FastBundler(include_paths)
+    while pending:
+        path = pending.pop()
+        if path in files:
+            continue
+        data = path.read_bytes()
+        if inputs is not None:
+            inputs[str(path)] = hashlib.sha256(data).hexdigest()
+        original = data.decode("utf-8").replace("\r\n", "\n").replace("\r", "\n")
+        if not original.endswith("\n"):
+            original += "\n"
+        files[path] = original
+        for line in preprocessor_lines(original):
+            match = LOCAL_INCLUDE_DIRECTIVE.match(line.rstrip("\r\n"))
+            if match is not None:
+                pending.append(resolver._resolve(match.group(1), path))
+    if not any(important_comments(original) for original in files.values()):
+        return text
+
+    # Locate emitted source lines before recovering comments on lost directives.
+    # Complete comments stay in place; partial block comments are restored whole.
+    original_lines = {path: original.splitlines(keepends=True) for path, original in files.items()}
+    located: list[tuple[Path | None, int, str, bool]] = []
+    emitted: dict[Path, set[int]] = {}
+    current: Path | None = None
+    source_line = 0
+    for line in text.splitlines(keepends=True):
+        if original_lines.get(current, [])[source_line : source_line + 1] == [line]:
+            located.append((current, source_line, line, False))
+            assert current is not None
+            emitted.setdefault(current, set()).add(source_line)
+            source_line += 1
+            continue
+        match = LINE_DIRECTIVE.match(line.rstrip("\r\n"))
+        if match is not None:
+            path = Path(json.loads(match.group(2)))
+            if not path.is_absolute():
+                path = source.parent / path
+            current = path.resolve()
+            source_line = int(match.group(1)) - 1
+            located.append((current, source_line, line, True))
+        else:
+            located.append((None, source_line, line, False))
+            source_line += 1
+
+    recovered: dict[Path, list[tuple[int, str]]] = {}
+    stripped: dict[Path, list[str]] = {}
+    for path, original in files.items():
+        recovered[path] = []
+        parts: list[str] = []
+        previous = previous_line = 0
+        for start, end in comment_spans(original):
+            first = previous_line + original.count("\n", previous, start)
+            last = first + original.count("\n", start, end)
+            comment = original[start:end]
+            parts.append(original[previous:start])
+            if all(index in emitted.get(path, set()) for index in range(first, last + 1)):
+                parts.append(comment)
+            else:
+                parts.append((" " if comment.startswith("/*") else "") + "\n" * comment.count("\n"))
+                if comment.startswith(("/*!", "//!")):
+                    recovered[path].append((first, comment))
+            previous, previous_line = end, last
+        parts.append(original[previous:])
+        stripped[path] = "".join(parts).splitlines(keepends=True)
+        stripped[path].extend([""] * (len(original_lines[path]) - len(stripped[path])))
+
+    positions: dict[Path, list[tuple[int, int]]] = {}
+    for position, (path, index, _, marker) in enumerate(located):
+        if path in files and not marker:
+            positions.setdefault(path, []).append((index, position))
+    insertions: dict[int, list[tuple[Path, int, str]]] = {}
+    absent: list[str] = []
+    for path, notices in recovered.items():
+        rows = positions.get(path, [])
+        for first, comment in notices:
+            if not rows:
+                # A header made only of removed directives has no emitted rows.
+                absent.append(comment)
+                continue
+            position = next((position for index, position in rows if index >= first), rows[-1][1] + 1)
+            insertions.setdefault(position, []).append((path, first, comment))
+
+    output: list[str] = []
+    for position in range(len(located) + 1):
+        for path, first, comment in insertions.get(position, ()):
+            # Restore the notice's origin so later rendering keeps its link.
+            output.append(f"#line {first + 1} {json.dumps(str(path))}\n{comment}\n\n")
+        if position == len(located):
+            break
+        path, index, line, marker = located[position]
+        if position in insertions and path in files and not marker:
+            output.append(f"#line {index + 1} {json.dumps(str(path))}\n")
+        if path in files and not marker:
+            output.extend(stripped[path][index : index + 1])
+        else:
+            output.append(line)
+    return retain_important_comments("".join(output), absent)
 
 
 def privacy_check_line_directives(text: str) -> None:
@@ -2335,6 +3621,41 @@ def common_compiler_from_args(
     )
 
 
+def canonical_oj_bundle(
+    text: str, source: Path, include_paths: Sequence[Path], repo_root: Path,
+) -> str:
+    resolver = OriginResolver(
+        base_dir=source.parent, source=source, include_paths=include_paths,
+    )
+    return BundleDocument.parse(
+        text, resolver=resolver, library_root=repo_root,
+    ).render(set(), keep_line=False)
+
+
+def expand_source(
+    source: Path, include_paths: Sequence[Path], repo_root: Path,
+    *, cxx: str | None, oj_bundle: str | None,
+    no_fallback: bool = False, reporter: Reporter,
+) -> tuple[str, str, dict[str, str]]:
+    try:
+        bundler = FastBundler(include_paths, library_root=repo_root)
+        bundled = bundler.bundle(source)
+        return bundled, "fast", bundler.inputs
+    except FastBundleUnsupported as exc:
+        if no_fallback:
+            raise
+        reporter.warning(f"fast expansion unsupported: {exc}")
+    reporter.phase("bundle", "running oj-bundle compatibility fallback")
+    inputs: dict[str, str] = {}
+    raw_bundle = run_oj_bundle(
+        executable=discover_oj_bundle(repo_root, oj_bundle), source=source,
+        include_paths=include_paths,
+        cxx=resolve_executable(cxx, ("g++-15", "g++-14", "g++")),
+        inputs=inputs,
+    )
+    return canonical_oj_bundle(raw_bundle, source, include_paths, repo_root), "oj-bundle", inputs
+
+
 def expand_command(args: argparse.Namespace, repo_root: Path) -> None:
     reporter = Reporter(args.verbose, args.color)
     source = Path(args.source).expanduser().resolve()
@@ -2348,32 +3669,21 @@ def expand_command(args: argparse.Namespace, repo_root: Path) -> None:
         default_include_paths(repo_root, source), args.include
     )
     started = time.monotonic()
-    method = "fast"
     reporter.phase("bundle", "expanding local includes")
-    try:
-        bundled = FastBundler(include_paths).bundle(source)
-    except FastBundleUnsupported as exc:
-        if args.no_fallback:
-            raise
-        method = "oj-bundle fallback"
-        reporter.warning(f"fast expansion unsupported: {exc}")
-        reporter.phase("bundle", "running oj-bundle compatibility fallback")
-        cxx = resolve_executable(args.cxx, ("g++-15", "g++-14", "g++"))
-        oj_bundle = discover_oj_bundle(repo_root, args.oj_bundle)
-        bundled = remove_line_directives(
-            run_oj_bundle(
-                executable=oj_bundle,
-                source=source,
-                include_paths=include_paths,
-                cxx=cxx,
-            )
-        )
-
+    bundled, method, inputs = expand_source(
+        source, include_paths, repo_root, cxx=args.cxx, oj_bundle=args.oj_bundle,
+        no_fallback=args.no_fallback, reporter=reporter,
+    )
     privacy_check_line_directives(bundled)
-    atomic_write(output, bundled)
+    stamp = SubmissionStamp(inputs[str(source)], hashlib.sha256(bundled.encode()).hexdigest())
+    rendered = stamp.render(bundled)
+    save_source_comments(output, source_comments(source.read_text(encoding="utf-8")), provenance={
+        "source": str(source), "inputs": inputs, "input_digest": stamp.input_digest,
+    })
+    atomic_write(output, rendered)
     reporter.done(
         "bundle",
-        f"{method}: {reporter.byte_count(len(bundled.encode()), 'green')}",
+        f"{method}: {reporter.byte_count(encoded_size(rendered), 'green')}",
         started,
     )
 
@@ -2386,11 +3696,11 @@ def bundle_command(args: argparse.Namespace, repo_root: Path) -> None:
         raise ToolError(f"source file does not exist: {source}")
     if source == output:
         raise ToolError("bundle output must differ from the source file")
+    comments = source_comments(source.read_text(encoding="utf-8"))
 
     include_paths = merge_include_paths(
         default_include_paths(repo_root, source), args.include
     )
-    writer = CheckpointWriter(output, reporter)
     command_started = time.monotonic()
 
     with common_compiler_from_args(
@@ -2399,13 +3709,21 @@ def bundle_command(args: argparse.Namespace, repo_root: Path) -> None:
         started = time.monotonic()
         reporter.phase("bundle", "running oj-bundle")
         oj_bundle = discover_oj_bundle(repo_root, args.oj_bundle)
+        inputs: dict[str, str] = {}
         raw_bundle = run_oj_bundle(
             executable=oj_bundle,
             source=source,
             include_paths=include_paths,
             cxx=compiler.cxx,
+            inputs=inputs,
         )
         reporter.done("bundle", "oj-bundle completed", started)
+        canonical = canonical_oj_bundle(raw_bundle, source, include_paths, repo_root)
+        stamp = SubmissionStamp(inputs[str(source)], hashlib.sha256(canonical.encode()).hexdigest())
+        save_source_comments(output, comments, provenance={
+            "source": str(source), "inputs": inputs, "input_digest": stamp.input_digest,
+        })
+        writer = CheckpointWriter(output, reporter, stamp=stamp)
         resolver = OriginResolver(
             base_dir=source.parent,
             source=source,
@@ -2420,6 +3738,7 @@ def bundle_command(args: argparse.Namespace, repo_root: Path) -> None:
             raw_bundle,
             resolver=resolver,
             protected=protected,
+            library_root=repo_root,
         )
         for line in document.lines:
             if line.origin_key is None:
@@ -2476,12 +3795,13 @@ def bundle_command(args: argparse.Namespace, repo_root: Path) -> None:
                 safe_only=not args.aggressive,
                 require_validation=False,
                 reporter=reporter,
+                keep_comments=comments,
             )
 
         writer.save("final", bundled, force=True)
     reporter.done(
         "bundle",
-        f"finished at {reporter.byte_count(encoded_size(bundled), 'green')}",
+        f"finished at {reporter.byte_count(writer.size(bundled), 'green')}",
         command_started,
     )
 
@@ -2492,8 +3812,18 @@ def cleanup_command(args: argparse.Namespace, repo_root: Path) -> None:
     path = Path(args.file).expanduser().resolve()
     if not path.is_file():
         raise ToolError(f"file does not exist: {path}")
-    text = path.read_text(encoding="utf-8")
-    writer = CheckpointWriter(path, reporter)
+    text = path.read_bytes().decode("utf-8")
+    stamp = None
+    detached, had_stamp = SubmissionStamp.detach(text)
+    if had_stamp:
+        try:
+            stamp, text = SubmissionStamp.read(text)
+        except ToolError:
+            # A hand-edited bundle can still be cleaned, but its original input
+            # association must be discarded rather than certified again.
+            text = detached
+            reporter.warning("生成後の編集を検出したため照合情報を外します。照合には oj-b で再生成してください。")
+    writer = CheckpointWriter(path, reporter, stamp=stamp)
     writer.current = text
     target_bytes = None if args.target_bytes == 0 else args.target_bytes
     if target_bytes is not None and target_bytes <= 0:
@@ -2506,13 +3836,13 @@ def cleanup_command(args: argparse.Namespace, repo_root: Path) -> None:
     )
     reporter.phase(
         "cleanup",
-        f"starting at {reporter.byte_count(encoded_size(text), 'cyan')}; "
+        f"starting at {reporter.byte_count(writer.size(text), 'cyan')}; "
         f"target {target_description}",
     )
-    if below_byte_limit(text, target_bytes):
+    if writer.below_limit(text, target_bytes):
         reporter.checkpoint(
             f"submission already ready: "
-            f"{reporter.byte_count(encoded_size(text), 'green')} < "
+            f"{reporter.byte_count(writer.size(text), 'green')} < "
             f"{reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
         )
 
@@ -2547,21 +3877,22 @@ def cleanup_command(args: argparse.Namespace, repo_root: Path) -> None:
             require_validation=True,
             reporter=reporter,
             target_bytes=target_bytes,
+            keep_comments=load_source_comments(path),
         )
-        writer.save("final", cleaned)
-        checkpoint_available = below_byte_limit(cleaned, target_bytes) or (
+        writer.save("final", cleaned, force=had_stamp)
+        checkpoint_available = writer.below_limit(cleaned, target_bytes) or (
             writer.current is not None
-            and below_byte_limit(writer.current, target_bytes)
+            and writer.below_limit(writer.current, target_bytes)
         )
         if target_bytes is not None and not checkpoint_available:
             reporter.warning(
                 f"target not reached: "
-                f"{reporter.byte_count(encoded_size(cleaned), 'red')} >= "
+                f"{reporter.byte_count(writer.size(cleaned), 'red')} >= "
                 f"{reporter.byte_count(target_bytes, 'yellow')}"
             )
     reporter.done(
         "cleanup",
-        f"finished at {reporter.byte_count(encoded_size(cleaned), 'green')}",
+        f"finished at {reporter.byte_count(writer.size(cleaned), 'green')}",
         command_started,
     )
 

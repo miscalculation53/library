@@ -23,17 +23,17 @@ void main2()
 {
   LL(N, M);
   VEC(pll, M, UV);
-  GraphUndirected<ll> G(N, UV);
-  auto [ok, cycle] = cycle_detection(G);
-  if (!ok)
+  GraphUndirected<> G(N, UV);
+  const auto cycle = cycle_detection(G);
+  if (!cycle)
     PRINTRETURN(-1);
-  ll L = cycle.size();
+  ll L = cycle->size();
   PRINT(L);
   vl resv(L), rese(L);
   rep(i, L)
   {
-    resv.at(i) = cycle.at(i).from;
-    rese.at(i) = cycle.at(i).index;
+    resv.at(i) = cycle->at(i).from;
+    rese.at(i) = cycle->at(i).index;
   }
   PRINT(resv);
   PRINT(rese);

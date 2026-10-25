@@ -1,10 +1,13 @@
 #pragma once
 
 #include "../../template/template_all_but_modint.hpp"
-#include "../algebra/algebra_basic_ops.hpp"
+#include "../../algebra/algebra_basic_ops.hpp"
 #include "bbla.hpp"
 #include "../../ds/csr.hpp"
 #include "../modint/modint.hpp"
+#include "../dot_product.hpp"
+#include "row_reduction_mod32.hpp"
+#include "internal_matrix_power_mod32.hpp"
 
 /**
  * @brief 行列（array）
@@ -56,12 +59,7 @@ struct MatrixArray : array<array<typename F::S, m>, n>
   {
     Vn res;
     fill(ALL(res), F::e0());
-    repi(i, n)
-    {
-      S sm = F::e0();
-      repi(j, m) sm = F::add(sm, F::mul((*this)[i][j], v[j]));
-      res[i] = sm;
-    }
+    repi(i, n) res[i] = dot_product<F>(m, (*this)[i].begin(), v.begin());
     return res;
   }
   template <int p>
@@ -69,6 +67,20 @@ struct MatrixArray : array<array<typename F::S, m>, n>
   {
     MatrixArray<F, n, p> res;
     repi(i, n) repi(j, p) res[i][j] = F::e0();
+    if constexpr (internal::dot_product_mod32<F>::value && n >= 16 && m >= 16 && p >= 16)
+    {
+      ll nonzero = 0;
+      for (const auto &row : *this) nonzero += m - count(row.begin(), row.end(), F::e0());
+      if (nonzero == 0) return res;
+      if (nonzero * 2 >= ll(n) * m)
+      {
+        // 転置の作業領域はヒープに置き、大きな array でスタックを増やさない。
+        vc<array<S, m>> bt(p);
+        repi(k, m) repi(j, p) bt[j][k] = b[k][j];
+        repi(i, n) repi(j, p) res[i][j] = dot_product<F>(m, (*this)[i].begin(), bt[j].begin());
+        return res;
+      }
+    }
     repi(ii, 0, n, BS) repi(kk, 0, m, BS) repi(jj, 0, p, BS)
     {
       repi(i, ii, min(ii + BS, n)) repi(k, kk, min(kk + BS, m))
@@ -85,6 +97,21 @@ struct MatrixArray : array<array<typename F::S, m>, n>
   M pow(T k) const
   {
     static_assert(n == m);
+    if (n == 0) return M(F::e1());
+    if constexpr (internal::ordinary_mod32_field<F>::value &&
+                  internal::matrix_power_mod32_detail::supported_builtin_exponent_v<T>)
+    {
+      if (n >= 24 && k > 0 && internal::matrix_power_mod32_detail::binary_multiplication_count(k) > 10 &&
+          internal::matrix_power_mod32_detail::is_prime_modulus<S>())
+      {
+        vvc<S> a(n, vc<S>(n));
+        repi(i, n) repi(j, n) a[i][j] = (*this)[i][j];
+        auto value = internal::matrix_power_mod32_detail::power_over_field(a, k);
+        M result;
+        repi(i, n) repi(j, n) result[i][j] = value[i][j];
+        return result;
+      }
+    }
     M res(F::e1()), tmp(*this);
     while (k > 0)
     {
@@ -112,6 +139,14 @@ struct MatrixArray : array<array<typename F::S, m>, n>
   tuple<M, I, S> row_reduction(bool rref = false) const
   {
     M a(*this);
+    if constexpr (internal::ordinary_mod32_field<F>::value)
+    {
+      if (n >= 32 && m >= 32)
+      {
+        auto [rk, de] = internal::row_reduction_mod32<S>(a, n, m, rref);
+        return {std::move(a), I(rk), de};
+      }
+    }
     I rk = 0;
     S de = F::e1();
     for (int i = 0, j = 0; i < n && j < m; j++)
@@ -133,19 +168,25 @@ struct MatrixArray : array<array<typename F::S, m>, n>
       }
       de = F::mul(de, a[i][j]);
       S aij_inv = F::inv(a[i][j]);
-      repi(l, m) a[i][l] = F::mul(a[i][l], aij_inv);
+      // ピボットより左は零。浮動小数点でも消去済みの成分を明示的に保つ。
+      repi(l, j + 1, m) a[i][l] = F::mul(a[i][l], aij_inv);
+      a[i][j] = F::e1();
       if (rref)
       {
         repi(k, i)
         {
           S akj = a[k][j];
-          repi(l, m) a[k][l] = F::add(a[k][l], F::minus(F::mul(a[i][l], akj)));
+          if (akj == F::e0()) continue;
+          a[k][j] = F::e0();
+          repi(l, j + 1, m) a[k][l] = F::add(a[k][l], F::minus(F::mul(a[i][l], akj)));
         }
       }
       repi(k, i + 1, n)
       {
         S akj = a[k][j];
-        repi(l, m) a[k][l] = F::add(a[k][l], F::minus(F::mul(a[i][l], akj)));
+        if (akj == F::e0()) continue;
+        a[k][j] = F::e0();
+        repi(l, j + 1, m) a[k][l] = F::add(a[k][l], F::minus(F::mul(a[i][l], akj)));
       }
       i++;
       rk++;
@@ -165,23 +206,23 @@ struct MatrixArray : array<array<typename F::S, m>, n>
     return get<2>(row_reduction());
   }
   // 正方行列
-  // (存在するか, 存在する場合逆行列)
-  pair<bool, M> inv() const
+  // 逆行列。存在しなければ nullopt。
+  optional<M> inv() const
   {
     static_assert(n == m);
     MatrixArray<F, n, 2 * n> a;
     repi(i, n) repi(j, n) a[i][j] = (*this)[i][j];
     repi(i, n) repi(j, n) a[i][n + j] = i == j ? F::e1() : F::e0();
     auto b = get<0>(a.row_reduction(true));
-    repi(i, n) if (b[i][i] == F::e0()) return {false, {}};
+    repi(i, n) if (b[i][i] == F::e0()) return nullopt;
     M res(n, n);
     repi(i, n) repi(j, n) res[i][j] = b[i][n + j];
-    return {true, res};
+    return res;
   }
 
-  // (解が存在するか, 解のひとつ, 基底)
+  // (解のひとつ, 基底)。解が存在しなければ nullopt。
   // O(nm min(n, m) + m^2)
-  tuple<bool, Vm, vc<Vm>> solve(const Vn &b) const
+  optional<pair<Vm, vc<Vm>>> solve(const Vn &b) const
   {
     MatrixArray<F, n, m + 1> a;
     repi(i, n) repi(j, m) a[i][j] = (*this)[i][j];
@@ -199,7 +240,7 @@ struct MatrixArray : array<array<typename F::S, m>, n>
       while (j < m && a[i][j] == F::e0())
         j++;
       if (j == m)
-        return {false, {}, {}};
+        return nullopt;
       sol[j] = a[i][m], piv[j] = i;
     }
     repi(j, m)
@@ -212,6 +253,6 @@ struct MatrixArray : array<array<typename F::S, m>, n>
       repi(k, j) if (piv[k] != -1) ba[k] = F::minus(a[piv[k]][j]);
       basis.eb(ba);
     }
-    return {true, sol, basis};
+    return pair{move(sol), move(basis)};
   }
 };

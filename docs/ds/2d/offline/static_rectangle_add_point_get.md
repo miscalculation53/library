@@ -1,4 +1,6 @@
-## 矩形加算 → 点取得（オフライン）
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
 
 普通に平面走査をして区間加算・一点更新にしてもよいが、左下に無限に広がる矩形領域の和に帰着することもできる（本ライブラリでは一旦こちらの実装を採用）。時間計算量は $O((N + Q) \log (N + Q))$。
 
@@ -10,15 +12,30 @@ $\begin{aligned}
 
 という感じになっているため。たとえば第 $1$ 項は点と長方形を入れ替えて考えて、点 $(\mathrm{lx}, \mathrm{rx})$ が長方形領域 $(-\infty, x] \times (-\infty, y]$ に含まれるという条件だと思えばよい。
 
-### コンストラクタ
+## 使用例
+
+```cpp
+#include "algebra/algebra_basic_ops.hpp"
+#include "ds/2d/offline/static_rectangle_add_point_get.hpp"
+
+StaticRectangleAddPointGet<GroupAddSub<ll>, int> queries;
+queries.rectangle_add(0, 4, 1, 3, 5);
+queries.point_get(2, 2);
+queries.point_get(4, 2); // 右端は範囲外
+assert(queries.run() == (vc<ll>{5, 0}));
+```
+
+## 詳細なドキュメント
+
+### StaticRectangleAddPointGet
+
+#### コンストラクタ
 
 ```cpp
 StaticRectangleAddPointGet<G, I>
 ```
 
 `G` は可換群、`I` は座標の型
-
-### メンバ関数
 
 #### rectangle_add
 

@@ -1,10 +1,28 @@
-## 一点更新・区間頻度（オフライン）
+このドキュメントには AI による作成・変更が含まれています。
 
-中身：値ごとに添字集合を管理する。先読みした添字で座圧して Fenwick Tree を用いる（この Fenwick Tree は 01 にできる）。
+## 概要
 
-オンラインでの処理が必要な場合は、Fenwick Tree の代わりに平衡二分探索木などを用いる（特に本ライブラリで整備した `pbds_set` を使うと便利で、かなりすぐ実装できる）。いかにも遅そうだが Library Checker に提出してみた感じ意外と速かった（？）
+一点更新と区間内の値の出現回数を、クエリの先読みによりまとめて処理する。
 
-### コンストラクタ
+値ごとの更新候補の添字をCSRにまとめ、1本の01列用Fenwick Treeで管理する。更新先の位置も前計算し、更新時の二分探索と値ごとの配列確保を省く。
+
+## 使用例
+
+```cpp
+#include "ds/query/point_set_range_frequency.hpp"
+
+PointSetRangeFrequency<int> queries(vc<int>{1, 2, 1});
+queries.range_frequency(0, 3, 1);
+queries.point_set(1, 1);
+queries.range_frequency(0, 3, 1);
+assert(queries.run() == (vc<ll>{2, 3}));
+```
+
+## 詳細なドキュメント
+
+### PointSetRangeFrequency
+
+#### コンストラクタ
 
 ```cpp
 PointSetRangeFrequency(vc<T> a)
@@ -14,14 +32,11 @@ PointSetRangeFrequency(vc<T> a)
 
 ##### 制約
 
-- `T` は比較可能
+- `T` の比較と等値比較が整合する全順序を持つこと。
 
 ##### 計算量
 
 - $O(\lvert a \rvert)$
-
-
-### メンバ関数
 
 #### point_set
 
@@ -38,7 +53,6 @@ void point_set(int p, T v)
 ##### 計算量
 
 - $O(1)$
-
 
 #### range_frequency
 
@@ -63,6 +77,8 @@ vc<I=ll> run()
 ```
 
 すべてのクエリにまとめて答え、結果を返す。結果は呼び出し順に格納される。
+
+登録済みのクエリを初期列から処理するため、同じオブジェクトで再実行できる。`I` は各回答を表現できる整数型を指定する。
 
 ##### 計算量
 

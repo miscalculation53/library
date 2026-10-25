@@ -25,7 +25,7 @@ void main2()
   LL(N);
   VEC(mint, N, f_);
   fps f(f_);
-  PRINT(compositional_inv(f));
+  PRINT(compositional_inv(f, N));
 }
 
 void test()

@@ -25,7 +25,7 @@ void main2()
   LL(N);
   VEC(mint, N, f_);
   fps f = f_;
-  fps g = f.exp();
+  fps g = f.exp(N);
   PRINT(g);
 }
 

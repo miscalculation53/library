@@ -1,0 +1,12 @@
+exclude:
+- tools
+- venv
+- benchmark
+- benchmarks
+- research
+- AGENTS.md
+- docs/STYLE.md
+- docs/ds/flat_dvec_benchmark.md
+- docs/math/fps/arithmetic_product_benchmark.md
+- docs/math/fps/bostan_mori_benchmark.md
+- docs/math/runtime_integer_width.md

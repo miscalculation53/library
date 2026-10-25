@@ -1,4 +1,8 @@
-## and/or 畳み込み
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
+
+and 畳み込みと or 畳み込みを計算する。
 
 ### 定義
 
@@ -38,7 +42,15 @@ $\begin{aligned}
 &= \zeta a(u) \zeta b(u)
 \end{aligned}$
 
-### ライブラリ
+## 使用例
+
+```cpp
+vc<ll> a{1, 2}, b{3, 4};
+auto c = or_convolution<RingAddSubMul<ll>>(a, b);
+assert((c == vc<ll>{3, 18}));
+```
+
+## 詳細なドキュメント
 
 #### and_convolution
 

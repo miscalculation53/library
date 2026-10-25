@@ -40,8 +40,7 @@ void main2()
     dump(cum.sum(r, r + 1, 0, W));
     dump(B.at(r).at(c));
     mintd ans = cum.sum(H, W) / cum.sum(0, H, c, c + 1) / cum.sum(r, r + 1, 0, W) * B.at(r).at(c);
-    auto [ok, anss] = ans.to_modint();
-    PRINT(anss);
+    PRINT(ans.to_modint().value_or(mint(0)));
   }
 }
 

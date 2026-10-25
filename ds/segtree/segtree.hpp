@@ -1,5 +1,12 @@
 #pragma once
 
+/*!
+ * Portions corresponding to AtCoder Library (CC0-1.0): iterative segment-tree operations.
+ * Upstream: atcoder/segtree.hpp
+ * https://github.com/atcoder/ac-library/tree/864245a00b00dd008d1abfdc239618fdb7d139da
+ * License: https://github.com/atcoder/ac-library/blob/864245a00b00dd008d1abfdc239618fdb7d139da/LICENSE
+ */
+
 #include "../../template/template_all_but_modint.hpp"
 
 /**
@@ -34,7 +41,7 @@ public:
     assert(0 <= p && p < n);
     p += siz;
     dat[p] = x;
-    while (p)
+    while (p > 1)
       p >>= 1, update(p);
   }
 

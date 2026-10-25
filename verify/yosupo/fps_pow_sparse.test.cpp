@@ -30,7 +30,7 @@ void main2()
     IN(mint, a);
     f.at(i) = a;
   }
-  fps g = f.pow(M);
+  fps g = f.pow(M, N);
   PRINT(g);
 }
 

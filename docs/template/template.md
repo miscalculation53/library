@@ -1,4 +1,30 @@
-## テンプレート（全体）
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
+
+競技プログラミング用テンプレート。
+
+## 使用例
+
+2 整数を読み込み、和を出力する。
+
+```cpp
+#define SINGLE_TESTCASE
+#include "template/template_all.hpp"
+
+void init() {}
+void main2() {
+  LL(a, b);
+  PRINT(a + b);
+}
+void test() {}
+
+#include "template/template_main.hpp"
+Main<init, main2, test> main_dummy;
+int main() {}
+```
+
+## 詳細なドキュメント
 
 ### LOCAL
 
@@ -21,10 +47,10 @@
 
 ### 入出力高速化
 
-`FAST_IO` が define されているとき、例の `cin.tie(0); ios::sync_with_stdio(false);` をする。`FAST_IO` は `LOCAL` では外れる。
+`FAST_IO` は `fread` / `fwrite` によるバッファ付き入出力を使う。`LOCAL` では通常の `cin` / `cout` に切り替わる。
+`FAST_CIO` では `template_main.hpp` が `cin.tie(nullptr); ios::sync_with_stdio(false);` を設定する。
 
 普段は `PRINT` 系での改行で flush しない。`INTERACTIVE` が define されているとき、flush する。
-
 
 ### 定数
 

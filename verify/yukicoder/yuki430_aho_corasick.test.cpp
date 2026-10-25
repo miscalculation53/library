@@ -16,7 +16,7 @@
 #include "template/template_all_but_modint.hpp"
 
 #include "string/aho_corasick.hpp"
-#include "graph/tree/rooted_tree.hpp"
+#include "tree/rooted_tree.hpp"
 
 void init()
 {
@@ -45,7 +45,7 @@ void main2()
   }
   dump(cnt | cp::index());
 
-  RootedTree G(N, GEN_VEC(N, i, aho.failure(i)));
+  RootedTree G(N, GEN_VEC(N, i, aho.failure(i).value_or(-1)));
   fec(v : G.bottom_up_vertices())
   {
     if (v == G.root())
@@ -58,7 +58,7 @@ void main2()
   fec(t : T)
   {
     ll v = 0;
-    fec(c : t) v = aho.trie.child(v, c);
+    fec(c : t) v = *aho.trie.child(v, c);
     dump(vtos(t, 'A'), cnt.at(v));
     ans += cnt.at(v);
   }

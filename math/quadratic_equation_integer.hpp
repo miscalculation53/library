@@ -18,6 +18,17 @@ template <class T = ll, class U = larger_int_t<T>, class A, class B, class C>
 pair<int, array<T, 2>> quadratic_equation_integer(A a, B b, C c)
 {
   const U aa = a, bb = b, cc = c;
+  if constexpr (is_same_v<U, i128> && is_integral_v<A> && is_signed_v<A> && sizeof(A) <= sizeof(ll) &&
+                is_integral_v<B> && is_signed_v<B> && sizeof(B) <= sizeof(ll) &&
+                is_integral_v<C> && is_signed_v<C> && sizeof(C) <= sizeof(ll))
+  {
+    // 各入力が [-2^30, 2^30) なら、中間値も ll に収まる。
+    constexpr ull offset = 1ULL << 30;
+    if (((ull(a) + offset) |
+         (ull(b) + offset) |
+         (ull(c) + offset)) < 2 * offset)
+      return quadratic_equation_integer<T, ll>(ll(aa), ll(bb), ll(cc));
+  }
   if (aa == 0)
   {
     if (bb == 0)

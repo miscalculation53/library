@@ -42,7 +42,7 @@ vc<mint> multipoint_evaluation_geo(const FormalPowerSeries<mint> &f, int m, cons
   F trir = calc_tri(n + m, pwr), triir = calc_tri(max(n, m), pwir);
   F s(n);
   repi(i, n) s[n - 1 - i] = f[i] * pwa[i] * triir[i];
-  F u = (s * trir).pre(n + m - 1) >> (n - 1);
+  F u = (s * trir).resized(n + m - 1) >> (n - 1);
   repi(i, m) u[i] *= triir[i];
   return u;
 }

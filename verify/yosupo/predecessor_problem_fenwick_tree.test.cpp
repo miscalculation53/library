@@ -35,13 +35,13 @@ void main2()
       PRINT(fw.get(k));
     else if (c == 3)
     {
-      ll i = fw.geq_min_in_set(k);
-      PRINT(i < fw.size_of_set() ? fw.kth_in_set(i) : -1);
+      auto i = fw.geq_min_in_set(k);
+      PRINT(i ? *fw.kth_in_set(*i) : -1);
     }
     else if (c == 4)
     {
-      ll i = fw.leq_max_in_set(k);
-      PRINT(i >= 0 ? fw.kth_in_set(i) : -1);
+      auto i = fw.leq_max_in_set(k);
+      PRINT(i ? *fw.kth_in_set(*i) : -1);
     }
   }
 }

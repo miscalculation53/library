@@ -1,9 +1,8 @@
-## 尺取り法
+このドキュメントには AI による作成・変更が含まれています。
 
-```cpp
-(1) vc<I=ll> right_ok(int n, auto add_r, auto del_l, auto judge)
-(2) vc<I=ll> left_ok(int n, auto add_r, auto del_l, auto judge)
-```
+## 概要
+
+尺取り法。
 
 $[0, n)$ に含まれる区間 $[l, r)$ に対し
 
@@ -16,14 +15,60 @@ $[0, n)$ に含まれる区間 $[l, r)$ に対し
 - 空の区間（特に最初は $[0, 0)$）は常に条件を満たす
 - 単調性がある。すなわち、ある区間が条件を満たすとき、それに完全に含まれる区間も条件を満たす
 
-と仮定する。このとき、
+と仮定する。このとき、次の $R_l,L_r$ を $O(n)$ 回の操作で求められる。
 
-- (1)：各 $l = 0, \dots, n$ に対し、$[l, r)$ が条件を満たす最大の $r$
-- (2)：各 $r = 0, \dots, n$ に対し、$[l, r)$ が条件を満たす最小の $l$
+$$
+R_l = \max\left\{x \in \mathbb{Z} \mathrel{\middle|} l \leq x \leq n,\ \operatorname{judge}(l,x) = \mathrm{true}\right\}
+$$
 
-を求める（長さ $n+1$ の vector として返す）。
+$$
+L_r = \min\left\{x \in \mathbb{Z} \mathrel{\middle|} 0 \leq x \leq r,\ \operatorname{judge}(x,r) = \mathrm{true}\right\}
+$$
+
+## 使用例
+
+```cpp
+#include "algo/two_pointers.hpp"
+
+vc<int> a{1, 2, 3};
+int sum = 0;
+auto add = [&](int, int r) { sum += a[r]; };
+auto erase = [&](int l, int) { sum -= a[l]; };
+auto judge = [&](int, int) { return sum <= 3; };
+auto r = right_ok(3, add, erase, judge);
+assert(r == vc<ll>({2, 2, 3, 3}));
+```
+
+## 詳細なドキュメント
+
+#### right_ok
+
+```cpp
+vc<I=ll> right_ok(int n, auto add_r, auto del_l, auto judge)
+```
+
+各 $l = 0, \dots, n$ に対する $R_l$ を、長さ $n+1$ の vector として返す。
+
+##### 制約
+
+- 「概要」に記載した仮定を満たす
 
 ##### 計算量
 
 - `add_r`, `del_l`, `judge` はそれぞれ $O(n)$ 回呼ばれる
 
+#### left_ok
+
+```cpp
+vc<I=ll> left_ok(int n, auto add_r, auto del_l, auto judge)
+```
+
+各 $r = 0, \dots, n$ に対する $L_r$ を、長さ $n+1$ の vector として返す。
+
+##### 制約
+
+- 「概要」に記載した仮定を満たす
+
+##### 計算量
+
+- `add_r`, `del_l`, `judge` はそれぞれ $O(n)$ 回呼ばれる

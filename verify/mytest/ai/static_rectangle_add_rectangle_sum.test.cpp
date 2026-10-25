@@ -2,8 +2,8 @@
 
 #include "template/template_all_but_modint.hpp"
 #include "math/modint/modint.hpp"
-#include "math/algebra/algebra_basic_ops.hpp"
-#include "math/algebra/bit.hpp"
+#include "algebra/algebra_basic_ops.hpp"
+#include "algebra/bit.hpp"
 #include "ds/2d/offline/static_rectangle_add_rectangle_sum.hpp"
 
 using mint = modint998244353;

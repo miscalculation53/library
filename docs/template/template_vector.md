@@ -1,4 +1,25 @@
-## テンプレート（vector）
+このドキュメントには AI による作成・変更が含まれています。
+
+## 概要
+
+テンプレート（vector）
+
+## 使用例
+
+```cpp
+#include "template/template_all_but_modint.hpp"
+
+auto squares = GEN_VEC(4, i, i * i);
+assert(squares == vc<int>({0, 1, 4, 9}));
+auto dp = dvec<ll>({2, 3}, -1);
+dp[1][2] = 5;
+assert(dp[0][0] == -1 && dp[1][2] == 5);
+auto codes = stov("JOJO", "JOI");
+assert(codes && *codes == vc<ll>({0, 1, 0, 1}));
+assert(!ctol('?', "JOI"));
+```
+
+## 詳細なドキュメント
 
 ### マクロ
 
@@ -20,16 +41,16 @@ T SZ<T=ll>(x)
 
 `LMD(x, f(x))`：`[&](auto x) { return f(x); }`
 
-
 ### vector の生成
 
 #### gen_vec
 
 ```cpp
-gen_vec(int n, F f)
+template <class F>
+auto gen_vec(int n, const F& f)
 ```
 
-長さ $n$ で、$i$ 番目が $f(i)$ の vector を返す。（あまり使わないかも。）
+長さ $n$ で、$i$ 番目が $f(i)$ の vector を返す。$i=0,\ldots,n-1$ の順に1回ずつ生成する。
 
 利点：
 
@@ -38,13 +59,35 @@ gen_vec(int n, F f)
 
 マクロとして `GEN_VEC(n, i, f(i))` がある。これは `gen_vec(n, LMD(i, f(i)))`。
 
+生成した値から各要素を直接構築する。ムーブ専用の型や、デフォルトコンストラクタ・代入演算子を持たない型にも対応する。
 
+```cpp
+auto squares = GEN_VEC(5, i, i * i);
+auto pointers = GEN_VEC(5, i, make_unique<int>(i));
+// MeldableIntegerSetPoolで各集合を個別に作る。
+MeldableIntegerSetPool pool(100);
+auto sets = gen_vec(5, [&](int) { return pool.make_set(); });
+```
+
+##### 制約
+
+- $0\leq n$
+- `f` は整数の添字で呼び出せる
+- `f(i)` の返り値の型はvectorの要素型として使え、生成した値からコピーまたはムーブ構築できる
+
+##### 計算量
+
+- $O(n)$。`f` と要素の構築にかかる時間は別途必要
 
 ### 多次元 vector の生成
 
 #### dvec
 
 多次元 vector を生成する。DP 配列の初期化などで使う。
+サイズには `ll` と `int` を混在させられる。要素型は `dvec<T>` で指定でき、省略時は初期値から推論する。
+型を指定した場合、初期値を `T` に変換して使う。
+
+一次元の vector で保持する多次元配列には [FlatDvec](../ds/flat_dvec.md) がある。
 
 使用例：
 
@@ -52,31 +95,73 @@ gen_vec(int n, F f)
 // dp[i][j][k] (0<=i<N, 0<=j<M, 0<=k<2)
 // 初期値は 0
 // 初期値の部分を 0 と書くと値の型が int になるので注意
-// N, M が ll の場合、定数は 2LL などとする
-auto dp = make_vec({N, M, 2}, 0LL);
+// N が ll、M が int でもそのまま書ける
+auto dp = dvec({N, M, 2}, 0LL);
+fill(dp, -1); // 全要素を -1 にする
+
+auto dp_mod = dvec<mint>({N, 2}, 0); // 要素型を mint に指定する
 ```
+
+### 全要素の代入
+
+#### fill
+
+```cpp
+void fill(V& v, const T& value)
+```
+
+配列の全要素を `value` にする。入れ子の `vector` や `array`、C 配列を再帰的に処理する。
+[FlatDvec](../ds/flat_dvec.md) にも同じ書き方を使える。
+値を代入できる要素の型に達したところで、各要素に代入する。
+例えば `vector<string>` に文字列を渡すと、各文字列全体を置き換える。
+
+```cpp
+auto dp = dvec({3, 4, 5}, 0LL);
+fill(dp, -1);           // 全要素を -1 にする。int から ll への代入も可能
+fill(dp[1], 0);         // 第 1 次元の添字が 1 の部分だけを更新する
+
+array<array<int, 3>, 2> a{};
+fill(a, 7);
+```
+
+##### 制約
+
+- `v` は変更可能で、`begin` / `end` による走査が可能
+- 各要素に `value` を代入できる、または各要素が同じ条件を満たす配列
+
+##### 計算量
+
+処理するコンテナと代入先の要素の総数を $S$ として、
+
+- $O(S)$。値の代入にかかる時間は別途必要
 
 ### 文字列から数値の vector に変換
 
 #### ctol
 
-`T ctol<T = ll>(char c, string s)`
+```cpp
+optional<T> ctol<T = ll>(const char& c, const string& s)
+```
 
 文字と数値の関係を表す文字列 $s$ を使って、文字 $c$ を数値に変換する。たとえば、`ctol(c, "JOI")` なら、`J` $\to 0$, `O` $\to 1$, `I` $\to 2$ という変換をする。
 
-厳密には、$s$ の中に初めて $c$ が現れる index（見つからなければ $-1$）を返す。（基本的に $s$ の文字が異なることを想定しているが、そうでなくても動作する。）
+$s$ の中に初めて $c$ が現れる添字を返す。見つからなければ `nullopt`。先頭で見つかれば値 $0$ を返す。重複した文字にも対応する。
+
+##### 計算量
+
+- $O(\lvert s\rvert)$
 
 #### stov
 
 ```cpp
 (1) vc<T = ll> stov(string s, char first)
-(2) vc<T = ll> stov(string s, string t)
+(2) optional<vc<T>> stov<T = ll>(const string& s, const string& t)
 ```
 
 - (1)：$s$ の各文字 `s[i]` を `s[i] - first` として数値に変換し、それを並べた vector を返す。
   - `first` は基本的には `'A'`, `'a'`, `'0'` を使うことが多いと思う。
 
-- (2)：$s$ の各文字 `s[i]` を `ctol(s[i], t)` として数値に変換し、それを並べた vector を返す。
+- (2)：各文字を `t` 内の最初の添字へ変換し、配列を返す。`t` に含まれない文字があれば `nullopt`。空文字列の変換は、空配列を持つ成功結果となる。
 
 ### 結合
 
@@ -108,9 +193,11 @@ $a$, $b$ はともに昇順にソートされているとき、$a$ と $b$ を�
 #### vecget
 
 ```cpp
-T vecget(vc<T> v, int i, T dflt_negative = -INF, T dflt_positive = INF)
+T vecget(vc<T> v, int i, T dflt_negative = -default_infty<T>(), T dflt_positive = default_infty<T>())
 ```
 
 範囲外も考慮した vector の取得。範囲内なら通常の `[]` や `at` と同じで、範囲外なら負方向は `dflt_negative`, 正方向は `dflt_positive` を返す。
+
+省略時は `T` の[既定の無限大](../utils/default_infty.md)の符号を変えた値を返す。例えば `i128` なら `±(INF * INF)`、`Rational` なら `±1/0` になる。明示指定した範囲外の値はそのまま使う。
 
 用途としては、ソート済み配列が無限に広がっていると考えたい場合（特に、`binsearch` や `expsearch` に渡すとき）。`LB` や `UB` だと頭が壊れるとき用に。→ 二分探索に lt, leq, gt, geq 系をつけたので出番がないかも。
