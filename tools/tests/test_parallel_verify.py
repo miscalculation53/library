@@ -18,6 +18,15 @@ import parallel_verify
 
 
 class ParallelVerifyTest(unittest.TestCase):
+    def setUp(self):
+        # Simulated workflow annotations stay inside the test process.
+        output = mock.patch.object(sys, "stdout", io.StringIO())
+        output.start()
+        self.addCleanup(output.stop)
+        environment = mock.patch.dict(os.environ, {"GITHUB_ACTIONS": "", "GITHUB_STEP_SUMMARY": ""})
+        environment.start()
+        self.addCleanup(environment.stop)
+
     def write_artifact(
         self,
         root,
@@ -117,6 +126,148 @@ class ParallelVerifyTest(unittest.TestCase):
         self.assertIn("next.cpp:3: error: ambiguous function call", log)
         self.assertEqual(completed.returncode, 1)
         self.assertEqual(failed, ["verify/next.test.cpp"])
+
+    def test_run_verify_identifies_only_interrupted_downloads(self):
+        lines = []
+        for name, phase, error, compiled in [
+            ("eof", "download", "SSLEOFError: UNEXPECTED_EOF_WHILE_READING", False),
+            ("certificate", "download", "SSLCertVerificationError", False),
+            ("runtime", "test", "SSLEOFError", False),
+            ("recovered", "download", "SSLEOFError", True),
+        ]:
+            path = f"verify/{name}.test.cpp"
+            lines.extend([
+                f"INFO:onlinejudge_verify.verify:verify: {path}",
+                f"INFO:onlinejudge_verify.verify:$ oj {phase} --system example",
+                f"[ERROR] {error}",
+            ])
+            if compiled:
+                lines.append("INFO:onlinejudge_verify.languages.cplusplus:$ g++ test.cpp")
+            lines.extend([
+                f"::error file={path}::failed to verify",
+                f"ERROR:onlinejudge_verify.verify:failed: {path}",
+            ])
+        command = [sys.executable, "-c", f"print({chr(10).join(lines)!r}); raise SystemExit(1)"]
+        output = io.StringIO()
+        download_errors = set()
+        with mock.patch.object(sys, "stdout", output):
+            completed, failed = parallel_verify.run_verify(
+                command, download_errors=download_errors
+            )
+        self.assertEqual(completed.returncode, 1)
+        self.assertEqual(download_errors, {"verify/eof.test.cpp"})
+        self.assertEqual(len(failed), 4)
+        self.assertIn("::warning file=verify/eof.test.cpp", output.getvalue())
+        self.assertIn("::error file=verify/certificate.test.cpp", output.getvalue())
+        self.assertIn("::error file=verify/runtime.test.cpp", output.getvalue())
+        self.assertIn("::error file=verify/recovered.test.cpp", output.getvalue())
+
+    def test_download_retry_rechecks_only_interrupted_targets_and_keeps_wa(self):
+        paths = [Path("verify/eof.test.cpp"), Path("verify/wa.test.cpp"), Path("verify/ac.test.cpp")]
+        command = ["oj-verify", "run", "--timeout", "2100", *map(str, paths)]
+
+        def run(command, *, download_errors):
+            if "verify/wa.test.cpp" in command:
+                download_errors.add("verify/eof.test.cpp")
+                return subprocess.CompletedProcess(command, 1), ["verify/eof.test.cpp", "verify/wa.test.cpp"]
+            return subprocess.CompletedProcess(command, 0), []
+
+        with mock.patch.object(parallel_verify, "run_verify", side_effect=run) as verify:
+            with mock.patch.object(parallel_verify.time, "sleep") as sleep:
+                with mock.patch.object(parallel_verify.time, "monotonic", side_effect=[100, 110]):
+                    completed, failed = parallel_verify.run_verify_with_download_retries(command, paths, 2100)
+        self.assertEqual(completed.returncode, 1)
+        self.assertEqual(failed, ["verify/wa.test.cpp"])
+        self.assertEqual(verify.call_count, 2)
+        self.assertEqual(verify.call_args.args[0], ["oj-verify", "run", "--timeout", "2085", "verify/eof.test.cpp"])
+        sleep.assert_called_once_with(5)
+
+    def test_download_retry_is_bounded_and_final_failure_remains_fatal(self):
+        path = "verify/eof.test.cpp"
+        paths = [Path(path)]
+        command = ["oj-verify", "run", "--timeout", "2100", path]
+
+        def run(command, *, download_errors):
+            if download_errors is not None:
+                download_errors.add(path)
+            return subprocess.CompletedProcess(command, 1), [path]
+
+        with mock.patch.object(parallel_verify, "run_verify", side_effect=run) as verify:
+            with mock.patch.object(parallel_verify.time, "sleep") as sleep:
+                completed, failed = parallel_verify.run_verify_with_download_retries(command, paths, 2100)
+        self.assertEqual(completed.returncode, 1)
+        self.assertEqual(failed, [path])
+        self.assertEqual(verify.call_count, 3)
+        self.assertEqual(sleep.call_args_list, [mock.call(5), mock.call(10)])
+        self.assertIsNone(verify.call_args.kwargs["download_errors"])
+
+    def test_download_retry_stops_when_shard_budget_is_spent(self):
+        path = "verify/eof.test.cpp"
+        command = ["oj-verify", "run", "--timeout", "10", path]
+
+        def run(command, *, download_errors):
+            download_errors.add(path)
+            return subprocess.CompletedProcess(command, 1), [path]
+
+        output = io.StringIO()
+        with mock.patch.object(parallel_verify, "run_verify", side_effect=run) as verify:
+            with mock.patch.object(parallel_verify.time, "sleep") as sleep:
+                with mock.patch.object(parallel_verify.time, "monotonic", side_effect=[100, 109]):
+                    with mock.patch.object(sys, "stdout", output):
+                        completed, failed = parallel_verify.run_verify_with_download_retries(command, [Path(path)], 10)
+        self.assertEqual(completed.returncode, 1)
+        self.assertEqual(failed, [path])
+        self.assertEqual(verify.call_count, 1)
+        sleep.assert_not_called()
+        self.assertIn(f"::error file={path}::failed to verify", output.getvalue())
+
+    def test_download_retry_preserves_process_interruption(self):
+        path = "verify/eof.test.cpp"
+        command = ["oj-verify", "run", "--timeout", "2100", path]
+
+        def run(command, *, download_errors):
+            download_errors.add(path)
+            return subprocess.CompletedProcess(command, 130), [path]
+
+        with mock.patch.object(parallel_verify, "run_verify", side_effect=run) as verify:
+            with mock.patch.object(parallel_verify.time, "sleep") as sleep:
+                completed, failed = parallel_verify.run_verify_with_download_retries(command, [Path(path)], 2100)
+        self.assertEqual(completed.returncode, 130)
+        self.assertEqual(failed, [path])
+        self.assertEqual(verify.call_count, 1)
+        sleep.assert_not_called()
+
+    def test_download_retry_recovers_from_tls_eof_with_real_subprocess(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            script = root / "verify.py"
+            script.write_text("""from pathlib import Path
+import sys
+marker = Path(__file__).with_suffix('.attempt')
+attempt = int(marker.read_text()) if marker.exists() else 0
+marker.write_text(str(attempt + 1))
+path = sys.argv[-1]
+print(f'INFO:onlinejudge_verify.verify:verify: {path}')
+if attempt < 2:
+    print('INFO:onlinejudge_verify.verify:$ oj download --system example')
+    print('[ERROR] HTTPSConnectionPool: SSLEOFError: UNEXPECTED_EOF_WHILE_READING')
+    print(f'::error file={path}::failed to verify')
+    print(f'ERROR:onlinejudge_verify.verify:failed: {path}')
+    raise SystemExit(1)
+print('INFO:onlinejudge_verify.languages.cplusplus:$ g++ test.cpp')
+print('[SUCCESS] test success: 10 cases')
+""")
+            path = Path("verify/eof.test.cpp")
+            command = [sys.executable, str(script), "--timeout", "2100", str(path)]
+            output = io.StringIO()
+            with mock.patch.object(parallel_verify.time, "sleep"):
+                with mock.patch.object(sys, "stdout", output):
+                    completed, failed = parallel_verify.run_verify_with_download_retries(command, [path], 2100)
+            self.assertEqual(completed.returncode, 0)
+            self.assertEqual(failed, [])
+            self.assertEqual(script.with_suffix(".attempt").read_text(), "3")
+            self.assertNotIn("::error file=", output.getvalue())
+            self.assertIn("[SUCCESS] test success: 10 cases", output.getvalue())
 
     def test_merge_requires_exactly_one_result_per_verification_file(self):
         with tempfile.TemporaryDirectory() as directory:

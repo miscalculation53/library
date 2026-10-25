@@ -45,6 +45,11 @@ node --test tools/tests/status.test.js
 テストが失敗した場合も artifact のアップロードを試みます。各ジョブの Summary には、
 担当した全ファイルを `Verified`、`Failed`、`Not completed` に分けて表示します。
 
+テストデータの取得中に TLS 接続が途中で切れた場合は、該当ファイルだけを
+5秒後・10秒後に最大2回再試行します。再試行も shard 全体の35分の制限に含めます。
+再試行後も取得できなければ失敗として扱います。判定結果やコンパイルエラー、
+証明書の検証エラーは通常どおり報告します。
+
 `main` への push では、実際の verify 失敗がない場合に限り、全 shard の artifact が
 全 verify ファイルを重複なく覆うことを `parallel_verify.py` で確認して timestamp を
 統合します。その後にだけ `GITHUB_TOKEN` で timestamp を main へ反映します。
