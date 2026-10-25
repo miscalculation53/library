@@ -136,7 +136,7 @@ optional<Matrix<F, BS>> inv() const
 optional<pair<vc<F::S>, vvc<F::S>>> solve(const vc<F::S>& b) const
 ```
 
-$A\boldsymbol{x} = \boldsymbol{b}$ の解を求め、解のひとつ $\boldsymbol{x}_0$ と解空間の基底 $\{\boldsymbol{c}_i\}_i$ のペアを返す。解がなければ `nullopt`。すなわち、解は $\boldsymbol{x} = \boldsymbol{x}_0 + \sum_i \lambda_i \boldsymbol{c}_i$ の形で表されるベクトル全体。
+$A\boldsymbol{x} = \boldsymbol{b}$ の解を求め、解のひとつ $\boldsymbol{x}_0$ と解空間の基底 $\lbrace\boldsymbol{c}_i\rbrace_i$ のペアを返す。解がなければ `nullopt`。すなわち、解は $\boldsymbol{x} = \boldsymbol{x}_0 + \sum_i \lambda_i \boldsymbol{c}_i$ の形で表されるベクトル全体。
 
 ##### 制約
 

@@ -41,7 +41,7 @@ assert(node.num() == 3 && node.den() == 5);
 
 - (1)：$O(\log \max(\mathrm{num}, \mathrm{den}))$
 - (2)：$O(1)$
-- (3)：$O(|\mathrm{path}|)$
+- (3)：$O(\lvert \mathrm{path}\rvert)$
 
 #### メンバ変数
 
@@ -139,21 +139,21 @@ $v$ を現在の頂点と `rhs` の頂点の分子・分母の最大値として
 SBTNode<T> sbt_search(auto judge, T max_value)
 ```
 
-`judge(T num, T den)` は $[0/1, 1/0]$ から `bool` への関数で、単調性を持つ、すなわちある実数 $\alpha$ が存在して、$\alpha$ を境に `true` と `false` が切り替わるとする（$\alpha$ で `true` か `false` かは問わない）。このとき、分母・分子がともに $\mathrm{max\_value}$ 以下の有理数のうち、下側・上側それぞれで $\alpha$ に最も近いものを求める。
+`judge(T num, T den)` は $[0/1, 1/0]$ から `bool` への関数で、単調性を持つ、すなわちある実数 $\alpha$ が存在して、$\alpha$ を境に `true` と `false` が切り替わるとする（$\alpha$ で `true` か `false` かは問わない）。このとき、分母・分子がともに $\mathrm{max\\_value}$ 以下の有理数のうち、下側・上側それぞれで $\alpha$ に最も近いものを求める。
 
 返り値の `p/q` が下側、`r/s` が上側の境界を表す。それぞれ `judge(0, 1)`、`judge(1, 0)` と同じ判定値を持ち、境界には $0/1$ と $1/0$ も含む。媒介分数 `(p+r)/(q+s)` は分子・分母のいずれかが `max_value` を超えるため、結果は `p, q, r, s` から取得する。
 
-同方向へ進む距離を指数探索と二分探索で求め、向きが変わる際の判定結果を再利用する。次の一段で向きが変わる場合は加算と比較だけで処理する。`judge` に渡す分子・分母はともに $0$ 以上 $\mathrm{max\_value}$ 以下。
+同方向へ進む距離を指数探索と二分探索で求め、向きが変わる際の判定結果を再利用する。次の一段で向きが変わる場合は加算と比較だけで処理する。`judge` に渡す分子・分母はともに $0$ 以上 $\mathrm{max\\_value}$ 以下。
 
 ##### 制約
 
 - `judge` は単調性を持つ
 - `judge(0, 1) != judge(1, 0)`
-- $\mathrm{max\_value} \geq 1$
+- $\mathrm{max\\_value} \geq 1$
 
 ##### 計算量
 
-- $O(\log \mathrm{max\_value})$ 回の `judge` の呼び出し
+- $O(\log \mathrm{max\\_value})$ 回の `judge` の呼び出し
 
 
 #### abc408g

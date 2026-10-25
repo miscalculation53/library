@@ -23,7 +23,9 @@ struct Main
     #endif
     #if defined FAST_CIO and not defined LOCAL
     CERR("\n[FAST_CIO]\n\n", "32");
-    cin.tie(0);
+    #endif
+    #if (defined FAST_CIO or defined INTERACTIVE) and not defined LOCAL
+    cin.tie(nullptr);
     ios::sync_with_stdio(false);
     #endif
     cout << fixed << setprecision(20);

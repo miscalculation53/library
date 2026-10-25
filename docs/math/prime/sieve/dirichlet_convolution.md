@@ -57,7 +57,7 @@ auto composed = a.compose_fps(vc<mint>{0, 1, 1, 2, 5, 14});
 ```
 
 最後の例の外側の FPS は $H(z)=z+z^2+2z^3+5z^4+14z^5$。
-`a.compose_fps(c)` は、$a$ を内側として $\sum_j c[j]a^{*j}$ を返す。
+`a.compose_fps(c)` は、$a$ を内側として $\sum_j c[j]a^{\ast j}$ を返す。
 
 例えば $c[k]=\mathrm{Catalan}(k-1)$、$c[0]=0$ とすると、
 葉が $k$ 個の順序付き充満二分木の形を数えることになる。
@@ -90,7 +90,7 @@ auto composed = a.compose_fps(vc<mint>{0, 1, 1, 2, 5, 14});
 例えば `PolynomialRingArray<RingAddSubMul<ll>, 3>` をそのまま指定できる。
 
 積や非負整数乗には乗法逆元が不要で、零因子を持つ環も利用できる。
-商 $h*g=f$ は $g(1)$ による除算が必要になるため、次のように扱う。
+商 $h\ast g=f$ は $g(1)$ による除算が必要になるため、次のように扱う。
 
 - **一般の環**：$g(1)=1_R$ または $-1_R$ なら `R::inv` がなくても計算できる。
   両方が乗法的な場合や、$f(1)=1_R$ の関数の逆数はここに含まれる。
@@ -314,7 +314,7 @@ DirichletSeries &operator/=(const DirichletSeries &g);
 DirichletSeries inv() const;
 ```
 
-Dirichlet 商は $h*g=f$ を満たす $h$、逆数は $f*h=\varepsilon$ を満たす $h$ を求める。
+Dirichlet 商は $h\ast g=f$ を満たす $h$、逆数は $f\ast h=\varepsilon$ を満たす $h$ を求める。
 商は両方の入力が乗法的な場合だけ、逆数は入力が乗法的な場合に出力も乗法的と記録する。
 
 ##### 制約
@@ -434,7 +434,7 @@ template <class T, enable_if_t<is_same_v<T, S> && !is_integral_ext<T>, int> = 0>
 DirichletSeries pow(const T &exponent) const;
 ```
 
-$\exp_*(\mathrm{exponent}\cdot\log_*f)$ を返す。
+$\exp_{\ast}(\mathrm{exponent}\cdot\log_{\ast}f)$ を返す。
 例えば `f.pow(mint(1) / k)` で定数項 $1$ の $k$ 乗根を求められる。
 整数リテラルには整数乗が選ばれる。こちらを明示的に選ぶときは係数型 `S` の値を渡す。
 入力が乗法的なら結果も乗法的と記録する。指数 $0$ は単位元、指数 $1$ は入力を返す。
@@ -477,7 +477,7 @@ DirichletSeries compose_fps(const vc<S> &c) const;
 ```
 
 通常の FPS $H(z)=\sum_j c[j]z^j$ に、入力の Dirichlet 級数 $f$ を代入する。
-戻り値は $\sum_j c[j]f^{*j}$。`c` は **0-indexed** で、欠けた項は零とみなす。
+戻り値は $\sum_j c[j]f^{\ast j}$。`c` は **0-indexed** で、欠けた項は零とみなす。
 空配列なら零関数を返す。$L$ 次を超える係数は参照しない。
 出力の範囲は $K$ のままで、乗法性フラグを解除する。
 
@@ -527,11 +527,11 @@ DirichletSeries operator/(const S &a) const;
 ### 微積分・log・exp・累乗
 
 $\Omega(ab)=\Omega(a)+\Omega(b)$ から、$\mathcal Df(i)=\Omega(i)f(i)$ は
-$\mathcal D(f*g)=(\mathcal Df)*g+f*(\mathcal Dg)$ を満たす。
+$\mathcal D(f\ast g)=(\mathcal Df)\ast g+f\ast(\mathcal Dg)$ を満たす。
 $\Omega$ の値は `LinearSieve::Omega` で必要な範囲まで自動で前計算する。
 
-log は $\mathcal D\log_*f=(\mathcal Df)/f$ により、微分・Dirichlet 除算・積分で計算する。
-exp は $b=\exp_*a$ に対して
+log は $\mathcal D\log_{\ast}f=(\mathcal Df)/f$ により、微分・Dirichlet 除算・積分で計算する。
+exp は $b=\exp_{\ast}a$ に対して
 
 $$
 b(1)=1_R,\qquad
@@ -549,8 +549,8 @@ $$
 
 ### FPS の代入
 
-$f(1)=0$ なら $f^{*j}(n)=0\ (n<2^j)$ なので、外側の FPS は $L$ 次まであれば十分。
-Horner 法で $c_j\varepsilon+f*(\cdots)$ を計算するとき、
+$f(1)=0$ なら $f^{\ast j}(n)=0\ (n<2^j)$ なので、外側の FPS は $L$ 次まであれば十分。
+Horner 法で $c_j\varepsilon+f\ast(\cdots)$ を計算するとき、
 外側を $K$ まで求めるには内側を $K/2$ まで、その内側を $K/4$ まで求めればよい。
 各段階の積の上限を縮めることで、合計は
 $\sum_{j\ge0}O((K/2^j)\log(K/2^j))=O(K\log K)$ になる。

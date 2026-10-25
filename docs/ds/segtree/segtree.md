@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 ACL とだいたい同じだが、次の点が異なる：
@@ -33,7 +35,7 @@ int max_right_ok(int l, const G& g) const
 次の $R$ を返す。
 
 $$
-R = \max\left\{x \in \mathbb{Z} \mathrel{\middle|} l \leq x \leq n,\ g(\operatorname{prod}(l, x)) = \mathrm{true}\right\}
+R = \max\left\lbrace x \in \mathbb{Z} \middle\vert l \leq x \leq n,\ g(\operatorname{prod}(l, x)) = \mathrm{true}\right\rbrace
 $$
 
 すなわち、$[l, R)$ は条件を満たし、$R=n$ でなければ $[l, R+1)$ は条件を満たさない。
@@ -58,7 +60,7 @@ int min_left_ok(int r, const G& g) const
 次の $L$ を返す。
 
 $$
-L = \min\left\{x \in \mathbb{Z} \mathrel{\middle|} 0 \leq x \leq r,\ g(\operatorname{prod}(x, r)) = \mathrm{true}\right\}
+L = \min\left\lbrace x \in \mathbb{Z} \middle\vert 0 \leq x \leq r,\ g(\operatorname{prod}(x, r)) = \mathrm{true}\right\rbrace
 $$
 
 すなわち、$[L, r)$ は条件を満たし、$L=0$ でなければ $[L-1, r)$ は条件を満たさない。

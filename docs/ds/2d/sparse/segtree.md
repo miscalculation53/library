@@ -66,7 +66,7 @@ void set(int point_id, M::S val)
 
 ##### 制約
 
-- $0 \leq \mathrm{point\_id} < \lvert\mathrm{xyws}\rvert$
+- $0 \leq \mathrm{point\\_id} < \lvert\mathrm{xyws}\rvert$
 - `D<M>` は `set` と `get` を持つ
 
 ##### 計算量
@@ -85,7 +85,7 @@ M::S get(int point_id)
 
 ##### 制約
 
-- $0 \leq \mathrm{point\_id} < \lvert\mathrm{xyws}\rvert$
+- $0 \leq \mathrm{point\\_id} < \lvert\mathrm{xyws}\rvert$
 - `D<M>` は `get` を持つ
 
 ##### 計算量
@@ -104,7 +104,7 @@ void modify(int point_id, const F& f)
 
 ##### 制約
 
-- $0 \leq \mathrm{point\_id} < \lvert\mathrm{xyws}\rvert$
+- $0 \leq \mathrm{point\\_id} < \lvert\mathrm{xyws}\rvert$
 - `D<M>` は `get` と `set` を持つ
 
 ##### 計算量
@@ -120,7 +120,7 @@ void modify(int point_id, const F& f)
 (2) M::S sum(I lx, I rx, I ly, I ry)
 ```
 
-- (1) 領域 $\{\mathrm{x}\} \times [\mathrm{ly}, \mathrm{ry})$ の点の重みの和を求める。
+- (1) 領域 $\lbrace\mathrm{x}\rbrace \times [\mathrm{ly}, \mathrm{ry})$ の点の重みの和を求める。
 - (2) 矩形領域 $[\mathrm{lx}, \mathrm{rx}) \times [\mathrm{ly}, \mathrm{ry})$ の点の重みの和を求める。
 
 ##### 制約

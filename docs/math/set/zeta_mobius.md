@@ -18,13 +18,13 @@ $\displaystyle \mu a(s) = \sum_{t \subseteq s} (-1)^{\lvert s \setminus t \rvert
 
 #### ゼータ変換（上位集合）
 
-$\displaystyle \zeta' a(s) = \sum_{s \subseteq t} a(t)$
+$\displaystyle \zeta^{\prime} a(s) = \sum_{s \subseteq t} a(t)$
 
 #### メビウス変換（上位集合）
 
-$\mu' \zeta' a (s) = a(s)$
+$\mu^{\prime} \zeta^{\prime} a (s) = a(s)$
 
-$\displaystyle \mu' a(s) = \sum_{s \subseteq t} (-1)^{\lvert t \setminus s \rvert} a(t)$
+$\displaystyle \mu^{\prime} a(s) = \sum_{s \subseteq t} (-1)^{\lvert t \setminus s \rvert} a(t)$
 
 ## 使用例
 

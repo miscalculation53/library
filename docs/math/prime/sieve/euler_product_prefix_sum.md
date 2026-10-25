@@ -15,7 +15,7 @@ $$
 同じ因子の項同士は掛けず、異なる因子からの選択を掛け合わせる。
 
 結果は [DirichletPrefixSum](dirichlet_prefix_sum.md)。
-正の商集合 $Q_N=\{\lfloor N/i\rfloor:1\le i\le N\}$ 上の累積和と $F(0)=0$ を持ち、
+正の商集合 $Q_N=\lbrace\lfloor N/i\rfloor:1\le i\le N\rbrace$ 上の累積和と $F(0)=0$ を持ち、
 全体の和は `result.F(N)` で取得する。
 係数には可換環 `R` を使う。環での除算は使わず、整数環・合成数法・多項式環でも使える。
 
@@ -131,7 +131,7 @@ $$
 O\left(
 D+I+M\log M
 +\log D\sum_{\substack{i,j\\d_{i,j}\le N,\ a_{i,j}\ne0}}
-\left(1+\min\left\{\sqrt{\frac{N}{d_{i,j}}},\frac{N}{d_{i,j}L_i}\right\}\right)
+\left(1+\min\left\lbrace\sqrt{\frac{N}{d_{i,j}}},\frac{N}{d_{i,j}L_i}\right\rbrace\right)
 \right).
 $$
 
@@ -219,7 +219,7 @@ $100$ 以下には、片方からだけ選んだ四項と定数項だけが残�
 
 ### Totient Bound の全累積和
 
-以下はすべての保持位置で $\#\{x:\varphi(x)\le t\}$ を返す。
+以下はすべての保持位置で $\\#\lbrace x:\varphi(x)\le t\rbrace$ を返す。
 素数冪のコストは $(p-1)p^{e-1}$、重みは $1$。
 この形のままでも、`seed` の準備を含めて $O(N^{2/3})$ 時間・$O(\sqrt N)$ 空間。
 明示する素数を $p\le K+1$、$K=\lfloor\sqrt N\rfloor$ に限り、
@@ -310,7 +310,7 @@ $Q(d,B)$ を $\lfloor x/d\rfloor>B$ を満たす保持位置 $x$ の個数とす
 
 $$
 1+(B-L+1)_++Q(d,B)
-=O\left(1+\min\left\{\sqrt{N/d},\frac{N}{dL}\right\}\right)
+=O\left(1+\min\left\lbrace\sqrt{N/d},\frac{N}{dL}\right\rbrace\right)
 $$
 
 となる。$L\le\sqrt{N/d}$ なら平方根で分割し、$L>\sqrt{N/d}$ なら零区間を飛ばして
@@ -327,7 +327,7 @@ API に記載した $c(p^e)=\Theta(p^e)$ などの条件を仮定する。
 
 $$
 \log N\sum_{p\le O(\sqrt N)}
-\min\left\{\sqrt{N/p},\frac{N}{p^2}\right\}=O(N^{2/3})
+\min\left\lbrace\sqrt{N/p},\frac{N}{p^2}\right\rbrace=O(N^{2/3})
 $$
 
 という評価に対応する。$e\ge2$ の項も、同じ素数の中で平方根側は $p^{-1/2}$ 倍、

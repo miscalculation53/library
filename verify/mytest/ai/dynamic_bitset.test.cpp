@@ -188,6 +188,30 @@ void test_slice_boundaries()
           }
 }
 
+// Test focus: full-word OR agrees with a saved source for every alignment,
+// clipped sources, partial boundary words, and overlapping self slices.
+void test_or_slice_bulk()
+{
+  mt19937_64 rng(20261025);
+  repi(l, 64) repi(bl, 64) for (bool self : {false, true})
+  {
+    int n = 256 + rng() % 257, m = 64 + rng() % 449;
+    DynamicBitset a(n), b(m);
+    repi(i, n) a.set(i, rng() & 1);
+    repi(i, m) b.set(i, rng() & 1);
+    auto expected = a.content();
+    const auto source = (self ? a : b).content();
+    int r = l + rng() % (n - l + 1);
+    int len = min(r - l, int(source.size()) - bl);
+    repi(i, len) expected[l + i] = expected[l + i] || source[bl + i];
+    const DynamicBitset &src = self ? a : b;
+    assert(&a.or_slice(l, r, src, bl) == &a);
+    assert(a.content() == expected);
+    a.resize(n + 64);
+    repi(i, n, n + 64) assert(!a.test(i));
+  }
+}
+
 // Test focus: aligned suffix XOR keeps untouched bits and zero padding intact,
 // including empty bitsets, non-multiple-of-64 sizes, and self XOR.
 void test_aligned_xor_slice()
@@ -407,6 +431,7 @@ int main()
   }
   test_slice(rng);
   test_slice_boundaries();
+  test_or_slice_bulk();
   test_aligned_xor_slice();
   test_comparison();
   cout << "Hello World" << endl;

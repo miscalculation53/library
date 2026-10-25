@@ -12,9 +12,9 @@ $n = p_1^{e_1} \cdots p_k^{e_k}$ とするとき $\phi(n) = n\prod_i\frac{p-1}{p
 
 $\lambda(1) = 1$
 
-$\lambda(2) = 1, \lambda(2^2) = 2, \lambda(2^e) = 2^{e-2} \: (e \geq 3)$
+$\lambda(2) = 1, \lambda(2^2) = 2, \lambda(2^e) = 2^{e-2} \  (e \geq 3)$
 
-$\lambda(p^e) = p^{e-1}(p-1) \: (p \geq 3)$
+$\lambda(p^e) = p^{e-1}(p-1) \  (p \geq 3)$
 
 $n = p_1^{e_1} \cdots p_k^{e_k}$ とするとき $\lambda(n) = \mathrm{lcm}(\lambda(p_1^{e_1}), \dots, \lambda(p_k^{e_k}))$
 

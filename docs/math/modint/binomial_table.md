@@ -49,7 +49,7 @@ $T$ 回呼んだとき、
 mint C(int n, int k)
 ```
 
-$n \geq k \geq 0$ のとき、$\displaystyle \binom{n}{k} = \dfrac{n!}{k!(n-k)!} = [x^k](1 + x)^n$ を返す。
+$n \geq k \geq 0$ のとき、$\displaystyle \binom{n}{k} = \dfrac{n!}{k!(n-k)!} = \lbrack x^k\rbrack(1 + x)^n$ を返す。
 
 $n \lt k, n \lt 0, k \lt 0$ のいずれかを満たす場合は $0$ を返す。
 

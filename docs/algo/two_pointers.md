@@ -18,11 +18,11 @@ $[0, n)$ に含まれる区間 $[l, r)$ に対し
 と仮定する。このとき、次の $R_l,L_r$ を $O(n)$ 回の操作で求められる。
 
 $$
-R_l = \max\left\{x \in \mathbb{Z} \mathrel{\middle|} l \leq x \leq n,\ \operatorname{judge}(l,x) = \mathrm{true}\right\}
+R_l = \max\left\lbrace x \in \mathbb{Z} \middle\vert l \leq x \leq n,\ \operatorname{judge}(l,x) = \mathrm{true}\right\rbrace
 $$
 
 $$
-L_r = \min\left\{x \in \mathbb{Z} \mathrel{\middle|} 0 \leq x \leq r,\ \operatorname{judge}(x,r) = \mathrm{true}\right\}
+L_r = \min\left\lbrace x \in \mathbb{Z} \middle\vert 0 \leq x \leq r,\ \operatorname{judge}(x,r) = \mathrm{true}\right\rbrace
 $$
 
 ## 使用例

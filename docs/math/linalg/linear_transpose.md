@@ -34,7 +34,7 @@ bool check<T>(int n, int m, const Forward& forward,
               const Transpose& transpose, int trials = 8)
 ```
 
-固定シードで $\{-3,\ldots,3\}$ から入力を生成し、入出力の長さと
+固定シードで $\lbrace-3,\ldots,3\rbrace$ から入力を生成し、入出力の長さと
 $\langle F(x),y\rangle=\langle x,F^{\mathsf T}(y)\rangle$ を検査する。
 正しさを調べるための乱択テストで、少数の入力に対する照合になる。
 
@@ -55,8 +55,8 @@ vc<T> convolution_transpose(const vc<T>& w, const vc<T>& b, int n)
 ```
 
 長さ $n$ の入力に対する `a -> convolution(a, b)` の転置を返す。
-結果の第 $i$ 成分は $\sum_{j=0}^{|b|-1}b_jw_{i+j}$。
-`w` の保存範囲外は $0$ として扱い、$n+|b|-1$ 項目以降は使わない。
+結果の第 $i$ 成分は $\sum_{j=0}^{\lvert b\rvert-1}b_jw_{i+j}$。
+`w` の保存範囲外は $0$ として扱い、$n+\lvert b\rvert-1$ 項目以降は使わない。
 `b` が空の場合は長さ $n$ の零ベクトルを返す。
 
 ##### 制約
@@ -66,7 +66,7 @@ vc<T> convolution_transpose(const vc<T>& w, const vc<T>& b, int n)
 
 ##### 計算量
 
-- $O(M(n+|b|))$
+- $O(M(n+\lvert b\rvert))$
 
 #### polynomial_mod / polynomial_mod_transpose
 
@@ -86,7 +86,7 @@ vc<T> polynomial_mod_transpose(const vc<T>& w, const vc<T>& g, int n)
 
 ##### 計算量
 
-- $O(M(n+d))$（順方向では $n=|a|$）
+- $O(M(n+d))$（順方向では $n=\lvert a\rvert$）
 
 #### ntt_forward / ntt_transpose / intt_forward / intt_transpose
 
@@ -107,7 +107,7 @@ vc<T> intt_transpose(vc<T> a)
 
 ##### 計算量
 
-- $O(n\log n)$、$n=|a|$。
+- $O(n\log n)$、$n=\lvert a\rvert$。
 
 #### add_to / slice / resized / reversed
 
@@ -124,11 +124,11 @@ vc<T> reversed(vc<T> a)
 ##### 制約
 
 - `add_to`: `a.size() == b.size()`。
-- `slice`: $0\leq l\leq r\leq |a|$。
+- `slice`: $0\leq l\leq r\leq \lvert a\rvert$。
 - `resized`: $n\geq0$。
 
 ##### 計算量
 
-- `add_to`, `reversed`: $O(|a|)$。
+- `add_to`, `reversed`: $O(\lvert a\rvert)$。
 - `slice`: $O(r-l)$。
-- `resized`: $O(|a|+n)$。
+- `resized`: $O(\lvert a\rvert+n)$。

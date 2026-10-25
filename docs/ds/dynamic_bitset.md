@@ -100,7 +100,7 @@ void resize(int n, bool value = false)
 
 ##### 計算量
 
-- 償却 $O(1+|n-\operatorname{size()}|/w)$
+- 償却 $O(1+\lvert n-\operatorname{size()}\rvert/w)$
 
 #### set / reset / flip
 

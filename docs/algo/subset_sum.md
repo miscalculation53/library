@@ -51,7 +51,7 @@ $$
 x-\sum_{a_i<0}a_i
 $$
 
-へ移す。復元時には、元が負だった要素を使うかどうかを反転する。このとき $s$ は $s-\sum_{a_i<0}a_i$ に、$\sum a_i$ は $\sum|a_i|$ に対応する。
+へ移す。復元時には、元が負だった要素を使うかどうかを反転する。このとき $s$ は $s-\sum_{a_i<0}a_i$ に、$\sum a_i$ は $\sum\lvert a_i\rvert$ に対応する。
 
 ## 使用例
 
@@ -88,7 +88,7 @@ SubsetSumFromFrequency(vc<T> freq, int smax)
 
 ##### 計算量
 
-$V=\min(smax+1,|freq|)$ とする。また、
+$V=\min(smax+1,\lvert freq\rvert)$ とする。また、
 
 $$
 s=\min\left(smax,\sum_{v=1}^{V-1}v\min\left(\mathrm{freq}[v],\left\lfloor\frac{smax}{v}\right\rfloor\right)\right)
@@ -151,13 +151,13 @@ SubsetSum(vc<T> a, int smax)
 
 ##### 計算量
 
-$n=|a|$、$L=smax-\sum_{a_i<0}a_i$ とする。$L<0$ の場合は $O(n)$ である。以下では $L\geq 0$ とする。$|a_i|$ の頻度を $c_v$ としたとき、
+$n=\lvert a\rvert$、$L=smax-\sum_{a_i<0}a_i$ とする。$L<0$ の場合は $O(n)$ である。以下では $L\geq 0$ とする。$\lvert a_i\rvert$ の頻度を $c_v$ としたとき、
 
 $$
 s=\min\left(L,\sum_{v=1}^{L}v\min\left(c_v,\left\lfloor\frac{L}{v}\right\rfloor\right)\right)
 $$
 
-とする。$|a_i|$ の頻度から生成される塊の総数を $m$ とする。
+とする。$\lvert a_i\rvert$ の頻度から生成される塊の総数を $m$ とする。
 
 - $O\left(n\log n+s+m\left\lceil s/w\right\rceil\right)$
 
@@ -179,7 +179,7 @@ bool exists(int x)
 const DynamicBitset &reachable()
 ```
 
-bit $i$ が、和 $\mathrm{min\_sum}()+i$ を作れるかを表す bitset への参照を返す。bitset は問い合わせ上限と使用可能な要素の総和の小さい方までを持つ。計算対象となる和が存在しない場合は、長さ $0$ の bitset を返す。
+bit $i$ が、和 $\mathrm{min\\_sum}()+i$ を作れるかを表す bitset への参照を返す。bitset は問い合わせ上限と使用可能な要素の総和の小さい方までを持つ。計算対象となる和が存在しない場合は、長さ $0$ の bitset を返す。
 
 ##### 計算量
 
@@ -191,7 +191,7 @@ bit $i$ が、和 $\mathrm{min\_sum}()+i$ を作れるかを表す bitset への
 ll min_sum()
 ```
 
-負要素の総和を返す。`reachable()` の bit $i$ に対応する和は $\mathrm{min\_sum}()+i$ である。
+負要素の総和を返す。`reachable()` の bit $i$ に対応する和は $\mathrm{min\\_sum}()+i$ である。
 
 ##### 計算量
 
@@ -203,7 +203,7 @@ ll min_sum()
 optional<vc<bool>> answer(int x) const
 ```
 
-元配列の各要素を使用するかを表す長さ $|a|$ の `vc<bool>` を返す。和 $x$ を作れない場合は `nullopt`。元配列が空で和 $0$ を作れる場合は、値ありの空配列を返す。
+元配列の各要素を使用するかを表す長さ $\lvert a\rvert$ の `vc<bool>` を返す。和 $x$ を作れない場合は `nullopt`。元配列が空で和 $0$ を作れる場合は、値ありの空配列を返す。
 
 ##### 計算量
 

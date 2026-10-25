@@ -105,7 +105,7 @@ $v$ がソート済みで、後ろの引数がデフォルトの場合、
 ```
 
 - (1)：整数の二分探索。整数 `T` から `bool` への関数 $\mathrm{judge}$ が $\mathrm{judge}(\mathrm{ok}) = \mathrm{true}, \mathrm{judge}(\mathrm{ng}) = \mathrm{false}$ を満たすとする。このとき $\mathrm{ok}$ と $\mathrm{ng}$ の間にある整数 $\alpha, \beta$ であって $\mathrm{judge}(\alpha) = \mathrm{true}, \mathrm{judge}(\beta) = \mathrm{false}, \lvert \alpha - \beta \rvert = 1$ を満たすものが存在する（特に $\mathrm{judge}$ が単調な場合は唯一である）。そのような $\alpha$ を一つ返す。
-- (2)：実数の二分探索。実数 `T` から `bool` への関数 $\mathrm{judge}$ が $\mathrm{judge}(\mathrm{ok}) = \mathrm{true}, \mathrm{judge}(\mathrm{ng}) = \mathrm{false}$ を満たすとする。$1$ 回の反復で、$\mathrm{judge}(\mathrm{ok}) = \mathrm{true}, \mathrm{judge}(\mathrm{ng}) = \mathrm{false}$ を満たしたまま $\lvert \mathrm{ok} - \mathrm{ng} \rvert$ を半分にできる。この反復を $\mathrm{iteration\_count}$ 回繰り返す。
+- (2)：実数の二分探索。実数 `T` から `bool` への関数 $\mathrm{judge}$ が $\mathrm{judge}(\mathrm{ok}) = \mathrm{true}, \mathrm{judge}(\mathrm{ng}) = \mathrm{false}$ を満たすとする。$1$ 回の反復で、$\mathrm{judge}(\mathrm{ok}) = \mathrm{true}, \mathrm{judge}(\mathrm{ng}) = \mathrm{false}$ を満たしたまま $\lvert \mathrm{ok} - \mathrm{ng} \rvert$ を半分にできる。この反復を $\mathrm{iteration\\_count}$ 回繰り返す。
 
 ##### 制約
 
@@ -120,7 +120,7 @@ $v$ がソート済みで、後ろの引数がデフォルトの場合、
 $\mathrm{judge}(x)$ の実行にかかる時間を $T$ として
 
 - (1)：$O(T \log \lvert \mathrm{ok} - \mathrm{ng} \rvert)$
-- (2)：$O(T \cdot \mathrm{iteration\_count})$
+- (2)：$O(T \cdot \mathrm{iteration\\_count})$
 
 #### expsearch
 

@@ -44,7 +44,7 @@ mint value = p_recursive_nth(a, c, 1'000'000);
 
 ## 詳細なドキュメント
 
-以下、$r=|c|-1$, $d=\max_j\deg c_j$ とし、定数・零多項式だけの場合は $d=0$ とする。
+以下、$r=\lvert c\rvert-1$, $d=\max_j\deg c_j$ とし、定数・零多項式だけの場合は $d=0$ とする。
 計算量は体上の演算を $O(1)$ として数える。
 
 #### guess_p_recursive
@@ -55,7 +55,7 @@ optional<vc<FormalPowerSeries<mint>>> guess_p_recursive(
     const vc<mint>& a, int max_order = 10, int max_degree = 10);
 ```
 
-$N=|a|$, $R=\texttt{max\_order}$, $D=\texttt{max\_degree}$、法を $p$ とする。
+$N=\lvert a\rvert$, $R=\texttt{max\\_order}$, $D=\texttt{max\\_degree}$、法を $p$ とする。
 $r=1,\ldots,R$ の順に、次数 $d\le D$ かつ $d<p$ の漸化式を探す。
 各候補は $N-r\ge(r+1)(d+1)$ を満たす範囲で探索し、$0\le n<N-r$ のすべての式を使う。
 同じ位数では係数多項式の最大次数が最小の候補を優先する。候補がなければ `nullopt` を返す。
@@ -111,13 +111,13 @@ $$a_{n+r}=-\frac{\sum_{j=0}^{r-1}c_j(n)a_{n+j}}{c_r(n)}$$
 ##### 制約
 
 - `mint` は素数を法とする modint
-- $|c|\ge2$, $\texttt{size}\ge0$
-- 項を追加する場合は $|a|\ge r$
-- 追加する各項について、$|a|-r\le n<\texttt{size}-r$ で $c_r(n)\ne0$
+- $\lvert c\rvert\ge2$, $\texttt{size}\ge0$
+- 項を追加する場合は $\lvert a\rvert\ge r$
+- 追加する各項について、$\lvert a\rvert-r\le n<\texttt{size}-r$ で $c_r(n)\ne0$
 
 ##### 計算量
 
-- $N=\max(0,\texttt{size}-|a|)$ として $O\bigl(|a|+Nr(d+1)\bigr)$
+- $N=\max(0,\texttt{size}-\lvert a\rvert)$ として $O\bigl(\lvert a\rvert+Nr(d+1)\bigr)$
 
 #### p_recursive_nth
 
@@ -128,7 +128,7 @@ mint p_recursive_nth(
 ```
 
 $0$-indexed の第 $k$ 項を返す。`k < a.size()` の場合は `a[k]`。
-それ以外では、$l=|a|-r$ から $k-r$ までの遷移を行う。
+それ以外では、$l=\lvert a\rvert-r$ から $k-r$ までの遷移を行う。
 
 状態 $(a_n,\ldots,a_{n+r-1})^\mathsf{T}$ の遷移行列について、分母 $c_r(n)$ と多項式行列の分子をそれぞれまとめて計算する。
 法を $p$ とすると係数の評価値は周期 $p$ を持つため、$k\ge p$ も周期の積の累乗で処理する。
@@ -136,15 +136,15 @@ $0$-indexed の第 $k$ 項を返す。`k < a.size()` の場合は `a[k]`。
 ##### 制約
 
 - `mint` は素数を法とする modint で、[畳み込み](../convolution/convolution.md) に対応するもの
-- $|c|\ge2$, $k\ge0$
-- 未知の項を求める場合は $|a|\ge r$
-- 必要な各遷移 $|a|-r\le n\le k-r$ で $c_r(n)\ne0$
+- $\lvert c\rvert\ge2$, $k\ge0$
+- 未知の項を求める場合は $\lvert a\rvert\ge r$
+- 必要な各遷移 $\lvert a\rvert-r\le n\le k-r$ で $c_r(n)\ne0$
 - 計算する範囲で、対象の数列が与えた漸化式を満たす
 
 ##### 計算量
 
 - 既知の項は $O(1)$
-- $d=0$ は $N=k-|a|+1$ として $O(r^3\log N)$
+- $d=0$ は $N=k-\lvert a\rvert+1$ として $O(r^3\log N)$
 - $d>0$ は $r$ 次正方行列の [polynomial_matrix_product](polynomial_matrix_product.md) と同じ。通常、$T=\min(N,p)$, $L=\sqrt{dT}$ として $O\bigl(r^2d^2+r^2M(L)+r^3L+r^3\log N\bigr)$。$M(L)$ は長さ $O(L)$ の畳み込みの計算量
 
 短い区間や補間に十分な点が取れない場合の計算量は、リンク先の直接計算の項を参照。

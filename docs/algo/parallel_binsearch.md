@@ -2,7 +2,7 @@
 
 ## 概要
 
-$q$ 個の関数 $\mathrm{judge}_i\colon$ `T` $\to$ `bool` があり、いずれも $\mathrm{judge}_i(\textrm{init\_ok}) = \mathrm{true}$, $\mathrm{judge}_i(\textrm{init\_ng}) = \mathrm{false}$ を満たしているとする。このとき各 $i$ について $\mathrm{judge}_i(\mathrm{ok}_i) = \mathrm{true}$, $\mathrm{judge}_i(\mathrm{ng}_i) = \mathrm{false}$, $\lvert \mathrm{ok}_i - \mathrm{ng}_i \rvert = 1$ を満たす $\mathrm{ok}_i, \mathrm{ng}_i$ を求めたい。
+$q$ 個の関数 $\mathrm{judge}_i\colon$ `T` $\to$ `bool` があり、いずれも $\mathrm{judge}_i(\textrm{init\\_ok}) = \mathrm{true}$, $\mathrm{judge}_i(\textrm{init\\_ng}) = \mathrm{false}$ を満たしているとする。このとき各 $i$ について $\mathrm{judge}_i(\mathrm{ok}_i) = \mathrm{true}$, $\mathrm{judge}_i(\mathrm{ng}_i) = \mathrm{false}$, $\lvert \mathrm{ok}_i - \mathrm{ng}_i \rvert = 1$ を満たす $\mathrm{ok}_i, \mathrm{ng}_i$ を求めたい。
 
 これは、$q$ 個の $\mathrm{judge}_i(x_i)$ たちをまとめて求めることが高速にできればよい。（$1$ 個ずつ求めることが可能な場合はそもそも普通の二分探索でよいので、このパートの解法は自然と クエリ先読み + イベントソート のようになる。）
 
@@ -41,7 +41,7 @@ pair<vc<T>, vc<T>> parallel_binsearch(int q, auto judge, T init_ok, T init_ng)
 
 `judge` の計算量が $O(q + T)$ であるとき
 
-- $O((q + T)\log \lvert \textrm{init\_ok} - \textrm{init\_ng} \rvert)$
+- $O((q + T)\log \lvert \textrm{init\\_ok} - \textrm{init\\_ng} \rvert)$
 
 #### parallel_binsearch_real
 
@@ -56,7 +56,7 @@ vc<T> parallel_binsearch_real<T = ld>(
 ##### 制約
 
 - 各判定は区間内で単調であり、`init_ok` は真、`init_ng` は偽となる
-- $0 \leq \mathrm{iteration\_count}$
+- $0 \leq \mathrm{iteration\\_count}$
 
 ##### 計算量
 

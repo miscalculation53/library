@@ -39,7 +39,7 @@ https://atcoder.jp/contests/abc260/editorial/4434
 
 $F$ が $A(F) = 0$ を満たしているとする。$\hat{F} = F \bmod x^d$ とすると
 
-$F \equiv \hat{F} - \dfrac{A(\hat{F})}{A'(\hat{F})} \pmod {x^{2d}}$
+$F \equiv \hat{F} - \dfrac{A(\hat{F})}{A^{\prime}(\hat{F})} \pmod {x^{2d}}$
 
 が成り立つ。これを利用して精度を倍々にしていく。
 
@@ -47,13 +47,13 @@ $A(F)$ をいい感じに定めるとニュートン法の式が導出できる�
 
 **inv**
 
-$g = f^{-1}$ を求めたい。$A(g) = \dfrac{1}{g} - f$ とすると $A'(g) = -\dfrac{1}{g^2}$ であるから
+$g = f^{-1}$ を求めたい。$A(g) = \dfrac{1}{g} - f$ とすると $A^{\prime}(g) = -\dfrac{1}{g^2}$ であるから
 
 $g \equiv \hat{g} - \dfrac{\frac{1}{\hat{g}}-f}{-\frac{1}{\hat{g}^2}} = 2\hat{g} - f\hat{g}^2 \pmod {x^{2d}}$
 
 **exp**
 
-$g = \exp f$ を求めたい。$A(g) = \log g - f$ とすると $A'(g) = \dfrac{1}{g}$ であるから
+$g = \exp f$ を求めたい。$A(g) = \log g - f$ とすると $A^{\prime}(g) = \dfrac{1}{g}$ であるから
 
 $g \equiv \hat{g} - \dfrac{\log \hat{g} - f}{\frac{1}{\hat{g}}} = \hat{g}(1 - \log \hat{g} + f) \pmod {x^{2d}}$
 
@@ -61,13 +61,13 @@ NTT が使える大きい入力では、`exp` と `sqrt` はブロックごと�
 
 #### log
 
-$\log f = \displaystyle \int \frac{f'}{f}$
+$\log f = \displaystyle \int \frac{f^{\prime}}{f}$
 
 #### pow
 
 $[x^0] f = 1$ のとき、$f^k = \exp \log f^k = \exp(k \log f)$
 
-$[x^0] f \coloneqq a_0 \neq 0$ のとき、$f^k = \left(\dfrac{f}{a_0}\right)^k \cdot a_0^k$
+$[x^0] f \mathrel{:=} a_0 \neq 0$ のとき、$f^k = \left(\dfrac{f}{a_0}\right)^k \cdot a_0^k$
 
 $f = x^\ell g, [x^0] g \neq 0$ のとき、$f^k = x^{k\ell} g^k$
 
@@ -79,18 +79,18 @@ sqrt も $1/2$ 乗だと思って同様に
 
 `pow` の指数 $0,1,-1$ は直接処理し、$2\le k\le8$ は打ち切った積の繰り返しで求める。`exp` は最初の非零次数を $d$ とすると、$2d\ge n$ の場合に $1+f$ を直接返す。逆数・平方根・累乗も $f=c+O(x^d)$, $3d\ge n$ の場合は二次までの展開で求める。
 
-乗算は定義通り、除算は乗算の逆演算として計算する。疎な `log` は $h=x(\log f)'$ とおき、$fh=xf'$ の係数比較から求める。非零次数の最大公約数を $g$ とすると、$f(x)=F(x^g)$ として次数を圧縮し、計算後に元の次数へ戻す。
+乗算は定義通り、除算は乗算の逆演算として計算する。疎な `log` は $h=x(\log f)^{\prime}$ とおき、$fh=xf^{\prime}$ の係数比較から求める。非零次数の最大公約数を $g$ とすると、$f(x)=F(x^g)$ として次数を圧縮し、計算後に元の次数へ戻す。
 
 exp, pow は疎な微分方程式を使う。$[x^0]a = 1$ を満たす $a(x), b(x)$ が与えられたとき
 
-$a(x) F'(x) + b(x) F(x) = 0, [x^0] F(x) = 1$
+$a(x) F^{\prime}(x) + b(x) F(x) = 0, [x^0] F(x) = 1$
 
 を満たす $F$ の先頭 $n$ 項を求める。係数の法は素数、$0\le n\le\bmod$ とする。この範囲では一意に決まり、$O(nk)$ 時間で計算できる（$k$ は $a, b$ の非零係数の個数）。
 
-- $F = \exp f$ のとき $F' = f' \exp f = f' F$ なので $a = 1, b = -f'$ とすればよい。
-- $F = f^k$ のとき $F' = k f' f^{k-1}$ より $fF' = kf'F$ なので $a = f, b = -kf'$ とすればよい（$[x^0] f = 1$ となるように適当に調整は必要）。
+- $F = \exp f$ のとき $F^{\prime} = f^{\prime} \exp f = f^{\prime} F$ なので $a = 1, b = -f^{\prime}$ とすればよい。
+- $F = f^k$ のとき $F^{\prime} = k f^{\prime} f^{k-1}$ より $fF^{\prime} = kf^{\prime}F$ なので $a = f, b = -kf^{\prime}$ とすればよい（$[x^0] f = 1$ となるように適当に調整は必要）。
 
-ほかにもたとえば $F = f^n g^m$ や $F = \exp(f/g)$ などが疎な微分方程式を使って計算できる（ https://maspypy.com/%E5%A4%9A%E9%A0%85%E5%BC%8F%E3%83%BB%E5%BD%A2%E5%BC%8F%E7%9A%84%E3%81%B9%E3%81%8D%E7%B4%9A%E6%95%B0-%E9%AB%98%E9%80%9F%E3%81%AB%E8%A8%88%E7%AE%97%E3%81%A7%E3%81%8D%E3%82%8B%E3%82%82%E3%81%AE#toc45 ）。必要に応じて対数微分法 $(\log F)' = \dfrac{F'}{F}$ を使うと導出しやすい。疎な微分方程式は `diff_eq` として実装している。（素直にやると $O(nk_1k_2)$ になるやつが $O(n(k_1+k_2))$ になるというのもあるらしいが一旦放置で……）
+ほかにもたとえば $F = f^n g^m$ や $F = \exp(f/g)$ などが疎な微分方程式を使って計算できる（ https://maspypy.com/%E5%A4%9A%E9%A0%85%E5%BC%8F%E3%83%BB%E5%BD%A2%E5%BC%8F%E7%9A%84%E3%81%B9%E3%81%8D%E7%B4%9A%E6%95%B0-%E9%AB%98%E9%80%9F%E3%81%AB%E8%A8%88%E7%AE%97%E3%81%A7%E3%81%8D%E3%82%8B%E3%82%82%E3%81%AE#toc45 ）。必要に応じて対数微分法 $(\log F)^{\prime} = \dfrac{F^{\prime}}{F}$ を使うと導出しやすい。疎な微分方程式は `diff_eq` として実装している。（素直にやると $O(nk_1k_2)$ になるやつが $O(n(k_1+k_2))$ になるというのもあるらしいが一旦放置で……）
 
 ## 詳細なドキュメント
 
@@ -219,7 +219,7 @@ mint eval(mint x)
 (2) fps integ()
 ```
 
-- (1)：$\displaystyle f(x) = \sum_{i=0}^n a_i x^i$ の微分 $\displaystyle f'(x) = \sum_{i=1}^n i a_i x^{i-1}$ を返す。
+- (1)：$\displaystyle f(x) = \sum_{i=0}^n a_i x^i$ の微分 $\displaystyle f^{\prime}(x) = \sum_{i=1}^n i a_i x^{i-1}$ を返す。
 - (2)：$\displaystyle f(x) = \sum_{i=0}^n a_i x^i$ の積分 $\displaystyle \int f(x) \mathrm{d}x = \sum_{i=0}^n \frac{a_i}{i+1} x^{i+1}$ を返す（定数項は $0$ とする）。
 
 ##### 制約
@@ -261,7 +261,7 @@ mint eval(mint x)
 入力と出力の長さの最大値を $N$、入力の非零係数の個数を $c$ とする。
 
 - $O(N \log N)$。疎な場合は $O(N(c+1))$
-- `pow` はさらに $O(\log |k|)$、`sqrt` はさらに $O(\log^2 \bmod)$
+- `pow` はさらに $O(\log \lvert k\rvert)$、`sqrt` はさらに $O(\log^2 \bmod)$
 
 #### exp_sparse, pow_sparse, sqrt_sparse
 
@@ -278,7 +278,7 @@ mint eval(mint x)
 入力と出力の長さの最大値を $N$、入力の非零係数の個数を $c$ とする。
 
 - $O(N(c+1))$
-- `pow_sparse` はさらに $O(\log |k|)$、`sqrt_sparse` はさらに $O(\log^2 \bmod)$
+- `pow_sparse` はさらに $O(\log \lvert k\rvert)$、`sqrt_sparse` はさらに $O(\log^2 \bmod)$
 
 #### mul_bin, div_bin
 

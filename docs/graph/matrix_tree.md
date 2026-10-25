@@ -100,7 +100,7 @@ mint count_eularian_circuits(vvc<I> g)
 
 ##### 計算量
 
-- 行列式の計算量に加え、階乗の前計算 $O(\max\{入次数\})$
+- 行列式の計算量に加え、階乗の前計算 $O(\max\lbrace入次数\rbrace)$
 
 #### count_eularian_trails
 
@@ -112,4 +112,4 @@ mint count_eularian_trails(vvc<I> g)
 
 ##### 計算量
 
-- 行列式の計算量に加え、階乗の前計算 $O(\max\{入次数\})$
+- 行列式の計算量に加え、階乗の前計算 $O(\max\lbrace入次数\rbrace)$

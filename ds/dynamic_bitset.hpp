@@ -105,6 +105,26 @@ private:
     };
 
     int lw = l / word_bits, rw = (r - 1) / word_bits;
+    if constexpr (op == 2 && is_same_v<F, nullptr_t>)
+    {
+      if (this != &b && lw < rw)
+      {
+        apply_word(lw);
+        apply_word(rw);
+        // 完全なワードでは区間端のマスクを省く。
+        int si = bl + (lw + 1) * word_bits - l;
+        int sw = si / word_bits, sb = si % word_bits;
+        if (sb == 0)
+          repi(w, lw + 1, rw) dat[w] |= b.dat[sw++];
+        else
+          repi(w, lw + 1, rw)
+          {
+            dat[w] |= (b.dat[sw] >> sb) | (b.dat[sw + 1] << (word_bits - sb));
+            sw++;
+          }
+        return *this;
+      }
+    }
     if (this == &b && bl < l && l < bl + r - l)
       repi(w, rw, lw - 1, -1) apply_word(w);
     else

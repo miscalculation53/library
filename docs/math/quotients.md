@@ -15,7 +15,7 @@
     &\iff \left\lfloor \left\lfloor\frac{n}{y+1}\right\rfloor^{1/d} \right\rfloor \lt x \leq \left\lfloor \left\lfloor\frac{n}{y}\right\rfloor^{1/d} \right\rfloor
   \end{aligned}$
 
-  $(y, l, r)$ から $(y', l', r')$ を得るには、$r' = l$ とし、$y' = \left\lfloor \dfrac{n}{r'^d} \right\rfloor$ を計算し、$l'$ を上式から求める。
+  $(y, l, r)$ から $(y^{\prime}, l^{\prime}, r^{\prime})$ を得るには、$r^{\prime} = l$ とし、$y^{\prime} = \left\lfloor \dfrac{n}{{r^{\prime}}^d} \right\rfloor$ を計算し、$l^{\prime}$ を上式から求める。
 
   切り上げ版の導出は
 

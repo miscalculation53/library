@@ -202,6 +202,6 @@ vc<tuple<I, I, Obj>> add_del_to_span(
 
 ##### 計算量
 
-$m = \lvert\mathrm{time\_obj}\rvert$ として
+$m = \lvert\mathrm{time\\_obj}\rvert$ として
 
 - $O(m\log m)$

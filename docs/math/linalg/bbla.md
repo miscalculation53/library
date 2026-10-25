@@ -85,7 +85,7 @@ $S^n$ から $S^n$ への線型写像に対し、最小多項式を求める。
 bbla::solve<F>(vc<F::S> y, auto linear_map, auto random_sample)
 ```
 
-$S^n$ から $S^n$ への正則な線型写像 $\mathrm{linear\_map}$ に対し、線型方程式 $\mathrm{linear\_map}(x) = y$ の（唯一の）解を求める。
+$S^n$ から $S^n$ への正則な線型写像 $\mathrm{linear\\_map}$ に対し、線型方程式 $\mathrm{linear\\_map}(x) = y$ の（唯一の）解を求める。
 
 使い方：
 

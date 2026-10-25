@@ -42,7 +42,7 @@ auto by_key = stable_argsort(records, [](const auto& x) { return x.first; });
 
 ##### 計算量
 
-$n=|a|$ とし、比較・キー取得を $O(1)$ とする。
+$n=\lvert a\rvert$ とし、比較・キー取得を $O(1)$ とする。
 
 - `vector` の固定幅整数キー（`bool` を除き、`i128`, `u128` を含む）：$O(n)$
 - その他：$O(n\log n)$
