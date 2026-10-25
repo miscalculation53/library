@@ -18,6 +18,6 @@ int main()
   {
     vc<string> row;
     repi(t, N) row.eb(dist[s][t] == INF ? "INF" : to_string(dist[s][t]));
-    PRINTV(row);
+    PRINT(row);
   }
 }

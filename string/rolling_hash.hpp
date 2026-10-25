@@ -368,9 +368,9 @@ public:
 };
 
 template <class Sequence, enable_if_t<is_rolling_hash_sequence<decay_t<Sequence>>, int> = 0>
-bool operator==(string_view lhs, const Sequence &rhs) { return rhs == lhs; }
+bool operator==(string_view lhs, const Sequence &rhs) { return rhs.operator==(lhs); }
 template <class Sequence, enable_if_t<is_rolling_hash_sequence<decay_t<Sequence>>, int> = 0>
-bool operator!=(string_view lhs, const Sequence &rhs) { return rhs != lhs; }
+bool operator!=(string_view lhs, const Sequence &rhs) { return rhs.operator!=(lhs); }
 template <class Sequence, enable_if_t<is_rolling_hash_sequence<decay_t<Sequence>>, int> = 0>
 bool operator<(string_view lhs, const Sequence &rhs) { return rhs > lhs; }
 template <class Sequence, enable_if_t<is_rolling_hash_sequence<decay_t<Sequence>>, int> = 0>

@@ -1,4 +1,6 @@
 #define PROBLEM "https://yukicoder.me/problems/no/60"
+// 答えは 10^9 以下の整数。公式出力の改行の有無に合わせ、数値を誤差ゼロで比較する。
+#define ERROR 0
 
 #define SINGLE_TESTCASE
 // #define MULTI_TESTCASE
@@ -41,10 +43,7 @@ void main2()
     if (res.at(x).at(y) > 0)
       ans += res.at(x).at(y);
   }
-  if (N <= 7)
-    WRITE(ans);
-  else 
-    PRINT(ans);
+  PRINT(ans);
 }
 
 void test() {}

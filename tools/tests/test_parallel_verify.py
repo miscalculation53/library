@@ -93,6 +93,31 @@ class ParallelVerifyTest(unittest.TestCase):
         self.assertEqual(completed.returncode, 1)
         self.assertEqual(failed, ["verify/a.test.cpp"])
 
+    def test_run_verify_keeps_next_compilation_errors_after_ci_failure(self):
+        command = [
+            sys.executable,
+            "-c",
+            (
+                "print('[FAILURE] TLE'); "
+                "print('large failed test output'); "
+                "print('INFO:onlinejudge_verify.languages.cplusplus:$ g++ next.cpp'); "
+                "print('next.cpp:3: error: ambiguous function call'); "
+                "print('::error file=verify/next.test.cpp::failed to verify'); "
+                "raise SystemExit(1)"
+            ),
+        ]
+        output = io.StringIO()
+        with mock.patch.dict(os.environ, {"GITHUB_ACTIONS": "true"}), mock.patch.object(
+            sys, "stdout", output
+        ):
+            completed, failed = parallel_verify.run_verify(command)
+
+        log = output.getvalue()
+        self.assertNotIn("large failed test output", log)
+        self.assertIn("next.cpp:3: error: ambiguous function call", log)
+        self.assertEqual(completed.returncode, 1)
+        self.assertEqual(failed, ["verify/next.test.cpp"])
+
     def test_merge_requires_exactly_one_result_per_verification_file(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

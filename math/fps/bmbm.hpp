@@ -21,6 +21,7 @@ pair<FormalPowerSeries<mint>, FormalPowerSeries<mint>> linear_recurrence_gf(cons
   F q = -F(c);
   q[0] = 1;
   F p = (F(a) * q).resized(d);
+  q.shrink();
   return {p, q};
 }
 

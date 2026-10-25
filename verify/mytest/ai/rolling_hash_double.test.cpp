@@ -46,6 +46,10 @@ void test_sequences()
   chmin(cat, view);
   assert(cat.content() == "0cdeab");
   assert(cat == string("0cdeab"));
+  assert(string("0cdeab") == cat);
+  assert(cat == string_view("0cdeab") && string_view("0cdeab") == cat);
+  assert(!(cat != "0cdeab") && !("0cdeab" != cat));
+  assert(cat != string("other") && string("other") != cat);
 }
 
 int main()

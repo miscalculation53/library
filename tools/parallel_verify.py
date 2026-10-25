@@ -139,7 +139,10 @@ def run_verify(command: List[str]) -> tuple[subprocess.CompletedProcess, List[st
     assert process.stdout is not None
     try:
         for line in process.stdout:
-            if line.startswith("INFO:onlinejudge_verify.verify:verify:"):
+            if line.startswith((
+                "INFO:onlinejudge_verify.verify:verify:",
+                "INFO:onlinejudge_verify.languages.cplusplus:",
+            )):
                 suppress_failure_details = False
                 suppression_reported = False
             match = pattern.match(line)
