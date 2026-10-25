@@ -7,7 +7,7 @@
 
 ## テスト
 
-`requirements.txt` の依存を入れた Python 環境と Node.js を使い、ライブラリのルートで実行する。
+`requirements.txt` の依存を入れた Python 3.11.5 以上の環境と Node.js を使い、ライブラリのルートで実行する。
 コンパイルを含むテストでは GNU C++ も使う。
 
 `oj-verify` の四倍精度リンクには `.verify-helper/quadmath.specs` を使う。
