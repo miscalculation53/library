@@ -49,7 +49,7 @@ radix_sort(records, [](const auto &x) { return x.first; });
 
 ##### 計算量
 
-$n=|a|$、キーのビット幅を $w$、1 回に処理するビット数を $d$ とする。
+$n=\lvert a\rvert$、キーのビット幅を $w$、1 回に処理するビット数を $d$ とする。
 
 - $O(n + \lceil w/d\rceil(n+2^d))$。キー取得の時間は別に加算する
 - 固定幅の整数型では $O(n)$

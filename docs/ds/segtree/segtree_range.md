@@ -4,7 +4,7 @@
 
 セグ木のノード番号・区間・点の対応と、区間分解・祖先の列挙を扱う。
 
-`SegmentTreeRange seg(n)` で列の長さを指定する。葉の数を $s = \operatorname{bit\_ceil}(n)$ とし、根は `1`、ノード番号は $[1, 2s)$、点 $p$ の葉は $s+p$。`SegmentTree` と同じ番号付けを使う。$n=0$ のときは $s=1$。
+`SegmentTreeRange seg(n)` で列の長さを指定する。葉の数を $s = \operatorname{bit\\_ceil}(n)$ とし、根は `1`、ノード番号は $[1, 2s)$、点 $p$ の葉は $s+p$。`SegmentTree` と同じ番号付けを使う。$n=0$ のときは $s=1$。
 
 構造体と列挙範囲は定数個の整数を保持する。範囲 for で順次列挙でき、必要に応じて `to_v()` で配列を作れる。
 

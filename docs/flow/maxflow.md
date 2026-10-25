@@ -133,7 +133,7 @@ Dinic の打切り時は探索を戻してフロー保存則を満たし、既�
 ##### 制約
 
 - $0 \leq s,t<n$、$s\ne t$
-- $0 \leq \mathrm{flow\_limit}$
+- $0 \leq \mathrm{flow\\_limit}$
 - 上限を省略して最大流を求める場合、今回追加で流せる最大流量が `Cap` に収まる
 
 ##### 計算量
@@ -184,7 +184,7 @@ void change_edge(int i, Cap new_cap, Cap new_flow);
 ##### 制約
 
 - $0\leq i<m$
-- $0\leq \mathrm{new\_flow}\leq \mathrm{new\_cap}$
+- $0\leq \mathrm{new\\_flow}\leq \mathrm{new\\_cap}$
 
 ##### 計算量
 

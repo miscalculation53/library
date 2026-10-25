@@ -46,11 +46,11 @@ BinomialPrefixSumSlider<mint> slider(int max_n = 0)
 
 ##### 制約
 
-- $0 \leq \mathrm{max\_n} < p$
+- $0 \leq \mathrm{max\\_n} < p$
 
 ##### 計算量
 
-- $O(\mathrm{max\_n})$
+- $O(\mathrm{max\\_n})$
 
 #### lpp / lmm / rpp / rmm
 
@@ -96,4 +96,4 @@ void set(int nl, int nr)
 
 移動前の状態を $(n,k)$ として、
 
-- $O(1+|\mathrm{nl}-n|+|\mathrm{nr}-k|)$。テーブルの追加計算を除く。
+- $O(1+\lvert \mathrm{nl}-n\rvert+\lvert \mathrm{nr}-k\rvert)$。テーブルの追加計算を除く。

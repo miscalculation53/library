@@ -12,7 +12,7 @@ f(x + c) &= \sum_{i = 0}^{n-1} a_i (x + c)^i \\\\
 &= \sum_{j = 0}^{n - 1} \left( \sum_{i = j}^{n - 1} a_i i! \cdot \frac{c^{i - j}}{(i-j)!} \right) \frac{x^j}{j!}
 \end{aligned}$
 
-となっているので、$A_i = a_i i!, C_i = \dfrac{c^i}{i!}$ とすると $\displaystyle b_j = \sum_{i = j}^{n - 1} A_i C_{i - j}$ である。ここで $A$ を反転した列 $\overline{A}$ を考えると（つまり $\overline{A}_i = A_{n - 1 - i}$）、$\displaystyle b_j = \sum_{i = j}^{n - 1} \overline{A}_{n - 1 - i} C_{i - j} = (\overline{A} * C)_{n-1-j}$ となるのでこの畳み込みを計算すればよい。
+となっているので、$A_i = a_i i!, C_i = \dfrac{c^i}{i!}$ とすると $\displaystyle b_j = \sum_{i = j}^{n - 1} A_i C_{i - j}$ である。ここで $A$ を反転した列 $\overline{A}$ を考えると（つまり $\overline{A}\_i = A\_{n - 1 - i}$）、$\displaystyle b_j = \sum_{i = j}^{n - 1} \overline{A}\_{n - 1 - i} C\_{i - j} = (\overline{A} \ast C)_{n-1-j}$ となるのでこの畳み込みを計算すればよい。
 
 ## 使用例
 

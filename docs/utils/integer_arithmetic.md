@@ -43,7 +43,7 @@ template <class T>
 constexpr make_unsigned_ext_t<T> unsigned_abs(T x)
 ```
 
-$|x|$ を対応する unsigned の型で返す。signed の最小値の絶対値も表せる。
+$\lvert x\rvert$ を対応する unsigned の型で返す。signed の最小値の絶対値も表せる。
 
 ##### 制約
 

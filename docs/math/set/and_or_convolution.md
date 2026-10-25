@@ -23,11 +23,11 @@ $\displaystyle c(u) = \sum_{u = s \cup t} a(s)b(t)$
 $u \subseteq s \cap t \iff u \subseteq s$ かつ $u \subseteq t$
 
 $\begin{aligned}
-\zeta' c(u) &= \sum_{u \subseteq v} c(v) \\\\  
+\zeta^{\prime} c(u) &= \sum_{u \subseteq v} c(v) \\\\  
 &= \sum_{u \subseteq v} \sum_{v = s\cap t} a(s)b(t) \\\\  
 &= \sum_{u \subseteq s \cap t} a(s)b(t) \\\\  
 &= \sum_{u \subseteq s} a(s) \sum_{u \subseteq t} b(t) \\\\  
-&= \zeta' a(u) \zeta' b(u)
+&= \zeta^{\prime} a(u) \zeta^{\prime} b(u)
 \end{aligned}$
 
 #### or 畳み込み

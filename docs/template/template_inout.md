@@ -184,7 +184,7 @@ READ(A);
 
 - `FAST_IO`：`fread` / `fwrite` による高速入出力。入力・出力にそれぞれ 128 KiB のバッファを使う。`LOCAL` では通常の入出力に切り替わる。
 - `FAST_CIO`：`cin` / `cout` を使う。`template_main.hpp` が `cin.tie(nullptr); ios::sync_with_stdio(false);` を設定する。
-- `INTERACTIVE`：`cin` / `cout` を使い、`PRINT` ごとに改行して flush する。
+- `INTERACTIVE`：`LOCAL` 以外では `FAST_CIO` と同じ入出力高速化を設定し、`PRINT` ごとに改行して flush する。
 - 指定なし、または `LOCAL`：`cin` / `cout` を使う。
 
 `INTERACTIVE` 以外では、`PRINT` の改行に `'\n'` を使う。

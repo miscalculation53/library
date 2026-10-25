@@ -92,7 +92,7 @@ auto candidates(int j)
 
 ##### 制約
 
-- $0 \leq j < \mathrm{len\_of\_lis}()$
+- $0 \leq j < \mathrm{len\\_of\\_lis}()$
 
 ##### 計算量
 

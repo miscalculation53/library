@@ -126,7 +126,7 @@ auto enumerate_completely_multiplicative(int n, const F &f_primepower);
 
 整数 $a$ を環に写す時間を $C(a)$ とする。
 通常の数値型の `RingAddSubMul`・`FieldAddSubMulDiv`、および `RingXorAnd` では $C(a)=O(1)$。
-一般の環では $C(a)=O(\log |a|)$。
+一般の環では $C(a)=O(\log \lvert a\rvert)$。
 
 | ラムダ式 | 素数冪一つあたりの時間 |
 | --- | --- |

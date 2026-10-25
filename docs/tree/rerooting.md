@@ -6,7 +6,7 @@ https://trap.jp/post/1702/
 
 可換モノイドの演算 $\oplus$ と、関数 $\mathrm{putv}_v(\mathrm{val}), \mathrm{pute}_e(\mathrm{val})$ があるとする。根を $r$ として、各頂点 $v$ について、次の $\mathrm{res}_r[\cdot]$ を計算する木 DP を考える：
 
-$\displaystyle \mathrm{res}_r[v] = \mathrm{putv}_v\left(\bigoplus_{c\in \mathrm{children}(v)} \mathrm{pute}_{(v, c)}(\mathrm{res}_r[c]) \right)$
+$\displaystyle \mathrm{res}\_r[v] = \mathrm{putv}\_v\left(\bigoplus\_{c\in \mathrm{children}(v)} \mathrm{pute}\_{(v, c)}(\mathrm{res}\_r[c]) \right)$
 
 このとき、すべての $r$ について $\mathrm{res}_r[r]$ を計算する。
 
@@ -36,8 +36,8 @@ c1 c2 c3
 上のような図をイメージする。
 
 $\begin{aligned}
-h[v] &= \mathrm{pute}_{(p,v)} \left( \mathrm{putv}_p \left( \left( \bigoplus_{\substack{d \in \mathrm{children}(p) \\\\  d \neq v}} \mathrm{pute}_{(p,d)}(g[d]) \right) \oplus h[p] \right) \right) \\\\   
-\mathrm{res}_v[v] &= \mathrm{putv}_v(f[v] \oplus h[v])
+h[v] &= \mathrm{pute}\_{(p,v)} \left( \mathrm{putv}\_p \left( \left( \bigoplus\_{\substack{d \in \mathrm{children}(p) \\\\  d \neq v}} \mathrm{pute}\_{(p,d)}(g[d]) \right) \oplus h[p] \right) \right) \\\\   
+\mathrm{res}\_v[v] &= \mathrm{putv}\_v(f[v] \oplus h[v])
 \end{aligned}$
 
 となっていることがわかる。$h$ は親方向全体について pute までしたもの。

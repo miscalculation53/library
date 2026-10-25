@@ -64,26 +64,27 @@ optional<pair<vvc<T>, vvc<T>>> pade_2d(
     const vvc<T>& a, int numerator_degree, int denominator_degree);
 ```
 
-$H=|a|$, $W=|a[0]|$、$N=HW$ とする。
+$H=\lvert a\rvert$, $W=\lvert a[0]\rvert$、$N=HW$ とする。
 分子と分母の項をそれぞれ
 
-$$S_p=\{(i,j):0\le i<H,\ 0\le j<W,\ i+j\le\texttt{numerator\_degree}\},$$
-$$S_q=\{(i,j):0\le i<H,\ 0\le j<W,\ i+j\le\texttt{denominator\_degree}\}$$
+$$S_p=\lbrace(i,j):0\le i<H,\ 0\le j<W,\ i+j\le\texttt{numerator\_degree}\rbrace,$$
+
+$$S_q=\lbrace(i,j):0\le i<H,\ 0\le j<W,\ i+j\le\texttt{denominator\_degree}\rbrace$$
 
 に限定し、`{p, q}` を返す。分母は `q[0][0] == 1` に正規化する。
 1行の入力は $y$ のみ、1列の入力は $x$ のみの有理母関数として扱う。
 
 $P$ の係数を消去し、$(i,j)\notin S_p$ における
 
-$$\sum_{(u,v)\in S_q\setminus\{(0,0)\}}q_{u,v}a_{i-u,j-v}=-a_{i,j}$$
+$$\sum_{(u,v)\in S_q\setminus\lbrace(0,0)\rbrace}q_{u,v}a_{i-u,j-v}=-a_{i,j}$$
 
 を解く。負の添字の $a$ は $0$ とする。分子は $S_p$ 内の $QF$ の係数から求める。
 境界を含めた既知の全係数について $QF=P$ が成立する。
 
-未知係数数は $|S_p|+|S_q|-1$。次の場合は `nullopt` を返す。
+未知係数数は $\lvert S_p\rvert+\lvert S_q\rvert-1$。次の場合は `nullopt` を返す。
 
 - 入力の行数または列数が $0$。
-- $N<|S_p|+|S_q|-1$。
+- $N<\lvert S_p\rvert+\lvert S_q\rvert-1$。
 - 指定した範囲に整合する候補がない。
 
 方程式に自由変数がある場合は、それらを $0$ にした解を使う。分子・分母の共通因子はそのまま残る。
@@ -96,7 +97,7 @@ $$\sum_{(u,v)\in S_q\setminus\{(0,0)\}}q_{u,v}a_{i-u,j-v}=-a_{i,j}$$
 
 ##### 計算量
 
-- $U=|S_q|$ として $O(NU^2)$
+- $U=\lvert S_q\rvert$ として $O(NU^2)$
 
 #### guess_rational_gf_2d
 
@@ -106,7 +107,7 @@ optional<pair<vvc<T>, vvc<T>>> guess_rational_gf_2d(
     const vvc<T>& a, int max_degree = 10);
 ```
 
-$d=0,1,\ldots,\texttt{max\_degree}$ の順に `pade_2d(a, d, d)` を試し、最初に得られた候補を返す。
+$d=0,1,\ldots,\texttt{max\\_degree}$ の順に `pade_2d(a, d, d)` を試し、最初に得られた候補を返す。
 実際の探索は入力内の単項式に限定し、未知係数数が $N$ を超えたところで終了する。
 候補が得られなければ `nullopt` を返す。
 
@@ -117,7 +118,7 @@ $d=0,1,\ldots,\texttt{max\_degree}$ の順に `pade_2d(a, d, d)` を試し、最
 
 - `T` は上記の体
 - `a` の各行の長さが等しい
-- $\texttt{max\_degree}\ge0$
+- $\texttt{max\\_degree}\ge0$
 
 ##### 計算量
 

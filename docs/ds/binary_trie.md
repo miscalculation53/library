@@ -225,7 +225,7 @@ S lt_sum(Key value, Key xor_value = 0) const
 
 ##### 制約
 
-- $0 \leq \mathrm{value}, \mathrm{xor\_value} < 2^{\mathrm{width}}$
+- $0 \leq \mathrm{value}, \mathrm{xor\\_value} < 2^{\mathrm{width}}$
 
 ##### 計算量
 
@@ -241,7 +241,7 @@ S leq_sum(Key value, Key xor_value = 0) const
 
 ##### 制約
 
-- $0 \leq \mathrm{value}, \mathrm{xor\_value} < 2^{\mathrm{width}}$
+- $0 \leq \mathrm{value}, \mathrm{xor\\_value} < 2^{\mathrm{width}}$
 
 ##### 計算量
 
@@ -257,7 +257,7 @@ S geq_sum(Key value, Key xor_value = 0) const
 
 ##### 制約
 
-- $0 \leq \mathrm{value}, \mathrm{xor\_value} < 2^{\mathrm{width}}$
+- $0 \leq \mathrm{value}, \mathrm{xor\\_value} < 2^{\mathrm{width}}$
 
 ##### 計算量
 
@@ -273,7 +273,7 @@ S gt_sum(Key value, Key xor_value = 0) const
 
 ##### 制約
 
-- $0 \leq \mathrm{value}, \mathrm{xor\_value} < 2^{\mathrm{width}}$
+- $0 \leq \mathrm{value}, \mathrm{xor\\_value} < 2^{\mathrm{width}}$
 
 ##### 計算量
 
@@ -293,16 +293,16 @@ Boundary max_right_ng(
 次の $R$ を考える。
 
 $$
-R = \max\left\{r \in \mathbb{Z} \mathrel{\middle|} \mathrm{lower} \leq r \leq N,\ f(P_{\mathrm{xor\_value}}(\mathrm{lower},r)) = \mathrm{true}\right\}
+R = \max\left\lbrace r \in \mathbb{Z} \middle\vert \mathrm{lower} \leq r \leq N,\ f(P_{\mathrm{xor\_value}}(\mathrm{lower},r)) = \mathrm{true}\right\rbrace
 $$
 
 $R<N$ なら `(key ^ xor_value) == R` であるキーを返す。$R=N$ なら番兵 $N$ を返す。すなわち、右へ累積したときに条件を初めて壊すキーを返す。
 
 ##### 制約
 
-- $0 \leq \mathrm{lower}, \mathrm{xor\_value} < 2^{\mathrm{width}}$
+- $0 \leq \mathrm{lower}, \mathrm{xor\\_value} < 2^{\mathrm{width}}$
 - `f(M::e()) == true`
-- $r$ を `lower` から $N$ へ増やしたとき、$f(P_{\mathrm{xor\_value}}(\mathrm{lower},r))$ は `true` から `false` へ高々 $1$ 回だけ変化する
+- $r$ を `lower` から $N$ へ増やしたとき、$f(P_{\mathrm{xor\\_value}}(\mathrm{lower},r))$ は `true` から `false` へ高々 $1$ 回だけ変化する
 
 ##### 計算量
 
@@ -353,16 +353,16 @@ Boundary min_left_ng(
 $U=\mathrm{upper}+1$ とし、次の $L$ を考える。
 
 $$
-L = \min\left\{l \in \mathbb{Z} \mathrel{\middle|} 0 \leq l \leq U,\ f(P_{\mathrm{xor\_value}}(l,U)) = \mathrm{true}\right\}
+L = \min\left\lbrace l \in \mathbb{Z} \middle\vert 0 \leq l \leq U,\ f(P_{\mathrm{xor\_value}}(l,U)) = \mathrm{true}\right\rbrace
 $$
 
 $L>0$ なら `(key ^ xor_value) == L - 1` であるキーを返す。$L=0$ なら番兵 `-1` を返す。すなわち、左へ累積したときに条件を初めて壊すキーを返す。
 
 ##### 制約
 
-- $0 \leq \mathrm{upper}, \mathrm{xor\_value} < 2^{\mathrm{width}}$
+- $0 \leq \mathrm{upper}, \mathrm{xor\\_value} < 2^{\mathrm{width}}$
 - `f(M::e()) == true`
-- $l$ を $U$ から $0$ へ減らしたとき、$f(P_{\mathrm{xor\_value}}(l,U))$ は `true` から `false` へ高々 $1$ 回だけ変化する
+- $l$ を $U$ から $0$ へ減らしたとき、$f(P_{\mathrm{xor\\_value}}(l,U))$ は `true` から `false` へ高々 $1$ 回だけ変化する
 
 ##### 計算量
 
@@ -415,7 +415,7 @@ optional<Key> kth_by(
 ##### 制約
 
 - `cnt` は概要に記載した条件を満たす
-- $0 \leq \mathrm{xor\_value} < 2^{\mathrm{width}}$
+- $0 \leq \mathrm{xor\\_value} < 2^{\mathrm{width}}$
 
 ##### 計算量
 
@@ -436,7 +436,7 @@ optional<Key> min_element_by(
 ##### 制約
 
 - `cnt` は概要に記載した条件を満たす
-- $0 \leq \mathrm{xor\_value} < 2^{\mathrm{width}}$
+- $0 \leq \mathrm{xor\\_value} < 2^{\mathrm{width}}$
 
 ##### 計算量
 
@@ -457,7 +457,7 @@ optional<Key> max_element_by(
 ##### 制約
 
 - `cnt` は概要に記載した条件を満たす
-- $0 \leq \mathrm{xor\_value} < 2^{\mathrm{width}}$
+- $0 \leq \mathrm{xor\\_value} < 2^{\mathrm{width}}$
 
 ##### 計算量
 
@@ -479,7 +479,7 @@ optional<Key> lt_max_by(
 ##### 制約
 
 - `cnt` は概要に記載した条件を満たす
-- $0 \leq \mathrm{value}, \mathrm{xor\_value} < 2^{\mathrm{width}}$
+- $0 \leq \mathrm{value}, \mathrm{xor\\_value} < 2^{\mathrm{width}}$
 
 ##### 計算量
 
@@ -501,7 +501,7 @@ optional<Key> leq_max_by(
 ##### 制約
 
 - `cnt` は概要に記載した条件を満たす
-- $0 \leq \mathrm{value}, \mathrm{xor\_value} < 2^{\mathrm{width}}$
+- $0 \leq \mathrm{value}, \mathrm{xor\\_value} < 2^{\mathrm{width}}$
 
 ##### 計算量
 
@@ -523,7 +523,7 @@ optional<Key> geq_min_by(
 ##### 制約
 
 - `cnt` は概要に記載した条件を満たす
-- $0 \leq \mathrm{value}, \mathrm{xor\_value} < 2^{\mathrm{width}}$
+- $0 \leq \mathrm{value}, \mathrm{xor\\_value} < 2^{\mathrm{width}}$
 
 ##### 計算量
 
@@ -545,7 +545,7 @@ optional<Key> gt_min_by(
 ##### 制約
 
 - `cnt` は概要に記載した条件を満たす
-- $0 \leq \mathrm{value}, \mathrm{xor\_value} < 2^{\mathrm{width}}$
+- $0 \leq \mathrm{value}, \mathrm{xor\\_value} < 2^{\mathrm{width}}$
 
 ##### 計算量
 

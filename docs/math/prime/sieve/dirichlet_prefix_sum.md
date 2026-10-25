@@ -5,7 +5,7 @@
 数論関数 $f$ の累積和 $F(x)=\sum_{i=1}^x f(i)$ を、根を取った商集合
 
 $$
-Q_{N,D}=\{\lfloor(N/i)^{1/D}\rfloor:1\le i\le N\}
+Q_{N,D}=\lbrace\lfloor(N/i)^{1/D}\rfloor:1\le i\le N\rbrace
 $$
 
 上で保持し、加減算・Dirichlet 積・商・逆数・非負整数乗を計算する。
@@ -141,7 +141,7 @@ typename R::S dirichlet_convolution_sum(
   const DirichletPrefixSum<R, D> &a, const DirichletPrefixSum<R, D> &b);
 ```
 
-$(a*b)$ の累積和を $X=\lfloor N^{1/D}\rfloor$ においてだけ求める。
+$(a\ast b)$ の累積和を $X=\lfloor N^{1/D}\rfloor$ においてだけ求める。
 全ての保持位置の結果が不要なら、`(a*b).F(X)` よりこちらを使う。`D` は引数から推論する。
 追加空間は $O(1)$。
 
@@ -262,7 +262,7 @@ $O(N^{1/(D+1)})$ 空間の配列を持つが、変換のたびにメモリを確
 bool contains(ll x) const;
 ```
 
-$F(x)$ を保持しているか、すなわち $x\in Q_{N,D}\cup\{0\}$ かを返す。
+$F(x)$ を保持しているか、すなわち $x\in Q_{N,D}\cup\lbrace0\rbrace$ かを返す。
 `contains(0)` は常に `true`。
 
 ##### 計算量
@@ -342,7 +342,7 @@ map<ll, S> content() const;
 
 ##### 計算量
 
-- $O(|Q_{N,D}|)=O(N^{1/(D+1)})$。キーの昇順に挿入する。
+- $O(\lvert Q_{N,D}\rvert)=O(N^{1/(D+1)})$。キーの昇順に挿入する。
 
 #### convolve, operator*
 
@@ -491,7 +491,7 @@ $$
 =\left\lfloor\left(\frac{N}{j a^D}\right)^{1/D}\right\rfloor
 $$
 
-なので、床除算した参照先も $Q_{N,D}\cup\{0\}$ に属する。
+なので、床除算した参照先も $Q_{N,D}\cup\lbrace0\rbrace$ に属する。
 また $m\le\lfloor N^{1/(2D)}\rfloor\le B$ だから、小さい係数も取得できる。
 `dirichlet_convolution_sum` は最大位置 $X$ でこの式を一度だけ計算する。
 
@@ -538,7 +538,7 @@ $$
 
 ### 商・逆数の区間更新
 
-$h*g=a$ を解く。保持位置を昇順に並べ、入力の $A$ の隣接差分を作業配列に持つ。
+$h\ast g=a$ を解く。保持位置を昇順に並べ、入力の $A$ の隣接差分を作業配列に持つ。
 既知の積の寄与を差し引いてから、各位置の未知の係数和を $g(1)$ で割って確定する。
 必要な除算は $g(1)$ によるものだけで、他の係数が零でもよい。
 

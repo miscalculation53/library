@@ -32,5 +32,5 @@ vc<mint> multipoint_evaluation(const FormalPowerSeries<mint>& f, const vc<mint>&
 
 ##### 計算量
 
-- $n=|f|$, $m=|\mathrm{xs}|$ として $O(m\log^2 m+(n+m)\log(n+m))$。
+- $n=\lvert f\rvert$, $m=\lvert \mathrm{xs}\rvert$ として $O(m\log^2 m+(n+m)\log(n+m))$。
 - $n\le64$ または $m\le1$ の場合は $O(nm+m)$。

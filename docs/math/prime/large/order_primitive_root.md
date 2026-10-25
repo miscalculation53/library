@@ -31,7 +31,7 @@ https://twitter.com/noshi91/status/1317025404700405760
 https://atcoder.jp/contests/abc335/editorial/9017
 https://atcoder.jp/contests/abc335/editorial/9045
 
-$p-1 = q_1^{e_1} \cdots q_k^{e_k}$ とする。位数 $n$ は $n = q_1^{f_1} \cdots q_k^{f_k} \: (0 \leq f_i \leq e_i)$ と書ける。性質「$x^m \equiv 1 \pmod p$ を満たす $m$ は位数の倍数」より、各 $f_i$ ごとに最小化すればよい。つまり、$i$ ごとに $\left(x^{q_1^{e_1} \cdots q_{i-1}^{e_{i-1}} q_{i+1}^{e_{i+1}} \cdots q_k^{e_k}}\right)^{q_i^{f_i}} \equiv 1 \pmod p$ を満たす $f_i$ の最小値を求めればよい。これは、上述のラグランジュ補間風のアルゴリズムで $x^{q_1^{e_1} \cdots q_{i-1}^{e_{i-1}} q_{i+1}^{e_{i+1}} \cdots q_k^{e_k}}$ を求めた後、それを $q_i$ 乗する回数 $f_i$ を愚直に $1$ ずつ増やしていけばよい。計算量は、$x^{q_1^{e_1} \cdots q_{i-1}^{e_{i-1}} q_{i+1}^{e_{i+1}} \cdots q_k^{e_k}}$ を求めるパートが $O(\log k \log p) = O(\log p \log\log p)$ 時間、$f_i$ を増やしていくパートが $O(\sum_i e_i \log q_i) = O(\log \prod_i q_i^{e_i}) = O(\log p)$ 時間で、全体 $O(\log p\log\log p)$ 時間。
+$p-1 = q_1^{e_1} \cdots q_k^{e_k}$ とする。位数 $n$ は $n = q_1^{f_1} \cdots q_k^{f_k} \  (0 \leq f_i \leq e_i)$ と書ける。性質「$x^m \equiv 1 \pmod p$ を満たす $m$ は位数の倍数」より、各 $f_i$ ごとに最小化すればよい。つまり、$i$ ごとに $\left(x^{q_1^{e_1} \cdots q_{i-1}^{e_{i-1}} q_{i+1}^{e_{i+1}} \cdots q_k^{e_k}}\right)^{q_i^{f_i}} \equiv 1 \pmod p$ を満たす $f_i$ の最小値を求めればよい。これは、上述のラグランジュ補間風のアルゴリズムで $x^{q_1^{e_1} \cdots q_{i-1}^{e_{i-1}} q_{i+1}^{e_{i+1}} \cdots q_k^{e_k}}$ を求めた後、それを $q_i$ 乗する回数 $f_i$ を愚直に $1$ ずつ増やしていけばよい。計算量は、$x^{q_1^{e_1} \cdots q_{i-1}^{e_{i-1}} q_{i+1}^{e_{i+1}} \cdots q_k^{e_k}}$ を求めるパートが $O(\log k \log p) = O(\log p \log\log p)$ 時間、$f_i$ を増やしていくパートが $O(\sum_i e_i \log q_i) = O(\log \prod_i q_i^{e_i}) = O(\log p)$ 時間で、全体 $O(\log p\log\log p)$ 時間。
 
 #### 原始根
 

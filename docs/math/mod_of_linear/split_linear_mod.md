@@ -8,7 +8,7 @@ $((ai+b)\bmod m)_{0\le i<n}$ を $O(\sqrt n)$ 本の等差数列に分ける。�
 
 内部計算は `ll` で行う。剰余の列挙は加算と折り返しで進め、部分列の次の先頭は最後の有効な項を経由して求める。各中間値が `ll` に収まる順序で計算する。
 
-先頭 $\lfloor\sqrt n\rfloor+1$ 個の剰余をソートし、値の差が最小の 2 点を取る。その添字差を $d$、符号付きの値の差を $h$ とすると、$d=O(\sqrt n)$、$|h|=O(m/\sqrt n)$。添字を $d$ ごとに進め、値が $[0,m)$ を出る直前で区切ると、部分列数は $O(d+n|h|/m)=O(\sqrt n)$ となる。[平方根分割の解説](https://codeforces.com/blog/entry/141889)。
+先頭 $\lfloor\sqrt n\rfloor+1$ 個の剰余をソートし、値の差が最小の 2 点を取る。その添字差を $d$、符号付きの値の差を $h$ とすると、$d=O(\sqrt n)$、$\lvert h\rvert=O(m/\sqrt n)$。添字を $d$ ごとに進め、値が $[0,m)$ を出る直前で区切ると、部分列数は $O(d+n\lvert h\rvert/m)=O(\sqrt n)$ となる。[平方根分割の解説](https://codeforces.com/blog/entry/141889)。
 
 複数周期を扱う場合は、$g=\gcd(a,m)$、$L=m/g$ とする。1 周期の値の多重集合は $b\bmod g+gj$ $(0\le j<L)$ なので、全周期をまとめ、残りの $n\bmod L$ 項をこの関数で分割できる。
 

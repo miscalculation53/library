@@ -48,6 +48,6 @@ $[x^k] \dfrac{p(x)}{q(x)}$ を求める。$k < 0$ のときは $0$ を返す。
 
 $k \ge 0$、$q(x)$ の次数を $d \ge 1$ として
 
-- $O\!\left(d\log d\left(1+\log\left(1+\frac{k}{d}\right)\right)\right)$
+- $O\\!\left(d\log d\left(1+\log\left(1+\frac{k}{d}\right)\right)\right)$
 
-$\deg p \ge d$ の場合は、最初の多項式除算の計算量が加わる。$d=0$ の場合は $O(|p|)$。
+$\deg p \ge d$ の場合は、最初の多項式除算の計算量が加わる。$d=0$ の場合は $O(\lvert p\rvert)$。

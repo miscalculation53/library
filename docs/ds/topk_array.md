@@ -29,7 +29,7 @@ best.add({8, 2});
 
 ## DP・区間クエリでの使い方
 
-例えば「直前と異なる色を選ぶ」DP の $\max_{c'\ne c}dp[c']$ は、色をキーとした上位 2 候補から計算できる。
+例えば「直前と異なる色を選ぶ」DP の $\max_{c^{\prime}\ne c}dp[c^{\prime}]$ は、色をキーとした上位 2 候補から計算できる。
 [ABC345 E - Colorful Subsequence の公式解説](https://atcoder.jp/contests/abc345/editorial/9590)にも、この圧縮を使う DP がある。
 無効な状態は候補として追加せず、番兵の色や $-\infty$ を必須にしない。
 

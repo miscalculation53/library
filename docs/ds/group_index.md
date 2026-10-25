@@ -106,11 +106,11 @@ $a_i = \mathrm{val}$ である添字 $i$ を昇順に並べた、読み取り専
 - (2)：$\max \lbrace j \leq i \mid a_j = \mathrm{val} \rbrace$、存在しなければ `nullopt`
 - (3)：$\min \lbrace j > i \mid a_j = \mathrm{val} \rbrace$、存在しなければ `nullopt`
 - (4)：$\min \lbrace j \geq i \mid a_j = \mathrm{val} \rbrace$、存在しなければ `nullopt`
-- (5)：$\# \lbrace j < i \mid a_j = \mathrm{val} \rbrace$
-- (6)：$\# \lbrace j \leq i \mid a_j = \mathrm{val} \rbrace$
-- (7)：$\# \lbrace j > i \mid a_j = \mathrm{val} \rbrace$
-- (8)：$\# \lbrace j \geq i \mid a_j = \mathrm{val} \rbrace$
-- (9)：$\# \lbrace l \leq j < r \mid a_j = \mathrm{val} \rbrace$
+- (5)：$\\# \lbrace j < i \mid a_j = \mathrm{val} \rbrace$
+- (6)：$\\# \lbrace j \leq i \mid a_j = \mathrm{val} \rbrace$
+- (7)：$\\# \lbrace j > i \mid a_j = \mathrm{val} \rbrace$
+- (8)：$\\# \lbrace j \geq i \mid a_j = \mathrm{val} \rbrace$
+- (9)：$\\# \lbrace l \leq j < r \mid a_j = \mathrm{val} \rbrace$
 
 「$a_i = \mathrm{val}$ は何番目の $\mathrm{val}$ か」は (5) と一致する。
 

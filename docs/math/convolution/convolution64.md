@@ -30,4 +30,4 @@ vc<ull> convolution64(vc<ull> a, vc<ull> b)
 
 - $O((n+m)\log(n+m))$
   - 定数倍は NTT の $5$ 倍程度つく。
-  - サイズが小さい場合や $a$ と $b$ のどちらかが疎な場合、$a, b$ の非零要素の個数を $n', m'$ として $O(n + m + \min(n'm, nm'))$ の実装に切り替える。
+  - サイズが小さい場合や $a$ と $b$ のどちらかが疎な場合、$a, b$ の非零要素の個数を $n^{\prime}, m^{\prime}$ として $O(n + m + \min(n^{\prime}m, nm^{\prime}))$ の実装に切り替える。

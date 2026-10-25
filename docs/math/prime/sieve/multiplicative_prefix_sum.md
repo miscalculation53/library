@@ -3,7 +3,7 @@
 ## 概要
 
 乗法的関数 $f$ の $F(x)=\sum_{i\le x}f(i)$ を商集合
-$Q_N=\{\lfloor N/j\rfloor:1\le j\le N\}$ 上で計算する。
+$Q_N=\lbrace\lfloor N/j\rfloor:1\le j\le N\rbrace$ 上で計算する。
 戻り値は [DirichletPrefixSum](dirichlet_prefix_sum.md)。全体の和は `result.F(N)`。
 $F(0)=0$ も取得できる。
 

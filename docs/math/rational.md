@@ -127,7 +127,7 @@ pair<T, T> reduced() const
 
 ##### 計算量
 
-- 剰余演算を持つ型：$O(\log \min(|\mathrm{num}|,\mathrm{den}))$ 回の `T` の剰余演算
+- 剰余演算を持つ型：$O(\log \min(\lvert \mathrm{num}\rvert,\mathrm{den}))$ 回の `T` の剰余演算
 - その他：$O(1)$
 
 #### is_infinite / is_finite

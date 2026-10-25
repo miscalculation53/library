@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 テンプレート（演算）
@@ -58,7 +60,7 @@ common_type_t<T, U> gcd(T a, U b)
 common_type_t<T, U> lcm(T a, U b)
 ```
 
-少なくとも一方が `i128` / `u128` の場合に対応する。通常の整数型どうしは標準の関数を使う。`gcd` は $\gcd(|a|,|b|)$、`lcm` は最小公倍数を返す。`gcd(0, 0)` は $0$、一方が $0$ の `lcm` も $0$ になる。
+少なくとも一方が `i128` / `u128` の場合に対応する。通常の整数型どうしは標準の関数を使う。`gcd` は $\gcd(\lvert a\rvert,\lvert b\rvert)$、`lcm` は最小公倍数を返す。`gcd(0, 0)` は $0$、一方が $0$ の `lcm` も $0$ になる。
 
 絶対値と gcd の内部計算には unsigned を使うため、符号付き最小値や signed / unsigned の混在も扱える。`lcm` は gcd で割ってから掛ける。
 
@@ -69,7 +71,7 @@ common_type_t<T, U> lcm(T a, U b)
 
 ##### 計算量
 
-- $O(\log \min(|a|,|b|))$ 回の整数の剰余演算
+- $O(\log \min(\lvert a\rvert,\lvert b\rvert))$ 回の整数の剰余演算
 
 ### 除算
 

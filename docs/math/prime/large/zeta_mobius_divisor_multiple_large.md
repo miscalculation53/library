@@ -30,15 +30,15 @@ $\displaystyle \mu a(n) = \sum_{d\mid n} \mu\left(\frac{n}{d}\right) a(d)$
 
 #### 倍数ゼータ変換
 
-$\displaystyle \zeta' a(n) = \sum_{n \mid m} a(m)$
+$\displaystyle \zeta^{\prime} a(n) = \sum_{n \mid m} a(m)$
 
 #### 倍数メビウス変換
 
-$\mu'$ は $\zeta'$ の逆変換、つまり $\displaystyle \mu'\zeta' a(n) = a(n)$
+$\mu^{\prime}$ は $\zeta^{\prime}$ の逆変換、つまり $\displaystyle \mu^{\prime}\zeta^{\prime} a(n) = a(n)$
 
 メビウス関数 $\mu(n)$ を用いて
 
-$\displaystyle \mu' a(n) = \sum_{n\mid m} \mu\left(\frac{m}{n}\right) a(m)$
+$\displaystyle \mu^{\prime} a(n) = \sum_{n\mid m} \mu\left(\frac{m}{n}\right) a(m)$
 
 ### 帰着のさせ方
 

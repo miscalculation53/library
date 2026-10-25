@@ -149,8 +149,8 @@ $\lvert v \rvert = k^n$ として
 
 `linear_map` は `array<T, k>` から `array<T, k>` への関数を渡す。この関数の内部では破壊的変更を行ってもよい。
 
-- (1)：$v$ を $\mathrm{linear\_map}^{\otimes k} v$ で置き換える。
-- (2)：$\mathrm{linear\_map}^{\otimes k} v$ を返す。
+- (1)：$v$ を $\mathrm{linear\\_map}^{\otimes k} v$ で置き換える。
+- (2)：$\mathrm{linear\\_map}^{\otimes k} v$ を返す。
 
 ##### 制約
 

@@ -48,9 +48,9 @@ int main() {}
 ### 入出力高速化
 
 `FAST_IO` は `fread` / `fwrite` によるバッファ付き入出力を使う。`LOCAL` では通常の `cin` / `cout` に切り替わる。
-`FAST_CIO` では `template_main.hpp` が `cin.tie(nullptr); ios::sync_with_stdio(false);` を設定する。
+`FAST_CIO` または `INTERACTIVE` を指定すると、`LOCAL` 以外では `template_main.hpp` が `cin.tie(nullptr); ios::sync_with_stdio(false);` を設定する。
 
-普段は `PRINT` 系での改行で flush しない。`INTERACTIVE` が define されているとき、flush する。
+`PRINT` 系の改行には通常 `'\n'` を使う。`INTERACTIVE` では `PRINT` ごとに改行して flush する。
 
 ### 定数
 

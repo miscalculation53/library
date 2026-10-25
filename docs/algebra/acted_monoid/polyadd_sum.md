@@ -81,7 +81,7 @@ S e()
 S mapping(const F& f, S x)
 ```
 
-`x.val` に $\sum_{k=0}^{D} f[k]\cdot x.power\_sum[k]$ を加える。
+`x.val` に $\sum_{k=0}^{D} f[k]\cdot x.power\\_sum[k]$ を加える。
 `power_sum` は維持する。
 
 ##### 計算量

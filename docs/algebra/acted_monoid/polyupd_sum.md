@@ -101,7 +101,7 @@ S mapping(const F& f, S x)
 ```
 
 `f.is_id` が真なら `x` を返す。
-それ以外では `x.val` を $\sum_{k=0}^{D} f.val[k]\cdot x.power\_sum[k]$ に置き換える。
+それ以外では `x.val` を $\sum_{k=0}^{D} f.val[k]\cdot x.power\\_sum[k]$ に置き換える。
 `power_sum` は維持する。
 
 ##### 計算量

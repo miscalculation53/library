@@ -35,11 +35,11 @@ $\begin{aligned}
 $k \mid \mathrm{gcd}(i, j) \iff k \mid i \ かつ \ k \mid j$ 
 
 $\begin{aligned}
-\zeta' c(k) &= \sum_{k \mid \ell} c(\ell) \\\\  
+\zeta^{\prime} c(k) &= \sum_{k \mid \ell} c(\ell) \\\\  
 &= \sum_{k \mid \ell} \sum_{\mathrm{gcd}(i, j) = \ell} a(i)b(j) \\\\  
 &= \sum_{k \mid \mathrm{gcd}(i, j)} a(i)b(j) \\\\  
 &= \sum_{k \mid i} a(i) \sum_{k \mid j} b(j) \\\\  
-&= \zeta' a(k) \zeta' b(k)
+&= \zeta^{\prime} a(k) \zeta^{\prime} b(k)
 \end{aligned}$
 
 ## 使用例

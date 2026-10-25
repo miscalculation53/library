@@ -61,7 +61,7 @@ void add(int point_id, M::S w)
 
 ##### 制約
 
-- $0 \leq \mathrm{point\_id} < p$
+- $0 \leq \mathrm{point\\_id} < p$
 - `D<M>` は `add`、または `get` と `set` を持つ
 
 ##### 計算量

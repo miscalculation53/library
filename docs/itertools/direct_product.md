@@ -25,7 +25,7 @@ assert(count == 6);
 direct_product(vc<T> a)
 ```
 
-長さ $\lvert a \rvert$ で、$i \: (0 \leq i < \lvert a \rvert)$ 番目が $[0, a_i)$ であるような vector をすべて（辞書順で）列挙する。
+長さ $\lvert a \rvert$ で、$i \  (0 \leq i < \lvert a \rvert)$ 番目が $[0, a_i)$ であるような vector をすべて（辞書順で）列挙する。
   - 例：$a = (2, 1, 3)$ のとき
     - $(0, 0, 0)$
     - $(0, 0, 1)$

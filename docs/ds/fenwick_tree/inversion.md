@@ -57,7 +57,7 @@ $0 \leq i \lt j \lt \lvert v \rvert$ かつ $v_i \gt v_j$ を満たす $(i, j)$ 
 
 ##### 計算量
 
-$n = |a|$、値の比較を $O(1)$ として、
+$n = \lvert a\rvert$、値の比較を $O(1)$ として、
 
 - (1)：$O(1)$
 - (2)、固定幅整数型（`bool` を除く）：$O(n)$
@@ -86,7 +86,7 @@ void set(int nl, int nr)
 
 ##### 計算量
 
-呼び出し前の区間を $[l,r)$ とし、$D = |\mathrm{nl}-l|+|\mathrm{nr}-r|$ として、
+呼び出し前の区間を $[l,r)$ とし、$D = \lvert \mathrm{nl}-l\rvert+\lvert \mathrm{nr}-r\rvert$ として、
 
 - $O(1+D\log n)$
 

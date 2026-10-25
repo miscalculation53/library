@@ -102,8 +102,8 @@ $s$ を始点として Dial 法で最短路を求める。`max_cost` を $C$ と
 
 - `Dist` は整数型
 - $0 \leq s < n$
-- $0 \leq \mathrm{max\_cost}$
-- すべての辺のコスト $w$ について $0 \leq w \leq \mathrm{max\_cost}$
+- $0 \leq \mathrm{max\\_cost}$
+- すべての辺のコスト $w$ について $0 \leq w \leq \mathrm{max\\_cost}$
 - 最短距離の計算結果が `Dist` の範囲に収まり、`infty` 未満
 
 ##### 計算量
@@ -134,7 +134,7 @@ vc<Dist> dijkstra_fibonacci(int s, int t = -1);
 vc<Edge<Cost>> prev_edges() const
 ```
 
-$\mathrm{prv}[v] \coloneqq$ $s$-$v$ 最短路のひとつにおいて $v$ に行くために使った辺（なければ $(\mathrm{from}, \mathrm{to}, \mathrm{index}) = (-1, -1, -1)$）を返す。`solve` の呼び出し後に呼ぶ。
+$\mathrm{prv}[v] \mathrel{:=}$ $s$-$v$ 最短路のひとつにおいて $v$ に行くために使った辺（なければ $(\mathrm{from}, \mathrm{to}, \mathrm{index}) = (-1, -1, -1)$）を返す。`solve` の呼び出し後に呼ぶ。
 距離が `-infty` の頂点も、親辺は $(-1,-1,-1)$ とする。
 
 `solve` の呼び出し時に $t$ を指定していた場合、$s$-$t$ 最短路のひとつで使った辺は正しく記録されている。
@@ -169,7 +169,7 @@ $s$-$t$ 最短路のひとつを辺の vector として返す。距離が `infty
 vc<mint> count_paths<mint>() const
 ```
 
-$\mathrm{cnt}[v] \coloneqq$ $s$-$v$ 最短パスの個数 を返す。`solve` の呼び出し後に呼ぶ（このとき **$t$ を指定して打ち切っていてはいけない**）。
+$\mathrm{cnt}[v] \mathrel{:=}$ $s$-$v$ 最短パスの個数 を返す。`solve` の呼び出し後に呼ぶ（このとき **$t$ を指定して打ち切っていてはいけない**）。
 
 ##### 制約
 

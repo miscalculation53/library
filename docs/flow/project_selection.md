@@ -57,7 +57,7 @@ void add_cost(int v, Cost cost0, Cost cost1);
 void add_profit(int v, Cost profit0, Cost profit1);
 ```
 
-それぞれ定数、$\mathrm{cost}_{x_v}$、$-\mathrm{profit}_{x_v}$ を費用へ足す。係数の符号は自由。
+それぞれ定数、$\mathrm{cost}\_{x\_v}$、$-\mathrm{profit}\_{x\_v}$ を費用へ足す。係数の符号は自由。
 
 ##### 制約
 

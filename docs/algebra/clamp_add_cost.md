@@ -60,7 +60,7 @@ auto [y, distance] = seg.prod(0, 3)(3);
 assert(y == 4 && distance == 9); // 3 -> 3 -> 8 -> 4
 ```
 
-[ABC365 F の解説](https://atcoder.jp/contests/abc365/editorial/10582)に対応する。列 $s_x$ から $t_x$ へ進むとき、途中の列を clamp として合成する。最終縦座標を $y$、累積縦移動を $c$ とすると、答えは $(t_x-s_x)+c+|y-t_y|$。逆方向の質問は始点と終点を交換して処理できる。
+[ABC365 F の解説](https://atcoder.jp/contests/abc365/editorial/10582)に対応する。列 $s_x$ から $t_x$ へ進むとき、途中の列を clamp として合成する。最終縦座標を $y$、累積縦移動を $c$ とすると、答えは $(t_x-s_x)+c+\lvert y-t_y\rvert$。逆方向の質問は始点と終点を交換して処理できる。
 
 ### 境界で止まる移動の総移動量
 
@@ -74,7 +74,7 @@ auto [y, gain] = f(8);
 assert(y == 6 && gain == 6); // 8 -> 10 -> 6、移動量は 2+4
 ```
 
-[AAL Contest 001 Q の解説](https://atcoder.jp/contests/aalc001/editorial/25876)に対応する。移動量を $v$ とすると、葉は `S::shift_then_clamp(v, 0, M, abs(v))`。区間内から出発した場合、$|v|$ から clamp の補正量を引いた値が実際の移動量になる。点更新と区間取得は各 $O(\log N)$。
+[AAL Contest 001 Q の解説](https://atcoder.jp/contests/aalc001/editorial/25876)に対応する。移動量を $v$ とすると、葉は `S::shift_then_clamp(v, 0, M, abs(v))`。区間内から出発した場合、$\lvert v\rvert$ から clamp の補正量を引いた値が実際の移動量になる。点更新と区間取得は各 $O(\log N)$。
 
 ### 下限・上限の補正に別々の料金を設定する
 
