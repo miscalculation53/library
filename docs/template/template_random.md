@@ -1,3 +1,5 @@
+このドキュメントには AI による作成・変更が含まれています。
+
 ## 概要
 
 主にランダムテストで使うことを目的としているが、解法が乱択の場合にも便利かも。
@@ -7,7 +9,9 @@
 $1 \leq a \lt b \leq n$ なる $a, b$ を生成したいとき
 
 ```cpp
-auto [a, b] = random_sample_range_array<2, true>(1, n + 1)
+ll n = 10;
+auto [a, b] = random_sample_range_array<2, true>(1, n + 1);
+assert(1 <= a && a < b && b <= n);
 ```
 
 ## 詳細なドキュメント

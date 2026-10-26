@@ -58,12 +58,22 @@ $$
 ```cpp
 vc<int> freq = {0, 2, 1};
 SubsetSumFromFrequency ss1(freq, 4);
-auto [ok1, cnt] = ss1.answer(4);
+auto cnt = ss1.answer(4);
+assert(cnt);
+int sum1 = 0;
+for (auto [value, count] : *cnt) sum1 += value * count;
+assert(sum1 == 4);
+assert(ss1.answer(0) && ss1.answer(0)->empty());
+assert(!ss1.answer(5));
 const auto &reachable1 = ss1.reachable();
 
 vc<int> a = {-3, 1, 2, 4};
 SubsetSum ss2(a, 5);
-auto [ok2, use] = ss2.answer(3);
+auto use = ss2.answer(3);
+assert(use);
+int sum2 = 0;
+repi(i, a.size()) if ((*use)[i]) sum2 += a[i];
+assert(sum2 == 3);
 const auto &reachable2 = ss2.reachable();
 // reachable2[i] は和 ss2.min_sum() + i を作れるかを表す
 ```

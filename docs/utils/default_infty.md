@@ -1,4 +1,4 @@
-このドキュメントには AI による作成・変更が含まれている可能性があります。
+このドキュメントには AI による作成・変更が含まれています。
 
 ## 概要
 
@@ -21,15 +21,20 @@
 ## 使用例
 
 ```cpp
+#include "math/rational.hpp"
+#include "graph/sssp.hpp"
+#include "convex/convex_hull_trick.hpp"
+
 static_assert(default_infty<ll>() == INF);
 static_assert(default_infty<i128>() == i128(INF) * INF);
 static_assert(default_infty<int>() == (1 << 30) - 1);
 
 using R = Rational<ll>;
 auto inf = default_infty<R>();  // 1/0
-GraphDirected<R> g(n, edges);
+GraphDirected<R> g(2, vc<tuple<int, int, R>>{{0, 1, R(1, 2)}});
 ShortestPath sp(g);  // 到達不能は 1/0
-ConvexHullTrick<ll> cht;  // 境界は INF、空集合の評価値は i128 の INF * INF
+ConvexHullTrick<ll> cht;  // 境界は INF
+assert(!cht.query(0));    // 空集合の問い合わせは nullopt
 ```
 
 ## 詳細なドキュメント
