@@ -3,6 +3,7 @@ import base64
 import datetime
 import io
 import json
+import logging
 import os
 from pathlib import Path
 import shutil
@@ -182,6 +183,35 @@ class ParallelVerifyTest(unittest.TestCase):
         self.assertEqual(verify.call_args.args[0], ["oj-verify", "run", "--timeout", "2085", "verify/eof.test.cpp"])
         sleep.assert_called_once_with(5)
 
+    def test_run_verify_identifies_download_error_with_oj_log_colors(self):
+        from onlinejudge_command.log_formatter import LogFormatter
+
+        path = "verify/eof.test.cpp"
+        error = LogFormatter().format(logging.LogRecord(
+            "onlinejudge", logging.ERROR, "", 0,
+            "HTTPSConnectionPool: SSLEOFError: UNEXPECTED_EOF_WHILE_READING",
+            (), None,
+        ))
+        self.assertIn("\x1b[", error)
+        lines = [
+            f"INFO:onlinejudge_verify.verify:verify: {path}",
+            "INFO:onlinejudge_verify.verify:$ oj download --system example",
+            error,
+            f"::error file={path}::failed to verify",
+            f"ERROR:onlinejudge_verify.verify:failed: {path}",
+        ]
+        command = [sys.executable, "-c", f"print({chr(10).join(lines)!r}); raise SystemExit(1)"]
+        output = io.StringIO()
+        download_errors = set()
+        with mock.patch.object(sys, "stdout", output):
+            completed, failed = parallel_verify.run_verify(
+                command, download_errors=download_errors
+            )
+        self.assertEqual(completed.returncode, 1)
+        self.assertEqual(failed, [path])
+        self.assertEqual(download_errors, {path})
+        self.assertIn(f"::warning file={path}", output.getvalue())
+
     def test_download_retry_is_bounded_and_final_failure_remains_fatal(self):
         path = "verify/eof.test.cpp"
         paths = [Path(path)]
@@ -250,7 +280,7 @@ path = sys.argv[-1]
 print(f'INFO:onlinejudge_verify.verify:verify: {path}')
 if attempt < 2:
     print('INFO:onlinejudge_verify.verify:$ oj download --system example')
-    print('[ERROR] HTTPSConnectionPool: SSLEOFError: UNEXPECTED_EOF_WHILE_READING')
+    print('[\\x1b[31mERROR\\x1b[0m] HTTPSConnectionPool: SSLEOFError: UNEXPECTED_EOF_WHILE_READING')
     print(f'::error file={path}::failed to verify')
     print(f'ERROR:onlinejudge_verify.verify:failed: {path}')
     raise SystemExit(1)

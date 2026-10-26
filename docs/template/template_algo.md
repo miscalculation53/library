@@ -14,6 +14,10 @@ assert(SUM<ll>(a) == 8 && ARGMAX(a) == 2);
 assert(!ARGMIN(vc<int>{}));
 assert(mex(vc<int>{0, 2, 3}) == 1);
 assert(permid<int>(3) == vc<int>({0, 1, 2}));
+assert(rotated(a, 1) == vc<int>({1, 4, 3}));
+assert(cumlsum(a, 1) == vc<int>({3, 4, 8}));
+assert(cumrsum(a, 1) == vc<int>({8, 5, 4}));
+assert(adjd(a, 1, 1) == vc<int>({-2, 3}));
 ```
 
 ## 詳細なドキュメント
@@ -212,26 +216,6 @@ C++17 以前ならば `std::sort`, C++20 以降ならば `std::ranges::sort` の
 - (1), (2)：`equal` の呼び出しを $O(n)$ 回
 - (3), (4)：`comp` の呼び出しを $O(n \log n)$ 回、`equal` の呼び出しを $O(n)$ 回
 
-#### sortuniqued_group
-
-```cpp
-vc<pair<T, vc<U>>> sortuniqued_group(vc<pair<T, U>> v)
-```
-
-$v$ の要素を `T` ごとにまとめる。
-
-`map` でも似たようなことができるが、静的なときはこちらのほうが速いし、扱いやすくもあると思う。
-
-##### 制約
-
-- `T` は比較可能
-
-##### 計算量
-
-列の長さを $n$ として
-
-- $O(n \log n)$
-
 #### rotate, rotated
 
 `std::rotate` をもとにしている。
@@ -243,10 +227,10 @@ $v$ の要素を `T` ごとにまとめる。
 (4) vc<T> rotated(vc<T> v, U k)
 ```
 
-- (1), (2)：列を**右に** $k$ 個 cyclic-shift する。
-- (3), (4)：列を**右に** $k$ 個 cyclic-shift してできる列を返す。
+- (1), (2)：列を**左に** $k$ 個 cyclic-shift する。
+- (3), (4)：列を**左に** $k$ 個 cyclic-shift してできる列を返す。
 
-右シフトなので、たとえば $(0, 1, 2, 3, 4)$ は $1$ 個シフトすると $(1, 2, 3, 4, 0)$ になる。
+たとえば $(0, 1, 2, 3, 4)$ は $1$ 個シフトすると $(1, 2, 3, 4, 0)$ になる。
 
 ##### 制約
 
@@ -280,54 +264,39 @@ $a$ のサイズを $n \times m$ として
 
 #### rot90
 
-```cpp
-(1) vvc<T> rot90(vvc<T> a, U k = 1)
-(2) vstr rot90(vstr a, U k = 1)
-```
-
-二次元配列を**反時計回りに** $90$ 度回転することを $k$ 回行った結果の二次元配列を返す。
-
-```
-12
-34 -> 246
-56    135
-```
-
-同じく $0 \times m$ には注意。
-
-##### 制約
-
-- `U` は整数
-- $k$ は型 `U` の上限・下限付近ではない
-
-##### 計算量
-
-$a$ のサイズを $n \times m$ として
-
-- $O(nm)$
+二次元配列の回転は `algo/rot90.hpp` をインクルードして使う。
+使用例と仕様は [rot90](../algo/rot90.md) を参照。
 
 ### 累積和・差分
 
 #### cuml, cumr
 
 ```cpp
-(1) vc<M::S> cuml(vc<M::S> v)
-(2) vc<M::S> cumr(vc<M::S> v)
-(3) vc<T> cumlsum(vc<T> v)
-(4) vc<T> cumrsum(vc<T> v)
-(5) vc<T> cumlmax(vc<T> v)
-(6) vc<T> cumrmax(vc<T> v)
-(7) vc<T> cumlmin(vc<T> v)
-(8) vc<T> cumrmin(vc<T> v)
+(1) vc<M::S> cuml(const vc<M::S>& v, int left_index = 0)
+(2) vc<M::S> cumr(const vc<M::S>& v, int right_index = 0)
+(3) vc<T> cumlsum(const vc<T>& v, int left_index = 0)
+(4) vc<T> cumrsum(const vc<T>& v, int right_index = 0)
+(5) vc<T> cumlmax(const vc<T>& v, int left_index = 0)
+(6) vc<T> cumrmax(const vc<T>& v, int right_index = 0)
+(7) vc<T> cumlmin(const vc<T>& v, int left_index = 0)
+(8) vc<T> cumrmin(const vc<T>& v, int right_index = 0)
 ```
 
 $\lvert v \rvert = n$ とする。
 
 - (1)：`M` はモノイド。長さ $n + 1$ の配列を返す。$i \  (0 \leq i \leq n)$ 番目には、$v[0, i)$ に左から順に `M` の積演算を行った結果を返す。
 - (2)：`M` はモノイド。長さ $n + 1$ の配列を返す。$i \  (0 \leq i \leq n)$ 番目には、$v[i, n)$ に右から順に `M` の積演算を行った結果を返す。
-- (3), (4), (5), (6), (7), (8)：モノイドをそれぞれ `MonoidAdd<T>`, `MonoidMin<T>`, `MonoidMax<T>` としたもの。
+- (3), (4)：モノイドを `MonoidAdd<T>` としたもの。
+- (5), (6)：モノイドを `MonoidMax<T>` としたもの。
+- (7), (8)：モノイドを `MonoidMin<T>` としたもの。
+
+`left_index` 個を先頭から、`right_index` 個を末尾から取り除く。`1` なら単位元を省き、長さ $n$ の配列を返す。既定値はどちらも `0`。
 
 例 (cumlsum)：$(3, 1, 4, 1) \to (0, 3, 4, 8, 9)$
+
+##### 制約
+
+- $0\leq\mathrm{left\\_index}\leq n+1$、$0\leq\mathrm{right\\_index}\leq n+1$
 
 ##### 計算量
 
@@ -336,14 +305,21 @@ $\lvert v \rvert = n$ とする。
 #### adjd
 
 ```cpp
-vc<T> adjd(vc<T> v)
+vc<T> adjd(const vc<T>& v, int left_index = 0, int right_index = 0)
 ```
 
 $\lvert v \rvert = n$ とする。
 
 長さ $n+1$ の配列を返す。$i \  (0 \leq i \leq n)$ 番目には、$v_i - v_{i-1}$ が格納される（ただし、$v_{-1}$ や $v_n$ は $0$ とみなす）。
 
+`left_index` 個を先頭から、`right_index` 個を末尾から取り除く。両方を `1` にすると隣接要素間の差だけを返す。
+
 例：$(3, 1, 4, 1) \to (3, -2, 3, -3, -1)$ 
+
+##### 制約
+
+- $0\leq\mathrm{left\\_index}$、$0\leq\mathrm{right\\_index}$
+- $\mathrm{left\\_index}+\mathrm{right\\_index}\leq n+1$
 
 ##### 計算量
 

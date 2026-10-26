@@ -74,6 +74,8 @@ https://hos-lyric.hatenablog.com/entry/2021/06/10/004947
 using mint = modint998244353;
 assert(Binomial<mint>::C(5, 2) == 10);
 assert(Binomial<mint>::fac(5) == 120);
+using small_mint = static_modint32<7>;
+assert(Binomial<small_mint>::inv(-2) == 3);
 ```
 
 ## 詳細なドキュメント
@@ -133,10 +135,10 @@ $T$ 回呼んだとき、
 #### inv
 
 ```cpp
-mint inv(mint n)
+mint inv(int n)
 ```
 
-$n^{-1}$ を返す。$n \lt 0$ なら $0$ を返す。
+$n$ を $p$ で割った非負の剰余に正規化し、$n^{-1}$ を返す。負の $n$ にも対応する。
 
 ##### 制約
 
@@ -204,11 +206,10 @@ $n \lt 0, k \lt 0$ のいずれかを満たす場合は $0$ を返す。
 
 ##### 制約
 
-- $k \lt p$
-- $n - k \lt p$
+- $n=0$ の場合を除き、$n+k-1\lt p$
 
 ##### 計算量
 
 $T$ 回呼んだとき、
 
-- $O(T + \max(n \bmod p))$
+- $O(T + \max(n+k))$

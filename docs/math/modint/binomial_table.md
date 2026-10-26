@@ -16,13 +16,13 @@ BinomialTable<mint>::C(n, k)
 
 - `mint` は modint 系
 
-以下 mod を $p$ と書く。
-
 ## 使用例
 
 ```cpp
 using mint = static_modint32<12>;
 assert(BinomialTable<mint>::C(5, 2) == 10);
+assert(BinomialTable<mint>::C(14, 2) == 7);
+assert(BinomialTable<mint>::H(4, 13) == 8);
 ```
 
 ## 詳細なドキュメント
@@ -53,11 +53,6 @@ $n \geq k \geq 0$ のとき、$\displaystyle \binom{n}{k} = \dfrac{n!}{k!(n-k)!}
 
 $n \lt k, n \lt 0, k \lt 0$ のいずれかを満たす場合は $0$ を返す。
 
-##### 制約
-
-- $k \lt p$
-- $n - k \lt p$
-
 ##### 計算量
 
 $T$ 回呼んだとき、
@@ -77,13 +72,8 @@ $n \geq 0, k \geq 0$ のとき、$[x^k]\dfrac{1}{(1-x)^n} = \begin{cases}
 
 $n \lt 0, k \lt 0$ のいずれかを満たす場合は $0$ を返す。
 
-##### 制約
-
-- $k \lt p$
-- $n - k \lt p$
-
 ##### 計算量
 
 $T$ 回呼んだとき、
 
-- $O(T + \max(n \bmod p))$
+- $O(T + \max(n+k)^2)$

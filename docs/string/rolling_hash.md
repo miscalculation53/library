@@ -70,12 +70,13 @@ dump(t);  // LOCAL では仮想列の実際の内容を表示する
 
 ```cpp
 vc<string> s = {"cba", "cb", "c"};
+int K = 3;
 vc<RollingHash<>> rh;
 for (const string& x : s) rh.emplace_back(x);
 
 RollingHashDeque ans;
 rep(_, K) {
-  auto it = min_element(all(rh), [&](const auto& x, const auto& y) {
+  auto it = min_element(ALL(rh), [&](const auto& x, const auto& y) {
     return x + ans < y + ans;
   });
   ans.push_front(*it);

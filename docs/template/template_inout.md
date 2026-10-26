@@ -103,7 +103,7 @@ tie(A, B) = unzip(AB);
 ```cpp
 LL(N);
 VEC(tlll, N - 1, ABC);
-offset(N, tlll{-1, -1, 0});
+offset(ABC, tlll{-1, -1, 0});
 // これで ABC = { {0, 1, 100}, {1, 2, 200} } となる
 ```
 
@@ -168,7 +168,7 @@ A[N][1] A[N][2] ... A[N][N]
 
 ```cpp
 LL(N);
-vl A(N);
+vvc<ll> A(N);
 rep(i, N) A.at(i).resize(i + 1);
 READ(A);
 ```

@@ -132,6 +132,7 @@ def run_verify(
 ) -> tuple[subprocess.CompletedProcess, List[str]]:
     failed = []
     pattern = re.compile(r"^::error file=(.+)::failed to verify\s*$")
+    ansi_color = re.compile(r"\x1b\[[0-9;]*m")
     current_file = None
     downloading = False
     suppress_failure_details = False
@@ -148,6 +149,8 @@ def run_verify(
     assert process.stdout is not None
     try:
         for line in process.stdout:
+            # oj inserts ANSI color codes inside labels such as [ERROR].
+            line = ansi_color.sub("", line)
             if line.startswith("INFO:onlinejudge_verify.verify:verify: "):
                 current_file = line.removeprefix(
                     "INFO:onlinejudge_verify.verify:verify: "
