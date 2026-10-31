@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../internal_power.hpp"
 #include "affine_multivariate_power_sum.hpp"
 #include "../upd.hpp"
 
@@ -16,6 +17,8 @@ struct ActedMonoidUpdMultivariatePowerSum
   using F = array<typename MonoidUpdFlag<T>::S, M::dim>;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
+  template <class I>
+  static constexpr S pow(const S &x, I k) { return internal_monoid_power::power<M>(x, k); }
   static constexpr S mapping(const F &f, const S &x)
   {
     using AM = ActedMonoidAffineMultivariatePowerSum<T, Ds...>;

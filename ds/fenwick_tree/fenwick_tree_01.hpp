@@ -76,32 +76,28 @@ public:
     fw.add(i / B, b ? 1 : -1);
   }
 
-  // sum[0, r) < w となる最大の r (なければ nullopt)
+  // sum[0, r) < w となる最大の r (左番兵 -1)
   template <class I = ll>
-  inline optional<I> lt_max(T w) const
+  inline I lt_max(T w) const
   {
+    static_assert(numeric_limits<I>::is_signed, "index type must represent -1");
     if (w <= 0)
-      return nullopt;
+      return -1;
     if (w > sum(n))
       return n;
     const auto [i, v] = *fw.lt_max_id_sum(w);
     I res = B * i + kth_bit_pos(dat[i], w - v - 1);
     return res;
   }
-  // sum[0, r) >= w となる最小の r (なければ nullopt)
+  // sum[0, r) >= w となる最小の r (右番兵 n + 1)
   template <class I = ll>
-  optional<I> geq_min(T w) const
-  {
-    auto r = lt_max<I>(w);
-    I index = r ? *r + 1 : 0;
-    return index > n ? nullopt : optional<I>(index);
-  }
-  // sum[0, r) <= w となる最大の r (なければ nullopt)
+  I geq_min(T w) const { return lt_max<int>(w) + 1; }
+  // sum[0, r) <= w となる最大の r (左番兵 -1)
   template <class I = ll>
-  inline optional<I> leq_max(T w) const { return lt_max<I>(w + 1); }
-  // sum[0, r) > w となる最小の r (なければ nullopt)
+  inline I leq_max(T w) const { return lt_max<I>(w + 1); }
+  // sum[0, r) > w となる最小の r (右番兵 n + 1)
   template <class I = ll>
-  inline optional<I> gt_min(T w) const { return geq_min<I>(w + 1); }
+  inline I gt_min(T w) const { return geq_min<I>(w + 1); }
 
   // 要素が [0, size()) の集合を管理するのに使ったとき、集合のサイズを返す
   inline T size_of_set() const { return sum(n); }
@@ -115,31 +111,28 @@ public:
   inline optional<I> kth_in_set(int k) const
   {
     if (k < 0) return nullopt;
-    auto key = leq_max<I>(k);
-    return key && *key < n ? key : nullopt;
+    int key = leq_max<int>(k);
+    return key < n ? optional<I>(I(key)) : nullopt;
   }
-  // 要素が [0, size()) の集合を管理するのに使ったとき、x 未満で最大の要素が**何番目か** (なければ nullopt)
+  // 要素が [0, size()) の集合を管理するのに使ったとき、x 未満で最大の要素の順位 (左番兵 -1)
   template <class I = ll>
-  inline optional<I> lt_max_in_set(T x) const
+  inline I lt_max_in_set(T x) const
   {
+    static_assert(numeric_limits<I>::is_signed, "index type must represent -1");
     if (x < 0)
-      return nullopt;
+      return -1;
     T count = sum(min(x, T(n)));
-    return count == 0 ? nullopt : optional<I>(I(count - 1));
+    return I(count) - 1;
   }
-  // 要素が [0, size()) の集合を管理するのに使ったとき、x 以下で最大の要素が**何番目か** (なければ nullopt)
+  // x 以下で最大の要素の順位 (左番兵 -1)
   template <class I = ll>
-  inline optional<I> leq_max_in_set(T x) const { return lt_max_in_set<I>(x + 1); }
-  // 要素が [0, size()) の集合を管理するのに使ったとき、x 以上で最小の要素が**何番目か** (なければ nullopt)
+  inline I leq_max_in_set(T x) const { return lt_max_in_set<I>(x + 1); }
+  // x 以上で最小の要素の順位 (右番兵 size_of_set())
   template <class I = ll>
-  inline optional<I> geq_min_in_set(T x) const
-  {
-    T rank = sum(clamp(x, T(0), T(n)));
-    return rank == size_of_set() ? nullopt : optional<I>(I(rank));
-  }
-  // 要素が [0, size()) の集合を管理するのに使ったとき、x 超過で最小の要素が**何番目か** (なければ nullopt)
+  inline I geq_min_in_set(T x) const { return sum(clamp(x, T(0), T(n))); }
+  // x 超過で最小の要素の順位 (右番兵 size_of_set())
   template <class I = ll>
-  inline optional<I> gt_min_in_set(T x) const { return geq_min_in_set<I>(x + 1); }
+  inline I gt_min_in_set(T x) const { return geq_min_in_set<I>(x + 1); }
 
   string content() const
   {

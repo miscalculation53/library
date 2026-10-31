@@ -39,6 +39,10 @@ void test_rational_and_providers()
   const R &inf = default_infty<R>();
   assert(inf.num == 1 && inf.den == 0);
   assert(&inf == &default_infty<R>());
+  const auto product_inf = default_infty<pair<R, array<i128, 2>>>();
+  assert(product_inf.first == inf && product_inf.second[0] == WIDE_INF);
+  const auto tuple_inf = default_infty<tuple<array<R, 2>, ll>>();
+  assert(get<0>(tuple_inf)[1] == inf && get<1>(tuple_inf) == INF);
   assert(MonoidMin<R>::e().is_infinite());
   assert(MonoidMax<R>::e().num == -1);
   assert(ActedMonoidAddMin<R>::mapping(R(3), inf).is_infinite());

@@ -89,10 +89,10 @@ $a_i = \mathrm{val}$ である添字 $i$ を昇順に並べた、読み取り専
 #### lt, leq, gt, geq
 
 ```cpp
-(1) optional<I> lt_max(const T& val, int i) const
-(2) optional<I> leq_max(const T& val, int i) const
-(3) optional<I> gt_min(const T& val, int i) const
-(4) optional<I> geq_min(const T& val, int i) const
+(1) I lt_max(const T& val, int i) const
+(2) I leq_max(const T& val, int i) const
+(3) I gt_min(const T& val, int i) const
+(4) I geq_min(const T& val, int i) const
 (5) I lt_cnt(const T& val, int i) const
 (6) I leq_cnt(const T& val, int i) const
 (7) I gt_cnt(const T& val, int i) const
@@ -102,10 +102,10 @@ $a_i = \mathrm{val}$ である添字 $i$ を昇順に並べた、読み取り専
 
 それぞれ次の値を返す。
 
-- (1)：$\max \lbrace j < i \mid a_j = \mathrm{val} \rbrace$、存在しなければ `nullopt`
-- (2)：$\max \lbrace j \leq i \mid a_j = \mathrm{val} \rbrace$、存在しなければ `nullopt`
-- (3)：$\min \lbrace j > i \mid a_j = \mathrm{val} \rbrace$、存在しなければ `nullopt`
-- (4)：$\min \lbrace j \geq i \mid a_j = \mathrm{val} \rbrace$、存在しなければ `nullopt`
+- (1)：$\max \lbrace j < i \mid a_j = \mathrm{val} \rbrace$、左番兵は `-1`
+- (2)：$\max \lbrace j \leq i \mid a_j = \mathrm{val} \rbrace$、左番兵は `-1`
+- (3)：$\min \lbrace j > i \mid a_j = \mathrm{val} \rbrace$、右番兵は元の配列長 `n`
+- (4)：$\min \lbrace j \geq i \mid a_j = \mathrm{val} \rbrace$、右番兵は元の配列長 `n`
 - (5)：$\\# \lbrace j < i \mid a_j = \mathrm{val} \rbrace$
 - (6)：$\\# \lbrace j \leq i \mid a_j = \mathrm{val} \rbrace$
 - (7)：$\\# \lbrace j > i \mid a_j = \mathrm{val} \rbrace$
@@ -117,6 +117,8 @@ $a_i = \mathrm{val}$ である添字 $i$ を昇順に並べた、読み取り専
 ##### 制約
 
 - (9)：$l \leq r$
+
+左側の検索には `-1` を表せる符号付き整数型 `I` を使う。
 
 ##### 計算量
 
@@ -162,6 +164,8 @@ vc<pair<T, vc<I>>> content() const
 ```
 
 出現した値と、その値を持つ添字の列を返す。値・各添字列とも昇順となる。`GroupIndexRaw` でも出現した値だけを含む。
+
+`LOCAL` 時の `dump(grp)` は、各組を `Group{ value= ..., indices= ... }` と表示する。`GroupIndexRaw` も同じ形式。
 
 ##### 計算量
 

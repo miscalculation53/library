@@ -255,6 +255,23 @@ public:
         return M::e();
     }
     S all_prod() const { return root < 0 ? M::e() : nodes[root].aggregate; }
+    template <class X, class F>
+    X prod_apply(ll l, ll r, X x, F&& apply) const {
+        auto dfs = [&](auto&& self, int i, ll a, ll b) -> void {
+            if (i < 0 || b <= l || r <= a) return;
+            const Node& v = nodes[i];
+            if (l <= a && b <= r) {
+                x = apply(x, v.aggregate);
+                return;
+            }
+            self(self, v.left, a, v.key);
+            if (l <= v.key && v.key < r) x = apply(x, v.own);
+            self(self, v.right, v.key + 1, b);
+        };
+        if (l < r && root >= 0)
+            dfs(dfs, root, nodes[first].key, nodes[last].key + 1);
+        return x;
+    }
     template <class G>
     ll max_right_ok(ll l, ll n, const G& g) const {
         S sum = M::e();
@@ -487,6 +504,33 @@ public:
     return dfs(dfs, 0);
   }
   S all_prod() const { return nodes.empty() ? M::e() : nodes[0].prod; }
+
+  template <class X, class F>
+  X prod_apply(ll l, ll r, X x, F &&apply) const
+  {
+    auto dfs = [&](auto &&self, int i) -> void
+    {
+      const Node &v = nodes[i];
+      if (v.hi <= l || r <= v.lo) return;
+      if (l <= v.lo && v.hi <= r)
+      {
+        x = apply(x, v.prod);
+        return;
+      }
+      if (v.chi[0] != -1) self(self, v.chi[0]);
+      ll a = max(l, v.entry.l), b = min(r, v.entry.r);
+      if (a < b && a == v.entry.l) x = apply(x, v.entry.val), ++a;
+      if (a < b)
+      {
+        const S rest = a == v.entry.l + 1 && b == v.entry.r
+                           ? v.entry.rest : repeat(initial_value, b - a);
+        x = apply(x, rest);
+      }
+      if (v.chi[1] != -1) self(self, v.chi[1]);
+    };
+    if (l < r) dfs(dfs, 0);
+    return x;
+  }
 
   // g(prod(l, r)) が true となる最大の r を返す
   template <class G>

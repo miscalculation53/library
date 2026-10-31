@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../../template/template_all_but_modint.hpp"
+#include "../../internal_dump_content.hpp"
 #include "../../../algebra/algebra_basic_ops.hpp"
 #include "../../fenwick_tree/fenwick_tree.hpp"
 #include "../../csr.hpp"
@@ -216,3 +217,20 @@ public:
     return res;
   }
 };
+
+#ifdef LOCAL
+namespace cpp_dump::_detail
+{
+  template <class M, class I, template <class...> class D>
+  inline string export_object_generic(
+      const FenwickTree2DSparse<M, I, D> &value, const string &indent,
+      size_t last_line_length, size_t current_depth, bool fail_on_newline,
+      const export_command &command)
+  {
+    return export_named_content<library_dump_detail::PointFields>(
+        value, [&]() -> decltype(auto) { return (value.content()); },
+        indent, last_line_length, current_depth, fail_on_newline, command);
+  }
+
+} // namespace cpp_dump::_detail
+#endif

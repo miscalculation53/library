@@ -1,269 +1,21 @@
 #pragma once
 
-#include "../../template/template_all_but_modint.hpp"
-
-/*! SPDX-License-Identifier: CC0-1.0
- * Independently designed from GF(2) row operations and the stated API.
- */
-
-#include <algorithm>
-#include <array>
-#include <cassert>
-#include <cstdint>
-#include <optional>
-#include <utility>
-#include <vector>
-
-namespace matrix_mod2_detail {
-using word = std::uint64_t;
-inline int low_bit(word x) { return __builtin_ctzll(x); }
-constexpr int word_count(int columns) { return columns / 64 + (columns % 64 != 0); }
-inline word tail_mask(int m) { return m % 64 ? (word(1) << (m % 64)) - 1 : ~word(0); }
-
-template<class GetWord>
-int rank_narrow(int n, int m, GetWord get) {
-    std::array<word, 64> basis;
-    std::fill(basis.begin(), basis.begin() + m, word(0));
-    const word mask = tail_mask(m);
-    int rank = 0;
-    for (int i = 0; i < n; ++i) {
-        word x = get(i, 0) & mask;
-        while (x) {
-            const int p = low_bit(x);
-            if (basis[p]) x ^= basis[p];
-            else {
-                basis[p] = x;
-                if (++rank == m) return rank;
-                break;
-            }
-        }
-    }
-    return rank;
-}
-
-template<class GetWord>
-int rank_few_rows(int n, int m, GetWord get) {
-    std::array<word, 64> combination, original, value;
-    for (int i = 0; i < n; ++i) combination[i] = word(1) << i;
-    const int width = word_count(m);
-    int rank = 0;
-    for (int w = 0; w < width; ++w) {
-        for (int i = 0; i < n; ++i) original[i] = get(i, w);
-        if (w + 1 == width) for (int i = 0; i < n; ++i) original[i] &= tail_mask(m);
-        for (int i = rank; i < n; ++i) {
-            word x = combination[i], y = 0;
-            while (x) { y ^= original[low_bit(x)]; x &= x - 1; }
-            value[i] = y;
-        }
-        while (rank < n) {
-            int pivot = rank;
-            while (pivot < n && !value[pivot]) ++pivot;
-            if (pivot == n) break;
-            std::swap(value[rank], value[pivot]);
-            std::swap(combination[rank], combination[pivot]);
-            const word bit = value[rank] & -value[rank];
-            for (int i = rank + 1; i < n; ++i) if (value[i] & bit) {
-                value[i] ^= value[rank];
-                combination[i] ^= combination[rank];
-            }
-            if (++rank == n) return rank;
-        }
-    }
-    return rank;
-}
-
-template<class GetWord>
-int rank_tall(int n, int m, GetWord get) {
-    const int width = word_count(m);
-    std::vector<word> basis(std::size_t(m) * width), current(width);
-    std::vector<unsigned char> occupied(m);
-    int rank = 0;
-    for (int i = 0; i < n; ++i) {
-        for (int w = 0; w < width; ++w) current[w] = get(i, w);
-        current.back() &= tail_mask(m);
-        for (int w = 0; w < width;) {
-            if (!current[w]) { ++w; continue; }
-            const int pivot = w * 64 + low_bit(current[w]);
-            word* b = basis.data() + std::size_t(pivot) * width;
-            if (occupied[pivot]) {
-                for (int j = w; j < width; ++j) current[j] ^= b[j];
-            } else {
-                occupied[pivot] = 1;
-                std::copy(current.begin() + w, current.end(), b + w);
-                if (++rank == m) return rank;
-                break;
-            }
-        }
-    }
-    return rank;
-}
-
-struct elimination {
-    int n, columns, left_width, row_width;
-    std::vector<word> storage;
-    std::vector<word*> rows;
-    std::vector<int> pivots;
-
-    template<class GetWord>
-    elimination(int n_, int m, bool inverse, GetWord get)
-        : n(n_), columns(m), left_width(word_count(m)), row_width(left_width * (inverse ? 2 : 1)),
-          storage(std::size_t(n) * row_width), rows(n) {
-        pivots.reserve(std::min(n, m));
-        for (int i = 0; i < n; ++i) {
-            rows[i] = storage.data() + std::size_t(i) * row_width;
-            for (int w = 0; w < left_width; ++w) rows[i][w] = get(i, w);
-            rows[i][left_width - 1] &= tail_mask(m);
-            if (inverse) rows[i][left_width + i / 64] = word(1) << (i % 64);
-        }
-    }
-
-    void forward(bool require_full = false) {
-        constexpr int block = 8;
-        std::vector<unsigned char> pattern(n);
-        std::vector<word> table;
-        int rank = 0;
-        for (int w = 0; w < left_width && rank < n; ++w) {
-            while (rank < n) {
-                std::fill(pattern.begin() + rank, pattern.end(), 0);
-                int count = 0;
-                for (; count < block && rank + count < n; ++count) {
-                    const int r = rank + count;
-                    int pivot = r;
-                    while (pivot < n && !rows[pivot][w]) ++pivot;
-                    if (pivot == n) break;
-                    std::swap(rows[r], rows[pivot]);
-                    std::swap(pattern[r], pattern[pivot]);
-                    const word bit = rows[r][w] & -rows[r][w];
-                    pivots.push_back(w * 64 + low_bit(bit));
-                    for (int i = r + 1; i < n; ++i) if (rows[i][w] & bit) {
-                        rows[i][w] ^= rows[r][w];
-                        pattern[i] ^= 1u << count;
-                    }
-                }
-                if (!count) break;
-                const int start = w + 1, length = row_width - start;
-                if (length) {
-                    for (int j = 0; j < count; ++j) {
-                        unsigned p = pattern[rank + j];
-                        while (p) {
-                            const int b = __builtin_ctz(p); p &= p - 1;
-                            for (int k = start; k < row_width; ++k) rows[rank + j][k] ^= rows[rank + b][k];
-                        }
-                    }
-                    int active = 0;
-                    for (int i = rank + count; i < n; ++i) active += pattern[i] != 0;
-                    if (active > (1 << count)) {
-                        table.resize(std::size_t(1 << count) * length);
-                        std::fill(table.begin(), table.begin() + length, 0);
-                        for (unsigned p = 1; p < (1u << count); ++p) {
-                            const unsigned previous = p & (p - 1);
-                            const int b = __builtin_ctz(p);
-                            for (int k = 0; k < length; ++k)
-                                table[std::size_t(p) * length + k] = table[std::size_t(previous) * length + k] ^ rows[rank + b][start + k];
-                        }
-                        for (int i = rank + count; i < n; ++i) if (pattern[i]) {
-                            const word* add = table.data() + std::size_t(pattern[i]) * length;
-                            for (int k = 0; k < length; ++k) rows[i][start + k] ^= add[k];
-                        }
-                    } else {
-                        for (int i = rank + count; i < n; ++i) {
-                            unsigned p = pattern[i];
-                            while (p) {
-                                const int b = __builtin_ctz(p); p &= p - 1;
-                                for (int k = start; k < row_width; ++k) rows[i][k] ^= rows[rank + b][k];
-                            }
-                        }
-                    }
-                }
-                rank += count;
-            }
-            if (require_full && std::size_t(rank) < std::min(std::size_t(columns), (std::size_t(w) + 1) * 64)) return;
-        }
-    }
-
-    std::vector<word> inverse_result() {
-        constexpr int block = 8;
-        std::vector<word> table;
-        for (int end = n; end > 0;) {
-            const int begin = std::max(0, end - block), count = end - begin;
-            for (int i = end - 1; i >= begin; --i)
-                for (int j = i + 1; j < end; ++j)
-                    if ((rows[i][pivots[j] / 64] >> (pivots[j] % 64)) & 1)
-                        for (int w = 0; w < left_width; ++w) rows[i][left_width + w] ^= rows[j][left_width + w];
-            if (begin > (1 << count)) {
-                table.resize(std::size_t(1 << count) * left_width);
-                std::fill(table.begin(), table.begin() + left_width, 0);
-                for (unsigned p = 1; p < (1u << count); ++p) {
-                    const unsigned previous = p & (p - 1);
-                    const int b = __builtin_ctz(p);
-                    for (int w = 0; w < left_width; ++w)
-                        table[std::size_t(p) * left_width + w] = table[std::size_t(previous) * left_width + w] ^ rows[begin + b][left_width + w];
-                }
-                for (int i = 0; i < begin; ++i) {
-                    unsigned p = 0;
-                    for (int j = 0; j < count; ++j)
-                        p |= unsigned((rows[i][pivots[begin + j] / 64] >> (pivots[begin + j] % 64)) & 1) << j;
-                    if (p) for (int w = 0; w < left_width; ++w) rows[i][left_width + w] ^= table[std::size_t(p) * left_width + w];
-                }
-            } else {
-                for (int i = 0; i < begin; ++i)
-                    for (int j = begin; j < end; ++j)
-                        if ((rows[i][pivots[j] / 64] >> (pivots[j] % 64)) & 1)
-                            for (int w = 0; w < left_width; ++w) rows[i][left_width + w] ^= rows[j][left_width + w];
-            }
-            end = begin;
-        }
-        std::vector<word> result(std::size_t(n) * left_width);
-        for (int i = 0; i < n; ++i)
-            std::copy(rows[i] + left_width, rows[i] + row_width, result.data() + std::size_t(pivots[i]) * left_width);
-        return result;
-    }
-};
-
-template<class GetWord>
-int rank(int n, int m, GetWord get) {
-    if (!n || !m) return 0;
-    if (m == 1) {
-        for (int i = 0; i < n; ++i) if (get(i, 0) & 1) return 1;
-        return 0;
-    }
-    if (n == 1) {
-        const int width = word_count(m);
-        for (int w = 0; w < width; ++w)
-            if (get(0, w) & (w + 1 == width ? tail_mask(m) : ~word(0))) return 1;
-        return 0;
-    }
-    if (m <= 64) return rank_narrow(n, m, get);
-    if (n <= 64) return rank_few_rows(n, m, get);
-    if (std::int64_t(n) > 4 * std::int64_t(m)) return rank_tall(n, m, get);
-    elimination work(n, m, false, get);
-    work.forward();
-    return int(work.pivots.size());
-}
-
-template<class GetWord>
-std::optional<std::vector<word>> inverse(int n, GetWord get) {
-    if (!n) return std::vector<word>();
-    elimination work(n, n, true, get);
-    work.forward(true);
-    if (int(work.pivots.size()) != n) return std::nullopt;
-    return work.inverse_result();
-}
-}
+#include "internal_matrix_mod2.hpp"
 
 #include <climits>
 #include <cstring>
 #include <limits>
 #include <type_traits>
 
-namespace matrix_mod2_detail {
+namespace matrix_mod2_detail
+{
 // The fast path assumes the bit layout validated in the tested GNU 15 build:
 // contiguous little-endian words; bit j is word j/64, bit j%64.
 // Size and trivial-copyability checks supplement that validation; they do not prove layout.
-template<std::size_t Capacity>
+template <std::size_t Capacity>
 constexpr bool native_bitset_words =
-#if defined(__GLIBCXX__) && defined(_GLIBCXX_RELEASE) && _GLIBCXX_RELEASE == 15 && \
-    CHAR_BIT == 8 && ULONG_MAX == UINT64_MAX && defined(__BYTE_ORDER__) && \
+#if defined(__GLIBCXX__) && defined(_GLIBCXX_RELEASE) && _GLIBCXX_RELEASE == 15 &&                 \
+    CHAR_BIT == 8 && ULONG_MAX == UINT64_MAX && defined(__BYTE_ORDER__) &&                         \
     defined(__ORDER_LITTLE_ENDIAN__) && __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
     Capacity != 0 && std::is_trivially_copyable<std::bitset<Capacity>>::value &&
     sizeof(std::bitset<Capacity>) == (Capacity / 64 + (Capacity % 64 != 0)) * sizeof(word);
@@ -271,315 +23,323 @@ constexpr bool native_bitset_words =
     false;
 #endif
 
-template<std::size_t Capacity>
-word read_word(const std::bitset<Capacity>& row, int index, std::size_t columns = Capacity) {
-    if constexpr (native_bitset_words<Capacity>) {
-        word value;
-        std::memcpy(&value, reinterpret_cast<const unsigned char*>(&row) + std::size_t(index) * sizeof(word), sizeof(word));
-        return value;
-    } else {
-        word value = 0;
-        const std::size_t begin = std::size_t(index) * 64;
-        const unsigned count = unsigned(std::min(std::size_t(64), std::size_t(columns) - begin));
-        for (unsigned bit = 0; bit < count; ++bit) value |= word(row[begin + bit]) << bit;
-        return value;
-    }
+template <std::size_t Capacity>
+word read_word(const std::bitset<Capacity> &row, int index, std::size_t columns = Capacity)
+{
+  if constexpr (native_bitset_words<Capacity>)
+  {
+    word value;
+    std::memcpy(&value,
+                reinterpret_cast<const unsigned char *>(&row) + std::size_t(index) * sizeof(word),
+                sizeof(word));
+    return value;
+  }
+  else
+  {
+    word value = 0;
+    const std::size_t begin = std::size_t(index) * 64;
+    const unsigned count = unsigned(std::min(std::size_t(64), std::size_t(columns) - begin));
+    for (unsigned bit = 0; bit < count; ++bit)
+      value |= word(row[begin + bit]) << bit;
+    return value;
+  }
 }
 
-template<std::size_t Capacity>
-void write_words(std::bitset<Capacity>& row, const word* source, int columns) {
-    const int width = word_count(columns);
-    if constexpr (native_bitset_words<Capacity>) {
-        if (width) std::memcpy(reinterpret_cast<unsigned char*>(&row), source, std::size_t(width) * sizeof(word));
-    } else {
-        for (int bit = 0; bit < columns; ++bit) row[bit] = (source[bit / 64] >> (bit % 64)) & 1;
-    }
+template <std::size_t Capacity>
+void write_words(std::bitset<Capacity> &row, const word *source, int columns)
+{
+  const int width = word_count(columns);
+  if constexpr (native_bitset_words<Capacity>)
+  {
+    if (width)
+      std::memcpy(reinterpret_cast<unsigned char *>(&row), source,
+                  std::size_t(width) * sizeof(word));
+  }
+  else
+  {
+    for (int bit = 0; bit < columns; ++bit)
+      row[bit] = (source[bit / 64] >> (bit % 64)) & 1;
+  }
 }
-}
-
+} // namespace matrix_mod2_detail
 
 /**
- * @brief 行列（$\mathbb{F}_2$）
+ * @brief 固定サイズの行列（$\mathbb{F}_2$）
  * @docs docs/math/linalg/matrix_mod2.md
  */
-
-template <size_t MAX_M>
-struct MatrixMod2 : vc<bitset<MAX_M>>
+template <size_t N, size_t C = N> struct MatrixMod2 : array<bitset<C>, N>
 {
   using M = MatrixMod2;
-  using V = bitset<MAX_M>;
-  using vc<bitset<MAX_M>>::vector;
-  using vc<bitset<MAX_M>>::operator=;
-  using vc<bitset<MAX_M>>::size;
-
-  int m;
-  MatrixMod2(int n, int m, int diag = 0, int non_diag = 0) : m(m)
+  using Vn = bitset<N>;
+  using Vm = bitset<C>;
+  using V = Vm;
+  using Base = array<Vm, N>;
+  using Base::at;
+  static constexpr int n = N, m = C;
+  MatrixMod2(int diag = 0, int non_diag = 0)
   {
-    assert(0 <= m && size_t(m) <= MAX_M);
-    this->resize(n);
-    repi(i, n) repi(j, m)(*this)[i][j] = i == j ? diag : non_diag;
+    assert((diag == 0 || diag == 1) && (non_diag == 0 || non_diag == 1));
+    if (non_diag)
+      for (auto &r : *this)
+        r.set();
+    if (diag != non_diag)
+      for (size_t i = 0; i < min(N, C); ++i)
+        (*this)[i].flip(i);
   }
-  template <class T>
-  MatrixMod2(const vvc<T> &vec)
+  MatrixMod2(const Base &a) : Base(a) {}
+  template <class T> MatrixMod2(const vvc<T> &a)
   {
-    const int n = vec.size();
-    m = n == 0 ? 0 : vec[0].size();
-    assert(0 <= m && size_t(m) <= MAX_M);
-    this->resize(n);
-    repi(i, n)
+    assert(a.size() == N);
+    for (size_t i = 0; i < N; ++i)
     {
-      assert(SZ(vec[i]) == m);
-      repi(j, m)
+      assert(a[i].size() == C);
+      for (size_t j = 0; j < C; ++j)
       {
-        assert(vec[i][j] == T(0) || vec[i][j] == T(1));
-        (*this)[i][j] = vec[i][j];
+        assert(a[i][j] == T(0) || a[i][j] == T(1));
+        (*this)[i][j] = a[i][j] == T(1);
       }
     }
   }
-  MatrixMod2(const vc<string> &vec)
+  MatrixMod2(const vc<string> &a)
   {
-    const int n = vec.size();
-    m = n == 0 ? 0 : vec[0].size();
-    assert(0 <= m && size_t(m) <= MAX_M);
-    this->resize(n);
-    repi(i, n)
+    assert(a.size() == N);
+    for (size_t i = 0; i < N; ++i)
     {
-      assert(SZ(vec[i]) == m);
-      repi(j, m)
+      assert(a[i].size() == C);
+      for (size_t j = 0; j < C; ++j)
       {
-        assert(vec[i][j] == '0' || vec[i][j] == '1');
-        (*this)[i][j] = vec[i][j] - '0';
+        assert(a[i][j] == '0' || a[i][j] == '1');
+        (*this)[i][j] = a[i][j] == '1';
       }
     }
   }
-  template <class T = ll>
-  vvc<T> to_vvi() const
+  template <class I = ll> static constexpr pair<I, I> shape() { return {I(N), I(C)}; }
+  static M e0() { return M(); }
+  static M e1() { return M(1); }
+  auto &row(int i) { return (*this)[i]; }
+  const auto &row(int i) const { return (*this)[i]; }
+  auto operator()(int i, int j) { return (*this)[i][j]; }
+  bool operator()(int i, int j) const { return (*this)[i][j]; }
+  auto at(int i, int j)
   {
-    const int n = size();
-    vvc<T> res(n, vc<T>(m));
-    repi(i, n) repi(j, m) res[i][j] = (*this)[i][j];
-    return res;
+    assert(0 <= i && i < n && 0 <= j && j < m);
+    return (*this)[i][j];
+  }
+  bool at(int i, int j) const
+  {
+    assert(0 <= i && i < n && 0 <= j && j < m);
+    return (*this)[i][j];
+  }
+  bool test(int i, int j) const { return at(i, j); }
+  M &set(int i, int j, bool value = true)
+  {
+    at(i, j) = value;
+    return *this;
+  }
+  M &flip(int i, int j)
+  {
+    at(i, j).flip();
+    return *this;
+  }
+  template <class T = ll> vvc<T> to_vvi() const
+  {
+    vvc<T> a(N, vc<T>(C));
+    repi(i, n) repi(j, m) a[i][j] = (*this)[i][j];
+    return a;
   }
   vc<string> to_vstr() const
   {
-    const int n = size();
-    vc<string> res(n, string(m, '0'));
-    repi(i, n) repi(j, m) res[i][j] += (*this)[i][j];
-    return res;
+    vc<string> a(N, string(C, '0'));
+    repi(i, n) repi(j, m) if ((*this)[i][j]) a[i][j] = '1';
+    return a;
   }
-
   M operator-() const { return *this; }
-  
-  // 加算・減算 O(nm/w)
   M &operator+=(const M &b)
   {
-    const int n = size();
     repi(i, n)(*this)[i] ^= b[i];
     return *this;
   }
   M &operator-=(const M &b) { return *this += b; }
   M operator+(const M &b) const { return M(*this) += b; }
   M operator-(const M &b) const { return M(*this) -= b; }
-
-  // 乗算 O(nmk/w)
-  template <size_t MAX_K>
-  MatrixMod2<MAX_K> operator*(const MatrixMod2<MAX_K> &b) const
+  Vn operator*(const Vm &v) const
   {
-    const int n = size(), m_ = b.size(), k = b.m;
-    assert(m == m_);
-    MatrixMod2<MAX_K> res(n, k);
-    repi(i, n)
-    {
-      auto row = (*this)[i];
-      for (int j = row._Find_first(); j < m; j = row._Find_next(j))
-        res[i] ^= b[j];
-    }
-    return res;
+    Vn result;
+    repi(i, n) result[i] = (((*this)[i] & v).count() & 1);
+    return result;
   }
-  template <size_t MAX_K>
-  MatrixMod2<MAX_K> operator*=(const MatrixMod2<MAX_K> &b) { return *this = *this * b; }
-
-  // 正方行列
-  // O(n^3 log k / w)
-  template <class T>
-  M pow(T k) const
+  friend Vm operator*(const Vn &v, const M &a)
   {
-    const int n = size();
-    assert(n == m);
-    M res(n, n, 1), tmp(*this);
+    Vm result;
+    for (int w = 0; w < matrix_mod2_detail::word_count(n); ++w)
+    {
+      auto bits = matrix_mod2_detail::read_word(v, w, N);
+      while (bits)
+      {
+        int i = w * 64 + matrix_mod2_detail::low_bit(bits);
+        bits &= bits - 1;
+        result ^= a[i];
+      }
+    }
+    return result;
+  }
+  template <size_t K> MatrixMod2<N, K> operator*(const MatrixMod2<C, K> &b) const
+  {
+    MatrixMod2<N, K> result;
+    repi(i, n) for (int w = 0; w < matrix_mod2_detail::word_count(m); ++w)
+    {
+      auto bits = matrix_mod2_detail::read_word((*this)[i], w, C);
+      while (bits)
+      {
+        int k = w * 64 + matrix_mod2_detail::low_bit(bits);
+        bits &= bits - 1;
+        result[i] ^= b[k];
+      }
+    }
+    return result;
+  }
+  M &operator*=(const MatrixMod2<C, C> &b) { return *this = *this * b; }
+  template <class T> M pow(T k) const
+  {
+    static_assert(N == C);
+    assert(k >= 0);
+    M result(1), a(*this);
     while (k > 0)
     {
       if (k & 1)
-        res *= tmp;
-      tmp *= tmp;
+        result *= a;
       k >>= 1;
+      if (k > 0)
+        a *= a;
     }
-    return res;
+    return result;
   }
-
-  // rref が true の場合、簡約行列にしたものを返す
-  // rref が false の場合、階段行列にしたものを返す
-  // O(nm min(n, m) / w)
   M row_reduction(bool rref = false) const
   {
-    const int n = size();
     M a(*this);
-    for (int i = 0, j = 0; i < n && j < m; j++)
+    for (int i = 0, j = 0; i < n && j < m; ++j)
     {
-      repi(k, i, n)
-      {
-        if (a[k][j])
-        {
-          swap(a[i], a[k]);
-          break;
-        }
-      }
-      if (a[i][j] == 0)
+      int pivot = i;
+      while (pivot < n && !a[pivot][j])
+        ++pivot;
+      if (pivot == n)
         continue;
-      if (rref) repi(k, i) if (a[k][j]) a[k] ^= a[i];
-      repi(k, i + 1, n) if (a[k][j]) a[k] ^= a[i];
-      i++;
+      swap(a[i], a[pivot]);
+      for (int k = rref ? 0 : i + 1; k < n; ++k)
+        if (k != i && a[k][j])
+          a[k] ^= a[i];
+      ++i;
     }
     return a;
   }
-  // C = MAX_M、w はワードのビット数。
-  // O(nm + n min(n, m) C / w)
-  template <class I = ll>
-  I rank() const
+  template <class I = ll> I rank() const
   {
-    if constexpr (matrix_mod2_detail::native_bitset_words<MAX_M>) {
-      assert(0 <= m && size_t(m) <= MAX_M);
-      auto get = [&](int row, int column) { return matrix_mod2_detail::read_word((*this)[row], column, m); };
-      return I(matrix_mod2_detail::rank(int(size()), m, get));
-    } else {
-      assert(0 <= m && size_t(m) <= MAX_M);
-      const int n = size();
-      if (!n || !m) return I(0);
-      if (m == 1) {
-        for (int i = 0; i < n; ++i) if ((*this)[i][0]) return I(1);
-        return I(0);
-      }
-      if constexpr (MAX_M <= 64) {
-        auto get = [&](int row, int) { return matrix_mod2_detail::word((*this)[row].to_ullong()); };
-        if (n == 1) return I((get(0, 0) & matrix_mod2_detail::tail_mask(m)) != 0);
-        return I(matrix_mod2_detail::rank_narrow(n, m, get));
-      }
-      if (n == 1) {
-        for (int j = 0; j < m; ++j) if ((*this)[0][j]) return I(1);
-        return I(0);
-      }
-      M a(*this);
-      int rank = 0;
-      for (int j = 0; rank < n && j < m; ++j) {
-        int pivot = rank;
-        while (pivot < n && !a[pivot][j]) ++pivot;
-        if (pivot == n) continue;
-        if (pivot != rank) a[rank] ^= a[pivot];
-        for (int i = rank + 1; i < n; ++i)
-          if (a[i][j]) a[i] ^= a[rank];
-        ++rank;
-      }
-      return I(rank);
+    if constexpr (matrix_mod2_detail::native_bitset_words<C> || C <= 64)
+    {
+      auto get = [&](int i, int w)
+      {
+        if constexpr (C <= 64)
+          return matrix_mod2_detail::word((*this)[i].to_ullong());
+        else
+          return matrix_mod2_detail::read_word((*this)[i], w, C);
+      };
+      return I(matrix_mod2_detail::rank(n, m, get));
+    }
+    else
+    {
+      M a = row_reduction();
+      I rank = 0;
+      for (const auto &r : a)
+        rank += r.any();
+      return rank;
     }
   }
-  // 正方行列、O(n^2 + n^2 C / w)
-  template <class I = ll>
-  I det() const
+  template <class I = ll> I det() const
   {
-    if constexpr (matrix_mod2_detail::native_bitset_words<MAX_M>) {
-      const int n = size();
-      assert(n == m);
-      assert(0 <= m && size_t(m) <= MAX_M);
-      if (!n) return I(1);
-      auto get = [&](int row, int column) { return matrix_mod2_detail::read_word((*this)[row], column, m); };
-      if (n <= 64) return I(matrix_mod2_detail::rank_narrow(n, n, get) == n);
-      matrix_mod2_detail::elimination work(n, n, false, get);
+    static_assert(N == C);
+    if constexpr (N == 0)
+      return I(1);
+    if constexpr (matrix_mod2_detail::native_bitset_words<C> || C <= 64)
+    {
+      auto get = [&](int i, int w)
+      {
+        if constexpr (C <= 64)
+          return matrix_mod2_detail::word((*this)[i].to_ullong());
+        else
+          return matrix_mod2_detail::read_word((*this)[i], w, C);
+      };
+      if (n <= 64)
+        return I(matrix_mod2_detail::rank_narrow(n, m, get) == n);
+      matrix_mod2_detail::elimination work(n, m, false, get);
       work.forward(true);
       return I(int(work.pivots.size()) == n);
-    } else {
-      const int n = size();
-      assert(n == m);
-      assert(0 <= m && size_t(m) <= MAX_M);
-      if (n <= 1) return I(n == 0 || (*this)[0][0]);
-      M a = row_reduction();
-      int res = 1;
-      repi(i, n) res &= a[i][i];
-      return I(res);
     }
+    else
+      return I(rank() == n);
   }
-  // 正方行列、O(n^2 + n^2 C / w)
-  // 逆行列。存在しなければ nullopt。
   optional<M> inv() const
   {
-    if constexpr (matrix_mod2_detail::native_bitset_words<MAX_M>) {
-      const int n = size();
-      assert(n == m);
-      assert(0 <= m && size_t(m) <= MAX_M);
-      auto get = [&](int row, int column) { return matrix_mod2_detail::read_word((*this)[row], column, m); };
+    static_assert(N == C);
+    if constexpr (matrix_mod2_detail::native_bitset_words<C> || C <= 64)
+    {
+      auto get = [&](int i, int w)
+      {
+        if constexpr (C <= 64)
+          return matrix_mod2_detail::word((*this)[i].to_ullong());
+        else
+          return matrix_mod2_detail::read_word((*this)[i], w, C);
+      };
       auto result = matrix_mod2_detail::inverse(n, get);
-      if (!result) return nullopt;
-      M res(0, m);
-      res.resize(n);
-      const int width = matrix_mod2_detail::word_count(n);
-      for (int row = 0; row < n; ++row)
-        matrix_mod2_detail::write_words(res[row], result->data() + size_t(row) * width, n);
-      return res;
-    } else {
-      const int n = size();
-      assert(n == m);
-      assert(0 <= m && size_t(m) <= MAX_M);
-      if (!n) return M(0, 0);
-      if (n == 1) {
-        if (!(*this)[0][0]) return nullopt;
-        M res(0, 1);
-        res.resize(1);
-        res[0][0] = 1;
-        return res;
+      if (!result)
+        return nullopt;
+      M a;
+      if constexpr (N > 0)
+        repi(i, n) matrix_mod2_detail::write_words(
+            a[i], result->data() + size_t(i) * matrix_mod2_detail::word_count(n), n);
+      return a;
+    }
+    else
+    {
+      MatrixMod2<N, 2 * C> a;
+      repi(i, n)
+      {
+        repi(j, m) a[i][j] = (*this)[i][j];
+        a[i][m + i] = 1;
       }
-      MatrixMod2<MAX_M * size_t(2)> a(n, 2 * n);
-      repi(i, n) repi(j, n) a[i][j] = (*this)[i][j];
-      repi(i, n) a[i][n + i] = 1;
       auto b = a.row_reduction(true);
-      repi(i, n) if (b[i][i] == 0) return nullopt;
-      M res(n, n);
-      repi(i, n) repi(j, n) res[i][j] = b[i][n + j];
-      return res;
+      repi(i, n) if (!b[i][i]) return nullopt;
+      M result;
+      repi(i, n) repi(j, m) result[i][j] = b[i][m + j];
+      return result;
     }
   }
-
-  // (解のひとつ, 基底)。解が存在しなければ nullopt。
-  // O(nm min(n, m) / w + m^2)
-  template <size_t MAX_N>
-  optional<pair<V, vc<V>>> solve(const bitset<MAX_N> &b) const
+  optional<pair<Vm, vc<Vm>>> solve(const Vn &b) const
   {
-    const int n = size();
-    assert(size_t(n) <= MAX_N);
-    MatrixMod2<MAX_M + 1> a(n, m + 1);
-    repi(i, n) rep(j, m) a[i][j] = (*this)[i][j];
-    repi(i, n) a[i][m] = b[i];
-    a = a.row_reduction(true);
-    int rk = 0;
-    repi(i, n) if (a[i] != 0) rk++;
-
-    V sol;
-    vc<V> basis;
-    vc<int> piv(m, -1);
-    for (int i = 0, j = 0; i < rk; i++)
+    MatrixMod2<N, C + 1> a;
+    repi(i, n)
     {
-      while (j < m && a[i][j] == 0)
-        j++;
+      repi(j, m) a[i][j] = (*this)[i][j];
+      a[i][m] = b[i];
+    }
+    a = a.row_reduction(true);
+    Vm sol;
+    vc<Vm> basis;
+    vc<int> pivot(m, -1);
+    for (int i = 0, j = 0; i < n && a[i].any(); ++i)
+    {
+      while (j < m && !a[i][j])
+        ++j;
       if (j == m)
         return nullopt;
-      sol[j] = a[i][m], piv[j] = i;
+      sol[j] = a[i][m];
+      pivot[j] = i;
     }
-    repi(j, m)
+    repi(j, m) if (pivot[j] < 0)
     {
-      if (piv[j] != -1)
-        continue;
-      V ba;
-      ba[j] = 1;
-      repi(k, j) if (piv[k] != -1) ba[k] = a[piv[k]][j];
-      basis.eb(ba);
+      Vm v;
+      v[j] = 1;
+      repi(k, j) if (pivot[k] >= 0 && a[pivot[k]][j]) v[k] = 1;
+      basis.push_back(v);
     }
     return pair{move(sol), move(basis)};
   }

@@ -2,6 +2,8 @@
 
 /*!
  * Portions adapted from https://github.com/sassan-dev/cpp-dump/tree/aabd98dd8a4b5ae3f62cf12387a68a9f6591197e
+ * @keep-if-code export_library_map map_values_for_dump color_map_key map_key_color
+ * @keep-if-code _p_LIBRARY_DECLARE_MAP_EXPORT _p_LIBRARY_DEFINE_MAP_EXPORT
  *
  * MIT License
  *
@@ -44,7 +46,7 @@ namespace cpp_dump::_detail
 #undef _p_LIBRARY_DECLARE_MAP_EXPORT
 }
 
-#include <cpp-dump.hpp> //! https://github.com/philip82148/cpp-dump
+#include <cpp-dump.hpp>
 
 namespace cpp_dump::options
 {

@@ -115,6 +115,7 @@ public:
   using iterator = const_iterator;
 
   HashSet() = default;
+  explicit HashSet(const Hash &hash, const Equal &equal = Equal{}) : hasher(hash), equal(equal) {}
   HashSet(const HashSet &) = default;
   HashSet &operator=(const HashSet &) = default;
   HashSet(HashSet &&other) noexcept(nothrow_move) : HashSet() { swap(other); }

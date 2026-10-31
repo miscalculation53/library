@@ -23,9 +23,12 @@ void main2()
   LL(N, M, K);
   VEC(string, N, A_);
   VEC(string, M, B_);
-  MatrixMod2<4096> A(A_), B(B_);
+  const int MAX = local_oj(4, 4096);
+  MatrixMod2<MAX, MAX> A, B;
+  rep(i, N) rep(j, M) A(i, j) = A_[i][j] == '1';
+  rep(i, M) rep(j, K) B(i, j) = B_[i][j] == '1';
   auto C = A * B;
-  PRINTV(C.to_vstr());
+  rep(i, N) { rep(j, K) WRITE(char('0' + C(i, j))); WRITE("\n"); }
 }
 
 void test() {}

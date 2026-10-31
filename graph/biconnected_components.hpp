@@ -2,8 +2,6 @@
 #include <cassert>
 #include "lowlink.hpp"
 
-/*! SPDX-License-Identifier: CC0-1.0 */
-
 /**
  * @brief 二重連結成分分解
  * @docs docs/graph/biconnected_components.md

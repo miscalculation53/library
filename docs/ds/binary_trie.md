@@ -6,7 +6,7 @@ $[0, 2^{\mathrm{width}})$ の整数をキーとする疎な列を Binary Trie �
 
 各キーには可換モノイド `M` の要素が対応する。更新されていないキーの値は `M::e()` である。長い単一子の区間を省略して保持する。
 
-キーの型 `Key` は符号付き整数型で、キー自体は非負とする。独自のキー検索は `optional` を返し、該当するキーがなければ `nullopt`。常に定義される境界 `max_right_ng`・`min_left_ng` は、それぞれ値域の右端・左端の外側も返す。デフォルトの `Key = ll` では `width <= 63` であり、`uint64_t` の全域は扱わない。
+キーの型 `Key` は符号付き整数型で、キー自体は非負とする。要素取得と近傍キー検索は `optional` を返し、該当するキーがなければ `nullopt`。境界探索4関数は、値域の右端・左端の外側も番兵として返す。デフォルトの `Key = ll` では `width <= 63` であり、`uint64_t` の全域は扱わない。
 
 ```cpp
 struct M
@@ -37,7 +37,7 @@ $$
 
 `M::count` のようなモノイド固有の関数は要求しない。通常の個数を値として持つ場合は `MonoidAdd<ll>` と `identity{}` を使える。
 
-二分探索の返り値がキー範囲内にある場合は、他の問い合わせと同様に XOR 前のキーへ戻して返す。番兵 $-1$ と $N$ には XOR を適用しない。`max_right_ok_by`, `min_left_ok_by` は `cnt` が正である実在キーだけを返す。
+二分探索の返り値がキー範囲内にある場合は、他の問い合わせと同様に XOR 前のキーへ戻して返す。番兵 $-1$ と $N$ には XOR を適用しない。`max_right_ok_by`, `min_left_ok_by` は `cnt` が正である実在キーを探し、該当するキーがなければそれぞれ `-1`, $N$ を返す。
 
 ## 使用例
 
@@ -85,7 +85,7 @@ using Boundary = conditional_t<
 >;
 ```
 
-`Boundary` は境界探索2関数の返り値型、および実在キーを探す2関数の `optional` 内の型である。通常は `Key` と同じであり、$2^{\mathrm{width}}$ が `Key` に収まらない場合だけ `larger_int_t<Key>` になる。
+`Boundary` は境界探索4関数の返り値型である。通常は `Key` と同じであり、$2^{\mathrm{width}}$ が `Key` に収まらない場合だけ `larger_int_t<Key>` になる。
 
 #### コンストラクタ
 
@@ -312,7 +312,7 @@ $R<N$ なら `(key ^ xor_value) == R` であるキーを返す。$R=N$ なら番
 
 ```cpp
 template <class F, class Count>
-optional<Boundary> max_right_ok_by(
+Boundary max_right_ok_by(
   Key lower,
   const F& f,
   const Count& cnt,
@@ -328,7 +328,7 @@ $$
 \mathrm{cnt}(\operatorname{get}(\mathrm{key})) > 0
 $$
 
-該当するキーがなければ `nullopt` を返す。
+該当するキーがなければ番兵 `-1` を返す。番兵には XOR を適用しない。
 
 ##### 制約
 
@@ -372,7 +372,7 @@ $L>0$ なら `(key ^ xor_value) == L - 1` であるキーを返す。$L=0$ な�
 
 ```cpp
 template <class F, class Count>
-optional<Boundary> min_left_ok_by(
+Boundary min_left_ok_by(
   Key upper,
   const F& f,
   const Count& cnt,
@@ -388,7 +388,7 @@ L \leq (\mathrm{key} \mathbin{\mathtt{xor}} \mathrm{xor\_value}) < U,
 \mathrm{cnt}(\operatorname{get}(\mathrm{key})) > 0
 $$
 
-該当するキーがなければ `nullopt` を返す。
+該当するキーがなければ番兵 $N = 2^{\mathrm{width}}$ を返す。番兵には XOR を適用しない。
 
 ##### 制約
 

@@ -91,7 +91,7 @@ public:
   }
 
 private:
-  // Independently derived root descent: retain the deepest sibling range
+  // Root descent: retain the deepest sibling range
   // containing a result while following the boundary prefix.
   template <bool forward>
   static int fast_set_edge(ull bits)
@@ -198,23 +198,16 @@ private:
   }
 
 public:
-  optional<int> next(int x) const
-  {
-    int key = fast_set_neighbor<true>(x);
-    return key == n ? nullopt : optional<int>(key);
-  }
-  optional<int> prev(int x) const
-  {
-    int key = fast_set_neighbor<false>(x);
-    return key < 0 ? nullopt : optional<int>(key);
-  }
+  // 隣接キー。左番兵は -1、右番兵は n。
+  int next(int x) const { return fast_set_neighbor<true>(x); }
+  int prev(int x) const { return fast_set_neighbor<false>(x); }
 
-  optional<int> geq_min(int x) const { return next(x); }
-  optional<int> gt_min(int x) const { return x >= n - 1 ? nullopt : next(x + 1); }
-  optional<int> leq_max(int x) const { return prev(x); }
-  optional<int> lt_max(int x) const { return x <= 0 ? nullopt : prev(x - 1); }
-  optional<int> min_element() const { return next(0); }
-  optional<int> max_element() const { return prev(n - 1); }
+  int geq_min(int x) const { return next(x); }
+  int gt_min(int x) const { return x >= n - 1 ? n : next(x + 1); }
+  int leq_max(int x) const { return prev(x); }
+  int lt_max(int x) const { return x <= 0 ? -1 : prev(x - 1); }
+  int min_element() const { return next(0); }
+  int max_element() const { return prev(n - 1); }
 
   template <class F>
   void enumerate(int l, int r, const F &f) const

@@ -5,7 +5,7 @@
 // Test focus: exponentiation uses the correct identity and multiplication over GF(2).
 int main()
 {
-  MatrixMod2<4> a(2, 2, 1);
+  MatrixMod2<2, 2> a(1);
   auto b = a.pow(3);
   assert((b.to_vvi() == vvc<ll>{{1, 0}, {0, 1}}));
   PRINT("Hello World");

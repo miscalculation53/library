@@ -1,7 +1,5 @@
 #pragma once
 
-/*! SPDX-License-Identifier: CC0-1.0 */
-
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
@@ -12,8 +10,7 @@
 
 #include "../dot_product.hpp"
 
-// Independently derived from matrix similarity, Krylov bases, and
-// the characteristic-polynomial identity. No external implementation used.
+// Matrix similarity, Krylov bases, and the characteristic-polynomial identity.
 namespace internal { namespace matrix_power_mod32_detail {
 
 // Other exponent types keep the original public binary-power requirements.

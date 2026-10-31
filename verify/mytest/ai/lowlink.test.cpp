@@ -13,10 +13,7 @@ Groups normalized(Groups groups)
   return groups;
 }
 
-/*! SPDX-License-Identifier: CC0-1.0
- * Canonical block comparison independently authored from the public output
- * contract, preserving each block's vertex and edge rows together.
- */
+// Compare canonical blocks with each block's vertex and edge rows kept together.
 using CanonicalBlocks = vector<pair<vector<int>, vector<int>>>;
 CanonicalBlocks canonical_blocks(const BiconnectedComponents& bcc)
 {

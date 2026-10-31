@@ -51,6 +51,13 @@ public:
         return fallback->prod(l, r);
     }
     S all_prod() const { return fast ? fast->all_prod() : fallback->all_prod(); }
+    // i = l, ..., r-1 について x ← apply(x, get(i))
+    template <class X, class F>
+    X prod_apply(ll l, ll r, X x, F&& apply) const {
+        assert(0 <= l && l <= r && r <= n);
+        if (fast) return fast->prod_apply(l, r, std::move(x), apply);
+        return fallback->prod_apply(l, r, std::move(x), apply);
+    }
     template <class G>
     ll max_right_ok(ll l, const G& g) const {
         if (fast) {

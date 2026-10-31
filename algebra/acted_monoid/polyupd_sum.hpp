@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../internal_power.hpp"
 #include "../index_power_sum.hpp"
 #include "../upd.hpp"
 #include "../../utils/make_unsigned_ext.hpp"
@@ -18,6 +19,8 @@ struct ActedMonoidPolyUpdSum
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
+  template <class I>
+  static constexpr S pow(const S &x, I k) { return internal_monoid_power::power<M>(x, k); }
   static constexpr S mapping(const F &f, S x)
   {
     if (f.is_id)

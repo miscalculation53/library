@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../template/template_all_but_modint.hpp"
+#include "../internal_dump_content.hpp"
 
 /**
  * @brief 一様な区間をまとめて保持する疎遅延セグメント木
@@ -155,7 +156,7 @@ private:
     insert(Entry(p, r, unit), 0, n, 0);
   }
 
-  void apply_impl(ll l, ll r, const F &f, int i)
+  void apply_impl(ll l, ll r, const F &f, ll a, ll b, int i, array<optional<Entry>, 2> &cuts)
   {
     if (nodes[i].hi <= l || r <= nodes[i].lo) return;
     if (l <= nodes[i].lo && nodes[i].hi <= r)
@@ -164,18 +165,38 @@ private:
       return;
     }
     push(i);
-    ll p = nodes[i].entry.l;
-    if (l <= p && p < r)
+    ll lo = nodes[i].lo, hi = nodes[i].hi;
+    Entry &x = nodes[i].entry;
+    if (x.l < l && l < x.r)
     {
-      nodes[i].entry.unit = AM::mapping(f, nodes[i].entry.unit);
-      nodes[i].entry.val = AM::mapping(f, nodes[i].entry.val);
+      cuts[0].emplace(l, min(r, x.r), AM::mapping(f, x.unit));
+      if (r < x.r) cuts[1].emplace(r, x.r, x.unit);
+      x.r = l;
+      x.val = repeat(x.unit, x.r - x.l);
     }
-    repi(d, 2)
+    else if (l <= x.l && x.l < r)
     {
-      int j = nodes[i].chi[d];
-      if (j != -1) apply_impl(l, r, f, j);
+      if (r < x.r)
+      {
+        cuts[1].emplace(r, x.r, x.unit);
+        x.r = r;
+        x.val = repeat(x.unit, x.r - x.l);
+      }
+      x.unit = AM::mapping(f, x.unit);
+      x.val = AM::mapping(f, x.val);
     }
+    ll c = a + (b - a) / 2;
+    int li = nodes[i].chi[0], ri = nodes[i].chi[1];
+    if (li != -1) apply_impl(l, r, f, a, c, li, cuts);
+    if (ri != -1) apply_impl(l, r, f, c, b, ri, cuts);
     pull(i);
+    // 元の部分木に属する新しい区間を、キーの座標範囲も満たす最深の祖先で挿入する。
+    for (auto &cut : cuts)
+      if (cut && max(a, lo) <= cut->l && cut->l < min(b, hi))
+      {
+        insert(std::move(*cut), a, b, i);
+        cut.reset();
+      }
   }
 
   S entry_prod(int i, ll l, ll r, const F &f) const
@@ -349,8 +370,9 @@ public:
   {
     assert(0 <= l && l <= r && r <= n);
     if (l == r) return;
-    split(l), split(r);
-    apply_impl(l, r, f, 0);
+    // 分割と作用を同じ走査で処理し、新しい区間は対応する部分木の更新後に挿入する。
+    array<optional<Entry>, 2> cuts;
+    apply_impl(l, r, f, 0, n, 0, cuts);
   }
 
   // [l, r) の積を返す
@@ -363,6 +385,34 @@ public:
 
   // 全体の積を返す
   S all_prod() const { return nodes[0].prod; }
+
+  // i = l, ..., r-1 について x ← apply(x, get(i))
+  template <class X, class G>
+  X prod_apply(ll l, ll r, X x, G &&apply) const
+  {
+    assert(0 <= l && l <= r && r <= n);
+    auto dfs = [&](auto &&self, int i, const F &f) -> void
+    {
+      const Node &v = nodes[i];
+      if (v.hi <= l || r <= v.lo) return;
+      if (l <= v.lo && v.hi <= r)
+      {
+        const S value = AM::mapping(f, v.prod);
+        x = apply(x, value);
+        return;
+      }
+      F nf = v.has_lazy ? AM::composition(f, v.lazy) : f;
+      if (v.chi[0] != -1) self(self, v.chi[0], nf);
+      if (max(l, v.entry.l) < min(r, v.entry.r))
+      {
+        const S value = entry_prod(i, l, r, f);
+        x = apply(x, value);
+      }
+      if (v.chi[1] != -1) self(self, v.chi[1], nf);
+    };
+    if (l < r) dfs(dfs, 0, AM::id());
+    return x;
+  }
 
   // 保持している区間を (左端, 右端, 一点の値) の順で返す
   vc<tuple<ll, ll, S>> content() const
@@ -391,3 +441,20 @@ public:
   template <class G>
   ll min_left_ok(ll r, const G &g) const { return min_left_bound(r, g); }
 };
+
+#ifdef LOCAL
+namespace cpp_dump::_detail
+{
+  template <class AM>
+  inline string export_object_generic(
+      const SparseLazySegmentTree<AM> &value, const string &indent,
+      size_t last_line_length, size_t current_depth, bool fail_on_newline,
+      const export_command &command)
+  {
+    return export_named_content<library_dump_detail::IntervalFields>(
+        value, [&]() -> decltype(auto) { return (value.content()); },
+        indent, last_line_length, current_depth, fail_on_newline, command);
+  }
+
+} // namespace cpp_dump::_detail
+#endif

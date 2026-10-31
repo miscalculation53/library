@@ -1,5 +1,6 @@
 #pragma once
 
+#include "internal_power.hpp"
 #include "../template/template_all_but_modint.hpp"
 #include "algebra_base.hpp"
 
@@ -29,6 +30,13 @@ struct MajorityVote
       return {b.cand, L(b.cnt - a.cnt)};
   }
   static constexpr S e() { return {T{}, 0}; }
+  template <class I>
+  static constexpr S pow(const S &x, I k)
+  {
+    internal_monoid_power::check_exponent(k);
+    if (x.cnt < L{}) return internal_monoid_power::binary<MajorityVote>(x, k);
+    return k == 0 || x.cnt == L{} ? e() : S(x.cand, internal_monoid_power::scale(x.cnt, k));
+  }
 };
 #ifdef LOCAL
 CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(cand, cnt);

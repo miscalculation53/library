@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../internal_power.hpp"
 #include "../../template/template_all_but_modint.hpp"
 #include "../../utils/make_unsigned_ext.hpp"
 
@@ -94,6 +95,20 @@ public:
     return c;
   }
   static constexpr S e() { return {}; }
+  template <class I>
+  static constexpr S pow(const S &x, I k)
+  {
+    internal_monoid_power::check_exponent(k);
+    if (k == 0) return e();
+    if (x.len == 0) return x;
+    S res = x;
+    res.sum = internal_monoid_power::scale(x.sum, k);
+    res.len = internal_monoid_power::scale(x.len, k);
+    res.mn_cnt = internal_monoid_power::scale(x.mn_cnt, k);
+    res.mx_cnt = internal_monoid_power::scale(x.mx_cnt, k);
+    res.fail = k == 1 && x.fail;
+    return res;
+  }
 };
 
 template <class T, auto infty = nullptr, class L = ll>
@@ -106,6 +121,8 @@ struct ActedMonoidChminChmaxAddMinMaxSum
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
+  template <class I>
+  static constexpr S pow(const S &x, I k) { return internal_monoid_power::power<M>(x, k); }
   static constexpr S mapping(const F &f, S x)
   {
     if (x.len == 0 || x.fail)

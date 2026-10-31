@@ -8,6 +8,7 @@
 #include "../dot_product.hpp"
 #include "row_reduction_mod32.hpp"
 #include "internal_matrix_power_mod32.hpp"
+#include "internal_matrix_product.hpp"
 
 /**
  * @brief 行列（array）
@@ -22,6 +23,15 @@ struct MatrixArray : array<array<typename F::S, m>, n>
   using M = MatrixArray;
   using Vn = array<S, n>;
   using Vm = array<S, m>;
+  using Base = array<array<S, m>, n>;
+  using Base::at;
+  template<class I=ll> static constexpr pair<I,I> shape() { return {n,m}; }
+  S &operator()(int i,int j) { return (*this)[i][j]; }
+  const S &operator()(int i,int j) const { return (*this)[i][j]; }
+  S &at(int i,int j) { assert(0<=i && i<n && 0<=j && j<m); return (*this)[i][j]; }
+  const S &at(int i,int j) const { assert(0<=i && i<n && 0<=j && j<m); return (*this)[i][j]; }
+  auto &row(int i) { return (*this)[i]; }
+  const auto &row(int i) const { return (*this)[i]; }
 
   MatrixArray(const S &diag = F::e0(), const S &non_diag = F::e0())
   {
@@ -62,35 +72,19 @@ struct MatrixArray : array<array<typename F::S, m>, n>
     repi(i, n) res[i] = dot_product<F>(m, (*this)[i].begin(), v.begin());
     return res;
   }
+  friend Vm operator*(const Vn &v, const M &a)
+  {
+    Vm res;
+    fill(ALL(res), F::e0());
+    repi(i, n) repi(j, m) res[j] = F::add(res[j], F::mul(v[i], a[i][j]));
+    return res;
+  }
   template <int p>
   MatrixArray<F, n, p> operator*(const MatrixArray<F, m, p> &b) const
   {
     MatrixArray<F, n, p> res;
     repi(i, n) repi(j, p) res[i][j] = F::e0();
-    if constexpr (internal::dot_product_mod32<F>::value && n >= 16 && m >= 16 && p >= 16)
-    {
-      ll nonzero = 0;
-      for (const auto &row : *this) nonzero += m - count(row.begin(), row.end(), F::e0());
-      if (nonzero == 0) return res;
-      if (nonzero * 2 >= ll(n) * m)
-      {
-        // 転置の作業領域はヒープに置き、大きな array でスタックを増やさない。
-        vc<array<S, m>> bt(p);
-        repi(k, m) repi(j, p) bt[j][k] = b[k][j];
-        repi(i, n) repi(j, p) res[i][j] = dot_product<F>(m, (*this)[i].begin(), bt[j].begin());
-        return res;
-      }
-    }
-    repi(ii, 0, n, BS) repi(kk, 0, m, BS) repi(jj, 0, p, BS)
-    {
-      repi(i, ii, min(ii + BS, n)) repi(k, kk, min(kk + BS, m))
-      {
-        S aik = (*this)[i][k];
-        if (aik == F::e0())
-          continue;
-        repi(j, jj, min(jj + BS, p)) res[i][j] = F::add(res[i][j], F::mul(aik, b[k][j]));
-      }
-    }
+    internal::matrix_product<F, BS>(n, m, p, *this, b, res);
     return res;
   }
   template <class T = ll>
@@ -215,7 +209,7 @@ struct MatrixArray : array<array<typename F::S, m>, n>
     repi(i, n) repi(j, n) a[i][n + j] = i == j ? F::e1() : F::e0();
     auto b = get<0>(a.row_reduction(true));
     repi(i, n) if (b[i][i] == F::e0()) return nullopt;
-    M res(n, n);
+    M res;
     repi(i, n) repi(j, n) res[i][j] = b[i][n + j];
     return res;
   }

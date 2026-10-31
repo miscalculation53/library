@@ -259,22 +259,22 @@ optional<ll> kth(ll k) const
 #### 隣接検索
 
 ```cpp
-optional<ll> geq_min(ll key) const
-optional<ll> gt_min(ll key) const
-optional<ll> leq_max(ll key) const
-optional<ll> lt_max(ll key) const
-optional<ll> min_element() const
-optional<ll> max_element() const
+ll geq_min(ll key) const
+ll gt_min(ll key) const
+ll leq_max(ll key) const
+ll lt_max(ll key) const
+ll min_element() const
+ll max_element() const
 ```
 
 | 関数 | 返すキー | 該当するキーがない場合 |
 |---|---|---|
-| `geq_min(key)` | `key` 以上で最小 | `nullopt` |
-| `gt_min(key)` | `key` より大きいキーの最小 | `nullopt` |
-| `leq_max(key)` | `key` 以下で最大 | `nullopt` |
-| `lt_max(key)` | `key` より小さいキーの最大 | `nullopt` |
-| `min_element()` | 全体の最小 | `nullopt` |
-| `max_element()` | 全体の最大 | `nullopt` |
+| `geq_min(key)` | `key` 以上で最小 | `n` |
+| `gt_min(key)` | `key` より大きいキーの最小 | `n` |
+| `leq_max(key)` | `key` 以下で最大 | `-1` |
+| `lt_max(key)` | `key` より小さいキーの最大 | `-1` |
+| `min_element()` | 全体の最小 | `n` |
+| `max_element()` | 全体の最大 | `-1` |
 
 `key` は値域の外でもよい。
 

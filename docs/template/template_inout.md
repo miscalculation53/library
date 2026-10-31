@@ -72,6 +72,14 @@ auto [A, B] = unzip(AB);
   
 これで `AB` は `vc<pll>` に、`A`, `B` はそれぞれ `vc<ll>` になる。
 
+カンマを含む型を直接指定するときは、型全体を括弧で囲む。
+
+```cpp
+VEC((pair<ll, string>), N, AB);
+```
+
+`VEC(pll, N, AB)` のような型の別名も引き続き使える。
+
 #### 例 5：vector 2 つを片方の値でソート
 
 ```
@@ -255,7 +263,7 @@ READ(A);
 
 - `IN(T, ...)`：`T` 型の値（複数可）
   - `READ(...)` が対応している型なら OK、ただし注意点：
-    - カンマが入っている型に注意（`pair<int, int>` など。`using pii = pair<int, int> IN(pii, p)` のようにする）
+    - カンマを含む型は `IN((pair<int, int>), p)` のように型全体を括弧で囲む。型の別名も使える。
     - vector は宣言後に resize する必要があるため `IN` を使ってもうまくいかない。`VEC` や `VEC2` を使う
 　
 - `CHAR(...)`
@@ -274,6 +282,8 @@ READ(A);
   :
   k[n] a[n][1] ... a[n][k[n]]
   ```
+
+`IN`・`ARR`・`VEC`・`VEC2`・`JAG` の型 `T` は、括弧付き・括弧なしのどちらでも指定できる。カンマを含む型を直接書く場合は、型全体を 1 組の括弧で囲む。
 
 ---
 
@@ -311,7 +321,7 @@ READ(A);
 
 `T` は tuple-like な型でも可。
 
-副産物として、tuple-like な型どうしが `+` で足し算できる。
+`pair`, `tuple`, `array` の成分ごとの `+`, `-`, `+=`, `-=`, 単項 `-` も使える。演算は [template_arithmetic.hpp](template_arithmetic.md) に定義している。
 
 #### zip, unzip
 

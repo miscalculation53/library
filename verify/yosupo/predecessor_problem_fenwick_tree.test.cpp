@@ -36,12 +36,12 @@ void main2()
     else if (c == 3)
     {
       auto i = fw.geq_min_in_set(k);
-      PRINT(i ? *fw.kth_in_set(*i) : -1);
+      PRINT(fw.kth_in_set(i).value_or(-1));
     }
     else if (c == 4)
     {
       auto i = fw.leq_max_in_set(k);
-      PRINT(i ? *fw.kth_in_set(*i) : -1);
+      PRINT(fw.kth_in_set(i).value_or(-1));
     }
   }
 }

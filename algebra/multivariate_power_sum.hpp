@@ -1,5 +1,6 @@
 #pragma once
 
+#include "internal_power.hpp"
 #include "power_sum.hpp"
 
 /**
@@ -79,4 +80,13 @@ struct MonoidMultivariatePowerSum
     return res;
   }
   static constexpr S e() { return {}; }
+  template <class I>
+  static constexpr S pow(const S &x, I k)
+  {
+    internal_monoid_power::check_exponent(k);
+    S res;
+    for (size_t j = 0; j < x.power_sum.size(); ++j)
+      res.power_sum[j] = internal_monoid_power::scale(x.power_sum[j], k);
+    return res;
+  }
 };

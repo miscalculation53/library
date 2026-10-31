@@ -1,12 +1,5 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-/*!
- * SPDX-License-Identifier: CC0-1.0
- * Independent definition-based rectangle area fixtures.
- * To the extent possible under law, the authors waive all copyright and related
- * or neighboring rights to this file under CC0 1.0 Universal.
- * https://creativecommons.org/publicdomain/zero/1.0/
- */
 #include <algorithm>
 #include <array>
 #include <cmath>

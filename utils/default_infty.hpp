@@ -11,8 +11,26 @@
  * @docs docs/utils/default_infty.md
  */
 
+template <class T>
+constexpr decltype(auto) default_infty();
+
 namespace default_infty_detail
 {
+  template <class T>
+  struct is_product : false_type {};
+  template <class T, class U>
+  struct is_product<pair<T, U>> : true_type {};
+  template <class... Ts>
+  struct is_product<tuple<Ts...>> : true_type {};
+  template <class T, size_t n>
+  struct is_product<array<T, n>> : true_type {};
+
+  template <class T, size_t... I>
+  constexpr T product_value(index_sequence<I...>)
+  {
+    return T{default_infty<tuple_element_t<I, T>>()...};
+  }
+
   template <class T, class = void>
   struct has_infty : false_type {};
 
@@ -35,6 +53,9 @@ constexpr decltype(auto) default_infty()
 {
   if constexpr (default_infty_detail::has_infty<T>::value)
     return default_infty_detail::custom_value<T>();
+  else if constexpr (default_infty_detail::is_product<remove_cv_t<T>>::value)
+    return default_infty_detail::product_value<remove_cv_t<T>>(
+        make_index_sequence<tuple_size_v<remove_cv_t<T>>>{});
   else if constexpr (is_same_v<T, i128> || is_same_v<T, u128>)
     return T(INF) * T(INF);
   else if constexpr (is_integral_ext<T> && !is_same_v<T, bool>)

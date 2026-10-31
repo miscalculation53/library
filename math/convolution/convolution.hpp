@@ -373,12 +373,60 @@ vc<mint> convolution_naive(const vc<mint> &a, const vc<mint> &b)
   return c;
 }
 
-// n == 0 or m == 0 はバグるので注意
+// 非零係数を含む最小の半開区間。
+template <class mint>
+pair<int, int> convolution_support(const vc<mint> &a)
+{
+  int l = 0, r = a.size();
+  while (l < r && a[l] == 0) ++l;
+  while (l < r && a[r - 1] == 0) --r;
+  return {l, r};
+}
+
+// 高次係数を別計算できる場合は、短い巡回積から線形積を復元する。
+inline int convolution_ntt_length(int n, int m)
+{
+  const int size = n + m - 1, z = bit_ceil(size), half = z / 2;
+  return size - half <= 32 && max(n, m) <= half ? half : z;
+}
+
+template <class mint>
+bool convolution_sparse_preferred(const vc<mint> &a, const vc<mint> &b, int ca, int cb, int moduli)
+{
+  const bool sparse_a = ll(ca) * 2 < int(a.size()), sparse_b = ll(cb) * 2 < int(b.size());
+  if (!sparse_a && !sparse_b) return false;
+  const ll work = sparse_a && sparse_b ? ll(ca) * cb : min(ll(a.size()) * cb, ll(b.size()) * ca);
+  const auto [al, ar] = convolution_support(a);
+  const auto [bl, br] = convolution_support(b);
+  const int z = convolution_ntt_length(ar - al, br - bl);
+  const ll budget = ll(moduli) * z * countr_zero(unsigned(z)) / 4;
+  return work <= budget;
+}
+
 template <class mint>
 vc<mint> convolution_ntt(vc<mint> a, vc<mint> b)
 {
-  const int n = a.size(), m = b.size();
-  const int z = bit_ceil(n + m - 1);
+  if (a.empty() || b.empty()) return {};
+  const int full_size = int(a.size()) + int(b.size()) - 1;
+  const auto [al, ar] = convolution_support(a);
+  const auto [bl, br] = convolution_support(b);
+  if (al == ar || bl == br) return vc<mint>(full_size);
+
+  int z = convolution_ntt_length(a.size(), b.size()), shift = 0;
+  // 変換長が同じ場合は、係数を移動する処理を省く。
+  const int cropped = convolution_ntt_length(ar - al, br - bl);
+  if (cropped < z)
+  {
+    shift = al + bl;
+    a.resize(ar), b.resize(br);
+    if (al) a.erase(a.begin(), a.begin() + al);
+    if (bl) b.erase(b.begin(), b.begin() + bl);
+    z = cropped;
+  }
+  const int size = int(a.size()) + int(b.size()) - 1;
+  vc<mint> tail(max(0, size - z));
+  repi(i, tail.size()) tail[i] = convolution_point_get(a, b, z + i);
+
   if (a == b)
   {
     a.resize(z);
@@ -392,9 +440,18 @@ vc<mint> convolution_ntt(vc<mint> a, vc<mint> b)
     repi(i, z) a[i] *= b[i];
   }
   intt(a);
-  mint iz = mint(z).inv();
-  fem(ai : a) ai *= iz;
-  a.resize(n + m - 1);
+  a.resize(min(z, size));
+  const mint iz = mint(z).inv();
+  for (auto &x : a) x *= iz;
+  a.resize(size);
+  // x^z - 1 によって先頭へ折り返された高次係数を戻す。
+  repi(i, tail.size())
+  {
+    a[i] -= tail[i];
+    a[z + i] = tail[i];
+  }
+  if (shift) a.insert(a.begin(), shift, mint(0));
+  a.resize(full_size);
   return a;
 }
 
@@ -458,18 +515,19 @@ template <class mint, typename = std::enable_if_t<!std::is_integral<mint>::value
 vc<mint> convolution(const vc<mint> &a, const vc<mint> &b)
 {
   const int n = a.size(), m = b.size();
-  const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);
   if (n == 0 || m == 0)
     return {};
+  const int cnta = n - count(ALL(a), 0), cntb = m - count(ALL(b), 0);
+  if (cnta == 0 || cntb == 0) return vc<mint>(n + m - 1);
   if (ntt_ok<mint>(n + m - 1))
   {
-    if (min(cnta, cntb) <= 60)
+    if (min(cnta, cntb) <= 60 || internal::convolution_sparse_preferred(a, b, cnta, cntb, 1))
       return internal::convolution_naive(a, b);
     return internal::convolution_ntt(a, b);
   }
   else
   {
-    if (min(cnta, cntb) <= 300)
+    if (min(cnta, cntb) <= 300 || internal::convolution_sparse_preferred(a, b, cnta, cntb, 3))
       return internal::convolution_naive(a, b);
     assert(ntt_ok<static_modint32<469762049>>(n + m - 1) && "|a| + |b| - 1 <= 2^26");
     vc<ll> a_(n), b_(m);

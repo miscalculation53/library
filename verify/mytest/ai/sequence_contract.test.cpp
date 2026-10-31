@@ -1,7 +1,5 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-/*! SPDX-License-Identifier: CC0-1.0 */
-
 #include "ds/bbst/lazy_sequence.hpp"
 
 namespace contract_fixture

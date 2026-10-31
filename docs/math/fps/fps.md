@@ -147,7 +147,7 @@ mint eval(mint x)
 - `fps div_poly(g)`：多項式としての除算を行い、商を返す。`div_poly`, `divmod`, `%` の除数 `g` は空でなく、末尾の係数が非零であること（必要に応じて `shrink()` する）。
 - `pair<fps, fps> divmod(g)`：多項式としての除算を行い、商とあまりを返す。
 - `%`：多項式としての剰余を返す。
-- `circular_mod(n)`：$\bmod \ x^n - 1$ をとる。
+- `circular_mod(n)`：$n>0$ として $\bmod \ x^n - 1$ をとり、長さ $n$ の列を返す。
 
 ##### 計算量
 
@@ -155,6 +155,7 @@ mint eval(mint x)
 - それ以外は $O(n \log n)$
 - `fps` どうしの `*` は、疎なときは一方の非零要素の個数を $k$ として $O(nk)$
 - 定数との `*`, `/` は $O(n)$
+- `circular_mod(m)` は元の列の長さを $n$ として $O(n+m)$
 
 #### inv, div
 

@@ -1,7 +1,5 @@
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/problems/ITP1_1_A"
 
-/*! SPDX-License-Identifier: CC0-1.0 */
-
 #include <algorithm>
 #include <cassert>
 #include <cstdint>

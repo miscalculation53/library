@@ -144,3 +144,16 @@ struct HasInverse;
 乗法が可換で、乗法逆元 $a^{-1}$ を持つ環。
 
 `S`, `S add(S a, S b)`, `S e0()`, `S mul(S a, S b)`, `S e1()`, `S minus(S a)` に加えて、`S inv(S a)` も持つ。
+
+### 逆順用の型の pow
+
+```cpp
+template <class I>
+static constexpr S pow(const S& x, I k);
+```
+
+`OppositeMonoid`・`OppositeGroup` は元の型へ転送し、`NormalAndOppositeMonoid`・`NormalAndOppositeGroup` は両成分を個別に反復する。指数 $k$ は非負整数とし、`k = 0` なら `e()` を返す。型と整数倍の条件は [pow の共通仕様](monoid_power.md) を参照。
+
+##### 計算量
+
+- 転送先の `pow` と同じ。対応する `pow` がなければ $O(\log k)$ 回の結合。

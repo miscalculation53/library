@@ -11,13 +11,6 @@
 #include <utility>
 #include <vector>
 
-/*!
- * Independently written API-only comparison/category fixtures.
- * Dedicated under CC0 1.0. https://creativecommons.org/publicdomain/zero/1.0/
- */
-
-
-
 static void expect(bool condition) {
   if (!condition) std::abort();
 }
@@ -183,8 +176,8 @@ static void compare_only_rank_and_zero_count() {
           sum += values[key];
           if (values[key] != 0) left_ok = key;
         }
-        expect(trie.max_right_ok_by(a, f, count, x).value_or(-1) == right_ok);
-        expect(trie.min_left_ok_by(a, f, count, x).value_or(32) == left_ok);
+        expect(trie.max_right_ok_by(a, f, count, x) == right_ok);
+        expect(trie.min_left_ok_by(a, f, count, x) == left_ok);
         expect(trie.max_right_ng(a, f, x) == right_ng);
         expect(trie.min_left_ng(a, f, x) == left_ng);
       }
@@ -197,8 +190,8 @@ static void compare_only_rank_and_zero_count() {
     expect(trie.leq_max_by(a, count).value_or(-1) == -1);
     expect(trie.geq_min_by(a, count).value_or(-1) == -1);
     expect(trie.gt_min_by(a, count).value_or(-1) == -1);
-    expect(!trie.max_right_ok_by(a, always, count));
-    expect(!trie.min_left_ok_by(a, always, count));
+    expect(trie.max_right_ok_by(a, always, count) == -1);
+    expect(trie.min_left_ok_by(a, always, count) == 32);
   }
 }
 

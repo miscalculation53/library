@@ -2,7 +2,7 @@
 
 ## 概要
 
-値つきの半開区間 $[l, r)$ を `set` で管理する。区間代入・削除、点の値の取得、点を含む区間や次の区間の検索ができる。
+値つきの半開区間 $[l, r)$ を `set` で管理する。区間代入・削除、点の値の取得、点を含む区間や左右の区間の検索ができる。
 保持する区間は互いに重ならず、接する同値の区間は自動的に併合する。
 
 未登録の点の値は `dflt`。`dflt` を明示的に代入した区間も登録区間として保持する。
@@ -24,9 +24,12 @@ assert(mp[3] == 7 && mp[8] == -1);
 mp.erase(4, 6);          // [2, 4): 7 と [6, 8): 7 が残る
 auto it = mp.get_it(3);
 assert(it && (*it)->l == 2 && (*it)->r == 4 && (*it)->x == 7);
-it = mp.next_it(4);
+it = mp.geq_min_it(4);
 assert(it && (*it)->l == 6);
-dump(mp.content());      // {(2, 4, 7), (6, 8, 7)}
+assert((*mp.leq_max_it(3))->l == 2 && (*mp.geq_min_it(3))->l == 2);
+assert(!mp.lt_max_it(3) && (*mp.gt_min_it(3))->l == 6);
+assert((*mp.lt_max_it(4))->l == 2);  // 右端が 4 の区間は点 4 より左側。
+dump(mp);               // 各区間を l, r, x の名前付きで表示
 
 for (const auto &[l, r, x] : mp)
   cout << l << ' ' << r << ' ' << x << '\n';
@@ -101,15 +104,30 @@ T operator[](const I p) const
 
 - $O(\log m)$
 
-#### get_it / next_it
+#### get_it / leq_max_it / geq_min_it / lt_max_it / gt_min_it
 
 ```cpp
 optional<iterator> get_it(const I p) const
-optional<iterator> next_it(const I p) const
+optional<iterator> leq_max_it(const I p) const
+optional<iterator> geq_min_it(const I p) const
+optional<iterator> lt_max_it(const I p) const
+optional<iterator> gt_min_it(const I p) const
 ```
 
-- `get_it(p)`：`p` を含む区間のイテレータ。未登録なら `nullopt`。
-- `next_it(p)`：`p` を含む区間、または `p` より右側で最初の区間のイテレータ。該当する区間がなければ `nullopt`。
+区間 $[l, r)$ と点 `p` の位置関係で検索し、該当する区間のイテレータを返す。各条件は次のとおり。最初・最後は左端の昇順を基準にする。
+
+| メソッド | 返す区間 |
+| --- | --- |
+| `get_it(p)` | $l \leq p < r$ を満たす区間 |
+| `leq_max_it(p)` | $l \leq p$ を満たす最後の区間 |
+| `geq_min_it(p)` | $p < r$ を満たす最初の区間 |
+| `lt_max_it(p)` | $r \leq p$ を満たす最後の区間 |
+| `gt_min_it(p)` | $p < l$ を満たす最初の区間 |
+
+各メソッドは、該当する区間がなければ `nullopt` を返す。
+`leq_max_it` / `geq_min_it` は `p` を含む区間を優先し、未登録の点ではそれぞれ左側の最後・右側の最初の区間を返す。
+`lt_max_it` / `gt_min_it` は区間全体が `p` より左側・右側にあるものを返す。半開区間なので、`r == p` の区間は左側に含める。
+これらは区間の検索であり、区間内部の `p` より小さい点や大きい点を取得する操作とは区別する。
 
 要素は公開メンバ `I l, r; T x;` を持つ `Segment`。
 `iterator` は `set` の `const_iterator` で、値ありの検索結果 `result` に対し、`(*result)->l`, `(*result)->r`, `(*result)->x` から区間と値を取得できる。
@@ -195,6 +213,8 @@ vc<tuple<I, I, T>> content() const
 
 登録区間を `(l, r, x)` の列にして、左端の昇順に返す。デバッグ出力用。
 返り値はコピーなので、取得後も保持できる。空の区間集合には空の列を返す。
+
+`LOCAL` 時の `dump(mp)` は、各区間を `Interval{ l= ..., r= ..., x= ... }` と表示する。`x` は区間内の各点の値。
 
 ##### 計算量
 

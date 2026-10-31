@@ -1,10 +1,3 @@
-/*!
- * SPDX-License-Identifier: CC0-1.0
- * Independently written from the public API contract and mathematical definitions.
- * To the extent possible under law, the authors waive all copyright and related
- * or neighboring rights to this file under CC0 1.0 Universal.
- * https://creativecommons.org/publicdomain/zero/1.0/
- */
 #pragma once
 
 #include <algorithm>

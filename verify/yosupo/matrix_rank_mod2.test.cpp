@@ -16,18 +16,6 @@
 #include "template/template_all_but_modint.hpp"
 #include "math/linalg/matrix_mod2.hpp"
 
-template <size_t MAX_M = 1>
-void solve(ll N, size_t M, const vstr &A_)
-{
-  if (M > MAX_M)
-  {
-    solve<MAX_M * 2>(N, M, A_);
-    return;
-  }
-  MatrixMod2<MAX_M> A(A_);
-  PRINT(A.rank());
-}
-
 void init() {}
 
 void main2()
@@ -36,7 +24,10 @@ void main2()
   if (M == 0)
     PRINTRETURN(0);
   VEC(string, N, A_);
-  solve(N, M, A_);
+  const int MAX = local_oj(4, 4096);
+  MatrixMod2<MAX, MAX> A;
+  rep(i, N) rep(j, M) A(i, j) = A_[i][j] == '1';
+  PRINT(A.rank());
 }
 
 void test() {}

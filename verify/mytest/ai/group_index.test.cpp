@@ -64,8 +64,8 @@ void check(const vc<T> &a, const vc<T> &queries)
         if (j > i) gt = min(gt, I(j)), ++gtc;
         if (j >= i) geq = min(geq, I(j)), ++geqc;
       }
-      assert(grp.lt_max(value, i).value_or(-1) == lt && grp.leq_max(value, i).value_or(-1) == leq);
-      assert(grp.gt_min(value, i).value_or(n) == gt && grp.geq_min(value, i).value_or(n) == geq);
+      assert(grp.lt_max(value, i) == lt && grp.leq_max(value, i) == leq);
+      assert(grp.gt_min(value, i) == gt && grp.geq_min(value, i) == geq);
       assert(grp.lt_cnt(value, i) == ltc && grp.leq_cnt(value, i) == leqc);
       assert(grp.gt_cnt(value, i) == gtc && grp.geq_cnt(value, i) == geqc);
       for (int r = i; r <= n + 1; ++r)
@@ -87,7 +87,7 @@ void check_default()
   assert(grp.begin() == grp.end());
   assert(grp.to_vv().empty() && grp.to_csr().size() == 0);
   assert(grp.idxs(5).empty());
-  assert(grp.lt_max(5, 0).value_or(-1) == -1 && !grp.geq_min(5, 0));
+  assert(grp.lt_max(5, 0) == -1 && grp.geq_min(5, 0) == 0);
   assert(grp.in_cnt(5, 0, 1) == 0);
   grp = Group(vc<int>{2, 0, 2});
   assert((grp.idxs(2).to_v() == vc<int>{0, 2}));
@@ -137,10 +137,10 @@ void check_search_boundaries(int n, int k)
       I hi = upper_bound(ALL(is), p) - is.begin();
       assert(grp.lt_cnt(value, p) == lo && grp.leq_cnt(value, p) == hi);
       assert(grp.geq_cnt(value, p) == I(is.size()) - lo && grp.gt_cnt(value, p) == I(is.size()) - hi);
-      assert(grp.lt_max(value, p).value_or(-1) == (lo == 0 ? I(-1) : is[lo - 1]));
-      assert(grp.leq_max(value, p).value_or(-1) == (hi == 0 ? I(-1) : is[hi - 1]));
-      assert(grp.geq_min(value, p).value_or(n) == (lo == I(is.size()) ? I(n) : is[lo]));
-      assert(grp.gt_min(value, p).value_or(n) == (hi == I(is.size()) ? I(n) : is[hi]));
+      assert(grp.lt_max(value, p) == (lo == 0 ? I(-1) : is[lo - 1]));
+      assert(grp.leq_max(value, p) == (hi == 0 ? I(-1) : is[hi - 1]));
+      assert(grp.geq_min(value, p) == (lo == I(is.size()) ? I(n) : is[lo]));
+      assert(grp.gt_min(value, p) == (hi == I(is.size()) ? I(n) : is[hi]));
       for (int q : boundaries) if (p <= q)
         assert(grp.in_cnt(value, p, q) == lower_bound(ALL(is), q) - (is.begin() + lo));
     }
@@ -158,14 +158,14 @@ int main()
 
   GroupIndex inferred(vstr{"b", "a", "b"});
   static_assert(is_same_v<decltype(inferred), GroupIndex<string>>);
-  static_assert(is_same_v<decltype(inferred.lt_max("b", 1)), optional<ll>>);
+  static_assert(is_same_v<decltype(inferred.lt_max("b", 1)), ll>);
   GroupIndex<int, true, int> int_indices(vc<int>{2});
-  static_assert(is_same_v<decltype(int_indices.lt_max(2, 1)), optional<int>>);
+  static_assert(is_same_v<decltype(int_indices.lt_max(2, 1)), int>);
 
   const vc<int> ids{0, 2, 2, 5};
   GroupIndexRaw raw(ids);
   static_assert(is_same_v<decltype(raw), GroupIndexRaw<int>>);
-  static_assert(is_same_v<decltype(raw.lt_max(2, 1)), optional<ll>>);
+  static_assert(is_same_v<decltype(raw.lt_max(2, 1)), ll>);
   assert(raw.size() == 3 && raw.to_csr().size() == 6);
   assert((raw.idxs(2).to_v() == vl{1, 2}));
   GroupIndexRaw raw_ll(vl{2, 0, 2});

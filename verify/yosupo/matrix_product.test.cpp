@@ -27,7 +27,7 @@ void main2()
   VEC2(mint, M, K, B_);
   Matrix<FieldAddSubMulDiv<mint>> A(A_), B(B_);
   auto C = A * B;
-  PRINTV(C);
+  PRINTV(C.to_vvi());
 }
 
 void test() {}

@@ -9,8 +9,9 @@
  * @docs docs/ds/interval_crossing.md
  */
 
-// 半開区間 [l, r) を管理する。交差は a < l < b < r または l < a < r < b。
-// 更新する区間を先読みし、入力順の id で追加・削除する。
+// 半開区間 [l, r) を管理する
+// 交差は a < l < b < r または l < a < r < b
+// 更新する区間を先読みし、入力順の id で追加・削除する
 template <class T = ll>
 struct IntervalCrossing
 {
@@ -72,28 +73,32 @@ public:
     }
   }
 
-  // [l, r) と交差する登録区間の {id, l, r}。該当する区間がなければ nullopt。
+  // 交差する登録区間の {id, l, r}
+  // 該当する区間がなければ nullopt
   optional<Interval> find_crossing(const T &l, const T &r) const
   {
     const int id = find_crossing_id(l, r);
     if (id == -1) return nullopt;
     return Interval{id, intervals[id].first, intervals[id].second};
   }
-  // id は登録中でもよい。自身との交差は生じない。
+  // 交差する登録区間の {id, l, r}
+  // 該当する区間がなければ nullopt
+  // id は登録中でもよい (自身との交差は生じないので)
   optional<Interval> find_crossing(int id) const
   {
     assert(0 <= id && id < n);
     return find_crossing(intervals[id].first, intervals[id].second);
   }
-  // 現在の区間族がラミナーなら、追加後もラミナーとなる条件。
+  // 現在の区間族がラミナーであるとして、追加後もラミナーであるか
   bool can_insert(const T &l, const T &r) const { return find_crossing_id(l, r) == -1; }
+  // 現在の区間族がラミナーであるとして、追加後もラミナーであるか
   bool can_insert(int id) const
   {
     assert(0 <= id && id < n);
     return can_insert(intervals[id].first, intervals[id].second);
   }
 
-  // 交差を含む状態も保持できる。ラミナー性を保つときは can_insert で判定する。
+  // 交差を含む状態も保持できる。ラミナー性を保つときは can_insert で判定する
   void insert(int id)
   {
     assert(0 <= id && id < n && !active[id]);

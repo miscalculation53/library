@@ -29,7 +29,7 @@ void main2()
   if (!B)
     PRINT(-1);
   else
-    PRINTV(*B);
+    PRINTV(B->to_vvi());
 }
 
 void test() {}

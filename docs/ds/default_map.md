@@ -82,6 +82,8 @@ vc<pair<Key, Value>> content() const
 
 デフォルト値の生成やキーの挿入は行わず、取得時点のコピーを作る。
 
+`LOCAL` 時の `dump(mp)` は、3種類とも各要素を `Entry{ key= ..., value= ... }` と表示する。格納済みの要素への参照を使い、キーの集合とデフォルト値の生成回数を保つ。
+
 ##### 計算量
 
 - `DefaultMap` / `DefaultUnorderedMap`：$O(n)$

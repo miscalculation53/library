@@ -1,6 +1,7 @@
 #pragma once
 
 #include "template_types.hpp"
+#include "template_arithmetic.hpp"
 #include "template_rep.hpp"
 #include "template_dump.hpp"
 
@@ -35,7 +36,6 @@ inline ostream &operator<<(ostream &os, f128 x)
 }
 #endif
 
-// 十進変換とバッファ処理は公開 API の仕様から独立に設計。
 #if defined FAST_IO and not defined LOCAL
 namespace fastio
 {
@@ -637,23 +637,31 @@ void READJAGnodump(int n, vvc<T> &...vs)
 
 #define READ(...) internal::READnodump(__VA_ARGS__); dump(__VA_ARGS__)
 
-#define IN(T, ...) T __VA_ARGS__; READ(__VA_ARGS__)
+#define LIBRARY_INOUT_TYPE(...) LIBRARY_INOUT_TYPE_IMPL(__VA_ARGS__)(__VA_ARGS__)
+#define LIBRARY_INOUT_TYPE_IMPL(T, ...) LIBRARY_INOUT_TYPE_SELECT(LIBRARY_INOUT_TYPE_PROBE T, LIBRARY_INOUT_TYPE_KEEP)
+#define LIBRARY_INOUT_TYPE_PROBE(...) _, LIBRARY_INOUT_TYPE_REMOVE
+#define LIBRARY_INOUT_TYPE_SELECT(...) LIBRARY_INOUT_TYPE_SECOND(__VA_ARGS__)
+#define LIBRARY_INOUT_TYPE_SECOND(_0, _1, ...) _1
+#define LIBRARY_INOUT_TYPE_KEEP(...) __VA_ARGS__
+#define LIBRARY_INOUT_TYPE_REMOVE(T) LIBRARY_INOUT_TYPE_KEEP T
+
+#define IN(T, ...) LIBRARY_INOUT_TYPE(T) __VA_ARGS__; READ(__VA_ARGS__)
 
 #define CHAR(...) IN(char, __VA_ARGS__)
 #define INT(...) IN(int, __VA_ARGS__)
 #define LL(...) IN(ll, __VA_ARGS__)
 #define STR(...) IN(string, __VA_ARGS__)
-#define ARR(T, n, ...) array<T, n> __VA_ARGS__; READ(__VA_ARGS__)
+#define ARR(T, n, ...) array<LIBRARY_INOUT_TYPE(T), n> __VA_ARGS__; READ(__VA_ARGS__)
 
 #define READVEC(...) internal::READVECnodump(__VA_ARGS__); dump(__VA_ARGS__)
 #define READVEC2(...) internal::READVEC2nodump(__VA_ARGS__); dump(__VA_ARGS__)
 
-#define VEC(T, n, ...) vc<T> __VA_ARGS__; READVEC(n, __VA_ARGS__)
-#define VEC2(T, n, m, ...) vvc<T> __VA_ARGS__; READVEC2(n, m, __VA_ARGS__)
+#define VEC(T, n, ...) vc<LIBRARY_INOUT_TYPE(T)> __VA_ARGS__; READVEC(n, __VA_ARGS__)
+#define VEC2(T, n, m, ...) vvc<LIBRARY_INOUT_TYPE(T)> __VA_ARGS__; READVEC2(n, m, __VA_ARGS__)
 
 #define READJAG(...) internal::READJAGnodump(__VA_ARGS__); dump(__VA_ARGS__)
 
-#define JAG(T, n, ...) vvc<T> __VA_ARGS__; READJAG(n, __VA_ARGS__)
+#define JAG(T, n, ...) vvc<LIBRARY_INOUT_TYPE(T)> __VA_ARGS__; READJAG(n, __VA_ARGS__)
 
 // ----------
 
@@ -750,99 +758,6 @@ void PRINTV(const vc<T> &v) { for (auto &vi : v) PRINT(vi); }
 // ----------
 
 // ----- 基準ずらし -----
-template <class T, class U, class P>
-pair<T, U> &operator+=(pair<T, U> &a, const P &b)
-{
-  a.first += b.first;
-  a.second += b.second;
-  return a;
-}
-template <class T, class U, class P>
-pair<T, U> operator+(pair<T, U> a, const P &b) { return a += b; }
-template <class T, class U, class P>
-pair<T, U> &operator-=(pair<T, U> &a, const P &b)
-{
-  a.first -= b.first;
-  a.second -= b.second;
-  return a;
-}
-template <class T, class U, class P>
-pair<T, U> operator-(pair<T, U> a, const P &b) { return a -= b; }
-template <class T, class U>
-pair<T, U> operator-(pair<T, U> a)
-{
-  a.first = -a.first;
-  a.second = -a.second;
-  return a;
-}
-
-template <class T, size_t n, class A>
-array<T, n> &operator+=(array<T, n> &a, const A &b)
-{
-  for (size_t i = 0; i < n; i++)
-    a[i] += b[i];
-  return a;
-}
-template <class T, size_t n, class A>
-array<T, n> operator+(array<T, n> a, const A &b) { return a += b; }
-template <class T, size_t n, class A>
-array<T, n> &operator-=(array<T, n> &a, const A &b)
-{
-  for (size_t i = 0; i < n; i++)
-    a[i] -= b[i];
-  return a;
-}
-template <class T, size_t n, class A>
-array<T, n> operator-(array<T, n> a, const A &b) { return a -= b; }
-template <class T, size_t n>
-array<T, n> operator-(array<T, n> a)
-{
-  for (auto &ai : a)
-    ai = -ai;
-  return a;
-}
-
-namespace internal
-{
-
-template <size_t... I, class A, class B>
-auto &tuple_add_impl(A &a, const B &b, const index_sequence<I...>)
-{
-  ((get<I>(a) += get<I>(b)), ...);
-  return a;
-}
-template <size_t... I, class A, class B>
-auto &tuple_sub_impl(A &a, const B &b, const index_sequence<I...>)
-{
-  ((get<I>(a) -= get<I>(b)), ...);
-  return a;
-}
-template <size_t... I, class A>
-auto &tuple_neg_impl(A &a, const index_sequence<I...>)
-{
-  ((get<I>(a) = -get<I>(a)), ...);
-  return a;
-}
-
-}; // namespace internal
-
-template <class... Ts, class Tp>
-tuple<Ts...> &operator+=(tuple<Ts...> &a, const Tp &b)
-{ return internal::tuple_add_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{}); }
-template <class... Ts, class Tp>
-tuple<Ts...> operator+(tuple<Ts...> a, const Tp &b) { return a += b; }
-template <class... Ts, class Tp>
-tuple<Ts...> &operator-=(tuple<Ts...> &a, const Tp &b)
-{ return internal::tuple_sub_impl(a, b, make_index_sequence<tuple_size_v<tuple<Ts...>>>{}); }
-template <class... Ts, class Tp>
-tuple<Ts...> operator-(tuple<Ts...> a, const Tp &b) { return a -= b; }
-template <class... Ts>
-tuple<Ts...> operator-(tuple<Ts...> a)
-{
-  internal::tuple_neg_impl(a, make_index_sequence<sizeof...(Ts)>{});
-  return a;
-}
-
 template <class T, class Add>
 void offset(vc<T> &v, const Add &add) { for (auto &vi : v) vi += add; }
 template <class T, class Add>

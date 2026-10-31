@@ -1,8 +1,6 @@
 #pragma once
 
-//! SPDX-License-Identifier: CC0-1.0
-//! The mathematical core was frozen before reading the project's public API.
-//! This revision adapts that core and uses exact integer intermediates.
+// Uses exact integer intermediates.
 
 #include <optional>
 

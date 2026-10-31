@@ -185,8 +185,8 @@ void test_rank_solve()
         for (auto &v : x) v = randrange(0, mint::mod());
         if (t % 2) b = multiply<mint>(a, x);
         else for (auto &v : b) v = randrange(0, 4);
-        M augmented = a;
-        repi(i, rows) augmented[i].eb(b[i]);
+        M augmented(rows, cols + 1);
+        repi(i, rows) { repi(j, cols) augmented[i][j] = a[i][j]; augmented[i][cols] = b[i]; }
         bool solvable = augmented.rank() == a.rank();
         auto result = bbla::solve_general<F>(rows, cols, apply, transpose, b);
         assert(result.solvable == solvable);

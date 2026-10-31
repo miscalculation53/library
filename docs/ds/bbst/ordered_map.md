@@ -74,6 +74,8 @@ vector<pair<Key,S>> content() const;
 
 要素数、空判定、全要素の削除、キー順の全要素の取得。
 
+`LOCAL` 時の `dump(t)` は、各要素を `Entry{ key= ..., value= ... }` と表示する。`LazyOrderedMapTree` も同じ形式で、作用を反映した現在値を表示する。
+
 ##### 計算量
 
 - `size`, `empty` は $O(1)$。`clear`, `content` は $O(n)$。

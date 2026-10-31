@@ -20,9 +20,10 @@ void main2()
     else if (c == 2) PRINT(int(st.contains(k)));
     else if (c == 3)
     {
-      PRINT(st.geq_min(k).value_or(-1));
+      ll next = st.geq_min(k);
+      PRINT(next == N ? -1 : next);
     }
-    else PRINT(st.leq_max(k).value_or(-1));
+    else PRINT(st.leq_max(k));
   }
 }
 void test() {}

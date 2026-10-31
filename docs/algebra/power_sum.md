@@ -74,3 +74,16 @@ S e()
 ##### 計算量
 
 - $O(D)$
+
+#### pow
+
+```cpp
+template <class I>
+static constexpr S pow(const S& x, I k);
+```
+
+各次数の和を `k` 倍する。指数 $k$ は非負整数とし、`k = 0` なら `e()` を返す。型と整数倍の条件は [pow の共通仕様](monoid_power.md) を参照。
+
+##### 計算量
+
+- $O(D)$。整数倍を使う場合は、その演算を $O(1)$ とする。

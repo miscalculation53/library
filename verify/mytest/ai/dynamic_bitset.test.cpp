@@ -29,8 +29,8 @@ void verify(const DynamicBitset &bs, const vc<bool> &a)
     if (first == n && a[i]) first = i;
     if (first_zero == n && !a[i]) first_zero = i;
   }
-  assert(bs.find_first().value_or(n) == first);
-  assert(bs.find_first(false).value_or(n) == first_zero);
+  assert(bs.find_first() == first);
+  assert(bs.find_first(false) == first_zero);
 
   repi(i, n)
   {
@@ -40,8 +40,8 @@ void verify(const DynamicBitset &bs, const vc<bool> &a)
       if (next == n && a[j]) next = j;
       if (next_zero == n && !a[j]) next_zero = j;
     }
-    assert(bs.find_next(i).value_or(n) == next);
-    assert(bs.find_next(i, false).value_or(n) == next_zero);
+    assert(bs.find_next(i) == next);
+    assert(bs.find_next(i, false) == next_zero);
   }
 
   int last = -1, last_zero = -1;
@@ -50,8 +50,8 @@ void verify(const DynamicBitset &bs, const vc<bool> &a)
     if (a[i]) last = i;
     if (!a[i]) last_zero = i;
   }
-  assert(bs.find_last().value_or(-1) == last);
-  assert(bs.find_last(false).value_or(-1) == last_zero);
+  assert(bs.find_last() == last);
+  assert(bs.find_last(false) == last_zero);
   repi(i, n + 1)
   {
     int prev = -1, prev_zero = -1;
@@ -60,8 +60,8 @@ void verify(const DynamicBitset &bs, const vc<bool> &a)
       if (a[j]) prev = j;
       if (!a[j]) prev_zero = j;
     }
-    assert(bs.find_prev(i).value_or(-1) == prev);
-    assert(bs.find_prev(i, false).value_or(-1) == prev_zero);
+    assert(bs.find_prev(i) == prev);
+    assert(bs.find_prev(i, false) == prev_zero);
   }
 
   repi(_, 20)

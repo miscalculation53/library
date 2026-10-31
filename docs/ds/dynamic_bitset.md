@@ -9,6 +9,8 @@
 - `resize`, `reserve`, `push_back`, `pop_back`
 - 半開区間 $[l,r)$ の `set_range`, `reset_range`, `flip_range`, `count`, `any`, `none`, `all`
 - 前後にある `1` または `0` の検索
+- `1` の位置を昇順に列挙する範囲
+- 左右への巡回シフト
 - bitset の区間から区間への論理演算
 - 上位ビットを優先する大小比較
 
@@ -19,12 +21,20 @@ DynamicBitset a(100);
 a.set_range(10, 20);
 a.flip(15);
 auto first = a.find_first();
-auto next = first ? a.find_next(*first) : nullopt;
+auto next = a.find_next(first);
 assert(first == 10 && next == 11);
 a.or_slice(7, a.size(), a, 0);
 
 DynamicBitset b("0010110");
 cout << b << '\n';
+
+DynamicBitset c("10010");
+auto d = c.rotated_left(1);
+assert(d.to_string() == "00101");
+c.rotate_right(1);
+assert(c.to_string() == "01001");
+
+for (int i : c.ones()) cout << i << ' '; // 0 3
 ```
 
 ## 詳細なドキュメント
@@ -146,17 +156,40 @@ bool all(int l, int r)
 #### find_first / find_next / find_last / find_prev
 
 ```cpp
-optional<int> find_first(bool value = true)
-optional<int> find_next(int i, bool value = true)
-optional<int> find_last(bool value = true)
-optional<int> find_prev(int i, bool value = true)
+int find_first(bool value = true)
+int find_next(int i, bool value = true)
+int find_last(bool value = true)
+int find_prev(int i, bool value = true)
 ```
 
-`find_next(i, value)` は $i$ より右、`find_prev(i, value)` は $i$ より左にある最初の `value` の位置を返す。存在しない場合は `nullopt` を返す。位置 $0$ も値ありとして返す。
+`find_next(i, value)` は $i$ より右、`find_prev(i, value)` は $i$ より左にある最初の `value` の位置を返す。右側の `find_first`, `find_next` は `size()`、左側の `find_last`, `find_prev` は `-1` を番兵として返す。
 
 ##### 計算量
 
 - 調べたワード数に比例
+
+#### ones
+
+```cpp
+auto ones() const &
+auto ones() &&
+auto ones() const &&
+```
+
+`1` になっているビットの添字を昇順に列挙する範囲を返す。`for (int i : a.ones())` と書ける。添字は `int` の値として取得する。
+
+左辺値では元の bitset を参照する。範囲を使う間は元の bitset の生存期間を保つ。
+
+列挙中に、現在取り出した位置を `0` にする操作に対応する。例えば `for (int i : a.ones()) a[i] = 0;` で全ての `1` を列挙しながら消せる。それ以外の内容変更や長さの変更は、その範囲から取得したイテレータを無効にする。
+
+右辺値では範囲がワード列を所有する。非 `const` の右辺値からはワード列を移し、移動元を空にする。`const` の右辺値からはワード列をコピーする。`for (int i : (a & b).ones())` のように一時オブジェクトからも列挙できる。
+
+範囲は読み取り用の入力イテレータと `begin`, `end`, `cbegin`, `cend` を持つ。`DynamicBitset::size()` は総ビット数を返す。
+
+##### 計算量
+
+- 範囲の作成：左辺値・非 `const` の右辺値は $O(1)$、`const` の右辺値は $O(n/w)$
+- 全体の列挙：$O(n/w+k)$。$k$ は `1` の個数
 
 #### 論理演算・シフト
 
@@ -167,6 +200,23 @@ a & b; a | b; a ^ b; ~a; a << k; a >> k;
 ```
 
 左右の長さは等しいものとする。
+
+##### 計算量
+
+- $O(n/w)$
+
+#### rotate_left / rotate_right / rotated_left / rotated_right
+
+```cpp
+DynamicBitset &rotate_left(int k)
+DynamicBitset &rotate_right(int k)
+DynamicBitset rotated_left(int k) const
+DynamicBitset rotated_right(int k) const
+```
+
+長さ $n$ の bitset を $k$ ビット巡回シフトする。左への巡回シフトは第 $i$ ビットを $(i+k)\bmod n$ へ、右への巡回シフトは $(i-k)\bmod n$ へ移す。左右の向きは `<<`, `>>` と同じ。
+
+`rotate_left`, `rotate_right` は自身を変更して参照を返し、`rotated_left`, `rotated_right` は変更したコピーを返す。シフト量は長さを法として扱い、負の場合は逆方向へ移す。長さは保ち、空の bitset は空のまま返す。
 
 ##### 計算量
 
@@ -219,3 +269,21 @@ $k=\min(r-l, b.\operatorname{size}()-bl)$ とし、各 $0\leq i<k$ に対して�
 
 - コールバックなし：$O(1+k/w)$
 - コールバックあり：$O(1+k/w+z)$。$z$ は `f` の呼び出し回数
+
+#### ワードへのアクセス
+
+```cpp
+int word_count() const
+Word word(int i) const
+DynamicBitset& set_word(int i, Word value)
+```
+
+保持するワード数、下位から第 `i` ワードの取得・設定。各ワードは64ビットで、末尾ワードの論理長を超えるビットは0に保つ。
+
+##### 制約
+
+- ワード数を $W$ として $0 \le i < W$。
+
+##### 計算量
+
+- $O(1)$。

@@ -18,9 +18,10 @@ void main2()
     else if (c == 2) PRINT(int(st.contains(k)));
     else if (c == 3)
     {
-      PRINT(st.next(k).value_or(-1));
+      int next = st.next(k);
+      PRINT(next == N ? -1 : next);
     }
-    else PRINT(st.prev(k).value_or(-1));
+    else PRINT(st.prev(k));
   }
 }
 void test() {}

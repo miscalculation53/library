@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../internal_power.hpp"
 #include "../../template/template_all_but_modint.hpp"
 
 #include "../clamp_add.hpp"
@@ -19,6 +20,8 @@ struct ActedMonoidClampMin
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
+  template <class I>
+  static constexpr S pow(const S &x, I k) { return internal_monoid_power::power<M>(x, k); }
   static constexpr S mapping(const F &f, S x) { return x == resolved_infty<T, infty>() ? x : f(x); }
   static constexpr auto composition = MF::op;
   static constexpr auto id = MF::e;
@@ -33,6 +36,8 @@ struct ActedMonoidClampMax
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
+  template <class I>
+  static constexpr S pow(const S &x, I k) { return internal_monoid_power::power<M>(x, k); }
   static constexpr S mapping(const F &f, S x) { return x == -resolved_infty<T, infty>() ? x : f(x); }
   static constexpr auto composition = MF::op;
   static constexpr auto id = MF::e;
@@ -47,6 +52,8 @@ struct ActedMonoidClampMinMax
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
+  template <class I>
+  static constexpr S pow(const S &x, I k) { return internal_monoid_power::power<M>(x, k); }
   static constexpr S mapping(const F &f, S x)
   {
     return x.mn == resolved_infty<T, infty>() ? x : S{f(x.mn), f(x.mx)};

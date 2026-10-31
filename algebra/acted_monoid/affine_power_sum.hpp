@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../internal_power.hpp"
 #include "../power_sum.hpp"
 #include "../affine_function.hpp"
 
@@ -17,6 +18,8 @@ struct ActedMonoidAffinePowerSum
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
+  template <class I>
+  static constexpr S pow(const S &x, I k) { return internal_monoid_power::power<M>(x, k); }
 
 private:
   template <class U>

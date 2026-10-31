@@ -268,20 +268,21 @@ private:
     return ll((block << 6) + offset);
   }
 
-  optional<ll> geq_min(Root root, ll key) const
+  // 隣接キー。左番兵は -1、右番兵は n。
+  ll geq_min(Root root, ll key) const
   {
     ll k = lt_cnt(root, key);
-    return k == size(root) ? nullopt : kth(root, k);
+    return k == size(root) ? n : *kth(root, k);
   }
-  optional<ll> leq_max(Root root, ll key) const
+  ll leq_max(Root root, ll key) const
   {
     ll k = leq_cnt(root, key);
-    return k == 0 ? nullopt : kth(root, k - 1);
+    return k == 0 ? -1 : *kth(root, k - 1);
   }
-  optional<ll> gt_min(Root root, ll key) const { return key >= n - 1 ? nullopt : geq_min(root, key + 1); }
-  optional<ll> lt_max(Root root, ll key) const { return key <= 0 ? nullopt : leq_max(root, key - 1); }
-  optional<ll> min_element(Root root) const { return geq_min(root, 0); }
-  optional<ll> max_element(Root root) const { return leq_max(root, n - 1); }
+  ll gt_min(Root root, ll key) const { return key >= n - 1 ? n : geq_min(root, key + 1); }
+  ll lt_max(Root root, ll key) const { return key <= 0 ? -1 : leq_max(root, key - 1); }
+  ll min_element(Root root) const { return geq_min(root, 0); }
+  ll max_element(Root root) const { return leq_max(root, n - 1); }
 
   template <class F>
   void enumerate(Root root, ll l, ll r, const F &f) const
@@ -316,7 +317,7 @@ private:
     const_iterator() = default;
     ll operator*() const { return key; }
     const ll *operator->() const { return &key; }
-    const_iterator &operator++() { key = sets->gt_min(root, key).value_or(sets->n); return *this; }
+    const_iterator &operator++() { key = sets->gt_min(root, key); return *this; }
     const_iterator operator++(int) { auto old = *this; ++*this; return old; }
     bool operator==(const const_iterator &other) const { return sets == other.sets && root == other.root && key == other.key; }
     bool operator!=(const const_iterator &other) const { return !(*this == other); }
@@ -367,19 +368,19 @@ public:
     ll gt_cnt(ll key) const { return sets->gt_cnt(root, key); }
     ll count(ll l, ll r) const { return sets->count(root, l, r); }
     optional<ll> kth(ll k) const { return sets->kth(root, k); }
-    optional<ll> geq_min(ll key) const { return sets->geq_min(root, key); }
-    optional<ll> gt_min(ll key) const { return sets->gt_min(root, key); }
-    optional<ll> leq_max(ll key) const { return sets->leq_max(root, key); }
-    optional<ll> lt_max(ll key) const { return sets->lt_max(root, key); }
-    optional<ll> min_element() const { return sets->min_element(root); }
-    optional<ll> max_element() const { return sets->max_element(root); }
+    ll geq_min(ll key) const { return sets->geq_min(root, key); }
+    ll gt_min(ll key) const { return sets->gt_min(root, key); }
+    ll leq_max(ll key) const { return sets->leq_max(root, key); }
+    ll lt_max(ll key) const { return sets->lt_max(root, key); }
+    ll min_element() const { return sets->min_element(root); }
+    ll max_element() const { return sets->max_element(root); }
 
     template <class F>
     void enumerate(ll l, ll r, const F &f) const { sets->enumerate(root, l, r, f); }
     vc<ll> content() const { return sets->content(root); }
     using iterator = MeldableIntegerSetPool::const_iterator;
     using const_iterator = MeldableIntegerSetPool::const_iterator;
-    iterator begin() const { return iterator(sets, root, min_element().value_or(sets->n)); }
+    iterator begin() const { return iterator(sets, root, min_element()); }
     iterator end() const { return iterator(sets, root, universe_size()); }
     const_iterator cbegin() const { return begin(); }
     const_iterator cend() const { return end(); }

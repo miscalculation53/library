@@ -8,6 +8,8 @@
 #include "../dot_product.hpp"
 #include "row_reduction_mod32.hpp"
 #include "internal_matrix_power_mod32.hpp"
+#include "internal_matrix_storage.hpp"
+#include "internal_matrix_product.hpp"
 
 /**
  * @brief 行列
@@ -16,31 +18,19 @@
 
 // F は体（一部の操作は環や半環で OK）
 template <class F, int BS = 32>
-struct Matrix : vvc<typename F::S>
+struct Matrix : internal::matrix_storage<typename F::S>
 {
   using S = typename F::S;
   using M = Matrix;
   using V = vc<S>;
-  using Base = vvc<S>;
-  using Base::Base;
-  using vvc<S>::operator=;
-
+  using Base = internal::matrix_storage<S>;
+  template<class I=ll> pair<I,I> shape() const { return Base::template shape<I>(); }
+  Matrix() = default;
   Matrix(int n, int m, const S &diag = F::e0(), const S &non_diag = F::e0())
-  {
-    *this = vvc<S>(n, vc<S>(m, non_diag));
-    repi(i, min(n, m))(*this)[i][i] = diag;
-  }
-  Matrix(const vvc<S> &a) { *this = a; }
-
-  template <class I = ll>
-  pair<I, I> shape() const
-  {
-    const int n = (*this).size();
-    if (n == 0)
-      return {0, 0};
-    const int m = (*this)[0].size();
-    return {n, m};
-  }
+      : Base(n, m, non_diag)
+  { repi(i, min(n, m)) (*this)(i, i) = diag; }
+  Matrix(const vvc<S> &a) : Base(a) {}
+  Matrix(initializer_list<V> a) : Matrix(vvc<S>(a)) {}
 
   M operator-() const
   {
@@ -78,39 +68,21 @@ struct Matrix : vvc<typename F::S>
     repi(i, n) res[i] = dot_product<F>(m, (*this)[i].begin(), v.begin());
     return res;
   }
+  friend V operator*(const V &v, const M &a)
+  {
+    auto [n, m] = a.template shape<int>();
+    assert(SZ(v) == n);
+    V res(m, F::e0());
+    repi(i, n) repi(j, m) res[j] = F::add(res[j], F::mul(v[i], a[i][j]));
+    return res;
+  }
   M operator*(const M &b) const
   {
     auto [n, m] = shape<int>();
     auto [m_, p] = b.shape<int>();
     assert(m == m_);
     M res(n, p);
-    if constexpr (internal::dot_product_mod32<F>::value)
-    {
-      // 密な積では右辺を転置して内積を取る。小さい・疎な積は下の零を飛ばす処理を使う。
-      if (n >= 16 && m >= 16 && p >= 16)
-      {
-        ll nonzero = 0;
-        for (const auto &row : *this) nonzero += m - count(row.begin(), row.end(), F::e0());
-        if (nonzero == 0) return res;
-        if (nonzero * 2 >= ll(n) * m)
-        {
-          vvc<S> bt(p, vc<S>(m));
-          repi(k, m) repi(j, p) bt[j][k] = b[k][j];
-          repi(i, n) repi(j, p) res[i][j] = dot_product<F>(m, (*this)[i].begin(), bt[j].begin());
-          return res;
-        }
-      }
-    }
-    repi(ii, 0, n, BS) repi(kk, 0, m, BS) repi(jj, 0, p, BS)
-    {
-      repi(i, ii, min(ii + BS, n)) repi(k, kk, min(kk + BS, m))
-      {
-        S aik = (*this)[i][k];
-        if (aik == F::e0())
-          continue;
-        repi(j, jj, min(jj + BS, p)) res[i][j] = F::add(res[i][j], F::mul(aik, b[k][j]));
-      }
-    }
+    internal::matrix_product<F, BS>(n, m, p, *this, b, res);
     return res;
   }
   template <class T = ll>
@@ -173,7 +145,7 @@ struct Matrix : vvc<typename F::S>
       {
         if (a[k][j] != F::e0())
         {
-          swap(a[k], a[i]);
+          a.swap_rows(k, i);
           if (k != i)
             de = F::minus(de);
           break;
@@ -306,8 +278,8 @@ struct Matrix : vvc<typename F::S>
   {
     auto [n, m] = shape<int>();
     assert(SZ(b) == n);
-    M a(*this);
-    repi(i, n) a[i].eb(b[i]);
+    M a(n, m + 1);
+    repi(i, n) { repi(j, m) a[i][j] = (*this)[i][j]; a[i][m] = b[i]; }
     auto [a_, rk, _] = a.row_reduction(true);
     swap(a, a_);
 

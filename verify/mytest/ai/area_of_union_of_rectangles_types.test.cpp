@@ -1,10 +1,3 @@
-/*!
- * SPDX-License-Identifier: CC0-1.0
- * Independent structural and custom-numeric rectangle area fixtures.
- * To the extent possible under law, the authors waive all copyright and related
- * or neighboring rights to this file under CC0 1.0 Universal.
- * https://creativecommons.org/publicdomain/zero/1.0/
- */
 // verification-helper: PROBLEM https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A
 #include <algorithm>
 #include <array>

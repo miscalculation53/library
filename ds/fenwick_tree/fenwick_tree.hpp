@@ -111,29 +111,34 @@ private:
   }
 
 public:
-  // 非負の通常の整数和を想定する。該当する接頭辞がなければ nullopt。
+  // 整数の普通の足し算で、要素が非負のとき
+  // sum[0, r) < w となる最大の r と、その sum[0, r) のペア (なければ nullopt)
   template <class I = ll>
   optional<pair<I, S>> lt_max_id_sum(S w) const
   {
     auto result = prefix_lt_raw(w);
     return result.first < 0 ? nullopt : optional<pair<I, S>>(pair<I, S>{I(result.first), std::move(result.second)});
   }
+  // 整数の普通の足し算で、要素が非負のとき
+  // sum[0, r) < w となる最大の r (左番兵 -1)
   template <class I = ll>
-  optional<I> lt_max(S w) const
+  I lt_max(S w) const
   {
-    int r = prefix_lt_raw(w).first;
-    return r < 0 ? nullopt : optional<I>(r);
+    static_assert(numeric_limits<I>::is_signed, "index type must represent -1");
+    return prefix_lt_raw(w).first;
   }
+  // 整数の普通の足し算で、要素が非負のとき
+  // sum[0, r) >= w となる最小の r (右番兵 n + 1)
   template <class I = ll>
-  optional<I> geq_min(S w) const
-  {
-    int r = prefix_lt_raw(w).first + 1;
-    return r > n ? nullopt : optional<I>(r);
-  }
+  I geq_min(S w) const { return prefix_lt_raw(w).first + 1; }
+  // 整数の普通の足し算で、要素が非負のとき
+  // sum[0, r) <= w となる最大の r (左番兵 -1)
   template <class I = ll>
-  optional<I> leq_max(S w) const { return lt_max<I>(w + 1); }
+  I leq_max(S w) const { return lt_max<I>(w + 1); }
+  // 整数の普通の足し算で、要素が非負のとき
+  // sum[0, r) > w となる最小の r (右番兵 n + 1)
   template <class I = ll>
-  optional<I> gt_min(S w) const { return geq_min<I>(w + 1); }
+  I gt_min(S w) const { return geq_min<I>(w + 1); }
 
   // 要素が [0, size()) の多重集合を管理するのに使ったとき、多重集合のサイズを返す
   inline S size_of_multiset() const { return sum(n); }
@@ -146,29 +151,26 @@ public:
   inline optional<I> kth_in_multiset(S k) const
   {
     if (k < 0) return nullopt;
-    auto key = leq_max<I>(k);
-    return key && *key < n ? key : nullopt;
+    int key = leq_max<int>(k);
+    return key < n ? optional<I>(I(key)) : nullopt;
   }
-  // 要素が [0, size()) の多重集合を管理するのに使ったとき、x 未満で最大の要素が**何番目か** (なければ nullopt)
+  // 要素が [0, size()) の多重集合を管理するのに使ったとき、x 未満で最大の要素の順位 (左番兵 -1)
   template <class T, class I = ll>
-  inline optional<I> lt_max_in_multiset(T x) const
+  inline I lt_max_in_multiset(T x) const
   {
+    static_assert(numeric_limits<I>::is_signed, "index type must represent -1");
     S count = sum(clamp(x, T(0), T(n)));
-    return count == 0 ? nullopt : optional<I>(I(count - 1));
+    return I(count) - 1;
   }
-  // 要素が [0, size()) の多重集合を管理するのに使ったとき、x 以下で最大の要素が**何番目か** (なければ nullopt)
+  // x 以下で最大の要素の順位 (左番兵 -1)
   template <class T, class I = ll>
-  inline optional<I> leq_max_in_multiset(T x) const { return lt_max_in_multiset<T, I>(x + 1); }
-  // 要素が [0, size()) の多重集合を管理するのに使ったとき、x 以上で最小の要素が**何番目か** (なければ nullopt)
+  inline I leq_max_in_multiset(T x) const { return lt_max_in_multiset<T, I>(x + 1); }
+  // x 以上で最小の要素の順位 (右番兵 size_of_multiset())
   template <class T, class I = ll>
-  inline optional<I> geq_min_in_multiset(T x) const
-  {
-    S rank = sum(clamp(x, T(0), T(n)));
-    return rank == size_of_multiset() ? nullopt : optional<I>(I(rank));
-  }
-  // 要素が [0, size()) の多重集合を管理するのに使ったとき、x 超過で最小の要素が**何番目か** (なければ nullopt)
+  inline I geq_min_in_multiset(T x) const { return sum(clamp(x, T(0), T(n))); }
+  // x 超過で最小の要素の順位 (右番兵 size_of_multiset())
   template <class T, class I = ll>
-  inline optional<I> gt_min_in_multiset(T x) const { return geq_min_in_multiset<T, I>(x + 1); }
+  inline I gt_min_in_multiset(T x) const { return geq_min_in_multiset<T, I>(x + 1); }
 
   vc<S> content() const
   {

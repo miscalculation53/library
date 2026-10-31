@@ -1,12 +1,7 @@
 #pragma once
 
-/*!
- * SPDX-License-Identifier: CC0-1.0
- * Independently authored for this library from coefficient identities of
- * f * f^{-1} = 1 and f * (x (log f)') = x f'.
- * The recurrence source was frozen before reading existing FPS integration.
- * Integration revision: select the scalar path explicitly and reuse f[0]^-1.
- */
+// Coefficient identities: f * f^{-1} = 1 and f * (x (log f)') = x f'.
+// Select the scalar path explicitly and reuse f[0]^-1.
 
 #include <algorithm>
 #include <cassert>

@@ -1,5 +1,6 @@
 import contextlib
 import io
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -51,8 +52,9 @@ int main() { printf("%d\\t%s\\n", answer() + EXTRA, __FILE__); }
             mocked.start()
             self.addCleanup(mocked.stop)
 
-    def compile(self, command=None):
-        with template_pch.prepare(self.source, command or self.command) as prepared:
+    def compile(self, command=None, source=None):
+        source = source or self.source
+        with template_pch.prepare(source, command or self.command) as prepared:
             result = subprocess.run([*prepared.command, '-H'], capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn('! ', result.stderr)
@@ -61,7 +63,7 @@ int main() { printf("%d\\t%s\\n", answer() + EXTRA, __FILE__); }
             self.assertTrue(prepared.unchanged())
         result = subprocess.check_output([str(self.executable)], text=True)
         number, filename = result.strip().split('\t')
-        self.assertEqual(filename, str(self.source))
+        self.assertEqual(filename, str(source))
         return int(number)
 
     def artifacts(self):
@@ -92,6 +94,133 @@ int main() { printf("%d\\t%s\\n", answer() + EXTRA, __FILE__); }
         self.assertEqual(self.compile([*self.command, '-DLOCAL']), 109)
         self.assertEqual(len(self.artifacts()), 2)
         self.assertEqual(self.compile(), 9)
+
+    def test_problem_directories_and_comments_share_pch(self):
+        command = [*self.command, '-I', str(self.root)]
+        self.assertEqual(self.compile(command), 9)
+        before = self.artifacts()
+        other = self.root / 'other problem'
+        other.mkdir()
+        source = other / 'main.cpp'
+        source.write_text(self.source.read_text().replace(
+            '#define EPS 4\n', '// problem comment\n\n#define EPS 4 // tolerance\n').replace(
+            '__LINE__ == 5', '__LINE__ == 7'))
+        (other / 'relative.hpp').write_text('#define EXTRA 7\n')
+        other_command = [str(source) if arg == str(self.source) else arg for arg in command]
+        previous = Path.cwd()
+        try:
+            os.chdir(other)
+            self.assertEqual(self.compile(other_command, source), 14)
+        finally:
+            os.chdir(previous)
+        self.assertEqual(self.artifacts(), before)
+        self.assertEqual(self.compile(command), 9)
+        self.assertEqual(self.artifacts(), before)
+
+    def test_macro_variants_remain_cached_when_switching_back(self):
+        self.assertEqual(self.compile(), 9)
+        original = self.source.read_text()
+        self.source.write_text(original.replace('EPS 4', 'EPS 6'))
+        self.assertEqual(self.compile(), 11)
+        before = self.artifacts()
+        self.assertEqual(len(before), 2)
+        self.source.write_text(original)
+        self.assertEqual(self.compile(), 9)
+        self.assertEqual(self.artifacts(), before)
+
+    def test_touch_preserves_pch_and_run_checks_use_current_timestamps(self):
+        self.assertEqual(self.compile(), 9)
+        before = self.artifacts()
+        stat = self.dependency.stat()
+        os.utime(self.dependency, ns=(stat.st_atime_ns, stat.st_mtime_ns + 1_000_000_000))
+        self.assertEqual(self.compile(), 9)
+        self.assertEqual(self.artifacts(), before)
+        code, opened = self.run_without_opening()
+        self.assertEqual(code, 0)
+        self.assertTrue(opened)
+
+    def test_source_relative_dependencies_get_separate_pch(self):
+        self.header.write_text(self.header.read_text().replace('"value.hpp"', '"selected.hpp"'))
+        (self.root / 'selected.hpp').write_text('#define VALUE 3\n')
+        command = [*self.command, '-I', str(self.root)]
+        self.assertEqual(self.compile(command), 9)
+        other = self.root / 'other problem'
+        other.mkdir()
+        source = other / 'main.cpp'
+        source.write_text(self.source.read_text())
+        (other / 'relative.hpp').write_text('#define EXTRA 2\n')
+        (other / 'selected.hpp').write_text('#define VALUE 20\n')
+        other_command = [str(source) if arg == str(self.source) else arg for arg in command]
+        self.assertEqual(self.compile(other_command, source), 26)
+        before = self.artifacts()
+        self.assertEqual(len(before), 2)
+        self.assertEqual(self.compile(command), 9)
+        self.assertEqual(self.artifacts(), before)
+
+    def test_new_source_relative_header_refreshes_resolution(self):
+        common = self.root / 'common'
+        common.mkdir()
+        (common / 'selected.hpp').write_text('#define VALUE 3\n')
+        self.header.write_text(self.header.read_text().replace('"value.hpp"', '"selected.hpp"'))
+        command = [*self.command, '-I', str(common)]
+        self.assertEqual(self.compile(command), 9)
+        self.assertEqual(self.compile(command), 9)
+        (self.root / 'selected.hpp').write_text('#define VALUE 20\n')
+        self.assertEqual(self.compile(command), 26)
+        self.assertEqual(len(self.artifacts()), 2)
+
+    def test_new_header_in_earlier_subdirectory_refreshes_resolution(self):
+        first, second = self.root / 'first', self.root / 'second'
+        for directory in (first, second):
+            (directory / 'sub').mkdir(parents=True)
+        (second / 'sub/selected.hpp').write_text('#define VALUE 3\n')
+        self.header.write_text(self.header.read_text().replace('"value.hpp"', '<sub/selected.hpp>'))
+        command = [*self.command, '-I', str(first), '-I', str(second)]
+        self.assertEqual(self.compile(command), 9)
+        self.assertEqual(self.compile(command), 9)
+        (first / 'sub/selected.hpp').write_text('#define VALUE 20\n')
+        self.assertEqual(self.compile(command), 26)
+        self.assertEqual(len(self.artifacts()), 2)
+
+    def test_new_quoted_header_and_has_include_refresh_resolution(self):
+        common = self.root / 'common'
+        (common / 'sub').mkdir(parents=True)
+        (self.templates / 'sub').mkdir()
+        (common / 'sub/selected.hpp').write_text('#define VALUE 3\n')
+        self.header.write_text(self.header.read_text().replace(
+            '#include "value.hpp"', '#include "sub/selected.hpp"\n'
+            '#if __has_include("sub/optional.hpp")\n#include "sub/optional.hpp"\n#endif'))
+        command = [*self.command, '-I', str(common)]
+        self.assertEqual(self.compile(command), 9)
+        (self.templates / 'sub/selected.hpp').write_text('#define VALUE 20\n')
+        self.assertEqual(self.compile(command), 26)
+        (self.templates / 'sub/optional.hpp').write_text('#undef VALUE\n#define VALUE 100\n')
+        self.assertEqual(self.compile(command), 106)
+        self.assertEqual(len(self.artifacts()), 3)
+
+    def test_location_dependent_and_continued_macros_preserve_their_text(self):
+        for definition in ['#define EPS __LINE__', '#define EPS (2 + \\\n2)']:
+            with self.subTest(definition=definition):
+                prefix = definition + '\n'
+                self.assertEqual(template_pch.preamble(self.source, prefix),
+                                 f'#line 1 "{self.source}"\n' + prefix)
+        self.source.write_text(self.source.read_text().replace('EPS 4', 'EPS __LINE__'))
+        self.assertEqual(self.compile(), 11)  # answer() expands EPS on line 6 of its header.
+
+    def test_code_before_template_keeps_source_locations(self):
+        self.source.write_text('constexpr auto source_file = __FILE__;\n'
+                               + self.source.read_text().replace('__LINE__ == 5', '__LINE__ == 6')
+                               .replace('answer() + EXTRA, __FILE__', 'answer() + EXTRA, source_file'))
+        self.assertEqual(self.compile(), 9)
+
+    def test_update_messages_explain_new_cache_and_changed_header(self):
+        with contextlib.redirect_stderr(io.StringIO()) as stderr:
+            self.assertEqual(self.compile(), 9)
+        self.assertIn('設定に対応するキャッシュ未作成', stderr.getvalue())
+        self.dependency.write_text('#define VALUE 8\n')
+        with contextlib.redirect_stderr(io.StringIO()) as stderr:
+            self.assertEqual(self.compile(), 14)
+        self.assertIn('参照ヘッダの内容が変更: value.hpp', stderr.getvalue())
 
     def run_without_opening(self, argv=None, after_compile=None):
         original = subprocess.run

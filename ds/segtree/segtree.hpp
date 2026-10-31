@@ -8,6 +8,7 @@
  */
 
 #include "../../template/template_all_but_modint.hpp"
+#include "segtree_range.hpp"
 
 /**
  * @brief セグメント木
@@ -66,6 +67,16 @@ public:
     return M::op(sml, smr);
   }
   S all_prod() const { return dat[1]; }
+
+  // i = l, ..., r-1 について x ← apply(x, get(i))
+  // 行列ベクトル積など
+  template <class X, class F>
+  X prod_apply(int l, int r, X x, F &&apply) const
+  {
+    for (auto i : SegmentTreeRange(n).range_to_nodes_from_left(l, r))
+      x = apply(x, dat[i]);
+    return x;
+  }
 
   // g(prod(l, r)) が true となる最大の r を返す
   template <class G>

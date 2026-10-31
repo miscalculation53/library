@@ -1,13 +1,4 @@
-/*! SPDX-License-Identifier: CC0-1.0
- * This independently authored file is dedicated to the public domain under
- * CC0 1.0 Universal. Its source is the mathematical input/output contract;
- * no other division, reciprocal, or multiplication implementation was read.
- */
-/*! This revision is independently derived from the mathematical contract and
- * the independently authored draft identified by SHA-256 prefix 818e7e455c04.
- * It adds packed exact arithmetic and an owned in-place elementary workspace.
- * No external implementation or previous public implementation was read.
- */
+// Packed exact arithmetic with an owned in-place elementary workspace.
 #ifndef INDEPENDENT_BIGINT_DIVISION_V2_20261024_HPP
 #define INDEPENDENT_BIGINT_DIVISION_V2_20261024_HPP
 

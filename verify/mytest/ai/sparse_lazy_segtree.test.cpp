@@ -4,6 +4,7 @@
 #include "math/modint/modint.hpp"
 #include "ds/segtree/sparse_lazy_segtree.hpp"
 #include "algebra/acted_monoid/add_sum.hpp"
+#include "algebra/acted_monoid/add_min.hpp"
 #include "algebra/acted_monoid/affine_sum.hpp"
 
 struct ActedMonoidStringAssign
@@ -279,6 +280,82 @@ void test_storage_growth_and_const_queries()
   assert(AM::S::live == 0);
 }
 
+// Test focus: newly split intervals retain old actions and receive the current action once.
+void test_split_boundaries()
+{
+  using AM = ActedMonoidAffineSum<modint998244353>;
+  for (int n : {1, 2, 3, 7, 16, 31, 64, 99})
+  {
+    for (int l = 0; l <= n; ++l)
+    {
+      SparseLazySegmentTree<AM> original(n, AM::S(2));
+      original.apply(0, n, {3, 1});
+      original.apply(n / 3, n, {2, 3});
+      for (int r = l; r <= n; ++r)
+      {
+        auto seg = original;
+        seg.apply(l, r, {0, 5});
+        seg.apply(0, n, {2, 1});
+        int pos = 0;
+        for (const auto &[a, b, x] : seg.content())
+        {
+          assert(a == pos && a < b);
+          for (int i = a; i < b; ++i)
+          {
+            ll expected = 2 * (l <= i && i < r ? 5 : (i < n / 3 ? 7 : 17)) + 1;
+            assert(x.len == 1 && x.val == expected);
+            assert(seg.get(i).val == expected);
+          }
+          pos = b;
+        }
+        assert(pos == n);
+        assert(original.get(0).val == (n / 3 == 0 ? 17 : 7));
+      }
+    }
+  }
+}
+
+// Test focus: circular range additions, duplicate endpoints, and retained split positions.
+void test_circular_add_min()
+{
+  using AM = ActedMonoidAddMin<ll>;
+  static_assert(AM::pow(7, 0) == AM::e());
+  static_assert(AM::pow(7, 1'000'000'000) == 7);
+  static_assert(ActedMonoidAddMax<i128>::pow(i128(1) << 90, 17) == i128(1) << 90);
+  using MM = ActedMonoidAddMinMax<ll>;
+  assert(MM::pow(MM::S(3, 7), 0).mn == MM::e().mn);
+  assert(MM::pow(MM::S(3, 7), 100).mx == 7);
+  mt19937 rng(20261028);
+  for (int n : {1, 2, 3, 17, 63, 100})
+  {
+    SparseLazySegmentTree<AM> seg(n, 0);
+    vc<ll> a(n);
+    set<ll> cuts{0, n};
+    repi(iter, 1000)
+    {
+      int l = rng() % n, len = rng() % (n + 1);
+      ll f = ll(rng() % 7) - 3;
+      auto update = [&](ll l, ll r)
+      {
+        seg.apply(l, r, f);
+        if (l < r) cuts.insert(l), cuts.insert(r);
+      };
+      update(l, min(n, l + len));
+      if (n < l + len) update(0, l + len - n);
+      repi(j, len) a[(l + j) % n] += f;
+      assert(seg.all_prod() == *min_element(ALL(a)));
+      auto runs = as_const(seg).content();
+      assert(runs.size() + 1 == cuts.size());
+      auto it = cuts.begin();
+      for (const auto &[left, right, value] : runs)
+      {
+        assert(left == *it++ && right == *it);
+        repi(i, left, right) assert(value == a[i]);
+      }
+    }
+  }
+}
+
 int main()
 {
   test_basic_and_binary_search();
@@ -287,5 +364,7 @@ int main()
   test_large_array();
   test_explicit_identity_initial_value();
   test_storage_growth_and_const_queries();
+  test_split_boundaries();
+  test_circular_add_min();
   cout << "Hello World" << endl;
 }
