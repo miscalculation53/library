@@ -165,7 +165,7 @@ def strip_cleanup_comments(text: str, keep_comments: Iterable[str] = ()) -> str:
     protected, comments = protect_cleanup_comments(text, keep_comments)
     protected, links = protect_source_links(protected)
     stripped = restore_source_links(strip_comments(protected, comments), links)
-    return restore_cleanup_comments(stripped, comments)
+    return retain_important_comments(restore_cleanup_comments(stripped, comments), ())
 
 
 def source_comments(text: str) -> set[str]:
@@ -180,9 +180,44 @@ def important_comments(text: str) -> list[str]:
 
 
 def retain_important_comments(text: str, comments: Sequence[str]) -> str:
-    if not comments:
+    if not comments and "@keep-if-code" not in text:
         return text
     present = source_comments(text)
+    dependencies: dict[str, set[str]] = {}
+    for comment in present.union(comments):
+        if not comment.startswith(("/*!", "//!")) or "@keep-if-code" not in comment:
+            continue
+        names: set[str] = set()
+        for line in comment.splitlines():
+            if "@keep-if-code" not in line:
+                continue
+            match = re.fullmatch(
+                r"\s*(?:/\*!|//!|\*)?\s*@keep-if-code\s+"
+                r"([_A-Za-z]\w*(?:[ \t]+[_A-Za-z]\w*)*)\s*(?:\*/)?\s*", line,
+            )
+            if match is None:
+                # An incomplete scope keeps the original notice.
+                names.clear()
+                break
+            names.update(match.group(1).split())
+        if names:
+            dependencies[comment] = names
+    if dependencies:
+        # C++ joins continued lines before recognizing identifiers and comments.
+        live = set(code_identifiers(re.sub(r"\\\r?\n", "", text)))
+        obsolete = {comment for comment, names in dependencies.items() if names.isdisjoint(live)}
+        if obsolete:
+            output: list[str] = []
+            previous = 0
+            for start, end in comment_spans(text):
+                if text[start:end] in obsolete:
+                    # Preserve token separation and compiler line coordinates.
+                    output.extend((text[previous:start], " " + "\n" * text[start:end].count("\n")))
+                    previous = end
+            output.append(text[previous:])
+            text = "".join(output)
+            present.difference_update(obsolete)
+            comments = [comment for comment in comments if comment not in obsolete]
     # Notices inside removed declarations or branches move to the beginning.
     # An extra newline also terminates a line comment ending in a backslash.
     missing = dict.fromkeys(comment for comment in comments if comment not in present)
@@ -2920,7 +2955,7 @@ def apply_removals(text: str, removals: Iterable[Removal]) -> str:
     for removal in removals:
         for line_index in range(max(0, removal.start), min(line_count, removal.end + 1)):
             replacements[line_index] = ""
-    return replace_lines_preserving_comments(text, replacements)
+    return retain_important_comments(replace_lines_preserving_comments(text, replacements), ())
 
 
 def reduce_unused_candidates(

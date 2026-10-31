@@ -4,10 +4,7 @@
 
 #include "shift_of_sampling_points.hpp"
 
-/*! SPDX-License-Identifier: CC0-1.0
- * New precomputation independently designed from finite-field interpolation,
- * polynomial products, and convolution; existing dependency notices retained.
- */
+// Precomputation using finite-field interpolation, polynomial products, and convolution.
 
 #include <algorithm>
 #include <cassert>

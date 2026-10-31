@@ -38,6 +38,6 @@ assert(s.lt_cnt(5) == 1);
 - `lt_max_it`, `leq_max_it`, `gt_min_it`, `geq_min_it`
   - `optional<const_iterator>` を返す（不在は `nullopt`）
 - `lt_max_id`, `leq_max_id`, `gt_min_id`, `geq_min_id`
-  - `optional<I>` で添字を返す（不在は `nullopt`、添字 $0$ は値あり）
+  - 整数 `I`（既定は `ll`）で順位を返す。左側の `lt_max_id`, `leq_max_id` は `-1`、右側の `gt_min_id`, `geq_min_id` は `size()` を番兵とする。左側の検索には符号付き整数型を使う
 
 **注意**：`pbds_multiset` のほうは、イテレータが指す値が `pair<T, int>` になっている（一応、`second` は追加された順番。これを使うことはあまり想定していない）。

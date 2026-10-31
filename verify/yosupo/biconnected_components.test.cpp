@@ -5,8 +5,6 @@
 #define FAST_IO
 #endif
 
-/*! SPDX-License-Identifier: CC0-1.0 */
-
 #include "graph/biconnected_components.hpp"
 
 void init() {}

@@ -133,6 +133,82 @@ private:
   }
 
 public:
+  template <class Storage> class OnesRange;
+
+  class OnesIterator
+  {
+    template <class Storage> friend class OnesRange;
+    const vc<Word> *words = nullptr;
+    int index = 0;
+    Word pending = 0;
+
+    void skip_empty()
+    {
+      while (index < SZ(*words))
+      {
+        pending = (*words)[index];
+        if (pending) return;
+        ++index;
+      }
+    }
+    OnesIterator(const vc<Word> *words, int index) : words(words), index(index)
+    {
+      skip_empty();
+    }
+
+  public:
+    using iterator_category = input_iterator_tag;
+    using value_type = int;
+    using difference_type = ptrdiff_t;
+    using reference = int;
+    using pointer = void;
+
+    OnesIterator() = default;
+    int operator*() const
+    {
+      assert(pending != 0);
+      return index * word_bits + __builtin_ctzll(pending);
+    }
+    OnesIterator &operator++()
+    {
+      assert(pending != 0);
+      pending &= pending - 1;
+      if (pending == 0)
+      {
+        ++index;
+        skip_empty();
+      }
+      return *this;
+    }
+    OnesIterator operator++(int) { auto old = *this; ++*this; return old; }
+    bool operator==(const OnesIterator &other) const
+    {
+      return words == other.words && index == other.index && pending == other.pending;
+    }
+    bool operator!=(const OnesIterator &other) const { return !(*this == other); }
+  };
+
+  template <class Storage>
+  class OnesRange
+  {
+    friend struct DynamicBitset;
+    Storage storage;
+    explicit OnesRange(Storage storage) : storage(std::move(storage)) {}
+    const vc<Word> &words() const
+    {
+      if constexpr (is_pointer_v<Storage>) return *storage;
+      else return storage;
+    }
+
+  public:
+    using iterator = OnesIterator;
+    using const_iterator = OnesIterator;
+    iterator begin() const { return iterator(&words(), 0); }
+    iterator end() const { return iterator(&words(), SZ(words())); }
+    const_iterator cbegin() const { return begin(); }
+    const_iterator cend() const { return end(); }
+  };
+
   struct Reference
   {
     DynamicBitset *bs;
@@ -167,6 +243,16 @@ public:
 
   // ビット数を返す。
   int size() const { return n; }
+  // 64 bit ワード数と、下位から i 番目のワード。
+  int word_count() const { return dat.size(); }
+  Word word(int i) const { assert(0 <= i && i < word_count()); return dat[i]; }
+  DynamicBitset &set_word(int i, Word value)
+  {
+    assert(0 <= i && i < word_count());
+    dat[i] = value;
+    if (i + 1 == word_count()) trim();
+    return *this;
+  }
   // 長さが 0 か返す。
   bool empty() const { return n == 0; }
   // 再確保せずに保持できるビット数を返す。
@@ -358,15 +444,15 @@ public:
   // [l, r) の全ビットが 1 か返す。
   bool all(int l, int r) const { return count(l, r) == r - l; }
 
-  // 最初の value、存在しなければ nullopt を返す。
-  optional<int> find_first(bool value = true) const { return find_next(-1, value); }
-  // i より右にある最初の value、存在しなければ nullopt を返す。
-  optional<int> find_next(int i, bool value = true) const
+  // 最初の value の位置を返す。右番兵は n。
+  int find_first(bool value = true) const { return find_next(-1, value); }
+  // i より右にある最初の value の位置を返す。右番兵は n。
+  int find_next(int i, bool value = true) const
   {
     assert(-1 <= i && i < n);
     i++;
     if (i == n)
-      return nullopt;
+      return n;
     int w = i / word_bits, b = i % word_bits;
     Word x = (value ? dat[w] : ~dat[w]) & (~Word(0) << b);
     while (true)
@@ -374,21 +460,21 @@ public:
       if (x)
       {
         int res = w * word_bits + __builtin_ctzll(x);
-        return res < n ? optional<int>(res) : nullopt;
+        return min(res, n);
       }
       if (++w == SZ(dat))
-        return nullopt;
+        return n;
       x = value ? dat[w] : ~dat[w];
     }
   }
-  // 最後の value、存在しなければ nullopt を返す。
-  optional<int> find_last(bool value = true) const { return find_prev(n, value); }
-  // i より左にある最初の value、存在しなければ nullopt を返す。
-  optional<int> find_prev(int i, bool value = true) const
+  // 最後の value の位置を返す。左番兵は -1。
+  int find_last(bool value = true) const { return find_prev(n, value); }
+  // i より左にある最初の value の位置を返す。左番兵は -1。
+  int find_prev(int i, bool value = true) const
   {
     assert(0 <= i && i <= n);
     if (i == 0)
-      return nullopt;
+      return -1;
     i--;
     int w = i / word_bits, b = i % word_bits;
     Word x = (value ? dat[w] : ~dat[w]) & low_mask(b + 1);
@@ -397,10 +483,21 @@ public:
       if (x)
         return w * word_bits + 63 - __builtin_clzll(x);
       if (w-- == 0)
-        return nullopt;
+        return -1;
       x = value ? dat[w] : ~dat[w];
     }
   }
+
+  // 1 の位置を昇順に列挙する。一時オブジェクトではワード列を範囲へ移す。
+  auto ones() const & { return OnesRange<const vc<Word> *>(&dat); }
+  auto ones() &&
+  {
+    auto result = OnesRange<vc<Word>>(std::move(dat));
+    n = 0;
+    dat.clear();
+    return result;
+  }
+  auto ones() const && { return OnesRange<vc<Word>>(dat); }
 
   DynamicBitset &operator&=(const DynamicBitset &b)
   {
@@ -466,6 +563,48 @@ public:
   }
   DynamicBitset operator<<(int k) const { return DynamicBitset(*this) <<= k; }
   DynamicBitset operator>>(int k) const { return DynamicBitset(*this) >>= k; }
+
+  // 第 i ビットを (i+k) mod n へ移す
+  DynamicBitset rotated_left(int k) const
+  {
+    if (n == 0)
+      return {};
+    k %= n;
+    if (k < 0) k += n;
+    if (k == 0)
+      return *this;
+    DynamicBitset res(n);
+    int p = n - k;
+    repi(i, SZ(dat))
+    {
+      Word x = get_word(p);
+      const int tail = n - p;
+      if (tail < word_bits)
+        x |= dat[0] << tail;
+      res.dat[i] = x;
+      p += word_bits;
+      if (p >= n) p -= n;
+    }
+    res.trim();
+    return res;
+  }
+  // 第 i ビットを (i-k) mod n へ移す
+  DynamicBitset rotated_right(int k) const
+  {
+    return rotated_left(n == 0 ? 0 : -(k % n));
+  }
+  // 第 i ビットを (i+k) mod n へ移す
+  DynamicBitset &rotate_left(int k)
+  {
+    if (n != 0 && k % n != 0)
+      *this = rotated_left(k);
+    return *this;
+  }
+  // 第 i ビットを (i-k) mod n へ移す
+  DynamicBitset &rotate_right(int k)
+  {
+    return rotate_left(n == 0 ? 0 : -(k % n));
+  }
 
   DynamicBitset &assign_slice(int l, int r, const DynamicBitset &b, int bl)
   {

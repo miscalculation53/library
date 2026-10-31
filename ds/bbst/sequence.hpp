@@ -1,9 +1,6 @@
 #pragma once
 
-/*! SPDX-License-Identifier: CC0-1.0
- * Independent implementation from the dynamic-sequence API contract and the
- * mathematical definition of a Cartesian tree with random priorities.
- */
+// Cartesian tree with random priorities.
 
 #include <algorithm>
 #include <cassert>
@@ -81,6 +78,7 @@ private:
     struct Cell : IndependentSequenceAction<A, Lazy> {
         Cell* left = nullptr;
         Cell* right = nullptr;
+        Cell* parent = nullptr;
         Page* page;
         std::uint64_t priority;
         int count = 1;
@@ -263,6 +261,7 @@ private:
 
     static std::pair<Cell*, Cell*> cut(Cell* u, int k) {
         if (!u) return {nullptr, nullptr};
+        u->parent = nullptr;
         if (k == 0) return {nullptr, u};
         if (k == u->count) return {u, nullptr};
         push(u);
@@ -270,12 +269,14 @@ private:
         if (k <= left) {
             auto result = cut(u->left, k);
             u->left = result.second;
+            if (u->left) u->left->parent = u;
             pull(u);
             result.second = u;
             return result;
         }
         auto result = cut(u->right, k - left - 1);
         u->right = result.first;
+        if (u->right) u->right->parent = u;
         pull(u);
         result.first = u;
         return result;
@@ -286,11 +287,13 @@ private:
         if (a->priority > b->priority) {
             push(a);
             a->right = connect(a->right, b);
+            a->right->parent = a;
             pull(a);
             return a;
         }
         push(b);
         b->left = connect(a, b->left);
+        b->left->parent = b;
         pull(b);
         return b;
     }
@@ -300,23 +303,35 @@ private:
             auto parts = cut(u, k);
             added->left = parts.first;
             added->right = parts.second;
+            if (added->left) added->left->parent = added;
+            if (added->right) added->right->parent = added;
             pull(added);
             return added;
         }
         push(u);
         int left = count(u->left);
-        if (k <= left) u->left = insert_cell(u->left, k, added);
-        else u->right = insert_cell(u->right, k - left - 1, added);
+        if (k <= left) {
+            u->left = insert_cell(u->left, k, added);
+            u->left->parent = u;
+        } else {
+            u->right = insert_cell(u->right, k - left - 1, added);
+            u->right->parent = u;
+        }
         pull(u);
         return u;
     }
     static Cell* erase_cell(Cell* u, int k) {
         push(u);
         int left = count(u->left);
-        if (k < left) u->left = erase_cell(u->left, k);
-        else if (k > left) u->right = erase_cell(u->right, k - left - 1);
-        else {
+        if (k < left) {
+            u->left = erase_cell(u->left, k);
+            if (u->left) u->left->parent = u;
+        } else if (k > left) {
+            u->right = erase_cell(u->right, k - left - 1);
+            if (u->right) u->right->parent = u;
+        } else {
             Cell* result = connect(u->left, u->right);
+            if (result) result->parent = u->parent;
             pool().destroy(u);
             return result;
         }
@@ -427,8 +442,12 @@ private:
                     spine.pop_back();
                 }
                 added->left = previous;
+                if (previous) previous->parent = added;
                 if (spine.empty()) root_ = added;
-                else spine.back()->right = added;
+                else {
+                    spine.back()->right = added;
+                    added->parent = spine.back();
+                }
                 unattached = nullptr;
                 spine.push_back(added);
             }
@@ -444,6 +463,16 @@ private:
     }
 
 public:
+    class Handle {
+        friend class SequenceTreeImpl;
+        Cell* cell_ = nullptr;
+        explicit Handle(Cell* cell) : cell_(cell) {}
+    public:
+        Handle() = default;
+        friend bool operator==(Handle a, Handle b) { return a.cell_ == b.cell_; }
+        friend bool operator!=(Handle a, Handle b) { return !(a == b); }
+    };
+
     SequenceTreeImpl() = default;
     template <class Iter> SequenceTreeImpl(Iter first, Iter last) { construct(first, last); }
     template <class T> explicit SequenceTreeImpl(const std::vector<T>& values)
@@ -478,7 +507,7 @@ public:
         enumerate(root_, result);
         return result;
     }
-    S get(int p) const {
+    Handle handle_at(int p) const {
         assert(0 <= p && p < size());
         Cell* u = root_;
         for (;;) {
@@ -488,16 +517,33 @@ public:
             else if (p > left) {
                 p -= left + 1;
                 u = u->right;
-            } else return u->value;
+            } else return Handle(u);
         }
     }
+    std::optional<int> index_of(Handle h) const {
+        Cell* u = h.cell_;
+        if (!u) return std::nullopt;
+        int position = count(u->left);
+        while (u->parent) {
+            Cell* parent = u->parent;
+            // The parent's pending reversal also reverses the child's order.
+            if (parent->reversed) position = u->count - 1 - position;
+            if (parent->right == u) position += count(parent->left) + 1;
+            u = parent;
+        }
+        if (u != root_) return std::nullopt;
+        return position;
+    }
+    S get(int p) const { return handle_at(p).cell_->value; }
     void set(int p, const S& x) {
         assert(0 <= p && p < size());
         replace(root_, p, x);
     }
-    void insert(int p, const S& x) {
+    Handle insert(int p, const S& x) {
         assert(0 <= p && p <= size());
-        root_ = insert_cell(root_, p, pool().make(x));
+        Cell* added = pool().make(x);
+        root_ = insert_cell(root_, p, added);
+        return Handle(added);
     }
     void erase(int p) {
         assert(0 <= p && p < size());

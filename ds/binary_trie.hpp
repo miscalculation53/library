@@ -458,15 +458,15 @@ public:
     return key == -1 ? key_limit() : Boundary(key);
   }
 
-  // max_right_ng より前にある cnt が正の最後の key。なければ nullopt
+  // max_right_ng より前にある cnt が正の最後の key。左番兵 -1
   template <class F, class Count>
-  optional<Boundary> max_right_ok_by(Key lower, const F &f, const Count &cnt, Key xor_val = 0) const
+  Boundary max_right_ok_by(Key lower, const F &f, const Count &cnt, Key xor_val = 0) const
   {
     Boundary ng = max_right_ng(lower, f, xor_val);
     Key key = ng == key_limit()
                   ? element_ng<false>(max_key(), cnt, xor_val)
                   : lt_max_by(Key(ng) ^ xor_val, cnt, xor_val).value_or(-1);
-    return key == -1 || (key ^ xor_val) < lower ? nullopt : optional<Boundary>(Boundary(key));
+    return key == -1 || (key ^ xor_val) < lower ? Boundary(-1) : Boundary(key);
   }
 
   // L=min{l | f(sum(l <= key ^ xor_val <= upper))} として L-1 に対応する key。L=0 なら -1
@@ -476,15 +476,15 @@ public:
     return Boundary(search_ng<false>(upper, f, xor_val));
   }
 
-  // min_left_ng より後にある cnt が正の最初の key。なければ nullopt
+  // min_left_ng より後にある cnt が正の最初の key。右番兵 2^width
   template <class F, class Count>
-  optional<Boundary> min_left_ok_by(Key upper, const F &f, const Count &cnt, Key xor_val = 0) const
+  Boundary min_left_ok_by(Key upper, const F &f, const Count &cnt, Key xor_val = 0) const
   {
     Boundary ng = min_left_ng(upper, f, xor_val);
     Key key = ng == -1
                   ? element_ng<true>(Key(0), cnt, xor_val)
                   : gt_min_by(Key(ng) ^ xor_val, cnt, xor_val).value_or(-1);
-    return key == -1 || (key ^ xor_val) > upper ? nullopt : optional<Boundary>(Boundary(key));
+    return key == -1 || (key ^ xor_val) > upper ? key_limit() : Boundary(key);
   }
 
   // ll cnt(S val): 値 val から「個数」の情報をとってくる関数

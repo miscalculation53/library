@@ -67,7 +67,7 @@ int main()
   FenwickTree<GroupAddSub<ll>> fw(3);
   fw.add(1, 1);
   assert((fw.leq_max_in_multiset<ll, int>(1LL << 40) == 0));
-  assert((!fw.gt_min_in_multiset<ll, int>(1LL << 40)));
+  assert((fw.gt_min_in_multiset<ll, int>(1LL << 40) == fw.size_of_multiset()));
 
   PRINT("Hello World");
 }

@@ -22,9 +22,11 @@ void main2()
 {
   LL(N, M);
   VEC(string, N, A_);
-  MatrixMod2<4096> A(A_);
+  const int MAX = local_oj(4, 4096);
+  MatrixMod2<MAX, MAX> A;
+  rep(i, N) rep(j, M) A(i, j) = A_[i][j] == '1';
   STR(b_);
-  bitset<4096> b;
+  bitset<MAX> b;
   rep(i, N) b.set(i, b_.at(i) - '0');
   const auto result = A.solve(b);
   if (!result)
@@ -32,11 +34,15 @@ void main2()
   else
   {
     const auto &[sol, basis] = *result;
-    PRINT(basis.size());
+    vc<string> basis_;
+    for (const auto &v : basis) {
+      string row(M, '0');
+      rep(j, M) if (v[j]) row[j] = '1';
+      if (row.find('1') != string::npos) basis_.push_back(row);
+    }
+    PRINT(basis_.size());
     string sol_(M, '0');
     rep(j, M) if (sol.test(j)) sol_.at(j) = '1';
-    vc<string> basis_(basis.size(), string(M, '0'));
-    rep(i, basis.size()) rep(j, M) if (basis.at(i).test(j)) basis_.at(i).at(j) = '1';
     PRINT(sol_);
     PRINTV(basis_);
   }

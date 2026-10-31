@@ -222,6 +222,27 @@ private:
   }
   S all_prod(Root root) const { check_root(root); return node_prod(root); }
 
+  template <class X, class F>
+  X prod_apply(Root root, ll l, ll r, X x, F &&apply) const
+  {
+    check_root(root);
+    assert(0 <= l && l <= r && r <= n);
+    auto dfs = [&](auto &&self, Root i, ll a, ll b) -> void
+    {
+      if (i == null || b <= l || r <= a) return;
+      if (l <= a && b <= r)
+      {
+        x = apply(x, nodes[i].prod);
+        return;
+      }
+      ll c = a + (b - a) / 2;
+      self(self, nodes[i].child[0], a, c);
+      self(self, nodes[i].child[1], c, b);
+    };
+    if (l < r) dfs(dfs, root, 0, n);
+    return x;
+  }
+
   // g(prod(root, l, r)) が true となる最大の r を返す。
   template <class G>
   ll max_right_ok(Root root, ll l, const G &g) const
@@ -346,6 +367,10 @@ public:
 
     S prod(ll l, ll r) const { return pool->prod(root, l, r); }
     S all_prod() const { return pool->all_prod(root); }
+    // i = l, ..., r-1 について x ← apply(x, get(i))
+    template <class X, class F>
+    X prod_apply(ll l, ll r, X x, F &&apply) const
+    { return pool->prod_apply(root, l, r, std::move(x), apply); }
     template <class G>
     ll max_right_ok(ll l, const G &g) const { return pool->max_right_ok(root, l, g); }
     template <class G>

@@ -18,14 +18,14 @@ void check(const MeldableIntegerSet &st, const set<ll> &expected)
     assert(st.lt_cnt(key) == below && st.leq_cnt(key) == through);
     assert(st.geq_cnt(key) == ll(expected.size()) - below);
     assert(st.gt_cnt(key) == ll(expected.size()) - through);
-    assert(st.geq_min(key).value_or(n) == (lo == expected.end() ? n : *lo));
-    assert(st.leq_max(key).value_or(-1) == (hi == expected.begin() ? -1 : *prev(hi)));
-    assert(st.gt_min(key).value_or(n) == (hi == expected.end() ? n : *hi));
-    assert(st.lt_max(key).value_or(-1) == (lo == expected.begin() ? -1 : *prev(lo)));
+    assert(st.geq_min(key) == (lo == expected.end() ? n : *lo));
+    assert(st.leq_max(key) == (hi == expected.begin() ? -1 : *prev(hi)));
+    assert(st.gt_min(key) == (hi == expected.end() ? n : *hi));
+    assert(st.lt_max(key) == (lo == expected.begin() ? -1 : *prev(lo)));
     if (0 <= key && key < n) assert(st.contains(key) == (expected.count(key) != 0));
   }
-  assert(st.min_element().value_or(n) == (expected.empty() ? n : *expected.begin()));
-  assert(st.max_element().value_or(-1) == (expected.empty() ? -1 : *expected.rbegin()));
+  assert(st.min_element() == (expected.empty() ? n : *expected.begin()));
+  assert(st.max_element() == (expected.empty() ? -1 : *expected.rbegin()));
   assert(st.count(0, n) == st.size());
 }
 

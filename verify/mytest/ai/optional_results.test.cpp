@@ -7,7 +7,7 @@
 #include "graph/cycle_detection.hpp"
 #include "math/crt.hpp"
 #include "math/fps/half_gcd.hpp"
-#include "math/linalg/dynamic_matrix_mod2.hpp"
+#include "math/linalg/matrix_mod2_dynamic.hpp"
 #include "math/linalg/matrix.hpp"
 #include "math/linalg/matrix_array.hpp"
 #include "math/linalg/matrix_mod2.hpp"
@@ -82,8 +82,8 @@ void check_empty_matrix(const M &a, const V &b)
 void test_matrices()
 {
   check_empty_matrix(Matrix<TestField>(0, 0), vc<mint>{});
-  check_empty_matrix(DynamicMatrixMod2(0, 0), DynamicBitset(0));
-  check_empty_matrix(MatrixMod2<8>(0, 0), bitset<8>{});
+  check_empty_matrix(MatrixMod2Dynamic(0, 0), DynamicBitset(0));
+  check_empty_matrix(MatrixMod2<0, 0>{}, bitset<0>{});
   const MatrixArray<TestField, 0, 0> a;
   const auto inverse = a.inv();
   static_assert(is_same_v<decay_t<decltype(inverse)>, optional<MatrixArray<TestField, 0, 0>>>);

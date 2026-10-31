@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-#include "math/linalg/dynamic_matrix_mod2.hpp"
+#include "math/linalg/matrix_mod2_dynamic.hpp"
 
 // Test focus: runtime-sized rows support [] assignment, addition, and exponentiation.
 // Slice copies in inv/solve preserve columns and the appended RHS at 64-bit
@@ -25,7 +25,7 @@ vvc<int> reduce_naive(vvc<int> a, bool rref)
   return a;
 }
 
-DynamicBitset multiply(const DynamicMatrixMod2 &a, const DynamicBitset &x)
+DynamicBitset multiply(const MatrixMod2Dynamic &a, const DynamicBitset &x)
 {
   DynamicBitset b(a.size());
   repi(i, a.size()) repi(j, a.m) if (a[i].test(j) && x.test(j)) b.flip(i);
@@ -37,7 +37,7 @@ void test_slice_copy()
   mt19937_64 rng(20260831);
   for (int n : {0, 1, 2, 63, 64, 65, 127, 128, 129})
   {
-    DynamicMatrixMod2 a(n, n, 1), identity(n, n, 1);
+    MatrixMod2Dynamic a(n, n, 1), identity(n, n, 1);
     if (n > 1)
       repi(_, 8 * n)
       {
@@ -67,7 +67,7 @@ void test_slice_copy()
   for (int n : {0, 1, 63, 64, 65})
     for (int m : {0, 1, 63, 64, 65, 127, 128, 129})
     {
-      DynamicMatrixMod2 a(n, m);
+      MatrixMod2Dynamic a(n, m);
       repi(i, n) repi(j, m) if (rng() & 1) a[i].set(j);
       DynamicBitset x(m);
       repi(j, m) if (rng() & 1) x.set(j);
@@ -78,13 +78,13 @@ void test_slice_copy()
       assert(sol.size() == m && multiply(a, sol) == b);
       assert(SZ(basis) == m - a.rank());
       fec(v : basis) assert(v.size() == m && v.any() && multiply(a, v).none());
-      DynamicMatrixMod2 kernel(basis.size(), m);
+      MatrixMod2Dynamic kernel(basis.size(), m);
       repi(i, basis.size()) kernel[i] = basis[i];
       assert(kernel.rank() == SZ(basis));
 
       for (int prefix : {0, m / 2})
       {
-        fem(row : a) row.reset_range(0, prefix);
+        for (auto row : a) row.reset_range(0, prefix);
         for (bool rref : {false, true})
         {
           auto reduced = a.row_reduction(rref);
@@ -97,7 +97,7 @@ void test_slice_copy()
 
 int main()
 {
-  DynamicMatrixMod2 a(2, 2, 1);
+  MatrixMod2Dynamic a(2, 2, 1);
   a[0][1] = true;
   assert(a[0][1]);
   assert(!a[1][0]);

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "internal_power.hpp"
 #include "../template/template_all_but_modint.hpp"
 
 /**
@@ -68,6 +69,8 @@ struct OppositeMonoid
   using S = typename M::S;
   static constexpr S op(const S &a, const S &b) { return M::op(b, a); }
   static constexpr auto e = M::e;
+  template <class I>
+  static constexpr S pow(const S &x, I k) { return internal_monoid_power::power<M>(x, k); }
 };
 template <class G>
 struct OppositeGroup
@@ -76,6 +79,8 @@ struct OppositeGroup
   static constexpr S op(const S &a, const S &b) { return G::op(b, a); }
   static constexpr auto e = G::e;
   static constexpr auto inv = G::inv;
+  template <class I>
+  static constexpr S pow(const S &x, I k) { return internal_monoid_power::power<G>(x, k); }
 };
 template <class M>
 struct NormalAndOppositeMonoid
@@ -94,6 +99,8 @@ struct NormalAndOppositeMonoid
   };
   static constexpr S op(const S &a, const S &b) { return {M::op(a.normal, b.normal), M::op(b.opposite, a.opposite)}; }
   static constexpr S e() { return {M::e(), M::e()}; }
+  template <class I>
+  static constexpr S pow(const S &x, I k) { return {internal_monoid_power::power<M>(x.normal, k), internal_monoid_power::power<M>(x.opposite, k)}; }
 };
 template <class G>
 struct NormalAndOppositeGroup
@@ -113,6 +120,8 @@ struct NormalAndOppositeGroup
   static constexpr S op(const S &a, const S &b) { return {G::op(a.normal, b.normal), G::op(b.opposite, a.opposite)}; }
   static constexpr S e() { return {G::e(), G::e()}; }
   static constexpr S inv(const S &a) { return {G::inv(a.normal), G::inv(a.opposite)}; }
+  template <class I>
+  static constexpr S pow(const S &x, I k) { return {internal_monoid_power::power<G>(x.normal, k), internal_monoid_power::power<G>(x.opposite, k)}; }
 };
 
 template <class SR>

@@ -4,6 +4,7 @@
 
 [SequenceTree](sequence.md) に区間作用を加えた列。
 挿入・削除・反転・移動・分割・連結・区間積・境界探索も同じ形式で使える。
+`insert` が返す `Handle`、`handle_at`、`index_of` も同じ形式で使え、作用による値の変更後も同じ要素を参照する。
 公開型は `LazySequenceTree<AM>`、分割や切り出しの返り値もこの型になる。
 
 `AM` は既存の `LazySegmentTree` と同じく `S`, `F`, `op`, `e`, `mapping`, `composition`, `id` を持つ。
@@ -25,8 +26,11 @@
 LazySequenceTree<ActedMonoidAffineSum<ll>> t(vector<ll>{1, 2, 3});
 t.apply(0, 2, {2, 1});           // [3, 5, 3]
 t.reverse(0, 3);                 // [3, 5, 3]
-t.insert(1, 10);                 // [3, 10, 5, 3]
+auto h = t.insert(1, 10);        // [3, 10, 5, 3]
 assert(t.prod(1, 3).val == 15);
+t.apply(0, t.size(), {1, 2});    // [5, 12, 7, 5]
+t.reverse(0, t.size());          // [5, 7, 12, 5]
+assert(t.index_of(h) == 2);
 ```
 
 ## 詳細なドキュメント

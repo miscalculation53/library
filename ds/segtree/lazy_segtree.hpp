@@ -8,6 +8,7 @@
  */
 
 #include "../../template/template_all_but_modint.hpp"
+#include "segtree_range.hpp"
 
 /**
  * @brief 遅延セグメント木
@@ -136,6 +137,24 @@ public:
     return AM::op(sml, smr);
   }
   S all_prod() const { return dat[1]; }
+
+  // i = l, ..., r-1 について x ← apply(x, get(i))
+  // 行列ベクトル積など
+  template <class X, class G>
+  X prod_apply(int l, int r, X x, G &&apply)
+  {
+    assert(0 <= l && l <= r && r <= n);
+    if (l == r) return x;
+    int left = l + siz, right = r + siz;
+    repi(i, lg, 0, -1)
+    {
+      if (((left >> i) << i) != left) push(left >> i);
+      if (((right >> i) << i) != right) push((right - 1) >> i);
+    }
+    for (auto i : SegmentTreeRange(n).range_to_nodes_from_left(l, r))
+      x = apply(x, as_const(dat[i]));
+    return x;
+  }
 
   vc<S> content()
   {

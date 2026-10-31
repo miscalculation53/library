@@ -4,6 +4,30 @@
 
 using Row = tuple<int, int, int>;
 
+// 全区間を走査し、点と区間の位置関係から5種類の検索結果を照合する。
+template <class T, class I>
+void check_search(const IntervalMap<T, I> &mp, const I p)
+{
+  using Result = optional<typename IntervalMap<T, I>::iterator>;
+  static_assert(is_same_v<decltype(mp.get_it(p)), Result>);
+  static_assert(is_same_v<decltype(mp.leq_max_it(p)), Result>);
+  static_assert(is_same_v<decltype(mp.geq_min_it(p)), Result>);
+  static_assert(is_same_v<decltype(mp.lt_max_it(p)), Result>);
+  static_assert(is_same_v<decltype(mp.gt_min_it(p)), Result>);
+  const array<Result, 5> actual{mp.get_it(p), mp.leq_max_it(p), mp.geq_min_it(p),
+                                mp.lt_max_it(p), mp.gt_min_it(p)};
+  array<Result, 5> expected{};
+  for (auto it = mp.begin(); it != mp.end(); ++it)
+  {
+    if (!(p < it->l) && p < it->r) expected[0] = it;
+    if (!(p < it->l)) expected[1] = it;
+    if (!expected[2] && p < it->r) expected[2] = it;
+    if (!(p < it->r)) expected[3] = it;
+    if (!expected[4] && p < it->l) expected[4] = it;
+  }
+  assert(actual == expected);
+}
+
 struct Mirror
 {
   set<Row> rows;
@@ -58,11 +82,27 @@ void check(const IntervalMap<int, int> &mp, const vc<optional<int>> &a,
     const auto it = mp.get_it(p);
     assert(it.has_value() == value.has_value());
     if (it) assert((*it)->l <= p && p < (*it)->r && (*it)->x == *value);
-    const auto jt = mp.next_it(p);
-    auto expected = find_if(want.begin(), want.end(), [&](const Row &row) { return p < std::get<1>(row); });
-    assert((!jt) == (expected == want.end()));
-    if (jt) assert((Row{(*jt)->l, (*jt)->r, (*jt)->x}) == *expected);
+    check_search(mp, p);
   }
+}
+
+void test_search_boundaries()
+{
+  IntervalMap<int, int> mp;
+  for (int p = -1; p <= 14; ++p) check_search(mp, p);
+  mp.set(2, 8, 1);
+  mp.set(10, 12, 2);
+  mp.set(12, 14, 3);  // 異なる値の区間が端点で接する。
+  for (int p = -1; p <= 15; ++p) check_search(mp, p);
+  assert((*mp.get_it(5))->l == 2);
+  assert((*mp.leq_max_it(5))->l == 2);
+  assert((*mp.geq_min_it(5))->l == 2);
+  assert(!mp.lt_max_it(5));
+  assert((*mp.gt_min_it(5))->l == 10);
+  assert(!mp.get_it(8) && (*mp.lt_max_it(8))->l == 2);
+  assert((*mp.leq_max_it(9))->l == 2 && (*mp.geq_min_it(9))->l == 10);
+  assert((*mp.lt_max_it(12))->l == 10 && (*mp.leq_max_it(12))->l == 12);
+  assert((*mp.geq_min_it(12))->l == 12 && !mp.gt_min_it(12));
 }
 
 void test_updates()
@@ -189,38 +229,46 @@ void test_types()
   mp.set(0, hi, "a");
   assert(mp.content().size() == 1 && mp.begin()->l == lo && mp.begin()->r == hi);
   assert(mp[lo] == "a" && mp[hi - 1] == "a" && mp[hi] == "empty");
-  assert(!mp.get_it(hi) && !mp.next_it(hi));
+  assert(!mp.get_it(hi) && !mp.geq_min_it(hi));
+  for (ll p : {lo, lo + 1, -1LL, 0LL, 1LL, hi - 1, hi}) check_search(mp, p);
   mp.erase(lo + 1, hi - 1);
   assert(mp.content().size() == 2 && mp.get(lo + 1) == "empty");
   mp.set(lo, hi, mp.begin()->x);
   assert(mp.content().size() == 1);
   mp.erase(lo, hi);
   assert(mp.empty());
+  check_search(mp, lo);
+  check_search(mp, hi);
 
   IntervalMap<int, ull> unsigned_mp;
   const ull umax = numeric_limits<ull>::max();
   unsigned_mp.set(0, umax, 3);
   unsigned_mp.erase(1, umax - 1);
   assert(unsigned_mp.content().size() == 2 && unsigned_mp[umax - 1] == 3 && unsigned_mp[umax] == 0);
+  for (ull p : {0ULL, 1ULL, 2ULL, umax - 1, umax}) check_search(unsigned_mp, p);
 
   IntervalMap<int, i128> wide;
   const i128 big = i128(1) << 100;
   wide.set(-big, big, 4);
   wide.erase(-1, 1);
   assert(wide.content().size() == 2 && wide[-big] == 4 && wide[0] == 0);
+  for (i128 p : {-big, -big + 1, i128(-1), i128(0), i128(1), big - 1, big}) check_search(wide, p);
 
   IntervalMap<int, double> real;
   real.set(-0.5, 1.25, 3);
   real.set(1.25, 2.5, 3);
   real.erase(0.25, 0.75);
   assert(real.content().size() == 2 && real[0.5] == 0 && real[1.25] == 3);
+  for (double p : {-1.0, -0.5, 0.0, 0.25, 0.5, 0.75, 1.25, 2.5, 3.0}) check_search(real, p);
+  assert(!real.lt_max_it(0.0) && (*real.gt_min_it(0.0))->l == 0.75);
 
   IntervalMap<Value, Key> generic(Value("empty"));
   generic.set(Key{1}, Key{4}, Value("a"));
   generic.set(Key{4}, Key{6}, generic.begin()->x);
   generic.erase(Key{2}, Key{3});
   assert(generic.content().size() == 2 && generic[Key{2}].value == "empty");
-  assert((*generic.next_it(Key{2}))->l.value == 3);
+  assert((*generic.geq_min_it(Key{2}))->l.value == 3);
+  for (int p = 0; p <= 7; ++p) check_search(generic, Key{p});
 }
 
 void test_many_segments()
@@ -235,6 +283,7 @@ void test_many_segments()
 
 int main()
 {
+  test_search_boundaries();
   test_updates();
   test_random();
   test_construction();

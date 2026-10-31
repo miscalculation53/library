@@ -48,10 +48,10 @@ void test2()
     if (!gt && a[i] > k) gt = i;
     if (!geq && a[i] >= k) geq = i;
   }
-  assert(lt_max(a, k) == lt);
-  assert(leq_max(a, k) == leq);
-  assert(gt_min(a, k) == gt);
-  assert(geq_min(a, k) == geq);
+  assert(lt_max(a, k) == lt.value_or(-1));
+  assert(leq_max(a, k) == leq.value_or(-1));
+  assert(gt_min(a, k) == gt.value_or(n));
+  assert(geq_min(a, k) == geq.value_or(n));
   multiset<ll> values(ALL(a));
   auto check_iterator = [&](auto result, optional<ll> expected)
   {
@@ -72,7 +72,7 @@ void test3()
 {
   vc<int> v = {1, 3, 5, 7, 9};
   auto i = leq_max(v, 6);
-  assert(i && v[*i] == 5);
+  assert(i == 2 && v[i] == 5);
   set<int> s = {1, 3, 5, 7, 9};
   auto it = leq_max(s, 6);
   assert(it && **it == 5);
@@ -85,7 +85,7 @@ void test4()
   auto solve = [](int q, vc<P> v) -> string
   {
     v.insert(v.begin(), {1, "kogakubu10gokan"});
-    int i = *leq_max(v, q, {}, [](const P &p)
+    int i = leq_max(v, q, {}, [](const P &p)
                     { return p.first; });
     return v[i].second;
   };
@@ -111,11 +111,13 @@ int main()
 {
   rep(_, 10000) test1();
   rep(_, 10000) test2();
-  static_assert(is_same_v<decltype(lt_max<unsigned>(vc<int>{}, 0)), optional<unsigned>>);
-  assert(!lt_max<unsigned>(vc<int>{}, 0));
-  assert(!geq_min<unsigned>(vc<int>{}, 0));
-  assert(geq_min<unsigned>(vc<int>{0}, 0) == 0);
-  assert(!gt_min(vc<int>{0}, 0));
+  static_assert(is_same_v<decltype(lt_max<int>(vc<int>{}, 0)), int>);
+  static_assert(is_same_v<decltype(lt_max<i128>(vc<int>{}, 0)), i128>);
+  static_assert(is_same_v<decltype(geq_min<unsigned>(vc<int>{}, 0)), unsigned>);
+  assert(lt_max<int>(vc<int>{}, 0) == -1);
+  assert(geq_min<unsigned>(vc<int>{}, 0) == 0u);
+  assert(geq_min<unsigned>(vc<int>{0}, 0) == 0u);
+  assert(gt_min(vc<int>{0}, 0) == 1);
   assert(!lt_max(set<int>{}, 0));
   test3();
   test4();

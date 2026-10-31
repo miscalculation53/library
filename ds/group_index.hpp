@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../template/template_all_but_modint.hpp"
+#include "internal_dump_content.hpp"
 
 #include "csr.hpp"
 #include "../algo/stable_argsort.hpp"
@@ -165,37 +166,39 @@ public:
   // 値が val になる添字たち
   auto idxs(const T &val) const { return csr.at(row_id(val)); }
 
-  // 値が val になる添字のうち i 未満で最大のもの (なければ nullopt)
-  optional<I> lt_max(const T &val, int i) const
+  // 値が val になる添字のうち i 未満で最大のもの (左番兵 -1)
+  I lt_max(const T &val, int i) const
   {
+    static_assert(numeric_limits<I>::is_signed, "index type must represent -1");
     int row = row_id(val);
     auto is = csr.at(row);
     I j = row_count(row, i, false);
-    return j == 0 ? nullopt : optional<I>(is[j - 1]);
+    return j == 0 ? I(-1) : is[j - 1];
   }
-  // 値が val になる添字のうち i 以下で最大のもの (なければ nullopt)
-  optional<I> leq_max(const T &val, int i) const
+  // 値が val になる添字のうち i 以下で最大のもの (左番兵 -1)
+  I leq_max(const T &val, int i) const
+  {
+    static_assert(numeric_limits<I>::is_signed, "index type must represent -1");
+    int row = row_id(val);
+    auto is = csr.at(row);
+    I j = row_count(row, i, true);
+    return j == 0 ? I(-1) : is[j - 1];
+  }
+  // 値が val になる添字のうち i 超過で最小のもの (右番兵 n)
+  I gt_min(const T &val, int i) const
   {
     int row = row_id(val);
     auto is = csr.at(row);
     I j = row_count(row, i, true);
-    return j == 0 ? nullopt : optional<I>(is[j - 1]);
+    return j == is.size() ? I(n) : is[j];
   }
-  // 値が val になる添字のうち i 超過で最小のもの (なければ nullopt)
-  optional<I> gt_min(const T &val, int i) const
-  {
-    int row = row_id(val);
-    auto is = csr.at(row);
-    I j = row_count(row, i, true);
-    return j == is.size() ? nullopt : optional<I>(is[j]);
-  }
-  // 値が val になる添字のうち i 以上で最小のもの (なければ nullopt)
-  optional<I> geq_min(const T &val, int i) const
+  // 値が val になる添字のうち i 以上で最小のもの (右番兵 n)
+  I geq_min(const T &val, int i) const
   {
     int row = row_id(val);
     auto is = csr.at(row);
     I j = row_count(row, i, false);
-    return j == is.size() ? nullopt : optional<I>(is[j]);
+    return j == is.size() ? I(n) : is[j];
   }
   // 値が val になる i 未満の添字の個数
   // i 番目が val のとき、「これは何番目の val か？」に一致
@@ -286,3 +289,37 @@ struct GroupIndexRaw : GroupIndex<T, false, I>
   GroupIndexRaw() = default;
   GroupIndexRaw(const vc<T> &a) : GroupIndex<T, false, I>(a) {}
 };
+
+#ifdef LOCAL
+namespace cpp_dump::_detail
+{
+  template <class T, bool compress, class I>
+  inline constexpr bool is_container<GroupIndex<T, compress, I>> = false;
+
+  template <class T, bool compress, class I>
+  inline string export_object_generic(
+      const GroupIndex<T, compress, I> &value, const string &indent,
+      size_t last_line_length, size_t current_depth, bool fail_on_newline,
+      const export_command &command)
+  {
+    return export_named_content<library_dump_detail::GroupFields>(
+        value, [&]() -> decltype(auto) { return (value); },
+        indent, last_line_length, current_depth, fail_on_newline, command);
+  }
+
+  template <class T, class I>
+  inline constexpr bool is_container<GroupIndexRaw<T, I>> = false;
+
+  template <class T, class I>
+  inline string export_object_generic(
+      const GroupIndexRaw<T, I> &value, const string &indent,
+      size_t last_line_length, size_t current_depth, bool fail_on_newline,
+      const export_command &command)
+  {
+    return export_named_content<library_dump_detail::GroupFields>(
+        value, [&]() -> decltype(auto) { return (value); },
+        indent, last_line_length, current_depth, fail_on_newline, command);
+  }
+
+} // namespace cpp_dump::_detail
+#endif

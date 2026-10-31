@@ -1,12 +1,5 @@
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/problems/ITP1_1_A"
 
-/*!
- * SPDX-License-Identifier: CC0-1.0
- * Independently written definition-based cycle fixtures.
- * To the extent possible under law, the authors waive all copyright and related
- * or neighboring rights to this file under CC0 1.0 Universal.
- * https://creativecommons.org/publicdomain/zero/1.0/
- */
 #include <algorithm>
 #include <cstddef>
 #include <cstdint>

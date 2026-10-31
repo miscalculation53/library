@@ -1,5 +1,7 @@
 #pragma once
 
+//! SPDX-License-Identifier: CC0-1.0
+
 #include "../../template/template_all_but_modint.hpp"
 
 #include "../algebra_base.hpp"
@@ -19,6 +21,11 @@ struct ActedMonoidAddMin
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
+  static constexpr S pow(const S &x, ll k)
+  {
+    assert(k >= 0);
+    return k == 0 ? e() : x;
+  }
   static constexpr S mapping(F f, S x) { return f + x; }
   static constexpr auto composition = MF::op;
   static constexpr auto id = MF::e;
@@ -33,6 +40,11 @@ struct ActedMonoidAddMax
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
+  static constexpr S pow(const S &x, ll k)
+  {
+    assert(k >= 0);
+    return k == 0 ? e() : x;
+  }
   static constexpr S mapping(F f, S x) { return f + x; }
   static constexpr auto composition = MF::op;
   static constexpr auto id = MF::e;
@@ -47,6 +59,11 @@ struct ActedMonoidAddMinMax
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
+  static constexpr S pow(const S &x, ll k)
+  {
+    assert(k >= 0);
+    return k == 0 ? e() : x;
+  }
   static constexpr S mapping(F f, S x)
   {
     if (x.mn == resolved_infty<T, infty>() && x.mx == -resolved_infty<T, infty>())

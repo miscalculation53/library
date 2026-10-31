@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../template/template_all_but_modint.hpp"
+#include "internal_dump_content.hpp"
 
 /**
  * @brief 値つき区間の管理（区間代入・削除）
@@ -49,7 +50,7 @@ private:
       }
     }
 
-    auto it = next_it(l).value_or(segs.end());
+    auto it = geq_min_it(l).value_or(segs.end());
     while (it != segs.end() && it->l < r)
     {
       const Segment a = *it;
@@ -88,8 +89,7 @@ public:
     }
   }
 
-  // p を含む区間
-  // 未登録なら nullopt。
+  // l <= p < r を満たす区間 [l, r) のイテレータ。該当する区間がなければ nullopt。
   optional<iterator> get_it(const I p) const
   {
     auto it = segs.upper_bound(p);
@@ -98,13 +98,35 @@ public:
     if (p < it->r) return it;
     return nullopt;
   }
-  // p を含む区間、またはその右側で最初の区間。なければ nullopt。
-  optional<iterator> next_it(const I p) const
+  // l <= p を満たす区間 [l, r) のうち、l が最大の区間のイテレータ。該当する区間がなければ nullopt。
+  optional<iterator> leq_max_it(const I p) const
+  {
+    auto it = segs.upper_bound(p);
+    if (it == segs.begin()) return nullopt;
+    return prev(it);
+  }
+  // p < r を満たす区間 [l, r) のうち、l が最小の区間のイテレータ。該当する区間がなければ nullopt。
+  optional<iterator> geq_min_it(const I p) const
   {
     auto it = segs.upper_bound(p);
     if (it != segs.begin() && p < prev(it)->r) return prev(it);
     if (it != segs.end()) return it;
     return nullopt;
+  }
+  // r <= p を満たす区間 [l, r) のうち、l が最大の区間のイテレータ。該当する区間がなければ nullopt。
+  optional<iterator> lt_max_it(const I p) const
+  {
+    auto it = leq_max_it(p);
+    if (!it || !(p < (*it)->r)) return it;
+    if (*it == segs.begin()) return nullopt;
+    return prev(*it);
+  }
+  // p < l を満たす区間 [l, r) のうち、l が最小の区間のイテレータ。該当する区間がなければ nullopt。
+  optional<iterator> gt_min_it(const I p) const
+  {
+    auto it = segs.upper_bound(p);
+    if (it == segs.end()) return nullopt;
+    return it;
   }
   T get(const I p) const
   {
@@ -158,3 +180,23 @@ public:
     return res;
   }
 };
+
+#ifdef LOCAL
+namespace cpp_dump::_detail
+{
+  template <class T, class I>
+  inline constexpr bool is_container<IntervalMap<T, I>> = false;
+
+  template <class T, class I>
+  inline string export_object_generic(
+      const IntervalMap<T, I> &value, const string &indent,
+      size_t last_line_length, size_t current_depth, bool fail_on_newline,
+      const export_command &command)
+  {
+    return export_named_content<library_dump_detail::IntervalMapFields>(
+        value, [&]() -> decltype(auto) { return (value); },
+        indent, last_line_length, current_depth, fail_on_newline, command);
+  }
+
+} // namespace cpp_dump::_detail
+#endif

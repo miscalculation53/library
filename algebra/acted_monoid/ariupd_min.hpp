@@ -32,6 +32,13 @@ struct ActedMonoidAriUpdMin
     return {min(a.l, b.l), max(a.r, b.r), min(a.mn, b.mn)};
   }
   static constexpr S e() { return {}; }
+  template <class I>
+  static constexpr S pow(const S &x, I k)
+  {
+    internal_monoid_power::check_exponent(k);
+    return k == 0 ? e() : x;
+  }
+
   static constexpr S mapping(const F &f, S x)
   {
     if (f.is_id || x.l == x.r)
@@ -71,6 +78,13 @@ struct ActedMonoidAriUpdMax
     return {min(a.l, b.l), max(a.r, b.r), max(a.mx, b.mx)};
   }
   static constexpr S e() { return {}; }
+  template <class I>
+  static constexpr S pow(const S &x, I k)
+  {
+    internal_monoid_power::check_exponent(k);
+    return k == 0 ? e() : x;
+  }
+
   static constexpr S mapping(const F &f, S x)
   {
     if (f.is_id || x.l == x.r)
@@ -110,6 +124,13 @@ struct ActedMonoidAriUpdMinMax
     return {min(a.l, b.l), max(a.r, b.r), min(a.mn, b.mn), max(a.mx, b.mx)};
   }
   static constexpr S e() { return {}; }
+  template <class I>
+  static constexpr S pow(const S &x, I k)
+  {
+    internal_monoid_power::check_exponent(k);
+    return k == 0 ? e() : x;
+  }
+
   static constexpr S mapping(const F &f, S x)
   {
     if (f.is_id || x.l == x.r)

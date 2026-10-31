@@ -3,9 +3,7 @@
 #include <array>
 #include <cstdint>
 
-/*! SPDX-License-Identifier: CC0-1.0
- * Independently derived from symmetric products and forward differences.
- */
+// Symmetric products and forward differences.
 // Contract: count >= 0; Mint supplies construction, +, -, *, +=, -=, *=.
 namespace factorial_tail_product_detail {
 

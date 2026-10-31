@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../internal_power.hpp"
 #include "../../template/template_all_but_modint.hpp"
 
 #include "../min_max_sum.hpp"
@@ -19,6 +20,8 @@ struct ActedMonoidUpdMinSum
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
+  template <class I>
+  static constexpr S pow(const S &x, I k) { return internal_monoid_power::power<M>(x, k); }
   static constexpr S mapping(const F &f, S x)
   {
     return f.is_id || x.len == 0 ? x : S{f.val, x.len};
@@ -36,6 +39,8 @@ struct ActedMonoidUpdMaxSum
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
+  template <class I>
+  static constexpr S pow(const S &x, I k) { return internal_monoid_power::power<M>(x, k); }
   static constexpr S mapping(const F &f, S x)
   {
     return f.is_id || x.len == 0 ? x : S{f.val, x.len};
@@ -53,6 +58,8 @@ struct ActedMonoidUpdMinMaxSum
   using F = typename MF::S;
   static constexpr auto op = M::op;
   static constexpr auto e = M::e;
+  template <class I>
+  static constexpr S pow(const S &x, I k) { return internal_monoid_power::power<M>(x, k); }
   static constexpr S mapping(const F &f, S x)
   {
     return f.is_id || x.len == 0 ? x : S{f.val, x.len};

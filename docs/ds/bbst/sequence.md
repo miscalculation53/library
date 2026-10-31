@@ -5,6 +5,7 @@
 挿入・削除・反転・区間移動・分割・連結とモノイド積を扱う列。
 要素の順序は列中の位置で決まり、区間は 0-indexed の半開区間で指定する。
 非可換モノイドに対応し、`prod(l, r)` は左から右へ積を取る。
+ハンドルで個々の要素を参照し、順序の変更後も現在位置を取得できる。
 
 `M` は `S`, `op`, `e` を持つモノイドとする。
 各要素は `M::S` 型で、順位は格納した要素の個数で数える。
@@ -27,6 +28,16 @@ auto right = t.split(3);         // t=[1,4,10], right=[3,2]
 t.concat(std::move(right));
 t.move(1, 3, 3);                 // [1,3,2,4,10]
 assert(t.content() == vector<ll>({1, 3, 2, 4, 10}));
+
+auto h = t.insert(1, 3);         // [1, 3(h), 3, 2, 4, 10]
+t.reverse(0, t.size());         // [10, 4, 2, 3, 3(h), 1]
+assert(t.index_of(h) == 4);
+assert(t.handle_at(4) == h);
+auto tail = t.split(4);         // t=[10,4,2,3], tail=[3(h),1]
+assert(t.index_of(h) == nullopt);
+assert(tail.index_of(h) == 0);
+t.concat(std::move(tail));
+assert(t.index_of(h) == 4);
 ```
 
 ## 詳細なドキュメント
@@ -74,12 +85,13 @@ vector<S> content() const;
 ```cpp
 S get(int p) const;
 void set(int p, const S& x);
-void insert(int p, const S& x);
+Handle insert(int p, const S& x);
 void erase(int p);
 void erase(int l, int r);
 ```
 
 位置 `p` の値を取得・変更・削除する。`insert` は位置 `p` の直前に挿入し、`p == size()` なら末尾へ追加する。
+`insert` は追加した要素のハンドルを返す。戻り値を使わない呼び出しも同じ形式で使える。
 区間版 `erase` は `[l,r)` のノードを解放する。
 
 ##### 制約
@@ -92,6 +104,38 @@ void erase(int l, int r);
 
 - 単一要素の操作は期待 $O(\log n)$。
 - 区間版 `erase` は期待 $O(\log n+r-l)$。
+
+#### Handle / handle_at / index_of
+
+```cpp
+class Handle;
+Handle handle_at(int p) const;
+optional<int> index_of(Handle h) const;
+```
+
+`Handle` は個々の要素を指す、コピー可能な参照。同じ値を持つ要素も別々のハンドルで区別する。
+デフォルト構築で空ハンドルになり、`==`, `!=` で同じ要素を指すか比較できる。
+ハンドルのコピー・代入・比較は $O(1)$、格納領域も $O(1)$。
+
+`handle_at(p)` は位置 `p` の要素のハンドルを返す。
+`index_of(h)` は、この木に属する要素なら現在の 0-indexed の位置を返す。
+空ハンドル、または別の木に属する生存中の要素なら `nullopt` を返す。
+別の木に属する場合の計算量は、その木の要素数を基準にする。
+
+挿入、`set`、反転・区間移動・回転の前後で、ハンドルは同じ要素を指す。
+分割・切り出し・連結・木の move では、移動先の木でそのまま使える。
+要素の削除、`clear`、所有する木の破棄で、その要素のハンドルは失効する。
+move 代入では、代入先がそれまで所有していた要素のハンドルが失効する。
+失効後のハンドルには、新しいハンドルの代入と破棄を行える。
+
+##### 制約
+
+- `handle_at` は $0\le p<n$。
+- `index_of` とハンドルの比較には、空ハンドルまたは生存中の要素のハンドルを渡す。
+
+##### 計算量
+
+- `handle_at`, `index_of` は期待 $O(\log n)$。空ハンドルの `index_of` は $O(1)$。
 
 #### prod / all_prod
 
@@ -172,3 +216,7 @@ template <class G> int min_left_ok(int r, const G& g) const;
 ##### 計算量
 
 - 期待 $O(\log n)$。`g` の実行を $O(1)$ とする。
+
+### 対応する問題
+
+- [Cut in Queue](https://yukicoder.me/problems/no/3167)：値に対応するハンドルから挿入位置を取得し、先頭削除と第 $k$ 要素の取得を行う。

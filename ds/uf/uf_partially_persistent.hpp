@@ -54,7 +54,7 @@ public:
   {
     t = clamp(t, 0, cur_time);
     x = leader(t, x);
-    int i = *leq_max(vhis[x], t, {}, [&](cauto &p)
+    int i = leq_max(vhis[x], t, {}, [&](cauto &p)
                     { return p.first; });
     return vhis[x][i].second;
   }

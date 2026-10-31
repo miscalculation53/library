@@ -1,6 +1,7 @@
 #pragma once
 
 #include "treap_base.hpp"
+#include "../internal_dump_content.hpp"
 
 /**
  * @brief キー順・順位区間のモノイド積を持つ map
@@ -193,3 +194,20 @@ public:
 
 template <class Key, class M, class Compare = less<Key>>
 using OrderedMapTree = bbst_detail::OrderedMapTreeImpl<Key, M, Compare, false>;
+
+#ifdef LOCAL
+namespace cpp_dump::_detail
+{
+  template <class Key, class A, class Compare, bool Lazy>
+  inline string export_object_generic(
+      const bbst_detail::OrderedMapTreeImpl<Key, A, Compare, Lazy> &value, const string &indent,
+      size_t last_line_length, size_t current_depth, bool fail_on_newline,
+      const export_command &command)
+  {
+    return export_named_content<library_dump_detail::MapFields>(
+        value, [&]() -> decltype(auto) { return (value.content()); },
+        indent, last_line_length, current_depth, fail_on_newline, command);
+  }
+
+} // namespace cpp_dump::_detail
+#endif

@@ -40,25 +40,28 @@ struct pbds_set : tree<T, null_type, Compare, rb_tree_tag, tree_order_statistics
   template <class I = ll>
   inline I gt_cnt(const T &x) const { return (I)this->size() - leq_cnt<I>(x); }
 
-  // 近傍要素のイテレータ。該当する要素がなければ nullopt。
+  // x 未満で最大の要素のイテレータ (なければ nullopt)
   optional<typename base::const_iterator> lt_max_it(const T &x) const
   {
     auto it = this->lower_bound(x);
     if (it == this->begin()) return nullopt;
     return prev(it);
   }
+  // x 以下で最大の要素のイテレータ (なければ nullopt)
   optional<typename base::const_iterator> leq_max_it(const T &x) const
   {
     auto it = this->upper_bound(x);
     if (it == this->begin()) return nullopt;
     return prev(it);
   }
+  // x 以上で最小の要素のイテレータ (なければ nullopt)
   optional<typename base::const_iterator> geq_min_it(const T &x) const
   {
     auto it = this->lower_bound(x);
     if (it == this->end()) return nullopt;
     return it;
   }
+  // x 超過で最小の要素のイテレータ (なければ nullopt)
   optional<typename base::const_iterator> gt_min_it(const T &x) const
   {
     auto it = this->upper_bound(x);
@@ -66,35 +69,26 @@ struct pbds_set : tree<T, null_type, Compare, rb_tree_tag, tree_order_statistics
     return it;
   }
 
-  // 近傍要素の順位。該当する要素がなければ nullopt。
+  // x 未満で最大の要素の順位 (左番兵 -1)
   template <class I = ll>
-  optional<I> lt_max_id(const T &x) const
+  I lt_max_id(const T &x) const
   {
-    I k = lt_cnt<I>(x);
-    if (k == 0) return nullopt;
-    return k - 1;
+    static_assert(numeric_limits<I>::is_signed, "index type must represent -1");
+    return lt_cnt<I>(x) - 1;
   }
+  // x 以下で最大の要素の順位 (左番兵 -1)
   template <class I = ll>
-  optional<I> leq_max_id(const T &x) const
+  I leq_max_id(const T &x) const
   {
-    I k = leq_cnt<I>(x);
-    if (k == 0) return nullopt;
-    return k - 1;
+    static_assert(numeric_limits<I>::is_signed, "index type must represent -1");
+    return leq_cnt<I>(x) - 1;
   }
+  // x 以上で最小の要素の順位 (右番兵 size())
   template <class I = ll>
-  optional<I> geq_min_id(const T &x) const
-  {
-    I k = lt_cnt<I>(x);
-    if (k == I(this->size())) return nullopt;
-    return k;
-  }
+  I geq_min_id(const T &x) const { return lt_cnt<I>(x); }
+  // x 超過で最小の要素の順位 (右番兵 size())
   template <class I = ll>
-  optional<I> gt_min_id(const T &x) const
-  {
-    I k = leq_cnt<I>(x);
-    if (k == I(this->size())) return nullopt;
-    return k;
-  }
+  I gt_min_id(const T &x) const { return leq_cnt<I>(x); }
 };
 
 template <class T, class Compare>
@@ -163,25 +157,28 @@ public:
   template <class I = ll>
   inline I gt_cnt(const T &x) const { return (I)this->size() - leq_cnt<I>(x); }
   
-  // 近傍要素のイテレータ。該当する要素がなければ nullopt。
+  // x 未満で最大の要素のイテレータ (なければ nullopt)
   optional<typename base::const_iterator> lt_max_it(const T &x) const
   {
     auto it = this->lower_bound({x, 0});
     if (it == this->begin()) return nullopt;
     return prev(it);
   }
+  // x 以下で最大の要素のイテレータ (なければ nullopt)
   optional<typename base::const_iterator> leq_max_it(const T &x) const
   {
     auto it = this->upper_bound({x, (int)1e9});
     if (it == this->begin()) return nullopt;
     return prev(it);
   }
+  // x 以上で最小の要素のイテレータ (なければ nullopt)
   optional<typename base::const_iterator> geq_min_it(const T &x) const
   {
     auto it = this->lower_bound({x, 0});
     if (it == this->end()) return nullopt;
     return it;
   }
+  // x 超過で最小の要素のイテレータ (なければ nullopt)
   optional<typename base::const_iterator> gt_min_it(const T &x) const
   {
     auto it = this->upper_bound({x, (int)1e9});
@@ -189,33 +186,24 @@ public:
     return it;
   }
 
-  // 近傍要素の順位。該当する要素がなければ nullopt。
+  // x 未満で最大の要素の順位 (左番兵 -1)
   template <class I = ll>
-  optional<I> lt_max_id(const T &x) const
+  I lt_max_id(const T &x) const
   {
-    I k = lt_cnt<I>(x);
-    if (k == 0) return nullopt;
-    return k - 1;
+    static_assert(numeric_limits<I>::is_signed, "index type must represent -1");
+    return lt_cnt<I>(x) - 1;
   }
+  // x 以下で最大の要素の順位 (左番兵 -1)
   template <class I = ll>
-  optional<I> leq_max_id(const T &x) const
+  I leq_max_id(const T &x) const
   {
-    I k = leq_cnt<I>(x);
-    if (k == 0) return nullopt;
-    return k - 1;
+    static_assert(numeric_limits<I>::is_signed, "index type must represent -1");
+    return leq_cnt<I>(x) - 1;
   }
+  // x 以上で最小の要素の順位 (右番兵 size())
   template <class I = ll>
-  optional<I> geq_min_id(const T &x) const
-  {
-    I k = lt_cnt<I>(x);
-    if (k == I(this->size())) return nullopt;
-    return k;
-  }
+  I geq_min_id(const T &x) const { return lt_cnt<I>(x); }
+  // x 超過で最小の要素の順位 (右番兵 size())
   template <class I = ll>
-  optional<I> gt_min_id(const T &x) const
-  {
-    I k = leq_cnt<I>(x);
-    if (k == I(this->size())) return nullopt;
-    return k;
-  }
+  I gt_min_id(const T &x) const { return leq_cnt<I>(x); }
 };

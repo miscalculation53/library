@@ -5,6 +5,9 @@
 行数・列数をコンパイル時に固定する行列。`array` に格納し、小さい行列の積やセグメント木の要素として使う。
 `F` は要素型 `F::S` と演算を定める。基本の演算は [Matrix](matrix.md) と共通。
 
+成分は `a(i, j)`、`a.at(i, j)`、`a[i][j]`、行は `a.row(i)` で参照できる。`shape<I=ll>()` は固定された行数・列数を返す。
+行列積は動的サイズ版と同じ処理を共有し、両辺の疎さと小さい上三角行列を利用する。
+
 ## 使用例
 
 ```cpp
@@ -16,6 +19,10 @@ a[1] = {1, 0};
 assert(a.pow(5)[0][1] == 5);
 auto result = a.solve(array<mint, 2>{3, 2});
 assert(result && result->first[0] == 2 && result->first[1] == 1);
+
+array<mint, 2> v{1, 2};
+assert((a * v == array<mint, 2>{3, 1}));
+assert((v * a == array<mint, 2>{3, 1}));
 ```
 
 ## 詳細なドキュメント
@@ -51,16 +58,19 @@ assert(result && result->first[0] == 2 && result->first[1] == 1);
 (1) M operator+(const M& b), operator-(const M& b)
 (2) M operator*(S x), operator/(S x)
 (3) Vn operator*(const Vm& v)
-(4) MatrixArray<F, n, p> operator*(const MatrixArray<F, m, p>& b)
+(4) friend Vm operator*(const Vn& v, const M& a)
+(5) MatrixArray<F, n, p> operator*(const MatrixArray<F, m, p>& b)
 ```
 
 加減算、スカラー倍・除算、行列とベクトルまたは行列の積を返す。複合代入も使える。
 スカラー除算には `F::inv`、減算には加法逆元が必要。
 
+`a * v` は長さ $m$ の列ベクトルから長さ $n$ の列ベクトル、`v * a` は長さ $n$ の行ベクトルから長さ $m$ の行ベクトルを求める。ベクトルの向きは左右の位置で決まる。係数の積も式の順序に従い、`a * v` は `F::mul(a[i][j], v[j])`、`v * a` は `F::mul(v[i], a[i][j])` を使う。
+
 ##### 計算量
 
-- (1), (2), (3)：$O(nm)$。
-- (4)：$O(nmp)$。
+- (1), (2), (3), (4)：$O(nm)$。
+- (5)：$O(nmp)$。
 
 #### pow
 

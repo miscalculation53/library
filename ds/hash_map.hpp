@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../template/template_all_but_modint.hpp"
+#include "internal_dump_content.hpp"
 
 #include "safe_unordered_map.hpp"
 
@@ -258,3 +259,23 @@ public:
     fill(ALL(ctrl), 0), num = 0;
   }
 };
+
+#ifdef LOCAL
+namespace cpp_dump::_detail
+{
+  template <class Key, class Value, class Hash, class Equal>
+  inline constexpr bool is_container<HashMap<Key, Value, Hash, Equal>> = false;
+
+  template <class Key, class Value, class Hash, class Equal>
+  inline string export_object_generic(
+      const HashMap<Key, Value, Hash, Equal> &value, const string &indent,
+      size_t last_line_length, size_t current_depth, bool fail_on_newline,
+      const export_command &command)
+  {
+    return export_named_content<library_dump_detail::MapFields>(
+        value, [&]() -> decltype(auto) { return (value); },
+        indent, last_line_length, current_depth, fail_on_newline, command);
+  }
+
+} // namespace cpp_dump::_detail
+#endif

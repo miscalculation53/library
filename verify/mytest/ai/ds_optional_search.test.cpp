@@ -9,7 +9,7 @@
 #include "ds/binary_trie.hpp"
 #include "ds/fenwick_tree/fenwick_tree_01.hpp"
 
-// Empty results, successful zeroes, and searches agree with direct enumeration.
+// Optional values and directional search boundaries agree with direct enumeration.
 int main()
 {
   static_assert(is_same_v<decltype(CoordinateCompression<int>{}.get_id(0)), optional<ll>>);
@@ -49,14 +49,14 @@ int main()
       assert(fast.content() == keys && meld.content() == vc<ll>(ALL(keys)));
       assert(vc<int>(fast.begin(), fast.end()) == keys);
       assert(vc<ll>(meld.begin(), meld.end()) == vc<ll>(ALL(keys)));
-      assert(fast.min_element() == (keys.empty() ? nullopt : optional<int>(keys.front())));
-      assert(meld.max_element() == (keys.empty() ? nullopt : optional<ll>(keys.back())));
+      assert(fast.min_element() == (keys.empty() ? n : keys.front()));
+      assert(meld.max_element() == (keys.empty() ? -1 : keys.back()));
       repi(x, -1, n + 2)
       {
         optional<int> lo, hi;
         for (int p : keys) { if (p <= x) lo = p; if (p >= x && !hi) hi = p; }
-        assert(fast.prev(x) == lo && fast.next(x) == hi);
-        assert(meld.leq_max(x) == lo && meld.geq_min(x) == hi);
+        assert(fast.prev(x) == lo.value_or(-1) && fast.next(x) == hi.value_or(n));
+        assert(meld.leq_max(x) == lo.value_or(-1) && meld.geq_min(x) == hi.value_or(n));
       }
       for (bool value : {false, true})
       {
@@ -64,13 +64,13 @@ int main()
         {
           optional<int> expected;
           repi(p, x + 1, n) if (bool(a[p]) == value) { expected = p; break; }
-          assert(bits.find_next(x, value) == expected);
+          assert(bits.find_next(x, value) == expected.value_or(n));
         }
         repi(x, n + 1)
         {
           optional<int> expected;
           repi(p, x) if (bool(a[p]) == value) expected = p;
-          assert(bits.find_prev(x, value) == expected);
+          assert(bits.find_prev(x, value) == expected.value_or(-1));
         }
       }
       ll total = repeated.size();
@@ -86,13 +86,13 @@ int main()
           if (sum > w && !gt) gt = r;
           if (r < n) sum += a[r];
         }
-        assert(fw.lt_max(w) == lt && fw.leq_max(w) == le);
-        assert(fw.geq_min(w) == ge && fw.gt_min(w) == gt);
+        assert(fw.lt_max(w) == lt.value_or(-1) && fw.leq_max(w) == le.value_or(-1));
+        assert(fw.geq_min(w) == ge.value_or(n + 1) && fw.gt_min(w) == gt.value_or(n + 1));
         auto pair = fw.lt_max_id_sum(w);
         assert(bool(pair) == bool(lt));
         if (pair) assert(pair->first == *lt && pair->second == fw.sum(*lt));
       }
-      assert(!fw.lt_max<unsigned>(0) && fw.geq_min<unsigned>(0) == 0u);
+      assert(fw.lt_max<i128>(0) == -1 && fw.geq_min<unsigned>(0) == 0u);
       repi(k, -1, total + 2)
       {
         optional<ll> expected = 0 <= k && k < total ? optional<ll>(repeated[k]) : nullopt;
@@ -109,7 +109,7 @@ int main()
         for (int p : keys) { if (p < x) lo = p; if (p >= x && !hi) hi = p; }
         assert(trie.lt_max_by(x, identity{}) == lo && trie.geq_min_by(x, identity{}) == hi);
         auto expected_rank = hi ? optional<ll>(lower_bound(ALL(repeated), x) - repeated.begin()) : nullopt;
-        assert(fw.geq_min_in_multiset(x) == expected_rank);
+        assert(fw.geq_min_in_multiset(x) == expected_rank.value_or(total));
       }
       auto min_key = keys.empty() ? nullopt : optional<ll>(keys.front());
       auto max_key = keys.empty() ? nullopt : optional<ll>(keys.back());
@@ -119,7 +119,7 @@ int main()
       {
         optional<ll> lo, hi;
         repi(p, n) if (a[p] == v) { if (p < i) lo = p; if (p >= i && !hi) hi = p; }
-        assert(groups.lt_max(v, i) == lo && groups.geq_min(v, i) == hi);
+        assert(groups.lt_max(v, i) == lo.value_or(-1) && groups.geq_min(v, i) == hi.value_or(n));
       }
     }
   }

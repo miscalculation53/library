@@ -7,11 +7,7 @@
 #include <utility>
 #include <vector>
 
-/*!
- * SPDX-License-Identifier: CC0-1.0
- * Independently derived from the mathematical specification of static
- * orthogonal range aggregation in a commutative group.
- */
+// Static orthogonal range aggregation in a commutative group.
 
 namespace internal_sparse_2d {
 
@@ -231,10 +227,6 @@ public:
 
 } // namespace internal_sparse_2d
 
-/*!
- * SPDX-License-Identifier: CC0-1.0
- * API adapter independently written against this project's documented API.
- */
 namespace internal_sparse_2d {
 
 template <class M>

@@ -197,7 +197,6 @@ SBTNode<T> sbt_search(const F &judge, T max_value)
   }
 }
 
-// 数学的な背景。区間補助関数は入出力仕様から独立に実装。
 //! https://atcoder.jp/contests/abc408/tasks/abc408_g/editorial
 // 0 <= a/b < c/d の開区間内で、分母、分子の順に最小の分数を返す。
 // b > 0。正の無限大は c > 0, d = 0 で表す。答えは T に収まるものとする。

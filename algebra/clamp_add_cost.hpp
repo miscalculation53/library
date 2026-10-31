@@ -1,5 +1,7 @@
 #pragma once
 
+#include "clamp_add.hpp"
+
 #include "../template/template_all_but_modint.hpp"
 #include "../utils/larger_int.hpp"
 #include "../utils/resolved_value.hpp"
@@ -76,4 +78,27 @@ struct MonoidClampAddCost
     return {lo, hi, T(bias), Cost(W(g.base) + W(f.base) + gap)};
   }
   static constexpr S e() { return {-inf(), inf(), T{}, Cost{}}; }
+
+  template <class I>
+  static constexpr S pow(const S &x, I k)
+  {
+    internal_monoid_power::check_exponent(k);
+    if (k == 0) return e();
+    if (k == 1) return x;
+    const auto position = MonoidClampAdd<T, infty>::pow({x.lo, x.hi, x.bias}, k);
+    W base;
+    if (x.lo != -inf() && x.hi != inf() && position.lo == position.hi)
+    {
+      const bool negative = x.bias < T{};
+      const W step = negative ? -W(x.bias) : W(x.bias);
+      const W weight = negative ? chmax_weight() : chmin_weight();
+      const W width = W(P(x.hi) - P(x.lo));
+      // 飽和後の1回分の費用を先にまとめ、大きな積どうしの相殺を避ける。
+      base = internal_monoid_power::scale(W(x.base) + weight * step, I(k - 1))
+             + W(x.base) - weight * width;
+    }
+    else
+      base = internal_monoid_power::scale(W(x.base), k);
+    return {position.lo, position.hi, position.bias, Cost(base)};
+  }
 };

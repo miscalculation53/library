@@ -13,7 +13,7 @@ import subprocess
 import sys
 import tempfile
 
-from submit_code import preprocessor_lines
+from submit_code import preprocessor_lines, strip_comments
 
 
 TEMPLATE_DIR = Path(__file__).resolve().parent.parent / 'template'
@@ -55,14 +55,31 @@ def include_roots(flags: list[str], source: Path) -> list[Path]:
     index = 0
     while index < len(flags):
         arg = flags[index]
-        if arg in ('-I', '-iquote', '-isystem') and index + 1 < len(flags):
+        options = ('-I', '-iquote', '-isystem', '-idirafter')
+        if arg in options and index + 1 < len(flags):
             roots.append(Path(flags[index + 1]).resolve())
             index += 2
             continue
-        if arg.startswith('-I') and len(arg) > 2:
-            roots.append(Path(arg[2:]).resolve())
+        for option in options:
+            if arg.startswith(option) and len(arg) > len(option):
+                roots.append(Path(arg[len(option):]).resolve())
+                break
         index += 1
     return roots
+
+
+def preamble(source: Path, text: str, flags: list[str] | None = None) -> str:
+    clean = strip_comments(text)
+    lines = [line.strip() for line in clean.splitlines() if line.strip()]
+    # Simple macro directives are independent of the source location. Keep the
+    # original text and location for includes, continuations and other C++ code.
+    if (not re.search(r'\\|__|##', clean)
+            and not any('__' in flag or flag.startswith(('-include', '-imacros', '@'))
+                        for flag in flags or ())
+            and all(re.match(r'^#\s*(define|undef|if|ifdef|ifndef|elif|else|endif)\b', line)
+                    for line in lines)):
+        return ''.join(line + '\n' for line in lines)
+    return f'#line 1 {json.dumps(str(source), ensure_ascii=False)}\n' + text
 
 
 def template_prefix(source: Path, text: str, flags: list[str]) -> tuple[Path, str, str] | None:
@@ -84,8 +101,7 @@ def template_prefix(source: Path, text: str, flags: list[str]) -> tuple[Path, st
         for root in include_roots(flags, source):
             header = (root / match.group(2)).resolve()
             if header.is_file():
-                prefix = (f'#line 1 {json.dumps(str(source), ensure_ascii=False)}\n'
-                          + ''.join(lines[:index])
+                prefix = (preamble(source, ''.join(lines[:index]), flags)
                           + f'#include {json.dumps(str(header), ensure_ascii=False)}\n')
                 suffix = (f'#line {index + 2} {json.dumps(str(source), ensure_ascii=False)}\n'
                           + ''.join(lines[index + 1:]))
@@ -118,10 +134,31 @@ class PreparedTemplate:
             return False
 
 
-def run_checked(command: list[str]) -> None:
-    result = subprocess.run(command, check=False)
+def run_checked(command: list[str], *, input: str | None = None) -> None:
+    result = subprocess.run(command, check=False, input=input, text=True)
     if result.returncode:
         raise PrecompileError('プリコンパイルに失敗しました。ヘッダを修正して再実行してください。')
+
+
+def rebuild_reason(state_path: Path, wrapper: Path, output: Path,
+                   inputs: dict, files: dict[str, dict]) -> str | None:
+    if not state_path.exists():
+        return '設定に対応するキャッシュ未作成'
+    try:
+        state = json.loads(state_path.read_text())
+        if state['inputs'] != inputs or wrapper.read_text() != inputs['prefix']:
+            return 'キャッシュの設定が変更'
+        for name, current in files.items():
+            if state['files'].get(name, {}).get('hash') != current['hash']:
+                return f'参照ヘッダの内容が変更: {Path(name).name}'
+        stat = output.stat()
+        if state['output'] != [stat.st_size, stat.st_mtime_ns]:
+            return 'プリコンパイル生成物が変更'
+    except FileNotFoundError:
+        return 'キャッシュのファイルが欠落'
+    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+        return 'キャッシュ情報の再作成'
+    return None
 
 
 @contextmanager
@@ -138,6 +175,7 @@ def prepare(source: Path, command: list[str]):
         yield PreparedTemplate(command)
         return
     header, prefix, suffix = selected
+    base = [command[0], *flags, '-iquote', str(source.parent)]
     executable = Path(shutil.which(command[0]) or command[0]).resolve()
     compiler_stat = executable.stat()
     context = {
@@ -145,43 +183,44 @@ def prepare(source: Path, command: list[str]):
         'compiler_stamp': [compiler_stat.st_size, compiler_stat.st_mtime_ns],
         'flags': flags,
         'header': str(header),
+        'prefix': prefix,
         'environment': {key: os.environ.get(key) for key in (
             'CPATH', 'CPLUS_INCLUDE_PATH', 'GCC_EXEC_PREFIX', 'COMPILER_PATH',
             'SDKROOT', 'MACOSX_DEPLOYMENT_TARGET', 'SOURCE_DATE_EPOCH',
         )},
     }
+    if prefix.startswith('#line '):
+        context['cwd'] = str(Path.cwd())
+    # Resolve includes in the current problem, including newly added headers.
+    with tempfile.TemporaryDirectory(prefix='pch-dependencies-') as temporary:
+        depfile = Path(temporary) / 'template.d'
+        run_checked([*base, '-x', 'c++', '-M', '-MT', 'pch', '-MF', str(depfile), '-'],
+                    input=prefix)
+        paths = dependencies(depfile)
+    context['dependencies'] = [str(path) for path in paths]
     key = hashlib.sha256(json.dumps(context, sort_keys=True).encode()).hexdigest()[:20]
     directory = CACHE_ROOT / key
     directory.mkdir(parents=True, exist_ok=True)
     wrapper = directory / 'template.hpp'
     output = directory / 'template.hpp.gch'
     state_path = directory / 'state.json'
-    base = [command[0], *flags, '-iquote', str(source.parent)]
-    inputs = {**context, 'prefix': prefix, 'cwd': str(Path.cwd())}
+    inputs = context
     with (directory / 'build.lock').open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
-        try:
-            state = json.loads(state_path.read_text())
-            stat = output.stat()
-            valid = (state['inputs'] == inputs and wrapper.read_text() == prefix
-                     and state['output'] == [stat.st_size, stat.st_mtime_ns]
-                     and PreparedTemplate(command, state['files']).unchanged())
-        except (OSError, ValueError, KeyError, TypeError):
-            valid = False
-        if not valid:
-            print(f'[precompile] {header.name} を更新します', file=sys.stderr)
+        files = snapshot(paths)
+        reason = rebuild_reason(state_path, wrapper, output, inputs, files)
+        if reason:
+            print(f'[precompile] {header.name} を更新します（{reason}）', file=sys.stderr)
             output.unlink(missing_ok=True)
             wrapper.write_text(prefix)
             with tempfile.TemporaryDirectory(prefix='build-', dir=directory) as temporary:
                 temp = Path(temporary)
                 depfile = temp / 'template.d'
                 artifact = temp / 'template.gch'
-                run_checked([*base, '-x', 'c++', '-M', '-MT', 'pch', '-MF', str(depfile), str(wrapper)])
-                files = snapshot(dependencies(depfile))
                 run_checked([*base, '-x', 'c++-header',
                              '-MD', '-MT', 'pch', '-MF', str(depfile), str(wrapper), '-o', str(artifact)])
-                after = snapshot(dependencies(depfile))
-                if files != after:
+                after = snapshot([path for path in dependencies(depfile) if path != wrapper])
+                if files != after or wrapper.read_text() != prefix:
                     raise PrecompileError('プリコンパイル中にヘッダが変更されました。もう一度実行してください。')
                 os.replace(artifact, output)
                 stat = output.stat()
@@ -194,5 +233,6 @@ def prepare(source: Path, command: list[str]):
             candidate.write_text(f'#include {json.dumps(str(wrapper), ensure_ascii=False)}\n' + suffix)
             replaced = [str(candidate) if not arg.startswith('-') and Path(arg).resolve() == source else arg
                         for arg in command[1:]]
-            prepared = PreparedTemplate([command[0], '-iquote', str(source.parent), *replaced], state['files'])
+            prepared = PreparedTemplate([command[0], '-iquote', str(source.parent), *replaced],
+                                        {**files, **snapshot([wrapper])})
             yield prepared

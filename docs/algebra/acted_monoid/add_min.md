@@ -6,6 +6,10 @@
 
 作用つきモノイド：加算・最小値／最大値取得
 
+`ActedMonoidAddMin<T>`・`ActedMonoidAddMax<T>` の `T` には `pll`, `tlll`, `array<ll, N>` なども使える。加算は成分ごと、最小値・最大値の比較は標準の辞書順で行う。例えば `pll` の値だけを増やして添字を保つには、作用に `{増分, 0}` を渡す。入れ子の `pair`, `tuple`, `array` にも対応する。
+
+3 種類とも `pow(const S& x, ll k)` を持つ。`x` を `op` で $k$ 回連結した値を $O(1)$ で求め、$k=0$ なら `e()`、$k>0$ なら `x` を返す。制約は $0\leq k$。
+
 ## 使用例
 
 ```cpp
@@ -15,7 +19,13 @@
 LazySegmentTree<ActedMonoidAddMin<ll>> seg(vc<ll>{3, 1, 4});
 seg.apply(0, 2, 5);
 assert(seg.prod(0, 3) == 4);
+
+LazySegmentTree<ActedMonoidAddMax<pll>> argmax(vc<pll>{{3, 0}, {1, 1}, {4, 2}});
+argmax.apply(0, 2, {5, 0});
+assert((argmax.all_prod() == pll{8, 0}));
 ```
+
+成分数が増える場合は、以下の計算量に成分ごとの加算・比較の計算量を考慮する。比較と加算が定義され、加算で順序が保たれる型を使う。
 
 ## 詳細なドキュメント
 

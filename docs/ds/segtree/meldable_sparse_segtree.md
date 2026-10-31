@@ -256,6 +256,26 @@ S all_prod() const
 - `prod`：$O(H)$
 - `all_prod`：$O(1)$
 
+#### prod_apply
+
+```cpp
+template <class X, class F>
+X prod_apply(ll l, ll r, X x, F&& apply) const
+```
+
+区間 $[l,r)$ の値を左から順に初期値 `x` へ作用させる。作用・型・コールバックの条件は [SegmentTree::prod_apply](segtree.md#prod_apply) と同じ。
+空区間では初期値を返し、コールバックの呼び出しは $0$ 回。未登録の点は単位元として飛ばす。ノードの追加は $0$ 個。
+
+コールバック内では、この木と同じプールに属する全ての木、およびノードプールの内容を維持する。
+
+##### 制約
+
+- $0\leq l\leq r\leq n$
+
+##### 計算量
+
+- 作用と代入を $O(T)$ として $O((T+1)H)$
+
 #### max_right_ok / min_left_ok
 
 ```cpp

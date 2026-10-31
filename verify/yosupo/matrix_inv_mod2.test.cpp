@@ -22,12 +22,14 @@ void main2()
 {
   LL(N);
   VEC(string, N, A_);
-  MatrixMod2<4096> A(A_);
+  const int MAX = local_oj(4, 4096);
+  MatrixMod2<MAX, MAX> A(1);
+  rep(i, N) rep(j, N) A(i, j) = A_[i][j] == '1';
   const auto B = A.inv();
   if (!B)
     PRINT(-1);
   else
-    PRINT(B->to_vstr());
+    rep(i, N) { rep(j, N) WRITE(char('0' + (*B)(i, j))); WRITE("\n"); }
 }
 
 void test() {}

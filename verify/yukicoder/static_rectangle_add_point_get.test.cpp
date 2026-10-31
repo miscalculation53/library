@@ -38,8 +38,8 @@ void main2()
   StaticRectangleAddPointGet<GroupAddSub<ll>, ll> AC, WA;
   rep(i, N)
   {
-    ll prvAC = grp.lt_max(2 * P[i] + 1, i).value_or(-1);
-    ll nxtAC = grp.gt_min(2 * P[i] + 1, i).value_or(N);
+    ll prvAC = grp.lt_max(2 * P[i] + 1, i);
+    ll nxtAC = grp.gt_min(2 * P[i] + 1, i);
     dump(i, prvAC, nxtAC);
     if (S[i] == "AC")
       AC.rectangle_add(prvAC + 1, i + 1, i + 1, N + 1, 1);

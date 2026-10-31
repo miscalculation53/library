@@ -52,9 +52,9 @@ void main2()
     else if (t == 4)
     {
       auto i = fw.leq_max_in_set(*cc.get_id(x));
-      if (i)
+      if (0 <= i && i < fw.size_of_set())
       {
-        auto ans = fw.kth_in_set(*i);
+        auto ans = fw.kth_in_set(i);
         PRINT(cc.get_val(*ans));
       }
       else
@@ -63,9 +63,9 @@ void main2()
     else if (t == 5)
     {
       auto i = fw.geq_min_in_set(*cc.get_id(x));
-      if (i)
+      if (0 <= i && i < fw.size_of_set())
       {
-        auto ans = fw.kth_in_set(*i);
+        auto ans = fw.kth_in_set(i);
         PRINT(cc.get_val(*ans));
       }
       else

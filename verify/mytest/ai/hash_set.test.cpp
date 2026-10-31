@@ -253,8 +253,55 @@ void test_optional_reference()
   assert(&stored->get() == inserted.first);
 }
 
+struct ConfigHash
+{
+  int modulus;
+  explicit ConfigHash(int modulus) : modulus(modulus) {}
+  size_t operator()(int x) const { return safe_hash::splitmix64(x % modulus); }
+};
+struct ConfigEqual
+{
+  int modulus;
+  explicit ConfigEqual(int modulus) : modulus(modulus) {}
+  bool operator()(int x, int y) const { return x % modulus == y % modulus; }
+};
+
+void test_configured_functions()
+{
+  ConfigHash hash(101);
+  ConfigEqual equal(101);
+  using Set = HashSet<int, ConfigHash, ConfigEqual>;
+  Set values(hash, equal);
+  hash.modulus = equal.modulus = 2;
+  for (int x = 0; x < 1000; x++)
+  {
+    auto [p, added] = values.insert(x);
+    assert(*p == x % 101 && added == (x < 101));
+  }
+  values.reserve(1000);
+  Set copied(values);
+  Set assigned(ConfigHash(17), ConfigEqual(17));
+  assigned.insert(3);
+  assigned = values;
+  for (int x = 0; x < 101; x++)
+  {
+    assert(copied.find_ptr(x + 303)->get() == x);
+    assert(assigned.find_ptr(x + 505)->get() == x);
+    assert(copied.erase(x + 202));
+    assert(values.contains(x));
+  }
+  assert(copied.empty() && values.size() == 101);
+  copied.insert(123);
+  assert(copied.contains(22));
+
+  HashSet<int, ConfigHash> custom_hash(ConfigHash(7));
+  custom_hash.insert(3), custom_hash.insert(10);
+  assert(custom_hash.size() == 2);
+}
+
 int main()
 {
+  test_configured_functions();
   test_optional_reference();
   test_iteration();
   test_collisions();

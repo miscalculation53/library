@@ -652,6 +652,161 @@ int main() { return 0; }
         self.assertEqual(submit_code.strip_cleanup_comments(cleaned), cleaned)
         self.assertNotIn('submit_code_comment_', cleaned)
 
+    def test_scoped_notices_follow_any_of_the_named_identifiers(self) -> None:
+        notice = '''/*!
+ * @keep-if-code first_function
+ * @keep-if-code SecondType
+ * Copyright Example; permission and disclaimer.
+ */'''
+        for code in [
+            'int first_function();', 'struct SecondType {};',
+            '#define WRAPPER first_function',
+        ]:
+            with self.subTest(code=code):
+                source = notice + '\n' + code + '\n'
+                self.assertEqual(submit_code.retain_important_comments(source, [notice]), source)
+                restored = submit_code.retain_important_comments(code, [notice])
+                self.assertEqual(restored.count(notice), 1)
+        source = notice + '''
+// first_function SecondType
+const char *text = "first_function";
+const char *raw = R"tag(SecondType /*! first_function */)tag";
+int main() { return 0; }
+'''
+        cleaned = submit_code.strip_cleanup_comments(source)
+        self.assertNotIn(notice, cleaned)
+        self.assertIn('"first_function"', cleaned)
+        self.assertIn('R"tag(SecondType /*! first_function */)tag"', cleaned)
+        self.assertEqual(submit_code.strip_cleanup_comments(cleaned), cleaned)
+        self.assertNotIn(notice, submit_code.retain_important_comments(cleaned, [notice]))
+
+    def test_incomplete_or_ordinary_scope_comments_are_preserved(self) -> None:
+        for notice in [
+            '/*! @keep-if-code */',
+            '/*! @keep-if-code name, other */',
+            '/*!\n * @keep-if-code first\n * @keep-if-code\n */',
+            '//! Documentation mentioning @keep-if-code',
+            '/* @keep-if-code missing */',
+        ]:
+            with self.subTest(notice=notice):
+                source = notice + '\nint main() {}\n'
+                self.assertEqual(submit_code.retain_important_comments(source, []), source)
+
+    def test_scoped_notices_handle_cpp_line_splicing(self) -> None:
+        notice = '/*! @keep-if-code first_function */'
+        for newline in ['\n', '\r\n']:
+            with self.subTest(newline=newline):
+                source = notice + '\nint first_' + '\\' + newline + 'function();\n'
+                self.assertIn(notice, submit_code.retain_important_comments(source, []))
+                source = notice + '\n// hidden ' + '\\' + newline + 'first_function\nint main() {}\n'
+                self.assertNotIn(notice, submit_code.retain_important_comments(source, []))
+
+    def test_scoped_notice_removal_preserves_token_and_line_boundaries(self) -> None:
+        notice = '/*!\n * @keep-if-code missing\n */'
+        source = 'int' + notice + 'value;\n'
+        cleaned = submit_code.retain_important_comments(source, [])
+        self.assertEqual(cleaned.count('\n'), source.count('\n'))
+        self.assertEqual(list(submit_code.code_identifiers(cleaned)), ['int', 'value'])
+
+    def test_scoped_notices_survive_partial_removal_and_template_stubs(self) -> None:
+        notice = '/*! @keep-if-code first second\n * Full permission and disclaimer.\n */'
+        source = notice + '''
+template <class T> int first() { return sizeof(T); }
+template <class T> int second() { return sizeof(T); }
+int main() { return 0; }
+'''
+        first = submit_code.Removal(3, 3, 'first')
+        second = submit_code.Removal(4, 4, 'second')
+        partial = submit_code.apply_removals(source, [first])
+        self.assertIn(notice, partial)
+        removed = submit_code.apply_removals(source, [first, second])
+        self.assertNotIn(notice, removed)
+        stubbed = submit_code.stub_uninstantiated_template_functions(source, [first, second])
+        self.assertIn(notice, stubbed)
+        self.assertIn('int first();', stubbed)
+        self.assertNotIn('sizeof(T)', stubbed)
+        deleted = submit_code.stub_uninstantiated_template_functions(
+            source, [first, second], deleted={first, second},
+        )
+        self.assertNotIn(notice, deleted)
+
+    def test_scoped_notice_follows_shared_code_in_remaining_headers(self) -> None:
+        notice = '/*! @keep-if-code first second\n * Shared license.\n */'
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / 'main.cpp'
+            raw = (f'#line 1 {json.dumps(str(source))}\n'
+                   'int main() {}\n'
+                   f'#line 1 {json.dumps(str(root / "first.hpp"))}\n'
+                   f'{notice}\nint first();\n'
+                   f'#line 1 {json.dumps(str(root / "second.hpp"))}\n'
+                   f'{notice}\nint second();\n')
+            resolver = submit_code.OriginResolver(base_dir=root, source=source, include_paths=[root])
+            document = submit_code.BundleDocument.parse(raw, resolver=resolver)
+            first = str((root / 'first.hpp').resolve())
+            second = str((root / 'second.hpp').resolve())
+            self.assertEqual(document.render({first}, keep_line=False).count(notice), 1)
+            self.assertNotIn(notice, document.render({first, second}, keep_line=False))
+
+    def test_scoped_notices_follow_conditional_code_after_either_bundler(self) -> None:
+        cxx = shutil.which('g++-15') or shutil.which('g++-14')
+        if cxx is None:
+            self.skipTest('GNU C++ compiler is unavailable')
+        notice = '/*! @keep-if-code debug_value\n * Full permission and disclaimer.\n */'
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / 'main.cpp'
+            source.write_text('#include "debug.hpp"\nint main() { return 0; }\n')
+            (root / 'debug.hpp').write_text(
+                f'#ifndef DEBUG_HPP\n#define DEBUG_HPP\n{notice}\n'
+                '#ifdef LOCAL\nint debug_value = 1;\n#endif\n#endif\n',
+            )
+            fast = submit_code.FastBundler([root]).bundle(source)
+            raw = ('#line 3 "debug.hpp"\n'
+                   '#ifdef LOCAL\nint debug_value = 1;\n#endif\n'
+                   '#line 2 "main.cpp"\nint main() { return 0; }\n')
+            recovered = submit_code.restore_oj_bundle_notices(raw, source, [root])
+            fallback = submit_code.canonical_oj_bundle(recovered, source, [root], root)
+            for bundled in [fast, fallback]:
+                self.assertIn(notice, bundled)
+                for extra_args in [[], ['-DLOCAL']]:
+                    with self.subTest(local=bool(extra_args), bundled=bundled), submit_code.CompilerWorkspace(
+                        cxx=cxx, standard='c++23', include_paths=[], extra_args=extra_args,
+                        timeout=None, reporter=submit_code.Reporter(),
+                    ) as compiler:
+                        cleaned = submit_code.safe_cleanup_candidate(bundled, compiler)
+                        self.assertEqual(notice in cleaned, bool(extra_args))
+                        self.assertEqual(submit_code.safe_cleanup_candidate(cleaned, compiler), cleaned)
+                        valid, stderr = compiler.validate(cleaned)
+                        self.assertTrue(valid, stderr)
+
+    def test_cpp_dump_notice_follows_the_actual_local_template(self) -> None:
+        cxx = shutil.which('g++-15') or shutil.which('g++-14')
+        if cxx is None:
+            self.skipTest('GNU C++ compiler is unavailable')
+        repo_root = tools_test_paths.REPOSITORY_ROOT
+        header = repo_root / 'template/template_dump_map.hpp'
+        notice, = submit_code.important_comments(header.read_text())
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'main.cpp'
+            source.write_text('#include "template/template_dump.hpp"\nint main() {}\n')
+            includes = submit_code.default_include_paths(repo_root, source)
+            bundled = submit_code.FastBundler(includes, library_root=repo_root).bundle(source)
+            for local in [False, True]:
+                if local and not any((path / 'cpp-dump.hpp').is_file() for path in includes):
+                    continue
+                with self.subTest(local=local), submit_code.CompilerWorkspace(
+                    cxx=cxx, standard='c++23', include_paths=includes,
+                    extra_args=['-DLOCAL'] if local else [], timeout=None,
+                    reporter=submit_code.Reporter(),
+                ) as compiler:
+                    cleaned = submit_code.safe_cleanup_candidate(bundled, compiler)
+                    self.assertEqual(notice in cleaned, local)
+                    self.assertEqual('MIT License' in cleaned, local)
+                    self.assertNotIn('https://github.com/philip82148/cpp-dump', cleaned)
+                    valid, stderr = compiler.validate(cleaned)
+                    self.assertTrue(valid, stderr)
+
     def test_declaration_and_template_removal_relocate_important_comments(self) -> None:
         source = '''template <class T> int unused() {
   /*! Copyright Example

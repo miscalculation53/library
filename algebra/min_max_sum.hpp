@@ -1,5 +1,6 @@
 #pragma once
 
+#include "internal_power.hpp"
 #include "../template/template_all_but_modint.hpp"
 #include "../utils/make_unsigned_ext.hpp"
 #include "algebra_base.hpp"
@@ -26,8 +27,9 @@ struct MonoidLenSum
   static constexpr S e() { return {0, T{}}; }
   static constexpr S pow(const S &x, ll k)
   {
-    assert(k >= 0);
-    return k == 0 ? e() : S(L(x.len * UL(k)), T(x.val * UL(k)));
+    internal_monoid_power::check_exponent(k);
+    return k == 0 ? e() : S(internal_monoid_power::scale(x.len, k),
+                            internal_monoid_power::scale(x.val, k));
   }
 };
 
@@ -44,6 +46,12 @@ struct MonoidMinMax
   };
   static constexpr S op(const S &a, const S &b) { return {min(a.mn, b.mn), max(a.mx, b.mx)}; }
   static constexpr S e() { return {}; }
+  template <class I>
+  static constexpr S pow(const S &x, I k)
+  {
+    internal_monoid_power::check_exponent(k);
+    return k == 0 ? e() : x;
+  }
 };
 
 template <class T, auto infty = nullptr, class L = ll>
@@ -64,6 +72,16 @@ struct MonoidMinSum
     return {min(a.mn, b.mn), a.sum + b.sum, L(a.len + b.len)};
   }
   static constexpr S e() { return {}; }
+  template <class I>
+  static constexpr S pow(const S &x, I k)
+  {
+    internal_monoid_power::check_exponent(k);
+    if (k == 0) return e();
+    S res = x;
+    res.sum = internal_monoid_power::scale(x.sum, k);
+    res.len = internal_monoid_power::scale(x.len, k);
+    return res;
+  }
 };
 
 template <class T, auto infty = nullptr, class L = ll>
@@ -84,6 +102,16 @@ struct MonoidMaxSum
     return {max(a.mx, b.mx), a.sum + b.sum, L(a.len + b.len)};
   }
   static constexpr S e() { return {}; }
+  template <class I>
+  static constexpr S pow(const S &x, I k)
+  {
+    internal_monoid_power::check_exponent(k);
+    if (k == 0) return e();
+    S res = x;
+    res.sum = internal_monoid_power::scale(x.sum, k);
+    res.len = internal_monoid_power::scale(x.len, k);
+    return res;
+  }
 };
 
 template <class T, auto infty = nullptr, class L = ll>
@@ -104,4 +132,14 @@ struct MonoidMinMaxSum
     return {min(a.mn, b.mn), max(a.mx, b.mx), a.sum + b.sum, L(a.len + b.len)};
   }
   static constexpr S e() { return {}; }
+  template <class I>
+  static constexpr S pow(const S &x, I k)
+  {
+    internal_monoid_power::check_exponent(k);
+    if (k == 0) return e();
+    S res = x;
+    res.sum = internal_monoid_power::scale(x.sum, k);
+    res.len = internal_monoid_power::scale(x.len, k);
+    return res;
+  }
 };

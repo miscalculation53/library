@@ -10,7 +10,7 @@
 #define EPS 1e-11
 
 #include "template/template_all_but_modint.hpp"
-#include "math/linalg/dynamic_matrix_mod2.hpp"
+#include "math/linalg/matrix_mod2_dynamic.hpp"
 
 void init() {}
 
@@ -18,7 +18,7 @@ void main2()
 {
   LL(N);
   VEC(string, N, A_);
-  DynamicMatrixMod2 A(A_);
+  MatrixMod2Dynamic A(A_);
   const auto B = A.inv();
   if (!B)
     PRINT(-1);

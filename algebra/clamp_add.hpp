@@ -1,5 +1,7 @@
 #pragma once
 
+#include "internal_power.hpp"
+
 #include "../template/template_all_but_modint.hpp"
 #include "../utils/larger_int.hpp"
 
@@ -46,6 +48,35 @@ struct MonoidClampAdd
     return {lo, hi, T(W(g.bias) + W(f.bias))};
   }
   static constexpr S e() { return {-resolved_infty<T, infty>(), resolved_infty<T, infty>(), T{}}; }
+
+  template <class I>
+  static constexpr S pow(const S &x, I k)
+  {
+    internal_monoid_power::check_exponent(k);
+    if (k == 0) return e();
+    if (k == 1) return x;
+    const T inf = resolved_infty<T, infty>();
+    S res = x;
+    const W d = W(x.bias);
+    if (x.lo != -inf && x.hi != inf)
+    {
+      const W width = W(x.hi) - W(x.lo);
+      const W step = d < W{} ? -d : d;
+      const W shift = internal_monoid_power::bounded_scale(step, I(k - 1), width);
+      if (d < W{})
+        res.lo = T(W(x.lo) + shift), res.bias = T(d - shift);
+      else
+        res.hi = T(W(x.hi) - shift), res.bias = T(d + shift);
+    }
+    else
+    {
+      const W shift = internal_monoid_power::scale(d, I(k - 1));
+      if (d < W{} && x.lo != -inf) res.lo = T(W(x.lo) - shift);
+      if (W{} < d && x.hi != inf) res.hi = T(W(x.hi) - shift);
+      res.bias = T(d + shift);
+    }
+    return res;
+  }
 };
 
 #ifdef LOCAL

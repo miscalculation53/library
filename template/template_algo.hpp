@@ -5,6 +5,7 @@
 #endif
 
 #include "template_types.hpp"
+#include "template_arithmetic.hpp"
 #include "template_rep.hpp"
 #include "template_vector.hpp"
 #include "../utils/is_integral_ext.hpp"

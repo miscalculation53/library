@@ -25,6 +25,27 @@ assert(seg.min_left_ok(4, g) == 3);
 
 ### LazySegmentTree
 
+#### prod_apply
+
+```cpp
+template <class X, class G>
+X prod_apply(int l, int r, X x, G&& apply)
+```
+
+区間 $[l,r)$ の値を左から順に初期値 `x` へ作用させる。[SegmentTree::prod_apply](segtree.md#prod_apply) と同じ作用の条件を満たすものとし、単位元と結合演算は `AM::e`、`AM::op` を使う。
+空区間では初期値を返し、コールバックの呼び出しは $0$ 回。コールバックは同じオブジェクトを参照で使い、第 $2$ 引数に `const S&` を渡す。
+
+問い合わせの境界に必要な遅延作用を伝播してから処理する。コールバック内ではこの木の論理的な値を維持する。`SegmentTreeBeats` でも利用できる。
+
+##### 制約
+
+- $0\leq l\leq r\leq n$
+
+##### 計算量
+
+- 作用と代入が $O(T)$、遅延作用の伝播が $O(1)$ として $O((T+1)\log n)$
+- Beats では、遅延作用の失敗に伴う再構築の時間を加える
+
 #### max_right_ok
 
 ```cpp

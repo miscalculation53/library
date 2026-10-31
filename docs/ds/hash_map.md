@@ -107,6 +107,8 @@ vc<pair<Key, Value>> content() const
 
 登録済みのキーと値を走査順でコピーして返す。順序は未規定。キーの大小比較は不要。
 
+`LOCAL` 時の `dump(mp)` は、各要素を `Entry{ key= ..., value= ... }` と表示する。表示には格納値への参照を使う。
+
 ##### 制約
 
 - `Key`, `Value` はコピー構築可能
