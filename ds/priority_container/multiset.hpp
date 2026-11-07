@@ -26,4 +26,4 @@ struct Access<multiset<T, Compare, Allocator>>
   static C make(const Comp &comp) { return C(comp); }
 };
 
-} // namespace priority_container_detail
+}

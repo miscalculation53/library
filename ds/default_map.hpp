@@ -137,5 +137,5 @@ namespace cpp_dump::_detail
         indent, last_line_length, current_depth, fail_on_newline, command);
   }
 
-} // namespace cpp_dump::_detail
+}
 #endif

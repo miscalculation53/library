@@ -10,10 +10,8 @@
 
 #include "../dot_product.hpp"
 
-// Matrix similarity, Krylov bases, and the characteristic-polynomial identity.
 namespace internal { namespace matrix_power_mod32_detail {
 
-// Other exponent types keep the original public binary-power requirements.
 template <class T>
 inline constexpr bool supported_builtin_exponent_v =
     std::is_integral_v<T>
@@ -91,8 +89,6 @@ S scalar_power(S a, T exponent) {
     return r;
 }
 
-// A row with one nonzero entry represents a weighted map on the indices.
-// Composition gives both the destination and the product of the path weights.
 template <class S, class T>
 Matrix<S> power_weighted_map(std::vector<std::size_t> next,
                              std::vector<S> weight, T exponent,
@@ -126,7 +122,6 @@ Matrix<S> power_weighted_map(std::vector<std::size_t> next,
     return result;
 }
 
-// Verify A = u v^T exactly, then use A^e = (v^T u)^(e-1) A.
 template <class S, class T>
 std::optional<Matrix<S>> rank_one_power(const Matrix<S>& a, T exponent) {
     const std::size_t n = a.size();
@@ -249,8 +244,6 @@ std::vector<S> polynomial_power(T exponent,
     return result;
 }
 
-// A cyclic vector yields K^-1 A K = C, with C the recurrence companion.
-// The candidate is deterministic; invertibility decides correctness exactly.
 template <class S, class T>
 std::optional<Matrix<S>> try_cyclic_power(const Matrix<S>& a, T exponent) {
     const std::size_t n = a.size();
@@ -284,7 +277,6 @@ std::optional<Matrix<S>> try_cyclic_power(const Matrix<S>& a, T exponent) {
     return multiply(multiply(basis, companion_value), *inverse);
 }
 
-// Similarity elimination uses only division by a verified nonzero field value.
 template <class S>
 std::vector<S> characteristic_recurrence(Matrix<S> h) {
     const std::size_t n = h.size();
@@ -337,7 +329,7 @@ inline std::size_t evaluation_block_size(std::size_t n) {
     return s;
 }
 
-// Evaluate sum coefficient[i] A^i by grouping consecutive powers.
+// Evaluate sum coefficient[i] A^i.
 template <class S>
 Matrix<S> evaluate_polynomial(const Matrix<S>& a,
                               const std::vector<S>& coefficient) {
@@ -366,7 +358,6 @@ Matrix<S> evaluate_polynomial(const Matrix<S>& a,
 
 // Requires an exact commutative field, equality, subtraction, and division.
 // Finite fields of every characteristic are supported, including n >= p.
-// Other coefficient algebras keep their original public binary-power path.
 template <class S, class T>
 Matrix<S> power_over_field(const Matrix<S>& a, T exponent) {
     require_square(a);
@@ -419,7 +410,6 @@ Matrix<S> power_over_field(const Matrix<S>& a, T exponent) {
     if (auto result = try_cyclic_power(a, exponent)) return std::move(*result);
     const std::size_t s = evaluation_block_size(n);
     const std::size_t groups = (n + s - 1) / s;
-    // The fixed allowance accounts for characteristic-polynomial arithmetic.
     if (s + groups + 3 >= binary_cost) {
         return power_over_ring(a, exponent);
     }
@@ -427,9 +417,6 @@ Matrix<S> power_over_field(const Matrix<S>& a, T exponent) {
     return evaluate_polynomial(a, polynomial_power(exponent, recurrence));
 }
 
-// Only the existing ordinary-mod32 algebra trait can call this helper.
-// Static moduli reuse their declared mathematical property; dynamic moduli
-// are checked from the definition of primality before field elimination.
 template <class S>
 bool is_prime_modulus() {
     if constexpr (::is_static_modint_v<S>) {
@@ -445,4 +432,4 @@ bool is_prime_modulus() {
     }
 }
 
-} }  // namespace internal::matrix_power_mod32_detail
+} }

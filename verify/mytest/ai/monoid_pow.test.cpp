@@ -1,7 +1,5 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-//! SPDX-License-Identifier: CC0-1.0
-
 #include "algebra/min_max_sum.hpp"
 #include "algebra/prefix_min_max.hpp"
 #include "algebra/power_sum.hpp"

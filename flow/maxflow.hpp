@@ -32,8 +32,6 @@ private:
   mutable CSR<ResidualEdge> g;
   mutable vc<int> pos;
   mutable vc<edge> pending;
-  // pos >= 0 は残余辺、pos < 0 は originals 内の元の辺を指す。
-  // originals の各行は集約辺の構成要素。最後の行は自己ループ・容量 0 の辺。
   mutable CSR<edge> originals;
   mutable vc<int> merged_pos;
   mutable vc<Cap> merged_flow;
@@ -42,13 +40,11 @@ private:
 
   bool merge_parallel_edges() const
   {
-    // サンプルの約 1/64 以上が多重辺なら、集約用の配列を作る。
     array<uint64_t, 1024> seen{};
     const int m = num_of_edges<int>(), samples = min(m, 1024);
     int repeated = 0, omitted = 0;
     for (int j = 0; j < samples; j++)
     {
-      // 64 箇所から連続する 16 本ずつ採り、隣接して追加された多重辺も拾う。
       const int i = m <= 1024 ? j : int(ll(j / 16) * m / 64) + j % 16;
       const auto e = get_edge(i);
       if (e.from == e.to || e.cap == 0) { omitted++; continue; }
@@ -57,7 +53,6 @@ private:
       if (seen[slot] == key) repeated++;
       seen[slot] = key;
     }
-    // 除外する辺が多ければ、まずフィルタだけ行う軽い構築を選ぶ。
     return 2 * omitted <= samples && repeated >= max(1, samples / 64);
   }
 
@@ -107,8 +102,6 @@ private:
     return min(limit, cut_bound(t, true));
   }
 
-  // 容量の共通単位で測った通過容量・流量を使い、Dinic の予算倍率を選ぶ。
-  // 自己ループを除き、現在の残余ネットワークをそのまま調べる。
   int dinic_budget_factor(int s, int t, Cap progress) const
   {
     Cap unit = 0;
@@ -150,7 +143,6 @@ private:
       return true;
     };
     if (check({})) return 8;
-    // 増加路に含まれない成分や行き止まりは、選択の判定から除く。
     auto use = min_cut(s);
     vc<bool> reaches_t(n, false);
     vc<int> que(n);
@@ -164,7 +156,6 @@ private:
           reaches_t[e.to] = true, que[back++] = e.to;
     }
     for (int v = 0; v < n; v++) use[v] = use[v] && reaches_t[v];
-    // 行き止まりを除いた端点のカットで、残りの流量を評価し直す。
     auto small_remaining_cut = [&](int v, bool reverse)
     {
       Cap remaining = progress;
@@ -178,7 +169,6 @@ private:
     };
     if (small_remaining_cut(s, false) || small_remaining_cut(t, true)) return 8;
     if (check(use)) return 8;
-    // 小容量の辺を外した到達集合から、流量が小さいことを証明できる場合。
     vc<bool> large_reachable(n, false);
     front = back = 0;
     large_reachable[s] = true, que[back++] = s;
@@ -204,8 +194,6 @@ private:
     return 64;
   }
 
-  // 終点側からの blocking flow。深い探索は明示的なスタックを使う。
-  // budget に達した場合も、スタックを戻してフロー保存則を満たしてから返す。
   template <bool adaptive>
   Cap run_dinic(int s, int t, Cap limit, ll &budget, bool &finished, int *structure = nullptr)
   {
@@ -234,7 +222,6 @@ private:
         }
       }
       if (level[t] == -1) return total;
-      // 長い経路では増加ごとの処理も重くなるので、早めに切り替える。
       ll phase_budget = budget * (level[t] <= 16 ? 8 : 2);
       if constexpr (adaptive)
         if (work >= phase_budget)
@@ -345,7 +332,6 @@ public:
     return id;
   }
 
-  // 元の辺を同方向ごとに集約し、探索用の残余グラフを構築する。
   void build() const
   {
     if (pending.empty() && !dirty && g.template size<int>() == n) return;
@@ -409,7 +395,6 @@ public:
     {
       const auto e = get_edge(i);
       int k = last[e.to];
-      // 容量の総和が型を越える場合は、別の集約辺へ分ける。
       if (k == -1 || combined[k].from != v || e.cap > numeric_limits<Cap>::max() - combined[k].cap)
       {
         k = combined.size();
@@ -534,14 +519,10 @@ public:
   }
 
 private:
-  // Highest-label push-relabel。仮想始点から上限分だけ供給し、超過分は返す。
-  // 余剰流の総和も flow_limit 以下に保つので、容量の合計を別の型で保持せずに済む。
-  // bounded では予算ごとに resume を呼び、別の探索を進めてから再開する。
   template <bool bounded, class F>
   Cap run_push_relabel(int s, int t, Cap flow_limit, ll budget, bool &finished, F resume)
   {
     const int source = n, N = n + 1, max_h = 2 * N;
-    // 仮想辺 s -> source は別に保持し、CSR の構造を固定する。
     Cap return_capacity = flow_limit;
 
     vc<Cap> excess(N, 0);
@@ -587,7 +568,6 @@ private:
       if constexpr (bounded) spent += 4LL * N;
       fill(ALL(height), max_h);
       fill(ALL(iter), 0);
-      // 終点へ送れる頂点の距離を求める。
       int front = 0, back = 0;
       height[t] = 0, que[back++] = t;
       while (front < back)
@@ -600,7 +580,6 @@ private:
             height[e.to] = height[v] + 1, que[back++] = e.to;
         }
       }
-      // 残りは仮想始点へ返す距離を使う。
       front = back = 0;
       height[source] = N;
       if (height[s] == max_h && return_capacity > 0)
@@ -656,7 +635,6 @@ private:
           if (old < N && count[old] == 0)
           {
             if constexpr (bounded) spent += n;
-            // gap より上の頂点は、終点へ到達する経路を持たない。
             for (int u = 0; u < n; u++) if (old < height[u] && height[u] < N)
             {
               count[height[u]]--;
@@ -716,7 +694,6 @@ public:
     build();
     flow_limit = flow_bound(s, t, flow_limit);
     if (flow_limit == 0) return 0;
-    // 小さいグラフでは Dinic を使う。それ以外は探索量で切り替える。
     bool finished;
     ll budget = n + ll(g.get_elist().size());
     if (n < 128 || g.get_elist().size() < 1024)
@@ -735,8 +712,6 @@ public:
       }
     }
 
-    // Push–Relabel も探索量を制限し、両方式の状態を保って交互に進める。
-    // 試行予算を倍増することで、Dinic の計算量保証を保つ。
     vc<Cap> saved;
     saved.reserve(g.get_elist().size());
     for (const auto &e : g.get_elist()) saved.eb(e.cap);
@@ -747,7 +722,6 @@ public:
       if (dinic_graph.template size<int>() == 0)
       {
         dinic_graph = g;
-        // 保存した容量で Dinic の再開地点を復元する。
         int index = 0;
         for (auto &e : dinic_graph.get_elist()) e.cap = saved[index++];
         vc<Cap>().swap(saved);

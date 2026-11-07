@@ -16,7 +16,6 @@ private:
   int n;
   struct TransitionRow : array<int, CHAR_NUM>
   {
-    // BFS writes every entry before this row is used.
     TransitionRow() {}
   };
   vc<TransitionRow> nxt;

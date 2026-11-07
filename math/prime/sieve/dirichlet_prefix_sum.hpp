@@ -12,21 +12,19 @@
 inline constexpr auto e_prefix_sum = [](ll n, auto ring)
 { return n == 0 ? decltype(ring)::e0() : decltype(ring)::e1(); };
 inline constexpr auto zeta_prefix_sum = [](ll n, auto ring)
-{ return internal::multiplicative_from_integer<decltype(ring)>(n); };
+{ return from_integer<decltype(ring)>(n); };
 inline constexpr auto id_prefix_sum = [](ll n, auto ring)
 {
   using R = decltype(ring);
-  const auto a = internal::multiplicative_from_integer<R>(n % 2 == 0 ? n / 2 : n);
+  const auto a = from_integer<R>(n % 2 == 0 ? n / 2 : n);
   const auto b = n % 2 == 0
-    ? R::add(internal::multiplicative_from_integer<R>(n), R::e1())
-    : internal::multiplicative_from_integer<R>(n / 2 + 1);
+    ? R::add(from_integer<R>(n), R::e1())
+    : from_integer<R>(n / 2 + 1);
   return R::mul(a, b);
 };
 
 namespace internal
 {
-  // D>1 の根付き商集合。large_value は降順、raw_index は元の i から
-  // 重複を除いた位置への変換。D は固定定数として扱う。
   template <int D>
   struct dirichlet_root_prefix_sum_index
   {
@@ -41,7 +39,6 @@ namespace internal
       assert(n >= 0);
       maximum = iroot(n, D);
       const ll root = iroot(n, min<ll>(ll(D) + 1, 63));
-      // (root+1)^D が ll の範囲を超えても、商は正しく 0 にする。
       const ll raw = ull(n) / pow_limited<ull>(root + 1, D, ull(n) + 1);
       k = int(root);
       large_value.push_back(0);
@@ -68,8 +65,6 @@ namespace internal
     ll value(int i) const { return i < k ? ll(i) + 1 : large_value[size() - i]; }
   };
 
-  // 正の商集合を昇順に並べた座標。index(v) は v 以上の最初の位置。
-  // index(0)=-1, index(n+1)=size() も内部の区間端点として使う。
   template <>
   struct dirichlet_root_prefix_sum_index<1>
   {
@@ -282,7 +277,6 @@ public:
   friend DirichletPrefixSum operator*(const S &a, const DirichletPrefixSum &f) { return f * a; }
 
 private:
-  // D>1 の区間集約。根の値が重複する元の添字 i を圧縮座標へ写す。
   DirichletPrefixSum convolve_root_impl(const DirichletPrefixSum &g, bool force_sparse) const
   {
     check_shape(g);
@@ -329,7 +323,6 @@ private:
             if (end < l_) res.large_[end + 1] = R::add(res.large_[end + 1], R::minus(term));
             j = end + 1;
           }
-          // 全正方形を引いた分から、uv>x になった位置で寄与を戻す。
           const ll before = coordinates_.large_value[l_] / i;
           if (before >= cut) continue;
           for (int j = max(i, int(before) + 1); j <= cut; j++)
@@ -396,15 +389,12 @@ private:
     const bool sparse = force_sparse || ai.size() + bi.size() < size_t(root);
     const int cut = int(iroot(n_, 3));
     int direct_end = l_;
-    // 直接列挙が十分少ないときは、そのまま計算する。
     if (!force_sparse && (sparse ? sparse_work : dense_work) > 16.0L * cut * cut)
     {
       direct_end = int(min<ll>(l_, n_ / (ll(cut) + 1) / (ll(cut) + 1)));
       const int begin = direct_end + 1;
       if (begin <= l_)
       {
-        // x=N/j < (cut+1)^2 では、積 uv<=x の片方は cut 以下。
-        // j の区間に差分で加え、最後に累積和を取る。
         res.large_[begin] = R::minus(R::mul(small_[cut], g.small_[cut]));
         for (int i = 1; i <= cut; i++)
         {
@@ -420,8 +410,6 @@ private:
             if (end < l_) res.large_[end + 1] = R::add(res.large_[end + 1], R::minus(term));
             j = end + 1;
           }
-          // 両方 cut 以下の重複を引く。全正方形を引いた分から、
-          // ij > N/d になった添字対だけを d=floor(N/(ij))+1 で戻す。
           const ll before = ni / l_;
           if (before >= cut) continue;
           for (int j = max(i, int(before) + 1); j <= cut; j++)
@@ -483,14 +471,12 @@ public:
     }();
     const int count = size();
     const auto sub = [](const S &a, const S &b) { return R::add(a, R::minus(b)); };
-    // 1-indexed の商位置の累積和。位置 0 は F(0)。
     auto at = [&](const DirichletPrefixSum &a, int i) -> const S &
     { return i <= k_ ? a.small_[i] : a.large_[count + 1 - i]; };
     vc<S> delta(size_t(count) + 2, R::e0());
     for (int i = 1; i <= count; i++) delta[i] = sub(at(*this, i), at(*this, i - 1));
     res.small_[1] = divide(small_[1]);
     const S h1 = res.small_[1];
-    // u,v>=2 の既知の寄与を、結果の商位置 [lo,hi] から差し引く。
     auto subtract = [&](int lo, int hi, const S &term)
     {
       delta[lo] = sub(delta[lo], term);
@@ -506,8 +492,6 @@ public:
         else return n_ / ipow<ll>(x, D);
       }();
       S gathered = R::e0();
-      // max(u,v)>z の寄与はこの商位置だけに加える。
-      // 対称な二領域をまとめ、u=v は小さい側へ割り当てる。
       for (int u = 2; ; u++)
       {
         const Index lo = max<Index>(u, z);
@@ -521,7 +505,6 @@ public:
       const S block = divide(sub(delta[i], R::mul(h1, sub(at(g, i), at(g, i - 1)))));
       (i <= k_ ? res.small_[i] : res.large_[count + 1 - i]) = R::add(at(res, i - 1), block);
       if (i > k_) continue;
-      // max(u,v)=i<=z の寄与は、uv<=Q<=⌊(N/i)^(1/D)⌋ へ区間加算。
       const S hi = res.coefficient(i), gi = g.coefficient(i);
       const ll bound = iroot(n_ / i, D);
       const int end = coordinates.index(bound) + 1;
@@ -531,7 +514,6 @@ public:
         const S term = R::add(R::mul(hi, g.coefficient(v)), R::mul(gi, res.coefficient(v)));
         subtract(coordinates.index(ll(i) * v) + 1, end, term);
       }
-      // 対角 u=v は gather から除外しているので、全ての Q>=i^2 へ反映する。
       const int diagonal = coordinates.index(ll(i) * i) + 1;
       if constexpr (D == 1) subtract(diagonal, count, R::mul(hi, gi));
       else if (diagonal <= count) subtract(diagonal, count, R::mul(hi, gi));

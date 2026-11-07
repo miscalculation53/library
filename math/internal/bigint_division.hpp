@@ -1,4 +1,3 @@
-// Packed exact arithmetic with an owned in-place elementary workspace.
 #ifndef INDEPENDENT_BIGINT_DIVISION_V2_20261024_HPP
 #define INDEPENDENT_BIGINT_DIVISION_V2_20261024_HPP
 
@@ -114,7 +113,7 @@ class magnitude_divider {
         if (carry) a.push_back(1);
     }
 
-    // 前提は a >= b。借りの計算は [-B, B-1] に収まる。
+    // 前提は a >= b。
     static void subtract(magnitude& a, const magnitude& b) {
         assert(compare(a, b) >= 0);
         long long borrow = 0;
@@ -197,8 +196,7 @@ class magnitude_divider {
         return multiply_(a, b);
     }
 
-    // b の最上位桁 >= floor(B/2)。u は値で所有する作業配列。
-    // 各 window の過大見積りは高々 3。積の減算と addback を直接行う。
+    // b の最上位桁 >= floor(B/2)。
     static std::pair<magnitude, magnitude> elementary_divide(
         magnitude u, const magnitude& b) {
         assert(!b.empty() && b.back() >= B / 2);
@@ -282,20 +280,17 @@ class magnitude_divider {
         }
         magnitude y;
         if (upper.size() > k) {
-            // ceil(b/B^f) = B^k の境界では逆数がちょうど B^k。
             y = radix_power(k);
         } else {
             y = reciprocal(upper);
         }
 
-        // x0 = y*B^f。T >= 0 とし、床を保った Newton 更新を行う。
         magnitude error = radix_power(n + k);
         subtract(error, product(b, y));
         magnitude delta = high_part(product(y, error), 2 * k);
         magnitude x = shift(y, f);
         add(x, delta);
 
-        // B^(2n)-b*x = T*B^f-b*delta。上式の打消しを先に使う。
         magnitude remainder = shift(error, f);
         subtract(remainder, product(b, delta));
         if (compare(remainder, b) >= 0) {
@@ -340,7 +335,6 @@ public:
 
         const std::size_t quotient_digits = a.size() - b.size() + 1;
         if (quotient_digits + 1 < b.size()) {
-            // 同数の下位桁を捨てた商は真の商以上、高々 1 過大。
             const std::size_t drop = b.size() - (quotient_digits + 1);
             magnitude upper_a = high_part(a, drop);
             magnitude upper_b = high_part(b, drop);
@@ -355,7 +349,6 @@ public:
             return {std::move(q), std::move(r)};
         }
 
-        // d*b は元と同じ桁数で、最上位桁が floor(B/2) 以上になる。
         const wide factor = static_cast<wide>(B) /
                             (static_cast<wide>(b.back()) + 1);
         magnitude scaled_a, scaled_b;
@@ -425,6 +418,6 @@ std::pair<magnitude, magnitude> divide_magnitude(
     return divider.divide(a, b);
 }
 
-}  // namespace independent_bigint_division_v2_20261024
+}
 
 #endif

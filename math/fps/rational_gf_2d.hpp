@@ -31,7 +31,6 @@ optional<pair<vvc<T>, vvc<T>>> pade_2d(
   int row = 0;
   repi(i, h) repi(j, w) if (i + j > numerator_degree)
   {
-    // [x^i y^j] QF = 0。負の添字の係数は 0。
     repi(k, cols)
     {
       auto [u, v] = qs[k];

@@ -1,4 +1,4 @@
-このドキュメントには AI による作成・変更が含まれている可能性があります。
+このドキュメントには AI による作成・変更が含まれています。
 
 ## 概要
 
@@ -124,7 +124,7 @@ $d=0,1,\ldots,\texttt{max\\_degree}$ の順に `pade_2d(a, d, d)` を試し、�
 
 実際に試す最大次数を $D$、次数 $d$ の分母の単項式数を $U_d$ とする。
 
-- $O\left(N\sum_{d=0}^{D}U_d^2\right)\subseteq O\bigl(N(D+1)^5\bigr)$
+- $O\left(N\sum_{d=0}^{D}U_d^2\right)\subseteq O\bigl(ND^5\bigr)$
 
 #### rational_gf_2d_coefficients
 
@@ -153,4 +153,4 @@ $$a_{i,j}=\frac{p_{i,j}-\sum_{(u,v)\ne(0,0)}q_{u,v}a_{i-u,j-v}}{q_{0,0}}$$
 
 `q` の格納係数数を $L$、出力の範囲内にある定数項以外の非零係数数を $K$ とする。
 
-- $O\bigl(L+h+hw(K+1)\bigr)$
+- $O\bigl(L+h+hw+hwK\bigr)$

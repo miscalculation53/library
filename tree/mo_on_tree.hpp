@@ -21,7 +21,6 @@ void mo_on_tree(const RootedTree &g, const vc<pair<I, I>> &uvs, const Add &add, 
   vc<int> in(n), out(n), tour(2 * n);
   repi(v, n)
   {
-    // 行きがけと帰りがけに頂点を 1 回ずつ記録する。
     in[v] = 2 * g.preorder(v) - g.depth(v);
     out[v] = 2 * g.postorder(v) - g.depth(v) - 1;
     tour[in[v]] = tour[out[v]] = v;
@@ -60,7 +59,6 @@ void mo_on_tree(const RootedTree &g, const vc<pair<I, I>> &uvs, const Add &add, 
   };
   auto answer = [&](int i)
   {
-    // 区間に現れない LCA を、答えの取得時だけ追加する。
     if (extra[i] != -1)
       add(extra[i]);
     rem(i);

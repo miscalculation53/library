@@ -1,6 +1,6 @@
 #pragma once
 
-#include "polygon.hpp"
+#include "internal_convex_polygon.hpp"
 
 /**
  * @brief 最近点対・凸多角形の直径
@@ -12,7 +12,7 @@ template <class T> optional<pair<Point<T>, Point<T>>> closest_pair(vector<Point<
   if (p.size() < 2) return nullopt;
   sort(p.begin(), p.end());
   for (size_t i = 1; i < p.size(); ++i) if (p[i - 1] == p[i]) return pair{p[i - 1], p[i]};
-  using W = geometry_wide_t<T>;
+  using W = larger_int_t<T>;
   pair<Point<T>, Point<T>> ans{p[0], p[1]};
   W best = distance2(ans.first, ans.second);
   vector<Point<T>> buffer(p.size()), strip;
@@ -56,21 +56,14 @@ template <class T> optional<pair<Point<T>, Point<T>>> closest_pair(vector<Point<
 
 template <class T> optional<pair<Point<T>, Point<T>>> convex_diameter(const vector<Point<T>> &input)
 {
-  vector<Point<T>> p;
-  for (const auto &q : input) if (p.empty() || p.back() != q) p.push_back(q);
-  if (p.size() > 1 && p.front() == p.back()) p.pop_back();
+  auto p = geometry_detail::normalize_convex_polygon(input, 0);
   if (p.empty()) return nullopt;
   if (p.size() == 1) return pair{p[0], p[0]};
-  if (signed_area2(p) == geometry_wide_t<T>(0))
+  if (p.size() == 2)
   {
-    auto mm = minmax_element(p.begin(), p.end());
-    return pair{*mm.first, *mm.second};
+    if (p[1] < p[0]) swap(p[0], p[1]);
+    return pair{p[0], p[1]};
   }
-  vector<Point<T>> corners;
-  for (size_t i = 0; i < p.size(); ++i)
-    if (cross(p[(i + p.size() - 1) % p.size()], p[i], p[(i + 1) % p.size()]) != geometry_wide_t<T>(0))
-      corners.push_back(p[i]);
-  p.swap(corners);
   pair<Point<T>, Point<T>> ans{p[0], p[1]};
   auto best = distance2(ans.first, ans.second);
   auto update = [&](size_t i, size_t j)

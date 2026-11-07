@@ -27,8 +27,8 @@ dump(region, polygon);
 
 ```cpp
 template<class T = ld> class ConvexCut;
-explicit ConvexCut(const T& sp = T(100000), geometry_real_t<T> eps = EPS);
-explicit ConvexCut(const vector<Point<T>>& p, geometry_real_t<T> eps = EPS);
+explicit ConvexCut(const T& sp = T(100000), ld eps = EPS);
+explicit ConvexCut(const vector<Point<T>>& p, ld eps = EPS);
 ```
 
 前者は正方形 `[-sp,sp] × [-sp,sp]`、後者は与えた凸領域を初期状態にする。内部座標型 `value_type` は `geometry_field_t<T>`。整数・有理数の入力では `Rational<i128>`、実数では入力と同じ型になる。
@@ -48,8 +48,8 @@ explicit ConvexCut(const vector<Point<T>>& p, geometry_real_t<T> eps = EPS);
 #### cut
 
 ```cpp
-void cut(const Line<T>& line, geometry_real_t<T> eps = EPS);
-void cut(const Point<T>& a, const Point<T>& b, geometry_real_t<T> eps = EPS);
+void cut(const Line<T>& line, ld eps = EPS);
+void cut(const Point<T>& a, const Point<T>& b, ld eps = EPS);
 ```
 
 `line.a` から `line.b`、または `a` から `b` へ向かう直線の左側を残す。直線上の点を含める。問い合わせ直前の領域を更新し、空になった領域もそのまま扱える。

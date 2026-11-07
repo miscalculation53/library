@@ -233,9 +233,8 @@ namespace internal
     return DirichletPrefixSum<R>(n, [&](ll x) { return dp.F(x); }, true);
   }
 
-  // modint での実測に基づく目安
   inline constexpr ll multiplicative_prefix_sum_fenwick_threshold = 1'000'000;
-} // namespace internal
+}
 
 // 入力: **完全**乗法的関数 g の DirichletPrefixSum
 // 出力: g の素数のところだけある関数 g_prime の DirichletPrefixSum

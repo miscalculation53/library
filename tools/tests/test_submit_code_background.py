@@ -108,6 +108,16 @@ class BackgroundTests(unittest.TestCase):
         self.wait_for(lambda: self.content() == "OLD CHECKPOINT")
         self.assertEqual(self.state()["phase"], "cleaning")
 
+    def test_priority_milestone_is_reported_before_the_secondary_milestone(self):
+        self.source.write_text('WAIT_CLEANUP FAST ' + 'x' * 70000)
+        self.call('start')
+        self.phase('cleaning')
+        self.assertTrue(self.state()['below_priority_limit'])
+        self.assertFalse(self.state()['below_limit'])
+        report = self.call('status').stdout
+        self.assertIn('131,072 B 未満', report)
+        self.assertIn('65,536 B 以上', report)
+
     def test_expansion_replaces_previous_output_before_first_cleanup_checkpoint(self):
         self.source.write_text("NEW WAIT_CLEANUP FAST")
         self.output.write_text("PREVIOUS")
@@ -178,6 +188,42 @@ class BackgroundTests(unittest.TestCase):
         self.phase("failed")
         self.assertEqual(self.content(), "FAIL_CLEANUP")
 
+    def test_oversized_result_is_failed_and_never_reused_as_complete(self):
+        self.source.write_text("FAST " + "x" * 131072)
+        self.call("start")
+        self.phase("failed")
+        self.assertGreaterEqual(len(self.content().encode()), 131072)
+        artifact = self.directory / "artifact.json"
+        record = json.loads(artifact.read_text())
+        self.assertFalse(record["complete"])
+        record["complete"] = True
+        artifact.write_text(json.dumps(record))
+        self.call("start")
+        self.phase("failed")
+        self.assertNotIn("reused", self.state())
+        self.assertTrue(self.content().endswith("FINAL FINAL"))
+
+    def test_completed_result_under_priority_limit_is_available_and_reused(self):
+        self.source.write_text('FAST ' + 'x' * 70000)
+        self.call('start')
+        self.phase('done')
+        self.assertTrue(self.state()['below_priority_limit'])
+        self.assertFalse(self.state()['below_limit'])
+        before = self.output.read_bytes()
+        self.call('start')
+        self.phase('done')
+        self.assertTrue(self.state()['reused'])
+        self.assertEqual(self.output.read_bytes(), before)
+
+    def test_feature_helper_changes_invalidate_the_completed_result(self):
+        self.source.write_text("FAST")
+        self.call("start")
+        self.phase("done")
+        (self.root / "bundle_fast.py").write_text("# changed helper\n")
+        self.call("start")
+        self.phase("done")
+        self.assertNotIn("reused", self.state())
+
     def test_source_edit_without_run_cancels_stale_work(self):
         self.call("start")
         self.wait_for(lambda: self.content() == "OLD CHECKPOINT")
@@ -230,6 +276,7 @@ class BackgroundTests(unittest.TestCase):
         from submit_code import SubmissionStamp, comment_record_path
         tool = self.root / 'submit_code.py'
         shutil.copyfile(tools_test_paths.TOOLS_DIR / 'submit_code.py', tool)
+        shutil.copyfile(tools_test_paths.TOOLS_DIR / 'bundle_fast.py', self.root / 'bundle_fast.py')
         dependency = self.root / 'dependency.hpp'
         dependency.write_text('#pragma once\n/*! Header license. */\nint value = 0;\n')
         self.source.write_text('#include "dependency.hpp"\nint main() { return value; }\n')

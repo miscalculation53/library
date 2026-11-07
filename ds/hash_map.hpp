@@ -74,7 +74,7 @@ private:
   }
 
 public:
-  // 空きスロットを飛ばして走査する。要素のキーは変更しないこと。
+  // 要素のキーは変更しないこと。
   template <bool IsConst>
   class basic_iterator
   {
@@ -277,5 +277,5 @@ namespace cpp_dump::_detail
         indent, last_line_length, current_depth, fail_on_newline, command);
   }
 
-} // namespace cpp_dump::_detail
+}
 #endif

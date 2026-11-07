@@ -24,7 +24,6 @@ constexpr make_unsigned_ext_t<T> unsigned_abs(T x)
   return is_negative(x) ? U(U(0) - U(x)) : U(x);
 }
 
-// 整数は整数昇格後も unsigned となる型、それ以外は元の型。
 template <class T, bool = is_integral_ext<T>>
 struct unsigned_arithmetic { using type = T; };
 

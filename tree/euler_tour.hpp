@@ -164,7 +164,7 @@ public:
   }
 
   // v から根までのパスで通る頂点の列
-  vc<int> path_to_root(int v) const
+  vc<int> path_vertex_to_root(int v) const
   {
     assert(0 <= v && v < n);
     vc<int> res = {v};
@@ -178,7 +178,7 @@ public:
     return res;
   }
   // u から v までのパスで通る頂点の列
-  vc<int> path(int u, int v) const
+  vc<int> path_vertex(int u, int v) const
   {
     assert(0 <= u && u < n);
     assert(0 <= v && v < n);

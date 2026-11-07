@@ -43,7 +43,6 @@ private:
     {
       auto [d, first_edge, v] = que.top();
       que.pop();
-      // 距離・辺番号順に確定し、異なる最初の辺を持つ経路を 2 種類まで残す。
       if (!best[v].add({d, first_edge})) continue;
       fec(e : g.out_edges(v))
       {
@@ -109,7 +108,6 @@ private:
       {
         if (ds[e.from] == inf() || ds[e.to] == inf()) continue;
         if (prv[e.from].index == e.index || prv[e.to].index == e.index) continue;
-        // s の自己ループ、または根から異なる最初の辺を使う 2 経路を結ぶ辺。
         if (branch[e.from] == branch[e.to] && !(e.from == s && e.to == s)) continue;
         if (chmin(ans, add(add(ds[e.from], ds[e.to]), e.cost))) closing = e;
       }
@@ -117,7 +115,7 @@ private:
     return {ans, closing};
   }
 
-  static vc<Edge<Cost>> path(int s, int t, const vc<Edge<Cost>> &prv)
+  static vc<Edge<Cost>> path_edge(int s, int t, const vc<Edge<Cost>> &prv)
   {
     vc<Edge<Cost>> res;
     while (t != s)
@@ -136,11 +134,11 @@ private:
   {
     if (cost == inf()) return nullopt;
     if (cost == -inf()) return pair<Dist, vc<Edge<Cost>>>{cost, {}};
-    auto cycle = path(s, closing.from, prv);
+    auto cycle = path_edge(s, closing.from, prv);
     cycle.eb(closing);
     if constexpr (!is_directed)
     {
-      auto right = rev_path(path(s, closing.to, prv));
+      auto right = rev_path(path_edge(s, closing.to, prv));
       cycle.insert(cycle.end(), right.begin(), right.end());
     }
     return pair<Dist, vc<Edge<Cost>>>{cost, std::move(cycle)};
@@ -211,7 +209,7 @@ public:
     const Dist cost = add(ds[closing.from], closing.cost);
     if (cost < Dist(0)) return pair<Dist, vc<Edge<Cost>>>{-inf(), {}};
     if (cost == inf()) return nullopt;
-    auto back = sp.path(closing.from);
+    auto back = sp.path_edge(closing.from);
     vc<Edge<Cost>> cycle{closing};
     assert(back);
     for (auto &e : *back)

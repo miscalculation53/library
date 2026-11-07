@@ -27,7 +27,6 @@ Matrix<FieldAddSubMulDiv<mint>> polynomial_matrix_product_short(
   if (n == 0 || r == 0) return res;
   if (d == 0) return eval(first).pow(n);
 
-  // d * block^2 >= n となる最小の 2 冪。比較は ll の積を避ける。
   ll block = 1;
   while (block <= (n - 1) / block / d) block *= 2;
   if (n <= 32 || d >= n || block > (mint::mod() - 1) / d)
@@ -36,8 +35,6 @@ Matrix<FieldAddSubMulDiv<mint>> polynomial_matrix_product_short(
     return res;
   }
 
-  // values[i][j][t] = (A(first+block*t+s-1) ... A(first+block*t))[i][j]
-  // 各成分は t の d*s 次以下の多項式。
   vvvc<mint> values(r, vvc<mint>(r, vc<mint>(d + 1)));
   repi(i, r) repi(j, r) repi(t, d + 1)
     values[i][j][t] = a[i][j].eval(first + mint(block) * t);
@@ -65,7 +62,7 @@ Matrix<FieldAddSubMulDiv<mint>> polynomial_matrix_product_short(
     res = eval(first + mint(i)) * res;
   return res;
 }
-} // namespace internal
+}
 
 // A(r-1) ... A(l)。空区間は単位行列。mint の法は素数。
 template <class mint>
@@ -93,6 +90,5 @@ Matrix<FieldAddSubMulDiv<mint>> polynomial_matrix_product(
     return internal::polynomial_matrix_product_short(a, mint(l), len, d);
   };
   if (d == 0 || n <= p) return product(n);
-  // A(x+p)=A(x)。先頭から 1 周期分の積を繰り返し、端数を左に掛ける。
   return product(n % p) * product(p).pow(n / p);
 }

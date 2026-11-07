@@ -9,9 +9,6 @@
 
 namespace matrix_mod2_detail
 {
-// The fast path assumes the bit layout validated in the tested GNU 15 build:
-// contiguous little-endian words; bit j is word j/64, bit j%64.
-// Size and trivial-copyability checks supplement that validation; they do not prove layout.
 template <std::size_t Capacity>
 constexpr bool native_bitset_words =
 #if defined(__GLIBCXX__) && defined(_GLIBCXX_RELEASE) && _GLIBCXX_RELEASE == 15 &&                 \
@@ -61,7 +58,7 @@ void write_words(std::bitset<Capacity> &row, const word *source, int columns)
       row[bit] = (source[bit / 64] >> (bit % 64)) & 1;
   }
 }
-} // namespace matrix_mod2_detail
+}
 
 /**
  * @brief 固定サイズの行列（$\mathbb{F}_2$）

@@ -13,7 +13,6 @@ namespace linear_transpose
 template <class T> class Recorder;
 template <class T> class Program;
 
-// 固定値、または coefficient * node。コピー・上書きは参照先を変えるだけ。
 template <class T>
 class Value
 {
@@ -274,7 +273,6 @@ vc<T> fixed_values(const vc<Value<T>> &a)
   return res;
 }
 
-// ADL で既存テンプレートからも呼び出す。
 template <class T>
 vc<Value<T>> convolution(const vc<Value<T>> &a, const vc<T> &b)
 {
@@ -333,4 +331,4 @@ vc<T> transpose(int n, const vc<T> &seed, const Forward &forward)
   return record<T>(n, forward).transpose(seed);
 }
 
-} // namespace linear_transpose
+}

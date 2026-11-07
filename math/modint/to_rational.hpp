@@ -101,7 +101,6 @@ namespace cpp_dump
         return std::invocable<mint_to_rat_fn, T>;
     }
 
-    // 範囲アダプタ同士の合成は標準ライブラリの operator| に任せる。
     template <typename T>
       requires(!requires { std::views::all | std::declval<T>(); })
     constexpr decltype(auto) operator()(T &&t) const
@@ -113,7 +112,6 @@ namespace cpp_dump
       else if constexpr (can_convert<T>())
       {
 #ifdef LOCAL
-        // 表示設定の一時オブジェクトを保持し、元の値は参照したままにする。
         if constexpr (_detail::is_value_with_command<T>)
           return rat_object<std::remove_cvref_t<T>>{std::forward<T>(t)};
         else
@@ -159,7 +157,6 @@ namespace cpp_dump
       return render(rat_closure{}(value));
   }
 
-  // rat() の前後にある表示設定を、cpp-dump と同じ順序で合成する。
   template <class T>
     requires _detail::is_value_with_command<T>
   auto operator|(rat_object<T> object, const _detail::export_command &command)

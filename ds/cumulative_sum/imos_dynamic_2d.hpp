@@ -17,11 +17,8 @@ struct ImosDynamic2D
 
 private:
   int n, m;
-  // 展開済みの部分は値、その外側は差分。
   vvc<S> d;
-  // 行 i の差分の [0, built[i]) の積。
   vc<S> row_sum;
-  // 展開済みの接頭辞の長さ。広義単調減少。
   vc<int> built;
 
 public:
@@ -48,7 +45,6 @@ public:
     assert(0 <= lj && lj <= rj && rj <= m);
     if (li == ri || lj == rj)
       return;
-    // 展開済みの領域は原点側に閉じているので、左上の 1 点で判定できる。
     assert(built[li] <= lj);
     d[li][lj] = G::op(d[li][lj], v);
     S iv = G::inv(v);
@@ -64,7 +60,6 @@ public:
   {
     S delta = G::op(G::inv(get(i, j)), v), idelta = G::inv(delta);
     d[i][j] = v;
-    // 展開済みの隣接点の値を保ち、未展開の差分と行の累積値を補正する。
     if (built[i] == j + 1)
     {
       row_sum[i] = G::op(row_sum[i], delta);
@@ -97,7 +92,7 @@ public:
     return d[i][j];
   }
 
-  // 全体をコピー上で展開し、元の更新可能範囲を保つ。
+  // 元の更新可能範囲を保つ。
   vvc<S> content() const
   {
     auto copy = *this;

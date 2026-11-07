@@ -58,7 +58,6 @@ struct MonoidClampAddCost
 
   static constexpr S op(const S &f, const S &g)
   {
-    // f の区間を g の入力側へ戻して clamp する。
     const T lo = f.lo == -inf() ? g.lo : T(std::clamp(P(f.lo) - P(g.bias), P(g.lo), P(g.hi)));
     const T hi = f.hi == inf() ? g.hi : T(std::clamp(P(f.hi) - P(g.bias), P(g.lo), P(g.hi)));
     P bias;
@@ -93,7 +92,6 @@ struct MonoidClampAddCost
       const W step = negative ? -W(x.bias) : W(x.bias);
       const W weight = negative ? chmax_weight() : chmin_weight();
       const W width = W(P(x.hi) - P(x.lo));
-      // 飽和後の1回分の費用を先にまとめ、大きな積どうしの相殺を避ける。
       base = internal_monoid_power::scale(W(x.base) + weight * step, I(k - 1))
              + W(x.base) - weight * width;
     }

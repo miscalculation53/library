@@ -14,8 +14,8 @@
 `seg.prod(l, r).power_sum[k]` で $\sum_{i=l}^{r-1}a_i^k$ を取得する。
 $P(x)=\sum_{k=0}^{D}p_kx^k$ に対する $\sum_i P(a_i)$ も、累乗和の線形結合で求められる。
 
-`LazySegmentTree` と組み合わせた構築は $O((D+1)N)$、区間更新は $O((D+1)^2\log N)$、区間取得は $O((D+1)\log N)$。
-乗算・代入による更新は $O((D+1)\log N)$。
+`LazySegmentTree` と組み合わせた構築は $O(DN)$、区間更新は $O(D^2\log N)$、区間取得は $O(D\log N)$。
+乗算・代入による更新は $O(D\log N)$。
 
 加算専用の [ActedMonoidAddPowerSum](add_power_sum.md) と、代入専用の [ActedMonoidUpdPowerSum](upd_power_sum.md) もある。これらでは更新値を一つ渡す。
 

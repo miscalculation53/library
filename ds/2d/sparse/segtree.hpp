@@ -22,8 +22,6 @@ struct CumulativeSum;
 // 点更新は、構築時に与えた点の添字 point_id で指定する
 // セグメント木にデータ構造 D<M> を載せる
 // D のデフォルトは SegmentTree
-// CumulativeSum は静的な可換群の矩形和として構築する
-// その他の D はセグメント木の各ノードに載せる
 // D<M> に set, get があるなら set, get が使える
 // M: 可換モノイド
 // I: 座標の型
@@ -350,5 +348,5 @@ namespace cpp_dump::_detail
         indent, last_line_length, current_depth, fail_on_newline, command);
   }
 
-} // namespace cpp_dump::_detail
+}
 #endif

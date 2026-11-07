@@ -400,7 +400,6 @@ struct FormalPowerSeries : vc<mint>
       if (n < 512) return internal::fps_exp_bs(*this, n);
       return internal::fps_exp_block(*this, n, n <= 4096 ? 4 : 16);
     }
-    // Maintain f and its reciprocal across Bostan-Schost updates.
     Binomial<mint>::reserve(n - 1);
     F f{1, get(1)}, g{1};
     for (int m = 2; m < n; m *= 2)

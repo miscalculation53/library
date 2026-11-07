@@ -41,7 +41,6 @@ struct PartitionBySum
 
 namespace two_multisets_detail
 {
-// 基底ごとの比較器・集約のテンプレート引数へ変換する。
 template <template <class...> class Base, class T, class Compare, class M, class Projection, bool Back>
 struct ContainerType
 {
@@ -59,7 +58,7 @@ struct ContainerType<OrderedMultisetTree, T, Compare, M, Projection, Back>
 {
   using type = OrderedMultisetTree<T, M, Compare, Projection>;
 };
-} // namespace two_multisets_detail
+}
 
 // 「中央値」の仕様: 奇数のとき .left().back(), 偶数のとき .left().back() と .right().front() の間
 // 「上位 K 個」の書き方: TwoMultisets<ll, multiset, PartitionBySize> ms{PartitionBySize{K}};
@@ -215,5 +214,5 @@ inline string export_object_generic(
   }
   _p_CPP_DUMP_DEFINE_EXPORT_OBJECT_COMMON2;
 }
-} // namespace cpp_dump::_detail
+}
 #endif

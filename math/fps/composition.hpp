@@ -12,7 +12,6 @@
  */
 
 // f(g(x)) mod x^n。g の定数項は 0。
-// power_projection(N-1, N, g, w.rev()) の w に関する転置。
 template <class mint>
 FormalPowerSeries<mint> composition
 (
@@ -46,11 +45,8 @@ FormalPowerSeries<mint> composition
   }
   const bool use_ntt = !ipw.empty();
 
-  // power_projection と同じ配置：x 方向に l 項、y 方向に k 項。
-  // y 方向を反転した分母の最高次 y^k は、配列の外で扱う。
   auto rec = [&](auto &&self, F q, int l, int k) -> F
   {
-    // g(0)=0 より終端の分母は 1。p.rev() の転置も反転。
     if (l == 1)
       return f.resized(n).resized(N).rev();
 
@@ -76,20 +72,16 @@ FormalPowerSeries<mint> composition
     repi(j, k) repi(i, l / 2)
       next_q[(j + k) * (l / 2) + i] += 2 * q[j * l + 2 * i];
 
-    // 戻り道では固定した q2 / r だけを使う。
     F().swap(q), F().swap(qq);
     if (!use_ntt) F().swap(q2);
     F p = self(self, move(next_q), l / 2, 2 * k), res(N);
-    // 省略した y^k による加算の転置。
     repi(j, k) repi(i, l / 2)
       res[j * l + 2 * i + 1] = p[(j + k) * (l / 2) + i];
 
     if (use_ntt)
     {
       F p2(2 * N), p3(4 * N);
-      // 係数の取り出しの転置は、同じ位置への 0 埋め。
       repi(j, 2 * k) repi(i, l / 2) p2[j * l + i] = p[j * (l / 2) + i];
-      // intt^T = ntt o reverse_except_zero（intt は正規化前）。
       reverse(p2.begin() + 1, p2.end());
       ntt(p2);
       repi(i, 2 * N)
@@ -98,7 +90,6 @@ FormalPowerSeries<mint> composition
         p3[2 * i] = a * q2[2 * i + 1];
         p3[2 * i + 1] = -a * q2[2 * i];
       }
-      // ntt^T = reverse_except_zero o intt。
       intt(p3);
       reverse(p3.begin() + 1, p3.end());
       repi(j, k) repi(i, l) res[j * l + i] += p3[j * (2 * l) + i];
@@ -108,7 +99,6 @@ FormalPowerSeries<mint> composition
       F p2(4 * N);
       repi(j, 2 * k) repi(i, l / 2)
         p2[j * (2 * l) + 2 * i + 1] = p[j * (l / 2) + i];
-      // 畳み込みの転置：a_i = sum_j r_j p2_{i+j}。
       p2 = middle_product(p2, r);
       repi(j, k) repi(i, l) res[j * l + i] += p2[j * (2 * l) + i];
     }

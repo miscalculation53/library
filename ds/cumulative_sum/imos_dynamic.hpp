@@ -17,7 +17,6 @@ struct ImosDynamic
 
 private:
   int built = 0;
-  // 展開済みの部分は値、それより後ろは差分。
   vc<S> d;
 
 public:
@@ -63,7 +62,7 @@ public:
     return d[i];
   }
 
-  // 全体をコピー上で展開し、元の更新可能範囲を保つ。
+  // 元の更新可能範囲を保つ。
   vc<S> content() const
   {
     auto copy = *this;

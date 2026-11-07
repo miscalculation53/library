@@ -190,7 +190,7 @@ public:
     return res;
   }
 };
-} // namespace bbst_detail
+}
 
 template <class Key, class M, class Compare = less<Key>>
 using OrderedMapTree = bbst_detail::OrderedMapTreeImpl<Key, M, Compare, false>;
@@ -209,5 +209,5 @@ namespace cpp_dump::_detail
         indent, last_line_length, current_depth, fail_on_newline, command);
   }
 
-} // namespace cpp_dump::_detail
+}
 #endif

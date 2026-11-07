@@ -17,7 +17,7 @@ int main()
     assert(sp.dijkstra_fibonacci(s) == expected);
     const auto actual = sp.dijkstra_fibonacci(s, t);
     assert(actual[t] == expected[t]);
-    const auto path = sp.path(t);
+    const auto path = sp.path_edge(t);
     if (expected[t] != INF)
     {
       ll cost = 0;

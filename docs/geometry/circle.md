@@ -43,7 +43,7 @@ template<class U> Circle<U> cast() const;
 #### 内外判定
 
 ```cpp
-Location contains(Circle<T> c, Point<T> p, geometry_real_t<T> eps = EPS);
+Location contains(Circle<T> c, Point<T> p, ld eps = EPS);
 ```
 
 `Location::Inside`、`Boundary`、`Outside` のいずれかを返す。これらの整数値は順に `1, 0, -1`。
@@ -55,7 +55,7 @@ Location contains(Circle<T> c, Point<T> p, geometry_real_t<T> eps = EPS);
 #### 円同士の位置関係
 
 ```cpp
-CircleRelation circle_relation(Circle<T> c, Circle<T> d, geometry_real_t<T> eps = EPS);
+CircleRelation circle_relation(Circle<T> c, Circle<T> d, ld eps = EPS);
 ```
 
 | 結果 | 関係 |
@@ -76,8 +76,8 @@ CircleRelation circle_relation(Circle<T> c, Circle<T> d, geometry_real_t<T> eps 
 #### 交差判定・交点
 
 ```cpp
-bool intersects(Circle<T> c, A a, geometry_real_t<T> eps = EPS);
-Intersection<geometry_real_t<T>> intersection(Circle<T> c, A a, geometry_real_t<T> eps = EPS);
+bool intersects(Circle<T> c, A a, ld eps = EPS);
+template<class R = ld> Intersection<R> intersection(Circle<T> c, A a, ld eps = EPS);
 ```
 
 `A` は `Line<T>`、`Segment<T>`、`Circle<T>`。引数を逆順にもできる。対象は円周であり、円の内部だけにある線分の交差判定は `false`。
@@ -93,9 +93,9 @@ Intersection<geometry_real_t<T>> intersection(Circle<T> c, A a, geometry_real_t<
 #### 接線
 
 ```cpp
-Tangents<geometry_real_t<T>> tangents(Circle<T> c, Point<T> p, geometry_real_t<T> eps = EPS);
-Tangents<geometry_real_t<T>> tangents(Point<T> p, Circle<T> c, geometry_real_t<T> eps = EPS);
-Tangents<geometry_real_t<T>> common_tangents(Circle<T> c, Circle<T> d, geometry_real_t<T> eps = EPS);
+template<class R = ld> Tangents<R> tangents(Circle<T> c, Point<T> p, ld eps = EPS);
+template<class R = ld> Tangents<R> tangents(Point<T> p, Circle<T> c, ld eps = EPS);
+template<class R = ld> Tangents<R> common_tangents(Circle<T> c, Circle<T> d, ld eps = EPS);
 
 template<class R> struct Tangents {
   bool infinite;
@@ -116,7 +116,7 @@ template<class R> struct Tangents {
 #### 円周までの距離
 
 ```cpp
-geometry_real_t<T> distance(Circle<T> c, A a);
+template<class R = ld> R distance(Circle<T> c, A a);
 ```
 
 `A` は `Point<T>`、`Line<T>`、`Segment<T>`、`Circle<T>`。逆順にも対応する。円周と相手の図形との最短距離を返す。例えば中心と正の半径の円周との距離は半径に等しい。

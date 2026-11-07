@@ -25,10 +25,11 @@ auto z = fac.arithmetic_product(0, 0, 0);  // 1
 #### コンストラクタ
 
 ```cpp
-Factorial<mint> fac(int k = -1)
+(1) Factorial<mint> fac
+(2) Factorial<mint> fac(int k)
 ```
 
-幅 $B=2^k$ のブロックを使って初期化する。`k == -1` では法に応じたデフォルト値を使う。
+幅 $B=2^k$ のブロックを使って初期化する。(1) と `k == -1` では法に応じたデフォルト値を使う。(1) は NTT friendly な法で NTT 用の畳み込みを直接選ぶため、bundle 時に CRT 用の依存を除きやすい。
 
 ##### 制約
 

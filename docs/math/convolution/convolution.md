@@ -19,7 +19,7 @@ assert((c == vc<mint>{3, 10, 8}));
 #### convolution_point_get
 
 ```cpp
-T convolution_point_get(vc<T> a, vc<T> b)
+T convolution_point_get(const vc<T> &a, const vc<T> &b, int p)
 ```
 
 $a$ と $b$ を畳み込んだときの $p$ 番目の要素を返す。長さが足りないときは $0$ を返す。
@@ -49,11 +49,30 @@ $a$ に対し NTT / INTT を行う（破壊的に変更する）。`intt` は正
 
 - $O(\lvert a \rvert \log \lvert a \rvert)$
 
+#### ntt_convolution
+
+```cpp
+template<class mint>
+vc<mint> ntt_convolution(const vc<mint> &a, const vc<mint> &b)
+```
+
+`math/convolution/convolution_ntt.hpp` から使える、NTT 用の畳み込み。係数と結果の形式は `convolution` と同じ。空の入力では空配列を返す。
+
+##### 制約
+
+- `mint` は静的 modint、法は素数。
+- 空配列を除き、`ntt_ok<mint>(a.size() + b.size() - 1)` が成り立つ。
+
+##### 計算量
+
+- $O((n+m)\log(n+m))$。小さい入力と疎な入力の直接計算は `convolution` と共通。
+
 #### convolution
 
 ```cpp
-(1) vc<mint> convolution(vc<mint> a, vc<mint> b)
-(2) vc<ll> convolution<mod = 998244353> convolution(vc<ll> a, vc<ll> b)
+(1) vc<mint> convolution(const vc<mint> &a, const vc<mint> &b)
+(2) template<int mod = 998244353, class T>
+    vc<T> convolution(const vc<T> &a, const vc<T> &b)
 ```
 
 - (1)：$\lvert a \rvert = n, \lvert b \rvert = m$ とする。畳み込みを計算し、長さ $n+m-1$ の vector を返す。ただし、$n = 0$ または $m = 0$ のときは空の vector を返す。

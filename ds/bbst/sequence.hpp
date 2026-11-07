@@ -1,7 +1,5 @@
 #pragma once
 
-// Cartesian tree with random priorities.
-
 #include <algorithm>
 #include <cassert>
 #include <cstddef>
@@ -14,8 +12,6 @@
 #include <utility>
 #include <vector>
 
-// The legacy type aliases are part of the public API. The implementation below
-// uses its own nodes and does not call legacy node or tree operations.
 #include "treap_base.hpp"
 
 /**
@@ -243,8 +239,6 @@ private:
     }
 
     static void destroy(Cell* u) {
-        // A right rotation removes one left edge; a node with no left child
-        // can then be destroyed while its right child remains reachable.
         while (u) {
             if (u->left) {
                 Cell* next = u->left;
@@ -526,7 +520,6 @@ public:
         int position = count(u->left);
         while (u->parent) {
             Cell* parent = u->parent;
-            // The parent's pending reversal also reverses the child's order.
             if (parent->reversed) position = u->count - 1 - position;
             if (parent->right == u) position += count(parent->left) + 1;
             u = parent;
@@ -635,6 +628,6 @@ public:
     }
 };
 
-} // namespace bbst_detail
+}
 
 template <class M> using SequenceTree = bbst_detail::SequenceTreeImpl<M, false>;

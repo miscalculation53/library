@@ -38,9 +38,7 @@ inline vc<LinearModArithmetic> split_linear_mod(ll n, ll m, ll a, ll b)
   if (n == 0) return {};
   if (n == 1) return {{1, 0, b, 0, 1}};
 
-  // s+1 個の剰余の隣接差に、m/s 未満のものが存在する。
   const ll s = iroot(n, 2);
-  // x+a を作る前に折り返す。引数・戻り値は [0,m)。
   auto advance = [&](ll x) { return x >= m - a ? x - (m - a) : x + a; };
   vc<pll> sample;
   for (ll i = 0, value = 0; i <= s; ++i, value = advance(value))
@@ -70,7 +68,6 @@ inline vc<LinearModArithmetic> split_linear_mod(ll n, ll m, ll a, ll b)
       res.push_back({len, step, value, pos, gap});
       if (len == remain) break;
       pos += len * gap;
-      // 最後の有効な項から 1 回折り返す。各中間値も ll に収まる。
       value += step * (len - 1);
       value += step > 0 ? step - m : step + m;
     }

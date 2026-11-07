@@ -268,7 +268,6 @@ pair<mint, mint> crt_mod(const V1 &rs, const V2 &ms)
     const int n = rs.size();
     mint r = 0, m = 1;
 
-    // 小さい法は 4 本以上で計算幅を切り替え、16 本以上で Barrett を使う。
     bool small = sizeof(T) <= 4;
     if constexpr (sizeof(T) > 4)
       if (n >= 4)

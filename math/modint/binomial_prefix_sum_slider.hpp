@@ -25,7 +25,6 @@ public:
     inv2 = mint(mint::mod() / 2 + 1);
   }
 
-  // l = n, r = k, sum = C(l, 0) + ... + C(l, r)
   void lpp()
   {
     assert(l + 1 < mint::mod());

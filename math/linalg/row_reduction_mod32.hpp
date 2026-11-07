@@ -5,8 +5,6 @@
 namespace internal
 {
 // 通常の modint32 の体に対する掃き出し。a は出力も兼ねる。
-// mod + block * (mod - 1)^2 < 2^64 の範囲で行更新の剰余を遅らせる。
-// ピボットの参照時・行の正規化時・返却時には必ず通常の代表元へ戻す。
 template <class S, class Rows>
 pair<int, S> row_reduction_mod32(Rows &a, int n, int m, bool rref)
 {
@@ -18,7 +16,6 @@ pair<int, S> row_reduction_mod32(Rows &a, int n, int m, bool rref)
   const int block = mod <= (1u << 30) ? 16 : 4;
   vvc<ull> w(n, vc<ull>(m));
   vc<int> used(n);
-  // first[k] より左は零（ピボットより下の行）。零行は m として以後飛ばす。
   vc<int> first(n);
   repi(i, n) repi(j, m) w[i][j] = a[i][j].val();
   int rk = 0;
@@ -60,7 +57,6 @@ pair<int, S> row_reduction_mod32(Rows &a, int n, int m, bool rref)
       if (c == 0) continue;
       if (used[k] == block)
       {
-        // j より左は以降更新しないので、残りの列だけを剰余に戻せばよい。
         repi(l, j + 1, m) w[k][l] %= mod;
         used[k] = 0;
       }

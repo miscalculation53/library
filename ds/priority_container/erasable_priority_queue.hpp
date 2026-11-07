@@ -31,4 +31,4 @@ struct ContainerForEnd<ErasablePriorityQueue<T, RawCompare>, Compare, Back>
 {
   using type = conditional_t<Back, MaxErasablePriorityQueue<T, Compare>, MinErasablePriorityQueue<T, Compare>>;
 };
-} // namespace priority_container_detail
+}

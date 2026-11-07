@@ -44,7 +44,6 @@ private:
     const Unsigned unlimited = numeric_limits<Unsigned>::max();
     if (s != -1)
     {
-      // 両向きの補助辺により、実行可能な流量が負の場合も扱う。
       residual.add_edge(t, s, unlimited);
       residual.add_edge(s, t, unlimited);
     }
@@ -56,7 +55,6 @@ private:
         if (balance[v].negative()) residual.add_edge(v, sink, amount);
         else demands.eb(residual.add_edge(source, v, amount));
       });
-    // 需給の総和が容量型を越える場合も、同じ型の流量に分けて処理する。
     while (residual.flow(source, sink) == unlimited) {}
     for (int id : demands)
     {

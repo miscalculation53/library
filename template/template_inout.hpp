@@ -106,7 +106,6 @@ namespace fastio
   using integer_magnitude = conditional_t<(sizeof(T) > sizeof(ull)), u128,
                             conditional_t<(sizeof(T) > sizeof(uint)), ull, uint>>;
 
-  // 各桁対、4 桁、8 桁の順に十進の重みをまとめる。
   inline uint decode_eight(uint64_t columns)
   {
     columns &= 0x0f0f0f0f0f0f0f0fULL;
@@ -433,7 +432,6 @@ integer_complete:
     {
       if (por > SIZ - 40) flush();
       char *out = obuf + por;
-      // 負号の位置だけを進め、非負なら数字で上書きする。
       *out = '-';
       out += negative;
       out = store_ordinary(out, magnitude);

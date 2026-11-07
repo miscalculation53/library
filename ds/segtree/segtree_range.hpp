@@ -91,7 +91,6 @@ public:
       {
         if (l < r)
         {
-          // 左端の整列条件と残りの長さから、次の最大区間を選ぶ。
           const ll len = min<ll>(lsb_mask(l), bit_floor(r - l));
           i = l / len;
           l += len;

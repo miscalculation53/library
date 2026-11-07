@@ -182,8 +182,8 @@ mint eval(mint x)
 
 入力と出力の長さの最大値を $N$、分母の非零係数の個数を $c$ とする。
 
-- (1), (2)：$O(N \log N)$。疎な場合は $O(N(c+1))$
-- (3), (4)：$O(N(c+1))$
+- (1), (2)：$O(N \log N)$。疎な場合は $O(Nc)$
+- (3), (4)：$O(Nc)$
 
 #### シフト
 
@@ -261,7 +261,7 @@ mint eval(mint x)
 
 入力と出力の長さの最大値を $N$、入力の非零係数の個数を $c$ とする。
 
-- $O(N \log N)$。疎な場合は $O(N(c+1))$
+- $O(N \log N)$。疎な場合は $O(N+Nc)$
 - `pow` はさらに $O(\log \lvert k\rvert)$、`sqrt` はさらに $O(\log^2 \bmod)$
 
 #### exp_sparse, pow_sparse, sqrt_sparse
@@ -278,7 +278,7 @@ mint eval(mint x)
 
 入力と出力の長さの最大値を $N$、入力の非零係数の個数を $c$ とする。
 
-- $O(N(c+1))$
+- $O(N+Nc)$
 - `pow_sparse` はさらに $O(\log \lvert k\rvert)$、`sqrt_sparse` はさらに $O(\log^2 \bmod)$
 
 #### mul_bin, div_bin

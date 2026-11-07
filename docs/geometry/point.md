@@ -64,13 +64,13 @@ p == q; p != q; p < q; p > q; p <= q; p >= q;
 #### 内積・外積・向き・二乗距離
 
 ```cpp
-geometry_wide_t<T> dot(Point<T> p, Point<T> q);
-geometry_wide_t<T> cross(Point<T> p, Point<T> q);
-geometry_wide_t<T> cross(Point<T> a, Point<T> b, Point<T> c);
-geometry_wide_t<T> norm2(Point<T> p);
-geometry_wide_t<T> distance2(Point<T> p, Point<T> q);
-int orientation(Point<T> a, Point<T> b, Point<T> c, geometry_real_t<T> eps = EPS);
-bool almost_equal(Point<T> p, Point<T> q, geometry_real_t<T> eps = EPS);
+larger_int_t<T> dot(Point<T> p, Point<T> q);
+larger_int_t<T> cross(Point<T> p, Point<T> q);
+larger_int_t<T> cross(Point<T> a, Point<T> b, Point<T> c);
+larger_int_t<T> norm2(Point<T> p);
+larger_int_t<T> distance2(Point<T> p, Point<T> q);
+int orientation(Point<T> a, Point<T> b, Point<T> c, ld eps = EPS);
+bool almost_equal(Point<T> p, Point<T> q, ld eps = EPS);
 ```
 
 三点の `cross` は $(b-a)\times(c-a)$。差を取る前に計算型へ広げる。`orientation` は反時計回りなら `1`、時計回りなら `-1`、同一直線上なら `0`。同じ点を含む三点にも使える。`almost_equal` は座標ごとに誤差を判定する。
@@ -82,16 +82,18 @@ bool almost_equal(Point<T> p, Point<T> q, geometry_real_t<T> eps = EPS);
 #### 長さ・角度・回転
 
 ```cpp
-geometry_real_t<T> norm(Point<T> p);
-geometry_real_t<T> distance(Point<T> p, Point<T> q);
-geometry_real_t<T> argument(Point<T> p);
-geometry_real_t<T> angle(Point<T> p, Point<T> q);
+template<class R = ld, class T> R norm(Point<T> p);
+template<class R = ld, class T> R distance(Point<T> p, Point<T> q);
+template<class R = ld, class T> R argument(Point<T> p);
+template<class R = ld, class T> R angle(Point<T> p, Point<T> q);
 Point<T> rot90(Point<T> p);
-Point<geometry_real_t<T>> rotate(Point<T> p, Angle theta);
-optional<Point<geometry_real_t<T>>> unit(Point<T> p);
+template<class R = ld, class T, class Angle> Point<R> rotate(Point<T> p, Angle theta);
+template<class R = ld, class T> optional<Point<R>> unit(Point<T> p);
 ```
 
 `argument` は正の x 軸からの偏角。`angle` は `p` から `q` への符号付き角度で、いずれも `atan2` の範囲。角度の単位はラジアン。`rot90` と `rotate` は原点を中心とする反時計回りの回転。`rotate` は元の点を保ち、回転後の点を返す。`unit` は長さ1のベクトルを返し、零ベクトルでは `nullopt`。
+
+`rot90` は座標型 `T` を保つ。それ以外の結果と実数計算には `R` を使う。既定値は `ld` で、`norm<f128>(p)` のように指定できる。
 
 ##### 制約
 

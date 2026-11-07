@@ -59,7 +59,6 @@ struct MonoidMultivariatePowerSum
       repi(d, dim)
       {
         if (degree[d] == 0) continue;
-        // 既存の成分を末尾から広げ、変数 d の累乗を掛ける。
         repi(j, len - 1, -1, -1)
         {
           U p = U(power_sum[j]);

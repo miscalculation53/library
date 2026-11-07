@@ -51,7 +51,6 @@ template <class mint> struct FPSMultipointTree
         F y = extend_spectrum(b, std::move(spectrum[2 * i + 1]), z);
         spectrum[2 * i] = x, spectrum[2 * i + 1] = y;
         repi(j, z) x[j] *= y[j];
-        // The even-root half of the next transform is this cyclic product.
         if (i > 1) spectrum[i] = x;
         intt(x);
         mint iz = mint(z).inv();
@@ -114,7 +113,7 @@ template <class mint> struct FPSMultipointTree
     return result;
   }
 };
-} // namespace internal
+}
 
 template <class mint> vc<mint> multipoint_evaluation(const FormalPowerSeries<mint> &f, const vc<mint> &xs)
 {

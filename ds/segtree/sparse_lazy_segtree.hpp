@@ -101,7 +101,6 @@ private:
     nodes[i].hi = r == -1 ? nodes[i].entry.r : nodes[r].hi;
   }
 
-  // 各ノードに一点を置く疎セグ木と同じ配置で、区間の左端をキーにする。
   void insert(Entry x, ll a, ll b, int i)
   {
     push(i);
@@ -190,7 +189,6 @@ private:
     if (li != -1) apply_impl(l, r, f, a, c, li, cuts);
     if (ri != -1) apply_impl(l, r, f, c, b, ri, cuts);
     pull(i);
-    // 元の部分木に属する新しい区間を、キーの座標範囲も満たす最深の祖先で挿入する。
     for (auto &cut : cuts)
       if (cut && max(a, lo) <= cut->l && cut->l < min(b, hi))
       {
@@ -370,7 +368,6 @@ public:
   {
     assert(0 <= l && l <= r && r <= n);
     if (l == r) return;
-    // 分割と作用を同じ走査で処理し、新しい区間は対応する部分木の更新後に挿入する。
     array<optional<Entry>, 2> cuts;
     apply_impl(l, r, f, 0, n, 0, cuts);
   }
@@ -456,5 +453,5 @@ namespace cpp_dump::_detail
         indent, last_line_length, current_depth, fail_on_newline, command);
   }
 
-} // namespace cpp_dump::_detail
+}
 #endif

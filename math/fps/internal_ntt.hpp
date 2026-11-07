@@ -4,7 +4,6 @@
 
 namespace internal
 {
-// NTT work is measured in L*log2(L). Coefficients are fitted from local timing measurements.
 enum class FPSSparseOperation
 {
   inv,
@@ -98,7 +97,6 @@ template <class F> bool fps_use_sparse(const F &f, int n, FPSSparseOperation op,
   return true;
 }
 
-// For f=c+O(x^d), 3d>=n leaves at most the quadratic term of a scalar Taylor expansion.
 template <class F>
 optional<F> fps_tail_power(const F &f, int n, typename F::value_type constant, typename F::value_type linear,
                            typename F::value_type quadratic)
@@ -411,7 +409,6 @@ template <class F> F fps_sqrt_block(const F &f, int n, int blocks, bool partial 
   return result;
 }
 
-// Keep four block products in registers before updating a frequency accumulator.
 template <class F>
 F fps_exp_block_product(const vc<F> &a, const vc<F> &b, int k, int m, bool delayed,
                         vc<ull> &positive, vc<ull> &negative)
@@ -569,4 +566,4 @@ template <class F> F fps_exp_block(const F &f, int n, int blocks, bool delayed =
   return result;
 }
 
-} // namespace internal
+}

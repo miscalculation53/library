@@ -106,7 +106,7 @@ $i$ 番目の要素を $b$ にする。
 
 ##### 計算量
 
-- $O\left(1 + \log \dfrac{n}{B}\right)$
+- $O\left(\log \dfrac{n}{B}\right)$
 
 #### leq_max, lt_max, gt_min, geq_min
 
@@ -128,7 +128,7 @@ $[0, r)$ の要素の和に関して二分探索する：
 
 ##### 計算量
 
-- $O\left(1 + \log \dfrac{n}{B}\right)$
+- $O\left(\log \dfrac{n}{B}\right)$
 
 ---
 
@@ -148,7 +148,7 @@ S size_of_set()
 
 ##### 計算量
 
-- $O\left(1 + \log \dfrac{n}{B}\right)$
+- $O\left(\log \dfrac{n}{B}\right)$
 
 #### order_in_set
 
@@ -164,7 +164,7 @@ $x$ が集合に存在するとき、$x$ が何番目かを返す。存在しな
 
 ##### 計算量
 
-- $O\left(1 + \log \dfrac{n}{B}\right)$
+- $O\left(\log \dfrac{n}{B}\right)$
 
 #### kth_in_set
 
@@ -178,7 +178,7 @@ optional<I> kth_in_set<I=ll>(int k)
 
 ##### 計算量
 
-- $O\left(1 + \log \dfrac{n}{B}\right)$
+- $O\left(\log \dfrac{n}{B}\right)$
 
 #### lt_max_in_set など
 
@@ -198,4 +198,4 @@ optional<I> kth_in_set<I=ll>(int k)
 
 ##### 計算量
 
-- $O\left(1 + \log \dfrac{n}{B}\right)$
+- $O\left(\log \dfrac{n}{B}\right)$

@@ -16,6 +16,14 @@ import time
 import uuid
 
 from submit_code import atomic_write, comment_record_path
+import submit_code
+
+PRIORITY_BYTE_LIMIT = getattr(submit_code, "PRIORITY_BYTE_LIMIT", 131072)
+
+
+def size_status(size: int) -> dict:
+    return {"below_limit": size < 65536,
+            "below_priority_limit": size < PRIORITY_BYTE_LIMIT}
 
 
 TOOL = Path(__file__).with_name("submit_code.py").resolve()
@@ -142,7 +150,7 @@ class Job:
                 "output_digest": self.expected_output, "complete": False,
             })
             status(self.directory, self.request, "cleaning", bytes=self.published_size,
-                   below_limit=self.published_size < 65536)
+                   **size_status(self.published_size))
 
     def run(self, arguments: list[str], *, checkpoint: Path | None = None) -> None:
         revision = checkpoint.stat() if checkpoint else None
@@ -181,7 +189,11 @@ class Job:
             self.update("expanding")
             self.run(["expand", str(self.source), "-o", str(scratch)])
             self.expansion_digest = hashlib.sha256(
-                scratch.read_bytes() + TOOL.read_bytes()
+                (submit_code.expansion_reuse_fingerprint(scratch)
+                 if hasattr(submit_code, "expansion_reuse_fingerprint") else scratch.read_bytes())
+                + TOOL.read_bytes()
+                + (TOOL.with_name("bundle_fast.py").read_bytes()
+                   if TOOL.with_name("bundle_fast.py").is_file() else b"")
             ).hexdigest()
             with locked(self.directory):
                 self.check()
@@ -190,9 +202,9 @@ class Job:
                         and previous.get("output_digest") == self.expected_output
                         and self.expected_output is not None):
                     self.published_size = self.output.stat().st_size
-                    if previous.get("complete"):
+                    if previous.get("complete") and self.published_size < PRIORITY_BYTE_LIMIT:
                         status(self.directory, self.request, "done", bytes=self.published_size,
-                               below_limit=self.published_size < 65536, reused=True)
+                               **size_status(self.published_size), reused=True)
                         return
                     # An interrupted run of exactly the same expansion can resume from
                     # its last published result, including one already below the limit.
@@ -202,13 +214,15 @@ class Job:
             self.run(["cleanup", str(scratch), "-I", str(self.source.parent)],
                      checkpoint=scratch)
             self.publish(scratch)
+            if self.published_size >= PRIORITY_BYTE_LIMIT:
+                raise RuntimeError("短縮結果が131,072 B未満に達していません。log.txt を確認してください。")
             with locked(self.directory):
                 self.check()
                 previous = read_json(self.directory / "artifact.json")
                 previous["complete"] = True
                 write_json(self.directory / "artifact.json", previous)
                 status(self.directory, self.request, "done", bytes=self.published_size,
-                       below_limit=self.published_size < 65536)
+                       **size_status(self.published_size))
         finally:
             scratch.unlink(missing_ok=True)
 
@@ -289,7 +303,9 @@ def main() -> int:
                     print(f"{output.name}: {phase}")
                     if value.get("bytes") is not None:
                         size = value["bytes"]
-                        print(f"今回の出力: {size:,} B ({'< 65,536 B' if size < 65536 else 'サイズ制限未達'})")
+                        limits = "・".join(f"{limit:,} B {'未満' if size < limit else '以上'}"
+                                          for limit in (PRIORITY_BYTE_LIMIT, 65536))
+                        print(f"今回の出力: {size:,} B ({limits})")
                     if not request.get("stop") and digest(source) != request.get("source_digest"):
                         print("元コードは生成開始時から変更されています。次の実行で再生成します。")
                     if value.get("error"):

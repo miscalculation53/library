@@ -67,7 +67,7 @@ private:
   }
 
 public:
-  // 空きスロットを飛ばして走査する。キーは const 参照で返す。
+  // キーは const 参照で返す。
   class const_iterator
   {
     friend struct HashSet;

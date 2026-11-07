@@ -28,7 +28,6 @@ struct CoverFlow
   vc<int> starts, use;
 };
 
-// 既知の実行可能流から t -> s へ流し戻し、流量を最小化する。
 template <class Edge>
 CoverFlow cover_flow(int n, const vc<Edge> &es, bool vertices)
 {
@@ -47,7 +46,7 @@ CoverFlow cover_flow(int n, const vc<Edge> &es, bool vertices)
   for (int v = 0; v < n; v++)
   {
     initial += starts[v];
-    if (vertices) flow.add_edge(v, n + v, bound - 1); // 下限 1 を除いた残余容量。
+    if (vertices) flow.add_edge(v, n + v, bound - 1);
     source_edge[v] = flow.add_edge(s, v, bound);
     flow.change_edge(source_edge[v], bound, starts[v]);
     const int id = flow.add_edge(vertices ? n + v : v, t, bound);
@@ -90,12 +89,12 @@ auto restore(int n, const vc<E> &es, CoverFlow state)
     if constexpr (vertices) result.eb(root, move(path));
     else result.eb(move(path));
   }
-  for (int use : state.use) assert(use == 0); // DAG なので循環流が残らない。
+  for (int use : state.use) assert(use == 0);
   return result;
 }
 }
 
-// (1) DAG の各頂点をちょうど 1 回ずつ使うパス分割。Hopcroft–Karp を使う。
+// (1) DAG の各頂点をちょうど 1 回ずつ使うパス分割。
 // 頂点が対象のときは (始点, 辺列) を返し、長さ 0 のパスも表す。
 template <class Cost, bool is_erasable>
 vc<pair<int, vc<Edge<Cost>>>> dag_vertex_path_partition(const GraphDirected<Cost, is_erasable> &g)
@@ -136,7 +135,7 @@ template <class Cost, bool is_erasable>
 int dag_vertex_path_partition_size(const GraphDirected<Cost, is_erasable> &g)
 { return dag_vertex_path_partition(g).size(); }
 
-// (4) DAG の各辺をちょうど 1 回ずつ使う。次数だけで O(n+m)。
+// (4) DAG の各辺をちょうど 1 回ずつ使う。O(n+m)。
 template <class Cost, bool is_erasable>
 int dag_edge_path_partition_size(const GraphDirected<Cost, is_erasable> &g)
 {
@@ -200,7 +199,7 @@ vvc<Edge<Cost>> dag_edge_path_cover(const GraphDirected<Cost, is_erasable> &g)
   return path_cover_detail::restore<false>(n, es, path_cover_detail::cover_flow(n, es, false));
 }
 
-// (3) 各頂点を 1 回以上使うウォーク被覆。強連結成分内を 1 頂点にする。
+// (3) 各頂点を 1 回以上使うウォーク被覆。
 template <class Cost, bool is_erasable>
 int vertex_walk_cover_size(const GraphDirected<Cost, is_erasable> &g)
 {
@@ -278,7 +277,6 @@ vvc<Edge<Cost>> edge_walk_partition(const GraphDirected<Cost, is_erasable> &g)
     {
       const int u = sinks[id][j], v = sources[id][i];
       const int count = min(-excess[u], excess[v]);
-      // 不足する出辺を仮想辺で補い、各成分を Euler 閉路にする。
       for (int k = 0; k < count; k++) es.push_back({u, v});
       excess[u] += count, excess[v] -= count;
       if (excess[u] == 0) j++;

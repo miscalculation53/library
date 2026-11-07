@@ -54,7 +54,6 @@ public:
   S sum(int l, int r) const
   {
     assert(0 <= l && l <= r && r <= n);
-    // 両端の prefix に共通する節点までで打ち切る。
     S right = G::e(), left = G::e();
     while (l < r)
     {
@@ -175,7 +174,6 @@ public:
   vc<S> content() const
   {
     vc<S> res(dat.begin() + 1, dat.end());
-    // 線形構築で親へ加えた値を、逆順に取り除く。
     for (int i = n; i > 0; i--)
     {
       const int p = i + (i & -i);

@@ -13,16 +13,12 @@ struct RootedTree
 protected:
   int n;
   vc<int> link, dep, pre, post, preinv;
-  // link[v] < 0: v は heavy path の先頭で、~link[v] が親。
-  // それ以外: link[v] は v が属する heavy path の先頭。
   int internal_head(int v) const { return link[v] < 0 ? v : link[v]; }
   int parent_of_head(int h) const { return ~link[h]; }
 
   template <bool xor_edges>
   void build(int rt)
   {
-    // pre は残りの次数（親配列なら子の数）、link は隣接頂点の XOR（または親）。
-    // 葉を除いた順を残すと、逆順では各頂点の親が先に確定する。
     constexpr int leaf_degree = xor_edges ? 1 : 0;
     pre[rt] = leaf_degree - 1;
     vc<int> removed(n - 1);
@@ -44,7 +40,6 @@ protected:
     }
     assert(count == n - 1);
 
-    // dep に置いた最大の子部分木サイズから heavy child を選ぶ。
     for (int v : removed)
     {
       const int p = link[v];
@@ -57,13 +52,11 @@ protected:
       const int v = removed[i];
       const bool heavy = link[v] < 0;
       const int p = heavy ? ~link[v] : link[v];
-      // heavy child の領域を親の直後に予約し、light child は右から詰める。
       pre[v] = heavy ? pre[p] + 1 : (preinv[p] -= post[v]);
       preinv[v] = post[v] += pre[v];
       dep[v] = dep[p] + 1;
       link[v] = heavy ? internal_head(p) : ~p;
     }
-    // light child の配置に使ったカーソルを、行きがけ順の逆引きへ使い直す。
     for (int v = 0; v < n; ++v) preinv[pre[v]] = v;
   }
 
@@ -156,6 +149,22 @@ public:
     return res;
   }
 
+  // 頂点番号と辺を保ち、根を rt に付け替えた木を返す。
+  RootedTree rerooted(int rt) const
+  {
+    assert(0 <= rt && rt < n);
+    auto par = parents();
+    int v = rt, previous = -1;
+    while (v != -1)
+    {
+      int next = par[v];
+      par[v] = previous;
+      previous = v;
+      v = next;
+    }
+    return RootedTree(n, par);
+  }
+
   // v が属する heavy path の先頭を返す
   int head(int v) const
   {
@@ -183,7 +192,7 @@ public:
   }
 
   // v から根までのパスで通る頂点の列
-  vc<int> path_to_root(int v) const
+  vc<int> path_vertex_to_root(int v) const
   {
     assert(0 <= v && v < n);
     vc<int> res = {v};
@@ -198,7 +207,7 @@ public:
     return res;
   }
   // u から v までのパスで通る頂点の列
-  vc<int> path(int u, int v) const
+  vc<int> path_vertex(int u, int v) const
   {
     assert(0 <= u && u < n);
     assert(0 <= v && v < n);
@@ -453,7 +462,6 @@ public:
   class PathRange
   {
   private:
-    // 各端点から根までの light edge 数は log2(n) 以下。
     static constexpr int capacity = 2 * numeric_limits<int>::digits;
     array<tuple<int, int, bool>, capacity> intervals;
     int count = 0;

@@ -327,7 +327,7 @@ private:
   void clear(Root &root) { check_root(root); root = null; }
 
 public:
-  // プールへの参照と根を持つ集合ハンドル。複製には clone を使う。
+  // 複製には clone を使う。
   class Set
   {
     friend struct MeldableIntegerSetPool;

@@ -22,7 +22,6 @@ vc<mint> berlekamp_massey_fast(const vc<mint> &seq)
   if (b.empty()) return {mint(-1)};
   auto m = H::half(a, b);
   tie(a, b) = m.apply(a, b);
-  // b == m.c*x^n + m.d*reverse(seq)。deg(b) < deg(m.d) で停止。
   while (b.sz() >= m.d.sz())
   {
     auto [q, rem] = H::divmod(std::move(a), b);

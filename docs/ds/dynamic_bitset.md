@@ -110,7 +110,7 @@ void resize(int n, bool value = false)
 
 ##### 計算量
 
-- 償却 $O(1+\lvert n-\operatorname{size()}\rvert/w)$
+- 償却 $O(\lceil\lvert n-\operatorname{size()}\rvert/w\rceil)$
 
 #### set / reset / flip
 
@@ -132,7 +132,7 @@ DynamicBitset &flip_range(int l, int r)
 ##### 計算量
 
 - 一点：$O(1)$
-- 区間または全体：$O(1+(r-l)/w)$
+- 区間または全体：$O(\lceil(r-l)/w\rceil)$
 
 #### count / any / none / all
 
@@ -151,7 +151,7 @@ bool all(int l, int r)
 
 ##### 計算量
 
-- $O(1+(r-l)/w)$。引数なしの場合は $O(n/w)$
+- $O(\lceil(r-l)/w\rceil)$。引数なしの場合は $O(n/w)$
 
 #### find_first / find_next / find_last / find_prev
 
@@ -241,7 +241,7 @@ $v(a)=\sum_{i=0}^{n-1} a[i]2^i$ の大小を比較する。
 
 ##### 計算量
 
-- $O(1+n/w)$。大小比較は上位ワードから調べ、異なるワードが見つかると終了する
+- $O(\lceil n/w\rceil)$。大小比較は上位ワードから調べ、異なるワードが見つかると終了する
 
 #### assign_slice / and_slice / or_slice / xor_slice
 
@@ -267,8 +267,8 @@ $k=\min(r-l, b.\operatorname{size}()-bl)$ とし、各 $0\leq i<k$ に対して�
 
 ##### 計算量
 
-- コールバックなし：$O(1+k/w)$
-- コールバックあり：$O(1+k/w+z)$。$z$ は `f` の呼び出し回数
+- コールバックなし：$O(\lceil k/w\rceil)$
+- コールバックあり：$O(\lceil k/w\rceil+z)$。$z$ は `f` の呼び出し回数
 
 #### ワードへのアクセス
 

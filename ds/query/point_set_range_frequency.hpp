@@ -84,7 +84,6 @@ public:
     }
     CSR<int> csr(counts);
     csr.get_elist() = move(positions);
-    // 値ごとの添字列を平坦につなぎ、1本の01列として管理する。
     vc<bool> initial(csr.get_elist().size());
     vc<int> current(handles.begin(), handles.begin() + n);
     for (int h : current) initial[h] = true;

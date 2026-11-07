@@ -175,7 +175,6 @@ public:
     T rhs_num = rhs.num, rhs_den = rhs.den;
     if constexpr (is_integral_ext<T> && !is_same_v<T, bool>)
     {
-      // 交差積が大きくても、最終的な分子が T に収まれば正確に復元できる。
       using C = unsigned_arithmetic_t<T>;
       num = wrapping_cast<T>(C(num) * C(rhs_den) + C(rhs_num) * C(den));
     }

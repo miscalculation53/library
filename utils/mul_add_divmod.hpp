@@ -27,7 +27,6 @@ constexpr pair<U, U> mul_add_divmod(U a, U b, U c, U m)
       const U y = a * b + c;
       return {y / m, y % m};
     }
-    // 商・剰余を保ちながら b の各 bit を読む。
     U q = 0, r = 0;
     for (int i = numeric_limits<U>::digits - 1; i >= 0; --i)
     {

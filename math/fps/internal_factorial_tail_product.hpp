@@ -3,8 +3,6 @@
 #include <array>
 #include <cstdint>
 
-// Symmetric products and forward differences.
-// Contract: count >= 0; Mint supplies construction, +, -, *, +=, -=, *=.
 namespace factorial_tail_product_detail {
 
 template <class Mint>
@@ -19,7 +17,6 @@ Mint rising_product_direct(Mint first, int count) {
     return result;
 }
 
-// (a+i)(a+L-1-i) = a(a+L-1) + i(L-1-i).
 template <class Mint>
 Mint rising_product_pairs(Mint first, int count) {
     if (count < 2) return count == 0 ? Mint(1) : first;
@@ -37,9 +34,6 @@ Mint rising_product_pairs(Mint first, int count) {
     return result;
 }
 
-// Split 4m factors into two intervals of length 2m. For each i, multiply
-// the symmetric pair from each interval. The resulting quartic has four
-// explicit initial forward differences and constant fourth difference 24.
 template <class Mint>
 Mint rising_product_quartets(Mint first, int count) {
     const int groups = count / 4;
@@ -71,10 +65,6 @@ Mint rising_product_quartets(Mint first, int count) {
     return result;
 }
 
-// Degree is 8 or 16. Partition Degree*m factors into Degree/2 intervals
-// of length 2m. A symmetric pair in interval j equals A_j+t_i, where
-// A_j=(a+2mj)(a+2mj+2m-1), t_i=i(2m-1-i).
-// The product over j is a monic polynomial of degree Degree in i.
 template <int Degree, class Mint>
 Mint rising_product_differences(Mint first, int count) {
     static_assert(Degree == 8 || Degree == 16);
@@ -132,8 +122,6 @@ Mint rising_product_differences(Mint first, int count) {
     return result;
 }
 
-// An unmeasured policy included only as a complete source-level candidate.
-// Compare individual kernels before selecting production thresholds.
 template <class Mint>
 Mint rising_product_candidate(Mint first, int count) {
     if (count < 32) return rising_product_pairs(first, count);
@@ -142,4 +130,4 @@ Mint rising_product_candidate(Mint first, int count) {
     return rising_product_differences<16>(first, count);
 }
 
-}  // namespace factorial_tail_product_detail
+}

@@ -21,7 +21,7 @@ assert(circle->r == 1);
 
 ```cpp
 optional<Point<geometry_field_t<T>>> circumcenter(Point<T> a, Point<T> b, Point<T> c,
-                                                 geometry_real_t<T> eps = EPS);
+                                                 ld eps = EPS);
 ```
 
 三頂点から等距離の点を返す。整数・有理数入力では有理数の座標を厳密に計算する。
@@ -33,8 +33,8 @@ optional<Point<geometry_field_t<T>>> circumcenter(Point<T> a, Point<T> b, Point<
 #### 外接円
 
 ```cpp
-optional<Circle<geometry_real_t<T>>> circumcircle(Point<T> a, Point<T> b, Point<T> c,
-                                                 geometry_real_t<T> eps = EPS);
+template<class R = ld> optional<Circle<R>> circumcircle(Point<T> a, Point<T> b, Point<T> c,
+                                                       ld eps = EPS);
 ```
 
 三頂点を円周上に持つ円を返す。中心・半径とも実数。
@@ -46,10 +46,10 @@ optional<Circle<geometry_real_t<T>>> circumcircle(Point<T> a, Point<T> b, Point<
 #### 内心・内接円
 
 ```cpp
-optional<Point<geometry_real_t<T>>> incenter(Point<T> a, Point<T> b, Point<T> c,
-                                            geometry_real_t<T> eps = EPS);
-optional<Circle<geometry_real_t<T>>> incircle(Point<T> a, Point<T> b, Point<T> c,
-                                            geometry_real_t<T> eps = EPS);
+template<class R = ld> optional<Point<R>> incenter(Point<T> a, Point<T> b, Point<T> c,
+                                                  ld eps = EPS);
+template<class R = ld> optional<Circle<R>> incircle(Point<T> a, Point<T> b, Point<T> c,
+                                                  ld eps = EPS);
 ```
 
 三辺から等距離で三角形の内部にある点と、その点を中心とする内接円を返す。

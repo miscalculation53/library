@@ -28,7 +28,7 @@ int main()
     int t = rng() % n;
     auto partial = g.dial(s, max_cost, t);
     assert(partial[t] == expected[t]);
-    auto path = g.path(t);
+    auto path = g.path_edge(t);
     if (expected[t] == INF)
       assert(!path);
     else

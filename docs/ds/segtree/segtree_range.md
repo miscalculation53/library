@@ -190,7 +190,7 @@ auto ancestors_from_top(ll i) const
 ##### 計算量
 
 - 範囲の取得・イテレータの移動：$O(1)$
-- 全列挙：$O(\operatorname{depth}(i)+1)$
+- 全列挙：$O(\operatorname{depth}(i))$
 
 #### 列挙範囲の共通操作
 

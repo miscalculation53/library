@@ -20,4 +20,4 @@ struct Access<DoubleEndedPriorityQueue<T, Compare>>
   template <class Comp>
   static C make(const Comp &comp) { return C(comp); }
 };
-} // namespace priority_container_detail
+}

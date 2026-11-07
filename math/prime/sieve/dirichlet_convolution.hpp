@@ -17,7 +17,6 @@ namespace internal
   template <class R>
   struct dirichlet_has_inv<R, void_t<decltype(R::inv(declval<const typename R::S &>()))>> : true_type {};
 
-  // 要素型が modint でも、独自の環演算なら特殊化しない。
   template <class R>
   struct dirichlet_modint_field : false_type {};
   template <class S>
@@ -32,8 +31,8 @@ namespace internal
     return res;
   }
 
-  // 1, ..., n はすべて可逆。R ごとに保持し、不足分だけ inv_many で追加する。
-  // 同じ範囲の再利用では逆元計算をしない。参照先は法変更・伸長時に更新される。
+  // 1, ..., n はすべて可逆。
+  // 参照先は法変更・伸長時に更新される。
   template <class R>
   const vc<typename R::S> &dirichlet_integer_inverses(int n)
   {
@@ -97,9 +96,9 @@ namespace internal
       if constexpr (dirichlet_has_inv<R>::value)
         return R::mul(a, value);
       else if constexpr (exact_integer)
-        return a / value; // 通常の整数環では、割り切れる商だけを扱う。
+        return a / value;
       else
-        return R::minus(a); // inv を持たない一般の環では、除数は ±1。
+        return R::minus(a);
     }
   };
 }
@@ -468,7 +467,6 @@ public:
     if (exponent == 1) return *this;
     if constexpr (internal::dirichlet_modint_field<R>::value)
     {
-      // 小さい標数・合成数 mod でも、従来の除算不要の整数乗を残す。
       if (n_ >= 1 && f_[1] == R::e1())
       {
         bool invertible = true;

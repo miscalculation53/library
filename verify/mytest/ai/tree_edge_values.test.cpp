@@ -134,8 +134,8 @@ void test_random_trees()
         diameter = max(diameter, expected);
       }
     }
-    auto [a, b, diameter_tree, depths] = tree_diameter_weighted(n, es, costs);
-    assert(diameter_tree.root() == a && depths[b] == diameter);
+    Diameter result(n, es, costs);
+    assert(result.length() == diameter);
     auto rerooted = rerooting<DistanceSum>(n, es,
       [&](DistanceSum::S x, int eid) { return DistanceSum::S{x.first + costs[eid] * x.second, x.second}; },
       [](DistanceSum::S x, int) { return DistanceSum::S{x.first, x.second + 1}; }, false);

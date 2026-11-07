@@ -207,9 +207,9 @@ optional<Total> flow(
 
 ##### 計算量
 
-- `ssp`・`primal_dual`：$O(n+m+(F+1)T)$
+- `ssp`・`primal_dual`：$O(n+m+T+FT)$
 - `capacity_scaling`：$O(n+m+MT\log U)$
-- `network_simplex`：pivot 回数を $P$ として $O(n+m+(P+1)(N+M)+N\log N)$。実際の木の更新は変更された部分木の大きさに比例する。$P$ は入力と辺の選択に依存する
+- `network_simplex`：pivot 回数を $P$ として $O(n+m+P(N+M)+N\log N)$。実際の木の更新は変更された部分木の大きさに比例する。$P$ は入力と辺の選択に依存する
 - `automatic`：SSP / primal-dual と容量スケーリングの上界の小さい方を保つ。候補の試行・保存に定数倍の費用が加わる
 
 #### get_edge / edges
@@ -287,4 +287,4 @@ pair<Cap, Total> flow(int s, int t,
 
 ##### 計算量
 
-- 増加路を流した回数を $K$ として $O(n+m+(K+1)T)$。$K$ は追加流量以下
+- 増加路を流した回数を $K$ として $O(n+m+T+KT)$。$K$ は追加流量以下

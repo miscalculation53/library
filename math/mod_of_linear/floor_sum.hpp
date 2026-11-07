@@ -11,7 +11,7 @@
 
 namespace internal
 {
-// 0 <= a,b < m。商は n 以下なので U に収まる。
+// 0 <= a,b < m。
 template <bool small = false, class U>
 pair<U, U> floor_sum_divmod(U n, U m, U a, U b)
 {
@@ -24,7 +24,7 @@ pair<U, U> floor_sum_divmod(U n, U m, U a, U b)
   else return mul_add_divmod(a, n, b, m);
 }
 
-// n*(n-1)/2。2 で割る側を先に選び、C 上では乗算だけを行う。
+// n*(n-1)/2。
 template <class C, class U>
 C floor_sum_triangle(U n)
 {
@@ -32,7 +32,6 @@ C floor_sum_triangle(U n)
   return n % 2 == 0 ? C(n / 2) * C(n - 1) : C(n) * C((n - 1) / 2);
 }
 
-// 非負入力に対するユークリッド互除法型の本体。
 template <class C, bool small, class U>
 C floor_sum_unsigned_core(U n, U m, U a, U b)
 {
@@ -51,7 +50,7 @@ C floor_sum_unsigned_core(U n, U m, U a, U b)
   return ans;
 }
 
-// 入口では 0 <= a,b < m。n,m は反復中に増えない。
+// 入口では 0 <= a,b < m。
 template <class C, class U>
 C floor_sum_unsigned(U n, U m, U a, U b)
 {
@@ -60,7 +59,6 @@ C floor_sum_unsigned(U n, U m, U a, U b)
     return floor_sum_unsigned_core<C, true>(ull(n), ull(m), ull(a), ull(b));
   else
   {
-    // a*n+b <= (m-1)*(n+1) < 2^64。ループは ull のまま計算する。
     if ((n | m) <= numeric_limits<uint>::max())
       return floor_sum_unsigned_core<C, true>(ull(n), ull(m), ull(a), ull(b));
     if constexpr (sizeof(U) > sizeof(ull))
@@ -70,7 +68,7 @@ C floor_sum_unsigned(U n, U m, U a, U b)
   }
 }
 
-} // namespace internal
+}
 
 // sum_{i=l}^{r-1} floor((a*i+b)/m)。整数の R には下位 sizeof(R)*8 bit を返す。
 template <class R, class L, class H, class M, class A, class B>
@@ -97,7 +95,6 @@ R floor_sum(L l, H r, M m, A a, B b)
   const C qa = na.first, qb = nb.first;
   const U ra = na.second, rb = nb.second;
   // F(x+1)-F(x)=floor((a*x+b)/m), F(0)=0 を満たす離散原始関数。
-  // 負の x は添字を反転する。a*l+b や r-l を作る必要がない。
   auto prefix = [&](U n, bool negative) -> C
   {
     if (n == 0) return C(0);
@@ -133,7 +130,6 @@ inline ll count_mod_of_linear(ll n, ll m, ll a, ll b, ll l, ll r)
   b %= m;
   if (a < 0) a += m;
   if (b < 0) b += m;
-  // 各総和は mod 2^64 でよい。差は [0,n] に収まる。
   return floor_sum<ull>(n, m, a, ull(b) + m - l)
        - floor_sum<ull>(n, m, a, ull(b) + m - r);
 }

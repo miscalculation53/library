@@ -15,19 +15,35 @@
 
 #include "template/template_all_but_modint.hpp"
 #include "math/linalg/matrix_mod2.hpp"
+#include "math/linalg/matrix_mod2_dynamic.hpp"
 
 void init() {}
 
 void main2()
 {
   LL(N, M);
-  if (M == 0)
+  if (N == 0 || M == 0)
     PRINTRETURN(0);
-  VEC(string, N, A_);
+  auto solve = [&](auto &A)
+  {
+    rep(i, N)
+    {
+      STR(row);
+      rep(j, M) A(i, j) = row[j] == '1';
+    }
+    PRINT(A.rank());
+  };
   const int MAX = local_oj(4, 4096);
-  MatrixMod2<MAX, MAX> A;
-  rep(i, N) rep(j, M) A(i, j) = A_[i][j] == '1';
-  PRINT(A.rank());
+  if (N <= MAX && M <= MAX)
+  {
+    MatrixMod2<MAX, MAX> A;
+    solve(A);
+  }
+  else
+  {
+    MatrixMod2Dynamic A(N, M);
+    solve(A);
+  }
 }
 
 void test() {}

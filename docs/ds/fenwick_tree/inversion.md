@@ -88,7 +88,7 @@ void set(int nl, int nr)
 
 呼び出し前の区間を $[l,r)$ とし、$D = \lvert \mathrm{nl}-l\rvert+\lvert \mathrm{nr}-r\rvert$ として、
 
-- $O(1+D\log n)$
+- $O(D\log n)$
 
 #### lpp, rpp, lmm, rmm
 

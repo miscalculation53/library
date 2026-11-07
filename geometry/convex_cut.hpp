@@ -33,24 +33,23 @@ private:
   }
 
 public:
-  explicit ConvexCut(const T &sp = T(100000), geometry_real_t<T> eps = EPS)
+  explicit ConvexCut(const T &sp = T(100000), ld eps = EPS)
   {
     assert(T(0) <= sp);
     *this = ConvexCut(vector<Point<T>>{{-sp, -sp}, {sp, -sp}, {sp, sp}, {-sp, sp}}, eps);
   }
-  explicit ConvexCut(const vector<Point<T>> &p, geometry_real_t<T> eps = EPS)
+  explicit ConvexCut(const vector<Point<T>> &p, ld eps = EPS)
   {
     auto q = geometry_detail::normalize_convex_polygon(p, eps);
     vertices.reserve(q.size());
     for (size_t i = 0; i < q.size(); ++i)
     {
-      // 一点の領域では incoming は使わない。
       Line<T> edge = q.size() == 1 ? Line<T>() : Line<T>(q[(i + q.size() - 1) % q.size()], q[i]);
       vertices.push_back({reduced(q[i].template cast<value_type>()), edge});
     }
   }
 
-  void cut(const Line<T> &line, geometry_real_t<T> eps = EPS)
+  void cut(const Line<T> &line, ld eps = EPS)
   {
     if (vertices.empty()) return;
     auto l = line.template cast<value_type>();
@@ -67,13 +66,11 @@ public:
       int b_side = orientation(l.a, l.b, b.point, eps);
       if (a_side * b_side < 0)
       {
-        // 新しい頂点は、元の境界直線と今回の切断直線から直接作る。
         P p = reduced(geometry_detail::line_crossing(b.incoming.a, b.incoming.b, line.a, line.b));
         append(p, a_side < 0 ? line : b.incoming);
       }
       if (b_side >= 0)
       {
-        // 外側から境界上の頂点に入る辺は、切断直線上に置き換わる。
         append(b.point, a_side < 0 && b_side == 0 ? line : b.incoming);
       }
       a_side = b_side;
@@ -85,7 +82,7 @@ public:
     }
     vertices.swap(next);
   }
-  void cut(const Point<T> &a, const Point<T> &b, geometry_real_t<T> eps = EPS)
+  void cut(const Point<T> &a, const Point<T> &b, ld eps = EPS)
   { cut(Line<T>(a, b), eps); }
   bool empty() const { return vertices.empty(); }
   size_t size() const { return vertices.size(); }

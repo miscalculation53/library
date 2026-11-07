@@ -94,7 +94,6 @@ public:
   {
     vc<pair<int, int>> es;
     es.reserve(source.num_of_edges());
-    // 次数が大きい側から小さい側へ、同次数では頂点番号の昇順に向きづける。
     repi(u0, source.size()) for (auto e : source.out_edges(u0))
     {
       int u = u0, v = e.to;

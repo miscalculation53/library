@@ -57,7 +57,6 @@ private:
     {
       if (l == r)
         continue;
-      // 右端の余白には query がないので、最後まで残る区間を延ばせる。
       int li = int(l) + tmax_ceil;
       int ri = (r == tmax ? tmax_ceil : int(r)) + tmax_ceil;
       while (li < ri)
@@ -126,7 +125,6 @@ public:
       span_obj.eb(l, r, obj);
   }
 
-  // 対象ごとに登録順を保って操作をまとめ、生存期間に変換する。
   vc<tuple<int, int, Obj>> spans() const
   {
     vc<tuple<int, int, Obj>> res;

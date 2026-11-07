@@ -1,47 +1,20 @@
 #pragma once
 
-/*!
- * Portions adapted from https://github.com/hitonanode/cplib-cpp/blob/30eca5de7eb8e520cd13d5d7fd23d9edaeebe60e/graph/shortest_path.hpp
- *
- * MIT License
- *
- * Copyright (c) 2019 Ryotaro Sato
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 #include "../template/template_all_but_modint.hpp"
 
 #include "graph.hpp"
+#include "internal_spfa.hpp"
 #include "../ds/my_queue.hpp"
 #include "../ds/fibonacci_heap.hpp"
 #include "../utils/is_integral_ext.hpp"
 #include "../utils/resolved_infty.hpp"
 
 /**
- * @brief 単一始点最短路
+ * @brief 単一・複数始点最短路
  * @docs docs/graph/sssp.md
  */
 
 //! 参考: https://hitonanode.github.io/cplib-cpp/graph/shortest_path.hpp
-// todo:
-// - SPFA 等
 
 template <bool is_directed, class Cost, auto infty = nullptr>
 struct ShortestPath
@@ -54,29 +27,40 @@ private:
 
   vc<Dist> dists;
   vc<Edge<Cost>> prv;
-  int source = -1;
+  vc<int> sources;
   bool solved_all = false;
 
-  void init_solve(int s, int t)
+  template <class Starts>
+  void init_solve(const Starts &starts, int t)
   {
-    source = s;
+    const int n = g.size();
     solved_all = (t == -1);
+    dists.assign(n, inf());
+    prv.assign(n, {});
+    sources.clear();
+    for (auto s : starts)
+    {
+      assert(0 <= s && u128(s) < u128(n));
+      if (dists[s] == inf())
+      {
+        dists[s] = 0;
+        sources.eb(int(s));
+      }
+    }
   }
 
 public:
   explicit ShortestPath(const Graph<is_directed, Cost> &g) : g(g) {}
   ShortestPath(const Graph<is_directed, Cost> &&) = delete;
 
-  vc<Dist> bfs(int s, int t = -1)
+  vc<Dist> bfs(int s, int t = -1) { return bfs(array<int, 1>{s}, t); }
+
+  template <class Starts, class = decltype(begin(declval<const Starts &>()))>
+  vc<Dist> bfs(const Starts &s, int t = -1)
   {
-    const int n = g.size();
-    assert(0 <= s && s < n);
     init_solve(s, t);
-    dists.assign(n, inf());
-    prv.assign(n, {});
     MyQueue<int> que;
-    dists[s] = 0;
-    que.push(s);
+    for (int v : sources) que.push(v);
     while (!que.empty())
     {
       auto v = que.front();
@@ -95,16 +79,15 @@ public:
     return dists;
   }
 
-  vc<Dist> bfs01(int s, int t = -1)
+  vc<Dist> bfs01(int s, int t = -1) { return bfs01(array<int, 1>{s}, t); }
+
+  template <class Starts, class = decltype(begin(declval<const Starts &>()))>
+  vc<Dist> bfs01(const Starts &s, int t = -1)
   {
     const int n = g.size();
-    assert(0 <= s && s < n);
     init_solve(s, t);
-    dists.assign(n, inf());
-    prv.assign(n, {});
-    vc<int> cur{int(s)}, nxt;
+    vc<int> cur = sources, nxt;
     vc<unsigned char> used(n, false);
-    dists[s] = 0;
     while (!cur.empty() || !nxt.empty())
     {
       if (cur.empty()) cur.swap(nxt);
@@ -131,15 +114,16 @@ public:
   }
 
   // 0 以上 max_cost 以下の整数重みについて Dial 法で最短路を求める
-  vc<Dist> dial(int s, int max_cost, int t = -1)
+  vc<Dist> dial(int s, int max_cost, int t = -1) { return dial(array<int, 1>{s}, max_cost, t); }
+
+  // 始点集合から、0 以上 max_cost 以下の整数重みについて最短路を求める
+  template <class Starts, class = decltype(begin(declval<const Starts &>()))>
+  vc<Dist> dial(const Starts &s, int max_cost, int t = -1)
   {
     static_assert(is_integral_ext<Dist>);
     const int n = g.size();
-    assert(0 <= s && s < n);
     assert(0 <= max_cost);
     init_solve(s, t);
-    dists.assign(n, inf());
-    prv.assign(n, {});
 
     const int bcnt = max_cost + 1;
     vc<int> head(bcnt, -1), nxt(n, -2), pre(n, -2);
@@ -165,8 +149,7 @@ public:
     };
 
     Dist cur = 0;
-    dists[s] = 0;
-    push(s, 0);
+    for (int v : sources) push(v, 0);
     while (que_size)
     {
       int b = int(cur % bcnt);
@@ -196,16 +179,14 @@ public:
     return dists;
   }
 
-  vc<Dist> dijkstra(int s, int t = -1)
+  vc<Dist> dijkstra(int s, int t = -1) { return dijkstra(array<int, 1>{s}, t); }
+
+  template <class Starts, class = decltype(begin(declval<const Starts &>()))>
+  vc<Dist> dijkstra(const Starts &s, int t = -1)
   {
-    const int n = g.size();
-    assert(0 <= s && s < n);
     init_solve(s, t);
-    dists.assign(n, inf());
-    prv.assign(n, {});
     pql<pair<Dist, int>> pque;
-    dists[s] = 0;
-    pque.push({0, s});
+    for (int v : sources) pque.push({0, v});
     while (!pque.empty())
     {
       auto [d, v] = pque.top();
@@ -227,15 +208,14 @@ public:
     return dists;
   }
 
-  vc<Dist> dijkstra_dense(int s, int t = -1)
+  vc<Dist> dijkstra_dense(int s, int t = -1) { return dijkstra_dense(array<int, 1>{s}, t); }
+
+  template <class Starts, class = decltype(begin(declval<const Starts &>()))>
+  vc<Dist> dijkstra_dense(const Starts &s, int t = -1)
   {
     const int n = g.size();
-    assert(0 <= s && s < n);
     init_solve(s, t);
-    dists.assign(n, inf());
-    prv.assign(n, {});
     vc<bool> ok(n, false);
-    dists[s] = 0;
     repi(_, n)
     {
       Dist mn = inf();
@@ -255,16 +235,15 @@ public:
     return dists;
   }
 
-  vc<Dist> dijkstra_fibonacci(int s, int t = -1)
+  vc<Dist> dijkstra_fibonacci(int s, int t = -1) { return dijkstra_fibonacci(array<int, 1>{s}, t); }
+
+  template <class Starts, class = decltype(begin(declval<const Starts &>()))>
+  vc<Dist> dijkstra_fibonacci(const Starts &s, int t = -1)
   {
     const int n = g.size();
-    assert(0 <= s && s < n);
     init_solve(s, t);
-    dists.assign(n, inf());
-    prv.assign(n, {});
     FibonacciHeap<Dist> que(n);
-    dists[s] = 0;
-    que.push(s, Dist(0));
+    for (int v : sources) que.push(v, Dist(0));
     while (!que.empty())
     {
       const auto [d, v] = que.top();
@@ -287,16 +266,17 @@ public:
 
   // 最短のウォークとして求める (いくらでも小さくなるなら -infty)
   // O(nm)
-  vc<Dist> bellman_ford(int s)
+  vc<Dist> bellman_ford(int s) { return bellman_ford(array<int, 1>{s}); }
+
+  // 始点集合から最短のウォークを求める。いくらでも小さくなる距離は -infty。
+  template <class Starts, class = decltype(begin(declval<const Starts &>()))>
+  vc<Dist> bellman_ford(const Starts &s)
   {
     const int n = g.size();
-    assert(0 <= s && s < n);
     init_solve(s, -1);
-    dists.assign(n, inf());
-    prv.assign(n, {});
-    dists[s] = 0;
     repi(t, 2 * n)
     {
+      bool changed = false;
       repi(v, n)
       {
         if (dists[v] == inf())
@@ -306,6 +286,7 @@ public:
           Dist nd = dists[v] == -inf() ? -inf() : dists[v] + e.cost;
           if (dists[e.to] > nd)
           {
+            changed = true;
             prv[e.to] = e;
             if (t == n - 1)
               dists[e.to] = -inf();
@@ -314,12 +295,29 @@ public:
           }
         }
       }
+      if (!changed) break;
     }
     repi(v, n) if (dists[v] == -inf()) prv[v] = {};
     return dists;
   }
 
-  vc<Dist> solve(int s, int t = -1)
+  // 最短のウォークを求める。到達不能は infty、負閉路の影響を受ける距離は -infty。
+  vc<Dist> spfa(int s) { return spfa(array<int, 1>{s}); }
+
+  // 始点集合から最短のウォークを求める。重複した始点は1つとして扱う。
+  template <class Starts, class = decltype(begin(declval<const Starts &>()))>
+  vc<Dist> spfa(const Starts &s)
+  {
+    init_solve(s, -1);
+    internal::spfa_relax<false>(g, dists, sources, Dist(inf()),
+        [&](int v, const Edge<Cost> &e) { prv[v] = e; });
+    return dists;
+  }
+
+  vc<Dist> solve(int s, int t = -1) { return solve(array<int, 1>{s}, t); }
+
+  template <class Starts, class = decltype(begin(declval<const Starts &>()))>
+  vc<Dist> solve(const Starts &s, int t = -1)
   {
     if constexpr (is_void_v<Cost>)
       return bfs(s, t);
@@ -396,7 +394,7 @@ public:
   // solve(s, t) の後に呼ぶ
   // (sssp の実行で t を指定して打ち切っていても動作する)
   // 有限の最短経路は辺列、距離が ±infty なら nullopt。
-  optional<vc<Edge<Cost>>> path(int t) const
+  optional<vc<Edge<Cost>>> path_edge(int t) const
   {
     const int n = g.size();
     assert(SZ(dists) == n && "solve(s, t) is not called");
@@ -414,15 +412,33 @@ public:
     return rev_path(res);
   }
 
-  // cnt[v] := s から v への最短パスの個数
+  // 有限の最短経路の頂点列。両端を含む。
+  optional<vc<int>> path_vertex(int t) const
+  {
+    const int n = g.size();
+    assert(SZ(dists) == n && "solve(s, t) is not called");
+    assert(0 <= t && t < n);
+    if (dists[t] == inf() || dists[t] == -inf()) return nullopt;
+    vc<int> res{t};
+    while (prv[t].index != -1)
+    {
+      t = prv[t].from;
+      res.eb(t);
+    }
+    reverse(res.begin(), res.end());
+    return res;
+  }
+
+  // cnt[v] := 始点集合から v への最短パスの個数
   // (**sssp の実行で t を指定して打ち切っていてはいけない**)
   template <class mint>
   vc<mint> count_paths() const
   {
     const int n = g.size();
-    assert(SZ(dists) == n && source != -1 && "solve(s) is not called");
+    assert(SZ(dists) == n && "solve(s) is not called");
     assert(solved_all && "solve(s, t) must not stop at t");
-    assert(dists[source] != -inf() && "the shortest-path graph must be finite");
+    for (int s : sources)
+      assert(dists[s] != -inf() && "the shortest-path graph must be finite");
     vc<mint> cnt(n, 0);
     vc<int> indeg(n, 0);
     int active = 0;
@@ -440,7 +456,7 @@ public:
     }
     MyQueue<int> que;
     repi(v, n) if (dists[v] != inf() && dists[v] != -inf() && indeg[v] == 0) que.push(v);
-    cnt[source] = 1;
+    for (int s : sources) if (dists[s] == 0) cnt[s] = 1;
     int processed = 0;
     while (!que.empty())
     {

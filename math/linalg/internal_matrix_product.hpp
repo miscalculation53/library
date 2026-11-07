@@ -3,8 +3,6 @@
 #include "../../ds/csr.hpp"
 #include "../dot_product.hpp"
 
-// C[i][j] = sum_k A[i][k] B[k][j].
-
 namespace internal
 {
 template <class F, int BS, class A, class B, class C>
@@ -116,4 +114,4 @@ void matrix_product(int n, int m, int p, const A &a, const B &b, C &c)
               c[i][j] = F::add(c[i][j], F::mul(x, b[k][j]));
           }
 }
-} // namespace internal
+}

@@ -89,7 +89,7 @@ $$d_r=\min\left(D,p-1,\left\lfloor\frac{N-r}{r+1}\right\rfloor-1\right)$$
 実際に探索する位数の最大値を $S\le R$、位数 $r$ の未知係数数を $C_r=(r+1)(d_r+1)$ とする。
 
 - 位数 $r$ 一つの探索は $O((N-r)C_r^2)$
-- 全体で $O\left(\sum_{r=1}^{S}(N-r)C_r^2\right)\subseteq O\bigl(NS^3(D+1)^2\bigr)$
+- 全体で $O\left(\sum_{r=1}^{S}(N-r)C_r^2\right)\subseteq O\bigl(NS^3D^2\bigr)$
 
 $N=O(C_r)$ 程度の初期項を使う場合、一つの位数の探索は $O(C_r^3)$ となる。
 
@@ -117,7 +117,7 @@ $$a_{n+r}=-\frac{\sum_{j=0}^{r-1}c_j(n)a_{n+j}}{c_r(n)}$$
 
 ##### 計算量
 
-- $N=\max(0,\texttt{size}-\lvert a\rvert)$ として $O\bigl(\lvert a\rvert+Nr(d+1)\bigr)$
+- $N=\max(0,\texttt{size}-\lvert a\rvert)$ として $O\bigl(\lvert a\rvert+Nrd\bigr)$
 
 #### p_recursive_nth
 

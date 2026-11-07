@@ -140,10 +140,10 @@ int parent(int v)
 
 - $O(1)$
 
-#### path_to_root
+#### path_vertex_to_root
 
 ```cpp
-vc<int> path_to_root(int v)
+vc<int> path_vertex_to_root(int v)
 ```
 
 `v` から根までのパス上の頂点を、`v` から根へ向かう順に返す。両端を含む。
@@ -156,10 +156,10 @@ vc<int> path_to_root(int v)
 
 - 時間：$O(\mathrm{depth}(v))$
 
-#### path
+#### path_vertex
 
 ```cpp
-vc<int> path(int u, int v)
+vc<int> path_vertex(int u, int v)
 ```
 
 `u` から `v` までのパス上の頂点を順に返す。両端を含む。

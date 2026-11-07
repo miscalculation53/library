@@ -42,7 +42,6 @@ private:
       return res;
     }
 
-    // coeff[j] は (bt+c)^k の t^j の係数。
     array<U, D + 1> coeff{};
     coeff[0] = U(1);
     repi(k, 1, D + 1)

@@ -23,7 +23,6 @@ struct larger_int
 private:
   static constexpr bool check()
   {
-    // 型エイリアス経由でも、128 ビット整数を入力にしたときだけ警告する。
     if constexpr (is_same_v<T, i128> || is_same_v<T, u128>)
       return larger_int_detail::warn_no_wider_integer<T>();
     return true;

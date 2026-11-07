@@ -32,7 +32,6 @@ public:
     pow2.resize(n + 1);
     repi(i, s, n + 1) pow2[i] = pow2[i - 1] + pow2[i - 1];
 
-    // table[i][j] = sum_{k=0}^{j*B} C(i*B, k)
     s = table.size();
     table.resize(n / B + 1);
     repi(i, s, table.size())

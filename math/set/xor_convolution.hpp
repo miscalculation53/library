@@ -24,8 +24,6 @@ void hadamard_abel_group_destructive(vc<typename G::S> &a)
   {
     if (len >= 1024)
     {
-      // 各中間値は入力の高々 len 項の符号付き和。
-      // len <= INT_MAX, mod < 2^31 より絶対値は 2^62 未満。
       vc<ll> b(len);
       repi(i, len) b[i] = a[i].val();
       for (int d = 1; d < len; d *= 2)

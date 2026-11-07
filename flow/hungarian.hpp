@@ -79,7 +79,6 @@ private:
                 "Cost must be a signed integer type");
   using U = make_unsigned_ext_t<Cost>;
 
-  // 相殺を含む加減算は同じ幅の符号なし型で計算する。
   static Cost difference(Cost x, Cost y) { return Cost(U(x) - U(y)); }
 
   // 2項の和を、符号付き型の範囲外でも正確に比較する。
@@ -108,7 +107,7 @@ private:
   bool ordered_matching(int n, int m, const vc<const Input *> &a)
   {
     if (n != m) return false;
-    int directions = 3; // bit 0: Monge、bit 1: 逆 Monge。
+    int directions = 3;
     for (int i = 1; i < n; i++) for (int j = 1; j < n; j++)
     {
       const int order = minor_order(a[i - 1][j - 1], a[i][j], a[i - 1][j], a[i][j - 1]);
@@ -138,7 +137,6 @@ private:
     free_rows.reserve(n);
     if (n < m)
     {
-      // 列ポテンシャルを 0 に保ち、行最小値で競合しない割当を作る。
       using ScanCost = conditional_t<numeric_limits<Input>::is_integer, Input, Cost>;
       for (int i = 0; i < n; i++)
       {
@@ -153,7 +151,6 @@ private:
       return free_rows;
     }
 
-    // lap の column reduction / reduction transfer。行優先で列最小値を得る。
     for (int j = 0; j < m; j++) col_potential[j] = Cost(a[0][j]), col_to_row[j] = 0;
     for (int i = 1; i < n; i++) for (int j = 0; j < m; j++)
       if (Cost(a[i][j]) < col_potential[j]) col_potential[j] = Cost(a[i][j]), col_to_row[j] = i;
@@ -177,8 +174,6 @@ private:
       }
     }
 
-    // lap の augmenting row reduction。追い出した行をすぐ再処理する。
-    // 各巡回を n 回の行走査で打ち切り、初期化を O(nm) に保つ。
     vc<int> deferred;
     deferred.reserve(n);
     for (int pass = 0; pass < 2 && !free_rows.empty(); pass++)

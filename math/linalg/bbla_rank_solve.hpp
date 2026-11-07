@@ -43,7 +43,7 @@ vc<typename F::S> inverse_action(const LinearMap &linear_map,
   for (auto &x : p) x = F::mul(x, scale);
   return apply_polynomial<F>(linear_map, b, p);
 }
-} // namespace detail
+}
 
 // apply: S^cols -> S^rows, transpose: S^rows -> S^cols（ともに破壊的）。
 // Monte Carlo: 過小評価することがある。trials 回の最大を返す。
@@ -98,7 +98,6 @@ struct LinearSolution
 };
 
 // 特異・長方形も可。解があれば一つ、なければ不整合の証明ベクトルを返す。
-// 解・証明は毎回検算する。失敗した乱択は再試行する。
 // 1 試行 O(d*(rows+cols+T)) 時間、O(rows+cols) 空間、d=min(rows,cols)。
 template <class F, class LinearMap, class TransposeMap,
           class RandomSample = decltype(random_sample_mint<typename F::S>)>
@@ -121,14 +120,14 @@ LinearSolution<typename F::S> solve_general(int rows, int cols, const LinearMap 
     auto dc = detail::random_diagonal<F>(cols, random_sample);
     auto gram = [&](vc<S> &v)
     {
-      if (cols <= rows) // D_c A^T D_r A
+      if (cols <= rows)
       {
         apply(v);
         detail::scale_diagonal<F>(v, dr);
         transpose(v);
         detail::scale_diagonal<F>(v, dc);
       }
-      else // A D_c A^T D_r
+      else
       {
         detail::scale_diagonal<F>(v, dr);
         transpose(v);
@@ -164,7 +163,6 @@ LinearSolution<typename F::S> solve_general(int rows, int cols, const LinearMap 
     }
     else
     {
-      // 行側 Gram の零固有成分から左核の候補を得る。
       if (cols <= rows) continue;
       vc<S> p(m.begin() + 1, m.end());
       witness = apply_polynomial<F>(gram, b, p);
@@ -177,4 +175,4 @@ LinearSolution<typename F::S> solve_general(int rows, int cols, const LinearMap 
     if (detail::is_zero<F>(atw)) return {false, {}, move(witness)};
   }
 }
-} // namespace bbla
+}

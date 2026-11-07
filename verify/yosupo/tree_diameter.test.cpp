@@ -27,12 +27,14 @@ void main2()
   ZIP(AB, A, B);
   RootedTree G(N, AB, 0);
 
-  auto [a, b, Ga, Da] = tree_diameter_weighted(N, AB, C);
-  auto path = G.path(b, a);
-  auto path2 = Ga.path_to_root(b);
+  Diameter diameter(N, AB, C);
+  auto [a, b] = diameter.endpoints();
+  const RootedTree Ga(N, AB, a);
+  auto path = G.path_vertex(b, a);
+  auto path2 = Ga.path_vertex_to_root(b);
   dump(path, path2);
   assert(path == path2);
-  PRINT(Da[b], SZ(path));
+  PRINT(diameter.length(), SZ(path));
   PRINT(path);
 }
 

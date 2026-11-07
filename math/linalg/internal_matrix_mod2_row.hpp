@@ -2,8 +2,6 @@
 
 #include "../../ds/dynamic_bitset.hpp"
 
-// Packed bit references and non-owning matrix rows.
-
 namespace internal
 {
 struct matrix_bit_reference
@@ -183,4 +181,4 @@ template <bool Const> bool operator==(const DynamicBitset &a, const matrix_mod2_
 {
   return b == a;
 }
-} // namespace internal
+}

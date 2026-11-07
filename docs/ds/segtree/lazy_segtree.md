@@ -43,7 +43,7 @@ X prod_apply(int l, int r, X x, G&& apply)
 
 ##### 計算量
 
-- 作用と代入が $O(T)$、遅延作用の伝播が $O(1)$ として $O((T+1)\log n)$
+- 作用と代入が $O(T)$、遅延作用の伝播が $O(1)$ として $O(T\log n)$
 - Beats では、遅延作用の失敗に伴う再構築の時間を加える
 
 #### max_right_ok

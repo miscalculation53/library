@@ -78,7 +78,6 @@ struct Access
   }
 };
 
-// top/pop を持つヒープを、固定した一端の操作として公開する。
 template <class C, class Compare, bool Back, bool ReverseInput>
 struct SingleEndedQueue
 {
@@ -140,7 +139,7 @@ template <class C, class Order, bool CurrentBack, bool ReverseInput, class Compa
 struct ContainerForEnd<SingleEndedQueue<C, Order, CurrentBack, ReverseInput>, Compare, Back>
     : ContainerForEnd<C, Compare, Back> {};
 
-} // namespace priority_container_detail
+}
 
 template <class Container,
           class M = typename priority_container_detail::NativeMonoid<Container>::type,

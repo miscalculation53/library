@@ -30,11 +30,9 @@ private:
   vc<Node> nodes{1};
   vc<Skip> skips;
   vc<int> free_skips;
-  // A leaf is promoted only when public modify exposes a reference to its value.
   deque<S> stable_values;
   Key lazy = 0;
 
-  // Keep a short unused gap when a newly allocated node group crosses a boundary.
   int append_nodes(int count)
   {
     int first = nodes.size();
@@ -122,7 +120,6 @@ private:
     return -index - 2;
   }
 
-  // The target is an existing node at target_bit; build only the skipped prefix.
   int connect_segment(Key exemplar, int upper, int target_bit, int target)
   {
     const int length = upper - target_bit;
@@ -218,7 +215,6 @@ private:
     return edge == -1 ? M::e() : edge_sum(edge, bit);
   }
 
-  // The prefix contains exactly the already selected raw-key bits.
   void follow(int edge, int &node, int &bit, UKey &prefix) const
   {
     if (edge >= 0) node = edge;
@@ -411,7 +407,6 @@ public:
     const int leaf = ensure_leaf(a, path, length);
     if constexpr (is_integral_v<S>)
     {
-      // Before any mutable reference is exposed, equal values preserve all aggregates.
       if (stable_values.empty() && leaf_value(leaf) == x) return;
     }
     leaf_value(leaf) = x;
@@ -428,7 +423,6 @@ public:
     const int leaf = ensure_leaf(a, path, length);
     for (int i = 0; i < length; ++i)
       nodes[path[i].node].sum = M::op(nodes[path[i].node].sum, x);
-    // Update the leaf last so x can refer to this same leaf.
     S &value = leaf_value(leaf);
     value = M::op(value, x);
   }

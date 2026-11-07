@@ -2,9 +2,7 @@
 
 #include "../../template/template_all_but_modint.hpp"
 
-#include "shift_of_sampling_points.hpp"
-
-// Precomputation using finite-field interpolation, polynomial products, and convolution.
+#include "../convolution/convolution.hpp"
 
 #include <algorithm>
 #include <cassert>
@@ -15,7 +13,7 @@
 #include "internal_factorial_tail_product.hpp"
 
 namespace factorial_many_detail {
-template<class mint>
+template<class mint, bool NttOnly = false>
 std::vector<mint> convolution_reused(const std::vector<mint>& left,
                                      const std::vector<mint>& right) {
     if (left.empty() || right.empty()) return {};
@@ -29,8 +27,14 @@ std::vector<mint> convolution_reused(const std::vector<mint>& left,
     const std::size_t width = last-first;
     std::size_t transform = 1;
     while (transform < width*8) transform *= 2;
-    if (width <= 8 || large.size() < transform || !ntt_ok<mint>(int(transform)))
-        return ::convolution(left,right);
+    if (width <= 8) {
+        if constexpr (NttOnly) return internal::convolution_naive(left,right);
+        else return ::convolution(left,right);
+    }
+    if (large.size() < transform || !ntt_ok<mint>(int(transform))) {
+        if constexpr (NttOnly) return ::ntt_convolution(left,right);
+        else return ::convolution(left,right);
+    }
     std::vector<mint> frequency(transform), work(transform), result(total);
     std::copy(small.begin()+first,small.begin()+last,frequency.begin());
     ::ntt(frequency);
@@ -50,7 +54,7 @@ std::vector<mint> convolution_reused(const std::vector<mint>& left,
 }
 
 // v[j] is a polynomial of degree at most v.size()-1 evaluated at j.
-// Compute that polynomial at start,start+1,... with finite-field zero handling.
+// Compute that polynomial at start,start+1,... .
 template<class Field, class Convolution, class Inverse, class Canonical>
 std::vector<Field> shift(const std::vector<Field>& v, Field start, std::size_t count,
                          const std::vector<Field>& inverse_factorials,
@@ -117,9 +121,6 @@ std::vector<Field> build(std::uint64_t prime, std::uint64_t block, Convolution c
     for (std::size_t j = degree_limit; j; --j)
         inverse_factorials[j-1] = inverse_factorials[j] * Field(j);
     const Field inverse_block = inverse(Field(block));
-    // H_d(t*block)=product_{j=0}^{d-1}(t*block+j), t=0,...,d.
-    // The known zero at t=0 lets each doubling request exactly 2d new
-    // shifted evaluations, keeping a full convolution length at 4d.
     std::vector<Field> values{Field(0),Field(block)};
     for (std::size_t d = 1; d < degree_limit; d *= 2) {
         const auto extra = shift(values,Field(d+1),d,inverse_factorials,convolution,inverse,canonical);
@@ -141,7 +142,7 @@ std::vector<Field> build(std::uint64_t prime, std::uint64_t block, Convolution c
     return anchors;
 }
 
-} // namespace factorial_many_detail
+}
 
 /**
  * @brief 高速階乗・等差数列の積
@@ -163,8 +164,8 @@ private:
   int k;
   vc<mint> y, z, fac;
 
-public:
-  Factorial(int k_ = -1)
+  template<bool NttOnly>
+  void initialize(int k_)
   {
     if (k_ == -1) k_ = ntt_ok<mint>(1 << 22) ? 9 : 11;
     assert(k_ >= 0);
@@ -176,7 +177,7 @@ public:
     auto inverse = [](mint x) { return x.inv(); };
     auto canonical = [](mint x) { return std::uint64_t(x.val()); };
     auto multiply = [](const std::vector<mint>& a,const std::vector<mint>& b) {
-      return factorial_many_detail::convolution_reused(a,b);
+      return factorial_many_detail::convolution_reused<mint,NttOnly>(a,b);
     };
     const std::size_t usable = std::size_t((prime-1)/block);
     const bool reflect = (prime-1)%block == 0;
@@ -185,7 +186,6 @@ public:
     for (std::size_t q = 1; q < fac.size(); ++q) fac[q] *= mint(std::uint64_t(q)*block);
     if (reflect)
     {
-      // Wilson: (qB)! ((p-1-qB)!) = (-1)^(qB+1).
       std::vector<mint> prefix(fac.size()+1,mint(1));
       for (std::size_t q = 0; q < fac.size(); ++q) prefix[q+1] = prefix[q]*fac[q];
       mint all_inverse = prefix.back().inv();
@@ -199,6 +199,14 @@ public:
       }
     }
   }
+public:
+  Factorial()
+  {
+    if constexpr (ntt_ok<mint>(1 << 22)) initialize<true>(9);
+    else initialize<false>(11);
+  }
+  Factorial(int k_) { initialize<false>(k_); }
+
   mint factorial(ll n) const
   {
     assert(n >= 0);
@@ -239,13 +247,11 @@ public:
     if (c == 0 || n > p - c) return 0;
     const ll l = c - 1, r = c + n - 1, block = 1LL << k;
     const ll last = (p - 1) >> k;
-    // R と p-1-L を B の倍数にする。既存の階乗表だけで R!/L! を得る。
     const ll L = p - 1 - (min(last, (p - c + block / 2) >> k) << k);
     const ll R = min(last, (r + block / 2) >> k) << k;
     if (n <= abs(L - l) + abs(R - r)) return direct();
     mint res = fac[R >> k] * fac[(p - 1 - L) >> k], den = 1;
     if (L % 2 == 0) res = -res;
-    // 内側の区切りなら掛け足し、外側なら余分な因子を分母にまとめる。
     mint tail = 1;
     for (ll j = min(L, l) + 1; j <= max(L, l); ++j) tail *= mint::raw(j);
     if (L < l) den *= tail;

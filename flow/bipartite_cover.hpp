@@ -36,7 +36,7 @@ vc<int> bipartite_vertex_cover(const GraphUndirected<Cost, is_erasable> &g,
       if (v == mate[u] || reached[v]) continue;
       reached[v] = true;
       const int w = mate[v];
-      assert(w != -1); // 最大マッチングなので増加路は存在しない。
+      assert(w != -1);
       if (!reached[w]) reached[w] = true, queue.eb(w);
     }
   }

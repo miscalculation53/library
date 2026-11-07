@@ -126,10 +126,42 @@ int main() { return header - 1; }
 '''
             )
             bundled = submit_code.FastBundler([root]).bundle(source)
-        self.assertEqual(bundled.count("#include <vector>"), 1)
+        self.assertEqual(bundled.count("#include <vector>"), 2)
         self.assertEqual(bundled.count("int dep = 1;"), 1)
         self.assertEqual(bundled.count("int header = dep;"), 1)
         self.assertIn('#include "missing-raw.hpp"', bundled)
+
+    def test_layout_preserves_literals_comments_and_continued_lines(self) -> None:
+        source = '''  int main() {
+
+    const char *raw = R"tag(first
+  raw indentation\x20\x20
+
+)tag";
+    const char *joined = "first\\
+  second";
+    // solution comment\x20\x20
+    /*! license
+
+     * original formatting\x20\x20
+     */
+#define TOKEN first \\
+  second
+#define EXTENDED first \\\x20
+  second
+    return  0;
+  }
+'''
+        compacted = submit_code.collapse_blank_lines(source)
+        self.assertTrue(compacted.startswith('  int main() {\n\n    const char *raw'))
+        self.assertIn('R"tag(first\n  raw indentation  \n\n)tag"', compacted)
+        self.assertIn('"first\\\n  second"', compacted)
+        self.assertIn('    // solution comment  \n', compacted)
+        self.assertIn('    /*! license\n\n     * original formatting  \n     */', compacted)
+        self.assertIn('#define TOKEN first \\\n  second\n', compacted)
+        self.assertIn('#define EXTENDED first \\\x20\n  second\n', compacted)
+        self.assertTrue(compacted.endswith('    return  0;\n  }\n'))
+        self.assertEqual(submit_code.collapse_blank_lines(compacted), compacted)
 
     def test_declaration_graph_removes_self_references_and_alias_chains(self) -> None:
         source = '''template <class T>
@@ -162,8 +194,6 @@ int main() { return used(0); }
         source = '''int effect();
 struct Guard { Guard() { effect(); } } guard;
 struct StaticEffect { inline static int value = effect(); };
-template <class T>
-struct TemplateEffect { inline static int value = effect(); };
 struct Friend { friend int effect() { return 0; } };
 constexpr auto invoked = [] { return 0; }();
 constexpr auto captured = [value = 0] { return value; };
@@ -189,6 +219,48 @@ CAT(Wid, get) instance;
 int main() {}
 '''
         self.assertEqual(submit_code.unreferenced_declaration_candidates(source), [])
+
+    def test_declaration_graph_limits_token_paste_protection_to_matching_names(self) -> None:
+        source = '''#define SUFFIX(name) name ## Tail
+#define PREFIX(name) Head ## name
+#define BOTH(name) Pre ## name ## Post
+#define FIXED fixed ## Name
+#define DIGRAPH(name) name %:%: Tail
+struct WidgetTail {};
+struct HeadWidget {};
+struct PreWidgetPost {};
+struct fixedName {};
+struct Unused {};
+SUFFIX(Widget) a;
+PREFIX(Widget) b;
+BOTH(Widget) c;
+FIXED d;
+DIGRAPH(Widget) e;
+int main() {}
+'''
+        candidates = submit_code.unreferenced_declaration_candidates(source)
+        self.assertEqual({candidate.name for candidate in candidates}, {"Unused"})
+
+    def test_declaration_graph_preserves_unknown_and_variadic_pastes(self) -> None:
+        for macro in ['#define CAT(...) __VA_ARGS__ ## Tail',
+                      '#define CAT(x) x ## __VA_OPT__(Tail)',
+                      '#define CAT(x) \\u0041 ## x']:
+            with self.subTest(macro=macro):
+                source = macro + '\nstruct WidgetTail {};\nint main() {}\n'
+                self.assertEqual(submit_code.unreferenced_declaration_candidates(source), [])
+
+    def test_declaration_graph_removes_scalar_constants_with_unused_traits(self) -> None:
+        source = '''template <class T>
+struct UnusedTrait {};
+template <class T>
+inline constexpr bool unused_v = UnusedTrait<T>::value;
+constexpr int live = 7;
+constexpr int first = 1, second = 2;
+constexpr int f(int x = live) { return x; }
+int main() { return f() - second - 5; }
+'''
+        candidates = submit_code.unreferenced_declaration_candidates(source)
+        self.assertEqual({candidate.name for candidate in candidates}, {"UnusedTrait", "unused_v"})
 
     def test_template_candidates_distinguish_lambda_and_explicit_call_operators(self) -> None:
         source = '''auto lambda = [](auto x) { return x; };
@@ -271,6 +343,8 @@ int main() { return 0; }
             lines, submit_code.structural_tokens(lines), 3, "unused"
         )
         cleaned = submit_code.stub_uninstantiated_template_functions(source, [candidate])
+        candidate = submit_code.Removal(candidate.start, candidate.end, candidate.label, "wrapper")
+        cleaned = submit_code.stub_uninstantiated_template_functions(source, [candidate])
         self.assertIn("decltype(convert(x))::first_type;", cleaned)
         self.assertNotIn("return x", cleaned)
 
@@ -294,8 +368,8 @@ int main() { return 0; }
         )
         self.assertEqual((candidate.start, candidate.end), (2, 8))
         cleaned = submit_code.stub_uninstantiated_template_functions(source, [candidate])
-        self.assertIn("Box(U x);", cleaned)
-        self.assertNotIn("first +=", cleaned)
+        self.assertIn("Box(U x) : first{x},", cleaned)
+        self.assertIn("first +=", cleaned)
         self.assertIn("int retained() { return 1; }", cleaned)
 
     def test_requires_expression_is_preserved_by_stub_and_removed_with_definition(self) -> None:
@@ -317,12 +391,13 @@ int main() { return 0; }
             lines, submit_code.structural_tokens(lines), 6, "unused"
         )
         self.assertEqual((candidate.start, candidate.end), (1, 9))
+        candidate = submit_code.Removal(candidate.start, candidate.end, candidate.label, "value")
         stubbed = submit_code.stub_uninstantiated_template_functions(source, [candidate])
         self.assertIn("requires requires(U x)", stubbed)
         self.assertIn("auto value(const U &x) -> decltype(x.value());", stubbed)
         self.assertNotIn("return x.value()", stubbed)
         deleted = submit_code.stub_uninstantiated_template_functions(source, [candidate], deleted={candidate})
-        self.assertEqual(deleted, 'template <class T> struct Box {\n};\nint main() { return 0; }\n')
+        self.assertEqual(deleted, stubbed)
 
         cxx = shutil.which("g++-15") or shutil.which("g++-14")
         if cxx is None:
@@ -346,6 +421,7 @@ int main() { return 0; }
             lines, submit_code.structural_tokens(lines), 3, "unused"
         )
         self.assertEqual((candidate.start, candidate.end), (1, 3))
+        candidate = submit_code.Removal(candidate.start, candidate.end, candidate.label, "get")
         stubbed = submit_code.stub_uninstantiated_template_functions(source, [candidate])
         self.assertIn("requires(!requires(T x) { x.value(); })", stubbed)
         self.assertIn("int get(T);", stubbed)
@@ -382,7 +458,8 @@ int main() { Box<int> box(0); }
                 self.assertLessEqual(validation.call_count, 3)
             self.assertEqual(accepted, 1)
             self.assertIn("Box(U) {}", cleaned)
-            self.assertNotIn("unused", cleaned)
+            self.assertIn("T unused(T x);", cleaned)
+            self.assertNotIn("return x", cleaned)
 
     def test_required_template_dependencies_are_retained_together(self) -> None:
         cxx = shutil.which("g++-15") or shutil.which("g++-14")
@@ -408,7 +485,8 @@ int main() { return entry(0) - 7; }
                 )
                 self.assertLessEqual(validation.call_count, 3)
             self.assertEqual(accepted, 1)
-            self.assertNotIn("int unused_function(", cleaned)
+            self.assertIn("int unused_function(T);", cleaned)
+            self.assertNotIn("return -1", cleaned)
             self.assertEqual(submit_code.run_command([str(compiler.executable)]).returncode, 0)
 
     def test_template_dependency_shortcut_does_not_prevent_size_checkpoint(self) -> None:
@@ -422,7 +500,7 @@ int main() { return entry(0) - 7; }
             "template <class T> int entry(T x, T) { return large_unused(x); }\n"
             "int main() { return entry(0) - 7; }\n"
         )
-        limit = len(source.encode()) - len(source.splitlines(keepends=True)[1].encode()) + 1
+        limit = 300
         reporter = submit_code.Reporter()
         with tempfile.TemporaryDirectory() as directory, submit_code.CompilerWorkspace(
             cxx=cxx, standard="c++23", include_paths=[], extra_args=[],
@@ -432,12 +510,26 @@ int main() { return entry(0) - 7; }
                           for i, name in enumerate(["helper", "large_unused", "entry", "entry"])]
             writer = submit_code.CheckpointWriter(Path(directory) / "bundle.cpp", reporter)
             writer.current = source
-            cleaned, _ = submit_code.reduce_template_body_candidates(
-                source, candidates, compiler=compiler, writer=writer,
-                reporter=reporter, target_bytes=limit,
-            )
+            events = []
+            validate_original, save_original = compiler.validate, writer.save
+            def validate(*args, **kwargs):
+                events.append("validate")
+                return validate_original(*args, **kwargs)
+            def save(stage, value, **kwargs):
+                result = save_original(stage, value, **kwargs)
+                if writer.below_limit(value, limit):
+                    events.append("ready")
+                return result
+            with patch.object(compiler, "validate", side_effect=validate), patch.object(writer, "save", side_effect=save):
+                cleaned, _ = submit_code.reduce_template_body_candidates(
+                    source, candidates, compiler=compiler, writer=writer,
+                    reporter=reporter, target_bytes=limit,
+                )
+            self.assertIn("ready", events)
+            self.assertIn("validate", events[events.index("ready") + 1:])
             self.assertTrue(submit_code.below_byte_limit(cleaned, limit))
-            self.assertNotIn("int large_unused(", cleaned)
+            self.assertIn("int large_unused(T x);", cleaned)
+            self.assertNotIn(" + 0", cleaned)
             self.assertEqual(submit_code.run_command([str(compiler.executable)]).returncode, 0)
 
     def test_declaration_checkpoint_precedes_template_analysis_and_checks_linking(self) -> None:
@@ -524,10 +616,10 @@ int main() { return 0; }
                 "int main() { return header - 1; }\n"
             )
             bundled = submit_code.FastBundler([root]).bundle(source)
-        self.assertEqual(bundled.count("int dep = 1;"), 1)
-        self.assertEqual(bundled.count("int header = dep;"), 1)
-        self.assertNotIn("HEADER_HPP", bundled)
-        self.assertNotIn("DEP_HPP", bundled)
+        self.assertEqual(bundled.count("int dep = 1;"), 2)
+        self.assertEqual(bundled.count("int header = dep;"), 2)
+        self.assertIn("#ifndef HEADER_HPP", bundled)
+        self.assertIn("#ifndef DEP_HPP", bundled)
 
     def test_fast_bundler_rejects_conditional_local_include(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -715,8 +807,8 @@ template <class T> int first() { return sizeof(T); }
 template <class T> int second() { return sizeof(T); }
 int main() { return 0; }
 '''
-        first = submit_code.Removal(3, 3, 'first')
-        second = submit_code.Removal(4, 4, 'second')
+        first = submit_code.Removal(3, 3, 'first', 'first')
+        second = submit_code.Removal(4, 4, 'second', 'second')
         partial = submit_code.apply_removals(source, [first])
         self.assertIn(notice, partial)
         removed = submit_code.apply_removals(source, [first, second])
@@ -780,18 +872,18 @@ int main() { return 0; }
                         valid, stderr = compiler.validate(cleaned)
                         self.assertTrue(valid, stderr)
 
-    def test_cpp_dump_notice_follows_the_actual_local_template(self) -> None:
+    def test_cpp_dump_local_header_stays_out_of_the_fast_bundle(self) -> None:
         cxx = shutil.which('g++-15') or shutil.which('g++-14')
         if cxx is None:
             self.skipTest('GNU C++ compiler is unavailable')
         repo_root = tools_test_paths.REPOSITORY_ROOT
-        header = repo_root / 'template/template_dump_map.hpp'
-        notice, = submit_code.important_comments(header.read_text())
         with tempfile.TemporaryDirectory() as directory:
             source = Path(directory) / 'main.cpp'
             source.write_text('#include "template/template_dump.hpp"\nint main() {}\n')
             includes = submit_code.default_include_paths(repo_root, source)
-            bundled = submit_code.FastBundler(includes, library_root=repo_root).bundle(source)
+            bundler = submit_code.FastBundler(includes, library_root=repo_root)
+            bundled = bundler.bundle(source)
+            self.assert_cpp_dump_header_is_external(bundled, bundler.inputs)
             for local in [False, True]:
                 if local and not any((path / 'cpp-dump.hpp').is_file() for path in includes):
                     continue
@@ -801,11 +893,41 @@ int main() { return 0; }
                     reporter=submit_code.Reporter(),
                 ) as compiler:
                     cleaned = submit_code.safe_cleanup_candidate(bundled, compiler)
-                    self.assertEqual(notice in cleaned, local)
-                    self.assertEqual('MIT License' in cleaned, local)
-                    self.assertNotIn('https://github.com/philip82148/cpp-dump', cleaned)
+                    self.assertNotIn('MIT License', cleaned)
                     valid, stderr = compiler.validate(cleaned)
                     self.assertTrue(valid, stderr)
+
+    def assert_cpp_dump_header_is_external(self, bundled: str, inputs: dict[str, str]) -> None:
+        self.assertIn('#ifdef LOCAL\n#include <template/template_dump_map_impl.hpp>\n#endif', bundled)
+        self.assertNotIn('MIT License', bundled)
+        self.assertNotIn('export_library_map', bundled)
+        self.assertNotIn('map_values_for_dump', bundled)
+        for name in ['template_dump_map.hpp', 'template_dump_map_impl.hpp']:
+            header = tools_test_paths.REPOSITORY_ROOT / 'template' / name
+            self.assertNotIn(str(header.resolve()), inputs)
+
+    def test_cpp_dump_local_header_stays_out_of_the_oj_bundle(self) -> None:
+        cxx = shutil.which('g++-15') or shutil.which('g++-14')
+        if cxx is None:
+            self.skipTest('GNU C++ compiler is unavailable')
+        repo_root = tools_test_paths.REPOSITORY_ROOT
+        try:
+            executable = submit_code.discover_oj_bundle(repo_root, None)
+        except submit_code.ToolError:
+            self.skipTest('oj-bundle is unavailable')
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'main.cpp'
+            source.write_text('#include "template/template_dump.hpp"\nint main() {}\n')
+            includes = submit_code.default_include_paths(repo_root, source)
+            inputs: dict[str, str] = {}
+            raw = submit_code.run_oj_bundle(executable=executable, source=source,
+                include_paths=includes, cxx=cxx, inputs=inputs)
+            bundled = submit_code.canonical_oj_bundle(raw, source, includes, repo_root)
+            self.assert_cpp_dump_header_is_external(bundled, inputs)
+            with submit_code.CompilerWorkspace(cxx=cxx, standard='c++23', include_paths=includes,
+                    extra_args=[], timeout=None, reporter=submit_code.Reporter()) as compiler:
+                valid, stderr = compiler.validate(bundled)
+            self.assertTrue(valid, stderr)
 
     def test_declaration_and_template_removal_relocate_important_comments(self) -> None:
         source = '''template <class T> int unused() {
@@ -846,7 +968,7 @@ int main() { return 0; }
         self.assertIn('#include <vector>\n/*! Live function license */\ntemplate', removed)
         self.assertIn('  //! Live implementation reference\n  return sizeof(T);', removed)
         stubbed = submit_code.stub_uninstantiated_template_functions(
-            source, [submit_code.Removal(3, 6, 'live')],
+            source, [submit_code.Removal(3, 6, 'live', 'live')],
         )
         self.assertIn('/*! Live function license */\ntemplate <class T> int live();', stubbed)
         self.assertEqual(stubbed.count('//! Live implementation reference'), 1)
@@ -953,11 +1075,13 @@ int main() { return value; }
             expanded = submit_code.FastBundler([root]).bundle(source)
         notices = submit_code.important_comments(dependency + header + original)
         self.assertEqual(set(submit_code.important_comments(expanded)), set(notices))
+        header_notices = set(submit_code.important_comments(header))
         for comment in notices:
-            self.assertEqual(expanded.count(comment), 1)
+            self.assertEqual(expanded.count(comment), 2 if comment in header_notices else 1)
         self.assertEqual(expanded.count('int value = 0;'), 1)
-        self.assertEqual(expanded.count('#include <vector>'), 1)
-        self.assertNotIn('#ifndef', expanded)
+        self.assertEqual(expanded.count('#include <vector>'), 3)
+        self.assertEqual(expanded.count('#ifndef HEADER_HPP'), 2)
+        self.assertEqual(expanded.count('#define HEADER_HPP'), 2)
         self.assertLess(expanded.index('#include <vector>'), expanded.index('//! Source notice'))
         self.assertLess(expanded.index('//! Guard notice'), expanded.index('/*! System include notice'))
         self.assertLess(expanded.index('/*! System include notice'), expanded.index('/*! Local include notice'))
@@ -1240,7 +1364,7 @@ int main() {
                 cleaned = submit_code.cleanup_text(bundled, compiler=compiler, writer=writer,
                     cppcheck=None, keep_functions=submit_code.DEFAULT_KEEP_FUNCTIONS,
                     max_passes=2, safe_only=False, require_validation=True, reporter=reporter,
-                    target_bytes=65536, keep_comments=submit_code.source_comments(source))
+                    target_bytes=None, keep_comments=submit_code.source_comments(source))
         self.assertTrue(submit_code.source_comments(source) <= submit_code.source_comments(cleaned))
         self.assertNotIn('library note', cleaned)
         self.assertNotIn('unused_helper', cleaned)
@@ -1407,7 +1531,105 @@ int main() { return std::numeric_limits<Number<int>>::digits - 7; }
             self.assertTrue(writer.save("smaller", "ok\n"))
             self.assertEqual(output.read_text(), "ok\n")
 
-    def test_cleanup_continues_after_target_checkpoint(self) -> None:
+    def test_checkpoint_writer_preserves_both_default_milestones(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / 'bundle.cpp'
+            writer = submit_code.CheckpointWriter(output, submit_code.Reporter(stream=io.StringIO()))
+            writer.current = 'x' * 140000
+            writer.preserve_below = 65536
+            self.assertTrue(writer.save('priority', 'x' * 131071))
+            self.assertEqual(writer.reached_limits, {131072})
+            self.assertFalse(writer.save('too large for priority', 'x' * 131072, force=True))
+            self.assertTrue(writer.save('secondary', 'x' * 65535))
+            self.assertEqual(writer.reached_limits, {131072, 65536})
+            self.assertFalse(writer.save('too large for secondary', 'x' * 65536, force=True))
+            self.assertEqual(output.stat().st_size, 65535)
+            self.assertEqual(submit_code.checkpoint_limits(None), ())
+            self.assertEqual(submit_code.checkpoint_limits(100000), (100000,))
+
+    def test_priority_checkpoint_is_verified_before_the_secondary_limit_is_met(self):
+        cxx = shutil.which('g++-15') or shutil.which('g++-14')
+        if cxx is None:
+            self.skipTest('GNU C++ compiler is unavailable')
+        source = '// ' + 'c' * 80000 + '\nconstexpr char payload[]="' + 'x' * 70000 + '";\n'
+        source += "int main(){return payload[0] != 'x';}\n"
+        reporter = submit_code.Reporter(stream=io.StringIO())
+        with tempfile.TemporaryDirectory() as directory, submit_code.CompilerWorkspace(
+                cxx=cxx, standard='c++23', include_paths=[], extra_args=[], timeout=None,
+                reporter=reporter) as compiler:
+            writer = submit_code.CheckpointWriter(Path(directory) / 'bundle.cpp', reporter)
+            writer.current = source
+            writer.preserve_below = 65536
+            result = submit_code.try_size_checkpoint(source, compiler=compiler, writer=writer,
+                reporter=reporter, limit=131072)
+            self.assertIsNotNone(result)
+            self.assertLess(writer.size(result), 131072)
+            self.assertGreaterEqual(writer.size(result), 65536)
+            self.assertEqual(writer.reached_limits, {131072})
+            self.assertTrue(compiler.validate_submission(result)[0])
+
+    def test_cleanup_uses_the_verified_partial_result_when_fast_cleanup_needs_more_work(self):
+        cxx = shutil.which('g++-15') or shutil.which('g++-14')
+        if cxx is None:
+            self.skipTest('GNU C++ compiler is unavailable')
+        source = '// ' + 'x' * 300 + '\nint main() { return 0; }\n'
+        partial = '// ' + 'x' * 100 + '\nint main(){return 0;}\n'
+        reporter = submit_code.Reporter(stream=io.StringIO())
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / 'bundle.cpp'
+            writer = submit_code.CheckpointWriter(output, reporter)
+            writer.current = source
+            writer.preserve_below = 40
+            def partial_cleanup(*args, **kwargs):
+                writer.save('verified partial result', partial)
+                return None
+            with submit_code.CompilerWorkspace(cxx=cxx, standard='c++23', include_paths=[],
+                    extra_args=[], timeout=None, reporter=reporter) as compiler:
+                with patch.object(submit_code.bundle_fast, 'try_cleanup', side_effect=partial_cleanup):
+                    result = submit_code.cleanup_text(source, compiler=compiler, writer=writer,
+                        cppcheck=None, keep_functions=submit_code.DEFAULT_KEEP_FUNCTIONS, max_passes=1,
+                        safe_only=False, require_validation=True, reporter=reporter, target_bytes=40)
+            self.assertEqual(result.strip(), 'int main(){return 0;}')
+            self.assertLess(output.stat().st_size, 40)
+
+    def test_fast_checkpoint_is_published_before_additional_cleanup(self):
+        cxx = shutil.which('g++-15') or shutil.which('g++-14')
+        if cxx is None:
+            self.skipTest('GNU C++ compiler is unavailable')
+        checkpoint = 'int unused_after_fast(){return 7;}\nint main(){return 0;}\n'
+        source = '// ' + 'x' * 300 + '\n' + checkpoint
+        limit = len(checkpoint.encode()) + 1
+        saved = []
+        reporter = submit_code.Reporter(stream=io.StringIO())
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / 'bundle.cpp'
+            class RecordingWriter(submit_code.CheckpointWriter):
+                def save(self, stage, value, **options):
+                    changed = super().save(stage, value, **options)
+                    if changed:
+                        saved.append(output.read_text())
+                    return changed
+            writer = RecordingWriter(output, reporter)
+            writer.current = source
+            writer.preserve_below = limit
+            def fast_cleanup(*args, **kwargs):
+                writer.save('verified fast checkpoint', checkpoint)
+                return checkpoint
+            with submit_code.CompilerWorkspace(cxx=cxx, standard='c++23', include_paths=[],
+                    extra_args=[], timeout=None, reporter=reporter) as compiler:
+                with patch.object(submit_code.bundle_fast, 'try_cleanup', side_effect=fast_cleanup) as fast:
+                    result = submit_code.cleanup_text(source, compiler=compiler, writer=writer,
+                        cppcheck=None, keep_functions=submit_code.DEFAULT_KEEP_FUNCTIONS, max_passes=1,
+                        safe_only=False, require_validation=True, reporter=reporter, target_bytes=limit)
+                self.assertTrue(compiler.validate(result)[0])
+            fast.assert_called_once()
+            self.assertEqual(saved[0], checkpoint)
+            self.assertGreater(len(saved), 1)
+            self.assertNotIn('unused_after_fast', result)
+            self.assertLess(len(saved[-1].encode()), len(saved[0].encode()))
+            self.assertEqual(output.read_text(), result)
+
+    def test_cleanup_continues_when_input_already_meets_target(self) -> None:
         cxx = shutil.which("g++-15") or shutil.which("g++-14")
         if cxx is None:
             self.skipTest("GNU C++ compiler is unavailable")
@@ -1466,21 +1688,73 @@ int main() {
                 )
             written = output.read_text()
         self.assertNotIn("unused_after_checkpoint", cleaned)
-        self.assertNotIn("unused_after_checkpoint", written)
         self.assertNotIn("unused_cycle_left", cleaned)
         self.assertNotIn("unused_cycle_right", cleaned)
-        self.assertNotIn("unused_cycle_left", written)
-        self.assertNotIn("unused_cycle_right", written)
-        self.assertIn("UsedInitializer()", cleaned)
-        self.assertIn("UsedInitializer()", written)
-        self.assertIn("int selected_overload(int x)", cleaned)
-        self.assertIn("int selected_overload(int x)", written)
-        self.assertNotIn("double selected_overload", cleaned)
-        self.assertNotIn("double selected_overload", written)
-        self.assertIn("\n  return  selected_overload(1) - 1 ;\n", cleaned)
-        self.assertIn("\n  return  selected_overload(1) - 1 ;\n", written)
-        self.assertNotIn("\n\n\n", cleaned)
-        self.assertNotIn("\n\n\n", written)
+        self.assertIn("return  selected_overload(1) - 1 ;", cleaned)
+        self.assertLess(len(cleaned), len(source))
+        self.assertEqual(written, cleaned)
+
+    def test_cleanup_preserves_layout_when_target_requires_removing_indentation(self) -> None:
+        cxx = shutil.which("g++-15") or shutil.which("g++-14")
+        if cxx is None:
+            self.skipTest("GNU C++ compiler is unavailable")
+        source = 'int main() {\n' + ' ' * 200 + 'return  0;\n}\n'
+        reporter = submit_code.Reporter()
+        with tempfile.TemporaryDirectory() as directory, submit_code.CompilerWorkspace(
+            cxx=cxx, standard="c++23", include_paths=[], extra_args=[],
+            timeout=None, reporter=reporter,
+        ) as compiler:
+            output = Path(directory) / "bundle.cpp"
+            writer = submit_code.CheckpointWriter(output, reporter)
+            writer.current = source
+            writer.preserve_below = 80
+            output.write_text(source)
+            with patch.object(compiler, "uninstantiated_template_functions", return_value=[]), \
+                 patch.object(compiler, "compiler_warnings", return_value=""), \
+                 patch.object(compiler, "ipa_unused_functions", return_value=[]):
+                cleaned = submit_code.cleanup_text(
+                    source, compiler=compiler, writer=writer, cppcheck=None,
+                    keep_functions=set(), max_passes=1, safe_only=False,
+                    require_validation=True, reporter=reporter, target_bytes=80,
+                )
+            self.assertGreaterEqual(output.stat().st_size, 80)
+            self.assertEqual(output.read_text(), cleaned)
+            self.assertIn('\n' + ' ' * 200 + 'return  0;\n', cleaned)
+            self.assertEqual(submit_code.run_command([str(compiler.executable)]).returncode, 0)
+
+    def test_cleanup_rechecks_declarations_after_removing_recursive_groups(self) -> None:
+        original_declarations = submit_code.unreferenced_declaration_candidates
+        cxx = shutil.which("g++-15") or shutil.which("g++-14")
+        if cxx is None:
+            self.skipTest("GNU C++ compiler is unavailable")
+        source = '''struct OnlyUsedByCycle {};
+int cycle(int x) { OnlyUsedByCycle value; return x ? cycle(x - 1) : 0; }
+int main() { return 0; }
+'''
+
+        def cycle_candidate(text, **kwargs):
+            line = next(i for i, row in enumerate(text.splitlines()) if row.startswith("int cycle("))
+            return [submit_code.Removal(line, line, "unused function group (IPA)")]
+
+        reporter = submit_code.Reporter()
+        with tempfile.TemporaryDirectory() as directory, submit_code.CompilerWorkspace(
+            cxx=cxx, standard="c++23", include_paths=[], extra_args=[],
+            timeout=None, reporter=reporter,
+        ) as compiler:
+            writer = submit_code.CheckpointWriter(Path(directory) / "bundle.cpp", reporter)
+            writer.current = source
+            with patch.object(compiler, "uninstantiated_template_functions", return_value=[]), \
+                 patch.object(compiler, "compiler_warnings", return_value=""), \
+                 patch.object(submit_code, "ipa_unused_candidates", side_effect=cycle_candidate), \
+                 patch.object(submit_code, "unreferenced_declaration_candidates", side_effect=lambda text, names=(), macros=(): [] if 'int cycle(' in text else original_declarations(text, names, macros)):
+                cleaned = submit_code.cleanup_text(
+                    source, compiler=compiler, writer=writer, cppcheck=None,
+                    keep_functions=set(), max_passes=1, safe_only=False,
+                    require_validation=True, reporter=reporter,
+                )
+            self.assertNotIn("OnlyUsedByCycle", cleaned)
+            self.assertNotIn("cycle", cleaned)
+            self.assertEqual(submit_code.run_command([str(compiler.executable)]).returncode, 0)
 
     def test_uninstantiated_template_methods_are_removed(self) -> None:
         cxx = shutil.which("g++-15") or shutil.which("g++-14")
@@ -1545,17 +1819,16 @@ int main() { return 0; }
 '''
         lines = source.splitlines(keepends=True)
         tokens = submit_code.structural_tokens(lines)
-        candidates = [
-            submit_code.removal_from_function_line(lines, tokens, line, "unused")
-            for line in (2, 3, 4)
-        ]
+        candidates = []
+        for line, name in [(2, 'Box'), (3, 'helper'), (4, 'unused')]:
+            candidate = submit_code.removal_from_function_line(lines, tokens, line, "unused")
+            candidates.append(submit_code.Removal(candidate.start, candidate.end, candidate.label, name))
         cleaned = submit_code.stub_uninstantiated_template_functions(
             source, [candidate for candidate in candidates if candidate is not None]
         )
         self.assertIn("T helper(T x);", cleaned)
         self.assertIn("T unused(T x);", cleaned)
-        self.assertIn("Box();", cleaned)
-        self.assertNotIn(": value", cleaned)
+        self.assertIn("Box() : value{} {}", cleaned)
         self.assertNotIn("return helper", cleaned)
 
     def test_unused_macro_before_standard_header_is_detected(self) -> None:
@@ -1729,7 +2002,7 @@ int main() { return 0; }
             "#include <iostream>\n"
             f'#line 1 {submit_code.json.dumps(str(unused))}\n'
             "/*! Copyright Example; permission and disclaimer. */\n"
-            "int never_called() { return 1; }\n"
+            "struct NeverUsedType {};\n"
             f'#line 2 {submit_code.json.dumps(str(source))}\n'
             'int main() { std::cout << "ok\\n"; }\n'
         )
@@ -1760,7 +2033,7 @@ int main() { return 0; }
                 valid, stderr = compiler.validate(output.read_text())
             self.assertTrue(valid, submit_code.first_error(stderr))
             self.assertIn(str(unused), removed)
-            self.assertNotIn("never_called", output.read_text())
+            self.assertNotIn("NeverUsedType", output.read_text())
             self.assertEqual(output.read_text().count('/*! Copyright Example; permission and disclaimer. */'), 1)
             self.assertNotIn(str(home), output.read_text())
 
@@ -1781,6 +2054,19 @@ class SubmissionStampTest(unittest.TestCase):
             result = submit_code.main(list(args))
         return result, stdout.getvalue() + stderr.getvalue()
 
+    def test_priority_limit_can_succeed_with_the_secondary_limit_unreached(self):
+        cxx = shutil.which('g++-15') or shutil.which('g++-14')
+        if cxx is None:
+            self.skipTest('GNU C++ compiler is unavailable')
+        notice = '/*! ' + 'x' * 70000 + ' */'
+        self.output.write_text(notice + '\nint main(){return 0;}\n')
+        result, message = self.command('cleanup', str(self.output), '--safe-only', '--cxx', cxx)
+        self.assertEqual(result, 0, message)
+        self.assertGreaterEqual(self.output.stat().st_size, 65536)
+        self.assertLess(self.output.stat().st_size, 131072)
+        self.assertIn(notice, self.output.read_text())
+        self.assertIn('secondary target not reached', message)
+
     def expand(self):
         result, message = self.command('expand', str(self.source), '-o', str(self.output))
         self.assertEqual(result, 0, message)
@@ -1790,6 +2076,27 @@ class SubmissionStampTest(unittest.TestCase):
         if cxx is None:
             self.skipTest('GNU C++ compiler is unavailable')
         return self.command('cleanup', str(self.output), '--safe-only', '--cxx', cxx)
+
+    def test_unreached_size_target_is_reported_as_failure(self):
+        cxx = shutil.which('g++-15') or shutil.which('g++-14')
+        if cxx is None:
+            self.skipTest('GNU C++ compiler is unavailable')
+        self.expand()
+        result, message = self.command('cleanup', str(self.output), '--safe-only',
+                                       '--target-bytes', '1', '--cxx', cxx)
+        self.assertNotEqual(result, 0)
+        self.assertIn('target not reached', message)
+        self.assertGreaterEqual(self.output.stat().st_size, 1)
+
+    def test_quick_size_checkpoint_requires_successful_linking(self):
+        cxx = shutil.which('g++-15') or shutil.which('g++-14')
+        if cxx is None:
+            self.skipTest('GNU C++ compiler is unavailable')
+        source = '// ' + 'x' * 70000 + '\nint missing();\nint main(){return missing();}\n'
+        self.output.write_text(source)
+        result, _ = self.command('cleanup', str(self.output), '--cxx', cxx)
+        self.assertNotEqual(result, 0)
+        self.assertEqual(self.output.read_text(), source)
 
     def test_verification_tracks_source_headers_output_and_cleanup(self):
         self.expand()

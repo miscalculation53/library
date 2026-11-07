@@ -62,6 +62,16 @@ test('bundle and clean progress remain visible alongside source agreement', () =
     }
 });
 
+test('size milestones show the 131072 byte priority before the 65536 byte target', () => {
+    const view = present(data(100000));
+    assert.match(view.detail, /131,072 B 未満: 達成/);
+    assert.match(view.detail, /65,536 B 未満: 未達/);
+    assert.ok(view.detail.indexOf('131,072 B 未満') < view.detail.indexOf('65,536 B 未満'));
+    assert.match(present(data(131072)).detail, /131,072 B 未満: 未達/);
+    assert.match(present(data(131071)).detail, /131,072 B 未満: 達成/);
+    assert.match(present(data(65535)).detail, /65,536 B 未満: 達成/);
+});
+
 test('completion belongs only to the current matching output and generation', () => {
     const value = job('done');
     assert.match(present(value).text, /clean 完了.*main.cpp と一致/);

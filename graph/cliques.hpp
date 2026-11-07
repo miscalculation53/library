@@ -21,7 +21,6 @@ class CliqueRange
     {
       const int n = g.size();
       iota(vertices.begin(), vertices.end(), 0);
-      // 次数順に向きづけると、各頂点から先の候補数は sqrt(2m) 以下。
       sort(vertices.begin(), vertices.end(), [&](int u, int v)
       { return pair{g.out_edges(u).size(), u} < pair{g.out_edges(v).size(), v}; });
       vc<int> rank(n);

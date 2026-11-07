@@ -2,15 +2,19 @@
 from __future__ import annotations
 
 import argparse
+from bisect import bisect_left
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 import fnmatch
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
 import re
+import secrets
+import shlex
 import shutil
 import subprocess
 import sys
@@ -18,6 +22,8 @@ import tempfile
 import time
 from typing import Iterable, Sequence
 from urllib.parse import quote
+
+import bundle_fast
 
 
 LINE_DIRECTIVE = re.compile(
@@ -41,8 +47,14 @@ RAW_STRING_OPEN = re.compile(r'(?:u8|u|U|L)?R"([^ ()\\\t\r\n]{0,16})\(')
 # Consume the complete preprocessing number before looking for character
 # literals. This includes hexadecimal digits, digit separators, and exponents.
 CPP_NUMBER = re.compile(r"(?:[0-9]|\.[0-9])(?:[\w.]|'\w|(?<=[eEpP])[+-])*")
+CODE_IDENTIFIER_TOKEN = re.compile(r'R"|[_A-Za-z]\w*|' + CPP_NUMBER.pattern + r'|//|/\*|["\']')
+CODE_QUOTE_TOKEN = re.compile(r'\\.|["\']', re.DOTALL)
+COMMENT_TOKEN = re.compile(RAW_STRING_OPEN.pattern + r'|//|/\*|' + CPP_NUMBER.pattern + r'|\b[_A-Za-z]\w*\b|["\']')
+COMMENT_LINE_END = re.compile(r'[\r\n]')
+PREPROCESSOR_TOKEN = re.compile(RAW_STRING_OPEN.pattern + r'|' + CPP_NUMBER.pattern + r'|["\']')
 DEFAULT_KEEP_FUNCTIONS = {"read", "write", "print", "init", "main2", "test"}
 DEFAULT_BYTE_LIMIT = 65536
+PRIORITY_BYTE_LIMIT = 131072
 LIBRARY_SOURCE_BASE = "https://github.com/miscalculation53/library/tree/wip/"
 LEGACY_LIBRARY_SITE_BASE = "https://miscalculation53.github.io/library/"
 LIBRARY_SOURCE_LINK = re.compile(
@@ -137,20 +149,33 @@ def source_link_comment(url: str) -> str:
 def protect_source_links(text: str) -> tuple[str, list[str]]:
     output: list[str] = []
     links: list[str] = []
-    for line in text.splitlines(keepends=True):
-        match = LIBRARY_SOURCE_LINK.match(line.rstrip("\r\n"))
+    previous = 0
+    for start, end in comment_spans(text):
+        comment = text[start:end]
+        match = LIBRARY_SOURCE_LINK.fullmatch(comment)
         if match is None:
-            output.append(line)
             continue
-        links.append(source_link_comment(match.group(1)))
+        line_start = text.rfind("\n", 0, start) + 1
+        if text[line_start:start].strip():
+            continue
+        previous_start = text.rfind("\n", 0, max(0, line_start - 1)) + 1
+        previous_line = text[previous_start:line_start]
+        if COMMENT_LINE_SPLICE.search(previous_line):
+            continue
+        line_end = text.find("\n", end)
+        line_end = len(text) if line_end < 0 else line_end + 1
+        links.append(text[line_start:line_end])
+        output.append(text[previous:line_start])
         output.append(f"#pragma submit_code_source_link {len(links) - 1}\n")
+        previous = line_end
+    output.append(text[previous:])
     return "".join(output), links
 
 
 def restore_source_links(text: str, links: Sequence[str]) -> str:
     output: list[str] = []
-    for line in text.splitlines(keepends=True):
-        match = SOURCE_LINK_PRAGMA.match(line.rstrip("\r\n"))
+    for line, visible in zip(text.splitlines(keepends=True), preprocessor_lines(text)):
+        match = SOURCE_LINK_PRAGMA.match(visible.rstrip("\r\n"))
         if match is None:
             output.append(line)
             continue
@@ -175,7 +200,7 @@ def source_comments(text: str) -> set[str]:
 def important_comments(text: str) -> list[str]:
     return list(dict.fromkeys(
         comment for start, end in comment_spans(text)
-        if (comment := text[start:end]).startswith(("/*!", "//!"))
+        if is_important_comment(comment := text[start:end])
     ))
 
 
@@ -185,7 +210,7 @@ def retain_important_comments(text: str, comments: Sequence[str]) -> str:
     present = source_comments(text)
     dependencies: dict[str, set[str]] = {}
     for comment in present.union(comments):
-        if not comment.startswith(("/*!", "//!")) or "@keep-if-code" not in comment:
+        if not is_important_comment(comment) or "@keep-if-code" not in comment:
             continue
         names: set[str] = set()
         for line in comment.splitlines():
@@ -204,7 +229,10 @@ def retain_important_comments(text: str, comments: Sequence[str]) -> str:
             dependencies[comment] = names
     if dependencies:
         # C++ joins continued lines before recognizing identifiers and comments.
-        live = set(code_identifiers(re.sub(r"\\\r?\n", "", text)))
+        live = set(code_identifiers(text))
+        patterns = token_paste_patterns(strip_comments(text))
+        live.update(name for names in dependencies.values() for name in names
+                    if any(pattern.fullmatch(name) for pattern in patterns))
         obsolete = {comment for comment, names in dependencies.items() if names.isdisjoint(live)}
         if obsolete:
             output: list[str] = []
@@ -247,8 +275,8 @@ def replace_lines_preserving_comments(
         else:
             # Strip the whole comment even when only its opening line changes.
             # Preserve line numbers until all replacements have been applied.
-            output.append((" " if comment.startswith("/*") else "") + "\n" * comment.count("\n"))
-            if comment.startswith(("/*!", "//!")) or comment in keep:
+            output.append((" " if is_block_comment(comment) else "") + "\n" * comment.count("\n"))
+            if is_important_comment(comment) or comment in keep:
                 notices.setdefault(changed, []).append(comment)
         previous, previous_line = end, last
     output.append(text[previous:])
@@ -435,6 +463,14 @@ def atomic_write(path: Path, text: str) -> None:
                 pass
 
 
+def checkpoint_limits(target_bytes: int | None) -> tuple[int, ...]:
+    if target_bytes is None:
+        return ()
+    if target_bytes == DEFAULT_BYTE_LIMIT:
+        return PRIORITY_BYTE_LIMIT, DEFAULT_BYTE_LIMIT
+    return (target_bytes,)
+
+
 class CheckpointWriter:
     def __init__(
         self, path: Path, reporter: Reporter, *, stamp: SubmissionStamp | None = None,
@@ -443,6 +479,7 @@ class CheckpointWriter:
         self.reporter = reporter
         self.current: str | None = None
         self.preserve_below: int | None = None
+        self.reached_limits: set[int] = set()
         self.stamp = stamp
         # Count the footer in size decisions, outside compiler analysis and cleanup.
         self.stamp_size = len(stamp.render("").encode()) if stamp else 0
@@ -453,14 +490,21 @@ class CheckpointWriter:
     def below_limit(self, text: str, limit: int | None) -> bool:
         return limit is not None and self.size(text) < limit
 
+    def report_checkpoint(self, text: str, limit: int | None) -> None:
+        if limit is None or limit in self.reached_limits or not self.below_limit(text, limit):
+            return
+        self.reached_limits.add(limit)
+        self.reporter.checkpoint(
+            f"submission ready: {self.reporter.byte_count(self.size(text), 'green')} "
+            f"< {self.reporter.byte_count(limit, 'yellow')}; cleanup continues"
+        )
+
     def save(self, stage: str, text: str, *, force: bool = False) -> bool:
         if not force and text == self.current:
             return False
-        if (
-            self.preserve_below is not None
-            and self.current is not None
-            and self.size(self.current) < self.preserve_below
-            and self.size(text) >= self.preserve_below
+        if self.current is not None and any(
+            self.below_limit(self.current, limit) and not self.below_limit(text, limit)
+            for limit in checkpoint_limits(self.preserve_below)
         ):
             return False
         before = self.size(self.current) if self.current is not None else self.size(text)
@@ -468,6 +512,8 @@ class CheckpointWriter:
         atomic_write(self.path, rendered)
         self.current = text
         self.reporter.size(stage, before, self.size(text))
+        for limit in checkpoint_limits(self.preserve_below):
+            self.report_checkpoint(text, limit)
         return True
 
 
@@ -783,6 +829,8 @@ class CompilerWorkspace:
         extra_args: Sequence[str],
         timeout: float | None,
         reporter: Reporter,
+        keep_unused_functions: bool = True,
+        whole_program: bool = False,
     ) -> None:
         self.cxx = cxx
         self.standard = standard
@@ -790,6 +838,9 @@ class CompilerWorkspace:
         self.extra_args = list(extra_args)
         self.timeout = timeout
         self.reporter = reporter
+        self.keep_unused_functions = keep_unused_functions
+        self.whole_program = whole_program
+        self.submission_whole_program = False
         self.temporary = tempfile.TemporaryDirectory(prefix="submit-code-")
         self.directory = Path(self.temporary.name)
         self.source = self.directory / "candidate.cpp"
@@ -799,12 +850,40 @@ class CompilerWorkspace:
         self.pch_header = self.directory / "standard_prelude.hpp"
         self.pch_output = self.directory / "standard_prelude.hpp.gch"
         self.pch_available: bool | None = None
+        self.pch_disabled = False
         self.pch_key: str | None = None
         self.pch_prefix_end: int | None = None
+        self.pch_preamble_cache: dict[str, str] = {}
+        self.predefined_macro_lines: set[str] | None = None
         self.syntax_cache: dict[str, tuple[bool, str]] = {}
         self.link_cache: dict[str, tuple[bool, str]] = {}
+        self.link_pch_cache: dict[str, bool] = {}
+        self.executable_digest: str | None = None
+        self.initialization_cache: dict[str, str] = {}
+        self.initialization_reference: str | None = None
+        self.initialization_reference_text: str | None = None
+        self.initialization_references: dict[bool, str] = {}
+        self.object_cache: dict[str, tuple[str, dict[str, str], set[str]]] = {}
+        self.object_dependencies: dict[str, str] = {}
+        self.object_undefined: set[str] = set()
+        self.object_diagnostic = ""
+        self.instantiated_header_cache: dict[str, str] = {}
+        self.emitted_line_cache: dict[str, set[int]] = {}
+        self.preprocessed_code_cache: dict[str, str | None] = {}
+        self.all_macro_cache: dict[str, dict[str, list[str]]] = {}
+        self.external_name_cache: dict[str, set[str]] = {}
+        self.external_content_cache: dict[str, tuple[set[str], set[str], dict[str, str]]] = {}
+        self.external_macro_cache: dict[str, set[str]] = {}
+        self.external_macro_definition_cache: dict[str, dict[str, str]] = {}
+        self.portable_workspace: CompilerWorkspace | None = None
+        self.submission_workspace: CompilerWorkspace | None = None
+        self.force_float128_macro: bool | None = None
 
     def close(self) -> None:
+        if self.submission_workspace is not None:
+            self.submission_workspace.close()
+        if self.portable_workspace is not None:
+            self.portable_workspace.close()
         self.temporary.cleanup()
 
     def __enter__(self) -> "CompilerWorkspace":
@@ -857,7 +936,40 @@ class CompilerWorkspace:
             continued = line.rstrip().endswith("\\")
         if continued:
             return None
-        return text[: include.end()] + "\n", include.end()
+        header_text = text[: include.end()]
+        for start, end in reversed(list(comment_spans(header_text))):
+            if header_text[start:end].startswith("// submit-code-feature:"):
+                header_text = header_text[:start] + "".join(
+                    "\n" if char == "\n" else " " for char in header_text[start:end]) + header_text[end:]
+        sensitive = {"__COUNTER__", "__LINE__", "__FILE__", "__BASE_FILE__", "__FILE_NAME__",
+                     "__TIME__", "__DATE__", "__TIMESTAMP__", "__builtin_FILE", "__builtin_LINE"}
+        if set(code_identifiers(prefix)).intersection(sensitive):
+            return None
+        if "\\" not in prefix and not set(code_identifiers(prefix)).intersection(sensitive) and all(
+            not line.strip() or re.match(r"\s*#\s*(?:define|undef|if|ifdef|ifndef|elif|else|endif|line)\b", line)
+            for line in prefix.splitlines()
+        ):
+            normalized = self.pch_preamble_cache.get(prefix)
+            if normalized is None:
+                prelude = self.directory / "pch_prefix.cpp"
+                command = [*self._base_command(), "-O0" if self.keep_unused_functions else "-O2", "-E", "-dM", str(prelude)]
+                if self.predefined_macro_lines is None:
+                    prelude.write_text("")
+                    result = self._run(command)
+                    if result.returncode:
+                        return None
+                    self.predefined_macro_lines = set(result.stdout.splitlines())
+                prelude.write_text(prefix)
+                result = self._run(command)
+                if result.returncode:
+                    return None
+                active = set(result.stdout.splitlines())
+                undefined = ["#undef " + line.split()[1].partition("(")[0]
+                             for line in self.predefined_macro_lines - active]
+                normalized = "\n".join(sorted(undefined) + sorted(active - self.predefined_macro_lines)) + "\n"
+                self.pch_preamble_cache[prefix] = normalized
+            header_text = normalized + "#include <bits/stdc++.h>"
+        return header_text + "\n", include.end()
 
     def _ensure_pch(self, text: str, *, build: bool = True) -> bool:
         prefix = self._pch_prefix(text)
@@ -881,12 +993,17 @@ class CompilerWorkspace:
                     "compiler_stamp": compiler_stamp,
                     "standard": self.standard,
                     "extra_args": self.extra_args,
+                    "optimization": "-O0" if self.keep_unused_functions else "-O2",
+                    "whole_program": self.whole_program,
+                    "include_paths": [str(path) for path in self.include_paths],
+                    "environment": {name: os.environ.get(name) for name in (
+                        "CPLUS_INCLUDE_PATH", "CPATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET")},
                     "header": header_text,
                 },
                 sort_keys=True,
             ).encode()
         ).hexdigest()[:20]
-        if self.pch_key == cache_key and self.pch_available is not None:
+        if self.pch_key == cache_key and self.pch_available is False:
             self.pch_prefix_end = prefix_end if self.pch_available else None
             return self.pch_available
 
@@ -902,13 +1019,18 @@ class CompilerWorkspace:
         cache_dir = cache_root / cache_key
         self.pch_header = cache_dir / "standard_prelude.hpp"
         self.pch_output = cache_dir / "standard_prelude.hpp.gch"
+        state_path = cache_dir / "dependencies.json"
         if self.pch_header.is_file() and self.pch_output.is_file():
             try:
-                if self.pch_header.read_text(encoding="utf-8") == header_text:
+                dependencies = json.loads(state_path.read_text())
+                if self.pch_header.read_text(encoding="utf-8") == header_text and dependencies and all(
+                    Path(path).is_file() and hashlib.sha256(Path(path).read_bytes()).hexdigest() == value
+                    for path, value in dependencies.items()
+                ):
                     self.pch_available = True
                     self.pch_prefix_end = prefix_end
                     return True
-            except OSError:
+            except (OSError, ValueError, AttributeError):
                 pass
 
         # A single early checkpoint is faster to check without building a PCH.
@@ -918,12 +1040,14 @@ class CompilerWorkspace:
         cache_dir.mkdir(parents=True, exist_ok=True)
         atomic_write(self.pch_header, header_text)
         temporary_output = cache_dir / f".{self.pch_output.name}.{os.getpid()}.tmp"
+        depfile = cache_dir / f".dependencies.{os.getpid()}.d"
         result = self._run(
             [
-                self.cxx,
-                f"-std={self.standard}",
-                "-w",
-                *self.extra_args,
+                *self._base_command(),
+                "-O0" if self.keep_unused_functions else "-O2",
+                *(["-fwhole-program"] if self.whole_program else []),
+                *([] if self.keep_unused_functions else ["-g0", "-frandom-seed=0"]),
+                "-MD", "-MF", str(depfile),
                 "-x",
                 "c++-header",
                 "-c",
@@ -935,6 +1059,7 @@ class CompilerWorkspace:
         self.pch_available = result.returncode == 0
         if self.pch_available:
             os.replace(temporary_output, self.pch_output)
+            atomic_write(state_path, json.dumps(self._object_dependency_hashes(depfile)))
             self.pch_prefix_end = prefix_end
         else:
             try:
@@ -948,10 +1073,27 @@ class CompilerWorkspace:
         return self.pch_available
 
     def _prepare_candidate_source(self, text: str, *, build_pch: bool = True) -> bool:
+        if self.force_float128_macro is not None:
+            directive = "#undef __STDCPP_FLOAT128_T__\n"
+            if self.force_float128_macro:
+                directive += "#define __STDCPP_FLOAT128_T__ 1\n"
+            output = [directive]
+            for line, visible in zip(text.splitlines(keepends=True), preprocessor_lines(text)):
+                output.append(line)
+                if SYSTEM_INCLUDE_DIRECTIVE.match(visible.rstrip("\r\n")):
+                    output.append(directive)
+            self.write("".join(output))
+            return False
+        if self.pch_disabled:
+            self.write(text)
+            return False
         use_pch = self._ensure_pch(text, build=build_pch)
         if use_pch and self.pch_prefix_end is not None:
             prefix = text[: self.pch_prefix_end]
-            masked_prefix = "".join("\n" if char == "\n" else " " for char in prefix)
+            masked_prefix = "".join(
+                line if re.match(r"\s*#\s*(?:line\b|\d)", line) else
+                "".join("\n" if char == "\n" else " " for char in line)
+                for line in prefix.splitlines(keepends=True))
             self.write(masked_prefix + text[self.pch_prefix_end :])
         else:
             self.write(text)
@@ -959,6 +1101,8 @@ class CompilerWorkspace:
 
     def _candidate_command(self, use_pch: bool) -> list[str]:
         command = self._base_command()
+        if self.whole_program:
+            command.append("-fwhole-program")
         if use_pch:
             command.extend(["-include", str(self.pch_header)])
         return command
@@ -977,46 +1121,203 @@ class CompilerWorkspace:
         self.syntax_cache[digest] = value
         return value
 
-    def link(self, text: str, *, build_pch: bool = True) -> tuple[bool, str]:
+    def object_signature(self, text: str) -> str | None:
+        digest = hashlib.sha256(text.encode()).hexdigest()
+        if digest in self.object_cache:
+            signature, self.object_dependencies, self.object_undefined = self.object_cache[digest]
+            self.object_diagnostic = ""
+            return signature
+        use_pch = False
+        if not self.keep_unused_functions:
+            use_pch = self._prepare_candidate_source(text, build_pch=False)
+        else:
+            self.write(text)
+        output = self.directory / "semantic.o"
+        depfile = self.directory / "semantic.d"
+        command = [argument for argument in self._candidate_command(use_pch) if argument != "-w"]
+        result = self._run([*command, "-O2", "-g0", "-frandom-seed=0", "-MD", "-MF", str(depfile),
+                            *(["-fpch-deps"] if use_pch else []),
+                            "-c", str(self.source), "-o", str(output)])
+        self.object_diagnostic = result.stderr
+        self.object_undefined = set()
+        if result.returncode or "used but never defined" in result.stderr:
+            if use_pch:
+                self.pch_available = False
+                return self.object_signature(text)
+            return None
+        dependencies = self._object_dependency_hashes(depfile)
+        signature = hashlib.sha256(output.read_bytes()).hexdigest()
+        if shutil.which("nm"):
+            symbols = self._run(["nm", "-u", str(output)])
+            if symbols.returncode == 0:
+                demangler = shutil.which("c++filt")
+                if demangler:
+                    demangled = run_command([demangler], input_text=symbols.stdout, timeout=self.timeout)
+                    if demangled.returncode == 0:
+                        symbols = demangled
+                self.object_undefined = set(symbols.stdout.splitlines())
+        self.object_cache[digest] = signature, dependencies, self.object_undefined
+        self.object_dependencies = dependencies
+        return signature
+
+    def _object_dependency_hashes(self, depfile: Path) -> dict[str, str]:
+        dependencies = {}
+        for word in shlex.split(depfile.read_text().replace("\\\n", "").split(":", 1)[1]):
+            path = Path(word).resolve()
+            if path != self.source.resolve() and path.is_file():
+                dependencies[str(path)] = hashlib.sha256(path.read_bytes()).hexdigest()
+        return dependencies
+
+    def instantiated_function_headers(self, text: str) -> str:
+        digest = hashlib.sha256(text.encode()).hexdigest()
+        if digest in self.instantiated_header_cache:
+            return self.instantiated_header_cache[digest]
+        self.write(text)
+        result = self._run([*self._base_command(), "-O0", "-fdump-tree-original",
+                            "-dumpdir", str(self.directory) + os.sep, "-dumpbase", "features.",
+                            "-c", str(self.source), "-o", str(self.directory / "features.o")])
+        dump = next(self.directory.glob("features.*.original"), None)
+        if result.returncode or dump is None:
+            return ""
+        return "\n".join(line for line in dump.read_text(errors="replace").splitlines()
+                         if line.startswith(";; Function "))
+
+    def preprocessed_fingerprint(self, text: str) -> str | None:
+        self.write(text)
+        result = self._run([*self._base_command(), "-O2", "-E", "-dD", str(self.source)])
+        if result.returncode:
+            return None
+        normalized = result.stdout.replace(str(self.source), "<submission>")
+        return hashlib.sha256(normalized.encode()).hexdigest()
+
+    def preprocessed_code_fingerprint(self, text: str) -> str | None:
+        digest = hashlib.sha256(text.encode()).hexdigest()
+        if digest in self.preprocessed_code_cache:
+            return self.preprocessed_code_cache[digest]
+        self.write(text)
+        result = self._run([*self._base_command(), "-O2", "-E", str(self.source)])
+        if result.returncode:
+            self.preprocessed_code_cache[digest] = None
+            return None
+        output = result.stdout
+        raw = []
+        list(comment_spans(output, raw_spans=raw))
+        offsets = [0]
+        for line in output.splitlines(keepends=True):
+            offsets.append(offsets[-1] + len(line))
+        protected = set()
+        for start, end in raw:
+            protected.update(range(bisect_left(offsets, start + 1) - 1,
+                                   bisect_left(offsets, end)))
+        fingerprint = hashlib.sha256()
+        source, number, flags = "", 1, ()
+        external = []
+        external_position = None
+
+        def flush_external():
+            if external:
+                content = "".join(external)
+                if content.strip():
+                    data = content.encode()
+                    fingerprint.update(b"E\0" + json.dumps(external_position).encode() + b"\0")
+                    fingerprint.update(len(data).to_bytes(8, "big") + data)
+                external.clear()
+
+        for index, line in enumerate(output.splitlines(keepends=True)):
+            marker = None if index in protected else GNU_LINE_MARKER.match(line.rstrip("\r\n"))
+            if marker is not None:
+                flush_external()
+                source = json.loads(marker.group(2))
+                if source == str(self.source):
+                    source = "<submission>"
+                number = int(marker.group(1))
+                flags = tuple(flag for flag in line[marker.end(2):].split() if flag in {"3", "4"})
+                continue
+            if source != "<submission>":
+                if not external:
+                    external_position = source, number, flags
+                external.append(line)
+            elif line.strip() or index in protected:
+                fingerprint.update(b"S\0" + json.dumps((source, number, flags, line.rstrip("\r\n"))).encode())
+                fingerprint.update(b"\n")
+            number += 1
+        flush_external()
+        value = fingerprint.hexdigest()
+        self.preprocessed_code_cache[digest] = value
+        return value
+
+    def link(self, text: str, *, build_pch: bool = True, force_pch: bool | None = None) -> tuple[bool, str]:
         digest = hashlib.sha256(text.encode()).hexdigest()
         cached = self.link_cache.get(digest)
-        if cached is not None:
+        if cached is not None and (force_pch is None or self.link_pch_cache.get(digest) == force_pch) and (not cached[0] or (
+            self.executable_digest == digest and self.executable.is_file()
+        )):
             return cached
-        use_pch = self._prepare_candidate_source(text, build_pch=build_pch)
+        if force_pch is False and self.force_float128_macro is None:
+            self.write(text)
+            use_pch = False
+        else:
+            use_pch = self._prepare_candidate_source(text, build_pch=build_pch or force_pch is True)
+        command = [argument for argument in self._candidate_command(use_pch) if argument != "-w"]
+        command.extend(["-fdump-tree-original", "-fdump-noaddr", "-fdump-unnumbered",
+                        "-dumpdir", str(self.directory) + os.sep, "-dumpbase", "validation."])
+        if not self.keep_unused_functions:
+            command.append("-fdump-tree-gimple-lineno")
+        for dump in self.directory.glob("validation.*.original"):
+            dump.unlink()
+        for dump in self.directory.glob("validation.*.gimple"):
+            dump.unlink()
+        self.executable_digest = None
+        retained = ["-fkeep-inline-functions", "-fkeep-static-functions"] if self.keep_unused_functions else []
         for artifact in (self.object, self.executable):
             try:
                 artifact.unlink()
             except FileNotFoundError:
                 pass
 
-        if not self.extra_args:
+        if not self.extra_args and self.keep_unused_functions:
             result = self._run(
                 [
-                    *self._candidate_command(use_pch),
+                    *command,
                     "-O0",
+                    *retained,
                     str(self.source),
                     "-o",
                     str(self.executable),
                     "-lquadmath",
                 ]
             )
-            value = result.returncode == 0, result.stderr
+            value = result.returncode == 0 and "used but never defined" not in result.stderr, result.stderr
+            if not value[0] and use_pch:
+                self.pch_available = False
+                return self.link(text, build_pch=False, force_pch=False)
+            if value[0]:
+                self.executable_digest = digest
+                self.initialization_cache[digest] = self._initialization_signature()
             self.link_cache[digest] = value
+            self.link_pch_cache[digest] = use_pch
             return value
 
         compile_result = self._run(
             [
-                *self._candidate_command(use_pch),
-                "-O0",
+                *command,
+                "-O0" if self.keep_unused_functions else "-O2",
+                *retained,
+                *([] if self.keep_unused_functions else ["-g0", "-frandom-seed=0", "-MD", "-MF", str(self.directory / "validation.d")]),
+                *(["-fpch-deps"] if use_pch else []),
                 "-c",
                 str(self.source),
                 "-o",
                 str(self.object),
             ]
         )
-        if compile_result.returncode != 0:
+        if compile_result.returncode != 0 or "used but never defined" in compile_result.stderr:
+            if use_pch:
+                self.pch_available = False
+                return self.link(text, build_pch=False, force_pch=False)
             value = False, compile_result.stderr
             self.link_cache[digest] = value
+            self.link_pch_cache[digest] = use_pch
             return value
 
         link_result = self._run(
@@ -1031,13 +1332,124 @@ class CompilerWorkspace:
             ]
         )
         value = link_result.returncode == 0, link_result.stderr
+        if value[0]:
+            self.executable_digest = digest
+            self.initialization_cache[digest] = self._initialization_signature()
         self.link_cache[digest] = value
+        self.link_pch_cache[digest] = use_pch
         return value
 
+    def _initialization_signature(self) -> str:
+        dump = next(self.directory.glob("validation.*.original"), None)
+        if dump is None:
+            raise ToolError("GCC did not produce the initialization validation dump")
+        functions = re.split(r"(?m)(?=^;; Function )", dump.read_text(encoding="utf-8", errors="replace"))
+        if self.executable_digest is not None:
+            self.instantiated_header_cache[self.executable_digest] = "\n".join(
+                function.split("\n", 1)[0] for function in functions if function.startswith(";; Function ")
+            )
+            if not self.keep_unused_functions:
+                dependencies = self._object_dependency_hashes(self.directory / "validation.d")
+                signature = hashlib.sha256(self.object.read_bytes()).hexdigest()
+                self.object_cache[self.executable_digest] = signature, dependencies, set()
+                gimple = next(self.directory.glob("validation.*.gimple"), None)
+                if gimple is not None:
+                    self.emitted_line_cache[self.executable_digest] = {
+                        int(match.group(1)) - 1 for match in re.finditer(
+                            rf"\[{re.escape(str(self.source))}:(\d+):\d+\]", gimple.read_text(errors="replace"))
+                    }
+        return "".join(function for function in functions if re.search(
+            r"__static_initialization_and_destruction_\d+|static (?:initializers|destructors) for|__tls_init|__tcf_",
+            function.split("\n", 1)[0],
+        ))
+
+    def preserve_initialization(self, text: str) -> None:
+        if self.initialization_reference is None:
+            valid, stderr = self.validate(text)
+            if not valid:
+                raise ToolError(f"the reference input does not validate: {first_error(stderr)}")
+
+    def validate_submission(self, text: str, *, build_pch: bool = False) -> tuple[bool, str]:
+        if self.submission_workspace is None:
+            self.submission_workspace = CompilerWorkspace(
+                cxx=self.cxx, standard=self.standard, include_paths=self.include_paths,
+                extra_args=self.extra_args, timeout=self.timeout, reporter=self.reporter,
+                keep_unused_functions=False,
+                whole_program=self.submission_whole_program,
+            )
+        workspace = self.submission_workspace
+        valid, diagnostic = workspace.validate(text, build_pch=build_pch)
+        if valid:
+            digest = hashlib.sha256(text.encode()).hexdigest()
+            self.instantiated_header_cache[digest] = workspace.instantiated_header_cache[digest]
+            if digest in workspace.emitted_line_cache:
+                self.emitted_line_cache[digest] = workspace.emitted_line_cache[digest]
+        return valid, diagnostic
+
+    def submission_object_signature(self, text: str) -> str | None:
+        if self.submission_workspace is None:
+            valid, _ = self.validate_submission(text)
+            if not valid:
+                return None
+        workspace = self.submission_workspace
+        signature = workspace.object_signature(text)
+        self.object_diagnostic = workspace.object_diagnostic
+        self.object_dependencies = workspace.object_dependencies
+        self.object_undefined = workspace.object_undefined
+        return signature
+
     def validate(self, text: str, *, build_pch: bool = True) -> tuple[bool, str]:
-        return self.link(text, build_pch=build_pch)
+        valid, stderr = self.link(text, build_pch=build_pch)
+        if valid:
+            digest = hashlib.sha256(text.encode()).hexdigest()
+            mode = self.link_pch_cache[digest]
+            if self.initialization_reference is None:
+                self.initialization_reference_text = text
+                self.initialization_references[mode] = self.initialization_cache[digest]
+            while mode not in self.initialization_references:
+                reference = self.initialization_reference_text
+                assert reference is not None
+                reference_valid, reference_stderr = self.link(reference, build_pch=mode, force_pch=mode)
+                if not reference_valid:
+                    return False, reference_stderr
+                reference_digest = hashlib.sha256(reference.encode()).hexdigest()
+                reference_mode = self.link_pch_cache[reference_digest]
+                self.initialization_references[reference_mode] = self.initialization_cache[reference_digest]
+                if reference_mode != mode:
+                    self.pch_disabled = True
+                valid, stderr = self.link(text, build_pch=mode, force_pch=reference_mode)
+                if not valid:
+                    return valid, stderr
+                mode = self.link_pch_cache[digest]
+            self.initialization_reference = self.initialization_references[mode]
+            if self.initialization_cache[digest] != self.initialization_reference:
+                return False, "static initialization or destruction changed"
+        if valid and self.portable_workspace is not None:
+            return self.portable_workspace.validate(text, build_pch=build_pch)
+        return valid, stderr
+
+    def retain_portable_target(self, text: str) -> None:
+        if self.portable_workspace is not None or "__STDCPP_FLOAT128_T__" not in set(code_identifiers(text)):
+            return
+        self.write(text)
+        macros = self._run([*self._base_command(), "-E", "-dM", "-x", "c++", str(self.source)])
+        if macros.returncode:
+            return
+        native = re.search(r"(?m)^#define __STDCPP_FLOAT128_T__\b", macros.stdout) is not None
+        target = CompilerWorkspace(cxx=self.cxx, standard=self.standard,
+            include_paths=self.include_paths, extra_args=self.extra_args,
+            timeout=self.timeout, reporter=self.reporter)
+        target.force_float128_macro = not native
+        valid, _ = target.validate(text, build_pch=False)
+        if valid:
+            self.portable_workspace = target
+        else:
+            target.close()
 
     def compiler_warnings(self, text: str, *, allow_pch: bool = True) -> str:
+        prefix = self._pch_prefix(text)
+        if prefix is not None and re.search(r"(?m)^\s*#\s*define\b", strip_comments(prefix[0])):
+            allow_pch = False
         if allow_pch:
             use_pch = self._prepare_candidate_source(text)
         else:
@@ -1067,6 +1479,15 @@ class CompilerWorkspace:
             return ""
         return result.stderr
 
+    def unused_macro_locations(self, text: str) -> list[int]:
+        self.write(text)
+        command = [argument for argument in self._base_command() if argument != "-w"]
+        result = self._run([*command, "-O2", "-Wunused-macros", "-E", str(self.source), "-o", os.devnull])
+        if result.returncode:
+            return []
+        pattern = re.compile(rf"^{re.escape(str(self.source))}:(\d+):\d+: warning:.*\[-Wunused-macros\]$", re.MULTILINE)
+        return [int(match.group(1)) - 1 for match in pattern.finditer(result.stderr)]
+
     def ipa_unused_functions(self, text: str) -> list[tuple[int, str]]:
         for path in self.directory.glob("ipa.*"):
             if path.is_file():
@@ -1078,6 +1499,7 @@ class CompilerWorkspace:
             [
                 *self._candidate_command(use_pch),
                 "-Og",
+                "-fwhole-program",
                 "-fdump-ipa-cgraph",
                 "-fdump-tree-original-raw",
                 "-dumpdir",
@@ -1229,6 +1651,91 @@ class CompilerWorkspace:
         )
         return result.returncode == 0, result.stdout, result.stderr
 
+    def external_identifiers(self, text: str) -> set[str]:
+        digest = hashlib.sha256(text.encode()).hexdigest()
+        if digest in self.external_name_cache:
+            return self.external_name_cache[digest]
+        self.write(text)
+        result = self._run([*self._base_command(), "-E", "-dD", "-x", "c++", str(self.source)])
+        if result.returncode:
+            raise ToolError("external-header analysis failed: " + first_error(result.stderr))
+        output = result.stdout
+        external = False
+        lines = []
+        for line in output.splitlines(keepends=True):
+            marker = GNU_LINE_MARKER.match(line.rstrip("\r\n"))
+            if marker:
+                name = json.loads(marker.group(2))
+                external = not name.startswith("<") and Path(name).name != self.source.name
+            elif external:
+                lines.append(line)
+        content = "".join(lines)
+        content_digest = hashlib.sha256(content.encode()).hexdigest()
+        cached = self.external_content_cache.get(content_digest)
+        if cached is None:
+            names = set(code_identifiers(content))
+            definitions: dict[str, str] = {}
+            for line in re.sub(r"\\\r?\n", "", content).splitlines():
+                if match := re.match(r"^\s*#\s*define\s+([_A-Za-z]\w*)(.*)", line):
+                    name, replacement = match.groups()
+                    definitions[name] = definitions.get(name, "") + "\n" + replacement
+            cached = names, set(definitions), definitions
+            self.external_content_cache[content_digest] = cached
+        names, macro_names, definitions = cached
+        self.external_name_cache[digest] = names
+        self.external_macro_cache[digest] = macro_names
+        self.external_macro_definition_cache[digest] = definitions
+        all_definitions: dict[str, list[str]] = {}
+        for line in re.sub(r"\\\r?\n", "", output).splitlines():
+            if match := re.match(r"^\s*#\s*define\s+([_A-Za-z]\w*)(.*)", line):
+                all_definitions.setdefault(match.group(1), []).append(match.group(2))
+        self.all_macro_cache[digest] = all_definitions
+        return names
+
+    def external_macro_names(self, text: str) -> set[str]:
+        digest = hashlib.sha256(text.encode()).hexdigest()
+        self.external_identifiers(text)
+        return self.external_macro_cache[digest]
+
+    def external_macro_definitions(self, text: str) -> dict[str, str]:
+        digest = hashlib.sha256(text.encode()).hexdigest()
+        self.external_identifiers(text)
+        return self.external_macro_definition_cache[digest]
+
+    def all_macro_definitions(self, text: str) -> dict[str, list[str]]:
+        digest = hashlib.sha256(text.encode()).hexdigest()
+        self.external_identifiers(text)
+        return self.all_macro_cache[digest]
+
+    def dangerous_macro_names(self, text: str) -> set[str]:
+        macros = self.all_macro_definitions(text)
+        dangerous = {"__attribute__", "__declspec", "asm", "__asm__", "__COUNTER__"}
+        for name, bodies in macros.items():
+            for body in bodies:
+                tokens = [token for row in structural_tokens(body.splitlines(keepends=True)) for token in row]
+                if tokens.count("[") != tokens.count("]") or any(
+                        a == b == "[" for a, b in zip(tokens, tokens[1:])):
+                    dangerous.add(name)
+        while True:
+            added = {name for name, bodies in macros.items()
+                     if set(code_identifiers("\n".join(bodies))).intersection(dangerous)} - dangerous
+            if not added:
+                return dangerous
+            dangerous.update(added)
+
+    def uses_counter_macro(self, text: str) -> bool:
+        macros = self.all_macro_definitions(text)
+        pending = set(code_identifiers(text))
+        visited = set()
+        while pending:
+            name = pending.pop()
+            if name == "__COUNTER__":
+                return True
+            if name not in visited:
+                visited.add(name)
+                pending.update(set(code_identifiers("\n".join(macros.get(name, [])))) - visited)
+        return False
+
 
 def first_error(stderr: str) -> str:
     for line in stderr.splitlines():
@@ -1266,16 +1773,30 @@ def prune_header_origins(
     max_passes: int,
     reporter: Reporter,
 ) -> set[str]:
+    compiler.preserve_initialization(document.render(set(), keep_line=keep_line))
     sizes = document.origin_sizes()
     first_positions = document.origin_first_positions()
     removed: set[str] = set()
     validation_cache: dict[frozenset[str], tuple[bool, str]] = {}
 
+    source_text = "".join(line.text for line in document.lines)
+    removable_lines = {
+        line_index
+        for candidate in unreferenced_declaration_candidates(source_text, compiler.external_identifiers(source_text))
+        for line_index in range(candidate.start, candidate.end + 1)
+    }
     candidates = []
     for key, origin in document.origins.items():
         if key in document.protected:
             continue
         if any(fnmatch.fnmatch(origin.display, pattern) for pattern in keep_patterns):
+            continue
+        remainder = strip_comments("".join(
+            line.text for index, line in enumerate(document.lines)
+            if line.origin_key == key and index not in removable_lines
+        ))
+        remainder = re.sub(r"\b(?:inline\s+)?namespace(?:\s+[_A-Za-z]\w*(?:::[_A-Za-z]\w*)*)?\s*\{", "", remainder)
+        if re.sub(r"[\s{};]", "", remainder):
             continue
         candidates.append(key)
 
@@ -1331,80 +1852,124 @@ def prune_header_origins(
     return removed
 
 
-def comment_spans(text: str) -> Iterable[tuple[int, int]]:
+COMMENT_LINE_SPLICE = re.compile(r"\\[ \t\f\v]*(?:\r\n|\n|\r)")
+
+
+def is_block_comment(comment: str) -> bool:
+    return comment.startswith("/*") or COMMENT_LINE_SPLICE.sub("", comment).startswith("/*")
+
+
+def is_important_comment(comment: str) -> bool:
+    return comment.startswith(("/*!", "//!")) or COMMENT_LINE_SPLICE.sub("", comment).startswith(("/*!", "//!"))
+
+
+def comment_lexical_view(text: str) -> tuple[str, list[int] | None]:
+    """Return spliced text and the original offset of each surviving character."""
+    if not COMMENT_LINE_SPLICE.search(text):
+        return text, None
+    parts: list[str] = []
+    offsets: list[int] = []
+    previous = 0
+    for match in COMMENT_LINE_SPLICE.finditer(text):
+        parts.append(text[previous:match.start()])
+        offsets.extend(range(previous, match.start()))
+        previous = match.end()
+    parts.append(text[previous:])
+    offsets.extend(range(previous, len(text)))
+    return "".join(parts), offsets
+
+
+def comment_spans(
+    text: str, *, raw_spans: list[tuple[int, int]] | None = None,
+) -> Iterable[tuple[int, int]]:
+    logical, offsets = comment_lexical_view(text)
     index = 0
-    size = len(text)
+    size = len(logical)
 
-    while index < size:
-        if text.startswith("//", index):
-            start = index
-            index += 2
-            while index < size:
-                if text[index] == "\n":
-                    break
-                if text[index] == "\\" and index + 1 < size and text[index + 1] == "\n":
-                    index += 2
-                    continue
-                index += 1
-            yield start, index
+    def original(position: int) -> int:
+        if position == size:
+            return len(text)
+        return position if offsets is None else offsets[position]
+
+    while match := COMMENT_TOKEN.search(logical, index):
+        token = match.group()
+        index = match.end()
+        if token == "//":
+            start = original(match.start())
+            newline = COMMENT_LINE_END.search(logical, index)
+            index = newline.start() if newline else size
+            yield start, original(index)
             continue
 
-        if text.startswith("/*", index):
-            start = index
-            index += 2
-            while index < size and not text.startswith("*/", index):
-                index += 1
-            if index < size:
-                index += 2
-            yield start, index
+        if token == "/*":
+            start = original(match.start())
+            end = logical.find("*/", index)
+            if end >= 0:
+                index = end + 2
+                end = original(index - 1) + 1
+            else:
+                index = size
+                end = len(text)
+            yield start, end
             continue
 
-        raw_match = RAW_STRING_OPEN.match(text, index)
-        if raw_match:
-            opener = raw_match.group(0)
-            delimiter = raw_match.group(1)
+        if match.group(1) is not None:
+            delimiter = match.group(1)
             closer = f'){delimiter}"'
-            end = text.find(closer, index + len(opener))
+            content_start = original(index - 1) + 1
+            end = text.find(closer, content_start)
             if end < 0:
                 break
             end += len(closer)
-            index = end
+            if raw_spans is not None:
+                raw_spans.append((original(match.start()), end))
+            index = end if offsets is None else bisect_left(offsets, end)
             continue
 
-        ch = text[index]
-        if ch.isdigit() or ch == ".":
-            number = CPP_NUMBER.match(text, index)
-            if number:
-                index = number.end()
-                continue
-        if ch in {'"', "'"}:
-            quote = ch
-            start = index
-            index += 1
-            escaped = False
-            while index < size:
-                current = text[index]
-                index += 1
-                if escaped:
-                    escaped = False
-                elif current == "\\":
-                    escaped = True
-                elif current == quote:
+        if token in {'"', "'"}:
+            while quote := CODE_QUOTE_TOKEN.search(logical, index):
+                index = quote.end()
+                if quote.group() == token:
                     break
-            continue
+            else:
+                return
 
-        index += 1
 
-
-def strip_comments(text: str, keep_comments: Iterable[str] = ()) -> str:
+def strip_comments(
+    text: str, keep_comments: Iterable[str] = (), *,
+    directive_splices: set[int] | None = None,
+) -> str:
     keep = set(keep_comments)
     output: list[str] = []
     previous = 0
-    for start, end in comment_spans(text):
+    logical_line = ""
+    raw_spans: list[tuple[int, int]] = []
+    raw_cursor = 0
+    current_line = 0
+    for start, end in comment_spans(text, raw_spans=raw_spans):
         comment = text[start:end]
-        output.append(text[previous:start])
+        gap = text[previous:start]
+        output.append(gap)
+        current_line += gap.count("\n")
+        visible_gap: list[str] = []
+        gap_cursor = previous
+        for raw_start, raw_end in raw_spans[raw_cursor:]:
+            visible_gap.append(text[gap_cursor:raw_start])
+            visible_gap.append(text[raw_start:raw_end].replace("\r", " ").replace("\n", " "))
+            gap_cursor = raw_end
+        visible_gap.append(text[gap_cursor:start])
+        raw_cursor = len(raw_spans)
+        logical_gap = COMMENT_LINE_SPLICE.sub("", "".join(visible_gap))
+        logical_line = (logical_line + logical_gap).rsplit("\n", 1)[-1]
+        block = is_block_comment(comment)
+        multiline_directive_comment = block and "\n" in comment and logical_line.lstrip().startswith(("#", "%:"))
+        newline = "\\\n" if multiline_directive_comment else "\n"
+        if multiline_directive_comment and comment not in keep and directive_splices is not None:
+            directive_splices.add(current_line)
         output.append(comment if comment in keep else
-                      (" " if comment.startswith("/*") else "") + "\n" * comment.count("\n"))
+                      (" " if block else "") + newline * comment.count("\n"))
+        logical_line += " "
+        current_line += comment.count("\n")
         previous = end
     output.append(text[previous:])
     return "".join(output)
@@ -1413,24 +1978,27 @@ def strip_comments(text: str, keep_comments: Iterable[str] = ()) -> str:
 def preprocessor_lines(text: str) -> list[str]:
     """Return comment-free lines, masking lines continued from a literal or macro."""
 
-    lines = strip_comments(text).splitlines(keepends=True)
+    directive_splices: set[int] = set()
+    lines = strip_comments(text, directive_splices=directive_splices).splitlines(keepends=True)
     lines.extend([""] * (len(text.splitlines(keepends=True)) - len(lines)))
     result: list[str] = []
     raw_closer: str | None = None
     quote: str | None = None
     previous_continues = False
 
-    for line in lines:
+    for line_index, line in enumerate(lines):
         protected_at_start = (
             raw_closer is not None or quote is not None or previous_continues
         )
         if protected_at_start:
             result.append("\n" if line.endswith("\n") else "")
+        elif line_index in directive_splices:
+            head = line.rstrip("\r\n")
+            result.append(head[:-1] + line[len(head):])
         else:
             result.append(line)
 
         index = 0
-        escaped = False
         while index < len(line):
             if raw_closer is not None:
                 end = line.find(raw_closer, index)
@@ -1442,31 +2010,23 @@ def preprocessor_lines(text: str) -> list[str]:
                 continue
 
             if quote is not None:
-                ch = line[index]
-                index += 1
-                if escaped:
-                    escaped = False
-                elif ch == "\\":
-                    escaped = True
-                elif ch == quote:
-                    quote = None
+                while quoted := CODE_QUOTE_TOKEN.search(line, index):
+                    index = quoted.end()
+                    if quoted.group() == quote:
+                        quote = None
+                        break
+                else:
+                    index = len(line)
                 continue
 
-            raw_match = RAW_STRING_OPEN.match(line, index)
-            if raw_match:
-                raw_closer = f'){raw_match.group(1)}"'
-                index += len(raw_match.group(0))
-                continue
-
-            ch = line[index]
-            if ch.isdigit() or ch == ".":
-                number = CPP_NUMBER.match(line, index)
-                if number:
-                    index = number.end()
-                    continue
-            if ch in {'"', "'"}:
-                quote = ch
-            index += 1
+            match = PREPROCESSOR_TOKEN.search(line, index)
+            if match is None:
+                break
+            index = match.end()
+            if match.group(1) is not None:
+                raw_closer = f'){match.group(1)}"'
+            elif match.group() in {'"', "'"}:
+                quote = match.group()
 
         previous_continues = line.rstrip("\r\n").endswith("\\")
         if quote is not None and not previous_continues:
@@ -1547,7 +2107,7 @@ def collapse_blank_lines(text: str) -> str:
                 continue
             index += 1
 
-        previous_continues = line.rstrip("\r\n").endswith("\\")
+        previous_continues = line.rstrip(" \t\r\n").endswith("\\")
         if protected:
             output.append(original)
             previous_blank = False
@@ -1710,7 +2270,36 @@ def safe_cleanup_candidate(
     return collapse_blank_lines(retain_important_comments(cleaned, important_comments(text)))
 
 
-def insert_anonymous_namespace(text: str) -> str:
+def try_size_checkpoint(
+    text: str, *, compiler: CompilerWorkspace, writer: CheckpointWriter,
+    reporter: Reporter, limit: int, keep_comments: Iterable[str] = (),
+    reference_checked: bool = False,
+) -> str | None:
+    candidate = text if writer.below_limit(text, limit) else collapse_blank_lines(
+        strip_cleanup_comments(text, keep_comments))
+    if not writer.below_limit(candidate, limit):
+        try:
+            candidate = safe_cleanup_candidate(text, compiler, keep_comments)
+        except ToolError:
+            return None
+    if not writer.below_limit(candidate, limit):
+        return None
+    reporter.phase("checkpoint", f"validating the {limit:,} B checkpoint")
+    if not reference_checked:
+        valid, diagnostic = compiler.validate_submission(text)
+        if not valid:
+            reporter.detail("checkpoint reference rejected: " + first_error(diagnostic))
+            return None
+    valid, diagnostic = compiler.validate_submission(candidate)
+    if not valid:
+        reporter.detail("checkpoint rejected: " + first_error(diagnostic))
+        return None
+    writer.save(f"verified {limit:,} B checkpoint", candidate, force=True)
+    writer.report_checkpoint(candidate, limit)
+    return candidate
+
+
+def insert_anonymous_namespace(text: str, *, source_name: str | None = None) -> str:
     """Put bundled declarations after the initial include block in an anonymous namespace."""
 
     lines = text.splitlines(keepends=True)
@@ -1772,13 +2361,16 @@ def insert_anonymous_namespace(text: str) -> str:
     # Standard-library specializations must stay in the global std namespace.
     # Separate anonymous-namespace blocks still refer to the same namespace.
     wrapped = [*lines[:include_end], "namespace {\n"]
+    def coordinate(line: int) -> list[str]:
+        return [f"#line {line + 1} {json.dumps(source_name)}\n"] if source_name else []
+    wrapped.extend(coordinate(include_end))
     cursor = include_end
     for start, end in standard_namespaces:
         if not include_end <= start < main_line:
             continue
-        wrapped.extend([*lines[cursor:start], "}\n", *lines[start : end + 1], "namespace {\n"])
+        wrapped.extend([*lines[cursor:start], "}\n", *coordinate(start), *lines[start : end + 1], "namespace {\n", *coordinate(end + 1)])
         cursor = end + 1
-    wrapped.extend([*lines[cursor:main_line], "}\n", *lines[main_line:]])
+    wrapped.extend([*lines[cursor:main_line], "}\n", *coordinate(main_line), *lines[main_line:]])
     return "".join(wrapped)
 
 
@@ -1855,6 +2447,51 @@ def structural_tokens(lines: Sequence[str]) -> list[list[str]]:
 
 
 def code_identifiers(text: str) -> Iterable[str]:
+    if COMMENT_LINE_SPLICE.search(text):
+        raw_spans: list[tuple[int, int]] = []
+        spans = list(comment_spans(text, raw_spans=raw_spans)) + raw_spans
+        pieces = []
+        previous = 0
+        for start, end in sorted(spans):
+            pieces.extend((text[previous:start], " "))
+            previous = end
+        pieces.append(text[previous:])
+        text = COMMENT_LINE_SPLICE.sub("", "".join(pieces))
+    if text.isascii():
+        index = 0
+        while match := CODE_IDENTIFIER_TOKEN.search(text, index):
+            token = match.group()
+            index = match.end()
+            if token == 'R"':
+                raw = RAW_STRING_OPEN.match(text, match.start())
+                if raw is not None:
+                    end = text.find(')' + raw.group(1) + '"', raw.end())
+                    if end < 0:
+                        return
+                    index = end + len(raw.group(1)) + 2
+                    continue
+                yield 'R'
+                index -= 1
+            elif token == '//':
+                end = text.find('\n', index)
+                if end < 0:
+                    return
+                index = end + 1
+            elif token == '/*':
+                end = text.find('*/', index)
+                if end < 0:
+                    return
+                index = end + 2
+            elif token in {'"', "'"}:
+                while quote := CODE_QUOTE_TOKEN.search(text, index):
+                    index = quote.end()
+                    if quote.group() == token:
+                        break
+                else:
+                    return
+            elif token[0] == '_' or token[0].isalpha():
+                yield token
+        return
     in_block_comment = False
     quote: str | None = None
     escaped = False
@@ -2059,11 +2696,17 @@ def ipa_removed_signatures(cgraph: str) -> set[str]:
     removed = cgraph.split("Removing unused symbols:", 1)[1].split(
         "Reclaimed Symbol table:", 1
     )[0]
-    return {
+    result = {
         signatures[symbol_id]
         for symbol_id in re.findall(r"/(\d+)(?=\s|$)", removed)
         if symbol_id in signatures
     }
+    if "Optimized Symbol table:" in cgraph:
+        optimized = cgraph.split("Optimized Symbol table:", 1)[1].split("Final Symbol table:", 1)[0]
+        remaining = {match.group(1) for line in optimized.splitlines()
+                     if (match := re.match(r"^.+/(\d+) \(.*\)$", line))}
+        result.update(signature for symbol_id, signature in signatures.items() if symbol_id not in remaining)
+    return result
 
 
 def ipa_function_locations(
@@ -2074,37 +2717,60 @@ def ipa_function_locations(
 ) -> list[tuple[int, str]]:
     result: set[tuple[int, str]] = set()
     signature: str | None = None
-    in_function_decl = False
-    saw_function_decl = False
-    found_decl = False
+    records: dict[str, str] = {}
+    record = ""
+    record_id = ""
     location_pattern = re.compile(
         rf"\bsrcp:\s+(?:.*[/\\])?{re.escape(source_name)}:(\d+)"
     )
 
+    def finish_record() -> None:
+        if record:
+            records[record_id] = record
+
+    def finish_function() -> None:
+        if signature is None:
+            return
+        prefix = signature.split(" [with ", 1)[0]
+        names = re.findall(r"(~?[_A-Za-z]\w*)\s*\(", prefix)
+        if not names or "<lambda" in prefix:
+            return
+        name = names[0]
+        results = [value for value in records.values() if re.match(r"@\d+\s+result_decl\b", value)]
+        parameters = [value for value in records.values() if re.match(r"@\d+\s+parm_decl\b", value)]
+        for value in results + parameters:
+            scope = re.search(r"\bscpe:\s+@(\d+)", value)
+            declaration = records.get(scope.group(1), "") if scope else ""
+            if not re.match(r"@\d+\s+function_decl\b", declaration):
+                continue
+            node = re.search(r"\bname:\s+@(\d+)", declaration)
+            spelling = records.get(node.group(1), "") if node else ""
+            if re.search(rf"\bstrg:\s+{re.escape(name)}\s+lngt:", spelling) is None:
+                continue
+            match = location_pattern.search(declaration)
+            if match:
+                result.add((int(match.group(1)), signature))
+                return
+
     with original.open(encoding="utf-8", errors="replace") as dump:
         for line in dump:
             if line.startswith(";; Function "):
+                finish_record()
+                finish_function()
                 header = line.rstrip()[len(";; Function ") :]
                 candidate = header.rsplit(" (", 1)[0]
                 signature = candidate if candidate in signatures else None
-                in_function_decl = False
-                saw_function_decl = False
-                found_decl = False
-                continue
-            if signature is None or found_decl:
-                continue
-            if line.startswith("@"):
-                is_function_decl = re.match(
-                    r"^@\d+\s+function_decl\b", line
-                ) is not None
-                in_function_decl = is_function_decl and not saw_function_decl
-                saw_function_decl = saw_function_decl or is_function_decl
-            if not in_function_decl:
-                continue
-            match = location_pattern.search(line)
-            if match is not None:
-                result.add((int(match.group(1)), signature))
-                found_decl = True
+                records, record, record_id = {}, "", ""
+            elif signature is not None:
+                match = re.match(r"@(\d+)\s+(\w+)\b", line)
+                if match:
+                    finish_record()
+                    record_id = match.group(1)
+                    record = line if match.group(2) in {"result_decl", "parm_decl", "function_decl", "identifier_node"} else ""
+                elif record:
+                    record += line
+        finish_record()
+        finish_function()
     return sorted(result)
 
 
@@ -2253,7 +2919,7 @@ def ipa_unused_candidates(
         ):
             continue
         deduplicated.append(candidate)
-    return deduplicated
+    return unreferenced_function_candidates(text, deduplicated, keep_functions)
 
 
 def uninstantiated_template_candidates(
@@ -2317,6 +2983,32 @@ def uninstantiated_template_candidates(
             continue
         deduplicated.append(candidate)
     return deduplicated
+
+
+def unreachable_function_body_candidates(
+    text: str, *, compiler: CompilerWorkspace, keep_functions: set[str],
+) -> list[Removal]:
+    lines = text.splitlines(keepends=True)
+    tokens = structural_tokens(lines)
+    candidates = set()
+    for line_number, signature in compiler.ipa_unused_functions(text):
+        if "<lambda" in signature:
+            continue
+        removal = removal_from_function_line(lines, tokens, line_number - 1, "unreachable function body")
+        if removal is None:
+            continue
+        source = "".join(lines[removal.start:removal.end + 1])
+        name = function_header_name(source)
+        if name is None or name in keep_functions:
+            continue
+        if re.search(rf"\b{re.escape(name)}\s*\(", signature.split(" [with ", 1)[0]) is None:
+            continue
+        candidates.add(Removal(removal.start, removal.end, removal.label, name))
+    output = []
+    for candidate in sorted(candidates, key=lambda value: (value.start, -value.end)):
+        if not any(previous.start <= candidate.start and candidate.end <= previous.end for previous in output):
+            output.append(candidate)
+    return output
 
 
 def function_body_span(source: str) -> tuple[int, int] | None:
@@ -2405,21 +3097,242 @@ def function_body_span(source: str) -> tuple[int, int] | None:
     return None
 
 
+def template_signature_macro_names(
+    text: str, names: dict[str, str] | Iterable[str] = (),
+) -> set[str]:
+    definitions: dict[str, list[str]] = {}
+    dangerous = set() if isinstance(names, dict) else set(names)
+    if isinstance(names, dict):
+        for name, replacement in names.items():
+            definitions.setdefault(name, []).append(replacement)
+    logical = re.sub(r"\\\r?\n", "", strip_comments(text)).replace("%:", "#")
+    for line in logical.splitlines():
+        match = re.match(r"\s*#\s*define\s+([_A-Za-z]\w*)(.*)", line)
+        if match:
+            definitions.setdefault(match.group(1), []).append(match.group(2))
+    references: dict[str, set[str]] = {}
+    semantic = {
+        "auto", "constexpr", "consteval", "virtual", "friend", "operator", "explicit",
+        "__attribute__", "__attribute", "__declspec", "asm", "__asm", "__asm__",
+        "__VA_OPT__", "__COUNTER__",
+    }
+    for name, replacements in definitions.items():
+        references[name] = set()
+        for replacement in replacements:
+            identifiers = set(code_identifiers(replacement))
+            references[name].update(identifiers)
+            if identifiers.intersection(semantic) or any(char in replacement for char in "#[]\\"):
+                dangerous.add(name)
+    while True:
+        added = {name for name, dependencies in references.items()
+                 if dependencies.intersection(dangerous)} - dangerous
+        if not added:
+            return dangerous
+        dangerous.update(added)
+
+
+def template_function_signature(
+    source: str, name: str | None, *, macro_names: Iterable[str] = (),
+) -> str | None:
+    if name is None or (IDENTIFIER.fullmatch(name) is None and re.fullmatch(
+        r"operator(?:\[\]|\(\)|<=>|<<|>>|[-+*/%&|^~!=<>]+)", name,
+    ) is None) or name == "operator=":
+        return None
+    body = function_body_span(source)
+    if body is None:
+        return None
+    if strip_comments(source[body[1] + 1:]).strip():
+        return None
+    declaration = strip_comments(source[:body[0]])
+    identifiers = set(code_identifiers(declaration))
+    spelling_matches = function_header_name(source) == name if name.startswith("operator") else name in identifiers
+    if not spelling_matches or identifiers.intersection(macro_names):
+        return None
+    inspected = re.sub(r"\b__attribute__\s*\(\(\s*(?:always_inline|noinline)(?:\s*,\s*(?:always_inline|noinline))*\s*\)\)", " ", declaration)
+    if "[[" in inspected or re.search(
+        r"\b(?:friend|virtual|override|final|__attribute__|__declspec|asm)\b", inspected,
+    ):
+        return None
+    if re.search(
+        rf"(?m)^\s*(?:(?:explicit(?:\([^)]*\))?|constexpr|consteval|inline)\s+)*"
+        rf"{re.escape(name)}\s*\(", inspected,
+    ):
+        return None
+    return declaration
+
+
+def template_member_candidates(text: str, candidates: Sequence[Removal]) -> set[Removal]:
+    visible = preprocessor_lines(text)
+    tokens = structural_tokens(["\n" if line.lstrip().startswith("#") else line for line in visible])
+    namespaces: list[tuple[int, int]] = []
+    for index, line in enumerate(visible):
+        if re.match(r"^\s*(?:inline\s+)?namespace\b", line):
+            end = find_braced_entity_end(tokens, index)
+            if end is not None:
+                namespaces.append((index, end))
+    depths = [0]
+    for row in tokens:
+        depths.append(depths[-1] + row.count("{") - row.count("}"))
+    return {candidate for candidate in candidates if depths[candidate.start] != sum(
+        first < candidate.start <= last for first, last in namespaces
+    )}
+
+
+def portable_body_dependencies(
+    text: str, candidates: Sequence[Removal], external_names: Iterable[str] = (),
+) -> set[str]:
+    visible = preprocessor_lines(text)
+    depth = 0
+    definitions = []
+    altered = False
+    for line in visible:
+        if match := re.match(r"\s*#\s*define\s+LIBRARY_HAS_FLOAT128\b(.*)", line):
+            definitions.append((depth, match.group(1).strip()))
+        if re.match(r"\s*#\s*undef\s+LIBRARY_HAS_FLOAT128\b", line) or re.search(r"\b(?:push_macro|pop_macro)\b", line):
+            altered = True
+        if CONDITIONAL_OPEN_DIRECTIVE.match(line):
+            depth += 1
+        elif CONDITIONAL_CLOSE_DIRECTIVE.match(line):
+            depth -= 1
+    target = text
+    if definitions and all(value == (0, "1") for value in definitions) and not altered and "LIBRARY_HAS_FLOAT128" not in set(external_names):
+        target = "".join(re.sub(r"\bLIBRARY_HAS_FLOAT128\b", "1", line)
+                         if CONDITIONAL_OPEN_DIRECTIVE.match(view) or CONDITIONAL_BRANCH_DIRECTIVE.match(view)
+                         else line for line, view in zip(text.splitlines(keepends=True), visible))
+    _, blocks = wrap_portable_conditionals(target)
+    operator_symbols = {candidate.name: candidate.name[len("operator"):]
+                        for candidate in candidates if (candidate.name or "").startswith("operator")}
+
+    def referenced_names(source: str) -> set[str]:
+        names = set(code_identifiers(source))
+        visible = strip_comments(source)
+        names.update(name for name, symbol in operator_symbols.items()
+                     if symbol and (symbol in visible or (symbol == "[]" and "[" in visible) or
+                                    (symbol == "()" and "(" in visible)))
+        return names
+
+    protected = referenced_names("\n".join(blocks.values()))
+    if not protected:
+        return protected
+    lines = text.splitlines(keepends=True)
+    references: dict[str, set[str]] = {}
+    for candidate in candidates:
+        if candidate.name:
+            references.setdefault(candidate.name, set()).update(referenced_names(
+                "".join(lines[candidate.start:candidate.end + 1])
+            ))
+    offset = 0
+    for line, visible in zip(lines, preprocessor_lines(text)):
+        statement = re.match(
+            r"\s*(?:if|else|for|while|switch|catch|return|co_return|static_assert|assert|case|do|using)\b",
+            visible,
+        )
+        direct_call = re.match(r"\s*[_A-Za-z]\w*\s*\(", visible)
+        assignment = "=" in visible.partition("(")[0]
+        if "(" in visible and not (visible.lstrip().startswith("#") or statement or direct_call or assignment):
+            source = text[offset:]
+            body = function_body_span(source)
+            if body is not None:
+                function_source = source[:body[1] + 1]
+                name = function_header_name(function_source)
+                names = [name] if name is not None else re.findall(
+                    r"\b([_A-Za-z]\w*)\s*(?=\(|<[^;{}()]*>\s*\()", source[:body[0]],
+                )
+                if names:
+                    identifiers = referenced_names(function_source)
+                    for name in names:
+                        references.setdefault(name, set()).update(identifiers)
+        offset += len(line)
+    pending = list(protected)
+    while pending:
+        dependencies = references.get(pending.pop(), set()) - protected
+        protected.update(dependencies)
+        pending.extend(dependencies)
+    return protected
+
+
+def unreferenced_template_declarations(
+    text: str, candidates: Sequence[Removal], *, keep_names: Iterable[str] = (),
+    macro_names: Iterable[str] = (),
+) -> set[Removal]:
+    if "__COUNTER__" in set(code_identifiers(text)):
+        return set()
+    lines = text.splitlines(keepends=True)
+    macro_names = template_signature_macro_names(text, macro_names)
+    members = template_member_candidates(text, candidates)
+    eligible = [candidate for candidate in candidates if not (candidate.name or "").startswith("operator") and candidate not in members and template_function_signature(
+        "".join(lines[candidate.start:candidate.end + 1]), candidate.name,
+        macro_names=macro_names,
+    ) is not None]
+    by_name: dict[str, set[Removal]] = {}
+    references: dict[Removal, set[str]] = {}
+    for candidate in eligible:
+        by_name.setdefault(candidate.name, set()).add(candidate)
+        references[candidate] = set(code_identifiers(
+            "".join(lines[candidate.start:candidate.end + 1])
+        ))
+    outside = set(code_identifiers(apply_removals(text, eligible)))
+    outside.update(keep_names)
+    pasted = token_paste_patterns(strip_comments(text))
+    outside.update(name for name in by_name if any(pattern.fullmatch(name) for pattern in pasted))
+    reachable = {candidate for name in outside for candidate in by_name.get(name, ())}
+    pending = list(reachable)
+    while pending:
+        candidate = pending.pop()
+        dependencies = {dependency for name in references[candidate]
+                        for dependency in by_name.get(name, ())} - reachable
+        reachable.update(dependencies)
+        pending.extend(dependencies)
+    return set(eligible) - reachable
+
+
+def template_body_can_be_stubbed(
+    source: str, name: str | None, *, macro_names: Iterable[str] = (),
+) -> bool:
+    declaration = template_function_signature(source, name, macro_names=macro_names)
+    if declaration is None or re.search(r"\b(?:constexpr|consteval)\b", declaration):
+        return False
+    parsed = function_header_name_and_prefix(source)
+    return_prefix = parsed[1] if parsed else declaration
+    if re.search(r"\bdecltype\s*\(\s*auto\s*\)", return_prefix):
+        return False
+    if re.search(r"->.*\bauto\b", declaration, re.DOTALL):
+        return False
+    placeholder = re.search(rf"\bauto\s*(?:[&*]\s*)*{re.escape(name)}\s*\(", declaration)
+    if "auto" in set(code_identifiers(return_prefix)) and placeholder is None:
+        return False
+    if placeholder and re.search(
+        r"\([^{}]*\)\s*(?:const\s*)?(?:noexcept(?:\([^{}]*\))?\s*)?->", declaration[placeholder.end() - 1:],
+    ) is None:
+        return False
+    return True
+
+
 def stub_uninstantiated_template_functions(
     text: str,
     candidates: Sequence[Removal],
     *,
     deleted: set[Removal] | None = None,
+    keep_names: Iterable[str] = (),
+    macro_names: Iterable[str] = (),
+    allow_portable_stubs: bool = False,
 ) -> str:
     notices = important_comments(text)
     lines = text.splitlines(keepends=True)
-    deleted = deleted or set()
+    macro_names = template_signature_macro_names(text, macro_names)
+    protected_bodies = set() if allow_portable_stubs else portable_body_dependencies(text, candidates, keep_names)
+    deleted = (deleted or set()).intersection(unreferenced_template_declarations(
+        text, candidates, keep_names=keep_names, macro_names=macro_names,
+    ))
+    preserve_bodies = "__COUNTER__" in set(code_identifiers(text))
     for candidate in sorted(candidates, reverse=True):
+        if candidate.name in protected_bodies:
+            continue
         if candidate in deleted:
             lines[candidate.start : candidate.end + 1] = []
             continue
         source = "".join(lines[candidate.start : candidate.end + 1])
-        if re.search(r"\bfriend\b", source):
+        if preserve_bodies or not template_body_can_be_stubbed(source, candidate.name, macro_names=macro_names):
             continue
         body = function_body_span(source)
         if body is None:
@@ -2435,13 +3348,26 @@ def stub_uninstantiated_template_functions(
 
 
 def removable_template_body_candidates(
-    text: str, candidates: Sequence[Removal]
+    text: str, candidates: Sequence[Removal], *, keep_names: Iterable[str] = (),
+    macro_names: Iterable[str] = (),
+    allow_portable_stubs: bool = False,
 ) -> list[Removal]:
     lines = text.splitlines(keepends=True)
+    macro_names = template_signature_macro_names(text, macro_names)
+    if "__COUNTER__" in set(code_identifiers(text)):
+        return []
+    deletable = unreferenced_template_declarations(
+        text, candidates, keep_names=keep_names, macro_names=macro_names,
+    )
+    protected_bodies = set() if allow_portable_stubs else portable_body_dependencies(text, candidates, keep_names)
     eligible: list[Removal] = []
     for candidate in candidates:
+        if candidate.name in protected_bodies:
+            continue
         source = "".join(lines[candidate.start : candidate.end + 1])
-        if re.search(r"\bfriend\b", source):
+        if candidate not in deletable and not template_body_can_be_stubbed(
+            source, candidate.name, macro_names=macro_names,
+        ):
             continue
         eligible.append(candidate)
     return eligible
@@ -2456,6 +3382,15 @@ def reduce_template_body_candidates(
     reporter: Reporter,
     target_bytes: int | None = None,
 ) -> tuple[str, int]:
+    compiler.preserve_initialization(text)
+    keep_names = set(compiler.external_identifiers(text))
+    macro_names = template_signature_macro_names(text, compiler.external_macro_definitions(text))
+    candidates = removable_template_body_candidates(
+        text, candidates, keep_names=keep_names, macro_names=macro_names,
+        allow_portable_stubs=compiler.portable_workspace is not None,
+    )
+    if not candidates:
+        return text, 0
     started = time.monotonic()
     original_text = text
     accepted: set[Removal] = set()
@@ -2465,16 +3400,11 @@ def reduce_template_body_candidates(
         and writer.below_limit(writer.current, target_bytes)
     )
 
-    # Stubbing leaves signatures behind. Before the first size checkpoint, also
-    # try deleting definitions whose names occur only at their declaration.
-    # Use the same compiler candidates and link validation as the normal pass.
-    quick_deleted: set[Removal] = set()
-    if target_bytes is not None and not target_checkpointed:
-        counts = Counter(code_identifiers(text))
-        quick_deleted = {
-            candidate for candidate in candidates
-            if candidate.name and counts[candidate.name] == 1
-        }
+    # Keep declarations used by lookup, type traits, and pasted identifiers.
+    # Only unreachable groups can be deleted together with their signatures.
+    quick_deleted = unreferenced_template_declarations(
+        text, candidates, keep_names=keep_names, macro_names=macro_names,
+    )
 
     original_lines = original_text.splitlines(keepends=True)
     dependencies: dict[Removal, set[Removal]] | None = None
@@ -2544,7 +3474,9 @@ def reduce_template_body_candidates(
             f"validation {validations}: testing {len(active)} template body(s)",
         )
         candidate_text = stub_uninstantiated_template_functions(
-            original_text, active, deleted=quick_deleted.intersection(active)
+            original_text, active, deleted=quick_deleted.intersection(active),
+            keep_names=keep_names, macro_names=macro_names,
+            allow_portable_stubs=compiler.portable_workspace is not None,
         )
         valid, stderr = compiler.validate(candidate_text)
         if valid:
@@ -2555,10 +3487,7 @@ def reduce_template_body_candidates(
             )
             if not target_checkpointed and writer.below_limit(text, target_bytes):
                 target_checkpointed = True
-                reporter.checkpoint(
-                    f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
-                    f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
-                )
+                writer.report_checkpoint(text, target_bytes)
             break
 
         blocked = {
@@ -2594,7 +3523,9 @@ def reduce_template_body_candidates(
         active = [candidate for candidate in candidates if candidate not in blocked]
 
     if accepted:
-        deleted = set(accepted)
+        deleted = unreferenced_template_declarations(
+            original_text, list(accepted), keep_names=keep_names, macro_names=macro_names,
+        )
         declaration_fallback: list[Removal] | None = None
         for _ in range(min(32, len(deleted))):
             validations += 1
@@ -2603,7 +3534,9 @@ def reduce_template_body_candidates(
                 f"validation {validations}: removing {len(deleted)} declarations",
             )
             candidate_text = stub_uninstantiated_template_functions(
-                original_text, list(accepted), deleted=deleted
+                original_text, list(accepted), deleted=deleted,
+                keep_names=keep_names, macro_names=macro_names,
+                allow_portable_stubs=compiler.portable_workspace is not None,
             )
             valid, stderr = compiler.validate(candidate_text)
             if valid:
@@ -2614,10 +3547,7 @@ def reduce_template_body_candidates(
                 )
                 if not target_checkpointed and writer.below_limit(text, target_bytes):
                     target_checkpointed = True
-                    reporter.checkpoint(
-                        f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
-                        f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
-                    )
+                    writer.report_checkpoint(text, target_bytes)
                 break
 
             blocked = {
@@ -2645,7 +3575,9 @@ def reduce_template_body_candidates(
                 nonlocal text, validations, target_checkpointed
                 proposal = deleted.union(batch)
                 candidate_text = stub_uninstantiated_template_functions(
-                    original_text, list(accepted), deleted=proposal
+                    original_text, list(accepted), deleted=proposal,
+                    keep_names=keep_names, macro_names=macro_names,
+                    allow_portable_stubs=compiler.portable_workspace is not None,
                 )
                 validations += 1
                 reporter.phase(
@@ -2664,10 +3596,7 @@ def reduce_template_body_candidates(
                 )
                 if not target_checkpointed and writer.below_limit(text, target_bytes):
                     target_checkpointed = True
-                    reporter.checkpoint(
-                        f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
-                        f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
-                    )
+                    writer.report_checkpoint(text, target_bytes)
                 return True
 
             def reduce_declarations(items: Sequence[Removal]) -> None:
@@ -2680,6 +3609,11 @@ def reduce_template_body_candidates(
 
             reduce_declarations(declaration_fallback)
 
+    name_counts = Counter(candidate.name for candidate in candidates)
+    refinement_candidates = [candidate for candidate in candidates if candidate not in accepted and (
+        not accepted or name_counts[candidate.name] > 1
+    )]
+    if not refinement_candidates:
         reporter.done(
             "templates",
             f"accepted {len(accepted)}/{len(candidates)} template body(s)",
@@ -2691,7 +3625,9 @@ def reduce_template_body_candidates(
         nonlocal text, validations, target_checkpointed
         proposal = accepted.union(batch)
         candidate_text = stub_uninstantiated_template_functions(
-            original_text, proposal
+            original_text, proposal, deleted=quick_deleted.intersection(proposal),
+            keep_names=keep_names, macro_names=macro_names,
+            allow_portable_stubs=compiler.portable_workspace is not None,
         )
         validations += 1
         reporter.phase(
@@ -2707,10 +3643,7 @@ def reduce_template_body_candidates(
         writer.save(f"removed {len(batch)} uninstantiated template body(s)", text)
         if not target_checkpointed and writer.below_limit(text, target_bytes):
             target_checkpointed = True
-            reporter.checkpoint(
-                f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
-                f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
-            )
+            writer.report_checkpoint(text, target_bytes)
         return True
 
     def reduce_batch(items: Sequence[Removal]) -> None:
@@ -2721,15 +3654,20 @@ def reduce_template_body_candidates(
         reduce_batch(left)
         reduce_batch(right)
 
-    reduce_batch(candidates)
+    reduce_batch(refinement_candidates)
     if accepted:
         validations += 1
         reporter.phase(
             "templates",
             f"validation {validations}: removing {len(accepted)} declarations",
         )
-        candidate_text = collapse_blank_lines(
-            apply_removals(original_text, accepted)
+        candidate_text = stub_uninstantiated_template_functions(
+            original_text, list(accepted),
+            deleted=unreferenced_template_declarations(
+                original_text, list(accepted), keep_names=keep_names, macro_names=macro_names,
+            ),
+            keep_names=keep_names, macro_names=macro_names,
+            allow_portable_stubs=compiler.portable_workspace is not None,
         )
         valid, stderr = compiler.validate(candidate_text)
         if valid:
@@ -2740,10 +3678,7 @@ def reduce_template_body_candidates(
             )
             if not target_checkpointed and writer.below_limit(text, target_bytes):
                 target_checkpointed = True
-                reporter.checkpoint(
-                    f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
-                    f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
-                )
+                writer.report_checkpoint(text, target_bytes)
         else:
             reporter.detail(
                 "template declaration cleanup was rejected: " + first_error(stderr)
@@ -2756,17 +3691,50 @@ def reduce_template_body_candidates(
     return text, len(accepted)
 
 
-def unreferenced_declaration_candidates(text: str) -> list[Removal]:
-    """Find unreachable groups of types, aliases, and plain lambda constants.
+def token_paste_patterns(text: str) -> list[re.Pattern[str]]:
+    """Return conservative identifier patterns produced by token-pasting macros."""
+    patterns: list[re.Pattern[str]] = []
+    logical = COMMENT_LINE_SPLICE.sub("", text).replace("%:%:", "##")
+    token = r"[_A-Za-z0-9]+"
+    paste = re.compile(rf"{token}(?:\s*##\s*{token})+")
+    for line in logical.splitlines():
+        if "##" not in line:
+            continue
+        if re.search(r"[\\$]|[^\x00-\x7f]", line):
+            return [re.compile(r".*")]
+        macro = re.match(r"\s*#\s*define\s+[_A-Za-z]\w*(\([^)]*\))?(.*)", line)
+        if macro is None:
+            return [re.compile(r".*")]
+        parameters = set(IDENTIFIER.findall(macro.group(1) or ""))
+        if "..." in (macro.group(1) or ""):
+            parameters.add("__VA_ARGS__")
+        body = macro.group(2)
+        if "__VA_OPT__" in body:
+            return [re.compile(r".*")]
+        expressions = list(paste.finditer(body))
+        if sum(match.group().count("##") for match in expressions) != body.count("##"):
+            return [re.compile(r".*")]
+        for match in expressions:
+            parts = re.split(r"\s*##\s*", match.group())
+            patterns.append(re.compile("".join(
+                r"\w*" if part in parameters else re.escape(part) for part in parts
+            )))
+    return patterns
+
+
+def unreferenced_declaration_candidates(text: str, keep_names: Iterable[str] = (),
+                                      protected_macros: Iterable[str] = ()) -> list[Removal]:
+    """Find unreachable groups of types, aliases, and constant declarations.
 
     Names are deliberately unqualified: a same-named declaration in another
     scope keeps both alive. Initializers and declarations that can introduce
     runtime effects are not considered removable here.
     """
     uncommented = strip_comments(text)
-    if "##" in uncommented:
-        # Token pasting can reference a name that never appears as an identifier.
+    source_names = set(code_identifiers(uncommented))
+    if "__COUNTER__" in source_names:
         return []
+    pasted_names = token_paste_patterns(uncommented)
     lines = uncommented.splitlines(keepends=True)
     visible_lines = preprocessor_lines(uncommented)
     if len(visible_lines) != len(lines):
@@ -2777,8 +3745,15 @@ def unreferenced_declaration_candidates(text: str) -> list[Removal]:
     lambda_pattern = re.compile(
         r"^\s*(?:inline\s+)?constexpr\s+auto\s+([_A-Za-z]\w*)\s*=\s*\[\s*\]"
     )
+    scalar_pattern = re.compile(
+        r"^\s*(?:inline\s+)?constexpr\s+"
+        r"(?:bool|char|char8_t|char16_t|char32_t|wchar_t|short|int|long|float|double|signed|unsigned)"
+        r"(?:\s+(?:short|int|long|signed|unsigned))*\s+([_A-Za-z]\w*)"
+        r"(?:\s*<[^;=(){}]*>)?\s*="
+    )
     candidates: list[Removal] = []
     references: dict[str, set[str]] = {}
+    class_sources: dict[str, str] = {}
     skip_until = -1
     continued = False
     for index, line in enumerate(lines):
@@ -2789,11 +3764,12 @@ def unreferenced_declaration_candidates(text: str) -> list[Removal]:
         type_match = type_pattern.match(visible_lines[index])
         alias_match = alias_pattern.match(visible_lines[index])
         lambda_match = lambda_pattern.match(visible_lines[index])
-        match = type_match or alias_match or lambda_match
+        scalar_match = scalar_pattern.match(visible_lines[index])
+        match = type_match or alias_match or lambda_match or scalar_match
         if match is None:
             continue
         start = template_prefix_start(lines, index, tokens)
-        if alias_match:
+        if alias_match or scalar_match:
             end = find_statement_end(tokens, index)
         else:
             end = find_braced_entity_end(tokens, index)
@@ -2814,33 +3790,217 @@ def unreferenced_declaration_candidates(text: str) -> list[Removal]:
                 terminators.append(position)
         if terminators != [len(statement_tokens) - 1] or re.search(r";\s*$", lines[end]) is None:
             continue
-        if not alias_match and re.search(r"}\s*;\s*$", lines[end]) is None:
+        if not (alias_match or scalar_match) and re.search(r"}\s*;\s*$", lines[end]) is None:
             # In particular, retain "struct X { ... } object;" and invoked
             # lambdas: neither may be discarded just because X is unreferenced.
             continue
         source = "".join(lines[start : end + 1])
+        if scalar_match and "," in source:
+            continue
         identifiers = set(code_identifiers(source))
+        if identifiers.intersection(protected_macros):
+            continue
+        if "__COUNTER__" in identifiers:
+            continue
+        if re.search(r"\[\s*\[", strip_comments(source)) or identifiers.intersection({"__attribute__", "__declspec", "asm", "__asm__"}):
+            continue
         if type_match:
             header = "".join(lines[start:index])
             is_template = "template" in header and re.search(r"template\s*<\s*>", header) is None
             if "friend" in identifiers:
                 continue
-            if not is_template and identifiers.intersection({"static", "inline"}):
-                continue
-            if {"static", "inline"}.issubset(identifiers):
+            if not is_template and re.search(r"\bstatic\b[^(){};]*\b[_A-Za-z]\w*\s*(?:=|;|\{)", strip_comments(source)):
                 continue
         name = match.group(1)
         candidates.append(Removal(start, end, f"unreferenced declaration {name}", name))
         references.setdefault(name, set()).update(identifiers)
+        if type_match:
+            class_sources[name] = source
+
+    functions: list[Removal] = []
+    skip_until = -1
+    for index, line in enumerate(visible_lines):
+        if source_names.intersection({"asm", "__asm__", "dlsym", "GetProcAddress"}) or index <= skip_until or "(" not in line or line.lstrip().startswith("#"):
+            continue
+        if re.match(r"\s*(?:if|else|for|while|switch|catch|return|co_return|static_assert|assert|case|do|using)\b", line):
+            continue
+        start = template_prefix_start(lines, index, tokens)
+        if any(candidate.start <= start <= candidate.end for candidate in candidates):
+            continue
+        tail = "".join(lines[index:])
+        body = function_body_span(tail)
+        if body:
+            end = index + tail.count("\n", 0, body[1])
+        else:
+            end = find_statement_end(tokens, index)
+        if end is None:
+            continue
+        source = "".join(lines[start:end+1])
+        name = function_header_name(source)
+        if set(code_identifiers(source)).intersection(protected_macros):
+            continue
+        if name is None or name.startswith("operator") or name in DEFAULT_KEEP_FUNCTIONS | {"main"}:
+            continue
+        header = strip_comments(source[:function_body_span(source)[0]] if body else source)
+        parsed = function_header_name_and_prefix(source)
+        prefix = parsed[1] if parsed else ""
+        if not prefix or "=" in prefix or prefix.endswith("~") or prefix in {"explicit", "constexpr", "consteval", "inline"}:
+            continue
+        if "[[" in header or set(code_identifiers(source)).intersection({"extern", "virtual", "override", "final", "__COUNTER__", "__attribute__", "__declspec"}):
+            continue
+        if body and (strip_comments("".join(lines[index:end+1]))[body[1]+1:].strip() or re.search(r"(?m)^\s*#", source)):
+            continue
+        functions.append(Removal(start, end, "unreferenced function declaration", name))
+        skip_until = end
+    members = template_member_candidates(uncommented, functions)
+    for candidate in functions:
+        if candidate in members:
+            continue
+        candidates.append(candidate)
+        references.setdefault(candidate.name, set()).update(code_identifiers("".join(lines[candidate.start:candidate.end+1])))
+
+    operators: list[tuple[Removal, set[str]]] = []
+    for index, line in enumerate(visible_lines):
+        if "operator" not in line or line.lstrip().startswith("#"):
+            continue
+        start = template_prefix_start(lines, index, tokens)
+        if any(candidate.start <= start <= candidate.end for candidate in candidates):
+            continue
+        tail = "".join(lines[index:])
+        body = function_body_span(tail)
+        match = re.search(r"\boperator\s*(?:\[\]|\(\)|<=>|<<|>>|[-+*/%&|^~!=<>]+)\s*\(", tail[:body[0]] if body else "")
+        if body is None or match is None:
+            continue
+        depth, end_parameter = 1, match.end()
+        while depth and end_parameter < body[0]:
+            char = tail[end_parameter]
+            depth += (char == "(") - (char == ")")
+            end_parameter += 1
+        attached = set(code_identifiers(tail[match.end():end_parameter-1])) & class_sources.keys()
+        anchors = {name for name in attached if re.search(
+            rf"\b{re.escape(name)}\s*\(|\busing\b[^;=]*::[^;=]*;|\bfriend\b|__COUNTER__", class_sources[name],
+        ) is None}
+        if not anchors:
+            continue
+        end = index + tail.count("\n", 0, body[1])
+        if strip_comments(tail[body[1]+1:tail.find("\n", body[1]+1) if "\n" in tail[body[1]+1:] else len(tail)]).strip():
+            continue
+        operators.append((Removal(start, end, "unreferenced operator component", f"@operator{start}"), attached))
+    member_operators = template_member_candidates(uncommented, [candidate for candidate, _ in operators])
+    for candidate, attached in operators:
+        if candidate in member_operators:
+            continue
+        candidates.append(candidate)
+        references[candidate.name] = set(code_identifiers("".join(lines[candidate.start:candidate.end+1])))
+        for name in attached:
+            references[name].add(candidate.name)
 
     names = set(references)
-    live = set(code_identifiers(apply_removals(uncommented, candidates))) & names
+    live = (set(code_identifiers(apply_removals(uncommented, candidates))) | set(keep_names)) & names
+    live.update(name for name in names if any(pattern.fullmatch(name) for pattern in pasted_names))
     pending = list(live)
     while pending:
         for dependency in (references[pending.pop()] & names) - live:
             live.add(dependency)
             pending.append(dependency)
     return [candidate for candidate in candidates if candidate.name not in live]
+
+
+def function_header_name_and_prefix(source: str) -> tuple[str, str] | None:
+    body = function_body_span(source)
+    if body is None and not source.rstrip().endswith(";"):
+        return None
+    header = strip_comments(source[:body[0]] if body else source.rstrip()[:-1])
+    header = header.lstrip()
+    while match := re.match(r"template\s*<", header):
+        angle, paren, position = 1, 0, match.end()
+        while position < len(header) and angle:
+            char = header[position]
+            if char == "(":
+                paren += 1
+            elif char == ")":
+                paren -= 1
+            elif not paren and char in "<>":
+                angle += 1 if char == "<" else -1
+            position += 1
+        if angle:
+            return None
+        header = header[position:].lstrip()
+    if re.search(r"\b(?:requires|asm|__asm__)\b", header):
+        return None
+    if "operator" in set(code_identifiers(header)):
+        operator = re.search(r"\boperator\s*(\[\]|\(\)|<=>|<<|>>|[-+*/%&|^~!=<>]+)\s*\(", header)
+        if operator is None:
+            return None
+        return "operator" + operator.group(1), header[:operator.start()].strip()
+    depth = bracket = 0
+    previous = ""
+    previous_position = 0
+    ignored = {"decltype", "noexcept", "sizeof", "alignof", "alignas", "__attribute__", "__declspec", "int", "void", "char", "bool", "float", "double", "long", "short"}
+    for match in re.finditer(r"[_A-Za-z]\w*|[^\s]", header):
+        token = match.group()
+        if token == "(":
+            if depth == bracket == 0 and IDENTIFIER.fullmatch(previous) and previous not in ignored:
+                return previous, header[:previous_position].strip()
+            depth += 1
+        elif token == ")":
+            depth -= 1
+        elif token == "[":
+            bracket += 1
+        elif token == "]":
+            bracket -= 1
+        previous = token
+        previous_position = match.start()
+    return None
+
+
+def function_header_name(source: str) -> str | None:
+    parsed = function_header_name_and_prefix(source)
+    return parsed[0] if parsed else None
+
+
+def unreferenced_function_candidates(
+    text: str, candidates: Sequence[Removal], keep_functions: set[str],
+) -> list[Removal]:
+    if "__COUNTER__" in set(code_identifiers(text)):
+        return []
+    lines = text.splitlines(keepends=True)
+    graph: dict[str, set[str]] = {}
+    eligible: list[Removal] = []
+    for candidate in candidates:
+        source = "".join(lines[candidate.start:candidate.end+1])
+        body = function_body_span(source)
+        if body is None and not source.rstrip().endswith(";"):
+            continue
+        if body is not None and strip_comments(source[body[1]+1:]).strip():
+            continue
+        identifiers = set(code_identifiers(source))
+        if identifiers.intersection({"__COUNTER__", "virtual", "override", "final", "extern", "constructor", "destructor", "used", "retain", "cleanup", "__attribute__", "__declspec"}) or "[[" in source:
+            continue
+        name = candidate.name or function_header_name(source)
+        if name is None or name in keep_functions or name.startswith("operator"):
+            continue
+        header = strip_comments(source[:body[0]] if body else source.rstrip()[:-1])
+        occurrence = re.search(rf"\b{re.escape(name)}\s*\(", header)
+        if occurrence is None:
+            continue
+        prefix = header[:occurrence.start()].strip()
+        if not prefix or prefix.endswith("~") or prefix in {"explicit", "constexpr", "consteval", "inline"}:
+            continue
+        eligible.append(Removal(candidate.start, candidate.end, candidate.label, name))
+        graph.setdefault(name, set()).update(identifiers)
+    outside = set(code_identifiers(apply_removals(text, eligible)))
+    live = outside.intersection(graph) | keep_functions
+    patterns = token_paste_patterns(strip_comments(text))
+    live.update(name for name in graph if any(pattern.fullmatch(name) for pattern in patterns))
+    if outside.intersection({"asm", "__asm__", "dlsym", "GetProcAddress"}):
+        return []
+    pending = list(live.intersection(graph))
+    while pending:
+        for name in (graph[pending.pop()] & graph.keys()) - live:
+            live.add(name)
+            pending.append(name)
+    return [candidate for candidate in eligible if candidate.name not in live]
 
 
 def unused_candidates(
@@ -2884,7 +4044,7 @@ def unused_candidates(
             cppcheck_result = cppcheck_future.result()
 
     warning_pattern = re.compile(
-        rf"^{re.escape(str(compiler.source))}:(\d+):\d+: warning:.*"
+        rf"^(?:{re.escape(str(compiler.source))}|{re.escape(compiler.source.name)}):(\d+):\d+: warning:.*"
         r"\[-Wunused-(function|macros)\]$"
     )
     for warning in compiler_output.splitlines():
@@ -2926,16 +4086,20 @@ def unused_candidates(
             reporter.detail(redact_home(cppcheck_result.stderr))
 
     counts = Counter(code_identifiers(text))
-    macro_pattern = re.compile(r"^\s*#\s*define\s+([_A-Za-z]\w*)\b")
-    for line_index, line in enumerate(lines):
-        macro_match = macro_pattern.match(line)
-        if macro_match and counts[macro_match.group(1)] == 1:
-            end = line_index
-            while end + 1 < len(lines) and lines[end].rstrip().endswith("\\"):
-                end += 1
-            removals.add(Removal(line_index, end, "unused macro (text scan)"))
-
-    removals.update(unreferenced_declaration_candidates(text))
+    patterns = token_paste_patterns(strip_comments(text))
+    macros = set()
+    functions = []
+    for removal in removals:
+        if "macro" in removal.label:
+            match = re.match(r"^\s*#\s*define\s+([_A-Za-z]\w*)\b", lines[removal.start])
+            if match and counts[match.group(1)] == 1 and not any(pattern.fullmatch(match.group(1)) for pattern in patterns):
+                macros.add(removal)
+        else:
+            functions.append(removal)
+    external_names = compiler.external_identifiers(text)
+    removals = macros.union(unreferenced_function_candidates(text, functions, keep_functions | external_names))
+    removals.update(unreferenced_declaration_candidates(text, external_names | keep_functions,
+                                                       compiler.dangerous_macro_names(text)))
 
     ordered = sorted(removals)
     deduplicated: list[Removal] = []
@@ -2968,6 +4132,7 @@ def reduce_unused_candidates(
     target_bytes: int | None = None,
     stage: str = "cleanup",
 ) -> tuple[str, int]:
+    compiler.preserve_initialization(text)
     started = time.monotonic()
     accepted: set[Removal] = set()
     cache: dict[frozenset[Removal], tuple[bool, str]] = {}
@@ -3018,10 +4183,7 @@ def reduce_unused_candidates(
         writer.save(f"removed {len(batch)} unused declaration(s)", text)
         if not target_checkpointed and writer.below_limit(text, target_bytes):
             target_checkpointed = True
-            reporter.checkpoint(
-                f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
-                f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
-            )
+            writer.report_checkpoint(text, target_bytes)
         if reporter.verbose:
             for candidate in batch:
                 reporter.detail(
@@ -3064,8 +4226,28 @@ def cleanup_text(
     reporter: Reporter,
     target_bytes: int | None = None,
     keep_comments: Iterable[str] = (),
+    feature_token: str | None = None,
 ) -> str:
+    reference_text = text
+    limits = checkpoint_limits(target_bytes)
+    priority_limit = limits[0] if len(limits) > 1 else None
+    if not safe_only and getattr(compiler, "uses_counter_macro", lambda text: False)(text):
+        safe_only = True
+        reporter.detail("keeping declarations and bodies that affect __COUNTER__")
+    if not safe_only and keep_functions == DEFAULT_KEEP_FUNCTIONS and not writer.below_limit(text, target_bytes):
+        fast = bundle_fast.try_cleanup(sys.modules[__name__], text, compiler=compiler, writer=writer,
+                                      reporter=reporter, target_bytes=target_bytes, keep_comments=keep_comments,
+                                      feature_token=feature_token, priority_bytes=priority_limit)
+        if fast is not None:
+            text = fast
+        if writer.current is not None and writer.size(writer.current) < writer.size(text):
+            text = writer.current
     keep_comments = set(keep_comments)
+    if priority_limit is not None and priority_limit not in writer.reached_limits:
+        checkpoint = try_size_checkpoint(text, compiler=compiler, writer=writer, reporter=reporter,
+                                         limit=priority_limit, keep_comments=keep_comments)
+        if checkpoint is not None:
+            text = checkpoint
     target_checkpointed = writer.below_limit(text, target_bytes) or (
         writer.current is not None
         and writer.below_limit(writer.current, target_bytes)
@@ -3076,17 +4258,14 @@ def cleanup_text(
         if target_checkpointed or not writer.below_limit(text, target_bytes):
             return
         target_checkpointed = True
-        reporter.checkpoint(
-            f"submission ready: {reporter.byte_count(writer.size(text), 'green')} "
-            f"< {reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
-        )
+        writer.report_checkpoint(text, target_bytes)
 
     if target_bytes is not None:
         quick_candidate = collapse_blank_lines(strip_cleanup_comments(text, keep_comments))
         if writer.below_limit(quick_candidate, target_bytes):
             started = time.monotonic()
             reporter.phase("cleanup", "validating a quick comment-only checkpoint")
-            valid, stderr = compiler.syntax(quick_candidate, build_pch=False)
+            valid, stderr = compiler.validate_submission(quick_candidate)
             if valid:
                 if quick_candidate != text:
                     text = quick_candidate
@@ -3103,7 +4282,7 @@ def cleanup_text(
     safe_candidate = safe_cleanup_candidate(text, compiler, keep_comments)
     if writer.below_limit(safe_candidate, target_bytes):
         if safe_candidate != text or require_validation:
-            valid, stderr = compiler.syntax(safe_candidate, build_pch=False)
+            valid, stderr = compiler.validate_submission(safe_candidate)
             if not valid:
                 raise ToolError(
                     f"safe cleanup did not validate: {first_error(stderr)}"
@@ -3133,6 +4312,8 @@ def cleanup_text(
         return text
 
     safe_changed = safe_candidate != text
+    compiler.preserve_initialization(reference_text)
+    compiler.retain_portable_target(reference_text)
     text = safe_candidate
     pending_validation = safe_changed or require_validation
 
@@ -3140,7 +4321,8 @@ def cleanup_text(
         nonlocal text, pending_validation
         if target_bytes is None or target_checkpointed:
             return
-        candidates = unreferenced_declaration_candidates(text)
+        candidates = unreferenced_declaration_candidates(text, compiler.external_identifiers(text) | keep_functions,
+                                                         compiler.dangerous_macro_names(text))
         if not candidates:
             return
         candidate_text = collapse_blank_lines(apply_removals(text, candidates))
@@ -3225,7 +4407,8 @@ def cleanup_text(
     )
     if template_candidates:
         template_candidates = removable_template_body_candidates(
-            text, template_candidates
+            text, template_candidates,
+            allow_portable_stubs=compiler.portable_workspace is not None,
         )
         if template_candidates:
             text, accepted = reduce_template_body_candidates(
@@ -3242,23 +4425,6 @@ def cleanup_text(
             reporter.detail("no declaration-only template body is safe to try")
     try_declaration_checkpoint()
     validate_pending()
-
-    # Template analysis works before namespace insertion. Checking the wrapper
-    # after template reduction avoids compiling and linking the full bundle
-    # before any removable code has been discarded.
-    started = time.monotonic()
-    reporter.phase("namespace", "checking anonymous namespace insertion")
-    namespace_candidate = insert_anonymous_namespace(text)
-    if namespace_candidate != text:
-        valid, stderr = compiler.validate(namespace_candidate)
-        if valid:
-            text = namespace_candidate
-            writer.save("anonymous namespace", text)
-        else:
-            reporter.detail(
-                "anonymous namespace was not inserted: " + first_error(stderr)
-            )
-    reporter.done("namespace", "anonymous namespace check complete", started)
 
     for pass_index in range(1, max_passes + 1):
         stage = f"pass {pass_index}/{max_passes}"
@@ -3297,8 +4463,22 @@ def cleanup_text(
         reporter.detail(
             f"IPA cleanup accepted {accepted}/{len(ipa_candidates)} candidate(s)"
         )
+        if accepted and max_passes > 0:
+            run_unused_pass(cppcheck, "after IPA")
+    started = time.monotonic()
+    reporter.phase("bodies", "finding unreachable function bodies while retaining declarations")
+    body_candidates = unreachable_function_body_candidates(text, compiler=compiler, keep_functions=keep_functions)
+    reporter.done("bodies", f"found {len(body_candidates)} candidate(s)", started)
+    if body_candidates:
+        text, accepted = reduce_template_body_candidates(
+            text, body_candidates, compiler=compiler, writer=writer, reporter=reporter, target_bytes=target_bytes,
+        )
+        if accepted and max_passes > 0:
+            run_unused_pass(cppcheck, "after bodies")
     try_declaration_checkpoint()
-    return text
+    return bundle_fast.prune_function_declarations(
+        sys.modules[__name__], text, compiler=compiler, writer=writer,
+        reporter=reporter, keep_functions=keep_functions)
 
 
 def default_include_paths(repo_root: Path, source: Path) -> list[Path]:
@@ -3343,11 +4523,11 @@ class FastBundler:
         library_root: Path | None = None,
     ) -> None:
         self.include_paths = [path.resolve() for path in include_paths]
+        self.feature_token = secrets.token_hex(16)
         self.library_root = (
             library_root.resolve() if library_root is not None else None
         )
         self.once: set[Path] = set()
-        self.system_includes: set[str] = set()
         self.stack: list[Path] = []
         self.inputs: dict[str, str] = {}
 
@@ -3410,12 +4590,19 @@ class FastBundler:
                 f"comment parsing changed the line count in {path.name}"
             )
 
-        has_pragma_once = any(
-            PRAGMA_ONCE_DIRECTIVE.match(line.rstrip("\r\n"))
-            for line in uncommented_lines
-        )
+        has_pragma_once = False
+        depth = 0
+        for line in uncommented_lines:
+            if PRAGMA_ONCE_DIRECTIVE.match(line.rstrip("\r\n")):
+                if depth:
+                    raise FastBundleUnsupported(f"conditional #pragma once in {path.name}")
+                has_pragma_once = True
+            elif CONDITIONAL_OPEN_DIRECTIVE.match(line):
+                depth += 1
+            elif CONDITIONAL_CLOSE_DIRECTIVE.match(line):
+                depth -= 1
         include_guard_lines = self._include_guard_lines(uncommented_lines)
-        guarded_once = has_pragma_once or bool(include_guard_lines)
+        guarded_once = has_pragma_once
         if guarded_once and path in self.once:
             return ""
         if guarded_once:
@@ -3436,11 +4623,10 @@ class FastBundler:
             for line_index, uncommented_line in enumerate(uncommented_lines):
                 directive = uncommented_line.rstrip("\r\n")
 
-                if (
-                    PRAGMA_ONCE_DIRECTIVE.match(directive)
-                    or line_index in include_guard_lines
-                ):
+                if PRAGMA_ONCE_DIRECTIVE.match(directive):
                     replacements[line_index] = ""
+                    continue
+                if line_index in include_guard_lines:
                     continue
 
                 local_include = LOCAL_INCLUDE_DIRECTIVE.match(directive)
@@ -3458,16 +4644,12 @@ class FastBundler:
                         f"unsupported local include syntax in {path.name}"
                     )
 
-                system_include = SYSTEM_INCLUDE_DIRECTIVE.match(directive)
-                if system_include and conditional_depth == 0:
-                    name = system_include.group(1)
-                    if name in self.system_includes:
-                        replacements[line_index] = ""
-                        continue
-                    self.system_includes.add(name)
-
-                if re.match(r'^\s*#\s*(?:line\s+)?\d+\s+"', directive):
-                    replacements[line_index] = ""
+                marker = LINE_DIRECTIVE.match(directive) or GNU_LINE_MARKER.match(directive)
+                if marker:
+                    raw = json.loads(marker.group(2))
+                    resolver = OriginResolver(base_dir=path.parent, source=path, include_paths=self.include_paths)
+                    origin = resolver.resolve(raw)
+                    replacements[line_index] = f"#line {marker.group(1)} {json.dumps(origin.display)}\n"
                     continue
 
                 if CONDITIONAL_OPEN_DIRECTIVE.match(directive):
@@ -3481,9 +4663,12 @@ class FastBundler:
 
             if conditional_depth != 0:
                 raise FastBundleUnsupported(f"unmatched conditional in {path.name}")
-            return prefix + replace_lines_preserving_comments(
+            feature = bundle_fast.feature_name(path, self.library_root)
+            begin = bundle_fast.marker(self.feature_token, True, feature) + "\n" if feature else ""
+            end = bundle_fast.marker(self.feature_token, False, feature) + "\n" if feature else ""
+            return prefix + begin + replace_lines_preserving_comments(
                 text, replacements, source_comments(text) if not add_source_link else (),
-            )
+            ) + end
         finally:
             self.stack.pop()
 
@@ -3587,8 +4772,8 @@ def restore_oj_bundle_notices(
             if all(index in emitted.get(path, set()) for index in range(first, last + 1)):
                 parts.append(comment)
             else:
-                parts.append((" " if comment.startswith("/*") else "") + "\n" * comment.count("\n"))
-                if comment.startswith(("/*!", "//!")):
+                parts.append((" " if is_block_comment(comment) else "") + "\n" * comment.count("\n"))
+                if is_important_comment(comment):
                     recovered[path].append((first, comment))
             previous, previous_line = end, last
         parts.append(original[previous:])
@@ -3670,11 +4855,13 @@ def canonical_oj_bundle(
 def expand_source(
     source: Path, include_paths: Sequence[Path], repo_root: Path,
     *, cxx: str | None, oj_bundle: str | None,
-    no_fallback: bool = False, reporter: Reporter,
+    no_fallback: bool = False, reporter: Reporter, metadata: dict | None = None,
 ) -> tuple[str, str, dict[str, str]]:
     try:
         bundler = FastBundler(include_paths, library_root=repo_root)
         bundled = bundler.bundle(source)
+        if metadata is not None:
+            metadata["feature_token"] = bundler.feature_token
         return bundled, "fast", bundler.inputs
     except FastBundleUnsupported as exc:
         if no_fallback:
@@ -3705,15 +4892,16 @@ def expand_command(args: argparse.Namespace, repo_root: Path) -> None:
     )
     started = time.monotonic()
     reporter.phase("bundle", "expanding local includes")
+    metadata: dict = {}
     bundled, method, inputs = expand_source(
         source, include_paths, repo_root, cxx=args.cxx, oj_bundle=args.oj_bundle,
-        no_fallback=args.no_fallback, reporter=reporter,
+        no_fallback=args.no_fallback, reporter=reporter, metadata=metadata,
     )
     privacy_check_line_directives(bundled)
     stamp = SubmissionStamp(inputs[str(source)], hashlib.sha256(bundled.encode()).hexdigest())
     rendered = stamp.render(bundled)
     save_source_comments(output, source_comments(source.read_text(encoding="utf-8")), provenance={
-        "source": str(source), "inputs": inputs, "input_digest": stamp.input_digest,
+        "source": str(source), "inputs": inputs, "input_digest": stamp.input_digest, **metadata,
     })
     atomic_write(output, rendered)
     reporter.done(
@@ -3721,6 +4909,31 @@ def expand_command(args: argparse.Namespace, repo_root: Path) -> None:
         f"{method}: {reporter.byte_count(encoded_size(rendered), 'green')}",
         started,
     )
+
+
+def expansion_reuse_fingerprint(path: Path) -> bytes:
+    raw = path.read_text()
+    stamp, text = SubmissionStamp.read(raw)
+    try:
+        record = json.loads(comment_record_path(path).read_text())
+        token = record["feature_token"]
+        if stamp is None or record["input_digest"] != stamp.input_digest:
+            return raw.encode()
+        text, owners = bundle_fast.feature_lines(sys.modules[__name__], text, token)
+        if not owners:
+            return raw.encode()
+        source = Path(record["source"])
+        root = Path(__file__).resolve().parent.parent
+        reporter = Reporter(stream=io.StringIO())
+        with CompilerWorkspace(cxx=resolve_executable(None, ("g++-15", "g++-14", "g++")),
+                               standard="c++23", include_paths=default_include_paths(root, source),
+                               extra_args=[], timeout=None, reporter=reporter) as compiler:
+            context = compiler.preprocessed_fingerprint(text)
+        if context is None:
+            return raw.encode()
+        return (text + context + Path(bundle_fast.__file__).read_text()).encode()
+    except (OSError, KeyError, TypeError, ValueError):
+        return raw.encode()
 
 
 def bundle_command(args: argparse.Namespace, repo_root: Path) -> None:
@@ -3741,6 +4954,30 @@ def bundle_command(args: argparse.Namespace, repo_root: Path) -> None:
     with common_compiler_from_args(
         args, include_paths=include_paths, reporter=reporter
     ) as compiler:
+        if (args.aggressive and not args.no_safe_cleanup and not args.keep_line and
+                not args.keep_header and not args.keep_function and not args.no_prune_headers):
+            metadata = {}
+            try:
+                expanded, _, inputs = expand_source(source, include_paths, repo_root, cxx=compiler.cxx,
+                                                    oj_bundle=args.oj_bundle, no_fallback=True,
+                                                    reporter=reporter, metadata=metadata)
+            except FastBundleUnsupported:
+                expanded = None
+            if expanded is not None:
+                stamp = SubmissionStamp(inputs[str(source)], hashlib.sha256(expanded.encode()).hexdigest())
+                writer = CheckpointWriter(output, reporter, stamp=stamp)
+                selected = bundle_fast.try_cleanup(sys.modules[__name__], expanded, compiler=compiler,
+                                                   writer=writer, reporter=reporter,
+                                                   target_bytes=DEFAULT_BYTE_LIMIT, keep_comments=comments,
+                                                   feature_token=metadata.get("feature_token"))
+                if selected is not None:
+                    save_source_comments(output, comments, provenance={
+                        "source": str(source), "inputs": inputs, "input_digest": stamp.input_digest, **metadata,
+                    })
+                    writer.save("final", selected, force=True)
+                    reporter.done("bundle", f"finished at {reporter.byte_count(writer.size(selected), 'green')}",
+                                  command_started)
+                    return
         started = time.monotonic()
         reporter.phase("bundle", "running oj-bundle")
         oj_bundle = discover_oj_bundle(repo_root, args.oj_bundle)
@@ -3867,7 +5104,7 @@ def cleanup_command(args: argparse.Namespace, repo_root: Path) -> None:
     target_description = (
         "disabled"
         if target_bytes is None
-        else f"<{reporter.byte_count(target_bytes, 'yellow')}"
+        else " then ".join(f"<{reporter.byte_count(limit, 'yellow')}" for limit in checkpoint_limits(target_bytes))
     )
     reporter.phase(
         "cleanup",
@@ -3878,7 +5115,7 @@ def cleanup_command(args: argparse.Namespace, repo_root: Path) -> None:
         reporter.checkpoint(
             f"submission already ready: "
             f"{reporter.byte_count(writer.size(text), 'green')} < "
-            f"{reporter.byte_count(target_bytes, 'yellow')}; cleanup continues"
+            f"{reporter.byte_count(target_bytes, 'yellow')}; validating and continuing cleanup"
         )
 
     include_paths = merge_include_paths(
@@ -3901,6 +5138,15 @@ def cleanup_command(args: argparse.Namespace, repo_root: Path) -> None:
         cppcheck = None
         if not args.safe_only:
             cppcheck = resolve_executable(args.cppcheck, ("cppcheck",))
+        feature_token = None
+        if stamp is not None:
+            try:
+                provenance = json.loads(comment_record_path(path).read_text())
+                token = provenance.get("feature_token")
+                if provenance.get("input_digest") == stamp.input_digest and isinstance(token, str) and re.fullmatch(r"[0-9a-f]{32}", token):
+                    feature_token = token
+            except (OSError, ValueError):
+                pass
         cleaned = cleanup_text(
             text,
             compiler=compiler,
@@ -3913,17 +5159,26 @@ def cleanup_command(args: argparse.Namespace, repo_root: Path) -> None:
             reporter=reporter,
             target_bytes=target_bytes,
             keep_comments=load_source_comments(path),
+            feature_token=feature_token,
         )
         writer.save("final", cleaned, force=had_stamp)
-        checkpoint_available = writer.below_limit(cleaned, target_bytes) or (
+        required_limit = checkpoint_limits(target_bytes)[0] if target_bytes is not None else None
+        checkpoint_available = writer.below_limit(cleaned, required_limit) or (
             writer.current is not None
-            and writer.below_limit(writer.current, target_bytes)
+            and writer.below_limit(writer.current, required_limit)
         )
         if target_bytes is not None and not checkpoint_available:
-            reporter.warning(
+            raise ToolError(
                 f"target not reached: "
                 f"{reporter.byte_count(writer.size(cleaned), 'red')} >= "
-                f"{reporter.byte_count(target_bytes, 'yellow')}"
+                f"{reporter.byte_count(required_limit, 'yellow')}"
+            )
+        if required_limit != target_bytes and target_bytes is not None and not (
+                writer.below_limit(cleaned, target_bytes) or
+                (writer.current is not None and writer.below_limit(writer.current, target_bytes))):
+            reporter.warning(
+                f"secondary target not reached: {reporter.byte_count(target_bytes, 'yellow')}; "
+                f"the {reporter.byte_count(required_limit, 'green')} checkpoint is available"
             )
     reporter.done(
         "cleanup",
@@ -4025,8 +5280,8 @@ def parse_args(argv: Sequence[str]) -> argparse.Namespace:
         type=int,
         default=DEFAULT_BYTE_LIMIT,
         help=(
-            "write a checkpoint as soon as the file is smaller than this many "
-            "bytes, then continue cleanup (default: 65536; 0 disables the checkpoint)"
+            "write a verified checkpoint below this many bytes, then continue cleanup "
+            "(default: 131072 first, then 65536; 0 disables checkpoints)"
         ),
     )
     cleanup.add_argument("--cppcheck", help="cppcheck executable")

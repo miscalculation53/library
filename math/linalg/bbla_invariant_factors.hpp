@@ -51,7 +51,6 @@ vc<typename F::S> multiply_polynomials(const vc<typename F::S> &a, const vc<type
   return c;
 }
 
-// 挿入した元のベクトルに対する従属関係を復元できる、rollback 可能な基底。
 template <class F>
 struct KrylovBasis
 {
@@ -125,7 +124,6 @@ optional<vc<vc<typename F::S>>> invariant_factors_trial(int n, const LinearMap &
     if (!factors.empty() && !polynomial_divmod<F>(factors.back(), p).second.empty())
       return nullopt;
 
-    // p(A)v = sum_j g_j(A)v_j。p | g_j を確認して v から前の部分空間の成分を除く。
     bool corrected = false;
     repi(j, factors.size())
     {
@@ -150,7 +148,6 @@ optional<vc<vc<typename F::S>>> invariant_factors_trial(int n, const LinearMap &
         if (!basis.insert(cur, relation)) return nullopt;
         apply(cur);
       }
-      // 補正後のブロックが閉じていることも、元の作用で検算する。
       repi(i, d) repi(j, n)
         cur[j] = F::add(cur[j], F::mul(p[i], basis.original[start + i][j]));
       for (auto &x : cur) if (x != F::e0()) return nullopt;
@@ -161,11 +158,11 @@ optional<vc<vc<typename F::S>>> invariant_factors_trial(int n, const LinearMap &
   reverse(factors.begin(), factors.end());
   return factors;
 }
-} // namespace detail
+}
 
 // det(xI-A)。昇冪順・monic。n=0 は {1}。
-// 最初に射影最小多項式を試し、次数 n なら O(n^2+nt) 時間・O(n) 空間。
-// それ以外は決定的な Krylov 分解で O(n^3+nt) 時間・O(n^2) 空間。返り値は常に正しい。
+// 射影最小多項式の次数が n なら O(n^2+nt) 時間・O(n) 空間。
+// それ以外は O(n^3+nt) 時間・O(n^2) 空間。返り値は常に正しい。
 template <class F, class LinearMap, class RandomSample = decltype(random_sample_mint<typename F::S>)>
 vc<typename F::S> characteristic_polynomial(int n, const LinearMap &apply,
                                            const RandomSample &random_sample = random_sample_mint)
@@ -200,7 +197,7 @@ vc<typename F::S> characteristic_polynomial(int n, const LinearMap &apply,
 }
 
 // f_1 | f_2 | ... の順の不変因子。各多項式は昇冪順・monic、定数多項式は含まない。
-// 各 Krylov ブロックの独立性・閉性・整除関係を検査する Las Vegas 法。
+// Las Vegas 法。
 // 十分大きいサンプル集合を仮定。通常 O(n^3+nt) 時間・O(n^2) 空間。
 // 最初の射影で次数 n を得た場合は O(n^2+nt) 時間・O(n) 空間。
 template <class F, class LinearMap, class RandomSample = decltype(random_sample_mint<typename F::S>)>
@@ -221,4 +218,4 @@ vc<vc<typename F::S>> invariant_factors(int n, const LinearMap &apply,
     if (result) return move(*result);
   }
 }
-} // namespace bbla
+}

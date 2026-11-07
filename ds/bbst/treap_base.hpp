@@ -146,7 +146,6 @@ struct TreapBase
   int size() const { return count(root); }
   static void destroy(Node *t)
   {
-    // 回転で左の子を取り除き、追加メモリ O(1) で解放する。
     while (t)
       if (t->left)
       {
@@ -336,4 +335,4 @@ struct TreapBase
     inorder(t->right, g);
   }
 };
-} // namespace bbst_detail
+}

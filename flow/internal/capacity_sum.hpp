@@ -4,8 +4,6 @@
 
 namespace flow_internal
 {
-// blocks * 2^bits + low。blocks は加えた項数以下の桁上がりの回数。
-// 係数型を拡張せず、容量の総和を同じ幅の容量へ分割して使う。
 template <class Unsigned>
 struct CapacitySum
 {

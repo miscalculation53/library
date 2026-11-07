@@ -25,7 +25,7 @@ assert((sum == vector<P>{{0, 0}, {5, 0}, {5, 2}, {0, 2}}));
 ```cpp
 vector<Point<T>> minkowski_sum(const vector<Point<T>>& p,
                                const vector<Point<T>>& q,
-                               geometry_real_t<T> eps = EPS);
+                               ld eps = EPS);
 ```
 
 両方の入力を保ち、共線の中間頂点を省いた反時計回りの凸境界を返す。始点は `(y, x)` 最小の頂点。[reorder_polygon](polygon.md) と同じ始点規則になる。

@@ -38,7 +38,6 @@ struct Edge<void>
 #ifdef LOCAL
 namespace cpp_dump::_detail
 {
-  // 辺の int 変換より、全メンバの表示を優先する。
   template <class Cost>
   inline constexpr bool is_ostream<Edge<Cost>> = false;
 }
@@ -388,7 +387,6 @@ private:
   }
 };
 
-// C++20 の別名テンプレートの型推論で、有向・無向と削除可否を引き継ぐ。
 template <bool is_directed, bool is_erasable = false, class I>
 Graph(int, const vc<pair<I, I>> &) -> Graph<is_directed, void, is_erasable>;
 template <bool is_directed, bool is_erasable = false, class I, class Cost>

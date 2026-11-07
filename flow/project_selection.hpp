@@ -73,7 +73,7 @@ public:
     if (u == v) { add_unary(u, c00, c11); return; }
     flow_internal::SignedCapacitySum<Cost> slack;
     slack.add(c01), slack.add(c10), slack.subtract(c00), slack.subtract(c11);
-    assert(!slack.negative()); // c00 + c11 <= c01 + c10
+    assert(!slack.negative());
     add_unary(u, c00, c10);
     add_unary(v, c10, c11);
     offset -= Unsigned(c10);
@@ -111,7 +111,6 @@ public:
     MaxFlow<Unsigned> flow(nodes + 2);
     auto vertex = [&](int v) { return v == source ? nodes : v == sink ? nodes + 1 : v; };
     for (const auto &e : finite) flow.add_edge(vertex(e.from), vertex(e.to), e.cap);
-    // 全有限容量の和 + 1。大きい場合は同じ幅の複数の辺へ分ける。
     auto infinity = bound;
     infinity.add(1);
     for (const auto &e : hard)

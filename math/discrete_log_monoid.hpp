@@ -59,8 +59,6 @@ optional<ll> discrete_log_action(const typename M::S &a, S s, const S &t, ll lim
         if (equal(current, t)) return base + j;
         current = act(a, std::as_const(current));
       }
-      // 最初の衝突以降に t へ到達できるなら t は周期上にある。
-      // その場合、次の衝突ブロックには必ず t が現れる。
       if (++misses == 2) return nullopt;
     }
     s = std::move(next);

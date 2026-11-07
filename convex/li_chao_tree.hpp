@@ -1,7 +1,5 @@
 #pragma once
 
-// Uses exact integer intermediates.
-
 #include <optional>
 
 #include "../template/template_all_but_modint.hpp"

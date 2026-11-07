@@ -66,7 +66,10 @@ void check(int n, const vc<tuple<int, int, ll>> &es)
       const auto prev = g.prev_edges(s);
       repi(t, n)
       {
-        auto path = g.path(s, t);
+        auto path = g.path_edge(s, t);
+        const auto vertices = g.path_vertex(s, t);
+        static_assert(is_same_v<decltype(vertices), const optional<vc<int>>>);
+        assert(bool(path) == bool(vertices));
         static_assert(is_same_v<decltype(path), optional<vc<Edge<Cost>>>>);
         if (ds[s][t] == INF || ds[s][t] == -INF)
         {
@@ -90,6 +93,9 @@ void check(int n, const vc<tuple<int, int, ll>> &es)
           cur = e.to, sum += e.cost;
         }
         assert(cur == t && sum == ds[s][t]);
+        vc<int> expected_vertices{s};
+        for (const auto &e : *path) expected_vertices.eb(e.to);
+        assert(*vertices == expected_vertices);
       }
     }
   };
@@ -207,7 +213,7 @@ int main()
   pending_input = GraphDirected<ll>(2, vc<tuple<int, int, ll>>{{0, 1, -1}, {1, 0, 2}});
   assert(!pending.negative_cycle());
   assert((pending.johnson() == vvl{{0, -1}, {2, 0}}));
-  assert(!pending.negative_cycle() && pending.path(0, 1)->front().cost == -1);
+  assert(!pending.negative_cycle() && pending.path_edge(0, 1)->front().cost == -1);
   Graph<false, ll> h_input(3, vc<pair<int, int>>{{0, 1}, {1, 2}});
   AllPairsShortestPath h(h_input);
   assert(h.solve()[0][2] == 2);
@@ -233,7 +239,7 @@ int main()
       {0, 1, INF - 7}, {1, 2, INF - 5}, {0, 2, 3}});
   AllPairsShortestPath large(large_input);
   assert(large.floyd_warshall()[0][2] == 3);
-  assert(large.path(0, 2)->size() == 1 && (*large.path(0, 2))[0].index == 2);
+  assert(large.path_edge(0, 2)->size() == 1 && (*large.path_edge(0, 2))[0].index == 2);
   assert(large.floyd_warshall()[0][3] == INF && !large.negative_cycle());
 
   // 2 * infty が型の範囲を超える設定では、飽和演算を使う。
@@ -241,17 +247,17 @@ int main()
       {0, 1, LLONG_MAX / 2 + 1}, {1, 2, LLONG_MAX / 2 + 1}, {0, 2, 3}});
   AllPairsShortestPath<true, ll, large_inf> max_graph(max_input);
   assert(max_graph.floyd_warshall()[0][2] == 3 && !max_graph.negative_cycle());
-  assert((*max_graph.path(0, 2))[0].index == 2);
+  assert((*max_graph.path_edge(0, 2))[0].index == 2);
 
   const i128 w = i128(1) << 120;
   GraphDirected<i128> wide_input(4, vc<tuple<int, int, i128>>{{0, 1, w}, {1, 2, w}});
   AllPairsShortestPath wide(wide_input);
   assert(wide.floyd_warshall()[0][2] == 2 * w);
-  assert(wide.path(0, 2)->size() == 2 && !wide.negative_cycle());
+  assert(wide.path_edge(0, 2)->size() == 2 && !wide.negative_cycle());
 
   GraphDirected<double> real_input(3, vc<tuple<int, int, double>>{{0, 1, 0.5}, {1, 2, -0.25}});
   AllPairsShortestPath real(real_input);
   assert(real.floyd_warshall()[0][2] == 0.25 && !real.negative_cycle());
-  assert(real.path(0, 2)->size() == 2);
+  assert(real.path_edge(0, 2)->size() == 2);
   PRINT("Hello World");
 }

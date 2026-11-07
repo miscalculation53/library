@@ -30,4 +30,4 @@ struct ContainerForEnd<priority_queue<T, Sequence, RawCompare>, Compare, Back>
   using type = conditional_t<Back, MaxPriorityQueue<T, Compare, Sequence>, MinPriorityQueue<T, Compare, Sequence>>;
 };
 
-} // namespace priority_container_detail
+}

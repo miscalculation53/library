@@ -29,7 +29,6 @@ optional<vc<FormalPowerSeries<mint>>> guess_p_recursive(
       mint pw = 1;
       repi(k, degree + 1)
       {
-        // 次数の低い係数から列を並べ、同じ消去で低次数の候補も得る。
         repi(j, r + 1) mat[i][k * (r + 1) + j] = a[i + j] * pw;
         pw *= i;
       }
@@ -37,7 +36,6 @@ optional<vc<FormalPowerSeries<mint>>> guess_p_recursive(
     const auto solution = mat.solve(vc<mint>(n - r));
     assert(solution);
     const auto &basis = solution->second;
-    // 基底は自由変数の列順なので、先頭の有効な基底が最小次数になる。
     for (const auto &b : basis)
     {
       P last(degree + 1);
@@ -83,7 +81,7 @@ vc<mint> p_recursive_extend(
   return a;
 }
 
-// 第 k 項（0-indexed）。既知の接頭辞の末尾から計算する。
+// 第 k 項（0-indexed）。
 // 制約: 必要な各遷移で c[r](n) != 0。
 template <class mint>
 mint p_recursive_nth(

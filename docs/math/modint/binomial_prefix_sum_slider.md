@@ -96,4 +96,4 @@ void set(int nl, int nr)
 
 移動前の状態を $(n,k)$ として、
 
-- $O(1+\lvert \mathrm{nl}-n\rvert+\lvert \mathrm{nr}-k\rvert)$。テーブルの追加計算を除く。
+- $O(\lvert \mathrm{nl}-n\rvert+\lvert \mathrm{nr}-k\rvert)$。テーブルの追加計算を除く。

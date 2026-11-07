@@ -35,7 +35,7 @@ template<class U> explicit Line(const Line<U>& l);
 template<class U> explicit Segment(const Segment<U>& s);
 template<class U> Line<U> Line::cast() const;
 template<class U> Segment<U> Segment::cast() const;
-Point<geometry_wide_t<T>> vec() const;
+Point<larger_int_t<T>> vec() const;
 ```
 
 公開メンバ `Point<T> a, b` を持つ。`vec()` は `b-a`。直線の向きは `a` から `b`。線分は `a == b` も有効。
@@ -51,11 +51,11 @@ Point<geometry_wide_t<T>> vec() const;
 #### 所属・平行・垂直・交差判定
 
 ```cpp
-bool contains(Line<T> l, Point<T> p, geometry_real_t<T> eps = EPS);
-bool contains(Segment<T> s, Point<T> p, geometry_real_t<T> eps = EPS);
-bool parallel(A a, B b, geometry_real_t<T> eps = EPS);
-bool perpendicular(A a, B b, geometry_real_t<T> eps = EPS);
-bool intersects(A a, B b, geometry_real_t<T> eps = EPS);
+bool contains(Line<T> l, Point<T> p, ld eps = EPS);
+bool contains(Segment<T> s, Point<T> p, ld eps = EPS);
+bool parallel(A a, B b, ld eps = EPS);
+bool perpendicular(A a, B b, ld eps = EPS);
+bool intersects(A a, B b, ld eps = EPS);
 ```
 
 `A, B` はそれぞれ `Line<T>` または `Segment<T>`。直線の一致・線分の重なりも交差に含む。整数・有理数では各判定を厳密に行う。
@@ -71,7 +71,7 @@ bool intersects(A a, B b, geometry_real_t<T> eps = EPS);
 #### 交差部分
 
 ```cpp
-Intersection<geometry_field_t<T>> intersection(A a, B b, geometry_real_t<T> eps = EPS);
+Intersection<geometry_field_t<T>> intersection(A a, B b, ld eps = EPS);
 
 template<class F> struct Intersection {
   IntersectionKind kind;
@@ -114,10 +114,10 @@ Point<geometry_field_t<T>> closest_point(Segment<T> s, Point<T> p);
 
 ```cpp
 geometry_field_t<T> distance2(A a, B b);
-geometry_real_t<T> distance(A a, B b);
+template<class R = ld> R distance(A a, B b);
 ```
 
-`A, B` は点・直線・線分の全組合せに対応する。点同士の `distance2` は `geometry_wide_t<T>`、それ以外は `geometry_field_t<T>`。図形間の最短距離を返す。
+`A, B` は点・直線・線分の全組合せに対応する。点同士の `distance2` は `larger_int_t<T>`、それ以外は `geometry_field_t<T>`。図形間の最短距離を返す。
 
 実数入力では、図形同士の交差による距離ゼロの判定に既定の `EPS` を使う。
 

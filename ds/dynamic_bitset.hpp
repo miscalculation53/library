@@ -111,7 +111,6 @@ private:
       {
         apply_word(lw);
         apply_word(rw);
-        // 完全なワードでは区間端のマスクを省く。
         int si = bl + (lw + 1) * word_bits - l;
         int sw = si / word_bits, sb = si % word_bits;
         if (sb == 0)

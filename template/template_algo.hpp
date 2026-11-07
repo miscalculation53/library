@@ -10,6 +10,7 @@
 #include "template_vector.hpp"
 #include "../utils/is_integral_ext.hpp"
 #include "../utils/resolved_infty.hpp"
+#include "../algebra/monoid_power.hpp"
 
 /**
  * @brief テンプレート（アルゴリズム）
@@ -222,52 +223,6 @@ struct MonoidMax
   template <class I>
   static constexpr S pow(const S &a, I k) { return k == 0 ? e() : a; }
 };
-
-namespace internal
-{
-  template <class M, class I, class = void>
-  struct HasMonoidPow : false_type
-  {
-  };
-  template <class M, class I>
-  struct HasMonoidPow<M, I, void_t<decltype(M::pow(declval<const typename M::S &>(), declval<I>()))>> : true_type
-  {
-  };
-}
-
-template <class M, class I>
-typename M::S pow_monoid(typename M::S a, I k)
-{
-  if constexpr (is_signed_ext<I>)
-    assert(k >= 0);
-  if constexpr (internal::HasMonoidPow<M, I>::value)
-    return M::pow(a, k);
-  else
-  {
-    typename M::S c = M::e();
-    for (; k; k >>= 1)
-    {
-      if (k & 1)
-        c = M::op(c, a);
-      a = M::op(a, a);
-    }
-    return c;
-  }
-}
-
-template <class G, class I>
-typename G::S pow_group(typename G::S a, I k)
-{
-  if constexpr (is_signed_ext<I>)
-  {
-    if (k < 0)
-    {
-      a = G::inv(a);
-      return G::op(pow_monoid<G>(a, -(k + 1)), a);
-    }
-  }
-  return pow_monoid<G>(a, k);
-}
 
 // left_index が 0 なら、長さ n+1 で a.front() が e()
 // left_index が 1 なら、長さ n で e() がない

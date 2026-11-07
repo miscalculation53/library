@@ -158,7 +158,6 @@ struct Matrix : internal::matrix_storage<typename F::S>
       }
       de = F::mul(de, a[i][j]);
       S aij_inv = F::inv(a[i][j]);
-      // ピボットより左は零。浮動小数点でも消去済みの成分を明示的に保つ。
       repi(l, j + 1, m) a[i][l] = F::mul(a[i][l], aij_inv);
       a[i][j] = F::e1();
       if (rref)

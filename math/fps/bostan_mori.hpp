@@ -25,7 +25,6 @@ mint bostan_mori(const FormalPowerSeries<mint> &p, const FormalPowerSeries<mint>
   const int d = SZ(q) - 1;
   if (d == 0)
     return res;
-  // 残りの添字が d 以下なら、FPS 除算の必要な係数だけを求める。
   auto finish = [&](const F &a, const F &b) -> mint
   {
     if (k == 0)
@@ -40,7 +39,6 @@ mint bostan_mori(const FormalPowerSeries<mint> &p, const FormalPowerSeries<mint>
   };
   if (k <= d)
     return finish(u, q);
-  // 小さい次数では、途中の FPS 用の配列確保を省いて最後まで反復する。
   const int cutoff = d < 64 ? 0 : d;
   if (ntt_ok<mint>(2 * d + 1))
   {

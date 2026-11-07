@@ -27,7 +27,6 @@ private:
   vl vec;
   bool is_nega = false;
 
-  // 各桁の積・余りは BASE * v 未満になる。
   template <class U, class F>
   static void with_scalar_width(U v, F f)
   {

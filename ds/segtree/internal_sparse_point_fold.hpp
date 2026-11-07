@@ -15,8 +15,6 @@ template <class T>
 struct has_equality<T, std::void_t<decltype(static_cast<bool>(
     std::declval<const T&>() == std::declval<const T&>()))>> : std::true_type {};
 
-// An optional predicate or an already available equality proves identity.
-// Types without either operation retain the general initial-value path.
 template <class M, class = void>
 struct identity_value {
     static bool test(const typename M::S& value) {
@@ -35,8 +33,6 @@ struct identity_value<M, std::void_t<decltype(static_cast<bool>(
     }
 };
 
-// These adapters use only the documented coefficient representation and e().
-// Equality remains optional for the coefficient type as well.
 template <class T>
 struct identity_value<GroupAffineFunction<T>, void> {
     static bool test(const typename GroupAffineFunction<T>::S& value) {
@@ -291,7 +287,7 @@ public:
     }
 };
 
-} // namespace internal_sparse_point_fold
+}
 
 namespace internal_sparse_point_fold {
 
@@ -327,7 +323,6 @@ private:
 
   struct Entry
   {
-    // l 番目の値が val、[l + 1, r) は初期値のままで、その積が rest
     ll l, r;
     S val, rest;
     bool registered;
@@ -356,7 +351,6 @@ private:
     nodes[i].hi = r == -1 ? nodes[i].entry.r : nodes[r].hi;
   }
 
-  // 疎セグメント木の配置で、各区間の左端をキーにする。
   void insert(Entry x, ll a, ll b, int i)
   {
     ll c = a + (b - a) / 2;
@@ -624,4 +618,4 @@ public:
   }
 };
 
-} // namespace internal_sparse_point_fold
+}

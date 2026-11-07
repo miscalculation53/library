@@ -127,7 +127,6 @@ public:
     degrees.clear();
     for (int x : roots)
     {
-      // 子にした根は根リストから外すので、未処理の根を再び辿らずに済む。
       if (nodes[x].parent != -1) continue;
       int d = nodes[x].degree;
       while (true)

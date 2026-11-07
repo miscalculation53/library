@@ -14,7 +14,6 @@ vc<I> two_edge_connected_component_ids(const LowLink &lowlink)
   int components = 0;
   for (int v : lowlink.dfs_order())
   {
-    // 無向 DFS では、親辺が橋の頂点と根で low[v] == order[v] になる。
     if (lowlink.low(v) == lowlink.order(v)) result[v] = components++;
     else result[v] = result[lowlink.parent(v)->first];
   }

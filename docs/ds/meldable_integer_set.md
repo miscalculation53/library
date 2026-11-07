@@ -196,7 +196,7 @@ void merge(MeldableIntegerSet& other)
 
 ##### 計算量
 
-- $O(t+1)$。$t$ は両方にノードがある区間数
+- $O(t)$。$t$ は両方にノードがある区間数
 - ノード生成が合計 $A$ 個、併合が $R$ 回なら、全併合の合計は $O(A+R)$
 
 併合中のノード生成は0個。
@@ -316,7 +316,7 @@ const_iterator cend() const
 
 - `end` / `cend` / 参照 / 比較：$O(1)$
 - `begin` / `cbegin` / `++`：$O(H)$
-- 全要素の走査：$O((s+1)H)$
+- 全要素の走査：$O(sH)$
 
 全体を高速に列挙する用途では `enumerate` を使える。
 

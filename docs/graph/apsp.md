@@ -46,7 +46,7 @@ if (walk[s][t] == -INF) {
   // s から t へ到達不能。
 } else {
   // walk[s][t] は有限の最短距離。
-  auto path = ap.path(s, t);
+  auto path = ap.path_edge(s, t);
 }
 ```
 
@@ -160,7 +160,7 @@ const vvc<Dist>& johnson();
 
 `Cost = void` の場合は、各辺の重み1に対して全始点 BFS を行う。
 
-重み付きの場合は全頂点へ重み 0 でつながる仮想始点から Bellman–Ford を 1 回だけ実行し、ポテンシャル $h$ を求める。
+重み付きの場合は全頂点を始点とする SPFA を 1 回だけ実行し、ポテンシャル $h$ を求める。
 負閉路がなければ辺を
 
 $$w'(u,v)=w(u,v)+h(u)-h(v)\ge0$$
@@ -170,7 +170,7 @@ $$w'(u,v)=w(u,v)+h(u)-h(v)\ge0$$
 $$d(s,t)=d'(s,t)-h(s)+h(t)$$
 
 で元の重みに戻す。グラフ自体や元の辺番号は変更しない。
-Bellman–Ford は更新前の配列から次の配列へ遷移し、1 周で経路の辺数が 1 本増える形にしている。
+ポテンシャル計算には SSSP と共通の SPFA を使い、親辺の記録を省き、負閉路を検出した時点で終了する。すべての辺が非負なら、ポテンシャルをすべて $0$ とする。最悪時間計算量は $O(nm)$。
 負閉路があれば Warshall–Floyd へ切り替え、各頂点対の有限値・`infty`・`-infty` を求める。
 
 #### negative_cycle
@@ -180,31 +180,33 @@ bool negative_cycle() const;
 ```
 
 グラフ全体の負閉路の有無を返す。
-距離の計算前は、Johnson と共通の Bellman–Ford で有無だけを判定する。距離行列を確保せず、グラフを含む空間は $O(n+m)$。
+距離の計算前は、Johnson と共通の複数始点 SPFA で有無を判定する。距離行列を確保せず、グラフを含む空間は $O(n+m)$。
 計算後は保存済みの判定結果を返す。
 
 事前判定では距離・ポテンシャルを保存しない。続く `solve()` / `johnson()` は改めて計算するが、負閉路がない場合の Johnson の計算量のオーダーは変わらない。
 
 ##### 計算量
 
-- 計算前：$O(n(n+m))$。重みなしは $O(1)$、全辺非負なら $O(n+m)$。
+- 計算前：最悪 $O(nm)$、初期化に $O(n)$。重みなしは $O(1)$、全辺非負なら $O(n+m)$。
 - 計算後：$O(1)$。
 
-#### path / prev_edges
+#### path_edge, path_vertex, prev_edges
 
 ```cpp
-optional<vc<Edge<Cost>>> path(int s, int t) const;
+optional<vc<Edge<Cost>>> path_edge(int s, int t) const;
+optional<vc<int>> path_vertex(int s, int t) const;
 vc<Edge<Cost>> prev_edges(int s) const;
 ```
 
 計算後に呼ぶ。グラフに負閉路があっても、有限の最短距離を持つ組について経路を復元できる。
 
-- `path(s,t)`：最短パスの辺を順に返す。距離が `infty`・`-infty` なら `nullopt`。有限距離で $s=t$ なら値ありの空配列。
+- `path_edge(s,t)`：最短パスの辺を順に返す。距離が `infty`・`-infty` なら `nullopt`。有限距離で $s=t$ なら値ありの空配列。
+- `path_vertex(s,t)`：両端を含む頂点列を移動順に返す。距離が `infty`・`-infty` なら `nullopt`。有限距離で $s=t$ なら `{s}`。
 - `prev_edges(s)`：各頂点へ入る親辺を返す。始点・距離が `infty` または `-infty` の頂点は `index == -1`。
 - 辺の `index` は入力辺列の添字。無向の場合、返す辺の向きは復元パスに合わせる。
 - Johnson の場合も返す辺の重みは元の重み。
 
-復元は `path` がパス長に比例する時間、`prev_edges` が $O(n)$。
+復元は `path_edge`・`path_vertex` が返す列の長さに比例する時間、`prev_edges` が $O(n)$。
 内部では親辺の番号だけを $n^2$ 個保存し、`Edge<Cost>` を全組分保持しない。
 
 #### 計算メソッド共通の制約・計算量
@@ -216,7 +218,7 @@ vc<Edge<Cost>> prev_edges(int s) const;
 有限の最短距離・ポテンシャル・非負化した距離と、それらの加減算の中間値が `Dist` の範囲に収まり、
 絶対値が `infty` 未満であることを前提とする。
 例えば最大絶対重み $W$ に対し $(6n+3)W<\mathtt{infty}$ が成り立ち、その範囲が `Dist` に収まれば十分。
-負閉路のある入力でも Bellman–Ford の $n$ 辺分の加算が収まる必要がある。
+負閉路のある入力でも、SPFA で負閉路を検出するまでの加算結果が `Dist` に十分な余裕を持って収まること。
 
 ##### 計算量
 
@@ -228,7 +230,7 @@ vc<Edge<Cost>> prev_edges(int s) const;
 | 全始点 Dial（最大重み $C$） | $O(n(n+m+nC))$ |
 | 全始点 Dijkstra | $O(n(n+m\log m))$ |
 | Warshall–Floyd | $O(n^3+n+m)$ |
-| Johnson（重み付き・負閉路なし） | $O(n(n+m)+n(n+m\log m))$ |
+| Johnson（重み付き・負閉路なし） | $O(n^2+nm\log m)$ |
 | Johnson（負閉路あり、Floyd へ切り替え） | $O(n^3+nm)$ |
 
 単純グラフで $m=\Omega(n)$ なら、Dijkstra・Johnson は通常の $O(nm\log n)$ と書ける。

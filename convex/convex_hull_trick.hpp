@@ -19,7 +19,6 @@
 template <class T>
 struct ConvexHullTrickLine
 {
-  // ax + b
   T a, b;
   int id = -1;
   CPP_DUMP_DEFINE_DATA(a, b, id);

@@ -54,7 +54,6 @@ typename R::S powerful_number_sieve(ll n, const GetG &getG, const GetPrimePower 
       {
         const S next = R::mul(weight, values[at]);
         if (next != R::e0()) self(self, rest, i + 1, next);
-        // この指数が零でも、同じ素数のより大きな指数は調べる。
       }
     }
   };

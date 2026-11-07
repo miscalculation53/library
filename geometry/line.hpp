@@ -14,8 +14,8 @@ template <class T = ld> struct Line
   Line(const Point<T> &a, const Point<T> &b) : a(a), b(b) { assert(a != b); }
   template <class U> explicit Line(const Line<U> &l) : Line(Point<T>(l.a), Point<T>(l.b)) {}
   template <class U> Line<U> cast() const { return Line<U>(*this); }
-  Point<geometry_wide_t<T>> vec() const
-  { using W = geometry_wide_t<T>; return b.template cast<W>() - a.template cast<W>(); }
+  Point<larger_int_t<T>> vec() const
+  { using W = larger_int_t<T>; return b.template cast<W>() - a.template cast<W>(); }
   friend istream &operator>>(istream &in, Line &l) { in >> l.a >> l.b; assert(!in || l.a != l.b); return in; }
   friend ostream &operator<<(ostream &out, const Line &l) { return out << l.a << ' ' << l.b; }
 #if defined FAST_IO && !defined LOCAL
@@ -32,8 +32,8 @@ template <class T = ld> struct Segment
   Segment(const Point<T> &a, const Point<T> &b) : a(a), b(b) {}
   template <class U> explicit Segment(const Segment<U> &s) : a(s.a), b(s.b) {}
   template <class U> Segment<U> cast() const { return Segment<U>(*this); }
-  Point<geometry_wide_t<T>> vec() const
-  { using W = geometry_wide_t<T>; return b.template cast<W>() - a.template cast<W>(); }
+  Point<larger_int_t<T>> vec() const
+  { using W = larger_int_t<T>; return b.template cast<W>() - a.template cast<W>(); }
   friend istream &operator>>(istream &in, Segment &s) { return in >> s.a >> s.b; }
   friend ostream &operator<<(ostream &out, const Segment &s) { return out << s.a << ' ' << s.b; }
 #if defined FAST_IO && !defined LOCAL
@@ -67,39 +67,39 @@ template <class T> struct Intersection
   CPP_DUMP_DEFINE_DATA(kind, points);
 };
 
-template <class T> bool contains(const Line<T> &l, const Point<T> &p, geometry_real_t<T> eps = EPS)
+template <class T> bool contains(const Line<T> &l, const Point<T> &p, ld eps = EPS)
 { assert(l.a != l.b); return orientation(l.a, l.b, p, eps) == 0; }
-template <class T> bool contains(const Segment<T> &s, const Point<T> &p, geometry_real_t<T> eps = EPS)
+template <class T> bool contains(const Segment<T> &s, const Point<T> &p, ld eps = EPS)
 {
   if (s.a == s.b) return almost_equal(s.a, p, eps);
   if (orientation(s.a, s.b, p, eps)) return false;
-  using W = geometry_wide_t<T>;
+  using W = larger_int_t<T>;
   return geometry_detail::sign(dot(p.template cast<W>() - s.a.template cast<W>(),
                                    p.template cast<W>() - s.b.template cast<W>()), eps) <= 0;
 }
-template <class T> bool parallel(const Line<T> &l, const Line<T> &m, geometry_real_t<T> eps = EPS)
+template <class T> bool parallel(const Line<T> &l, const Line<T> &m, ld eps = EPS)
 { return geometry_detail::sign(cross(l.vec(), m.vec()), eps) == 0; }
-template <class T> bool perpendicular(const Line<T> &l, const Line<T> &m, geometry_real_t<T> eps = EPS)
+template <class T> bool perpendicular(const Line<T> &l, const Line<T> &m, ld eps = EPS)
 { return geometry_detail::sign(dot(l.vec(), m.vec()), eps) == 0; }
-template <class T> bool parallel(const Line<T> &l, const Segment<T> &s, geometry_real_t<T> eps = EPS)
+template <class T> bool parallel(const Line<T> &l, const Segment<T> &s, ld eps = EPS)
 { return parallel(l, Line<T>(s.a, s.b), eps); }
-template <class T> bool parallel(const Segment<T> &s, const Line<T> &l, geometry_real_t<T> eps = EPS)
+template <class T> bool parallel(const Segment<T> &s, const Line<T> &l, ld eps = EPS)
 { return parallel(l, s, eps); }
-template <class T> bool parallel(const Segment<T> &s, const Segment<T> &t, geometry_real_t<T> eps = EPS)
+template <class T> bool parallel(const Segment<T> &s, const Segment<T> &t, ld eps = EPS)
 { return parallel(Line<T>(s.a, s.b), Line<T>(t.a, t.b), eps); }
-template <class T> bool perpendicular(const Line<T> &l, const Segment<T> &s, geometry_real_t<T> eps = EPS)
+template <class T> bool perpendicular(const Line<T> &l, const Segment<T> &s, ld eps = EPS)
 { return perpendicular(l, Line<T>(s.a, s.b), eps); }
-template <class T> bool perpendicular(const Segment<T> &s, const Line<T> &l, geometry_real_t<T> eps = EPS)
+template <class T> bool perpendicular(const Segment<T> &s, const Line<T> &l, ld eps = EPS)
 { return perpendicular(l, s, eps); }
-template <class T> bool perpendicular(const Segment<T> &s, const Segment<T> &t, geometry_real_t<T> eps = EPS)
+template <class T> bool perpendicular(const Segment<T> &s, const Segment<T> &t, ld eps = EPS)
 { return perpendicular(Line<T>(s.a, s.b), Line<T>(t.a, t.b), eps); }
-template <class T> bool intersects(const Line<T> &l, const Line<T> &m, geometry_real_t<T> eps = EPS)
+template <class T> bool intersects(const Line<T> &l, const Line<T> &m, ld eps = EPS)
 { return !parallel(l, m, eps) || contains(l, m.a, eps); }
-template <class T> bool intersects(const Line<T> &l, const Segment<T> &s, geometry_real_t<T> eps = EPS)
+template <class T> bool intersects(const Line<T> &l, const Segment<T> &s, ld eps = EPS)
 { return orientation(l.a, l.b, s.a, eps) * orientation(l.a, l.b, s.b, eps) <= 0; }
-template <class T> bool intersects(const Segment<T> &s, const Line<T> &l, geometry_real_t<T> eps = EPS)
+template <class T> bool intersects(const Segment<T> &s, const Line<T> &l, ld eps = EPS)
 { return intersects(l, s, eps); }
-template <class T> bool intersects(const Segment<T> &s, const Segment<T> &t, geometry_real_t<T> eps = EPS)
+template <class T> bool intersects(const Segment<T> &s, const Segment<T> &t, ld eps = EPS)
 {
   if (contains(s, t.a, eps) || contains(s, t.b, eps) || contains(t, s.a, eps) || contains(t, s.b, eps)) return true;
   return orientation(s.a, s.b, t.a, eps) * orientation(s.a, s.b, t.b, eps) < 0 &&
@@ -118,7 +118,7 @@ template <class T> Point<field_t<T>> affine(const Point<T> &a, const Point<T> &v
 template <class T> Point<field_t<T>> line_crossing(const Point<T> &a, const Point<T> &b,
                                                  const Point<T> &c, const Point<T> &d)
 {
-  using W = wide_t<T>;
+  using W = conditional_t<is_integral_ext<T>, i128, field_t<T>>;
   auto aw = a.template cast<W>(), v = b.template cast<W>() - aw;
   auto cw = c.template cast<W>(), w = d.template cast<W>() - cw;
   return affine(aw, v, cross(cw - aw, w), cross(v, w));
@@ -126,7 +126,7 @@ template <class T> Point<field_t<T>> line_crossing(const Point<T> &a, const Poin
 }
 
 template <class T> Intersection<geometry_field_t<T>> intersection(const Line<T> &l, const Line<T> &m,
-                                                                geometry_real_t<T> eps = EPS)
+                                                                ld eps = EPS)
 {
   using F = geometry_field_t<T>;
   if (parallel(l, m, eps))
@@ -137,7 +137,7 @@ template <class T> Intersection<geometry_field_t<T>> intersection(const Line<T> 
   return {IntersectionKind::Points, {geometry_detail::line_crossing(l.a, l.b, m.a, m.b)}};
 }
 template <class T> Intersection<geometry_field_t<T>> intersection(const Line<T> &l, const Segment<T> &s,
-                                                                geometry_real_t<T> eps = EPS)
+                                                                ld eps = EPS)
 {
   using F = geometry_field_t<T>;
   if (!intersects(l, s, eps)) return {};
@@ -149,10 +149,10 @@ template <class T> Intersection<geometry_field_t<T>> intersection(const Line<T> 
   return {IntersectionKind::Points, {geometry_detail::line_crossing(l.a, l.b, s.a, s.b)}};
 }
 template <class T> Intersection<geometry_field_t<T>> intersection(const Segment<T> &s, const Line<T> &l,
-                                                                geometry_real_t<T> eps = EPS)
+                                                                ld eps = EPS)
 { return intersection(l, s, eps); }
 template <class T> Intersection<geometry_field_t<T>> intersection(const Segment<T> &s, const Segment<T> &t,
-                                                                geometry_real_t<T> eps = EPS)
+                                                                ld eps = EPS)
 {
   using F = geometry_field_t<T>;
   if (!intersects(s, t, eps)) return {};
@@ -171,8 +171,8 @@ template <class T> Intersection<geometry_field_t<T>> intersection(const Segment<
 
 template <class T> Point<geometry_field_t<T>> projection(const Line<T> &l, const Point<T> &p)
 {
-  using W = geometry_wide_t<T>;
-  auto a = l.a.template cast<W>(), v = l.vec();
+  using W = conditional_t<is_integral_ext<T>, i128, geometry_field_t<T>>;
+  auto a = l.a.template cast<W>(), v = l.b.template cast<W>() - a;
   return geometry_detail::affine(a, v, dot(p.template cast<W>() - a, v), norm2(v));
 }
 template <class T> Point<geometry_field_t<T>> reflection(const Line<T> &l, const Point<T> &p)
@@ -182,8 +182,9 @@ template <class T> Point<geometry_field_t<T>> reflection(const Line<T> &l, const
 }
 template <class T> Point<geometry_field_t<T>> closest_point(const Segment<T> &s, const Point<T> &p)
 {
-  using W = geometry_wide_t<T>; using F = geometry_field_t<T>;
-  auto a = s.a.template cast<W>(), v = s.vec();
+  using F = geometry_field_t<T>;
+  using W = conditional_t<is_integral_ext<T>, i128, F>;
+  auto a = s.a.template cast<W>(), v = s.b.template cast<W>() - a;
   W n = norm2(v), t = dot(p.template cast<W>() - a, v);
   if (t <= W(0)) return s.a.template cast<F>();
   if (n <= t) return s.b.template cast<F>();
@@ -192,20 +193,23 @@ template <class T> Point<geometry_field_t<T>> closest_point(const Segment<T> &s,
 
 namespace geometry_detail
 {
-template <class T> pair<wide_t<T>, wide_t<T>> distance_fraction(const Line<T> &l, const Point<T> &p)
+template <class T> auto distance_fraction(const Line<T> &l, const Point<T> &p)
 {
-  auto c = cross(l.a, l.b, p);
-  return {c * c, norm2(l.vec())};
+  using W = conditional_t<is_integral_ext<T>, i128, field_t<T>>;
+  auto a = l.a.template cast<W>(), b = l.b.template cast<W>();
+  auto c = cross(a, b, p.template cast<W>());
+  return pair<W, W>{c * c, distance2(a, b)};
 }
-template <class T> pair<wide_t<T>, wide_t<T>> distance_fraction(const Segment<T> &s, const Point<T> &p)
+template <class T> auto distance_fraction(const Segment<T> &s, const Point<T> &p)
 {
-  using W = wide_t<T>;
-  auto a = s.a.template cast<W>(), v = s.vec();
-  W n = norm2(v), t = dot(p.template cast<W>() - a, v);
-  if (t <= W(0)) return {distance2(s.a, p), W(1)};
-  if (n <= t) return {distance2(s.b, p), W(1)};
-  W c = cross(s.a, s.b, p);
-  return {c * c, n};
+  using W = conditional_t<is_integral_ext<T>, i128, field_t<T>>;
+  auto a = s.a.template cast<W>(), b = s.b.template cast<W>(), q = p.template cast<W>();
+  auto v = b - a;
+  W n = norm2(v), t = dot(q - a, v);
+  if (t <= W(0)) return pair<W, W>{distance2(a, q), W(1)};
+  if (n <= t) return pair<W, W>{distance2(b, q), W(1)};
+  W c = cross(a, b, q);
+  return pair<W, W>{c * c, n};
 }
 }
 
@@ -225,9 +229,13 @@ template <class T> geometry_field_t<T> distance2(const Segment<T> &s, const Segm
   if (intersects(s, t)) return geometry_field_t<T>(0);
   return min({distance2(s, t.a), distance2(s, t.b), distance2(t, s.a), distance2(t, s.b)});
 }
-template <class T, template <class> class A, template <class> class B>
+template <class R = ld, class T, template <class> class A, template <class> class B>
 auto distance(const A<T> &a, const B<T> &b)
     -> enable_if_t<(is_same_v<A<T>, Line<T>> || is_same_v<A<T>, Segment<T>> || is_same_v<A<T>, Point<T>>) &&
                    (is_same_v<B<T>, Line<T>> || is_same_v<B<T>, Segment<T>> || is_same_v<B<T>, Point<T>>) &&
-                   !(is_same_v<A<T>, Point<T>> && is_same_v<B<T>, Point<T>>), geometry_real_t<T>>
-{ return sqrt(geometry_detail::cast<geometry_real_t<T>>(distance2(a, b))); }
+                   !(is_same_v<A<T>, Point<T>> && is_same_v<B<T>, Point<T>>), R>
+{
+  if constexpr (is_integral_ext<T> || is_rational_v<T>)
+    return sqrt(geometry_detail::cast<R>(distance2(a, b)));
+  else return sqrt(distance2(a.template cast<R>(), b.template cast<R>()));
+}

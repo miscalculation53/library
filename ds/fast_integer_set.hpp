@@ -91,8 +91,6 @@ public:
   }
 
 private:
-  // Root descent: retain the deepest sibling range
-  // containing a result while following the boundary prefix.
   template <bool forward>
   static int fast_set_edge(ull bits)
   {
@@ -133,7 +131,6 @@ private:
     else return bits & (pivot | (pivot - 1));
   }
 
-  // 近い summary word を先に調べ、残る範囲を根から探索する。
   template <bool forward>
   [[gnu::noinline]] int fast_set_far(int next_summary) const
   {

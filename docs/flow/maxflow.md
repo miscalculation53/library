@@ -10,7 +10,7 @@
 
 集約した辺の流量変化は、探索の終了時に元の各辺へ配分する。`get_edge`・`edges` は追加した全辺の容量・流量を返し、自己ループに `change_edge` で設定した流量も保つ。集約辺の構成要素と除外した辺だけに元の辺の記録を持たせ、単独の辺は残余グラフを直接参照する。使用メモリは $O(n+m)$。
 
-`flow` は Dinic で開始し、探索量が増えると highest-label Push–Relabel も試す。流量の進捗と頂点の通過容量を見て Dinic の試行量を延長する。Push–Relabel が長引いた場合は、それぞれの残余グラフを保持して両方式を交互に進める。試行量を倍増させることで、Dinic の計算量保証を保つ。`dinic`・`push_relabel` で方式を指定することもできる。
+`flow` は Dinic で開始し、探索量が増えると highest-label Push–Relabel も試す。流量の進捗と頂点の通過容量を見て Dinic の試行量を延長する。Push–Relabel が長引いた場合は、それぞれの残余グラフを保持して両方式を交互に進める。試行量を倍増させ、両方式の計算量保証を引き継ぐ。`dinic`・`push_relabel` で方式を指定することもできる。
 
 自動選択の状態保存には追加で $O(n+m)$ のメモリを使う。
 
@@ -138,13 +138,15 @@ Dinic の打切り時は探索を戻してフロー保存則を満たし、既�
 
 ##### 計算量
 
-- `dinic`・`flow`：$O(n^2m+n+m)$。全辺の容量が $0$ または $1$ なら $O((n+m)\sqrt m)$。二部マッチングの標準的なネットワークでは $O((n+m)\sqrt n)$。今回の最大追加流量を $F$ とすると $O((F+1)(n+m))$ とも評価できる
+- `dinic`・`flow`：$O(n^2m+n+m)$。全辺の容量が $0$ または $1$ なら $O((n+m)\sqrt m)$。二部マッチングの標準的なネットワークでは $O((n+m)\sqrt n)$。今回の最大追加流量を $F$ とすると $O(n+m+F(n+m))$ とも評価できる
 - `dinic`・`flow`：最大辺容量が $U\geq1$ の場合は $O(U(n+m)\sqrt m)$。平行辺がなければ $O(U(n+m)\min(\sqrt m,n^{2/3}))$ とも評価できる
-- `push_relabel`：$O(nm+n^2\sqrt m)$。$m=O(n^2)$ の場合は $O(n^2\sqrt m)$
+- `push_relabel`・`flow`：$O(nm+n^2\sqrt m+n+m)$。$m=O(n^2)$ の場合は $O(n^2\sqrt m+n+m)$
 
-一般の上界は、探索用の辺数を使って `dinic`・`flow` が $O(n^2q+n+m)$、`push_relabel` が $O(nq+n^2\sqrt q+m)$ とも評価できる。構築と元の辺への流量配分を含む。容量に依存する上界では、元の辺の容量と、集約後の辺の容量を区別する。
+一般の上界は、探索用の辺数を使って `dinic`・`flow` が $O(n^2q+n+m)$、`push_relabel`・`flow` が $O(nq+n^2\sqrt q+n+m)$ とも評価できる。構築と元の辺への流量配分を含む。容量に依存する上界では、元の辺の容量と、集約後の辺の容量を区別する。
 
-自動選択では、状態の保存・再開の費用を含む各試行を幾何級数的に増やす。合計処理量は最後の試行予算の定数倍となり、Dinic が完走できる予算までに終了するため、上記の Dinic の上界を保つ。
+自動選択では、状態の保存・再開の費用を含む各試行を幾何級数的に増やす。Dinic が完走できる予算までに終了するため、上記の Dinic の上界を保つ。Push–Relabel は中断位置を保って継続し、その消費した処理量に定数倍の Dinic の試行を挟むため、Push–Relabel の上界にも定数倍で追随する。
+
+最高ラベル規則の解析は [Cheriyan–Mehlhorn, An Analysis of the Highest-Level Selection Rule in the Preflow-Push Max-Flow Algorithm（1998 稿）, Theorems 2–3](https://www.math.uwaterloo.ca/~jcheriya/PDF_files/me3.0.pdf) を参照。自動選択が両方式の保証を引き継ぐ点は、この実装の予算配分からの評価である。
 
 #### get_edge / edges
 

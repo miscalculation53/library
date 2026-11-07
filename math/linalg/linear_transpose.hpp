@@ -107,7 +107,6 @@ vc<T> convolution_transpose(const vc<T> &w, const vc<T> &b, int n)
   vc<T> a(w.begin(), w.begin() + min(len, (int)w.size())), r(b.rbegin(), b.rend());
   if (min(a.size(), b.size()) > 60 && ntt_ok<T>(z))
   {
-    // 巡回畳み込みの [m-1, m-1+n) には折り返しが入らない。
     a.resize(z), r.resize(z);
     ntt(a), ntt(r);
     repi(i, z) a[i] *= r[i];
@@ -144,7 +143,6 @@ vc<T> polynomial_mod_transpose(const vc<T> &w, const vc<T> &g, int n)
   if (n <= d) return res;
   using F = FormalPowerSeries<T>;
   const int k = n - d;
-  // r = a - q*g, q = rev(trunc_k(rev(a)) / rev(g))。
   auto t = convolution_transpose(w, g, k);
   reverse(t.begin(), t.end());
   F inv = F(g).rev().inv(k);
@@ -153,4 +151,4 @@ vc<T> polynomial_mod_transpose(const vc<T> &w, const vc<T> &g, int n)
   return res;
 }
 
-} // namespace linear_transpose
+}

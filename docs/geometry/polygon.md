@@ -34,11 +34,11 @@ void reorder_polygon(vector<Point<T>>& p);
 #### 面積・周長
 
 ```cpp
-geometry_wide_t<T> signed_area2(const vector<Point<T>>& p);
-geometry_wide_t<T> area2(const vector<Point<T>>& p);
+larger_int_t<T> signed_area2(const vector<Point<T>>& p);
+larger_int_t<T> area2(const vector<Point<T>>& p);
 geometry_field_t<T> signed_area(const vector<Point<T>>& p);
 geometry_field_t<T> area(const vector<Point<T>>& p);
-geometry_real_t<T> perimeter(const vector<Point<T>>& p);
+template<class R = ld, class T> R perimeter(const vector<Point<T>>& p);
 ```
 
 `signed_area2` は符号付き面積の二倍で、反時計回りが正。`area2` はその絶対値。`signed_area`、`area` はそれぞれ半分を返す。整数座標の面積は有理数で返す。
@@ -52,7 +52,7 @@ geometry_real_t<T> perimeter(const vector<Point<T>>& p);
 #### 内外判定
 
 ```cpp
-Location contains(const vector<Point<T>>& p, Point<T> q, geometry_real_t<T> eps = EPS);
+Location contains(const vector<Point<T>>& p, Point<T> q, ld eps = EPS);
 ```
 
 巻き数を使い `Inside`、`Boundary`、`Outside` を返す。時計回り・反時計回りの双方に対応。空なら `Outside`、一点ならその一点、二点ならその線分を境界として扱う。連続する同一点も扱える。
@@ -68,7 +68,7 @@ Location contains(const vector<Point<T>>& p, Point<T> q, geometry_real_t<T> eps 
 #### 凸性判定
 
 ```cpp
-bool is_convex(const vector<Point<T>>& p, geometry_real_t<T> eps = EPS);
+bool is_convex(const vector<Point<T>>& p, ld eps = EPS);
 ```
 
 巡回する三頂点の曲がる方向がそろっているかを返す。同一直線上の頂点を許す。空・一点・二点・全点が同一直線上の場合は `true`。
@@ -85,7 +85,7 @@ bool is_convex(const vector<Point<T>>& p, geometry_real_t<T> eps = EPS);
 
 ```cpp
 Location contains_convex(const vector<Point<T>>& p, Point<T> q,
-                         geometry_real_t<T> eps = EPS);
+                         ld eps = EPS);
 ```
 
 反時計回りの凸多角形に対して `Inside`、`Boundary`、`Outside` を返す。最初の頂点からの扇形を二分探索し、問い合わせごとの前処理は行わない。
@@ -113,7 +113,7 @@ for (const auto& query : queries) {
 
 ```cpp
 vector<Point<T>> convex_hull(vector<Point<T>> p, bool keep_collinear = false,
-                            geometry_real_t<T> eps = EPS);
+                            ld eps = EPS);
 ```
 
 辞書順最小の点から反時計回りに頂点を返す。末尾に先頭を重複させない。座標が等しい入力点は一つにまとめる。
@@ -128,7 +128,7 @@ vector<Point<T>> convex_hull(vector<Point<T>> p, bool keep_collinear = false,
 
 ```cpp
 vector<Point<geometry_field_t<T>>> convex_cut(const vector<Point<T>>& p, Line<T> l,
-                                             geometry_real_t<T> eps = EPS);
+                                             ld eps = EPS);
 ```
 
 直線 `l.a` から `l.b` に向かって左側の閉半平面との共通部分を返す。頂点の巡回方向を保ち、整数入力の新しい頂点は有理数になる。隣接する同一点と末尾の重複をまとめる。空・一点・線分に退化した入力や結果にも対応する。

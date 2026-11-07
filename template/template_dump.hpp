@@ -11,7 +11,9 @@ namespace cpp_dump::_detail
 }
 #endif
 
-#include "template_dump_map.hpp"
+#ifdef LOCAL
+#include <template/template_dump_map_impl.hpp>
+#endif
 
 /**
  * @brief テンプレート（dump）

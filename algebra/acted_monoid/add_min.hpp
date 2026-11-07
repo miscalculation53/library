@@ -1,7 +1,5 @@
 #pragma once
 
-//! SPDX-License-Identifier: CC0-1.0
-
 #include "../../template/template_all_but_modint.hpp"
 
 #include "../algebra_base.hpp"

@@ -8,7 +8,7 @@
  */
 
 template <class T> vector<Point<T>> minkowski_sum(const vector<Point<T>> &p, const vector<Point<T>> &q,
-                                                geometry_real_t<T> eps = EPS)
+                                                ld eps = EPS)
 {
   if (p.empty() || q.empty()) return {};
   auto a = geometry_detail::normalize_convex_polygon(p, eps);
@@ -31,10 +31,11 @@ template <class T> vector<Point<T>> minkowski_sum(const vector<Point<T>> &p, con
     result.push_back(a[i % a.size()] + b[j % b.size()]);
     if (i == a.size()) { ++j; continue; }
     if (j == b.size()) { ++i; continue; }
-    using W = geometry_wide_t<T>;
+    using W = larger_int_t<T>;
     auto u = a[(i + 1) % a.size()].template cast<W>() - a[i].template cast<W>();
     auto v = b[(j + 1) % b.size()].template cast<W>() - b[j].template cast<W>();
-    if (cross(u, v) == W(0) && dot(u, v) > W(0)) { ++i; ++j; }
+    auto c = cross(u, v);
+    if (c == decltype(c)(0) && dot(u, v) > decltype(c)(0)) { ++i; ++j; }
     else if (polar_less(u, v)) ++i;
     else ++j;
   }

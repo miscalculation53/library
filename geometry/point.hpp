@@ -9,17 +9,7 @@
 
 namespace geometry_detail
 {
-template <class T, bool = is_integral_ext<T>> struct wide { using type = T; };
-template <class T> struct wide<T, true>
-{
-  static_assert(is_signed_ext<T>, "geometry coordinates use signed integers");
-  using type = i128;
-};
-template <class T> struct wide<Rational<T>, false>
-{ using type = Rational<typename wide<T>::type>; };
-template <class T> using wide_t = typename wide<T>::type;
-template <class T> using field_t = conditional_t<is_integral_ext<T>, Rational<wide_t<T>>, wide_t<T>>;
-template <class T> using real_t = conditional_t<is_integral_ext<T> || is_rational_v<T>, ld, T>;
+template <class T> using field_t = conditional_t<is_integral_ext<T> || is_rational_v<T>, Rational<i128>, T>;
 
 template <class To, class From> constexpr To cast(const From &x)
 {
@@ -28,7 +18,7 @@ template <class To, class From> constexpr To cast(const From &x)
   else return To(x);
 }
 
-template <class T> int sign(const T &x, real_t<T> eps = EPS)
+template <class T> int sign(const T &x, ld eps = EPS)
 {
   if constexpr (is_integral_ext<T> || is_rational_v<T>)
     return int(T(0) < x) - int(x < T(0));
@@ -79,9 +69,7 @@ template <class T> void read_scalar(T &x)
 #endif
 }
 
-template <class T> using geometry_wide_t = geometry_detail::wide_t<T>;
 template <class T> using geometry_field_t = geometry_detail::field_t<T>;
-template <class T> using geometry_real_t = geometry_detail::real_t<T>;
 
 enum class Location { Outside = -1, Boundary = 0, Inside = 1 };
 #ifdef LOCAL
@@ -115,7 +103,7 @@ struct Point
   friend constexpr Point operator*(const T &s, Point p) { return p *= s; }
   friend Point<geometry_field_t<T>> operator/(const Point &p, const T &s)
   {
-    using W = geometry_wide_t<T>;
+    using W = larger_int_t<T>;
     return {geometry_detail::quotient(W(p.x), W(s)), geometry_detail::quotient(W(p.y), W(s))};
   }
   friend constexpr bool operator==(const Point &p, const Point &q) { return p.x == q.x && p.y == q.y; }
@@ -145,67 +133,77 @@ template <class T> inline constexpr bool is_ostream<Point<T>> = false;
 }
 #endif
 
-template <class T> constexpr geometry_wide_t<T> dot(const Point<T> &p, const Point<T> &q)
+template <class T> constexpr larger_int_t<T> dot(const Point<T> &p, const Point<T> &q)
 {
-  using W = geometry_wide_t<T>;
+  using W = larger_int_t<T>;
   return W(p.x) * W(q.x) + W(p.y) * W(q.y);
 }
-template <class T> constexpr geometry_wide_t<T> cross(const Point<T> &p, const Point<T> &q)
+template <class T> constexpr larger_int_t<T> cross(const Point<T> &p, const Point<T> &q)
 {
-  using W = geometry_wide_t<T>;
+  using W = larger_int_t<T>;
   return W(p.x) * W(q.y) - W(p.y) * W(q.x);
 }
-template <class T> constexpr geometry_wide_t<T> cross(const Point<T> &a, const Point<T> &b, const Point<T> &c)
+template <class T> constexpr larger_int_t<T> cross(const Point<T> &a, const Point<T> &b, const Point<T> &c)
 {
-  using W = geometry_wide_t<T>;
-  return cross(b.template cast<W>() - a.template cast<W>(), c.template cast<W>() - a.template cast<W>());
+  using W = larger_int_t<T>;
+  W x = W(b.x) - W(a.x), y = W(b.y) - W(a.y);
+  W u = W(c.x) - W(a.x), v = W(c.y) - W(a.y);
+  return x * v - y * u;
 }
-template <class T> constexpr geometry_wide_t<T> norm2(const Point<T> &p) { return dot(p, p); }
-template <class T> constexpr geometry_wide_t<T> distance2(const Point<T> &p, const Point<T> &q)
+template <class T> constexpr larger_int_t<T> norm2(const Point<T> &p) { return dot(p, p); }
+template <class T> constexpr larger_int_t<T> distance2(const Point<T> &p, const Point<T> &q)
 {
-  using W = geometry_wide_t<T>;
-  return norm2(p.template cast<W>() - q.template cast<W>());
+  using W = larger_int_t<T>;
+  W x = W(p.x) - W(q.x), y = W(p.y) - W(q.y);
+  return x * x + y * y;
 }
 template <class T> int orientation(const Point<T> &a, const Point<T> &b, const Point<T> &c,
-                                  geometry_real_t<T> eps = EPS)
+                                  ld eps = EPS)
 { return geometry_detail::sign(cross(a, b, c), eps); }
-template <class T> bool almost_equal(const Point<T> &p, const Point<T> &q, geometry_real_t<T> eps = EPS)
+template <class T> bool almost_equal(const Point<T> &p, const Point<T> &q, ld eps = EPS)
 {
-  using W = geometry_wide_t<T>;
+  using W = larger_int_t<T>;
   return geometry_detail::sign(W(p.x) - W(q.x), eps) == 0 &&
          geometry_detail::sign(W(p.y) - W(q.y), eps) == 0;
 }
 template <class T> constexpr Point<T> rot90(const Point<T> &p) { return {-p.y, p.x}; }
-template <class T> geometry_real_t<T> norm(const Point<T> &p)
-{ return sqrt(geometry_detail::cast<geometry_real_t<T>>(norm2(p))); }
-template <class T> geometry_real_t<T> distance(const Point<T> &p, const Point<T> &q)
-{ return sqrt(geometry_detail::cast<geometry_real_t<T>>(distance2(p, q))); }
-template <class T> geometry_real_t<T> argument(const Point<T> &p)
+template <class R = ld, class T> R norm(const Point<T> &p)
 {
-  using R = geometry_real_t<T>;
+  if constexpr (is_integral_ext<T> || is_rational_v<T>)
+    return sqrt(geometry_detail::cast<R>(norm2(p)));
+  else return sqrt(norm2(p.template cast<R>()));
+}
+template <class R = ld, class T> R distance(const Point<T> &p, const Point<T> &q)
+{
+  if constexpr (is_integral_ext<T> || is_rational_v<T>)
+    return sqrt(geometry_detail::cast<R>(distance2(p, q)));
+  else return norm<R>(p.template cast<R>() - q.template cast<R>());
+}
+template <class R = ld, class T> R argument(const Point<T> &p)
+{
   assert(p != Point<T>());
   return atan2(geometry_detail::cast<R>(p.y), geometry_detail::cast<R>(p.x));
 }
-template <class T> geometry_real_t<T> angle(const Point<T> &p, const Point<T> &q)
+template <class R = ld, class T> R angle(const Point<T> &p, const Point<T> &q)
 {
-  using R = geometry_real_t<T>;
   assert(p != Point<T>() && q != Point<T>());
-  return atan2(geometry_detail::cast<R>(cross(p, q)), geometry_detail::cast<R>(dot(p, q)));
+  if constexpr (is_integral_ext<T> || is_rational_v<T>)
+    return atan2(geometry_detail::cast<R>(cross(p, q)), geometry_detail::cast<R>(dot(p, q)));
+  else return atan2(cross(p.template cast<R>(), q.template cast<R>()),
+                    dot(p.template cast<R>(), q.template cast<R>()));
 }
-template <class T, class Angle> Point<geometry_real_t<T>> rotate(const Point<T> &p, Angle angle)
+template <class R = ld, class T, class Angle> Point<R> rotate(const Point<T> &p, Angle angle)
 {
-  using R = geometry_real_t<T>;
   auto q = p.template cast<R>();
   R c = cos(R(angle)), s = sin(R(angle));
   return {q.x * c - q.y * s, q.x * s + q.y * c};
 }
-template <class T, class Angle> Point<geometry_real_t<T>> rotate(Point<T> &p, Angle angle)
-{ return rotate(static_cast<const Point<T> &>(p), angle); }
-template <class T> optional<Point<geometry_real_t<T>>> unit(const Point<T> &p)
+template <class R = ld, class T, class Angle> Point<R> rotate(Point<T> &p, Angle angle)
+{ return rotate<R>(static_cast<const Point<T> &>(p), angle); }
+template <class R = ld, class T> optional<Point<R>> unit(const Point<T> &p)
 {
   if (p == Point<T>()) return nullopt;
-  using R = geometry_real_t<T>;
-  return p.template cast<R>() / norm(p);
+  return p.template cast<R>() / norm<R>(p);
 }
 
 namespace geometry_detail

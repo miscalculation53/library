@@ -29,7 +29,7 @@ void main2()
   Graph<true, ll> G_input(N, ABC);
   ShortestPath G(G_input);
   auto dists = G.solve(s, t);
-  auto path = G.path(t);
+  auto path = G.path_edge(t);
   if (!path)
     PRINTRETURN(-1);
   PRINT(dists.at(t), path->size());

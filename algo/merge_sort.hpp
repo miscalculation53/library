@@ -14,7 +14,6 @@ void merge_sort(vc<T> &v, const Compare &comp)
   if (n <= 1)
     return;
   vc<T> buf = v;
-  // 読み出し元と書き込み先を交互にし、同じ補助配列を再利用する。
   auto sort_range = [&](auto &&self, vc<T> &src, vc<T> &dst, int l, int r) -> void
   {
     if (r - l <= 1) return;

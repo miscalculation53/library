@@ -6,7 +6,7 @@ namespace geometry_detail
 {
 // 巡回する凸境界を、共線の中間点を省いた反時計回りの点列にそろえる。
 template <class T> vector<Point<T>> normalize_convex_polygon(const vector<Point<T>> &input,
-                                                           real_t<T> eps)
+                                                           ld eps)
 {
   vector<Point<T>> p;
   p.reserve(input.size());

@@ -71,7 +71,6 @@ public:
     }
     const int bl = l / B + (l % B != 0);
     const int br = r == n ? n / B + (n % B != 0) : r / B;
-    // 可換性を使って 4 本に分け、演算の依存を短くする。
     S s0 = G::e(), s1 = G::e(), s2 = G::e(), s3 = G::e();
     auto fold = [&](const vc<S> &v, int a, int b)
     {

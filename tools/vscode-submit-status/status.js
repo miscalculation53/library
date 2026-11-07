@@ -100,9 +100,11 @@ function agreement(data) {
     if (changedInputs.length) return { text: '$(warning) ヘッダに変更あり', warning: true,
         detail: `参照ヘッダが生成時から変更されています。Ctrl+Option+N で再生成してください。\n${changedInputs.join('\n')}` };
     const size = actualBytes.toLocaleString('en-US') + ' B';
+    const limits = [131072, 65536].map(limit =>
+        `${limit.toLocaleString('en-US')} B 未満: ${actualBytes < limit ? '達成' : '未達'}`).join('\n');
     return { text: `$(check) ${sourceName} と一致 ${size}`, detail:
         `現在の ${sourceName} と生成元のハッシュが一致し、生成本文のハッシュも一致しています。`
-        + (actualBytes >= 65536 ? '\nサイズ制限 65,536 B 以上です。' : '') };
+        + `\nサイズ制限（131,072 B を優先）\n${limits}` };
 }
 
 function present(data) {

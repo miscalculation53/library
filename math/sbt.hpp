@@ -29,7 +29,6 @@ public:
   SBTNode(T num_, T den_) : SBTNode()
   {
     assert(num_ > 0 && den_ > 0);
-    // ユークリッド互除法の各商から境界を直接更新する。
     while (num_ != den_)
     {
       if (num_ > den_)
@@ -152,11 +151,9 @@ SBTNode<T> sbt_search(const F &judge, T max_value)
     const bool right = judge_now == judge_01;
     T &a = right ? node.p : node.r, &b = right ? node.q : node.s;
     const T c = right ? node.r : node.p, d = right ? node.s : node.q;
-    // 判定済みの媒介分数を対応する境界へ移す。
     a += c, b += d;
     if (c > max_value - a || d > max_value - b)
       return node;
-    // 次の一段で向きが変わる場合は、除算を省く。
     if (judge(a + c, b + d) != judge_now)
     {
       judge_now = !judge_now;
@@ -192,7 +189,6 @@ SBTNode<T> sbt_search(const F &judge, T max_value)
       (judge_next(dm) ? dl : dr) = dm;
     }
     a += dl * c, b += dl * d;
-    // 次の媒介分数は、判定が反転する最初の境界。
     judge_now = !judge_now;
   }
 }

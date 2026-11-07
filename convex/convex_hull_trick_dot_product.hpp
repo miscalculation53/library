@@ -25,7 +25,6 @@ private:
   using R = Rational<T>;
   using V = Rational<U>;
   using RationalLine = ConvexHullTrickLine<R>;
-  // CHT の境界には有理数の正の無限大を使う。
   using MinCHT = CHT<R, V, less<>, R::infty, inftyU>;
   using MaxCHT = CHT<R, V, greater<>, R::infty, inftyU>;
 

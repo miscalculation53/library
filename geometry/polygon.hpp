@@ -16,27 +16,27 @@ template <class T> void reorder_polygon(vector<Point<T>> &p)
   rotate(p.begin(), first, p.end());
 }
 
-template <class T> geometry_wide_t<T> signed_area2(const vector<Point<T>> &p)
+template <class T> larger_int_t<T> signed_area2(const vector<Point<T>> &p)
 {
-  geometry_wide_t<T> ans(0);
+  larger_int_t<T> ans(0);
   for (size_t i = 0; i < p.size(); ++i) ans += cross(p[i], p[(i + 1) % p.size()]);
   return ans;
 }
-template <class T> geometry_wide_t<T> area2(const vector<Point<T>> &p) { return abs(signed_area2(p)); }
+template <class T> larger_int_t<T> area2(const vector<Point<T>> &p) { return abs(signed_area2(p)); }
 template <class T> geometry_field_t<T> signed_area(const vector<Point<T>> &p)
-{ return geometry_detail::quotient(signed_area2(p), geometry_wide_t<T>(2)); }
+{ return geometry_detail::quotient(signed_area2(p), larger_int_t<T>(2)); }
 template <class T> geometry_field_t<T> area(const vector<Point<T>> &p)
-{ return geometry_detail::quotient(area2(p), geometry_wide_t<T>(2)); }
-template <class T> geometry_real_t<T> perimeter(const vector<Point<T>> &p)
+{ return geometry_detail::quotient(area2(p), larger_int_t<T>(2)); }
+template <class R = ld, class T> R perimeter(const vector<Point<T>> &p)
 {
-  geometry_real_t<T> ans(0);
-  for (size_t i = 0; i < p.size(); ++i) ans += distance(p[i], p[(i + 1) % p.size()]);
+  R ans(0);
+  for (size_t i = 0; i < p.size(); ++i) ans += distance<R>(p[i], p[(i + 1) % p.size()]);
   return ans;
 }
 template <class T> Location contains(const vector<Point<T>> &p, const Point<T> &q,
-                                     geometry_real_t<T> eps = EPS)
+                                     ld eps = EPS)
 {
-  using W = geometry_wide_t<T>;
+  using W = larger_int_t<T>;
   int winding = 0;
   for (size_t i = 0; i < p.size(); ++i)
   {
@@ -50,7 +50,7 @@ template <class T> Location contains(const vector<Point<T>> &p, const Point<T> &
   }
   return winding ? Location::Inside : Location::Outside;
 }
-template <class T> bool is_convex(const vector<Point<T>> &p, geometry_real_t<T> eps = EPS)
+template <class T> bool is_convex(const vector<Point<T>> &p, ld eps = EPS)
 {
   int direction = 0;
   for (size_t i = 0; i < p.size(); ++i)
@@ -64,7 +64,7 @@ template <class T> bool is_convex(const vector<Point<T>> &p, geometry_real_t<T> 
 
 // 反時計回りの凸多角形。辺上の中間点を許し、隣接する頂点は異なるものとする。
 template <class T> Location contains_convex(const vector<Point<T>> &p, const Point<T> &q,
-                                           geometry_real_t<T> eps = EPS)
+                                           ld eps = EPS)
 {
   size_t n = p.size();
   if (n > 1 && p.front() == p.back()) --n;
@@ -72,12 +72,13 @@ template <class T> Location contains_convex(const vector<Point<T>> &p, const Poi
   if (n <= 2)
     return contains(Segment<T>(p[0], p[n - 1]), q, eps) ? Location::Boundary : Location::Outside;
   if (almost_equal(p[0], q, eps)) return Location::Boundary;
-  using W = geometry_wide_t<T>;
+  using W = larger_int_t<T>;
   auto origin = p[0].template cast<W>();
   auto same_ray = [&](const Point<T> &a, const Point<T> &b)
   {
-    return orientation(p[0], a, b, eps) == 0 &&
-           dot(a.template cast<W>() - origin, b.template cast<W>() - origin) > W(0);
+    if (orientation(p[0], a, b, eps) != 0) return false;
+    auto d = dot(a.template cast<W>() - origin, b.template cast<W>() - origin);
+    return d > decltype(d)(0);
   };
   int first = orientation(p[0], p[1], q, eps);
   int last = orientation(p[0], p[n - 1], q, eps);
@@ -119,7 +120,7 @@ template <class T> Location contains_convex(const vector<Point<T>> &p, const Poi
 }
 
 template <class T> vector<Point<T>> convex_hull(vector<Point<T>> p, bool keep_collinear = false,
-                                               geometry_real_t<T> eps = EPS)
+                                               ld eps = EPS)
 {
   sort(p.begin(), p.end());
   p.erase(unique(p.begin(), p.end()), p.end());
@@ -146,7 +147,7 @@ template <class T> vector<Point<T>> convex_hull(vector<Point<T>> p, bool keep_co
   return lower;
 }
 template <class T> vector<Point<geometry_field_t<T>>> convex_cut(const vector<Point<T>> &p, const Line<T> &l,
-                                                               geometry_real_t<T> eps = EPS)
+                                                               ld eps = EPS)
 {
   using F = geometry_field_t<T>;
   vector<Point<F>> ans;

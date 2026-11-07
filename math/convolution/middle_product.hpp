@@ -1,5 +1,6 @@
 #pragma once
 #include "convolution.hpp"
+#include "../dot_product.hpp"
 
 /**
  * @brief 中間積（畳み込みの転置）
@@ -25,9 +26,9 @@ vc<static_modint32<prime>> middle_product_prime(const vc<mint> &a, const vc<mint
   return result;
 }
 
-} // namespace internal
+}
 
-// y[i] = sum_j a[i+j]*b[j]. Cyclic wrap lands strictly below b.size()-1.
+// y[i] = sum_j a[i+j]*b[j].
 template <class mint> vc<mint> middle_product(const vc<mint> &a, const vc<mint> &b)
 {
   using F = vc<mint>;

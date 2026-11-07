@@ -39,7 +39,6 @@ vc<int> mo_order_params(const vc<pair<I, I>> &lrs, const vc<int> &by_right, int 
     cursor[k] = sum + ((k & 1) ? count : 0);
     sum += count;
   }
-  // 偶数ブロックは右端の昇順、奇数ブロックは降順に配置する。
   for (int i : by_right)
   {
     int k = block[i];
@@ -56,7 +55,6 @@ vc<int> mo_order(const vc<pair<I, I>> &lrs)
     return permid<int>(q);
   int n = 0;
   fec([l, r] : lrs) chmax(n, int(max(l, r)));
-  // 右端の整列を 6 通りの候補で共用する。
   auto by_right = radix_argsort(lrs, [](const auto &lr) { return lr.second; });
   const int b1 = max(1, int(n / sqrt(q + 1.0)));
   const int b2 = max(1, int(sqrt(3) * n / sqrt(2.0 * q + 1)));

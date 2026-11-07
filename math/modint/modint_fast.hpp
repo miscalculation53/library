@@ -37,7 +37,6 @@ private:
   vc<pair<uint16_t, uint16_t>> frac;
   vc<uint> inverse, logarithm, low, high;
 
-  // 各区間の中央を挟む Farey 分数のうち、分母が小さい方を記録する。
   int build_frac()
   {
     const int n = min(width, p - 1);
@@ -93,7 +92,6 @@ private:
       }
     }
 
-    // 小さい素数の離散対数を、baby step を共用した BSGS で求める。
     const uint step = max(1, min(2 * limit, int(ceil(sqrt(double(p - 1) * primes.size())))));
     HashMap<uint, uint> baby;
     baby.reserve(step);
@@ -120,7 +118,6 @@ private:
       if (lpf[i] != i)
         logarithm[i] = (ull(logarithm[lpf[i]]) + logarithm[i / lpf[i]]) % (p - 1);
 
-    // i > sqrt(p) なら p / i, p % i < i。i = -(p % i) / (p / i) を使う。
     for (int i = small + 1; i <= limit; ++i)
       logarithm[i] = (ull(logarithm[p % i]) + (p - 1) / 2 + (p - 1) - logarithm[p / i]) % (p - 1);
   }
@@ -174,7 +171,7 @@ public:
   }
 };
 
-} // namespace internal
+}
 
 template <int p>
 using fast_modint = internal::modint_impl<internal::policy_static<p>, internal::modint_fast_table<p>>;

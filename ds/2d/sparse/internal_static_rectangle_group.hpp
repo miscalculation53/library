@@ -7,8 +7,6 @@
 #include <utility>
 #include <vector>
 
-// Static orthogonal range aggregation in a commutative group.
-
 namespace internal_sparse_2d {
 
 // Group supplies value_type, identity(), combine(a, b), and inverse(a).
@@ -225,7 +223,7 @@ public:
 
 };
 
-} // namespace internal_sparse_2d
+}
 
 namespace internal_sparse_2d {
 
@@ -266,4 +264,4 @@ struct static_rectangle_storage<M, I, true> {
         : core(points_from(xyws)) {}
 };
 
-} // namespace internal_sparse_2d
+}

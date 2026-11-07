@@ -1,4 +1,5 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_5_A"
+#define ERROR 1e-6
 #define FAST_IO
 #include "geometry/point_set.hpp"
 

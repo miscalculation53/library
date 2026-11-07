@@ -221,7 +221,7 @@ template <class F> void merge(MeldableSparseSegmentTree<M>& other, const F& f)
 
 ##### 計算量
 
-- $O(t+1)$。$t$ は両方にノードがある区間数
+- $O(t)$。$t$ は両方にノードがある区間数
 - 生成ノードが合計 $A$ 個、併合が $R$ 回なら、全併合の合計は $O(A+R)$
 
 併合中のノード生成は0個。`f` は両方で登録されている点ごとに1回呼ぶ。
@@ -274,7 +274,7 @@ X prod_apply(ll l, ll r, X x, F&& apply) const
 
 ##### 計算量
 
-- 作用と代入を $O(T)$ として $O((T+1)H)$
+- 作用と代入を $O(T)$ として $O(TH)$
 
 #### max_right_ok / min_left_ok
 

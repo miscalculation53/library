@@ -29,7 +29,6 @@ DirichletPrefixSum<R> euler_product_prefix_sum(const DirichletPrefixSum<R> &seed
   const int size = coordinates.size();
   vc<ll> x(size + 1, 0);
   vc<S> blocks(size, R::e0()), change(blocks);
-  // [2,first) の係数は零。seed の疎さも安全な範囲で利用する。
   ll first = ll(k) + 1;
   for (int i = 0; i < size; i++)
   {
@@ -64,11 +63,9 @@ DirichletPrefixSum<R> euler_product_prefix_sum(const DirichletPrefixSum<R> &seed
       add_change(coordinates.index(d), R::mul(a, blocks[0]));
       const ll limit = n / d;
       const ll b = min(limit, max(first - 1, ll(iroot(limit, 2))));
-      // 小さい元の係数は個別に押し出す。b<=√N なので係数を O(1) で読める。
       for (ll v = first; v <= b; v++)
         if (blocks[v - 1] != R::e0())
           add_change(coordinates.index(v * d), R::mul(a, blocks[v - 1]));
-      // 大きい元の係数は、更新先のブロックごとに区間和を取得する。
       for (int i = size - 1; i >= 0 && x[i + 1] / d > b; i--)
       {
         const ll lo = max(b, x[i] / d), hi = x[i + 1] / d;
@@ -76,7 +73,6 @@ DirichletPrefixSum<R> euler_product_prefix_sum(const DirichletPrefixSum<R> &seed
         add_change(i, R::mul(a, value));
       }
     }
-    // 同じ局所因子の項を組み合わせないよう、全項を読んでから反映する。
     for (int i : touched)
     {
       if (change[i] != R::e0())

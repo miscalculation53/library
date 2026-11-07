@@ -108,7 +108,6 @@ struct FormalPowerSeries2D : vvc<mint>
   friend F operator*(mint c, const F &f) { return f * c; }
   F operator/(mint c) const { return F(*this) /= c; }
 
-  // y の次数が次の x の係数へ繰り上がらない間隔で、1変数の畳み込みに埋め込む。
   F mul(const F &g, int h, int w) const
   {
     F res(h, w);
@@ -201,7 +200,6 @@ struct FormalPowerSeries2D : vvc<mint>
     F df = resized(h, w);
     repi(i, h) repi(j, w) df[i][j] *= i + j;
     F res = df.mul(inv(h, w), h, w);
-    // (x d/dx + y d/dy) log(f) = (x f_x + y f_y) / f。
     repi(i, h) repi(j, w) if (i || j) res[i][j] *= Binomial<mint>::inv(i + j);
     return res;
   }

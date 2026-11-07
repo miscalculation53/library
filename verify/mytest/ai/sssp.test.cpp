@@ -11,9 +11,11 @@ int main()
     ShortestPath g(g_input);
     auto ds = g.dijkstra_dense(0, 2);
     assert(ds[0] == 0 && ds[1] == 1 && ds[2] == INF);
-    auto empty_path = g.path(0);
+    auto empty_path = g.path_edge(0);
     assert(empty_path && empty_path->empty());
-    assert(!g.path(2));
+    assert(!g.path_edge(2));
+    assert(g.path_vertex(0) == optional<vc<int>>({{0}}));
+    assert(!g.path_vertex(2));
   }
   {
     vc<tuple<int, int, ll>> es = {{0, 1, 2}, {0, 2, 1}, {2, 1, 1}, {1, 3, 1}};
@@ -35,10 +37,11 @@ int main()
     assert((sp.solve(0) == vl{0, -INF, -INF, -INF, 7, INF}));
     auto prev = sp.prev_edges();
     for (int t : {1, 2, 3, 5})
-      assert(!sp.path(t) && prev[t].index == -1);
-    const auto finite = sp.path(4);
+      assert(!sp.path_edge(t) && !sp.path_vertex(t) && prev[t].index == -1);
+    const auto finite = sp.path_edge(4);
+    assert(sp.path_vertex(4) == optional<vc<int>>({{0, 4}}));
     assert(finite->size() == 1 && (*finite)[0].index == 4 && (*finite)[0].cost == 7);
-    assert(sp.solve(1)[1] == -INF && !sp.path(1));
+    assert(sp.solve(1)[1] == -INF && !sp.path_edge(1));
     assert((sp.solve(4) == vl{INF, INF, INF, INF, 0, INF}));
   }
   PRINT("Hello World");

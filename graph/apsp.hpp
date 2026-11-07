@@ -59,21 +59,19 @@ private:
     by_id.resize(g.num_of_edges());
     fec(e : g.edges()) by_id[e.index] = e;
   }
-  // 全頂点を始点とする Bellman–Ford。負閉路があれば nullopt。
+  // 負閉路があれば nullopt。
   optional<vc<Dist>> potentials() const
   {
     const int n = g.size();
+    bool neg = false;
+    for (int v = 0; v < n && !neg; v++) fec(e : g.out_edges(v))
+      if (e.cost < Dist(0)) { neg = true; break; }
+    if (!neg) return vc<Dist>(n, Dist(0));
+    vc<int> starts(n);
+    iota(starts.begin(), starts.end(), 0);
     vc<Dist> h(n, Dist(0));
-    repi(iter, n)
-    {
-      auto next = h;
-      bool changed = false;
-      repi(v, n) fec(e : g.out_edges(v))
-        if (chmin(next[e.to], h[v] + e.cost)) changed = true;
-      if (!changed) break;
-      if (iter == n - 1) return nullopt;
-      h.swap(next);
-    }
+    if (!internal::spfa_relax<true>(g, h, starts, Dist(inf()),
+        [](int, const Edge<Cost> &) {})) return nullopt;
     return h;
   }
   Edge<Cost> ending_at(int id, int t) const
@@ -146,7 +144,6 @@ public:
     }
     if constexpr (is_integral_ext<Dist>)
     {
-      // 密な非負整数グラフでは、2 * inf() が型に収まれば飽和判定を省ける。
       bool nonnegative = inf() <= numeric_limits<Dist>::max() / 2 && ll(n) * n < 16 * ll(by_id.size());
       fec(e : by_id) if (e.cost < Dist(0)) nonnegative = false;
       if (nonnegative)
@@ -171,7 +168,6 @@ public:
       repi(j, n)
       {
         if (dist[k][j] == inf()) continue;
-        // 負閉路のある入力でも、距離の増幅によるオーバーフローを避ける。
         const Dist &a = dist[i][k], &b = dist[k][j];
         Dist nd;
         if (a == -inf() || b == -inf()) nd = -inf();
@@ -181,8 +177,6 @@ public:
         if (chmin(dist[i][j], nd)) prev[i][j] = prev[k][j];
       }
     }
-    // s -> 負閉路 -> t と進める組だけを -infty にする。
-    // infty かどうかは更新で変わらないため、到達性の行列は別に保存しない。
     repi(k, n) if (dist[k][k] < Dist(0))
     {
       negative = true;
@@ -239,7 +233,7 @@ public:
   }
 
   // 有限の最短経路は辺列、距離が ±infty なら nullopt。
-  optional<vc<Edge<Cost>>> path(int s, int t) const
+  optional<vc<Edge<Cost>>> path_edge(int s, int t) const
   {
     const int n = g.size();
     assert(solved && 0 <= s && s < n && 0 <= t && t < n);
@@ -251,6 +245,25 @@ public:
       auto e = ending_at(prev[s][t], t);
       res.eb(e);
       t = e.from;
+    }
+    reverse(res.begin(), res.end());
+    return res;
+  }
+
+  // 有限の最短経路の頂点列。両端を含む。
+  optional<vc<int>> path_vertex(int s, int t) const
+  {
+    const int n = g.size();
+    assert(solved && 0 <= s && s < n && 0 <= t && t < n);
+    if (dist[s][t] == inf() || dist[s][t] == -inf()) return nullopt;
+    vc<int> res{t};
+    while (t != s)
+    {
+      assert(prev[s][t] != -1 && int(res.size()) < n);
+      const auto &e = by_id[prev[s][t]];
+      if constexpr (is_directed) t = e.from;
+      else t = e.from == t ? e.to : e.from;
+      res.eb(t);
     }
     reverse(res.begin(), res.end());
     return res;

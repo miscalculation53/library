@@ -19,7 +19,6 @@ private:
   int n, m;
   vvc<S> a, s;
   vc<S> row_sum;
-  // 行 i の [0, fixed[i]) が確定済み。fixed は広義単調減少。
   vc<int> fixed;
 
 public:

@@ -104,7 +104,6 @@ vc<typename F::S> solve(const LinearMap &linear_map, vc<typename F::S> y, const 
       bm.append(dot_product<F>(n, u.begin(), v.begin()));
       if (i + 1 == checkpoint)
       {
-        // 低次数の候補だけ途中で検査する。一般の場合は最後に一度だけ。
         if (i + 1 == 2 * n || bm.degree() <= (i + 1) / 4)
         {
           auto m = reversed(bm.coefficients());
@@ -123,7 +122,6 @@ vc<typename F::S> solve(const LinearMap &linear_map, vc<typename F::S> y, const 
       }
       if (i + 1 < 2 * n) linear_map(v);
     }
-    // 射影の取りこぼしは検算で検出し、新しい射影で再試行する。
   }
 }
 

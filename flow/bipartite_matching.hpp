@@ -41,7 +41,6 @@ vc<pair<int, int>> bipartite_matching(const GraphUndirected<Cost, is_erasable> &
     }
     return res;
   };
-  // 長さ 1 の増加路を先に処理し、小さい側が全て埋まれば直ちに返す。
   for (int u = 0; u < k; u++) for (const auto &e : g.out_edges(left[u]))
   {
     assert((color[e.to] == 1) != side);
@@ -53,7 +52,6 @@ vc<pair<int, int>> bipartite_matching(const GraphUndirected<Cost, is_erasable> &
   if (matched == k) return result();
 
   {
-    // 残次数が小さい頂点を優先し、長い交互路の少ない初期対応を作る。
     vc<int> degree(n), leaves(n), twos(n);
     int leaf_front = 0, leaf_back = 0, two_front = 0, two_back = 0;
     for (int v = 0; v < n; v++)
@@ -108,7 +106,6 @@ vc<pair<int, int>> bipartite_matching(const GraphUndirected<Cost, is_erasable> &
 
   CSR<int> adj;
   {
-    // 多重辺を除き、小さい側から出る行先だけを連続配置する。
     vc<int> seen(n, -1), degree(k);
     for (int u = 0; u < k; u++) for (const auto &e : g.out_edges(left[u]))
     {
@@ -135,7 +132,6 @@ vc<pair<int, int>> bipartite_matching(const GraphUndirected<Cost, is_erasable> &
     int front = 0, back = 0, shortest = -1;
     for (int u = 0; u < k; u++) if (mate_left[u] == -1)
       level[u] = 0, que[back++] = u;
-    // 最短の増加路に現れる左側の頂点まで、交互路の層を作る。
     while (front < back && shortest == -1)
     {
       const int u = que[front++];
@@ -150,7 +146,6 @@ vc<pair<int, int>> bipartite_matching(const GraphUndirected<Cost, is_erasable> &
     if (!refined)
     {
       refined = true;
-      // 完全に失敗した根の閉領域を共有し、任意長の増加路を先に減らす。
       vc<unsigned char> closed(k);
       fill(ALL(level), -1);
       const ll limit = 64LL * adj.get_elist().size();
@@ -201,7 +196,6 @@ vc<pair<int, int>> bipartite_matching(const GraphUndirected<Cost, is_erasable> &
             path.pop_back();
           }
         }
-        // スタックが尽きた場合だけ、全到達集合を閉領域に加える。
         if (path.empty()) for (int i = 0; i < back; i++) closed[que[i]] = true;
       }
       if (matched == k) return result();
@@ -212,7 +206,6 @@ vc<pair<int, int>> bipartite_matching(const GraphUndirected<Cost, is_erasable> &
     {
       path.clear();
       path.eb(root);
-      // 明示的なスタックで、最短増加路の極大な頂点素集合を求める。
       while (!path.empty())
       {
         const int u = path.back();

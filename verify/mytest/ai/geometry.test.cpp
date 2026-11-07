@@ -31,7 +31,8 @@ static_assert(is_same_v<decltype(dot(P{}, P{})), i128>);
 static_assert(is_same_v<decltype(P{} / 2LL), PQ>);
 static_assert(is_same_v<decltype(distance2(L{}, P{})), Q>);
 static_assert(is_same_v<decltype(intersection(C{}, L{})), Intersection<ld>>);
-static_assert(is_same_v<decltype(norm(Point<f128>{})), f128>);
+static_assert(is_same_v<decltype(norm(Point<f128>{})), ld>);
+static_assert(is_same_v<decltype(norm<f128>(Point<f128>{})), f128>);
 
 bool near(long double a, long double b, long double eps = 1e-8L)
 { return abs(a - b) <= eps * (1 + abs(a) + abs(b)); }
@@ -83,7 +84,7 @@ void basic()
     if (polar_less(a,b) && polar_less(b,c)) assert(polar_less(a,c));
   Point<f128> fp{f128(3), f128(4)};
   assert(norm(fp) == f128(5));
-  assert(almost_equal(rotate(fp, f128(0)), fp));
+  assert(almost_equal(rotate<f128>(fp, f128(0)), fp));
   assert(!almost_equal(Point<ld>(0,0), Point<ld>(1e-8,0)));
   assert(almost_equal(Point<ld>(0,0), Point<ld>(1e-12,0)));
   Point<ld> small{1e-12,0};
@@ -315,7 +316,7 @@ template <class T> void coordinate_type()
   assert(intersection(circle, Circle<T>(PT(T(6),T(0)),T(5))).points.size() == 2);
   assert(common_tangents(circle, Circle<T>(PT(T(12),T(0)),T(5))).lines.size() == 4);
   PT mutable_point = b;
-  assert(almost_equal(rotate(mutable_point,0),b.template cast<geometry_real_t<T>>()));
+  assert(almost_equal(rotate(mutable_point,0),b.template cast<ld>()));
 }
 
 void fractional_points()

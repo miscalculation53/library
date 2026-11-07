@@ -32,7 +32,6 @@ vc<int> radix_argsort(const vc<T> &a, const Key &key)
   if (varying == 0)
     return ord;
 
-  // 小さい列は安定な挿入ソートで処理する。
   if (n <= 32)
   {
     repi(i, 1, n)
@@ -50,7 +49,6 @@ vc<int> radix_argsort(const vc<T> &a, const Key &key)
   vc<int> tmp(n), cnt(buckets);
   for (int shift = 0; shift < width; shift += bits)
   {
-    // 全要素で等しい桁は順序を変えない。
     if (((varying >> shift) & mask) == 0)
       continue;
     fill(ALL(cnt), 0);
@@ -81,7 +79,6 @@ template <class T, class Key>
 void radix_sort(vc<T> &a, const Key &key)
 {
   auto ord = radix_argsort(a, key);
-  // 巡回置換ごとに移動し、要素型のデフォルト構築を省く。
   repi(i, a.size())
   {
     if (ord[i] == i)

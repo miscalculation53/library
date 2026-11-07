@@ -53,8 +53,6 @@ private:
   Potential cost_unit = 0;
   mutable vc<Potential> normalized_price;
 
-  // 符号付き整数の中間和・積は unsigned で計算し、最終結果の符号を復元する。
-  // 数学的な結果が Total に収まる限り、途中で打ち消し合う大きな項も扱える。
   template <class Integer>
   static Integer from_bits(make_unsigned_ext_t<Integer> bits)
   {
@@ -241,8 +239,6 @@ private:
       pos[i] = a;
       maximum = max(maximum, max(forward, backward));
     }
-    // div(v) = lower[v] + f(r -> v)、div(r) = -sum(lower)。
-    // 幅のある供給だけを費用0の辺へ変換し、補助頂点・辺は公開APIから隠す。
     if (intervals) for (int v = 0; v < n; v++) if (supply[v] != supply_upper[v])
     {
       const Capacity width = supply_upper[v] - supply[v];
@@ -282,7 +278,6 @@ private:
     excess[source] -= Balance(amount), excess[target] += Balance(amount);
     return amount;
   }
-  // 最短路の森で流せる分を、木上の需要の集計と配分の2走査でまとめて流す。
   void augment_forest(ShortestPaths &search, Capacity delta)
   {
     auto &first = search.first_child, &next = search.next_child;
@@ -315,7 +310,6 @@ private:
     for (int v : search.settled)
     {
       Balance amount = available[v];
-      // 親から流す前の需要を使う。delta 未満の端数はそのまま残す。
       if (search.prev[v] != -1)
       {
         const Balance before = excess[v] - amount;
@@ -334,7 +328,6 @@ private:
     }
     search.work += 6LL * solve_n;
   }
-  // Primal network simplex。人工辺の費用は (人工流量, 元の費用) の辞書順で扱う。
   //! 参考: Kiraly--Kovacs, Efficient implementations of minimum-cost flow algorithms, §3.4.
   struct NetworkSimplex
   {
@@ -466,8 +459,6 @@ private:
       Capacity amount = residual(entering, u);
       int leaving = -1, moved = -1;
       bool leave_v_side = false;
-      // 同量なら u 側は根から遠い辺、v 側は根に近い辺を選ぶ。
-      // v 側を優先して、各頂点から根へ正の量を流せる木を保つ。
       for (int x = u; x != join; x = parent[x])
       {
         const Capacity cap = residual(parent_arc[x], parent[x]);
@@ -509,8 +500,6 @@ private:
         const auto &e = arcs[i];
         data[e.pos].cap = e.cap - e.flow, data[data[e.pos].rev].cap = e.flow;
       }
-      // 残余辺では phase[from] >= phase[to]。同じ phase 内だけ Dijkstra を使い、
-      // phase の大きい順に処理して、数値の巨大定数を使わず通常の双対解へ戻す。
       Potential offset = 0;
       for (int v = 0; v < vertices; v++) offset = max(offset, price[v]);
       vc<Potential> dist(vertices);
@@ -557,8 +546,6 @@ private:
       while (delta <= maximum / 2) delta *= 2;
     }
   };
-  // 各段階の residual-capacity >= delta の辺で双対実行可能性を保つ。
-  // 最短路の更新・増加を完了した境界で停止し、後から再開できる。
   bool capacity_scaling(ShortestPaths &search, ScalingState &state, ll budget = -1)
   {
     const ll start = search.work;
@@ -721,8 +708,6 @@ public:
       }
       if (!finished)
       {
-        // 非スケーリング側の状態を保存し、容量スケーリング・simplex と交互に進める。
-        // 予算を倍増し、入力依存の切替判断に加えて SSP の上界も保つ。
         CSR<ResidualEdge> other_graph = g;
         vc<Balance> other_excess = excess;
         vc<Potential> other_price = price;
@@ -776,7 +761,6 @@ public:
   pair<Cap, Total> flow(int s, int t, Cap limit = numeric_limits<Cap>::max(), Heap heap = Heap::automatic)
   { return slope(s, t, limit, heap).back(); }
 
-  // 全頂点を始点とする reweighted Dijkstra。区間供給では補助頂点の値を0にする。
   vc<Potential> potential() const
   {
     assert(solved);

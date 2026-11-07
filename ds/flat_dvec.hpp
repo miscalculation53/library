@@ -42,7 +42,6 @@ private:
       strides.back() = 1;
       return;
     }
-    // 最後の添字が連続する通常の配置。
     size_t n = 1;
     for (size_t d = R; d-- > 0;)
     {

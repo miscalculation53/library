@@ -49,7 +49,6 @@ namespace library_dump_detail
     T value;
   };
 
-  // 参照を返すイテレータと、値を返すイテレータの両方をそのまま包む。
   template <class Fields, class Range>
   struct Content
   {
@@ -104,5 +103,5 @@ namespace cpp_dump::_detail
     append_output("content()", (library_dump_detail::Content<Fields, Range>{content}));
     _p_CPP_DUMP_DEFINE_EXPORT_OBJECT_COMMON2;
   }
-} // namespace cpp_dump::_detail
+}
 #endif

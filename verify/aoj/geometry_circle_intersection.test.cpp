@@ -1,4 +1,5 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=CGL_7_E"
+#define ERROR 1e-6
 #define FAST_IO
 #include "geometry/circle.hpp"
 

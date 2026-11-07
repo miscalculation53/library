@@ -61,7 +61,7 @@ $$Q_{2s}(x)=Q_s(x+s)Q_s(x)$$
 
 - 定数行列は $O(m^3\log N)$
 - $d>0$, $L=dB=O(\sqrt{dT})$ として、通常は $O\bigl(m^2d^2+m^2M(L)+m^3L+m^3\log N\bigr)$
-- $T\le32$、$d\ge T$、または $dB\ge p$ の場合は直接計算を用い、$O\bigl(T(m^2(d+1)+m^3)+m^3\log N\bigr)$
+- $T\le32$、$d\ge T$、または $dB\ge p$ の場合は直接計算を用い、$O\bigl(T(m^2d+m^3)+m^3\log N\bigr)$
 
 通常の計算量の $m^2d^2$ は、最初の $d+1$ 点を Horner 法で評価する部分。
 位数・次数が定数で $N<p$ なら $O(\sqrt{N}\log N)$。

@@ -96,7 +96,6 @@ struct PolynomialHalfGCD
       return t;
     }
 
-    // [[0,1],[1,-q]] を左から掛ける。
     void step(const P &q)
     {
       P u = a - q * c, v = b - q * d;
@@ -152,7 +151,7 @@ struct PolynomialHalfGCD
     return full(std::move(b), std::move(rem)) * r;
   }
 };
-} // namespace internal
+}
 
 // (monic gcd, s, t)、s*a+t*b=gcd。gcd(0,0)=0。
 template <class mint>

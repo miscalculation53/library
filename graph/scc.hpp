@@ -52,7 +52,6 @@ vc<I> scc(const GraphDirected<Cost> &g)
           const int u = active.back();
           active.pop_back();
           ids[u] = cnt;
-          // 成分が確定した頂点は訪問番号 n として扱う。
           ord[u] = n;
           if (u == v) break;
         }

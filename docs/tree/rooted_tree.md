@@ -149,6 +149,22 @@ vc<int> parents() const
 
 - $O(n)$
 
+#### rerooted
+
+```cpp
+RootedTree rerooted(int root) const
+```
+
+頂点番号と辺を保ち、`root` を根とする新しい木を返す。元の木も引き続き使える。HLD の行きがけ順は新しい根に合わせて構築する。
+
+##### 制約
+
+- $0 \leq \mathrm{root} < n$
+
+##### 計算量
+
+- $O(n)$
+
 #### children, light_children, heavy_child, head
 
 ```cpp
@@ -233,11 +249,11 @@ vc<int> parents() const
 - (1)：$O(1)$
 - (2), (3)：$O(n)$
 
-#### path_to_root, path
+#### path_vertex_to_root, path_vertex
 
 ```cpp
-(1) vc<int> path_to_root(int v) const
-(2) vc<int> path(int u, int v) const
+(1) vc<int> path_vertex_to_root(int v) const
+(2) vc<int> path_vertex(int u, int v) const
 ```
 
 - (1)：`v` から根までのパス上の頂点列を返す。

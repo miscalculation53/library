@@ -1,8 +1,5 @@
 #pragma once
 
-// Coefficient identities: f * f^{-1} = 1 and f * (x (log f)') = x f'.
-// Select the scalar path explicitly and reuse f[0]^-1.
-
 #include <algorithm>
 #include <cassert>
 #include <cstdint>
@@ -15,9 +12,6 @@
 namespace internal::sparse_fps
 {
 
-// The val() interface must return the canonical residue in [0, mod()).
-// Construction from an integer must produce its residue.  No assumption is
-// made about the representation stored inside Mint.
 template <class Mint, class = void>
 struct has_canonical32_interface : std::false_type
 {
@@ -44,7 +38,6 @@ struct input_shape
   std::vector<std::pair<int, Mint>> terms;
 };
 
-// If f(x) = F(x^d) modulo x^n, compute in the variable y = x^d.
 template <class Fps>
 auto describe_input(const Fps &f, int n)
 {
@@ -118,7 +111,6 @@ public:
   }
 };
 
-// Internal implementation of f.log(n).
 // Prime modulus and 0 <= n <= modulus are the existing log preconditions.
 template <bool UseCanonical32, class Fps>
 Fps logarithm(const Fps &f, int n)
@@ -201,4 +193,4 @@ Fps logarithm(const Fps &f, int n)
   return answer;
 }
 
-} // namespace internal::sparse_fps
+}

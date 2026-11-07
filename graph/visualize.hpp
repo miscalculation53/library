@@ -30,7 +30,6 @@ namespace graph_visualize_detail
     return res;
   }
 
-  // GRAPH × GRAPH の URL Export と同じパラメータを使う。
   inline string url(const string &text, bool directed, bool weighted, bool one_indexed)
   {
     return string("https://hello-world-494ec.firebaseapp.com/?format=normal&indexed=") +

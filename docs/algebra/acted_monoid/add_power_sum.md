@@ -9,7 +9,7 @@
 [ActedMonoidAffinePowerSum](affine_power_sum.md) の $b=1$ の特殊版で、二項展開による累乗和の更新を共有する。
 整数型の中間積和は unsigned で計算し、結果を `T` に戻す。
 
-`LazySegmentTree` と組み合わせた構築は $O((D+1)N)$、区間更新は $O((D+1)^2\log N)$、区間取得は $O((D+1)\log N)$。
+`LazySegmentTree` と組み合わせた構築は $O(DN)$、区間更新は $O(D^2\log N)$、区間取得は $O(D\log N)$。
 
 ## 使用例
 

@@ -2,8 +2,6 @@
 
 #include "../../template/template_all_but_modint.hpp"
 
-// Matrix storage and views over contiguous ranges.
-
 namespace internal
 {
 template <class Iterator> struct matrix_row
@@ -228,4 +226,4 @@ public:
   }
   friend bool operator!=(const matrix_storage &a, const matrix_storage &b) { return !(a == b); }
 };
-} // namespace internal
+}

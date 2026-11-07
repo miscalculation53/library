@@ -34,7 +34,6 @@ private:
       {
         const auto row = g.out_edges(v);
         const int end = row.size(), pe = parent_edge_[v], discovery = ord_[v];
-        // 隣接辺の走査中は局所変数を使い、配列への書き戻しをまとめる。
         int at = cursor[v], best = low_[v], lower_degree = 0;
         int child = -1, edge = -1;
         while (at < end)
@@ -43,7 +42,6 @@ private:
           const int to_order = ord_[e.to];
           if (to_order < 0)
           {
-            // 葉は親辺だけで探索が完了するので、その場で結果を確定する。
             if (g.out_edges(e.to).size() == 1)
             {
               const int leaf = e.to;
@@ -83,7 +81,6 @@ private:
             if (p != root && best >= ord_[p]) articulation_[p] = 1;
             if (best > ord_[p]) bridges_.push_back(pe);
           }
-          // 親配列そのものを探索スタックとして使う。
           v = p;
         }
       }
