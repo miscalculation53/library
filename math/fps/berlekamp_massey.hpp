@@ -23,6 +23,7 @@ struct BerlekampMassey
   vc<S> a, b, c, tmp;
   int pos = -1;
   S inv_x = F::e0();
+  CPP_DUMP_DEFINE_DATA(a, c, pos);
 
   int degree() const { return c.size(); }
 

@@ -462,6 +462,7 @@ public:
         Cell* cell_ = nullptr;
         explicit Handle(Cell* cell) : cell_(cell) {}
     public:
+        local(auto content() const { return static_cast<const void *>(cell_); })
         Handle() = default;
         friend bool operator==(Handle a, Handle b) { return a.cell_ == b.cell_; }
         friend bool operator!=(Handle a, Handle b) { return !(a == b); }

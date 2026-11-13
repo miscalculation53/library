@@ -15,7 +15,7 @@ struct Edge
   Cost cost;
   int index;
   CPP_DUMP_DEFINE_DATA(from, to, cost, index);
-  Edge() : from(-1), to(-1), index(-1) {}
+  Edge() : from(-1), to(-1), cost{}, index(-1) {}
   Edge(int s, int t, Cost c, int i = -1) : from(s), to(t), cost(c), index(i) {}
   operator int() const { return to; }
   bool operator<(const Edge &rhs) const { return cost < rhs.cost; }
@@ -236,6 +236,8 @@ protected:
   }
 
 public:
+  local(auto content() const { return pair{n, edges()}; })
+
   Graph() {}
   template <class I>
   Graph(int n, const vc<pair<I, I>> &es) : n(n), m(es.size()), era(0)

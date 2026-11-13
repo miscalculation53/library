@@ -12,15 +12,17 @@
 struct ZetaMobiusDivisorMultipleLarge
 {
 public:
-  ll m;
+  ll m = 0;
   vc<PrimePower<ll>> fac;
-  ll pnum, dnum;
+  ll pnum = 0, dnum = 0;
   vc<ll> ds;
 
 private:
   vc<int> f01;  // f01[d] は、d が f[j] == e[j] なら j ビット目が 1
 
 public:
+  CPP_DUMP_DEFINE_DATA(m, fac, ds);
+
   ZetaMobiusDivisorMultipleLarge() {}
   template <class I>
   ZetaMobiusDivisorMultipleLarge(ll m, const vc<PrimePower<I>> &fac) : m(m), fac(ALL(fac))
@@ -123,7 +125,13 @@ public:
     // 変更も可能
     const T &get_by_i(ll i) const { return v[i]; }
 
+    local(auto content() const { return to_map(); })
+
     map<ll, T> to_map()
+    {
+      return std::as_const(*this).to_map();
+    }
+    map<ll, T> to_map() const
     {
       map<ll, T> res;
       fec(d : zm.ds) res[d] = get_by_d(d);

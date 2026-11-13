@@ -145,6 +145,8 @@ private:
   }
 
 public:
+  CPP_DUMP_DEFINE_DATA(g);
+
   explicit MinimumCycle(const Graph<is_directed, Cost> &g) : g(g) {}
   MinimumCycle(const Graph<is_directed, Cost> &&) = delete;
 

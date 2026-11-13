@@ -173,6 +173,8 @@ public:
     qdir = 0;
   }
 
+  local(auto content() const { return segments(); })
+
   // Segment: line, left, right
   // 直線 line が最適になる x の範囲 (left, right]
   // 整数の場合、端点はどちらの直線に入れてもいいというわけではないので注意!!
@@ -355,6 +357,8 @@ public:
     last_x.reset();
     qdir = 0;
   }
+
+  local(auto content() const { return segments(); })
 
   // Segment: line, left, right
   // 直線 line が最適になる x の範囲 (left, right]

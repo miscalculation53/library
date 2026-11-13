@@ -16,6 +16,7 @@ struct TwoMultisetsState
 {
   int left_size, right_size;
   S left_prod, right_prod;
+  CPP_DUMP_DEFINE_DATA(left_size, right_size, left_prod, right_prod);
   int size() const { return left_size + right_size; }
 };
 
@@ -28,6 +29,7 @@ struct PartitionByMedian
 struct PartitionBySize
 {
   int k = 0;
+  CPP_DUMP_DEFINE_DATA(k);
   template <class S>
   bool operator()(const TwoMultisetsState<S> &s) const { assert(k >= 0); return s.left_size <= k; }
 };
@@ -36,6 +38,7 @@ template <class S>
 struct PartitionBySum
 {
   S limit;
+  CPP_DUMP_DEFINE_DATA(limit);
   bool operator()(const TwoMultisetsState<S> &s) const { return s.left_prod <= limit; }
 };
 

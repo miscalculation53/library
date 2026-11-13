@@ -11,11 +11,13 @@ template <class mint>
 struct PowerTable
 {
 private:
-  decltype(mint::mod()) mod;
-  mint base;
+  decltype(mint::mod()) mod{};
+  mint base{};
   vc<mint> pw;
 
 public:
+  CPP_DUMP_DEFINE_DATA(mod, base, pw);
+
   PowerTable() {}
   PowerTable(const mint &base) : mod(mint::mod()), base(base), pw(1, 1) {}
 

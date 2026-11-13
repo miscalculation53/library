@@ -2,11 +2,15 @@
 
 #include "template_types.hpp"
 
-#if defined(LOCAL) && LIBRARY_HAS_FLOAT128
+#ifdef LOCAL
 namespace cpp_dump::_detail
 {
   struct export_command;
+#if LIBRARY_HAS_FLOAT128
   inline string export_var(const f128 &, const string &, size_t,
+                           size_t, bool, const export_command &);
+#endif
+  inline string export_var(const u128 &, const string &, size_t,
                            size_t, bool, const export_command &);
 }
 #endif
@@ -40,6 +44,18 @@ namespace cpp_dump::_detail
     return es::signed_number(i128tos(x));
   }
 
+  inline string export_var(
+      const u128 &x, const string &, size_t,
+      size_t, bool, const export_command &
+  ) {
+    return es::signed_number(u128tos(x));
+  }
+
+  template <class T, class = void>
+  inline constexpr bool has_dump_data = false;
+  template <class T>
+  inline constexpr bool has_dump_data<T, void_t<decltype(declval<const T &>().dump_data())>> = true;
+
   template <class T>
   inline auto export_object_generic(
       const T &value, const string &indent, size_t last_line_length,
@@ -53,6 +69,18 @@ namespace cpp_dump::_detail
         { (append_output(member.first, member.second.get()), ...); },
         value.dump_data()
     );
+    _p_CPP_DUMP_DEFINE_EXPORT_OBJECT_COMMON2;
+  }
+
+  template <class T>
+  inline auto export_object_generic(
+      const T &value, const string &indent, size_t last_line_length,
+      size_t current_depth, bool fail_on_newline, const export_command &command
+  ) -> enable_if_t<!has_dump_data<T>, decltype(value.content(), string())>
+  {
+    string class_name = es::class_name(get_typename<T>());
+    _p_CPP_DUMP_DEFINE_EXPORT_OBJECT_COMMON1;
+    append_output("content()", value.content());
     _p_CPP_DUMP_DEFINE_EXPORT_OBJECT_COMMON2;
   }
 } // namespace cpp_dump::_detail
@@ -69,7 +97,6 @@ CPP_DUMP_SET_OPTION_GLOBAL(max_iteration_count, 100);
 #define local(...) __VA_ARGS__
 #define oj(...)
 #define local_oj(a, b) (a)
-CPP_DUMP_DEFINE_EXPORT_OBJECT_GENERIC(content());
 #else
 #define CPP_DUMP_DEFINE_DATA(...)
 #define dump(...) ((void)0)

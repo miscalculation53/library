@@ -16,6 +16,7 @@ struct LinearEquationsIntegerResult
   int dim = 0;
   pair<T, T> sol{};
   array<pair<T, T>, 2> basis{};
+  CPP_DUMP_DEFINE_DATA(dim, sol, basis);
 };
 
 // ax + by == c, dx + ey == f の整数解全体を返す

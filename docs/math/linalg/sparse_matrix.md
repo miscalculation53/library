@@ -17,6 +17,7 @@
 
 using F = FieldAddSubMulDiv<modint998244353>;
 SparseMatrix<F> a(2, 3, {{0, 0, 2}, {0, 2, 1}, {1, 1, 3}});
+dump(a);
 vc<modint998244353> v{1, 2, 3};
 auto av = a * v;                         // {5, 6}
 auto gram = a.multiply_dense(a.transpose()); // 2 x 2 の密行列
@@ -82,6 +83,18 @@ S operator()(int i, int j) const;
 ##### 計算量
 
 - 係数取得は $O(\log m)$、ほかは $O(1)$。
+
+#### content
+
+```cpp
+pair<pair<int, int>, vc<tuple<int, int, S>>> content() const;
+```
+
+`((行数, 列数), 非零成分の列)` を返す。各非零成分は `(行, 列, 係数)` の三つ組で、行番号・列番号順に並ぶ。`LOCAL` では `dump(a)` でこの形式を表示できる。マトロイドの `sparse_linear_representation()` が返す行列にも同様に使える。
+
+##### 計算量
+
+- $O(n+z)$。
 
 #### to_dense・transpose
 

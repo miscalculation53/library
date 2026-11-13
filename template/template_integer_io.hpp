@@ -13,22 +13,20 @@ i128 stoi128(const string &s)
     return -i128(res - 1) - 1;
   return i128(res);
 }
+inline string u128tos(u128 x)
+{
+  string res;
+  do
+  {
+    res += char('0' + x % 10);
+    x /= 10;
+  } while (x > 0);
+  reverse(res.begin(), res.end());
+  return res;
+}
 string i128tos(i128 x)
 {
-  if (x == 0) return "0";
-  string sign = "", res = "";
-  u128 ux;
-  if (x < 0)
-    ux = u128(-(x + 1)) + 1, sign = "-";
-  else
-    ux = u128(x);
-  while (ux > 0)
-  {
-    res += char('0' + ux % 10);
-    ux /= 10;
-  }
-  reverse(res.begin(), res.end());
-  return sign + res;
+  return x < 0 ? "-" + u128tos(u128(-(x + 1)) + 1) : u128tos(u128(x));
 }
 istream &operator>>(istream &is, i128 &a)
 {

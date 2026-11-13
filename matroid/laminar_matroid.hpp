@@ -48,6 +48,8 @@ public:
           return int(group[e]);
         })) {}
 
+  CPP_DUMP_DEFINE_DATA(parent, capacity, group, independent);
+
   int size() const { return group.size(); }
 
   template <class I = int>

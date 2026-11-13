@@ -51,6 +51,8 @@ private:
   }
 
 public:
+  local(auto content() const { return tuple{this->rt, edge, gen_vec(this->n, [&](int v) { return get(v); })}; })
+
   PathProd() {}
   template <class I, class T = S>
   PathProd(int n, const vc<I> &par, const vc<T> &vec = {}, bool edge = false)

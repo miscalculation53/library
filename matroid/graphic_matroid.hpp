@@ -4,6 +4,7 @@
 #include "../tree/add_virtual_root.hpp"
 #include "linear_matroid.hpp"
 
+/** 行数は vertices、列数は edges.size()。各列の非零数は自己ループで 0、その他の辺で 2。 */
 template <class F = FieldAddSubMulDiv<modint998244353>, class I = int, class J = int, bool Sparse = false>
 auto graphic_linear_representation(int vertices, const vc<pair<I, J>> &edges)
 {
@@ -50,14 +51,18 @@ public:
       assert(u128(u) < unsigned(vertices) && u128(v) < unsigned(vertices));
   }
 
+  CPP_DUMP_DEFINE_DATA(vertices, edges, selected);
+
   int size() const { return edges.size(); }
 
+  /** 行数は頂点数、列数は辺数。各列の非零数は自己ループで 0、その他の辺で 2。 */
   template <class F = FieldAddSubMulDiv<modint998244353>>
   LinearMatroid<F> linear_representation() const
   {
     return graphic_linear_representation<F>(vertices, edges);
   }
 
+  /** 行数は頂点数、列数は辺数。各列の非零数は自己ループで 0、その他の辺で 2。 */
   template <class F = FieldAddSubMulDiv<modint998244353>>
   SparseMatrix<F> sparse_linear_representation() const
   {

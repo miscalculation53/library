@@ -14,6 +14,7 @@ struct PermCycle
   // i 番目の要素の (サイクルの番号, サイクル内での順番)
   vc<pair<I, I>> cycle_id;
   vvc<I> cycles;
+  CPP_DUMP_DEFINE_DATA(cycle_id, cycles);
 
   PermCycle() {}
   PermCycle(const vc<I> &p)

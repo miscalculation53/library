@@ -23,11 +23,13 @@ struct HalfPlaneIntersection
   {
     T a, b, c;
     int id = -1;
+    CPP_DUMP_DEFINE_DATA(a, b, c, id);
   };
 
   struct Point
   {
     Fraction x, y;
+    CPP_DUMP_DEFINE_DATA(x, y);
   };
 
   enum class Status
@@ -37,11 +39,23 @@ struct HalfPlaneIntersection
     Bounded,
   };
 
+  local(friend ostream &operator<<(ostream &os, Status status)
+  {
+    switch (status)
+    {
+      case Status::Empty: return os << "Empty";
+      case Status::Unbounded: return os << "Unbounded";
+      case Status::Bounded: return os << "Bounded";
+    }
+    return os << int(status);
+  })
+
   struct Result
   {
     Status status;
     vc<HalfPlane> boundaries;
     vc<Point> vertices;
+    CPP_DUMP_DEFINE_DATA(status, boundaries, vertices);
   };
 
 private:
@@ -132,6 +146,8 @@ private:
   static HalfPlane halfplane(const Line &h) { return {h.a, h.b, h.c, h.id}; }
 
 public:
+  CPP_DUMP_DEFINE_DATA(hps, infty);
+
   // 空の半平面集合を作る。infty は非有界判定用の内部の枠に使う。
   explicit HalfPlaneIntersection(T infty = default_infty<T>()) : infty(infty)
   {

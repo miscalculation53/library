@@ -127,6 +127,8 @@ namespace li_chao_tree_detail
     }
 
   public:
+    CPP_DUMP_DEFINE_DATA(lines);
+
     void reserve(int count) { lines.reserve(count); }
     void clear() { lines.clear(); }
     const Line &get(int slot) const { return lines[slot]; }
@@ -215,6 +217,7 @@ private:
   {
     int candidate = -1;
     int child[2] = {-1, -1};
+    CPP_DUMP_DEFINE_DATA(candidate, child);
   };
   T xmin, xmax;
   Bank bank;
@@ -287,6 +290,8 @@ public:
     nodes.reserve(n);
     bank.reserve(n);
   }
+  CPP_DUMP_DEFINE_DATA(xmin, xmax, bank, nodes);
+
   void add_line(T a, T b) { add_line(a, b, add_cnt); }
   void add_line(T a, T b, int id)
   {
@@ -417,6 +422,8 @@ public:
   {
     return std::lower_bound(xs.begin(), xs.end(), x) - xs.begin();
   }
+  CPP_DUMP_DEFINE_DATA(xs, bank, candidates);
+
   void add_line(T a, T b) { add_line(a, b, add_cnt); }
   void add_line(T a, T b, int id)
   {

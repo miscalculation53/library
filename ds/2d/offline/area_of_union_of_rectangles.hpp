@@ -18,10 +18,13 @@ template<class T = ll> struct AreaOfUnionOfRectangles {
 private:
     struct Rectangle {
         T lx, rx, ly, ry;
+        CPP_DUMP_DEFINE_DATA(lx, rx, ly, ry);
     };
     std::vector<Rectangle> rectangles;
 
 public:
+    CPP_DUMP_DEFINE_DATA(rectangles);
+
     void rectangle_add(T lx, T rx, T ly, T ry) {
         rectangles.push_back({lx, rx, ly, ry});
     }

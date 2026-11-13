@@ -3,6 +3,8 @@
 #include "../math/linalg/xor_basis.hpp"
 #include "linear_matroid.hpp"
 
+/** 行数は整数型のビット幅、または DynamicBitset の長さ（DynamicBitset の入力が空なら 0）。
+ *  列数は vectors.size()。各列の非零数は対応する入力ベクトルの 1 ビットの数。 */
 template <class F = FieldAddSubMulDiv<static_modint32<2>>, class V, bool Sparse = false>
 auto binary_linear_representation(const vc<V> &vectors)
 {
@@ -53,13 +55,19 @@ public:
       assert(internal::XorBasisVector<V>::valid(value, basis.dimension()));
   }
 
+  CPP_DUMP_DEFINE_DATA(vectors, independent, basis);
+
   int size() const { return int(vectors.size()); }
 
+  /** 行数は整数型のビット幅、または DynamicBitset の長さ（DynamicBitset の入力が空なら 0）。
+   *  列数は入力ベクトル数。各列の非零数は対応する入力ベクトルの 1 ビットの数。 */
   template <class F = FieldAddSubMulDiv<static_modint32<2>>>
   LinearMatroid<F> linear_representation() const
   {
     return binary_linear_representation<F>(vectors);
   }
+  /** 行数は整数型のビット幅、または DynamicBitset の長さ（DynamicBitset の入力が空なら 0）。
+   *  列数は入力ベクトル数。各列の非零数は対応する入力ベクトルの 1 ビットの数。 */
   template <class F = FieldAddSubMulDiv<static_modint32<2>>>
   SparseMatrix<F> sparse_linear_representation() const
   {

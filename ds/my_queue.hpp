@@ -41,5 +41,6 @@ public:
     return d[pos + i];
   }
 
-  vc<T> content() { return {d.begin() + pos, d.end()}; }
+  vc<T> content() { return std::as_const(*this).content(); }
+  vc<T> content() const { return {d.begin() + pos, d.end()}; }
 };

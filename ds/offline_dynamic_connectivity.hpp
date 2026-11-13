@@ -32,6 +32,7 @@ private:
     int time;
     bool is_add;
     Obj obj;
+    CPP_DUMP_DEFINE_DATA(time, is_add, obj);
     Operation(int time, bool is_add, const Obj &obj) : time(time), is_add(is_add), obj(obj) {}
   };
   int tmax, last_time = 0;
@@ -84,6 +85,8 @@ private:
   }
 
 public:
+  CPP_DUMP_DEFINE_DATA(tmax, operations, span_obj);
+
   explicit OfflineDynamicConnectivity(int tmax) : tmax(tmax) { assert(tmax >= 0); }
 
   // 既存の生存区間を受け取る。時刻が int なら vector ごと移動する。

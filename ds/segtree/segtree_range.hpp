@@ -16,6 +16,8 @@ private:
   void check_node(ll i) const { assert(1 <= i && i < 2 * siz); }
 
 public:
+  CPP_DUMP_DEFINE_DATA(n, siz);
+
   explicit SegmentTreeRange(int n) : n(n), siz(1)
   {
     assert(0 <= n);

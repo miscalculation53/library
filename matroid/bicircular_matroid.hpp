@@ -4,6 +4,7 @@
 #include "../graph/graph.hpp"
 #include "linear_matroid.hpp"
 
+/** 行数は vertices、列数は edges.size()。各列の非零数は自己ループで高々 1、その他の辺で高々 2。 */
 template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &,
           class I = int, class J = int, bool Sparse = false>
 auto bicircular_linear_representation(int vertices, const vc<pair<I, J>> &edges,
@@ -50,14 +51,18 @@ public:
       assert(u128(u) < unsigned(vertices) && u128(v) < unsigned(vertices));
   }
 
+  CPP_DUMP_DEFINE_DATA(vertices, edges, independent, cyclic);
+
   int size() const { return edges.size(); }
 
+  /** 行数は頂点数、列数は辺数。各列の非零数は自己ループで高々 1、その他の辺で高々 2。 */
   template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &>
   LinearMatroid<F> linear_representation(Sample &&sample = random_modint<typename F::S>) const
   {
     return bicircular_linear_representation<F>(vertices, edges, std::forward<Sample>(sample));
   }
 
+  /** 行数は頂点数、列数は辺数。各列の非零数は自己ループで高々 1、その他の辺で高々 2。 */
   template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &>
   SparseMatrix<F> sparse_linear_representation(Sample &&sample = random_modint<typename F::S>) const
   {

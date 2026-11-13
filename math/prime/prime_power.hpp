@@ -14,6 +14,7 @@ struct PrimePower
   P p;
   int e;
   P pe;
+  CPP_DUMP_DEFINE_DATA(p, e, pe);
 
   PrimePower() : p(-1), e(-1), pe(-1) {}
   PrimePower(P p, int e = 1) : p(p), e(e), pe(ipow(p, e)) {}
@@ -34,10 +35,6 @@ struct PrimePower
   }
   void div_p() { e--, pe /= p; }
 };
-#ifdef LOCAL
-CPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<int>, p, e, pe);
-CPP_DUMP_DEFINE_EXPORT_OBJECT(PrimePower<ll>, p, e, pe);
-#endif
 
 // n が m で割り切れる回数 e について、(e, m^e, n/m^e)
 tuple<int, ll, ll> ord_pow_div(ll n, ll m)

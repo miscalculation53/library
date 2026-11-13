@@ -3,6 +3,7 @@
 #include "../flow/bipartite_matching_state.hpp"
 #include "linear_matroid.hpp"
 
+/** 行数は色 1 の頂点数、列数は色 0 の頂点数。各列の非零数は対応する頂点の異なる隣接先の数以下。 */
 template <class F = FieldAddSubMulDiv<modint998244353>, class Cost, bool is_erasable, class Color,
           class Sample = decltype(random_modint<typename F::S>) &, bool Sparse = false>
 auto transversal_linear_representation(const GraphUndirected<Cost, is_erasable> &graph,
@@ -21,6 +22,7 @@ auto transversal_linear_representation(const GraphUndirected<Cost, is_erasable> 
   return std::move(columns).finish();
 }
 
+/** 行数は right_vertices、列数は adjacency.size()。各列の非零数は対応する行の異なる隣接先の数以下。 */
 template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &, class I = int, bool Sparse = false>
 auto transversal_linear_representation(int right_vertices, const vvc<I> &adjacency,
                                                    Sample &&sample = random_modint<typename F::S>)
@@ -40,6 +42,7 @@ auto transversal_linear_representation(int right_vertices, const vvc<I> &adjacen
   return std::move(columns).finish();
 }
 
+/** 行数は right_vertices、列数は adjacency.size()。各列の非零数は対応する行の異なる隣接先の数以下。 */
 template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &,
           class I = int, bool erasable = false, bool Sparse = false>
 auto transversal_linear_representation(int right_vertices, const CSR<I, erasable> &adjacency,
@@ -60,6 +63,7 @@ auto transversal_linear_representation(int right_vertices, const CSR<I, erasable
   return std::move(columns).finish();
 }
 
+/** 行数は right_vertices、列数は adjacency.size()。各列の非零数は対応する行の異なる隣接先の数以下。 */
 template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &, class I = int, bool Sparse = false>
 auto transversal_linear_representation(int right_vertices, initializer_list<vc<I>> adjacency,
                                                    Sample &&sample = random_modint<typename F::S>)
@@ -86,10 +90,13 @@ public:
   TransversalMatroid(int right_vertices, vvc<I> adjacency)
       : matching(right_vertices, adjacency), selected(adjacency.size()) {}
 
+  CPP_DUMP_DEFINE_DATA(matching, selected);
+
   int size() const { return matching.left_size(); }
   int vertex(int e) const { return matching.left_vertex(e); }
   optional<int> element(int vertex) const { return matching.left_index(vertex); }
 
+  /** 行数は右側の頂点数、列数は左側の頂点数。各列の非零数は対応する左頂点の異なる隣接先の数以下。 */
   template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &>
   LinearMatroid<F> linear_representation(Sample &&sample = random_modint<typename F::S>) const
   {
@@ -97,6 +104,7 @@ public:
                                                 std::forward<Sample>(sample));
   }
 
+  /** 行数は右側の頂点数、列数は左側の頂点数。各列の非零数は対応する左頂点の異なる隣接先の数以下。 */
   template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &>
   SparseMatrix<F> sparse_linear_representation(Sample &&sample = random_modint<typename F::S>) const
   {

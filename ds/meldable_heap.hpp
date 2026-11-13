@@ -20,6 +20,7 @@ private:
     T value;
     array<Root, 2> child = {null, null};
     int rank = 1;
+    CPP_DUMP_DEFINE_DATA(value, child, rank);
     template <class... Args>
     explicit Node(in_place_t, Args &&...args) : value(std::forward<Args>(args)...) {}
   };
@@ -69,6 +70,8 @@ private:
   }
 
 public:
+  CPP_DUMP_DEFINE_DATA(nodes);
+
   explicit MeldableHeapPool(size_t expected_pushes = 0, Compare comp = Compare{}) : comp(std::move(comp))
   { nodes.reserve(expected_pushes); }
   size_t node_count() const { return nodes.size(); }

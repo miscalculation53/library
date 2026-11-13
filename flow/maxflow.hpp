@@ -312,6 +312,8 @@ private:
   }
 
 public:
+  local(auto content() const { return pair{n, edges()}; })
+
   MaxFlow() = default;
   explicit MaxFlow(int n) : n(n)
   {

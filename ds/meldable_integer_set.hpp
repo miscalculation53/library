@@ -152,6 +152,8 @@ private:
   }
 
 public:
+  local(auto content() const { return pair{n, node_count()}; })
+
   explicit MeldableIntegerSetPool(ll n = 0, size_t expected_insertions = 0) : n(n)
   {
     assert(n >= 0);

@@ -98,6 +98,8 @@ private:
   }
 
 public:
+  CPP_DUMP_DEFINE_DATA(n, es, solved);
+
   BoundedMaxFlow() = default;
   explicit BoundedMaxFlow(int n) : n(n) { assert(n >= 0); }
   template <class I = ll>

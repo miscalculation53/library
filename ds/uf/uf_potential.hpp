@@ -22,6 +22,8 @@ protected:
   vc<bool> valid_;
 
 public:
+  CPP_DUMP_DEFINE_DATA(par, weight_, valid_);
+
   UnionFindPotentialBase() {}
   UnionFindPotentialBase(int n)
   : UF(n), weight_(n, G::e()), valid_(n, true) {}

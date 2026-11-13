@@ -16,6 +16,7 @@ class FibonacciHeap
     Key key{};
     int parent = -1, child = -1, prev = -1, next = -1, degree = 0;
     bool marked = false, present = false;
+    CPP_DUMP_DEFINE_DATA(key, parent, child, prev, next, degree, marked, present);
   };
   vc<Node> nodes;
   vc<int> roots, degrees;
@@ -54,6 +55,8 @@ class FibonacciHeap
   }
 
 public:
+  CPP_DUMP_DEFINE_DATA(minimum, count, nodes);
+
   explicit FibonacciHeap(int n = 0, Compare comp = Compare{}) : nodes(n), comp(std::move(comp)) {}
   int size() const { return count; }
   bool empty() const { return count == 0; }

@@ -42,6 +42,8 @@ private:
 
 public:
   BlockCutTree() = default;
+  CPP_DUMP_DEFINE_DATA(blocks_, forest_, vertex_ids_, articulations_);
+
   explicit BlockCutTree(const BiconnectedComponents &bcc) { build(bcc); }
   template <class Cost, bool is_erasable>
   explicit BlockCutTree(const GraphUndirected<Cost, is_erasable> &g)

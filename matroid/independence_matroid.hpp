@@ -21,6 +21,8 @@ public:
       : n(n), independent(move(independent)), used(n)
   { assert(n >= 0); }
 
+  CPP_DUMP_DEFINE_DATA(n, selected);
+
   int size() const { return n; }
 
   template <class I = int>

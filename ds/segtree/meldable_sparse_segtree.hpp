@@ -20,6 +20,7 @@ private:
   {
     S prod;
     array<Root, 2> child;
+    CPP_DUMP_DEFINE_DATA(prod, child);
     Node(const S &prod, Root left = null, Root right = null) : prod(prod), child{left, right} {}
   };
   ll n;
@@ -139,6 +140,8 @@ private:
 
 public:
   explicit MeldableSparseSegmentTreePool(ll n = 0) : n(n) { assert(n >= 0); }
+
+  CPP_DUMP_DEFINE_DATA(n, nodes);
 
   ll universe_size() const { return n; }
   size_t node_count() const { return nodes.size(); }

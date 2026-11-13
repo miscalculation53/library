@@ -50,6 +50,8 @@ private:
   }
 
 public:
+  CPP_DUMP_DEFINE_DATA(sources, dists, prv, solved_all);
+
   explicit ShortestPath(const Graph<is_directed, Cost> &g) : g(g) {}
   ShortestPath(const Graph<is_directed, Cost> &&) = delete;
 

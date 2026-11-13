@@ -20,6 +20,8 @@ private:
   LowerLeftSum<G, I> rs;
 
 public:
+  CPP_DUMP_DEFINE_DATA(rs);
+
   // [lx, rx) × [ly, ry) に重み w の長方形を追加
   void rectangle_add(I lx, I rx, I ly, I ry, const S &w)
   {

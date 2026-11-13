@@ -22,7 +22,7 @@ struct LazySegmentTree
   using F = typename AM::F;
 
 private:
-  int n, siz, lg;
+  int n = 0, siz = 0, lg = 0;
   vc<S> dat;
   vc<F> lazy;
   void update(int i) { dat[i] = AM::op(dat[2 * i], dat[2 * i + 1]); }
@@ -155,6 +155,12 @@ public:
       x = apply(x, as_const(dat[i]));
     return x;
   }
+
+  local(vc<S> content() const
+  {
+    auto copy = *this;
+    return copy.content();
+  })
 
   vc<S> content()
   {

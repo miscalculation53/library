@@ -59,6 +59,8 @@ private:
   }
 
 public:
+  CPP_DUMP_DEFINE_DATA(par, chi);
+
   Trie()
   {
     par = {-1};

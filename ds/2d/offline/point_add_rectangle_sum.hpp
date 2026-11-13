@@ -28,6 +28,8 @@ private:
   int qn = 0;
 
 public:
+  CPP_DUMP_DEFINE_DATA(qs);
+
   // (x, y) に重み w の点を追加
   void point_add(I x, I y, const S &w) { qs.eb(P(x, y, w)); }
   // 前の rectangle sum のクエリを参照した重みの点を追加
@@ -126,6 +128,8 @@ private:
   int qn = 0;
 
 public:
+  CPP_DUMP_DEFINE_DATA(qs);
+
   // (x, y) に重み w の点を追加
   void point_add(I x, I y, const S &w) { qs.eb(P(x, y, w)); }
   // 前の rectangle sum のクエリを参照した重みの点を追加

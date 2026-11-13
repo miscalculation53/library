@@ -91,7 +91,8 @@ public:
   void snapshot() { snap_time = his.size(); }
   void rollback() { undo(SZ(his) - snap_time); }
 
-  vc<T> content() { return vec; }
+  vc<T> content() { return std::as_const(*this).content(); }
+  vc<T> content() const { return vec; }
 };
 
 #ifdef LOCAL

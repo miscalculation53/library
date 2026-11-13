@@ -24,6 +24,8 @@ class Value
   Value(Recorder<T> *owner, int node) : owner(owner), node(node), coefficient(1) {}
 
 public:
+  CPP_DUMP_DEFINE_DATA(node, coefficient);
+
   Value() = default;
   Value(const T &value) : coefficient(value) {}
   template <class I, std::enable_if_t<is_integral_ext<I>, int> = 0>
@@ -78,9 +80,38 @@ class Program
 {
   friend class Recorder<T>;
   enum class Kind { Add, Convolution, Modulo, Ntt, Intt };
-  struct Edge { int node; T coefficient; };
-  struct Step { Kind kind; int output, first, second; T a, b; };
-  struct Block { vc<Edge> input; vc<T> parameter; int output_size; };
+  local(friend ostream &operator<<(ostream &os, Kind kind)
+  {
+    switch (kind)
+    {
+      case Kind::Add: return os << "Add";
+      case Kind::Convolution: return os << "Convolution";
+      case Kind::Modulo: return os << "Modulo";
+      case Kind::Ntt: return os << "Ntt";
+      case Kind::Intt: return os << "Intt";
+    }
+    return os << int(kind);
+  })
+  struct Edge
+  {
+    int node;
+    T coefficient;
+    CPP_DUMP_DEFINE_DATA(node, coefficient);
+  };
+  struct Step
+  {
+    Kind kind;
+    int output, first, second;
+    T a, b;
+    CPP_DUMP_DEFINE_DATA(kind, output, first, second, a, b);
+  };
+  struct Block
+  {
+    vc<Edge> input;
+    vc<T> parameter;
+    int output_size;
+    CPP_DUMP_DEFINE_DATA(input, parameter, output_size);
+  };
   int inputs = 0, nodes = 0;
   vc<Edge> outputs;
   vc<Step> steps;
@@ -95,6 +126,8 @@ class Program
   }
 
 public:
+  CPP_DUMP_DEFINE_DATA(inputs, nodes, outputs, steps, blocks);
+
   int input_size() const { return inputs; }
   int output_size() const { return outputs.size(); }
   int node_count() const { return nodes; }
@@ -200,6 +233,8 @@ class Recorder
   }
 
 public:
+  CPP_DUMP_DEFINE_DATA(program);
+
   Recorder() = default;
   Recorder(const Recorder &) = delete;
   Recorder &operator=(const Recorder &) = delete;

@@ -17,6 +17,8 @@ private:
   vvc<mint> table = {{1}};
 
 public:
+  CPP_DUMP_DEFINE_DATA(pow2, table);
+
   BinomialPrefixSum(int n = 0)
   {
     assert(mint::mod() > 2);

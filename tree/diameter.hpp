@@ -134,6 +134,8 @@ public:
     else return depths[b];
   }
 
+  CPP_DUMP_DEFINE_DATA(a, b, depths, tree);
+
   // 直径の一例
   vc<int> path_vertex() const { return tree.path_vertex(a, b); }
 

@@ -13,7 +13,12 @@ class ProjectSelection
 {
   static_assert(is_integral_ext<Cost> && is_signed_ext<Cost>);
   using Unsigned = make_unsigned_ext_t<Cost>;
-  struct Arc { int from, to; Unsigned cap; };
+  struct Arc
+  {
+    int from, to;
+    Unsigned cap;
+    CPP_DUMP_DEFINE_DATA(from, to, cap);
+  };
   static constexpr int source = -1, sink = -2;
   int n = 0, nodes = 0;
   vc<Arc> finite;
@@ -47,6 +52,8 @@ class ProjectSelection
   }
 
 public:
+  CPP_DUMP_DEFINE_DATA(n, nodes, finite, hard, offset, solved, chosen);
+
   ProjectSelection() = default;
   explicit ProjectSelection(int n) : n(n), nodes(n) { assert(n >= 0); }
   template <class I = ll>

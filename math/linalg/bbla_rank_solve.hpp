@@ -95,6 +95,7 @@ struct LinearSolution
   bool solvable;
   vc<S> solution;    // solvable == true: A * solution == b
   vc<S> certificate; // solvable == false: A^T * certificate == 0, certificate^T * b != 0
+  CPP_DUMP_DEFINE_DATA(solvable, solution, certificate);
 };
 
 // 特異・長方形も可。解があれば一つ、なければ不整合の証明ベクトルを返す。

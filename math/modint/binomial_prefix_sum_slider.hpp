@@ -16,6 +16,7 @@ private:
 public:
   int l = 0, r = 0;
   mint sum = 1;
+  CPP_DUMP_DEFINE_DATA(l, r, sum);
 
   BinomialPrefixSumSlider(int max_n = 0)
   {

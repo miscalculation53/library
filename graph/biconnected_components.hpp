@@ -144,6 +144,8 @@ class BiconnectedComponents {
     }
 
 public:
+    CPP_DUMP_DEFINE_DATA(vertex_count_, vertex_groups_, edge_groups_);
+
     BiconnectedComponents() = default;
 
     template <class Cost, bool is_erasable>

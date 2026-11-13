@@ -11,6 +11,7 @@ struct SqrtDecompositionSegment
 {
   // [l, r) は対象部分、[block_l, block_r) はブロック全体。
   int b, l, r, block_l, block_r;
+  CPP_DUMP_DEFINE_DATA(b, l, r, block_l, block_r);
   bool full() const { return l == block_l && r == block_r; }
 };
 

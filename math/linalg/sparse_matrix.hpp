@@ -114,6 +114,16 @@ public:
   auto operator[](int i) const { assert(0 <= i && i < n_); return rows_[i]; }
   const CSR<Entry> &rows() const { return rows_; }
 
+  // ((行数, 列数), 非零成分の (行, 列, 係数) の列) を返す。O(n+z) 時間（n=行数、z=非零数）。
+  auto content() const
+  {
+    vc<tuple<int, int, S>> entries;
+    entries.reserve(nnz());
+    for (int i = 0; i < n_; i++) for (const auto &[j, x] : rows_[i])
+      entries.emplace_back(i, j, x);
+    return pair{shape<int>(), std::move(entries)};
+  }
+
   S operator()(int i, int j) const
   {
     assert(0 <= i && i < n_ && 0 <= j && j < m_);

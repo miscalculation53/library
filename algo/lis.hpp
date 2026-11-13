@@ -17,6 +17,8 @@ private:
   GroupIndexRaw<int, int> grp;
 
 public:
+  CPP_DUMP_DEFINE_DATA(pos, grp);
+
   LIS() {}
   template <class T, class Compare = less<T>>
   LIS(const vc<T> &a, Compare comp = Compare()) : n(a.size()), pos(n)

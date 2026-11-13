@@ -136,6 +136,8 @@ public:
     mx.reset_monotone_query();
   }
 
+  local(auto content() const { return convex_hull(); })
+
   // (a, b) として見る必要のあるものだけ集めた集合
   // 反時計回り
   // (a, b) が最適であるための (x, y) の条件は、両隣 (循環ありで) よりもよいこと

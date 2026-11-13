@@ -47,6 +47,7 @@ struct Hungarian
   // row_potential[i] + col_potential[j] <= a[i][j]。割当辺では等号。
   // n < m の場合、col_potential <= 0、未割当列の col_potential = 0。
   vc<Cost> row_potential, col_potential;
+  CPP_DUMP_DEFINE_DATA(cost, row_to_col, col_to_row, row_potential, col_potential);
 
   template <class Matrix>
   explicit Hungarian(const Matrix &a)

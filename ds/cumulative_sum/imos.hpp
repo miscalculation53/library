@@ -41,5 +41,6 @@ public:
   }
 
   // 現状の vector を返す
-  vc<S> content() { return cuml<G>(d, 1); }
+  vc<S> content() { return std::as_const(*this).content(); }
+  vc<S> content() const { return cuml<G>(d, 1); }
 };

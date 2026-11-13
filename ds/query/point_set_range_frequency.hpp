@@ -22,6 +22,8 @@ private:
   vc<T> vs;
 
 public:
+  CPP_DUMP_DEFINE_DATA(n, qs, vs);
+
   PointSetRangeFrequency() {}
   PointSetRangeFrequency(const vc<T> &a) : n(a.size()), vs(a) {}
 

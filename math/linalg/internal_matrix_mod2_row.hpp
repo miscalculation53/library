@@ -169,6 +169,8 @@ template <bool Const> struct matrix_mod2_row
     return true;
   }
   template <class Row> bool operator!=(const Row &b) const { return !(*this == b); }
+  local(auto content() const { return DynamicBitset(*this).to_string(); })
+
   operator DynamicBitset() const
   {
     DynamicBitset result(n);

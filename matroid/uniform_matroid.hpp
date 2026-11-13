@@ -4,6 +4,7 @@
 #include "linear_matroid.hpp"
 #include "../algebra/from_integer.hpp"
 
+/** 行数は min(rank, distinct_points.size())、列数は distinct_points.size()。各列の非零数は高々行数。 */
 template <class F = FieldAddSubMulDiv<modint998244353>, bool Sparse = false>
 auto uniform_linear_representation(int rank, const vc<typename F::S> &distinct_points)
 {
@@ -34,8 +35,11 @@ public:
   UniformMatroid(int n, int rank) : n(n), rank_(rank), selected(n)
   { assert(n >= 0 && rank >= 0); }
 
+  CPP_DUMP_DEFINE_DATA(n, rank_, independent);
+
   int size() const { return n; }
 
+  /** 行数は min(rank, n)、列数は n（rank と n はコンストラクタの引数）。各列の非零数は高々行数。 */
   template <class F = FieldAddSubMulDiv<modint998244353>>
   LinearMatroid<F> linear_representation(const vc<typename F::S> &points) const
   {
@@ -43,6 +47,7 @@ public:
     return uniform_linear_representation<F>(rank_, points);
   }
 
+  /** 行数は min(rank, n)、列数は n（rank と n はコンストラクタの引数）。各列の非零数は高々行数。 */
   template <class F = FieldAddSubMulDiv<modint998244353>>
   LinearMatroid<F> linear_representation() const
   {
@@ -55,6 +60,7 @@ public:
     return linear_representation<F>(points);
   }
 
+  /** 行数は min(rank, n)、列数は n（rank と n はコンストラクタの引数）。各列の非零数は高々行数。 */
   template <class F = FieldAddSubMulDiv<modint998244353>>
   SparseMatrix<F> sparse_linear_representation(const vc<typename F::S> &points) const
   {
@@ -62,6 +68,7 @@ public:
     return uniform_linear_representation<F, true>(rank_, points);
   }
 
+  /** 行数は min(rank, n)、列数は n（rank と n はコンストラクタの引数）。各列の非零数は高々行数。 */
   template <class F = FieldAddSubMulDiv<modint998244353>>
   SparseMatrix<F> sparse_linear_representation() const
   {

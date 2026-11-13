@@ -200,6 +200,8 @@ private:
     }
   }
 public:
+  CPP_DUMP_DEFINE_DATA(k, fac);
+
   Factorial()
   {
     if constexpr (ntt_ok<mint>(1 << 22)) initialize<true>(9);

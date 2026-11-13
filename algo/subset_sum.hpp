@@ -90,6 +90,8 @@ private:
   }
 
 public:
+  CPP_DUMP_DEFINE_DATA(s, val_cnt, dp);
+
   SubsetSumFromFrequency() : s(0), dp(1), time(1, 0), keep_history(false) { dp.set(0); }
 
   // freq[v] := 値 v の個数
@@ -162,6 +164,8 @@ private:
   SubsetSumFromFrequency ss;
 
 public:
+  CPP_DUMP_DEFINE_DATA(n, s, xmax, negsum, isneg, elems, ss);
+
   SubsetSum() : n(0), s(-1), xmax(-1), negsum(0) {}
 
   // smax はクエリで聞かれる target の値の最大値

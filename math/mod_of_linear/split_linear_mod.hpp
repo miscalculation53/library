@@ -11,6 +11,7 @@ struct LinearModArithmetic
 {
   ll n, a, b;
   ll l, gap;
+  CPP_DUMP_DEFINE_DATA(n, a, b, l, gap);
 
   ll operator()(ll i) const
   {

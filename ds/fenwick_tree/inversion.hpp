@@ -36,6 +36,7 @@ struct InversionSlider
   ll inversion_num = 0;
   vc<int> vec;
   FenwickTree01<> fw{0};
+  CPP_DUMP_DEFINE_DATA(l, r, inversion_num, fw);
 
   InversionSlider() = default;
   InversionSlider(const vc<T> &a) : n(a.size()), vec(n), fw(n)

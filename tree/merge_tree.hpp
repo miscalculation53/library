@@ -25,6 +25,8 @@ public:
     par.assign(n, -1);
   }
 
+  CPP_DUMP_DEFINE_DATA(par, top);
+
   vc<int> parents() const { return par; }
 
   bool same(int u, int v) { return uf.same(u, v); }

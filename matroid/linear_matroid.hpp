@@ -44,6 +44,8 @@ public:
       columns_[e][i] = matrix[i][e];
   }
 
+  CPP_DUMP_DEFINE_DATA(dimension_, columns_, selected_);
+
   int size() const { return int(columns_.size()); }
   int dimension() const { return dimension_; }
   const vvc<S> &columns() const { return columns_; }

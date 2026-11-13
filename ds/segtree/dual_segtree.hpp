@@ -23,7 +23,7 @@ struct DualSegmentTree
   using F = typename A::F;
 
 private:
-  int n, siz, lg;
+  int n = 0, siz = 0, lg = 0;
   vc<S> dat;
   vc<F> lazy;
   void all_apply(int i, const F &f)
@@ -89,6 +89,12 @@ public:
       l >>= 1, r >>= 1;
     }
   }
+
+  local(vc<S> content() const
+  {
+    auto copy = *this;
+    return copy.content();
+  })
 
   vc<S> content()
   {

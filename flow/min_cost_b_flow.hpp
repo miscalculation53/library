@@ -643,6 +643,8 @@ public:
   }
   int add_edge(int from, int to, Cap upper, Cost cost) { return add_edge(from, to, Cap(0), upper, cost); }
   edge get_edge(int i) const { assert(0 <= i && i < int(input.size())); return input[i]; }
+  CPP_DUMP_DEFINE_DATA(n, input, supply, supply_upper, price, value, solved);
+
   vc<edge> edges() const { return input; }
 
   optional<Total> flow(Algorithm algorithm = Algorithm::automatic, Heap heap = Heap::automatic)

@@ -15,6 +15,8 @@ struct DMDecomposition
   GraphDirected<> dag;
   vc<pair<int, int>> matching;
 
+  CPP_DUMP_DEFINE_DATA(ids, left, right, dag, matching);
+
   int size() const { return left.template size<int>(); }
 };
 

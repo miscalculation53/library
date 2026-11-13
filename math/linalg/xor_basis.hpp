@@ -102,6 +102,19 @@ private:
     int pivot;
     V value;
     StoredCoefficient coefficient;
+#ifdef LOCAL
+    auto dump_data() const
+    {
+      auto fields = make_tuple(_p_LIBRARY_CPP_DUMP_MEMBER(pivot), _p_LIBRARY_CPP_DUMP_MEMBER(value));
+      if constexpr (tagged && Track)
+        return tuple_cat(fields, make_tuple(_p_LIBRARY_CPP_DUMP_MEMBER(this->tag), _p_LIBRARY_CPP_DUMP_MEMBER(coefficient)));
+      else if constexpr (tagged)
+        return tuple_cat(fields, make_tuple(_p_LIBRARY_CPP_DUMP_MEMBER(this->tag)));
+      else if constexpr (Track)
+        return tuple_cat(fields, make_tuple(_p_LIBRARY_CPP_DUMP_MEMBER(coefficient)));
+      else return fields;
+    }
+#endif
     Row(int pivot, V value, StoredCoefficient coefficient, StoredTag tag)
         : TagData(std::move(tag)), pivot(pivot), value(std::move(value)), coefficient(std::move(coefficient)) {}
   };
@@ -281,6 +294,8 @@ public:
           if constexpr (is_same_v<V, DynamicBitset>) return vectors.empty() ? 0 : vectors[0].size();
           else return Traits::default_dimension;
         }(), vectors) {}
+
+  CPP_DUMP_DEFINE_DATA(dimension_, rows_, original_);
 
   int dimension() const { return dimension_; }
   int rank() const { return int(rows_.size()); }

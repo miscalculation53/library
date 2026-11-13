@@ -4,6 +4,8 @@
 #include "linear_matroid.hpp"
 #include "../algebra/from_integer.hpp"
 
+/** 行数は全グループの min(容量, 要素数) の総和。列数は group.size()。
+ *  各列の非零数は所属グループの min(容量, 要素数) 以下。 */
 template <class F = FieldAddSubMulDiv<modint998244353>, class G = int, class C = int, bool Sparse = false>
 auto partition_linear_representation(const vc<G> &group, const vc<C> &capacity,
                                                  const vc<typename F::S> &points)
@@ -34,6 +36,8 @@ auto partition_linear_representation(const vc<G> &group, const vc<C> &capacity,
   return std::move(columns).finish();
 }
 
+/** 行数は全グループの min(容量, 要素数) の総和。列数は group.size()。
+ *  各列の非零数は所属グループの min(容量, 要素数) 以下。 */
 template <class F = FieldAddSubMulDiv<modint998244353>, class G = int, class C = int, bool Sparse = false>
 auto partition_linear_representation(const vc<G> &group, const vc<C> &capacity)
 {
@@ -91,26 +95,36 @@ public:
           return u128(capacity[g]) < group.size() ? int(capacity[g]) : int(group.size());
         })) {}
 
+  CPP_DUMP_DEFINE_DATA(group, capacity, selected);
+
   int size() const { return group.size(); }
 
+  /** 行数は全グループの min(容量, 要素数) の総和。列数は台集合の要素数。
+   *  各列の非零数は所属グループの min(容量, 要素数) 以下。 */
   template <class F = FieldAddSubMulDiv<modint998244353>>
   LinearMatroid<F> linear_representation(const vc<typename F::S> &points) const
   {
     return partition_linear_representation<F>(group, capacity, points);
   }
 
+  /** 行数は全グループの min(容量, 要素数) の総和。列数は台集合の要素数。
+   *  各列の非零数は所属グループの min(容量, 要素数) 以下。 */
   template <class F = FieldAddSubMulDiv<modint998244353>>
   LinearMatroid<F> linear_representation() const
   {
     return partition_linear_representation<F>(group, capacity);
   }
 
+  /** 行数は全グループの min(容量, 要素数) の総和。列数は台集合の要素数。
+   *  各列の非零数は所属グループの min(容量, 要素数) 以下。 */
   template <class F = FieldAddSubMulDiv<modint998244353>>
   SparseMatrix<F> sparse_linear_representation(const vc<typename F::S> &points) const
   {
     return partition_linear_representation<F, int, int, true>(group, capacity, points);
   }
 
+  /** 行数は全グループの min(容量, 要素数) の総和。列数は台集合の要素数。
+   *  各列の非零数は所属グループの min(容量, 要素数) 以下。 */
   template <class F = FieldAddSubMulDiv<modint998244353>>
   SparseMatrix<F> sparse_linear_representation() const
   {

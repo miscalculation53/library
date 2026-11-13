@@ -57,7 +57,8 @@ public:
   }
 
   // 現状の vector を返す
-  vvc<S> content()
+  vvc<S> content() { return std::as_const(*this).content(); }
+  vvc<S> content() const
   {
     if (d.empty())
       return {};

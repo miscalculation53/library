@@ -23,6 +23,7 @@ private:
 
 public:
   Trie<CHAR_NUM> trie;
+  CPP_DUMP_DEFINE_DATA(trie, fail, nxt);
   AhoCorasick() {}
   template <class C>
   AhoCorasick(const vvc<C> &strs)

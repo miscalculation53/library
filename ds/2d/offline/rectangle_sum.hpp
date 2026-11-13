@@ -25,6 +25,7 @@ private:
     S w;
     P(I x, I y, const S &w) : x(x), y(y), w(w) {}
     bool operator<(const P &rhs) const { return x < rhs.x; }
+    CPP_DUMP_DEFINE_DATA(x, y, w);
   };
   struct Q
   {
@@ -32,12 +33,15 @@ private:
     int qi;
     Q(I x, I y, int qi) : x(x), y(y), qi(qi) {}
     bool operator<(const Q &rhs) const { return x < rhs.x; }
+    CPP_DUMP_DEFINE_DATA(x, y, qi);
   };
   vc<P> ps;
   vc<Q> qs;
   vc<I> ys;
 
 public:
+  CPP_DUMP_DEFINE_DATA(ps, qs);
+
   // (x, y) に重み w を加えるクエリを追加
   void point_add(I x, I y, const S &w)
   {
@@ -85,6 +89,7 @@ private:
     S w;
     P(I x, I y, const S &w) : x(x), y(y), w(w) {}
     bool operator<(const P &rhs) const { return x < rhs.x; }
+    CPP_DUMP_DEFINE_DATA(x, y, w);
   };
   struct Q
   {
@@ -92,12 +97,15 @@ private:
     int qi;
     Q(I x, I ly, I ry, int qi) : x(x), ly(ly), ry(ry), qi(qi) {}
     bool operator<(const Q &rhs) const { return x < rhs.x; }
+    CPP_DUMP_DEFINE_DATA(x, ly, ry, qi);
   };
   vc<P> ps;
   vc<Q> qs;
   vc<I> ys;
 
 public:
+  CPP_DUMP_DEFINE_DATA(ps, qs);
+
   // (x, y) に重み w を加えるクエリを追加
   void point_add(I x, I y, const S &w)
   {

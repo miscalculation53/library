@@ -13,7 +13,7 @@ template <bool need_lca = true, class RMQ = BlockSparseTable<MonoidMin<ull>, 64>
 struct EulerTour
 {
 protected:
-  int n, rt;
+  int n = 0, rt = -1;
   vc<int> in, out, tour, dep;
   RMQ rmq;
 
@@ -55,6 +55,8 @@ protected:
   }
 
 public:
+  local(auto content() const { return tie(rt, in, out, tour); })
+
   EulerTour() {}
   template <class I>
   EulerTour(int n, const vc<I> &par)

@@ -15,6 +15,7 @@ public:
   {
     vc<int> left, right, parent_right;
     optional<int> free_right;
+    CPP_DUMP_DEFINE_DATA(left, right, parent_right, free_right);
   };
 
 private:
@@ -65,6 +66,8 @@ public:
   const CSR<int> &adjacency() const { return adjacency_; }
   const vc<int> &left_mate() const { return left_mate_; }
   const vc<int> &right_mate() const { return right_mate_; }
+
+  CPP_DUMP_DEFINE_DATA(left_vertices_, right_vertices_, adjacency_, left_mate_, right_mate_);
 
   int left_vertex(int u) const
   {

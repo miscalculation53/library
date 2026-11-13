@@ -21,6 +21,7 @@ private:
   struct V
   {
     S a, b, c, d;
+    CPP_DUMP_DEFINE_DATA(a, b, c, d);
   };
   struct VMonoid
   {
@@ -40,6 +41,7 @@ private:
   {
     I x, y;
     V v;
+    CPP_DUMP_DEFINE_DATA(x, y, v);
     bool operator<(const P &rhs) const { return x < rhs.x; }
   };
   struct Q
@@ -47,6 +49,7 @@ private:
     I x, y;
     int qi;
     bool inv;
+    CPP_DUMP_DEFINE_DATA(x, y, qi, inv);
     bool operator<(const Q &rhs) const { return x < rhs.x; }
   };
   vc<P> ps;
@@ -60,6 +63,8 @@ private:
   }
 
 public:
+  CPP_DUMP_DEFINE_DATA(ps, qs, qn);
+
   // [lx, ∞) × [ly, ∞) の各単位領域に w を作用
   void upper_right_add(I lx, I ly, const S &w)
   {

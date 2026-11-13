@@ -89,6 +89,8 @@ private:
   }
 
 public:
+  CPP_DUMP_DEFINE_DATA(ord_, low_, parent_, parent_edge_, articulations_, bridges_);
+
   LowLink() = default;
   template <class Cost, bool is_erasable>
   explicit LowLink(const GraphUndirected<Cost, is_erasable> &g)

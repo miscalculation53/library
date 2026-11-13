@@ -46,6 +46,8 @@ private:
   }
 
 public:
+  local(auto content() const { return tuple{this->rt, edge, gen_vec(this->n, [&](int v) { return get(v); })}; })
+
   PathSum() {}
   // edge のとき vec[v] は (parent(v), v) の値。根の値は単位元。
   template <class I, class T = S>

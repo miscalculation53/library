@@ -15,7 +15,7 @@ struct RangeAddPointGet
   using S = typename G::S;
 
 private:
-  int n;
+  int n = 0;
   FenwickTree<G> fw;
 
 public:
@@ -34,13 +34,15 @@ public:
   }
   void add(int p, S x) { add(p, p + 1, x); }
   void set(int p, S x) { add(p, p + 1, G::op(G::inv(get(p)), x)); }
-  S get(int p)
+  S get(int p) { return std::as_const(*this).get(p); }
+  S get(int p) const
   {
     assert(0 <= p && p < n);
     return fw.sum(0, p + 1);
   }
 
-  vc<S> content()
+  vc<S> content() { return std::as_const(*this).content(); }
+  vc<S> content() const
   {
     vc<S> res(n);
     repi(i, n) res[i] = get(i);

@@ -83,6 +83,8 @@ private:
   }
 
 public:
+  CPP_DUMP_DEFINE_DATA(dist, prev, by_id, negative, solved);
+
   explicit AllPairsShortestPath(const Graph<is_directed, Cost> &g) : g(g) {}
   AllPairsShortestPath(const Graph<is_directed, Cost> &&) = delete;
 
