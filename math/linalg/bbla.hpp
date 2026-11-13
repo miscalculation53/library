@@ -2,6 +2,7 @@
 
 #include "../../template/template_all_but_modint.hpp"
 #include "../fps/berlekamp_massey.hpp"
+#include "../modint/random.hpp"
 
 /**
  * @brief Black Box Linear Algebra
@@ -14,7 +15,7 @@ namespace bbla
 {
 
 template <class mint>
-mint random_sample_mint() { return randrange(1, mint::mod()); }
+mint random_sample_mint() { return random_modint<mint, true>(); }
 
 // u^T A^i v (0 <= i < count)。乱択しない。行列作用は max(0, count-1) 回。
 template <class F, class LinearMap>

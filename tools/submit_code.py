@@ -32,6 +32,8 @@ LINE_DIRECTIVE = re.compile(
 GNU_LINE_MARKER = re.compile(
     r'^\s*#\s+(\d+)\s+("(?:\\.|[^"\\])*")(?:\s+.*)?$'
 )
+LINE_CONTROL = re.compile(r"^\s*(?:#|%:)\s*(?:line\b|[0-9])")
+BARE_LINE_CONTROL = re.compile(r"^\s*#\s*line\s+([0-9]+)\s*$")
 INCLUDE_DIRECTIVE = re.compile(r"^\s*#\s*include\b")
 LOCAL_INCLUDE_DIRECTIVE = re.compile(r'^\s*#\s*include\s*"([^"]+)"\s*$')
 SYSTEM_INCLUDE_DIRECTIVE = re.compile(r"^\s*#\s*include\s*<([^>]+)>\s*$")
@@ -55,10 +57,12 @@ PREPROCESSOR_TOKEN = re.compile(RAW_STRING_OPEN.pattern + r'|' + CPP_NUMBER.patt
 DEFAULT_KEEP_FUNCTIONS = {"read", "write", "print", "init", "main2", "test"}
 DEFAULT_BYTE_LIMIT = 65536
 PRIORITY_BYTE_LIMIT = 131072
-LIBRARY_SOURCE_BASE = "https://github.com/miscalculation53/library/tree/wip/"
+LIBRARY_LAYOUT_DELAY = 10.0
+LIBRARY_REPOSITORY_URL = "https://github.com/miscalculation53/library"
+LIBRARY_SOURCE_BASE = LIBRARY_REPOSITORY_URL + "/tree/wip/"
 LEGACY_LIBRARY_SITE_BASE = "https://miscalculation53.github.io/library/"
 LIBRARY_SOURCE_LINK = re.compile(
-    rf"^\s*//\s*((?:{re.escape(LIBRARY_SOURCE_BASE)}\S+\.hpp|"
+    rf"^\s*//\s*((?:{re.escape(LIBRARY_REPOSITORY_URL)}/?|{re.escape(LIBRARY_SOURCE_BASE)}\S+\.hpp|"
     rf"{re.escape(LEGACY_LIBRARY_SITE_BASE)}\S+\.html#unbundled))\s*$"
 )
 SOURCE_LINK_PRAGMA = re.compile(
@@ -86,6 +90,13 @@ class ToolError(RuntimeError):
 
 class FastBundleUnsupported(ToolError):
     pass
+
+
+def diagnostic_messages(diagnostics: str) -> str:
+    return "\n".join(line for line in diagnostics.splitlines() if re.search(
+        r"\b(?:fatal error|error):|used but never defined|undefined reference|Undefined symbols|^\s+\".*referenced from:",
+        line,
+    ))
 
 
 @dataclass(frozen=True)
@@ -186,11 +197,22 @@ def restore_source_links(text: str, links: Sequence[str]) -> str:
     return "".join(output)
 
 
+def compact_source_links(text: str) -> str:
+    protected, links = protect_source_links(text)
+    if not links:
+        return text
+    repository = source_link_comment(LIBRARY_REPOSITORY_URL)
+    if text.startswith(links[0]):
+        return restore_source_links(protected, [repository, *["\n"] * (len(links) - 1)])
+    body = restore_source_links(protected, ["\n"] * len(links))
+    return repository + "#line 1\n" + body
+
+
 def strip_cleanup_comments(text: str, keep_comments: Iterable[str] = ()) -> str:
     protected, comments = protect_cleanup_comments(text, keep_comments)
     protected, links = protect_source_links(protected)
     stripped = restore_source_links(strip_comments(protected, comments), links)
-    return retain_important_comments(restore_cleanup_comments(stripped, comments), ())
+    return compact_source_links(retain_important_comments(restore_cleanup_comments(stripped, comments), ()))
 
 
 def source_comments(text: str) -> set[str]:
@@ -480,6 +502,9 @@ class CheckpointWriter:
         self.current: str | None = None
         self.preserve_below: int | None = None
         self.reached_limits: set[int] = set()
+        self.layout_started: float | None = None
+        self.display_layout = None
+        self.analysis_current: str | None = None
         self.stamp = stamp
         # Count the footer in size decisions, outside compiler analysis and cleanup.
         self.stamp_size = len(stamp.render("").encode()) if stamp else 0
@@ -489,6 +514,11 @@ class CheckpointWriter:
 
     def below_limit(self, text: str, limit: int | None) -> bool:
         return limit is not None and self.size(text) < limit
+
+    def allow_library_compaction(self, text: str, limit: int | None) -> bool:
+        return (self.layout_started is not None and limit is not None
+                and limit not in self.reached_limits and not self.below_limit(text, limit)
+                and time.monotonic() - self.layout_started >= LIBRARY_LAYOUT_DELAY)
 
     def report_checkpoint(self, text: str, limit: int | None) -> None:
         if limit is None or limit in self.reached_limits or not self.below_limit(text, limit):
@@ -500,19 +530,27 @@ class CheckpointWriter:
         )
 
     def save(self, stage: str, text: str, *, force: bool = False) -> bool:
+        original = text
+        limits = checkpoint_limits(self.preserve_below)
+        preserved = tuple(limit for limit in limits if self.current is not None
+                          and self.below_limit(self.current, limit))
+        if not force and any(not self.below_limit(text, limit) for limit in preserved):
+            return False
+        first_checkpoint = any(limit not in self.reached_limits and self.below_limit(text, limit)
+                               for limit in limits)
+        if self.display_layout is not None and not first_checkpoint:
+            text = self.display_layout(text, force)
         if not force and text == self.current:
             return False
-        if self.current is not None and any(
-            self.below_limit(self.current, limit) and not self.below_limit(text, limit)
-            for limit in checkpoint_limits(self.preserve_below)
-        ):
+        if any(not self.below_limit(text, limit) for limit in preserved):
             return False
         before = self.size(self.current) if self.current is not None else self.size(text)
         rendered = self.stamp.render(text) if self.stamp else text
         atomic_write(self.path, rendered)
         self.current = text
+        self.analysis_current = original
         self.reporter.size(stage, before, self.size(text))
-        for limit in checkpoint_limits(self.preserve_below):
+        for limit in limits:
             self.report_checkpoint(text, limit)
         return True
 
@@ -761,6 +799,7 @@ class BundleDocument:
         previous_key: str | None = None
         expected_line: int | None = None
         linked: set[str] = set()
+        uses_library = False
 
         for line in self.lines:
             if line.origin_key in removed:
@@ -774,7 +813,7 @@ class BundleDocument:
                     else None
                 )
                 if url is not None:
-                    output.append(source_link_comment(url))
+                    uses_library = True
                 linked.add(line.origin_key)
 
             if keep_line and line.origin_key is not None:
@@ -789,7 +828,8 @@ class BundleDocument:
                 expected_line = line.source_line + 1
             output.append(line.text)
 
-        return retain_important_comments("".join(output), self.important_comments)
+        result = retain_important_comments("".join(output), self.important_comments)
+        return source_link_comment(LIBRARY_REPOSITORY_URL) + result if uses_library else result
 
 
 def read_direct_local_includes(
@@ -831,6 +871,7 @@ class CompilerWorkspace:
         reporter: Reporter,
         keep_unused_functions: bool = True,
         whole_program: bool = False,
+        optimization: str = "-O2",
     ) -> None:
         self.cxx = cxx
         self.standard = standard
@@ -839,8 +880,10 @@ class CompilerWorkspace:
         self.timeout = timeout
         self.reporter = reporter
         self.keep_unused_functions = keep_unused_functions
+        self.optimization = "-O0" if keep_unused_functions else optimization
         self.whole_program = whole_program
         self.submission_whole_program = False
+        self.submission_optimization = "-O2"
         self.temporary = tempfile.TemporaryDirectory(prefix="submit-code-")
         self.directory = Path(self.temporary.name)
         self.source = self.directory / "candidate.cpp"
@@ -868,8 +911,9 @@ class CompilerWorkspace:
         self.object_undefined: set[str] = set()
         self.object_diagnostic = ""
         self.instantiated_header_cache: dict[str, str] = {}
+        self.submission_headers_by_object: dict[str, str] = {}
         self.emitted_line_cache: dict[str, set[int]] = {}
-        self.preprocessed_code_cache: dict[str, str | None] = {}
+        self.preprocessed_code_cache: dict[tuple[str, str, bool], str | None] = {}
         self.all_macro_cache: dict[str, dict[str, list[str]]] = {}
         self.external_name_cache: dict[str, set[str]] = {}
         self.external_content_cache: dict[str, tuple[set[str], set[str], dict[str, str]]] = {}
@@ -952,7 +996,7 @@ class CompilerWorkspace:
             normalized = self.pch_preamble_cache.get(prefix)
             if normalized is None:
                 prelude = self.directory / "pch_prefix.cpp"
-                command = [*self._base_command(), "-O0" if self.keep_unused_functions else "-O2", "-E", "-dM", str(prelude)]
+                command = [*self._base_command(), self.optimization, "-E", "-dM", str(prelude)]
                 if self.predefined_macro_lines is None:
                     prelude.write_text("")
                     result = self._run(command)
@@ -971,7 +1015,7 @@ class CompilerWorkspace:
             header_text = normalized + "#include <bits/stdc++.h>"
         return header_text + "\n", include.end()
 
-    def _ensure_pch(self, text: str, *, build: bool = True) -> bool:
+    def _ensure_pch(self, text: str, *, build: bool = True, probe: bool = False) -> bool:
         prefix = self._pch_prefix(text)
         if prefix is None:
             self.pch_prefix_end = None
@@ -993,7 +1037,7 @@ class CompilerWorkspace:
                     "compiler_stamp": compiler_stamp,
                     "standard": self.standard,
                     "extra_args": self.extra_args,
-                    "optimization": "-O0" if self.keep_unused_functions else "-O2",
+                    "optimization": self.optimization,
                     "whole_program": self.whole_program,
                     "include_paths": [str(path) for path in self.include_paths],
                     "environment": {name: os.environ.get(name) for name in (
@@ -1003,6 +1047,8 @@ class CompilerWorkspace:
                 sort_keys=True,
             ).encode()
         ).hexdigest()[:20]
+        if probe:
+            cache_key = "object-" + cache_key
         if self.pch_key == cache_key and self.pch_available is False:
             self.pch_prefix_end = prefix_end if self.pch_available else None
             return self.pch_available
@@ -1044,7 +1090,7 @@ class CompilerWorkspace:
         result = self._run(
             [
                 *self._base_command(),
-                "-O0" if self.keep_unused_functions else "-O2",
+                self.optimization,
                 *(["-fwhole-program"] if self.whole_program else []),
                 *([] if self.keep_unused_functions else ["-g0", "-frandom-seed=0"]),
                 "-MD", "-MF", str(depfile),
@@ -1072,7 +1118,7 @@ class CompilerWorkspace:
             )
         return self.pch_available
 
-    def _prepare_candidate_source(self, text: str, *, build_pch: bool = True) -> bool:
+    def _prepare_candidate_source(self, text: str, *, build_pch: bool = True, probe: bool = False) -> bool:
         if self.force_float128_macro is not None:
             directive = "#undef __STDCPP_FLOAT128_T__\n"
             if self.force_float128_macro:
@@ -1087,7 +1133,7 @@ class CompilerWorkspace:
         if self.pch_disabled:
             self.write(text)
             return False
-        use_pch = self._ensure_pch(text, build=build_pch)
+        use_pch = self._ensure_pch(text, build=build_pch, probe=probe)
         if use_pch and self.pch_prefix_end is not None:
             prefix = text[: self.pch_prefix_end]
             masked_prefix = "".join(
@@ -1121,44 +1167,73 @@ class CompilerWorkspace:
         self.syntax_cache[digest] = value
         return value
 
-    def object_signature(self, text: str) -> str | None:
+    def object_signature(self, text: str, *, pch: bool | None = None) -> str | None:
         digest = hashlib.sha256(text.encode()).hexdigest()
-        if digest in self.object_cache:
+        if pch is None and digest in self.object_cache:
             signature, self.object_dependencies, self.object_undefined = self.object_cache[digest]
             self.object_diagnostic = ""
             return signature
         use_pch = False
-        if not self.keep_unused_functions:
-            use_pch = self._prepare_candidate_source(text, build_pch=False)
+        if self.force_float128_macro is not None or (not self.keep_unused_functions and pch is not False):
+            use_pch = self._prepare_candidate_source(text, build_pch=False, probe=pch is True)
         else:
             self.write(text)
+        if pch is True and not use_pch:
+            return self.object_signature(text, pch=False)
         output = self.directory / "semantic.o"
         depfile = self.directory / "semantic.d"
         command = [argument for argument in self._candidate_command(use_pch) if argument != "-w"]
-        result = self._run([*command, "-O2", "-g0", "-frandom-seed=0", "-MD", "-MF", str(depfile),
+        result = self._run([*command, "-O2" if self.keep_unused_functions else self.optimization,
+                            "-g0", "-frandom-seed=0", "-MD", "-MF", str(depfile),
                             *(["-fpch-deps"] if use_pch else []),
+                            *(["-H", "-Werror=invalid-pch"] if pch is True else []),
                             "-c", str(self.source), "-o", str(output)])
         self.object_diagnostic = result.stderr
         self.object_undefined = set()
+        if pch is True:
+            lines = result.stderr.splitlines()
+            self.object_diagnostic = "\n".join(line for line in lines if not re.match(r"^[.!x]+ ", line))
+            if not any(line.lstrip(".") == f"! {self.pch_output}" for line in lines):
+                self.pch_available = False
+                return self.object_signature(text, pch=False)
         if result.returncode or "used but never defined" in result.stderr:
-            if use_pch:
+            if pch is None and use_pch:
                 self.pch_available = False
                 return self.object_signature(text)
             return None
-        dependencies = self._object_dependency_hashes(depfile)
         signature = hashlib.sha256(output.read_bytes()).hexdigest()
-        if shutil.which("nm"):
-            symbols = self._run(["nm", "-u", str(output)])
-            if symbols.returncode == 0:
-                demangler = shutil.which("c++filt")
-                if demangler:
-                    demangled = run_command([demangler], input_text=symbols.stdout, timeout=self.timeout)
-                    if demangled.returncode == 0:
-                        symbols = demangled
-                self.object_undefined = set(symbols.stdout.splitlines())
+        self.object_undefined = self._undefined_symbols(output)
+        if pch is True:
+            return signature
+        dependencies = self._object_dependency_hashes(depfile)
         self.object_cache[digest] = signature, dependencies, self.object_undefined
         self.object_dependencies = dependencies
         return signature
+
+    def prepare_object_pch(self, text: str, reference: str) -> bool:
+        """Enable declaration probes when both compilation modes agree on the reference."""
+        if self.pch_disabled or self.force_float128_macro is not None:
+            return False
+        if not self._ensure_pch(text, probe=True):
+            return False
+        if (self.object_signature(text, pch=True) != reference or not self.pch_available
+                or self.object_signature(text, pch=False) != reference):
+            self.pch_available = False
+            return False
+        return True
+
+    def _undefined_symbols(self, output: Path) -> set[str]:
+        if not shutil.which("nm"):
+            return set()
+        symbols = self._run(["nm", "-u", str(output)])
+        if symbols.returncode:
+            return set()
+        demangler = shutil.which("c++filt")
+        if demangler:
+            demangled = run_command([demangler], input_text=symbols.stdout, timeout=self.timeout)
+            if demangled.returncode == 0:
+                symbols = demangled
+        return set(symbols.stdout.splitlines())
 
     def _object_dependency_hashes(self, depfile: Path) -> dict[str, str]:
         dependencies = {}
@@ -1172,6 +1247,8 @@ class CompilerWorkspace:
         digest = hashlib.sha256(text.encode()).hexdigest()
         if digest in self.instantiated_header_cache:
             return self.instantiated_header_cache[digest]
+        for dump in self.directory.glob("features.*.original"):
+            dump.unlink()
         self.write(text)
         result = self._run([*self._base_command(), "-O0", "-fdump-tree-original",
                             "-dumpdir", str(self.directory) + os.sep, "-dumpbase", "features.",
@@ -1179,8 +1256,10 @@ class CompilerWorkspace:
         dump = next(self.directory.glob("features.*.original"), None)
         if result.returncode or dump is None:
             return ""
-        return "\n".join(line for line in dump.read_text(errors="replace").splitlines()
-                         if line.startswith(";; Function "))
+        headers = "\n".join(line for line in dump.read_text(errors="replace").splitlines()
+                            if line.startswith(";; Function "))
+        self.instantiated_header_cache[digest] = headers
+        return headers
 
     def preprocessed_fingerprint(self, text: str) -> str | None:
         self.write(text)
@@ -1192,12 +1271,21 @@ class CompilerWorkspace:
 
     def preprocessed_code_fingerprint(self, text: str) -> str | None:
         digest = hashlib.sha256(text.encode()).hexdigest()
-        if digest in self.preprocessed_code_cache:
-            return self.preprocessed_code_cache[digest]
+        workspace = self.submission_workspace
+        if workspace is not None:
+            optimization, whole_program = workspace.optimization, workspace.whole_program
+        elif self.keep_unused_functions:
+            optimization, whole_program = self.submission_optimization, self.submission_whole_program
+        else:
+            optimization, whole_program = self.optimization, self.whole_program
+        key = digest, optimization, whole_program
+        if key in self.preprocessed_code_cache:
+            return self.preprocessed_code_cache[key]
         self.write(text)
-        result = self._run([*self._base_command(), "-O2", "-E", str(self.source)])
+        result = self._run([*self._base_command(), optimization,
+                            *(["-fwhole-program"] if whole_program else []), "-E", str(self.source)])
         if result.returncode:
-            self.preprocessed_code_cache[digest] = None
+            self.preprocessed_code_cache[key] = None
             return None
         output = result.stdout
         raw = []
@@ -1243,7 +1331,7 @@ class CompilerWorkspace:
             number += 1
         flush_external()
         value = fingerprint.hexdigest()
-        self.preprocessed_code_cache[digest] = value
+        self.preprocessed_code_cache[key] = value
         return value
 
     def link(self, text: str, *, build_pch: bool = True, force_pch: bool | None = None) -> tuple[bool, str]:
@@ -1301,7 +1389,7 @@ class CompilerWorkspace:
         compile_result = self._run(
             [
                 *command,
-                "-O0" if self.keep_unused_functions else "-O2",
+                self.optimization,
                 *retained,
                 *([] if self.keep_unused_functions else ["-g0", "-frandom-seed=0", "-MD", "-MF", str(self.directory / "validation.d")]),
                 *(["-fpch-deps"] if use_pch else []),
@@ -1351,7 +1439,7 @@ class CompilerWorkspace:
             if not self.keep_unused_functions:
                 dependencies = self._object_dependency_hashes(self.directory / "validation.d")
                 signature = hashlib.sha256(self.object.read_bytes()).hexdigest()
-                self.object_cache[self.executable_digest] = signature, dependencies, set()
+                self.object_cache[self.executable_digest] = signature, dependencies, self._undefined_symbols(self.object)
                 gimple = next(self.directory.glob("validation.*.gimple"), None)
                 if gimple is not None:
                     self.emitted_line_cache[self.executable_digest] = {
@@ -1376,15 +1464,48 @@ class CompilerWorkspace:
                 extra_args=self.extra_args, timeout=self.timeout, reporter=self.reporter,
                 keep_unused_functions=False,
                 whole_program=self.submission_whole_program,
+                optimization=self.submission_optimization,
             )
         workspace = self.submission_workspace
         valid, diagnostic = workspace.validate(text, build_pch=build_pch)
         if valid:
             digest = hashlib.sha256(text.encode()).hexdigest()
-            self.instantiated_header_cache[digest] = workspace.instantiated_header_cache[digest]
+            headers = workspace.instantiated_header_cache[digest]
+            self.instantiated_header_cache[digest] = headers
+            self.submission_headers_by_object[workspace.object_cache[digest][0]] = headers
             if digest in workspace.emitted_line_cache:
                 self.emitted_line_cache[digest] = workspace.emitted_line_cache[digest]
         return valid, diagnostic
+
+    def remember_submission_layout(self, before: str, after: str) -> None:
+        """Reuse the object record after verifying identical preprocessed code and positions."""
+        if self.submission_workspace is None or self.submission_workspace.pch_available:
+            return
+        cache = self.submission_workspace.object_cache
+        before_digest = hashlib.sha256(before.encode()).hexdigest()
+        if before_digest in cache:
+            after_digest = hashlib.sha256(after.encode()).hexdigest()
+            cache[after_digest] = cache[before_digest]
+            if before_digest in self.instantiated_header_cache:
+                self.instantiated_header_cache[after_digest] = self.instantiated_header_cache[before_digest]
+
+    def linked_submission_headers(self, text: str) -> str | None:
+        if self.submission_workspace is not None:
+            digest = hashlib.sha256(text.encode()).hexdigest()
+            cached = self.submission_workspace.object_cache.get(digest)
+            if cached is not None and cached[0] in self.submission_headers_by_object:
+                return self.instantiated_header_cache.get(digest, self.submission_headers_by_object[cached[0]])
+        return None
+
+    def submission_reference(self, text: str) -> tuple[str | None, str]:
+        """Return a linked reference signature and conservative function information."""
+        headers = self.linked_submission_headers(text)
+        if headers is not None:
+            return self.submission_object_signature(text), headers
+        valid, _ = self.validate_submission(text)
+        if not valid:
+            return None, ""
+        return self.submission_object_signature(text), self.instantiated_function_headers(text)
 
     def submission_object_signature(self, text: str) -> str | None:
         if self.submission_workspace is None:
@@ -1398,7 +1519,32 @@ class CompilerWorkspace:
         self.object_undefined = workspace.object_undefined
         return signature
 
-    def validate(self, text: str, *, build_pch: bool = True) -> tuple[bool, str]:
+    def same_submission_layout(self, before: str, after: str) -> bool:
+        def same_object(signature) -> bool:
+            reference = signature(before)
+            return reference is not None and signature(after) == reference
+
+        portable = self.portable_workspace
+        if portable is None:
+            return same_object(self.submission_object_signature)
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            alternate = executor.submit(same_object, portable.object_signature)
+            return same_object(self.submission_object_signature) and alternate.result()
+
+    def validate(self, text: str, *, build_pch: bool = True,
+                 parallel_portable: bool = False) -> tuple[bool, str]:
+        portable = self.portable_workspace
+        if parallel_portable and portable is not None:
+            with ThreadPoolExecutor(max_workers=1) as executor:
+                alternate = executor.submit(portable.validate, text, build_pch=build_pch)
+                result = self._validate_local(text, build_pch=build_pch)
+                return alternate.result() if result[0] else result
+        result = self._validate_local(text, build_pch=build_pch)
+        if result[0] and portable is not None:
+            return portable.validate(text, build_pch=build_pch)
+        return result
+
+    def _validate_local(self, text: str, *, build_pch: bool) -> tuple[bool, str]:
         valid, stderr = self.link(text, build_pch=build_pch)
         if valid:
             digest = hashlib.sha256(text.encode()).hexdigest()
@@ -1424,8 +1570,6 @@ class CompilerWorkspace:
             self.initialization_reference = self.initialization_references[mode]
             if self.initialization_cache[digest] != self.initialization_reference:
                 return False, "static initialization or destruction changed"
-        if valid and self.portable_workspace is not None:
-            return self.portable_workspace.validate(text, build_pch=build_pch)
         return valid, stderr
 
     def retain_portable_target(self, text: str) -> None:
@@ -1480,15 +1624,22 @@ class CompilerWorkspace:
         return result.stderr
 
     def unused_macro_locations(self, text: str) -> list[int]:
+        rows = warning_line_indices(text)
+        if not rows:
+            return []
         self.write(text)
         command = [argument for argument in self._base_command() if argument != "-w"]
         result = self._run([*command, "-O2", "-Wunused-macros", "-E", str(self.source), "-o", os.devnull])
         if result.returncode:
             return []
         pattern = re.compile(rf"^{re.escape(str(self.source))}:(\d+):\d+: warning:.*\[-Wunused-macros\]$", re.MULTILINE)
-        return [int(match.group(1)) - 1 for match in pattern.finditer(result.stderr)]
+        return [rows[number] for match in pattern.finditer(result.stderr)
+                if (number := int(match.group(1))) in rows]
 
     def ipa_unused_functions(self, text: str) -> list[tuple[int, str]]:
+        return self._analyze_ipa(text) or []
+
+    def _analyze_ipa(self, text: str) -> list[tuple[int, str]] | None:
         for path in self.directory.glob("ipa.*"):
             if path.is_file():
                 path.unlink()
@@ -1516,22 +1667,27 @@ class CompilerWorkspace:
             self.reporter.detail(
                 "IPA analysis failed: " + first_error(result.stderr)
             )
-            return []
+            return None
 
         cgraph = next(self.directory.glob("ipa.*.cgraph"), None)
         original = next(self.directory.glob("ipa.*.original"), None)
         if cgraph is None or original is None:
             self.reporter.detail("IPA analysis did not produce GCC dump files")
-            return []
+            return None
 
-        signatures = ipa_removed_signatures(
-            cgraph.read_text(encoding="utf-8", errors="replace")
-        )
-        functions = ipa_function_locations(
+        graph_text = cgraph.read_text(encoding="utf-8", errors="replace")
+        signatures = ipa_removed_signatures(graph_text)
+        initial = graph_text.split("Initial Symbol table:", 1)[-1].split("Removing unused symbols:", 1)[0]
+        all_signatures = {match.group(1) for line in initial.splitlines()
+                          if (match := re.match(r"^\S.*/\d+ \((.*)\)$", line))}
+        locations = ipa_function_locations(
             original,
-            signatures=signatures,
+            signatures=all_signatures,
             source_name=self.source.name,
         )
+        live_lines = {line for line, signature in locations if signature not in signatures}
+        functions = [(line, signature) for line, signature in locations
+                     if signature in signatures and line not in live_lines]
         self.reporter.detail(
             f"IPA analysis: {len(functions)} mapped function(s), "
             f"{time.monotonic() - started:.2f}s"
@@ -2267,7 +2423,7 @@ def safe_cleanup_candidate(
     )
     filtered = restore_source_links(filtered, links)
     cleaned = restore_cleanup_comments(filtered, comments)
-    return collapse_blank_lines(retain_important_comments(cleaned, important_comments(text)))
+    return compact_source_links(collapse_blank_lines(retain_important_comments(cleaned, important_comments(text))))
 
 
 def try_size_checkpoint(
@@ -2689,7 +2845,7 @@ def ipa_removed_signatures(cgraph: str) -> set[str]:
     )[0]
     signatures: dict[str, str] = {}
     for line in initial.splitlines():
-        match = re.match(r"^.+/(\d+) \((.*)\)$", line)
+        match = re.match(r"^\S.*/(\d+) \((.*)\)$", line)
         if match is not None:
             signatures[match.group(1)] = match.group(2)
 
@@ -2703,9 +2859,25 @@ def ipa_removed_signatures(cgraph: str) -> set[str]:
     }
     if "Optimized Symbol table:" in cgraph:
         optimized = cgraph.split("Optimized Symbol table:", 1)[1].split("Final Symbol table:", 1)[0]
-        remaining = {match.group(1) for line in optimized.splitlines()
-                     if (match := re.match(r"^.+/(\d+) \(.*\)$", line))}
-        result.update(signature for symbol_id, signature in signatures.items() if symbol_id not in remaining)
+        optimized_symbols = [match.groups() for line in optimized.splitlines()
+                             if (match := re.match(r"^\S.*/(\d+) \((.*)\)$", line))]
+        remaining = {symbol_id for symbol_id, _ in optimized_symbols}
+        optimized_signatures = {signature for _, signature in optimized_symbols}
+        remaining.update(symbol_id for symbol_id, signature in signatures.items() if signature in optimized_signatures)
+        dependencies: dict[str, set[str]] = {}
+        symbol_id: str | None = None
+        for line in initial.splitlines():
+            if match := re.match(r"^\S.*/(\d+) \(.*\)$", line):
+                symbol_id = match.group(1)
+            elif symbol_id is not None and re.match(r"\s+(?:Calls|References):", line):
+                dependencies.setdefault(symbol_id, set()).update(re.findall(r"/(\d+)(?=\s|$)", line))
+        reachable = set(remaining)
+        pending = list(remaining)
+        while pending:
+            added = dependencies.get(pending.pop(), set()) - reachable
+            reachable.update(added)
+            pending.extend(added)
+        result.update(signature for symbol_id, signature in signatures.items() if symbol_id not in reachable)
     return result
 
 
@@ -2732,6 +2904,8 @@ def ipa_function_locations(
         if signature is None:
             return
         prefix = signature.split(" [with ", 1)[0]
+        if re.search(r"\)\s*::", prefix):
+            return
         names = re.findall(r"(~?[_A-Za-z]\w*)\s*\(", prefix)
         if not names or "<lambda" in prefix:
             return
@@ -2805,8 +2979,10 @@ def ipa_unused_candidates(
     *,
     compiler: CompilerWorkspace,
     keep_functions: set[str],
+    functions: Sequence[tuple[int, str]] | None = None,
 ) -> list[Removal]:
-    functions = compiler.ipa_unused_functions(text)
+    if functions is None:
+        functions = compiler.ipa_unused_functions(text)
     if not functions:
         return []
 
@@ -2987,11 +3163,14 @@ def uninstantiated_template_candidates(
 
 def unreachable_function_body_candidates(
     text: str, *, compiler: CompilerWorkspace, keep_functions: set[str],
+    functions: Sequence[tuple[int, str]] | None = None,
 ) -> list[Removal]:
     lines = text.splitlines(keepends=True)
     tokens = structural_tokens(lines)
     candidates = set()
-    for line_number, signature in compiler.ipa_unused_functions(text):
+    if functions is None:
+        functions = compiler.ipa_unused_functions(text)
+    for line_number, signature in functions:
         if "<lambda" in signature:
             continue
         removal = removal_from_function_line(lines, tokens, line_number - 1, "unreachable function body")
@@ -3395,6 +3574,21 @@ def reduce_template_body_candidates(
     original_text = text
     accepted: set[Removal] = set()
     validations = 0
+    rejected: dict[tuple[str, str | None, bool | None, bool], str] = {}
+
+    def validate_candidate(candidate: str, action: str) -> tuple[bool, str]:
+        nonlocal validations
+        key = candidate, compiler.pch_key, compiler.pch_available, compiler.pch_disabled
+        if key in rejected:
+            return False, rejected[key]
+        validations += 1
+        reporter.phase("templates", f"validation {validations}: {action}")
+        valid, diagnostic = compiler.validate(candidate, parallel_portable=True)
+        if not valid:
+            key = candidate, compiler.pch_key, compiler.pch_available, compiler.pch_disabled
+            rejected[key] = diagnostic
+        return valid, diagnostic
+
     target_checkpointed = writer.below_limit(text, target_bytes) or (
         writer.current is not None
         and writer.below_limit(writer.current, target_bytes)
@@ -3456,6 +3650,7 @@ def reduce_template_body_candidates(
         return list(items[:count]), list(items[count:])
 
     def mentioned_in(candidate: Removal, diagnostics: str) -> bool:
+        diagnostics = diagnostic_messages(diagnostics)
         if not candidate.name:
             return False
         if candidate.name.startswith("operator"):
@@ -3468,17 +3663,14 @@ def reduce_template_body_candidates(
     active = list(candidates)
     required_definitions: set[Removal] = set()
     for _ in range(min(32, len(candidates))):
-        validations += 1
-        reporter.phase(
-            "templates",
-            f"validation {validations}: testing {len(active)} template body(s)",
-        )
+        if not active:
+            break
         candidate_text = stub_uninstantiated_template_functions(
             original_text, active, deleted=quick_deleted.intersection(active),
             keep_names=keep_names, macro_names=macro_names,
             allow_portable_stubs=compiler.portable_workspace is not None,
         )
-        valid, stderr = compiler.validate(candidate_text)
+        valid, stderr = validate_candidate(candidate_text, f"testing {len(active)} template body(s)")
         if valid:
             accepted.update(active)
             text = candidate_text
@@ -3528,17 +3720,12 @@ def reduce_template_body_candidates(
         )
         declaration_fallback: list[Removal] | None = None
         for _ in range(min(32, len(deleted))):
-            validations += 1
-            reporter.phase(
-                "templates",
-                f"validation {validations}: removing {len(deleted)} declarations",
-            )
             candidate_text = stub_uninstantiated_template_functions(
                 original_text, list(accepted), deleted=deleted,
                 keep_names=keep_names, macro_names=macro_names,
                 allow_portable_stubs=compiler.portable_workspace is not None,
             )
-            valid, stderr = compiler.validate(candidate_text)
+            valid, stderr = validate_candidate(candidate_text, f"removing {len(deleted)} declarations")
             if valid:
                 text = candidate_text
                 writer.save(
@@ -3572,19 +3759,14 @@ def reduce_template_body_candidates(
             deleted = quick_deleted.intersection(accepted)
 
             def try_delete(batch: Sequence[Removal]) -> bool:
-                nonlocal text, validations, target_checkpointed
+                nonlocal text, target_checkpointed
                 proposal = deleted.union(batch)
                 candidate_text = stub_uninstantiated_template_functions(
                     original_text, list(accepted), deleted=proposal,
                     keep_names=keep_names, macro_names=macro_names,
                     allow_portable_stubs=compiler.portable_workspace is not None,
                 )
-                validations += 1
-                reporter.phase(
-                    "templates",
-                    f"validation {validations}: testing {len(batch)} declaration(s)",
-                )
-                valid, stderr = compiler.validate(candidate_text)
+                valid, stderr = validate_candidate(candidate_text, f"testing {len(batch)} declaration(s)")
                 if not valid:
                     reporter.detail(first_error(stderr))
                     return False
@@ -3622,19 +3804,14 @@ def reduce_template_body_candidates(
         return text, len(accepted)
 
     def try_accept(batch: Sequence[Removal]) -> bool:
-        nonlocal text, validations, target_checkpointed
+        nonlocal text, target_checkpointed
         proposal = accepted.union(batch)
         candidate_text = stub_uninstantiated_template_functions(
             original_text, proposal, deleted=quick_deleted.intersection(proposal),
             keep_names=keep_names, macro_names=macro_names,
             allow_portable_stubs=compiler.portable_workspace is not None,
         )
-        validations += 1
-        reporter.phase(
-            "templates",
-            f"validation {validations}: testing {len(batch)} template body(s)",
-        )
-        valid, stderr = compiler.validate(candidate_text)
+        valid, stderr = validate_candidate(candidate_text, f"testing {len(batch)} template body(s)")
         if not valid:
             reporter.detail(first_error(stderr))
             return False
@@ -3656,11 +3833,6 @@ def reduce_template_body_candidates(
 
     reduce_batch(refinement_candidates)
     if accepted:
-        validations += 1
-        reporter.phase(
-            "templates",
-            f"validation {validations}: removing {len(accepted)} declarations",
-        )
         candidate_text = stub_uninstantiated_template_functions(
             original_text, list(accepted),
             deleted=unreferenced_template_declarations(
@@ -3669,7 +3841,7 @@ def reduce_template_body_candidates(
             keep_names=keep_names, macro_names=macro_names,
             allow_portable_stubs=compiler.portable_workspace is not None,
         )
-        valid, stderr = compiler.validate(candidate_text)
+        valid, stderr = validate_candidate(candidate_text, f"removing {len(accepted)} declarations")
         if valid:
             text = candidate_text
             writer.save(
@@ -3723,12 +3895,16 @@ def token_paste_patterns(text: str) -> list[re.Pattern[str]]:
 
 
 def unreferenced_declaration_candidates(text: str, keep_names: Iterable[str] = (),
-                                      protected_macros: Iterable[str] = ()) -> list[Removal]:
+                                      protected_macros: Iterable[str] = (), *,
+                                      include_friend_types: bool = False,
+                                      include_structured_constants: bool = False) -> list[Removal]:
     """Find unreachable groups of types, aliases, and constant declarations.
 
     Names are deliberately unqualified: a same-named declaration in another
     scope keeps both alive. Initializers and declarations that can introduce
     runtime effects are not considered removable here.
+    Friend types and structured constants require an object-equivalence check
+    by the caller.
     """
     uncommented = strip_comments(text)
     source_names = set(code_identifiers(uncommented))
@@ -3751,6 +3927,10 @@ def unreferenced_declaration_candidates(text: str, keep_names: Iterable[str] = (
         r"(?:\s+(?:short|int|long|signed|unsigned))*\s+([_A-Za-z]\w*)"
         r"(?:\s*<[^;=(){}]*>)?\s*="
     )
+    structured_pattern = re.compile(
+        r"^\s*(?:inline\s+)?constexpr\s+(?:(?:std::)?array\s*<[^;={}]+>|uint|ull|ll|i128|u128)\s+"
+        r"([_A-Za-z]\w*)\s*(?:\[[^;={}]*\]\s*)*="
+    )
     candidates: list[Removal] = []
     references: dict[str, set[str]] = {}
     class_sources: dict[str, str] = {}
@@ -3764,7 +3944,8 @@ def unreferenced_declaration_candidates(text: str, keep_names: Iterable[str] = (
         type_match = type_pattern.match(visible_lines[index])
         alias_match = alias_pattern.match(visible_lines[index])
         lambda_match = lambda_pattern.match(visible_lines[index])
-        scalar_match = scalar_pattern.match(visible_lines[index])
+        scalar_match = scalar_pattern.match(visible_lines[index]) or (
+            structured_pattern.match(visible_lines[index]) if include_structured_constants else None)
         match = type_match or alias_match or lambda_match or scalar_match
         if match is None:
             continue
@@ -3795,7 +3976,9 @@ def unreferenced_declaration_candidates(text: str, keep_names: Iterable[str] = (
             # lambdas: neither may be discarded just because X is unreferenced.
             continue
         source = "".join(lines[start : end + 1])
-        if scalar_match and "," in source:
+        if scalar_match and "," in source and not (
+            include_structured_constants and (structured_pattern.match(visible_lines[index])
+                                               or re.match(r"\s*template\s*<", source))):
             continue
         identifiers = set(code_identifiers(source))
         if identifiers.intersection(protected_macros):
@@ -3807,7 +3990,7 @@ def unreferenced_declaration_candidates(text: str, keep_names: Iterable[str] = (
         if type_match:
             header = "".join(lines[start:index])
             is_template = "template" in header and re.search(r"template\s*<\s*>", header) is None
-            if "friend" in identifiers:
+            if "friend" in identifiers and not include_friend_types:
                 continue
             if not is_template and re.search(r"\bstatic\b[^(){};]*\b[_A-Za-z]\w*\s*(?:=|;|\{)", strip_comments(source)):
                 continue
@@ -4003,6 +4186,34 @@ def unreferenced_function_candidates(
     return [candidate for candidate in eligible if candidate.name not in live]
 
 
+def warning_line_indices(text: str) -> dict[int, int]:
+    """Map unambiguous GCC line numbers to indices in the source file."""
+    lines = text.splitlines(keepends=True)
+    rows: dict[int, int] = {}
+    repeated: set[int] = set()
+    number, depth = 1, 0
+    for index, line in enumerate(preprocessor_lines(text)):
+        if line.lstrip().startswith("%:"):
+            line = "#" + line.lstrip()[2:]
+        if LINE_CONTROL.match(line):
+            marker = BARE_LINE_CONTROL.fullmatch(lines[index])
+            if marker is None or depth:
+                return {}
+            number = int(marker.group(1))
+            continue
+        if number in rows:
+            repeated.add(number)
+        rows[number] = index
+        number += 1
+        if CONDITIONAL_OPEN_DIRECTIVE.match(line):
+            depth += 1
+        elif CONDITIONAL_CLOSE_DIRECTIVE.match(line):
+            depth -= 1
+    for number in repeated:
+        del rows[number]
+    return rows
+
+
 def unused_candidates(
     text: str,
     *,
@@ -4015,9 +4226,12 @@ def unused_candidates(
     lines = text.splitlines(keepends=True)
     tokens = structural_tokens(lines)
     removals: set[Removal] = set()
+    rows = warning_line_indices(text)
 
     cppcheck_result: subprocess.CompletedProcess[str] | None = None
-    if cppcheck is None:
+    if not rows:
+        compiler_output = ""
+    elif cppcheck is None or len(rows) != len(lines):
         compiler_output = compiler.compiler_warnings(text, allow_pch=allow_pch)
     else:
         compiler.write_analysis_source(text)
@@ -4051,7 +4265,9 @@ def unused_candidates(
         match = warning_pattern.match(warning)
         if not match:
             continue
-        line_index = int(match.group(1)) - 1
+        line_index = rows.get(int(match.group(1)))
+        if line_index is None:
+            continue
         if match.group(2) == "macros":
             end = line_index
             while end + 1 < len(lines) and lines[end].rstrip().endswith("\\"):
@@ -4171,7 +4387,7 @@ def reduce_unused_candidates(
                 stage,
                 f"validation {validations}: testing {len(batch)} candidate(s)",
             )
-            valid, stderr = compiler.validate(candidate_text)
+            valid, stderr = compiler.validate(candidate_text, parallel_portable=True)
             cache[proposal] = valid, stderr
         else:
             valid, stderr = cached
@@ -4213,6 +4429,49 @@ def reduce_unused_candidates(
     return text, len(accepted)
 
 
+def try_early_declaration_checkpoint(
+    text: str, *, compiler: CompilerWorkspace, writer: CheckpointWriter,
+    reporter: Reporter, limit: int, keep_functions: set[str], keep_comments: set[str],
+    verified_layout: str | None = None,
+) -> str | None:
+    api = sys.modules[__name__]
+    structures, _ = bundle_fast.structural_candidates(api, text, "")
+    lines = text.splitlines(keepends=True)
+    savings = sum(encoded_size("".join(lines[item.start:item.end + 1])) for item in structures)
+    if writer.size(text) - savings >= limit:
+        return None
+
+    reporter.phase("declarations", f"trying an early {limit:,} B checkpoint")
+    scratch = CheckpointWriter(compiler.directory / "declaration-checkpoint.cpp",
+                               Reporter(stream=io.StringIO()), stamp=writer.stamp)
+    sources = [text]
+    if verified_layout is not None and verified_layout != text and compiler.linked_submission_headers(verified_layout) is not None:
+        sources.insert(0, verified_layout)
+    for source in sources:
+        scratch.current = source
+        candidate = bundle_fast.prune_function_declarations(
+            api, source, compiler=compiler, writer=scratch, reporter=reporter, keep_functions=keep_functions)
+        if candidate == source:
+            continue
+        if source != text or not writer.below_limit(candidate, limit):
+            try:
+                candidate = safe_cleanup_candidate(candidate, compiler, keep_comments)
+            except ToolError as exc:
+                reporter.detail("early declaration checkpoint rejected: " + str(exc))
+                continue
+            if not writer.below_limit(candidate, limit):
+                candidate = bundle_fast.prune_optimized_declarations(
+                    api, candidate, compiler=compiler, writer=scratch, reporter=reporter,
+                    keep_functions=keep_functions, checkpoint_limit=limit)
+        if writer.below_limit(candidate, limit):
+            valid, diagnostic = compiler.validate(candidate, parallel_portable=True)
+            if valid:
+                writer.save("verified early declaration checkpoint", candidate)
+                return candidate
+            reporter.detail("early declaration checkpoint rejected: " + first_error(diagnostic))
+    return None
+
+
 def cleanup_text(
     text: str,
     *,
@@ -4231,6 +4490,11 @@ def cleanup_text(
     reference_text = text
     limits = checkpoint_limits(target_bytes)
     priority_limit = limits[0] if len(limits) > 1 else None
+    if writer.layout_started is not None and feature_token is not None:
+        import submission_layout
+
+        writer.display_layout = submission_layout.CheckpointLayout(
+            sys.modules[__name__], text, feature_token, writer, compiler, target_bytes)
     if not safe_only and getattr(compiler, "uses_counter_macro", lambda text: False)(text):
         safe_only = True
         reporter.detail("keeping declarations and bodies that affect __COUNTER__")
@@ -4240,8 +4504,13 @@ def cleanup_text(
                                       feature_token=feature_token, priority_bytes=priority_limit)
         if fast is not None:
             text = fast
-        if writer.current is not None and writer.size(writer.current) < writer.size(text):
-            text = writer.current
+        published = writer.analysis_current if writer.display_layout is not None else writer.current
+        if published is not None and writer.size(published) < writer.size(text):
+            text = published
+        if text != reference_text:
+            text = bundle_fast.prune_function_declarations(
+                sys.modules[__name__], text, compiler=compiler, writer=writer,
+                reporter=reporter, keep_functions=keep_functions, include_structures=False)
     keep_comments = set(keep_comments)
     if priority_limit is not None and priority_limit not in writer.reached_limits:
         checkpoint = try_size_checkpoint(text, compiler=compiler, writer=writer, reporter=reporter,
@@ -4311,11 +4580,18 @@ def cleanup_text(
                 raise ToolError(f"the input file does not compile: {first_error(stderr)}")
         return text
 
+    verified_layout = text
     safe_changed = safe_candidate != text
     compiler.preserve_initialization(reference_text)
     compiler.retain_portable_target(reference_text)
     text = safe_candidate
     pending_validation = safe_changed or require_validation
+    if feature_token is not None and target_checkpointed:
+        previous = text
+        text = bundle_fast.prune_function_declarations(
+            sys.modules[__name__], text, compiler=compiler, writer=writer,
+            reporter=reporter, keep_functions=keep_functions, final=True)
+        pending_validation |= text != previous
 
     def try_declaration_checkpoint() -> None:
         nonlocal text, pending_validation
@@ -4341,6 +4617,16 @@ def cleanup_text(
         reporter.done("declarations", "quick checkpoint checked", started)
 
     try_declaration_checkpoint()
+    if (feature_token is not None and not target_checkpointed and target_bytes is not None
+            and priority_limit in writer.reached_limits and not compiler.extra_args
+            and keep_functions == DEFAULT_KEEP_FUNCTIONS):
+        early = try_early_declaration_checkpoint(
+            text, compiler=compiler, writer=writer, reporter=reporter, limit=target_bytes,
+            keep_functions=keep_functions, keep_comments=keep_comments, verified_layout=verified_layout)
+        if early is not None:
+            text = early
+            pending_validation = False
+            report_target_checkpoint()
 
     def validate_pending() -> None:
         nonlocal pending_validation
@@ -4440,10 +4726,13 @@ def cleanup_text(
 
     started = time.monotonic()
     reporter.phase("IPA", "finding unreachable recursive function groups")
+    ipa_text = text
+    ipa_functions = compiler._analyze_ipa(text)
     ipa_candidates = ipa_unused_candidates(
         text,
         compiler=compiler,
         keep_functions=keep_functions,
+        functions=ipa_functions or (),
     )
     reporter.done(
         "IPA",
@@ -4467,7 +4756,10 @@ def cleanup_text(
             run_unused_pass(cppcheck, "after IPA")
     started = time.monotonic()
     reporter.phase("bodies", "finding unreachable function bodies while retaining declarations")
-    body_candidates = unreachable_function_body_candidates(text, compiler=compiler, keep_functions=keep_functions)
+    body_candidates = unreachable_function_body_candidates(
+        text, compiler=compiler, keep_functions=keep_functions,
+        functions=ipa_functions if text == ipa_text else None,
+    )
     reporter.done("bodies", f"found {len(body_candidates)} candidate(s)", started)
     if body_candidates:
         text, accepted = reduce_template_body_candidates(
@@ -4476,9 +4768,13 @@ def cleanup_text(
         if accepted and max_passes > 0:
             run_unused_pass(cppcheck, "after bodies")
     try_declaration_checkpoint()
+    dynamic_policy_header = "source:math/modint/modint_internal_barrett32.hpp"
+    include_dynamic_types = (feature_token is not None and target_bytes is not None
+                             and not writer.below_limit(text, target_bytes)
+                             and bundle_fast.marker(feature_token, True, dynamic_policy_header) in reference_text)
     return bundle_fast.prune_function_declarations(
         sys.modules[__name__], text, compiler=compiler, writer=writer,
-        reporter=reporter, keep_functions=keep_functions)
+        reporter=reporter, keep_functions=keep_functions, final=True, include_dynamic_types=include_dynamic_types)
 
 
 def default_include_paths(repo_root: Path, source: Path) -> list[Path]:
@@ -4530,6 +4826,7 @@ class FastBundler:
         self.once: set[Path] = set()
         self.stack: list[Path] = []
         self.inputs: dict[str, str] = {}
+        self.uses_library = False
 
     def _resolve(self, name: str, included_from: Path) -> Path:
         for root in [included_from.parent, *self.include_paths]:
@@ -4616,7 +4913,7 @@ class FastBundler:
         if add_source_link:
             url = library_source_url(path, self.library_root)
             if url is not None:
-                prefix = source_link_comment(url)
+                self.uses_library = True
         replacements: dict[int, str] = {}
         conditional_depth = 0
         try:
@@ -4673,7 +4970,8 @@ class FastBundler:
             self.stack.pop()
 
     def bundle(self, source: Path) -> str:
-        return self._expand(source, add_source_link=False)
+        result = self._expand(source, add_source_link=False)
+        return source_link_comment(LIBRARY_REPOSITORY_URL) + result if self.uses_library else result
 
 
 def run_oj_bundle(
@@ -5147,6 +5445,8 @@ def cleanup_command(args: argparse.Namespace, repo_root: Path) -> None:
                     feature_token = token
             except (OSError, ValueError):
                 pass
+        if feature_token is not None and not args.safe_only:
+            writer.layout_started = command_started
         cleaned = cleanup_text(
             text,
             compiler=compiler,
@@ -5182,7 +5482,7 @@ def cleanup_command(args: argparse.Namespace, repo_root: Path) -> None:
             )
     reporter.done(
         "cleanup",
-        f"finished at {reporter.byte_count(writer.size(cleaned), 'green')}",
+        f"finished at {reporter.byte_count(writer.size(writer.current if writer.current is not None else cleaned), 'green')}",
         command_started,
     )
 

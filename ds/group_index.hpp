@@ -150,7 +150,7 @@ public:
     }
     else
     {
-      static_assert(is_integral_v<T>);
+      static_assert(is_integral_ext<T>);
       const int m = a.empty() ? 0 : int(MAX(a)) + 1;
       vc<pair<int, I>> ies(n);
       repi(i, n)

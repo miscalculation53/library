@@ -4,21 +4,21 @@
 #include "../graph/graph.hpp"
 #include "linear_matroid.hpp"
 
-template <class F, class Sample>
-LinearMatroid<F> bicircular_linear_representation(int vertices, const vc<pair<int, int>> &edges,
-                                                  Sample &&sample)
+template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &,
+          class I = int, class J = int, bool Sparse = false>
+auto bicircular_linear_representation(int vertices, const vc<pair<I, J>> &edges,
+                                                  Sample &&sample = random_modint<typename F::S>)
 {
-  using S = typename F::S;
   assert(vertices >= 0);
-  vvc<S> columns(edges.size(), vc<S>(vertices, F::e0()));
+  internal::LinearRepresentationBuilder<F, Sparse> columns(vertices, edges.size());
   for (int e = 0; e < int(edges.size()); e++)
   {
     const auto [u, v] = edges[e];
-    assert(0 <= u && u < vertices && 0 <= v && v < vertices);
-    columns[e][u] = sample();
-    if (u != v) columns[e][v] = sample();
+    assert(u128(u) < unsigned(vertices) && u128(v) < unsigned(vertices));
+    columns.set(e, int(u), sample());
+    if (u128(u) != u128(v)) columns.set(e, int(v), sample());
   }
-  return LinearMatroid<F>(vertices, std::move(columns));
+  return std::move(columns).finish();
 }
 
 /**
@@ -42,22 +42,39 @@ public:
     build({});
   }
 
+  template <class I = int, class J = int>
+  BicircularMatroid(int vertices, const vc<pair<I, J>> &edges)
+      : BicircularMatroid(vertices, vc<pair<int, int>>(ALL(edges)))
+  {
+    for (auto [u, v] : edges)
+      assert(u128(u) < unsigned(vertices) && u128(v) < unsigned(vertices));
+  }
+
   int size() const { return edges.size(); }
 
-  template <class F, class Sample>
-  LinearMatroid<F> linear_representation(Sample &&sample) const
+  template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &>
+  LinearMatroid<F> linear_representation(Sample &&sample = random_modint<typename F::S>) const
   {
     return bicircular_linear_representation<F>(vertices, edges, std::forward<Sample>(sample));
   }
 
-  void build(const vc<int> &s)
+  template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &>
+  SparseMatrix<F> sparse_linear_representation(Sample &&sample = random_modint<typename F::S>) const
+  {
+    return bicircular_linear_representation<F, Sample, int, int, true>(vertices, edges, std::forward<Sample>(sample));
+  }
+
+  template <class I = int>
+  void build(const vc<I> &s)
   {
     fill(ALL(selected), false);
-    independent = s;
+    independent.assign(ALL(s));
     UnionFind<UFDataEmpty<>> uf(vertices);
-    for (int e : s)
+    for (auto value : s)
     {
-      assert(0 <= e && e < size() && !selected[e]);
+      assert(u128(value) < unsigned(size()));
+      const int e = int(value);
+      assert(!selected[e]);
       selected[e] = true;
       auto [u, v] = edges[e];
       uf.merge(u, v);

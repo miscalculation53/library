@@ -5,6 +5,7 @@ from pathlib import Path
 import shutil
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import tools_test_paths
 
@@ -12,6 +13,54 @@ import submit_code
 
 
 class TemplateSafetyTest(unittest.TestCase):
+    def test_ipa_keeps_inlined_callees_and_shared_template_definitions(self) -> None:
+        cxx = shutil.which("g++-15") or shutil.which("g++-14")
+        if cxx is None:
+            self.skipTest("GNU C++ compiler is unavailable")
+        source = '''inline int leaf() { return 7; }
+template <class T> int value(T) { return leaf(); }
+template int value<int>(int);
+int dormant() { return 8; }
+int main() { return value(0L) - 7; }
+'''
+        with submit_code.CompilerWorkspace(
+            cxx=cxx, standard="c++23", include_paths=[], extra_args=[],
+            timeout=None, reporter=submit_code.Reporter(stream=io.StringIO()),
+        ) as compiler:
+            functions = compiler.ipa_unused_functions(source)
+        self.assertTrue(any("dormant" in signature for _, signature in functions))
+        self.assertFalse(any("leaf" in signature or "value" in signature for _, signature in functions))
+
+    def test_ipa_retains_calls_and_address_references_of_surviving_symbols(self) -> None:
+        graph = '''Initial Symbol table:
+main/1 (int main())
+  Calls: inline_helper/2
+inline_helper/2 (int inline_helper())
+  References: callback/3 (addr)
+callback/3 (int callback())
+unused/4 (int unused())
+  Calls: unused_leaf/5
+unused_leaf/5 (int unused_leaf())
+Removing unused symbols: unused/4 unused_leaf/5
+Reclaimed Symbol table:
+Optimized Symbol table:
+main/1 (int main())
+Final Symbol table:
+'''
+        self.assertEqual(submit_code.ipa_removed_signatures(graph), {"int unused()", "int unused_leaf()"})
+
+    def test_diagnostic_messages_exclude_source_and_context_names(self) -> None:
+        diagnostics = '''candidate.cpp: In function ‘int unrelated_name()’:
+candidate.cpp:3:4: error: ‘required_name’ was not declared in this scope
+    3 | required_name(unrelated_name);
+      | ^~~~~~~~~~~~~
+candidate.cpp:1:5: warning: inline function ‘int required_inline()’ used but never defined
+'''
+        messages = submit_code.diagnostic_messages(diagnostics)
+        self.assertIn("required_name", messages)
+        self.assertIn("required_inline", messages)
+        self.assertNotIn("unrelated_name", messages)
+
     def reduce(self, source: str, expected: int, *, forced: list[submit_code.Removal] | None = None) -> str:
         cxx = shutil.which("g++-15") or shutil.which("g++-14")
         if cxx is None:
@@ -49,6 +98,33 @@ int main() { return pick(0); }
 '''
         cleaned = self.reduce(source, 1)
         self.assertIn("int probe(T);", cleaned)
+
+    def test_rejected_template_batch_is_only_validated_once(self) -> None:
+        cxx = shutil.which("g++-15") or shutil.which("g++-14")
+        if cxx is None:
+            self.skipTest("GNU C++ compiler is unavailable")
+        source = '''template <class T> int first(T x) { return x + 1; }
+template <class T> int second(T x) { return x + 2; }
+int main() { return first(0) + second(0) - 3; }
+'''
+        reporter = submit_code.Reporter(stream=io.StringIO())
+        candidates = [submit_code.Removal(0, 0, "template", "first"),
+                      submit_code.Removal(1, 1, "template", "second")]
+        with submit_code.CompilerWorkspace(
+            cxx=cxx, standard="c++23", include_paths=[], extra_args=[],
+            timeout=None, reporter=reporter,
+        ) as compiler:
+            compiler.preserve_initialization(source)
+            writer = submit_code.CheckpointWriter(compiler.directory / "bundle.cpp", reporter)
+            writer.current = source
+            with patch.object(compiler, "validate", wraps=compiler.validate) as validate:
+                cleaned, accepted = submit_code.reduce_template_body_candidates(
+                    source, candidates, compiler=compiler, writer=writer, reporter=reporter,
+                )
+            checked = [call.args[0] for call in validate.call_args_list]
+            self.assertEqual(len(checked), 3)
+            self.assertEqual(len(set(checked)), 3)
+            self.assertEqual((cleaned, accepted), (source, 0))
 
     def test_constructor_and_conversion_keep_type_traits(self) -> None:
         source = '''#include <type_traits>

@@ -23,16 +23,19 @@ public:
 
   int size() const { return n; }
 
-  void build(const vc<int> &elements)
+  template <class I = int>
+  void build(const vc<I> &elements)
   {
     fill(ALL(used), false);
-    for (int e : elements)
+    for (auto value : elements)
     {
-      assert(0 <= e && e < n && !used[e]);
+      assert(u128(value) < unsigned(n));
+      const int e = int(value);
+      assert(!used[e]);
       used[e] = true;
     }
-    assert(independent(elements));
-    selected = elements;
+    selected.assign(ALL(elements));
+    assert(independent(as_const(selected)));
   }
 
   optional<vc<int>> circuit(int e) const

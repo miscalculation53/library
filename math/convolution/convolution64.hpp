@@ -23,3 +23,10 @@ vc<ull> convolution64(const vc<ull> &a, const vc<ull> &b)
   assert(ntt_ok<static_modint32<754974721>>(n + m - 1) && "|a| + |b| - 1 <= 2^25");
   return internal::convolution_crt_mod<ull, 167772161, 469762049, 1107296257, 1711276033, 1811939329>(a, b);
 }
+
+template <class I = ull, class J = ull>
+vc<ull> convolution64(const vc<I> &a, const vc<J> &b)
+{
+  static_assert(is_integral_ext<I> && is_integral_ext<J>);
+  return convolution64(vc<ull>(ALL(a)), vc<ull>(ALL(b)));
+}

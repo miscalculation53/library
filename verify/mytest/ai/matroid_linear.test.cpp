@@ -97,7 +97,7 @@ void random_cases(int cases)
     for (auto &v : b) for (auto &x : v) x = sample();
     const LinearMatroid<F> first(da, a), second(db, b);
     if (trial < 15) check_circuits(first);
-    auto result = linear_matroid_intersection(first, second, sample, P < 100 ? 32 : 2);
+    auto result = linear_matroid_intersection_restore(first, second, sample, P < 100 ? 32 : 2);
     assert(independent(first, result) && independent(second, result));
     int expected_common = brute_intersection(first, second);
     int common_size = linear_matroid_intersection_size(first, second, sample, P < 100 ? 32 : 2);
@@ -128,7 +128,7 @@ void random_cases(int cases)
     vc<pair<int, int>> pairs;
     for (int i = 0; i < m; i++) pairs.emplace_back(order[2 * i], order[2 * i + 1]);
     const LinearMatroid<F> parity(d, columns);
-    auto selected = linear_matroid_parity(parity, pairs, sample, P < 100 ? 32 : 2);
+    auto selected = linear_matroid_parity_restore(parity, pairs, sample, P < 100 ? 32 : 2);
     vc<int> ids;
     for (int e : selected) ids.push_back(pairs[e].first), ids.push_back(pairs[e].second);
     assert(independent(parity, ids));
@@ -160,26 +160,26 @@ void degenerate_cases()
   auto one = [] { return S(1); };
   auto zero = [] { return S(0); };
   LinearMatroid<F> three(1, {{1}, {1}, {1}});
-  assert(linear_matroid_intersection(three, three, one).size() == 1);
+  assert(linear_matroid_intersection_restore(three, three, one).size() == 1);
   assert(linear_matroid_intersection_size(three, three, one) == 1);
   assert(linear_matroid_intersection_size(three, three, zero) == 0);
-  assert(linear_matroid_intersection(three, three, zero).empty());
+  assert(linear_matroid_intersection_restore(three, three, zero).empty());
   LinearMatroid<F> pairs(2, {{1, 0}, {0, 1}, {1, 0}, {0, 1}, {1, 0}, {0, 1}});
-  assert(linear_matroid_parity(pairs, one).size() == 1);
+  assert(linear_matroid_parity_restore(pairs, one).size() == 1);
   assert(linear_matroid_parity_size(pairs, one) == 1);
   assert(linear_matroid_parity_size(pairs, zero) == 0);
-  assert(linear_matroid_parity(pairs, zero).empty());
+  assert(linear_matroid_parity_restore(pairs, zero).empty());
   LinearMatroid<F> loops(Matrix<F>(0, 3));
   assert(loops.size() == 3 && loops.dimension() == 0);
   loops.build({});
   assert(loops.circuit(2) && loops.circuit(2)->empty());
-  assert(linear_matroid_intersection(loops, loops, one).empty());
+  assert(linear_matroid_intersection_restore(loops, loops, one).empty());
   LinearMatroid<F> empty(Matrix<F>(7, 0));
   assert(empty.dimension() == 7 && empty.size() == 0);
-  assert(linear_matroid_intersection(empty, empty, one).empty());
+  assert(linear_matroid_intersection_restore(empty, empty, one).empty());
   assert(linear_matroid_intersection_size(empty, empty, one) == 0);
   assert(linear_matroid_parity_size(empty, one) == 0);
-  assert(linear_matroid_parity(empty, one).empty());
+  assert(linear_matroid_parity_restore(empty, one).empty());
 }
 
 void matching_cases()
@@ -206,7 +206,7 @@ void matching_cases()
       columns.back()[v] = 1;
     }
     LinearMatroid<F> matroid(n, columns);
-    auto result = linear_matroid_parity(matroid, sample, 2);
+    auto result = linear_matroid_parity_restore(matroid, sample, 2);
     int best = 0;
     for (int mask = 0; mask < (1 << edges.size()); mask++)
     {
@@ -238,9 +238,9 @@ void large_representation()
   auto sample = [&] { return S(rng() % S::mod()); };
   assert(linear_matroid_intersection_size(matroid, matroid, sample, 2) == n);
   assert(linear_matroid_parity_size(matroid, sample, 2) == n / 2);
-  auto common = linear_matroid_intersection(matroid, matroid, sample, 2);
+  auto common = linear_matroid_intersection_restore(matroid, matroid, sample, 2);
   assert(common.size() == n);
-  auto parity = linear_matroid_parity(matroid, sample, 2);
+  auto parity = linear_matroid_parity_restore(matroid, sample, 2);
   assert(parity.size() == n / 2);
   matroid.build(common);
 }

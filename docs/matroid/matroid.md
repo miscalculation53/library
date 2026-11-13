@@ -28,10 +28,12 @@
 | [matroid_intersection](matroid_intersection.md) | 二つのマトロイドの最大共通独立集合 |
 | [weighted_matroid_intersection](weighted_matroid_intersection.md) | 指定した要素数、または最大要素数での最大重み共通独立集合 |
 | [matroid_union](matroid_union.md) | 複数の独立集合に分けられる最大要素集合 |
-| [linear_matroid_intersection](linear_matroid_intersection.md) | 同じ体で表現した二つのマトロイドの線形交叉 |
-| [linear_matroid_parity](linear_matroid_parity.md) | 指定されたペアを丸ごと選ぶ最大線形独立集合 |
+| [linear_matroid_intersection_size / linear_matroid_intersection_restore](linear_matroid_intersection.md) | 同じ体で表現した二つのマトロイドの線形交叉 |
+| [linear_matroid_parity_size / linear_matroid_parity_restore](linear_matroid_parity.md) | 指定されたペアを丸ごと選ぶ最大線形独立集合 |
 
 組合せ的な交叉は決定的に解く。線形交叉・パリティの代数的方法は有限体上の乱択法で、実行時間・誤り確率・返す集合の保証は各文書に記載する。
+
+ライブラリ付属のマトロイドの整数配列入力は `i128`・`u128` を含む任意の整数型に対応する。独立性判定のコールバックと返却する要素番号には `int` を使う。
 
 ## 使用例
 

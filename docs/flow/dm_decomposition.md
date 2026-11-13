@@ -8,6 +8,8 @@
 
 最大マッチングには [bipartite_matching](bipartite_matching.md)、分解には [SCC](../graph/scc.md)、成分間の DAG には [グラフの縮約](../graph/contraction.md) を使う。最大マッチングを渡す場合、分解部分は線形時間になる。
 
+与える最大マッチングの両端の頂点番号には、それぞれ `i128`・`u128` を含む任意の整数型を使える。
+
 ## 使用例
 
 ```cpp
@@ -82,6 +84,11 @@ DMDecomposition dm_decomposition(
     const GraphUndirected<Cost, is_erasable>& g,
     const vc<Color>& color,
     vc<pair<int, int>> matching);
+
+template<class Cost, bool is_erasable, class Color, class I = int, class J = int>
+DMDecomposition dm_decomposition(
+    const GraphUndirected<Cost, is_erasable>& g, const vc<Color>& color,
+    const vc<pair<I, J>>& matching);
 ```
 
 最大マッチングを求めて分解する。第3引数を渡す場合は、その最大マッチングを再利用する。

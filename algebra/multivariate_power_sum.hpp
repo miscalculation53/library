@@ -24,12 +24,13 @@ struct MonoidMultivariatePowerSum
     return res;
   }();
 
-  static constexpr int index(const array<int, dim> &exponent)
+  template <class I = int>
+  static constexpr int index(const array<I, dim> &exponent)
   {
     int res = 0;
     repi(d, dim)
     {
-      assert(0 <= exponent[d] && exponent[d] <= degree[d]);
+      assert(u128(exponent[d]) <= unsigned(degree[d]));
       res += exponent[d] * stride[d];
     }
     return res;
@@ -46,8 +47,10 @@ struct MonoidMultivariatePowerSum
       else
         init<T>(x);
     }
-    T &at(const array<int, dim> &exponent) { return power_sum[index(exponent)]; }
-    const T &at(const array<int, dim> &exponent) const { return power_sum[index(exponent)]; }
+    template <class I = int>
+    T &at(const array<I, dim> &exponent) { return power_sum[index(exponent)]; }
+    template <class I = int>
+    const T &at(const array<I, dim> &exponent) const { return power_sum[index(exponent)]; }
     CPP_DUMP_DEFINE_DATA(power_sum);
 
   private:

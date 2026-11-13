@@ -575,7 +575,7 @@ int main() { return 0; }
                 self.assertEqual(submit_code.run_command([str(compiler.executable)]).returncode, 0)
                 self.assertLess(output.stat().st_size, 80)
 
-    def test_fast_bundler_links_each_library_header(self) -> None:
+    def test_fast_bundler_links_the_library_repository_once(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "ds").mkdir()
@@ -588,16 +588,9 @@ int main() { return 0; }
             bundled = submit_code.FastBundler(
                 [root], library_root=root
             ).bundle(source)
-        self.assertIn(
-            "// https://github.com/miscalculation53/library/tree/wip/"
-            "ds/dep.hpp\n",
-            bundled,
-        )
-        self.assertIn(
-            "// https://github.com/miscalculation53/library/tree/wip/"
-            "ds/header.hpp\n",
-            bundled,
-        )
+        self.assertTrue(bundled.startswith("// " + submit_code.LIBRARY_REPOSITORY_URL + "\n"))
+        self.assertEqual(bundled.count(submit_code.LIBRARY_REPOSITORY_URL), 1)
+        self.assertNotIn("/tree/wip/", bundled)
         self.assertNotIn("tree/wip/main.cpp", bundled)
 
     def test_fast_bundler_expands_include_guard_headers(self) -> None:
@@ -699,12 +692,9 @@ int main() { return 0; }
             library_root=root,
         )
         rendered = document.render(set(), keep_line=False)
-        self.assertEqual(rendered.count("/tree/wip/"), 1)
-        self.assertIn(
-            "// https://github.com/miscalculation53/library/tree/wip/"
-            "math/rational.hpp\n",
-            rendered,
-        )
+        self.assertTrue(rendered.startswith("// " + submit_code.LIBRARY_REPOSITORY_URL + "\n"))
+        self.assertEqual(rendered.count(submit_code.LIBRARY_REPOSITORY_URL), 1)
+        self.assertNotIn("/tree/wip/", rendered)
         self.assertNotIn("tree/wip/dependency.hpp", rendered)
 
     def test_cleanup_comment_stripping_preserves_source_links(self) -> None:
@@ -717,7 +707,8 @@ int main() { return 0; }
         cleaned = submit_code.strip_cleanup_comments(source)
         self.assertNotIn("ordinary comment", cleaned)
         self.assertNotIn("trailing comment", cleaned)
-        self.assertIn("library/tree/wip/ds/segtree.hpp", cleaned)
+        self.assertIn(submit_code.LIBRARY_REPOSITORY_URL, cleaned)
+        self.assertNotIn("tree/wip/ds/segtree.hpp", cleaned)
 
     def test_cleanup_preserves_important_comments_without_a_source_snapshot(self) -> None:
         source = '''/*! Copyright Example
@@ -1107,9 +1098,9 @@ int main() { return helper(); }
             source = root / 'main.cpp'
             source.write_text(original)
             expanded = submit_code.FastBundler([root], library_root=root).bundle(source)
-        header_link = submit_code.source_link_comment(submit_code.library_source_url(root / 'header.hpp', root))
-        dependency_link = submit_code.source_link_comment(submit_code.library_source_url(root / 'dep.hpp', root))
-        self.assertLess(expanded.index(header_link), expanded.index(dependency_link))
+        repository_link = submit_code.source_link_comment(submit_code.LIBRARY_REPOSITORY_URL)
+        self.assertTrue(expanded.startswith(repository_link))
+        self.assertEqual(expanded.count(repository_link), 1)
         self.assertLess(expanded.index('int value = 0;'), expanded.index('/*! Header license */'))
         self.assertIn('/*! Header license */\n//! Header reference\nint helper()', expanded)
         self.assertIn('//! Solution reference\nint main()', expanded)
@@ -1185,8 +1176,9 @@ int value = 0;
                    '#line 3 "main.cpp"\n//! Solution reference\nint main() { return value; }\n')
             recovered = submit_code.restore_oj_bundle_notices(raw, source, [root])
             expanded = submit_code.canonical_oj_bundle(recovered, source, [root], root)
-            link = submit_code.source_link_comment(submit_code.library_source_url(header, root))
-        self.assertLess(expanded.index('#include <vector>'), expanded.index(link))
+            link = submit_code.source_link_comment(submit_code.LIBRARY_REPOSITORY_URL)
+        self.assertTrue(expanded.startswith(link))
+        self.assertEqual(expanded.count(link), 1)
         self.assertLess(expanded.index(link), expanded.index('//! Guard license'))
         self.assertIn('int before;\n/*! Implementation license */\nint value = 0;', expanded)
         self.assertIn('//! Solution reference\nint main()', expanded)
@@ -1398,7 +1390,8 @@ int invalid = ;
         self.assertIn("int main()", cleaned)
         self.assertNotIn("invalid", cleaned)
         self.assertNotIn("removed comment", cleaned)
-        self.assertIn("library/tree/wip/ds/segtree.hpp", cleaned)
+        self.assertIn(submit_code.LIBRARY_REPOSITORY_URL, cleaned)
+        self.assertNotIn("tree/wip/ds/segtree.hpp", cleaned)
         self.assertIn("#include <bits/stdc++.h>", cleaned)
 
     def test_compiler_unused_macro_warning_is_enabled(self) -> None:
@@ -1736,6 +1729,9 @@ int main() { return 0; }
             line = next(i for i, row in enumerate(text.splitlines()) if row.startswith("int cycle("))
             return [submit_code.Removal(line, line, "unused function group (IPA)")]
 
+        def declaration_candidates(text, names=(), macros=(), **options):
+            return [] if 'int cycle(' in text else original_declarations(text, names, macros, **options)
+
         reporter = submit_code.Reporter()
         with tempfile.TemporaryDirectory() as directory, submit_code.CompilerWorkspace(
             cxx=cxx, standard="c++23", include_paths=[], extra_args=[],
@@ -1746,7 +1742,7 @@ int main() { return 0; }
             with patch.object(compiler, "uninstantiated_template_functions", return_value=[]), \
                  patch.object(compiler, "compiler_warnings", return_value=""), \
                  patch.object(submit_code, "ipa_unused_candidates", side_effect=cycle_candidate), \
-                 patch.object(submit_code, "unreferenced_declaration_candidates", side_effect=lambda text, names=(), macros=(): [] if 'int cycle(' in text else original_declarations(text, names, macros)):
+                 patch.object(submit_code, "unreferenced_declaration_candidates", side_effect=declaration_candidates):
                 cleaned = submit_code.cleanup_text(
                     source, compiler=compiler, writer=writer, cppcheck=None,
                     keep_functions=set(), max_passes=1, safe_only=False,

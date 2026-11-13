@@ -7,8 +7,8 @@
 ## 1. 順方向を書く
 
 ```cpp
-template<class S>
-vc<S> range_sum_cpp(const vc<S>& x, const vc<int>& left, const vc<int>& right) {
+template<class S, class I = int, class J = int>
+vc<S> range_sum_cpp(const vc<S>& x, const vc<I>& left, const vc<J>& right) {
   FenwickTree<GroupAddSub<S>> tree(x);
   vc<S> y(left.size());
   repi(i, left.size()) y[i] = tree.sum(left[i], right[i]);

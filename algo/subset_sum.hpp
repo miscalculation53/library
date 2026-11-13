@@ -103,8 +103,8 @@ public:
     int vmax = min(smax, SZ<int>(freq) - 1);
     repi(v, 1, vmax + 1)
     {
-      assert(freq[v] >= 0);
-      int c = freq[v] < T(smax / v) ? int(freq[v]) : smax / v;
+      if constexpr (is_signed_ext<T>) assert(freq[v] >= 0);
+      int c = int(min<common_type_t<T, int>>(freq[v], smax / v));
       if (c)
         f.eb(v, c);
     }

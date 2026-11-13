@@ -19,6 +19,8 @@ $$
 各数列への独立した更新には、[一次関数作用](acted_monoid/affine_multivariate_power_sum.md)、[加算](acted_monoid/add_multivariate_power_sum.md)、[代入](acted_monoid/upd_multivariate_power_sum.md) の作用つきモノイドを使える。
 $K=1$ は [MonoidPowerSum](power_sum.md) と同じ累乗和を保持する。
 
+指数の配列には `i128`・`u128` を含む任意の整数型を使える。
+
 ## 使用例
 
 ```cpp
@@ -69,8 +71,10 @@ MonoidMultivariatePowerSum<T, Ds...>
 #### S::at
 
 ```cpp
-T& at(const array<int, dim>& exponent)
-const T& at(const array<int, dim>& exponent) const
+template<class I = int>
+T& at(const array<I, dim>& exponent)
+template<class I = int>
+const T& at(const array<I, dim>& exponent) const
 ```
 
 指定した指数の混合累乗和への参照を返す。
@@ -86,7 +90,8 @@ const T& at(const array<int, dim>& exponent) const
 #### index
 
 ```cpp
-int index(const array<int, dim>& exponent)
+template<class I = int>
+int index(const array<I, dim>& exponent)
 ```
 
 `power_sum` 内の格納位置 $\sum_d\mathrm{exponent}[d]\cdot\mathrm{stride}[d]$ を返す。

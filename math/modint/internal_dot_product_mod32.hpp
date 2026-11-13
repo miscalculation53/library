@@ -1,6 +1,7 @@
 #pragma once
 
 #include "internal_mod32_value.hpp"
+#include "internal_block_dot32.hpp"
 
 namespace internal
 {
@@ -10,15 +11,10 @@ using dot_product_mod32_value = ordinary_mod32<S>;
 template <int block, class S, class It1, class It2>
 S dot_product_mod32_impl(int n, It1 a, It2 b)
 {
-  const ull mod = S::mod();
-  ull sum = 0;
-  for (; n >= block; n -= block)
+  return S::raw(block_dot32(n, S::mod(), block, 0, [&]()
   {
-    repi(j, block) sum += ull((a++)->val()) * (b++)->val();
-    sum %= mod;
-  }
-  repi(j, n) sum += ull((a++)->val()) * (b++)->val();
-  return S::raw(sum % mod);
+    return ull((a++)->val()) * (b++)->val();
+  }));
 }
 
 template <class S, class It1, class It2>

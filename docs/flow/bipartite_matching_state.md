@@ -6,6 +6,8 @@
 
 左頂点を順に追加する割当や [transversal matroid](../matroid/transversal_matroid.md) の circuit の計算に使える。一括で最大マッチングだけを求める場合は [bipartite_matching](bipartite_matching.md) を使う。
 
+隣接先の配列は `i128`・`u128` を含む任意の整数型に対応する。削除可能な CSR では有効な要素だけを取り込む。
+
 ## 使用例
 
 ```cpp
@@ -33,8 +35,12 @@ template<class Cost, bool is_erasable, class Color>
 BipartiteMatchingState(
     const GraphUndirected<Cost, is_erasable>& graph, const vc<Color>& color);
 BipartiteMatchingState(int right_vertices, CSR<int> adjacency);
-BipartiteMatchingState(int right_vertices, const vvc<int>& adjacency);
-BipartiteMatchingState(int right_vertices, initializer_list<vc<int>> adjacency);
+template<class I = int>
+BipartiteMatchingState(int right_vertices, const vvc<I>& adjacency);
+template<class I = int>
+BipartiteMatchingState(int right_vertices, initializer_list<vc<I>> adjacency);
+template<class I, bool erasable>
+BipartiteMatchingState(int right_vertices, const CSR<I, erasable>& adjacency);
 ```
 
 グラフと彩色から構築する場合、色 $0$ を左、色 $1$ を右とし、それぞれ元の頂点番号の昇順に内部番号を付ける。孤立点も保持する。辺の重み・番号は使わず、多重辺に対応する。削除可能グラフでは構築時点で有効な辺を使う。隣接関係と頂点番号の対応をコピーして保持する。

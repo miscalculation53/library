@@ -153,7 +153,7 @@ struct Matrix : internal::matrix_storage<typename F::S>
       }
       if (a[i][j] == F::e0())
       {
-        de = 0;
+        de = F::e0();
         continue;
       }
       de = F::mul(de, a[i][j]);

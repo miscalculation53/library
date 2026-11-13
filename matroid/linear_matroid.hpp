@@ -2,13 +2,14 @@
 
 #include "../math/linalg/matrix.hpp"
 #include "../math/linalg/linear_basis.hpp"
+#include "../math/linalg/sparse_matrix.hpp"
 
 /**
  * @brief 線形マトロイド
  * @docs docs/matroid/linear_matroid.md
  */
 
-template <class F>
+template <class F = FieldAddSubMulDiv<modint998244353>>
 class LinearMatroid
 {
 public:
@@ -47,14 +48,25 @@ public:
   int dimension() const { return dimension_; }
   const vvc<S> &columns() const { return columns_; }
 
-  void build(const vc<int> &independent)
+  Matrix<F> matrix() const
   {
-    selected_ = independent;
+    Matrix<F> result(dimension_, size());
+    for (int e = 0; e < size(); e++) for (int i = 0; i < dimension_; i++)
+      result[i][e] = columns_[e][i];
+    return result;
+  }
+
+  template <class I = int>
+  void build(const vc<I> &independent)
+  {
+    selected_.assign(ALL(independent));
     fill(used_.begin(), used_.end(), 0);
     basis_.clear();
-    for (int e : selected_)
+    for (auto value : independent)
     {
-      assert(0 <= e && e < size() && !used_[e]);
+      assert(u128(value) < unsigned(size()));
+      const int e = int(value);
+      assert(!used_[e]);
       used_[e] = 1;
       bool inserted = basis_.insert(columns_[e]);
       assert(inserted);
@@ -73,3 +85,35 @@ public:
     return result;
   }
 };
+
+namespace internal
+{
+template <class F, bool Sparse>
+class LinearRepresentationBuilder
+{
+  using S = typename F::S;
+  int dimension_, size_;
+  conditional_t<Sparse, vc<tuple<int, int, S>>, vvc<S>> data_;
+
+public:
+  LinearRepresentationBuilder(int dimension, int size)
+      : dimension_(dimension), size_(size), data_([&]
+        {
+          if constexpr (Sparse) return vc<tuple<int, int, S>>{};
+          else return vvc<S>(size, vc<S>(dimension, F::e0()));
+        }()) {}
+  void set(int element, int coordinate, const S &value)
+  {
+    if constexpr (Sparse)
+    {
+      if (value != F::e0()) data_.emplace_back(coordinate, element, value);
+    }
+    else data_[element][coordinate] = value;
+  }
+  auto finish() &&
+  {
+    if constexpr (Sparse) return SparseMatrix<F>(dimension_, size_, data_);
+    else return LinearMatroid<F>(dimension_, std::move(data_));
+  }
+};
+}

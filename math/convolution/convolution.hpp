@@ -59,7 +59,7 @@ vc<mint> convolution_crt_mod(const vc<T> &a, const vc<T> &b)
   }(make_index_sequence<k>{});
 
   vc<mint> c(n + m - 1);
-  repi(i, n + m - 1) c[i] = crt_mod_constexpr<mint>(cs[i], ms_arr).first;
+  repi(i, n + m - 1) c[i] = crt_internal::crt_mod_normalized<mint>(cs[i], ms_arr).first;
   return c;
 }
 
@@ -67,7 +67,7 @@ vc<mint> convolution_crt_mod(const vc<T> &a, const vc<T> &b)
 
 // ntt-friendly なら普通、そうでなければ 3 つの mod
 // mod は 10^9 程度を想定、列の長さは合計 2^26 程度
-template <class mint, typename = std::enable_if_t<!std::is_integral<mint>::value>>
+template <class mint, typename = std::enable_if_t<!is_integral_ext<mint>>>
 vc<mint> convolution(const vc<mint> &a, const vc<mint> &b)
 {
   const int n = a.size(), m = b.size();
@@ -93,7 +93,7 @@ vc<mint> convolution(const vc<mint> &a, const vc<mint> &b)
   }
 }
 
-template <int mod = 998244353, class T, typename = enable_if_t<is_integral<T>::value>>
+template <int mod = 998244353, class T, typename = enable_if_t<is_integral_ext<T>>>
 vc<T> convolution(const vc<T> &a, const vc<T> &b)
 {
   using mint = static_modint32<mod>;

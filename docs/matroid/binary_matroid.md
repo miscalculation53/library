@@ -6,7 +6,9 @@
 符号なし整数（`u128` まで）と [DynamicBitset](../ds/dynamic_bitset.md) に対応する。
 線形消去と選択済み要素による表現には [XorBasis](../math/linalg/xor_basis.md) を使う。
 
-線形表現は、このヘッダの `linear_representation<F>(...)` メンバから取得できる。引数・条件は [線形表現](linear_representation.md) を参照。
+線形表現は、このヘッダの `linear_representation()` メンバから取得できる。既定の係数体は標数 $2$ の `static_modint32<2>`。引数・条件は [線形表現](linear_representation.md) を参照。
+
+`build` の要素番号の配列には、`i128`・`u128` を含む任意の整数型を使える。返す要素番号は `int`。
 
 ## 使用例
 
@@ -70,7 +72,8 @@ $O(1)$。
 #### build
 
 ```cpp
-void build(const vc<int>& independent)
+template<class I = int>
+void build(const vc<I>& independent)
 ```
 
 現在の独立集合を置き換える。指定する要素の順序は任意で、fundamental circuitもその順序で返す。
@@ -100,3 +103,15 @@ optional<vc<int>> circuit(int e) const
 ##### 計算量
 
 $O(rB)$。
+
+#### sparse_linear_representation
+
+`linear_representation` と同じ引数・係数体で、行を座標、列を要素とする `SparseMatrix<F>` を返す。構築の条件と計算量は [線形表現](linear_representation.md) を参照する。
+
+## 係数体と乱択計算
+
+通常の独立性判定には `XorBasis`、二元体上の行列演算には [MatrixMod2Dynamic](../math/linalg/matrix_mod2_dynamic.md) を使える。線形交叉・parity の多項式評価や BBLA の乱択には、十分大きい標数2の拡大体 $\mathbf F_{2^k}$ を使う。
+
+元の行列の各成分 $0,1$ を拡大体の $0,1$ に移しても、行列の次元と列の独立性は保たれる。`linear_representation<F>()` の `F` に拡大体を指定し、乱択アルゴリズムにはその体の適切な sampler を渡す。入力のビット行列を保存し、その作用を拡大体のベクトルに対して計算する設計も可能。
+
+64ビット nimber の加算 XOR・乗算 nim product は $\mathbf F_{2^{64}}$ の実現方法の一つ。既約多項式で構成する二進拡大体も利用できる。nim arithmetic の数学的な説明は [Ferguson, Game Theory, Part I, Section 5.3](https://www.cs.umb.edu/~eb/320/FergusonGames.pdf#page=34) を参照する。

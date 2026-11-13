@@ -150,6 +150,8 @@ def definition_groups(api, text: str, owners: list[str | None], compiler, *,
         source = "".join(lines[item.start:item.end + 1])
         body = api.function_body_span(source)
         assert body is not None
+        if not api.strip_comments(source[body[0] + 1:body[1]]).strip():
+            continue
         if emitted is None or counts[item.name] == 1 or set(api.code_identifiers(source[:body[0]])).intersection({"constexpr", "consteval"}):
             if item.name in instantiated_names or (item.name.startswith("operator") and re.search(
                     rf"(?<![_A-Za-z0-9]){re.escape(item.name)}\s*(?:<|\()", instantiated)):
@@ -161,6 +163,305 @@ def definition_groups(api, text: str, owners: list[str | None], compiler, *,
         edit = (offsets[item.start] + body[0], offsets[item.start] + body[1] + 1, ";")
         groups.setdefault(item.label + ":" + item.name + ("@" + str(item.start) if item.label == "float_io" else ""), []).append(edit)
     return groups
+
+
+def function_scopes(api, text, candidates):
+    lines = text.splitlines(keepends=True)
+    tokens = api.structural_tokens(lines)
+    scopes = []
+    for i, line in enumerate(api.preprocessor_lines(text)):
+        match = re.match(r"\s*(?:(?:inline\s+)?namespace\s*([\w:]*)|(?:struct|class)\s+(\w+))\s*(?:[<{:]|$)", line)
+        if match:
+            end = api.find_braced_entity_end(tokens, i)
+            if end is not None:
+                scopes.append((i, end, match.group(1) if match.group(1) is not None else match.group(2)))
+    return {item: [name for first, last, name in scopes if first < item.start <= item.end <= last]
+            for item in candidates}
+
+
+def has_function_instance(api, source, item, scope, headers):
+    if any(not name for name in scope):
+        return True
+    name = item.name or ""
+    if name.startswith("operator"):
+        family = re.search(r"\boperator\s*[^\s(]+\s*\(\s*(?:const\s+)?(?:std::)?(pair|tuple|array)\s*<", source)
+        if scope or family is None:
+            return True
+        return re.search(rf"\b{re.escape(name)}\s*\(\s*(?:const\s+)?(?:std::)?{family[1]}\s*<", headers) is not None
+    prefix = "".join(re.escape(part) + r"(?:<[^\n]*?>)?::" for value in scope for part in value.split("::"))
+    return re.search(rf"(?<![\w:]){prefix}{re.escape(name)}\s*(?:<[^\n]*?>)?\s*\(", headers) is not None
+
+
+def class_definitions(api, text):
+    visible = api.preprocessor_lines(text)
+    tokens = api.structural_tokens(visible)
+    depths, depth = [], 0
+    for line, row in zip(visible, tokens):
+        depths.append(depth)
+        if not line.lstrip().startswith("#"):
+            depth += row.count("{") - row.count("}")
+    classes = []
+    for i, line in enumerate(visible):
+        match = re.match(r"\s*(?:struct|class)\s+(\w+)\b", line)
+        if match is None:
+            continue
+        end = api.find_braced_entity_end(tokens, i)
+        if end is None or not re.fullmatch(r"\s*};\s*", visible[end]):
+            continue
+        opening = next((j for j in range(i, end + 1) if "{" in tokens[j]), None)
+        if opening is not None:
+            classes.append((match[1], i, end, opening, depths[opening] + 1))
+    return classes, depths
+
+
+def parameter_families(source, name):
+    match = re.search(rf"\b{re.escape(name)}\s*\(", source)
+    if match is None:
+        return None
+    depth, start, parameters = [], match.end(), []
+    for i in range(start, len(source)):
+        char = source[i]
+        if char == ")" and not depth:
+            parameters.append(source[start:i])
+            break
+        if char in "(<[{":
+            depth.append(char)
+        elif char in ")>]}":
+            if not depth or "(<[{".index(depth[-1]) != ")>]}".index(char):
+                return None
+            depth.pop()
+        elif char == "," and not depth:
+            parameters.append(source[start:i])
+            start = i + 1
+    else:
+        return None
+    parameters = [p.strip() for p in parameters]
+    if parameters == [""] or parameters == ["void"]:
+        return ()
+    result = []
+    for parameter in parameters:
+        parameter = parameter.split("=", 1)[0]
+        names = re.findall(r"\b\w+\b", parameter)
+        containers = sum(names.count(n) * width for n, width in (("vector", 1), ("vc", 1), ("vvc", 2), ("vvvc", 3)))
+        result.append((containers, names.count("pair"), names.count("tuple"),
+                       "const" in names, "&&" if "&&" in parameter else "&" if "&" in parameter else ""))
+    return tuple(result)
+
+
+def structural_candidates(api, text, headers):
+    lines = text.splitlines(keepends=True)
+    visible = api.preprocessor_lines(text)
+    tokens = api.structural_tokens(lines)
+    classes, depths = class_definitions(api, text)
+    names = {name for name, *_ in classes}
+    candidates, replacements = [], {}
+    for i, line in enumerate(visible):
+        match = re.match(r"\s*(?:(?:explicit|constexpr|consteval|inline)\s+)*(\w+)\s*\(", line)
+        if match is None or match[1] not in names:
+            continue
+        name = match[1]
+        start = api.template_prefix_start(lines, i, tokens)
+        parent = next((c for c in reversed(classes) if c[1] < i <= c[2]), None)
+        if parent is not None:
+            if parent[0] != name or depths[i] != parent[4]:
+                continue
+            body = api.function_body_span("".join(lines[i:parent[2] + 1]))
+            if body is None:
+                continue
+            end = i + "".join(lines[i:parent[2] + 1]).count("\n", 0, body[1])
+            source = "".join(lines[i:end + 1])
+            key = parameter_families(source, name)
+            instances = [parameter_families(h, name) for h in headers.splitlines()
+                         if re.search(rf"::\s*{re.escape(name)}\s*\(", h)]
+            if key is None or None in instances or key in instances:
+                continue
+            label = "unused constructor"
+        else:
+            end = api.find_statement_end(tokens, i)
+            if end is None or re.search(rf"\)\s*->\s*{re.escape(name)}\s*<", "".join(visible[i:end + 1])) is None:
+                continue
+            label = "unused deduction guide"
+        candidates.append(api.Removal(start, end, label, name))
+    for name, start, end, opening, _ in classes:
+        prefix = api.template_prefix_start(lines, start, tokens)
+        header = "".join(visible[prefix:opening + 1]).split("{", 1)[0]
+        if "template" not in header or not re.search(rf"\b(?:class|struct)\s+{re.escape(name)}\s*$", header):
+            continue
+        if not any(n == name and re.match(rf"\s*(?:struct|class)\s+{re.escape(name)}\s*<", visible[a])
+                   for n, a, *_ in classes):
+            continue
+        item = api.Removal(opening, end, "unused primary template body", name)
+        candidates.append(item)
+        replacements[item] = (opening, lines[opening].index("{"), ";")
+    for i, line in enumerate(visible):
+        match = re.match(r"\s*namespace\s+([\w:]+)\s*$", line)
+        if match is None:
+            continue
+        end = api.find_braced_entity_end(tokens, i)
+        if end is None:
+            continue
+        source = "".join(lines[i:end + 1])
+        body = "".join(visible[i:end + 1])
+        body = body[body.find("{") + 1:body.rfind("}")]
+        body = re.sub(r"(?m)^\s*#\s*line\b[^\n]*", "", body)
+        if not body.strip() and not api.important_comments(source):
+            candidates.append(api.Removal(i, end, "empty namespace", match[1]))
+    return candidates, replacements
+
+
+def uncalled_function_groups(api, text, functions):
+    visible = api.preprocessor_lines(text)
+    offsets = [0]
+    for line in visible:
+        offsets.append(offsets[-1] + len(line))
+    pattern = re.compile(r"(?<![\w.:>])([_A-Za-z]\w*)\s*(?:\(|<[^;\n(){}]*?>\s*(?=[(,);}\]]))")
+    initializers = set()
+    classes, depths = class_definitions(api, text)
+    for i, line in enumerate(visible):
+        match = re.match(r"\s*(?:(?:explicit|constexpr|consteval|inline)\s+)*(\w+)\s*\(", line)
+        if match is None:
+            continue
+        parent = next((c for c in reversed(classes) if c[1] < i <= c[2]), None)
+        if parent is None or match[1] != parent[0] or depths[i] != parent[4]:
+            continue
+        tail = "".join(visible[i:parent[2] + 1])
+        body = api.function_body_span(tail)
+        if body is None:
+            continue
+        header = tail[:body[0]]
+        start = re.search(r"\)\s*:(?!:)", header)
+        if start is None:
+            continue
+        level = 0
+        levels = {}
+        for pos in range(start.end(), len(header)):
+            levels[pos] = level
+            if header[pos] in "({[":
+                level += 1
+            elif header[pos] in ")}]":
+                level -= 1
+        initializers.update(offsets[i] + m.start() for m in pattern.finditer(header, start.end())
+                            if levels[m.start()] == 0)
+    references = {}
+    for match in pattern.finditer("".join(visible)):
+        if match.start() in initializers:
+            continue
+        references.setdefault(match[1], []).append(bisect_left(offsets, match.start() + 1) - 1)
+    groups = {}
+    for item in functions:
+        if not item.name.startswith("operator"):
+            groups.setdefault(item.name, set()).add(item)
+    return [items for name, items in groups.items()
+            if not any(not any(item.start <= row <= item.end for item in items)
+                       for row in references.get(name, []))]
+
+
+def optional_type_ranges(text, owners):
+    lines = text.splitlines(keepends=True)
+    groups = [
+        [i for i, owner in enumerate(owners) if owner and owner.startswith("source:math/modint/")],
+        [i for i, owner in enumerate(owners) if owner == "source:utils/larger_int.hpp"],
+    ]
+    offsets = [0]
+    for line in lines:
+        offsets.append(offsets[-1] + len(line))
+    for rows in groups:
+        if not rows:
+            continue
+        yield [(offsets[i], offsets[i + 1], "") for i in rows]
+
+
+def dynamic_modint_declarations(api, text, functions):
+    policies = {"policy_barrett32", "policy_montgomery64", "policy_montgomery64_odd"}
+    reducers = {"barrett32", "montgomery64", "montgomery64odd"}
+    classes, _ = class_definitions(api, text)
+    if not any(name in policies for name, *_ in classes):
+        return []
+    lines = text.splitlines(keepends=True)
+    tokens = api.structural_tokens(lines)
+    removals = [api.Removal(api.template_prefix_start(lines, start, tokens), end, "dynamic modint", name)
+                for name, start, end, _, _ in classes if name in policies | reducers]
+    scopes = function_scopes(api, text, removals + functions)
+    removals = [item for item in removals if scopes[item] == ["internal"]]
+    if not removals:
+        return []
+    dynamic_type = re.compile(r"\bdynamic_modint(?:32|64(?:_odd)?)\b")
+    dependent_type = re.compile(r"\s*(?:using\s+(?P<alias>dynamic_modint\w*|modint(?:64)?)\s*=|"
+                                r"struct\s+(?:is_dynamic_modint|ordinary_mod32)\s*<)")
+    for i, line in enumerate(api.preprocessor_lines(text)):
+        dependent = dependent_type.match(line)
+        if dependent and dynamic_type.search(line) and line.rstrip().endswith(";"):
+            start = api.template_prefix_start(lines, i, tokens)
+            removals.append(api.Removal(start, i, "dynamic modint", dependent["alias"]))
+    for function in functions:
+        if (function.name == "inv64" and scopes[function] == ["internal"]) or (function.name in {"ntt", "intt"}
+                and dynamic_type.search("".join(lines[function.start:function.end + 1]))):
+            removals.append(function)
+    names = {item.name for item in removals if item.name and item.name not in {"ntt", "intt"}}
+    if names.intersection(api.code_identifiers(api.apply_removals(text, removals))):
+        return []
+    if any(pattern.fullmatch(name) for pattern in api.token_paste_patterns(text) for name in names):
+        return []
+    return removals
+
+
+def discarded_constexpr_branches(api, text, owners, emitted_lines):
+    if not emitted_lines:
+        return []
+    lines = text.splitlines(keepends=True)
+    visible = api.preprocessor_lines(text)
+    functions = definition_candidates(api, text, owners)
+    protected = api.portable_body_dependencies(text, functions)
+    offsets = [0]
+    for line in lines:
+        offsets.append(offsets[-1] + len(line))
+    emitted = sorted(emitted_lines)
+
+    def has_emission(first, last):
+        i = bisect_left(emitted, first)
+        return i < len(emitted) and emitted[i] <= last
+
+    def discarded(start, end):
+        first = bisect_left(offsets, start + 1) - 1
+        last = bisect_left(offsets, end + 1) - 1
+        return (first < last and not has_emission(first, last)
+                and not any(line.lstrip().startswith("#") for line in visible[first:last + 1]))
+
+    edits = []
+    for function in functions:
+        if function.name in protected or not has_emission(function.start, function.end):
+            continue
+        end = offsets[function.end + 1]
+        source = text[offsets[function.start]:end]
+        body = api.function_body_span(source)
+        if body is None or set(api.code_identifiers(source[:body[0]])) & {"constexpr", "consteval"}:
+            continue
+        for i in range(function.start + 1, function.end):
+            statement = re.match(r"([ \t]*)if\s+constexpr\s*\(", lines[i])
+            if statement is None or not re.match(r"\s*if\s+constexpr\s*\(", visible[i]):
+                continue
+            start = offsets[i] + len(statement[1])
+            tail = text[start:end]
+            arm = api.function_body_span(tail)
+            if (arm is None or ";" in tail[:arm[0]] or not tail[:arm[0]].rstrip().endswith(")")
+                    or re.search(r"(?m)^\s*#", tail[:arm[0]])):
+                continue
+            opening, closing = (start + point for point in arm)
+            alternate = re.match(r"\s*else\s*\{", text[closing + 1:end])
+            if alternate is None:
+                if not re.match(r"\s*else\b", api.strip_comments(text[closing + 1:end])) and discarded(opening, closing):
+                    edits.append((start, closing + 1, ";"))
+                continue
+            other_opening = closing + alternate.end()
+            other_arm = api.function_body_span(text[other_opening:end])
+            if other_arm is None or other_arm[0] != 0:
+                continue
+            other_closing = other_opening + other_arm[1]
+            if discarded(opening, closing):
+                edits.append((start, other_opening, ""))
+            elif discarded(other_opening, other_closing):
+                edits.extend([(start, opening, ""), (closing + 1, other_closing + 1, "")])
+    return edits
 
 
 def unused_macro_candidates(api, text: str, owners, compiler):
@@ -182,8 +483,6 @@ def unused_macro_candidates(api, text: str, owners, compiler):
 
 
 def compact_lines(api, text: str) -> str:
-    if re.search(r"(?m)^\s*#\s*(?:line\b|\d)", text):
-        return text
     raw = []
     spans = list(api.comment_spans(text, raw_spans=raw)) + raw
     protected = set()
@@ -192,6 +491,19 @@ def compact_lines(api, text: str) -> str:
         protected.update(range(first, first + text.count("\n", start, end) + 1))
     lines = text.splitlines(keepends=True)
     visible = api.preprocessor_lines(text)
+    coordinates = []
+    number, level = 1, 0
+    for line in visible:
+        coordinates.append(number)
+        match = re.match(r"\s*#\s*(?:line\s+)?(\d+)\b", line)
+        if match:
+            number = int(match[1]) if level == 0 else None
+        elif number is not None:
+            number += 1
+        if re.match(r"\s*#\s*(?:if|ifdef|ifndef)\b", line):
+            level += 1
+        elif re.match(r"\s*#\s*endif\b", line):
+            level -= 1
     output = []
     i = depth = 0
     while i < len(lines):
@@ -199,20 +511,69 @@ def compact_lines(api, text: str) -> str:
             depth += 1
         elif re.match(r"\s*#\s*endif\b", visible[i]):
             depth -= 1
-        if depth or lines[i].strip() or i in protected or (i and lines[i - 1].rstrip().endswith("\\")):
+        if depth or coordinates[i] is None or lines[i].strip() or i in protected or (i and lines[i - 1].rstrip().endswith("\\")):
             output.append(lines[i])
             i += 1
             continue
         end = i + 1
         while end < len(lines) and not lines[end].strip() and end not in protected:
             end += 1
-        directive = f"#line {end + 1}\n" if end < len(lines) else ""
+        directive = f"#line {coordinates[end]}\n" if end < len(lines) else ""
         if end - i > len(directive):
             if directive:
                 output.append(directive)
         else:
             output.extend("\n" for _ in range(i, end))
         i = end
+    return "".join(output)
+
+
+def tidy_checkpoint(api, text: str, *, original: str, observers=frozenset()) -> str:
+    """Propose shorter layout for publication, subject to compiler verification."""
+    logical = api.COMMENT_LINE_SPLICE.sub("", original)
+    if any(api.LINE_CONTROL.match(line) for line in api.preprocessor_lines(logical)):
+        return text
+    lines = text.splitlines(keepends=True)
+    visible = api.preprocessor_lines(text)
+    if len(lines) != len(visible):
+        return text
+    candidate = []
+    coordinates = []
+    number, depth = 1, 0
+    for i, (line, directive) in enumerate(zip(lines, visible)):
+        continued = i and api.COMMENT_LINE_SPLICE.search(lines[i - 1])
+        marker = api.BARE_LINE_CONTROL.fullmatch(line)
+        if marker and api.BARE_LINE_CONTROL.fullmatch(directive) and not continued:
+            if observers and depth:
+                return text
+            number = int(marker.group(1))
+            continue
+        if observers and api.LINE_CONTROL.match(directive) and not continued:
+            return text
+        if line.strip():
+            observes_line = observers and not continued and not observers.isdisjoint(api.code_identifiers(directive))
+            if observes_line and depth:
+                return text
+            coordinates.append(number if observes_line else None)
+        candidate.append(line)
+        number += 1
+        if api.CONDITIONAL_OPEN_DIRECTIVE.match(directive):
+            depth += 1
+        elif api.CONDITIONAL_CLOSE_DIRECTIVE.match(directive):
+            depth -= 1
+    compacted = api.collapse_blank_lines("".join(candidate))
+    if not observers:
+        return compacted
+    output = []
+    positions = iter(coordinates)
+    number = 1
+    for line in compacted.splitlines(keepends=True):
+        expected = next(positions) if line.strip() else None
+        if expected is not None and number != expected:
+            output.append(f"#line {expected}\n")
+            number = expected
+        output.append(line)
+        number += 1
     return "".join(output)
 
 
@@ -258,7 +619,7 @@ def finish_layout(api, text: str, original: str, owners, *, feature_token=None) 
             lines[i] = "\n"
         elif i not in protected and line != before and not line.rstrip().endswith("\\"):
             lines[i] = line.rstrip(" \t\r\n") + ("\n" if line.endswith("\n") else "")
-    return compact_lines(api, "".join(lines))
+    return api.compact_source_links(compact_lines(api, "".join(lines)))
 
 
 def optional_feature_ranges(api, text, owners):
@@ -286,6 +647,7 @@ def cache_key(text: str, compiler) -> str:
     data = [text, str(executable), stat.st_mtime_ns, stat.st_size, compiler.standard,
             compiler.extra_args, [str(p) for p in compiler.include_paths],
             compiler.submission_whole_program,
+            compiler.submission_optimization,
             {name: os.environ.get(name) for name in ("CPLUS_INCLUDE_PATH", "CPATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET")},
             Path(__file__).read_text(), Path(__file__).with_name("submit_code.py").read_text()]
     return hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest()
@@ -362,61 +724,250 @@ def freeze_conditions(api, text: str, compiler) -> str | None:
     return mask_ranges(api, text, edits)
 
 
-def prune_function_declarations(api, text, *, compiler, writer, reporter, keep_functions):
+def prune_function_declarations(api, text, *, compiler, writer, reporter, keep_functions,
+                                final=False, include_structures=True, include_dynamic_types=False,
+                                use_pch=True):
+    def finish(result):
+        return prune_optimized_declarations(api, result, compiler=compiler, writer=writer,
+                                            reporter=reporter, keep_functions=keep_functions) if final else result
+
     lines = text.splitlines(keepends=True)
     candidates = definition_candidates(api, text, ["library"] * len(lines), include_declarations=True)
+    dynamic_types = dynamic_modint_declarations(api, text, candidates) if include_dynamic_types else []
     macros = api.template_signature_macro_names(text, compiler.external_macro_definitions(text))
     protected = api.portable_body_dependencies(text, candidates)
+    def signature_identifiers(item):
+        source = "".join(lines[item.start:item.end + 1])
+        body = api.function_body_span(source)
+        return set(api.code_identifiers(source[:body[0]] if body else source))
     candidates = [item for item in candidates if item.name not in keep_functions | protected
-                  and api.function_body_span("".join(lines[item.start:item.end + 1])) is None
-                  and set(api.code_identifiers("".join(lines[item.start:item.end + 1]))).isdisjoint(macros)]
-    if not candidates or set(api.code_identifiers(text)).intersection({"__COUNTER__", "asm", "__asm__", "dlsym", "GetProcAddress"}):
+                  and signature_identifiers(item).isdisjoint(macros)]
+    types = api.unreferenced_declaration_candidates(
+        text, keep_functions, compiler.dangerous_macro_names(text),
+        include_friend_types=True, include_structured_constants=True)
+    types = [item for item in types if item.label.startswith("unreferenced declaration ")
+             and set(api.code_identifiers("".join(lines[item.start:item.end + 1]))).isdisjoint({"virtual", "override", "final"})]
+    if set(api.code_identifiers(text)).intersection({"__COUNTER__", "asm", "__asm__", "dlsym", "GetProcAddress"}):
         return text
-    valid, diagnostic = compiler.validate_submission(text)
-    if not valid:
-        return text
-    reference = compiler.submission_object_signature(text)
+    if not (candidates or types or dynamic_types) and not re.search(r"(?m)^\s*(?:struct|class|namespace)\b", text):
+        return finish(text)
+    reference, headers = compiler.submission_reference(text)
     if reference is None:
         return text
+    reference_undefined = set(compiler.object_undefined)
+    workspace = compiler.submission_workspace
+    structures, replacements = structural_candidates(api, text, headers) if include_structures else ([], {})
+    structures = [item for item in structures if item.name not in keep_functions
+                  and signature_identifiers(item).isdisjoint(macros)]
+    scopes = function_scopes(api, text, candidates)
+    unreferenced = api.unreferenced_function_candidates(
+        text, candidates, compiler.external_identifiers(text) | keep_functions)
+    candidates = [item for item in candidates if item in unreferenced
+                  or api.function_body_span("".join(lines[item.start:item.end + 1])) is None
+                  or not has_function_instance(api, "".join(lines[item.start:item.end + 1]), item, scopes[item], headers)]
+    if (use_pch and writer.layout_started is not None and writer.reached_limits
+            and workspace.prepare_object_pch(text, reference)):
+        prelude = text[:workspace.pch_prefix_end]
+    else:
+        prelude = None
     offsets = [0]
     for line in lines:
         offsets.append(offsets[-1] + len(line))
-    current, accepted = text, 0
+    current, accepted = text, set()
+    rejected = {}
+    name_counts = {}
+    for item in candidates + types + structures:
+        name_counts[item.name] = name_counts.get(item.name, 0) + 1
+
+    def verify(items):
+        nonlocal current
+        edits = []
+        for item in items:
+            if item in replacements:
+                row, column, replacement = replacements[item]
+                edits.append((offsets[row] + column, offsets[item.end + 1], replacement))
+            else:
+                edits.append((offsets[item.start], offsets[item.end + 1], ""))
+        candidate = mask_ranges(api, current, edits)
+        digest = hashlib.sha256(candidate.encode()).hexdigest()
+        key = digest, workspace.pch_available, workspace.pch_disabled
+        if key in rejected:
+            return rejected[key]
+        reporter.phase("signatures", f"checking {len(items)} unused declaration(s)")
+        if prelude is not None:
+            signature = workspace.object_signature(candidate, pch=candidate.startswith(prelude))
+        elif use_pch:
+            signature = compiler.submission_object_signature(candidate)
+        else:
+            signature = workspace.object_signature(candidate, pch=False)
+        if signature == reference:
+            current = candidate
+            accepted.update(items)
+            return None
+        reporter.detail(api.first_error(workspace.object_diagnostic) if workspace.object_diagnostic else "object differs")
+        missing = "\n".join([api.diagnostic_messages(workspace.object_diagnostic),
+                            *sorted(workspace.object_undefined - reference_undefined)])
+        rejected[digest, workspace.pch_available, workspace.pch_disabled] = missing
+        return missing
 
     def remove(items):
-        nonlocal current, accepted
+        items = [item for item in items if item not in accepted]
         if not items:
             return
-        candidate = mask_ranges(api, current, [(offsets[item.start], offsets[item.end + 1], "") for item in items])
-        reporter.phase("signatures", f"checking {len(items)} function/method declaration(s)")
-        if compiler.submission_object_signature(candidate) == reference:
-            current = candidate
-            accepted += len(items)
+        missing = verify(items)
+        if missing is None:
             return
         if len(items) == 1:
             return
-        missing = compiler.object_diagnostic
         blocked = [item for item in items if item.name and re.search(
             rf"(?<![_A-Za-z0-9]){re.escape(item.name)}(?![_A-Za-z0-9])", missing)]
+        retained = set(blocked)
+        representatives = set()
+        for name, scope in re.findall(r"['‘]([_A-Za-z]\w*)['’] is not a member of ['‘]([\w:]+)['’]", missing):
+            group = [item for item in items if item.name == name and "::".join(scopes.get(item, ())) == scope]
+            if group:
+                representatives.add(group[-1])
+                retained.difference_update(item for item in blocked if item.name == name)
+        retained.update(representatives)
+        if retained != set(blocked):
+            proposal = [item for item in items if item not in retained]
+            if proposal and verify(proposal) is None:
+                remove([item for item in items if item in retained - representatives and name_counts[item.name] > 1])
+                return
         if blocked and len(blocked) < len(items):
             remove([item for item in items if item not in blocked])
-            remove(blocked)
+            remove([item for item in blocked if name_counts[item.name] > 1])
             return
         middle = len(items) // 2
         remove(items[:middle])
         remove(items[middle:])
 
+    def remaining(items):
+        return [item for item in items if not any(
+            parent.start <= item.start and item.end <= parent.end for parent in accepted)]
+
+    if dynamic_types and not any(item.name in keep_functions for item in dynamic_types):
+        verify(dynamic_types)
+    remove(remaining(types + structures))
+    candidates = remaining(candidates)
+    unreferenced = api.unreferenced_function_candidates(
+        current, candidates, keep_functions)
+    if unreferenced:
+        remove(unreferenced)
     remove(candidates)
     if not accepted:
-        return text
+        return finish(text)
+    if prelude is not None and workspace.object_signature(current, pch=False) != reference:
+        return prune_function_declarations(api, text, compiler=compiler, writer=writer,
+                                           reporter=reporter, keep_functions=keep_functions, final=final,
+                                           include_structures=include_structures, include_dynamic_types=include_dynamic_types,
+                                           use_pch=False)
     result = finish_layout(api, current, text, ["library"] * len(lines))
     fingerprint = compiler.preprocessed_code_fingerprint(current)
     if fingerprint is None or compiler.preprocessed_code_fingerprint(result) != fingerprint:
         result = current
+    else:
+        compiler.remember_submission_layout(current, result)
     if writer.size(result) >= writer.size(text):
+        return finish(text)
+    writer.save(f"removed {len(accepted)} unused declaration(s)", result)
+    return finish(result)
+
+
+def prune_optimized_declarations(api, text, *, compiler, writer, reporter, keep_functions,
+                                 checkpoint_limit=None):
+    if compiler.extra_args:
         return text
-    writer.save(f"removed {accepted} function/method declaration(s)", result)
-    return result
+    lines = text.splitlines(keepends=True)
+    functions = definition_candidates(api, text, ["library"] * len(lines))
+    scopes = function_scopes(api, text, functions)
+    protected = api.portable_body_dependencies(text, functions)
+    functions = [item for item in functions if not scopes[item] and item.name not in keep_functions | protected]
+    streams = []
+    for item in functions:
+        if item.name not in {"operator<<", "operator>>"}:
+            continue
+        source = "".join(lines[item.start:item.end + 1])
+        body = api.function_body_span(source)
+        header = source[:body[0]]
+        if re.search(r"\b(?:istream|ostream)\b", header) and re.search(r"\b(?:i128|u128|__int128_t|__uint128_t)\b", header):
+            streams.append(item)
+    offsets = [0]
+    for line in lines:
+        offsets.append(offsets[-1] + len(line))
+    roots = uncalled_function_groups(api, text, functions) + [{stream} for stream in streams]
+    if not roots:
+        return text
+    groups = []
+    for root in roots:
+        group = set(root)
+        while True:
+            identifiers = set(api.code_identifiers("".join(
+                "".join(lines[item.start:item.end + 1]) for item in group)))
+            added = {item for item in functions if item.name in identifiers} - group
+            if not added:
+                break
+            group.update(added)
+        while True:
+            outside = mask_ranges(api, text, [(offsets[x.start], offsets[x.end + 1], "") for x in group])
+            identifiers = set(api.code_identifiers(outside))
+            shared = {item for item in group - root if item.name in identifiers}
+            if not shared:
+                break
+            group -= shared
+        groups.append(group)
+
+    def remove_declarations(source, items):
+        candidate = mask_ranges(api, source, [(offsets[x.start], offsets[x.end + 1], "") for x in items])
+        aliases = api.unreferenced_declaration_candidates(candidate, keep_functions, compiler.dangerous_macro_names(text))
+        aliases = [x for x in aliases if x.label.startswith("unreferenced declaration ")
+                   and re.match(r"\s*using\s+\w+\s*=", "".join(lines[x.start:x.end + 1]))]
+        return mask_ranges(api, candidate, [(offsets[x.start], offsets[x.end + 1], "") for x in aliases])
+
+    combined = set.union(*groups)
+    proposal = remove_declarations(text, combined)
+    if checkpoint_limit is not None:
+        formatted = finish_layout(api, proposal, text, ["library"] * len(lines))
+        if not writer.below_limit(formatted, checkpoint_limit):
+            return text
+    with api.CompilerWorkspace(cxx=compiler.cxx, standard=compiler.standard,
+            include_paths=compiler.include_paths, extra_args=compiler.extra_args,
+            timeout=compiler.timeout, reporter=reporter, keep_unused_functions=False,
+            whole_program=compiler.submission_whole_program, optimization="-O2") as verification:
+        verification.pch_disabled = True
+        reference = verification.object_signature(text)
+        if reference is None:
+            return text
+        current, accepted = text, set()
+        def remove(items, candidate=None):
+            nonlocal current
+            items = set(items) - accepted
+            if not items:
+                return True
+            if candidate is None:
+                candidate = remove_declarations(current, items)
+            reporter.phase("optimized", f"checking {len(items)} unused declaration(s) at -O2")
+            if verification.object_signature(candidate) != reference:
+                return False
+            linked = verification._run([verification.cxx, str(verification.directory / "semantic.o"),
+                "-o", str(verification.executable), *verification.extra_args, "-lquadmath"])
+            if linked.returncode:
+                return False
+            accepted.update(items)
+            current = candidate
+            return True
+        if not remove(combined, proposal) and checkpoint_limit is None:
+            for group in groups:
+                remove(group)
+        if not accepted:
+            return text
+        result = finish_layout(api, current, text, ["library"] * len(lines))
+        if verification.preprocessed_code_fingerprint(result) != verification.preprocessed_code_fingerprint(current):
+            result = current
+        if writer.size(result) >= writer.size(text):
+            return text
+        writer.save(f"removed {len(accepted)} unused declaration(s) at -O2", result)
+        return result
 
 
 def try_cleanup(api, text: str, *, compiler, writer, reporter, target_bytes: int | None,
@@ -473,6 +1024,8 @@ def try_cleanup(api, text: str, *, compiler, writer, reporter, target_bytes: int
         return None
     compiler.submission_whole_program = not names.intersection({"extern", "externally_visible", "weak", "alias"}) and re.search(
         r"\boperator\s+(?:new|delete)\b", api.strip_comments(text)) is None
+    compiler.submission_optimization = "-Og" if compiler.submission_whole_program and not expanded.intersection({
+        "__builtin_constant_p", "__builtin_object_size", "__builtin_dynamic_object_size"}) else "-O2"
     context = compiler.preprocessed_code_fingerprint(text)
     if context is None:
         return None
@@ -510,13 +1063,13 @@ def try_cleanup(api, text: str, *, compiler, writer, reporter, target_bytes: int
     valid, diagnostic = compiler.validate_submission(text)
     if not valid:
         return None
+    if checkpoint is not None and priority_bytes not in writer.reached_limits:
+        writer.save(f"verified {priority_bytes:,} B checkpoint", checkpoint)
     reference = compiler.submission_object_signature(text)
     if reference is None:
         return None
     dependencies = dict(compiler.object_dependencies)
     reference_undefined = set(compiler.object_undefined)
-    if checkpoint is not None:
-        writer.save(f"verified {priority_bytes:,} B checkpoint", checkpoint)
     declaration_source = None
     def publish(result):
         writer.save("verified feature selection", result)
@@ -554,7 +1107,8 @@ def try_cleanup(api, text: str, *, compiler, writer, reporter, target_bytes: int
         reporter.phase("features", f"verified checkpoint at {writer.size(result):,} B; continuing cleanup")
         return result
 
-    if priority_bytes is not None and priority_bytes not in writer.reached_limits:
+    if (priority_bytes is not None and priority_bytes not in writer.reached_limits
+            and writer.below_limit(candidate, priority_bytes)):
         checkpoint = api.try_size_checkpoint(text, compiler=compiler, writer=writer, reporter=reporter,
                                              limit=priority_bytes, keep_comments=keep_comments,
                                              reference_checked=True)
@@ -570,7 +1124,12 @@ def try_cleanup(api, text: str, *, compiler, writer, reporter, target_bytes: int
         formatted = finish_layout(api, candidate, text, owners, feature_token=feature_token)
         if not writer.below_limit(formatted, priority_bytes):
             return
-        valid, diagnostic = compiler.validate_submission(formatted)
+        fingerprint = compiler.preprocessed_code_fingerprint(candidate)
+        if fingerprint is not None and compiler.preprocessed_code_fingerprint(formatted) == fingerprint:
+            compiler.remember_submission_layout(candidate, formatted)
+            valid, diagnostic = True, ""
+        else:
+            valid, diagnostic = compiler.validate_submission(formatted)
         if valid:
             writer.save(f"verified {priority_bytes:,} B checkpoint", formatted)
             writer.report_checkpoint(formatted, priority_bytes)
@@ -590,6 +1149,7 @@ def try_cleanup(api, text: str, *, compiler, writer, reporter, target_bytes: int
         save_priority_checkpoint(current)
         return True
 
+    module_base = current
     optional = optional_feature_ranges(api, current, owners)
     if optional:
         current = mask_ranges(api, current, optional)
@@ -662,7 +1222,7 @@ def try_cleanup(api, text: str, *, compiler, writer, reporter, target_bytes: int
         accepted += int(current != text)
         save_priority_checkpoint(current)
     else:
-        current = freeze_conditions(api, initial, compiler)
+        current = module_base
         if current is None or compiler.submission_object_signature(current) != reference:
             return None
         if optional:
@@ -670,6 +1230,23 @@ def try_cleanup(api, text: str, *, compiler, writer, reporter, target_bytes: int
         if forward:
             prove(mask_ranges(api, current, forward))
         select(pending)
+    positions = [0]
+    for line in current.splitlines(keepends=True):
+        positions.append(positions[-1] + len(line))
+    for ranges in optional_type_ranges(current, owners):
+        proposal = mask_ranges(api, current, ranges)
+        if proposal == current:
+            continue
+        aliases = api.unreferenced_declaration_candidates(
+            proposal, api.DEFAULT_KEEP_FUNCTIONS,
+            compiler.dangerous_macro_names(text), include_friend_types=True)
+        proposal = mask_ranges(api, proposal, [(positions[x.start], positions[x.end + 1], "") for x in aliases])
+        prove(proposal)
+    if priority_bytes in writer.reached_limits and not writer.below_limit(
+            finish_layout(api, current, text, owners, feature_token=feature_token), target_bytes):
+        branches = discarded_constexpr_branches(api, current, owners, emitted_lines)
+        if branches:
+            prove(mask_ranges(api, current, branches))
     for round_index in range(4):
         if accepted and writer.below_limit(
                 finish_layout(api, current, text, owners, feature_token=feature_token), target_bytes):
@@ -766,6 +1343,7 @@ def try_cleanup(api, text: str, *, compiler, writer, reporter, target_bytes: int
     fingerprint = compiler.preprocessed_code_fingerprint(current)
     if fingerprint is not None and compiler.preprocessed_code_fingerprint(result) == fingerprint:
         result_signature = current_signature
+        compiler.remember_submission_layout(current, result)
     else:
         result_signature = compiler.submission_object_signature(result)
     if current_signature is None or result_signature is None or result_signature != current_signature:

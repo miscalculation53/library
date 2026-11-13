@@ -26,7 +26,7 @@ class Value
 public:
   Value() = default;
   Value(const T &value) : coefficient(value) {}
-  template <class I, std::enable_if_t<std::is_integral_v<I>, int> = 0>
+  template <class I, std::enable_if_t<is_integral_ext<I>, int> = 0>
   Value(I value) : coefficient(T(value)) {}
 
   bool is_fixed() const { return owner == nullptr; }
@@ -116,7 +116,7 @@ public:
       }
       const auto &b = blocks[s.first];
       vc<T> w(gradient.begin() + s.output, gradient.begin() + s.output + b.output_size), t;
-      if constexpr (!std::is_integral_v<T>)
+      if constexpr (!is_integral_ext<T>)
       {
         if (s.kind == Kind::Convolution) t = convolution_transpose(w, b.parameter, b.input.size());
         if (s.kind == Kind::Modulo) t = polynomial_mod_transpose(w, b.parameter, b.input.size());

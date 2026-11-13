@@ -74,6 +74,15 @@ DMDecomposition dm_decomposition(const GraphUndirected<Cost, is_erasable> &g,
   return {move(ids), CSR<int>(blocks, left), CSR<int>(blocks, right), move(dag), move(matching)};
 }
 
+template <class Cost, bool is_erasable, class Color, class I = int, class J = int>
+DMDecomposition dm_decomposition(const GraphUndirected<Cost, is_erasable> &g,
+                                const vc<Color> &color, const vc<pair<I, J>> &matching)
+{
+  for (auto [u, v] : matching)
+    assert(u128(u) < u128(g.size()) && u128(v) < u128(g.size()));
+  return dm_decomposition(g, color, vc<pair<int, int>>(ALL(matching)));
+}
+
 // 最大マッチングも求めてDM分解を返す。
 template <class Cost, bool is_erasable, class Color>
 DMDecomposition dm_decomposition(const GraphUndirected<Cost, is_erasable> &g, const vc<Color> &color)

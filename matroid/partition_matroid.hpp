@@ -2,41 +2,60 @@
 
 #include "../ds/csr.hpp"
 #include "linear_matroid.hpp"
+#include "../algebra/from_integer.hpp"
 
-template <class F>
-LinearMatroid<F> partition_linear_representation(const vc<int> &group, const vc<int> &capacity,
+template <class F = FieldAddSubMulDiv<modint998244353>, class G = int, class C = int, bool Sparse = false>
+auto partition_linear_representation(const vc<G> &group, const vc<C> &capacity,
                                                  const vc<typename F::S> &points)
 {
   using S = typename F::S;
   const int n = group.size(), k = capacity.size();
   assert(int(points.size()) == n);
   vc<int> count(k), offset(k + 1);
-  for (int g : group)
+  for (auto g : group)
   {
-    assert(0 <= g && g < k);
+    assert(u128(g) < unsigned(k));
     count[g]++;
   }
   for (int g = 0; g < k; g++)
   {
-    assert(capacity[g] >= 0);
-    offset[g + 1] = offset[g] + min(capacity[g], count[g]);
+    if constexpr (is_signed_ext<C>) assert(capacity[g] >= 0);
+    offset[g + 1] = offset[g] + int(min<common_type_t<C, int>>(capacity[g], count[g]));
   }
   const int dimension = offset[k];
-  vvc<S> columns(n, vc<S>(dimension, F::e0()));
+  internal::LinearRepresentationBuilder<F, Sparse> columns(dimension, n);
   for (int e = 0; e < n; e++)
   {
     const int g = group[e];
     S power = F::e1();
     for (int i = offset[g]; i < offset[g + 1]; i++)
-      columns[e][i] = power, power = F::mul(power, points[e]);
+      columns.set(e, i, power), power = F::mul(power, points[e]);
   }
-  return LinearMatroid<F>(dimension, columns);
+  return std::move(columns).finish();
+}
+
+template <class F = FieldAddSubMulDiv<modint998244353>, class G = int, class C = int, bool Sparse = false>
+auto partition_linear_representation(const vc<G> &group, const vc<C> &capacity)
+{
+  vc<int> count(capacity.size());
+  auto points = gen_vec(group.size(), [&](int e)
+  {
+    assert(u128(group[e]) < capacity.size());
+    const int g = int(group[e]), i = count[g]++;
+    auto point = from_integer<F>(i);
+    assert((common_type_t<C, int>(capacity[g]) < 2 || i == 0 || point != F::e0()));
+    return point;
+  });
+  return partition_linear_representation<F, G, C, Sparse>(group, capacity, points);
 }
 
 /**
  * @brief 分割マトロイド
  * @docs docs/matroid/partition_matroid.md
  */
+
+// group[i]: 要素 i がどのグループに入るか
+// capacity[j]: グループ j から選ばれる個数の上限
 class PartitionMatroid
 {
   vc<int> group, capacity, count;
@@ -60,21 +79,54 @@ public:
     build({});
   }
 
+  template <class G = int, class C = int>
+  PartitionMatroid(const vc<G> &group, const vc<C> &capacity)
+      : PartitionMatroid(gen_vec(group.size(), [&](int e)
+        {
+          assert(u128(group[e]) < capacity.size());
+          return int(group[e]);
+        }), gen_vec(capacity.size(), [&](int g)
+        {
+          if constexpr (is_signed_ext<C>) assert(capacity[g] >= 0);
+          return u128(capacity[g]) < group.size() ? int(capacity[g]) : int(group.size());
+        })) {}
+
   int size() const { return group.size(); }
 
-  template <class F>
+  template <class F = FieldAddSubMulDiv<modint998244353>>
   LinearMatroid<F> linear_representation(const vc<typename F::S> &points) const
   {
     return partition_linear_representation<F>(group, capacity, points);
   }
 
-  void build(const vc<int> &s)
+  template <class F = FieldAddSubMulDiv<modint998244353>>
+  LinearMatroid<F> linear_representation() const
+  {
+    return partition_linear_representation<F>(group, capacity);
+  }
+
+  template <class F = FieldAddSubMulDiv<modint998244353>>
+  SparseMatrix<F> sparse_linear_representation(const vc<typename F::S> &points) const
+  {
+    return partition_linear_representation<F, int, int, true>(group, capacity, points);
+  }
+
+  template <class F = FieldAddSubMulDiv<modint998244353>>
+  SparseMatrix<F> sparse_linear_representation() const
+  {
+    return partition_linear_representation<F, int, int, true>(group, capacity);
+  }
+
+  template <class I = int>
+  void build(const vc<I> &s)
   {
     fill(ALL(selected), false);
     fill(ALL(count), 0);
-    for (int e : s)
+    for (auto value : s)
     {
-      assert(0 <= e && e < size() && !selected[e]);
+      assert(u128(value) < unsigned(size()));
+      const int e = int(value);
+      assert(!selected[e]);
       selected[e] = true;
       const int g = group[e];
       members[g][count[g]++] = e;

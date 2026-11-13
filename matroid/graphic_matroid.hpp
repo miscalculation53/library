@@ -4,20 +4,20 @@
 #include "../tree/add_virtual_root.hpp"
 #include "linear_matroid.hpp"
 
-template <class F>
-LinearMatroid<F> graphic_linear_representation(int vertices, const vc<pair<int, int>> &edges)
+template <class F = FieldAddSubMulDiv<modint998244353>, class I = int, class J = int, bool Sparse = false>
+auto graphic_linear_representation(int vertices, const vc<pair<I, J>> &edges)
 {
-  using S = typename F::S;
   assert(vertices >= 0);
-  vvc<S> columns(edges.size(), vc<S>(vertices, F::e0()));
+  internal::LinearRepresentationBuilder<F, Sparse> columns(vertices, edges.size());
   for (int e = 0; e < int(edges.size()); e++)
   {
     const auto [u, v] = edges[e];
-    assert(0 <= u && u < vertices && 0 <= v && v < vertices);
-    columns[e][u] = F::e1();
-    columns[e][v] = F::add(columns[e][v], F::minus(F::e1()));
+    assert(u128(u) < unsigned(vertices) && u128(v) < unsigned(vertices));
+    if (u128(u) == u128(v)) continue;
+    columns.set(e, int(u), F::e1());
+    columns.set(e, int(v), F::minus(F::e1()));
   }
-  return LinearMatroid<F>(vertices, columns);
+  return std::move(columns).finish();
 }
 
 /**
@@ -42,22 +42,39 @@ public:
     build({});
   }
 
+  template <class I = int, class J = int>
+  GraphicMatroid(int vertices, const vc<pair<I, J>> &edges)
+      : GraphicMatroid(vertices, vc<pair<int, int>>(ALL(edges)))
+  {
+    for (auto [u, v] : edges)
+      assert(u128(u) < unsigned(vertices) && u128(v) < unsigned(vertices));
+  }
+
   int size() const { return edges.size(); }
 
-  template <class F>
+  template <class F = FieldAddSubMulDiv<modint998244353>>
   LinearMatroid<F> linear_representation() const
   {
     return graphic_linear_representation<F>(vertices, edges);
   }
 
-  void build(const vc<int> &s)
+  template <class F = FieldAddSubMulDiv<modint998244353>>
+  SparseMatrix<F> sparse_linear_representation() const
+  {
+    return graphic_linear_representation<F, int, int, true>(vertices, edges);
+  }
+
+  template <class I = int>
+  void build(const vc<I> &s)
   {
     fill(ALL(selected), false);
     vc<pair<int, int>> selected_edges;
     selected_edges.reserve(s.size());
-    for (int e : s)
+    for (auto value : s)
     {
-      assert(0 <= e && e < size() && !selected[e]);
+      assert(u128(value) < unsigned(size()));
+      const int e = int(value);
+      assert(!selected[e]);
       selected[e] = true;
       selected_edges.push_back(edges[e]);
     }
@@ -73,7 +90,7 @@ public:
       for (int i = 0; i < int(queue.size()); i++)
       {
         int v = queue[i];
-        for (const auto &edge : graph.out_edges(v)) if (s[edge.index] != parent_edge[v])
+        for (const auto &edge : graph.out_edges(v)) if (int(s[edge.index]) != parent_edge[v])
         {
           const int u = edge.to;
           assert(component[u] == -1);

@@ -8,6 +8,8 @@
 
 oracle の共通仕様は [マトロイド](matroid.md) を参照。重みを扱う場合は [重み付き交叉](weighted_matroid_intersection.md) を使う。
 
+`initial` の要素番号には、`i128`・`u128` を含む任意の整数型を使える。
+
 ## 使用例
 
 ```cpp
@@ -25,9 +27,9 @@ auto selected = matroid_intersection(left, right); // {1, 2}
 #### matroid_intersection
 
 ```cpp
-template<class M1, class M2>
+template<class M1, class M2, class I = int>
 vc<int> matroid_intersection(M1 first, M2 second,
-                            const vc<int>& initial = {});
+                            const vc<I>& initial = {});
 ```
 
 最大共通独立集合の要素番号を昇順に返す。空配列も有効な答え。`initial` を初期解として増加させられる。oracle を値で受け取り、内部の状態を作り直す。

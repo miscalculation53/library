@@ -92,10 +92,11 @@ public:
     solved = false;
   }
   // 指定した全変数が value のときだけ profit >= 0 の利益を加える。
-  void add_all_profit(const vc<int> &vertices, bool value, Cost profit)
+  template <class I = int>
+  void add_all_profit(const vc<I> &vertices, bool value, Cost profit)
   {
     assert(profit >= 0);
-    for (int v : vertices) check_vertex(v);
+    for (auto v : vertices) assert(u128(v) < unsigned(n));
     if (vertices.empty()) { offset -= Unsigned(profit); solved = false; return; }
     if (profit == 0) return;
     const int extra = nodes++;

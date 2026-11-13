@@ -16,12 +16,15 @@ assert((c == vc<ll>{3, -2, -8}));
 #### convolution_4e18
 
 ```cpp
-vc<ll> convolution_4e18(vc<ll> a, vc<ll> b)
+template<class I = ll, class J = ll>
+vc<ll> convolution_4e18(const vc<I>& a, const vc<J>& b)
 ```
 
 畳み込みの最終結果が $4.2 \times 10^{18}$ 程度に収まる場合に、結果を `ll` で計算する。
 
 ACL の `convolution_ll` は `ll` の範囲を全部できるようにしている代わりに mod が $3$ つになっている。欲しくなったらこれも作るかも。
+
+入力の整数型はそれぞれ独立に選べ、`i128`・`u128` にも対応する。入力値は `ll` に収まるものとし、`ll` に変換して計算する。
 
 ##### 制約
 

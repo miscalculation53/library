@@ -22,7 +22,7 @@ public:
     {
       assert(this->capacity[v] >= 0);
       const int p = parent[v];
-      assert(-1 <= p && p < k && p != v);
+      assert(-1 <= p && p < k);
     }
     tree = add_virtual_root(k, parent);
     this->parent = tree.parents();
@@ -30,17 +30,38 @@ public:
     build({});
   }
 
+  template <class P = int, class C = int, class G = int>
+  LaminarMatroid(const vc<P> &parent, const vc<C> &capacity, const vc<G> &group)
+      : LaminarMatroid(gen_vec(parent.size(), [&](int v)
+        {
+          const auto p = parent[v];
+          if constexpr (is_signed_ext<P>) if (p == -1) return -1;
+          assert(u128(p) < parent.size());
+          return int(p);
+        }), gen_vec(capacity.size(), [&](int v)
+        {
+          if constexpr (is_signed_ext<C>) assert(capacity[v] >= 0);
+          return u128(capacity[v]) < group.size() ? int(capacity[v]) : int(group.size());
+        }), gen_vec(group.size(), [&](int e)
+        {
+          assert(u128(group[e]) < parent.size());
+          return int(group[e]);
+        })) {}
+
   int size() const { return group.size(); }
 
-  void build(const vc<int> &s)
+  template <class I = int>
+  void build(const vc<I> &s)
   {
-    independent = s;
+    independent.assign(ALL(s));
     fill(ALL(selected), false);
     const int root = tree.root();
     count.assign(capacity.size(), 0);
-    for (int e : s)
+    for (auto value : s)
     {
-      assert(0 <= e && e < size() && !selected[e]);
+      assert(u128(value) < unsigned(size()));
+      const int e = int(value);
+      assert(!selected[e]);
       selected[e] = true;
       count[group[e]]++;
     }

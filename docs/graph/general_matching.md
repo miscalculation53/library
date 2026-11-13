@@ -4,6 +4,8 @@
 
 一般無向グラフの最大マッチングを Micali–Vazirani 法で求める。[GraphUndirected](graph.md) の重み付き・重みなし・辺削除可能な形式に対応する。多重辺を扱い、自己ループは読み飛ばす。重みは使わない。追加メモリは $O(n+m)$。
 
+初期マッチングの両端の頂点番号には、それぞれ `i128`・`u128` を含む任意の整数型を使える。
+
 ## 使用例
 
 ```cpp
@@ -23,10 +25,10 @@ matching = general_matching(g, vc<pair<int, int>>{{1, 2}});
 #### general_matching
 
 ```cpp
-template <class Cost, bool erasable>
+template <class Cost, bool erasable, class I = int, class J = int>
 vc<pair<int, int>> general_matching(
     const GraphUndirected<Cost, erasable> &g,
-    const vc<pair<int, int>> &initial = {});
+    const vc<pair<I, J>> &initial = {});
 ```
 
 最大マッチングを頂点対 `(u, v)` の配列で返す。各対は `u < v` を満たし、配列は `u` の昇順。各頂点は高々一度現れ、最大解が複数ある場合の組合せは任意。空配列も有効な答えになる。

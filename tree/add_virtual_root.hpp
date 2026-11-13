@@ -12,15 +12,16 @@ RootedTree add_virtual_root(int n, const vc<T> &forest)
 {
   assert(n >= 0);
   vc<int> par(n + 1, -1);
-  if constexpr (is_integral_v<T>)
+  if constexpr (is_integral_ext<T>)
   {
     assert(SZ(forest) == n);
     repi(v, n)
     {
-      if (forest[v] < 0 || uintmax_t(forest[v]) == uintmax_t(v)) par[v] = n;
+      if constexpr (is_signed_ext<T>) if (forest[v] < 0) { par[v] = n; continue; }
+      if (u128(forest[v]) == unsigned(v)) par[v] = n;
       else
       {
-        assert(uintmax_t(forest[v]) < uintmax_t(n));
+        assert(u128(forest[v]) < unsigned(n));
         par[v] = forest[v];
       }
     }
@@ -30,7 +31,7 @@ RootedTree add_virtual_root(int n, const vc<T> &forest)
     vvc<int> adj(n);
     for (auto [u, v] : forest)
     {
-      assert(uintmax_t(u) < uintmax_t(n) && uintmax_t(v) < uintmax_t(n));
+      assert(u128(u) < unsigned(n) && u128(v) < unsigned(n));
       adj[u].eb(v), adj[v].eb(u);
     }
     vc<int> que;

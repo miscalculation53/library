@@ -2,21 +2,22 @@
 
 #include "../template/template_all_but_modint.hpp"
 #include "linear_matroid.hpp"
+#include "../algebra/from_integer.hpp"
 
-template <class F>
-LinearMatroid<F> uniform_linear_representation(int rank, const vc<typename F::S> &distinct_points)
+template <class F = FieldAddSubMulDiv<modint998244353>, bool Sparse = false>
+auto uniform_linear_representation(int rank, const vc<typename F::S> &distinct_points)
 {
   using S = typename F::S;
   assert(rank >= 0);
   const int n = distinct_points.size(), dimension = min(rank, n);
-  vvc<S> columns(n, vc<S>(dimension, F::e0()));
+  internal::LinearRepresentationBuilder<F, Sparse> columns(dimension, n);
   for (int e = 0; e < n; e++)
   {
     S power = F::e1();
     for (int i = 0; i < dimension; i++)
-      columns[e][i] = power, power = F::mul(power, distinct_points[e]);
+      columns.set(e, i, power), power = F::mul(power, distinct_points[e]);
   }
-  return LinearMatroid<F>(dimension, columns);
+  return std::move(columns).finish();
 }
 
 /**
@@ -35,21 +36,55 @@ public:
 
   int size() const { return n; }
 
-  template <class F>
+  template <class F = FieldAddSubMulDiv<modint998244353>>
   LinearMatroid<F> linear_representation(const vc<typename F::S> &points) const
   {
     assert(int(points.size()) == n);
     return uniform_linear_representation<F>(rank_, points);
   }
 
-  void build(const vc<int> &s)
+  template <class F = FieldAddSubMulDiv<modint998244353>>
+  LinearMatroid<F> linear_representation() const
+  {
+    auto points = gen_vec(n, [&](int e)
+    {
+      auto point = from_integer<F>(e);
+      assert(rank_ < 2 || e == 0 || point != F::e0());
+      return point;
+    });
+    return linear_representation<F>(points);
+  }
+
+  template <class F = FieldAddSubMulDiv<modint998244353>>
+  SparseMatrix<F> sparse_linear_representation(const vc<typename F::S> &points) const
+  {
+    assert(int(points.size()) == n);
+    return uniform_linear_representation<F, true>(rank_, points);
+  }
+
+  template <class F = FieldAddSubMulDiv<modint998244353>>
+  SparseMatrix<F> sparse_linear_representation() const
+  {
+    auto points = gen_vec(n, [&](int e)
+    {
+      auto point = from_integer<F>(e);
+      assert(rank_ < 2 || e == 0 || point != F::e0());
+      return point;
+    });
+    return sparse_linear_representation<F>(points);
+  }
+
+  template <class I = int>
+  void build(const vc<I> &s)
   {
     assert(int(s.size()) <= rank_);
     fill(ALL(selected), false);
-    independent = s;
-    for (int e : s)
+    independent.assign(ALL(s));
+    for (auto value : s)
     {
-      assert(0 <= e && e < n && !selected[e]);
+      assert(u128(value) < unsigned(n));
+      const int e = int(value);
+      assert(!selected[e]);
       selected[e] = true;
     }
   }

@@ -8,7 +8,6 @@
 #include "laminar_matroid.hpp"
 #include "binary_matroid.hpp"
 #include "linear_matroid.hpp"
-#include "linear_representation.hpp"
 #include "independence_matroid.hpp"
 #include "matroid_greedy.hpp"
 #include "matroid_intersection.hpp"

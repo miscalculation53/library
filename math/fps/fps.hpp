@@ -5,7 +5,8 @@
 #include "../modint/binomial.hpp"
 #include "../convolution/convolution.hpp"
 #include "../modint/sqrt_mod.hpp"
-#include "internal_ntt.hpp"
+#include "../modint/internal_block_dot32.hpp"
+#include "internal_fps.hpp"
 #include "internal_sparse_log.hpp"
 
 /**
@@ -114,42 +115,42 @@ struct FormalPowerSeries : vc<mint>
   {
     assert(n >= 0);
     assert(g.get(0) != 0);
-    mint iv = g.front().inv();
-    vc<pair<int, mint>> gnz;
-    repi(j, min(n, g.sz())) if (g[j] != 0) gnz.eb(j, g[j]);
+    const mint iv = g.front().inv();
+    vc<pair<int, mint>> terms;
+    repi(j, 1, min(n, g.sz())) if (g[j] != 0) terms.eb(j, g[j]);
     resize(n);
     if constexpr (internal::ordinary_mod32<mint>::value)
     {
-      vc<pair<int, mint>> terms;
-      for (auto [j, b] : gnz) if (j > 0 && j < n) terms.eb(j, b);
-      const ull mod = mint::mod();
+      const auto mod = mint::mod();
       const int block = mod <= (1U << 30) ? 16 : 4;
+      for (auto &[j, b] : terms) b *= -iv;
+      const int first = terms.empty() ? n : terms.front().first;
+      repi(i, first) (*this)[i] *= iv;
+      size_t active = 0;
+      repi(i, first, n)
+      {
+        while (active < terms.size() && terms[active].first <= i) ++active;
+        size_t k = 0;
+        const uint seed = ((*this)[i] * iv).val();
+        const auto sum = internal::block_dot32(active, mod, block, seed, [&]()
+        {
+          const auto &[j, b] = terms[k++];
+          return ull((*this)[i - j].val()) * b.val();
+        });
+        (*this)[i] = mint::raw(sum);
+      }
+    }
+    else
       repi(i, n)
       {
-        ull sum = 0;
-        int used = 0;
-        for (const auto &[j, b] : terms)
+        fec([j, b] : terms)
         {
-          if (j > i) break;
-          sum += ull((*this)[i - j].val()) * b.val();
-          if (++used == block) sum %= mod, used = 0;
+          if (j > i)
+            break;
+          (*this)[i] -= (*this)[i - j] * b;
         }
-        (*this)[i] = ((*this)[i] - mint::raw(sum % mod)) * iv;
+        (*this)[i] *= iv;
       }
-      return *this;
-    }
-    repi(i, n)
-    {
-      fec([j, b] : gnz)
-      {
-        if (j == 0)
-          continue;
-        if (j > i)
-          break;
-        (*this)[i] -= (*this)[i - j] * b;
-      }
-      (*this)[i] *= iv;
-    }
     return *this;
   }
   F div_sparse(const F &g, int n) const { return F(*this).div_sparse_destructive(g, n); }
@@ -163,7 +164,7 @@ struct FormalPowerSeries : vc<mint>
       return {};
     mint iv = get(0).inv();
     if (auto tail = internal::fps_tail_power(*this, n, iv, -iv * iv, iv * iv * iv)) return std::move(*tail);
-    if (internal::fps_use_sparse(*this, n, internal::FPSSparseOperation::inv))
+    if (internal::fps_use_sparse<internal::FPSSparseOperation::inv>(*this, n))
       return F{1}.div_sparse(*this, n);
     const int N = bit_ceil(n);
     if (n >= 512 && ll(n) * 4 <= ll(N) * 3 && ntt_ok<mint>(N))
@@ -176,7 +177,7 @@ struct FormalPowerSeries : vc<mint>
     assert(g.get(0) != 0);
     if (n == 0)
       return {};
-    if (internal::fps_use_sparse(g, n, internal::FPSSparseOperation::div))
+    if (internal::fps_use_sparse<internal::FPSSparseOperation::div>(g, n))
       return div_sparse(g, n);
     return (resized(n) * g.inv(n)).resized(n);
   }
@@ -247,7 +248,7 @@ struct FormalPowerSeries : vc<mint>
     assert(get(0) == 1);
     if (n == 0)
       return {};
-    if (internal::fps_use_sparse(*this, n - 1, internal::FPSSparseOperation::div))
+    if (internal::fps_use_sparse<internal::FPSSparseOperation::div>(*this, n - 1))
       return internal::sparse_fps::logarithm<
           internal::ordinary_mod32<mint>::value>(*this, n);
     F f = resized(n);
@@ -394,7 +395,7 @@ struct FormalPowerSeries : vc<mint>
       res[0] = 1;
       return res;
     }
-    if (internal::fps_use_sparse(*this, n, internal::FPSSparseOperation::exp)) return exp_sparse(n);
+    if (internal::fps_use_sparse<internal::FPSSparseOperation::exp>(*this, n)) return exp_sparse(n);
     if (ntt_ok<mint>(bit_ceil(n)))
     {
       if (n < 512) return internal::fps_exp_bs(*this, n);
@@ -455,7 +456,7 @@ struct FormalPowerSeries : vc<mint>
       if (auto tail = internal::fps_tail_power(f, need, factor, mint(k) * factor * iv,
           need <= 2 ? mint(0) : mint(k) * (mint(k) - 1) * Binomial<mint>::inv(2) * factor * iv * iv))
         return (std::move(*tail) << shift);
-    if (internal::fps_use_sparse(*this, need, internal::FPSSparseOperation::pow, d0))
+    if (internal::fps_use_sparse<internal::FPSSparseOperation::pow>(*this, need, d0))
       return pow_sparse(k, n);
     f *= iv;
     F res = (f.log(need) * mint(k)).exp(need);
@@ -481,7 +482,7 @@ struct FormalPowerSeries : vc<mint>
     mint iv = a0.inv(), half = Binomial<mint>::inv(2);
     if (auto tail = internal::fps_tail_power(shifted, need, r, r * iv * half, -r * iv * iv * half * half * half))
       return std::move(*tail) << (d0 / 2);
-    if (internal::fps_use_sparse(*this, need, internal::FPSSparseOperation::sqrt, d0))
+    if (internal::fps_use_sparse<internal::FPSSparseOperation::sqrt>(*this, need, d0))
       return sqrt_sparse(n);
     F f = std::move(shifted); f *= iv;
     F g = need >= 512 && ntt_ok<mint>(bit_ceil(need))

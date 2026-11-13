@@ -66,22 +66,29 @@ inline ll fps_sqrt_weight(int n, bool native)
     cost += (native ? 5 : 15) * fps_ntt_weight(2 * m) + fps_inv_weight(m, native);
   return cost;
 }
-template <class F> bool fps_use_sparse(const F &f, int n, FPSSparseOperation op, int offset = 0)
+template <FPSSparseOperation op, class F>
+bool fps_use_sparse(const F &f, int n, int offset = 0)
 {
   using mint = typename F::value_type;
   if (n <= 64)
     return true;
   bool native = ntt_ok<mint>(bit_ceil(n));
-  ll inverse = fps_inv_weight(n, native), cost = inverse;
+  ll cost;
+  if constexpr (op == FPSSparseOperation::exp)
+    cost = fps_exp_weight(n, native);
+  else if constexpr (op == FPSSparseOperation::sqrt)
+    cost = fps_sqrt_weight(n, native);
+  else
+    cost = fps_inv_weight(n, native);
   int scale = 14, repetitions = 1;
-  if (op == FPSSparseOperation::div || op == FPSSparseOperation::pow)
+  if constexpr (op == FPSSparseOperation::div || op == FPSSparseOperation::pow)
     cost += (ntt_ok<mint>(2 * n - 1) ? 3 : 9) * fps_ntt_weight(bit_ceil(2 * n - 1));
-  if (op == FPSSparseOperation::exp)
-    cost = fps_exp_weight(n, native), scale = 18;
-  if (op == FPSSparseOperation::pow)
+  if constexpr (op == FPSSparseOperation::exp)
+    scale = 18;
+  if constexpr (op == FPSSparseOperation::pow)
     cost += fps_exp_weight(n, native), repetitions = 2;
-  if (op == FPSSparseOperation::sqrt)
-    cost = fps_sqrt_weight(n, native), scale = 17, repetitions = 2;
+  if constexpr (op == FPSSparseOperation::sqrt)
+    scale = 17, repetitions = 2;
   if (!native)
     scale = 25;
   if constexpr (!internal::ordinary_mod32<mint>::value)
@@ -107,18 +114,18 @@ optional<F> fps_tail_power(const F &f, int n, typename F::value_type constant, t
     ++d;
   if (d < min(n, f.sz()) && ll(d) * 3 < n)
     return nullopt;
-  F result = f.resized(n) * linear;
+  F res = f.resized(n) * linear;
   if (n)
-    result[0] = constant;
+    res[0] = constant;
   if (ll(d) * 2 < n && d < f.sz())
   {
     int need = n - 2 * d;
     F h(need);
     repi(i, min(need, f.sz() - d)) h[i] = f[d + i];
     F square = (h * h).resized(need) * quadratic;
-    repi(i, need) result[2 * d + i] += square[i];
+    repi(i, need) res[2 * d + i] += square[i];
   }
-  return result;
+  return res;
 }
 
 template <class F> F fps_inv_newton(const F &input, int n)
@@ -151,6 +158,38 @@ template <class F> F fps_inv_newton(const F &input, int n)
   return g.resized(n);
 }
 
+template <class F, class Visit>
+inline void fps_for_block_pair(const vc<F> &a, const vc<F> &b, int k, Visit visit)
+{
+  for (int i = max(0, k - int(b.size()) + 1); i <= k && i < int(a.size()); ++i)
+  {
+    int j = k - i;
+    if (!a[i].empty() && !b[j].empty()) visit(i, j);
+  }
+}
+
+template <class F> inline void fps_intt_prefix(F &f, int m)
+{
+  intt(f);
+  f.resize(m);
+}
+
+template <class F> inline void fps_intt_block(F &f, int m)
+{
+  using mint = typename F::value_type;
+  fps_intt_prefix(f, m);
+  mint iz = mint(2 * m).inv();
+  for (auto &v : f) v *= iz;
+}
+
+template <class F>
+inline void fps_ntt_product_prefix(F &f, const F &transformed, int n)
+{
+  ntt(f);
+  repi(i, 2 * n) f[i] *= transformed[i];
+  fps_intt_prefix(f, n);
+}
+
 template <class F> F fps_block_product(const vc<F> &a, const vc<F> &b, int k, int m, bool delayed = false)
 {
   using mint = typename F::value_type;
@@ -162,67 +201,59 @@ template <class F> F fps_block_product(const vc<F> &a, const vc<F> &b, int k, in
       const ull mod = mint::mod(), max_product = (mod - 1) * (mod - 1);
       const ull batch = numeric_limits<ull>::max() / max_product;
       square = square && mod <= (1ULL << 31);
-      vc<ull> positive(2 * m), negative(2 * m);
-      ull pending = 0;
+      vc<ull> pos(2 * m), neg(2 * m);
+      ull cnt = 0;
       auto flush = [&]()
       {
         repi(j, 2 * m)
         {
-          freq[j] += mint(positive[j] % mod);
-          freq[j] -= mint(negative[j] % mod);
-          positive[j] = negative[j] = 0;
+          freq[j] += mint(pos[j] % mod);
+          freq[j] -= mint(neg[j] % mod);
+          pos[j] = neg[j] = 0;
         }
-        pending = 0;
+        cnt = 0;
       };
       for (int carry : {0, 1})
-        for (int i = max(0, k - carry - int(b.size()) + 1); i <= k - carry && i < int(a.size()); ++i)
-          if (!a[i].empty() && !b[k - carry - i].empty())
+        fps_for_block_pair(a, b, k - carry, [&](int i, int j)
+        {
+          if (square && i > j)
+            return;
+          int times = square && i < j ? 2 : 1;
+          if (cnt + times > batch)
+            flush();
+          repi(t, 2 * m)
           {
-            int other = k - carry - i;
-            if (square && i > other)
-              continue;
-            int times = square && i < other ? 2 : 1;
-            if (pending + times > batch)
-              flush();
-            repi(j, 2 * m)
-            {
-              ull v = ull(a[i][j].val()) * b[other][j].val() * times;
-              if (carry && j >= m)
-                negative[j] += v;
-              else
-                positive[j] += v;
-            }
-            pending += times;
-            if (pending == batch)
-              flush();
+            ull v = ull(a[i][t].val()) * b[j][t].val() * times;
+            if (carry && t >= m)
+              neg[t] += v;
+            else
+              pos[t] += v;
           }
-      if (pending)
+          cnt += times;
+          if (cnt == batch)
+            flush();
+        });
+      if (cnt)
         flush();
-      intt(freq);
-      freq.resize(m);
-      mint iz = mint(2 * m).inv();
-      for (auto &v : freq)
-        v *= iz;
+      fps_intt_block(freq, m);
       return freq;
     }
-  for (int i = max(0, k - int(b.size()) + 1); i <= k && i < int(a.size()); ++i)
-    if (!a[i].empty() && !b[k - i].empty())
-      repi(j, 2 * m) freq[j] += a[i][j] * b[k - i][j];
-  for (int i = max(0, k - int(b.size())); i < k && i < int(a.size()); ++i)
-    if (!a[i].empty() && !b[k - 1 - i].empty())
-      repi(j, 2 * m)
-      {
-        mint v = a[i][j] * b[k - 1 - i][j];
-        if (j < m)
-          freq[j] += v;
-        else
-          freq[j] -= v;
-      }
-  intt(freq);
-  freq.resize(m);
-  mint iz = mint(2 * m).inv();
-  for (auto &v : freq)
-    v *= iz;
+  fps_for_block_pair(a, b, k, [&](int i, int j)
+  {
+    repi(t, 2 * m) freq[t] += a[i][t] * b[j][t];
+  });
+  fps_for_block_pair(a, b, k - 1, [&](int i, int j)
+  {
+    repi(t, 2 * m)
+    {
+      mint v = a[i][t] * b[j][t];
+      if (t < m)
+        freq[t] += v;
+      else
+        freq[t] -= v;
+    }
+  });
+  fps_intt_block(freq, m);
   return freq;
 }
 
@@ -288,10 +319,7 @@ template <class F> F fps_exp_bs(const F &h, int n, bool split_last = true)
       g_fft = g.resized(2 * m);
       ntt(g_fft);
       t = s.resized(2 * m);
-      ntt(t);
-      repi(i, 2 * m) t[i] *= g_fft[i];
-      intt(t);
-      t.resize(m);
+      fps_ntt_product_prefix(t, g_fft, m);
       for (auto &v : t)
         v *= i2m;
     }
@@ -329,10 +357,7 @@ template <class F> F fps_inv_block(const F &f, int n, int blocks, bool partial =
   repi(k, 1, s)
   {
     F v = fps_block_product(ff, gf, k, m, true).resized(2 * m);
-    ntt(v);
-    repi(i, 2 * m) v[i] *= gf[0][i];
-    intt(v);
-    v.resize(m);
+    fps_ntt_product_prefix(v, gf[0], m);
     mint iz = -mint(2 * m).inv();
     for (auto &x : v)
       x *= iz;
@@ -346,15 +371,15 @@ template <class F> F fps_inv_block(const F &f, int n, int blocks, bool partial =
     df[k].resize(2 * m);
     ntt(df[k]);
   }
-  F result(r * m);
-  repi(k, s) copy(g[k].begin(), g[k].end(), result.begin() + k * m);
+  F res(r * m);
+  repi(k, s) copy(g[k].begin(), g[k].end(), res.begin() + k * m);
   repi(k, h)
   {
     F v = fps_block_product(df, gf, k, m, true);
-    copy(v.begin(), v.end(), result.begin() + (s + k) * m);
+    copy(v.begin(), v.end(), res.begin() + (s + k) * m);
   }
-  result.resize(n);
-  return result;
+  res.resize(n);
+  return res;
 }
 
 template <class F> F fps_sqrt_newton(const F &f, int n)
@@ -386,8 +411,8 @@ template <class F> F fps_sqrt_block(const F &f, int n, int blocks, bool partial 
   F u = (g.inv(m) * mint(2).inv()).resized(2 * m);
   ntt(u);
   vc<F> gf(r);
-  F result(r * m);
-  copy(g.begin(), g.end(), result.begin());
+  F res(r * m);
+  copy(g.begin(), g.end(), res.begin());
   mint iz = mint(2 * m).inv();
   repi(k, 1, r)
   {
@@ -396,22 +421,19 @@ template <class F> F fps_sqrt_block(const F &f, int n, int blocks, bool partial 
     F v = fps_block_product(gf, gf, k, m, true);
     repi(i, m) v[i] = f.get(k * m + i) - v[i];
     v.resize(2 * m);
-    ntt(v);
-    repi(i, 2 * m) v[i] *= u[i];
-    intt(v);
-    v.resize(m);
+    fps_ntt_product_prefix(v, u, m);
     for (auto &x : v)
       x *= iz;
     g = std::move(v);
-    copy(g.begin(), g.end(), result.begin() + k * m);
+    copy(g.begin(), g.end(), res.begin() + k * m);
   }
-  result.resize(n);
-  return result;
+  res.resize(n);
+  return res;
 }
 
 template <class F>
 F fps_exp_block_product(const vc<F> &a, const vc<F> &b, int k, int m, bool delayed,
-                        vc<ull> &positive, vc<ull> &negative)
+                        vc<ull> &pos, vc<ull> &neg)
 {
   using mint = typename F::value_type;
   if constexpr (ordinary_mod32<mint>::value)
@@ -419,18 +441,18 @@ F fps_exp_block_product(const vc<F> &a, const vc<F> &b, int k, int m, bool delay
     {
       const ull mod = mint::mod(), batch = numeric_limits<ull>::max() / ((mod - 1) * (mod - 1));
       F freq(2 * m);
-      ull pending = 0;
+      ull cnt = 0;
       auto flush = [&]()
       {
         repi(j, m)
         {
-          freq[j] += mint::raw(positive[j] % mod);
-          positive[j] = 0;
-          freq[m + j] += mint::raw(positive[m + j] % mod);
-          freq[m + j] -= mint::raw(negative[j] % mod);
-          positive[m + j] = negative[j] = 0;
+          freq[j] += mint::raw(pos[j] % mod);
+          pos[j] = 0;
+          freq[m + j] += mint::raw(pos[m + j] % mod);
+          freq[m + j] -= mint::raw(neg[j] % mod);
+          pos[m + j] = neg[j] = 0;
         }
-        pending = 0;
+        cnt = 0;
       };
       using Term = pair<const mint *, const mint *>;
       vc<Term> terms;
@@ -457,28 +479,26 @@ F fps_exp_block_product(const vc<F> &a, const vc<F> &b, int k, int m, bool delay
       for (int carry : {0, 1})
       {
         terms.clear();
-        for (int i = max(0, k - carry - int(b.size()) + 1); i <= k - carry && i < int(a.size()); ++i)
-          if (!a[i].empty() && !b[k - carry - i].empty())
-            terms.emplace_back(a[i].data(), b[k - carry - i].data());
+        fps_for_block_pair(a, b, k - carry, [&](int i, int j)
+        {
+          terms.emplace_back(a[i].data(), b[j].data());
+        });
         for (int i = 0; i < int(terms.size()); )
         {
-          int count = min<ull>(min(4, int(terms.size()) - i), batch - pending);
+          int count = min<ull>(min(4, int(terms.size()) - i), batch - cnt);
           if (carry)
           {
-            append(positive.data(), 0, m, i, count);
-            append(negative.data(), m, m, i, count);
+            append(pos.data(), 0, m, i, count);
+            append(neg.data(), m, m, i, count);
           }
-          else append(positive.data(), 0, 2 * m, i, count);
+          else append(pos.data(), 0, 2 * m, i, count);
           i += count;
-          pending += count;
-          if (pending == batch) flush();
+          cnt += count;
+          if (cnt == batch) flush();
         }
       }
-      if (pending) flush();
-      intt(freq);
-      freq.resize(m);
-      mint iz = mint(2 * m).inv();
-      for (auto &v : freq) v *= iz;
+      if (cnt) flush();
+      fps_intt_block(freq, m);
       return freq;
     }
   return fps_block_product(a, b, k, m, delayed);
@@ -497,9 +517,9 @@ template <class F> F fps_exp_block(const F &f, int n, int blocks, bool delayed =
   Binomial<mint>::reserve(N - 1);
   int r = (n + m - 1) / m, high = r - s;
   vc<F> g(s), gf(s), q(r), qf(r), ef(high);
-  vc<ull> positive, negative;
+  vc<ull> pos, neg;
   if constexpr (ordinary_mod32<mint>::value)
-    if (delayed) positive.resize(2 * m), negative.resize(m);
+    if (delayed) pos.resize(2 * m), neg.resize(m);
   g[0] = fps_exp_bs(f.resized(m), m);
   F u = g[0].inv(m).resized(2 * m);
   ntt(u);
@@ -514,18 +534,12 @@ template <class F> F fps_exp_block(const F &f, int n, int blocks, bool delayed =
   }
   repi(k, 1, s)
   {
-    F phi = fps_exp_block_product(gf, qf, k, m, delayed, positive, negative).resized(2 * m);
-    ntt(phi);
-    repi(i, 2 * m) phi[i] *= u[i];
-    intt(phi);
-    phi.resize(m);
+    F phi = fps_exp_block_product(gf, qf, k, m, delayed, pos, neg).resized(2 * m);
+    fps_ntt_product_prefix(phi, u, m);
     mint iz = mint(2 * m).inv();
     repi(i, m) phi[i] *= iz * Binomial<mint>::inv_[k * m + i];
     phi.resize(2 * m);
-    ntt(phi);
-    repi(i, 2 * m) phi[i] *= gf[0][i];
-    intt(phi);
-    phi.resize(m);
+    fps_ntt_product_prefix(phi, gf[0], m);
     for (auto &v : phi)
       v *= iz;
     g[k] = std::move(phi);
@@ -534,11 +548,8 @@ template <class F> F fps_exp_block(const F &f, int n, int blocks, bool delayed =
   }
   repi(k, s, r)
   {
-    F value = fps_exp_block_product(qf, gf, k, m, delayed, positive, negative).resized(2 * m);
-    ntt(value);
-    repi(i, 2 * m) value[i] *= u[i];
-    intt(value);
-    value.resize(m);
+    F value = fps_exp_block_product(qf, gf, k, m, delayed, pos, neg).resized(2 * m);
+    fps_ntt_product_prefix(value, u, m);
     mint iz = -mint(2 * m).inv();
     for (auto &v : value)
       v *= iz;
@@ -552,18 +563,15 @@ template <class F> F fps_exp_block(const F &f, int n, int blocks, bool delayed =
     repi(i, m) ef[k][i] = q[s + k][i] * Binomial<mint>::inv_[(s + k) * m + i] - f.get((s + k) * m + i);
     ntt(ef[k]);
   }
-  F result(r * m);
-  repi(k, s)
-  {
-    copy(g[k].begin(), g[k].end(), result.begin() + k * m);
-  }
+  F res(r * m);
+  repi(k, s) copy(g[k].begin(), g[k].end(), res.begin() + k * m);
   repi(k, high)
   {
-    F value = fps_exp_block_product(gf, ef, k, m, delayed, positive, negative);
-    repi(i, m) result[(s + k) * m + i] = -value[i];
+    F value = fps_exp_block_product(gf, ef, k, m, delayed, pos, neg);
+    repi(i, m) res[(s + k) * m + i] = -value[i];
   }
-  result.resize(n);
-  return result;
+  res.resize(n);
+  return res;
 }
 
 }

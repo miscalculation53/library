@@ -17,9 +17,9 @@
 // - 上記でさらに i が素数しか動かないとき O(N^{2/3}) 時間
 //
 // 一般には m[i] = min_j{ a[ij] } としておおむね O(Σ_{i,j} min{√(N/d[ij]), N/(d[ij] m[i])}) 時間
-template <class R>
+template <class R, class I = ll>
 DirichletPrefixSum<R> euler_product_prefix_sum(const DirichletPrefixSum<R> &seed,
-  const vvc<pair<ll, typename R::S>> &factors)
+  const vvc<pair<I, typename R::S>> &factors)
 {
   using S = typename R::S;
   const ll n = seed.n();
@@ -44,7 +44,7 @@ DirichletPrefixSum<R> euler_product_prefix_sum(const DirichletPrefixSum<R> &seed
     for (const auto &[d, a] : factors[i])
     {
       assert(d >= 1);
-      if (d >= 2 && d <= n && a != R::e0()) minimum[i] = min(minimum[i], d);
+      if (d >= 2 && u128(d) <= u128(n) && a != R::e0()) minimum[i] = min(minimum[i], ll(d));
     }
   sort(order.begin(), order.end(), [&](int i, int j) { return minimum[i] > minimum[j]; });
   vc<int> touched;
@@ -57,9 +57,10 @@ DirichletPrefixSum<R> euler_product_prefix_sum(const DirichletPrefixSum<R> &seed
   };
   for (int fi : order)
   {
-    for (const auto &[d, a] : factors[fi])
+    for (const auto &[degree, a] : factors[fi])
     {
-      if (d > n || a == R::e0()) continue;
+      if (u128(degree) > u128(n) || a == R::e0()) continue;
+      const ll d = ll(degree);
       add_change(coordinates.index(d), R::mul(a, blocks[0]));
       const ll limit = n / d;
       const ll b = min(limit, max(first - 1, ll(iroot(limit, 2))));
@@ -104,7 +105,7 @@ DirichletPrefixSum<R> euler_product_prefix_sum(const DirichletPrefixSum<R> &seed
 // - 上記でさらに i が素数しか動かないとき O(N^{2/3}) 時間
 //
 // 一般には m[i] = min_j{ a[ij] } としておおむね O(Σ_{i,j} min{√(N/d[ij]), N/(d[ij] m[i])}) 時間
-template <class R>
+template <class R, class I = ll>
 DirichletPrefixSum<R> euler_product_prefix_sum(ll n,
-  const vvc<pair<ll, typename R::S>> &factors)
+  const vvc<pair<I, typename R::S>> &factors)
 { return euler_product_prefix_sum(DirichletPrefixSum<R>::unit(n), factors); }

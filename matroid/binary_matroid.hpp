@@ -3,10 +3,9 @@
 #include "../math/linalg/xor_basis.hpp"
 #include "linear_matroid.hpp"
 
-template <class F, class V>
-LinearMatroid<F> binary_linear_representation(const vc<V> &vectors)
+template <class F = FieldAddSubMulDiv<static_modint32<2>>, class V, bool Sparse = false>
+auto binary_linear_representation(const vc<V> &vectors)
 {
-  using S = typename F::S;
   using Bits = internal::XorBasisVector<V>;
   const int width = [&]
   {
@@ -14,13 +13,13 @@ LinearMatroid<F> binary_linear_representation(const vc<V> &vectors)
     else return Bits::default_dimension;
   }();
   assert(F::add(F::e1(), F::e1()) == F::e0());
-  vvc<S> columns(vectors.size(), vc<S>(width, F::e0()));
+  internal::LinearRepresentationBuilder<F, Sparse> columns(width, vectors.size());
   for (int e = 0; e < int(vectors.size()); e++)
   {
     assert(Bits::valid(vectors[e], width));
-    for (int b = 0; b < width; b++) if (Bits::test(vectors[e], b)) columns[e][b] = F::e1();
+    for (int b = 0; b < width; b++) if (Bits::test(vectors[e], b)) columns.set(e, b, F::e1());
   }
-  return LinearMatroid<F>(width, columns);
+  return std::move(columns).finish();
 }
 
 /**
@@ -56,22 +55,30 @@ public:
 
   int size() const { return int(vectors.size()); }
 
-  template <class F>
+  template <class F = FieldAddSubMulDiv<static_modint32<2>>>
   LinearMatroid<F> linear_representation() const
   {
     return binary_linear_representation<F>(vectors);
   }
+  template <class F = FieldAddSubMulDiv<static_modint32<2>>>
+  SparseMatrix<F> sparse_linear_representation() const
+  {
+    return binary_linear_representation<F, V, true>(vectors);
+  }
   int dimension() const { return basis.dimension(); }
   const vc<V> &columns() const { return vectors; }
 
-  void build(const vc<int> &s)
+  template <class I = int>
+  void build(const vc<I> &s)
   {
-    independent = s;
+    independent.assign(ALL(s));
     fill(ALL(selected), false);
     basis.clear();
-    for (int e : s)
+    for (auto value : s)
     {
-      assert(0 <= e && e < size() && !selected[e]);
+      assert(u128(value) < unsigned(size()));
+      const int e = int(value);
+      assert(!selected[e]);
       selected[e] = true;
       bool inserted = basis.insert(vectors[e]);
       assert(inserted);

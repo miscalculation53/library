@@ -108,26 +108,20 @@ struct fft_info
       iroot[i] = iroot[i + 1] * iroot[i + 1];
     }
 
+    auto set_rates = [&](int shift, auto &rate, auto &irate)
     {
       mint prod = 1, iprod = 1;
-      for (int i = 0; i <= rank2 - 2; i++)
+      for (int i = 0; i <= rank2 - shift; ++i)
       {
-        rate2[i] = root[i + 2] * prod;
-        irate2[i] = iroot[i + 2] * iprod;
-        prod *= iroot[i + 2];
-        iprod *= root[i + 2];
+        const int j = i + shift;
+        rate[i] = root[j] * prod;
+        irate[i] = iroot[j] * iprod;
+        prod *= iroot[j];
+        iprod *= root[j];
       }
-    }
-    {
-      mint prod = 1, iprod = 1;
-      for (int i = 0; i <= rank2 - 3; i++)
-      {
-        rate3[i] = root[i + 3] * prod;
-        irate3[i] = iroot[i + 3] * iprod;
-        prod *= iroot[i + 3];
-        iprod *= root[i + 3];
-      }
-    }
+    };
+    set_rates(2, rate2, irate2);
+    set_rates(3, rate3, irate3);
   }
 };
 
@@ -174,18 +168,13 @@ void ntt(vc<internal::modint_impl<internal::policy_static<mod>, PowInv>> &a)
   {
     if (h - len == 1)
     {
-      int p = 1 << (h - len - 1);
       mint rot = 1;
       for (int s = 0; s < (1 << len); s++)
       {
-        int offset = s << (h - len);
-        for (int i = 0; i < p; i++)
-        {
-          auto l = a[i + offset];
-          auto r = a[i + offset + p] * rot;
-          a[i + offset] = l + r;
-          a[i + offset + p] = l - r;
-        }
+        const int i = 2 * s;
+        auto l = a[i], r = a[i + 1] * rot;
+        a[i] = l + r;
+        a[i + 1] = l - r;
         if (s + 1 != (1 << len))
           rot *= info.rate2[countr_zero(~(unsigned int)(s))];
       }
@@ -203,18 +192,19 @@ void ntt(vc<internal::modint_impl<internal::policy_static<mod>, PowInv>> &a)
         int offset = s << (h - len);
         for (int i = 0; i < p; i++)
         {
+          const int j = i + offset;
           auto mod2 = wide(mint::mod()) * mint::mod();
-          auto a0 = wide(a[i + offset].val());
-          auto a1 = wide(a[i + offset + p].val()) * rot.val();
-          auto a2 = wide(a[i + offset + 2 * p].val()) * rot2.val();
-          auto a3 = wide(a[i + offset + 3 * p].val()) * rot3.val();
+          auto a0 = wide(a[j].val());
+          auto a1 = wide(a[j + p].val()) * rot.val();
+          auto a2 = wide(a[j + 2 * p].val()) * rot2.val();
+          auto a3 = wide(a[j + 3 * p].val()) * rot3.val();
           auto a1na3imag =
               wide(mint(a1 + mod2 - a3).val()) * imag.val();
           auto na2 = mod2 - a2;
-          a[i + offset] = a0 + a2 + a1 + a3;
-          a[i + offset + 1 * p] = a0 + a2 + (2 * mod2 - (a1 + a3));
-          a[i + offset + 2 * p] = a0 + na2 + a1na3imag;
-          a[i + offset + 3 * p] = a0 + na2 + (mod2 - a1na3imag);
+          a[j] = a0 + a2 + a1 + a3;
+          a[j + p] = a0 + a2 + (2 * mod2 - (a1 + a3));
+          a[j + 2 * p] = a0 + na2 + a1na3imag;
+          a[j + 3 * p] = a0 + na2 + (mod2 - a1na3imag);
         }
         if (s + 1 != (1 << len))
           rot *= info.rate3[countr_zero(~(unsigned int)(s))];
@@ -243,23 +233,12 @@ void intt(vc<internal::modint_impl<internal::policy_static<mod>, PowInv>> &a)
   {
     if (len == 1)
     {
-      int p = 1 << (h - len);
-      mint irot = 1;
-      for (int s = 0; s < (1 << (len - 1)); s++)
+      const int p = 1 << (h - 1);
+      for (int i = 0; i < p; i++)
       {
-        int offset = s << (h - len + 1);
-        for (int i = 0; i < p; i++)
-        {
-          auto l = a[i + offset];
-          auto r = a[i + offset + p];
-          a[i + offset] = l + r;
-          a[i + offset + p] =
-              (wide(mint::mod()) + l.val() - wide(r.val())) *
-              irot.val();
-          ;
-        }
-        if (s + 1 != (1 << (len - 1)))
-          irot *= info.irate2[countr_zero(~(unsigned int)(s))];
+        auto l = a[i], r = a[i + p];
+        a[i] = l + r;
+        a[i + p] = wide(mint::mod()) + l.val() - wide(r.val());
       }
       len--;
     }
@@ -275,21 +254,22 @@ void intt(vc<internal::modint_impl<internal::policy_static<mod>, PowInv>> &a)
         int offset = s << (h - len + 2);
         for (int i = 0; i < p; i++)
         {
-          auto a0 = wide(a[i + offset + 0 * p].val());
-          auto a1 = wide(a[i + offset + 1 * p].val());
-          auto a2 = wide(a[i + offset + 2 * p].val());
-          auto a3 = wide(a[i + offset + 3 * p].val());
+          const int j = i + offset;
+          auto a0 = wide(a[j].val());
+          auto a1 = wide(a[j + p].val());
+          auto a2 = wide(a[j + 2 * p].val());
+          auto a3 = wide(a[j + 3 * p].val());
 
           auto a2na3iimag =
               wide(mint((wide(mint::mod()) + a2 - a3) * iimag.val()).val());
 
-          a[i + offset] = a0 + a1 + a2 + a3;
-          a[i + offset + 1 * p] =
+          a[j] = a0 + a1 + a2 + a3;
+          a[j + p] =
               (a0 + (mint::mod() - a1) + a2na3iimag) * irot.val();
-          a[i + offset + 2 * p] =
+          a[j + 2 * p] =
               (a0 + a1 + (mint::mod() - a2) + (mint::mod() - a3)) *
               irot2.val();
-          a[i + offset + 3 * p] =
+          a[j + 3 * p] =
               (a0 + (mint::mod() - a1) + (mint::mod() - a2na3iimag)) *
               irot3.val();
         }

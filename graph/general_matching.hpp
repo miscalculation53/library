@@ -330,14 +330,15 @@ struct MicaliVazirani
     return augmented;
   }
 
-  vc<pair<int, int>> solve(const vc<pair<int, int>> &initial)
+  template <class I = int, class J = int>
+  vc<pair<int, int>> solve(const vc<pair<I, J>> &initial)
   {
     for (auto [u, v] : initial)
     {
-      assert(0 <= u && u < n && 0 <= v && v < n && u != v);
+      assert(u128(u) < unsigned(n) && u128(v) < unsigned(n) && u128(u) != u128(v));
       assert(mate[u] == -1 && mate[v] == -1);
       int found = -1;
-      for (int e : adj[u]) if (other(e, u) == v) { found = e; break; }
+      for (int e : adj[u]) if (other(e, u) == int(v)) { found = e; break; }
       assert(found != -1);
       mate[u] = v, mate[v] = u, mate_edge[u] = mate_edge[v] = found;
     }
@@ -356,9 +357,9 @@ struct MicaliVazirani
 }
 
 // 初期マッチングから開始し、最大マッチングを頂点対の配列で返す。
-template <class Cost, bool is_erasable>
+template <class Cost, bool is_erasable, class I = int, class J = int>
 vc<pair<int, int>> general_matching(const GraphUndirected<Cost, is_erasable> &g,
-                                  const vc<pair<int, int>> &initial = {})
+                                  const vc<pair<I, J>> &initial = {})
 {
   vc<pair<int, int>> es;
   es.reserve(g.num_of_edges());

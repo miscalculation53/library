@@ -7,9 +7,9 @@
  * @docs docs/flow/bipartite_cover.md
  */
 
-template <class Cost, bool is_erasable, class Color>
+template <class Cost, bool is_erasable, class Color, class I = int, class J = int>
 vc<int> bipartite_vertex_cover(const GraphUndirected<Cost, is_erasable> &g,
-                               const vc<Color> &color, const vc<pair<int, int>> &matching)
+                               const vc<Color> &color, const vc<pair<I, J>> &matching)
 {
   const int n = g.template size<int>();
   assert(int(color.size()) == n);
@@ -17,7 +17,7 @@ vc<int> bipartite_vertex_cover(const GraphUndirected<Cost, is_erasable> &g,
   vc<bool> reached(n);
   for (auto [u, v] : matching)
   {
-    assert(0 <= u && u < n && 0 <= v && v < n);
+    assert(u128(u) < unsigned(n) && u128(v) < unsigned(n));
     assert(mate[u] == -1 && mate[v] == -1 && color[u] != color[v]);
     mate[u] = v, mate[v] = u;
   }
@@ -50,9 +50,9 @@ template <class Cost, bool is_erasable, class Color>
 vc<int> bipartite_vertex_cover(const GraphUndirected<Cost, is_erasable> &g, const vc<Color> &color)
 { return bipartite_vertex_cover(g, color, bipartite_matching(g, color)); }
 
-template <class Cost, bool is_erasable, class Color>
+template <class Cost, bool is_erasable, class Color, class I = int, class J = int>
 vc<int> bipartite_independent_set(const GraphUndirected<Cost, is_erasable> &g,
-                                  const vc<Color> &color, const vc<pair<int, int>> &matching)
+                                  const vc<Color> &color, const vc<pair<I, J>> &matching)
 {
   vc<bool> covered(g.template size<int>());
   for (int v : bipartite_vertex_cover(g, color, matching)) covered[v] = true;
@@ -67,15 +67,15 @@ vc<int> bipartite_independent_set(const GraphUndirected<Cost, is_erasable> &g, c
 
 // 一般の無向グラフでも、最大マッチングが与えられれば O(n+m) で構成できる。
 // 辺番号を返す。孤立点がある場合は nullopt。
-template <class Cost, bool is_erasable>
+template <class Cost, bool is_erasable, class I = int, class J = int>
 optional<vc<int>> minimum_edge_cover(const GraphUndirected<Cost, is_erasable> &g,
-                                      const vc<pair<int, int>> &matching)
+                                      const vc<pair<I, J>> &matching)
 {
   const int n = g.template size<int>();
   vc<int> mate(n, -1);
   for (auto [u, v] : matching)
   {
-    assert(0 <= u && u < n && 0 <= v && v < n && u != v);
+    assert(u128(u) < unsigned(n) && u128(v) < unsigned(n) && u128(u) != u128(v));
     assert(mate[u] == -1 && mate[v] == -1);
     mate[u] = v, mate[v] = u;
   }

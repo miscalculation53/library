@@ -69,15 +69,21 @@ protected:
 public:
   CSR() : n(0), m(0), start{0} {}
   // 各行の要素数を指定し、値初期化された CSR を構築する
-  CSR(const vc<int> &row_sizes)
+  template <class I = int>
+  CSR(const vc<I> &row_sizes)
       : n(row_sizes.size())
   {
-    fec(s : row_sizes) assert(s >= 0);
-    start = cumlsum(row_sizes);
+    static_assert(is_integral_ext<I>);
+    start.resize(n + 1);
+    for (int i = 0; i < n; i++)
+    {
+      if constexpr (is_signed_ext<I>) assert(row_sizes[i] >= 0);
+      start[i + 1] = start[i] + int(row_sizes[i]);
+    }
     m = start.back();
     elist.resize(m);
     if constexpr (is_erasable)
-      len = row_sizes;
+      len.assign(ALL(row_sizes));
   }
   // (i, elem) が格納された vector
   template <class I>
@@ -103,7 +109,8 @@ public:
     }
   }
   // vv[i] に elem たちが格納された vector
-  CSR(const vvc<T> &vv) : n(vv.size()), start(n + 1, 0)
+  template <class U = T>
+  CSR(const vvc<U> &vv) : n(vv.size()), start(n + 1, 0)
   {
     m = 0;
     fec(row : vv) m += row.size();
@@ -122,6 +129,13 @@ public:
       }
     }
     start.back() = m;
+  }
+
+  template <class U, bool erasable>
+  explicit CSR(const CSR<U, erasable> &other)
+      : CSR(gen_vec(other.template size<int>(), [&](int i) { return other[i].template size<int>(); }))
+  {
+    for (int i = 0; i < n; i++) copy(ALL(other[i]), elist.begin() + start[i]);
   }
 
   Row operator[](int i) { return Row(elist.begin() + start[i], elist.begin() + get_last(i)); }
@@ -191,3 +205,6 @@ public:
   vc<T> &get_elist() { return elist; }
   const vc<T> &get_elist() const { return elist; }
 };
+
+template <class T>
+CSR(const vvc<T> &) -> CSR<T>;

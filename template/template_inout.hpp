@@ -118,6 +118,26 @@ namespace fastio
 
   inline constexpr uint powers_of_ten[8] = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000};
 
+  template <class U>
+  __attribute__((always_inline)) inline void read_wide_integer_tail(
+      U &value, const char *&p, uint64_t columns, uint64_t stop)
+  {
+    const unsigned digits = unsigned(__builtin_ctzll(stop)) / 8;
+    if (digits)
+    {
+      uint tail;
+      if (digits <= 3)
+      {
+        tail = unsigned(p[0] - '0');
+        if (digits >= 2) tail = tail * 10 + unsigned(p[1] - '0');
+        if (digits == 3) tail = tail * 10 + unsigned(p[2] - '0');
+      }
+      else tail = decode_eight(columns << (8 * (8 - digits)));
+      value = value * powers_of_ten[digits] + tail;
+      p += digits;
+    }
+  }
+
   template <class T>
   __attribute__((always_inline)) inline void rd1_integer(T &x)
   {
@@ -154,20 +174,7 @@ namespace fastio
         {
           if constexpr (sizeof(U) > sizeof(ull))
           {
-            const unsigned digits = unsigned(__builtin_ctzll(stop)) / 8;
-            if (digits)
-            {
-              uint tail;
-              if (digits <= 3)
-              {
-                tail = unsigned(p[0] - '0');
-                if (digits >= 2) tail = tail * 10 + unsigned(p[1] - '0');
-                if (digits == 3) tail = tail * 10 + unsigned(p[2] - '0');
-              }
-              else tail = decode_eight(columns << (8 * (8 - digits)));
-              value = value * powers_of_ten[digits] + tail;
-              p += digits;
-            }
+            read_wide_integer_tail(value, p, columns, stop);
             goto integer_complete;
           }
           else
@@ -416,6 +423,29 @@ integer_complete:
     return store_short(out, uint(x));
   }
 
+  template <class U, bool newline>
+  __attribute__((always_inline)) inline void write_wide_integer(U magnitude, bool negative)
+  {
+    char text[48];
+    char *const end = text + sizeof(text);
+    char *first = end;
+    constexpr ull base = 1000000000000000000ULL;
+    while (magnitude >= base)
+    {
+      const U q = magnitude / base;
+      const ull tail = ull(magnitude - q * base);
+      const uint hi = uint(tail / 1000000000ULL);
+      first -= 18;
+      store_nine(first, hi);
+      store_nine(first + 9, uint(tail - ull(hi) * 1000000000ULL));
+      magnitude = q;
+    }
+    first = prepend_wide(first, ull(magnitude));
+    if (negative) *--first = '-';
+    append_bytes(first, size_t(end - first));
+    if constexpr (newline) append_char('\n');
+  }
+
   template <class T, bool newline = false>
   __attribute__((always_inline)) inline void wt1_integer(T x)
   {
@@ -439,29 +469,7 @@ integer_complete:
       por = uint32_t(out - obuf);
       return;
     }
-    char text[48];
-    char *const end = text + sizeof(text);
-    char *first = end;
-    if constexpr (sizeof(U) > sizeof(ull))
-    {
-      constexpr ull base = 1000000000000000000ULL;
-      while (magnitude >= base)
-      {
-        const U q = magnitude / base;
-        const ull tail = ull(magnitude - q * base);
-        const uint hi = uint(tail / 1000000000ULL);
-        first -= 18;
-        store_nine(first, hi);
-        store_nine(first + 9, uint(tail - ull(hi) * 1000000000ULL));
-        magnitude = q;
-      }
-      first = prepend_wide(first, ull(magnitude));
-    }
-    else if constexpr (sizeof(U) > sizeof(uint)) first = prepend_wide(first, magnitude);
-    else first = prepend_small(first, magnitude);
-    if (negative) *--first = '-';
-    append_bytes(first, size_t(end - first));
-    if constexpr (newline) append_char('\n');
+    else write_wide_integer<U, newline>(magnitude, negative);
   }
 
   template <class T, enable_if_t<numeric_limits<T>::is_integer, int> = 0>

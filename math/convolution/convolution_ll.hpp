@@ -25,3 +25,10 @@ vc<ll> convolution_4e18(const vc<ll> &a, const vc<ll> &b)
     return internal::convolution_naive(a, b);
   return internal::convolution_crt<2013265921, 2113929217>(a, b);
 }
+
+template <class I = ll, class J = ll>
+vc<ll> convolution_4e18(const vc<I> &a, const vc<J> &b)
+{
+  static_assert(is_integral_ext<I> && is_integral_ext<J>);
+  return convolution_4e18(vc<ll>(ALL(a)), vc<ll>(ALL(b)));
+}

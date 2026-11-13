@@ -182,6 +182,30 @@ class Job:
                     os.killpg(process.pid, signal.SIGKILL)
                     process.wait()
 
+    def restore_reuse_record(self, scratch: Path) -> bool:
+        current_path = comment_record_path(scratch)
+        previous_path = comment_record_path(self.output)
+        if not current_path.is_file():
+            return not previous_path.is_file()
+        try:
+            current = read_json(current_path)
+            previous_text = previous_path.read_text()
+            previous = json.loads(previous_text)
+            stamp, _ = submit_code.SubmissionStamp.read(self.output.read_text())
+            if (not isinstance(previous, dict) or not isinstance(current, dict)
+                    or previous.get("source") != str(self.source)
+                    or current.get("source") != str(self.source)
+                    or previous.get("input_digest") != stamp.input_digest
+                    or stamp.source_digest != self.request["source_digest"]
+                    or not isinstance(previous.get("inputs"), dict)
+                    or previous["inputs"].get(str(self.source)) != stamp.source_digest
+                    or previous["inputs"] != current.get("inputs")):
+                return False
+        except (OSError, ValueError, submit_code.ToolError):
+            return False
+        atomic_write(current_path, previous_text)
+        return True
+
     def execute(self) -> None:
         # Keep the include directory stable so repeated runs reuse the compiler's PCH.
         scratch = self.directory / "work.cpp"
@@ -194,13 +218,16 @@ class Job:
                 + TOOL.read_bytes()
                 + (TOOL.with_name("bundle_fast.py").read_bytes()
                    if TOOL.with_name("bundle_fast.py").is_file() else b"")
+                + (TOOL.with_name("submission_layout.py").read_bytes()
+                   if TOOL.with_name("submission_layout.py").is_file() else b"")
             ).hexdigest()
             with locked(self.directory):
                 self.check()
                 previous = read_json(self.directory / "artifact.json")
                 if (previous.get("expansion_digest") == self.expansion_digest
                         and previous.get("output_digest") == self.expected_output
-                        and self.expected_output is not None):
+                        and self.expected_output is not None
+                        and self.restore_reuse_record(scratch)):
                     self.published_size = self.output.stat().st_size
                     if previous.get("complete") and self.published_size < PRIORITY_BYTE_LIMIT:
                         status(self.directory, self.request, "done", bytes=self.published_size,

@@ -221,8 +221,6 @@ constexpr pair<mint, mint> crt_mod_word_constexpr(const array<R, n> &rs, const a
 
 namespace crt_word_dispatch
 {
-  constexpr bool constant_evaluation() { return __builtin_is_constant_evaluated(); }
-
   template <class V>
   constexpr bool runtime_requires_word(const V &ms)
   {
@@ -238,14 +236,33 @@ namespace crt_word_dispatch
       return false;
     }
   }
+}
 
-  template <class M0>
-  constexpr bool array_requires_word()
+template <class mint, class U1, class U2, size_t n>
+constexpr pair<mint, mint> crt_mod_normalized(const array<U1, n> &rs, const array<U2, n> &ms)
+{
+  using T = larger_int_t<U2>;
+  assert(rs.size() == ms.size());
+  mint r = 0, m = 1;
+  array<T, n> rr{}, mm{};
+  fill(ALL(mm), 1);
+  repi(i, n)
   {
-    using M = remove_cv_t<M0>;
-    if constexpr (!is_integral_ext<M>) return false;
-    else return !is_signed_ext<M> || sizeof(M) > sizeof(uint64_t) || constant_evaluation();
+    assert(ms[i] >= U2(1));
+    assert(U1(0) <= rs[i] && U2(rs[i]) < ms[i]);
+    auto [g, im, _] = extgcd<T>(mm[i], ms[i]);
+    assert(g == 1);
+    T t = safemod<T>((rs[i] - rr[i]) * im, ms[i]);
+    r += t * m, m *= ms[i];
+    repi(j, i + 1, n)
+    {
+      rr[j] += t * mm[j] % ms[j];
+      if (rr[j] >= ms[j])
+        rr[j] -= ms[j];
+      mm[j] *= ms[i], mm[j] %= ms[j];
+    }
   }
+  return {r, m};
 }
 }
 
@@ -351,7 +368,7 @@ constexpr pair<mint, mint> crt_mod_constexpr(const array<U1, n> &rs, const array
   else
   {
     if constexpr (is_integral_ext<remove_cv_t<U2>>)
-      if (crt_internal::crt_word_dispatch::array_requires_word<U2>())
+      if (__builtin_is_constant_evaluated())
         return crt_internal::crt_mod_word_constexpr<mint>(rs, ms);
     if constexpr (sizeof(U2) > 4)
     {
@@ -365,28 +382,7 @@ constexpr pair<mint, mint> crt_mod_constexpr(const array<U1, n> &rs, const array
         return crt_mod_constexpr<mint>(residues, moduli);
       }
     }
-    using T = larger_int_t<U2>;
-    assert(rs.size() == ms.size());
-    mint r = 0, m = 1;
-    array<T, n> rr{}, mm{};
-    fill(ALL(mm), 1);
-    repi(i, n)
-    {
-      assert(ms[i] >= U2(1));
-      assert(U1(0) <= rs[i] && U2(rs[i]) < ms[i]);
-      auto [g, im, _] = extgcd<T>(mm[i], ms[i]);
-      assert(g == 1);
-      T t = safemod<T>((rs[i] - rr[i]) * im, ms[i]);
-      r += t * m, m *= ms[i];
-      repi(j, i + 1, n)
-      {
-        rr[j] += t * mm[j] % ms[j];
-        if (rr[j] >= ms[j])
-          rr[j] -= ms[j];
-        mm[j] *= ms[i], mm[j] %= ms[j];
-      }
-    }
-    return {r, m};
+    return crt_internal::crt_mod_normalized<mint>(rs, ms);
   }
 }
 

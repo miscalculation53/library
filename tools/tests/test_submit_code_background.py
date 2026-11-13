@@ -1,4 +1,6 @@
 from pathlib import Path
+import hashlib
+import io
 import shutil
 import subprocess
 import sys
@@ -6,6 +8,7 @@ import tempfile
 import time
 import unittest
 import json
+from unittest import mock
 
 import tools_test_paths
 
@@ -276,7 +279,8 @@ class BackgroundTests(unittest.TestCase):
         from submit_code import SubmissionStamp, comment_record_path
         tool = self.root / 'submit_code.py'
         shutil.copyfile(tools_test_paths.TOOLS_DIR / 'submit_code.py', tool)
-        shutil.copyfile(tools_test_paths.TOOLS_DIR / 'bundle_fast.py', self.root / 'bundle_fast.py')
+        for name in ('bundle_fast.py', 'submission_layout.py'):
+            shutil.copyfile(tools_test_paths.TOOLS_DIR / name, self.root / name)
         dependency = self.root / 'dependency.hpp'
         dependency.write_text('#pragma once\n/*! Header license. */\nint value = 0;\n')
         self.source.write_text('#include "dependency.hpp"\nint main() { return value; }\n')
@@ -311,6 +315,108 @@ class BackgroundTests(unittest.TestCase):
         self.assertNotEqual(SubmissionStamp.read(self.content())[0].input_digest, stamp.input_digest)
         if shutil.which('node'):
             self.assertIn('main.cpp と一致', view())
+
+
+class ReuseRecordTests(unittest.TestCase):
+    def setUp(self):
+        import submit_code
+        import submit_code_background as background
+        self.api = submit_code
+        self.background = background
+        self.temporary = tempfile.TemporaryDirectory(prefix='reuse records ')
+        self.addCleanup(self.temporary.cleanup)
+        self.root = Path(self.temporary.name).resolve()
+        self.source = self.root / 'main.cpp'
+        self.source.write_text('int main() { return 0; }\n')
+        self.output, self.directory = background.paths(self.source)
+        self.directory.mkdir(parents=True)
+        self.expansions = 0
+        self.cleanups = 0
+        self.interrupt = False
+        self.inputs = {str(self.source): background.digest(self.source)}
+
+    def run_tool(self, arguments, *, checkpoint=None):
+        if arguments[0] == 'expand':
+            self.expansions += 1
+            scratch = Path(arguments[arguments.index('-o') + 1])
+            token = f'{self.expansions:032x}'
+            body = (self.api.bundle_fast.marker(token, True, 'core_types') + '\n'
+                    + self.source.read_text()
+                    + self.api.bundle_fast.marker(token, False, 'core_types') + '\n')
+            stamp = self.api.SubmissionStamp(self.inputs[str(self.source)],
+                                            hashlib.sha256(body.encode()).hexdigest())
+            self.api.save_source_comments(scratch, set(), provenance={
+                'source': str(self.source), 'inputs': dict(self.inputs),
+                'input_digest': stamp.input_digest, 'feature_token': token,
+            })
+            self.api.atomic_write(scratch, stamp.render(body))
+        else:
+            self.cleanups += 1
+            scratch = Path(arguments[1])
+            stamp, body = self.api.SubmissionStamp.read(scratch.read_text())
+            record = self.background.read_json(self.api.comment_record_path(scratch))
+            self.assertEqual(stamp.input_digest, record['input_digest'])
+            if self.interrupt:
+                raise self.background.GenerationInterrupted('test', 'interrupted')
+            if 'submit-code-feature:' in body:
+                self.assertIn(self.api.bundle_fast.marker(record['feature_token'], True), body)
+            self.api.atomic_write(scratch, stamp.render(self.source.read_text()))
+
+    def execute(self):
+        request = {'token': f'job-{self.expansions}', 'source': str(self.source),
+                   'source_digest': self.background.digest(self.source),
+                   'output_digest': self.background.digest(self.output)}
+        self.background.write_json(self.directory / 'request.json', request)
+
+        def fingerprint(scratch):
+            _, body = self.api.SubmissionStamp.read(scratch.read_text())
+            record = self.background.read_json(self.api.comment_record_path(scratch))
+            return self.api.bundle_fast.feature_lines(self.api, body, record['feature_token'])[0].encode()
+
+        with mock.patch.object(self.api, 'expansion_reuse_fingerprint', side_effect=fingerprint), \
+                mock.patch.object(self.background.Job, 'run', side_effect=self.run_tool):
+            self.background.Job(self.directory, request, io.StringIO()).execute()
+
+    def assert_record_matches(self):
+        stamp, _ = self.api.SubmissionStamp.read(self.output.read_text())
+        record = self.background.read_json(self.api.comment_record_path(self.output))
+        self.assertEqual(record['input_digest'], stamp.input_digest)
+        self.assertEqual(record['inputs'], self.inputs)
+
+    def test_resume_preserves_checkpoint_stamp_and_feature_token_together(self):
+        self.interrupt = True
+        with self.assertRaises(self.background.GenerationInterrupted):
+            self.execute()
+        self.assert_record_matches()
+        first = self.api.comment_record_path(self.output).read_text()
+        self.interrupt = False
+        self.execute()
+        self.assertEqual(self.expansions, 2)
+        self.assertEqual(self.cleanups, 2)
+        self.assert_record_matches()
+        self.assertEqual(self.api.comment_record_path(self.output).read_text(), first)
+        before = self.output.stat()
+        self.execute()
+        self.assertEqual(self.cleanups, 2)
+        self.assertEqual(self.output.stat(), before)
+        self.assert_record_matches()
+
+    def test_completed_output_with_mismatched_record_is_regenerated(self):
+        self.execute()
+        path = self.api.comment_record_path(self.output)
+        record = self.background.read_json(path)
+        record['input_digest'] = '0' * 64
+        self.background.write_json(path, record)
+        self.execute()
+        self.assertEqual(self.cleanups, 2)
+        self.assert_record_matches()
+
+    def test_identical_expansion_with_changed_input_records_is_regenerated(self):
+        self.execute()
+        self.inputs[str(self.root / 'dependency.hpp')] = '1' * 64
+        self.execute()
+        self.assertEqual(self.cleanups, 2)
+        self.assert_record_matches()
 
 
 if __name__ == "__main__":

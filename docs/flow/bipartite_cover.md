@@ -8,6 +8,8 @@
 
 一般の無向グラフにも、最大マッチングから最小辺被覆を作る関数を用意している。[参考：最小点被覆・最大独立集合・最小辺被覆](https://qiita.com/drken/items/7f98315b56c95a6181a4)
 
+`matching` の両端の頂点番号には、それぞれ `i128`・`u128` を含む任意の整数型を使える。
+
 ## 使用例
 
 ```cpp
@@ -31,9 +33,10 @@ assert(edge_cover && edge_cover->size() == 4 - matching.size());
 template <class Cost, bool is_erasable, class Color>
 vector<int> bipartite_vertex_cover(
     const GraphUndirected<Cost, is_erasable>& g, const vector<Color>& color);
+template<class Cost, bool is_erasable, class Color, class I = int, class J = int>
 vector<int> bipartite_vertex_cover(
     const GraphUndirected<Cost, is_erasable>& g, const vector<Color>& color,
-    const vector<pair<int,int>>& matching);
+    const vector<pair<I, J>>& matching);
 
 // 同じ引数で呼べる。
 vector<int> bipartite_independent_set(...);
@@ -58,10 +61,10 @@ vector<int> bipartite_independent_set(...);
 #### minimum_edge_cover / bipartite_edge_cover
 
 ```cpp
-template <class Cost, bool is_erasable>
+template <class Cost, bool is_erasable, class I = int, class J = int>
 optional<vector<int>> minimum_edge_cover(
     const GraphUndirected<Cost, is_erasable>& g,
-    const vector<pair<int,int>>& matching);
+    const vector<pair<I, J>>& matching);
 
 template <class Cost, bool is_erasable, class Color>
 optional<vector<int>> bipartite_edge_cover(

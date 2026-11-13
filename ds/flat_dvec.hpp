@@ -21,7 +21,7 @@ private:
   template <class I, size_t R>
   void init_shape(const I *sz, const T &init)
   {
-    static_assert(is_integral_v<I>);
+    static_assert(is_integral_ext<I>);
     static_assert(R >= 1);
     static_assert(D == 0 || D == R);
     if constexpr (D == 0)
@@ -32,8 +32,7 @@ private:
     bool empty_shape = false;
     for (size_t d = 0; d < R; d++)
     {
-      if constexpr (is_signed_v<I>)
-        assert(sz[d] >= 0);
+      assert(u128(sz[d]) <= u128(size_t(-1)));
       dims[d] = size_t(sz[d]);
       empty_shape |= dims[d] == 0;
     }
@@ -59,13 +58,16 @@ private:
       assert(sizeof...(I) == dims.size());
     else
       static_assert(sizeof...(I) == D);
-    static_assert((is_integral_v<I> && ...));
+    static_assert((is_integral_ext<I> && ...));
+    if constexpr (checked)
+    {
+      [[maybe_unused]] size_t d = 0;
+      ((assert(u128(is) < dims[d]), void(is), ++d), ...);
+    }
     array<size_t, sizeof...(I)> ids{size_t(is)...};
     size_t pos = 0;
     for (size_t d = 0; d < sizeof...(I); d++)
     {
-      if constexpr (checked)
-        assert(ids[d] < dims[d]);
       pos += ids[d] * strides[d];
     }
     return pos;

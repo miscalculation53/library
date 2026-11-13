@@ -41,10 +41,23 @@ public:
     assert(right_vertices >= 0);
     for (int v : adjacency_.get_elist()) assert(0 <= v && v < right_count);
   }
-  BipartiteMatchingState(int right_vertices, const vvc<int> &adjacency)
-      : BipartiteMatchingState(right_vertices, CSR<int>(adjacency)) {}
-  BipartiteMatchingState(int right_vertices, initializer_list<vc<int>> adjacency)
-      : BipartiteMatchingState(right_vertices, vvc<int>(adjacency)) {}
+  template <class I = int>
+  BipartiteMatchingState(int right_vertices, const vvc<I> &adjacency)
+      : BipartiteMatchingState(right_vertices, CSR<int>(adjacency))
+  {
+    for (const auto &row : adjacency) for (auto v : row)
+      assert(u128(v) < unsigned(right_vertices));
+  }
+  template <class I = int>
+  BipartiteMatchingState(int right_vertices, initializer_list<vc<I>> adjacency)
+      : BipartiteMatchingState(right_vertices, vvc<I>(adjacency)) {}
+  template <class I, bool erasable>
+  BipartiteMatchingState(int right_vertices, const CSR<I, erasable> &adjacency)
+      : BipartiteMatchingState(right_vertices, CSR<int>(adjacency))
+  {
+    for (int u = 0; u < adjacency.template size<int>(); u++) for (auto v : adjacency[u])
+      assert(u128(v) < unsigned(right_vertices));
+  }
 
   int left_size() const { return adjacency_.template size<int>(); }
   int right_size() const { return right_count; }

@@ -8,6 +8,8 @@ fundamental circuit から追加要素を除くと、最も近い飽和した祖
 
 [`add_virtual_root`](../tree/add_virtual_root.md) と [`RootedTree`](../tree/rooted_tree.md) により、森の親・部分木・集計順序を管理する。仮想根には容量を設けない。
 
+`build` の要素番号の配列には、`i128`・`u128` を含む任意の整数型を使える。返す要素番号は `int`。
+
 ## 使用例
 
 ```cpp
@@ -25,10 +27,13 @@ c = m.circuit(3);      // {0, 2}: 全体の容量
 #### コンストラクタ
 
 ```cpp
-LaminarMatroid(vc<int> parent, vc<int> capacity, vc<int> group);
+template<class P = int, class C = int, class G = int>
+LaminarMatroid(const vc<P>& parent, const vc<C>& capacity, const vc<G>& group);
 ```
 
-`parent` はグループの包含関係を表す森の親配列で、根の親は `-1`。要素 `e` は頂点 `group[e]` に割り当てる。頂点 `v` 自身とその子孫に割り当てられた要素から、合計 `capacity[v]` 個まで選べる。台集合は `group` の添字。初期状態の独立集合は空集合。
+`P`・`C`・`G` はそれぞれ独立に選べる整数型。容量は台集合の要素数を超えてもよい。
+
+`parent` はグループの包含関係を表す森の親配列で、根の親は `-1` または根自身の番号。符号なし型では根自身の番号を使う。要素 `e` は頂点 `group[e]` に割り当てる。頂点 `v` 自身とその子孫に割り当てられた要素から、合計 `capacity[v]` 個まで選べる。台集合は `group` の添字。初期状態の独立集合は空集合。
 
 以下、台集合の要素数を $n$、グループ数を $k$、森の高さを $h$ とする。
 
@@ -57,7 +62,8 @@ int size() const;
 #### build
 
 ```cpp
-void build(const vc<int>& independent);
+template<class I = int>
+void build(const vc<I>& independent);
 ```
 
 現在の独立集合 $I$ を置き換え、各部分木の選択数を記録する。

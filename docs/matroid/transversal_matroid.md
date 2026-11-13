@@ -8,7 +8,9 @@
 
 マッチングと交互路探索には [BipartiteMatchingState](../flow/bipartite_matching_state.md) を使う。[DM 分解](../flow/dm_decomposition.md) とも交互グラフを共有する。DM 分解は最大マッチングに対する全体構造を扱い、この oracle は $I+e$ に対応する一つの未対応左頂点からの到達可能性を使う。探索に失敗した場合の到達済み左頂点から `e` を除いたものが `circuit(e)` の返却列になる。
 
-線形表現は、このヘッダの `linear_representation<F>(...)` メンバから取得できる。引数・条件は [線形表現](linear_representation.md) を参照。
+線形表現は、このヘッダの `linear_representation()` メンバから取得できる。乱数生成関数は省略できる。既定の係数体は `modint998244353`。引数・条件は [線形表現](linear_representation.md) を参照。
+
+`build` の要素番号の配列には、`i128`・`u128` を含む任意の整数型を使える。返す要素番号は `int`。
 
 ## 使用例
 
@@ -35,12 +37,13 @@ assert(m.circuit(3)->empty()); // 割当先がない要素
 template<class Cost, bool is_erasable, class Color>
 TransversalMatroid(
     const GraphUndirected<Cost, is_erasable>& graph, const vc<Color>& color);
-TransversalMatroid(int right_vertices, vvc<int> adjacency);
+template<class I = int>
+TransversalMatroid(int right_vertices, vvc<I> adjacency);
 ```
 
 グラフと彩色から構築する場合、色 $0$ の頂点を元の頂点番号の昇順に並べ、その順に要素番号 `0..size()-1` を付ける。色 $1$ の頂点も昇順に並べ、線形表現の行座標にする。孤立した色 $0$ の頂点はループとして残る。辺の重み・番号は使わず、多重辺に対応する。削除可能グラフでは構築時点で有効な辺を使い、隣接関係と番号の対応をコピーして保持する。
 
-右頂点数と左頂点ごとの隣接列からも構築でき、この場合の要素番号は `adjacency` の添字。隣接列の重複に対応する。初期状態の独立集合は空集合。
+右頂点数と、任意の整数型を隣接先に使う左頂点ごとの隣接列からも構築でき、この場合の要素番号は `adjacency` の添字。隣接列の重複に対応する。初期状態の独立集合は空集合。
 
 以下、左頂点数を $n$、右頂点数を $v$、隣接列の要素数の総和を $m$ とする。
 
@@ -81,7 +84,8 @@ optional<int> element(int vertex) const;
 #### build
 
 ```cpp
-void build(const vc<int>& independent);
+template<class I = int>
+void build(const vc<I>& independent);
 ```
 
 現在の独立集合 $I$ を置き換え、その全要素を覆うマッチングを構築する。
@@ -110,3 +114,7 @@ $I+e$ の全要素を覆えるなら `nullopt`、従属なら fundamental circui
 ##### 計算量
 
 - $O(n+v+m)$。
+
+#### sparse_linear_representation
+
+`linear_representation` と同じ引数・係数体で、行を座標、列を要素とする `SparseMatrix<F>` を返す。構築の条件と計算量は [線形表現](linear_representation.md) を参照する。

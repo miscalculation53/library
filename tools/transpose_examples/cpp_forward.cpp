@@ -2,8 +2,8 @@
 #include "ds/fenwick_tree/fenwick_tree.hpp"
 
 // 既存の FenwickTree とテンプレートを使う順方向。
-template <class S>
-vc<S> range_sum_cpp(const vc<S> &x, const vc<int> &left, const vc<int> &right)
+template <class S, class I = int, class J = int>
+vc<S> range_sum_cpp(const vc<S> &x, const vc<I> &left, const vc<J> &right)
 {
   FenwickTree<GroupAddSub<S>> tree(x);
   vc<S> y(left.size());

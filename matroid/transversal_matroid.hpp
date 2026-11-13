@@ -3,67 +3,68 @@
 #include "../flow/bipartite_matching_state.hpp"
 #include "linear_matroid.hpp"
 
-template <class F, class Cost, bool is_erasable, class Color, class Sample>
-LinearMatroid<F> transversal_linear_representation(const GraphUndirected<Cost, is_erasable> &graph,
-                                                   const vc<Color> &color, Sample &&sample)
+template <class F = FieldAddSubMulDiv<modint998244353>, class Cost, bool is_erasable, class Color,
+          class Sample = decltype(random_modint<typename F::S>) &, bool Sparse = false>
+auto transversal_linear_representation(const GraphUndirected<Cost, is_erasable> &graph,
+                                                   const vc<Color> &color, Sample &&sample = random_modint<typename F::S>)
 {
-  using S = typename F::S;
   internal::BipartiteGraphIndex indexed(graph, color);
   const int n = indexed.left.size(), dimension = indexed.right.size();
-  vvc<S> columns(n, vc<S>(dimension, F::e0()));
+  internal::LinearRepresentationBuilder<F, Sparse> columns(dimension, n);
   vc<int> seen(dimension, -1);
   for (int e = 0; e < n; e++) for (int v : indexed.adjacency[e])
   {
     if (seen[v] == e) continue;
     seen[v] = e;
-    columns[e][v] = sample();
+    columns.set(e, v, sample());
   }
-  return LinearMatroid<F>(dimension, std::move(columns));
+  return std::move(columns).finish();
 }
 
-template <class F, class Sample>
-LinearMatroid<F> transversal_linear_representation(int right_vertices, const vvc<int> &adjacency,
-                                                   Sample &&sample)
+template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &, class I = int, bool Sparse = false>
+auto transversal_linear_representation(int right_vertices, const vvc<I> &adjacency,
+                                                   Sample &&sample = random_modint<typename F::S>)
 {
-  using S = typename F::S;
   assert(right_vertices >= 0);
   const int n = adjacency.size();
-  vvc<S> columns(n, vc<S>(right_vertices, F::e0()));
+  internal::LinearRepresentationBuilder<F, Sparse> columns(right_vertices, n);
   vc<int> seen(right_vertices, -1);
-  for (int e = 0; e < n; e++) for (int v : adjacency[e])
+  for (int e = 0; e < n; e++) for (auto value : adjacency[e])
   {
-    assert(0 <= v && v < right_vertices);
+    assert(u128(value) < unsigned(right_vertices));
+    const int v = int(value);
     if (seen[v] == e) continue;
     seen[v] = e;
-    columns[e][v] = sample();
+    columns.set(e, v, sample());
   }
-  return LinearMatroid<F>(right_vertices, std::move(columns));
+  return std::move(columns).finish();
 }
 
-template <class F, class Sample>
-LinearMatroid<F> transversal_linear_representation(int right_vertices, const CSR<int> &adjacency,
-                                                   Sample &&sample)
+template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &,
+          class I = int, bool erasable = false, bool Sparse = false>
+auto transversal_linear_representation(int right_vertices, const CSR<I, erasable> &adjacency,
+                                                   Sample &&sample = random_modint<typename F::S>)
 {
-  using S = typename F::S;
   assert(right_vertices >= 0);
   const int n = adjacency.size();
-  vvc<S> columns(n, vc<S>(right_vertices, F::e0()));
+  internal::LinearRepresentationBuilder<F, Sparse> columns(right_vertices, n);
   vc<int> seen(right_vertices, -1);
-  for (int e = 0; e < n; e++) for (int v : adjacency[e])
+  for (int e = 0; e < n; e++) for (auto value : adjacency[e])
   {
-    assert(0 <= v && v < right_vertices);
+    assert(u128(value) < unsigned(right_vertices));
+    const int v = int(value);
     if (seen[v] == e) continue;
     seen[v] = e;
-    columns[e][v] = sample();
+    columns.set(e, v, sample());
   }
-  return LinearMatroid<F>(right_vertices, std::move(columns));
+  return std::move(columns).finish();
 }
 
-template <class F, class Sample>
-LinearMatroid<F> transversal_linear_representation(int right_vertices, initializer_list<vc<int>> adjacency,
-                                                   Sample &&sample)
+template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &, class I = int, bool Sparse = false>
+auto transversal_linear_representation(int right_vertices, initializer_list<vc<I>> adjacency,
+                                                   Sample &&sample = random_modint<typename F::S>)
 {
-  return transversal_linear_representation<F>(right_vertices, vvc<int>(adjacency),
+  return transversal_linear_representation<F, Sample, I, Sparse>(right_vertices, vvc<I>(adjacency),
                                                std::forward<Sample>(sample));
 }
 
@@ -81,27 +82,38 @@ public:
   TransversalMatroid(const GraphUndirected<Cost, is_erasable> &graph, const vc<Color> &color)
       : matching(graph, color), selected(matching.left_size()) {}
 
-  TransversalMatroid(int right_vertices, vvc<int> adjacency)
+  template <class I = int>
+  TransversalMatroid(int right_vertices, vvc<I> adjacency)
       : matching(right_vertices, adjacency), selected(adjacency.size()) {}
 
   int size() const { return matching.left_size(); }
   int vertex(int e) const { return matching.left_vertex(e); }
   optional<int> element(int vertex) const { return matching.left_index(vertex); }
 
-  template <class F, class Sample>
-  LinearMatroid<F> linear_representation(Sample &&sample) const
+  template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &>
+  LinearMatroid<F> linear_representation(Sample &&sample = random_modint<typename F::S>) const
   {
     return transversal_linear_representation<F>(matching.right_size(), matching.adjacency(),
                                                 std::forward<Sample>(sample));
   }
 
-  void build(const vc<int> &s)
+  template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &>
+  SparseMatrix<F> sparse_linear_representation(Sample &&sample = random_modint<typename F::S>) const
+  {
+    return transversal_linear_representation<F, Sample, int, false, true>(matching.right_size(), matching.adjacency(),
+                                                                         std::forward<Sample>(sample));
+  }
+
+  template <class I = int>
+  void build(const vc<I> &s)
   {
     fill(ALL(selected), false);
     matching.clear();
-    for (int e : s)
+    for (auto value : s)
     {
-      assert(0 <= e && e < size() && !selected[e]);
+      assert(u128(value) < unsigned(size()));
+      const int e = int(value);
+      assert(!selected[e]);
       selected[e] = true;
       const bool added = matching.augment(e);
       assert(added);

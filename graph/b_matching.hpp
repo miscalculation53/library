@@ -424,7 +424,11 @@ vc<pair<int, Capacity>> b_matching_impl(
 }
 }
 
-// 各辺の使用本数を圧縮して返す。自己ループ一本は頂点容量を二つ使う。
+// capacity[v]: 頂点 v の次数の上限
+// edge_capacity[e]: 辺 e の使用本数の上限
+// 返り値: (辺番号, 使用本数) の vector
+// 自己ループは頂点容量を 2 個使う
+// O(nm α(n) + MF(n, m)) 時間
 template <class Cost, bool erasable, class Capacity>
 vc<pair<int, Capacity>> b_matching(
     const GraphUndirected<Cost, erasable> &g, const vc<Capacity> &capacity,
@@ -437,7 +441,11 @@ vc<pair<int, Capacity>> b_matching(
   });
 }
 
-// 各辺を高々一度使う。
+// capacity[v]: 頂点 v の次数の上限
+// 各辺の使用本数は高々 1
+// 返り値: (辺番号, 使用本数) の vector
+// 自己ループは頂点容量を 2 個使う
+// O(nm α(n) + MF(n, m)) 時間
 template <class Cost, bool erasable, class Capacity>
 vc<pair<int, Capacity>> b_matching(
     const GraphUndirected<Cost, erasable> &g, const vc<Capacity> &capacity)
@@ -445,7 +453,11 @@ vc<pair<int, Capacity>> b_matching(
   return internal::b_matching_impl<true>(g, capacity, [](int) { return Capacity(1); });
 }
 
-// 辺容量に nullopt を渡すと、各辺を任意回使える。
+// capacity[v]: 頂点 v の次数の上限
+// 各辺の使用本数は無制限
+// 返り値: (辺番号, 使用本数) の vector
+// 自己ループは頂点容量を 2 個使う
+// O(nm α(n) + MF(n, m)) 時間
 template <class Cost, bool erasable, class Capacity>
 vc<pair<int, Capacity>> b_matching(
     const GraphUndirected<Cost, erasable> &g, const vc<Capacity> &capacity, nullopt_t)
@@ -454,7 +466,8 @@ vc<pair<int, Capacity>> b_matching(
       [](int) { return numeric_limits<Capacity>::max(); });
 }
 
-// 各頂点の次数が demand と一致する辺集合を、元の辺番号で返す。
+// 各頂点の次数が demand と一致する辺集合 (辺番号の vector)
+// O(nm α(n) + MF(n, m)) 時間
 template <class Cost, bool is_erasable, class Demand>
 optional<vc<int>> f_factor(const GraphUndirected<Cost, is_erasable> &g, const vc<Demand> &demand)
 {

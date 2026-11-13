@@ -16,10 +16,11 @@ assert((c == vc<ull>{3, 10, 8}));
 #### convolution64
 
 ```cpp
-vc<ull> convolution64(vc<ull> a, vc<ull> b)
+template<class I = ull, class J = ull>
+vc<ull> convolution64(const vc<I>& a, const vc<J>& b)
 ```
 
-畳み込みを $\bmod \ 2^{64}$ で計算する。
+畳み込みを $\bmod \ 2^{64}$ で計算する。入力の整数型はそれぞれ独立に選べ、`i128`・`u128` にも対応する。負の値も含め、各要素を $2^{64}$ を法として扱う。
 
 ##### 制約
 

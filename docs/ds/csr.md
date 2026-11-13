@@ -6,6 +6,8 @@
 
 `vvc<T>` と比較してできないことは `v[i].push_back(x)`、それ以外は（実装しているかはともかく）大体できるような気がする（要出典）
 
+行サイズの配列は `i128`・`u128` を含む任意の整数型に対応する。累積サイズは内部の添字型で計算する。
+
 ## 使用例
 
 ```cpp
@@ -26,15 +28,17 @@ assert(rows[2].content() == (vc<int>{7}));
 
 ```cpp
 (1) CSR()
-(2) CSR(vc<int> row_sizes)
+(2) template<class I = int> CSR(const vc<I>& row_sizes)
 (3) CSR(int n, vc<pair<I, T>> ies)
-(4) CSR(vvc<T> vv)
+(4) template<class U = T> CSR(const vvc<U>& vv)
+(5) template<class U, bool erasable> explicit CSR(const CSR<U, erasable>& other)
 ```
 
 - (1)：行数 $0$ の空の CSR を構築する。
 - (2)：`row_sizes[i]` 個の値初期化された要素を持つ第 $i$ 行を構築する。`get_elist()` と `offset()` を使って要素を直接書き込める。
 - (3)：$n$ は $\mathrm{vv}$ の長さを表す。$\mathrm{ies}$ の要素 $(i, e)$ は、$\mathrm{vv}[i]$ に $e$ が含まれることを表す。この表現を CSR 表現に変換する。
-- (4)：`vvc` での表現を CSR 表現に変換する。
+- (4)：`vvc` での表現を CSR 表現に変換する。各要素は `T` に変換できる値とする。
+- (5)：要素型または削除可能性が異なる CSR から、有効な要素を `T` に変換してコピーする。同じ型どうしのコピーは従来どおり内部の領域も保持する。
 
 ##### 計算量
 

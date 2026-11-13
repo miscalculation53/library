@@ -3,6 +3,7 @@ import io
 import shutil
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import tools_test_paths
 import submit_code as s
@@ -128,6 +129,22 @@ class SemanticSafetyTest(unittest.TestCase):
             bundled = s.FastBundler([root]).bundle(source)
             self.assertEqual(self.run_text(compiler, bundled), (0, ''))
 
+    def test_unused_macro_warnings_follow_compacted_line_numbers(self):
+        source = '#line 4\n#define UNUSED_FIRST 1\nint main(){}\n#define UNUSED_LAST 2\n'
+        with self.compiler() as compiler:
+            self.assertEqual(sorted(compiler.unused_macro_locations(source)), [1, 3])
+            removals = s.unused_candidates(source, compiler=compiler, cppcheck=None,
+                                          keep_functions=set(), reporter=self.reporter)
+        self.assertEqual([(item.start, item.end) for item in removals], [(1, 1), (3, 3)])
+
+    def test_ambiguous_warning_line_numbers_are_skipped(self):
+        source = '#line 42\n#define FIRST 1\n#line 42\n#define SECOND 2\nint main(){}\n'
+        self.assertEqual(s.warning_line_indices(source), {43: 4})
+        conditional = '#if 1\n#line 42\n#define FIRST 1\n#endif\n'
+        self.assertEqual(s.warning_line_indices(conditional), {})
+        continued = '#line 42 /* first\nsecond */\n#define FIRST 1\n'
+        self.assertEqual(s.warning_line_indices(continued), {})
+
     def test_validation_checks_the_other_retained_float128_branch(self):
         probe = '#if defined(__STDCPP_FLOAT128_T__)\nint flag=1;\n#endif\nint main(){}\n'
         with self.compiler() as compiler:
@@ -141,6 +158,8 @@ class SemanticSafetyTest(unittest.TestCase):
             candidate = source.replace(helper, '')
             self.assertTrue(compiler.link(candidate)[0])
             self.assertFalse(compiler.validate(candidate)[0])
+            self.assertFalse(compiler.validate(candidate, parallel_portable=True)[0])
+            self.assertTrue(compiler.validate(source, parallel_portable=True)[0])
 
     def test_validation_checks_dependencies_of_unused_inline_and_static_functions(self):
         for declaration in ['inline int retained(){return missing();}',
@@ -158,6 +177,23 @@ class SemanticSafetyTest(unittest.TestCase):
             self.assertEqual(self.run_text(compiler, original)[0], 3)
             self.assertFalse(compiler.validate('int absent();\nint main(){return absent();}\n')[0])
             self.assertEqual(self.run_text(compiler, original)[0], 3)
+
+    def test_cleanup_reuses_ipa_only_after_success_on_unchanged_text(self):
+        main = 'int main(){return 0;}\n'
+        dormant = 'int dormant(){return 8;}\n'
+        cases = [(main, [], 1), (main, None, 2), (dormant + main, [(1, 'int dormant()')], 2)]
+        for source, first_analysis, expected_calls in cases:
+            with self.subTest(first_analysis=first_analysis), tempfile.TemporaryDirectory() as directory, self.compiler() as compiler:
+                writer = s.CheckpointWriter(Path(directory) / 'bundle.cpp', self.reporter)
+                writer.current = source
+                with patch.object(compiler, '_analyze_ipa', side_effect=[first_analysis, []]) as analyze:
+                    result = s.cleanup_text(source, compiler=compiler, writer=writer, cppcheck=None,
+                        keep_functions=set(), max_passes=0, safe_only=False, require_validation=True,
+                        reporter=self.reporter)
+                self.assertNotIn('dormant', result)
+                self.assertEqual(analyze.call_count, expected_calls)
+                if first_analysis:
+                    self.assertNotIn('dormant', analyze.call_args.args[0])
 
     def test_validation_rejects_missing_inline_definitions_after_an_early_return(self):
         source = 'inline int missing();\ntemplate<class T> int pick(){if constexpr(sizeof(T)==sizeof(int)) return 0; return missing();}\nint main(){return pick<int>();}\n'

@@ -203,3 +203,7 @@ $A\boldsymbol{x} = \boldsymbol{b}$ の解を求め、解のひとつ $\boldsymbo
 ### 通常の 32 bit modint の掃き出しで使う作業領域
 
 `F = FieldAddSubMulDiv<mint>` で、`mint` が `static_modint32` または `dynamic_modint32` のとき、行数・列数がともに 32 以上なら内部で 64 bit 整数の作業配列を使う。`row_reduction` の入力コピーに加えて、行数を $n$、列数を $m$ として約 $8nm$ byte と $O(n)$ の作業領域をヒープに確保する。`rank`・`det`・`inv`・`solve` からこの掃き出しを呼ぶ場合も同様（`inv`・`solve` では拡大行列の大きさで数える）。
+
+## 疎な入力
+
+非零成分だけを保存したい場合は [SparseMatrix](sparse_matrix.md) を使う。密行列との積にも対応し、rank・行列式・連立方程式は BBLA で計算できる。

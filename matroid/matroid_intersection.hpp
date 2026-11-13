@@ -8,15 +8,17 @@
  * @docs docs/matroid/matroid_intersection.md
  */
 
-template <class M1, class M2>
-vc<int> matroid_intersection(M1 first, M2 second, const vc<int> &initial = {})
+template <class M1, class M2, class I = int>
+vc<int> matroid_intersection(M1 first, M2 second, const vc<I> &initial = {})
 {
   const int n = first.size();
   assert(n == second.size());
   vc<bool> used(n);
-  for (int e : initial)
+  for (auto value : initial)
   {
-    assert(0 <= e && e < n && !used[e]);
+    assert(u128(value) < unsigned(n));
+    const int e = int(value);
+    assert(!used[e]);
     used[e] = true;
   }
   while (true)

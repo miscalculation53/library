@@ -99,7 +99,24 @@ class CommentSafetyTest(unittest.TestCase):
         protected, links = submit_code.protect_source_links(source)
         self.assertEqual(links, [link])
         self.assertEqual(submit_code.restore_source_links(protected, links), source)
-        self.assertEqual(submit_code.strip_cleanup_comments(source), source)
+        cleaned = submit_code.strip_cleanup_comments(source)
+        self.assertTrue(cleaned.startswith(submit_code.source_link_comment(submit_code.LIBRARY_REPOSITORY_URL)))
+        self.assertNotIn("tree/wip/template/template_all.hpp", cleaned)
+        self.assertIn("#line 1\nint first;\n\nint second;", cleaned)
+
+    def test_link_compaction_preserves_line_observations_and_licenses(self) -> None:
+        source = '''#include <cstdio>
+// https://github.com/miscalculation53/library/tree/wip/a.hpp
+/*! Required license */
+int first=__LINE__;
+// https://github.com/miscalculation53/library/tree/wip/b.hpp
+int main(){printf("%d %d",first,__LINE__);}
+'''
+        cleaned = submit_code.compact_source_links(source)
+        self.assertEqual(cleaned.count(submit_code.LIBRARY_REPOSITORY_URL), 1)
+        self.assertIn('/*! Required license */', cleaned)
+        self.assertEqual(submit_code.compact_source_links(cleaned), cleaned)
+        self.assert_programs_equal(source, cleaned)
 
     def test_source_links_and_pragmas_inside_raw_strings_stay_literal(self) -> None:
         source = '''const char *raw = R"tag(

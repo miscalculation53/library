@@ -26,9 +26,9 @@ class FastFeatureTest(unittest.TestCase):
     def marked(self, body):
         return f.marker(self.token, True, "math") + "\n" + body + f.marker(self.token, False, "math") + "\n"
 
-    def compiler(self):
+    def compiler(self, **options):
         return s.CompilerWorkspace(cxx=self.cxx, standard="c++23", include_paths=[self.root],
-                                   extra_args=[], timeout=None, reporter=self.reporter)
+                                   extra_args=[], timeout=None, reporter=self.reporter, **options)
 
     def reduce(self, compiler, source):
         writer = s.CheckpointWriter(self.root / "bundle.cpp", self.reporter)
@@ -43,6 +43,177 @@ class FastFeatureTest(unittest.TestCase):
             self.assertIsNotNone(result)
             self.assertNotIn("return x+1", result)
             self.assertEqual(compiler.object_signature(source), compiler.object_signature(result))
+
+    def test_unused_modint_group_and_source_aliases_are_removed_together(self):
+        source = f.marker(self.token, True, 'source:math/modint/template_modint.hpp') + '\n'
+        source += 'struct Mint {int value;};\nusing modint998244353=Mint;\n'
+        source += f.marker(self.token, False, 'source:math/modint/template_modint.hpp') + '\n'
+        source += 'using mint=modint998244353;\nint main(){return 0;}\n'
+        with self.compiler() as compiler:
+            external_identifiers = compiler.external_identifiers
+            with patch.object(compiler, 'external_identifiers', side_effect=lambda text: external_identifiers(text) | {'mint'}):
+                result = self.reduce(compiler, source)
+            self.assertIsNotNone(result)
+            self.assertNotIn('modint998244353', result)
+            self.assertNotIn('struct Mint', result)
+
+    def test_used_modint_group_is_kept(self):
+        source = f.marker(self.token, True, 'source:math/modint/modint.hpp') + '\n'
+        source += 'struct Mint {int value;};\nusing modint998244353=Mint;\n'
+        source += f.marker(self.token, False, 'source:math/modint/modint.hpp') + '\n'
+        source += 'using mint=modint998244353;\nint main(){return mint{7}.value!=7;}\n'
+        with self.compiler() as compiler:
+            result = self.reduce(compiler, source)
+            self.assertIsNotNone(result)
+            self.assertIn('struct Mint', result)
+            self.assertTrue(compiler.validate_submission(result)[0])
+
+    def test_unused_dynamic_modint_policy_can_be_removed_with_its_dependents(self):
+        source = '''namespace internal
+{
+template <int id>
+struct policy_barrett32
+{
+  int value;
+};
+}
+struct Static { int value; };
+template <int id>
+using dynamic_modint32 = internal::policy_barrett32<id>;
+template <class T>
+struct is_dynamic_modint {};
+template <int id>
+struct is_dynamic_modint<dynamic_modint32<id>> {};
+'''
+        for type_name in ('Static', 'dynamic_modint32<0>'):
+            with self.subTest(type_name=type_name), self.compiler() as compiler:
+                program = source + f'int main(){{ return {type_name}{{7}}.value != 7; }}\n'
+                writer = s.CheckpointWriter(self.root / 'bundle.cpp', self.reporter)
+                writer.current = program
+                result = f.prune_function_declarations(s, program, compiler=compiler, writer=writer,
+                    reporter=self.reporter, keep_functions=s.DEFAULT_KEEP_FUNCTIONS, include_dynamic_types=True)
+                self.assertEqual('struct policy_barrett32' in result, type_name != 'Static')
+
+    def test_discarded_constexpr_arm_is_checked_using_emitted_function_lines(self):
+        source = '''template <bool select>
+int pick(int x)
+{
+  if constexpr (select)
+  {
+    return x + 42;
+  }
+  else
+  {
+    return x * 7;
+  }
+}
+int main(){return pick<false>(1) != 7;}
+'''
+        with self.compiler() as compiler:
+            reference, _ = compiler.submission_reference(source)
+            self.assertIsNotNone(reference)
+            digest = hashlib.sha256(source.encode()).hexdigest()
+            edits = f.discarded_constexpr_branches(s, source, ['library'] * len(source.splitlines()),
+                                                  compiler.emitted_line_cache[digest])
+            proposal = f.mask_ranges(s, source, edits)
+            self.assertNotIn('return x + 42', proposal)
+            self.assertIn('return x * 7', proposal)
+            self.assertEqual(compiler.submission_object_signature(proposal), reference)
+
+    def test_priority_checkpoint_precedes_unused_modint_removal(self):
+        source = f.marker(self.token, True, 'source:math/modint/modint.hpp') + '\n'
+        source += 'struct Mint {int value;};\nusing modint998244353=Mint;\n'
+        source += 'template<class T>\nint dormant(){return sizeof("' + 'x' * 140000 + '");}\n'
+        source += f.marker(self.token, False, 'source:math/modint/modint.hpp') + '\n'
+        source += 'using mint=modint998244353;\nint main(){return 0;}\n'
+        checkpoints = []
+        with self.compiler() as compiler:
+            writer = s.CheckpointWriter(self.root / 'bundle.cpp', self.reporter)
+            writer.current = source
+            save = writer.save
+            def record(stage, value, **options):
+                changed = save(stage, value, **options)
+                if changed and writer.below_limit(value, 131072):
+                    checkpoints.append(value)
+                return changed
+            with patch.object(writer, 'save', side_effect=record), patch.object(
+                    s, 'try_size_checkpoint', side_effect=AssertionError('oversized preprocessing retry')):
+                result = f.try_cleanup(s, source, compiler=compiler, writer=writer,
+                    reporter=self.reporter, target_bytes=65536, priority_bytes=131072,
+                    feature_token=self.token)
+            self.assertIsNotNone(result)
+            self.assertIn('struct Mint', checkpoints[0])
+            self.assertNotIn('struct Mint', result)
+
+    def test_structural_refinement_starts_after_both_checkpoints_are_saved(self):
+        source = self.marked('#define UNUSED_PADDING "' + 'x' * 140000 + '"\n'+'''template<class T>
+struct Box
+{
+  T value;
+  Box() : value(7) {}
+  Box(int) : value(9) {}
+};
+''') + 'int main(){return Box<int>{}.value!=7;}\n'
+        calls = []
+        with self.compiler() as compiler:
+            writer = s.CheckpointWriter(self.root / 'bundle.cpp', self.reporter)
+            writer.current = source
+            writer.preserve_below = 65536
+            original = f.structural_candidates
+            def check(*args):
+                self.assertTrue({131072,65536} <= writer.reached_limits)
+                calls.append(1)
+                return original(*args)
+            with patch.object(f, 'structural_candidates', side_effect=check):
+                result = s.cleanup_text(source,compiler=compiler,writer=writer,
+                    reporter=self.reporter,cppcheck=None,keep_functions=s.DEFAULT_KEEP_FUNCTIONS,
+                    max_passes=1,safe_only=False,require_validation=True,target_bytes=65536,
+                    feature_token=self.token)
+            self.assertTrue(calls)
+            self.assertNotIn('Box(int)',result)
+
+    def test_early_declaration_checkpoint_publishes_only_after_validation(self):
+        source = """template<class T>
+struct Box
+{
+  T value;
+  Box() : value(7) {}
+  Box(int) : value(9) {}
+};
+int main(){return Box<int>{}.value!=7;}
+"""
+        with self.compiler() as compiler:
+            writer = s.CheckpointWriter(self.root / "bundle.cpp", self.reporter)
+            writer.current = source
+            limit = writer.size(source) - 8
+            options = dict(compiler=compiler, writer=writer, reporter=self.reporter,
+                           limit=limit, keep_functions=s.DEFAULT_KEEP_FUNCTIONS, keep_comments=set())
+            with patch.object(compiler, "validate", return_value=(False, "alternate target rejected")) as validate:
+                self.assertIsNone(s.try_early_declaration_checkpoint(source, **options))
+            validate.assert_called_once()
+            self.assertFalse(writer.path.exists())
+            self.assertEqual(writer.current, source)
+
+            compiler.preserve_initialization(source)
+            result = s.try_early_declaration_checkpoint(source, **options)
+            self.assertIsNotNone(result)
+            self.assertLess(writer.size(result), limit)
+            self.assertEqual(writer.path.read_text(), result)
+            self.assertNotIn("Box(int)", result)
+
+    def test_unused_operator_families_are_removed_without_losing_pair_addition(self):
+        source = '#include <array>\n#include <tuple>\n#include <utility>\nusing namespace std;\n'
+        source += '''template<class A,class B> pair<A,B>& operator+=(pair<A,B>& x,const pair<A,B>& y){x.first+=y.first;x.second+=y.second;return x;}
+template<class T,size_t N> array<T,N>& operator+=(array<T,N>& x,const array<T,N>& y){for(size_t i=0;i<N;i++)x[i]+=y[i];return x;}
+template<class T> tuple<T>& operator+=(tuple<T>& x,const tuple<T>& y){get<0>(x)+=get<0>(y);return x;}
+int main(){pair<int,int> x{1,2};x+=pair{3,4};return x.first!=4;}
+'''
+        with self.compiler() as compiler:
+            result = self.prune_declarations(compiler, source)
+            self.assertNotIn('array<T,N>& operator+=', result)
+            self.assertNotIn('tuple<T>& operator+=', result)
+            self.assertIn('pair<A,B>& operator+=', result)
+            self.assertTrue(compiler.validate_submission(result)[0])
 
     def test_requires_with_deduced_return_keeps_its_body(self):
         source = self.marked("template<class T>\nauto probe(T x){return x;}\n")
@@ -87,6 +258,78 @@ class FastFeatureTest(unittest.TestCase):
             self.assertIn("value(int", result)
             self.assertEqual(compiler.submission_object_signature(source), compiler.submission_object_signature(result))
 
+    def test_reference_object_cache_retains_undefined_symbols(self):
+        source = '#include <cstdio>\nint main(){return puts("hello") < 0;}\n'
+        with self.compiler() as compiler:
+            self.assertTrue(compiler.validate_submission(source)[0])
+            compiler.submission_object_signature(source)
+            cached = compiler.object_undefined
+            self.assertTrue(any("puts" in symbol for symbol in cached))
+            compiler.submission_workspace.object_cache.clear()
+            compiler.submission_object_signature(source)
+            self.assertEqual(compiler.object_undefined, cached)
+
+    def test_matching_object_reuses_linked_reference_without_replacing_executable(self):
+        source = "int calculate(){return 7;}\nint main(){return calculate()!=7;}\n"
+        reformatted = source + "// trailing comment\n"
+        source_digest = hashlib.sha256(source.encode()).hexdigest()
+        reformatted_digest = hashlib.sha256(reformatted.encode()).hexdigest()
+        with self.compiler() as compiler:
+            self.assertTrue(compiler.validate_submission(source)[0])
+            workspace = compiler.submission_workspace
+            signature = compiler.submission_object_signature(source)
+            self.assertEqual(compiler.preprocessed_code_fingerprint(source),
+                             compiler.preprocessed_code_fingerprint(reformatted))
+            compiler.remember_submission_layout(source, reformatted)
+            with patch.object(workspace, "_run", side_effect=AssertionError("reference already verified")):
+                reused, headers = compiler.submission_reference(reformatted)
+            self.assertEqual(reused, signature)
+            self.assertIn("calculate", headers)
+            self.assertEqual(workspace.executable_digest, source_digest)
+            self.assertTrue(compiler.validate_submission(reformatted)[0])
+            self.assertEqual(workspace.executable_digest, reformatted_digest)
+            self.assertEqual(s.run_command([str(workspace.executable)]).returncode, 0)
+
+    def test_preprocessing_fingerprint_uses_submission_optimization_mode(self):
+        source = "#if defined(__OPTIMIZE__)\nint optimized;\n#endif\n"
+        with self.compiler() as compiler:
+            optimized = compiler.preprocessed_code_fingerprint(source)
+            compiler.submission_optimization = "-O0"
+            self.assertIsNotNone(optimized)
+            self.assertNotEqual(compiler.preprocessed_code_fingerprint(source), optimized)
+
+    def test_qualified_missing_member_diagnostic_allows_one_retry(self):
+        source = """namespace Needed {
+  int probe(double);
+  int probe(char);
+  int probe(int);
+}
+namespace Unused {
+  int probe(short);
+  int probe(long);
+  int probe(unsigned);
+}
+int main(){return !requires { static_cast<int (*)(int)>(&Needed::probe); };}
+"""
+        with self.compiler() as compiler:
+            with patch.object(compiler, "submission_object_signature", wraps=compiler.submission_object_signature) as proofs:
+                result = self.prune_declarations(compiler, source)
+            self.assertLessEqual(proofs.call_count, 4)
+            self.assertEqual(result.count("int probe("), 1)
+            self.assertIn("int probe(int);", result)
+            self.assertEqual(compiler.submission_object_signature(source),
+                             compiler.submission_object_signature(result))
+
+    def test_required_unique_declaration_is_not_retested_individually(self):
+        source = "struct Box {\n  int required() const;\n  int dormant() const;\n};\n"
+        source += "int main(){return !requires(Box x){x.required();};}\n"
+        with self.compiler() as compiler:
+            with patch.object(compiler, "submission_object_signature", wraps=compiler.submission_object_signature) as signatures:
+                result = self.prune_declarations(compiler, source)
+            self.assertLessEqual(signatures.call_count, 3)
+            self.assertIn("required()", result)
+            self.assertNotIn("dormant()", result)
+
     def test_declaration_pruning_preserves_type_detection_and_removes_other_methods(self):
         source = "struct Box {\n  int probe() const;\n  int dormant() const;\n};\n"
         source += "template<class T> constexpr bool has_probe=requires(T x){x.probe();};\n"
@@ -107,16 +350,269 @@ class FastFeatureTest(unittest.TestCase):
             self.assertIn("virtual int value()", result)
             self.assertNotIn("dormant()", result)
 
+    def test_unused_constructor_releases_its_helper_declaration(self):
+        source = '''int unused_helper(int);
+template<class T>
+struct Box
+{
+  T value;
+  Box(T x) : value{x} {}
+  template<class U>
+  Box(int, const U&) : value{unused_helper(3)} {}
+};
+template<class T>
+Box(T) -> Box<T>;
+int main(){Box b(7);return b.value!=7;}
+'''
+        with self.compiler() as compiler:
+            result = self.prune_declarations(compiler, source)
+            self.assertNotIn('unused_helper', result)
+            self.assertNotIn('Box(int,', result)
+            self.assertIn('Box(T x)', result)
+            self.assertTrue(compiler.validate_submission(result)[0])
+            self.assertEqual(s.run_command([str(compiler.submission_workspace.executable)]).returncode, 0)
+
+    def test_constructor_required_by_type_detection_is_kept(self):
+        source = '''struct Box
+{
+  Box(int) = delete;
+  Box(double) {}
+};
+constexpr bool supported=requires {Box(0.5);};
+int main(){return !supported;}
+'''
+        with self.compiler() as compiler:
+            result = self.prune_declarations(compiler, source)
+            self.assertIn('Box(double)', result)
+            self.assertTrue(compiler.validate_submission(result)[0])
+
+    def test_required_deduction_guide_is_kept(self):
+        source = '''#include <type_traits>
+template<class T>
+struct Box
+{
+  T value;
+  template<class U>
+  Box(U x) : value(x) {}
+};
+Box(int) -> Box<long>;
+static_assert(std::is_same_v<decltype(Box(7)),Box<long>>);
+int main(){Box b(7);return b.value!=7;}
+'''
+        with self.compiler() as compiler:
+            result = self.prune_declarations(compiler, source)
+            self.assertIn('Box(int) -> Box<long>;', result)
+            self.assertTrue(compiler.validate_submission(result)[0])
+
+    def test_unused_primary_template_body_becomes_a_forward_declaration(self):
+        source = '''template<class T>
+struct Box
+{
+  T value;
+  Box(T x) : value(x) {}
+};
+template<>
+struct Box<void>
+{
+  int value=7;
+};
+int main(){return Box<void>{}.value!=7;}
+'''
+        with self.compiler() as compiler:
+            result = self.prune_declarations(compiler, source)
+            self.assertNotIn('T value;', result)
+            self.assertIn('struct Box<void>', result)
+            self.assertTrue(compiler.validate_submission(result)[0])
+            used = source.replace('Box<void>{}', 'Box<int>{7}')
+            result = self.prune_declarations(compiler, used)
+            self.assertIn('T value;', result)
+            self.assertTrue(compiler.validate_submission(result)[0])
+
+    def test_unused_helper_with_body_macros_and_a_member_name_collision_is_removed(self):
+        source = '''#define LOOP(n) for(auto i=0;i<n;++i)
+template<class T>
+int top(T x){LOOP(2)x+=1;return x;}
+struct Box {int top=0;};
+int main(){return Box{}.top;}
+'''
+        with self.compiler() as compiler:
+            result = self.prune_declarations(compiler, source)
+            self.assertNotIn('int top(T', result)
+            self.assertIn('int top=0', result)
+            self.assertTrue(compiler.validate_submission(result)[0])
+
+    def test_unused_variable_template_with_comma_in_type_arguments_is_removed(self):
+        source = '''#include <type_traits>
+template<class T>
+constexpr bool unused=std::is_same_v<T,int>;
+template<class T>
+constexpr bool required=std::is_same_v<T,int>;
+int main(){return !required<int>;}
+'''
+        with self.compiler() as compiler:
+            result = self.prune_declarations(compiler, source)
+            self.assertNotIn('bool unused=', result)
+            self.assertIn('bool required=', result)
+            self.assertTrue(compiler.validate_submission(result)[0])
+
+    def test_empty_namespace_pruning_preserves_namespace_lookup_and_notices(self):
+        source = '''namespace unused
+{
+}
+namespace required
+{
+}
+using namespace required;
+namespace licensed
+{
+//! required notice
+}
+int main(){return 0;}
+'''
+        with self.compiler() as compiler:
+            result = self.prune_declarations(compiler, source)
+            self.assertNotIn('namespace unused', result)
+            self.assertIn('namespace required', result)
+            self.assertIn('//! required notice', result)
+            self.assertTrue(compiler.validate_submission(result)[0])
+
+    def test_wide_stream_cleanup_keeps_used_128_bit_io(self):
+        header = Path(s.__file__).parent.parent / 'template/template_integer_io.hpp'
+        source = '#include <bits/stdc++.h>\nusing namespace std;\nusing i128=__int128_t;\nusing u128=__uint128_t;\n'
+        source += '\n'.join(line for line in header.read_text().splitlines() if not line.startswith(('#include', '#pragma')))+'\n'
+        for used in (False, True):
+            with self.subTest(used=used), self.compiler() as compiler:
+                compiler.submission_whole_program = True
+                compiler.submission_optimization = '-Og'
+                text = source + ('int main(){i128 x;cin>>x;cout<<x;}' if used else 'int main(){return 0;}')+'\n'
+                writer = s.CheckpointWriter(self.root / 'bundle.cpp', self.reporter)
+                writer.current = text
+                result = f.prune_function_declarations(s, text, compiler=compiler, writer=writer,
+                    reporter=self.reporter, keep_functions=s.DEFAULT_KEEP_FUNCTIONS, final=True)
+                self.assertEqual('stoi128(' in result, used)
+                self.assertEqual('i128tos(' in result, used)
+                self.assertTrue(compiler.validate_submission(result)[0])
+                if used:
+                    p=s.run_command([str(compiler.submission_workspace.executable)],input_text='-170141183460469231731687303715884105728\n')
+                    self.assertEqual(p.stdout, '-170141183460469231731687303715884105728')
+
+    def test_uncalled_function_scan_keeps_template_passed_as_an_argument(self):
+        source = """template<class T>
+T make_value(){return T(7);}
+template<class T>
+T make_other(){return T(1);}
+int dormant(){return 0;}
+int invoke(int (*fn)(), long (*other)()){return fn()+other();}
+int main(){return invoke(make_value<int>, make_other<long>)!=8;}
+"""
+        functions = f.definition_candidates(s, source, ["library"] * len(source.splitlines()))
+        groups = f.uncalled_function_groups(s, source, functions)
+        self.assertEqual({item.name for group in groups for item in group}, {"dormant"})
+
+    def test_optimized_cleanup_removes_uncalled_overloads_with_a_member_name_collision(self):
+        source = '''#include <vector>
+using namespace std;
+#define LOOP(n) for(auto i=0;i<n;++i)
+template<class T>
+int top(T x){LOOP(2)x+=1;return x;}
+int top(const vector<int>& x){return top(x[0]);}
+struct Box
+{
+  int top;
+  Box(int x) : top(x) {}
+};
+int main(){return Box(0).top;}
+'''
+        with self.compiler() as compiler:
+            compiler.submission_whole_program = True
+            writer = s.CheckpointWriter(self.root/'bundle.cpp',self.reporter)
+            writer.current = source
+            result = f.prune_optimized_declarations(s,source,compiler=compiler,writer=writer,
+                reporter=self.reporter,keep_functions=s.DEFAULT_KEEP_FUNCTIONS)
+            self.assertNotIn('int top(', result)
+            self.assertIn('int top;',result)
+            self.assertTrue(compiler.validate_submission(result)[0])
+
+    def test_optimized_cleanup_preserves_shared_wide_integer_helpers(self):
+        header = Path(s.__file__).parent.parent/'template/template_integer_io.hpp'
+        source = '#include <bits/stdc++.h>\nusing namespace std;\nusing i128=__int128_t;\nusing u128=__uint128_t;\n'
+        source += '\n'.join(line for line in header.read_text().splitlines() if not line.startswith(('#include','#pragma')))+'\n'
+        source += 'int main(){cout<<i128tos(i128(7));}\n'
+        with self.compiler() as compiler:
+            compiler.submission_whole_program = True
+            writer=s.CheckpointWriter(self.root/'bundle.cpp',self.reporter)
+            writer.current=source
+            result=f.prune_optimized_declarations(s,source,compiler=compiler,writer=writer,
+                reporter=self.reporter,keep_functions=s.DEFAULT_KEEP_FUNCTIONS)
+            self.assertIn('string i128tos(',result)
+            self.assertNotIn('operator<<',result)
+            self.assertNotIn('stoi128(',result)
+            self.assertTrue(compiler.validate_submission(result)[0])
+            self.assertEqual(s.run_command([str(compiler.submission_workspace.executable)]).stdout,'7')
+
     def test_function_candidates_skip_constructor_local_definitions(self):
         source = "struct Box {\n  Box() {\n    struct Local {\n      int invoke(int x) {return x;}\n    };\n  }\n};\n"
         candidates = f.definition_candidates(s, source, ["math"] * len(source.splitlines()))
         self.assertNotIn("invoke", [item.name for item in candidates])
+
+    def test_empty_policy_callback_is_kept_without_a_failed_batch(self):
+        self.reporter.verbose = True
+        source = self.marked("struct Policy {\n template<class T> static void merge(T&) {}\n};\n"
+                             "struct Dormant {\n template<class T> static void merge(T& x) {++x;}\n};\n")
+        source += "int main(){int x=0;Policy::merge(x);return x;}\n"
+        with self.compiler() as compiler:
+            result = self.reduce(compiler, source)
+            self.assertIsNotNone(result)
+            self.assertIn("merge(T&) {}", result)
+            self.assertNotIn("++x", result)
+            self.assertNotIn("batch comparison:", self.reporter.stream.getvalue())
 
     def test_compaction_preserves_coordinates_across_inactive_branches(self):
         source = "#if 0\n" + "\n" * 12 + "int inactive;\n#else\nint active=__LINE__;\n#endif\n"
         result = f.compact_lines(s, source)
         with self.compiler() as compiler:
             self.assertEqual(compiler.preprocessed_code_fingerprint(source), compiler.preprocessed_code_fingerprint(result))
+
+    def test_compaction_uses_existing_logical_line_numbers(self):
+        source = '#line 700 "fragment.hpp"\nint first=__LINE__;\n' + '\n'*50 + 'int second=__LINE__;\n'
+        result = f.compact_lines(s, source)
+        self.assertLess(len(result), len(source))
+        with self.compiler() as compiler:
+            self.assertEqual(compiler.preprocessed_code_fingerprint(source), compiler.preprocessed_code_fingerprint(result))
+
+    def test_compaction_keeps_uncertain_conditional_line_numbers(self):
+        source = '#if 0\n#line 900\n#endif\n' + '\n'*40 + 'int value=__LINE__;\n'
+        result = f.compact_lines(s, source)
+        with self.compiler() as compiler:
+            self.assertEqual(compiler.preprocessed_code_fingerprint(source), compiler.preprocessed_code_fingerprint(result))
+
+    def test_tidy_checkpoint_preserves_literal_and_comment_layout(self):
+        original = ('const char *s = R"raw(first\n#line 40\n\n\nlast)raw";\n'
+                    '/*! credit\n\n  original indentation */\n'
+                    '#define VALUE \\\n#line 50\n'
+                    '#define VALUE_WITH_SPACE \\\x20\n#line 55\n'
+                    '  int result;\n')
+        candidate = original.replace('  int result;', '\n\n#line 60\n\n  int result;')
+        expected = original.replace('  int result;', '\n  int result;')
+        self.assertEqual(f.tidy_checkpoint(s, candidate, original=original), expected)
+
+    def test_tidy_checkpoint_preserves_authored_line_controls(self):
+        for directive in ('#line 700\n', '#li\\\nne 700\n', '%:line 700\n', '# 700 "source.cpp"\n'):
+            with self.subTest(directive=directive):
+                original = directive + 'int a;\nint b;\n'
+                candidate = directive + 'int a;\n\n\n#line 711\nint b;\n'
+                self.assertEqual(f.tidy_checkpoint(s, candidate, original=original), candidate)
+
+    def test_tidy_checkpoint_retargets_line_observers(self):
+        original = 'int x;\nvoid f(){\n  assert(x);\n  CHECK(x);\n}\n'
+        candidate = 'int x;\n\n\n#line 100\nvoid f(){\n  assert(x);\n  CHECK(x);\n}\n'
+        expected = 'int x;\n\nvoid f(){\n#line 101\n  assert(x);\n  CHECK(x);\n}\n'
+        self.assertEqual(f.tidy_checkpoint(s, candidate, original=original, observers={'assert', 'CHECK'}), expected)
+
+    def test_tidy_checkpoint_declines_uncertain_conditional_observers(self):
+        original = 'int x;\n#if ENABLE\nvoid f(){ assert(x); }\n#endif\n'
+        candidate = 'int x;\n\n\n#line 100\n#if ENABLE\nvoid f(){ assert(x); }\n#endif\n'
+        self.assertEqual(f.tidy_checkpoint(s, candidate, original=original, observers={'assert'}), candidate)
 
     def test_preprocessed_fingerprint_preserves_code_coordinates_and_raw_string_content(self):
         with self.compiler() as compiler:
@@ -160,6 +656,27 @@ class FastFeatureTest(unittest.TestCase):
             self.assertEqual(first_validation_counts, [1])
             self.assertNotIn('UNUSED_PADDING', result)
 
+    def test_friend_type_pruning_keeps_injected_functions_needed_by_main(self):
+        source = "int injected();\nstruct Required {\n friend int injected(){return 7;}\n};\n"
+        source += "struct Dormant {\n friend int unused_friend(Dormant){return 9;}\n};\n"
+        source += "int main(){return injected()!=7;}\n"
+        with self.compiler() as compiler:
+            result = self.prune_declarations(compiler, source)
+            self.assertIn("struct Required", result)
+            self.assertNotIn("struct Dormant", result)
+            self.assertEqual(compiler.submission_object_signature(source), compiler.submission_object_signature(result))
+
+    def test_early_checkpoint_checks_linking(self):
+        source = self.marked('#define UNUSED_PADDING "' + 'x' * 140000 + '"\n')
+        source += 'int missing();\nint main(){return missing();}\n'
+        with self.compiler() as compiler:
+            writer = s.CheckpointWriter(self.root / 'bundle.cpp', self.reporter)
+            writer.current = source
+            f.try_cleanup(s, source, compiler=compiler, writer=writer, reporter=self.reporter,
+                          target_bytes=65536, priority_bytes=131072, feature_token=self.token)
+            self.assertEqual(writer.current, source)
+            self.assertFalse(writer.path.exists())
+
     def test_submission_pch_tracks_dependencies_and_preserves_source_lines(self):
         header = self.root / 'headers/bits/stdc++.h'
         header.parent.mkdir(parents=True)
@@ -195,6 +712,16 @@ class FastFeatureTest(unittest.TestCase):
             self.assertTrue(compiler.validate_submission(source, build_pch=True)[0])
             self.assertEqual(s.run_command([str(compiler.submission_workspace.executable)]).returncode, 1)
             self.assertNotEqual(compiler.pch_key, compiler.submission_workspace.pch_key)
+            optimized_key = compiler.submission_workspace.pch_key
+        with patch.dict(s.os.environ, {'CPLUS_INCLUDE_PATH': str(self.root / 'headers'),
+                                       'SUBMIT_CODE_CACHE_DIR': str(self.root / 'pch-cache')}), self.compiler() as compiler:
+            compiler.submission_optimization = '-Og'
+            self.assertTrue(compiler.validate_submission(source, build_pch=True)[0])
+            self.assertEqual(s.run_command([str(compiler.submission_workspace.executable)]).returncode, 1)
+            self.assertNotEqual(optimized_key, compiler.submission_workspace.pch_key)
+            signature = compiler.submission_object_signature(source)
+            compiler.submission_workspace.object_cache.clear()
+            self.assertEqual(signature, compiler.submission_object_signature(source))
 
     def test_pch_reuses_equivalent_active_preamble_macros(self):
         header = self.root / 'headers/bits/stdc++.h'
@@ -234,6 +761,94 @@ class FastFeatureTest(unittest.TestCase):
                 self.assertTrue(failed)
                 self.assertFalse(workspace.pch_available)
                 self.assertEqual(s.run_command([str(workspace.executable)]).returncode, 7)
+
+    def test_declaration_object_probe_without_pch_marker_retries_raw_source(self):
+        prefix = '#include <bits/stdc++.h>\n'
+        source = prefix + 'int main(){return 7;}\n'
+        invocations = []
+        with self.compiler(keep_unused_functions=False) as workspace:
+            workspace.pch_prefix_end = len(prefix)
+            workspace.pch_available = True
+
+            def compile_object(command):
+                use_pch = '-include' in command
+                invocations.append(use_pch)
+                written = workspace.source.read_text()
+                if use_pch:
+                    self.assertNotIn(prefix, written)
+                    self.assertIn('-Werror=invalid-pch', command)
+                else:
+                    self.assertEqual(written, source)
+                payload = b'probe without PCH-use marker' if use_pch else b'raw object'
+                Path(command[command.index('-o') + 1]).write_bytes(payload)
+                return s.subprocess.CompletedProcess(command, 0, '', '')
+
+            with patch.object(workspace, '_ensure_pch', return_value=True), \
+                 patch.object(workspace, '_run', side_effect=compile_object), \
+                 patch.object(workspace, '_undefined_symbols', return_value=set()), \
+                 patch.object(workspace, '_object_dependency_hashes', return_value={}):
+                signature = workspace.object_signature(source, pch=True)
+                self.assertEqual(signature, hashlib.sha256(b'raw object').hexdigest())
+                self.assertEqual(workspace.object_signature(source), signature)
+            self.assertEqual(invocations, [True, False])
+            self.assertFalse(workspace.pch_available)
+
+    def test_declaration_object_pch_is_separate_from_layout_verification(self):
+        prefix = '#include <bits/stdc++.h>\n'
+        source = prefix + 'int main(){return 7;}\n'
+        formatted = prefix + 'int main() { return 7; }\n'
+        invocations = []
+        dependency = self.root / 'header.hpp'
+        dependency.write_text('// precompiled dependency\n')
+        dependencies = {str(dependency): hashlib.sha256(dependency.read_bytes()).hexdigest()}
+        with self.compiler() as compiler:
+            workspace = compiler.submission_workspace = self.compiler(keep_unused_functions=False)
+
+            def compile_object(command):
+                if '-x' in command:
+                    self.assertEqual(command[command.index('-x') + 1], 'c++-header')
+                    payload = b'probe PCH'
+                else:
+                    self.assertNotIn('-include', command)
+                    invocations.append(workspace.source.read_text())
+                    payload = b'raw object'
+                Path(command[command.index('-o') + 1]).write_bytes(payload)
+                return s.subprocess.CompletedProcess(command, 0, '', '')
+
+            with patch.dict(s.os.environ, {'SUBMIT_CODE_CACHE_DIR': str(self.root / 'cache')}), \
+                 patch.object(workspace, '_pch_prefix', return_value=(prefix, len(prefix))), \
+                 patch.object(workspace, '_run', side_effect=compile_object), \
+                 patch.object(workspace, '_undefined_symbols', return_value=set()), \
+                 patch.object(workspace, '_object_dependency_hashes', return_value=dependencies):
+                self.assertTrue(workspace._ensure_pch(source, probe=True))
+                probe_key = workspace.pch_key
+                self.assertTrue(compiler.same_submission_layout(source, formatted))
+            self.assertNotEqual(workspace.pch_key, probe_key)
+            self.assertEqual(invocations, [source, formatted])
+
+    def test_layout_object_verification_uses_the_alternate_float_macro(self):
+        source = '#ifdef __STDCPP_FLOAT128_T__\nint value = 1;\n#endif\nint main() {}\n'
+        formatted = source.replace('int value = 1;', 'int value = 2;')
+        with self.compiler() as compiler:
+            portable = compiler.portable_workspace = self.compiler()
+            portable.force_float128_macro = True
+            observed = []
+
+            def compile_object(command):
+                prepared = portable.source.read_text()
+                self.assertTrue(prepared.startswith('#undef __STDCPP_FLOAT128_T__\n#define __STDCPP_FLOAT128_T__ 1\n'))
+                observed.append(prepared)
+                Path(command[command.index('-o') + 1]).write_text(prepared)
+                return s.subprocess.CompletedProcess(command, 0, '', '')
+
+            with patch.object(compiler, 'submission_object_signature', return_value='native object'), \
+                 patch.object(portable, '_run', side_effect=compile_object), \
+                 patch.object(portable, '_undefined_symbols', return_value=set()), \
+                 patch.object(portable, '_object_dependency_hashes', return_value={}):
+                self.assertFalse(compiler.same_submission_layout(source, formatted))
+            self.assertEqual(len(observed), 2)
+            self.assertTrue(observed[0].endswith(source))
+            self.assertTrue(observed[1].endswith(formatted))
 
     def test_initialization_is_checked_in_each_precompilation_mode(self):
         header = self.root / 'headers/bits/stdc++.h'
@@ -278,6 +893,7 @@ class FastFeatureTest(unittest.TestCase):
                              + 'x' * 140000 + '";return 0;}\n')
         source += 'int main(){return 0;}\n'
         stages = []
+        validation_counts = []
         with self.compiler() as compiler:
             writer = s.CheckpointWriter(self.root / 'bundle.cpp', self.reporter)
             writer.current = source
@@ -287,14 +903,17 @@ class FastFeatureTest(unittest.TestCase):
                 changed = original(stage, value, **options)
                 if changed:
                     stages.append(stage)
+                    validation_counts.append(validate.call_count)
                 return changed
-            with patch.object(writer, 'save', side_effect=save):
+            with patch.object(compiler, 'validate_submission', wraps=compiler.validate_submission) as validate, \
+                 patch.object(writer, 'save', side_effect=save):
                 result = f.try_cleanup(s, source, compiler=compiler, writer=writer,
                     reporter=self.reporter, target_bytes=65536, priority_bytes=131072,
                     feature_token=self.token)
             self.assertIsNotNone(result)
             self.assertEqual(writer.reached_limits, {131072, 65536})
             self.assertIn('131,072 B checkpoint', stages[0])
+            self.assertEqual(validation_counts[0], 1)
             self.assertNotIn('dormant', result)
 
     def test_constant_evaluation_keeps_its_body(self):

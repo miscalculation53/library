@@ -62,7 +62,7 @@ auto result = euler_product_prefix_sum(seed, factors);
 
 #### factors の形式
 
-`factors` は `vvc<pair<ll, S>>` 型で、内側の配列一つが局所因子一つを表す。
+`factors` は `vvc<pair<I, S>>` 型で、`I` には `i128`・`u128` を含む任意の整数型を使える。内側の配列一つが局所因子一つを表す。
 `(d,a)` で $a\,d^{-s}$ を表し、先頭の $1$ は暗黙に加わる。
 因子の項から一つを選ぶか、何も選ばないかを表す。
 
@@ -74,13 +74,13 @@ auto result = euler_product_prefix_sum(seed, factors);
 #### euler_product_prefix_sum
 
 ```cpp
-template <class R>
+template <class R, class I = ll>
 DirichletPrefixSum<R> euler_product_prefix_sum(
-  const DirichletPrefixSum<R> &seed, const vvc<pair<ll, typename R::S>> &factors);
+  const DirichletPrefixSum<R> &seed, const vvc<pair<I, typename R::S>> &factors);
 
-template <class R>
+template <class R, class I = ll>
 DirichletPrefixSum<R> euler_product_prefix_sum(
-  ll N, const vvc<pair<ll, typename R::S>> &factors);
+  ll N, const vvc<pair<I, typename R::S>> &factors);
 ```
 
 `seed` が表す数列 $B$ に全局所因子を掛け、係数の累積和を返す。

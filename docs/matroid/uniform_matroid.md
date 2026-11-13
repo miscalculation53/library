@@ -6,7 +6,9 @@
 
 `build` で独立集合を指定し、`circuit` で要素追加に伴う fundamental circuit を取得する。マトロイド交叉の oracle として使える。
 
-線形表現は、このヘッダの `linear_representation<F>(...)` メンバから取得できる。引数・条件は [線形表現](linear_representation.md) を参照。
+線形表現は、このヘッダの `linear_representation()` メンバから取得できる。点の列は自動生成でき、明示的な指定も使える。既定の係数体は `modint998244353`。引数・条件は [線形表現](linear_representation.md) を参照。
+
+`build` の要素番号の配列には、`i128`・`u128` を含む任意の整数型を使える。返す要素番号は `int`。
 
 ## 使用例
 
@@ -53,7 +55,8 @@ int size() const;
 #### build
 
 ```cpp
-void build(const vc<int>& independent);
+template<class I = int>
+void build(const vc<I>& independent);
 ```
 
 現在の独立集合 $I$ を置き換える。
@@ -82,3 +85,7 @@ $I+e$ が独立なら `nullopt`、従属なら fundamental circuit から `e` �
 ##### 計算量
 
 - $O(\lvert I\rvert)$。
+
+#### sparse_linear_representation
+
+`linear_representation` と同じ引数・係数体で、行を座標、列を要素とする `SparseMatrix<F>` を返す。構築の条件と計算量は [線形表現](linear_representation.md) を参照する。

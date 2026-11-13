@@ -10,6 +10,8 @@
 
 二変数費用の最小カットへの帰着については [Kolmogorov–Zabih, §4](https://www.cs.cornell.edu/~rdz/Papers/KZ-PAMI04.pdf) を参照。
 
+`add_all_profit` の頂点番号の配列には、`i128`・`u128` を含む任意の整数型を使える。
+
 ## 使用例
 
 ```cpp
@@ -111,7 +113,8 @@ void fix(int v, bool value);
 #### 全変数が同じ値のときの利益
 
 ```cpp
-void add_all_profit(const vector<int>& vertices, bool value, Cost profit);
+template<class I = int>
+void add_all_profit(const vector<I>& vertices, bool value, Cost profit);
 ```
 
 指定した全変数が `value` のときだけ `profit` の利益を足す。補助変数を1個追加する。空配列では条件を常に満たすため、定数の利益となる。頂点番号の重複も許す。

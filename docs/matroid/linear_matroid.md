@@ -9,15 +9,17 @@
 係数型は既存の `Matrix<F>` と同じ体のインターフェースを使う。基底の管理と係数の復元には [LinearBasis](../math/linalg/linear_basis.md) を使う。
 有限体や有理数など、零判定と四則演算を正確に行える型を使う。
 
+`F` の既定値は `FieldAddSubMulDiv<modint998244353>`。`LinearMatroid<>` と書ける。既存の線形表現を入力するときは、その表現の体を使う。
+
+`build` の要素番号の配列には、`i128`・`u128` を含む任意の整数型を使える。返す要素番号は `int`。
+
 ## 使用例
 
 ```cpp
 #include "matroid/linear_matroid.hpp"
 
-using mint = modint998244353;
-using F = FieldAddSubMulDiv<mint>;
 // 各要素を列ベクトルとして渡す。
-LinearMatroid<F> m(2, {{1, 0}, {0, 1}, {1, 1}, {0, 0}});
+LinearMatroid<> m(2, {{1, 0}, {0, 1}, {1, 1}, {0, 0}});
 m.build({0, 1});
 assert(m.circuit(2) == optional<vc<int>>({0, 1}));
 assert(m.circuit(3) == optional<vc<int>>(vc<int>{}));
@@ -70,7 +72,8 @@ $O(1)$。
 #### build
 
 ```cpp
-void build(const vc<int>& independent)
+template<class I = int>
+void build(const vc<I>& independent)
 ```
 
 現在の独立集合を設定する。消去済みの基底と、各基底ベクトルの元の列による表現を保持する。
@@ -100,3 +103,11 @@ optional<vc<int>> circuit(int e) const
 ##### 計算量
 
 $O(dr)$。
+
+#### matrix
+
+```cpp
+Matrix<F> matrix() const;
+```
+
+行を座標、列を台集合の要素とする密行列を返す。次元を $d$、要素数を $n$ として $O(dn)$ 時間。

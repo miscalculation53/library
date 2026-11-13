@@ -6,6 +6,8 @@
 
 専用の oracle を用意する前の検証や、小さい入力に使える。
 
+`build` の要素番号の配列には、`i128`・`u128` を含む任意の整数型を使える。返す要素番号は `int`。
+
 ## 使用例
 
 ```cpp
@@ -55,7 +57,8 @@ int size() const;
 #### build
 
 ```cpp
-void build(const vc<int>& independent);
+template<class I = int>
+void build(const vc<I>& independent);
 ```
 
 現在の独立集合を置き換える。相異なる有効な要素からなる独立集合を渡す。以下、現在の大きさを $r$、独立性判定一回の時間を $T$ とする。
