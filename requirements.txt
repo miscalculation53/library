@@ -19,7 +19,7 @@ referencing==0.37.0
 requests==2.33.0
 rpds-py==0.30.0
 setuptools==84.2.1
-soupsieve==3.0.4
+soupsieve==4.1
 toml==0.10.2
 typing_extensions==4.15.0
 urllib3==2.8.0

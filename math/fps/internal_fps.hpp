@@ -108,7 +108,6 @@ template <class F>
 optional<F> fps_tail_power(const F &f, int n, typename F::value_type constant, typename F::value_type linear,
                            typename F::value_type quadratic)
 {
-  using mint = typename F::value_type;
   int d = 1;
   while (d < min(n, f.sz()) && f[d] == 0)
     ++d;
