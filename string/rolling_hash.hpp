@@ -162,10 +162,10 @@ struct RollingHashBase
       mod = mint::mod();
       pw = {one()};
     }
-    const H b = inverse ? inv_base() : base();
     int i = pw.size();
     if (n >= i)
     {
+      const H b = inverse ? inv_base() : base();
       pw.resize(n + 1);
       for (; i <= n; i++) pw[i] = mul(pw[i - 1], b);
     }
@@ -262,6 +262,52 @@ struct RollingHashSequenceOps
 private:
   const Derived &self() const { return static_cast<const Derived &>(*this); }
 
+  template <class Other>
+  ll lcp_between(const Other &rhs, ll ok, ll ng) const
+  {
+    static_assert(is_same_v<decltype(self().hash()), decltype(rhs.hash())>);
+    return binsearch<ll>([&](ll mid)
+    {
+      return self().hash_value(0, mid) == rhs.hash_value(0, mid);
+    }, ok, ng, false, false).first;
+  }
+
+  template <class A, class B>
+  int compare_after_first(const A &, const B &rhs, ll n, ll m) const
+  {
+    ll k = lcp_between(rhs, 0, min(n, m) + 1);
+    return compare_at(rhs, k, n, m);
+  }
+
+  template <class L1, class R1, class L2, class R2>
+  int compare_after_first(const RollingHashConcatView<L1, R1> &a,
+                          const RollingHashConcatView<L2, R2> &b, ll n, ll m) const
+  {
+    ll limit = min(n, m), ok = 0, ng = limit + 1;
+    ll boundary = min(a.lhs.size(), b.lhs.size());
+    if (boundary > 0)
+    {
+      if (a.lhs.hash_value(0, boundary) == b.lhs.hash_value(0, boundary))
+      {
+        int cmp = compare_at(b, boundary, n, m);
+        if (cmp != 0 || boundary == limit) return cmp;
+        ok = boundary;
+      }
+      else ng = boundary;
+    }
+    ll k = lcp_between(b, ok, ng);
+    return compare_at(b, k, n, m);
+  }
+
+  template <class Other>
+  int compare_at(const Other &rhs, ll i, ll n, ll m) const
+  {
+    if (i == min(n, m)) return n < m ? -1 : n > m ? 1 : 0;
+    if (self().get(i) < rhs.get(i)) return -1;
+    if (rhs.get(i) < self().get(i)) return 1;
+    return 0;
+  }
+
 public:
   auto content() const
   {
@@ -281,14 +327,7 @@ public:
   template <class Other, enable_if_t<is_rolling_hash_sequence<decay_t<Other>>, int> = 0>
   ll lcp(const Other &rhs) const
   {
-    static_assert(is_same_v<decltype(self().hash()), decltype(rhs.hash())>);
-    ll ok = 0, ng = min(self().size(), rhs.size()) + 1;
-    while (ng - ok > 1)
-    {
-      ll mid = (ok + ng) / 2;
-      (self().hash_value(0, mid) == rhs.hash_value(0, mid) ? ok : ng) = mid;
-    }
-    return ok;
+    return lcp_between(rhs, 0, min(self().size(), rhs.size()) + 1);
   }
   ll lcp(string_view rhs) const
   {
@@ -319,17 +358,10 @@ public:
   template <class Other, enable_if_t<is_rolling_hash_sequence<decay_t<Other>>, int> = 0>
   int compare(const Other &rhs) const
   {
-    if (self().size() && rhs.size())
-    {
-      if (self().get(0) < rhs.get(0)) return -1;
-      if (rhs.get(0) < self().get(0)) return 1;
-    }
-    ll k = lcp(rhs);
-    if (k == min(self().size(), rhs.size()))
-      return self().size() < rhs.size() ? -1 : self().size() > rhs.size() ? 1 : 0;
-    if (self().get(k) < rhs.get(k)) return -1;
-    if (rhs.get(k) < self().get(k)) return 1;
-    return 0;
+    ll n = self().size(), m = rhs.size();
+    int cmp = compare_at(rhs, 0, n, m);
+    if (cmp != 0 || n == 0 || m == 0) return cmp;
+    return compare_after_first(self(), rhs, n, m);
   }
   int compare(string_view rhs) const
   {
@@ -436,6 +468,8 @@ private:
   L lhs;
   R rhs;
 
+  template <class Derived>
+  friend struct RollingHashSequenceOps;
   template <class V, class mint, int id, int hash_count>
   friend struct RollingHashConcat;
 
@@ -570,6 +604,7 @@ public:
   H hash_value(ll l, ll r) const
   {
     assert(0 <= l && l <= r && r <= size());
+    if (l == 0) return sm[r];
     return Base::sub(sm[r], Base::mul(sm[l], Base::pow(r - l)));
   }
   decltype(auto) get(ll i) const

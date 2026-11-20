@@ -7,18 +7,12 @@
  * @docs docs/matroid/linear_matroid_intersection.md
  */
 
-// 復元なし
-// d₁, d₂: 行数、n: 列数 (要素数)、r₁, r₂: ランク として
-// 前処理: O(d₁ n min(d₁, n) + d₂ n min(d₂, n)) 時間
-// 実際の計算 (trials 回): O(r₁ r₂ (n + min(r₁, r₂))) 時間
-template <class F, class Sample,
-          enable_if_t<is_invocable_r_v<typename F::S, Sample &>, int> = 0>
-int linear_matroid_intersection_size(const LinearMatroid<F> &first,
-                                     const LinearMatroid<F> &second,
-                                     Sample &&sample, int trials = 1)
+namespace internal::linear_matroid_detail
 {
-  assert(first.size() == second.size() && trials >= 1);
-  using namespace internal::linear_matroid_detail;
+template <class F, class M1, class M2, class Sample>
+int dense_intersection_size(const M1 &first, const M2 &second, Sample &sample, int trials)
+{
+  assert(element_count(first) == element_count(second) && trials >= 1);
   auto a = compressed_columns(first), b = compressed_columns(second);
   if (a.empty() || a[0].empty() || b[0].empty()) return 0;
   int best = 0;
@@ -27,21 +21,13 @@ int linear_matroid_intersection_size(const LinearMatroid<F> &first,
   return best;
 }
 
-// 復元あり (要素番号)
-// d₁, d₂: 行数、n: 列数 (要素数)、r₁, r₂: ランク として
-// 前処理: O(d₁ n min(d₁, n) + d₂ n min(d₂, n)) 時間
-// 実際の計算 (trials 回): O(n * r₁ r₂ (n + min(r₁, r₂))) 時間
-template <class F, class Sample,
-          enable_if_t<is_invocable_r_v<typename F::S, Sample &>, int> = 0>
-vc<int> linear_matroid_intersection_restore(const LinearMatroid<F> &first,
-                                    const LinearMatroid<F> &second,
-                                    Sample &&sample, int trials = 1)
+template <class F, class M1, class M2, class Sample>
+vc<int> dense_intersection_restore(const M1 &first, const M2 &second, Sample &sample, int trials)
 {
-  assert(first.size() == second.size() && trials >= 1);
-  using namespace internal::linear_matroid_detail;
+  const int n = element_count(first);
+  assert(n == element_count(second) && trials >= 1);
   auto original_a = compressed_columns(first), original_b = compressed_columns(second);
   if (original_a.empty() || original_a[0].empty() || original_b[0].empty()) return {};
-  const int n = first.size();
   vc<int> best;
   for (int trial = 0; trial < trials; trial++)
   {
@@ -62,7 +48,81 @@ vc<int> linear_matroid_intersection_restore(const LinearMatroid<F> &first,
   }
   return best;
 }
+}
 
+// 復元なし
+// d₁, d₂: 行数、n: 列数 (要素数)、r₁, r₂: ランク として
+// 前処理: O(d₁ n min(d₁, n) + d₂ n min(d₂, n)) 時間
+// 実際の計算 (trials 回): O(r₁ r₂ (n + min(r₁, r₂))) 時間
+template <class F, int BS1, int BS2, class Sample,
+          enable_if_t<is_invocable_r_v<typename F::S, Sample &>, int> = 0>
+int linear_matroid_intersection_size(const Matrix<F, BS1> &first,
+                                    const Matrix<F, BS2> &second,
+                                    Sample &&sample, int trials = 1)
+{
+  return internal::linear_matroid_detail::dense_intersection_size<F>(first, second, sample, trials);
+}
+
+// 復元あり (要素番号)
+// d₁, d₂: 行数、n: 列数 (要素数)、r₁, r₂: ランク として
+// 前処理: O(d₁ n min(d₁, n) + d₂ n min(d₂, n)) 時間
+// 実際の計算 (trials 回): O(n * r₁ r₂ (n + min(r₁, r₂))) 時間
+template <class F, int BS1, int BS2, class Sample,
+          enable_if_t<is_invocable_r_v<typename F::S, Sample &>, int> = 0>
+vc<int> linear_matroid_intersection_restore(const Matrix<F, BS1> &first,
+                                           const Matrix<F, BS2> &second,
+                                           Sample &&sample, int trials = 1)
+{
+  return internal::linear_matroid_detail::dense_intersection_restore<F>(first, second, sample, trials);
+}
+
+// 復元なし
+// d₁, d₂: 行数、n: 列数 (要素数)、r₁, r₂: ランク として
+// 前処理: O(d₁ n min(d₁, n) + d₂ n min(d₂, n)) 時間
+// 実際の計算 (trials 回): O(r₁ r₂ (n + min(r₁, r₂))) 時間
+template <class F, int BS1, int BS2>
+int linear_matroid_intersection_size(const Matrix<F, BS1> &first,
+                                    const Matrix<F, BS2> &second, int trials = 1)
+{
+  return linear_matroid_intersection_size(first, second, random_modint<typename F::S>, trials);
+}
+
+// 復元あり (要素番号)
+// d₁, d₂: 行数、n: 列数 (要素数)、r₁, r₂: ランク として
+// 前処理: O(d₁ n min(d₁, n) + d₂ n min(d₂, n)) 時間
+// 実際の計算 (trials 回): O(n * r₁ r₂ (n + min(r₁, r₂))) 時間
+template <class F, int BS1, int BS2>
+vc<int> linear_matroid_intersection_restore(const Matrix<F, BS1> &first,
+                                           const Matrix<F, BS2> &second, int trials = 1)
+{
+  return linear_matroid_intersection_restore(first, second, random_modint<typename F::S>, trials);
+}
+
+// 復元なし
+// d₁, d₂: 行数、n: 列数 (要素数)、r₁, r₂: ランク として
+// 前処理: O(d₁ n min(d₁, n) + d₂ n min(d₂, n)) 時間
+// 実際の計算 (trials 回): O(r₁ r₂ (n + min(r₁, r₂))) 時間
+template <class F, class Sample,
+          enable_if_t<is_invocable_r_v<typename F::S, Sample &>, int> = 0>
+int linear_matroid_intersection_size(const LinearMatroid<F> &first,
+                                    const LinearMatroid<F> &second,
+                                    Sample &&sample, int trials = 1)
+{
+  return internal::linear_matroid_detail::dense_intersection_size<F>(first, second, sample, trials);
+}
+
+// 復元あり (要素番号)
+// d₁, d₂: 行数、n: 列数 (要素数)、r₁, r₂: ランク として
+// 前処理: O(d₁ n min(d₁, n) + d₂ n min(d₂, n)) 時間
+// 実際の計算 (trials 回): O(n * r₁ r₂ (n + min(r₁, r₂))) 時間
+template <class F, class Sample,
+          enable_if_t<is_invocable_r_v<typename F::S, Sample &>, int> = 0>
+vc<int> linear_matroid_intersection_restore(const LinearMatroid<F> &first,
+                                           const LinearMatroid<F> &second,
+                                           Sample &&sample, int trials = 1)
+{
+  return internal::linear_matroid_detail::dense_intersection_restore<F>(first, second, sample, trials);
+}
 
 // 復元なし
 // d₁, d₂: 行数、n: 列数 (要素数)、r₁, r₂: ランク として

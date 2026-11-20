@@ -11,7 +11,7 @@
 
 namespace internal
 {
-// 0 <= a,b < m。
+// 0 <= a,b < m
 template <bool small = false, class U>
 pair<U, U> floor_sum_divmod(U n, U m, U a, U b)
 {
@@ -24,7 +24,7 @@ pair<U, U> floor_sum_divmod(U n, U m, U a, U b)
   else return mul_add_divmod(a, n, b, m);
 }
 
-// n*(n-1)/2。
+// n*(n-1)/2
 template <class C, class U>
 C floor_sum_triangle(U n)
 {
@@ -50,7 +50,7 @@ C floor_sum_unsigned_core(U n, U m, U a, U b)
   return ans;
 }
 
-// 入口では 0 <= a,b < m。
+// 0 <= a,b < m
 template <class C, class U>
 C floor_sum_unsigned(U n, U m, U a, U b)
 {
@@ -70,7 +70,7 @@ C floor_sum_unsigned(U n, U m, U a, U b)
 
 }
 
-// sum_{i=l}^{r-1} floor((a*i+b)/m)。整数の R には下位 sizeof(R)*8 bit を返す。
+// sum_{i=l}^{r-1} floor((a*i+b)/m)
 template <class R, class L, class H, class M, class A, class B>
 R floor_sum(L l, H r, M m, A a, B b)
 {
@@ -120,7 +120,7 @@ R floor_sum(N n, M m, A a, B b)
   return floor_sum<R>(0, n, m, a, b);
 }
 
-// (a*i+b) mod m (0 <= i < n) のうち [l,r) に入る項数。
+// (a*i+b) mod m (0 <= i < n) のうち [l,r) に入る項数
 inline ll count_mod_of_linear(ll n, ll m, ll a, ll b, ll l, ll r)
 {
   assert(n >= 0 && m >= 1);
@@ -132,9 +132,4 @@ inline ll count_mod_of_linear(ll n, ll m, ll a, ll b, ll l, ll r)
   if (b < 0) b += m;
   return floor_sum<ull>(n, m, a, ull(b) + m - l)
        - floor_sum<ull>(n, m, a, ull(b) + m - r);
-}
-
-inline ll count_mod_of_linear(ll n, ll m, ll a, ll l, ll r)
-{
-  return count_mod_of_linear(n, m, a, 0, l, r);
 }

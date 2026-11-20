@@ -17,6 +17,8 @@ void test1()
   }
   rep(k, -1, 12)
   {
+    rep(r, k, 13)
+      assert(st.count(k, r) == std::count_if(ALL(a), [&](ll x) { return k <= x && x < r; }));
     assert(lt_cnt(a, k) == st.lt_cnt(k));
     assert(leq_cnt(a, k) == st.leq_cnt(k));
     assert(gt_cnt(a, k) == st.gt_cnt(k));
@@ -69,6 +71,8 @@ void test2()
   }
   rep(k, -1, 12)
   {
+    rep(r, k, 13)
+      assert(ms.count(k, r) == std::count_if(ALL(a), [&](ll x) { return k <= x && x < r; }));
     assert(lt_cnt(a, k) == ms.lt_cnt(k));
     assert(leq_cnt(a, k) == ms.leq_cnt(k));
     assert(gt_cnt(a, k) == ms.gt_cnt(k));
@@ -108,10 +112,26 @@ void test2()
   }
 }
 
+void test_count_boundaries()
+{
+  const i128 large = i128(1) << 100;
+  const pbds_set<i128, greater<i128>> st{large, 0, -large, -large};
+  const pbds_multiset<i128, greater<i128>> ms{large, 0, -large, -large};
+  static_assert(is_same_v<decltype(st.count(large, 0)), ll>);
+  static_assert(is_same_v<decltype(ms.count<u128>(0, -large)), u128>);
+  assert(st.count(large, -large) == 2);
+  assert(ms.count(0, -large) == 1);
+  assert(ms.count<u128>(-large, -large - 1) == 2);
+  assert(ms.count(-large, -large) == 0);
+  assert(pbds_set<int>{}.count(-1, 1) == 0);
+  assert(pbds_multiset<int>{}.count(-1, 1) == 0);
+}
+
 int main()
 {
   rep(_, 100) test1();
   rep(_, 100) test2();
+  test_count_boundaries();
 
   cout << "Hello World" << endl;
 }

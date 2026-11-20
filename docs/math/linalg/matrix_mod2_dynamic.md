@@ -86,6 +86,18 @@ void swap_rows(int i, int j)
 - 区間操作：区間長を $l$ として $O(\lceil l/w\rceil)$。
 - ビット検索：$O(W_m)$。
 
+#### transpose
+
+```cpp
+MatrixMod2Dynamic transpose() const;
+```
+
+行数と列数を入れ替えた転置行列を返す。
+
+##### 計算量
+
+- $O(nm)$。
+
 #### 演算・累乗
 
 ```cpp

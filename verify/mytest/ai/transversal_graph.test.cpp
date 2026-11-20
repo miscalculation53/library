@@ -74,10 +74,10 @@ void exercise(const GraphUndirected<Cost, Erasable> &graph, const vc<Color> &col
   const int member_calls = calls;
   calls = 0;
   auto factory = transversal_linear_representation<F>(graph, color, sample);
-  assert(member_calls == calls && member.columns() == factory.columns());
+  assert(member_calls == calls && member == factory);
   calls = 0;
-  assert(factory.columns() == transversal_linear_representation<F>(r, adjacency, sample).columns());
-  assert(member_calls == calls && factory.dimension() == r && factory.size() == n);
+  assert(factory == transversal_linear_representation<F>(r, adjacency, sample));
+  assert(member_calls == calls && factory.template shape<int>() == make_pair(r, n));
 
   for (int mask = 0; mask < (1 << n); mask++) if (cover(adjacency, mask))
   {
@@ -94,7 +94,7 @@ void exercise(const GraphUndirected<Cost, Erasable> &graph, const vc<Color> &col
       for (int f : selected)
         assert(bool(members.count(f)) == cover(adjacency, (mask ^ (1 << f)) | (1 << e)));
       calls = 0;
-      assert(matroid.linear_representation<F>(sample).columns() == factory.columns());
+      assert(matroid.linear_representation<F>(sample) == factory);
     }
   }
 }

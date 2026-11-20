@@ -4,15 +4,14 @@
 #include "math/modint/random.hpp"
 
 template <class F, class Predicate>
-void check_representation(const LinearMatroid<F> &m, const Predicate &independent)
+void check_representation(const Matrix<F> &m, const Predicate &independent)
 {
-  for (int mask = 0; mask < (1 << m.size()); mask++)
+  const int n = m.template shape<int>().second;
+  for (int mask = 0; mask < (1 << n); mask++)
   {
     vc<int> selected;
-    for (int e = 0; e < m.size(); e++) if (mask >> e & 1) selected.push_back(e);
-    Matrix<F> matrix(m.dimension(), selected.size());
-    for (int j = 0; j < int(selected.size()); j++) for (int i = 0; i < m.dimension(); i++)
-      matrix[i][j] = m.columns()[selected[j]][i];
+    for (int e = 0; e < n; e++) if (mask >> e & 1) selected.push_back(e);
+    auto matrix = m.select_columns(selected);
     assert((matrix.template rank<int>() == int(selected.size())) == independent(mask));
   }
 }
@@ -55,7 +54,7 @@ int main()
   mt.seed(20261108);
   const auto saved = mt;
   auto uniform = UniformMatroid(6, 3).linear_representation();
-  static_assert(is_same_v<decltype(uniform), LinearMatroid<F>>);
+  static_assert(is_same_v<decltype(uniform), Matrix<F>>);
   assert(mt == saved);
   check_representation(uniform, [](int mask) { return __builtin_popcount(unsigned(mask)) <= 3; });
   check_representation(UniformMatroid(3, 3).linear_representation<F3>(), [](int) { return true; });
@@ -70,7 +69,7 @@ int main()
   const vc<u128> capacity{2, 1, 0};
   auto partition = PartitionMatroid(group, capacity).linear_representation();
   assert(mt == saved);
-  assert(partition.columns() == partition_linear_representation(group, capacity).columns());
+  assert(partition == partition_linear_representation(group, capacity));
   check_representation(partition, [&](int mask)
   {
     vc<int> count(3);
@@ -83,38 +82,39 @@ int main()
                        [](int mask) { return __builtin_popcount(unsigned(mask)) <= 1; });
   check_representation(PartitionMatroid({0, 0, 1}, {1, 1}).linear_representation<CustomField>(),
                        [](int mask) { return (mask & 3) != 3; });
-  assert(partition_linear_representation({}, {}).size() == 0);
-  assert(uniform_linear_representation(2, vc<modint998244353>{0, 1, 2}).size() == 3);
-  assert(UniformMatroid(3, 2).linear_representation({0, 1, 2}).size() == 3);
-  assert(PartitionMatroid(group, capacity).linear_representation({0, 0, 1, 1, 0, 1}).size() == 6);
+  assert(partition_linear_representation({}, {}).shape().second == 0);
+  assert(uniform_linear_representation(2, vc<modint998244353>{0, 1, 2}).shape().second == 3);
+  assert(UniformMatroid(3, 2).linear_representation({0, 1, 2}).shape().second == 3);
+  assert(PartitionMatroid(group, capacity).linear_representation({0, 0, 1, 1, 0, 1}).shape().second == 6);
 
   GraphicMatroid graphic(3, {{0, 1}, {1, 2}, {2, 0}});
-  assert(graphic.linear_representation().columns() == graphic_linear_representation(3, {{0, 1}, {1, 2}, {2, 0}}).columns());
+  assert(graphic.linear_representation() == graphic_linear_representation(3, {{0, 1}, {1, 2}, {2, 0}}));
   auto binary = BinaryMatroid<>({3, 5, 6}).linear_representation();
-  static_assert(is_same_v<decltype(binary), LinearMatroid<F2>>);
+  static_assert(is_same_v<decltype(binary), Matrix<F2>>);
   check_representation(binary, [](int mask) { return mask != 7; });
   auto odd = graphic_linear_representation(0, vc<pair<int, int>>{});
-  assert(odd.size() == 0);
-  assert(binary_linear_representation(vc<ull>{1, 2, 3}).dimension() == 64);
+  assert(odd.shape().second == 0);
+  assert(binary_linear_representation(vc<ull>{1, 2, 3}).shape().first == 64);
 
   auto sample = [state = make_unique<int>(0)]() mutable { return modint998244353(++*state); };
   const vvc<ll> adjacency{{0, 0}, {0, 1}};
-  assert(transversal_linear_representation(2, adjacency, sample).columns()[0][0] == 1);
-  assert(transversal_linear_representation(2, CSR<ll>(adjacency)).size() == 2);
-  assert(transversal_linear_representation(2, {{0}, {0, 1}}).size() == 2);
+  assert(transversal_linear_representation(2, adjacency, sample)[0][0] == 1);
+  assert(transversal_linear_representation(2, CSR<ll>(adjacency)).shape().second == 2);
+  assert(transversal_linear_representation(2, {{0}, {0, 1}}).shape().second == 2);
   GraphUndirected<> graph(4, vc<pair<int, int>>{{0, 2}, {1, 2}, {1, 3}});
   vc<int> color{0, 0, 1, 1};
   mt.seed(7);
   check_representation(TransversalMatroid(graph, color).linear_representation(), [](int) { return true; });
-  assert(transversal_linear_representation(graph, color).size() == 2);
+  assert(transversal_linear_representation(graph, color).shape().second == 2);
   check_representation(BicircularMatroid(1, {{0, 0}, {0, 0}}).linear_representation(),
                        [](int mask) { return mask != 3; });
-  assert(bicircular_linear_representation(1, {{0, 0}}).size() == 1);
+  assert(bicircular_linear_representation(1, {{0, 0}}).shape().second == 1);
   auto custom_sample = [] { return CustomField::e1(); };
-  assert(BicircularMatroid(1, {{0, 0}}).linear_representation<CustomField>(custom_sample).size() == 1);
+  assert(BicircularMatroid(1, {{0, 0}}).linear_representation<CustomField>(custom_sample).shape().second == 1);
   LinearMatroid<CustomField> custom(2, {{CustomField::e1(), CustomField::e0()},
                                       {CustomField::e0(), CustomField::e1()}});
   assert(linear_matroid_parity_size(custom, custom_sample) == 1);
+  assert(linear_matroid_parity_size(custom.matrix(), custom_sample) == 1);
 
   LinearMatroid m(4, {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}});
   static_assert(is_same_v<decltype(m), LinearMatroid<>>);
@@ -133,6 +133,19 @@ int main()
   assert(linear_matroid_intersection_size(m, m, 2) == 4);
   assert(linear_matroid_parity_restore(LinearMatroid<>(0, vvc<modint998244353>{})).empty());
   assert(linear_matroid_intersection_size(uniform, partition) == 3);
+
+  const Matrix<F, 16> matrix(m.matrix().to_vvi());
+  assert(linear_matroid_parity_size(matrix) == 2);
+  assert(linear_matroid_parity_size(matrix, pairs, 2) == 2);
+  assert(linear_matroid_parity_size(matrix, {}) == 0);
+  assert(linear_matroid_parity_restore(matrix).size() == 2);
+  assert(linear_matroid_parity_restore(matrix, pairs).size() == 2);
+  assert(linear_matroid_parity_restore(matrix, {{0, 1}, {2, 3}}, 2).size() == 2);
+  assert(linear_matroid_parity_restore(matrix, {}).empty());
+  assert(linear_matroid_parity_size(Matrix<F>(0, 4)) == 0);
+  assert(linear_matroid_intersection_restore(matrix, m.matrix()).size() == 4);
+  assert(linear_matroid_intersection_size(matrix, m.matrix(), 2) == 4);
+  assert(linear_matroid_intersection_size(Matrix<F>(0, 4), matrix) == 0);
 
   mt.seed(20261108);
   vc<modint998244353> old_samples(128);

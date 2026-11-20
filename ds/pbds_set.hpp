@@ -17,7 +17,7 @@ struct pbds_set : tree<T, null_type, Compare, rb_tree_tag, tree_order_statistics
   using base = tree<T, null_type, Compare, rb_tree_tag, tree_order_statistics_node_update>;
 
   pbds_set() {}
-  pbds_set(initializer_list<T> il) : base(il) {}
+  pbds_set(initializer_list<T> il) : base(il.begin(), il.end()) {}
   template <class Iterator>
   pbds_set(Iterator begi, Iterator endi) : base(begi, endi) {}
 
@@ -39,6 +39,13 @@ struct pbds_set : tree<T, null_type, Compare, rb_tree_tag, tree_order_statistics
   // x 超過の要素の個数
   template <class I = ll>
   inline I gt_cnt(const T &x) const { return (I)this->size() - leq_cnt<I>(x); }
+  // 比較順で半開区間 [l, r) にある要素の個数
+  template <class I = ll>
+  inline I count(const T &l, const T &r) const
+  {
+    assert(!this->get_cmp_fn()(r, l));
+    return lt_cnt(r) - lt_cnt(l);
+  }
 
   // x 未満で最大の要素のイテレータ (なければ nullopt)
   optional<typename base::const_iterator> lt_max_it(const T &x) const
@@ -156,6 +163,13 @@ public:
   // x 超過の要素の個数
   template <class I = ll>
   inline I gt_cnt(const T &x) const { return (I)this->size() - leq_cnt<I>(x); }
+  // 比較順で半開区間 [l, r) にある要素の個数 (重複を含む)
+  template <class I = ll>
+  inline I count(const T &l, const T &r) const
+  {
+    assert(!Compare()(r, l));
+    return lt_cnt(r) - lt_cnt(l);
+  }
   
   // x 未満で最大の要素のイテレータ (なければ nullopt)
   optional<typename base::const_iterator> lt_max_it(const T &x) const

@@ -32,6 +32,76 @@ struct Matrix : internal::matrix_storage<typename F::S>
   Matrix(const vvc<S> &a) : Base(a) {}
   Matrix(initializer_list<V> a) : Matrix(vvc<S>(a)) {}
 
+  /** 転置した行列を返す。 */
+  M transpose() const
+  {
+    auto [n, m] = shape<int>();
+    M result(m, n);
+    constexpr int block = 32;
+    for (int j = 0; j < m; j += block)
+      for (int i = 0; i < n; i += block)
+        for (int r = i; r < min(i + block, n); ++r)
+          for (int c = j; c < min(j + block, m); ++c)
+            result[c][r] = (*this)[r][c];
+    return result;
+  }
+
+  /** 第 j 列をベクトルとして返す。 */
+  V column(int j) const
+  {
+    auto [n, m] = shape<int>();
+    assert(0 <= j && j < m);
+    return gen_vec(n, [&](int i) -> S { return (*this)[i][j]; });
+  }
+
+  /** 指定した行を順に取り出す。行番号の重複にも対応する。 */
+  template <class I = int>
+  M select_rows(const vc<I> &indices) const
+  {
+    static_assert(is_integral_ext<I>);
+    auto [n, m] = shape<int>();
+    M result(indices.size(), m);
+    for (int i = 0; i < int(indices.size()); ++i)
+    {
+      assert(u128(indices[i]) < unsigned(n));
+      result[i] = (*this)[int(indices[i])];
+    }
+    return result;
+  }
+
+  /** 指定した列を順に取り出す。列番号の重複にも対応する。 */
+  template <class I = int>
+  M select_columns(const vc<I> &indices) const
+  {
+    static_assert(is_integral_ext<I>);
+    auto [n, m] = shape<int>();
+    for ([[maybe_unused]] I j : indices) assert(u128(j) < unsigned(m));
+    M result(n, indices.size());
+    for (int i = 0; i < n; ++i) for (int j = 0; j < int(indices.size()); ++j)
+      result[i][j] = (*this)[i][int(indices[j])];
+    return result;
+  }
+
+  /** scale を対角成分とする対角行列 D を左から掛ける（A ← DA）。 */
+  M &scale_rows(const V &scale)
+  {
+    auto [n, m] = shape<int>();
+    assert(int(scale.size()) == n);
+    for (int i = 0; i < n; ++i) for (int j = 0; j < m; ++j)
+      (*this)[i][j] = F::mul(scale[i], (*this)[i][j]);
+    return *this;
+  }
+
+  /** scale を対角成分とする対角行列 D を右から掛ける（A ← AD）。 */
+  M &scale_columns(const V &scale)
+  {
+    auto [n, m] = shape<int>();
+    assert(int(scale.size()) == m);
+    for (int i = 0; i < n; ++i) for (int j = 0; j < m; ++j)
+      (*this)[i][j] = F::mul((*this)[i][j], scale[j]);
+    return *this;
+  }
+
   M operator-() const
   {
     auto [n, m] = shape<int>();

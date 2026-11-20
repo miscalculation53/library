@@ -6,12 +6,9 @@ using F = FieldAddSubMulDiv<modint998244353>;
 using S = F::S;
 
 template <class G>
-void equal_representation(const LinearMatroid<G> &a, const SparseMatrix<G> &b)
+void equal_representation(const Matrix<G> &a, const SparseMatrix<G> &b)
 {
-  auto x = a.matrix(), y = b.to_dense();
-  assert(x.template shape<int>() == y.template shape<int>());
-  auto [d, n] = x.template shape<int>();
-  for (int i = 0; i < d; i++) for (int j = 0; j < n; j++) assert(x[i][j] == y[i][j]);
+  assert(a == b.to_dense());
 }
 
 bool independent(const Matrix<F> &a, const vc<int> &indices)

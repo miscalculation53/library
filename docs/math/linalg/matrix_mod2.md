@@ -77,6 +77,18 @@ bitset<M>& row(int i)
 
 - $O(1)$。
 
+#### transpose
+
+```cpp
+MatrixMod2<M, N> transpose() const;
+```
+
+行数と列数を入れ替えた転置行列を返す。
+
+##### 計算量
+
+- $O(nm)$。
+
 #### 演算・累乗
 
 ```cpp

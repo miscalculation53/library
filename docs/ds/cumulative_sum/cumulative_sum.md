@@ -5,6 +5,7 @@
 $1$ 次元累積和
 
 更新と取得を混ぜ、取得した接頭辞を確定できる場合は [動的累積和](cumulative_sum_dynamic.md) を使う。
+静的な疎な点集合には [疎累積和](sparse_cumulative_sum.md) を使う。
 
 ## 使用例
 

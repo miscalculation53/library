@@ -62,7 +62,7 @@ public:
   /** 行数は整数型のビット幅、または DynamicBitset の長さ（DynamicBitset の入力が空なら 0）。
    *  列数は入力ベクトル数。各列の非零数は対応する入力ベクトルの 1 ビットの数。 */
   template <class F = FieldAddSubMulDiv<static_modint32<2>>>
-  LinearMatroid<F> linear_representation() const
+  Matrix<F> linear_representation() const
   {
     return binary_linear_representation<F>(vectors);
   }

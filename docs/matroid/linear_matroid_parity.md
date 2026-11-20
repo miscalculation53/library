@@ -18,7 +18,7 @@ $$
 
 階数と最適ペア数の関係は Lovász の階数公式による。
 
-`F` は入力の `LinearMatroid<F>` から推論する。`LinearMatroid<>` の既定体は `FieldAddSubMulDiv<modint998244353>`。入力が別の体の表現なら、その体で計算する。
+密な入力には `Matrix<F, BS>` または `LinearMatroid<F>` を渡す。行が座標、列が要素に対応し、`F` は入力から推論する。
 
 `sample` は省略でき、[random_modint](../math/modint/random.md) で零を含む体の元から一様に選ぶ。`F::S` が modint の場合に使える。乱数エンジンは `mt`。
 
@@ -29,8 +29,8 @@ $$
 ```cpp
 #include "matroid/linear_matroid_parity.hpp"
 
-LinearMatroid<> m(3, {{1, 0, 0}, {0, 1, 0},
-                      {0, 1, 0}, {0, 0, 1}});
+using F = FieldAddSubMulDiv<modint998244353>;
+Matrix<F> m{{1, 0, 0, 0}, {0, 1, 1, 0}, {0, 0, 0, 1}};
 auto pair_ids = linear_matroid_parity_restore(m, 2);
 int count = linear_matroid_parity_size(m, 2);
 assert(count == 1);
@@ -42,29 +42,29 @@ assert(count == 1);
 #### linear_matroid_parity_restore
 
 ```cpp
-template<class F, class I = int, class J = int>
-vc<int> linear_matroid_parity_restore(const LinearMatroid<F>& matroid,
+template <class F, int BS, class I = int, class J = int>
+vc<int> linear_matroid_parity_restore(const Matrix<F, BS>& matroid,
     const vc<pair<I, J>>& pairs, int trials = 1);
-template<class F>
-vc<int> linear_matroid_parity_restore(const LinearMatroid<F>& matroid, int trials = 1);
+template <class F, int BS>
+vc<int> linear_matroid_parity_restore(const Matrix<F, BS>& matroid, int trials = 1);
 
-template <class F, class Sample, class I = int, class J = int>
+template <class F, int BS, class Sample, class I = int, class J = int>
 vc<int> linear_matroid_parity_restore(
-    const LinearMatroid<F>& matroid,
+    const Matrix<F, BS>& matroid,
     const vc<pair<I, J>>& pairs,
-    Sample&& sample, int trials = 1)
+    Sample&& sample, int trials = 1);
 
-template <class F, class Sample>
+template <class F, int BS, class Sample>
 vc<int> linear_matroid_parity_restore(
-    const LinearMatroid<F>& matroid,
-    Sample&& sample, int trials = 1)
+    const Matrix<F, BS>& matroid,
+    Sample&& sample, int trials = 1);
 ```
 
 `sample()` を指定する場合は、体の要素 `F::S` に変換できる値を返す関数とする。mutable な関数オブジェクトや move-only な関数オブジェクトも渡せる。
 `trials` 回それぞれ独立に階数評価と解の復元を行い、最も大きい解のペア番号を昇順で返す。
 明示的な `pairs` を省略すると、列 $(0,1),(2,3),\ldots$ をペアとする。
 明示的な `pairs` では、ペアに含まれない列も入力できる。
-入力の `build` の状態は使わず、列ベクトルを読み取る。
+`LinearMatroid<F>` を渡す場合も、保持する全列を使う。
 
 返る集合の独立性は、縮約時の正確な零判定で保証する。
 乱数の分布にかかわらず実行可能な集合が返り、乱択の失敗はペア数の過小評価として現れる。
@@ -99,22 +99,22 @@ $$
 #### linear_matroid_parity_size
 
 ```cpp
-template<class F, class I = int, class J = int>
-int linear_matroid_parity_size(const LinearMatroid<F>& matroid,
+template <class F, int BS, class I = int, class J = int>
+int linear_matroid_parity_size(const Matrix<F, BS>& matroid,
     const vc<pair<I, J>>& pairs, int trials = 1);
-template<class F>
-int linear_matroid_parity_size(const LinearMatroid<F>& matroid, int trials = 1);
+template <class F, int BS>
+int linear_matroid_parity_size(const Matrix<F, BS>& matroid, int trials = 1);
 
-template <class F, class Sample, class I = int, class J = int>
+template <class F, int BS, class Sample, class I = int, class J = int>
 int linear_matroid_parity_size(
-    const LinearMatroid<F>& matroid,
+    const Matrix<F, BS>& matroid,
     const vc<pair<I, J>>& pairs,
-    Sample&& sample, int trials = 1)
+    Sample&& sample, int trials = 1);
 
-template <class F, class Sample>
+template <class F, int BS, class Sample>
 int linear_matroid_parity_size(
-    const LinearMatroid<F>& matroid,
-    Sample&& sample, int trials = 1)
+    const Matrix<F, BS>& matroid,
+    Sample&& sample, int trials = 1);
 ```
 
 最大ペア数を求める。復元を省き、`trials` 回の階数評価の半分の最大値を返す。
@@ -132,7 +132,7 @@ int linear_matroid_parity_size(
 
 ## 疎な線形表現
 
-`LinearMatroid<F>` の代わりに [SparseMatrix<F>](../math/linalg/sparse_matrix.md) を渡せる。行が座標、列が台集合の要素。関数名・ペア指定・`sample`・`trials` と、返す番号の意味は共通。
+疎な入力には [SparseMatrix<F>](../math/linalg/sparse_matrix.md) を渡す。行が座標、列が台集合の要素。関数名・ペア指定・`sample`・`trials` と、返す番号の意味は共通。
 
 ```cpp
 auto a = PartitionMatroid(group, capacity).sparse_linear_representation();

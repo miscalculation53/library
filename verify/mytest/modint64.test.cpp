@@ -13,10 +13,11 @@ void test1()
     i128 b = i128(-10) * MOD + mt() % (i128(21) * MOD);
     i128 ma = safemod<i128>(a, MOD);
     i128 mb = safemod<i128>(b, MOD);
+    const bool can_divide = mb != 0 && gcd((ll)mb, MOD) == 1;
     assert((mint(a) + mint(b)).val() == safemod<i128>(ma + mb, MOD));
     assert((mint(a) - mint(b)).val() == safemod<i128>(ma - mb, MOD));
     assert((mint(a) * mint(b)).val() == safemod<i128>(ma * mb, MOD));
-    if (gcd((ll)mb, MOD) == 1)
+    if (can_divide)
     {
       mint c = mint(a) / mint(b);
       assert(mint(b) * c == mint(a));
@@ -36,7 +37,7 @@ void test1()
     z = x * y;
     x *= y;
     assert(x == z);
-    if (gcd((ll)mb, MOD) == 1)
+    if (can_divide)
     {
       z = x / y;
       x /= y;
@@ -57,10 +58,11 @@ void test2(ll MOD)
     i128 b = i128(-10) * MOD + mt() % (i128(21) * MOD);
     i128 ma = safemod<i128>(a, MOD);
     i128 mb = safemod<i128>(b, MOD);
+    const bool can_divide = mb != 0 && gcd((ll)mb, MOD) == 1;
     assert((mint(a) + mint(b)).val() == safemod<i128>(ma + mb, MOD));
     assert((mint(a) - mint(b)).val() == safemod<i128>(ma - mb, MOD));
     assert((mint(a) * mint(b)).val() == safemod<i128>(ma * mb, MOD));
-    if (gcd((ll)mb, MOD) == 1)
+    if (can_divide)
     {
       mint c = mint(a) / mint(b);
       assert(b * c == a);
@@ -80,7 +82,7 @@ void test2(ll MOD)
     z = x * y;
     x *= y;
     assert(x == z);
-    if (gcd((ll)mb, MOD) == 1)
+    if (can_divide)
     {
       z = x / y;
       x /= y;
@@ -102,10 +104,11 @@ void test3(ll MOD)
     i128 b = i128(-10) * MOD + mt() % (i128(21) * MOD);
     i128 ma = safemod<i128>(a, MOD);
     i128 mb = safemod<i128>(b, MOD);
+    const bool can_divide = mb != 0 && gcd((ll)mb, MOD) == 1;
     assert((mint(a) + mint(b)).val() == safemod<i128>(ma + mb, MOD));
     assert((mint(a) - mint(b)).val() == safemod<i128>(ma - mb, MOD));
     assert((mint(a) * mint(b)).val() == safemod<i128>(ma * mb, MOD));
-    if (gcd((ll)mb, MOD) == 1)
+    if (can_divide)
     {
       mint c = mint(a) / mint(b);
       assert(b * c == a);
@@ -125,7 +128,7 @@ void test3(ll MOD)
     z = x * y;
     x *= y;
     assert(x == z);
-    if (gcd((ll)mb, MOD) == 1)
+    if (can_divide)
     {
       z = x / y;
       x /= y;

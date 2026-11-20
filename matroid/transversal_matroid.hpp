@@ -98,7 +98,7 @@ public:
 
   /** 行数は右側の頂点数、列数は左側の頂点数。各列の非零数は対応する左頂点の異なる隣接先の数以下。 */
   template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &>
-  LinearMatroid<F> linear_representation(Sample &&sample = random_modint<typename F::S>) const
+  Matrix<F> linear_representation(Sample &&sample = random_modint<typename F::S>) const
   {
     return transversal_linear_representation<F>(matching.right_size(), matching.adjacency(),
                                                 std::forward<Sample>(sample));

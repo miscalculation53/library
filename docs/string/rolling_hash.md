@@ -66,6 +66,18 @@ string restored = t.content();
 dump(t);  // LOCAL では仮想列の実際の内容を表示する
 ```
 
+列の一致判定を繰り返すときは、`.hash()` で `RollingHashValue` を取得し、[HashSet](../ds/hash_set.md) のキーにできる。キーは列の長さとハッシュ値で比較される。
+
+```cpp
+#include "ds/hash_set.hpp"
+#include "string/rolling_hash.hpp"
+
+RollingHash lhs("abcd"), rhs("axcd");
+HashSet<decltype(lhs.hash())> seen;
+seen.insert((lhs.substr(0, 1) + lhs.substr(2)).hash());  // "acd"
+bool same = seen.contains((rhs.substr(0, 1) + rhs.substr(2)).hash());
+```
+
 先頭へ列を追加しながら辞書順比較を繰り返す場合は `RollingHashDeque` を使う。
 
 ```cpp
@@ -574,6 +586,8 @@ int compare(const Other& rhs)
 ```
 
 辞書順で自身が `rhs` より小さい、等しい、大きいとき、それぞれ $-1, 0, 1$ を返す。`<`, `<=`, `>`, `>=` も使用できる。
+
+連結 view どうしでは、先に現れる連結位置までのハッシュを調べる。そこまでが一致し、次の要素が異なる場合はその場で比較結果が決まる。
 
 要素型が文字のときは、`rhs` に `string` または文字列リテラルも渡せる。比較演算子では文字列を左辺に置くこともできる。この場合、文字列側のハッシュをその場で構築する。
 

@@ -71,27 +71,27 @@ void integer_cases()
   assert(matroid_intersection(partition, UniformMatroid(4, 2), vc<I>{0}).size() == 2);
 
   const vc<typename F::S> points{0, 1, 0, 1};
-  assert(partition_linear_representation<F>(group, capacity, points).columns() ==
-         PartitionMatroid({0, 0, 1, 1}, {1, 2}).linear_representation<F>(points).columns());
-  assert(PartitionMatroid(group, {1, 2}).linear_representation<F>(points).columns() ==
-         PartitionMatroid({0, 0, 1, 1}, capacity).linear_representation<F>(points).columns());
-  assert(graphic_linear_representation<F>(3, edges).columns() == GraphicMatroid(3, edges).linear_representation<F>().columns());
+  assert(partition_linear_representation<F>(group, capacity, points) ==
+         PartitionMatroid({0, 0, 1, 1}, {1, 2}).linear_representation<F>(points));
+  assert(PartitionMatroid(group, {1, 2}).linear_representation<F>(points) ==
+         PartitionMatroid({0, 0, 1, 1}, capacity).linear_representation<F>(points));
+  assert(graphic_linear_representation<F>(3, edges) == GraphicMatroid(3, edges).linear_representation<F>());
   auto sample = [] { return F::e1(); };
-  assert(bicircular_linear_representation<F>(3, edges, sample).columns() ==
-         BicircularMatroid(3, edges).linear_representation<F>(sample).columns());
+  assert(bicircular_linear_representation<F>(3, edges, sample) ==
+         BicircularMatroid(3, edges).linear_representation<F>(sample));
   CSR<I> compact(adjacency);
   BipartiteMatchingState matching(2, adjacency), matching_csr(2, compact);
   assert(matching.augment(0) && matching_csr.augment(0));
   assert(matching.augment(1) && matching_csr.augment(1));
   assert(!matching.augment(2) && !matching_csr.augment(2));
-  assert(transversal_linear_representation<F>(2, adjacency, sample).columns() ==
-         transversal_linear_representation<F>(2, compact, sample).columns());
+  assert(transversal_linear_representation<F>(2, adjacency, sample) ==
+         transversal_linear_representation<F>(2, compact, sample));
   CSR<I, true> erasable(adjacency);
   erasable.pop_back(0);
   CSR<int> converted(erasable);
   assert(converted.content() == vvc<int>({{0}, {0}, {1}, {}}));
   assert(BipartiteMatchingState(2, erasable).left_size() == 4);
-  assert(transversal_linear_representation<F>(2, erasable, sample).columns()[0][1] == F::e0());
+  assert(transversal_linear_representation<F>(2, erasable, sample)[1][0] == F::e0());
   CSR<int> rows(vc<I>{100, 100});
   assert(rows.offset(2) == 200);
   CSR<int, true> mutable_rows(vc<I>{100, 100});
@@ -161,8 +161,8 @@ int main()
   partition.build(vc<unsigned char>{0, 1});
   assert(partition.circuit(2)->empty());
   using F = FieldAddSubMulDiv<static_modint32<998244353>>;
-  assert(partition.linear_representation<F>({0, 1, 0}).dimension() == 2);
-  assert(partition_linear_representation<F>(vc<u128>{0, 0}, vc<u128>{huge}, {0, 1}).dimension() == 2);
+  assert(partition.linear_representation<F>({0, 1, 0}).shape().first == 2);
+  assert(partition_linear_representation<F>(vc<u128>{0, 0}, vc<u128>{huge}, {0, 1}).shape().first == 2);
   LaminarMatroid laminar(vc<unsigned>{0}, vc<u128>{huge}, vc<unsigned char>{0, 0});
   laminar.build(vc<i128>{0, 1});
   auto predicate = [](const vc<int> &s) { return s.size() <= 2; };

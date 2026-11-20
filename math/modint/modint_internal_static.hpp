@@ -24,7 +24,14 @@ struct policy_static
   static constexpr mod_type val(value_type v) { return v; }
   static constexpr value_type mul(value_type a, value_type b)
   {
-    return (value_type)((calc_type(a) * b) % M);
+    const calc_type product = calc_type(a) * b;
+    if constexpr (M == (1LL << 61) - 1)
+    {
+      const value_type reduced = (value_type(product) & umod()) + value_type(product >> 61);
+      return reduced >= umod() ? reduced - umod() : reduced;
+    }
+    else
+      return value_type(product % M);
   }
 };
 

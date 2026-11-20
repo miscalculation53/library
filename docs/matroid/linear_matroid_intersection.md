@@ -20,15 +20,16 @@ Cauchy–Binet の公式で各小行列式を展開すると、同じ列集合�
 
 適用例の参考として、分割・グラフ的マトロイドを扱う [ABC399 G 公式解説](https://atcoder.jp/contests/abc399/editorial/12546?lang=ja) がある。
 
-`F` は入力の線形表現から推論する。`sample` を省略すると、[random_modint](../math/modint/random.md) で零を含む体の元から一様に選ぶ。既定の `LinearMatroid<>` は `modint998244353` を使う。その他の体も、その体のまま計算する。
+密な入力には `Matrix<F, BS>` または `LinearMatroid<F>` の組を渡す。`F` は入力から推論する。`sample` を省略すると、[random_modint](../math/modint/random.md) で零を含む体の元から一様に選ぶ。既定の `LinearMatroid<>` は `modint998244353` を使う。その他の体も、その体のまま計算する。
 
 ## 使用例
 
 ```cpp
 #include "matroid/linear_matroid_intersection.hpp"
 
-LinearMatroid<> a(2, {{1, 0}, {1, 0}, {0, 1}});
-LinearMatroid<> b(2, {{1, 0}, {0, 1}, {0, 1}});
+using F = FieldAddSubMulDiv<modint998244353>;
+Matrix<F> a{{1, 1, 0}, {0, 0, 1}};
+Matrix<F> b{{1, 0, 0}, {0, 1, 1}};
 auto ids = linear_matroid_intersection_restore(a, b, 2);
 int count = linear_matroid_intersection_size(a, b, 2);
 assert(count == 2);
@@ -40,20 +41,20 @@ assert(count == 2);
 #### linear_matroid_intersection_restore
 
 ```cpp
-template<class F>
-vc<int> linear_matroid_intersection_restore(const LinearMatroid<F>& first,
-    const LinearMatroid<F>& second, int trials = 1);
+template <class F, int BS1, int BS2>
+vc<int> linear_matroid_intersection_restore(const Matrix<F, BS1>& first,
+    const Matrix<F, BS2>& second, int trials = 1);
 
-template <class F, class Sample>
+template <class F, int BS1, int BS2, class Sample>
 vc<int> linear_matroid_intersection_restore(
-    const LinearMatroid<F>& first,
-    const LinearMatroid<F>& second,
-    Sample&& sample, int trials = 1)
+    const Matrix<F, BS1>& first,
+    const Matrix<F, BS2>& second,
+    Sample&& sample, int trials = 1);
 ```
 
 `sample()` を指定する場合は、体の要素 `F::S` に変換できる値を返す関数とする。
 `trials` 回それぞれ独立に階数評価と解の復元を行い、最も大きい解の要素番号を昇順で返す。
-入力の `build` の状態は使わず、列ベクトルを読み取る。
+各列が1要素に対応する。`LinearMatroid<F>` を渡す場合も、保持する全列を使う。
 
 返る集合の独立性は、縮約時の正確な零判定で保証する。
 乱数の分布にかかわらず実行可能な集合が返り、乱択の失敗は要素数の過小評価として現れる。
@@ -98,15 +99,15 @@ $$
 #### linear_matroid_intersection_size
 
 ```cpp
-template<class F>
-int linear_matroid_intersection_size(const LinearMatroid<F>& first,
-    const LinearMatroid<F>& second, int trials = 1);
+template <class F, int BS1, int BS2>
+int linear_matroid_intersection_size(const Matrix<F, BS1>& first,
+    const Matrix<F, BS2>& second, int trials = 1);
 
-template <class F, class Sample>
+template <class F, int BS1, int BS2, class Sample>
 int linear_matroid_intersection_size(
-    const LinearMatroid<F>& first,
-    const LinearMatroid<F>& second,
-    Sample&& sample, int trials = 1)
+    const Matrix<F, BS1>& first,
+    const Matrix<F, BS2>& second,
+    Sample&& sample, int trials = 1);
 ```
 
 最大共通独立集合の要素数を求める。復元を省き、`trials` 回の階数評価の最大値を返す。
@@ -119,7 +120,7 @@ int linear_matroid_intersection_size(
 
 ## 疎な線形表現
 
-`LinearMatroid<F>` の代わりに [SparseMatrix<F>](../math/linalg/sparse_matrix.md) を渡せる。行が座標、列が台集合の要素。関数名・`sample`・`trials` と、返す番号の意味は共通。
+疎な入力には [SparseMatrix<F>](../math/linalg/sparse_matrix.md) の組を渡す。行が座標、列が台集合の要素。関数名・`sample`・`trials` と、返す番号の意味は共通。
 
 全て零の行を除き、形状と対応する両列の非零数から次の経路を自動選択する。選択基準は `SparseMatrix::rank`、`det`、線形マトロイド parity と共通。
 

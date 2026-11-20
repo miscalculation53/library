@@ -145,7 +145,7 @@ SparseMatrix& operator*=(const S& scale);
 SparseMatrix operator*(const S& scale) const;
 ```
 
-指定した係数を各行・各列・全成分に掛ける。`scale_rows`・`scale_columns` の配列長はそれぞれ $n$、$m$。零になった成分は除く。
+`scale` を対角成分とする対角行列を $D$ とすると、`scale_rows` は $A\leftarrow DA$、`scale_columns` は $A\leftarrow AD$ に対応する。配列長はそれぞれ $n$、$m$。単一のスカラーは全成分に掛ける。零になった成分は除く。
 
 ##### 計算量
 

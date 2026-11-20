@@ -102,7 +102,7 @@ public:
   /** 行数は全グループの min(容量, 要素数) の総和。列数は台集合の要素数。
    *  各列の非零数は所属グループの min(容量, 要素数) 以下。 */
   template <class F = FieldAddSubMulDiv<modint998244353>>
-  LinearMatroid<F> linear_representation(const vc<typename F::S> &points) const
+  Matrix<F> linear_representation(const vc<typename F::S> &points) const
   {
     return partition_linear_representation<F>(group, capacity, points);
   }
@@ -110,7 +110,7 @@ public:
   /** 行数は全グループの min(容量, 要素数) の総和。列数は台集合の要素数。
    *  各列の非零数は所属グループの min(容量, 要素数) 以下。 */
   template <class F = FieldAddSubMulDiv<modint998244353>>
-  LinearMatroid<F> linear_representation() const
+  Matrix<F> linear_representation() const
   {
     return partition_linear_representation<F>(group, capacity);
   }

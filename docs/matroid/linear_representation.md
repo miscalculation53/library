@@ -2,7 +2,9 @@
 
 ## 概要
 
-具体的なマトロイドを [`LinearMatroid<F>`](linear_matroid.md) に変換する。要素番号は入力の順序を保つ。係数体 `F` は既存の `FieldAddSubMulDiv<mint>` などを使える。
+具体的なマトロイドの線形表現を [`Matrix<F>`](../math/linalg/matrix.md) として作る。行が座標、列が台集合の要素に対応する。要素番号は入力の順序を保つ。係数体 `F` は既存の `FieldAddSubMulDiv<mint>` などを使える。
+
+組合せ的マトロイド交叉で `build`・`circuit` を使う場合は、行列から [`LinearMatroid<F>`](linear_matroid.md) を構築する。
 
 各マトロイドの `linear_representation` メンバから利用できる。以下の対応するヘッダを読み込めば呼び出せる。構築関数も、それぞれ対応するヘッダに含む。
 
@@ -29,7 +31,7 @@ transversal・bicircular の `sample` を省略すると、[random_modint](../ma
 
 グループ番号・容量・辺の両端・隣接先の整数型は、それぞれ独立に選べる。`i128`・`u128` にも対応する。
 
-疎な表現は各 struct の `sparse_linear_representation<F>(...)` で取得する。引数と既定の係数体は `linear_representation` と同じで、戻り値は [SparseMatrix<F>](../math/linalg/sparse_matrix.md)。行が座標、列が台集合の要素に対応する。`LinearMatroid::matrix()` は同じ向きの密行列を返す。
+疎な表現は各マトロイドの `sparse_linear_representation<F>(...)` で取得する。引数・既定の係数体・行列の向きは `linear_representation` と同じで、戻り値は [SparseMatrix<F>](../math/linalg/sparse_matrix.md)。
 
 疎な表現は生成時から非零成分を蓄積する。graphic は各列高々2成分、partition は各列が所属グループの座標だけを持つ。transversal・bicircular は対応する隣接位置だけを持つ。一様・binary も疎な形式で取得できる。
 
@@ -46,6 +48,7 @@ transversal・bicircular の `sample` を省略すると、[random_modint](../ma
 auto uniform = UniformMatroid(4, 2).linear_representation();
 auto graphic = GraphicMatroid(3, {{0, 1}, {1, 2}, {2, 0}}).linear_representation();
 auto partition = PartitionMatroid({0, 0, 1}, {1, 1}).linear_representation();
+auto oracle = LinearMatroid(partition);
 auto sparse = GraphicMatroid(3, {{0, 1}, {1, 2}}).sparse_linear_representation();
 GraphUndirected<> g(5, vc<pair<int, int>>{{0, 1}, {2, 1}, {2, 3}, {4, 3}});
 vc<bool> color{false, true, false, true, false};
@@ -61,19 +64,19 @@ auto transversal = TransversalMatroid(g, color).linear_representation();
 ```cpp
 // UniformMatroid / PartitionMatroid
 template<class F = FieldAddSubMulDiv<modint998244353>>
-LinearMatroid<F> linear_representation() const;
+Matrix<F> linear_representation() const;
 template<class F = FieldAddSubMulDiv<modint998244353>>
-LinearMatroid<F> linear_representation(const vc<typename F::S>& points) const;
+Matrix<F> linear_representation(const vc<typename F::S>& points) const;
 // GraphicMatroid
 template<class F = FieldAddSubMulDiv<modint998244353>>
-LinearMatroid<F> linear_representation() const;
+Matrix<F> linear_representation() const;
 // BinaryMatroid<V>
 template<class F = FieldAddSubMulDiv<static_modint32<2>>>
-LinearMatroid<F> linear_representation() const;
+Matrix<F> linear_representation() const;
 // TransversalMatroid / BicircularMatroid
 template<class F = FieldAddSubMulDiv<modint998244353>,
          class Sample = decltype(random_modint<typename F::S>) &>
-LinearMatroid<F> linear_representation(Sample&& sample = random_modint<typename F::S>) const;
+Matrix<F> linear_representation(Sample&& sample = random_modint<typename F::S>) const;
 ```
 
 保持しているパラメータから線形表現を作る。`points` を指定する場合、一様・分割では `points.size() == size()` とし、以下に記載した点の相異性の条件も満たす。binary の表現では係数体を標数 $2$ とする。現在の `build` の状態に依存せず、要素番号を保つ。制約・計算量はそれぞれ対応する以下の構築関数と同じ。
@@ -86,7 +89,7 @@ LinearMatroid<F> linear_representation(Sample&& sample = random_modint<typename 
 
 ```cpp
 template<class F = FieldAddSubMulDiv<modint998244353>>
-LinearMatroid<F> uniform_linear_representation(int rank, const vc<typename F::S>& distinct_points);
+Matrix<F> uniform_linear_representation(int rank, const vc<typename F::S>& distinct_points);
 ```
 
 $r=\min(\mathrm{rank},n)$ として、点 $x_e$ に列 $(1,x_e,\ldots,x_e^{r-1})$ を割り当てる。一様マトロイドの線形表現を返す。`rank == 0` では全要素が零次元のループになる。
@@ -104,10 +107,10 @@ $r=\min(\mathrm{rank},n)$ として、点 $x_e$ に列 $(1,x_e,\ldots,x_e^{r-1})
 
 ```cpp
 template<class F = FieldAddSubMulDiv<modint998244353>, class G = int, class C = int>
-LinearMatroid<F> partition_linear_representation(
+Matrix<F> partition_linear_representation(
     const vc<G>& group, const vc<C>& capacity, const vc<typename F::S>& points);
 template<class F = FieldAddSubMulDiv<modint998244353>, class G = int, class C = int>
-LinearMatroid<F> partition_linear_representation(const vc<G>& group, const vc<C>& capacity);
+Matrix<F> partition_linear_representation(const vc<G>& group, const vc<C>& capacity);
 ```
 
 要素 `e` の所属グループを `group[e]`、グループの容量を `capacity[g]` とした分割マトロイドの線形表現を返す。各グループの Vandermonde 表現を互いに異なる座標に配置する。容量が $0$ のグループの要素は零ベクトルになる。
@@ -126,7 +129,7 @@ LinearMatroid<F> partition_linear_representation(const vc<G>& group, const vc<C>
 
 ```cpp
 template<class F = FieldAddSubMulDiv<modint998244353>, class I = int, class J = int>
-LinearMatroid<F> graphic_linear_representation(int vertices, const vc<pair<I, J>>& edges);
+Matrix<F> graphic_linear_representation(int vertices, const vc<pair<I, J>>& edges);
 ```
 
 辺 $(u,v)$ の列を、行 $u$ に $1$、行 $v$ に $-1$ を加えた接続行列で表す。任意の体でグラフ的マトロイドの線形表現を返す。自己ループは零ベクトルになり、多重辺にも対応する。
@@ -144,7 +147,7 @@ LinearMatroid<F> graphic_linear_representation(int vertices, const vc<pair<I, J>
 
 ```cpp
 template<class F = FieldAddSubMulDiv<static_modint32<2>>, class V>
-LinearMatroid<F> binary_linear_representation(const vc<V>& vectors);
+Matrix<F> binary_linear_representation(const vc<V>& vectors);
 ```
 
 整数または `DynamicBitset` の第 $b$ ビットを第 $b$ 座標に割り当て、binary matroid の線形表現を返す。係数体は標数 $2$ とする。
@@ -163,18 +166,18 @@ LinearMatroid<F> binary_linear_representation(const vc<V>& vectors);
 ```cpp
 template<class F = FieldAddSubMulDiv<modint998244353>, class Cost, bool is_erasable, class Color,
          class Sample = decltype(random_modint<typename F::S>) &>
-LinearMatroid<F> transversal_linear_representation(
+Matrix<F> transversal_linear_representation(
     const GraphUndirected<Cost, is_erasable>& graph,
     const vc<Color>& color, Sample&& sample = random_modint<typename F::S>);
 template<class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &, class I = int>
-LinearMatroid<F> transversal_linear_representation(
+Matrix<F> transversal_linear_representation(
     int right_vertices, const vvc<I>& adjacency, Sample&& sample = random_modint<typename F::S>);
 template<class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &,
          class I = int, bool erasable = false>
-LinearMatroid<F> transversal_linear_representation(
+Matrix<F> transversal_linear_representation(
     int right_vertices, const CSR<I, erasable>& adjacency, Sample&& sample = random_modint<typename F::S>);
 template<class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &, class I = int>
-LinearMatroid<F> transversal_linear_representation(
+Matrix<F> transversal_linear_representation(
     int right_vertices, initializer_list<vc<I>> adjacency, Sample&& sample = random_modint<typename F::S>);
 ```
 
@@ -200,7 +203,7 @@ LinearMatroid<F> transversal_linear_representation(
 ```cpp
 template<class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &,
          class I = int, class J = int>
-LinearMatroid<F> bicircular_linear_representation(
+Matrix<F> bicircular_linear_representation(
     int vertices, const vc<pair<I, J>>& edges, Sample&& sample = random_modint<typename F::S>);
 ```
 

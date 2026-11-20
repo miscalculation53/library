@@ -34,15 +34,8 @@ public:
   }
   template <int BS>
   explicit LinearMatroid(const Matrix<F, BS> &matrix)
-  {
-    auto [d, n] = matrix.template shape<int>();
-    dimension_ = d;
-    basis_ = LinearBasis<F, true, void>(d);
-    columns_.assign(n, vc<S>(d));
-    used_.assign(n, 0);
-    for (int e = 0; e < n; e++) for (int i = 0; i < d; i++)
-      columns_[e][i] = matrix[i][e];
-  }
+      : LinearMatroid(matrix.template shape<int>().first,
+                      gen_vec(matrix.template shape<int>().second, [&](int e) { return matrix.column(e); })) {}
 
   CPP_DUMP_DEFINE_DATA(dimension_, columns_, selected_);
 
@@ -95,14 +88,14 @@ class LinearRepresentationBuilder
 {
   using S = typename F::S;
   int dimension_, size_;
-  conditional_t<Sparse, vc<tuple<int, int, S>>, vvc<S>> data_;
+  conditional_t<Sparse, vc<tuple<int, int, S>>, Matrix<F>> data_;
 
 public:
   LinearRepresentationBuilder(int dimension, int size)
       : dimension_(dimension), size_(size), data_([&]
         {
           if constexpr (Sparse) return vc<tuple<int, int, S>>{};
-          else return vvc<S>(size, vc<S>(dimension, F::e0()));
+          else return Matrix<F>(dimension, size);
         }()) {}
   void set(int element, int coordinate, const S &value)
   {
@@ -110,12 +103,12 @@ public:
     {
       if (value != F::e0()) data_.emplace_back(coordinate, element, value);
     }
-    else data_[element][coordinate] = value;
+    else data_[coordinate][element] = value;
   }
   auto finish() &&
   {
     if constexpr (Sparse) return SparseMatrix<F>(dimension_, size_, data_);
-    else return LinearMatroid<F>(dimension_, std::move(data_));
+    else return std::move(data_);
   }
 };
 }

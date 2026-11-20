@@ -71,6 +71,57 @@ const vc<S>& content() const
 - 行の代入・`swap_rows`：$O(m)$。
 - `to_vvi`：$O(nm)$。
 
+#### transpose・column
+
+```cpp
+Matrix<F, BS> transpose() const;
+vc<F::S> column(int j) const;
+```
+
+`transpose` は $n\times m$ 行列から $m\times n$ の転置行列を作る。行数または列数が $0$ のときも形状を入れ替える。
+`column(j)` は有効な列番号 `j` の成分を行順にコピーする。
+
+##### 計算量
+
+- `transpose`：$O(nm)$。
+- `column`：$O(n)$。
+
+#### select_rows・select_columns
+
+```cpp
+template <class I = int> Matrix<F, BS> select_rows(const vc<I>& indices) const;
+template <class I = int> Matrix<F, BS> select_columns(const vc<I>& indices) const;
+```
+
+行・列をそれぞれ `indices` の順で取り出した行列を返す。添字の重複にも対応する。
+
+##### 制約
+
+- `I` は `i128`・`u128` を含む整数型。
+- 添字は対応する行または列の範囲内。
+
+##### 計算量
+
+- $k$ 個の行・列を取り出す時間は、それぞれ $O(km)$、$O(nk)$。
+
+#### scale_rows・scale_columns
+
+```cpp
+Matrix<F, BS>& scale_rows(const vc<F::S>& scale);
+Matrix<F, BS>& scale_columns(const vc<F::S>& scale);
+```
+
+`scale` を対角成分とする対角行列を $D$ とする。
+`scale_rows` は $A\leftarrow DA$、`scale_columns` は $A\leftarrow AD$ を計算する。どちらも元の行列を更新し、その参照を返す。
+
+##### 制約
+
+- `scale` の長さはそれぞれ行数 $n$、列数 $m$。
+
+##### 計算量
+
+- $O(nm)$。
+
 #### 四則演算
 
 - スカラーとの `*`, `/`：$O(nm)$

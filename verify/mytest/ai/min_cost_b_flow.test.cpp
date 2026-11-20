@@ -288,6 +288,48 @@ void portfolio_paths()
   }
 }
 
+void long_basis_paths()
+{
+  using G = MinCostBFlow<i128, ll, i128>;
+  constexpr int length = 400, branches = 260, target = length + branches + 1;
+  constexpr i128 unit = i128(1) << 72;
+  const i128 sent = branches * unit;
+  for (bool reverse : {false, true})
+  {
+    auto at = [&](int v) { return reverse ? target - v : v; };
+    vc<i128> b(target + 1);
+    b[at(0)] = sent, b[at(target)] = -sent;
+    G base(b);
+    i128 expected = 0;
+    for (int v = 0; v < length; ++v)
+    {
+      const ll cost = v % 4 - 1;
+      base.add_edge(at(v), at(v + 1), 2 * sent, cost);
+      expected += sent * cost;
+    }
+    for (int i = 1; i <= branches; ++i)
+    {
+      const ll cost = (i * 37) % 29;
+      base.add_edge(at(length), at(length + i), -unit, unit, cost);
+      base.add_edge(at(length + i), at(target), 2 * unit, 0);
+      expected += unit * cost;
+    }
+    for (auto algorithm : {G::Algorithm::automatic, G::Algorithm::network_simplex})
+    {
+      auto g = base;
+      assert(g.flow(algorithm) == expected);
+      check_state(g, b, expected);
+      g.add_supply(at(0), unit);
+      g.add_supply(at(target), -unit);
+      assert(!g.flow(algorithm));
+      g.add_supply(at(0), -unit);
+      g.add_supply(at(target), unit);
+      assert(g.flow(algorithm) == expected);
+      check_state(g, b, expected);
+    }
+  }
+}
+
 int main()
 {
   check({}, {}, i128(0));
@@ -310,5 +352,6 @@ int main()
   declared_types<i128>();
   explicit_i128();
   portfolio_paths();
+  long_basis_paths();
   cout << "Hello World\n";
 }

@@ -100,6 +100,34 @@ void test_view()
   assert(xy.substr(2, 7).hash() == RollingHashValue((sx + sy).substr(2, 5)));
 }
 
+void test_view_compare()
+{
+  const RollingHash lhs("aaabbc"), rhs("aaabbd");
+  auto check = [](const auto &x, const auto &y)
+  {
+    string a = x.content(), b = y.content();
+    int expected = a < b ? -1 : a > b ? 1 : 0;
+    assert(x.compare(y) == expected);
+    assert(y.compare(x) == -expected);
+    assert((x < y) == (a < b));
+    assert(x.lcp(y) == brute_lcp(a, b));
+  };
+
+  rep(l, lhs.size() + 1) rep(r, rhs.size() + 1)
+  {
+    auto a = lhs.substr(0, l) + lhs.substr(l);
+    check(a, rhs.substr(0, r) + rhs.substr(r));
+    check(a, lhs.substr(0, r) + lhs.substr(r));
+  }
+
+  auto a = lhs.substr(0, 2) + lhs.substr(3);
+  auto b = rhs.substr(0, 3) + rhs.substr(4);
+  check(a, b);
+  check(a, (rhs.substr(0, 1) + rhs.substr(1, 4)) + rhs.substr(5));
+  check(a, rhs.substr(0, 2) + rhs.substr(3, 3));
+  check(a, rhs.substr(0, 0) + rhs.substr(0, 0));
+}
+
 // Test focus: owning rolling-hash sequences are converted to whole-range views by operator+.
 void test_owner_plus()
 {
@@ -161,6 +189,7 @@ int main()
   test_concat();
   test_multiple_sources();
   test_view();
+  test_view_compare();
   test_owner_plus();
   test_assign_view();
   test_large_value();

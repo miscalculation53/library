@@ -4,13 +4,22 @@
 
 namespace internal::linear_matroid_detail
 {
-template <class F>
-vvc<typename F::S> compressed_columns(const LinearMatroid<F> &matroid)
+template <class F, int BS>
+int element_count(const Matrix<F, BS> &matrix)
 {
-  const int d = matroid.dimension(), n = matroid.size();
-  Matrix<F> matrix(d, n);
-  for (int e = 0; e < n; e++) for (int i = 0; i < d; i++)
-    matrix[i][e] = matroid.columns()[e][i];
+  return matrix.template shape<int>().second;
+}
+
+template <class F>
+int element_count(const LinearMatroid<F> &matroid)
+{
+  return matroid.size();
+}
+
+template <class F, int BS>
+vvc<typename F::S> compressed_columns(const Matrix<F, BS> &matrix)
+{
+  const int n = element_count(matrix);
   auto [reduced, rank, determinant] = matrix.template row_reduction<int>();
   (void)determinant;
   vvc<typename F::S> result(n, vc<typename F::S>(rank));
@@ -19,14 +28,21 @@ vvc<typename F::S> compressed_columns(const LinearMatroid<F> &matroid)
   return result;
 }
 
-template <class F, class I = int, class J = int>
-pair<vvc<typename F::S>, vc<pair<int, int>>>
-parity_representation(const LinearMatroid<F> &matroid, const vc<pair<I, J>> &pairs)
+template <class F>
+vvc<typename F::S> compressed_columns(const LinearMatroid<F> &matroid)
 {
-  vc<unsigned char> used(matroid.size());
+  return compressed_columns(matroid.matrix());
+}
+
+template <class F, class M, class I, class J>
+pair<vvc<typename F::S>, vc<pair<int, int>>>
+parity_representation(const M &matroid, const vc<pair<I, J>> &pairs)
+{
+  const int n = element_count(matroid);
+  vc<unsigned char> used(n);
   for (auto [a, b] : pairs)
   {
-    assert(u128(a) < unsigned(matroid.size()) && u128(b) < unsigned(matroid.size()));
+    assert(u128(a) < unsigned(n) && u128(b) < unsigned(n));
     assert(u128(a) != u128(b) && !used[a] && !used[b]);
     used[a] = used[b] = 1;
   }

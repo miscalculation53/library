@@ -16,7 +16,7 @@ int main()
     ll x, y, modulus;
     cin >> x >> y >> modulus;
     mint::set_mod(modulus);
-    auto result = discrete_log_monoid<MonoidMul<mint>>(mint(x), mint(y), modulus);
+    auto result = discrete_log_monoid<MonoidMul<mint>>(mint(x), mint(y), 0, modulus);
     cout << result.value_or(-1) << '\n';
   }
 }

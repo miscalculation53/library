@@ -203,17 +203,19 @@ private:
     }
   }
 
-  int access(int v)
+  template <bool SplayEnd = true>
+  int access(int v, int *detached = nullptr)
   {
     int last = none;
     for (int x = v; x != none; x = nodes_[x].parent)
     {
       splay(x);
+      if constexpr (!SplayEnd) *detached = nodes_[x].child[1];
       nodes_[x].child[1] = last;
       pull(x);
       last = x;
     }
-    splay(v);
+    if constexpr (SplayEnd) splay(v);
     return last;
   }
 
@@ -273,15 +275,8 @@ private:
 
   void detach(int v, int p)
   {
-    detach_parent(v);
-    if constexpr (Edge)
-    {
-      detach_parent(p);
-      nodes_[p] = Node(A::e());
-      nodes_[p].parent = free_edge_;
-      free_edge_ = p;
-    }
-    else (void)p;
+    if constexpr (Edge) cut_parent_edge(v, p);
+    else { (void)p; detach_parent(v); }
   }
 
   template <class Query>
@@ -362,6 +357,85 @@ private:
   }
 
 protected:
+  struct SplitPath
+  {
+    int junction, from, to;
+    CPP_DUMP_DEFINE_DATA(junction, from, to);
+  };
+
+  // 連結な u, v のパスを、現在の根に関する LCA で分ける。
+  SplitPath split_path(int u, int v)
+  {
+    access(u);
+    int from = none;
+    const int junction = access<false>(v, &from);
+    assert(u == junction || nodes_[u].parent != none);
+    return {junction, from, nodes_[junction].child[1]};
+  }
+
+  // 分けた直後の辺パスについて、u→LCA と LCA→v の積を返す。
+  pair<S, S> split_products(const SplitPath &path) const
+  {
+    static_assert(Edge);
+    return {path.from == none ? A::e() : nodes_[path.from].product.opposite,
+            path.to == none ? A::e() : nodes_[path.to].product.normal};
+  }
+
+  // 分けた直後のパスに含まれる辺数を返す。
+  int split_distance(const SplitPath &path) const
+  {
+    return (path_size(path.from) + path_size(path.to)) / (Edge ? 2 : 1);
+  }
+
+  // 分けた直後の辺パスに、u→v 方向は forward、逆方向は backward を作用させる。
+  void apply_split(const SplitPath &path, const F &forward, const F &backward)
+  {
+    static_assert(Edge && Lazy);
+    apply_node(path.from, {backward, forward});
+    if (path.to != none)
+    {
+      apply_node(path.to, {forward, backward});
+      pull(path.junction);
+    }
+  }
+
+  // v と親の間の辺ノード e を取り外す。
+  void cut_parent_edge(int v, int e)
+  {
+    static_assert(Edge);
+    access(v);
+    splay(e);
+    const int left = nodes_[e].child[0];
+    assert(left != none && nodes_[e].child[1] == v);
+    nodes_[left].parent = nodes_[v].parent = none;
+    nodes_[e] = Node(A::e());
+    nodes_[e].parent = free_edge_;
+    free_edge_ = e;
+  }
+
+  // 各辺について、端点と両方向の現在値を一度ずつ渡す。
+  template <class Visit>
+  void for_each_edge_value(const Visit &visit)
+  {
+    static_assert(Edge);
+    ancestors_.clear();
+    for (int v = 0; v < int(nodes_.size()); ++v)
+      if (is_aux_root(v))
+      {
+        ancestors_.push_back(v);
+        while (!ancestors_.empty())
+        {
+          const int u = ancestors_.back();
+          ancestors_.pop_back();
+          push(u);
+          const auto &node = nodes_[u];
+          if (carries_value(node)) visit(node.ends, node.value.normal, node.value.opposite);
+          for (int child : node.child)
+            if (child != none) ancestors_.push_back(child);
+        }
+      }
+  }
+
   Forest() = default;
   Forest(const Forest &) = default;
   Forest &operator=(const Forest &) = default;
@@ -411,6 +485,17 @@ protected:
   bool link_edge(int u, int v, const S &forward, const S &backward)
   {
     if (!can_link(u, v)) return false;
+    link_root_edge<true>(u, v, forward, backward);
+    return true;
+  }
+
+  // 別成分の u を v の子につなぎ、辺ノードの添字を返す。
+  // u は補助木の根とし、Reroot が偽なら成分の根とする。
+  template <bool Reroot = false>
+  int link_root_edge(int u, int v, const S &forward, const S &backward)
+  {
+    static_assert(Edge);
+    assert(nodes_[u].parent == none);
     int e = free_edge_;
     if (e == none)
     {
@@ -426,10 +511,10 @@ protected:
       x.ends = {v, u};
       free_edge_ = next;
     }
-    reverse(u);
+    if constexpr (Reroot) reverse(u);
     nodes_[u].parent = e;
     nodes_[e].parent = v;
-    return true;
+    return e;
   }
 
   pair<int, int> find_edge(int u, int v)

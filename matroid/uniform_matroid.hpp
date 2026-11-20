@@ -41,7 +41,7 @@ public:
 
   /** 行数は min(rank, n)、列数は n（rank と n はコンストラクタの引数）。各列の非零数は高々行数。 */
   template <class F = FieldAddSubMulDiv<modint998244353>>
-  LinearMatroid<F> linear_representation(const vc<typename F::S> &points) const
+  Matrix<F> linear_representation(const vc<typename F::S> &points) const
   {
     assert(int(points.size()) == n);
     return uniform_linear_representation<F>(rank_, points);
@@ -49,7 +49,7 @@ public:
 
   /** 行数は min(rank, n)、列数は n（rank と n はコンストラクタの引数）。各列の非零数は高々行数。 */
   template <class F = FieldAddSubMulDiv<modint998244353>>
-  LinearMatroid<F> linear_representation() const
+  Matrix<F> linear_representation() const
   {
     auto points = gen_vec(n, [&](int e)
     {

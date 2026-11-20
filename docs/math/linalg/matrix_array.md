@@ -52,6 +52,18 @@ assert((v * a == array<mint, 2>{3, 1}));
 
 - $O(nm)$。
 
+#### transpose
+
+```cpp
+MatrixArray<F, m, n, BS> transpose() const;
+```
+
+転置した行列を返す。
+
+##### 計算量
+
+- $O(nm)$。
+
 #### 四則演算、行列とベクトルの積
 
 ```cpp

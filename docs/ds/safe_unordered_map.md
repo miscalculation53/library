@@ -1,4 +1,4 @@
-このドキュメントには AI による作成・変更が含まれている可能性があります。
+このドキュメントには AI による作成・変更が含まれています。
 
 ## 概要
 
@@ -17,6 +17,21 @@ unordered_map<pair<ll, ll>, int, safe_hash> mp;
 unordered_map<tuple<int, string, vc<int>>, int, safe_hash> nested;
 ```
 
+独自型は `safe_hash_key` でハッシュ化する値を指定できる。たとえば C++20 では次のように書ける。
+
+```cpp
+#include "ds/hash_map.hpp"
+
+struct State
+{
+  int x, y;
+  bool operator==(const State &) const = default;
+  friend auto safe_hash_key(const State &s) { return std::pair{s.x, s.y}; }
+};
+
+HashMap<State, int> memo;
+```
+
 ## 詳細なドキュメント
 
 ### safe_hash
@@ -31,8 +46,10 @@ size_t operator()(const T& x) const
 
 ##### 制約
 
-- `T` が対応済みの型、または `std::hash<T>` が定義された型
+- `T` が対応済みの型、`std::hash<T>` が定義された型、または `safe_hash_key(x)` でハッシュ化する値を取得できる型
 - 複合型の各要素も同じ制約を満たす
+- `safe_hash_key` は型と同じ名前空間か、型の `friend` として定義する。等値判定で等しいキーには等しい値を返す
+- 独自型のハッシュの指定には、`std::hash<T>` と `safe_hash_key` のいずれか一方を使う
 
 ##### 計算量
 

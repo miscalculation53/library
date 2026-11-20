@@ -138,6 +138,13 @@ template <size_t N, size_t C = N> struct MatrixMod2 : array<bitset<C>, N>
     at(i, j).flip();
     return *this;
   }
+  /** 転置した行列を返す。 */
+  MatrixMod2<C, N> transpose() const
+  {
+    MatrixMod2<C, N> result;
+    repi(i, n) repi(j, m) result[j][i] = (*this)[i][j];
+    return result;
+  }
   template <class T = ll> vvc<T> to_vvi() const
   {
     vvc<T> a(N, vc<T>(C));

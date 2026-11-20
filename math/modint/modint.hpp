@@ -95,6 +95,8 @@ namespace internal
     }
     mint &operator/=(const mint &rhs)
     {
+      if constexpr (is_void_v<PowInv>)
+        assert(rhs._v != 0 && "modint: division by zero");
       return *this *= rhs.inv();
     }
 

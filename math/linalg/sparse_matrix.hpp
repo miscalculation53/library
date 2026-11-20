@@ -187,6 +187,7 @@ public:
     return result;
   }
 
+  /** scale を対角成分とする対角行列 D を左から掛ける（A ← DA）。 */
   SparseMatrix &scale_rows(const V &scale)
   {
     assert(int(scale.size()) == n_);
@@ -194,6 +195,7 @@ public:
     rows_ = canonical_rows(std::move(rows_));
     return *this;
   }
+  /** scale を対角成分とする対角行列 D を右から掛ける（A ← AD）。 */
   SparseMatrix &scale_columns(const V &scale)
   {
     assert(int(scale.size()) == m_);

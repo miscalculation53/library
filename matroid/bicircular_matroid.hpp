@@ -57,7 +57,7 @@ public:
 
   /** 行数は頂点数、列数は辺数。各列の非零数は自己ループで高々 1、その他の辺で高々 2。 */
   template <class F = FieldAddSubMulDiv<modint998244353>, class Sample = decltype(random_modint<typename F::S>) &>
-  LinearMatroid<F> linear_representation(Sample &&sample = random_modint<typename F::S>) const
+  Matrix<F> linear_representation(Sample &&sample = random_modint<typename F::S>) const
   {
     return bicircular_linear_representation<F>(vertices, edges, std::forward<Sample>(sample));
   }

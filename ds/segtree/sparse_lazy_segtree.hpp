@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../template/template_all_but_modint.hpp"
+#include "internal_sparse_interval_tree.hpp"
 #include "../internal_dump_content.hpp"
 
 /**
@@ -9,200 +9,24 @@
  */
 
 template <class AM>
-struct SparseLazySegmentTree
+struct SparseLazySegmentTree : private internal_sparse_interval_tree::Tree<AM, true>
 {
   using S = typename AM::S;
   using F = typename AM::F;
 
 private:
-  template <class A, class = void>
-  struct HasPow : false_type {};
-  template <class A>
-  struct HasPow<A, void_t<decltype(A::pow(declval<const S &>(), ll{}))>> : true_type {};
-
-  static S repeat(S x, ll len)
-  {
-    if constexpr (HasPow<AM>::value)
-      return AM::pow(x, len);
-    else
-    {
-      S res = AM::e();
-      while (len)
-      {
-        if (len & 1) res = AM::op(res, x);
-        len >>= 1;
-        if (len) x = AM::op(x, x);
-      }
-      return res;
-    }
-  }
-
-  struct Entry
-  {
-    ll l, r;
-    S unit, val;
-    Entry(ll l, ll r, const S &unit) : l(l), r(r), unit(unit), val(repeat(unit, r - l)) {}
-  };
-  struct Node
-  {
-    Entry entry;
-    S prod;
-    F lazy;
-    ll lo, hi;
-    array<int, 2> chi;
-    bool has_lazy;
-    Node(const Entry &entry)
-        : entry(entry), prod(entry.val), lazy(AM::id()), lo(entry.l), hi(entry.r), chi{-1, -1}, has_lazy(false) {}
-  };
-  ll n;
-  vc<Node> nodes;
-
-  int make_node(const Entry &entry)
-  {
-    int i = nodes.size();
-    nodes.eb(entry);
-    return i;
-  }
-
-  void all_apply(int i, const F &f)
-  {
-    nodes[i].entry.unit = AM::mapping(f, nodes[i].entry.unit);
-    nodes[i].entry.val = AM::mapping(f, nodes[i].entry.val);
-    nodes[i].prod = AM::mapping(f, nodes[i].prod);
-    if (nodes[i].has_lazy)
-      nodes[i].lazy = AM::composition(f, nodes[i].lazy);
-    else
-    {
-      nodes[i].lazy = f;
-      nodes[i].has_lazy = true;
-    }
-  }
-
-  void push(int i)
-  {
-    if (!nodes[i].has_lazy) return;
-    F f = nodes[i].lazy;
-    repi(d, 2)
-    {
-      int j = nodes[i].chi[d];
-      if (j != -1) all_apply(j, f);
-    }
-    nodes[i].lazy = AM::id();
-    nodes[i].has_lazy = false;
-  }
-
-  void pull(int i)
-  {
-    int l = nodes[i].chi[0], r = nodes[i].chi[1];
-    S sml = l == -1 ? AM::e() : nodes[l].prod;
-    S smr = r == -1 ? AM::e() : nodes[r].prod;
-    nodes[i].prod = AM::op(AM::op(sml, nodes[i].entry.val), smr);
-    nodes[i].lo = l == -1 ? nodes[i].entry.l : nodes[l].lo;
-    nodes[i].hi = r == -1 ? nodes[i].entry.r : nodes[r].hi;
-  }
-
-  void insert(Entry x, ll a, ll b, int i)
-  {
-    push(i);
-    ll c = a + (b - a) / 2;
-    int d = x.l < c ? 0 : 1;
-    if ((d == 0 && nodes[i].entry.l < x.l) || (d == 1 && x.l < nodes[i].entry.l))
-      swap(x, nodes[i].entry);
-    int j = nodes[i].chi[d];
-    if (j == -1)
-    {
-      j = make_node(x);
-      nodes[i].chi[d] = j;
-    }
-    else if (d == 0)
-      insert(std::move(x), a, c, j);
-    else
-      insert(std::move(x), c, b, j);
-    pull(i);
-  }
-
-  template <class G>
-  void modify_entry(ll p, const G &g, int i)
-  {
-    push(i);
-    if (nodes[i].entry.l == p)
-      g(nodes[i].entry);
-    else
-      modify_entry(p, g, nodes[i].chi[p < nodes[i].entry.l ? 0 : 1]);
-    pull(i);
-  }
-
-  void split(ll p)
-  {
-    if (p == 0 || p == n) return;
-    int i = 0, prev = -1;
-    while (i != -1)
-    {
-      push(i);
-      if (nodes[i].entry.l == p) return;
-      if (nodes[i].entry.l < p)
-        prev = i, i = nodes[i].chi[1];
-      else
-        i = nodes[i].chi[0];
-    }
-    ll l = nodes[prev].entry.l, r = nodes[prev].entry.r;
-    S unit = nodes[prev].entry.unit;
-    modify_entry(l, [&](Entry &x)
-    {
-      x.r = p;
-      x.val = repeat(x.unit, p - l);
-    }, 0);
-    insert(Entry(p, r, unit), 0, n, 0);
-  }
-
-  void apply_impl(ll l, ll r, const F &f, ll a, ll b, int i, array<optional<Entry>, 2> &cuts)
-  {
-    if (nodes[i].hi <= l || r <= nodes[i].lo) return;
-    if (l <= nodes[i].lo && nodes[i].hi <= r)
-    {
-      all_apply(i, f);
-      return;
-    }
-    push(i);
-    ll lo = nodes[i].lo, hi = nodes[i].hi;
-    Entry &x = nodes[i].entry;
-    if (x.l < l && l < x.r)
-    {
-      cuts[0].emplace(l, min(r, x.r), AM::mapping(f, x.unit));
-      if (r < x.r) cuts[1].emplace(r, x.r, x.unit);
-      x.r = l;
-      x.val = repeat(x.unit, x.r - x.l);
-    }
-    else if (l <= x.l && x.l < r)
-    {
-      if (r < x.r)
-      {
-        cuts[1].emplace(r, x.r, x.unit);
-        x.r = r;
-        x.val = repeat(x.unit, x.r - x.l);
-      }
-      x.unit = AM::mapping(f, x.unit);
-      x.val = AM::mapping(f, x.val);
-    }
-    ll c = a + (b - a) / 2;
-    int li = nodes[i].chi[0], ri = nodes[i].chi[1];
-    if (li != -1) apply_impl(l, r, f, a, c, li, cuts);
-    if (ri != -1) apply_impl(l, r, f, c, b, ri, cuts);
-    pull(i);
-    for (auto &cut : cuts)
-      if (cut && max(a, lo) <= cut->l && cut->l < min(b, hi))
-      {
-        insert(std::move(*cut), a, b, i);
-        cut.reset();
-      }
-  }
+  using Base = internal_sparse_interval_tree::Tree<AM, true>;
+  using typename Base::Entry;
+  using typename Base::Node;
+  using Base::n;
+  using Base::nodes;
 
   S entry_prod(int i, ll l, ll r, const F &f) const
   {
     const Entry &x = nodes[i].entry;
     ll a = max(l, x.l), b = min(r, x.r);
     if (b <= a) return AM::e();
-    return AM::mapping(f, a == x.l && b == x.r ? x.val : repeat(x.unit, b - a));
+    return AM::mapping(f, a == x.l && b == x.r ? x.val : pow_monoid<AM>(x.unit, b - a));
   }
 
   S prod_impl(ll l, ll r, int i, const F &f) const
@@ -319,58 +143,26 @@ private:
 
 public:
   // 長さ n、各点の初期値 initial_value の列を作る
-  SparseLazySegmentTree(ll n, const S &initial_value) : n(n)
-  {
-    assert(n >= 0);
-    nodes.eb(Entry(0, n, initial_value));
-  }
+  SparseLazySegmentTree(ll n, const S &initial_value) : Base(n, initial_value) {}
 
   // 少なくとも n ノード分の領域をあらかじめ確保する
-  void reserve(int n) { nodes.reserve(n); }
+  void reserve(int n) { Base::reserve(n); }
 
   // p 番目の値を参照で受け取る関数 g を適用する
   template <class G>
-  void modify(ll p, const G &g)
-  {
-    assert(0 <= p && p < n);
-    split(p), split(p + 1);
-    modify_entry(p, [&](Entry &x) { g(x.unit); x.val = x.unit; }, 0);
-  }
+  void modify(ll p, const G &g) { Base::modify(p, g); }
 
   // p 番目の値を x にする
-  void set(ll p, const S &x) { modify(p, [&](S &y) { y = x; }); }
+  void set(ll p, const S &x) { Base::set(p, x); }
 
   // p 番目の値を返す
-  S get(ll p) const
-  {
-    assert(0 <= p && p < n);
-    int i = 0;
-    F f = AM::id();
-    while (true)
-    {
-      if (nodes[i].entry.l <= p && p < nodes[i].entry.r)
-        return AM::mapping(f, nodes[i].entry.unit);
-      F nf = nodes[i].has_lazy ? AM::composition(f, nodes[i].lazy) : f;
-      i = nodes[i].chi[p < nodes[i].entry.l ? 0 : 1];
-      f = std::move(nf);
-    }
-  }
+  S get(ll p) const { return Base::get(p); }
 
   // p 番目に作用 f を適用する
-  void apply(ll p, const F &f)
-  {
-    assert(0 <= p && p < n);
-    apply(p, p + 1, f);
-  }
+  void apply(ll p, const F &f) { Base::apply(p, f); }
 
   // [l, r) に作用 f を適用する
-  void apply(ll l, ll r, const F &f)
-  {
-    assert(0 <= l && l <= r && r <= n);
-    if (l == r) return;
-    array<optional<Entry>, 2> cuts;
-    apply_impl(l, r, f, 0, n, 0, cuts);
-  }
+  void apply(ll l, ll r, const F &f) { Base::apply(l, r, f); }
 
   // [l, r) の積を返す
   S prod(ll l, ll r) const
@@ -412,23 +204,7 @@ public:
   }
 
   // 保持している区間を (左端, 右端, 一点の値) の順で返す
-  vc<tuple<ll, ll, S>> content() const
-  {
-    vc<tuple<ll, ll, S>> res;
-    if (n == 0) return res;
-    res.reserve(nodes.size());
-    auto dfs = [&](auto dfs, int i, const F &f) -> void
-    {
-      if (i == -1) return;
-      const Node &x = nodes[i];
-      F nf = x.has_lazy ? AM::composition(f, x.lazy) : f;
-      dfs(dfs, x.chi[0], nf);
-      res.eb(x.entry.l, x.entry.r, AM::mapping(f, x.entry.unit));
-      dfs(dfs, x.chi[1], nf);
-    };
-    dfs(dfs, 0, AM::id());
-    return res;
-  }
+  vc<tuple<ll, ll, S>> content() const { return Base::content(); }
 
   // g(prod(l, r)) が true となる最大の r を返す
   template <class G>

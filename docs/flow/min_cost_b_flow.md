@@ -196,8 +196,8 @@ optional<Total> flow(
 - `ssp`：余剰点から最も近い需要点まで探索し、1本の最短路を増加する。
 - `primal_dual`：複数の需要点まで探索する。最短路の森で需要を下から集計し、上から容量に合わせて配分する。森上の処理は1回 $O(n)$。
 - `capacity_scaling`：大きい容量単位から始め、単位以上の残余容量だけで探索する。負の還元費用の辺を単位の倍数だけ飽和し、primal-dual と同じ森の処理で需給を修正する。最後に単位1で最適性を確定する。
-- `network_simplex`：基底木に辺を加えて循環を作り、流量を増減して木の辺を交換する。block search で入る辺を選び、親子関係・ポテンシャルは変更された部分木だけを更新する。人工辺の費用を優先順位と元の費用の組で扱い、巨大な費用定数を避ける。最短路キューの指定は pivot に作用せず、最後の双対解の変換に共有の Fibonacci heap を使う。
-- `automatic`：小規模で容量幅が大きい場合や、疎な単位容量で流量が多い場合に network simplex を予算付きで試す。SSP または primal-dual の進捗に応じて予算を延長し、その後は容量スケーリング・network simplex と交互に進める。容量幅が1以下ならスケーリングを省く。
+- `network_simplex` は基底木に辺を加えて循環を作り、流量を増減して木の辺を交換する。block search で入る辺を選び、変更された部分木のポテンシャルは同じ量だけずらす。循環の経路が長い状態が続けば Link-Cut Tree に切り替え、両方向の残余容量の最小値取得と一括更新を行う。短い経路が続く場合は親をたどる方式に戻る。人工辺の費用は優先順位と元の費用の組で扱う。最後の双対解の変換には共有の Fibonacci heap を使う。
+- `automatic` は小規模で容量幅が大きい場合や、疎な単位容量で流量が多い場合に network simplex を予算付きで試す。規模の大きい疎なグラフで SSP や primal-dual が長い経路を繰り返し使う場合や、大きな循環問題で最短路法の試行が長引く場合にも候補に加える。SSP または primal-dual の進捗に応じて予算を延長し、容量スケーリングと各候補を交互に進める。容量幅が1以下ならスケーリングを省く。
 
 ##### 制約
 
@@ -209,7 +209,7 @@ optional<Total> flow(
 
 - `ssp`・`primal_dual`：$O(n+m+T+FT)$
 - `capacity_scaling`：$O(n+m+MT\log U)$
-- `network_simplex`：pivot 回数を $P$ として $O(n+m+P(N+M)+N\log N)$。実際の木の更新は変更された部分木の大きさに比例する。$P$ は入力と辺の選択に依存する
+- `network_simplex` は pivot 回数を $P$ として $O(n+m+P(N+M)+N\log N)$。Link-Cut Tree を使う間、循環の最小残余容量の取得と経路の残余容量の更新は償却 $O(\log N)$。辺の選択と、変更された部分木をたどる処理も各 pivot に含む。$P$ は入力と辺の選択に依存する。
 - `automatic`：SSP / primal-dual と容量スケーリングの上界の小さい方を保つ。候補の試行・保存に定数倍の費用が加わる
 
 #### get_edge / edges
@@ -288,3 +288,8 @@ pair<Cap, Total> flow(int s, int t,
 ##### 計算量
 
 - 増加路を流した回数を $K$ として $O(n+m+T+KT)$。$K$ は追加流量以下
+
+## 参考文献
+
+- 基底木の辺交換への動的木の適用。 [Sleator–Tarjan, A Data Structure for Dynamic Trees, §6 (1983)](https://www.cs.cmu.edu/~sleator/papers/dynamic-trees.pdf)
+- ネットワークシンプレックス法の block search。 [Király–Kovács, Efficient Implementations of Minimum-Cost Flow Algorithms, §3.4 (2012)](https://arxiv.org/html/1207.6381#S3.SS4)

@@ -40,6 +40,14 @@ struct MatrixArray : array<array<typename F::S, m>, n>
   MatrixArray(const array<array<S, m>, n> &a)
   { repi(i, n) repi(j, m) (*this)[i][j] = a[i][j]; }
 
+  /** 転置した行列を返す。 */
+  MatrixArray<F, m, n, BS> transpose() const
+  {
+    MatrixArray<F, m, n, BS> result;
+    repi(i, n) repi(j, m) result[j][i] = (*this)[i][j];
+    return result;
+  }
+
   static constexpr MatrixArray e0() { return MatrixArray(F::e0(), F::e0()); }
   static constexpr MatrixArray e1() { return MatrixArray(F::e1(), F::e0()); }
 

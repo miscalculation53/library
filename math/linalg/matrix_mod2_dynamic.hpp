@@ -122,6 +122,13 @@ public:
       for (int w = 0; w < width(); ++w)
         swap(values_[size_t(i) * width() + w], values_[size_t(j) * width() + w]);
   }
+  /** 転置した行列を返す。 */
+  M transpose() const
+  {
+    M result(m, n_);
+    repi(i, n_) repi(j, m) result[j][i] = (*this)[i][j];
+    return result;
+  }
   template <class T = ll> vvc<T> to_vvi() const
   {
     vvc<T> a(n_, vc<T>(m));

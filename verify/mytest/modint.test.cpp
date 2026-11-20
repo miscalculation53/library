@@ -11,10 +11,11 @@ void test1()
   {
     ll a = -10LL * MOD + mt() % (21LL * MOD);
     ll b = -10LL * MOD + mt() % (21LL * MOD);
+    const bool can_divide = b % MOD != 0 && gcd(b, MOD) == 1;
     assert((mint(a) + mint(b)).val() == safemod(a + b, MOD));
     assert((mint(a) - mint(b)).val() == safemod(a - b, MOD));
     assert((mint(a) * mint(b)).val() == safemod((a % MOD) * (b % MOD), MOD));
-    if (gcd(b, MOD) == 1)
+    if (can_divide)
     {
       mint c = mint(a) / mint(b);
       assert(mint(b) * c == mint(a));
@@ -34,7 +35,7 @@ void test1()
     z = x * y;
     x *= y;
     assert(x == z);
-    if (gcd(b, MOD) == 1)
+    if (can_divide)
     {
       z = x / y;
       x /= y;
@@ -53,10 +54,11 @@ void test2(int MOD)
   {
     ll a = -10LL * MOD + mt() % (21LL * MOD);
     ll b = -10LL * MOD + mt() % (21LL * MOD);
+    const bool can_divide = b % MOD != 0 && gcd(b, MOD) == 1;
     assert((mint(a) + mint(b)).val() == safemod(a + b, MOD));
     assert((mint(a) - mint(b)).val() == safemod(a - b, MOD));
     assert((mint(a) * mint(b)).val() == safemod((a % MOD) * (b % MOD), MOD));
-    if (gcd(b, MOD) == 1)
+    if (can_divide)
     {
       mint c = mint(a) / mint(b);
       assert(b * c == a);
@@ -76,7 +78,7 @@ void test2(int MOD)
     z = x * y;
     x *= y;
     assert(x == z);
-    if (gcd(b, MOD) == 1)
+    if (can_divide)
     {
       z = x / y;
       x /= y;
