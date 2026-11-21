@@ -22,7 +22,7 @@ void main2()
   for (int i = 1; i < tree.size(); ++i)
   {
     const int v = tree.preorder_select(i);
-    prefix[v] = prefix[tree.parent(v)] + bct.is_articulation_node(v);
+    prefix[v] = prefix[*tree.parent(v)] + bct.is_articulation_node(v);
   }
   INT(q);
   while (q--)

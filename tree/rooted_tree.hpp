@@ -8,6 +8,8 @@
  */
 
 //! XOR Linked Tree の考え方: https://codeforces.com/blog/entry/135239
+
+// コンストラクタ: n, es, root または n, par
 struct RootedTree
 {
 protected:
@@ -15,6 +17,7 @@ protected:
   vc<int> link, dep, pre, post, preinv;
   int internal_head(int v) const { return link[v] < 0 ? v : link[v]; }
   int parent_of_head(int h) const { return ~link[h]; }
+  int parent_or_self(int v) const { return link[v] < 0 ? parent_of_head(v) : preinv[pre[v] - 1]; }
 
   template <bool xor_edges>
   void build(int rt)
@@ -132,24 +135,24 @@ public:
       return {subtree_size(u), n - subtree_size(u)};
   }
 
-  // v の親を返す。v は根であってはいけない
-  int parent(int v) const
+  // v の親を返す。根では nullopt
+  optional<int> parent(int v) const
   {
     assert(0 <= v && v < n);
-    assert(v != root());
-    return link[v] < 0 ? ~link[v] : preinv[pre[v] - 1];
+    if (link[v] < 0 && parent_of_head(v) == v) return nullopt;
+    return parent_or_self(v);
   }
 
-  // 頂点番号順の親配列を返す。根の親は -1。
+  // 頂点番号順の親配列を返す (根の親は -1)
   vc<int> parents() const
   {
-    vc<int> res(n, -1);
-    const int rt = root();
-    for (int v = 0; v < n; ++v) if (v != rt) res[v] = parent(v);
+    vc<int> res(n);
+    for (int v = 0; v < n; ++v) res[v] = parent_or_self(v);
+    res[root()] = -1;
     return res;
   }
 
-  // 頂点番号と辺を保ち、根を rt に付け替えた木を返す。
+  // 根を rt に付け替えた木
   RootedTree rerooted(int rt) const
   {
     assert(0 <= rt && rt < n);
@@ -200,7 +203,7 @@ public:
     int rt = root();
     while (v != rt)
     {
-      int p = parent(v);
+      int p = parent_or_self(v);
       res.eb(p);
       v = p;
     }
@@ -216,13 +219,13 @@ public:
     {
       if (dep[u] > dep[v])
       {
-        int p = parent(u);
+        int p = parent_or_self(u);
         pu.eb(p);
         u = p;
       }
       else
       {
-        int p = parent(v);
+        int p = parent_or_self(v);
         pv.eb(p);
         v = p;
       }
@@ -249,7 +252,7 @@ public:
     {
       if (v == rt)
         continue;
-      int p = parent(v);
+      int p = parent_or_self(v);
       int in_idx = 2 * pre[v] - dep[v] - 1;
       int out_idx = 2 * post[v] - dep[v] - 2;
       bp[in_idx] = '(', vs[in_idx + 1] = v;
@@ -430,7 +433,7 @@ public:
     return la(v, d_ul + d_vl - k);
   }
 
-  // costs[v] := (parent(v), v) のコスト としたときの、各頂点の深さ
+  // costs[v] を親から v への辺のコストとしたときの各頂点の重み付き深さ
   // costs[root()] は参照されない
   // edge_to_vertex_values で辺の値を頂点番号順に変換できる
   template <class T>
@@ -441,7 +444,7 @@ public:
     costs[root()] = 0;
     rep(i, 1, n)
     {
-      int v = vs[i], p = parent(v);
+      int v = vs[i], p = parent_or_self(v);
       costs[v] += costs[p];
     }
     return costs;

@@ -98,7 +98,9 @@ void test_graphs_and_flows()
   assert(!cycle_detection(GraphDirected<>(0, vc<pair<int, int>>{})));
   const auto cycle = cycle_detection(GraphDirected<>(1, vc<pair<int, int>>{{0, 0}}));
   assert(cycle && cycle->size() == 1 && cycle->front().index == 0);
-  assert(ProjectSelection<int>(0).solve() == 0);
+  const auto project = ProjectSelectionProblem<int>(0).solve();
+  static_assert(is_same_v<decay_t<decltype(project)>, optional<pair<int, vc<int>>>>);
+  assert((project == pair{0, vc<int>{}}));
   BoundedMaxFlow<int> bounded(2);
   assert(bounded.flow(0, 1) == 0 && bounded.min_flow(0, 1) == 0);
   BoundedMaxFlow<int> impossible(3);

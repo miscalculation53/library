@@ -118,7 +118,7 @@ public:
     {
       if (forest.depth<int>(u) < forest.depth<int>(v)) swap(u, v);
       result.push_back(parent_edge[u]);
-      u = forest.parent(u);
+      u = *forest.parent(u);
     }
     return result;
   }

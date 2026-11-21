@@ -110,9 +110,13 @@ void integer_cases()
   LinearMatroid<F> identity(4, {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}});
   assert(linear_matroid_parity_size(identity, pairs, sample) == 2);
   assert(linear_matroid_parity_restore(identity, pairs, sample).size() == 2);
-  ProjectSelection<ll> project(4);
-  project.add_all_profit(vc<I>{0, 1}, true, 7);
-  assert(project.solve() == optional<ll>(-7));
+  ProjectSelectionProblem<ll> project(4);
+  project.add_all1(vc<I>{0, 1}, -7, 0);
+  const auto selected = project.solve();
+  assert(selected && selected->first == -7);
+  K_ProjectSelectionProblem<ll> labels(2, vc<I>{1, 3});
+  labels.add1(1, {3, 0, -2});
+  assert((labels.solve() == pair{-2LL, vc<int>{0, 2}}));
 
   assert(add_virtual_root(2, vc<I>{0, 0}).size() == 3);
   GroupIndex<I, false> indexed(vc<I>{1, 0, 1});

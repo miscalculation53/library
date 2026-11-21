@@ -39,7 +39,7 @@ void main2()
   RootedTree G(N, UV, root);
   rep(v, N)
   {
-    WRITE("node ", v, ": parent = ", v == G.root() ? -1 : G.parent(v), ", depth = ", G.depth(v), ", ");
+    WRITE("node ", v, ": parent = ", G.parent(v).value_or(-1), ", depth = ", G.depth(v), ", ");
     if (v == G.root())
       WRITE("root");
     else if (G.children(v).empty())

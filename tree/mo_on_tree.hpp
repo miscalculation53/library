@@ -11,7 +11,7 @@
 // add(v): 頂点 v を現在の集合に追加する
 // del(v): 頂点 v を現在の集合から削除する
 // rem(qid): uvs[qid] のパスについて答えを記録する
-// edge のときは辺属性を扱い、辺 (parent(v), v) を頂点 v で表す
+// edge のときは辺属性を扱い、各辺を子側の頂点で表す
 template <class I, class Add, class Del, class Rem>
 void mo_on_tree(const RootedTree &g, const vc<pair<I, I>> &uvs, const Add &add, const Del &del, const Rem &rem, bool edge = false)
 {

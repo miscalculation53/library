@@ -31,7 +31,7 @@ optional<vc<Edge<Cost>>> cycle_detection(const Graph<is_directed, Cost>& g) {
         while (!frames.empty()) {
             Frame &frame = frames.back();
             const int vertex = frame.vertex;
-            if (static_cast<std::size_t>(frame.next) == g.out_edges(vertex).size()) {
+            if (frame.next == g.out_edges(vertex).template size<int>()) {
                 position[vertex] = -2;
                 frames.pop_back();
                 if (!path_edges.empty()) path_edges.pop_back();

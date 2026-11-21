@@ -48,10 +48,8 @@ void main2()
   RootedTree G(N, GEN_VEC(N, i, aho.failure(i).value_or(-1)));
   fec(v : G.bottom_up_vertices())
   {
-    if (v == G.root())
-      continue;
-    ll p = G.parent(v);
-    cnt.at(p) += cnt.at(v);
+    if (auto p = G.parent(v))
+      cnt.at(*p) += cnt.at(v);
   }
 
   ll ans = 0;

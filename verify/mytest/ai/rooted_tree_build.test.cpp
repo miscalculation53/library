@@ -18,6 +18,7 @@ void check(const vc<pair<int, int>> &es, int root)
     }
   for (int i = n - 1; i > 0; --i) size[par[order[i]]] += size[order[i]];
   const RootedTree from_edges(n, es, root);
+  static_assert(is_same_v<decltype(from_edges.parent(root)), optional<int>>);
   par[root] = -1;
   const RootedTree from_parents(n, par);
   for (const RootedTree *tree : {&from_edges, &from_parents})
@@ -43,7 +44,8 @@ void check(const vc<pair<int, int>> &es, int root)
       assert(children == int(adj[v].size()) - (v != root));
       assert(!heavy == (children == 0));
       if (heavy) assert(size[*heavy] == biggest);
-      if (v != root) assert(tree->parent(v) == par[v]);
+      if (v == root) assert(!tree->parent(v));
+      else assert(tree->parent(v) == par[v]);
     }
     const auto [brackets, vertices] = tree->dfs_ordered_vertices();
     assert(vertices.size() == es.size() * 2 + 1 && vertices.front() == root);

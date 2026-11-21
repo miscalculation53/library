@@ -35,9 +35,10 @@ vc<typename M::S> rerooting(int n, const vc<Pair> &es, const PUTE &pute, const P
   vc<S> f(n, M::e()), g(n, M::e());
   fe(v : gr.bottom_up_vertices())
   {
-    if (v == gr.root())
+    const auto parent = gr.parent(v);
+    if (!parent)
       continue;
-    int p = gr.parent(v);
+    int p = *parent;
     dump(p, v);
     g[v] = putv(f[v], v);
     f[p] = M::op(f[p], pute(g[v], eids[v]));

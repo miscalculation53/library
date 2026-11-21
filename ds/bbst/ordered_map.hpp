@@ -165,23 +165,9 @@ public:
     apply_by_order(l, r, f);
   }
   template <class G>
-  int max_right_ok(int l, const G &g) const
-  {
-    assert(0 <= l && l <= size());
-    S acc = A::e();
-    assert(g(acc));
-    int p = Base::max_right(tree.root, l, 0, acc, g);
-    return p == -1 ? size() : p;
-  }
+  int max_right_ok(int l, const G &g) const { return tree.max_right_ok(l, g); }
   template <class G>
-  int min_left_ok(int r, const G &g) const
-  {
-    assert(0 <= r && r <= size());
-    S acc = A::e();
-    assert(g(acc));
-    int p = Base::min_left(tree.root, r, 0, acc, g);
-    return p == -1 ? 0 : p;
-  }
+  int min_left_ok(int r, const G &g) const { return tree.min_left_ok(r, g); }
   vector<pair<Key, S>> content() const
   {
     vector<pair<Key, S>> res;

@@ -284,6 +284,24 @@ struct TreapBase
   }
 
   template <class G>
+  int max_right_ok(int l, const G &g) const
+  {
+    assert(0 <= l && l <= size());
+    S acc = Node::e();
+    assert(g(acc));
+    int p = max_right(root, l, 0, acc, g);
+    return p == -1 ? size() : p;
+  }
+  template <class G>
+  int min_left_ok(int r, const G &g) const
+  {
+    assert(0 <= r && r <= size());
+    S acc = Node::e();
+    assert(g(acc));
+    int p = min_left(root, r, 0, acc, g);
+    return p == -1 ? 0 : p;
+  }
+  template <class G>
   static int max_right(Node *t, int l, int offset, S &acc, const G &g)
   {
     if (!t || offset + count(t) <= l) return -1;

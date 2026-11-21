@@ -120,6 +120,15 @@ public:
     assert(!comp(hi, lo));
     return prod_by_order(order_of_key(lo), order_of_key(hi));
   }
+
+  // g(prod_by_order(l, r)) が true となる最大の r を返す
+  template <class G>
+  int max_right_ok(int l, const G &g) const { return tree.max_right_ok(l, g); }
+
+  // g(prod_by_order(l, r)) が true となる最小の l を返す
+  template <class G>
+  int min_left_ok(int r, const G &g) const { return tree.min_left_ok(r, g); }
+
   OrderedMultisetTree split_by_order(int k)
   {
     assert(0 <= k && k <= size());

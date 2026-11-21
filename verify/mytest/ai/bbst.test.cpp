@@ -2,6 +2,7 @@
 
 #include "ds/bbst/lazy_sequence.hpp"
 #include "ds/bbst/lazy_ordered_map.hpp"
+#include "ds/bbst/ordered_multiset.hpp"
 #include "algebra/acted_monoid/affine_sum.hpp"
 #include "math/modint/modint.hpp"
 
@@ -381,6 +382,21 @@ struct KeyCompare
   bool descending;
   bool operator()(const Key &a, const Key &b) const { return descending ? a.x > b.x : a.x < b.x; }
 };
+void test_multiset_boundaries()
+{
+  using Item = pair<int, string>;
+  auto compare = [](const Item &a, const Item &b) { return a.first > b.first; };
+  OrderedMultisetTree<Item, Concat, decltype(compare), decltype(&Item::second)> t(compare, &Item::second);
+  check_boundaries(t, {});
+  t.insert({2, "ab"});
+  t.insert({1, "c"});
+  t.insert({2, "d"});
+  t.insert({3, "e"});
+  check_boundaries(t, {"e", "ab", "d", "c"});
+  assert(t.erase({2, ""}));
+  check_boundaries(t, {"e", "d", "c"});
+}
+
 void test_types_and_large()
 {
   OrderedMapTree<Key, Concat, KeyCompare> mp(KeyCompare{true});
@@ -435,6 +451,7 @@ int main()
     test_map<true>(greater<int>{});
     test_affine();
     test_pending_updates();
+    test_multiset_boundaries();
   }
   test_types_and_large();
   cout << "Hello World" << endl;

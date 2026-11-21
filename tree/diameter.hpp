@@ -40,9 +40,9 @@ private:
   vc<Dist> distances_from_b() const
   {
     vc<Dist> res(tree.size<int>(), length());
-    for (int v : tree.top_down_vertices()) if (v != a)
+    for (int v : tree.top_down_vertices()) if (const auto parent = tree.parent(v))
     {
-      const int p = tree.parent(v);
+      const int p = *parent;
       const Dist w = distance_from_a(v) - distance_from_a(p);
       if (tree.is_ancestor(v, b)) res[v] = res[p] - w;
       else res[v] = res[p] + w;
@@ -69,10 +69,14 @@ private:
       while (depths[left] + depths[left] > diameter)
       {
         right = left;
-        left = tree.parent(left);
+        left = *tree.parent(left);
       }
       if (depths[left] + depths[left] < diameter) return {left, right};
-      while (left != a && depths[tree.parent(left)] == depths[left]) left = tree.parent(left);
+      while (const auto p = tree.parent(left))
+      {
+        if (depths[*p] != depths[left]) break;
+        left = *p;
+      }
       int representative = left;
       vc<int> que{left};
       for (int i = 0; i < int(que.size()); ++i)
@@ -191,10 +195,9 @@ public:
     vc<int> branch(n, a);
     if (has_center)
     {
-      for (int v : tree.top_down_vertices()) if (v != a)
+      for (int v : tree.top_down_vertices()) if (const auto p = tree.parent(v))
       {
-        const int p = tree.parent(v);
-        branch[v] = at_center[p] && !at_center[v] ? v : branch[p];
+        branch[v] = at_center[*p] && !at_center[v] ? v : branch[*p];
       }
     }
     else
@@ -241,9 +244,9 @@ public:
     const auto [left, right] = midpoint();
     auto centered = tree.rerooted(left);
     vc<Dist> costs2(n + bool(right), 0);
-    for (int v = 0; v < n; ++v) if (v != left)
+    for (int v = 0; v < n; ++v) if (const auto parent = centered.parent(v))
     {
-      const int p = centered.parent(v);
+      const int p = *parent;
       const Dist w = depths[v] < depths[p] ? depths[p] - depths[v] : depths[v] - depths[p];
       costs2[v] = w + w;
     }

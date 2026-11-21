@@ -52,9 +52,11 @@ auto [child, parent] = tree.first_ancestor(3, [&](int x) { return value[x] >= 2;
 assert(child == 3 && parent == 1);
 ```
 
-親配列は `parents()` で取り出せる。`LOCAL` では `dump(tree)` が頂点数・根・親配列を表示する。
+`parent(v)` は親を返し、根では `nullopt` を返す。親配列は `parents()` で取り出せる。`LOCAL` では `dump(tree)` が頂点数・根・親配列を表示する。
 
 ```cpp
+assert(!tree.parent(tree.root()));
+assert(tree.parent(1) == 0);
 assert(tree.parents() == vc<int>({-1, 0, 1, 1}));
 dump(tree);
 dump(tree.parents() | cp::index()); // 親配列を添字付きで表示する。
@@ -123,15 +125,14 @@ dump(tree.parents() | cp::index()); // 親配列を添字付きで表示する�
 #### parent
 
 ```cpp
-int parent(int v) const
+optional<int> parent(int v) const
 ```
 
-`v` の親の頂点番号を返す。
+`v` の親の頂点番号を返す。根では `nullopt` を返す。
 
 ##### 制約
 
 - $0 \leq v < n$
-- $v \neq \mathrm{root}()$
 
 ##### 計算量
 
@@ -365,7 +366,7 @@ vc<T> edge_to_vertex_values(
 vc<T> weighted_depths(vc<T> costs) const
 ```
 
-`costs[v]` を辺 `(parent(v), v)` の重みとして、根から各頂点までの重みの合計を返す。入力・出力ともに頂点番号順。根の入力値は計算上 `0` に置き換える。
+`costs[v]` を親から `v` への辺の重みとして、根から各頂点までの重みの合計を返す。入力・出力ともに頂点番号順。根の入力値は計算上 `0` に置き換える。
 
 ##### 制約
 

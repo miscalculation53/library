@@ -48,7 +48,7 @@ void check(int n, const vc<pair<int, int>> &edges, const vc<Cost> &costs, mt1993
   vc<int> split;
   repi(v, tree.size()) if (v != root)
   {
-    int parent = tree.parent(v);
+    int parent = *tree.parent(v);
     if (parent == n) split.eb(v);
     else
     {

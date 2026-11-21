@@ -2,7 +2,7 @@
 
 ## 概要
 
-重複する要素を比較器の順に管理し、順位の取得・削除と区間のモノイド積を行う Treap。
+重複する要素を比較器の順に管理し、順位の取得・削除、区間のモノイド積、積に基づく境界探索を行う Treap。
 既定では要素をそのままモノイド `M` の値として格納する。
 必要な場合は射影を指定し、要素から集約用の値を取り出す。比較と順位・端の取得には元の要素を使う。
 集約なし、和、最小値、積などを指定できる。単独で使う場合は非可換モノイドにも対応する。
@@ -29,6 +29,9 @@ for (int x : {4, 1, 4, 2}) t.push(x);
 assert(t.get_by_order(2) == 4);
 assert(t.count(4) == 2);
 assert(t.prod_by_order(1, 3) == 6);
+auto fits = [](ll sum) { return sum <= 7; };
+assert(t.max_right_ok(0, fits) == 3);
+assert(t.size() - t.min_left_ok(t.size(), fits) == 1);
 t.erase(4);
 assert(t.all_prod() == 7);
 auto right = t.split_by_order(2);
@@ -168,6 +171,27 @@ S prod_by_key(const T& lo, const T& hi) const;
 
 - `all_prod` は $O(1)$。
 - 区間集約は期待 $O(\log n)$。
+
+#### max_right_ok / min_left_ok
+
+```cpp
+template <class G> int max_right_ok(int l, const G& g) const;
+template <class G> int min_left_ok(int r, const G& g) const;
+```
+
+`max_right_ok` は `g(prod_by_order(l, R))` が真となる最大の $R$ を返す。
+`min_left_ok` は `g(prod_by_order(L, r))` が真となる最小の $L$ を返す。
+非負の値の和を集約し、`g` で和が上限以下かを判定すると、`max_right_ok(0, g)` で条件を満たす最長の接頭辞の長さを取得できる。
+
+##### 制約
+
+- $0 \le l,r \le n$。
+- `g(M::e())` は真。
+- 指定した端から区間を伸ばすとき、判定が偽になった以降は常に偽。
+
+##### 計算量
+
+- `g` の実行を $O(1)$ として、期待 $O(\log n)$。
 
 #### split_by_order / split_by_key / join
 
